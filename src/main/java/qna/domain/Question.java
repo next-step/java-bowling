@@ -1,10 +1,13 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -39,6 +42,10 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
+    Question copy() {
+        return new Question(this.title, this.contents).writeBy(this.writer);
+    }
+
     public String getTitle() {
         return title;
     }
@@ -66,6 +73,37 @@ public class Question extends AbstractEntity {
         return this;
     }
 
+    public List<DeleteHistory> deleteBy(User loginUser) throws CannotDeleteException {
+        checkQuestionWriter(loginUser);
+        setDeleted(true);
+
+        List<DeleteHistory> deleteHistoryList = new ArrayList<>();
+        deleteHistoryList.add(getDeleteHistory());
+        deleteHistoryList.addAll(deleteAnswers(loginUser));
+
+        return deleteHistoryList;
+    }
+
+    private DeleteHistory getDeleteHistory() {
+        return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
+    }
+
+    private void checkQuestionWriter(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
+    private List<DeleteHistory> deleteAnswers(User loginUser) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistoryList = new ArrayList<>();
+
+        for (Answer answer : answers) {
+            deleteHistoryList.add(answer.deleteBy(loginUser));
+        }
+
+        return deleteHistoryList;
+    }
+
     public void addAnswer(Answer answer) {
         answer.toQuestion(this);
         answers.add(answer);
@@ -91,5 +129,19 @@ public class Question extends AbstractEntity {
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Question question = (Question) o;
+        return deleted == question.deleted && Objects.equals(title, question.title) && Objects.equals(contents, question.contents) && Objects.equals(writer, question.writer) && Objects.equals(answers, question.answers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), title, contents, writer, answers, deleted);
     }
 }
