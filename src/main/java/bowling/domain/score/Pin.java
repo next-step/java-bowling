@@ -1,4 +1,4 @@
-package bowling.domain.Pin;
+package bowling.domain.score;
 
 import bowling.exception.Pin.PinValueException;
 import java.util.HashMap;
