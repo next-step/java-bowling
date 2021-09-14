@@ -1,7 +1,7 @@
 package bowling.presentation.output;
 
 import bowling.domain.Player;
-import bowling.domain.frame.FinalFrames;
+import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.NormalFrames;
 import bowling.presentation.output.util.FinalFrameOutputViewHelper;
 import bowling.presentation.output.util.NormalFrameOutputViewHelper;
@@ -14,6 +14,8 @@ public class FrameOutputView {
 
     private static final String SPACE = " ";
 
+    private static final String EMPTY_FRAME = "|      ";
+
     private static final int NORMAL_INDENT_SIZE = 4;
 
 
@@ -25,10 +27,10 @@ public class FrameOutputView {
     }
 
     public void print(Player player) {
-        print(player, NormalFrames.empty(), FinalFrames.empty());
+        print(player, NormalFrames.empty());
     }
 
-    public void print(Player player, NormalFrames normalFrames, FinalFrames finalFrames) {
+    public void print(Player player, NormalFrames normalFrames) {
 
         System.out.println(FIRST_ROW);
 
@@ -37,7 +39,24 @@ public class FrameOutputView {
         secondRow
                 .append(name(player))
                 .append(NormalFrameOutputViewHelper.create().output(normalFrames))
-                .append(FinalFrameOutputViewHelper.create().output(finalFrames))
+                .append(EMPTY_FRAME)
+                .append(BOUNDARY);
+
+        System.out.println(secondRow);
+
+    }
+
+
+    public void print(Player player, NormalFrames normalFrames, FinalFrame finalFrame) {
+
+        System.out.println(FIRST_ROW);
+
+        StringBuilder secondRow = new StringBuilder();
+
+        secondRow
+                .append(name(player))
+                .append(NormalFrameOutputViewHelper.create().output(normalFrames))
+                .append(FinalFrameOutputViewHelper.create().output(finalFrame))
                 .append(BOUNDARY);
 
         System.out.println(secondRow);

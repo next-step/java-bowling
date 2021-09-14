@@ -1,4 +1,4 @@
-package bowling.domain.frame.vo;
+package bowling.domain.frame;
 
 import org.junit.jupiter.api.Test;
 

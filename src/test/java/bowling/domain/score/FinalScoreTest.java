@@ -16,26 +16,26 @@ public class FinalScoreTest {
         //given
         //when
         //then
-        assertThat(FinalScore.from(9).next(1).next(10))
-                .isEqualTo(FinalScore.from(9).next(1).next(10));
+        assertThat(FinalScore.first(9).second(1).third(10))
+                .isEqualTo(FinalScore.first(9).second(1).third(10));
     }
 
     @Test
     public void FinalScore의_첫번째가_10점이면_스트라이크이다() {
         //given
         //when
-        FinalScore score = FinalScore.from(10);
+        FinalScore score = FinalScore.first(10);
         //then
         assertTrue(score.isStrike());
     }
 
     @Test
-    public void 현재_스코어에서_다음_스코어를_더했을_때_스페어인지_알_수_있다() {
+    public void 스페어인지_알_수_있다() {
         //given
         //when
-        FinalScore score = FinalScore.from(9);
+        FinalScore score = FinalScore.first(9).second(1);
         //then
-        assertTrue(score.isSpareWhenAdd(1));
+        assertTrue(score.isSpare());
     }
 
     @ParameterizedTest
@@ -43,9 +43,9 @@ public class FinalScoreTest {
     public void FinalScore의_두번째_점수는_0에서_10점까지의_점수만을_가질수_있다(int value) {
         //given
         //when
-        FinalScore score = FinalScore.from(3);
+        FinalScore score = FinalScore.first(3);
         //then
-        assertThatThrownBy(() -> score.next(value))
+        assertThatThrownBy(() -> score.second(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("잘못된 점수를 입력하였습니다.");
     }
@@ -55,9 +55,9 @@ public class FinalScoreTest {
     public void FinalScore의_세번째_점수는_0에서_10점까지의_점수만을_가질수_있다(int value) {
         //given
         //when
-        FinalScore score = FinalScore.from(3).next(7);
+        FinalScore score = FinalScore.first(3).second(7);
         //then
-        assertThatThrownBy(() -> score.next(value))
+        assertThatThrownBy(() -> score.third(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("잘못된 점수를 입력하였습니다.");
     }

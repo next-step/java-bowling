@@ -1,21 +1,12 @@
 package bowling.domain.frame;
 
-import bowling.domain.frame.vo.FinalFrameStatus;
 import bowling.domain.score.FinalScore;
 
 import java.util.Objects;
 
 public class FinalFrame {
 
-    private static final int SUM_FIRST_SECOND_TRIAL_LIMIT = 10;
-
-    private static final int FIRST_TRIAL = 1;
-
-    private static final int SECOND_TRIAL = 2;
-
-    private static final int THIRD_TRIAL = 3;
-
-    private final FinalScore score;
+    private FinalScore score;
 
     private final int trial;
 
@@ -35,70 +26,49 @@ public class FinalFrame {
         return new FinalFrame(score, trial, status);
     }
 
-    public static FinalFrame start(int score) {
-        return of(FinalScore.from(score), 1, false, false);
+
+    public static FinalFrame init() {
+        return of(FinalScore.start(), 1, false, false);
     }
 
+    public static boolean isNone(FinalFrame frame) {
+        return init().equals(frame);
+    }
 
-    public boolean isDone() {
-        return status.isDone();
+    public FinalScore getScore() {
+        return score;
+    }
+
+    public int getTrial() {
+        return trial;
+    }
+
+    public boolean isLast() {
+        return !status.isThirdAvailable() && status.isDone();
     }
 
     public int score() {
-        return score.get();
+        return score.getThird();
     }
 
-    public FinalFrame next(int score) {
-        if (isFirstTry()) {
-            return secondTry(score);
+    public FinalFrame tryFirst(int score) {
+        return of(FinalScore.first(score), 1, FinalFrameStatus.of(false, false));
+    }
+
+    public FinalFrame trySecond(int score) {
+        this.score = this.score.second(score);
+        if (isThirdAvailable()) {
+            return of(this.score, 2, FinalFrameStatus.of(true, false));
         }
-
-        if (isSecondTry() && status.isThirdAvailable()) {
-            return thirdTry(this.score.next(score));
-        }
-
-        return stop(this.score, trial);
-
+        return of(this.score, 2, FinalFrameStatus.of(false, true));
     }
 
-    private boolean isFirstTry() {
-        return trial == FIRST_TRIAL;
+    public FinalFrame tryThird(int score) {
+        return of(this.score.third(score), 3, FinalFrameStatus.of(false, true));
     }
 
-    private boolean isSecondTry() {
-        return trial == SECOND_TRIAL;
-    }
-
-    private FinalFrame secondTry(int score) {
-
-        if (this.score.isStrike()) {
-            return secondTry(this.score.next(score), true, false);
-        }
-
-        if (this.score.isSpareWhenAdd(score)) {
-            return secondTry(this.score.next(score), true, false);
-        }
-
-        validateCombinedScores(score);
-        return secondTry(this.score.next(score), false, true);
-    }
-
-    private static FinalFrame secondTry(FinalScore score, boolean isThirdAvailable, boolean isDone) {
-        return new FinalFrame(score, SECOND_TRIAL, FinalFrameStatus.of(isThirdAvailable, isDone));
-    }
-
-    private void validateCombinedScores(int score) {
-        if (this.score.add(score) > SUM_FIRST_SECOND_TRIAL_LIMIT) {
-            throw new IllegalArgumentException("1차시도와 2차시도의 합계는 10점을 넘을 수 없습니다.");
-        }
-    }
-
-    private static FinalFrame thirdTry(FinalScore score) {
-        return new FinalFrame(score, THIRD_TRIAL, FinalFrameStatus.of(false, true));
-    }
-
-    private static FinalFrame stop(FinalScore score, int trial) {
-        return new FinalFrame(score, trial, FinalFrameStatus.of(false, true));
+    private boolean isThirdAvailable() {
+        return this.score.isStrike() || this.score.isSpare();
     }
 
     @Override

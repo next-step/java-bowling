@@ -20,7 +20,7 @@ public class NormalFrame {
         this.trial = trial;
     }
 
-    public static NormalFrame start() {
+    public static NormalFrame init() {
         return of(0, NormalScore.start(), 1);
     }
 
@@ -47,7 +47,7 @@ public class NormalFrame {
     }
 
     public NormalFrame tryFirst(int score) {
-        return new NormalFrame(index + 1, NormalScore.first(score), 1);
+        return of(index + 1, NormalScore.first(score), 1);
     }
 
 

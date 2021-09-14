@@ -13,11 +13,7 @@ public class ScoreInputView {
         return new ScoreInputView();
     }
 
-    public int inputStart() {
-        return input(1);
-    }
-
-    public int inputLast() {
+    public int inputLastFrameScore() {
         return input(10);
     }
 

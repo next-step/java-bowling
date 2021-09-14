@@ -18,10 +18,6 @@ public class FrameOutputViewHelper {
         return score == 10;
     }
 
-    protected boolean isSpare(int first, int second) {
-        return first != 10 && first + second == 10;
-    }
-
     protected boolean noPoints(int score) {
         return score == 0;
     }

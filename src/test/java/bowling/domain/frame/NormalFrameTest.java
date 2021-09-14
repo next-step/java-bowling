@@ -15,16 +15,16 @@ class NormalFrameTest {
         //when
         //then
         assertAll(
-                () -> assertEquals(NormalFrame.start(), NormalFrame.start()),
-                () -> assertEquals(NormalFrame.start().tryFirst(10), NormalFrame.of(1, NormalScore.first(10), 1)),
-                () -> assertEquals(NormalFrame.start().tryFirst(0).trySecond(3), NormalFrame.of(1, NormalScore.first(0).second(3), 2))
+                () -> assertEquals(NormalFrame.init(), NormalFrame.init()),
+                () -> assertEquals(NormalFrame.init().tryFirst(10), NormalFrame.of(1, NormalScore.first(10), 1)),
+                () -> assertEquals(NormalFrame.init().tryFirst(0).trySecond(3), NormalFrame.of(1, NormalScore.first(0).second(3), 2))
         );
     }
 
     @Test
     public void 첫시도에서_스트라이크를_치면_Frame이_끝난다() {
         //given
-        NormalFrame frame = NormalFrame.start();
+        NormalFrame frame = NormalFrame.init();
         //when
         frame = frame.tryFirst(10);
         //then
@@ -34,7 +34,7 @@ class NormalFrameTest {
     @Test
     public void 첫시도에서_스트라이크를_치면_Frame이_끝나지_않는다() {
         //given
-        NormalFrame frame = NormalFrame.start();
+        NormalFrame frame = NormalFrame.init();
         //when
         frame = frame.tryFirst(1);
         //then
@@ -75,7 +75,7 @@ class NormalFrameTest {
     public void 마지막시도가_아니면_끝나지_않았다() {
         //given
         //when
-        NormalFrame frame = NormalFrame.start().tryFirst(1);
+        NormalFrame frame = NormalFrame.init().tryFirst(1);
         //then
         assertThat(frame.isLast()).isFalse();
     }

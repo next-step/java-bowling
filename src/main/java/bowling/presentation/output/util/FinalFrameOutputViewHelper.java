@@ -1,11 +1,7 @@
 package bowling.presentation.output.util;
 
 import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.FinalFrames;
-import bowling.domain.frame.vo.FinalFrameScore;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import bowling.domain.score.FinalScore;
 
 public class FinalFrameOutputViewHelper extends FrameOutputViewHelper {
 
@@ -18,73 +14,57 @@ public class FinalFrameOutputViewHelper extends FrameOutputViewHelper {
         return new FinalFrameOutputViewHelper();
     }
 
-    public StringBuilder output(FinalFrames frames) {
-        List<Integer> scores = frameScores(frames);
-        return framesOutput(scores);
-    }
+    public StringBuilder output(FinalFrame frame) {
 
-    private List<Integer> frameScores(FinalFrames frames) {
-        return frames.getAll().stream()
-                .map(FinalFrame::score)
-                .collect(Collectors.toList());
-    }
-
-    private StringBuilder framesOutput(List<Integer> scores) {
-
-        if (scores.isEmpty()) {
-            return new StringBuilder(EMPTY_FRAME);
-        }
-
-        FinalFrameScore finalFrameScore = FinalFrameScore.of(scores);
-        return framesOutput(finalFrameScore);
-    }
-
-    private StringBuilder framesOutput(FinalFrameScore finalFrameScore) {
+        FinalScore score = frame.getScore();
 
         StringBuilder scores = new StringBuilder();
 
-        scores.append(first(finalFrameScore));
-        if (isFirstTrial(finalFrameScore)) {
+        scores.append(first(score));
+        if (isFirstTrial(frame.getTrial())) {
             return framesOutputFrom(scores);
         }
 
-        scores.append(second(finalFrameScore));
-        if (isSecondTrial(finalFrameScore)) {
+        scores.append(second(score));
+        if (isSecondTrial(frame.getTrial())) {
             return framesOutputFrom(scores);
         }
 
-        scores.append(third(finalFrameScore));
+        scores.append(third(score));
         return framesOutputFrom(scores);
     }
 
-    private String first(FinalFrameScore finalFrameScore) {
-        if (isStrike(finalFrameScore.getFirst())) {
+    private String first(FinalScore score) {
+        int first = score.getFirst();
+        if (isStrike(first)) {
             return STRIKE;
         }
 
-        if (noPoints(finalFrameScore.getFirst())) {
+        if (noPoints(first)) {
             return NO_POINT;
         }
 
-        return String.valueOf(finalFrameScore.getFirst());
+        return String.valueOf(first);
     }
 
-    private String second(FinalFrameScore score) {
-        if (isStrike(score.getSecond())) {
+    private String second(FinalScore score) {
+        int second = score.getSecond();
+
+        if (isStrike(second)) {
             return BOUNDARY + STRIKE;
         }
-        if (noPoints(score.getSecond())) {
+        if (noPoints(second)) {
             return BOUNDARY + NO_POINT;
         }
 
-        if (isSpare(score.getFirst(), score.getSecond())) {
+        if (score.isSpare()) {
             return BOUNDARY + SPARE;
         }
 
         return BOUNDARY + score.getSecond();
     }
 
-    private String third(FinalFrameScore score) {
+    private String third(FinalScore score) {
         if (isStrike(score.getThird())) {
             return BOUNDARY + STRIKE;
         }
@@ -94,12 +74,12 @@ public class FinalFrameOutputViewHelper extends FrameOutputViewHelper {
         return BOUNDARY + score.getThird();
     }
 
-    private boolean isFirstTrial(FinalFrameScore finalFrameScore) {
-        return finalFrameScore.getTrial() == 1;
+    private boolean isFirstTrial(int trial) {
+        return trial == 1;
     }
 
-    private boolean isSecondTrial(FinalFrameScore finalFrameScore) {
-        return finalFrameScore.getTrial() == 2;
+    private boolean isSecondTrial(int trial) {
+        return trial == 2;
     }
 
     private StringBuilder framesOutputFrom(StringBuilder outputScores) {

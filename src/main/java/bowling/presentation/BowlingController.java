@@ -2,7 +2,6 @@ package bowling.presentation;
 
 import bowling.domain.Player;
 import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.FinalFrames;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.NormalFrames;
 import bowling.presentation.input.PlayerInputView;
@@ -21,14 +20,11 @@ public class BowlingController {
     public void execute() {
 
         Player player = Player.from(PlayerInputView.create().input());
+        NormalFrames normalFrames = NormalFrames.empty();
 
         printBowlingStart(player);
-
-        NormalFrames normalFrames = NormalFrames.empty();
         executeNormalFrames(player, normalFrames);
-
-        FinalFrames finalFrames = FinalFrames.empty();
-        executeFinalFrames(player, normalFrames, finalFrames);
+        executeFinalFrames(player, normalFrames);
 
     }
 
@@ -37,31 +33,36 @@ public class BowlingController {
     }
 
     private void executeNormalFrames(Player player, NormalFrames normalFrames) {
-        NormalFrame normalFrame = NormalFrame.start();
+        NormalFrame normalFrame = NormalFrame.init();
 
         while (!normalFrame.isLast()) {
 
             normalFrame = normalFrame.tryFirst(ScoreInputView.create().input(normalFrame.nextIndex()));
 
             normalFrames.add(normalFrame);
-            FrameOutputView.create().print(player, normalFrames, FinalFrames.empty());
+            FrameOutputView.create().print(player, normalFrames);
 
             if (!normalFrame.isNowFrameDone()) {
                 normalFrame.trySecond(ScoreInputView.create().input(normalFrame.nextIndex()));
-                FrameOutputView.create().print(player, normalFrames, FinalFrames.empty());
+                FrameOutputView.create().print(player, normalFrames);
             }
         }
     }
 
-    private void executeFinalFrames(Player player, NormalFrames normalFrames, FinalFrames finalFrames) {
-        FinalFrame finalFrame = FinalFrame.start(ScoreInputView.create().inputLast());
-        finalFrames.add(finalFrame);
-        FrameOutputView.create().print(player, normalFrames, finalFrames);
+    private void executeFinalFrames(Player player, NormalFrames normalFrames) {
 
-        while (!finalFrame.isDone()) {
-            finalFrame = finalFrame.next(ScoreInputView.create().inputLast());
-            finalFrames.add(finalFrame);
-            FrameOutputView.create().print(player, normalFrames, finalFrames);
+        FinalFrame finalFrame = FinalFrame.init();
+
+        finalFrame = finalFrame.tryFirst(ScoreInputView.create().inputLastFrameScore());
+        FrameOutputView.create().print(player, normalFrames, finalFrame);
+
+        finalFrame = finalFrame.trySecond(ScoreInputView.create().inputLastFrameScore());
+        FrameOutputView.create().print(player, normalFrames, finalFrame);
+
+        if (!finalFrame.isLast()) {
+            finalFrame = finalFrame.tryThird(ScoreInputView.create().inputLastFrameScore());
+            FrameOutputView.create().print(player, normalFrames, finalFrame);
         }
+
     }
 }
