@@ -5,14 +5,14 @@ import java.util.Stack;
 public class Frames {
     private final Stack<Frame> frames;
 
+    private Frames(Stack<Frame> frames) {
+        this.frames = frames;
+    }
+
     public static Frames init() {
         Stack<Frame> frames = new Stack<>();
         frames.add(Frame.init());
         return new Frames(frames);
-    }
-
-    private Frames(Stack<Frame> frames) {
-        this.frames = frames;
     }
 
     public Inning currentInning() {
@@ -31,7 +31,6 @@ public class Frames {
         //새로운 이닝일때는 이전 기록을 넣고 추가로 넣는다
         frames.add(currentFrame);
         frames.add(recodeFrame);
-
     }
 
     private Frame currentFrame() {
