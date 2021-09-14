@@ -2,6 +2,7 @@ package bowling.domain.score;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import bowling.exception.Pin.PinSecondValueException;
 import org.junit.jupiter.api.DisplayName;
@@ -83,6 +84,42 @@ class FinalScoreTest {
 
         // then
         assertThat(result).isInstanceOf(FinalScore.class);
+    }
+
+    @Test
+    @DisplayName("보너스 가능여부는 두번째 핀이 스트라이크여야 한다.")
+    void checkBonusAvailableStrikeTest() {
+
+        // given
+        FinalScore start = FinalScore.empty();
+        Pin first = Pin.of(10);
+        FinalScore firstScore = start.createFirstPin(first);
+        Pin second = Pin.of(10);
+        FinalScore secondScore = firstScore.createSecondPin(second);
+
+        // when
+        boolean result = secondScore.isBonus();
+
+        // then
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("보너스 가능여부는 두번째 핀이 스페어여야 한다.")
+    void checkBonusAvailableSpareTest() {
+
+        // given
+        FinalScore start = FinalScore.empty();
+        Pin first = Pin.of(3);
+        FinalScore firstScore = start.createFirstPin(first);
+        Pin second = Pin.of(7);
+        FinalScore secondScore = firstScore.createSecondPin(second);
+
+        // when
+        boolean result = secondScore.isBonus();
+
+        // then
+        assertTrue(result);
     }
 
 

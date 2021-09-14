@@ -35,4 +35,8 @@ public class FinalScore extends Score {
         }
     }
 
+    public boolean isBonus() {
+        return (first == STRIKE && second == STRIKE) || (first.remainPin() == second.value());
+    }
+
 }
