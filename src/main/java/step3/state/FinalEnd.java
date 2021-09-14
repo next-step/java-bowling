@@ -43,6 +43,12 @@ public class FinalEnd extends Finished {
 
     @Override
     public String symbol() {
+        if (pins.getFallenPins() == 10) {
+            return "X";
+        }
+        if (pins.getFallenPins() == 0) {
+            return "-";
+        }
         return Integer.toString(pins.getFallenPins());
     }
 }
