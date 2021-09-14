@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class DeleteHistories {
-    private static final String CREATE_ERROR = "입력 값이 null 입니다.";
+    private static final String INPUT_IS_NULL = "입력 값이 null 입니다.";
 
     private List<DeleteHistory> deleteHistories;
 
@@ -15,7 +15,7 @@ public class DeleteHistories {
 
     public DeleteHistories(List<DeleteHistory> deleteHistories) {
         if (deleteHistories == null) {
-            throw new IllegalArgumentException(CREATE_ERROR);
+            throw new IllegalArgumentException(INPUT_IS_NULL);
         }
         this.deleteHistories = deleteHistories;
     }
