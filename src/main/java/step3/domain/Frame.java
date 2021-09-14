@@ -3,15 +3,16 @@ package step3.domain;
 import step3.state.State;
 
 public interface Frame {
-    public Frame bowl(int fallenPins);
 
-    public Score getScore();
+    Frame bowl(int fallenPins);
 
-    public boolean isGameEnd();
+    Score getScore();
 
-    public State getState();
-    
-    public boolean isFinish();
+    boolean isGameEnd();
+
+    State getState();
+
+    boolean isFinish();
 
     Score calculateAdditionalScore(Score score);
 

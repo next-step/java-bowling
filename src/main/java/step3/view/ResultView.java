@@ -1,6 +1,5 @@
 package step3.view;
 
-import java.util.List;
 import java.util.stream.Collectors;
 import step3.domain.FinalFrame;
 import step3.domain.Frame;
@@ -12,7 +11,8 @@ import step3.state.State;
 public class ResultView {
 
     public static void printHeader() {
-        System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
+        System.out.println(
+            "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
     }
 
     public static void printResult(Frames frames, Frame frame) {
@@ -40,7 +40,7 @@ public class ResultView {
     public static void printFinalResult(FinalFrame frame) {
         System.out.printf("  %-3s |", frame.getStates()
             .stream()
-            .map(state -> state.symbol())
+            .map(State::symbol)
             .collect(Collectors.joining("|")));
     }
 
@@ -74,8 +74,7 @@ public class ResultView {
 
     private static int printResultScoreByFrame(Frame frame1, int totalScore) {
         try {
-            int score = frame1.getScore().getScore();
-            return score;
+            return frame1.getScore().getScore();
         } catch (CannotCalculateExceptions c) {
             return -1;
         }

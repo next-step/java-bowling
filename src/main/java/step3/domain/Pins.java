@@ -4,6 +4,7 @@ import java.util.Objects;
 import step3.exceptions.PinNumberExecption;
 
 public class Pins {
+
     private static final int MAX = 10;
     private static final int MIN = 0;
 

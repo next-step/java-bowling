@@ -1,6 +1,5 @@
 package step3.controller;
 
-import step3.domain.FinalFrame;
 import step3.domain.Frame;
 import step3.domain.Frames;
 import step3.domain.NormalFrame;
@@ -8,6 +7,7 @@ import step3.view.InputView;
 import step3.view.ResultView;
 
 public class BowlingGameController {
+
     public void runGame() {
         String userName = InputView.requireUserName();
         int frameNum = 1;

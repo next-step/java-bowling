@@ -2,10 +2,10 @@ package step3.state;
 
 import step3.domain.Pins;
 import step3.domain.Score;
-import step3.exceptions.CanNotThrowBallException;
 import step3.exceptions.PinNumberExecption;
 
 public class Spair extends Finished {
+
     private Score score;
     private Pins firstOfPin;
     private Pins secondOfPin;

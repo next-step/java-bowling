@@ -4,6 +4,7 @@ import java.util.Objects;
 import step3.exceptions.CannotCalculateExceptions;
 
 public class Score {
+
     private int score;
     private int left;
 

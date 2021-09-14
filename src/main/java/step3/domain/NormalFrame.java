@@ -6,6 +6,7 @@ import step3.state.Ready;
 import step3.state.State;
 
 public class NormalFrame implements Frame {
+
     private Frame next;
     private State state;
     private int no;

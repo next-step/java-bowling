@@ -5,6 +5,7 @@ import step3.exceptions.CannotCalculateExceptions;
 import step3.exceptions.SymbolDoesNotExistException;
 
 public class FinalReady implements State {
+
     private Score score;
 
     public State bowl(int fallenPins) {

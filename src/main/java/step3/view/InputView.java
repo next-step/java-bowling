@@ -3,6 +3,7 @@ package step3.view;
 import java.util.Scanner;
 
 public class InputView {
+
     private static final String THROW_BOWL_NUM = "%s 프레임 투구 : ";
     private static final String USER_NAME = "플레이어 이름은(3 english letters)?: ";
     private static final Scanner SC = new Scanner(System.in);

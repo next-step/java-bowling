@@ -3,9 +3,9 @@ package step3.state;
 import java.util.Objects;
 import step3.domain.Pins;
 import step3.domain.Score;
-import step3.exceptions.CanNotThrowBallException;
 
 public class Strike extends Finished {
+
     private Pins pins;
     private Score score;
 

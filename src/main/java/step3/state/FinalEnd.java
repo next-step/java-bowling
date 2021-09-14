@@ -5,6 +5,7 @@ import step3.domain.Pins;
 import step3.domain.Score;
 
 public class FinalEnd extends Finished {
+
     private final Pins pins;
     private final Score score;
 

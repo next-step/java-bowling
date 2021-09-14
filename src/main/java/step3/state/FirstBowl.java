@@ -3,10 +3,10 @@ package step3.state;
 import java.util.Objects;
 import step3.domain.Pins;
 import step3.domain.Score;
-import step3.exceptions.CanNotThrowBallException;
 import step3.exceptions.CannotCalculateExceptions;
 
 public class FirstBowl implements State {
+
     private Score score;
     private final Pins firstOfPin;
 

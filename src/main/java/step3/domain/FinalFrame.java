@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import step3.state.FinalReady;
-import step3.state.Ready;
 import step3.state.State;
 
 public class FinalFrame implements Frame {
@@ -26,14 +25,13 @@ public class FinalFrame implements Frame {
     }
 
     public Score getScore() {
-        Score score = state.score();
-        return score;
+        return state.score();
     }
 
     public int getLastFrameResult() {
         return states.stream()
             .map(state -> state.score().getScore())
-            .reduce(0, (x, y) -> x + y);
+            .reduce(0, Integer::sum);
     }
 
     public Score calculateAdditionalScore(Score beforeScore) {

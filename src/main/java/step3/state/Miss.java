@@ -5,6 +5,7 @@ import step3.domain.Score;
 import step3.exceptions.PinNumberExecption;
 
 public class Miss extends Finished {
+
     private Pins firstOfPin;
     private Pins secondOfPin;
 
