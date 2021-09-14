@@ -25,6 +25,14 @@ public class ResultView {
         System.out.println(FRAME);
     }
 
+    public static void printBowlingResult(List<BowlingGame> games) {
+        ResultView.printFrame();
+        games.forEach(game -> {
+            ResultView.printFrameByPlayer(game);
+            ResultView.printScoreByPlayer(game);
+        });
+    }
+
     public static void printFrameByPlayer(BowlingGame bowlingGame) {
         System.out.printf(PLAYER_NAME, bowlingGame.playerName());
         List<Frame> frames = bowlingGame.frames();

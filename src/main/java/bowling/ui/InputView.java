@@ -1,7 +1,7 @@
 package bowling.ui;
 
-import bowling.domain.BowlingGame;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -15,18 +15,28 @@ public class InputView {
 
     }
 
-    public static int InputNumberOfPlayer() {
+    public static List<String> InputPlayers() {
+        int numberOfPlayer = inputNumberOfPlayers();
+
+        List<String> names = new ArrayList<>();
+        for (int i = 1; i <= numberOfPlayer; i++) {
+            names.add(inputPlayerName(i));
+        }
+        return names;
+    }
+
+    private static int inputNumberOfPlayers() {
         System.out.print(NUMBER_OF_PLAYER);
         return Integer.parseInt(scanner.nextLine());
     }
 
-    public static String inputPlayerName(int numberOfPlayer) {
+    private static String inputPlayerName(int numberOfPlayer) {
         System.out.printf(PLAYER_NAME, numberOfPlayer);
         return scanner.nextLine();
     }
 
-    public static int nextFallenPin(BowlingGame bowlingGame) {
-        System.out.printf(TURN, bowlingGame.playerName());
+    public static int nextFallenPin(String name) {
+        System.out.printf(TURN, name);
         return Integer.parseInt(scanner.nextLine());
     }
 }
