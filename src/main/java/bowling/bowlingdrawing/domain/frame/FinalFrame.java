@@ -49,6 +49,24 @@ public class FinalFrame{
         return finalFrame.spare();
     }
 
+    public Frame finalFrame() {
+        return finalFrame;
+    }
+
+    public Integer firstBonusScore() {
+        if (bonusPitching1 == null) {
+            return -1;
+        }
+        return bonusPitching1.score(0);
+    }
+
+    public Integer secondBonusScore() {
+        if (bonusPitching2 == null) {
+            return -1;
+        }
+        return bonusPitching2.score(0);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -61,5 +79,4 @@ public class FinalFrame{
     public int hashCode() {
         return Objects.hash(finalFrame, bonusPitching1, bonusPitching2);
     }
-
 }
