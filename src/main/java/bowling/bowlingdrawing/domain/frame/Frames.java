@@ -10,13 +10,18 @@ import java.util.List;
 public class Frames {
 
     private final List<Frame> frames = new ArrayList<>();
+    private FinalFrame finalFrame;
 
     public void pitch(Pitching pitching) {
         validateGameEnd();
-        validateOverTenFrames();
 
         if (frames.isEmpty()) {
             addNewFrame(pitching);
+            return;
+        }
+
+        if (frames.size() == 9) {
+            pitchAtFinalFrame(pitching);
             return;
         }
 
@@ -35,10 +40,8 @@ public class Frames {
         }
     }
 
-    private void validateOverTenFrames() {
-        if (frames.size() == 10) {
-            throw new CustomException("최대 Frame(10) 초과");
-        }
+    public boolean end() {
+        return finalFrame != null && finalFrame.end();
     }
 
     private void addNewFrame(Pitching pitching) {
@@ -46,8 +49,12 @@ public class Frames {
         frames.add(firstFrame);
     }
 
-    public boolean end() {
-        return frames.size() == 10 && frames.get(frames.size()-1).end();
+    private void pitchAtFinalFrame(Pitching pitching) {
+        if (finalFrame != null) {
+            finalFrame.pitch(pitching);
+            return;
+        }
+        finalFrame = new FinalFrame(pitching);
     }
 
     public int currentFrame() {

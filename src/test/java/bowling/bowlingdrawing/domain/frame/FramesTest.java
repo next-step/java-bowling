@@ -26,23 +26,6 @@ class FramesTest {
     }
 
     @Test
-    @DisplayName("10개 Frame 초과 검증")
-    void validate_over_ten_frames() {
-        // given
-        Frames frames = new Frames();
-        Pitching pitching = Pitching.first(10);
-        frames.pitch(pitching);
-        // when
-        for (int i = 0; i < 9; i++) {
-            frames.pitch(Pitching.of(10));
-        }
-        // then
-        assertThatThrownBy(() -> frames.pitch(Pitching.of(10)))
-                .isInstanceOf(CustomException.class)
-                .hasMessageContaining("최대 Frame(10) 초과");
-    }
-
-    @Test
     @DisplayName("게임 종료 확인")
     void validate_game_over() {
         // given
@@ -54,11 +37,13 @@ class FramesTest {
         // when
         for (int i = 0; i < 9; i++) {
             pitchings.add(pitchings.get(i).next(10));
-            frames.pitch(pitchings.get(pitchings.size()-1));
+            frames.pitch(pitchings.get(pitchings.size() - 1));
         }
 
         pitchings.add(pitchings.get(pitchings.size() - 1).next(10));
+        frames.pitch(pitchings.get(pitchings.size()-1));
         pitchings.add(pitchings.get(pitchings.size() - 1).next(10));
+        frames.pitch(pitchings.get(pitchings.size()-1));
 
         // then
         assertThatThrownBy(() -> frames.pitch(Pitching.of(10)))
