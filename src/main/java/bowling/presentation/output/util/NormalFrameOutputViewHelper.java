@@ -2,10 +2,7 @@ package bowling.presentation.output.util;
 
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.NormalFrames;
-import bowling.domain.frame.vo.NormalFrameScore;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import bowling.domain.score.NormalScore;
 
 public class NormalFrameOutputViewHelper extends FrameOutputViewHelper {
 
@@ -27,32 +24,31 @@ public class NormalFrameOutputViewHelper extends FrameOutputViewHelper {
         StringBuilder framesOutput = new StringBuilder();
 
         for (int i = FIRST_FRAME; i <= LAST_FRAME; i++) {
-            List<Integer> scores = frameScores(frames, i);
-            setFrameOutputScores(framesOutput, scores);
+            setFrameOutputScores(framesOutput, frameScores(frames, i));
         }
 
         return framesOutput;
     }
 
-    private List<Integer> frameScores(NormalFrames frames, int i) {
-        return frames.findByFrame(i).getAll().stream()
+    private NormalScore frameScores(NormalFrames frames, int idx) {
+        return frames.findByFrame(idx).getAll().stream()
                 .map(NormalFrame::score)
-                .collect(Collectors.toList());
+                .findFirst()
+                .orElse(NormalScore.none());
     }
 
-    private void setFrameOutputScores(StringBuilder framesOutput, List<Integer> scores) {
-        if (scores.isEmpty()) {
+    private void setFrameOutputScores(StringBuilder framesOutput, NormalScore score) {
+        if (NormalScore.isNone(score)) {
             framesOutput.append(EMPTY_FRAME);
             return;
         }
 
-        NormalFrameScore normalFrameScore = NormalFrameScore.of(scores);
-
+        ScoreOutputHelper helper = ScoreOutputHelper.create();
         StringBuilder outputScores = new StringBuilder();
 
         outputScores
-                .append(first(normalFrameScore))
-                .append(second(normalFrameScore));
+                .append(helper.first(score))
+                .append(helper.second(score));
 
         framesOutput
                 .append(BOUNDARY)
@@ -61,40 +57,6 @@ public class NormalFrameOutputViewHelper extends FrameOutputViewHelper {
 
         setOutputIndent(framesOutput, outputScores);
     }
-
-
-    private String first(NormalFrameScore score) {
-        if (isStrike(score.getFirst())) {
-            return STRIKE;
-        }
-
-        if (noPoints(score.getFirst())) {
-            return NO_POINT;
-        }
-        return String.valueOf(score.getFirst());
-    }
-
-    private String second(NormalFrameScore score) {
-
-        if (score.isFirstTry()) {
-            return "";
-        }
-
-        if (isStrike(score.getFirst())) {
-            return "";
-        }
-
-        if (isSpare(score.getFirst(), score.getSecond())) {
-            return BOUNDARY + SPARE;
-        }
-
-        if (noPoints(score.getSecond())) {
-            return BOUNDARY + NO_POINT;
-        }
-
-        return BOUNDARY + score.getSecond();
-    }
-
 
     private void setOutputIndent(StringBuilder framesOutput, StringBuilder outputScores) {
         for (int i = outputScores.length(); i < INDENT_SIZE; i++) {

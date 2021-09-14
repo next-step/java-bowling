@@ -22,17 +22,35 @@ public class BowlingController {
 
         Player player = Player.from(PlayerInputView.create().input());
 
-        NormalFrames normalFrames = NormalFrames.empty();
-        FinalFrames finalFrames = FinalFrames.empty();
-
         printBowlingStart(player);
-        executeNormalFrames(player, normalFrames, finalFrames);
+
+        NormalFrames normalFrames = NormalFrames.empty();
+        executeNormalFrames(player, normalFrames);
+
+        FinalFrames finalFrames = FinalFrames.empty();
         executeFinalFrames(player, normalFrames, finalFrames);
 
     }
 
     private void printBowlingStart(Player player) {
         FrameOutputView.create().print(player);
+    }
+
+    private void executeNormalFrames(Player player, NormalFrames normalFrames) {
+        NormalFrame normalFrame = NormalFrame.start();
+
+        while (!normalFrame.isLast()) {
+
+            normalFrame = normalFrame.tryFirst(ScoreInputView.create().input(normalFrame.nextIndex()));
+
+            normalFrames.add(normalFrame);
+            FrameOutputView.create().print(player, normalFrames, FinalFrames.empty());
+
+            if (!normalFrame.isNowFrameDone()) {
+                normalFrame.trySecond(ScoreInputView.create().input(normalFrame.nextIndex()));
+                FrameOutputView.create().print(player, normalFrames, FinalFrames.empty());
+            }
+        }
     }
 
     private void executeFinalFrames(Player player, NormalFrames normalFrames, FinalFrames finalFrames) {
@@ -43,18 +61,6 @@ public class BowlingController {
         while (!finalFrame.isDone()) {
             finalFrame = finalFrame.next(ScoreInputView.create().inputLast());
             finalFrames.add(finalFrame);
-            FrameOutputView.create().print(player, normalFrames, finalFrames);
-        }
-    }
-
-    private void executeNormalFrames(Player player, NormalFrames normalFrames, FinalFrames finalFrames) {
-        NormalFrame normalFrame = NormalFrame.start(ScoreInputView.create().inputStart());
-        normalFrames.add(normalFrame);
-        FrameOutputView.create().print(player, normalFrames, finalFrames);
-
-        while (!normalFrame.isLast()) {
-            normalFrame = normalFrame.next(ScoreInputView.create().input(normalFrame.nextIndex()));
-            normalFrames.add(normalFrame);
             FrameOutputView.create().print(player, normalFrames, finalFrames);
         }
     }

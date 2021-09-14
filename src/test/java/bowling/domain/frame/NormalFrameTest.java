@@ -4,6 +4,7 @@ import bowling.domain.score.NormalScore;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SuppressWarnings("NonAsciiCharacters")
 class NormalFrameTest {
@@ -13,74 +14,68 @@ class NormalFrameTest {
         //given
         //when
         //then
-        assertThat(NormalFrame.start(10)).isEqualTo(NormalFrame.start(10));
+        assertAll(
+                () -> assertEquals(NormalFrame.start(), NormalFrame.start()),
+                () -> assertEquals(NormalFrame.start().tryFirst(10), NormalFrame.of(1, NormalScore.first(10), 1)),
+                () -> assertEquals(NormalFrame.start().tryFirst(0).trySecond(3), NormalFrame.of(1, NormalScore.first(0).second(3), 2))
+        );
     }
 
     @Test
-    public void 첫시도에서_스트라이크를_치면_다음_Frame으로_넘어간다() {
+    public void 첫시도에서_스트라이크를_치면_Frame이_끝난다() {
         //given
-        NormalFrame frame = NormalFrame.start(10);
+        NormalFrame frame = NormalFrame.start();
         //when
-        frame = frame.next(9);
+        frame = frame.tryFirst(10);
         //then
-        assertThat(frame).isEqualTo(NormalFrame.of(2, NormalScore.from(9), false));
+        assertTrue(frame.isNowFrameDone());
     }
 
     @Test
-    public void 첫시도에서_스트라이크가_아니면_다음시도를_한다() {
+    public void 첫시도에서_스트라이크를_치면_Frame이_끝나지_않는다() {
         //given
-        NormalFrame frame = NormalFrame.start(9);
+        NormalFrame frame = NormalFrame.start();
         //when
-        frame = frame.next(1);
+        frame = frame.tryFirst(1);
         //then
-        assertThat(frame).isEqualTo(NormalFrame.of(1, NormalScore.from(1), true));
-    }
-
-    @Test
-    public void 두번째_시도에서_다음시도를하면_다음Frame이_된다() {
-        //given
-        NormalFrame frame = NormalFrame.start(9).next(0);
-        //when
-        frame = frame.next(3);
-        //then
-        assertThat(frame).isEqualTo(NormalFrame.of(2, NormalScore.from(3), false));
+        assertFalse(frame.isNowFrameDone());
     }
 
     @Test
     public void _9회차의_첫시도에서_스트라이크를_치면_끝난다() {
         //given
-        NormalFrame frame = NormalFrame.of(8, NormalScore.from(3), true);
+        NormalFrame frame = NormalFrame.of(8, NormalScore.first(3).second(3), 2);
         //when
-        frame = frame.next(10);
+        frame = frame.tryFirst(10);
         //then
-        assertThat(frame.isLast()).isTrue();
+        assertTrue(frame.isLast());
     }
 
     @Test
     public void _9회차의_첫시도가_스트라이크가_아니면_끝나지_않는다() {
         //given
-        NormalFrame frame = NormalFrame.of(8, NormalScore.from(3), true);
+        NormalFrame frame = NormalFrame.of(8, NormalScore.first(3).second(3), 2);
         //when
-        frame = frame.next(8);
+        frame = frame.tryFirst(8);
         //then
-        assertThat(frame.isLast()).isFalse();
+        assertFalse(frame.isLast());
     }
 
     @Test
     public void _9회차의_두번째_시도_후_끝난다() {
         //given
-        NormalFrame frame = NormalFrame.of(8, NormalScore.from(3), true);
+        NormalFrame frame = NormalFrame.of(8, NormalScore.first(3).second(3), 2);
         //when
-        frame = frame.next(8).next(1);
+        frame = frame.tryFirst(8).trySecond(2);
         //then
-        assertThat(frame.isLast()).isTrue();
+        assertTrue(frame.isLast());
     }
 
     @Test
     public void 마지막시도가_아니면_끝나지_않았다() {
         //given
         //when
-        NormalFrame frame = NormalFrame.start(9).next(0);
+        NormalFrame frame = NormalFrame.start().tryFirst(1);
         //then
         assertThat(frame.isLast()).isFalse();
     }
@@ -89,9 +84,9 @@ class NormalFrameTest {
     public void 라운드를_받아서_맞는지_여부를_판단할_수_있다() {
         //given
         //when
-        NormalFrame frame = NormalFrame.of(8, NormalScore.from(3), true);
+        NormalFrame frame = NormalFrame.of(8, NormalScore.first(3), 1);
         //then
-        assertThat(frame.isIndex(8)).isTrue();
+        assertThat(frame.isFrame(8)).isTrue();
     }
 
 }
