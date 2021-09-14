@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.BusinessException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -49,6 +51,17 @@ public class Pitches {
         return pitches.stream()
                 .map(Pitch::status)
                 .collect(Collectors.toList());
+    }
+
+    public int sum() {
+        return pitches
+                .stream()
+                .map(Pitch::intValue)
+                .reduce(0, Integer::sum);
+    }
+
+    public boolean isLastPitchStatus(Status status) {
+        return pitches.get(pitches.size() - 1).status().equals(status);
     }
 
     @Override

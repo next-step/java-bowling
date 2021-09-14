@@ -3,14 +3,15 @@ package bowling.domain;
 import bowling.exception.BusinessException;
 
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class NormalFrame implements Frame {
 
     public static final int MAXIMUM_NORMAL_FRAME_PITCH = 2;
+    private static final int ZERO = 0;
 
     private final FrameNumber frameNumber;
     private Pitches pitches;
+    private Frame nextFrame;
 
     public NormalFrame(final int frameNumber) {
         this.frameNumber = new FrameNumber(frameNumber);
@@ -32,9 +33,11 @@ public class NormalFrame implements Frame {
             return this;
         }
         if (frameNumber.isLastNormalNumber()) {
-            return new FinalFrame();
+            nextFrame = new FinalFrame();
+            return nextFrame;
         }
-        return new NormalFrame(frameNumber.nextNumber());
+        nextFrame = new NormalFrame(frameNumber.nextNumber());
+        return nextFrame;
     }
 
     @Override
@@ -45,6 +48,36 @@ public class NormalFrame implements Frame {
     @Override
     public Pitches pitches() {
         return pitches;
+    }
+
+    @Override
+    public Score addScore(final Score beforeScore) {
+        if (pitches.isEmpty()) {
+            return Score.cantCalculate();
+        }
+        int range = Math.min(beforeScore.left(), pitches.size());
+        for (int i = 0; i < range; i++) {
+            beforeScore.pitch(pitches.get(i).intValue());
+        }
+        if (beforeScore.canCalculateScore()) {
+            return beforeScore;
+        }
+        return nextFrame.addScore(beforeScore);
+    }
+
+    @Override
+    public Score score() {
+        if (!isEnd()) {
+            return Score.cantCalculate();
+        }
+        if (pitches.isLastPitchStatus(Status.SPARE)) {
+            return nextFrame.addScore(Score.ofSpare());
+        }
+        if (pitches.isLastPitchStatus(Status.STRIKE)) {
+            return nextFrame.addScore(Score.ofStrike());
+        }
+
+        return Score.of(pitches.sum());
     }
 
     private void addNextPitch(int countOfPins) {

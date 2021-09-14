@@ -12,4 +12,8 @@ public interface Frame {
     boolean isNormal();
 
     Pitches pitches();
+
+    Score addScore(Score beforeScore);
+
+    Score score();
 }

@@ -1,10 +1,8 @@
 package bowling.view;
 
-import bowling.domain.BowlingGame;
-import bowling.domain.Frame;
-import bowling.domain.Pitch;
-import bowling.domain.Pitches;
+import bowling.domain.*;
 
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -32,12 +30,33 @@ public class ResultView {
         System.out.println(TITLE);
         printName(bowlingGame.player());
 
-        for (Frame frame : bowlingGame.frames().value()) {
+        printSymbol(bowlingGame.frames());
+
+        printScore(bowlingGame.frames());
+    }
+
+    private static void printSymbol(Frames frames) {
+        for (Frame frame : frames.value()) {
             System.out.print(String.format("%5s %s", result(frame.pitches()), SEPARATOR));
         }
-        printBlock(LAST_NUMBER - bowlingGame.frames().size() - 1);
-        System.out.println();
-        System.out.println();
+        printBlock(LAST_NUMBER - frames.size() - 1);
+    }
+
+    private static void printScore(Frames frames) {
+        System.out.print(String.format("%s%s %s", SEPARATOR, BLANK, SEPARATOR));
+        int total = 0;
+        for (Frame frame : frames.value()) {
+            Score score = frame.score();
+            String resultScore = BLANK;
+            if (score.canCalculateScore()) {
+                total += score.getScore();
+                resultScore = String.valueOf(total);
+            }
+            System.out.print(String.format("%5s %s", resultScore, SEPARATOR));
+        }
+
+        printBlock(LAST_NUMBER - frames.size() - 1);
+
     }
 
     private static void printBlock(int range) {

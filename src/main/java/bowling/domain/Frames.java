@@ -2,6 +2,7 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Frames {
     public static final int FIRST_FRAME_INDEX = 1;
@@ -32,4 +33,11 @@ public class Frames {
     public List<Frame> value() {
         return frames;
     }
+
+    public int totalPitchSize(int index) {
+        return IntStream.range(0, index)
+                .map(idx -> frames.get(idx).pitches().size())
+                .reduce(0, Integer::sum);
+    }
+
 }
