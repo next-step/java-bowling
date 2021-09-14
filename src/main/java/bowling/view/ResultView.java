@@ -1,9 +1,10 @@
 package bowling.view;
 
+import bowling.domain.frame.AllFrames;
+import bowling.domain.player.Players;
+
 import java.util.List;
 import java.util.stream.IntStream;
-
-import bowling.domain.player.Players;
 
 public class ResultView {
     private static final String OUTPUT_FRAME_FORMAT = "  %02d  |";
@@ -26,9 +27,9 @@ public class ResultView {
         System.out.printf(OUTPUT_FRAME_FORMAT, frameNumber);
     }
 
-    public void outputScores(Players players) {
+    public void outputScores(Players players, AllFrames allFrames) {
         List<String> playerNames = players.names();
-        List<List<String>> scoresOfPlayers = players.results();
+        List<List<String>> scoresOfPlayers = players.results(allFrames);
         List<List<Integer>> cumulativeScoresOfPlayers = players.totalScoreBoard().cumulativeScoresOfPlayers();
 
         outputFrames();
