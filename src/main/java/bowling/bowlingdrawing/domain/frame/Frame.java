@@ -30,6 +30,7 @@ public class Frame {
     }
 
     public void secondPitching(Pitching secondPitching) {
+        validateSumIsOverTen(firstPitching, secondPitching);
         this.secondPitching = secondPitching;
     }
 
@@ -58,18 +59,6 @@ public class Frame {
 
     public boolean done() {
         return strike() || (secondPitching != null);
-    }
-
-    public boolean end() {
-        if (strike() && firstPitching.score(2) >= 10) {
-            return true;
-        }
-
-        if (spare() && secondPitching.score(1) >= 0) {
-            return true;
-        }
-
-        return secondPitching != null;
     }
 
     public Integer firstScore() {

@@ -41,8 +41,11 @@ class FrameTest {
         // given
         Pitching firstPitching = Pitching.of(firstPins);
         Pitching secondPitching = firstPitching.next(secondPins);
+        Frame frame = new Frame(firstPitching);
         // when, then
         assertThatThrownBy(() -> new Frame(firstPitching, secondPitching))
+                .isInstanceOf(CustomException.class);
+        assertThatThrownBy(() -> frame.secondPitching(secondPitching))
                 .isInstanceOf(CustomException.class);
     }
 
