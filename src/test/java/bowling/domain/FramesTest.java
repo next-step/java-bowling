@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class FramesTest {
 
@@ -30,8 +31,6 @@ class FramesTest {
     @DisplayName("현재 진행중인 이닝을 받는다.")
     @MethodSource("currentInningSource")
     void currentInningTest(Pitch pitch, Inning current) {
-//        Frames frames = Frames.init();
-
         frames.recodePitch(pitch);
         assertThat(frames.currentInning()).isEqualTo(current);
     }
@@ -77,36 +76,48 @@ class FramesTest {
     @Test
     @DisplayName("이닝이 10 이닝 이하라면 true")
     void under_10_non_over_true() {
-        frames.recodePitch(new Pitch(10));
-        assertThat(frames.nonOver()).isTrue();
-
-        frames.recodePitch(new Pitch(10));
-        assertThat(frames.nonOver()).isTrue();
-
-        frames.recodePitch(new Pitch(10));
-        assertThat(frames.nonOver()).isTrue();
-
-        frames.recodePitch(new Pitch(10));
-        assertThat(frames.nonOver()).isTrue();
-
-        frames.recodePitch(new Pitch(10));
-        assertThat(frames.nonOver()).isTrue();
-
-        frames.recodePitch(new Pitch(10));
-        assertThat(frames.nonOver()).isTrue();
-
-        frames.recodePitch(new Pitch(10));
-        assertThat(frames.nonOver()).isTrue();
-
-        frames.recodePitch(new Pitch(10));
-        assertThat(frames.nonOver()).isTrue();
-
-        frames.recodePitch(new Pitch(10));
-        assertThat(frames.nonOver()).isTrue();
-
-        frames.recodePitch(new Pitch(10));
-        assertThat(frames.nonOver()).isTrue();
-
+        assertAll(  
+                () -> {
+                    frames.recodePitch(new Pitch(10));
+                    assertThat(frames.nonOver()).isTrue();
+                },
+                () -> {
+                    frames.recodePitch(new Pitch(10));
+                    assertThat(frames.nonOver()).isTrue();
+                },
+                () -> {
+                    frames.recodePitch(new Pitch(10));
+                    assertThat(frames.nonOver()).isTrue();
+                },
+                () -> {
+                    frames.recodePitch(new Pitch(10));
+                    assertThat(frames.nonOver()).isTrue();
+                },
+                () -> {
+                    frames.recodePitch(new Pitch(10));
+                    assertThat(frames.nonOver()).isTrue();
+                },
+                () -> {
+                    frames.recodePitch(new Pitch(10));
+                    assertThat(frames.nonOver()).isTrue();
+                },
+                () -> {
+                    frames.recodePitch(new Pitch(10));
+                    assertThat(frames.nonOver()).isTrue();
+                },
+                () -> {
+                    frames.recodePitch(new Pitch(10));
+                    assertThat(frames.nonOver()).isTrue();
+                },
+                () -> {
+                    frames.recodePitch(new Pitch(10));
+                    assertThat(frames.nonOver()).isTrue();
+                },
+                () -> {
+                    frames.recodePitch(new Pitch(7));
+                    assertThat(frames.nonOver()).isTrue();
+                }
+        );
     }
 
     @Test
