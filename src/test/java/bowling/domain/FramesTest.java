@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FramesTest {
@@ -22,15 +21,12 @@ class FramesTest {
         int expectedCurrentFrame = 3;
 
         // when
-        boolean firstPitchResult = frames.addPitch(new Pitch(10));
-        boolean secondPitchResult = frames.addPitch(new Pitch(0));
-        boolean thirdPitchResult = frames.addPitch(new Pitch(10));
+        frames.addPitch(new Pitch(10));
+        frames.addPitch(new Pitch(0));
+        frames.addPitch(new Pitch(10));
         List<List<Integer>> allFramePitchValues = frames.allFramePitchValues();
 
         // then
-        assertThat(firstPitchResult).isEqualTo(true);
-        assertThat(secondPitchResult).isEqualTo(true);
-        assertThat(thirdPitchResult).isEqualTo(true);
         assertThat(allFramePitchValues)
                 .contains(
                         Collections.singletonList(10),
@@ -47,15 +43,14 @@ class FramesTest {
         List<Integer> expectedPitchValues = Arrays.asList(0, 0);
 
         // when
-        List<Boolean> results = allGutter(frames);
+        allGutter(frames);
         List<List<Integer>> allFramePitchValues = frames.allFramePitchValues();
 
         // then
-        assertThat(results).allMatch(result -> result);
         assertThat(allFramePitchValues)
                 .allMatch(pitchValues -> pitchValues.equals(expectedPitchValues));
         assertThat(frames.isEnd()).isEqualTo(true);
-        assertThat(frames.scores()).allMatch(score -> score == 0);
+        assertThat(frames.scores()).allMatch(score -> score.equals("0"));
     }
 
     @Test
@@ -67,7 +62,7 @@ class FramesTest {
         List<Integer> finalExpected = Arrays.asList(10, 10, 10);
 
         // when
-        List<Boolean> results = perfectGame(frames);
+        perfectGame(frames);
         List<List<Integer>> allFramePitchValues = frames.allFramePitchValues();
         List<List<Integer>> normalFramePitchValues = allFramePitchValues.stream()
                 .limit(allFramePitchValues.size() - 1)
@@ -75,26 +70,24 @@ class FramesTest {
         List<Integer> finalFramePitchValues = allFramePitchValues.get(allFramePitchValues.size() - 1);
 
         // then
-        assertThat(results).allMatch(result -> result);
         assertThat(normalFramePitchValues)
                 .allMatch(pitchValues -> pitchValues.equals(normalExpected));
         assertThat(finalFramePitchValues).isEqualTo(finalExpected);
         assertThat(frames.isEnd()).isEqualTo(true);
-        assertThat(frames.scores()).containsExactly(30, 60, 90, 120, 150, 180, 210, 240, 270, 300);
+        assertThat(frames.scores())
+                .containsExactly("30", "60", "90", "120", "150", "180", "210", "240", "270", "300");
     }
 
-    private List<Boolean> allGutter(final Frames frames) {
-        return IntStream.range(0, 20)
+    private void allGutter(final Frames frames) {
+        IntStream.range(0, 20)
                 .mapToObj(i -> new Pitch(0))
-                .map(frames::addPitch)
-                .collect(Collectors.toList());
+                .forEach(frames::addPitch);
     }
 
-    private List<Boolean> perfectGame(final Frames frames) {
-        return IntStream.range(0, 12)
+    private void perfectGame(final Frames frames) {
+        IntStream.range(0, 12)
                 .mapToObj(i -> new Pitch(10))
-                .map(frames::addPitch)
-                .collect(Collectors.toList());
+                .forEach(frames::addPitch);
     }
 
 }
