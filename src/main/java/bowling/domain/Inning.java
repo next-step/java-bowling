@@ -3,7 +3,8 @@ package bowling.domain;
 import java.util.Objects;
 
 public class Inning {
-    private static final int firstInning = 1;
+    private static final int FIRST_INNING = 1;
+
     private final int inning;
 
     public Inning(int inning) {
@@ -11,7 +12,7 @@ public class Inning {
     }
 
     public static Inning first() {
-        return new Inning(firstInning);
+        return new Inning(FIRST_INNING);
     }
 
     public int asInt() {
