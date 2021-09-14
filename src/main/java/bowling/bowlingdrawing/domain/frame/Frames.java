@@ -72,4 +72,8 @@ public class Frames {
     public List<Frame> frames() {
         return Collections.unmodifiableList(frames);
     }
+
+    public FinalFrame finalFrame() {
+        return finalFrame;
+    }
 }
