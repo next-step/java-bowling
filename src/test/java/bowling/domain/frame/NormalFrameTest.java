@@ -1,31 +1,31 @@
 package bowling.domain.frame;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.stream.Stream;
-
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import bowling.domain.score.Score;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class NormalFrameTest {
 
     private static Stream<Arguments> toScoreSymbolTest() {
         return Stream.of(
-            Arguments.of(new int[] {0}, "-"),
-            Arguments.of(new int[] {9}, "9"),
-            Arguments.of(new int[] {10}, "X"),
-            Arguments.of(new int[] {0, 1}, "-|1"),
-            Arguments.of(new int[] {0, 10}, "-|/"),
-            Arguments.of(new int[] {1, 2}, "1|2"),
-            Arguments.of(new int[] {0, 2}, "-|2"),
-            Arguments.of(new int[] {1, 0}, "1|-"),
-            Arguments.of(new int[] {0, 0}, "-|-"),
-            Arguments.of(new int[] {4, 6}, "4|/")
+            Arguments.of(new int[]{0}, "-"),
+            Arguments.of(new int[]{9}, "9"),
+            Arguments.of(new int[]{10}, "X"),
+            Arguments.of(new int[]{0, 1}, "-|1"),
+            Arguments.of(new int[]{0, 10}, "-|/"),
+            Arguments.of(new int[]{1, 2}, "1|2"),
+            Arguments.of(new int[]{0, 2}, "-|2"),
+            Arguments.of(new int[]{1, 0}, "1|-"),
+            Arguments.of(new int[]{0, 0}, "-|-"),
+            Arguments.of(new int[]{4, 6}, "4|/")
         );
     }
 

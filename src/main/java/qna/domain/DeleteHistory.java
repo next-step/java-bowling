@@ -1,16 +1,8 @@
 package qna.domain;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
-
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class DeleteHistory {
@@ -53,7 +45,7 @@ public class DeleteHistory {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        DeleteHistory that = (DeleteHistory)o;
+        DeleteHistory that = (DeleteHistory) o;
         return Objects.equals(id, that.id) &&
             contentType == that.contentType &&
             Objects.equals(contentId, that.contentId) &&

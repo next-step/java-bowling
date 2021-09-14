@@ -1,14 +1,10 @@
 package qna.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-
 import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
+
+import javax.persistence.*;
 
 @Entity
 public class Answer extends AbstractEntity {

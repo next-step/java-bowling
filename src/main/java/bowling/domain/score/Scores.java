@@ -1,10 +1,10 @@
 package bowling.domain.score;
 
+import bowling.domain.frame.Frame;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import bowling.domain.frame.Frame;
 
 public class Scores {
     private final List<Score> scores;

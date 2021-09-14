@@ -64,7 +64,7 @@ public class Score {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        Score score1 = (Score)o;
+        Score score1 = (Score) o;
         return score == score1.score;
     }
 

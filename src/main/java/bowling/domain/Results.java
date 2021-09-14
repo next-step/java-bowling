@@ -1,10 +1,10 @@
 package bowling.domain;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Results {
     private final List<String> results;
