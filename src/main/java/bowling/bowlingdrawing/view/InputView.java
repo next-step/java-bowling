@@ -9,6 +9,7 @@ public class InputView {
     public static final Scanner scanner = new Scanner(System.in);
 
     public static String inputPlayer() {
+        System.out.print("플레이어 이름은(3 english letters)? : ");
         return scanner.nextLine();
     }
 
