@@ -149,19 +149,19 @@ public class QnAService {
         - `Pitching bonusPitching1`
         - `Pitching bonusPitching2`
     2. 메서드
-        - `void bonusPitching(int pins)`
+        - `void secondPitching(Ptiching pitching)`
+        - `void bonusPitching(Pitching pitching)`
         - `int score()`
         - `boolean strike()`
         - `boolean spare()`
-        - `boolean done()`
         - `boolean end()`
-5. Frame
+5. Frame    
     1. 속성
         - `Pitching firstPitching`
         - `Pitching secondPitching`
     2. 메서드
         - `void validateSumIsOverTen()`
-        - `void secondPitching(int pins)`
+        - `void secondPitching(Ptiching pitching)`
         - `int score()`
         - `boolean strike()`
         - `boolean spare()`
