@@ -25,10 +25,11 @@ class NormalScoreTest {
     void createFirstPinTest() {
 
         // given
+        NormalScore start = NormalScore.empty();
         Pin first = Pin.of(5);
 
         // when
-        NormalScore result = NormalScore.ofFirst(first);
+        NormalScore result = start.createFirstPin(first);
 
         // then
         assertThat(result).isInstanceOf(NormalScore.class);
@@ -39,8 +40,9 @@ class NormalScoreTest {
     void createSecondPinTest() {
 
         // given
+        NormalScore start = NormalScore.empty();
         Pin first = Pin.of(5);
-        NormalScore firstScore = NormalScore.ofFirst(first);
+        NormalScore firstScore = start.createFirstPin(first);
         Pin second = Pin.of(3);
 
         // when
@@ -55,8 +57,9 @@ class NormalScoreTest {
     void createSecondExceptionTest() {
 
         // given
+        NormalScore start = NormalScore.empty();
         Pin first = Pin.of(10);
-        NormalScore firstScore = NormalScore.ofFirst(first);
+        NormalScore firstScore = start.createFirstPin(first);
         Pin second = Pin.of(3);
 
         // when & then
