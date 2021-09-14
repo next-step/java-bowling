@@ -21,7 +21,7 @@ public class NormalScore extends Score {
     public NormalScore createSecondPin(Pin pin) {
         checkFirstStrike(first);
 
-        return new NormalScore(this.first, second);
+        return new NormalScore(this.first, pin);
     }
 
     private static void checkFirstStrike(Pin pin) {
