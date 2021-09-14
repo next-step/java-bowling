@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class FrameStateRendererTest {
+class NormalFrameStateRendererTest {
 
     @ParameterizedTest(name = "첫번째 투구 후 상태 렌더링 테스트")
     @CsvSource({"SIX, 6", "ZERO, -"})
