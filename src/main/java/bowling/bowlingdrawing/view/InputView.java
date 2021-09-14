@@ -16,7 +16,15 @@ public class InputView {
     public static int inputPins(Player player) {
         System.out.printf("%d 프레임 투구 : ", player.currentFrame());
         String pinsString = scanner.nextLine();
-        return Integer.parseInt(pinsString);
+        try {
+            return Integer.parseInt(pinsString);
+        } catch (NumberFormatException e) {
+            System.out.println("숫자만 입력 가능 합니다.");
+            System.exit(0);
+            return 0;
+        } finally {
+            System.out.println();
+        }
     }
 
 }
