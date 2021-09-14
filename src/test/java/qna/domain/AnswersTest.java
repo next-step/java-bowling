@@ -28,14 +28,15 @@ class AnswersTest {
 
     @ParameterizedTest
     @MethodSource("provideOtherWriterAnswers")
-    @DisplayName("답변들중 주어진 작성자외의 유저가 작성한 답변이 존재할경우, 삭제불가능한 상태가 된다.")
+    @DisplayName("답변들중 주어진 작성자외의 유저가 작성한 답변이 존재할경우, 삭제 불가능한 상태가 된다.")
     void otherWriterAnswersAreNotDeletable(Answers answers) {
         assertThat(answers.isDeletable(UserTest.JAVAJIGI)).isEqualTo(false);
     }
 
     @ParameterizedTest
     @MethodSource("provideSameWriterAnswers")
-    void name(Answers answers) {
+    @DisplayName("답변들을 모두 삭제할시, 삭제상태 플래그가 모두 true가된다.")
+    void deleteAllAnswers(Answers answers) {
         answers.deleteAll();
         assertThat(answers.value().stream().allMatch(a -> a.isDeleted())).isEqualTo(true);
 

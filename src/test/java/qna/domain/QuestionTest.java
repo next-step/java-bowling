@@ -1,5 +1,7 @@
 package qna.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
@@ -23,8 +25,26 @@ public class QuestionTest {
     @Test
     @DisplayName("답변에 작성자 이외의 유저가 답변을 달았을 경우, 삭제할 수 없고 예외를 던진다.")
     void tryDeleteQuestionWithAnswerWrittenByOtherUser() {
-        Q1.addAnswer2(AnswerTest.A2);
+        Q1.addAnswer(AnswerTest.A2);
         assertThatThrownBy(() -> Q1.delete(UserTest.JAVAJIGI))
             .isInstanceOf(OtherUserAnswerFoundException.class);
     }
+
+    @Test
+    @DisplayName("질문글에 아무런 답변이 없을때, 작성자는 질문글을 지울수 있다.")
+    void canDeleteQuestionWithoutAnyAnswer() {
+        assertThatCode(() -> Q1.delete(UserTest.JAVAJIGI))
+            .doesNotThrowAnyException();
+        assertThat(Q1.isDeleted()).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("질문글과 질문글에 달린 모든 답변이 작성자본인일때는 질문글 삭제가 가능하다.")
+    void canDeleteQuestion() {
+        Q1.addAnswer(AnswerTest.A1);
+        assertThatCode(() -> Q1.delete(UserTest.JAVAJIGI))
+            .doesNotThrowAnyException();
+        assertThat(Q1.isDeleted()).isEqualTo(true);
+    }
+
 }

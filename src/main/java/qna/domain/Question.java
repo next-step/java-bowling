@@ -1,12 +1,17 @@
 package qna.domain;
 
 import java.time.LocalDateTime;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import qna.exception.NotQuestionWriterException;
 import qna.exception.OtherUserAnswerFoundException;
 
@@ -68,7 +73,7 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    public void addAnswer2(Answer answer) {
+    public void addAnswer(Answer answer) {
         answer.toQuestion(this);
         answers.add(answer);
     }
@@ -104,11 +109,6 @@ public class Question extends AbstractEntity {
         }
     }
 
-    @Override
-    public String toString() {
-        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
-    }
-
     public List<DeleteHistory> delete(User loginUser) throws NotQuestionWriterException, OtherUserAnswerFoundException {
         validateDelete(loginUser);
 
@@ -125,5 +125,10 @@ public class Question extends AbstractEntity {
         List<DeleteHistory> questionDeleteHistories = new ArrayList<>();
         questionDeleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
         return questionDeleteHistories;
+    }
+
+    @Override
+    public String toString() {
+        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 }
