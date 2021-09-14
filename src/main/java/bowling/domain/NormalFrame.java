@@ -62,12 +62,15 @@ public class NormalFrame implements Frame {
         if (beforeScore.canCalculateScore()) {
             return beforeScore;
         }
+        if(nextFrame == null) {
+            return Score.cantCalculate();
+        }
         return nextFrame.addScore(beforeScore);
     }
 
     @Override
     public Score score() {
-        if (!isEnd()) {
+        if (!isEnd() || nextFrame == null) {
             return Score.cantCalculate();
         }
         if (pitches.isLastPitchStatus(Status.SPARE)) {

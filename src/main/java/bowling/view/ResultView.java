@@ -2,7 +2,6 @@ package bowling.view;
 
 import bowling.domain.*;
 
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -48,7 +47,7 @@ public class ResultView {
         for (Frame frame : frames.value()) {
             Score score = frame.score();
             String resultScore = BLANK;
-            if (score.canCalculateScore()) {
+            if (score.canCalculateScore() && frame.isEnd()) {
                 total += score.getScore();
                 resultScore = String.valueOf(total);
             }

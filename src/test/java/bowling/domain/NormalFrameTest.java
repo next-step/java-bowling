@@ -129,10 +129,18 @@ class NormalFrameTest {
         assertThat(frame.score().getScore()).isEqualTo(20);
     }
 
+    @DisplayName("노멀프레임에서 현재 프레임이 스페어 일때 투구를 1번 더 던지기 전까지 점수를 매길 수 없다. ")
     @Test
-    @DisplayName("노멀프레임에서 현재 프레임이 스트라이크 일때 투구를 2번 더 던지기 전까지 점수를 매길 수 없다. ")
-    void noScoreSpare() {
+    void noScore_spare() {
         Frame frame = new NormalFrame(1).pitch(2).pitch(8);
+        frame.next();
+        assertThat(frame.score().canCalculateScore()).isFalse();
+    }
+
+    @DisplayName("노멀프레임에서 현재 프레임이 스트라이크 일때 투구를 2번 더 던지기 전까지 점수를 매길 수 없다. ")
+    @Test
+    void noScore_strike() {
+        Frame frame = new NormalFrame(1).pitch(10).next().pitch(8);
         frame.next();
         assertThat(frame.score().canCalculateScore()).isFalse();
     }

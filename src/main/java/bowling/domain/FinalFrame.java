@@ -64,6 +64,9 @@ public class FinalFrame implements Frame {
 
     @Override
     public Score addScore(Score beforeScore) {
+        if(pitches.isEmpty()){
+            return Score.cantCalculate();
+        }
         int range = Math.min(beforeScore.left(), pitches.size());
         for (int i = 0; i < range; i++) {
             beforeScore.pitch(pitches.get(i).intValue());
