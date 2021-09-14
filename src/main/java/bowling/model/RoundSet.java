@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 
 import static bowling.controller.Main.bowlingResults;
-import static bowling.model.Point.isValidRange;
 
 public class RoundSet {
     private static final int FINAL_ROUND = 10;
@@ -34,9 +33,11 @@ public class RoundSet {
     public int play(int point) {
         int tryCount = rounds.size();
         int maxCount = 0;
-        System.out.println("tryCount = " + tryCount);
-        System.out.println(getLastRound() instanceof FinalRound);
-        BowlingResult result = getLastRound().play(calcTotalPoint(point), tryCount);
+        calcTotalPoint(point);
+        GameResult result = getLastRound().play(totalPoint, tryCount);
+        if (totalPoint == STRIKE_POINT) {
+            totalPoint = 0;
+        }
         bowlingResults.add(result);
 
         boolean isSkip = isSkipNextRound();
@@ -45,7 +46,6 @@ public class RoundSet {
         }
 
         boolean isBonus = giveBonus();
-        System.out.println("give Bonus~~" +isBonus);
         if (isBonus) {
             maxCount = 1;
         }
@@ -63,14 +63,14 @@ public class RoundSet {
         return rounds.size();
     }
 
-    private int calcTotalPoint(int point) {
+    private void calcTotalPoint(int point) {
         if (point != STRIKE_POINT) {
             totalPoint += point;
-            isValidRange(totalPoint);
-            return totalPoint;
         }
 
-        return STRIKE_POINT;
+        if (point == STRIKE_POINT) {
+            totalPoint = point;
+        }
     }
 
     private boolean isSkipNextRound() {
@@ -81,14 +81,13 @@ public class RoundSet {
         return false;
     }
 
-    private void next(BowlingResult currentResult) {
+    private void next(GameResult currentResult) {
         boolean isBonusRound = isBonusRound();
 
         if (!isBonusRound) {
             isBonusRound = giveBonus();
         }
         rounds.add(getLastRound().next(isBonusRound, currentResult));
-        System.out.println("rounds size = " + rounds.size());
     }
 
     private boolean isBonusRound() {

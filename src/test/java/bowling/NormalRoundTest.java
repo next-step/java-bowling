@@ -1,8 +1,6 @@
 package bowling;
 
-import bowling.model.BowlingResult;
-import bowling.model.NormalRound;
-import bowling.model.Result;
+import bowling.model.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +8,7 @@ public class NormalRoundTest {
     @Test
     public void 스트라이크() {
         //given
-        NormalRound expect = new NormalRound(false, new Result(BowlingResult.EMPTY, BowlingResult.STRIKE));
+        NormalRound expect = new NormalRound(false, new Result(new Miss(),new Strike()));
 
         //when
         NormalRound normalRound = new NormalRound();
@@ -23,7 +21,7 @@ public class NormalRoundTest {
     @Test
     public void 스페어() {
         //given
-        NormalRound expect = new NormalRound(false, new Result(BowlingResult.EMPTY, BowlingResult.SPARE));
+        NormalRound expect = new NormalRound(false, new Result(new Miss(), new Spare()));
 
         //when
         NormalRound normalRound = new NormalRound();
@@ -36,7 +34,7 @@ public class NormalRoundTest {
     @Test
     public void 미스() {
         //given
-        NormalRound expect = new NormalRound(false, new Result(BowlingResult.EMPTY, BowlingResult.MISS));
+        NormalRound expect = new NormalRound(false, new Result(new Miss(), new Miss(9)));
 
         //when
         NormalRound normalRound = new NormalRound();
@@ -49,7 +47,7 @@ public class NormalRoundTest {
     @Test
     public void 거터() {
         //given
-        NormalRound expect = new NormalRound(false, new Result(BowlingResult.EMPTY, BowlingResult.GUTTER));
+        NormalRound expect = new NormalRound(false, new Result(new Miss(), new Gutter()));
 
         //when
         NormalRound normalRound = new NormalRound();

@@ -2,15 +2,13 @@ package bowling.model;
 
 import java.util.Objects;
 
-import static bowling.controller.Main.bowlingResults;
-
 public class NormalRound implements Round{
     private final boolean isBonusRound;
     private Result result;
 
     public NormalRound() {
         isBonusRound = false;
-        result = new Result(BowlingResult.EMPTY, BowlingResult.EMPTY);
+        result = new Result(new Miss(), new Miss());
     }
 
     public NormalRound(boolean isBonusRound, Result result) {
@@ -19,16 +17,15 @@ public class NormalRound implements Round{
     }
 
     @Override
-    public BowlingResult play(int totalPoint, int tryCount) {
-        BowlingResult currentResult = BowlingResult.findBowlingResult(new Point(totalPoint), tryCount, result.getBefore());
-        System.out.println("currentResult = " + currentResult);
-        result = new Result(result.getBefore(), currentResult);
+    public GameResult play(int totalPoint, int tryCount) {
+        GameResult currentResult = findResult(totalPoint, tryCount);
+        this.result = new Result(result.getBefore(), currentResult);
         return currentResult;
     }
 
     @Override
-    public Round next(boolean isBonusRound, BowlingResult beforeResult) {
-        return new NormalRound(false, new Result(beforeResult, BowlingResult.EMPTY));
+    public Round next(boolean isBonusRound, GameResult beforeResult) {
+        return new NormalRound(false, new Result(beforeResult, new Miss()));
     }
 
     @Override
@@ -44,6 +41,28 @@ public class NormalRound implements Round{
     @Override
     public boolean giveBonus() {
         return false;
+    }
+
+    @Override
+    public GameResult findResult(int point, int tryCount) {
+        if (point == STRIKE) {
+            return isStrikeOrSpare(tryCount);
+        }
+
+        if (point == GUTTER) {
+            return new Gutter();
+        }
+
+        return new Miss(point);
+    }
+
+    @Override
+    public GameResult isStrikeOrSpare(int tryCount) {
+        if (tryCount == FIRST_TRY) {
+            return new Strike();
+        }
+
+        return new Spare();
     }
 
     @Override

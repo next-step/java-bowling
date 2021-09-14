@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.model.BowlingResult;
+import bowling.model.*;
 
 import java.util.List;
 
@@ -62,16 +62,16 @@ public class OutputView {
         return addBlank(result);
     }
 
-    public static String changeScore(int score, BowlingResult bowlingResult) {
-        if (bowlingResult == BowlingResult.STRIKE) {
+    public static String changeScore(int score, GameResult bowlingResult) {
+        if (bowlingResult instanceof Strike) {
             return "X";
         }
 
-        if (bowlingResult == BowlingResult.GUTTER) {
+        if (bowlingResult instanceof Gutter) {
             return "-";
         }
 
-        if (bowlingResult == BowlingResult.SPARE) {
+        if (bowlingResult instanceof Spare) {
             return "/";
         }
 

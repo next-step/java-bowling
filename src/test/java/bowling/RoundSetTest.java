@@ -15,7 +15,7 @@ public class RoundSetTest {
 
         //when
         RoundSet roundSet = new RoundSet(1);
-        roundSet.play(1, firstPoint);
+        roundSet.play(firstPoint);
 
         //then
         assertThat(roundSet.size()).isEqualTo(1);
@@ -28,7 +28,7 @@ public class RoundSetTest {
 
         //when
         RoundSet roundSet = new RoundSet(10);
-        roundSet.play(1, firstPoint);
+        roundSet.play(firstPoint);
 
         //then
         assertThat(roundSet.size()).isEqualTo(2);
@@ -38,13 +38,13 @@ public class RoundSetTest {
     public void 파이널라운드는_스트라이크일_경우_보너스라운드를_준다() {
         //given
         int firstPoint = 10;
-        Round round1 = new FinalRound(false, new Result(BowlingResult.EMPTY, BowlingResult.STRIKE));
-        Round round2 = new FinalRound(true, new Result(BowlingResult.STRIKE, BowlingResult.EMPTY));
-        RoundSet expect = new RoundSet(10, Arrays.asList(round1, round2));
+        Round round1 = new FinalRound(false, new Result(new Miss(), new Strike()));
+        Round round2 = new FinalRound(true, new Result(new Strike(), new Miss()));
+        RoundSet expect = new RoundSet(0, Arrays.asList(round1, round2));
 
         //when
         RoundSet roundSet = new RoundSet(10);
-        roundSet.play(1, firstPoint);
+        roundSet.play(firstPoint);
 
         //then
         assertThat(roundSet).isEqualTo(expect);
@@ -55,15 +55,15 @@ public class RoundSetTest {
         //given
         int firstPoint = 1;
         int secondPoint = 9;
-        Round round1 = new FinalRound(false, new Result(BowlingResult.EMPTY, BowlingResult.EMPTY));
-        Round round2 = new FinalRound(false, new Result(BowlingResult.EMPTY, BowlingResult.SPARE));
-        Round round3 = new FinalRound(true, new Result(BowlingResult.SPARE, BowlingResult.EMPTY));
-        RoundSet expect = new RoundSet(10, Arrays.asList(round1, round2, round3));
+        Round round1 = new FinalRound(false, new Result(new Miss(), new Miss(1)));
+        Round round2 = new FinalRound(false, new Result(new Miss(1), new Spare()));
+        Round round3 = new FinalRound(true, new Result(new Spare(), new Miss()));
+        RoundSet expect = new RoundSet(0, Arrays.asList(round1, round2, round3));
 
         //when
         RoundSet roundSet = new RoundSet(10);
-        roundSet.play(1, firstPoint);
-        roundSet.play(2, secondPoint);
+        roundSet.play(firstPoint);
+        roundSet.play(secondPoint);
 
         //then
         assertThat(roundSet).isEqualTo(expect);

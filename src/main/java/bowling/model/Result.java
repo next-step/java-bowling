@@ -3,32 +3,24 @@ package bowling.model;
 import java.util.Objects;
 
 public class Result {
-    private BowlingResult before;
-    private BowlingResult current;
+    private GameResult before;
+    private GameResult current;
 
-    public Result(BowlingResult before, BowlingResult current) {
+    public Result(GameResult before, GameResult current) {
         this.before = before;
         this.current = current;
     }
 
-    public BowlingResult getBefore() {
+    public GameResult getBefore() {
         return before;
     }
 
     public boolean isStrike() {
-        if (current == BowlingResult.STRIKE) {
-            return true;
-        }
-
-        return false;
+        return current instanceof Strike;
     }
 
     public boolean isSpare() {
-        if (current == BowlingResult.SPARE) {
-            return true;
-        }
-
-        return false;
+        return current instanceof Spare;
     }
 
     @Override
@@ -36,7 +28,7 @@ public class Result {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Result result = (Result) o;
-        return before == result.before && current == result.current;
+        return Objects.equals(before, result.before) && Objects.equals(current, result.current);
     }
 
     @Override
