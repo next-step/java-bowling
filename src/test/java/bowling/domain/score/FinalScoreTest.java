@@ -57,15 +57,32 @@ class FinalScoreTest {
     void createSecondExceptionRangeTest() {
 
         // given
-        NormalScore start = NormalScore.empty();
+        FinalScore start = FinalScore.empty();
         Pin first = Pin.of(9);
-        NormalScore firstScore = start.createFirstPin(first);
+        FinalScore firstScore = start.createFirstPin(first);
         Pin second = Pin.of(3);
 
         // when & then
         assertThatExceptionOfType(PinSecondValueException.class)
             .isThrownBy(() -> firstScore.createSecondPin(second))
             .withMessageMatching("첫번째 핀이 쓰러뜨리고 남은 핀 개수만 저장할 수 있다.");
+    }
+
+    @Test
+    @DisplayName("첫번째 핀이 스트라이크인 경우 두번째 핀은 10개 온전히 다 칠 수 있다.")
+    void crerteSecondTenTest() {
+
+        // given
+        FinalScore start = FinalScore.empty();
+        Pin first = Pin.of(10);
+        FinalScore firstScore = start.createFirstPin(first);
+        Pin second = Pin.of(10);
+
+        // when
+        FinalScore result = firstScore.createSecondPin(second);
+
+        // then
+        assertThat(result).isInstanceOf(FinalScore.class);
     }
 
 
