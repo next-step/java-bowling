@@ -6,7 +6,7 @@ import bowling.exception.BowlingStateException;
 public class Ready extends State {
     @Override
     public State bowl(int pin) {
-        if(pin == 10){
+        if (pin == 10) {
             return new Strike();
         }
         return new FirstBowl(pin);
@@ -18,7 +18,7 @@ public class Ready extends State {
     }
 
     @Override
-    public boolean finish() {
+    public boolean stateFinish() {
         return false;
     }
 }

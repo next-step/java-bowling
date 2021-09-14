@@ -7,32 +7,41 @@ import java.util.Objects;
 
 public abstract class Frame {
     protected State state;
+    protected Frame nextFrame;
 
     public abstract Frame next(int number);
 
     public abstract boolean finish();
 
+    public abstract int total();
+
+    public abstract int total(int beforTotal, int leftCount);
+
+    public boolean hasNextFrame() {
+        return !ObjectUtils.isEmpty(nextFrame);
+    }
+
     public State getState() {
         return state;
     }
 
-    public boolean hasFirstCount(){
-        return !ObjectUtils.isEmpty(state.getFirstPin());
+    public boolean hasFirstPin() {
+        return state.hasFirstPin();
     }
 
-    public int firstCount(){
-        return state.getFirstPin().count();
+    public int firstCount() {
+        return state.getFirstCount();
     }
 
-    public boolean hasSecondCount(){
-        return !ObjectUtils.isEmpty(state.getSecondPin());
+    public boolean hasSecondPin() {
+        return state.hasSecondPin();
     }
 
-    public int secondCount(){
-        return state.getSecondPin().count();
+    public int secondCount() {
+        return state.getSecondCount();
     }
 
-    public abstract boolean hasBonusFirst();
+    public abstract boolean hasBonus();
 
     public abstract int bonusFirstCount();
 

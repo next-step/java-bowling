@@ -11,7 +11,7 @@ public class Strike extends State {
     }
 
     @Override
-    public Score getScore(){
+    public Score getScore() {
         return Score.ofStrike();
     }
 
@@ -21,7 +21,7 @@ public class Strike extends State {
     }
 
     @Override
-    public boolean finish() {
+    public boolean stateFinish() {
         return true;
     }
 }

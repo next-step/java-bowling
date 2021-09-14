@@ -1,28 +1,21 @@
 package bowling.domain;
 
-import bowling.exception.BowlingScoreException;
+import bowling.exception.BowlingStateException;
 
 import java.util.Objects;
 
 public class Score {
-    private Pin pin;
+    private int score;
     private int bonusCount;
 
-    public Score(int pin, int bonus){
-        this.pin = new Pin(pin);
+    public Score(int score, int bonus){
+        this.score = score;
         this.bonusCount = bonus;
     }
 
     public Score bowl(Pin pin) {
-        this.pin = new Pin(this.pin.count() + pin.count());
+        this.score = this.score + pin.count();
         return new Score(pin.count(), bonusCount - 1);
-    }
-
-    public Pin sum(){
-        if(!finish()){
-            throw new BowlingScoreException("보너스 투구 후에 점수 합산이 가능합니다.");
-        }
-        return pin;
     }
 
     public boolean finish(){
@@ -30,6 +23,9 @@ public class Score {
     }
 
     public static Score ofMiss(int firstCount, int secondCount){
+        if(firstCount + secondCount > 10){
+            throw new BowlingStateException("쓰러트린 볼링 핀의 총 합은 10을 넘을수 없습니다.");
+        }
         return new Score(firstCount + secondCount, 0);
     }
 
@@ -41,8 +37,8 @@ public class Score {
         return new Score(10, 2);
     }
 
-    public Pin getPin() {
-        return pin;
+    public int getScore() {
+        return score;
     }
 
     public int getBonusCount() {
@@ -55,11 +51,11 @@ public class Score {
         if (o == null || getClass() != o.getClass()) return false;
         Score score1 = (Score) o;
         return bonusCount == score1.bonusCount &&
-                Objects.equals(pin, score1.pin);
+                Objects.equals(score, score1.score);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pin, bonusCount);
+        return Objects.hash(score, bonusCount);
     }
 }

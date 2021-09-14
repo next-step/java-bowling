@@ -1,28 +1,67 @@
 package bowling.domain.frame;
 
+import bowling.domain.state.Miss;
 import bowling.domain.state.Ready;
+import bowling.domain.state.Spare;
 
 public class NormalFrame extends Frame {
+    private static final int MAX_NORMAL_FRAME_NO = 9;
+    private int frameNo;
+
     NormalFrame() {
         state = new Ready();
+        frameNo = 1;
+    }
+
+    NormalFrame(int frameNo) {
+        state = new Ready();
+        this.frameNo = frameNo;
     }
 
     @Override
     public Frame next(int number) {
-        if(!state.finish()){
+        if (!state.stateFinish()) {
             state = state.bowl(number);
             return this;
         }
-        return new NormalFrame().next(number);
+        if (frameNo == MAX_NORMAL_FRAME_NO) {
+            this.nextFrame = new FinalFrame().next(number);
+            return this.nextFrame;
+        }
+        this.nextFrame = new NormalFrame(frameNo + 1).next(number);
+        return this.nextFrame;
+    }
+
+    public int total() {
+        if (state.scoreFinish()) {
+            return state.getScoreCount();
+        }
+        if (hasNextFrame()) {
+            return nextFrame.total(state.getScoreCount(), state.getBonusCount() - 1);
+        }
+        return 0;
+    }
+
+    public int total(int beforTotal, int leftCount) {
+        if (leftCount == 1 && (state instanceof Miss || state instanceof Spare)) {
+            return beforTotal + state.getScoreCount();
+        }
+        if (leftCount == 0) {
+            return beforTotal + state.getFirstCount();
+        }
+        if (hasNextFrame()) {
+            return nextFrame.total(beforTotal + state.getScoreCount(), leftCount - 1);
+        }
+        return 0;
     }
 
     @Override
     public boolean finish() {
-        return state.finish();
+        return state.stateFinish();
     }
 
     @Override
-    public boolean hasBonusFirst() {
+    public boolean hasBonus() {
         return false;
     }
 

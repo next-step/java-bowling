@@ -2,6 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.Pin;
 import bowling.domain.Score;
+import org.springframework.util.ObjectUtils;
 
 import java.util.Objects;
 
@@ -14,14 +15,37 @@ public abstract class State {
 
     public abstract Score getScore();
 
-    public abstract boolean finish();
+    public abstract boolean stateFinish();
 
-    public Pin getFirstPin() {
-        return firstPin;
+    public boolean scoreFinish() {
+        if (ObjectUtils.isEmpty(score)) {
+            return false;
+        }
+        return score.finish();
     }
 
-    public Pin getSecondPin() {
-        return secondPin;
+    public boolean hasFirstPin(){
+        return !ObjectUtils.isEmpty(firstPin);
+    }
+
+    public boolean hasSecondPin(){
+        return !ObjectUtils.isEmpty(secondPin);
+    }
+
+    public int getFirstCount() {
+        return firstPin.count();
+    }
+
+    public int getSecondCount() {
+        return secondPin.count();
+    }
+
+    public int getScoreCount() {
+        return score.getScore();
+    }
+
+    public int getBonusCount() {
+        return score.getBonusCount();
     }
 
     @Override

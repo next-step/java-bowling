@@ -12,11 +12,16 @@ public class OutputView {
     private static final String TABLE_HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     private static final String COLUMN_INIT = "|";
     private static final String COLUMN_SEPARATOR = "  %3s |";
-    private static final String EMPTY_SCORE = "  ";
+    private static final String EMPTY = "  ";
     private static final int MAX_FRAME_NO = 10;
 
     public void printBoard(Player player) {
         System.out.println(TABLE_HEADER);
+        printPin(player);
+        printScore(player);
+    }
+
+    private void printPin(Player player) {
         System.out.printf(COLUMN_INIT + COLUMN_SEPARATOR, player.getPlayerName());
 
         player.getFrames()
@@ -26,22 +31,45 @@ public class OutputView {
 
         IntStream.range(0, MAX_FRAME_NO - player.getFrames().size())
                 .forEach(i ->
-                        System.out.printf(COLUMN_SEPARATOR, EMPTY_SCORE)
+                        System.out.printf(COLUMN_SEPARATOR, EMPTY)
                 );
-
         System.out.println();
+    }
+
+    private void printScore(Player player) {
+        System.out.printf(COLUMN_INIT + COLUMN_SEPARATOR, EMPTY);
+
+        int total = 0;
+        for(Frame frame: player.getFrames()){
+            total += frame.total();
+            System.out.printf(COLUMN_SEPARATOR, displayTotal(total, frame.total()));
+        }
+
+
+        IntStream.range(0, MAX_FRAME_NO - player.getFrames().size())
+                .forEach(i ->
+                        System.out.printf(COLUMN_SEPARATOR, EMPTY)
+                );
+        System.out.println();
+    }
+
+    private String displayTotal(int savedTotal, int currentTotal){
+        if(currentTotal == 0){
+            return EMPTY;
+        }
+        return String.valueOf(savedTotal);
     }
 
     private String displays(Frame frame) {
 
         List<String> scores = new ArrayList<>();
-        if (frame.hasFirstCount()) {
+        if (frame.hasFirstPin()) {
             scores.add(display(frame.firstCount()));
         }
-        if (frame.hasSecondCount()) {
+        if (frame.hasSecondPin()) {
             scores.add(display(frame.firstCount(), frame.secondCount()));
         }
-        if (frame.hasBonusFirst()) {
+        if (frame.hasBonus()) {
             scores.add(display(frame.bonusFirstCount()));
         }
         if (frame.hasBonusSecond()) {
@@ -49,7 +77,7 @@ public class OutputView {
         }
 
         if (scores.isEmpty()) {
-            return EMPTY_SCORE;
+            return EMPTY;
         }
         return StringUtils.join(scores, "|");
     }

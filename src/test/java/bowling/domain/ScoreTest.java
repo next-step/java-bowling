@@ -4,6 +4,7 @@ import bowling.domain.Pin;
 import bowling.domain.Score;
 import bowling.exception.BowlingPinException;
 import bowling.exception.BowlingScoreException;
+import bowling.exception.BowlingStateException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -35,6 +36,6 @@ public class ScoreTest {
     @DisplayName("이전 투구와 현재 투구의 합이 10을 넘어가면 에러")
     @Test
     void error_sum() {
-        assertThatThrownBy(()->Score.ofMiss(5, 6)).isInstanceOf(BowlingPinException.class);
+        assertThatThrownBy(()->Score.ofMiss(5, 6)).isInstanceOf(BowlingStateException.class);
     }
 }

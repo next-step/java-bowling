@@ -24,7 +24,7 @@ public class FirstBowl extends State {
     }
 
     @Override
-    public boolean finish() {
+    public boolean stateFinish() {
         return false;
     }
 }

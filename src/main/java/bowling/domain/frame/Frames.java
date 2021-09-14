@@ -20,10 +20,6 @@ public class Frames {
     }
 
     public Frames next(int number) {
-        if (frames.size() == FINAL_FRAME - 1 && lastFrame().finish()) {
-            this.frames.add(new FinalFrame().next(number));
-            return this;
-        }
         if (lastFrame().finish()) {
             this.frames.add(lastFrame().next(number));
             return this;
@@ -37,7 +33,7 @@ public class Frames {
     }
 
     public int nextFrameNo() {
-        if(lastFrame().finish()){
+        if (lastFrame().finish()) {
             return this.frames.size() + 1;
         }
         return this.frames.size();

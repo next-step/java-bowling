@@ -13,13 +13,13 @@ public class Spare extends State {
     }
 
     private void pinValidate(int firstCount, int secondCount) {
-        if(firstCount + secondCount != 10){
+        if (firstCount + secondCount != 10) {
             throw new BowlingStateException("spare는 두번 투구의 합이 10이 되어야합니다.");
         }
     }
 
     @Override
-    public Score getScore(){
+    public Score getScore() {
         return Score.ofSpare();
     }
 
@@ -29,7 +29,7 @@ public class Spare extends State {
     }
 
     @Override
-    public boolean finish() {
+    public boolean stateFinish() {
         return true;
     }
 }

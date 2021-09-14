@@ -13,7 +13,7 @@ public class Bonus extends State {
 
     @Override
     public State bowl(int pin) {
-        if(!finish()){
+        if (!stateFinish()) {
             this.secondPin = new Pin(pin);
             score = new Score(pin, 0);
             return this;
@@ -27,7 +27,7 @@ public class Bonus extends State {
     }
 
     @Override
-    public boolean finish() {
+    public boolean stateFinish() {
         return score.getBonusCount() == 0;
     }
 }
