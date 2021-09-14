@@ -19,7 +19,7 @@ public abstract class Pitches {
 
     public abstract boolean isFull();
 
-    public abstract int score(final Frame nextFrame);
+    public abstract Score score(final Frame nextFrame);
 
     public List<Integer> values() {
         return pitches.stream()
@@ -39,13 +39,20 @@ public abstract class Pitches {
 
     protected boolean isSpare() {
         return pitches.size() >= SPARE_PITCHES_LIMIT
-                && sum() == SPARE_TOTAL;
+                && sum(SPARE_PITCHES_LIMIT) == SPARE_TOTAL;
     }
 
     protected boolean isStrike(final int pitchIndex) {
         return pitches.size() > pitchIndex
                 && pitches.get(pitchIndex)
                         .isStrike();
+    }
+
+    private int sum(final int limit) {
+        return pitches.stream()
+                .limit(limit)
+                .map(Pitch::value)
+                .reduce(0, Integer::sum);
     }
 
 }

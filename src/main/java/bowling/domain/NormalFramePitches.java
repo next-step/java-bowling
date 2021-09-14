@@ -13,8 +13,8 @@ public class NormalFramePitches extends Pitches {
     private static final int TOTAL_MAX = 10;
     private static final int STRIKE_BONUS_PITCH_COUNT = 2;
     private static final int SPARE_BONUS_PITCH_COUNT = 1;
-    private static final int NO_SCORE = 0;
 
+    @Override
     public boolean add(final Pitch pitch) {
         if (isFull()) {
             return false;
@@ -23,14 +23,16 @@ public class NormalFramePitches extends Pitches {
         return pitches.add(pitch);
     }
 
+    @Override
     public boolean isFull() {
         return isStrike(FIRST_INDEX)
                 || pitches.size() == PITCHES_LIMIT;
     }
 
-    public int score(final Frame nextFrame) {
+    @Override
+    public Score score(final Frame nextFrame) {
         if (!isFull()) {
-            return NO_SCORE;
+            return Score.noScore();
         }
         if (isStrike(FIRST_INDEX)) {
             return getTotalScoreIfBonusExist(nextTwoFramePitchValues(nextFrame), STRIKE_BONUS_PITCH_COUNT);
@@ -38,7 +40,7 @@ public class NormalFramePitches extends Pitches {
         if (isSpare()) {
             return getTotalScoreIfBonusExist(nextPitchValues(nextFrame), SPARE_BONUS_PITCH_COUNT);
         }
-        return sum();
+        return Score.from(sum());
     }
 
     private List<Integer> nextTwoFramePitchValues(final Frame nextFrame) {
@@ -60,13 +62,14 @@ public class NormalFramePitches extends Pitches {
                 .orElse(Collections.emptyList());
     }
 
-    private int getTotalScoreIfBonusExist(final List<Integer> bonusPitches, final int limit) {
+    private Score getTotalScoreIfBonusExist(final List<Integer> bonusPitches, final int limit) {
         if (bonusPitches.size() < limit) {
-            return NO_SCORE;
+            return Score.noScore();
         }
-        return sum() + bonusPitches.stream()
+        return Score.from(sum()
+                + bonusPitches.stream()
                 .limit(limit)
-                .reduce(NO_SCORE, Integer::sum);
+                .reduce(0, Integer::sum));
     }
 
     private void requireValidSum(final Pitch pitch) {

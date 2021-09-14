@@ -103,10 +103,10 @@ class NormalFramePitchesTest {
         NormalFramePitches normalFramePitches = new NormalFramePitches();
         normalFramePitches.add(new Pitch(5));
         normalFramePitches.add(new Pitch(3));
-        int expectedScore = 8;
+        Score expectedScore = Score.from(8);
 
         // when
-        int score = normalFramePitches.score(new NormalFrame());
+        Score score = normalFramePitches.score(new NormalFrame());
 
         // then
         assertThat(score).isEqualTo(expectedScore);

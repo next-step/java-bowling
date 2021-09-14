@@ -17,7 +17,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public int score() {
+    public Score score() {
         return pitches.score(nextFrame);
     }
 

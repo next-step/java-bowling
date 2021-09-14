@@ -16,7 +16,7 @@ public abstract class Frame {
 
     public abstract boolean isFull();
 
-    public abstract int score();
+    public abstract Score score();
 
     public void addNextFrame(final Frame nextFrame) {
         this.nextFrame = nextFrame;

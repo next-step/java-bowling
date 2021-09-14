@@ -13,7 +13,7 @@ public class Frames {
     private static final int SIZE = 10;
 
     private final Stack<Frame> frames;
-    private final List<Integer> scores;
+    private final List<Score> scores;
 
     public Frames() {
         frames = new Stack<>();
@@ -21,15 +21,12 @@ public class Frames {
         scores = new ArrayList<>();
     }
 
-    public boolean addPitch(final Pitch pitch) {
-        if (currentFrame().addPitchIfPossible(pitch)) {
-            return true;
-        }
-        if (frames.size() == SIZE) {
-            return false;
+    public void addPitch(final Pitch pitch) {
+        if (isEnd() || currentFrame().addPitchIfPossible(pitch)) {
+            return;
         }
         addNextFrame();
-        return addPitch(pitch);
+        addPitch(pitch);
     }
 
     public List<List<Integer>> allFramePitchValues() {
@@ -48,31 +45,43 @@ public class Frames {
         return currentFrameNumber() > Frames.SIZE;
     }
 
-    public List<Integer> scores() {
+    public boolean isCurrentFrameEnd() {
+        return currentFrame().isFull();
+    }
+
+
+    public List<String> scores() {
         IntStream.range(scores.size(), frames.size())
                 .forEach(this::addScoreIfExist);
-        return Stream.of(scores, emptyIntList())
+        return Stream.of(toScores(), emptyList())
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }
 
-    private List<Integer> emptyIntList() {
-        return Stream.generate(() -> 0)
+    private List<String> toScores() {
+        return scores.stream()
+                .map(Score::score)
+                .collect(Collectors.toList());
+    }
+
+    private List<String> emptyList() {
+        return Stream.generate(Score::noScore)
                 .limit(SIZE - scores.size())
+                .map(Score::score)
                 .collect(Collectors.toList());
     }
 
     private void addScoreIfExist(final int index) {
-        int score = frames.get(index)
+        Score score = frames.get(index)
                 .score();
-        if (score > 0) {
-            scores.add(score + getPrevFrameScore());
+        if (!score.isEmpty()) {
+            scores.add(score.plus(prevFrameScore()));
         }
     }
 
-    private int getPrevFrameScore() {
+    private Score prevFrameScore() {
         return scores.isEmpty()
-                ? 0
+                ? Score.from(0)
                 : scores.get(scores.size() - 1);
     }
 

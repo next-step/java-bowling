@@ -123,12 +123,13 @@ class NormalFrameTest {
                 .addPitchIfPossible(thirdPitch);
         frames.get(2)
                 .addPitchIfPossible(fourthPitch);
-        List<Integer> scores = frames.stream()
+        List<Score> scores = frames.stream()
                 .map(Frame::score)
                 .collect(Collectors.toList());
 
         // then
-        assertThat(scores).containsExactly(28, 19, 9);
+        assertThat(scores)
+                .containsExactly(Score.from(28), Score.from(19), Score.from(9));
     }
 
 }

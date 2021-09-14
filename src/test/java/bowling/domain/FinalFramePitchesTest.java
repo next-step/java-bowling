@@ -162,10 +162,10 @@ class FinalFramePitchesTest {
         finalFramePitches.add(new Pitch(10));
         finalFramePitches.add(new Pitch(10));
         finalFramePitches.add(new Pitch(7));
-        int expectedScore = 27;
+        Score expectedScore = Score.from(27);
 
         // when
-        int score = finalFramePitches.score(new NormalFrame());
+        Score score = finalFramePitches.score(new NormalFrame());
 
         // then
         assertThat(score).isEqualTo(expectedScore);
