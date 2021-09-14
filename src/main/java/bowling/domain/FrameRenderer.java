@@ -5,9 +5,7 @@ import java.util.Objects;
 public class FrameRenderer implements Renderer {
 
     private static final String EMPTY_FRAME_STATE_FORMAT = "      ";
-    private static final String ONE_FRAME_STATE_FORMAT = "  %s   ";
-    private static final String TWO_FRAME_STATE_FORMAT = "  %s ";
-    private static final String THREE_FRAME_STATE_FORMAT = " %s";
+    private static final String FRAME_STATE_FORMAT = " %-5s";
     private static final String GUTTER = "-";
     private static final String STRIKE = "X";
     private static final String SPARE = "/";
@@ -27,13 +25,13 @@ public class FrameRenderer implements Renderer {
 
     public static FrameRenderer of(PinCount first, PinCount second, PinCount third) {
         if (first.isDefined() && second.isDefined() && third.isDefined()) {
-            return new FrameRenderer(String.format(THREE_FRAME_STATE_FORMAT, render(first, second, third)));
+            return new FrameRenderer(String.format(FRAME_STATE_FORMAT, render(first, second, third)));
         }
         if (first.isDefined() && second.isDefined()) {
-            return new FrameRenderer(String.format(TWO_FRAME_STATE_FORMAT, render(first, second)));
+            return new FrameRenderer(String.format(FRAME_STATE_FORMAT, render(first, second)));
         }
         if (first.isDefined()) {
-            return new FrameRenderer(String.format(ONE_FRAME_STATE_FORMAT, render(first)));
+            return new FrameRenderer(String.format(FRAME_STATE_FORMAT, render(first)));
         }
         return ready;
     }
@@ -57,7 +55,7 @@ public class FrameRenderer implements Renderer {
 
     private static String render(PinCount first, PinCount second, PinCount third) {
         if (second.spare(first)) {
-            return String.join(PIN_COUNT_DELIMITER, render(first), SPARE, render(third));
+            return String.join(PIN_COUNT_DELIMITER, render(first, second), render(third));
         }
         return String.join(PIN_COUNT_DELIMITER, render(first), render(second, third));
     }

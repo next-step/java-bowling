@@ -17,14 +17,10 @@ public class FrameNumber {
     }
 
     public void increase() {
-        validateOverFrameNumber();
-        this.number++;
-    }
-
-    private void validateOverFrameNumber() {
         if (isOver()) {
             throw new IllegalStateException("프레임 최대 값을 초과했습니다.");
         }
+        this.number++;
     }
 
     public int getNumber() {
