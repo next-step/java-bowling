@@ -1,6 +1,5 @@
-package bowling.bowlingdrawing.domain;
+package bowling.bowlingdrawing.domain.pitching;
 
-import bowling.bowlingdrawing.domain.pitching.Pins;
 import bowling.bowlingdrawing.exception.CustomException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

@@ -1,6 +1,5 @@
-package bowling.bowlingdrawing.domain;
+package bowling.bowlingdrawing.domain.pitching;
 
-import bowling.bowlingdrawing.domain.pitching.Pitching;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
