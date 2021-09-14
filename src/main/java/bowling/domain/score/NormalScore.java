@@ -4,7 +4,7 @@ import bowling.exception.Pin.PinSecondValueException;
 
 public class NormalScore extends Score {
 
-    private static final int STRIKE_VALUE = 10;
+    private static final Pin STRIKE = Pin.of(10);
 
     private NormalScore(Pin first, Pin second) {
         super(first, second);
@@ -28,19 +28,19 @@ public class NormalScore extends Score {
     }
 
     private static void checkFirstStrike(Pin pin) {
-        if (pin == Pin.of(STRIKE_VALUE)) {
+        if (pin == STRIKE) {
             throw new PinSecondValueException();
         }
     }
 
     private static void checkRemainPin(Pin first, Pin second) {
-        if (Math.subtractExact(STRIKE_VALUE, first.value()) < second.value()) {
+        if (first.remainPin() < second.value()) {
             throw new PinSecondValueException();
         }
     }
 
     public boolean isNext() {
-        return first != Pin.of(STRIKE_VALUE);
+        return first != STRIKE;
     }
 
 }
