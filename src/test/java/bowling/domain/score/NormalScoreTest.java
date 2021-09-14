@@ -32,4 +32,20 @@ class NormalScoreTest {
         assertThat(result).isInstanceOf(NormalScore.class);
     }
 
+    @Test
+    @DisplayName("두번째 핀을 생성할 수 있다.")
+    void createSecondPinTest() {
+
+        // given
+        Pin first = Pin.of(5);
+        NormalScore firstScore = NormalScore.ofFirst(first);
+        Pin second = Pin.of(3);
+
+        // when
+        NormalScore result = firstScore.createSecondPin(second);
+
+        // then
+        assertThat(result).isInstanceOf(NormalScore.class);
+    }
+
 }

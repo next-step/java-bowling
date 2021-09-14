@@ -14,4 +14,8 @@ public class NormalScore extends Score {
         return new NormalScore(pin, null);
     }
 
+    public NormalScore createSecondPin(Pin pin) {
+        return new NormalScore(this.first, second);
+    }
+
 }
