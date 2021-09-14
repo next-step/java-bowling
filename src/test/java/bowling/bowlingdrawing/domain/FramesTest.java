@@ -24,7 +24,7 @@ class FramesTest {
         frames.pitch(pitching);
         // then
         assertThat(frames.frames().get(0))
-                .isEqualTo(Frame.of(Pitching.first(10)));
+                .isEqualTo(new Frame(Pitching.first(10)));
     }
 
     @Test
