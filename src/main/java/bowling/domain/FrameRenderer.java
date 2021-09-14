@@ -21,20 +21,21 @@ public class FrameRenderer implements Renderer {
         this.state = Objects.requireNonNull(state);
     }
 
-    public static FrameRenderer of() {
-        return ready;
-    }
-
-    public static FrameRenderer of(PinCount pinCount) {
-        return new FrameRenderer(String.format(ONE_FRAME_STATE_FORMAT, render(pinCount)));
-    }
-
     public static FrameRenderer of(PinCount first, PinCount second) {
-        return new FrameRenderer(String.format(TWO_FRAME_STATE_FORMAT, render(first, second)));
+        return of(first, second, PinCount.UNDEFINED);
     }
 
     public static FrameRenderer of(PinCount first, PinCount second, PinCount third) {
-        return new FrameRenderer(String.format(THREE_FRAME_STATE_FORMAT, render(first, second, third)));
+        if (first.isDefined() && second.isDefined() && third.isDefined()) {
+            return new FrameRenderer(String.format(THREE_FRAME_STATE_FORMAT, render(first, second, third)));
+        }
+        if (first.isDefined() && second.isDefined()) {
+            return new FrameRenderer(String.format(TWO_FRAME_STATE_FORMAT, render(first, second)));
+        }
+        if (first.isDefined()) {
+            return new FrameRenderer(String.format(ONE_FRAME_STATE_FORMAT, render(first)));
+        }
+        return ready;
     }
 
     private static String render(PinCount pinCount) {

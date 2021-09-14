@@ -12,14 +12,14 @@ class FrameRendererTest {
     @ParameterizedTest(name = "첫번째 투구 후 상태 렌더링 테스트")
     @CsvSource({"SIX, 6", "ZERO, -"})
     public void proceedingFrameRenderingTest(PinCount firstFallenPinCount, String expected) {
-        Renderer renderer = FrameRenderer.of(firstFallenPinCount);
+        Renderer renderer = FrameRenderer.of(firstFallenPinCount, PinCount.UNDEFINED);
         assertThat(renderer.render()).contains(expected);
     }
 
     @DisplayName("스트라이크 렌더링 테스트")
     @Test
     public void strikeRenderingTest() {
-        Renderer renderer = FrameRenderer.of(PinCount.TEN);
+        Renderer renderer = FrameRenderer.of(PinCount.TEN, PinCount.UNDEFINED);
         assertThat(renderer.render()).contains("X");
     }
 
