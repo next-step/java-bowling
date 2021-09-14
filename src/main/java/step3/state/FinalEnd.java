@@ -5,8 +5,8 @@ import step3.domain.Pins;
 import step3.domain.Score;
 
 public class FinalEnd extends Finished {
-    private Pins pins;
-    private Score score;
+    private final Pins pins;
+    private final Score score;
 
     public FinalEnd(int fallenPins) {
         this.score = new Score(fallenPins, 0);

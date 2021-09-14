@@ -11,7 +11,7 @@ public class Strike extends Finished {
 
     public Strike() {
         this.score = new Score(10, 2);
-        pins = new Pins(10);
+        this.pins = new Pins(10);
     }
 
     @Override

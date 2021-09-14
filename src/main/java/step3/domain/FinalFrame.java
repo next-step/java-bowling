@@ -27,9 +27,6 @@ public class FinalFrame implements Frame {
 
     public Score getScore() {
         Score score = state.score();
-        if (score.canCalculateScore()) {
-            return score;
-        }
         return score;
     }
 
