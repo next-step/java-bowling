@@ -10,4 +10,8 @@ public class NormalScore extends Score {
         return new NormalScore(null, null);
     }
 
+    public static NormalScore ofFirst(Pin pin) {
+        return new NormalScore(pin, null);
+    }
+
 }

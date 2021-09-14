@@ -18,4 +18,18 @@ class NormalScoreTest {
         assertThat(result).isInstanceOf(NormalScore.class);
     }
 
+    @Test
+    @DisplayName("첫번째 핀을 생성할 수 있다.")
+    void createFirstPinTest() {
+
+        // given
+        Pin first = Pin.of(5);
+
+        // when
+        NormalScore result = NormalScore.ofFirst(first);
+
+        // then
+        assertThat(result).isInstanceOf(NormalScore.class);
+    }
+
 }
