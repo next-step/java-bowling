@@ -20,6 +20,14 @@ public class Players {
         return new Players(players);
     }
 
+    public int countOfPlayers() {
+        return players.size();
+    }
+
+    public int index(Player player) {
+        return players.indexOf(player);
+    }
+
     public void forEach(Consumer<? super Player> players) {
         this.players.forEach(players);
     }

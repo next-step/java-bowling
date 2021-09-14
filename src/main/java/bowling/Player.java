@@ -5,9 +5,7 @@ import java.util.regex.Pattern;
 public class Player {
 
     private String playerName;
-    private static Pattern pattern;
-    private Frames frames;
-
+    private Pattern pattern;
 
     public Player(String playerName) {
         if (!checkPlayerName(playerName)) {
@@ -15,7 +13,6 @@ public class Player {
         }
         this.playerName = playerName;
         pattern = Pattern.compile("(^[a-zA-Z]{3})*$");
-        frames = Frames.init();
     }
 
     public static Player of(String playerName) {
@@ -30,15 +27,4 @@ public class Player {
         return pattern.matches("(^[a-zA-Z]{3})*$", playerName);
     }
 
-    public Frames frames() {
-        return frames;
-    }
-
-    public boolean isFrameCompleted(int frameIndex) {
-        return frames.isFrameCompleted(frameIndex);
-    }
-
-    public void play(int score) {
-        frames = frames.play(score);
-    }
 }
