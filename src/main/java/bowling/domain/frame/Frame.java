@@ -3,24 +3,20 @@ package bowling.domain.frame;
 import java.util.List;
 
 import bowling.domain.common.Pins;
-import bowling.domain.common.Score;
-import bowling.domain.pitch.Pitch;
+import bowling.domain.score.Score;
+import bowling.domain.state.PitchStates;
 
 public interface Frame {
 
-	boolean possiblePitch();
+	Score addScore(Score score);
 
-	Frame pitch(final int pinsCount);
+	void hitPins(Pins pins);
 
-	Frame pitch(final Pins pins);
+	boolean isFinish();
 
-	Frame next();
+	boolean isStart();
 
-	Frame last();
+	PitchStates getPitchStates();
 
-	List<Pitch> pitches();
-
-	Score caculateScore(List<Frame> frames);
-
-	Score additionalScore(Score beforeScore, List<Frame> frames);
+	Score getScore();
 }

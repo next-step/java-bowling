@@ -1,21 +1,32 @@
 package bowling.controller;
 
-import bowling.domain.Bowling;
-import bowling.domain.common.Player;
+import java.util.List;
+
+import bowling.domain.BowlingGame;
+import bowling.domain.player.Bowler;
 import bowling.view.InputView;
 import bowling.view.OutputView;
+import bowling.view.dto.PrintBowlerDto;
 
 public class BowlingController {
 
 	public static void main(final String[] args) {
-		final Player player = new Player(InputView.name());
-		Bowling bowling = Bowling.of();
+		final BowlingGame bowlingGame = createBowlingGame();
 
-		OutputView.printFrames(player, bowling);
-		while (bowling.possiblePitch()) {
-			final int pinsCount = InputView.pinsCount(bowling.currentFrameIndex());
-			bowling = bowling.pitch(pinsCount);
-			OutputView.printFrames(player, bowling);
+		OutputView.printResultBoard(PrintBowlerDto.of(bowlingGame.getBowlers()));
+		while (!bowlingGame.isFinish()) {
+			final int pins = getHitPinCount(bowlingGame.getCurrentBowler());
+			bowlingGame.play(pins);
+			OutputView.printResultBoard(PrintBowlerDto.of(bowlingGame.getBowlers()));
 		}
+	}
+
+	private static BowlingGame createBowlingGame() {
+		final List<String> names = InputView.inputPlayerNames();
+		return BowlingGame.start(names);
+	}
+
+	private static int getHitPinCount(final Bowler bowler) {
+		return InputView.inputHitPinCount(bowler.getName());
 	}
 }

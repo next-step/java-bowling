@@ -1,11 +1,13 @@
 package bowling.view;
 
+import java.util.Collections;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import bowling.domain.Bowling;
-import bowling.domain.common.Player;
+import bowling.domain.BowlingGame;
+import bowling.view.dto.PrintBowlerDto;
 
 @DisplayName("출력")
 class OutputViewTest {
@@ -22,17 +24,17 @@ class OutputViewTest {
 		"1",
 		"0",
 	})
-	void printFrames(final int pitchCount) {
+	void resultBoard(final int pitchCount) {
 		// given
-		final Player player = new Player("cbh");
-		Bowling bowling = Bowling.of();
+		final BowlingGame bowlingGame = BowlingGame.start(Collections.singletonList("cbh"));
 		for (int i = 0; i < pitchCount; i++) {
-			bowling = bowling.pitch(10);
+			bowlingGame.play(10);
 		}
 
 		// when
-		OutputView.printFrames(player, bowling);
+		OutputView.printResultBoard(PrintBowlerDto.of(bowlingGame.getBowlers()));
 
 		// then
+
 	}
 }

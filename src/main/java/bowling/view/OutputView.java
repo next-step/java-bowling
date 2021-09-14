@@ -1,82 +1,72 @@
 package bowling.view;
 
-import bowling.domain.Bowling;
-import bowling.domain.common.Player;
-import bowling.domain.frame.Frame;
-import bowling.view.dto.PrintDto;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import bowling.view.dto.PrintBowlerDto;
+import bowling.view.dto.PrintPitchStatesDto;
+import bowling.view.dto.PrintScoreDto;
+
 public class OutputView {
 
-	private static final String DELIMITER = "|";
+	public static final int END_COUNT = 10;
 
-	public static void printFrames(final Player player, final Bowling bowling) {
-		printTitle();
-		printFrames(player, bowling.getFrames());
-		printScores(bowling.getFrames());
+	public static final String DELIMITER = "|";
+	public static final String BLANK = "";
+
+	private OutputView() {
+	}
+
+	public static void printResultBoard(final List<PrintBowlerDto> dots) {
+		System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
+		dots.forEach(OutputView::printGameResult);
 		System.out.println();
 	}
 
-	private static void printTitle() {
-		System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
+	private static String name(final String name) {
+		return String.format("|%5s |", name);
 	}
 
-	private static void printFrames(final Player player, final List<Frame> frames) {
-		final String prefix = framesPrefix(player);
-		final String body = framesBody(frames);
-		final int restFrameCount = 10 - frames.size();
-		final String suffix = suffix(restFrameCount);
-
-		System.out.println(prefix + body + suffix);
+	private static void printGameResult(final PrintBowlerDto dto) {
+		printFrame(dto);
+		printScore(dto);
 	}
 
-	private static String framesPrefix(final Player player) {
-		return String.format("%s%5s %s", DELIMITER, player.getName(), DELIMITER);
+	private static void printFrame(final PrintBowlerDto dto) {
+		final String prefix = name(dto.getBowlerName());
+		final String body = dto.getStates().stream()
+			.map(PrintPitchStatesDto::printString)
+			.map(state -> String.format("%5s ", state))
+			.collect(Collectors.joining(DELIMITER, BLANK, DELIMITER));
+		final String suffix = IntStream.range(dto.getCurrentFrameCount(), END_COUNT)
+			.mapToObj(i -> String.format("%5s ", BLANK))
+			.collect(Collectors.joining(DELIMITER));
+
+		System.out.println(prefix
+			+ body
+			+ ((suffix.length() == 0) ? suffix : suffix + DELIMITER));
 	}
 
-	private static String framesBody(final List<Frame> frames) {
-		return frames.stream()
-				.map(PrintDto::forFrameResult)
-				.map(PrintDto::toString)
-				.collect(Collectors.joining());
+	private static void printScore(final PrintBowlerDto dto) {
+		final String prefix = name(BLANK);
+		final String body = scoreBody(dto);
+		final String suffix = IntStream.range(dto.getScores().size(), END_COUNT)
+			.mapToObj(value -> String.format("%5s ", BLANK))
+			.collect(Collectors.joining(DELIMITER));
+
+		System.out.println(prefix
+			+ ((body.length() == 0) ? body : body + DELIMITER)
+			+ ((suffix.length() == 0) ? suffix : suffix + DELIMITER));
 	}
 
-	private static String suffix(final int count) {
-		return IntStream.range(0, count)
-				.mapToObj(i -> PrintDto.of())
-				.map(PrintDto::toString)
-				.collect(Collectors.joining());
-	}
-
-	private static void printScores(final List<Frame> frames) {
-		final String prefix = "|      |";
-		final String body = scoresBody(frames);
-		final int restFrameCount = (int) (10 - frames.stream()
-				.filter(e -> e.caculateScore(frames).possiblecalculate())
-				.count());
-		final String suffix = suffix(restFrameCount);
-
-		System.out.println(prefix + body + suffix);
-	}
-
-	private static String scoresBody(final List<Frame> frames) {
-		final List<Frame> calculableFrames = frames.stream()
-				.filter(e -> e.caculateScore(frames).possiblecalculate())
-				.collect(Collectors.toList());
-
-		int totalScore = 0;
-		final List<PrintDto> printDtos = new ArrayList<>();
-
-		for (final Frame frame : calculableFrames) {
-			totalScore += frame.caculateScore(frames).getValue();
-			printDtos.add(PrintDto.forScore(totalScore));
-		}
-
-		return printDtos.stream()
-				.map(PrintDto::toString)
-				.collect(Collectors.joining());
+	private static String scoreBody(final PrintBowlerDto dto) {
+		final AtomicInteger score = new AtomicInteger(0);
+		return dto.getScores().stream()
+			.map(PrintScoreDto::getValue)
+			.map(score::addAndGet)
+			.map(value -> String.format("%5s ", value))
+			.collect(Collectors.joining(DELIMITER));
 	}
 }

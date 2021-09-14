@@ -1,75 +1,64 @@
 package bowling.domain.frame;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import bowling.domain.common.Pins;
-import bowling.domain.exception.InvalidMethodCallException;
-import bowling.domain.pitch.NormalPitch;
-import bowling.domain.pitch.Pitch;
-import bowling.domain.pitch.SparePitch;
-import bowling.domain.pitch.StrikePitch;
+import bowling.domain.score.Score;
+import bowling.domain.state.PitchState;
+import bowling.domain.state.PitchStates;
+import bowling.domain.state.Start;
 
-public abstract class BaseFrame implements Frame {
+public class BaseFrame extends DefaultFrame {
 
-	private static final Pins STRIKE_PINS = Pins.of(10);
-	private static final int FIRST_INDEX = 0;
-	private static final int SECOND_INDEX = 1;
+	private PitchState pitchState;
+	private Frame nextFrame;
 
-	protected final List<Pitch> pitches;
+	public BaseFrame(final PitchState pitchState, final Frame nextFrame) {
+		this.pitchState = pitchState;
+		this.nextFrame = nextFrame;
+	}
 
-	protected BaseFrame(final List<Pitch> pitches) {
-		this.pitches = pitches;
+	public static BaseFrame of(final PitchState pitchState, final Frame nextFrame) {
+		return new BaseFrame(pitchState, nextFrame);
+	}
+
+	public static BaseFrame of() {
+		return new BaseFrame(Start.of(), StartingFrame.of());
+	}
+
+	public BaseFrame create(final Frame nextFrame) {
+		return new BaseFrame(pitchState, nextFrame);
 	}
 
 	@Override
-	public Frame pitch(final int pinsCount) {
-		return pitch(Pins.of(pinsCount));
+	public Score addScore(final Score score) {
+		final Score addedScore = pitchState.addScore(score);
+
+		return nextFrame.addScore(addedScore);
 	}
 
-	protected List<Pitch> playedPitches(final Pins pins) {
-		final Pitch playedPitch = pitches.isEmpty()
-			? firstPitch(pins)
-			: otherPitch(pins);
-
-		return Stream.concat(pitches.stream(), Stream.of(playedPitch))
-			.collect(Collectors.toList());
+	public void updateNext(final Frame nextFrame) {
+		this.nextFrame = nextFrame;
 	}
 
-	private Pitch firstPitch(final Pins pins) {
-		return (pins.isEqualsCount(STRIKE_PINS))
-			? new StrikePitch()
-			: new NormalPitch(pins);
-	}
-
-	private Pitch otherPitch(final Pins pins) {
-		return pitches.get(pitches.size() - 1).play(pins);
-	}
-
-	protected boolean isFirstStrike() {
-		return pitches.size() > FIRST_INDEX
-			&& pitches.get(FIRST_INDEX) instanceof StrikePitch;
-	}
-
-	protected boolean isSecondSpare() {
-		return pitches.size() > SECOND_INDEX
-			&& pitches.get(SECOND_INDEX) instanceof SparePitch;
+	public void hitPins(final Pins pins) {
+		this.pitchState = pitchState.hitPins(pins);
 	}
 
 	@Override
-	public List<Pitch> pitches() {
-		return Collections.unmodifiableList(pitches);
+	public Score getScore() {
+		return nextFrame.addScore(pitchState.score());
+	}
+
+	public PitchStates getPitchStates() {
+		return PitchStates.of(pitchState);
 	}
 
 	@Override
-	public Frame next() {
-		throw new InvalidMethodCallException();
+	public boolean isFinish() {
+		return pitchState.isFinish();
 	}
 
 	@Override
-	public Frame last() {
-		throw new InvalidMethodCallException();
+	public boolean isStart() {
+		return !pitchState.isFinish();
 	}
 }
