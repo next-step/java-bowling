@@ -2,7 +2,7 @@ package bowling.domain;
 
 import java.util.Objects;
 
-public class FrameStateRenderer implements Renderer {
+public class FrameRenderer implements Renderer {
 
     private static final String EMPTY_FRAME_STATE_FORMAT = "      ";
     private static final String ONE_FRAME_STATE_FORMAT = "  %s   ";
@@ -13,28 +13,28 @@ public class FrameStateRenderer implements Renderer {
     private static final String SPARE = "/";
     private static final String PIN_COUNT_DELIMITER = "|";
 
-    private static final FrameStateRenderer ready = new FrameStateRenderer(EMPTY_FRAME_STATE_FORMAT);
+    private static final FrameRenderer ready = new FrameRenderer(EMPTY_FRAME_STATE_FORMAT);
 
     private final String state;
 
-    private FrameStateRenderer(String state) {
+    private FrameRenderer(String state) {
         this.state = Objects.requireNonNull(state);
     }
 
-    public static FrameStateRenderer of() {
+    public static FrameRenderer of() {
         return ready;
     }
 
-    public static FrameStateRenderer of(PinCount pinCount) {
-        return new FrameStateRenderer(String.format(ONE_FRAME_STATE_FORMAT, render(pinCount)));
+    public static FrameRenderer of(PinCount pinCount) {
+        return new FrameRenderer(String.format(ONE_FRAME_STATE_FORMAT, render(pinCount)));
     }
 
-    public static FrameStateRenderer of(PinCount first, PinCount second) {
-        return new FrameStateRenderer(String.format(TWO_FRAME_STATE_FORMAT, render(first, second)));
+    public static FrameRenderer of(PinCount first, PinCount second) {
+        return new FrameRenderer(String.format(TWO_FRAME_STATE_FORMAT, render(first, second)));
     }
 
-    public static FrameStateRenderer of(PinCount first, PinCount second, PinCount third) {
-        return new FrameStateRenderer(String.format(THREE_FRAME_STATE_FORMAT, render(first, second, third)));
+    public static FrameRenderer of(PinCount first, PinCount second, PinCount third) {
+        return new FrameRenderer(String.format(THREE_FRAME_STATE_FORMAT, render(first, second, third)));
     }
 
     private static String render(PinCount pinCount) {

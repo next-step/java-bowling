@@ -14,7 +14,7 @@ public class PlayerRenderer implements Renderer {
 
     public PlayerRenderer(PlayerName playerName, Frames frames) {
         this.playerName = String.format(PLAYER_NAME_RENDERING_FORMAT, playerName);
-        this.frameStateRenderers = frames.toFrameStateRenderers();
+        this.frameStateRenderers = frames.toRenderers();
     }
 
     @Override

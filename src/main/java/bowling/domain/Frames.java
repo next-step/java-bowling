@@ -24,9 +24,9 @@ public class Frames {
         return frameNumber;
     }
 
-    public List<Renderer> toFrameStateRenderers() {
+    public List<Renderer> toRenderers() {
         return frames.stream()
-                .map(Frame::createFrameStateRenderer)
+                .map(Frame::toRenderer)
                 .collect(Collectors.toList());
     }
 }

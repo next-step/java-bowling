@@ -43,7 +43,7 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Renderer createFrameStateRenderer() {
-        return FrameStateRenderer.of(first, second);
+    public Renderer toRenderer() {
+        return FrameRenderer.of(first, second);
     }
 }
