@@ -1,7 +1,9 @@
 package bowling.domain.score;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+import bowling.exception.Pin.PinSecondValueException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -46,6 +48,21 @@ class NormalScoreTest {
 
         // then
         assertThat(result).isInstanceOf(NormalScore.class);
+    }
+
+    @Test
+    @DisplayName("첫번째 핀이 스트라이크인 경우 두번째 핀을 생성할 수 없다.")
+    void createSecondExceptionTest() {
+
+        // given
+        Pin first = Pin.of(10);
+        NormalScore firstScore = NormalScore.ofFirst(first);
+        Pin second = Pin.of(3);
+
+        // when & then
+        assertThatExceptionOfType(PinSecondValueException.class)
+            .isThrownBy(() -> firstScore.createSecondPin(second))
+            .withMessageMatching("첫번째 핀이 쓰러뜨리고 남은 핀 개수만 저장할 수 있다.");
     }
 
 }
