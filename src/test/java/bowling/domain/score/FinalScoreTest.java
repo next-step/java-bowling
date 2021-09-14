@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import bowling.exception.Pin.PinBonusException;
 import bowling.exception.Pin.PinSecondValueException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -154,7 +155,7 @@ class FinalScoreTest {
         Pin bonus = Pin.of(3);
 
         // when & then
-        assertThatExceptionOfType(RuntimeException.class)
+        assertThatExceptionOfType(PinBonusException.class)
             .isThrownBy(() -> secondScore.createBonusPin(bonus))
             .withMessageMatching("보너스 핀은 스페어나 스트라이크 후 칠 수 있다.");
     }

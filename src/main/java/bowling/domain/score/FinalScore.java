@@ -1,5 +1,6 @@
 package bowling.domain.score;
 
+import bowling.exception.Pin.PinBonusException;
 import bowling.exception.Pin.PinSecondValueException;
 
 public class FinalScore extends Score {
@@ -43,7 +44,7 @@ public class FinalScore extends Score {
 
     private static void checkBonusPin(FinalScore finalScore) {
         if (!finalScore.isBonus()) {
-            throw new RuntimeException("보너스 핀은 스페어나 스트라이크 후 칠 수 있다.");
+            throw new PinBonusException();
         }
     }
 
