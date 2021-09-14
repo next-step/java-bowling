@@ -18,7 +18,7 @@ public class FinalFrame extends Frame {
             return this;
         }
         if(firstBonus()){
-            bonusState = new Bonus(number, state.getScore().getBonusCount());
+            bonusState = new Bonus(number, state.getBonusCount());
             return this;
         }
         if(secondBonus()){
@@ -55,7 +55,7 @@ public class FinalFrame extends Frame {
     }
 
     private boolean firstBonus() {
-        return !hasBonus() && state.getScore().getBonusCount() > 0;
+        return !hasBonus() && state.getBonusCount() > 0;
     }
 
     private boolean secondBonus() {

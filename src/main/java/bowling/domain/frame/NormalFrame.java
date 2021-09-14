@@ -25,11 +25,11 @@ public class NormalFrame extends Frame {
             return this;
         }
         if (frameNo == MAX_NORMAL_FRAME_NO) {
-            this.nextFrame = new FinalFrame().next(number);
-            return this.nextFrame;
+            nextFrame = new FinalFrame().next(number);
+            return nextFrame;
         }
-        this.nextFrame = new NormalFrame(frameNo + 1).next(number);
-        return this.nextFrame;
+        nextFrame = new NormalFrame(frameNo + 1).next(number);
+        return nextFrame;
     }
 
     public int total() {
