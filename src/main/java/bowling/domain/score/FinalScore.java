@@ -1,6 +1,10 @@
 package bowling.domain.score;
 
+import bowling.exception.Pin.PinSecondValueException;
+
 public class FinalScore extends Score {
+
+    private static final Pin STRIKE = Pin.of(10);
 
     private final Pin bonus;
 
@@ -20,7 +24,15 @@ public class FinalScore extends Score {
 
     @Override
     public FinalScore createSecondPin(Pin pin) {
+        checkRemainPin(this.first, pin);
+
         return new FinalScore(this.first, pin, null);
+    }
+
+    private static void checkRemainPin(Pin before, Pin pin) {
+        if (before != STRIKE && before.remainPin() < pin.value()) {
+            throw new PinSecondValueException();
+        }
     }
 
 }

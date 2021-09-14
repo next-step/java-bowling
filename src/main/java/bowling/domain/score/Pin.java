@@ -36,6 +36,10 @@ public class Pin {
         }
     }
 
+    public int remainPin() {
+        return Math.subtractExact(PIN_MAX_VALUE, this.pin);
+    }
+
     public int value() {
         return pin;
     }
