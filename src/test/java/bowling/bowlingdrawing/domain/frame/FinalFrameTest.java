@@ -41,7 +41,7 @@ class FinalFrameTest {
         Pitching pitching1 = Pitching.of(9);
         FinalFrame finalFrame = new FinalFrame(pitching1);
         Pitching pitching2 = pitching1.next(1);
-        finalFrame.secondPitching(pitching2);
+        finalFrame.pitch(pitching2);
 
         // when
         boolean spare = finalFrame.spare();
@@ -58,7 +58,7 @@ class FinalFrameTest {
         Pitching pitching2 = pitching1.next(5);
 
         FinalFrame finalFrame = new FinalFrame(pitching1);
-        finalFrame.secondPitching(pitching2);
+        finalFrame.pitch(pitching2);
 
         // when
         boolean end = finalFrame.end();
@@ -76,8 +76,8 @@ class FinalFrameTest {
         Pitching pitching3 = pitching2.next(8);
 
         FinalFrame finalFrame = new FinalFrame(pitching1);
-        finalFrame.bonusPitch(pitching2);
-        finalFrame.bonusPitch(pitching3);
+        finalFrame.pitch(pitching2);
+        finalFrame.pitch(pitching3);
 
         // when
         boolean end = finalFrame.end();
@@ -95,8 +95,8 @@ class FinalFrameTest {
         Pitching pitching3 = pitching2.next(8);
 
         FinalFrame finalFrame = new FinalFrame(pitching1);
-        finalFrame.secondPitching(pitching2);
-        finalFrame.bonusPitch(pitching3);
+        finalFrame.pitch(pitching2);
+        finalFrame.pitch(pitching3);
 
         // when
         boolean end = finalFrame.end();

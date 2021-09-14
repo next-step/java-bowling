@@ -14,11 +14,16 @@ public class FinalFrame{
         this.finalFrame = new Frame(pitching);
     }
 
-    public void secondPitching(Pitching secondPitching) {
-        finalFrame.secondPitching(secondPitching);
+
+    public void pitch(Pitching pitching) {
+        if (strike() || spare()) {
+            bonusPitch(pitching);
+            return;
+        }
+        finalFrame.secondPitching(pitching);
     }
 
-    public void bonusPitch(Pitching bonusPitching) {
+    private void bonusPitch(Pitching bonusPitching) {
         if (bonusPitching1 == null) {
             bonusPitching1 = bonusPitching;
             return;
@@ -56,4 +61,5 @@ public class FinalFrame{
     public int hashCode() {
         return Objects.hash(finalFrame, bonusPitching1, bonusPitching2);
     }
+
 }
