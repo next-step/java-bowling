@@ -30,4 +30,8 @@ public class NormalScore extends Score {
         }
     }
 
+    public boolean isNext() {
+        return first != Pin.of(STRIKE_VALUE);
+    }
+
 }

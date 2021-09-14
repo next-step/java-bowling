@@ -2,6 +2,7 @@ package bowling.domain.score;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import bowling.exception.Pin.PinSecondValueException;
 import org.junit.jupiter.api.DisplayName;
@@ -66,6 +67,22 @@ class NormalScoreTest {
         assertThatExceptionOfType(PinSecondValueException.class)
             .isThrownBy(() -> firstScore.createSecondPin(second))
             .withMessageMatching("첫번째 핀이 쓰러뜨리고 남은 핀 개수만 저장할 수 있다.");
+    }
+
+    @Test
+    @DisplayName("다음 핀이 진행되는지 확인할 수 있다.")
+    void avaliableCheckNextPinTest() {
+
+        // given
+        NormalScore start = NormalScore.empty();
+        Pin first = Pin.of(5);
+        NormalScore firstScore = start.createFirstPin(first);
+
+        // when
+        boolean result = firstScore.isNext();
+
+        // then
+        assertTrue(result);
     }
 
 }
