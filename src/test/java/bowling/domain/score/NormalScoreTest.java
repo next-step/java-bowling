@@ -70,6 +70,22 @@ class NormalScoreTest {
     }
 
     @Test
+    @DisplayName("첫번째 핀이 쓰러뜨리고 남은 핀보다 많은 핀이 두번째 들어올 수 없다.")
+    void createSecondExceptionRangeTest() {
+
+        // given
+        NormalScore start = NormalScore.empty();
+        Pin first = Pin.of(9);
+        NormalScore firstScore = start.createFirstPin(first);
+        Pin second = Pin.of(3);
+
+        // when & then
+        assertThatExceptionOfType(PinSecondValueException.class)
+            .isThrownBy(() -> firstScore.createSecondPin(second))
+            .withMessageMatching("첫번째 핀이 쓰러뜨리고 남은 핀 개수만 저장할 수 있다.");
+    }
+
+    @Test
     @DisplayName("다음 핀이 진행되는지 확인할 수 있다.")
     void avaliableCheckNextPinTest() {
 

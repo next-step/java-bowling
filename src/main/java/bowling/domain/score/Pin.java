@@ -36,6 +36,10 @@ public class Pin {
         }
     }
 
+    public int value() {
+        return pin;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

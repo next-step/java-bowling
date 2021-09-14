@@ -22,12 +22,19 @@ public class NormalScore extends Score {
     @Override
     public NormalScore createSecondPin(Pin pin) {
         checkFirstStrike(this.first);
+        checkRemainPin(this.first, pin);
 
         return new NormalScore(this.first, pin);
     }
 
     private static void checkFirstStrike(Pin pin) {
         if (pin == Pin.of(STRIKE_VALUE)) {
+            throw new PinSecondValueException();
+        }
+    }
+
+    private static void checkRemainPin(Pin first, Pin second) {
+        if (Math.subtractExact(STRIKE_VALUE, first.value()) < second.value()) {
             throw new PinSecondValueException();
         }
     }
