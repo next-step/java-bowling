@@ -16,22 +16,32 @@ public class ResultView {
     private ResultView() {
     }
 
-    public static void printInit(final BowlingGame bowlingGame) {
+    public static void printInit(final BowlingGames bowlingGames) {
         System.out.println(TITLE);
+        for(BowlingGame bowlingGame : bowlingGames.games()) {
+            printPlayerGame(bowlingGame);
+        }
+    }
+
+    private static void printPlayerGame(BowlingGame bowlingGame) {
         printName(bowlingGame.player());
         IntStream.range(FIRST_NUMBER, LAST_NUMBER)
                 .forEach(value -> System.out.print(String.format("%5s %s", BLANK, SEPARATOR)));
         System.out.println();
-        System.out.println();
+        System.out.print(SEPARATOR);
+        printBlock(LAST_NUMBER);
     }
 
-    public static void printResult(final BowlingGame bowlingGame) {
+    public static void printResult(final BowlingGames bowlingGames) {
         System.out.println(TITLE);
-        printName(bowlingGame.player());
+        for(BowlingGame bowlingGame : bowlingGames.games()) {
+            printName(bowlingGame.player());
 
-        printSymbol(bowlingGame.frames());
+            printSymbol(bowlingGame.frames());
 
-        printScore(bowlingGame.frames());
+            printScore(bowlingGame.frames());
+        }
+
     }
 
     private static void printSymbol(Frames frames) {

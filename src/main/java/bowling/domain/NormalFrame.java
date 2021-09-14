@@ -22,6 +22,7 @@ public class NormalFrame implements Frame {
         if (isEnd()) {
             throw new BusinessException("현재 프레임에서 투구할 수 있는 갯수를 초과했습니다.");
         }
+        pitches.validateNormalSecondPitch(countOfPins);
         addNextPitch(countOfPins);
         return this;
     }
@@ -61,7 +62,7 @@ public class NormalFrame implements Frame {
         if (beforeScore.canCalculateScore()) {
             return beforeScore;
         }
-        if(nextFrame == null) {
+        if (nextFrame == null) {
             return Score.cantCalculate();
         }
         return nextFrame.addScore(beforeScore);

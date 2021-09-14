@@ -144,4 +144,11 @@ class NormalFrameTest {
         frame.next();
         assertThat(frame.score().canCalculateScore()).isFalse();
     }
+
+    @DisplayName("스트라이크, 스페어가 아닌 두번째 투구에서 두 수의 합이 10 이상이면 에러가 발생한다. ")
+    @Test
+    void two_pitch() {
+        assertThatThrownBy(() -> new NormalFrame(1).pitch(2).pitch(10))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
