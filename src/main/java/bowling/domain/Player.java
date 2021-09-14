@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.PlayerRenderer;
-
 public class Player {
 
     private final PlayerName playerName;
@@ -16,7 +14,7 @@ public class Player {
         return frames.bowl(frameNumber, fallenPinCount);
     }
 
-    public PlayerRenderer toRenderer() {
+    public Renderer toRenderer() {
         return new PlayerRenderer(playerName, frames);
     }
 }

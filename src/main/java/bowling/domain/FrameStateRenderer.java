@@ -1,10 +1,8 @@
-package bowling;
-
-import bowling.domain.PinCount;
+package bowling.domain;
 
 import java.util.Objects;
 
-public class FrameStateRenderer {
+public class FrameStateRenderer implements Renderer {
 
     private static final String READY_FRAME_STATE_FORMAT = "      ";
     private static final String STRIKE_FRAME_STATE_FORMAT = "  X   ";
@@ -41,7 +39,8 @@ public class FrameStateRenderer {
         return new FrameStateRenderer(String.format(MISS_FRAME_STATE_FORMAT, firstFallenPinCount, secondFallenPinCount));
     }
 
-    public String renderState() {
+    @Override
+    public String render() {
         return state;
     }
 }

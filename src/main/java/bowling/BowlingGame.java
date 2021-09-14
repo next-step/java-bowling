@@ -20,6 +20,7 @@ public class BowlingGame {
         outputView.printPlayerNameInputMessage();
         Player player = new Player(inputView.getPlayerName());
         outputView.printScoreBoard(player.toRenderer());
+
         FrameNumber frameNumber = FrameNumber.FIRST;
         while (!frameNumber.isOver()) {
             outputView.printBowlInputMessage(frameNumber.getNumber());

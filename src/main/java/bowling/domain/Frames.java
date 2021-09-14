@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.FrameStateRenderer;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,9 +24,9 @@ public class Frames {
         return frameNumber;
     }
 
-    public List<FrameStateRenderer> toFrameStateRenderers() {
+    public List<Renderer> toFrameStateRenderers() {
         return frames.stream()
-                .map(Frame::toFrameStateRenderer)
+                .map(Frame::createFrameStateRenderer)
                 .collect(Collectors.toList());
     }
 }

@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.FrameStateRenderer;
-
 public class NormalFrame implements Frame {
 
     private FrameState state;
@@ -21,7 +19,7 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public FrameStateRenderer toFrameStateRenderer() {
+    public Renderer createFrameStateRenderer() {
         return state.toRenderer();
     }
 }

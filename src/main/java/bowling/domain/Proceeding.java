@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.FrameStateRenderer;
-
 import java.util.Objects;
 
 public class Proceeding implements FrameState {
@@ -18,7 +16,7 @@ public class Proceeding implements FrameState {
     }
 
     @Override
-    public FrameStateRenderer toRenderer() {
+    public Renderer toRenderer() {
         return FrameStateRenderer.of(firstFallenPinCount);
     }
 

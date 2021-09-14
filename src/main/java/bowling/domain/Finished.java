@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.FrameStateRenderer;
-
 import java.util.Objects;
 
 public class Finished implements FrameState {
@@ -43,7 +41,7 @@ public class Finished implements FrameState {
     }
 
     @Override
-    public FrameStateRenderer toRenderer() {
+    public Renderer toRenderer() {
         if (this.isStrike()) {
             return FrameStateRenderer.strike();
         }
