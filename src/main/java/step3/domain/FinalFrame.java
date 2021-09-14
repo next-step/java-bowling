@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import step3.state.FinalReady;
+import step3.state.Miss;
 import step3.state.State;
 
 public class FinalFrame implements Frame {
@@ -66,7 +67,7 @@ public class FinalFrame implements Frame {
     }
 
     public boolean isGameEnd() {
-        return turn == 3;
+        return turn == 3 || (turn == 2 && states.get(1).score().getScore() != 10);
     }
 
     public State getState() {

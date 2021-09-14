@@ -10,22 +10,30 @@ import step3.state.State;
 
 public class ResultView {
 
+    private static final String OUTPUT_FRAME_FORMAT = "  %02d  |";
+    private static final String OUTPUT_SCORE_FORMAT = "  %-3s |";
+    private static final int FRAME_NUMBER_START = 1;
+    private static final int FRAME_NUMBER_END = 10;
+
     public static void printHeader() {
-        System.out.println(
-            "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
+        System.out.print("| NAME |");
+        for (int i = FRAME_NUMBER_START; i <= FRAME_NUMBER_END; i++) {
+            System.out.printf(OUTPUT_FRAME_FORMAT, i);
+        }
+        System.out.println();
     }
 
     public static void printResult(Frames frames, Frame frame) {
         frames.getFrames()
-            .forEach(frame1 -> System.out.printf("  %-3s |", frame1.getSymbol()));
+            .forEach(frame1 -> System.out.printf(OUTPUT_SCORE_FORMAT, frame1.getSymbol()));
 
         try {
-            System.out.printf("  %-3s |", frame.getSymbol());
+            System.out.printf(OUTPUT_SCORE_FORMAT, frame.getSymbol());
         } catch (SymbolDoesNotExistException s) {
             printRightBlank();
         }
 
-        for (int i = frame.number(); i < 10; i++) {
+        for (int i = frame.number(); i < FRAME_NUMBER_END; i++) {
             printRightBlank();
         }
 
@@ -34,19 +42,17 @@ public class ResultView {
     }
 
     public static void printUserName(String userName) {
-        System.out.print("|  PJS |");
+        System.out.printf("|  %-3s |", userName);
     }
 
     public static void printFinalResult(FinalFrame frame) {
-        System.out.printf("  %-3s |", frame.getStates()
+        System.out.printf(OUTPUT_SCORE_FORMAT, frame.getStates()
             .stream()
             .map(State::symbol)
             .collect(Collectors.joining("|")));
     }
 
-    public static void prinBlank() {
-        System.out.print("|      |");
-    }
+    public static void prinBlank() { System.out.print("|      |"); }
 
     public static void printRightBlank() {
         System.out.print("      |");
@@ -61,12 +67,18 @@ public class ResultView {
                 continue;
             }
             totalScore += currentFrameScore;
-            System.out.printf("  %-3s |", totalScore);
+            System.out.printf(OUTPUT_SCORE_FORMAT, totalScore);
         }
 
         if (frame.number() == 10 && frame.isGameEnd()) {
             FinalFrame finalFrame = (FinalFrame) frame;
-            System.out.printf("  %-3s |", finalFrame.getLastFrameResult() + totalScore);
+            System.out.printf(OUTPUT_SCORE_FORMAT, finalFrame.getLastFrameResult() + totalScore);
+        }
+
+        if (!frame.isGameEnd()) {
+            for (int i = frame.number(); i <= FRAME_NUMBER_END; i++) {
+                printRightBlank();
+            }
         }
 
         System.out.println();
