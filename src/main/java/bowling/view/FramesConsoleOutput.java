@@ -18,17 +18,21 @@ public class FramesConsoleOutput {
     private static final String PITCHES_PREFIX = "|  ";
     private static final String PITCHES_SUFFIX = " |";
     private static final String SCORES_PREFIX = "|      |  ";
-    private static final String SCORES_SUFFIX = " |\n";
+    private static final String SCORES_SUFFIX = " |";
 
-    public static void print(final String playerName, final FrameStatusDto frameStatusDto) {
+    public static void print(final List<String> playerNames, final List<FrameStatusDto> frameStatusDtos) {
         System.out.println(FRAMES_TOP);
-        System.out.println(getFramePitches(playerName, frameStatusDto.getAllFramePitchValues()));
-        System.out.println(getFrameScores(frameStatusDto.getScores()));
+        for (int i = 0; i < playerNames.size(); i++) {
+            String playerName = playerNames.get(i);
+            FrameStatusDto frameStatusDto = frameStatusDtos.get(i);
+            System.out.println(getFramePitches(playerName, frameStatusDto.getAllFramePitchValues()));
+            System.out.println(getFrameScores(frameStatusDto.getScores()));
+        }
+        System.out.println();
     }
 
-    private static String getFrameScores(final List<Integer> scores) {
+    private static String getFrameScores(final List<String> scores) {
         return scores.stream()
-                .map(score -> score == 0 ? "" : String.valueOf(score))
                 .map(score -> String.format(FRAME_FORMAT, score))
                 .collect(Collectors.joining(FRAME_DELIMITER, SCORES_PREFIX, SCORES_SUFFIX));
     }
