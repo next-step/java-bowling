@@ -62,10 +62,6 @@ public class Frames {
             return 1;
         }
 
-        if (frames.size() == 10) {
-            return frames.size();
-        }
-
         Frame currentFrame = frames.get(frames.size() - 1);
         if (currentFrame.done()) {
             return frames.size() + 1;
@@ -75,9 +71,5 @@ public class Frames {
 
     public List<Frame> frames() {
         return Collections.unmodifiableList(frames);
-    }
-
-    public boolean fullFrame() {
-        return frames.size() == 10;
     }
 }
