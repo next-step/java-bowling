@@ -55,7 +55,8 @@ public class Answers {
 
     private List<DeleteHistory> createDeleteHistory() {
         return answers.stream().
-            map(a -> new DeleteHistory(ContentType.ANSWER, a.getId(), a.getWriter(), LocalDateTime.now()))
+            map(a -> new DeleteHistory(ContentType.ANSWER, a.getId(), a.getWriter(),
+                LocalDateTime.now()))
             .collect(Collectors.toList());
     }
 }

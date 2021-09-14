@@ -35,9 +35,7 @@ public class QnAService {
     }
 
     @Transactional
-    public void deleteQuestion(User loginUser, long questionId)
-        throws NotQuestionWriterException, OtherUserAnswerFoundException {
-
+    public void deleteQuestion(User loginUser, long questionId) throws NotQuestionWriterException, OtherUserAnswerFoundException {
         Question question = findQuestionById(questionId);
         List<DeleteHistory> deleteHistories = question.delete(loginUser);
         deleteHistoryService.saveAll(deleteHistories);

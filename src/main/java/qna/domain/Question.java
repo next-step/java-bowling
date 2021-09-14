@@ -3,7 +3,6 @@ package qna.domain;
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,13 +22,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
-
     @Embedded
-    private Answers answers2 = new Answers();
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -74,14 +68,9 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    public void addAnswer(Answer answer) {
-        answer.toQuestion(this);
-        answers.add(answer);
-    }
-
     public void addAnswer2(Answer answer) {
         answer.toQuestion(this);
-        answers2.add(answer);
+        answers.add(answer);
     }
 
     public boolean isOwner(User loginUser) {
@@ -97,11 +86,8 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
-    }
-    public Answers getAnswers2() {
-        return answers2;
     }
 
     public void validateDelete(User loginUser)
@@ -111,7 +97,7 @@ public class Question extends AbstractEntity {
             throw new NotQuestionWriterException("질문을 삭제할 권한이 없습니다.");
         }
 
-        Answers answers = getAnswers2();
+        Answers answers = getAnswers();
 
         if(!answers.isDeletable(loginUser)) {
             throw new OtherUserAnswerFoundException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
@@ -125,12 +111,13 @@ public class Question extends AbstractEntity {
 
     public List<DeleteHistory> delete(User loginUser) throws NotQuestionWriterException, OtherUserAnswerFoundException {
         validateDelete(loginUser);
+
         setDeleted(true);
         List<DeleteHistory> questionDeleteHistories = createDeleteHistory();
-        List<DeleteHistory> answersDeleteHistories = answers2.deleteAll();
+        List<DeleteHistory> answersDeleteHistories = answers.deleteAll();
 
         return Stream.of(questionDeleteHistories, answersDeleteHistories)
-            .flatMap(x -> x.stream())
+            .flatMap(h -> h.stream())
             .collect(Collectors.toList());
     }
 

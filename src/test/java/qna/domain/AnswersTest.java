@@ -33,6 +33,14 @@ class AnswersTest {
         assertThat(answers.isDeletable(UserTest.JAVAJIGI)).isEqualTo(false);
     }
 
+    @ParameterizedTest
+    @MethodSource("provideSameWriterAnswers")
+    void name(Answers answers) {
+        answers.deleteAll();
+        assertThat(answers.value().stream().allMatch(a -> a.isDeleted())).isEqualTo(true);
+
+    }
+
     private static Stream<Arguments> provideSameWriterAnswers() {
         Answers answers1 = new Answers();
         answers1.add(AnswerTest.A1);
