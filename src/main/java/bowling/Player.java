@@ -18,11 +18,11 @@ public class Player {
         }
 
         if (!isLengthThree(name)) {
-            throw new IllegalArgumentException("플레이어의 이름은 3자리 입니다.");
+            throw new IllegalArgumentException("플레이어의 이름은 3자리이여야 합니다.");
         }
 
         if (!isOnlyAlphabetics(name)) {
-            throw new IllegalArgumentException("플레이어의 영문자 입니다.");
+            throw new IllegalArgumentException("플레이어의 이름은 오직 영문자 조합이여야 합니다.");
         }
     }
 

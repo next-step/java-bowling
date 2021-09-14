@@ -9,7 +9,6 @@ public class BowlingMain {
         Player player = new Player(name);
 
         ScoreFrames scoreFrames = new ScoreFrames();
-
         BowlingOutputView.printFramesStatus(player, scoreFrames);
 
         while (scoreFrames.isContinued()) {

@@ -12,13 +12,19 @@ public class ScoreStringTest {
     void getOutputStringTest() {
         ScoreString scoreString = new ScoreString();
 
-        assertThat(scoreString.getOutputString()).isEqualTo("");
+        String firstString = scoreString.getOutputString();
 
         scoreString = scoreString.append(new Score(1));
-        assertThat(scoreString.getOutputString()).isEqualTo("1");
+        String secondString = scoreString.getOutputString();
 
         scoreString = scoreString.append(new Score(9), FrameResult.SPARE);
-        assertThat(scoreString.getOutputString()).isEqualTo("1|/");
+        String thirdString = scoreString.getOutputString();
+
+        assertThat(firstString).isEqualTo("");
+
+        assertThat(secondString).isEqualTo("1");
+
+        assertThat(thirdString).isEqualTo("1|/");
     }
 
     @Test
@@ -36,9 +42,13 @@ public class ScoreStringTest {
         ScoreString scoreString = new ScoreString();
 
         scoreString = scoreString.append(new Score(0), FrameResult.MISS);
-        assertThat(scoreString.getOutputString()).isEqualTo("-");
+        String firstString = scoreString.getOutputString();
 
         scoreString = scoreString.append(new Score(6), FrameResult.MISS);
-        assertThat(scoreString.getOutputString()).isEqualTo("-|6");
+        String secondString = scoreString.getOutputString();
+
+        assertThat(firstString).isEqualTo("-");
+
+        assertThat(secondString).isEqualTo("-|6");
     }
 }

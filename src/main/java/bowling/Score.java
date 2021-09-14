@@ -3,7 +3,6 @@ package bowling;
 import java.util.Objects;
 
 public class Score {
-    private static final int MAX_SCORE = 10;
 
     private final int value;
 
@@ -13,22 +12,20 @@ public class Score {
         this.value = value;
     }
 
-    public int sum(Score score) {
-        return this.value + score.value;
+    public Score sum(Score score) {
+        return new Score(this.value + score.value);
+    }
+
+    public boolean isHigherOrEqualThan(Score score) {
+        return this.value >= score.value;
     }
 
     public String getScoreString() {
         return String.valueOf(value);
     }
 
-    public int toInt() {
-        return value;
-    }
-
-    private void validate(int value) {
-        if (value > MAX_SCORE) {
-            throw new IllegalArgumentException("점수는 10점을 초과할수 없습니다.");
-        }
+    public static Score ofZero() {
+        return new Score(0);
     }
 
     @Override
@@ -42,5 +39,11 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    private void validate(int value) {
+        if (value < 0) {
+            throw new IllegalArgumentException("점수는 음수가 될 수 없습니다.");
+        }
     }
 }

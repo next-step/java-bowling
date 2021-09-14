@@ -39,4 +39,25 @@ public class ScoresTest {
 
         assertThat(scores.isSecondScore()).isTrue();
     }
+
+    @Test
+    @DisplayName("n 개의 점수 합 계산")
+    void sumTest() {
+        Scores scores = new Scores();
+
+        scores.add(new Score(2));
+        scores.add(new Score(8));
+
+        assertThat(scores.sum(2)).isEqualTo(new Score(10));
+    }
+
+    @Test
+    @DisplayName("점수의 갯수 확인")
+    void getSizeTest() {
+        Scores scores = new Scores();
+
+        scores.add(new Score(2));
+
+        assertThat(scores.getSize()).isEqualTo(1);
+    }
 }
