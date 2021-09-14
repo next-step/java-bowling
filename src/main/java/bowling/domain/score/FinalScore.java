@@ -13,4 +13,8 @@ public class FinalScore extends Score {
         return new FinalScore(null, null, null);
     }
 
+    public FinalScore createFirstPin(Pin pin) {
+        return new FinalScore(pin, null, null);
+    }
+
 }

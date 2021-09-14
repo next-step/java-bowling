@@ -17,4 +17,19 @@ class FinalScoreTest {
         // then
         assertThat(result).isInstanceOf(FinalScore.class);
     }
+
+    @Test
+    @DisplayName("첫번째 핀을 생성할 수 있다.")
+    void createFirstPinTest() {
+
+        // given
+        FinalScore start = FinalScore.empty();
+        Pin first = Pin.of(5);
+
+        // when
+        FinalScore result = start.createFirstPin(first);
+
+        // then
+        assertThat(result).isInstanceOf(FinalScore.class);
+    }
 }
