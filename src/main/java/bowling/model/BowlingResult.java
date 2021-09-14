@@ -51,7 +51,7 @@ public enum BowlingResult {
     }
 
     private static BowlingResult isStrikeOrSpare(BowlingResult beforeResult) {
-        if (beforeResult == STRIKE) {
+        if (beforeResult == SPARE || beforeResult == STRIKE) {
             return STRIKE;
         }
 
