@@ -1,5 +1,7 @@
 package bowling.domain.Pin;
 
+import bowling.exception.Pin.PinSecondValueException;
+
 public class FinalPins {
 
     private final Pin first;
@@ -18,9 +20,16 @@ public class FinalPins {
 
     public FinalPins ofNext(Pin pin) {
         if (second == null) {
+            checkSecondPin(first, pin);
             return new FinalPins(first, pin, null);
         }
         return new FinalPins(first, second, pin);
+    }
+
+    private static void checkSecondPin(Pin first, Pin second) {
+        if (!first.isRemainPin(second)) {
+            throw new PinSecondValueException();
+        }
     }
 
 }
