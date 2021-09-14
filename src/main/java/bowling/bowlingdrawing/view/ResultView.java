@@ -23,7 +23,7 @@ public class ResultView {
         formatter.format("|  %-4s|", player.name());
 
         for (int i = 0; i < 9; i++) {
-            String score = scoreToString(i, frames);
+            String score = framesToString(i, frames);
             formatter.format("  %-4s|", score);
         }
 
@@ -38,24 +38,14 @@ public class ResultView {
         System.out.println(result);
     }
 
-    private static String scoreToString(int indexFrame, List<Frame> frames) {
+    private static String framesToString(int indexFrame, List<Frame> frames) {
         if(indexFrame > frames.size()-1){
             return "";
         }
 
         Frame frame = frames.get(indexFrame);
 
-        String firstScoreString = convertFirstResult(frame.firstScore());
-        String secondScoreString = convertNextResult(frame.secondScore());
-
-        if(frame.strike()) {
-            return "X";
-        }
-        if (frame.spare()) {
-            return frame.firstScore() + "|/";
-        }
-
-        return firstScoreString + secondScoreString;
+        return frameToString(frame);
     }
 
     private static String lastScoreToString(FinalFrame finalFrame) {
@@ -64,23 +54,21 @@ public class ResultView {
         }
 
         Frame frame = finalFrame.finalFrame();
-        String firstScoreString = convertFirstResult(frame.firstScore());
-        String secondScoreString = convertNextResult(frame.firstScore());
         String firstBonusScoreString = convertBonusResult(finalFrame.firstBonusScore());
         String secondBonusScoreString = convertBonusResult(finalFrame.secondBonusScore());
 
-        if (finalFrame.strike()) {
-            if (finalFrame.firstBonusScore() == -1) {
-                return "X";
-            }
-            if(finalFrame.secondBonusScore() == -1) {
-                return "X" + firstBonusScoreString;
-            }
-            return "X" + firstBonusScoreString + secondBonusScoreString;
-        }
+        return frameToString(frame) + firstBonusScoreString + secondBonusScoreString;
+    }
 
-        if (finalFrame.spare()) {
-            return firstScoreString + "|/" + firstBonusScoreString;
+    private static String frameToString(Frame frame) {
+        String firstScoreString = convertFirstResult(frame.firstScore());
+        String secondScoreString = convertNextResult(frame.secondScore());
+
+        if(frame.strike()) {
+            return "X";
+        }
+        if (frame.spare()) {
+            return frame.firstScore() + "|/";
         }
 
         return firstScoreString + secondScoreString;
