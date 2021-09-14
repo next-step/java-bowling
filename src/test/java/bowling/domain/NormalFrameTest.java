@@ -3,8 +3,7 @@ package bowling.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.*;
 
 class NormalFrameTest {
 
@@ -26,6 +25,26 @@ class NormalFrameTest {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> frame.bowl(PinCount.THREE))
                 .withMessageContainingAll("8", "3");
+    }
+
+    @DisplayName("스트라이크인 경우 프레임은 종료된다.")
+    @Test
+    public void normalFrameStrikeFinishTest() {
+        Frame frame = new NormalFrame();
+        assertThat(frame.isFinished()).isFalse();
+        frame.bowl(PinCount.TEN);
+        assertThat(frame.isFinished()).isTrue();
+    }
+
+    @DisplayName("첫번째와 두번째 투구가 모두 끝난 경우 프레임은 종료된다.")
+    @Test
+    public void normalFrameFinishTest() {
+        Frame frame = new NormalFrame();
+        assertThat(frame.isFinished()).isFalse();
+        frame.bowl(PinCount.THREE);
+        assertThat(frame.isFinished()).isFalse();
+        frame.bowl(PinCount.FOUR);
+        assertThat(frame.isFinished()).isTrue();
     }
 
 }

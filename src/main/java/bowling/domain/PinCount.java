@@ -49,4 +49,8 @@ public enum PinCount {
     public boolean isDefined() {
         return !this.equals(UNDEFINED);
     }
+
+    public boolean isStrike() {
+        return this.equals(TEN);
+    }
 }

@@ -6,12 +6,8 @@ public class NormalFrame implements Frame {
     private PinCount second;
 
     public NormalFrame() {
-        this(PinCount.UNDEFINED, PinCount.UNDEFINED);
-    }
-
-    public NormalFrame(PinCount first, PinCount second) {
-        this.first = first;
-        this.second = second;
+        this.first = PinCount.UNDEFINED;
+        this.second = PinCount.UNDEFINED;
     }
 
     @Override
@@ -39,7 +35,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isFinished() {
-        return first.isDefined() && second.isDefined();
+        return first.isStrike() || (first.isDefined() && second.isDefined());
     }
 
     @Override
