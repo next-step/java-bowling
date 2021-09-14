@@ -1,28 +1,24 @@
 package bowling.domain;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class Frame {
-    private static final int MAX_PIN_NUMBER = 10;
+public abstract class Frame {
 
-    protected Score score;
-    protected Status status;
-    private Frame nextFrame;
+    public static final int LAST_FRAME = 10;
+    public static final int FIRST_FRAME = 1;
+    public static final int EMPTY_FRAME = 0;
 
-    public Frame(int hitNumberOfPin) {
-        if (hitNumberOfPin == MAX_PIN_NUMBER) {
+    FrameIndex frameIndex;
+    Score score;
+    Status status;
+
+    public Frame(int hitNumberOfPin, int frameIndex) {
+        if (hitNumberOfPin == Pin.MAX.getValue()) {
             status = Status.STRIKE;
         }
         score = new Score(hitNumberOfPin);
-    }
-
-    public Frame() {
-    }
-
-    public int firstScore() {
-        return score.firstScore();
+        this.frameIndex = new FrameIndex(frameIndex);
     }
 
     public void secondBall(int hitNumberOfPin) {
@@ -30,13 +26,12 @@ public class Frame {
         status = score.frameStatus();
     }
 
-    public int secondScore() {
-        return score.secondScore();
+    public int firstScore() {
+        return score.firstScore();
     }
 
-    public Frame nextFrame(int hitNumberOfPin) {
-        nextFrame = new Frame(hitNumberOfPin);
-        return nextFrame;
+    public int secondScore() {
+        return score.secondScore();
     }
 
     public List<String> scores() {
@@ -54,22 +49,18 @@ public class Frame {
         return Status.STRIKE.equals(status);
     }
 
-    public FinalFrame finalFrame(int hitNumberOfPin) {
-        FinalFrame finalFrame = new FinalFrame(hitNumberOfPin);
-        nextFrame = finalFrame;
-        return finalFrame;
+    public int frameIndex() {
+        return frameIndex.getValue();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Frame frame = (Frame) o;
-        return Objects.equals(score, frame.score) && status == frame.status && Objects.equals(nextFrame, frame.nextFrame);
+    public int nextFrameIndex() {
+        return frameIndex.getValue() + 1;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(score, status, nextFrame);
+    public int frameScore() {
+        return score.scores()
+                .stream()
+                .mapToInt(score -> score)
+                .sum();
     }
 }
