@@ -28,8 +28,7 @@ public class BowlingGameTest {
         frames1.add(finishFinalFrame);
         frames2.add(notFinishFinalFrame);
 
-
-        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1, frames2), 0);
+        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1, frames2), Players.of(Arrays.asList(Player.from("syd"), Player.from("kjy"))));
 
         assertThat(bowlingGame.isEnd()).isFalse();
     }
@@ -54,7 +53,7 @@ public class BowlingGameTest {
         frames2.add(notFinishFinalFrame);
 
 
-        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1, frames2), 0);
+        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1, frames2), Players.of(Arrays.asList(Player.from("syd"), Player.from("kjy"))));
 
         assertThat(bowlingGame.isEnd()).isTrue();
     }
@@ -77,7 +76,7 @@ public class BowlingGameTest {
         frames2.add(normalFrame2);
 
 
-        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1, frames2), 0);
+        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1, frames2), Players.of(Arrays.asList(Player.from("syd"), Player.from("kjy"))));
 
         assertThat(bowlingGame.isRoundEnd()).isFalse();
     }
@@ -87,15 +86,15 @@ public class BowlingGameTest {
     void bowl() {
         Frames frames1 = Frames.newInstance();
 
-        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1), 0);
+        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1), Players.of(Arrays.asList(Player.from("syd"), Player.from("kjy"))));
 
-        bowlingGame.bowl(0, 10);
+        bowlingGame.bowl(Player.from("syd"), 10);
 
-        bowlingGame.bowl(0, 10);
+        bowlingGame.bowl(Player.from("syd"), 10);
 
-        bowlingGame.bowl(0, 10);
+        bowlingGame.bowl(Player.from("syd"), 10);
 
-        assertThat(bowlingGame.currentGame(0).size()).isEqualTo(3);
+        assertThat(bowlingGame.currentGame(Player.from("syd")).size()).isEqualTo(3);
     }
 
     @DisplayName("2경기 중 1번째 경기의 프레임이 종료 되면, 2번째 경기는 한번 더 쳐야 하기 때문에 true를 반환")
@@ -104,13 +103,13 @@ public class BowlingGameTest {
         Frames frames1 = Frames.newInstance();
         Frames frames2 = Frames.newInstance();
 
-        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1, frames2), 0);
+        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1, frames2), Players.of(Arrays.asList(Player.from("syd"), Player.from("kjy"))));
 
-        bowlingGame.bowl(0, 10);
+        bowlingGame.bowl(Player.from("syd"), 10);
 
-        bowlingGame.bowl(1, 3);
+        bowlingGame.bowl(Player.from("kjy"), 3);
 
-        assertThat(bowlingGame.isBowling(1)).isTrue();
+        assertThat(bowlingGame.isBowling(Player.from("kjy"))).isTrue();
     }
 
     @DisplayName("2경기 중 1번째 경기의 프레임이 종료 되면 false 를 반환")
@@ -119,12 +118,12 @@ public class BowlingGameTest {
         Frames frames1 = Frames.newInstance();
         Frames frames2 = Frames.newInstance();
 
-        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1, frames2), 0);
+        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1, frames2), Players.of(Arrays.asList(Player.from("syd"), Player.from("kjy"))));
 
-        bowlingGame.bowl(0, 10);
+        bowlingGame.bowl(Player.from("syd"), 10);
 
-        bowlingGame.bowl(1, 3);
+        bowlingGame.bowl(Player.from("kjy"), 3);
 
-        assertThat(bowlingGame.isBowling(0)).isFalse();
+        assertThat(bowlingGame.isBowling(Player.from("syd"))).isFalse();
     }
 }

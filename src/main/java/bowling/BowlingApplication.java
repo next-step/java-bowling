@@ -2,6 +2,7 @@ package bowling;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.Frames;
+import bowling.domain.Player;
 import bowling.domain.Players;
 import bowling.view.InputView;
 import bowling.view.ResultView;
@@ -13,7 +14,7 @@ public class BowlingApplication {
     public static void main(String args[]) {
         int count = InputView.getPlayerCount();
         Players players = Players.of(InputView.getPlayerNames(count));
-        BowlingGame bowlingGame = BowlingGame.of(initFrames(players), BowlingGame.FIRST_ROUND);
+        BowlingGame bowlingGame = BowlingGame.of(initFrames(players), players);
 
         while (!bowlingGame.isEnd()) {
             playGame(players, bowlingGame);
@@ -23,18 +24,18 @@ public class BowlingApplication {
 
     private static void playGame(Players players, BowlingGame bowlingGame) {
         for (int index = 0; index < players.size(); index++) {
-            bowling(players, bowlingGame, index);
+            bowling(players.get(index), bowlingGame);
         }
     }
 
-    private static void bowling(Players players, BowlingGame bowlingGame, int index) {
-        if (bowlingGame.isBowling(index)) {
-            int score = InputView.getFrameScore(players.name(index));
+    private static void bowling(Player player, BowlingGame bowlingGame) {
+        if (bowlingGame.isBowling(player)) {
+            int score = InputView.getFrameScore(player);
 
-            bowlingGame.bowl(index, score);
+            bowlingGame.bowl(player, score);
 
             ResultView.printTitle();
-            ResultView.printBowlingGame(players, bowlingGame);
+            ResultView.printBowlingGame(bowlingGame);
         }
     }
 

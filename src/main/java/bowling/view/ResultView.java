@@ -16,19 +16,21 @@ public class ResultView {
     private static final String GUTTER = "- |";
     private static final String SPARE = "/ |";
 
-    public static void printBowlingGame(Players players, BowlingGame bowlingGame) {
+    public static void printBowlingGame(BowlingGame bowlingGame) {
         for (int i = 0; i < bowlingGame.size(); i++) {
+            Players players = bowlingGame.getPlayers();
+
             printPlayer(players.name(i));
 
-            printPitch(bowlingGame.currentGame(i));
+            printPitch(bowlingGame.currentGame(players.get(i)));
 
-            printRemainBoard(bowlingGame.currentGame(i));
+            printRemainBoard(bowlingGame.currentGame(players.get(i)));
 
             printBlank();
 
-            printResultScore(bowlingGame.currentGame(i));
+            printResultScore(bowlingGame.currentGame(players.get(i)));
 
-            printRemainScore(bowlingGame.currentGame(i));
+            printRemainScore(bowlingGame.currentGame(players.get(i)));
 
             System.out.println();
         }

@@ -25,15 +25,15 @@ public class InputView {
         return players;
     }
 
-    public static int getFrameScore(String player) {
-        System.out.print(player + GET_FRAME_SCORE);
-        int score = scanner.nextInt();
-        return score;
-    }
-
     public static int getPlayerCount() {
         System.out.print(GET_PLAYER_COUNT);
         int count = scanner.nextInt();
         return count;
+    }
+
+    public static int getFrameScore(Player player) {
+        System.out.print(player.name() + GET_FRAME_SCORE);
+        int score = scanner.nextInt();
+        return score;
     }
 }

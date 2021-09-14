@@ -15,5 +15,4 @@ public class PlayersTest {
 
         assertThat(players).isEqualTo(Players.of(Arrays.asList(Player.from("syd"), Player.from("kjy"), Player.from("pjs"))));
     }
-
 }

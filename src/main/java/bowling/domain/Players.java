@@ -22,6 +22,14 @@ public class Players {
         return players.size();
     }
 
+    public int participantNumber(Player player) {
+        return players.indexOf(player);
+    }
+
+    public Player get(int number) {
+        return players.get(number);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -6,15 +6,17 @@ public class BowlingGame {
     public static final int FIRST_ROUND = 0;
 
     private List<Frames> bowlingGame;
+    private Players players;
     private int round;
 
-    public BowlingGame(List<Frames> bowlingGame, int round) {
+    public BowlingGame(List<Frames> bowlingGame, Players players, int round) {
         this.bowlingGame = bowlingGame;
+        this.players = players;
         this.round = round;
     }
 
-    public static BowlingGame of(List<Frames> bowlingGame, int round) {
-        return new BowlingGame(bowlingGame, round);
+    public static BowlingGame of(List<Frames> bowlingGame, Players players) {
+        return new BowlingGame(bowlingGame, players, FIRST_ROUND);
     }
 
     public boolean isRoundEnd() {
@@ -31,12 +33,17 @@ public class BowlingGame {
         return bowlingGame.size();
     }
 
-    public Frames currentGame(int playerIndex) {
-        return bowlingGame.get(playerIndex);
+    public Frames currentGame(Player player) {
+        int participantNumber = players.participantNumber(player);
+        return bowlingGame.get(participantNumber);
     }
 
-    public Frame currentGameFrame(int playerIndex) {
-        return currentGame(playerIndex).currentFrame().next();
+    public Frame currentGameFrame(Player player) {
+        return currentGame(player).currentFrame().next();
+    }
+
+    public Players getPlayers() {
+        return players;
     }
 
     public void checkRound() {
@@ -45,21 +52,21 @@ public class BowlingGame {
         }
     }
 
-    public void bowl(int index, int score) {
-        Frame frame = currentGameFrame(index);
-
-        Pins pins = Pins.of(score);
-        frame.bowl(pins);
-
-        currentGame(index).add(frame);
-    }
-
-    public boolean isBowling(int index) {
-        Frame frame = currentGameFrame(index);
+    public boolean isBowling(Player player) {
+        Frame frame = currentGameFrame(player);
 
         if (!frame.isFinish() && frame.getFrameNumber() - 1 == round) {
             return true;
         }
         return false;
+    }
+
+    public void bowl(Player player, int score) {
+        Frame frame = currentGameFrame(player);
+
+        Pins pins = Pins.of(score);
+        frame.bowl(pins);
+
+        currentGame(player).add(frame);
     }
 }
