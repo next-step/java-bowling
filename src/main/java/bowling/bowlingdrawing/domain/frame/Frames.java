@@ -42,8 +42,8 @@ public class Frames {
     }
 
     private void addNewFrame(Pitching pitching) {
-        Frame firstFrame = new Frame(pitching);
-        frames.add(firstFrame);
+        Frame newFrame = new Frame(pitching);
+        frames.add(newFrame);
     }
 
     public boolean end() {
