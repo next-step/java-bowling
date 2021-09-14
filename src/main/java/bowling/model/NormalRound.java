@@ -21,6 +21,7 @@ public class NormalRound implements Round{
     @Override
     public BowlingResult play(int totalPoint, int tryCount) {
         BowlingResult currentResult = BowlingResult.findBowlingResult(new Point(totalPoint), tryCount, result.getBefore());
+        System.out.println("currentResult = " + currentResult);
         result = new Result(result.getBefore(), currentResult);
         return currentResult;
     }

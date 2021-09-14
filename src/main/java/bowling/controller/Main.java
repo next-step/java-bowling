@@ -33,9 +33,11 @@ public class Main {
 
     private static void playRound(BowlingGame game, User user, int index) {
         int tryCount = 0;
-        while (tryCount++ < SECOND_TRY) {
+        int maxRound = SECOND_TRY;
+        game.roundInit();
+        while (tryCount++ < maxRound) {
             int pinCount = askDigit(index + "프레임 투구 : ");
-            tryCount = game.play(index, tryCount, pinCount);
+            maxRound += game.play(pinCount);
 
             getLastList().add(changeScore(pinCount, getBowlingResult()));
             printBowlingScore(user.getName(), allResults);

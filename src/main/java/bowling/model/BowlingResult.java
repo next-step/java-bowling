@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum BowlingResult {
-    STRIKE(Arrays.asList(10), Arrays.asList(1,2)),
-    SPARE(Arrays.asList(10), Arrays.asList(2)),
-    MISS(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9), Arrays.asList(2)),
-    GUTTER(Arrays.asList(0), Arrays.asList(1,2)),
+    STRIKE(Arrays.asList(10), Arrays.asList(1,2,3)),
+    SPARE(Arrays.asList(10), Arrays.asList(2,3)),
+    MISS(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9), Arrays.asList(2,3)),
+    GUTTER(Arrays.asList(0), Arrays.asList(1,2,3)),
     EMPTY(Collections.EMPTY_LIST, Collections.EMPTY_LIST);
 
     private final List<Integer> pinCount;
@@ -29,6 +29,7 @@ public enum BowlingResult {
     }
 
     public static BowlingResult findBowlingResult(Point point, int tryCount, BowlingResult beforeResult) {
+        System.out.println(beforeResult);
         List<BowlingResult> bowlingResults = Arrays.stream(BowlingResult.values())
                 .filter(bowlingResult -> isMatchCount(point, bowlingResult))
                 .filter(bowlingResult -> isMatchTry(tryCount, bowlingResult))
@@ -50,11 +51,11 @@ public enum BowlingResult {
     }
 
     private static BowlingResult isStrikeOrSpare(BowlingResult beforeResult) {
-        if (beforeResult == EMPTY || beforeResult == GUTTER) {
-            return SPARE;
+        if (beforeResult == STRIKE) {
+            return STRIKE;
         }
 
-        return STRIKE;
+        return SPARE;
     }
 
 

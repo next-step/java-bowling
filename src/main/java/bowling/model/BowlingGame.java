@@ -11,9 +11,6 @@ public class BowlingGame {
 
     public BowlingGame() {
         this.allRounds = new ArrayList<>();
-        for (int i = 1; i <= MAX_ROUND; i++) {
-            allRounds.add(new RoundSet(i));
-        }
     }
 
     public BowlingGame(int index, RoundSet roundSet) {
@@ -22,12 +19,12 @@ public class BowlingGame {
         this.allRounds.remove(index);
     }
 
-    public int play(int index, int tryCount, int point) {
-        if (allRounds.size() < index){
-            allRounds.add(new RoundSet(index));
-        }
+    public void roundInit() {
+        allRounds.add(new RoundSet(allRounds.size() + 1));
+    }
 
-        return getRoundSet(index).play(tryCount, point);
+    public int play(int point) {
+        return getRoundSet(allRounds.size()).play(point);
     }
 
     private RoundSet getRoundSet(int index) {

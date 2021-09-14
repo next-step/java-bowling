@@ -9,8 +9,7 @@ import static bowling.model.Point.isValidRange;
 
 public class RoundSet {
     private static final int FINAL_ROUND = 10;
-    private static final int SECOND_TRY = 2;
-    private static final int FIRST_TRY = 1;
+    private static final int STRIKE_POINT = 10;
 
     private int totalPoint;
     private List<Round> rounds;
@@ -32,33 +31,28 @@ public class RoundSet {
         this.rounds = rounds;
     }
 
-    public int play(int tryCount, int point) {
-        int count = tryCount;
-
-        calcTotalPoint(point);
-        BowlingResult result = getLastRound().play(totalPoint, tryCount);
+    public int play(int point) {
+        int tryCount = rounds.size();
+        int maxCount = 0;
+        System.out.println("tryCount = " + tryCount);
+        System.out.println(getLastRound() instanceof FinalRound);
+        BowlingResult result = getLastRound().play(calcTotalPoint(point), tryCount);
         bowlingResults.add(result);
 
         boolean isSkip = isSkipNextRound();
         if (isSkip) {
-            return SECOND_TRY;
+            return -1;
         }
 
         boolean isBonus = giveBonus();
-        if (isBonus && tryCount == FIRST_TRY) {
-            count = 0;
+        System.out.println("give Bonus~~" +isBonus);
+        if (isBonus) {
+            maxCount = 1;
         }
 
-        if (isBonus && tryCount == SECOND_TRY) {
-            count = FIRST_TRY;
-            next(result);
-        }
+        next(result);
 
-        if (tryCount == FIRST_TRY) {
-            next(result);
-        }
-
-        return count;
+        return maxCount;
     }
 
     private Round getLastRound() {
@@ -69,15 +63,14 @@ public class RoundSet {
         return rounds.size();
     }
 
-    private void calcTotalPoint(int point) {
-        if (isBonusRound()) {
-            totalPoint = point;
-        }
-
-        if (!isBonusRound()) {
+    private int calcTotalPoint(int point) {
+        if (point != STRIKE_POINT) {
             totalPoint += point;
             isValidRange(totalPoint);
+            return totalPoint;
         }
+
+        return STRIKE_POINT;
     }
 
     private boolean isSkipNextRound() {
@@ -94,8 +87,8 @@ public class RoundSet {
         if (!isBonusRound) {
             isBonusRound = giveBonus();
         }
-
         rounds.add(getLastRound().next(isBonusRound, currentResult));
+        System.out.println("rounds size = " + rounds.size());
     }
 
     private boolean isBonusRound() {
