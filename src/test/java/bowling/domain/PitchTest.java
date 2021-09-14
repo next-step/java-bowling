@@ -47,7 +47,6 @@ class PitchTest {
         assertThat(pitch.isStrike()).isTrue();
     }
 
-    //FIXME : 테스트 불가
     @Test
     @Disabled
     @DisplayName("Pitch 2개의 합이 10 이상 이라면, OverScoreException")
