@@ -4,7 +4,7 @@ import bowling.domain.score.NormalScore;
 
 import java.util.Objects;
 
-public class NormalFrame {
+public class NormalFrame extends Frame {
 
     private static final int LAST_ROUND = 9;
 
@@ -12,12 +12,10 @@ public class NormalFrame {
 
     private NormalScore score;
 
-    private int trial;
-
     private NormalFrame(int index, NormalScore score, int trial) {
+        super(trial);
         this.index = index;
         this.score = score;
-        this.trial = trial;
     }
 
     public static NormalFrame init() {
@@ -57,6 +55,7 @@ public class NormalFrame {
         return this;
     }
 
+    @Override
     public boolean isLast() {
         if (index > LAST_ROUND) {
             return true;

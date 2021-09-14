@@ -4,17 +4,15 @@ import bowling.domain.score.FinalScore;
 
 import java.util.Objects;
 
-public class FinalFrame {
+public class FinalFrame extends Frame {
 
     private FinalScore score;
-
-    private final int trial;
 
     private final FinalFrameStatus status;
 
     public FinalFrame(FinalScore score, int trial, FinalFrameStatus status) {
+        super(trial);
         this.score = score;
-        this.trial = trial;
         this.status = status;
     }
 
@@ -31,24 +29,8 @@ public class FinalFrame {
         return of(FinalScore.start(), 1, false, false);
     }
 
-    public static boolean isNone(FinalFrame frame) {
-        return init().equals(frame);
-    }
-
     public FinalScore getScore() {
         return score;
-    }
-
-    public int getTrial() {
-        return trial;
-    }
-
-    public boolean isLast() {
-        return !status.isThirdAvailable() && status.isDone();
-    }
-
-    public int score() {
-        return score.getThird();
     }
 
     public FinalFrame tryFirst(int score) {
@@ -63,12 +45,17 @@ public class FinalFrame {
         return of(this.score, 2, FinalFrameStatus.of(false, true));
     }
 
+    private boolean isThirdAvailable() {
+        return this.score.isStrike() || this.score.isSpare();
+    }
+
     public FinalFrame tryThird(int score) {
         return of(this.score.third(score), 3, FinalFrameStatus.of(false, true));
     }
 
-    private boolean isThirdAvailable() {
-        return this.score.isStrike() || this.score.isSpare();
+    @Override
+    public boolean isLast() {
+        return !status.isThirdAvailable() && status.isDone();
     }
 
     @Override

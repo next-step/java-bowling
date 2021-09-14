@@ -22,12 +22,12 @@ public class FinalScore extends Score {
     public FinalScore second(int score) {
         validateScore(score);
         validateCombinedScores(score);
-        return new FinalScore(this.first, score, this.third);
+        return new FinalScore(getFirst(), score, this.third);
     }
 
     public FinalScore third(int score) {
         validateScore(score);
-        return new FinalScore(this.first, this.second, score);
+        return new FinalScore(getFirst(), getSecond(), score);
     }
 
     public int getThird() {
@@ -36,7 +36,7 @@ public class FinalScore extends Score {
 
     @Override
     protected void validateCombinedScores(int score) {
-        if (!isStrike() && this.first + score > MAX_SCORE) {
+        if (!isStrike() && getFirst() + score > MAX_SCORE) {
             throw new IllegalArgumentException(
                     "마지막 프레임의 첫시도가 스트라이크가 아닐 때, 1차시도와 2차시도의 합계는 10점을 넘을 수 없습니다.");
         }
