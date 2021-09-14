@@ -13,7 +13,7 @@ public class FrameNumber {
     }
 
     public boolean isOver() {
-        return this.number == LAST_FRAME_NUMBER;
+        return this.number > LAST_FRAME_NUMBER;
     }
 
     public void increase() {
