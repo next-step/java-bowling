@@ -37,4 +37,17 @@ class FrameStateRendererTest {
         assertThat(renderer.render()).contains(expected);
     }
 
+    @ParameterizedTest(name = "추가 투구 렌더링 테스트")
+    @CsvSource({
+            "EIGHT, TWO, SEVEN, 8|/|7",
+            "EIGHT, TWO, TEN, 8|/|X",
+            "TEN, TWO, EIGHT, X|2|/",
+            "TEN, TEN, SIX, X|X|6",
+            "TEN, TEN, TEN, X|X|X"
+    })
+    public void bonusBowlRenderingTest(PinCount first, PinCount second, PinCount third, String expected) {
+        Renderer renderer = FrameStateRenderer.of(first, second, third);
+        assertThat(renderer.render()).contains(expected);
+    }
+
 }
