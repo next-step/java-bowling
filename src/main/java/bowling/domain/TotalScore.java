@@ -39,18 +39,23 @@ public class TotalScore {
     }
 
     public List<Integer> getTotalScores(Frames frames, List<Integer> calculatedScores) {
-        if (scores.size() == 0 || scores.size() <= lastIndex) {
+        if (!checkCalculateSize()) {
             return calculatedScores;
         }
-        if (scores.get(lastIndex) == Score.TEN_SCORE && (lastIndex + 2) >= scores.size()) {
-            return calculatedScores;
-        }
+
         calculateScores(calculatedScores);
         if (frames.isFinish() && calculatedScores.size() != TOTAL_FRAME_COUNT) {
             calculateScores(calculatedScores);
         }
 
         return calculatedScores;
+    }
+
+    private boolean checkCalculateSize() {
+        if ((scores.size() == 0 || scores.size() <= lastIndex) || (scores.get(lastIndex) == Score.TEN_SCORE && (lastIndex + 2) >= scores.size())) {
+            return false;
+        }
+        return true;
     }
 
     private void calculateScores(List<Integer> calculatedScores) {
