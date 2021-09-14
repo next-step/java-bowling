@@ -1,48 +1,25 @@
 package bowling;
 
-import bowling.domain.BowlingGame;
-import bowling.domain.BowlingGames;
+import bowling.domain.BowlingClub;
 import bowling.ui.InputView;
 import bowling.ui.ResultView;
+
+import java.util.List;
 
 public class BowlingApplication {
 
     public static void main(String[] args) {
+        List<String> names = InputView.InputPlayers();
+        BowlingClub bowlingClub = new BowlingClub(names);
 
-        int numberOfPlayer = InputView.InputNumberOfPlayer();
+        ResultView.printBowlingResult(bowlingClub.games());
 
-        String[] names = new String[numberOfPlayer];
-        for (int i = 0; i < numberOfPlayer; i++) {
-            names[i] = InputView.inputPlayerName(i + 1);
+        while (bowlingClub.isNotEnd()) {
+            int fallenPin = InputView.nextFallenPin(bowlingClub.nameOfPlayerForThisTurn());
+            bowlingClub.roll(fallenPin);
+            ResultView.printBowlingResult(bowlingClub.games());
         }
 
-        BowlingGames bowlingGames = new BowlingGames(names);
-
-        printBowlingGame(bowlingGames);
-
-        while (bowlingGames.isNotEnd()) {
-            for (BowlingGame game : bowlingGames.games()) {
-                roll(game, bowlingGames);
-            }
-        }
-
-    }
-
-    private static void roll(BowlingGame game, BowlingGames bowlingGames) {
-        int fallenPin = InputView.nextFallenPin(game);
-        game.roll(fallenPin);
-        printBowlingGame(bowlingGames);
-        if (!game.currentFrameIsEnd()) {
-            roll(game, bowlingGames);
-        }
-    }
-
-    private static void printBowlingGame(BowlingGames bowlingGames) {
-        ResultView.printFrame();
-        bowlingGames.games().forEach(game -> {
-            ResultView.printFrameByPlayer(game);
-            ResultView.printScoreByPlayer(game);
-        });
     }
 
 }
