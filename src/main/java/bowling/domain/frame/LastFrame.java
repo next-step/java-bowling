@@ -64,8 +64,7 @@ public class LastFrame extends DefaultFrame {
 	}
 
 	private void changeLastPitchState(final PitchState pitchState) {
-		pitchStates.remove(pitchStates.size() - 1);
-		pitchStates.add(pitchState);
+		pitchStates.changeLastPitchState(pitchState);
 	}
 
 	private void addExtraChance() {

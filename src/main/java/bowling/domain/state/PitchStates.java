@@ -42,6 +42,11 @@ public class PitchStates {
 				});
 	}
 
+	public void changeLastPitchState(final PitchState pitchState){
+		values.remove(values.size() - 1);
+		values.add(pitchState);
+	}
+
 	public int size() {
 		return values.size();
 	}
