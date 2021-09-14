@@ -54,13 +54,8 @@ public class Pitch {
     public void checkTotal(Pitch second) {
         int totalScore = this.pitch + second.pitch;
         if (totalScore > 10) {
-            try {
-                throw new OverScoreException(totalScore);
-            } catch (OverScoreException e) {
-                e.printStackTrace();
-            }
+            throw new OverScoreException(totalScore);
         }
-
     }
 
     public boolean isSpare(Pitch second) {
