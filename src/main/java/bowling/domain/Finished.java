@@ -32,7 +32,7 @@ public class Finished implements FrameState {
     }
 
     public boolean isMiss() {
-        return !isStrike() && !isStrike();
+        return !isStrike() && !isSpare();
     }
 
     @Override
