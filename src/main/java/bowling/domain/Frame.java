@@ -8,15 +8,11 @@ public class Frame {
     private final Pitch second;
 
     private Frame(Inning inning) {
-        this.inning = inning;
-        this.first = new Pitch();
-        this.second = new Pitch();
+        this(inning, new Pitch(), new Pitch());
     }
 
     public Frame(Inning inning, Pitch first) {
-        this.inning = inning;
-        this.first = first;
-        this.second = new Pitch();
+        this(inning, first, new Pitch());
     }
 
     public Frame(Inning inning, Pitch first, Pitch second) {
