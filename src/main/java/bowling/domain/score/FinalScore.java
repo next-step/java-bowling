@@ -13,8 +13,14 @@ public class FinalScore extends Score {
         return new FinalScore(null, null, null);
     }
 
+    @Override
     public FinalScore createFirstPin(Pin pin) {
         return new FinalScore(pin, null, null);
+    }
+
+    @Override
+    public FinalScore createSecondPin(Pin pin) {
+        return new FinalScore(this.first, pin, null);
     }
 
 }

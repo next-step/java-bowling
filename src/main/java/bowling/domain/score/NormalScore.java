@@ -14,12 +14,14 @@ public class NormalScore extends Score {
         return new NormalScore(null, null);
     }
 
+    @Override
     public NormalScore createFirstPin(Pin pin) {
         return new NormalScore(pin, null);
     }
 
+    @Override
     public NormalScore createSecondPin(Pin pin) {
-        checkFirstStrike(first);
+        checkFirstStrike(this.first);
 
         return new NormalScore(this.first, pin);
     }

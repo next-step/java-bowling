@@ -32,4 +32,22 @@ class FinalScoreTest {
         // then
         assertThat(result).isInstanceOf(FinalScore.class);
     }
+
+    @Test
+    @DisplayName("두번째 핀을 생성할 수 있다.")
+    void createSecondPinTest() {
+
+        // given
+        FinalScore start = FinalScore.empty();
+        Pin first = Pin.of(5);
+        FinalScore firstScore = start.createFirstPin(first);
+        Pin second = Pin.of(3);
+
+        // when
+        FinalScore result = firstScore.createSecondPin(second);
+
+        // then
+        assertThat(result).isInstanceOf(FinalScore.class);
+    }
+
 }

@@ -10,4 +10,7 @@ public abstract class Score {
         this.second = second;
     }
 
+    abstract Score createFirstPin(Pin pin);
+    abstract Score createSecondPin(Pin pin);
+
 }
