@@ -1,38 +1,37 @@
 package bowling.domain;
 
-public enum FrameNumber {
-    FIRST,
-    SECOND,
-    THIRD,
-    FOURTH,
-    FIFTH,
-    SIXTH,
-    SEVENTH,
-    EIGHTH,
-    NINTH,
-    LAST,
-    FRAME_OVER;
+public class FrameNumber {
 
-    public static final int LAST_FRAME_NUMBER = 10;
-    public static final int FRAME_NUMBER_INCREASE_UNIT = 1;
+    private static final int FIRST_FRAME_NUMBER = 1;
+    private static final int LAST_FRAME_NUMBER = 10;
+    private static final int GAP_BETWEEN_NUMBER_AND_INDEX = 1;
+
+    private int number;
+
+    public FrameNumber() {
+        this.number = FIRST_FRAME_NUMBER;
+    }
 
     public boolean isOver() {
-        return this.equals(FRAME_OVER);
+        return this.number == LAST_FRAME_NUMBER;
     }
 
-    public FrameNumber next() {
+    public void increase() {
         validateOverFrameNumber();
-        return values()[this.ordinal() + FRAME_NUMBER_INCREASE_UNIT];
-    }
-
-    public int getNumber() {
-        validateOverFrameNumber();
-        return this.ordinal() + 1;
+        this.number++;
     }
 
     private void validateOverFrameNumber() {
         if (isOver()) {
             throw new IllegalStateException("프레임 최대 값을 초과했습니다.");
         }
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public int frameIndex() {
+        return number - GAP_BETWEEN_NUMBER_AND_INDEX;
     }
 }

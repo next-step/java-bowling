@@ -21,10 +21,10 @@ public class BowlingGame {
         Player player = new Player(inputView.getPlayerName());
         outputView.printScoreBoard(player.toRenderer());
 
-        FrameNumber frameNumber = FrameNumber.FIRST;
+        FrameNumber frameNumber = new FrameNumber();
         while (!frameNumber.isOver()) {
             outputView.printBowlInputMessage(frameNumber.getNumber());
-            frameNumber = player.bowl(frameNumber, PinCount.valueOf(inputView.getFallenPinCount()));
+            player.bowl(frameNumber, PinCount.valueOf(inputView.getFallenPinCount()));
             outputView.printScoreBoard(player.toRenderer());
         }
     }

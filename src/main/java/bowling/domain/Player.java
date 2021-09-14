@@ -10,8 +10,8 @@ public class Player {
         this.frames = new Frames();
     }
 
-    public FrameNumber bowl(FrameNumber frameNumber, PinCount fallenPinCount) {
-        return frames.bowl(frameNumber, fallenPinCount);
+    public void bowl(FrameNumber frameNumber, PinCount fallenPinCount) {
+        frames.bowl(frameNumber, fallenPinCount);
     }
 
     public Renderer toRenderer() {
