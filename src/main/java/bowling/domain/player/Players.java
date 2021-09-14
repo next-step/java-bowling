@@ -1,12 +1,12 @@
 package bowling.domain.player;
 
-import java.util.ArrayList;
+import bowling.domain.frame.AllFrames;
+import bowling.domain.score.TotalScoreBoard;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import bowling.domain.frame.Frames;
-import bowling.domain.score.TotalScoreBoard;
+import java.util.stream.IntStream;
 
 public class Players {
     private static final String PLAYER_NAMES_IS_NULL_EXCEPTION_STATEMENT = "플레이어의 이름 데이터가 널입니다";
@@ -14,17 +14,17 @@ public class Players {
     private final List<Player> players;
     private final TotalScoreBoard totalScoreBoard;
 
-    private Players(List<String> playerNames) {
+    private Players(List<String> playerNames, AllFrames allFrames) {
         validate(playerNames);
-        players = new ArrayList<>();
-        playerNames.forEach(playerName -> addPlayer(
-            Player.from(playerName, Frames.from(new ArrayList<>())))
-        );
-        totalScoreBoard = TotalScoreBoard.from(this);
+        players = playerNames.stream()
+            .map(Player::from)
+            .collect(Collectors.toList());
+
+        totalScoreBoard = TotalScoreBoard.from(this, allFrames);
     }
 
-    public static Players init(List<String> playerNames) {
-        return new Players(playerNames);
+    public static Players init(List<String> playerNames, AllFrames allFrames) {
+        return new Players(playerNames, allFrames);
     }
 
     private void validate(List<String> playerNames) {
@@ -33,24 +33,17 @@ public class Players {
         }
     }
 
-    private void addPlayer(Player player) {
-        players.add(player);
-    }
-
-    public boolean isGameFinish() {
-        long finishedCount = players.stream().filter(i -> i.frames().isFinish()).count();
-        return finishedCount == players.size();
-    }
-
     public List<String> names() {
         return players.stream()
             .map(Player::name)
             .collect(Collectors.toList());
     }
 
-    public List<List<String>> results() {
-        return players.stream()
-            .map(Player::results)
+    public List<List<String>> results(AllFrames allFrames) {
+        return IntStream.range(0, players.size())
+            .mapToObj(i -> nthOf(i).results(
+                allFrames.nthFramesOf(i))
+            )
             .collect(Collectors.toList());
     }
 
@@ -58,11 +51,11 @@ public class Players {
         return players.size();
     }
 
-    public List<Player> players() {
-        return players;
-    }
-
     public TotalScoreBoard totalScoreBoard() {
         return totalScoreBoard;
+    }
+
+    public Player nthOf(int nth) {
+        return players.get(nth);
     }
 }
