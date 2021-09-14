@@ -1,16 +1,10 @@
 package bowling.service;
 
-import bowling.domain.FinalFrame;
-import bowling.domain.Frame;
-import bowling.domain.Player;
+import bowling.domain.*;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
 public class BowlingService {
-
-    private static final int FINAL_FRAME = 10;
-    private static final int FIRST_FRAME = 1;
-
     public static void playBowling() {
         String userName = InputView.inputName();
         Player player = new Player(userName);
@@ -19,39 +13,42 @@ public class BowlingService {
     }
 
     private static void play(Player player) {
-        player.createEmptyFrame();
-        for (int frameIndex = FIRST_FRAME; frameIndex < FINAL_FRAME; frameIndex++) {
-            playBall(player);
+        NormalFrame frame = (NormalFrame) player.startFrame();
+
+        for (int frameIndex = Frame.FIRST_FRAME; frameIndex < Frame.LAST_FRAME; frameIndex++) {
+            frame = playBall(player, frame);
         }
-        playFinalBall(player);
+        playFinalBall(player, frame);
     }
 
-    private static Frame playBall(Player player) {
-        int currentFrameIndex = player.getFrameIndex();
-        int hitNumberOfPin = InputView.hitNumberOfPin(currentFrameIndex);
-        Frame frame = player.firstBall(hitNumberOfPin);
+    private static NormalFrame playBall(Player player, NormalFrame frame) {
+        int nextFrameIndex = frame.nextFrameIndex();
+        int hitNumberOfPin = InputView.hitNumberOfPin(nextFrameIndex);
+
+        NormalFrame nextFrame = (NormalFrame) frame.nextFrame(hitNumberOfPin);
+        player.addFrame(nextFrame);
         ResultView.printScoreBoard(player);
 
-        if (!frame.isStrike()) {
-            hitNumberOfPin = InputView.hitNumberOfPin(currentFrameIndex);
-            frame.secondBall(hitNumberOfPin);
+        if (!nextFrame.isStrike()) {
+            hitNumberOfPin = InputView.hitNumberOfPin(nextFrameIndex);
+            nextFrame.secondBall(hitNumberOfPin);
             ResultView.printScoreBoard(player);
         }
 
-        return frame;
+        return nextFrame;
     }
 
-    private static void playFinalBall(Player player) {
-        int currentFrameIndex = player.getFrameIndex();
+    private static void playFinalBall(Player player, NormalFrame frame) {
+        int currentFrameIndex = frame.frameIndex() + 1;
         int hitNumberOfPin = InputView.hitNumberOfPin(currentFrameIndex);
-        FinalFrame finalFrame = player.finalFrame(hitNumberOfPin);
+
+        FinalFrame finalFrame = (FinalFrame) frame.nextFrame(hitNumberOfPin);
+        player.addFrame(finalFrame);
         ResultView.printScoreBoard(player);
 
-        if (!finalFrame.isStrike()) {
-            hitNumberOfPin = InputView.hitNumberOfPin(currentFrameIndex);
-            finalFrame.secondBall(hitNumberOfPin);
-            ResultView.printScoreBoard(player);
-        }
+        hitNumberOfPin = InputView.hitNumberOfPin(currentFrameIndex);
+        finalFrame.secondBall(hitNumberOfPin);
+        ResultView.printScoreBoard(player);
 
         if (finalFrame.isStrike() || finalFrame.isSpare()) {
             hitNumberOfPin = InputView.hitNumberOfPin(currentFrameIndex);

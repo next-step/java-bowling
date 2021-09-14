@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.domain.Frame;
+import bowling.domain.NormalFrame;
 import bowling.domain.Player;
 
 import java.util.List;
@@ -11,14 +12,12 @@ public class ResultView {
     private static final String STRIKE = "X";
     private static final String SPARE = "/";
     private static final String GUTTER = "-";
-    private static final int MIN_FRAME_INDEX = 1;
-    private static final int MAX_FRAME_INDEX = 10;
     private static final int MAX_BLANK_SIZE = 6;
     private static final char SPACE = ' ';
     private static final String BLANK = "";
     private static final int SCORES_LAST_INDEX = 1;
-    private static final String GUTTER_NUMBER = "0";
-    private static final String MAX_PIN_NUMBER = "10";
+    private static final String GUTTER_NUMBER_STRING = "0";
+    private static final String MAX_PIN_NUMBER_STRING = "10";
 
 
     public static void printScoreBoard(Player player) {
@@ -35,7 +34,7 @@ public class ResultView {
     }
 
     private static void printEmptySectionBoard(int emptyFrameStartIndex) {
-        for (int i = emptyFrameStartIndex; i < MAX_FRAME_INDEX; i++) {
+        for (int i = emptyFrameStartIndex; i < Frame.LAST_FRAME; i++) {
             System.out.print(alignText(BLANK) + SEPARATOR);
         }
     }
@@ -54,13 +53,13 @@ public class ResultView {
             scores.set(SCORES_LAST_INDEX, SPARE);
         }
 
-        scores.replaceAll(score -> score.replaceAll(MAX_PIN_NUMBER, STRIKE).replaceAll(GUTTER_NUMBER, GUTTER));
+        scores.replaceAll(score -> score.replaceAll(MAX_PIN_NUMBER_STRING, STRIKE).replaceAll(GUTTER_NUMBER_STRING, GUTTER));
         System.out.print(alignText(String.join(SEPARATOR, scores)) + SEPARATOR);
     }
 
     private static void printUpBoard() {
         System.out.print(SEPARATOR + alignText("NAME") + SEPARATOR);
-        IntStream.rangeClosed(MIN_FRAME_INDEX, MAX_FRAME_INDEX)
+        IntStream.rangeClosed(Frame.FIRST_FRAME, Frame.LAST_FRAME)
                 .mapToObj(i -> alignText(String.format("%02d", i)) + SEPARATOR)
                 .forEach(System.out::print);
     }
