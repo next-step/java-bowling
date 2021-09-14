@@ -20,6 +20,7 @@ public class NormalFrame implements Frame {
 
     public NormalFrame(int index) {
         this.index = index;
+        this.points = new Points();
     }
 
     public static NormalFrame first() {
@@ -38,6 +39,9 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isFinished() {
+        if (points.bowlCount() == 0) {
+            return false;
+        }
         if (points.bowlCount() == MAX_TRY) {
             return true;
         }
@@ -47,6 +51,17 @@ public class NormalFrame implements Frame {
         return false;
     }
 
+    @Override
+    public int findCurrentIndex() {
+        return index;
+    }
+
+    @Override
+    public void addPoint(Point point) {
+        points.addPoint(point);
+    }
+
+    @Override
     public NormalFrame next() {
         return new NormalFrame(this.index + NEXT_INDEX_DISTANCE);
     }

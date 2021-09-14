@@ -37,13 +37,17 @@ public class Points {
     }
 
     public boolean canPlayBonusGame() {
-        int pointSum = points.stream()
+        if (findFirstPoint() == 10 && points.size() == 2) {
+            return false;
+        }
+
+        if (points.stream()
                 .mapToInt(Point::currentPoint)
-                .sum();
+                .sum() == 10 && points.size() == 3) {
+            return false;
+        }
 
-        int bowlCount = points.size();
-
-        return pointSum == 10 && bowlCount <= 2;
+        return true;
     }
 
     @Override

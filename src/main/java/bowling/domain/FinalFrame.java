@@ -28,16 +28,36 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isFinished() {
-
+        if (points.bowlCount() == 0) {
+            return false;
+        }
         if (points.bowlCount() == MAX_TRY) {
             return true;
         }
-
-        if (!points.canPlayBonusGame()) {
+        if (points.findFirstPoint() == 10 && points.bowlCount() == 2) {
             return true;
         }
-
+        if (points.values().stream()
+                .mapToInt(Point::currentPoint)
+                .sum() == 10 && points.bowlCount() == 2) {
+            return true;
+        }
         return false;
+    }
+
+    @Override
+    public int findCurrentIndex() {
+        return index;
+    }
+
+    @Override
+    public void addPoint(Point point) {
+        points.addPoint(point);
+    }
+
+    @Override
+    public Frame next() {
+        return this;
     }
 
     @Override

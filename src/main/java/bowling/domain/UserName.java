@@ -17,7 +17,6 @@ public class UserName {
     private void validated(String name) {
 
         if (Pattern.matches(NAME_REGEX, name)) {
-            System.out.println("match");
             return;
         }
         throw new IllegalArgumentException("이름은 영어 3글자까지 가능합니다.");
