@@ -1,58 +1,65 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.Score;
-import bowling.domain.score.ScoreType;
+import bowling.domain.state.Bonus;
+import bowling.domain.state.Ready;
+import bowling.domain.state.State;
 import bowling.exception.BowlingFrameException;
 import org.springframework.util.ObjectUtils;
 
 public class FinalFrame extends Frame {
-    protected Score score3;
+    protected State bonusState;
+
+    FinalFrame() {
+        state = new Ready();
+    }
 
     @Override
-    protected Frame setScore(int number) {
-        if (isFirstTurn()) {
-            this.score1 = new Score(number);
+    public Frame next(int number) {
+        if(!state.finish()){
+            state = state.bowl(number);
             return this;
         }
-        if (isSecondTurn()) {
-            this.score2 = new Score(this.score1, number);
+        if(firstBonus()){
+            bonusState = new Bonus(number, state.getScore().getBonusCount());
             return this;
         }
-        if (isThirdTurn()) {
-            this.score3 = new Score(this.score2, number);
+        if(secondBonus()){
+            bonusState = bonusState.bowl(number);
             return this;
         }
-        throw new BowlingFrameException("투구를 모두 마쳤습니다.");
+        throw new BowlingFrameException("투구가 모두 종료되었습니다.");
+    }
+
+    private boolean firstBonus() {
+        return !hasBonusFirst() && state.getScore().getBonusCount() > 0;
+    }
+
+    private boolean secondBonus() {
+        return hasBonusFirst() && !bonusState.finish();
+    }
+
+    public boolean finish() {
+        return (state.finish() && state.getScore().getBonusCount() == 0) ||
+                (hasBonusFirst() && bonusState.finish());
     }
 
     @Override
-    public boolean isFinish() {
-        return !isFirstTurn() && !isSecondTurn() && !isThirdTurn();
+    public boolean hasBonusFirst() {
+        return !ObjectUtils.isEmpty(bonusState);
     }
 
     @Override
-    protected boolean isSecondTurn() {
-        return ObjectUtils.isEmpty(this.score2);
-    }
-
-    private boolean isThirdTurn() {
-        if (isFirstTurn() || isSecondTurn()) {
-            return false;
-        }
-        if (!ObjectUtils.isEmpty(this.score3)) {
-            return false;
-        }
-        return this.score2.getScoreType().equals(ScoreType.SPARE) ||
-                this.score1.getScoreType().equals(ScoreType.STRIKE) ||
-                this.score2.getScoreType().equals(ScoreType.STRIKE);
+    public int bonusFirstCount() {
+        return bonusState.getFirstPin().count();
     }
 
     @Override
-    public Score getScore3() {
-        return score3;
+    public boolean hasBonusSecond() {
+        return hasBonusFirst() && !ObjectUtils.isEmpty(bonusState.getSecondPin());
     }
 
-    public ScoreType getScoreType3() {
-        return score3.getScoreType();
+    @Override
+    public int bonusSecondCount() {
+        return bonusState.getSecondPin().count();
     }
 }

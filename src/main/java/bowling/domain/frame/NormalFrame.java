@@ -1,41 +1,43 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.Score;
-import bowling.domain.score.ScoreType;
-import org.springframework.util.ObjectUtils;
+import bowling.domain.state.Ready;
 
 public class NormalFrame extends Frame {
+    NormalFrame() {
+        state = new Ready();
+    }
+
     @Override
-    protected Frame setScore(int number) {
-        if (isFirstTurn()) {
-            this.score1 = new Score(number);
-            return this;
-        }
-        if (isSecondTurn()) {
-            this.score2 = new Score(this.score1, number);
+    public Frame next(int number) {
+        if(!state.finish()){
+            state = state.bowl(number);
             return this;
         }
         return new NormalFrame().next(number);
     }
 
     @Override
-    public boolean isFinish() {
-        return !isFirstTurn() && !isSecondTurn();
+    public boolean finish() {
+        return state.finish();
     }
 
     @Override
-    protected boolean isSecondTurn() {
-        if (isFirstTurn()) {
-            return false;
-        }
-        if (this.score1.getScoreType().equals(ScoreType.STRIKE)) {
-            return false;
-        }
-        return ObjectUtils.isEmpty(this.score2);
+    public boolean hasBonusFirst() {
+        return false;
     }
 
     @Override
-    public Score getScore3() {
-        return null;
+    public int bonusFirstCount() {
+        return 0;
+    }
+
+    @Override
+    public boolean hasBonusSecond() {
+        return false;
+    }
+
+    @Override
+    public int bonusSecondCount() {
+        return 0;
     }
 }

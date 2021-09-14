@@ -20,11 +20,11 @@ public class Frames {
     }
 
     public Frames next(int number) {
-        if (frames.size() == FINAL_FRAME - 1 && lastFrame().isFinish()) {
+        if (frames.size() == FINAL_FRAME - 1 && lastFrame().finish()) {
             this.frames.add(new FinalFrame().next(number));
             return this;
         }
-        if (lastFrame().isFinish()) {
+        if (lastFrame().finish()) {
             this.frames.add(lastFrame().next(number));
             return this;
         }
@@ -37,11 +37,14 @@ public class Frames {
     }
 
     public int nextFrameNo() {
+        if(lastFrame().finish()){
+            return this.frames.size() + 1;
+        }
         return this.frames.size();
     }
 
     public boolean isFinish() {
-        return frames.size() == FINAL_FRAME && lastFrame().isFinish();
+        return frames.size() == FINAL_FRAME && lastFrame().finish();
     }
 
     public List<Frame> getFrames() {

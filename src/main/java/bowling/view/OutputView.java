@@ -2,10 +2,7 @@ package bowling.view;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.player.Player;
-import bowling.domain.score.Score;
-import bowling.domain.score.ScoreType;
 import com.sun.deploy.util.StringUtils;
-import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,15 +33,19 @@ public class OutputView {
     }
 
     private String displays(Frame frame) {
+
         List<String> scores = new ArrayList<>();
-        if (!ObjectUtils.isEmpty(frame.getScore1())) {
-            scores.add(display(frame.getScore1()));
+        if (frame.hasFirstCount()) {
+            scores.add(display(frame.firstCount()));
         }
-        if (!ObjectUtils.isEmpty(frame.getScore2())) {
-            scores.add(display(frame.getScore2()));
+        if (frame.hasSecondCount()) {
+            scores.add(display(frame.firstCount(), frame.secondCount()));
         }
-        if (!ObjectUtils.isEmpty(frame.getScore3())) {
-            scores.add(display(frame.getScore3()));
+        if (frame.hasBonusFirst()) {
+            scores.add(display(frame.bonusFirstCount()));
+        }
+        if (frame.hasBonusSecond()) {
+            scores.add(display(frame.bonusSecondCount()));
         }
 
         if (scores.isEmpty()) {
@@ -53,16 +54,20 @@ public class OutputView {
         return StringUtils.join(scores, "|");
     }
 
-    private String display(Score score) {
-        if (score.getScoreType().equals(ScoreType.STRIKE)) {
+    private String display(int firstCount) {
+        if (firstCount == 10) {
             return "x";
         }
-        if (score.getScoreType().equals(ScoreType.SPARE)) {
-            return "/";
-        }
-        if (score.getScoreType().equals(ScoreType.GUTTER)) {
+        if (firstCount == 0) {
             return "-";
         }
-        return String.valueOf(score.getScore());
+        return String.valueOf(firstCount);
+    }
+
+    private String display(int firstCount, int secondCount) {
+        if (firstCount + secondCount == 10) {
+            return "/";
+        }
+        return display(secondCount);
     }
 }

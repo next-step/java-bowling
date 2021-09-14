@@ -20,27 +20,26 @@
 
 ## TODO
 ### 점수계산
-* score type enum
-  * strike(x) : 10점
-  * spare(/) : 10점
-  * miss(숫자) : 1~9점
-  * gutter(-) : 0점
-  * 정적 팩토리 메서드
-    * 이전 점수 + 현재점수가 10이면 spare
-    * 나머지는 점수대로 할당
+* pin : 1~10개의 볼링핀
 * score
-  * score type, score
-* frame 추상 클래스, 일급 콜렉션
-  * score1, score2, score3
+  * pin
+  * bonusCount : 남은 보너스 투구 횟수
+* state
+  * firstPin : 첫번째 투구 결과
+  * secondPin : 두번째 투구 결과
+  * score : 최종 결과
+  * 투구 후 다음 상태가 결정됌.
+  * 상태 종류 : ready, firstBowl, miss, spare, strike, bonus
+* frame
+  * state
   * normalFrame
-    * 2회까지 투구 가능
-    * strike 인 경우 1회 투구
+    * 투가가 종료되었으면 새로운 프레임, 종료되지 않았으면 자기자신을 리턴
   * finalFrame
-    * strike 또는 spare 인 경우 3회까지 투구 가능
-    * 그 외에는 2회 투구
+    * bonusState를 추가로 가짐. bonusCount가 남아있으면 해당 횟수만큼 투구 가능
 * frames 일급콜렉션
-  * frame list
+  * 1-9프레임은 nomarFrame, 마지막 프레임은 finalFrame으로 생성
 * player
-  * name : 참가자명
+  * playerName
   * frames
 * 입출력 view 및 게임실행
+
