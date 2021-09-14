@@ -14,7 +14,7 @@ public class Finished implements FrameState {
     }
 
     private void validateSecondFallenPinCount(PinCount firstFallenPinCount, PinCount secondFallenPinCount) {
-        if (secondFallenPinCount.over(firstFallenPinCount.leftPinCount())) {
+        if (secondFallenPinCount.over(firstFallenPinCount.remainPinCount())) {
             throw new IllegalArgumentException(String.format("쓰러트린 핀의 수가 유효하지 않습니다. first: %s, second: %s", firstFallenPinCount, secondFallenPinCount));
         }
     }
@@ -28,7 +28,7 @@ public class Finished implements FrameState {
     }
 
     public boolean isSpare() {
-        return !isStrike() && firstFallenPinCount.leftPinCount().equals(secondFallenPinCount);
+        return !isStrike() && secondFallenPinCount.spare(firstFallenPinCount);
     }
 
     public boolean isMiss() {
@@ -43,11 +43,11 @@ public class Finished implements FrameState {
     @Override
     public Renderer toRenderer() {
         if (this.isStrike()) {
-            return FrameStateRenderer.strike();
+            return FrameStateRenderer.of(firstFallenPinCount);
         }
         if (this.isSpare()) {
-            return FrameStateRenderer.spare(firstFallenPinCount);
+            return FrameStateRenderer.of(firstFallenPinCount, secondFallenPinCount);
         }
-        return FrameStateRenderer.miss(firstFallenPinCount, secondFallenPinCount);
+        return FrameStateRenderer.of(firstFallenPinCount, secondFallenPinCount);
     }
 }

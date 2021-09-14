@@ -15,8 +15,6 @@ public enum PinCount {
     ONE(1),
     ZERO(0);
 
-    private static final String STRING_FOR_GUTTER = "-";
-
     private final int count;
 
     PinCount(int count) {
@@ -30,7 +28,7 @@ public enum PinCount {
                 .orElseThrow(() -> new IllegalArgumentException(String.format("쓰러진 핀의 수는 0에서 10 사이의 값이어야 합니다. count: %s", count)));
     }
 
-    public PinCount leftPinCount() {
+    public PinCount remainPinCount() {
         return valueOf(TEN.count - this.count);
     }
 
@@ -40,6 +38,10 @@ public enum PinCount {
 
     @Override
     public String toString() {
-        return this == ZERO ? STRING_FOR_GUTTER : String.valueOf(count);
+        return String.valueOf(count);
+    }
+
+    public boolean spare(PinCount first) {
+        return first.count == this.count;
     }
 }

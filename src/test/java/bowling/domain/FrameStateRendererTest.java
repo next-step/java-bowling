@@ -19,21 +19,21 @@ class FrameStateRendererTest {
     @DisplayName("스트라이크 렌더링 테스트")
     @Test
     public void strikeRenderingTest() {
-        Renderer renderer = FrameStateRenderer.strike();
+        Renderer renderer = FrameStateRenderer.of(PinCount.TEN);
         assertThat(renderer.render()).contains("X");
     }
 
     @DisplayName("스페어 렌더링 테스트")
     @Test
     public void spareRenderingTest() {
-        Renderer renderer = FrameStateRenderer.spare(PinCount.EIGHT);
+        Renderer renderer = FrameStateRenderer.of(PinCount.EIGHT, PinCount.TWO);
         assertThat(renderer.render()).contains("8|/");
     }
 
     @ParameterizedTest(name = "미스 렌더링 테스트")
     @CsvSource({"EIGHT, ONE, 8|1", "SEVEN, ZERO, 7|-"})
     public void missRenderingTest(PinCount firstFallenPinCount, PinCount secondFallenPinCount, String expected) {
-        Renderer renderer = FrameStateRenderer.miss(firstFallenPinCount, secondFallenPinCount);
+        Renderer renderer = FrameStateRenderer.of(firstFallenPinCount, secondFallenPinCount);
         assertThat(renderer.render()).contains(expected);
     }
 

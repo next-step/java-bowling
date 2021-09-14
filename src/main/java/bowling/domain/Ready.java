@@ -13,6 +13,6 @@ public class Ready implements FrameState {
 
     @Override
     public Renderer toRenderer() {
-        return FrameStateRenderer.ready();
+        return FrameStateRenderer.of();
     }
 }
