@@ -139,10 +139,23 @@ public class QnAService {
 3. Frames
     1. 속성
         - `List<Frame> frames`
+        - `FinalFrame finalFrame`
     2. 메서드
         - `void pitch(int pins)`
         - `void validateOverTenFrames()`
-4. Frame
+4. FinalFrame
+    1. 속성
+        - `Frame finalFrame`
+        - `Pitching bonusPitching1`
+        - `Pitching bonusPitching2`
+    2. 메서드
+        - `void bonusPitching(int pins)`
+        - `int score()`
+        - `boolean strike()`
+        - `boolean spare()`
+        - `boolean done()`
+        - `boolean end()`
+5. Frame
     1. 속성
         - `Pitching firstPitching`
         - `Pitching secondPitching`
@@ -153,19 +166,18 @@ public class QnAService {
         - `boolean strike()`
         - `boolean spare()`
         - `boolean done()`
-        - `boolean end()`
-5. Pitchings
+6. Pitchings
     1. 속성
         - `List<Pitching> pitchings`
     2. 메서드
         - `Pitching nextPitching(int pins)`
-6. Pitching
+7. Pitching
     1. 속성
         - `Pins pins`
         - `Pitching nextPitching`
     2. 메서드
         - `Integer score(int levelOfRecursion)`
-7. Pins
+8. Pins
     1. 속성
         - `int pins`
     2. 메서드
