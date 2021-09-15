@@ -33,4 +33,12 @@ public class Answers {
     public void add(Answer answer) {
         this.answers.add(answer);
     }
+
+    public List<DeleteHistory> deleteAll() {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        for (Answer answer : this.answers) {
+            deleteHistories.add(answer.delete());
+        }
+        return deleteHistories;
+    }
 }

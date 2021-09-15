@@ -3,6 +3,9 @@ package qna.domain;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -16,9 +19,6 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-//    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-//    @Where(clause = "deleted = false")
-//    @OrderBy("id ASC")
     @Embedded
     private Answers answers = new Answers();
 
@@ -38,23 +38,6 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
 
     public User getWriter() {
         return writer;
@@ -84,18 +67,22 @@ public class Question extends AbstractEntity {
         }
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public List<DeleteHistory> delete(User loginUser, long questionId) throws CannotDeleteException {
+        this.validateAuthorAreSame(loginUser);
+        this.validateThereIsAnyonesElseAnswer(loginUser);
+
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        this.deleted = true;
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, this.writer, LocalDateTime.now()));
+        deleteHistories.addAll(answers.deleteAll());
+
+        return deleteHistories;
     }
 
     public boolean isDeleted() {
         return deleted;
     }
 
-    public Answers getAnswers() {
-        return this.answers;
-    }
 
     @Override
     public String toString() {
