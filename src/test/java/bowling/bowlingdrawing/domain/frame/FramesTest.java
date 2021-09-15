@@ -5,9 +5,6 @@ import bowling.bowlingdrawing.exception.CustomException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.*;
 
 class FramesTest {
@@ -21,7 +18,7 @@ class FramesTest {
         frames.pitch(10);
         // then
         assertThat(frames.frames().get(0))
-                .isEqualTo(new NormalFrame(Pitching.first(10)));
+                .isEqualTo(new Frame(Pitching.first(10)));
     }
 
     @Test

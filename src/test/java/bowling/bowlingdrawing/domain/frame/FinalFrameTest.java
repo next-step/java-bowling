@@ -52,7 +52,7 @@ class FinalFrameTest {
 
     @Test
     @DisplayName("완료 확인")
-    void end() {
+    void done() {
         // given
         Pitching pitching1 = Pitching.of(2);
         Pitching pitching2 = pitching1.next(5);
@@ -61,15 +61,15 @@ class FinalFrameTest {
         finalFrame.pitch(pitching2);
 
         // when
-        boolean end = finalFrame.end();
+        boolean done = finalFrame.done();
 
         // then
-        assertThat(end).isTrue();
+        assertThat(done).isTrue();
     }
 
     @Test
     @DisplayName("strike 후 bonusPitching 완료 확인")
-    void end_strike() {
+    void done_strike() {
         // given
         Pitching pitching1 = Pitching.of(10);
         Pitching pitching2 = pitching1.next(9);
@@ -80,15 +80,15 @@ class FinalFrameTest {
         finalFrame.pitch(pitching3);
 
         // when
-        boolean end = finalFrame.end();
+        boolean done = finalFrame.done();
 
         // then
-        assertThat(end).isTrue();
+        assertThat(done).isTrue();
     }
 
     @Test
     @DisplayName("spare 후 bonusPitching 완료 확인")
-    void end_spare() {
+    void done_spare() {
         // given
         Pitching pitching1 = Pitching.of(1);
         Pitching pitching2 = pitching1.next(9);
@@ -99,10 +99,10 @@ class FinalFrameTest {
         finalFrame.pitch(pitching3);
 
         // when
-        boolean end = finalFrame.end();
+        boolean done = finalFrame.done();
 
         // then
-        assertThat(end).isTrue();
+        assertThat(done).isTrue();
     }
 
 }

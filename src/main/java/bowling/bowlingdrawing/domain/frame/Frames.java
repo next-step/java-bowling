@@ -10,35 +10,34 @@ import java.util.Objects;
 
 public class Frames {
 
-    public static final int MAXIMUM_SIZE_OF_FRAMES = 9;
+    public static final int MAXIMUM_SIZE_OF_FRAMES = 10;
+    public static final int BEFORE_MAXIMUM_SIZE_OF_FRAMES = 9;
+    public static final int MAXIMUM_INDEX_OF_FRAMES = 9;
 
     private final List<Frame> frames = new ArrayList<>();
-    private FinalFrame finalFrame;
     private Pitching currentPitching;
 
     public void pitch(int pins) {
         validateGameEnd();
-
         currentPitching = changeCurrentPitching(pins);
 
         if (frames.isEmpty()) {
-            addNewFrame(currentPitching);
+            addNormalFrame(currentPitching);
             return;
         }
 
         Frame currentFrame = frames.get(frames.size() - 1);
-
-        if (frames.size() == MAXIMUM_SIZE_OF_FRAMES && currentFrame.done()) {
-            pitchAtFinalFrame(currentPitching);
+        if (frames.size() == BEFORE_MAXIMUM_SIZE_OF_FRAMES && currentFrame.done()) {
+            addFinalFrame(currentPitching);
             return;
         }
 
         if (currentFrame.done()) {
-            addNewFrame(currentPitching);
+            addNormalFrame(currentPitching);
             return;
         }
 
-        currentFrame.secondPitching(currentPitching);
+        currentFrame.pitch(currentPitching);
     }
 
     private Pitching changeCurrentPitching(int pins) {
@@ -55,20 +54,18 @@ public class Frames {
     }
 
     public boolean end() {
-        return finalFrame != null && finalFrame.end();
+        return frames.size() == MAXIMUM_SIZE_OF_FRAMES &&
+                frames.get(MAXIMUM_INDEX_OF_FRAMES).done();
     }
 
-    private void addNewFrame(Pitching pitching) {
-        Frame firstFrame = new NormalFrame(pitching);
+    private void addNormalFrame(Pitching pitching) {
+        Frame firstFrame = new Frame(pitching);
         frames.add(firstFrame);
     }
 
-    private void pitchAtFinalFrame(Pitching pitching) {
-        if (finalFrame != null) {
-            finalFrame.pitch(pitching);
-            return;
-        }
-        finalFrame = new FinalFrame(pitching);
+    private void addFinalFrame(Pitching pitching) {
+        Frame finalFrame = new FinalFrame(pitching);
+        frames.add(finalFrame);
     }
 
     public int currentFrame() {
@@ -88,7 +85,10 @@ public class Frames {
     }
 
     public FinalFrame finalFrame() {
-        return finalFrame;
+        if (frames.size() != MAXIMUM_SIZE_OF_FRAMES) {
+            return null;
+        }
+        return (FinalFrame) frames.get(MAXIMUM_INDEX_OF_FRAMES);
     }
 
     @Override
@@ -96,11 +96,11 @@ public class Frames {
         if (this == o) return true;
         if (!(o instanceof Frames)) return false;
         Frames frames1 = (Frames) o;
-        return Objects.equals(frames, frames1.frames) && Objects.equals(finalFrame, frames1.finalFrame);
+        return Objects.equals(frames, frames1.frames) && Objects.equals(currentPitching, frames1.currentPitching);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frames, finalFrame);
+        return Objects.hash(frames, currentPitching);
     }
 }

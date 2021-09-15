@@ -13,12 +13,13 @@ public class FinalFrame extends Frame{
         super(firstPitching);
     }
 
+    @Override
     public void pitch(Pitching pitching) {
         if (strike() || spare()) {
             bonusPitch(pitching);
             return;
         }
-        secondPitching(pitching);
+        super.pitch(pitching);
     }
 
     private void bonusPitch(Pitching bonusPitching) {
@@ -29,14 +30,15 @@ public class FinalFrame extends Frame{
         bonusPitching2 = bonusPitching;
     }
 
-    public boolean end() {
+    @Override
+    public boolean done() {
         if(strike()) {
             return bonusPitching2 != null;
         }
         if(spare()) {
             return bonusPitching1 != null;
         }
-        return done();
+        return !(this.secondScore() == Pitching.IS_NULL);
     }
 
     public Integer firstBonusScore() {
