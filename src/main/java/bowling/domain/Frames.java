@@ -34,10 +34,4 @@ public class Frames {
         return frames;
     }
 
-    public int totalPitchSize(int index) {
-        return IntStream.range(0, index)
-                .map(idx -> frames.get(idx).pitches().size())
-                .reduce(0, Integer::sum);
-    }
-
 }

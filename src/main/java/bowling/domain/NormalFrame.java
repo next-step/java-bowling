@@ -62,7 +62,7 @@ public class NormalFrame implements Frame {
         if (beforeScore.canCalculateScore()) {
             return beforeScore;
         }
-        if(nextFrame == null) {
+        if (nextFrame == null) {
             return Score.cantCalculate();
         }
         return nextFrame.addScore(beforeScore);
