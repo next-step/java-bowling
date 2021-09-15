@@ -13,8 +13,15 @@ public class ScoreFrames {
         this.lastScoreFrame = this.firstScoreFrame;
     }
 
-    public void bowl(int score) {
-        updateLastScoreFrame(lastScoreFrame.addScore(score));
+    public FrameStatus bowl(int score) {
+        ScoreFrame nextScoreFrame = lastScoreFrame.addScore(score);
+        boolean isFrameUpdated = lastScoreFrame != nextScoreFrame;
+
+        if (isFrameUpdated) {
+            lastScoreFrame = nextScoreFrame;
+        }
+
+        return FrameStatus.fromBoolean(isFrameUpdated);
     }
 
     public List<String> getCalculatedScores() {
@@ -43,17 +50,7 @@ public class ScoreFrames {
         return scoreStringList;
     }
 
-    public int getCurrentTurn() {
-        return lastScoreFrame.getTurnNumber();
-    }
-
     public boolean isContinued() {
         return lastScoreFrame.isContinued();
-    }
-
-    private void updateLastScoreFrame(ScoreFrame nextScoreFrame) {
-        if (lastScoreFrame != nextScoreFrame) {
-            lastScoreFrame = nextScoreFrame;
-        }
     }
 }

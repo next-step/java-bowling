@@ -11,12 +11,15 @@ public class ScoreFramesTest {
     @Test
     @DisplayName("게임이 진행중인지 체크 - 12회 스트라이크 이후 게임 종료")
     void isContinuedTest() {
-        assertThat(scoreFrames.isContinued()).isTrue();
+        boolean beforeBowl = scoreFrames.isContinued();
 
         for (int i = 0; i < 12; i++) {
             scoreFrames.bowl(10);
         }
 
-        assertThat(scoreFrames.isContinued()).isFalse();
+        boolean afterBowl = scoreFrames.isContinued();
+
+        assertThat(beforeBowl).isTrue();
+        assertThat(afterBowl).isFalse();
     }
 }

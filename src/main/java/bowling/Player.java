@@ -27,8 +27,8 @@ public class Player {
         return scoreFrames.isContinued();
     }
 
-    public void playBowl(int score) {
-        scoreFrames.bowl(score);
+    public FrameStatus playBowl(int score) {
+        return scoreFrames.bowl(score);
     }
 
     public String getNameString() {

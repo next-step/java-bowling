@@ -13,7 +13,7 @@ public class BowlingOutputView {
     private static final int END_FRAME = 10;
     private static final int FRAME_WIDTH = 6;
 
-    public static void printPlayersFramesStatus(Players players) {
+    public static void printPlayerFrames(Players players) {
         System.out.println("| NAME " + getScoreLabel() + "|");
 
         for (Player player : players) {
