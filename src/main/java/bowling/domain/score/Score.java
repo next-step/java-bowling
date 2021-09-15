@@ -11,6 +11,7 @@ public abstract class Score {
     }
 
     public abstract Score createFirstPin(Pin pin);
-    public abstract Score createSecondPin(Pin pin);
+    public abstract Score createNextPin(Pin pin);
+    public abstract boolean isNext();
 
 }

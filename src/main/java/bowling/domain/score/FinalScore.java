@@ -24,10 +24,13 @@ public class FinalScore extends Score {
     }
 
     @Override
-    public FinalScore createSecondPin(Pin pin) {
-        checkRemainPin(this.first, pin);
-
-        return new FinalScore(this.first, pin, null);
+    public FinalScore createNextPin(Pin pin) {
+        if (second == null ){
+            checkRemainPin(this.first, pin);
+            return new FinalScore(this.first, pin, null);
+        }
+        checkBonusPin(this);
+        return new FinalScore(this.first, this.second, pin);
     }
 
     private static void checkRemainPin(Pin before, Pin pin) {
@@ -36,20 +39,18 @@ public class FinalScore extends Score {
         }
     }
 
-    public FinalScore createBonusPin(Pin pin) {
-        checkBonusPin(this);
-
-        return new FinalScore(this.first, this.second, pin);
-    }
-
     private static void checkBonusPin(FinalScore finalScore) {
         if (!finalScore.isBonus()) {
             throw new PinBonusException();
         }
     }
-
-    public boolean isBonus() {
+    private boolean isBonus() {
         return (first == STRIKE && second == STRIKE) || (first.remainPin() == second.value());
+    }
+
+    @Override
+    public boolean isNext() {
+        return false;
     }
 
 }

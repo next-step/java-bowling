@@ -47,7 +47,7 @@ class NormalScoreTest {
         Pin second = Pin.of(3);
 
         // when
-        NormalScore result = firstScore.createSecondPin(second);
+        NormalScore result = firstScore.createNextPin(second);
 
         // then
         assertThat(result).isInstanceOf(NormalScore.class);
@@ -65,7 +65,7 @@ class NormalScoreTest {
 
         // when & then
         assertThatExceptionOfType(PinSecondValueException.class)
-            .isThrownBy(() -> firstScore.createSecondPin(second))
+            .isThrownBy(() -> firstScore.createNextPin(second))
             .withMessageMatching("첫번째 핀이 쓰러뜨리고 남은 핀 개수만 저장할 수 있다.");
     }
 
@@ -81,7 +81,7 @@ class NormalScoreTest {
 
         // when & then
         assertThatExceptionOfType(PinSecondValueException.class)
-            .isThrownBy(() -> firstScore.createSecondPin(second))
+            .isThrownBy(() -> firstScore.createNextPin(second))
             .withMessageMatching("첫번째 핀이 쓰러뜨리고 남은 핀 개수만 저장할 수 있다.");
     }
 

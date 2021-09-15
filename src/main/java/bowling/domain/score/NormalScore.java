@@ -20,7 +20,7 @@ public class NormalScore extends Score {
     }
 
     @Override
-    public NormalScore createSecondPin(Pin pin) {
+    public NormalScore createNextPin(Pin pin) {
         checkFirstStrike(this.first);
         checkRemainPin(this.first, pin);
 
@@ -39,6 +39,7 @@ public class NormalScore extends Score {
         }
     }
 
+    @Override
     public boolean isNext() {
         return first != STRIKE;
     }
