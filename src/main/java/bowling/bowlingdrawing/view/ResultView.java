@@ -53,11 +53,10 @@ public class ResultView {
             return "";
         }
 
-        Frame frame = finalFrame.finalFrame();
         String firstBonusScoreString = convertBonusResult(finalFrame.firstBonusScore());
         String secondBonusScoreString = convertBonusResult(finalFrame.secondBonusScore());
 
-        return frameToString(frame) + firstBonusScoreString + secondBonusScoreString;
+        return frameToString(finalFrame) + firstBonusScoreString + secondBonusScoreString;
     }
 
     private static String frameToString(Frame frame) {

@@ -4,23 +4,21 @@ import bowling.bowlingdrawing.domain.pitching.Pitching;
 
 import java.util.Objects;
 
-public class FinalFrame{
+public class FinalFrame extends Frame{
 
-    private final Frame finalFrame;
     private Pitching bonusPitching1;
     private Pitching bonusPitching2;
 
-    public FinalFrame(Pitching pitching) {
-        this.finalFrame = new Frame(pitching);
+    public FinalFrame(Pitching firstPitching) {
+        super(firstPitching);
     }
-
 
     public void pitch(Pitching pitching) {
         if (strike() || spare()) {
             bonusPitch(pitching);
             return;
         }
-        finalFrame.secondPitching(pitching);
+        secondPitching(pitching);
     }
 
     private void bonusPitch(Pitching bonusPitching) {
@@ -38,19 +36,7 @@ public class FinalFrame{
         if(spare()) {
             return bonusPitching1 != null;
         }
-        return finalFrame.done();
-    }
-
-    public boolean strike() {
-        return finalFrame.strike();
-    }
-
-    public boolean spare() {
-        return finalFrame.spare();
-    }
-
-    public Frame finalFrame() {
-        return finalFrame;
+        return done();
     }
 
     public Integer firstBonusScore() {
@@ -71,12 +57,13 @@ public class FinalFrame{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof FinalFrame)) return false;
+        if (!super.equals(o)) return false;
         FinalFrame that = (FinalFrame) o;
-        return Objects.equals(finalFrame, that.finalFrame) && Objects.equals(bonusPitching1, that.bonusPitching1) && Objects.equals(bonusPitching2, that.bonusPitching2);
+        return Objects.equals(bonusPitching1, that.bonusPitching1) && Objects.equals(bonusPitching2, that.bonusPitching2);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(finalFrame, bonusPitching1, bonusPitching2);
+        return Objects.hash(super.hashCode(), bonusPitching1, bonusPitching2);
     }
 }
