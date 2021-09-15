@@ -1,17 +1,18 @@
 package bowling.bowlingdrawing.domain;
 
+import bowling.bowlingdrawing.domain.frame.Frames;
 import bowling.bowlingdrawing.exception.CustomException;
 
 import java.util.regex.Pattern;
 
 public class Player {
     private final String name;
-    private final Game game;
+    private final Frames frames;
 
     public Player(String name) {
         validateName(name);
         this.name = name;
-        this.game = new Game();
+        this.frames = new Frames();
     }
 
     private void validateName(String name) {
@@ -22,14 +23,15 @@ public class Player {
     }
 
     public void pitch(int pins) {
-        game.pitch(pins);
+        frames.pitch(pins);
     }
-    public Game game() {
-        return game;
+
+    public Frames frames() {
+        return frames;
     }
 
     public boolean end() {
-        return game.end();
+        return frames.end();
     }
 
     public String name() {
@@ -37,6 +39,6 @@ public class Player {
     }
 
     public int currentFrame() {
-        return game.currentFrame();
+        return frames.currentFrame();
     }
 }

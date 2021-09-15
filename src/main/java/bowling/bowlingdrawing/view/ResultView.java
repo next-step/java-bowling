@@ -13,8 +13,8 @@ public class ResultView {
     public static void showPlayBoard(Player player) {
         Formatter formatter = new Formatter();
 
-        List<Frame> frames = player.game().frames().frames();
-        FinalFrame finalFrame = player.game().frames().finalFrame();
+        List<Frame> frames = player.frames().frames();
+        FinalFrame finalFrame = player.frames().finalFrame();
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |")
