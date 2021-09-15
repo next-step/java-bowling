@@ -20,7 +20,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class QnaServiceTest {
+public class QnAServiceTest
+{
     @Mock
     private QuestionRepository questionRepository;
 

@@ -1,10 +1,8 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -18,10 +16,11 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+//    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+//    @Where(clause = "deleted = false")
+//    @OrderBy("id ASC")
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -71,8 +70,18 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
+    public void validateAuthorAreSame(User loginUser) throws CannotDeleteException {
+        if (!this.writer.equals(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
+    public void validateThereIsAnyonesElseAnswer(User loginUser) throws CannotDeleteException {
+        try {
+            this.answers.validateAuthorsAreSame(loginUser);
+        } catch (CannotDeleteException exception) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
     }
 
     public Question setDeleted(boolean deleted) {
@@ -84,8 +93,8 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public Answers getAnswers() {
+        return this.answers;
     }
 
     @Override
