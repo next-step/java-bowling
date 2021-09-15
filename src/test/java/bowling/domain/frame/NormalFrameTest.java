@@ -62,7 +62,7 @@ class NormalFrameTest {
         // given
         Frame first = NormalFrame.createFirstFrame();
         Score emptyScore = NormalScore.empty();
-        Score score = emptyScore.createFirstPin(Pin.of(10));
+        Score score = emptyScore.nextPin(Pin.of(10));
 
         // when
         first.saveScore(score);

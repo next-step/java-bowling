@@ -10,8 +10,7 @@ public abstract class Score {
         this.second = second;
     }
 
-    public abstract Score createFirstPin(Pin pin);
-    public abstract Score createNextPin(Pin pin);
+    public abstract Score nextPin(Pin pin);
     public abstract boolean isNext();
 
 }

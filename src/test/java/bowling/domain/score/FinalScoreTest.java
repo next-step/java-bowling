@@ -30,7 +30,7 @@ class FinalScoreTest {
         Pin first = Pin.of(5);
 
         // when
-        FinalScore result = start.createFirstPin(first);
+        FinalScore result = start.nextPin(first);
 
         // then
         assertThat(result).isInstanceOf(FinalScore.class);
@@ -43,11 +43,11 @@ class FinalScoreTest {
         // given
         FinalScore start = FinalScore.empty();
         Pin first = Pin.of(5);
-        FinalScore firstScore = start.createFirstPin(first);
+        FinalScore firstScore = start.nextPin(first);
         Pin second = Pin.of(3);
 
         // when
-        FinalScore result = firstScore.createNextPin(second);
+        FinalScore result = firstScore.nextPin(second);
 
         // then
         assertThat(result).isInstanceOf(FinalScore.class);
@@ -60,12 +60,12 @@ class FinalScoreTest {
         // given
         FinalScore start = FinalScore.empty();
         Pin first = Pin.of(9);
-        FinalScore firstScore = start.createFirstPin(first);
+        FinalScore firstScore = start.nextPin(first);
         Pin second = Pin.of(3);
 
         // when & then
         assertThatExceptionOfType(PinSecondValueException.class)
-            .isThrownBy(() -> firstScore.createNextPin(second))
+            .isThrownBy(() -> firstScore.nextPin(second))
             .withMessageMatching("첫번째 핀이 쓰러뜨리고 남은 핀 개수만 저장할 수 있다.");
     }
 
@@ -76,11 +76,11 @@ class FinalScoreTest {
         // given
         FinalScore start = FinalScore.empty();
         Pin first = Pin.of(10);
-        FinalScore firstScore = start.createFirstPin(first);
+        FinalScore firstScore = start.nextPin(first);
         Pin second = Pin.of(10);
 
         // when
-        FinalScore result = firstScore.createNextPin(second);
+        FinalScore result = firstScore.nextPin(second);
 
         // then
         assertThat(result).isInstanceOf(FinalScore.class);
@@ -93,13 +93,13 @@ class FinalScoreTest {
         // given
         FinalScore start = FinalScore.empty();
         Pin first = Pin.of(5);
-        FinalScore firstScore = start.createFirstPin(first);
+        FinalScore firstScore = start.nextPin(first);
         Pin second = Pin.of(5);
-        FinalScore secondScore = firstScore.createNextPin(second);
+        FinalScore secondScore = firstScore.nextPin(second);
         Pin bonus = Pin.of(3);
 
         // when
-        FinalScore result = secondScore.createNextPin(bonus);
+        FinalScore result = secondScore.nextPin(bonus);
 
         // then
         assertThat(result).isInstanceOf(FinalScore.class);
@@ -112,14 +112,14 @@ class FinalScoreTest {
         // given
         FinalScore start = FinalScore.empty();
         Pin first = Pin.of(5);
-        FinalScore firstScore = start.createFirstPin(first);
+        FinalScore firstScore = start.nextPin(first);
         Pin second = Pin.of(4);
-        FinalScore secondScore = firstScore.createNextPin(second);
+        FinalScore secondScore = firstScore.nextPin(second);
         Pin bonus = Pin.of(3);
 
         // when & then
         assertThatExceptionOfType(PinBonusException.class)
-            .isThrownBy(() -> secondScore.createNextPin(bonus))
+            .isThrownBy(() -> secondScore.nextPin(bonus))
             .withMessageMatching("보너스 핀은 스페어나 스트라이크 후 칠 수 있다.");
     }
 

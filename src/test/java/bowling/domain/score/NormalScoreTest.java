@@ -30,7 +30,7 @@ class NormalScoreTest {
         Pin first = Pin.of(5);
 
         // when
-        NormalScore result = start.createFirstPin(first);
+        NormalScore result = start.nextPin(first);
 
         // then
         assertThat(result).isInstanceOf(NormalScore.class);
@@ -43,11 +43,11 @@ class NormalScoreTest {
         // given
         NormalScore start = NormalScore.empty();
         Pin first = Pin.of(5);
-        NormalScore firstScore = start.createFirstPin(first);
+        NormalScore firstScore = start.nextPin(first);
         Pin second = Pin.of(3);
 
         // when
-        NormalScore result = firstScore.createNextPin(second);
+        NormalScore result = firstScore.nextPin(second);
 
         // then
         assertThat(result).isInstanceOf(NormalScore.class);
@@ -60,12 +60,12 @@ class NormalScoreTest {
         // given
         NormalScore start = NormalScore.empty();
         Pin first = Pin.of(10);
-        NormalScore firstScore = start.createFirstPin(first);
+        NormalScore firstScore = start.nextPin(first);
         Pin second = Pin.of(3);
 
         // when & then
         assertThatExceptionOfType(PinSecondValueException.class)
-            .isThrownBy(() -> firstScore.createNextPin(second))
+            .isThrownBy(() -> firstScore.nextPin(second))
             .withMessageMatching("첫번째 핀이 쓰러뜨리고 남은 핀 개수만 저장할 수 있다.");
     }
 
@@ -76,12 +76,12 @@ class NormalScoreTest {
         // given
         NormalScore start = NormalScore.empty();
         Pin first = Pin.of(9);
-        NormalScore firstScore = start.createFirstPin(first);
+        NormalScore firstScore = start.nextPin(first);
         Pin second = Pin.of(3);
 
         // when & then
         assertThatExceptionOfType(PinSecondValueException.class)
-            .isThrownBy(() -> firstScore.createNextPin(second))
+            .isThrownBy(() -> firstScore.nextPin(second))
             .withMessageMatching("첫번째 핀이 쓰러뜨리고 남은 핀 개수만 저장할 수 있다.");
     }
 
@@ -92,7 +92,7 @@ class NormalScoreTest {
         // given
         NormalScore start = NormalScore.empty();
         Pin first = Pin.of(5);
-        NormalScore firstScore = start.createFirstPin(first);
+        NormalScore firstScore = start.nextPin(first);
 
         // when
         boolean result = firstScore.isNext();

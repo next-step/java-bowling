@@ -20,12 +20,10 @@ public class FinalScore extends Score {
     }
 
     @Override
-    public FinalScore createFirstPin(Pin pin) {
-        return new FinalScore(pin, null, null);
-    }
-
-    @Override
-    public FinalScore createNextPin(Pin pin) {
+    public FinalScore nextPin(Pin pin) {
+        if (Objects.isNull(first)) {
+            return new FinalScore(pin, null, null);
+        }
         if (Objects.isNull(second)) {
             checkRemainPin(this.first, pin);
             return new FinalScore(this.first, pin, null);
