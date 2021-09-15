@@ -15,7 +15,7 @@ class FinalScoreTest {
     void createEmptyScoreTest() {
 
         // when
-        FinalScore result = FinalScore.empty();
+        Score result = FinalScore.empty();
 
         // then
         assertThat(result).isInstanceOf(FinalScore.class);
@@ -26,11 +26,11 @@ class FinalScoreTest {
     void createFirstPinTest() {
 
         // given
-        FinalScore start = FinalScore.empty();
+        Score start = FinalScore.empty();
         Pin first = Pin.of(5);
 
         // when
-        FinalScore result = start.nextPin(first);
+        Score result = start.nextPin(first);
 
         // then
         assertThat(result).isInstanceOf(FinalScore.class);
@@ -41,13 +41,13 @@ class FinalScoreTest {
     void createSecondPinTest() {
 
         // given
-        FinalScore start = FinalScore.empty();
+        Score start = FinalScore.empty();
         Pin first = Pin.of(5);
-        FinalScore firstScore = start.nextPin(first);
+        Score firstScore = start.nextPin(first);
         Pin second = Pin.of(3);
 
         // when
-        FinalScore result = firstScore.nextPin(second);
+        Score result = firstScore.nextPin(second);
 
         // then
         assertThat(result).isInstanceOf(FinalScore.class);
@@ -58,9 +58,9 @@ class FinalScoreTest {
     void createSecondExceptionRangeTest() {
 
         // given
-        FinalScore start = FinalScore.empty();
+        Score start = FinalScore.empty();
         Pin first = Pin.of(9);
-        FinalScore firstScore = start.nextPin(first);
+        Score firstScore = start.nextPin(first);
         Pin second = Pin.of(3);
 
         // when & then
@@ -74,13 +74,13 @@ class FinalScoreTest {
     void crerteSecondTenTest() {
 
         // given
-        FinalScore start = FinalScore.empty();
+        Score start = FinalScore.empty();
         Pin first = Pin.of(10);
-        FinalScore firstScore = start.nextPin(first);
+        Score firstScore = start.nextPin(first);
         Pin second = Pin.of(10);
 
         // when
-        FinalScore result = firstScore.nextPin(second);
+        Score result = firstScore.nextPin(second);
 
         // then
         assertThat(result).isInstanceOf(FinalScore.class);
@@ -91,15 +91,15 @@ class FinalScoreTest {
     void createBonusPinTest() {
 
         // given
-        FinalScore start = FinalScore.empty();
+        Score start = FinalScore.empty();
         Pin first = Pin.of(5);
-        FinalScore firstScore = start.nextPin(first);
+        Score firstScore = start.nextPin(first);
         Pin second = Pin.of(5);
-        FinalScore secondScore = firstScore.nextPin(second);
+        Score secondScore = firstScore.nextPin(second);
         Pin bonus = Pin.of(3);
 
         // when
-        FinalScore result = secondScore.nextPin(bonus);
+        Score result = secondScore.nextPin(bonus);
 
         // then
         assertThat(result).isInstanceOf(FinalScore.class);
@@ -110,11 +110,11 @@ class FinalScoreTest {
     void createBonusPinExceptionByNotSpare() {
 
         // given
-        FinalScore start = FinalScore.empty();
+        Score start = FinalScore.empty();
         Pin first = Pin.of(5);
-        FinalScore firstScore = start.nextPin(first);
+        Score firstScore = start.nextPin(first);
         Pin second = Pin.of(4);
-        FinalScore secondScore = firstScore.nextPin(second);
+        Score secondScore = firstScore.nextPin(second);
         Pin bonus = Pin.of(3);
 
         // when & then
