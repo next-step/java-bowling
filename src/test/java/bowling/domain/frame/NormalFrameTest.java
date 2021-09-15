@@ -34,4 +34,22 @@ class NormalFrameTest {
         assertThat(result).isInstanceOf(NormalFrame.class);
     }
 
+    @Test
+    @DisplayName("9번 프레임에서는 다음 프레임을 10번 프레임을 생성해야 한다.")
+    void createFinalFrameTest() {
+
+        // given
+        Frame first = NormalFrame.createFirstFrame();
+        for (int i=0; i<8; i++){
+            first = first.createNextFrame();
+        }
+
+        // when
+        Frame result = first.createNextFrame();
+
+        // then
+        assertThat(result).isInstanceOf(Frame.class);
+        assertThat(result).isInstanceOf(FinalFrame.class);
+    }
+
 }
