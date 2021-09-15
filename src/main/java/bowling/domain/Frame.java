@@ -11,4 +11,7 @@ public interface Frame {
     void addPoint(Point point);
 
     Frame next();
+
+    Points currentFramePoints();
+
 }

@@ -9,6 +9,8 @@ public class Points {
     private List<Point> points;
 
     private final int FIRST_INDEX = 0;
+    private final int SECOND_INDEX = 1;
+    private final int BONUS_INDEX = 2;
 
     public Points() {
         points = new ArrayList<>();
@@ -21,6 +23,15 @@ public class Points {
     public int findFirstPoint() {
         return points.get(FIRST_INDEX).currentPoint();
     }
+
+    public int findSecondPoint() {
+        return points.get(SECOND_INDEX).currentPoint();
+    }
+
+    public int findBonusPoint() {
+        return points.get(BONUS_INDEX).currentPoint();
+    }
+
 
     public int currentPoint() {
         return points.stream()

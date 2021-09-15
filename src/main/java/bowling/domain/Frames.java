@@ -28,4 +28,8 @@ public class Frames {
         }
         return false;
     }
+
+    public List<Frame> values() {
+        return frames;
+    }
 }

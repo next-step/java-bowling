@@ -29,9 +29,12 @@ public class BowlingGame {
             return;
         }
 
-
         if (currentFrame().isFinished()) {
             frames.addFrame(currentFrame().next());
         }
+    }
+
+    public Frames getFrames() {
+        return frames;
     }
 }

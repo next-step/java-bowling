@@ -66,6 +66,7 @@ public class NormalFrame implements Frame {
         return new NormalFrame(this.index + NEXT_INDEX_DISTANCE);
     }
 
+    @Override
     public Points currentFramePoints() {
         return points;
     }

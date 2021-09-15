@@ -39,10 +39,15 @@ public class FinalFrame implements Frame {
         }
         if (points.values().stream()
                 .mapToInt(Point::currentPoint)
-                .sum() == 10 && points.bowlCount() == 2) {
+                .sum() == 10 && points.bowlCount() == 3) {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Points currentFramePoints() {
+        return points;
     }
 
     @Override

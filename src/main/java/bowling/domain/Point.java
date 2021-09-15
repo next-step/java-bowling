@@ -34,6 +34,11 @@ public class Point {
     }
 
     @Override
+    public String toString() {
+        return String.valueOf(point);
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(point);
     }

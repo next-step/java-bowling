@@ -1,7 +1,6 @@
 package bowling.view;
 
 import bowling.domain.Frame;
-import bowling.domain.Point;
 import bowling.domain.UserName;
 
 import java.util.Scanner;
@@ -27,10 +26,11 @@ public class InputView {
         return userName;
     }
 
-    public static Point getPoint(Frame frame) {
+    public static void enterBowlPins(Frame frame) {
         while (true) {
             try {
-                return makePoint(frame);
+                downPins(frame);
+                return;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
@@ -38,13 +38,10 @@ public class InputView {
     }
 
 
-    private static Point makePoint(Frame frame) {
+    private static void downPins(Frame frame) {
         System.out.print(frame.findCurrentIndex() + "프레임 투구: ");
         int downPin = SCANNER.nextInt();
-
-        Point point = new Point(downPin);
-
-        return point;
+        frame.bowl(downPin);
     }
 
 }
