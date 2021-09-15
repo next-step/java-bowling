@@ -36,6 +36,7 @@ public class FinalFrame implements Frame {
 
     public Score calculateAdditionalScore(Score beforeScore) {
         Score score = beforeScore;
+
         for (State state : states) {
             score = state.calculateAdditionalScore(score);
             if (score.canCalculateScore()) {
@@ -44,6 +45,7 @@ public class FinalFrame implements Frame {
         }
         return score;
     }
+
 
     @Override
     public int number() {

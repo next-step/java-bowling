@@ -7,21 +7,21 @@ import step3.view.InputView;
 import step3.view.ResultView;
 
 public class BowlingGameController {
+    private static final Integer START_FRAME_NUMBER = 1;
+    private static final Integer END_FRAME_NUMBER = 10;
 
     public void runGame() {
         String userName = InputView.requireUserName();
-        int frameNum = 1;
-        Frame frame = new NormalFrame(frameNum);
+
+        Frame frame = new NormalFrame(START_FRAME_NUMBER);
         Frames frames = new Frames();
         while (!frame.isGameEnd()) {
-            int fallenPin = InputView.requireThrowBallNum(frameNum);
+            int fallenPin = InputView.requireThrowBallNum(frame.number());
             frame = frame.bowl(fallenPin);
             frame = addFrame(frames, frame);
-            frameNum = frame.number();
 
             printResult(userName, frames, frame);
         }
-
     }
 
     private void printResult(String userName, Frames frames, Frame frame) {
@@ -33,12 +33,12 @@ public class BowlingGameController {
     }
 
     private Frame addFrame(Frames frames, Frame frame) {
-        if (frame.isFinish() && frame.number() != 10) {
+        if (frame.isFinish() && frame.number() != END_FRAME_NUMBER) {
             frames.add(frame);
             frame = frame.createFrame();
             return frame;
         }
-        if (frame.number() == 10) {
+        if (frame.number() == END_FRAME_NUMBER) {
             frame = frame.createFrame();
         }
         return frame;
