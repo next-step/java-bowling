@@ -15,8 +15,7 @@ public class ScoreBoard {
         IntStream.range(0, players.numberOfPlayers()).forEach(
                 player -> {
                     calculatedScoresOfPlayers.add(new ArrayList<>());
-                    totalScoresOfPlayers.add(
-                            TotalScores.from(totalFrames.of(player), calculatedScoresOfPlayers.get(player)));
+                    totalScoresOfPlayers.add(TotalScores.from(totalFrames.of(player), calculatedScoresOfPlayers.get(player)));
                 }
         );
     }
@@ -25,19 +24,19 @@ public class ScoreBoard {
         return new ScoreBoard(players, totalFrames);
     }
 
-    public TotalScores totalScoreOf(int index) {
-        return totalScoresOfPlayers.get(index);
+    public TotalScores totalScoreOf(int playerIndex) {
+        return totalScoresOfPlayers.get(playerIndex);
     }
 
     public List<List<Integer>> calculatedScoresOfPlayers() {
         return calculatedScoresOfPlayers;
     }
 
-    public void updateCalculatedScoresOf(int index, List<Integer> calculatedScores) {
-        calculatedScoresOfPlayers.set(index, calculatedScores);
+    public void updateCalculatedScoresOf(int playerIndex, List<Integer> calculatedScores) {
+        calculatedScoresOfPlayers.set(playerIndex, calculatedScores);
     }
 
-    public List<Integer> calculatedScoresOf(int index) {
-        return calculatedScoresOfPlayers.get(index);
+    public List<Integer> calculatedScoresOf(int playerIndex) {
+        return calculatedScoresOfPlayers.get(playerIndex);
     }
 }
