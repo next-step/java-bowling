@@ -67,16 +67,20 @@ public class Question extends AbstractEntity {
         }
     }
 
-    public List<DeleteHistory> delete(User loginUser, long questionId) throws CannotDeleteException {
+    public List<DeleteHistory> deleteAllAndRelatedAnswers(User loginUser, long questionId) throws CannotDeleteException {
         this.validateAuthorAreSame(loginUser);
         this.validateThereIsAnyonesElseAnswer(loginUser);
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        this.deleted = true;
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, this.writer, LocalDateTime.now()));
+        deleteHistories.add(delete(questionId));
         deleteHistories.addAll(answers.deleteAll());
 
         return deleteHistories;
+    }
+
+    public DeleteHistory delete(long questionId) {
+        this.deleted = true;
+        return new DeleteHistory(ContentType.QUESTION, questionId, this.writer, LocalDateTime.now());
     }
 
     public boolean isDeleted() {
