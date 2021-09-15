@@ -30,6 +30,15 @@ public class Frame {
         }
     }
 
+    public void pitch(Pitching pitching) {
+        validateSumIsOverTen(firstPitching, pitching);
+        this.secondPitching = pitching;
+    }
+
+    public boolean done() {
+        return strike() || (secondPitching != null);
+    }
+
     public Integer score() {
         if (strike()) {
             return firstPitching.score(Pitching.SCORE_LEVEL_OF_STRIKE);
@@ -62,15 +71,6 @@ public class Frame {
             return Pitching.IS_NULL;
         }
         return secondPitching.score(Pitching.SCORE_LEVEL_OF_MISS);
-    }
-
-    public void pitch(Pitching pitching) {
-        validateSumIsOverTen(firstPitching, pitching);
-        this.secondPitching = pitching;
-    }
-
-    public boolean done() {
-        return strike() || (secondPitching != null);
     }
 
     @Override
