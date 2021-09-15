@@ -14,7 +14,7 @@ public class Game {
         frames.pitch(currentPitching);
     }
 
-    public Pitching nextPitching(int pins) {
+    private Pitching nextPitching(int pins) {
         if (currentPitching == null) {
             return Pitching.first(pins);
         }
