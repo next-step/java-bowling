@@ -61,13 +61,13 @@ public class Frame {
         return score() + beforeFrame.totalScore();
     }
 
-    public Integer score() {
+    public int score() {
         if (strike()) {
-            return firstPitching.score(Pitching.SCORE_LEVEL_OF_STRIKE);
+            return strikeScore();
         }
 
         if (spare()) {
-            return firstScore() + secondPitching.score(Pitching.SCORE_LEVEL_OF_SPARE);
+            return spareScore();
         }
 
         return firstPitching.sum(secondPitching);
@@ -77,6 +77,10 @@ public class Frame {
         return firstPitching.score(0) == Pins.MAXIMUM_PINS;
     }
 
+    private int strikeScore() {
+        return firstPitching.score(Pitching.SCORE_LEVEL_OF_STRIKE);
+    }
+
     public boolean spare() {
         if (secondPitching == null) {
             return false;
@@ -84,11 +88,18 @@ public class Frame {
         return firstPitching.sum(secondPitching) == Pins.MAXIMUM_PINS;
     }
 
-    public Integer firstScore() {
+    private int spareScore() {
+        if (secondPitching.score(Pitching.SCORE_LEVEL_OF_SPARE) == Pitching.IS_NULL) {
+            return Pitching.IS_NULL;
+        }
+        return firstScore() + secondPitching.score(Pitching.SCORE_LEVEL_OF_SPARE);
+    }
+
+    public int firstScore() {
         return firstPitching.score(Pitching.SCORE_LEVEL_OF_MISS);
     }
 
-    public Integer secondScore() {
+    public int secondScore() {
         if (secondPitching == null) {
             return Pitching.IS_NULL;
         }

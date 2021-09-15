@@ -63,7 +63,7 @@ class FrameTest {
             frame.pitch(nextPitching1);
         }
         // when
-        Integer score = frame.score();
+        int score = frame.score();
         // then
         assertThat(score).isEqualTo(result);
     }

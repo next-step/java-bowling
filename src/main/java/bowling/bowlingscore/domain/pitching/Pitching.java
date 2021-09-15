@@ -33,7 +33,7 @@ public class Pitching {
         return nextPitching;
     }
 
-    public Integer score(int level) {
+    public int score(int level) {
         if (level == SCORE_LEVEL_OF_STRIKE) {
             if (nextPitching == null || nextPitching.score(SCORE_LEVEL_OF_SPARE) == IS_NULL) {
                 return IS_NULL;
