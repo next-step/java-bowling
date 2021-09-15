@@ -68,7 +68,7 @@ public class Frames {
         frames.add(finalFrame);
     }
 
-    public int currentFrame() {
+    public int currentFrameNumber() {
         if (frames.isEmpty()) {
             return 1;
         }

@@ -39,6 +39,6 @@ public class Player {
     }
 
     public int currentFrame() {
-        return frames.currentFrame();
+        return frames.currentFrameNumber();
     }
 }
