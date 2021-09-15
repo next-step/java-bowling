@@ -6,7 +6,7 @@ import bowling.bowlingdrawing.exception.CustomException;
 
 import java.util.Objects;
 
-public class Frame {
+public abstract class Frame {
     private final Pitching firstPitching;
     private Pitching secondPitching;
 
@@ -44,7 +44,7 @@ public class Frame {
             return firstScore() + secondPitching.score(Pitching.SCORE_LEVEL_OF_SPARE);
         }
 
-        return firstScore() + secondScore();
+        return firstPitching.sum(secondPitching);
     }
 
     public boolean strike() {
@@ -72,8 +72,6 @@ public class Frame {
     public boolean done() {
         return strike() || (secondPitching != null);
     }
-
-
 
     @Override
     public boolean equals(Object o) {
