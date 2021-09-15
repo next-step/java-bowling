@@ -18,7 +18,7 @@ public class BowlingGameController {
         while (!frame.isGameEnd()) {
             int fallenPin = InputView.requireThrowBallNum(frame.number());
             frame = frame.bowl(fallenPin);
-            frame = addFrame(frames, frame);
+            frame = frames.add(frame);
 
             printResult(userName, frames, frame);
         }
@@ -30,17 +30,5 @@ public class BowlingGameController {
         ResultView.printResult(frames, frame);
         ResultView.prinBlank();
         ResultView.printScoreResult(frames, frame);
-    }
-
-    private Frame addFrame(Frames frames, Frame frame) {
-        if (frame.isFinish() && frame.number() != END_FRAME_NUMBER) {
-            frames.add(frame);
-            frame = frame.createFrame();
-            return frame;
-        }
-        if (frame.number() == END_FRAME_NUMBER) {
-            frame = frame.createFrame();
-        }
-        return frame;
     }
 }
