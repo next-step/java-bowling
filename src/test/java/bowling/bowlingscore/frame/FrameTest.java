@@ -100,4 +100,23 @@ class FrameTest {
         assertThat(spare1).isTrue();
         assertThat(spare2).isFalse();
     }
+
+    @ParameterizedTest(name = "해당 Frame 까지의 totalScore")
+    @CsvSource({"10, 1, 30", "10, 10, 300"})
+    void totalScore(int pins, int scoreFrame, int result) {
+        // given
+        Pitching pitching = Pitching.first(pins);
+        Frame frame = new Frame(pitching);
+
+        for (int i = 0; i < scoreFrame - 2; i++) {
+            pitching = pitching.next(pins);
+            frame = new Frame(pitching, frame);
+        }
+        pitching = pitching.next(pins);
+        pitching.next(pins);
+        // when
+        int totalScore = frame.totalScore();
+        // then
+        assertThat(totalScore).isEqualTo(result);
+    }
 }
