@@ -52,8 +52,11 @@ public class Pitching {
         return pins.pins();
     }
 
-    public int sum(Pitching secondPitching) {
-        return pins.pins() + secondPitching.pins.pins();
+    public int sum(Pitching pitching) {
+        if (pitching == null) {
+            return IS_NULL;
+        }
+        return pins.pins() + pitching.pins.pins();
     }
 
     @Override
