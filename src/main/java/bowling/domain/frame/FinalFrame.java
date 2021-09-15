@@ -12,4 +12,9 @@ public class FinalFrame extends Frame {
     public Frame createNextFrame() {
         return null;
     }
+
+    @Override
+    public void saveScore(Score score) {
+
+    }
 }

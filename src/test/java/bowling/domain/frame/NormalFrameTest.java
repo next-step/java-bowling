@@ -2,6 +2,9 @@ package bowling.domain.frame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import bowling.domain.score.NormalScore;
+import bowling.domain.score.Pin;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -50,6 +53,23 @@ class NormalFrameTest {
         // then
         assertThat(result).isInstanceOf(Frame.class);
         assertThat(result).isInstanceOf(FinalFrame.class);
+    }
+
+    @Test
+    @DisplayName("현재 라운드의 score를 저장할 수 있다.")
+    void saveNowScoreTest() {
+
+        // given
+        Frame first = NormalFrame.createFirstFrame();
+        Score emptyScore = NormalScore.empty();
+        Score score = emptyScore.createFirstPin(Pin.of(10));
+
+        // when
+        first.saveScore(score);
+
+        // then
+        assertThat(first).isInstanceOf(Frame.class);
+        assertThat(first).isInstanceOf(NormalFrame.class);
     }
 
 }

@@ -5,7 +5,7 @@ import bowling.domain.score.Score;
 public abstract class Frame {
 
     final int round;
-    final Score score;
+    Score score;
     Frame nextFrame;
 
     Frame(int round, Score score, Frame nextFrame) {
@@ -14,6 +14,7 @@ public abstract class Frame {
         this.nextFrame = nextFrame;
     }
 
-    abstract Frame createNextFrame();
+    public abstract Frame createNextFrame();
+    public abstract void saveScore(Score score);
 
 }
