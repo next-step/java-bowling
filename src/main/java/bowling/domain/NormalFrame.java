@@ -7,7 +7,6 @@ import java.util.Objects;
 public class NormalFrame implements Frame {
 
     public static final int MAXIMUM_NORMAL_FRAME_PITCH = 2;
-    private static final int ZERO = 0;
 
     private final FrameNumber frameNumber;
     private Pitches pitches;

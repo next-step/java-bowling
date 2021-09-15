@@ -65,7 +65,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Score addScore(Score beforeScore) {
+    public Score addScore(final Score beforeScore) {
         if (pitches.isEmpty()) {
             return Score.cantCalculate();
         }
