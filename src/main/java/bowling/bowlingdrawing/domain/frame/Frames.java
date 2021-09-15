@@ -23,12 +23,13 @@ public class Frames {
             return;
         }
 
-        if (frames.size() == MAXIMUM_SIZE_OF_FRAMES) {
+        Frame currentFrame = frames.get(frames.size() - 1);
+
+        if (frames.size() == MAXIMUM_SIZE_OF_FRAMES && currentFrame.done()) {
             pitchAtFinalFrame(pitching);
             return;
         }
 
-        Frame currentFrame = frames.get(frames.size() - 1);
         if (currentFrame.done()) {
             addNewFrame(pitching);
             return;
