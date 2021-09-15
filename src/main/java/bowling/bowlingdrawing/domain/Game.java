@@ -2,23 +2,27 @@ package bowling.bowlingdrawing.domain;
 
 import bowling.bowlingdrawing.domain.frame.Frames;
 import bowling.bowlingdrawing.domain.pitching.Pitching;
-import bowling.bowlingdrawing.domain.pitching.Pitchings;
+
+import java.util.Objects;
 
 public class Game {
     private final Frames frames = new Frames();
-    private final Pitchings pitchings = new Pitchings();
+    private Pitching currentPitching;
 
     public void pitch(int pins) {
-        Pitching nextPitching = pitchings.nextPitching(pins);
-        frames.pitch(nextPitching);
+        currentPitching = nextPitching(pins);
+        frames.pitch(currentPitching);
+    }
+
+    public Pitching nextPitching(int pins) {
+        if (currentPitching == null) {
+            return Pitching.first(pins);
+        }
+        return currentPitching.next(pins);
     }
 
     public Frames frames() {
         return frames;
-    }
-
-    public Pitchings pitchings() {
-        return pitchings;
     }
 
     public boolean end() {
@@ -27,5 +31,18 @@ public class Game {
 
     public int currentFrame() {
         return frames.currentFrame();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Game)) return false;
+        Game game = (Game) o;
+        return Objects.equals(frames, game.frames) && Objects.equals(currentPitching, game.currentPitching);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frames, currentPitching);
     }
 }

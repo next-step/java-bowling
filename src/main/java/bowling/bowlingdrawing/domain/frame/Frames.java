@@ -6,6 +6,7 @@ import bowling.bowlingdrawing.exception.CustomException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Frames {
 
@@ -77,5 +78,18 @@ public class Frames {
 
     public FinalFrame finalFrame() {
         return finalFrame;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Frames)) return false;
+        Frames frames1 = (Frames) o;
+        return Objects.equals(frames, frames1.frames) && Objects.equals(finalFrame, frames1.finalFrame);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frames, finalFrame);
     }
 }
