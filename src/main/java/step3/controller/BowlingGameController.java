@@ -19,13 +19,17 @@ public class BowlingGameController {
             frame = addFrame(frames, frame);
             frameNum = frame.number();
 
-            ResultView.printHeader();
-            ResultView.printUserName(userName);
-            ResultView.printResult(frames, frame);
-            ResultView.prinBlank();
-            ResultView.printScoreResult(frames, frame);
+            printResult(userName, frames, frame);
         }
 
+    }
+
+    private void printResult(String userName, Frames frames, Frame frame) {
+        ResultView.printHeader();
+        ResultView.printUserName(userName);
+        ResultView.printResult(frames, frame);
+        ResultView.prinBlank();
+        ResultView.printScoreResult(frames, frame);
     }
 
     private Frame addFrame(Frames frames, Frame frame) {

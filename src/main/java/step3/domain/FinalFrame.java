@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import step3.state.FinalReady;
-import step3.state.Miss;
 import step3.state.State;
 
 public class FinalFrame implements Frame {
