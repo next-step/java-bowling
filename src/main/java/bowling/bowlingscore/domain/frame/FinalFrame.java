@@ -13,6 +13,10 @@ public class FinalFrame extends Frame {
         super(firstPitching);
     }
 
+    public FinalFrame(Pitching firstPitching, Frame beforeFrame) {
+        super(firstPitching, beforeFrame);
+    }
+
     @Override
     public void pitch(Pitching pitching) {
         if (strike() || spare()) {
