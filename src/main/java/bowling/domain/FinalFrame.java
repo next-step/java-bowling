@@ -69,7 +69,7 @@ public class FinalFrame implements Frame {
             return Score.cantCalculate();
         }
 
-        pitchScore(beforeScore);
+        pitchScoreUntilPossible(beforeScore);
 
         if (beforeScore.canCalculateScore()) {
             return beforeScore;
@@ -77,7 +77,7 @@ public class FinalFrame implements Frame {
         return Score.cantCalculate();
     }
 
-    private void pitchScore(final Score beforeScore) {
+    private void pitchScoreUntilPossible(final Score beforeScore) {
         int range = Math.min(beforeScore.leftPitch(), pitches.size());
         for (int i = 0; i < range; i++) {
             beforeScore.pitch(pitches.get(i).intValue());
