@@ -36,8 +36,8 @@ public class Players {
         return scoreBoard;
     }
 
-    public Player of(int nth) {
-        return players.get(nth);
+    public Player of(int playerIndex) {
+        return players.get(playerIndex);
     }
 
     private List<String> framesToResults(Frames frames) {
