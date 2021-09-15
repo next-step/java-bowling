@@ -1,14 +1,13 @@
 package bowling.domain.score;
 
 import bowling.domain.rolling.NormalRollings;
-import bowling.domain.score.Score;
-import bowling.domain.score.ScoreFixedException;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ScoreTest {
 
@@ -22,10 +21,11 @@ class ScoreTest {
         Score actual = Score.of(score);
 
         //then
-        assertThat(actual).isEqualTo(Score.of(score));
-        assertThat(actual.value()).isEqualTo(score);
-        assertThat(actual.isFixed()).isTrue();
-
+        assertAll(
+                () -> assertThat(actual).isEqualTo(Score.of(score)),
+                () -> assertThat(actual.value()).isEqualTo(score),
+                () -> assertThat(actual.isFixed()).isTrue()
+        );
     }
 
     @Test
@@ -41,8 +41,10 @@ class ScoreTest {
         int actual = score.value();
 
         //then
-        assertThat(actual).isEqualTo(-1);
-        assertThat(score.isFixed()).isFalse();
+        assertAll(
+                () -> assertThat(actual).isEqualTo(-1),
+                () -> assertThat(score.isFixed()).isFalse()
+        );
 
     }
 
@@ -60,8 +62,10 @@ class ScoreTest {
         Score actual = score.plus(bonus);
 
         //then
-        assertThat(actual.isFixed()).isTrue();
-        assertThat(actual).isEqualTo(Score.of(15));
+        assertAll(
+                () -> assertThat(actual.isFixed()).isTrue(),
+                () -> assertThat(actual).isEqualTo(Score.of(15))
+        );
 
     }
 
@@ -97,8 +101,10 @@ class ScoreTest {
         Score actual = strike.plus(secondBonus);
 
         //then
-        assertThat(actual.isFixed()).isTrue();
-        assertThat(actual).isEqualTo(Score.of(20));
+        assertAll(
+                () -> assertThat(actual.isFixed()).isTrue(),
+                () -> assertThat(actual).isEqualTo(Score.of(20))
+        );
 
     }
 

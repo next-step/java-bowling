@@ -1,31 +1,25 @@
 package bowling;
 
-import bowling.domain.BowlingGame;
+import bowling.domain.BowlingClub;
 import bowling.ui.InputView;
 import bowling.ui.ResultView;
+
+import java.util.List;
 
 public class BowlingApplication {
 
     public static void main(String[] args) {
+        List<String> names = InputView.InputPlayers();
+        BowlingClub bowlingClub = new BowlingClub(names);
 
-        String player = InputView.inputPlayerName();
-        BowlingGame bowlingGame = new BowlingGame(player);
+        ResultView.printBowlingResult(bowlingClub.games());
 
-        printBowlingGame(bowlingGame);
-
-        while (bowlingGame.isNotEnd()) {
-            int fallenPin = InputView.nextFallenPin(bowlingGame);
-            bowlingGame.roll(fallenPin);
-
-            printBowlingGame(bowlingGame);
+        while (bowlingClub.isNotEnd()) {
+            int fallenPin = InputView.nextFallenPin(bowlingClub.nameOfPlayerForThisTurn());
+            bowlingClub.roll(fallenPin);
+            ResultView.printBowlingResult(bowlingClub.games());
         }
 
-    }
-
-    private static void printBowlingGame(BowlingGame bowlingGame) {
-        ResultView.printFrame();
-        ResultView.printFrameByPlayer(bowlingGame);
-        ResultView.printScoreByPlayer(bowlingGame);
     }
 
 }

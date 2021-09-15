@@ -11,11 +11,14 @@ public class Score {
     private static final int REMAINING_SPARE = 1;
     private static final int NOT_NEED_MORE = 0;
     private static final int FINAL_STRIKE_OR_SPARE = 20;
+    private static final int MAX = 30;
 
     private final int value;
     private final int countOfRemaining;
 
     public Score(int value, int countOfRemaining) {
+        validateFixed(countOfRemaining);
+        validateScore(value);
         this.value = value;
         this.countOfRemaining = countOfRemaining;
     }
@@ -46,17 +49,21 @@ public class Score {
     }
 
     public Score plus(int bonus) {
-        validateFixed();
         return new Score(this.value + bonus, this.countOfRemaining - 1);
     }
 
     public Score plus(Rollings rollings) {
-        validateFixed();
         return new Score(this.value + rollings.sum(), this.countOfRemaining - 1);
     }
 
-    private void validateFixed() {
-        if (isFixed()) {
+    private void validateFixed(int countOfRemaining) {
+        if (countOfRemaining < NOT_NEED_MORE) {
+            throw new ScoreFixedException();
+        }
+    }
+
+    private void validateScore(int score) {
+        if (score > MAX) {
             throw new ScoreFixedException();
         }
     }

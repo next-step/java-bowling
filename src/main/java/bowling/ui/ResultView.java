@@ -25,6 +25,14 @@ public class ResultView {
         System.out.println(FRAME);
     }
 
+    public static void printBowlingResult(List<BowlingGame> games) {
+        ResultView.printFrame();
+        games.forEach(game -> {
+            ResultView.printFrameByPlayer(game);
+            ResultView.printScoreByPlayer(game);
+        });
+    }
+
     public static void printFrameByPlayer(BowlingGame bowlingGame) {
         System.out.printf(PLAYER_NAME, bowlingGame.playerName());
         List<Frame> frames = bowlingGame.frames();
@@ -48,13 +56,13 @@ public class ResultView {
         }
 
         printNonFrame(frames.size());
-
+        System.out.println();
     }
 
     private static int displayScore(int totalScore, int score) {
         if (score > 0) {
             totalScore += score;
-            System.out.printf(SCORE, totalScore, StringUtil.pad(totalScore, 4));
+            System.out.printf(SCORE, totalScore, StringUtil.pad(String.valueOf(totalScore).length(), 4, " "));
         }
         return totalScore;
     }
