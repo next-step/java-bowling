@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.BusinessException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -60,6 +62,14 @@ public class Pitches {
 
     public boolean isLastPitchStatus(Status status) {
         return pitches.get(pitches.size() - 1).status().equals(status);
+    }
+
+    public void validateNormalSecondPitch(int countOfPins) {
+        int sumOfNormalPitch = pitches.get(0).intValue() + countOfPins;
+
+        if (!pitches.isEmpty() && sumOfNormalPitch > Pitch.MAXIMUM_COUNT_OF_PINS) {
+            throw new BusinessException("일반 투구의 합계는 10 이하여야 합니다.");
+        }
     }
 
     @Override

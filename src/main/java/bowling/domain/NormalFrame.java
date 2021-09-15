@@ -23,6 +23,9 @@ public class NormalFrame implements Frame {
         if (isEnd()) {
             throw new BusinessException("현재 프레임에서 투구할 수 있는 갯수를 초과했습니다.");
         }
+        if (pitches.size() == 1) {
+            pitches.validateNormalSecondPitch(countOfPins);
+        }
         addNextPitch(countOfPins);
         return this;
     }
@@ -55,10 +58,9 @@ public class NormalFrame implements Frame {
         if (pitches.isEmpty()) {
             return Score.cantCalculate();
         }
-        int range = Math.min(beforeScore.left(), pitches.size());
-        for (int i = 0; i < range; i++) {
-            beforeScore.pitch(pitches.get(i).intValue());
-        }
+
+        pitchScoreUntilPossible(beforeScore);
+
         if (beforeScore.canCalculateScore()) {
             return beforeScore;
         }
@@ -66,6 +68,13 @@ public class NormalFrame implements Frame {
             return Score.cantCalculate();
         }
         return nextFrame.addScore(beforeScore);
+    }
+
+    private void pitchScoreUntilPossible(final Score beforeScore) {
+        int range = Math.min(beforeScore.leftPitch(), pitches.size());
+        for (int i = 0; i < range; i++) {
+            beforeScore.pitch(pitches.get(i).intValue());
+        }
     }
 
     @Override

@@ -41,7 +41,9 @@ public class FinalFrame implements Frame {
     }
 
     public boolean isNormalEnd() {
-        return pitches.equalsToSize(NormalFrame.MAXIMUM_NORMAL_FRAME_PITCH) && pitches.sum() < Pitch.MAXIMUM_COUNT_OF_PINS;
+        boolean isNormalFrameSize = pitches.equalsToSize(NormalFrame.MAXIMUM_NORMAL_FRAME_PITCH);
+        boolean isNormalPitch = pitches.sum() < Pitch.MAXIMUM_COUNT_OF_PINS;
+        return isNormalFrameSize && isNormalPitch;
     }
 
     @Override
@@ -64,17 +66,22 @@ public class FinalFrame implements Frame {
 
     @Override
     public Score addScore(Score beforeScore) {
-        if(pitches.isEmpty()){
+        if (pitches.isEmpty()) {
             return Score.cantCalculate();
         }
-        int range = Math.min(beforeScore.left(), pitches.size());
-        for (int i = 0; i < range; i++) {
-            beforeScore.pitch(pitches.get(i).intValue());
-        }
+        pitchScoreUntilPossible(beforeScore);
+
         if (beforeScore.canCalculateScore()) {
             return beforeScore;
         }
         return Score.cantCalculate();
+    }
+
+    private void pitchScoreUntilPossible(final Score beforeScore) {
+        int range = Math.min(beforeScore.leftPitch(), pitches.size());
+        for (int i = 0; i < range; i++) {
+            beforeScore.pitch(pitches.get(i).intValue());
+        }
     }
 
     @Override
