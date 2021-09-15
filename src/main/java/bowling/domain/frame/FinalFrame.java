@@ -10,7 +10,7 @@ public class FinalFrame extends Frame {
 
     private final FinalFrameStatus status;
 
-    public FinalFrame(FinalScore score, int trial, FinalFrameStatus status) {
+    private FinalFrame(FinalScore score, int trial, FinalFrameStatus status) {
         super(trial);
         this.score = score;
         this.status = status;

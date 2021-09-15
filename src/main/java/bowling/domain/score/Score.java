@@ -4,9 +4,9 @@ public abstract class Score {
 
     protected static final int MAX_SCORE = 10;
 
-    private final int first;
+    protected final int first;
 
-    private final int second;
+    protected final int second;
 
     protected Score(int first, int second) {
         this.first = first;

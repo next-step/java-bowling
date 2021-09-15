@@ -5,6 +5,10 @@ import bowling.domain.score.FinalScore;
 
 public class FinalFrameOutputViewHelper extends FrameOutputViewHelper {
 
+    private static final int FIRST_TRIAL = 1;
+
+    private static final int SECOND_TRIAL = 2;
+
     private static final int INDENT_SIZE = 5;
 
     protected FinalFrameOutputViewHelper() {
@@ -75,11 +79,11 @@ public class FinalFrameOutputViewHelper extends FrameOutputViewHelper {
     }
 
     private boolean isFirstTrial(int trial) {
-        return trial == 1;
+        return trial == FIRST_TRIAL;
     }
 
     private boolean isSecondTrial(int trial) {
-        return trial == 2;
+        return trial == SECOND_TRIAL;
     }
 
     private StringBuilder framesOutputFrom(StringBuilder outputScores) {
