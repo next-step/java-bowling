@@ -13,7 +13,7 @@ public class ScoreFrames {
         this.lastScoreFrame = this.firstScoreFrame;
     }
 
-    public FrameStatus bowl(int score) {
+    public boolean bowl(int score) {
         ScoreFrame nextScoreFrame = lastScoreFrame.addScore(score);
         boolean isFrameUpdated = lastScoreFrame != nextScoreFrame;
 
@@ -21,7 +21,7 @@ public class ScoreFrames {
             lastScoreFrame = nextScoreFrame;
         }
 
-        return FrameStatus.fromBoolean(isFrameUpdated);
+        return isFrameUpdated;
     }
 
     public List<String> getCalculatedScores() {

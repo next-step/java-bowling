@@ -27,13 +27,12 @@ public class BowlingMain {
     }
 
     private static void doBowl(Players players, Player player) {
-        FrameStatus frameStatus = FrameStatus.CONTINUE;
+        boolean frameUpdated = false;
 
-        while(frameStatus.equals(FrameStatus.CONTINUE)) {
+        while(!frameUpdated) {
             String message = String.format("%s's turn : ", player.getNameString());
             int score = BowlingInputView.getIntInput(message);
-
-            frameStatus = player.playBowl(score);
+            frameUpdated = player.playBowl(score);
 
             BowlingOutputView.printPlayerFrames(players);
         }

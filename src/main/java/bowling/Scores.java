@@ -32,9 +32,9 @@ public class Scores {
         return scoreSum.isHigherOrEqualThan(new Score(number));
     }
 
-    public Score sum(int firstNumbersOf) {
+    public Score sum(int count) {
         return scores.stream()
-                .limit(firstNumbersOf)
+                .limit(count)
                 .reduce(Score::sum)
                 .orElse(new Score(0));
     }
