@@ -1,66 +1,64 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.Score;
-import bowling.domain.score.ScoreType;
+import bowling.domain.state.State;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Objects;
 
 public abstract class Frame {
-    protected Score score1;
-    protected Score score2;
-    protected Score score3;
+    protected State state;
+    protected Frame nextFrame;
 
-    public Frame next(int number) {
-        return setScore(number);
+    public abstract Frame next(int number);
+
+    public abstract boolean finish();
+
+    public abstract int total();
+
+    public abstract int total(int beforTotal, int leftCount);
+
+    public boolean hasNextFrame() {
+        return !ObjectUtils.isEmpty(nextFrame);
     }
 
-    protected abstract Frame setScore(int number);
-
-    protected boolean isFirstTurn() {
-        return ObjectUtils.isEmpty(this.score1);
+    public State getState() {
+        return state;
     }
 
-    protected abstract boolean isSecondTurn();
-
-    public abstract boolean isFinish();
-
-    public Score getScore1() {
-        return score1;
+    public boolean hasFirstPin() {
+        return state.hasFirstPin();
     }
 
-    public Score getScore2() {
-        return score2;
+    public int firstCount() {
+        return state.getFirstCount();
     }
 
-    public Score getScore3() {
-        return score3;
+    public boolean hasSecondPin() {
+        return state.hasSecondPin();
     }
 
-    public ScoreType getScoreType1() {
-        return score1.getScoreType();
+    public int secondCount() {
+        return state.getSecondCount();
     }
 
-    public ScoreType getScoreType2() {
-        return score2.getScoreType();
-    }
+    public abstract boolean hasBonus();
 
-    public ScoreType getScoreType3() {
-        return score3.getScoreType();
-    }
+    public abstract int bonusFirstCount();
+
+    public abstract boolean hasBonusSecond();
+
+    public abstract int bonusSecondCount();
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Frame frame = (Frame) o;
-        return Objects.equals(score1, frame.score1) &&
-                Objects.equals(score2, frame.score2) &&
-                Objects.equals(score3, frame.score3);
+        return Objects.equals(state, frame.state);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score1, score2, score3);
+        return Objects.hash(state);
     }
 }

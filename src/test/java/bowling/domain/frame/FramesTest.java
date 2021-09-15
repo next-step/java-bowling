@@ -42,10 +42,17 @@ class FramesTest {
         assertThat(frames.nextFrameNo()).isEqualTo(10);
     }
 
-    @DisplayName("종료 후 투구시 오류")
+    @DisplayName("마지막 프레임 종료")
     @Test
     void finish() {
         Frames frames = new Frames(10).next(1).next(2);
+        assertThat(frames.isFinish()).isTrue();
+    }
+
+    @DisplayName("마지막 프레임 보너스")
+    @Test
+    void finish_bunus() {
+        Frames frames = new Frames(10).next(10).next(2).next(1);
         assertThat(frames.isFinish()).isTrue();
 
     }

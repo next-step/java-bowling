@@ -18,29 +18,39 @@
   * 거터(gutter) : 핀을 하나도 쓰러트리지 못한 상태. 거터는 "-"로 표시
 * 10 프레임은 스트라이크이거나 스페어이면 한 번을 더 투구할 수 있다.
 
+### 점수 계산
+* 사용자 1명의 볼링 게임 점수를 관리할 수 있는 프로그램을 구현한다.
+* 스트라이크는 다음 2번의 투구까지 점수를 합산해야 한다. 스페어는 다음 1번의 투구까지 점수를 합산해야 한다.
+
 ## TODO
-### 점수계산
-* score type enum
-  * strike(x) : 10점
-  * spare(/) : 10점
-  * miss(숫자) : 1~9점
-  * gutter(-) : 0점
-  * 정적 팩토리 메서드
-    * 이전 점수 + 현재점수가 10이면 spare
-    * 나머지는 점수대로 할당
+### 그리기
+* pin : 1~10개의 볼링핀
 * score
-  * score type, score
-* frame 추상 클래스, 일급 콜렉션
-  * score1, score2, score3
+  * pin
+  * bonusCount : 남은 보너스 투구 횟수
+* state
+  * firstPin : 첫번째 투구 결과
+  * secondPin : 두번째 투구 결과
+  * score : 최종 결과
+  * 투구 후 다음 상태가 결정됌.
+  * 상태 종류 : ready, firstBowl, miss, spare, strike, bonus
+* frame
+  * state
   * normalFrame
-    * 2회까지 투구 가능
-    * strike 인 경우 1회 투구
+    * 투가가 종료되었으면 새로운 프레임, 종료되지 않았으면 자기자신을 리턴
   * finalFrame
-    * strike 또는 spare 인 경우 3회까지 투구 가능
-    * 그 외에는 2회 투구
+    * bonusState를 추가로 가짐. bonusCount가 남아있으면 해당 횟수만큼 투구 가능
 * frames 일급콜렉션
-  * frame list
+  * 1-9프레임은 nomarFrame, 마지막 프레임은 finalFrame으로 생성
 * player
-  * name : 참가자명
+  * playerName
   * frames
 * 입출력 view 및 게임실행
+
+### 점수 계산
+* frame
+  * nextFrame 포인터 추가
+  * 현재 프레임의 점수계산 메소드
+    * bonusCount가 남아있으면 nextFrame으로 점수계산 전달
+* 누적 점수를 보여주는 view 추가
+
