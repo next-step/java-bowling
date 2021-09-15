@@ -5,13 +5,13 @@ import java.util.Scanner;
 public class BowlingInputView {
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public static String getPlayerNameWithPrompt(String message) {
+    public static String getStringInput(String message) {
         System.out.print(message);
 
         return SCANNER.nextLine();
     }
 
-    public static int getBowlingScoreWithPrompt(String message) {
+    public static int getIntInput(String message) {
         System.out.print(message);
 
         return toInt(SCANNER.nextLine());

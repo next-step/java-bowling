@@ -1,15 +1,34 @@
 package bowling;
 
+import java.util.List;
+
 public class Player {
     public static final int NAME_LENGTH = 3;
     public static final String ONLY_ENG_ALPHABETS = "^[a-zA-Z]*$";
 
     private final String name;
+    private final ScoreFrames scoreFrames = new ScoreFrames();
 
     public Player(String name) {
         validate(name);
 
         this.name = name;
+    }
+
+    public List<String> getScoreStrings() {
+        return scoreFrames.getScoreStrings();
+    }
+
+    public List<String> getCalculatedScoreStrings() {
+        return scoreFrames.getCalculatedScores();
+    }
+
+    public boolean isContinued() {
+        return scoreFrames.isContinued();
+    }
+
+    public String getNameString() {
+        return name;
     }
 
     private void validate(String name) {
@@ -32,9 +51,5 @@ public class Player {
 
     private boolean isLengthThree(String nonNullName) {
         return nonNullName.length() == NAME_LENGTH;
-    }
-
-    public String getNameString() {
-        return name;
     }
 }

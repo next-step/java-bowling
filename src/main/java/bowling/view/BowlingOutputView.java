@@ -3,6 +3,7 @@ package bowling.view;
 import bowling.*;
 import bowling.util.OutputStringFormatter;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -12,27 +13,18 @@ public class BowlingOutputView {
     private static final int END_FRAME = 10;
     private static final int FRAME_WIDTH = 6;
 
-    public static void printFramesStatus(Player player, ScoreFrames scoreFrames) {
+    public static void printPlayersFramesStatus(Players players) {
         System.out.println("| NAME " + getScoreLabel() + "|");
-        System.out.println(getPlayerName(player) + getScores(scoreFrames) + "|");
-        System.out.println("|      " + getCalculatedScores(scoreFrames) + "|");
+
+        for (Player player : players) {
+            System.out.println(getPlayerName(player) + createLine(player.getScoreStrings()) + "|");
+            System.out.println("|      " + createLine(player.getCalculatedScoreStrings()) + "|");
+        }
     }
 
     private static String getPlayerName(Player player) {
         return String.format("|%s",
                 OutputStringFormatter.toCenterAlignedWithFixedPaddedString(player.getNameString(), FRAME_WIDTH));
-    }
-
-    private static String getScores(ScoreFrames scoreFrames) {
-        List<String> scoreStrings = scoreFrames.getScoreStrings();
-
-        return createLine(scoreStrings);
-    }
-
-    private static String getCalculatedScores(ScoreFrames scoreFrames) {
-        List<String> calculatedScores = scoreFrames.getCalculatedScores();
-
-        return createLine(calculatedScores);
     }
 
     private static String getScoreLabel() {
