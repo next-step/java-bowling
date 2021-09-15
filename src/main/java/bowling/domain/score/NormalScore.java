@@ -47,7 +47,7 @@ public class NormalScore extends Score {
 
     @Override
     public boolean isNext() {
-        return first != STRIKE;
+        return Objects.isNull(first) || first != STRIKE;
     }
 
 }

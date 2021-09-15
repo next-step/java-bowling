@@ -15,7 +15,7 @@ class NormalScoreTest {
     void createEmptyNormalScoreTest() {
 
         // when
-        NormalScore result = NormalScore.empty();
+        Score result = NormalScore.empty();
 
         // then
         assertThat(result).isInstanceOf(NormalScore.class);
@@ -26,11 +26,11 @@ class NormalScoreTest {
     void createFirstPinTest() {
 
         // given
-        NormalScore start = NormalScore.empty();
+        Score start = NormalScore.empty();
         Pin first = Pin.of(5);
 
         // when
-        NormalScore result = start.nextPin(first);
+        Score result = start.nextPin(first);
 
         // then
         assertThat(result).isInstanceOf(NormalScore.class);
@@ -41,13 +41,13 @@ class NormalScoreTest {
     void createSecondPinTest() {
 
         // given
-        NormalScore start = NormalScore.empty();
+        Score start = NormalScore.empty();
         Pin first = Pin.of(5);
-        NormalScore firstScore = start.nextPin(first);
+        Score firstScore = start.nextPin(first);
         Pin second = Pin.of(3);
 
         // when
-        NormalScore result = firstScore.nextPin(second);
+        Score result = firstScore.nextPin(second);
 
         // then
         assertThat(result).isInstanceOf(NormalScore.class);
@@ -58,9 +58,9 @@ class NormalScoreTest {
     void createSecondExceptionTest() {
 
         // given
-        NormalScore start = NormalScore.empty();
+        Score start = NormalScore.empty();
         Pin first = Pin.of(10);
-        NormalScore firstScore = start.nextPin(first);
+        Score firstScore = start.nextPin(first);
         Pin second = Pin.of(3);
 
         // when & then
@@ -74,9 +74,9 @@ class NormalScoreTest {
     void createSecondExceptionRangeTest() {
 
         // given
-        NormalScore start = NormalScore.empty();
+        Score start = NormalScore.empty();
         Pin first = Pin.of(9);
-        NormalScore firstScore = start.nextPin(first);
+        Score firstScore = start.nextPin(first);
         Pin second = Pin.of(3);
 
         // when & then
@@ -85,17 +85,32 @@ class NormalScoreTest {
             .withMessageMatching("첫번째 핀이 쓰러뜨리고 남은 핀 개수만 저장할 수 있다.");
     }
 
+
     @Test
-    @DisplayName("다음 핀이 진행되는지 확인할 수 있다.")
-    void avaliableCheckNextPinTest() {
+    @DisplayName("첫번째 핀이 비어있다면 isNext는 true여야 한다.")
+    void isNextFirstNullTest() {
 
         // given
-        NormalScore start = NormalScore.empty();
-        Pin first = Pin.of(5);
-        NormalScore firstScore = start.nextPin(first);
+        Score start = NormalScore.empty();
 
         // when
-        boolean result = firstScore.isNext();
+        boolean result = start.isNext();
+
+        // then
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("첫번째핀이 비어있지 않지만 strike가 아니라면 isNext는 true여야 한다.")
+    void isNextNotStrikeTest() {
+
+        // given
+        Score start = NormalScore.empty();
+        Pin startPin = Pin.of(3);
+        Score next = start.nextPin(startPin);
+
+        // when
+        boolean result = next.isNext();
 
         // then
         assertTrue(result);
