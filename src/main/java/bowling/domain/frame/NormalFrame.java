@@ -4,6 +4,7 @@ import bowling.domain.score.Score;
 
 public class NormalFrame extends Frame {
 
+    private static final int FIRST_FRAME_ROUND = 1;
     private static final int FINAL_FRAME_ROUND = 10;
 
     private NormalFrame(int round, Score score, Frame nextFrame) {
@@ -11,7 +12,7 @@ public class NormalFrame extends Frame {
     }
 
     public static Frame createFirstFrame() {
-        return new NormalFrame(1, null, null);
+        return new NormalFrame(FIRST_FRAME_ROUND, null, null);
     }
 
     @Override
