@@ -18,11 +18,19 @@ public class NormalScore extends Score {
     @Override
     public NormalScore nextPin(Pin pin) {
         if (Objects.isNull(first)) {
-            return new NormalScore(pin, null);
+            return createFirstPin(pin);
         }
-        checkFirstStrike(this.first);
-        checkRemainPin(this.first, pin);
-        return new NormalScore(this.first, pin);
+        return createSecondPin(pin);
+    }
+
+    private NormalScore createFirstPin(Pin pin){
+        return new NormalScore(pin, null);
+    }
+
+    private NormalScore createSecondPin(Pin pin) {
+        checkFirstStrike(first);
+        checkRemainPin(first, pin);
+        return new NormalScore(first, pin);
     }
 
     private static void checkFirstStrike(Pin pin) {

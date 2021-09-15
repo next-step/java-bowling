@@ -22,20 +22,32 @@ public class FinalScore extends Score {
     @Override
     public FinalScore nextPin(Pin pin) {
         if (Objects.isNull(first)) {
-            return new FinalScore(pin, null, null);
+            return createFirstPin(pin);
         }
         if (Objects.isNull(second)) {
-            checkRemainPin(this.first, pin);
-            return new FinalScore(this.first, pin, null);
+            return createSecondPin(pin);
         }
-        checkBonusPin(this);
-        return new FinalScore(this.first, this.second, pin);
+        return createBonusPin(pin);
+    }
+
+    private FinalScore createFirstPin(Pin pin) {
+        return new FinalScore(pin, null, null);
+    }
+
+    private FinalScore createSecondPin(Pin pin) {
+        checkRemainPin(first, pin);
+        return new FinalScore(first, pin, null);
     }
 
     private static void checkRemainPin(Pin before, Pin pin) {
         if (before != STRIKE && before.remainPin() < pin.value()) {
             throw new PinSecondValueException();
         }
+    }
+
+    private FinalScore createBonusPin(Pin pin) {
+        checkBonusPin(this);
+        return new FinalScore(first, second, pin);
     }
 
     private static void checkBonusPin(FinalScore finalScore) {
