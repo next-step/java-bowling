@@ -2,6 +2,7 @@ package bowling.domain.score;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import bowling.exception.Pin.PinBonusException;
 import bowling.exception.Pin.PinSecondValueException;
@@ -121,6 +122,72 @@ class FinalScoreTest {
         assertThatExceptionOfType(PinBonusException.class)
             .isThrownBy(() -> secondScore.nextPin(bonus))
             .withMessageMatching("보너스 핀은 스페어나 스트라이크 후 칠 수 있다.");
+    }
+
+    @Test
+    @DisplayName("첫번째 핀이 비어있으면 isNext는 true여야 한다.")
+    void isNextFirstNullTest() {
+
+        // given
+        Score start = FinalScore.empty();
+
+        // when
+        boolean result = start.isNext();
+
+        // then
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("두번째 핀이 비어있으면 isNext는 true여야 한다.")
+    void isNextSecondNullTest() {
+
+        // given
+        Score start = FinalScore.empty();
+        Pin first = Pin.of(5);
+        Score firstScore = start.nextPin(first);
+
+        // when
+        boolean result = firstScore.isNext();
+
+        // then
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("첫번째 핀이 스트라이크고 두번째핀이 스트라이크일 때 isNext는 true여야 한다.")
+    void isNextFirstAndSecondAllStrikeTest() {
+
+        // given
+        Score start = FinalScore.empty();
+        Pin first = Pin.of(10);
+        Score firstScore = start.nextPin(first);
+        Pin second = Pin.of(10);
+        Score secondScore = firstScore.nextPin(second);
+
+        // when
+        boolean result= secondScore.isNext();
+
+        // then
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("두번째 핀이 스페어일 때 isNext는 true여야 한다.")
+    void isNextSpareTest() {
+
+        // given
+        Score start = FinalScore.empty();
+        Pin first = Pin.of(3);
+        Score firstScore = start.nextPin(first);
+        Pin second = Pin.of(7);
+        Score secondScore = firstScore.nextPin(second);
+
+        // when
+        boolean result= secondScore.isNext();
+
+        // then
+        assertTrue(result);
     }
 
 }

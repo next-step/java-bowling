@@ -62,7 +62,8 @@ public class FinalScore extends Score {
 
     @Override
     public boolean isNext() {
-        return false;
+        return Objects.isNull(first) || Objects.isNull(second)
+            || (first == STRIKE && second == STRIKE) || (first.remainPin() == second.value());
     }
 
 }
