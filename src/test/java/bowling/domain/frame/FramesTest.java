@@ -46,14 +46,14 @@ class FramesTest {
     @Test
     void finish() {
         Frames frames = new Frames(10).next(1).next(2);
-        assertThat(frames.isFinish()).isTrue();
+        assertThat(frames.finish()).isTrue();
     }
 
     @DisplayName("마지막 프레임 보너스")
     @Test
     void finish_bunus() {
         Frames frames = new Frames(10).next(10).next(2).next(1);
-        assertThat(frames.isFinish()).isTrue();
+        assertThat(frames.finish()).isTrue();
 
     }
 

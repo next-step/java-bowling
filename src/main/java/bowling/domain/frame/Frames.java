@@ -39,12 +39,16 @@ public class Frames {
         return this.frames.size();
     }
 
-    public boolean isFinish() {
+    public boolean finish() {
         return frames.size() == FINAL_FRAME && lastFrame().finish();
     }
 
     public List<Frame> getFrames() {
         return frames;
+    }
+
+    public boolean turnFinish(){
+        return lastFrame().finish();
     }
 
     @Override

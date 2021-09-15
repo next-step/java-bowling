@@ -17,23 +17,27 @@ public class Player {
     }
 
     public String getPlayerName() {
-        return this.playerName.getValue();
+        return playerName.getValue();
     }
 
     public List<Frame> getFrames() {
-        return this.frames.getFrames();
+        return frames.getFrames();
     }
 
-    public boolean isFinish() {
-        return this.frames.isFinish();
+    public boolean finish() {
+        return frames.finish();
     }
 
     public void next(int number) {
-        this.frames.next(number);
+        frames.next(number);
     }
 
     public int nextFrameNo() {
-        return this.frames.nextFrameNo();
+        return frames.nextFrameNo();
+    }
+
+    public boolean turnFinish(){
+        return frames.turnFinish();
     }
 
     @Override

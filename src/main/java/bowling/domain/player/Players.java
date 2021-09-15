@@ -7,14 +7,18 @@ import java.util.stream.Collectors;
 public class Players {
     private List<Player> players;
 
-    Players(List<String> playerNames){
+    public Players(List<String> playerNames){
         players = playerNames.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
     }
 
-    public int count(){
-        return players.size();
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public boolean finish(){
+        return players.get(players.size() -1).finish();
     }
 
     @Override

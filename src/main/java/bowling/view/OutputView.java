@@ -2,6 +2,7 @@ package bowling.view;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.player.Player;
+import bowling.domain.player.Players;
 import com.sun.deploy.util.StringUtils;
 
 import java.util.ArrayList;
@@ -15,10 +16,13 @@ public class OutputView {
     private static final String EMPTY = "  ";
     private static final int MAX_FRAME_NO = 10;
 
-    public void printBoard(Player player) {
+    public void printBoard(Players players) {
         System.out.println(TABLE_HEADER);
-        printPin(player);
-        printScore(player);
+        players.getPlayers().stream().forEach(player -> {
+            printPin(player);
+            printScore(player);
+        });
+        System.out.println();
     }
 
     private void printPin(Player player) {
