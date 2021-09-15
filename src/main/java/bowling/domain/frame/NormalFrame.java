@@ -11,4 +11,9 @@ public class NormalFrame extends Frame {
     public static Frame createFirstFrame() {
         return new NormalFrame(1, null, null);
     }
+
+    public Frame createNextFrame() {
+        return this.nextFrame = new NormalFrame(round + 1, null, null);
+    }
+
 }
