@@ -5,7 +5,6 @@ import bowling.domain.Score;
 import bowling.exception.BowlingStateException;
 
 public class Bonus extends State {
-
     public Bonus(int pin, int bonusCount) {
         this.firstPin = new Pin(pin);
         score = new Score(pin, bonusCount - 1);
@@ -15,7 +14,7 @@ public class Bonus extends State {
     public State bowl(int pin) {
         if (!stateFinish()) {
             this.secondPin = new Pin(pin);
-            score = new Score(pin, 0);
+            score = new Score(pin, MISS_BONUS_NO);
             return this;
         }
         throw new BowlingStateException("보너스 투구가 종료되었습니다.");

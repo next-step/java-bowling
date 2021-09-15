@@ -7,6 +7,9 @@ import org.springframework.util.ObjectUtils;
 import java.util.Objects;
 
 public abstract class State {
+    protected static final int MAX_PIN_NO = 10;
+    protected static final int MISS_BONUS_NO = 0;
+
     protected Pin firstPin;
     protected Pin secondPin;
     protected Score score;

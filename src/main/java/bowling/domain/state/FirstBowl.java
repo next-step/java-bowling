@@ -12,7 +12,7 @@ public class FirstBowl extends State {
 
     @Override
     public State bowl(int secondCount) {
-        if (firstPin.count() + secondCount == 10) {
+        if (firstPin.count() + secondCount == MAX_PIN_NO) {
             return new Spare(firstPin.count(), secondCount);
         }
         return new Miss(firstPin.count(), secondCount);

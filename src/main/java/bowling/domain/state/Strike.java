@@ -6,7 +6,7 @@ import bowling.exception.BowlingStateException;
 
 public class Strike extends State {
     public Strike() {
-        firstPin = new Pin(10);
+        firstPin = new Pin(MAX_PIN_NO);
         score = Score.ofStrike();
     }
 

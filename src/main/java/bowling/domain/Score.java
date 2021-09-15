@@ -5,6 +5,11 @@ import bowling.exception.BowlingStateException;
 import java.util.Objects;
 
 public class Score {
+    private static final int MAX_PIN_NO = 10;
+    private static final int MISS_BONUS_NO = 0;
+    private static final int SPARE_BONUS_NO = 1;
+    private static final int STRIKE_BONUS_NO = 2;
+
     private int score;
     private int bonusCount;
 
@@ -19,22 +24,22 @@ public class Score {
     }
 
     public boolean finish(){
-        return bonusCount == 0;
+        return bonusCount == MISS_BONUS_NO;
     }
 
     public static Score ofMiss(int firstCount, int secondCount){
-        if(firstCount + secondCount > 10){
+        if(firstCount + secondCount > MAX_PIN_NO){
             throw new BowlingStateException("쓰러트린 볼링 핀의 총 합은 10을 넘을수 없습니다.");
         }
-        return new Score(firstCount + secondCount, 0);
+        return new Score(firstCount + secondCount, MISS_BONUS_NO);
     }
 
     public static Score ofSpare(){
-        return new Score(10, 1);
+        return new Score(MAX_PIN_NO, SPARE_BONUS_NO);
     }
 
     public static Score ofStrike(){
-        return new Score(10, 2);
+        return new Score(MAX_PIN_NO, STRIKE_BONUS_NO);
     }
 
     public int getScore() {
