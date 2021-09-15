@@ -1,40 +1,45 @@
 package bowling;
 
-import bowling.domain.Frames;
-import bowling.domain.Player;
-import bowling.domain.Score;
-import bowling.domain.TotalScore;
+import bowling.domain.*;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Game {
 
     public static void main(String[] args) {
-        Player player = new Player(InputView.inputNameOfPlayer());
-        Frames frames = new Frames();
+        List<String> names = InputView.inputPlayer();
+        TotalFrames totalFrame = new TotalFrames(names.size());
+        Players players = new Players(names, totalFrame);
 
-        OutputView.outputScores(player, frames.results());
-        OutputView.outputCalculatedScores(new ArrayList<>());
+        OutputView.outputScores(players, totalFrame);
 
-        startGame(frames, player);
+        startGame(players, totalFrame);
     }
 
-    private static void startGame(Frames frames, Player player) {
-        List<Integer> calculatedScores = new ArrayList<>();
-        TotalScore totalScore = TotalScore.from(frames, calculatedScores);
+    private static void startGame(Players players, TotalFrames totalFrames) {
+        while (!totalFrames.isGameFinish()) {
+            IntStream.range(0, players.numberOfPlayers())
+                     .forEach(playerIndex -> execute(players, totalFrames, playerIndex));
+        }
+    }
 
-        int frameNumber = 1;
-        while (frameNumber <= Frames.TOTAL_FRAME_COUNT) {
-            int pitchingCount = InputView.inputPitchingCount(frameNumber);
-            frames.throwBalls(pitchingCount);
-            totalScore.addScore(Score.valueOf(pitchingCount));
-            frameNumber = frames.nextFrameNumber();
-            OutputView.outputScores(player, frames.results());
-            calculatedScores = totalScore.getTotalScores(frames, calculatedScores);
-            OutputView.outputCalculatedScores(calculatedScores);
+    private static void execute(Players players, TotalFrames totalFrames, int playerIndex) {
+        Player player = players.of(playerIndex);
+        ScoreBoard scoreBoard = players.scoreBoard();
+        boolean isNext = false;
+        while (!isNext) {
+            List<Integer> calculatedScores = scoreBoard.calculatedScoresOf(playerIndex);
+            TotalScores totalScores = scoreBoard.totalScoreOf(playerIndex);
+            int pitchingCount = InputView.inputPitchingCount(player.name());
+
+            totalScores.addScore(Score.valueOf(pitchingCount));
+            totalFrames.throwBall(playerIndex, pitchingCount);
+            scoreBoard.updateCalculatedScoresOf(playerIndex, totalScores.getTotalScores(totalFrames.of(playerIndex), calculatedScores));
+            OutputView.outputScores(players, totalFrames);
+            isNext = totalFrames.isNextPlayer(playerIndex);
         }
     }
 }

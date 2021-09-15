@@ -21,6 +21,10 @@ public class Player {
         }
     }
 
+    public String name() {
+        return name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
