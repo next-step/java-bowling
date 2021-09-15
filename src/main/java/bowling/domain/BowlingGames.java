@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BowlingGames {
-    public static final int START_INDEX = 0;
-
     private final List<BowlingGame> bowlingGames;
 
     public BowlingGames(List<String> players) {
