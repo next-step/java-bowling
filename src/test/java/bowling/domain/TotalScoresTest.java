@@ -9,11 +9,11 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TotalScoreTest {
-    @DisplayName("TotalScore 생성 성공 테스트")
+public class TotalScoresTest {
+    @DisplayName("TotalScores 생성 성공 테스트")
     @Test
     public void createTest() {
-        assertThat(TotalScore.from(Arrays.asList(1, 2))).isInstanceOf(TotalScore.class);
+        assertThat(TotalScores.from(Arrays.asList(1, 2))).isInstanceOf(TotalScores.class);
     }
 
     @DisplayName("3번 투구시 - 1번 프레임 스트라이크, 2번 프레임 스페어 했을때 총점 테스트")
@@ -25,7 +25,7 @@ public class TotalScoreTest {
         frames.throwBalls(10);
         frames.throwBalls(8);
         frames.throwBalls(2);
-        TotalScore.from(frames, calculatedScores);
+        TotalScores.from(frames, calculatedScores);
 
         assertThat(calculatedScores.size()).isEqualTo(1);
         assertThat(calculatedScores).containsExactly(20);
@@ -40,7 +40,7 @@ public class TotalScoreTest {
         frames.throwBalls(10);
         frames.throwBalls(10);
         frames.throwBalls(10);
-        TotalScore.from(frames, calculatedScores);
+        TotalScores.from(frames, calculatedScores);
 
         assertThat(calculatedScores.size()).isEqualTo(1);
         assertThat(calculatedScores).containsExactly(30);
@@ -55,7 +55,7 @@ public class TotalScoreTest {
         frames.throwBalls(1);
         frames.throwBalls(9);
         frames.throwBalls(0);
-        TotalScore.from(frames, calculatedScores);
+        TotalScores.from(frames, calculatedScores);
 
         assertThat(calculatedScores.size()).isEqualTo(1);
         assertThat(calculatedScores).containsExactly(10);
@@ -70,7 +70,7 @@ public class TotalScoreTest {
         frames.throwBalls(10);
         frames.throwBalls(1);
         frames.throwBalls(2);
-        TotalScore.from(frames, calculatedScores);
+        TotalScores.from(frames, calculatedScores);
 
         assertThat(calculatedScores.size()).isEqualTo(1);
         assertThat(calculatedScores).containsExactly(13);
@@ -85,7 +85,7 @@ public class TotalScoreTest {
         frames.throwBalls(3);
         frames.throwBalls(7);
         frames.throwBalls(6);
-        TotalScore.from(frames, calculatedScores);
+        TotalScores.from(frames, calculatedScores);
 
         assertThat(calculatedScores.size()).isEqualTo(1);
         assertThat(calculatedScores).containsExactly(16);
