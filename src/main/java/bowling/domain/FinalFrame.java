@@ -6,40 +6,60 @@ public class FinalFrame implements Frame {
 
     private int index;
     private Points points;
-
-    private static final int FINAL_INDEX = 10;
-    private static final int MAX_TRY = 3;
+    public static final int MAX_TRY = 3;
 
 
     public FinalFrame() {
-        this.index = FINAL_INDEX;
+        this.index = Frames.FINAL_INDEX;
         this.points = new Points();
     }
 
     @Override
     public void bowl(int hitPin) {
-        int currentPoint = points.currentPoint();
+        int currentPoint = points.currentPointSum();
 
         if (currentPoint + hitPin > Point.FINAL_MAX_POINT) {
             throw new IllegalArgumentException("합계 점수가 20이 넘을 수 없습니다");
+        }
+        makePoint(hitPin);
+    }
+
+    public void makePoint(int hitPin) {
+        if (points.bowlCount() == MAX_TRY - 1) {
+            points.addPoint(new Point(hitPin, true));
+            return;
+        }
+        if (points.currentPointSum() == Point.MAX_POINT && points.bowlCount() == MAX_TRY - 2) {
+            points.addPoint(new Point(hitPin, true));
+            return;
         }
         points.addPoint(new Point(hitPin));
     }
 
     @Override
     public boolean isFinished() {
-        if (points.bowlCount() == 0) {
+        if (points.bowlCount() == Point.MIN_POINT) {
+            return false;
+        }
+        if (points.bowlCount() == Point.MAX_POINT) {
             return false;
         }
         if (points.bowlCount() == MAX_TRY) {
             return true;
         }
-        if (points.findFirstPoint() == 10 && points.bowlCount() == 2) {
+        if (hasNotBonusGame()) {
             return true;
         }
-        if (points.values().stream()
-                .mapToInt(Point::currentPoint)
-                .sum() == 10 && points.bowlCount() == 3) {
+        return false;
+    }
+
+    private boolean hasNotBonusGame() {
+        if ((points.findFirstPointScore() == Point.MAX_POINT && points.bowlCount() == MAX_TRY - 1)
+                ||
+                (points.values()
+                        .stream()
+                        .mapToInt(Point::currentPoint)
+                        .sum() == Point.MAX_POINT && points.bowlCount() == MAX_TRY)) {
             return true;
         }
         return false;
@@ -53,11 +73,6 @@ public class FinalFrame implements Frame {
     @Override
     public int findCurrentIndex() {
         return index;
-    }
-
-    @Override
-    public void addPoint(Point point) {
-        points.addPoint(point);
     }
 
     @Override

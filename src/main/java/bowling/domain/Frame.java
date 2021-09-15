@@ -7,9 +7,7 @@ public interface Frame {
     boolean isFinished();
 
     int findCurrentIndex();
-
-    void addPoint(Point point);
-
+    
     Frame next();
 
     Points currentFramePoints();

@@ -9,14 +9,26 @@ public class Point {
     public static final int MIN_POINT = 0;
 
     private int point;
+    private boolean isBonusPoint;
 
     public Point(int point) {
         validate(point);
         this.point = point;
+        this.isBonusPoint = false;
+    }
+
+    public Point(int point, boolean isBonusPoint) {
+        validate(point);
+        this.point = point;
+        this.isBonusPoint = isBonusPoint;
     }
 
     public int currentPoint() {
         return point;
+    }
+
+    public boolean isBonusPoint() {
+        return isBonusPoint;
     }
 
     private void validate(int point) {

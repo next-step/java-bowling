@@ -7,7 +7,7 @@ public class Frames {
 
     private List<Frame> frames;
 
-    private static final int FINAL_INDEX = 10;
+    public static final int FINAL_INDEX = 10;
 
     public Frames() {
         frames = new ArrayList<>();

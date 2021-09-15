@@ -1,8 +1,7 @@
 package bowling.view;
 
-import bowling.domain.Frames;
-import bowling.domain.Points;
-import bowling.domain.UserName;
+import bowling.domain.*;
+
 
 public class ResultView {
 
@@ -10,6 +9,7 @@ public class ResultView {
     private static final String BLANK = "  ";
 
     private static final String LINE = "|";
+    private static final String BLANK_LINE = " |";
 
 
     public static void printHeader() {
@@ -32,28 +32,33 @@ public class ResultView {
         if (points.bowlCount() == 0) {
             return "";
         }
-        String result = makeFirstResult(points.findFirstPoint());
-        if (points.bowlCount() == 2) {
-            result = result + "|" + makeSecondResult(points.findFirstPoint(), points.findSecondPoint());
+        String result = makeFirstResult(points.findFirstPointScore());
+
+        if (points.findBonusPoint().isPresent() && points.bowlCount() == NormalFrame.MAX_TRY) {
+            result = result + makeBonusResult(points);
+            return result;
         }
-        if (points.bowlCount() == 3) {
-            result = result + "|" + makeSecondResult(points.findFirstPoint(), points.findSecondPoint());
-            result = result + makeBonusResult(points.findBonusPoint());
+        if (points.bowlCount() == NormalFrame.MAX_TRY) {
+            result = result + LINE + makeSecondResult(points.findFirstPointScore(), points.findSecondPointScore());
+        }
+        if (points.bowlCount() == FinalFrame.MAX_TRY) {
+            result = result + LINE + makeSecondResult(points.findFirstPointScore(), points.findSecondPointScore());
+            result = result + makeBonusResult(points);
         }
         return result;
     }
 
     private static String makeFirstResult(int firstPoint) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(BLANK);
-        if (firstPoint == 10) {
-            stringBuilder.append("X");
+        StringBuilder stringBuilder = initResult();
+
+        if (firstPoint == Point.MAX_POINT) {
+            stringBuilder.append(ScoreResultType.STRIKE.value());
             stringBuilder.append("   |");
             return stringBuilder.toString();
         }
 
-        if (firstPoint == 0) {
-            stringBuilder.append("-");
+        if (firstPoint == Point.MIN_POINT) {
+            stringBuilder.append(ScoreResultType.GUTTER.value());
             return stringBuilder.toString();
         }
         stringBuilder.append(firstPoint);
@@ -63,36 +68,48 @@ public class ResultView {
     private static String makeSecondResult(int firstPoint, int secondPoint) {
         StringBuilder stringBuilder = new StringBuilder();
 
-        if (secondPoint == 0) {
-            stringBuilder.append("-");
-            stringBuilder.append(" " + LINE);
+        if (secondPoint == Point.MIN_POINT) {
+            return makeGutter(stringBuilder);
+        }
+        if (firstPoint + secondPoint == Point.MAX_POINT) {
+            stringBuilder.append(ScoreResultType.SPARE.value());
+            stringBuilder.append(BLANK_LINE);
             return stringBuilder.toString();
         }
-        if (firstPoint + secondPoint == 10) {
-            stringBuilder.append("/");
-            stringBuilder.append(" " + LINE);
+        return makeMiss(stringBuilder, secondPoint);
+
+    }
+
+    private static String makeBonusResult(Points points) {
+        int bonusPoint = points.findBonusPoint().get().currentPoint();
+
+        StringBuilder stringBuilder = initResult();
+        if (bonusPoint == Point.MIN_POINT) {
+            return makeGutter(stringBuilder);
+        }
+        if (bonusPoint == Point.MAX_POINT) {
+            stringBuilder.append(ScoreResultType.STRIKE.value());
+            stringBuilder.append(BLANK_LINE);
             return stringBuilder.toString();
         }
-        stringBuilder.append(secondPoint);
-        stringBuilder.append(" " + LINE);
+        return makeMiss(stringBuilder, bonusPoint);
+    }
+
+    private static StringBuilder initResult() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(BLANK);
+        return stringBuilder;
+    }
+
+    private static String makeMiss(StringBuilder stringBuilder, int point) {
+        stringBuilder.append(point);
+        stringBuilder.append(BLANK_LINE);
         return stringBuilder.toString();
     }
 
-    private static String makeBonusResult(int bonusPoint) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(" ");
-        if (bonusPoint == 0) {
-            stringBuilder.append("-");
-            stringBuilder.append(" " + LINE);
-            return stringBuilder.toString();
-        }
-        if (bonusPoint == 10) {
-            stringBuilder.append("X");
-            stringBuilder.append(" " + LINE);
-            return stringBuilder.toString();
-        }
-        stringBuilder.append(bonusPoint);
-        stringBuilder.append(" " + LINE);
+    private static String makeGutter(StringBuilder stringBuilder) {
+        stringBuilder.append(ScoreResultType.GUTTER.value());
+        stringBuilder.append(BLANK_LINE);
         return stringBuilder.toString();
     }
 }

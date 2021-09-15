@@ -3,6 +3,7 @@ package bowling.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Points {
 
@@ -20,23 +21,27 @@ public class Points {
         points.add(point);
     }
 
-    public int findFirstPoint() {
+    public int findFirstPointScore() {
         return points.get(FIRST_INDEX).currentPoint();
     }
 
-    public int findSecondPoint() {
+    public int findSecondPointScore() {
         return points.get(SECOND_INDEX).currentPoint();
     }
 
-    public int findBonusPoint() {
-        return points.get(BONUS_INDEX).currentPoint();
+
+    public Optional<Point> findBonusPoint() {
+        return points.stream().filter(point -> point.isBonusPoint()).findFirst();
     }
 
-
-    public int currentPoint() {
+    public int currentPointSum() {
         return points.stream()
                 .mapToInt(Point::currentPoint)
                 .sum();
+    }
+
+    public boolean isFinalFrame() {
+        return points.size() == Frames.FINAL_INDEX;
     }
 
     public List<Point> values() {
@@ -45,20 +50,6 @@ public class Points {
 
     public int bowlCount() {
         return points.size();
-    }
-
-    public boolean canPlayBonusGame() {
-        if (findFirstPoint() == 10 && points.size() == 2) {
-            return false;
-        }
-
-        if (points.stream()
-                .mapToInt(Point::currentPoint)
-                .sum() == 10 && points.size() == 3) {
-            return false;
-        }
-
-        return true;
     }
 
     @Override

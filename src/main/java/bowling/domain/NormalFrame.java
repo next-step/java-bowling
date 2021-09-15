@@ -9,8 +9,7 @@ public class NormalFrame implements Frame {
     private Points points;
 
     private static final int START_INDEX = 1;
-    private static final int NEXT_INDEX_DISTANCE = 1;
-    private static final int MAX_TRY = 2;
+    public static final int MAX_TRY = 2;
 
 
     private NormalFrame() {
@@ -29,7 +28,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public void bowl(int hitPin) {
-        int currentPoint = points.currentPoint();
+        int currentPoint = points.currentPointSum();
 
         if (currentPoint + hitPin > Point.MAX_POINT) {
             throw new IllegalArgumentException("합계 점수가 10이 넘을 수 없습니다");
@@ -39,13 +38,13 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isFinished() {
-        if (points.bowlCount() == 0) {
+        if (points.bowlCount() == Point.MIN_POINT) {
             return false;
         }
         if (points.bowlCount() == MAX_TRY) {
             return true;
         }
-        if (points.findFirstPoint() == 10) {
+        if (points.findFirstPointScore() == Point.MAX_POINT) {
             return true;
         }
         return false;
@@ -57,13 +56,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public void addPoint(Point point) {
-        points.addPoint(point);
-    }
-
-    @Override
     public NormalFrame next() {
-        return new NormalFrame(this.index + NEXT_INDEX_DISTANCE);
+        return new NormalFrame(this.index + 1);
     }
 
     @Override
