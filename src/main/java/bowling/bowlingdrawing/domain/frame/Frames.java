@@ -16,29 +16,6 @@ public class Frames {
     private FinalFrame finalFrame;
     private Pitching currentPitching;
 
-    public void pitch(Pitching pitching) {
-        validateGameEnd();
-
-        if (frames.isEmpty()) {
-            addNewFrame(pitching);
-            return;
-        }
-
-        Frame currentFrame = frames.get(frames.size() - 1);
-
-        if (frames.size() == MAXIMUM_SIZE_OF_FRAMES && currentFrame.done()) {
-            pitchAtFinalFrame(pitching);
-            return;
-        }
-
-        if (currentFrame.done()) {
-            addNewFrame(pitching);
-            return;
-        }
-
-        currentFrame.secondPitching(pitching);
-    }
-
     public void pitch(int pins) {
         validateGameEnd();
 
