@@ -9,14 +9,14 @@ public class BowlingGame {
     private Players players;
     private int round;
 
-    public BowlingGame(List<Frames> bowlingGame, Players players, int round) {
+    public BowlingGame(List<Frames> bowlingGame, Players players) {
         this.bowlingGame = bowlingGame;
         this.players = players;
-        this.round = round;
+        round = FIRST_ROUND;
     }
 
     public static BowlingGame of(List<Frames> bowlingGame, Players players) {
-        return new BowlingGame(bowlingGame, players, FIRST_ROUND);
+        return new BowlingGame(bowlingGame, players);
     }
 
     public boolean isRoundEnd() {
@@ -29,13 +29,9 @@ public class BowlingGame {
                 .allMatch(frames -> frames.isEnd());
     }
 
-    public int size() {
-        return bowlingGame.size();
-    }
-
     public Frames currentGame(Player player) {
-        int participantNumber = players.participantNumber(player);
-        return bowlingGame.get(participantNumber);
+        int gameIndex = players.gameIndex(player);
+        return bowlingGame.get(gameIndex);
     }
 
     public Frame currentGameFrame(Player player) {

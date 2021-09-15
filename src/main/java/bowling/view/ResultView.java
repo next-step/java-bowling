@@ -17,23 +17,23 @@ public class ResultView {
     private static final String SPARE = "/ |";
 
     public static void printBowlingGame(BowlingGame bowlingGame) {
-        for (int i = 0; i < bowlingGame.size(); i++) {
-            Players players = bowlingGame.getPlayers();
+        Players players = bowlingGame.getPlayers();
 
-            printPlayer(players.name(i));
+        players.list().forEach(player -> {
+            printPlayer(player.name());
 
-            printPitch(bowlingGame.currentGame(players.get(i)));
+            printPitch(bowlingGame.currentGame(player));
 
-            printRemainBoard(bowlingGame.currentGame(players.get(i)));
+            printRemainBoard(bowlingGame.currentGame(player));
 
             printBlank();
 
-            printResultScore(bowlingGame.currentGame(players.get(i)));
+            printResultScore(bowlingGame.currentGame(player));
 
-            printRemainScore(bowlingGame.currentGame(players.get(i)));
+            printRemainScore(bowlingGame.currentGame(player));
 
             System.out.println();
-        }
+        });
     }
 
     public static void printTitle() {

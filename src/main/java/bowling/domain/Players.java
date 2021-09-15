@@ -1,12 +1,18 @@
 package bowling.domain;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Players {
-    private final List<Player> players;
+    private final Map<Player, Integer> players;
 
-    public Players(List<Player> players) {
+    private Players(List<Player> playerList) {
+        Map<Player, Integer> players = new HashMap<>();
+
+        for (int gameIndex = 0; gameIndex < playerList.size(); gameIndex++) {
+            Player player = playerList.get(gameIndex);
+            players.put(player, gameIndex);
+        }
+
         this.players = players;
     }
 
@@ -14,20 +20,16 @@ public class Players {
         return new Players(players);
     }
 
-    public String name(int index) {
-        return players.get(index).name();
-    }
-
     public int size() {
         return players.size();
     }
 
-    public int participantNumber(Player player) {
-        return players.indexOf(player);
+    public int gameIndex(Player player) {
+        return players.get(player);
     }
 
-    public Player get(int number) {
-        return players.get(number);
+    public Set<Player> list() {
+        return players.keySet();
     }
 
     @Override

@@ -23,9 +23,8 @@ public class BowlingApplication {
     }
 
     private static void playGame(Players players, BowlingGame bowlingGame) {
-        for (int index = 0; index < players.size(); index++) {
-            bowling(players.get(index), bowlingGame);
-        }
+        players.list()
+                .forEach(player -> bowling(player, bowlingGame));
     }
 
     private static void bowling(Player player, BowlingGame bowlingGame) {
