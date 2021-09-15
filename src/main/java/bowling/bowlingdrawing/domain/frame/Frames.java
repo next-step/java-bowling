@@ -14,6 +14,7 @@ public class Frames {
 
     private final List<Frame> frames = new ArrayList<>();
     private FinalFrame finalFrame;
+    private Pitching currentPitching;
 
     public void pitch(Pitching pitching) {
         validateGameEnd();
@@ -36,6 +37,38 @@ public class Frames {
         }
 
         currentFrame.secondPitching(pitching);
+    }
+
+    public void pitch(int pins) {
+        validateGameEnd();
+
+        currentPitching = changeCurrentPitching(pins);
+
+        if (frames.isEmpty()) {
+            addNewFrame(currentPitching);
+            return;
+        }
+
+        Frame currentFrame = frames.get(frames.size() - 1);
+
+        if (frames.size() == MAXIMUM_SIZE_OF_FRAMES && currentFrame.done()) {
+            pitchAtFinalFrame(currentPitching);
+            return;
+        }
+
+        if (currentFrame.done()) {
+            addNewFrame(currentPitching);
+            return;
+        }
+
+        currentFrame.secondPitching(currentPitching);
+    }
+
+    private Pitching changeCurrentPitching(int pins) {
+        if (currentPitching == null) {
+            return Pitching.first(pins);
+        }
+        return currentPitching.next(pins);
     }
 
     private void validateGameEnd() {
