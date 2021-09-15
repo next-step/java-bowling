@@ -6,27 +6,27 @@ import java.util.stream.IntStream;
 
 import static bowling.domain.Frames.TOTAL_FRAME_COUNT;
 
-public class TotalScore {
+public class TotalScores {
     private final List<Integer> scores;
     private int lastIndex;
 
-    private TotalScore(List<Integer> scores) {
+    private TotalScores(List<Integer> scores) {
         this.lastIndex = 0;
         this.scores = scores;
     }
 
-    private TotalScore(Frames frames, List<Integer> calculatedScores) {
+    private TotalScores(Frames frames, List<Integer> calculatedScores) {
         this(new ArrayList<>());
         IntStream.range(0, frames.frames().size())
                  .forEach(i -> initTotalScores(frames, i, calculatedScores));
     }
 
-    public static TotalScore from(Frames frames, List<Integer> calculatedScores) {
-        return new TotalScore(frames, calculatedScores);
+    public static TotalScores from(Frames frames, List<Integer> calculatedScores) {
+        return new TotalScores(frames, calculatedScores);
     }
 
-    public static TotalScore from(List<Integer> scores) {
-        return new TotalScore(scores);
+    public static TotalScores from(List<Integer> scores) {
+        return new TotalScores(scores);
     }
 
     private void initTotalScores(final Frames frames, final int index, List<Integer> calculatedScores) {
@@ -110,7 +110,7 @@ public class TotalScore {
         calculatedScores.set(lastIndex, calculatedScores.get(lastIndex - 1) + calculatedScores.get(lastIndex));
     }
 
-    public void addScore(final Score score) {
+    public void addScore(Score score) {
         scores.add(score.score());
     }
 }
