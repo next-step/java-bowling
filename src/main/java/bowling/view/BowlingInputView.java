@@ -1,9 +1,19 @@
 package bowling.view;
 
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class BowlingInputView {
     private static final Scanner SCANNER = new Scanner(System.in);
+
+    public static List<String> getStringsInput(int numberOfInputString, String message) {
+        return IntStream.rangeClosed(1, numberOfInputString)
+                .mapToObj(i -> String.format(message, i))
+                .map(BowlingInputView::getStringInput)
+                .collect(Collectors.toList());
+    }
 
     public static String getStringInput(String message) {
         System.out.print(message);

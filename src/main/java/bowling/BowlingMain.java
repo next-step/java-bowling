@@ -11,7 +11,8 @@ public class BowlingMain {
     public static void main(String[] args) {
         int numberOfPlayers = BowlingInputView.getIntInput("How many people? ");
 
-        List<String> playerNames = getPlayerNames(numberOfPlayers);
+        List<String> playerNames =
+                BowlingInputView.getStringsInput(numberOfPlayers, "플레이어 %d의 이름은(3 english letters)?: ");
 
         Players players = new Players(playerNames);
 
@@ -22,21 +23,14 @@ public class BowlingMain {
         }
     }
 
-    private static List<String> getPlayerNames(int numberOfPlayers) {
-        return IntStream.rangeClosed(1, numberOfPlayers)
-                .mapToObj(i -> String.format("플레이어 %d의 이름은(3 english letters)?: ", i))
-                .map(BowlingInputView::getStringInput)
-                .collect(Collectors.toList());
-    }
-
     private static void doBowls(Players players) {
         for (Player player : players.getContinuablePlayers()) {
             String message = String.format("%s's turn : ", player.getNameString());
             int score = BowlingInputView.getIntInput(message);
 
-            scoreFrames.bowl(score);
+            player.playBowl(score);
 
-            BowlingOutputView.printFramesStatus(player, scoreFrames);
+            BowlingOutputView.printPlayersFramesStatus(players);
         }
     }
 }
