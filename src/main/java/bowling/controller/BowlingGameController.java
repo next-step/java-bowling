@@ -12,18 +12,22 @@ public class BowlingGameController {
 
         ResultView.printInit(bowlingGames);
         while (!bowlingGames.isEnd()) {
-            turnPlayer(bowlingGames);
+            playBowling(bowlingGames);
         }
     }
 
-    private void turnPlayer(BowlingGames bowlingGames) {
+    private void playBowling(BowlingGames bowlingGames) {
         for (BowlingGame bowlingGame : bowlingGames.games()) {
-            boolean isFrameEnd = false;
-            while (!isFrameEnd) {
-                int countOfPins = InputView.inputPlayerTurn(bowlingGame);
-                isFrameEnd = bowlingGame.pitch(countOfPins);
-                ResultView.printResult(bowlingGames);
-            }
+            playByPlayer(bowlingGame, bowlingGames);
+        }
+    }
+
+    private void playByPlayer(final BowlingGame bowlingGame, final BowlingGames bowlingGames) {
+        boolean isFrameEnd = false;
+        while (!isFrameEnd) {
+            int countOfPins = InputView.inputPlayerTurn(bowlingGame);
+            isFrameEnd = bowlingGame.pitch(countOfPins);
+            ResultView.printResult(bowlingGames);
         }
     }
 

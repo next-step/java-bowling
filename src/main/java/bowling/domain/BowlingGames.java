@@ -8,11 +8,12 @@ public class BowlingGames {
     private final List<BowlingGame> bowlingGames;
 
     public BowlingGames(List<String> players) {
-        bowlingGames = Collections.unmodifiableList(
-                players.stream()
-                        .map(BowlingGame::new)
-                        .collect(Collectors.toList())
-        );
+        bowlingGames = players.stream()
+                .map(BowlingGame::new)
+                .collect(
+                        Collectors.collectingAndThen(
+                                Collectors.toList(),
+                                Collections::unmodifiableList));
     }
 
     public boolean isEnd() {

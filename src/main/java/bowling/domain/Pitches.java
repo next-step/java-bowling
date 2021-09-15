@@ -65,11 +65,10 @@ public class Pitches {
     }
 
     public void validateNormalSecondPitch(int countOfPins) {
-        if (pitches.isEmpty()) {
-            return;
-        }
-        if (pitches.get(0).intValue() + countOfPins > Pitch.MAXIMUM_COUNT_OF_PINS) {
-            throw new BusinessException("일반 투구의 합계는 10이하여야 합니다.");
+        int sumOfNormalPitch = pitches.get(0).intValue() + countOfPins;
+
+        if (!pitches.isEmpty() && sumOfNormalPitch > Pitch.MAXIMUM_COUNT_OF_PINS) {
+            throw new BusinessException("일반 투구의 합계는 10 이하여야 합니다.");
         }
     }
 
