@@ -22,7 +22,7 @@ class FramesTest {
         frames.pitch(pitching);
         // then
         assertThat(frames.frames().get(0))
-                .isEqualTo(new Frame(Pitching.first(10)));
+                .isEqualTo(new NormalFrame(Pitching.first(10)));
     }
 
     @Test

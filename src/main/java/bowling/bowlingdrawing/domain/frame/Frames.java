@@ -49,7 +49,7 @@ public class Frames {
     }
 
     private void addNewFrame(Pitching pitching) {
-        Frame firstFrame = new Frame(pitching);
+        Frame firstFrame = new NormalFrame(pitching);
         frames.add(firstFrame);
     }
 
