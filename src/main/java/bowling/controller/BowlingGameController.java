@@ -18,14 +18,13 @@ public class BowlingGameController {
 
     private void turnPlayer(BowlingGames bowlingGames) {
         for (BowlingGame bowlingGame : bowlingGames.games()) {
-            boolean flag = false;
-            while (!flag) {
+            boolean isFrameEnd = false;
+            while (!isFrameEnd) {
                 int countOfPins = InputView.inputPlayerTurn(bowlingGame);
-                flag = bowlingGame.pitch(countOfPins);
+                isFrameEnd = bowlingGame.pitch(countOfPins);
                 ResultView.printResult(bowlingGames);
             }
         }
     }
-
 
 }

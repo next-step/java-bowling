@@ -27,11 +27,13 @@ public class BowlingGame {
     public boolean pitch(final int countOfPins) {
         Frame frame = currentFrame().pitch(countOfPins);
 
-        if (currentFrame().isEnd() && currentFrame().isNormal()) {
-            frames.add(frame.next());
-            return true;
+        if (!currentFrame().isEnd()) {
+            return false;
         }
-        return false;
+        if (currentFrame().isNormal()) {
+            frames.add(frame.next());
+        }
+        return true;
     }
 
     private Frame currentFrame() {
