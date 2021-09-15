@@ -9,15 +9,25 @@ import java.util.Objects;
 public class Frame {
     private final Pitching firstPitching;
     private Pitching secondPitching;
+    private final Frame beforeFrame;
 
-    public Frame(Pitching firstPitching, Pitching secondPitching) {
+    public Frame(Pitching firstPitching, Pitching secondPitching, Frame beforeFrame) {
         validateSumIsOverTen(firstPitching, secondPitching);
         this.firstPitching = firstPitching;
         this.secondPitching = secondPitching;
+        this.beforeFrame = beforeFrame;
+    }
+
+    public Frame(Pitching firstPitching, Pitching secondPitching) {
+        this(firstPitching, secondPitching, null);
     }
 
     public Frame(Pitching firstPitching) {
-        this(firstPitching, null);
+        this(firstPitching, null, null);
+    }
+
+    public Frame(Pitching firstPitching, Frame beforeFrame) {
+        this(firstPitching, null, beforeFrame);
     }
 
     private void validateSumIsOverTen(Pitching firstPitching, Pitching secondPitching) {
@@ -37,6 +47,18 @@ public class Frame {
 
     public boolean done() {
         return strike() || (secondPitching != null);
+    }
+
+    public int totalScore() {
+        if (score() == Pitching.IS_NULL) {
+            return Pitching.IS_NULL;
+        }
+
+        if (beforeFrame == null) {
+            return score();
+        }
+
+        return score() + beforeFrame.totalScore();
     }
 
     public Integer score() {

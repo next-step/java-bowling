@@ -101,19 +101,40 @@ class FrameTest {
         assertThat(spare2).isFalse();
     }
 
-    @ParameterizedTest(name = "해당 Frame 까지의 totalScore")
+    @ParameterizedTest(name = "해당 Frame 까지의 totalScore : All strike")
     @CsvSource({"10, 1, 30", "10, 10, 300"})
-    void totalScore(int pins, int scoreFrame, int result) {
+    void total_score_all_strike(int pins, int scoreFrame, int result) {
         // given
         Pitching pitching = Pitching.first(pins);
         Frame frame = new Frame(pitching);
 
-        for (int i = 0; i < scoreFrame - 2; i++) {
+        for (int i = 0; i < scoreFrame - 1; i++) {
             pitching = pitching.next(pins);
             frame = new Frame(pitching, frame);
         }
         pitching = pitching.next(pins);
         pitching.next(pins);
+        // when
+        int totalScore = frame.totalScore();
+        // then
+        assertThat(totalScore).isEqualTo(result);
+    }
+
+    @ParameterizedTest(name = "해당 Frame 까지의 totalScore : no strike")
+    @CsvSource({"1, 8, 1, 9", "1, 8, 10, 90"})
+    void total_score_no_strike(int pins1, int pins2, int scoreFrame, int result) {
+        // given
+        Pitching pitching = Pitching.first(pins1);
+        Frame frame = new Frame(pitching);
+        Pitching nextPitching = pitching.next(pins2);
+        frame.pitch(nextPitching);
+
+        for (int i = 0; i < scoreFrame - 1; i++) {
+            nextPitching = nextPitching.next(pins1);
+            frame = new Frame(nextPitching, frame);
+            nextPitching = nextPitching.next(pins2);
+            frame.pitch(nextPitching);
+        }
         // when
         int totalScore = frame.totalScore();
         // then
