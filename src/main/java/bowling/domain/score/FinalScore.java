@@ -2,6 +2,7 @@ package bowling.domain.score;
 
 import bowling.exception.Pin.PinBonusException;
 import bowling.exception.Pin.PinSecondValueException;
+import java.util.Objects;
 
 public class FinalScore extends Score {
 
@@ -25,7 +26,7 @@ public class FinalScore extends Score {
 
     @Override
     public FinalScore createNextPin(Pin pin) {
-        if (second == null ){
+        if (Objects.isNull(second)) {
             checkRemainPin(this.first, pin);
             return new FinalScore(this.first, pin, null);
         }
@@ -44,6 +45,7 @@ public class FinalScore extends Score {
             throw new PinBonusException();
         }
     }
+
     private boolean isBonus() {
         return (first == STRIKE && second == STRIKE) || (first.remainPin() == second.value());
     }
