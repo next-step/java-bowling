@@ -11,7 +11,6 @@ public class Points {
 
     private final int FIRST_INDEX = 0;
     private final int SECOND_INDEX = 1;
-    private final int BONUS_INDEX = 2;
 
     public Points() {
         points = new ArrayList<>();
