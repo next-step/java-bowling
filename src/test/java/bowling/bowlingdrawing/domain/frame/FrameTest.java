@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.*;
 
-class NormalFrameTest {
+class FrameTest {
 
     @Test
     @DisplayName("Frame 생성")
@@ -17,9 +17,9 @@ class NormalFrameTest {
         // given
         Pitching pitching = Pitching.of(9);
         // when
-        Frame frame = new NormalFrame(pitching);
+        Frame frame = new Frame(pitching);
         // then
-        assertThat(frame).isEqualTo(new NormalFrame(Pitching.of(9)));
+        assertThat(frame).isEqualTo(new Frame(Pitching.of(9)));
     }
 
     @ParameterizedTest(name = "SecondPitching 추가 [{index}] {0}, {1}")
@@ -27,12 +27,12 @@ class NormalFrameTest {
     void addSecondPitching(int firstPins, int secondPins) {
         // given
         Pitching firstPitching = Pitching.of(firstPins);
-        Frame frame = new NormalFrame(firstPitching);
+        Frame frame = new Frame(firstPitching);
         // when
         Pitching secondPitching = firstPitching.next(secondPins);
-        frame.secondPitching(secondPitching);
+        frame.pitch(secondPitching);
         // then
-        assertThat(frame).isEqualTo(new NormalFrame(firstPitching, secondPitching));
+        assertThat(frame).isEqualTo(new Frame(firstPitching, secondPitching));
     }
 
     @ParameterizedTest(name = "SecondPitching 추가 실패 : 합계 10 초과")
@@ -41,11 +41,11 @@ class NormalFrameTest {
         // given
         Pitching firstPitching = Pitching.of(firstPins);
         Pitching secondPitching = firstPitching.next(secondPins);
-        Frame frame = new NormalFrame(firstPitching);
+        Frame frame = new Frame(firstPitching);
         // when, then
-        assertThatThrownBy(() -> new NormalFrame(firstPitching, secondPitching))
+        assertThatThrownBy(() -> new Frame(firstPitching, secondPitching))
                 .isInstanceOf(CustomException.class);
-        assertThatThrownBy(() -> frame.secondPitching(secondPitching))
+        assertThatThrownBy(() -> frame.pitch(secondPitching))
                 .isInstanceOf(CustomException.class);
     }
 
@@ -56,9 +56,9 @@ class NormalFrameTest {
         Pitching pitching = Pitching.first(firstPins);
         Pitching nextPitching1 = pitching.next(secondPins);
         Pitching nextPitching2 = nextPitching1.next(thirdPins);
-        Frame frame = new NormalFrame(pitching);
+        Frame frame = new Frame(pitching);
         if (firstPins < 10) {
-            frame.secondPitching(nextPitching1);
+            frame.pitch(nextPitching1);
         }
         // when
         Integer score = frame.score();
@@ -71,9 +71,9 @@ class NormalFrameTest {
     void strike() {
         // given
         Pitching pitching1 = Pitching.first(10);
-        Frame frame1 = new NormalFrame(pitching1);
+        Frame frame1 = new Frame(pitching1);
         Pitching pitching2 = pitching1.next(9);
-        Frame frame2 = new NormalFrame(pitching2);
+        Frame frame2 = new Frame(pitching2);
         // when
         boolean strike1 = frame1.strike();
         boolean strike2 = frame2.strike();
@@ -89,8 +89,8 @@ class NormalFrameTest {
         Pitching pitching1 = Pitching.first(9);
         Pitching pitching2 = pitching1.next(1);
         Pitching pitching3 = pitching2.next(8);
-        Frame frame1 = new NormalFrame(pitching1, pitching2);
-        Frame frame2 = new NormalFrame(pitching2, pitching3);
+        Frame frame1 = new Frame(pitching1, pitching2);
+        Frame frame2 = new Frame(pitching2, pitching3);
         // when
         boolean spare1 = frame1.spare();
         boolean spare2 = frame2.spare();

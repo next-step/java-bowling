@@ -6,7 +6,7 @@ import bowling.bowlingdrawing.exception.CustomException;
 
 import java.util.Objects;
 
-public abstract class Frame {
+public class Frame {
     private final Pitching firstPitching;
     private Pitching secondPitching;
 
@@ -20,7 +20,7 @@ public abstract class Frame {
         this(firstPitching, null);
     }
 
-    public void validateSumIsOverTen(Pitching firstPitching, Pitching secondPitching) {
+    private void validateSumIsOverTen(Pitching firstPitching, Pitching secondPitching) {
         if (secondPitching == null) {
             return;
         }
@@ -28,11 +28,6 @@ public abstract class Frame {
         if (firstPitching.sum(secondPitching) > Pins.MAXIMUM_PINS) {
             throw new CustomException("Frame 전체 pin 개수가 10개를 초과합니다.");
         }
-    }
-
-    public void secondPitching(Pitching secondPitching) {
-        validateSumIsOverTen(firstPitching, secondPitching);
-        this.secondPitching = secondPitching;
     }
 
     public Integer score() {
@@ -67,6 +62,11 @@ public abstract class Frame {
             return Pitching.IS_NULL;
         }
         return secondPitching.score(Pitching.SCORE_LEVEL_OF_MISS);
+    }
+
+    public void pitch(Pitching pitching) {
+        validateSumIsOverTen(firstPitching, pitching);
+        this.secondPitching = pitching;
     }
 
     public boolean done() {
