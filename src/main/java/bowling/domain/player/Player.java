@@ -1,9 +1,5 @@
 package bowling.domain.player;
 
-import bowling.domain.Results;
-import bowling.domain.frame.Frames;
-
-import java.util.List;
 import java.util.Objects;
 
 public class Player {
@@ -34,10 +30,5 @@ public class Player {
 
     public String name() {
         return name;
-    }
-
-    public List<String> results(Frames frames) {
-        Results results = Results.from(frames);
-        return results.results();
     }
 }

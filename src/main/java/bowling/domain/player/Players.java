@@ -1,6 +1,9 @@
 package bowling.domain.player;
 
+import bowling.domain.Results;
 import bowling.domain.frame.AllFrames;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
 import bowling.domain.score.TotalScoreBoard;
 
 import java.util.List;
@@ -41,9 +44,7 @@ public class Players {
 
     public List<List<String>> results(AllFrames allFrames) {
         return IntStream.range(0, players.size())
-            .mapToObj(i -> nthOf(i).results(
-                allFrames.nthFramesOf(i))
-            )
+            .mapToObj(i -> framesToResults(allFrames.nthFramesOf(i)))
             .collect(Collectors.toList());
     }
 
@@ -57,5 +58,10 @@ public class Players {
 
     public Player nthOf(int nth) {
         return players.get(nth);
+    }
+
+    private List<String> framesToResults(Frames frames) {
+        Results results = Results.from(frames);
+        return results.results();
     }
 }
