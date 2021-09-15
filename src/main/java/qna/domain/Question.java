@@ -91,27 +91,32 @@ public class Question extends AbstractEntity {
     }
 
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
-        if (!this.isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
-
         List<DeleteHistory> deleteHistoryList = new ArrayList<>();
 
-        DeleteHistory questionDeleteHistory = DeleteHistory.fromQuestion(this);
-        deleteHistoryList.add(questionDeleteHistory);
+        DeleteHistory questionDeleteHistory = deleteQuestion(loginUser);
+        List<DeleteHistory> answerDeleteHistory = deleteAnswers(loginUser);
 
-        List<DeleteHistory> answerDeleteHistory = deleteAnswers(this, loginUser);
+        deleteHistoryList.add(questionDeleteHistory);
         deleteHistoryList.addAll(answerDeleteHistory);
 
-        this.setDeleted(true);
 
         return deleteHistoryList;
     }
 
-    private List<DeleteHistory> deleteAnswers(Question question, User loginUser) throws CannotDeleteException {
+    private DeleteHistory deleteQuestion(User loginUser) throws CannotDeleteException {
+        if (!this.isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+
+        this.setDeleted(true);
+
+        return DeleteHistory.fromQuestion(this);
+    }
+
+    private List<DeleteHistory> deleteAnswers(User loginUser) throws CannotDeleteException {
         List<DeleteHistory> deleteHistoryList = new ArrayList<>();
 
-        List<Answer> answers = question.getAnswers();
+        List<Answer> answers = this.getAnswers();
         for (Answer answer : answers) {
             DeleteHistory deleteHistory = answer.delete(loginUser);
             deleteHistoryList.add(deleteHistory);
