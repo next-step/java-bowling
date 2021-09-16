@@ -1,5 +1,6 @@
 package bowling.model;
 
+import java.util.List;
 import java.util.Objects;
 
 public class NormalRound implements Round{
@@ -14,15 +15,17 @@ public class NormalRound implements Round{
     }
 
     @Override
-    public GameResult play(int totalPoint, int tryCount) {
-        GameResult currentResult = findResult(totalPoint, tryCount);
+    public GameResult play(Point pinCount, int tryCount) {
+        GameResult currentResult = findResult(pinCount, tryCount);
         this.result = new Result(result.getBefore(), currentResult);
         return currentResult;
     }
 
     @Override
-    public Round next(GameResult beforeResult) {
-        return new NormalRound(new Result(beforeResult, new Miss()));
+    public void next(List<Round> rounds, GameResult beforeResult) {
+        if (!result.isStrike()) {
+            rounds.add(new NormalRound(new Result(beforeResult, new Miss())));
+        }
     }
 
     @Override
@@ -35,16 +38,16 @@ public class NormalRound implements Round{
     }
 
     @Override
-    public GameResult findResult(int point, int tryCount) {
-        if (point == STRIKE) {
+    public GameResult findResult(Point pinCount, int tryCount) {
+        if (pinCount.isStrike()) {
             return isStrikeOrSpare(tryCount);
         }
 
-        if (point == GUTTER) {
+        if (pinCount.isGutter()) {
             return new Gutter();
         }
 
-        return new Miss(point);
+        return new Miss(pinCount);
     }
 
     @Override

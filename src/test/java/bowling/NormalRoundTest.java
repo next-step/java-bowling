@@ -12,7 +12,7 @@ public class NormalRoundTest {
 
         //when
         NormalRound normalRound = new NormalRound();
-        normalRound.play(10, 1);
+        normalRound.play(new Point(10), 1);
 
         //then
         Assertions.assertThat(normalRound).isEqualTo(expect);
@@ -25,7 +25,7 @@ public class NormalRoundTest {
 
         //when
         NormalRound normalRound = new NormalRound();
-        normalRound.play(10, 2);
+        normalRound.play(new Point(10), 2);
 
         //then
         Assertions.assertThat(normalRound).isEqualTo(expect);
@@ -34,11 +34,11 @@ public class NormalRoundTest {
     @Test
     public void 미스() {
         //given
-        NormalRound expect = new NormalRound(new Result(new Miss(), new Miss(9)));
+        NormalRound expect = new NormalRound(new Result(new Miss(), new Miss(new Point(9))));
 
         //when
         NormalRound normalRound = new NormalRound();
-        normalRound.play(9, 2);
+        normalRound.play(new Point(9), 2);
 
         //then
         Assertions.assertThat(normalRound).isEqualTo(expect);
@@ -51,7 +51,7 @@ public class NormalRoundTest {
 
         //when
         NormalRound normalRound = new NormalRound();
-        normalRound.play(0, 1);
+        normalRound.play(new Point(0), 1);
 
         //then
         Assertions.assertThat(normalRound).isEqualTo(expect);

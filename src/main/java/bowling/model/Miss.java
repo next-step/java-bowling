@@ -9,8 +9,8 @@ public class Miss implements GameResult {
         this.point = new Point(0);
     }
 
-    public Miss(int point) {
-        this.point = new Point(point);
+    public Miss(Point point) {
+        this.point = point;
     }
 
     @Override

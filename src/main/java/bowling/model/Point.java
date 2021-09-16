@@ -19,6 +19,26 @@ public class Point {
         }
     }
 
+    public Point add(int point) {
+        return new Point(this.point + point);
+    }
+
+    public boolean isStrike() {
+        if (this.point == MAX_POINT) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean isGutter() {
+        if (this.point == MIN_POINT) {
+            return true;
+        }
+
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

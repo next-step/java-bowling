@@ -1,13 +1,13 @@
 package bowling.model;
 
+import java.util.List;
+
 public interface Round {
-    int STRIKE = 10;
-    int GUTTER = 0;
     int FIRST_TRY = 1;
 
-    GameResult play(int totalPoint, int tryCount);
-    Round next(GameResult beforeResult);
+    GameResult play(Point pinCount, int tryCount);
+    void next(List<Round> rounds, GameResult beforeResult);
     int calcMaxTryCount();
-    GameResult findResult(int point, int tryCount);
+    GameResult findResult(Point point, int tryCount);
     GameResult isStrikeOrSpare(int tryCount);
 }

@@ -10,11 +10,11 @@ public class RoundSet {
     private static final int FINAL_ROUND = 10;
     private static final int STRIKE_POINT = 10;
 
-    private int totalPoint;
+    private Point point;
     private List<Round> rounds;
 
     public RoundSet(int index) {
-        this.totalPoint = 0;
+        this.point = new Point(0);
         this.rounds = new ArrayList<>();
 
         Round round = new NormalRound();
@@ -25,21 +25,21 @@ public class RoundSet {
 
     }
 
-    public RoundSet(int totalPoint, List<Round> rounds) {
-        this.totalPoint = totalPoint;
+    public RoundSet(int point, List<Round> rounds) {
+        this.point = new Point(point);
         this.rounds = rounds;
     }
 
-    public int play(int point) {
+    public int play(int pinCount) {
         int tryCount = rounds.size();
 
-        calcTotalPoint(point);
+        this.point = calcTotalPoint(pinCount);
 
-        GameResult result = getCurrentRound().play(totalPoint, tryCount);
+        GameResult result = getCurrentRound().play(this.point, tryCount);
         bowlingResults.add(result);
 
-        if (totalPoint == STRIKE_POINT) {
-            totalPoint = 0;
+        if (this.point.isStrike()) {
+            this.point = new Point(0);
         }
 
         int maxTryCount = getCurrentRound().calcMaxTryCount();
@@ -55,18 +55,16 @@ public class RoundSet {
         return rounds.size();
     }
 
-    private void calcTotalPoint(int point) {
+    private Point calcTotalPoint(int point) {
         if (point != STRIKE_POINT) {
-            totalPoint += point;
+            return this.point.add(point);
         }
 
-        if (point == STRIKE_POINT) {
-            totalPoint = point;
-        }
+        return new Point(point);
     }
 
     private void next(GameResult currentResult) {
-        rounds.add(getCurrentRound().next(currentResult));
+        getCurrentRound().next(this.rounds, currentResult);
     }
 
     public int size() {
@@ -78,11 +76,11 @@ public class RoundSet {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RoundSet roundSet = (RoundSet) o;
-        return totalPoint == roundSet.totalPoint && Objects.equals(rounds, roundSet.rounds);
+        return Objects.equals(point, roundSet.point) && Objects.equals(rounds, roundSet.rounds);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(totalPoint, rounds);
+        return Objects.hash(point, rounds);
     }
 }

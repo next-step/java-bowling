@@ -1,5 +1,6 @@
 package bowling.model;
 
+import java.util.List;
 import java.util.Objects;
 
 public class FinalRound implements Round{
@@ -15,15 +16,15 @@ public class FinalRound implements Round{
     }
 
     @Override
-    public GameResult play(int totalPoint, int tryCount) {
-        GameResult currentResult = findResult(totalPoint, tryCount);
+    public GameResult play(Point point, int tryCount) {
+        GameResult currentResult = findResult(point, tryCount);
         this.result = new Result(result.getBefore(), currentResult);
         return currentResult;
     }
 
     @Override
-    public Round next(GameResult beforeResult) {
-        return new FinalRound(new Result(beforeResult, new Miss()));
+    public void next(List<Round> rounds, GameResult beforeResult) {
+        rounds.add(new FinalRound(new Result(beforeResult, new Miss())));
     }
 
     @Override
@@ -44,12 +45,12 @@ public class FinalRound implements Round{
     }
 
     @Override
-    public GameResult findResult(int point, int tryCount) {
-        if (point == STRIKE) {
+    public GameResult findResult(Point point, int tryCount) {
+        if (point.isStrike()) {
             return isStrikeOrSpare(tryCount);
         }
 
-        if (point == GUTTER) {
+        if (point.isGutter()) {
             return new Gutter();
         }
 

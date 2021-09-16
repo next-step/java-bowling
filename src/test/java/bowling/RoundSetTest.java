@@ -55,8 +55,8 @@ public class RoundSetTest {
         //given
         int firstPoint = 1;
         int secondPoint = 9;
-        Round round1 = new FinalRound(new Result(new Miss(), new Miss(1)));
-        Round round2 = new FinalRound(new Result(new Miss(1), new Spare()));
+        Round round1 = new FinalRound(new Result(new Miss(), new Miss(new Point(1))));
+        Round round2 = new FinalRound(new Result(new Miss(new Point(1)), new Spare()));
         Round round3 = new FinalRound(new Result(new Spare(), new Miss()));
         RoundSet expect = new RoundSet(0, Arrays.asList(round1, round2, round3));
 
