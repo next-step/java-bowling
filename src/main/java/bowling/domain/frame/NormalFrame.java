@@ -2,7 +2,6 @@ package bowling.domain.frame;
 
 import bowling.domain.score.FinalScore;
 import bowling.domain.score.NormalScore;
-import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
 
 public class NormalFrame extends Frame {
@@ -28,11 +27,6 @@ public class NormalFrame extends Frame {
             return this.nextFrame = new NormalFrame(round + 1, NormalScore.empty(), null);
         }
         return this.nextFrame = new FinalFrame(FINAL_FRAME_ROUND, FinalScore.empty());
-    }
-
-    @Override
-    public void updateScoreByPin(Pin pin) {
-        score = score.nextPin(pin);
     }
 
 }
