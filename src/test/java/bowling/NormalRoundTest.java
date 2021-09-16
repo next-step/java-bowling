@@ -8,7 +8,7 @@ public class NormalRoundTest {
     @Test
     public void 스트라이크() {
         //given
-        NormalRound expect = new NormalRound(false, new Result(new Miss(),new Strike()));
+        NormalRound expect = new NormalRound(new Result(new Miss(),new Strike()));
 
         //when
         NormalRound normalRound = new NormalRound();
@@ -21,7 +21,7 @@ public class NormalRoundTest {
     @Test
     public void 스페어() {
         //given
-        NormalRound expect = new NormalRound(false, new Result(new Miss(), new Spare()));
+        NormalRound expect = new NormalRound(new Result(new Miss(), new Spare()));
 
         //when
         NormalRound normalRound = new NormalRound();
@@ -34,7 +34,7 @@ public class NormalRoundTest {
     @Test
     public void 미스() {
         //given
-        NormalRound expect = new NormalRound(false, new Result(new Miss(), new Miss(9)));
+        NormalRound expect = new NormalRound(new Result(new Miss(), new Miss(9)));
 
         //when
         NormalRound normalRound = new NormalRound();
@@ -47,7 +47,7 @@ public class NormalRoundTest {
     @Test
     public void 거터() {
         //given
-        NormalRound expect = new NormalRound(false, new Result(new Miss(), new Gutter()));
+        NormalRound expect = new NormalRound(new Result(new Miss(), new Gutter()));
 
         //when
         NormalRound normalRound = new NormalRound();

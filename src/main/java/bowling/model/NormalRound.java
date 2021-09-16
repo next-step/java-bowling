@@ -3,16 +3,13 @@ package bowling.model;
 import java.util.Objects;
 
 public class NormalRound implements Round{
-    private final boolean isBonusRound;
     private Result result;
 
     public NormalRound() {
-        isBonusRound = false;
         result = new Result(new Miss(), new Miss());
     }
 
-    public NormalRound(boolean isBonusRound, Result result) {
-        this.isBonusRound = isBonusRound;
+    public NormalRound(Result result) {
         this.result = result;
     }
 
@@ -24,23 +21,17 @@ public class NormalRound implements Round{
     }
 
     @Override
-    public Round next(boolean isBonusRound, GameResult beforeResult) {
-        return new NormalRound(false, new Result(beforeResult, new Miss()));
+    public Round next(GameResult beforeResult) {
+        return new NormalRound(new Result(beforeResult, new Miss()));
     }
 
     @Override
-    public boolean isBonusRound() {
-        return isBonusRound;
-    }
+    public int calcMaxTryCount() {
+        if (result.isStrike()) {
+            return -1;
+        }
 
-    @Override
-    public boolean isStrike() {
-        return result.isStrike();
-    }
-
-    @Override
-    public boolean giveBonus() {
-        return false;
+        return 0;
     }
 
     @Override
@@ -70,11 +61,11 @@ public class NormalRound implements Round{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalRound that = (NormalRound) o;
-        return isBonusRound == that.isBonusRound && Objects.equals(result, that.result);
+        return Objects.equals(result, that.result);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(isBonusRound, result);
+        return Objects.hash(result);
     }
 }

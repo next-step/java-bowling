@@ -32,30 +32,22 @@ public class RoundSet {
 
     public int play(int point) {
         int tryCount = rounds.size();
-        int maxCount = 0;
+
         calcTotalPoint(point);
-        GameResult result = getLastRound().play(totalPoint, tryCount);
+
+        GameResult result = getCurrentRound().play(totalPoint, tryCount);
+        bowlingResults.add(result);
+
         if (totalPoint == STRIKE_POINT) {
             totalPoint = 0;
         }
-        bowlingResults.add(result);
 
-        boolean isSkip = isSkipNextRound();
-        if (isSkip) {
-            return -1;
-        }
-
-        boolean isBonus = giveBonus();
-        if (isBonus) {
-            maxCount = 1;
-        }
-
+        int maxTryCount = getCurrentRound().calcMaxTryCount();
         next(result);
-
-        return maxCount;
+        return maxTryCount;
     }
 
-    private Round getLastRound() {
+    private Round getCurrentRound() {
         return this.rounds.get(getSize() - 1);
     }
 
@@ -73,29 +65,8 @@ public class RoundSet {
         }
     }
 
-    private boolean isSkipNextRound() {
-        if (getLastRound().isStrike()) {
-            return true;
-        }
-
-        return false;
-    }
-
     private void next(GameResult currentResult) {
-        boolean isBonusRound = isBonusRound();
-
-        if (!isBonusRound) {
-            isBonusRound = giveBonus();
-        }
-        rounds.add(getLastRound().next(isBonusRound, currentResult));
-    }
-
-    private boolean isBonusRound() {
-        return getLastRound().isBonusRound();
-    }
-
-    private boolean giveBonus() {
-        return getLastRound().giveBonus();
+        rounds.add(getCurrentRound().next(currentResult));
     }
 
     public int size() {

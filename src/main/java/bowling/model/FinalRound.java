@@ -3,16 +3,14 @@ package bowling.model;
 import java.util.Objects;
 
 public class FinalRound implements Round{
-    private final boolean isBonusRound;
+    private static int bonusCount = 1;
     private Result result;
 
     public FinalRound() {
-        isBonusRound = false;
         result = new Result(new Miss(), new Miss());
     }
 
-    public FinalRound(boolean isBonusRound, Result result) {
-        this.isBonusRound = isBonusRound;
+    public FinalRound(Result result) {
         this.result = result;
     }
 
@@ -24,31 +22,25 @@ public class FinalRound implements Round{
     }
 
     @Override
-    public Round next(boolean isBonusRound, GameResult beforeResult) {
-        return new FinalRound(isBonusRound, new Result(beforeResult, new Miss()));
+    public Round next(GameResult beforeResult) {
+        return new FinalRound(new Result(beforeResult, new Miss()));
     }
 
     @Override
-    public boolean isBonusRound() {
-        return isBonusRound;
-    }
+    public int calcMaxTryCount() {
+        System.out.println("bonusCount = " + bonusCount);
+        result.printResult();
 
-    @Override
-    public boolean isStrike() {
-        return false;
-    }
-
-    @Override
-    public boolean giveBonus() {
-        if (isBonusRound) {
-            return false;
+        if (bonusCount == 0) {
+            return 0;
         }
 
         if (result.isStrike() || result.isSpare()) {
-            return true;
+            bonusCount -= 1;
+            return 1;
         }
 
-        return false;
+        return 0;
     }
 
     @Override
@@ -78,11 +70,11 @@ public class FinalRound implements Round{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FinalRound that = (FinalRound) o;
-        return isBonusRound == that.isBonusRound && Objects.equals(result, that.result);
+        return Objects.equals(result, that.result);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(isBonusRound, result);
+        return Objects.hash(result);
     }
 }

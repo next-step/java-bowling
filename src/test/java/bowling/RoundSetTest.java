@@ -38,8 +38,8 @@ public class RoundSetTest {
     public void 파이널라운드는_스트라이크일_경우_보너스라운드를_준다() {
         //given
         int firstPoint = 10;
-        Round round1 = new FinalRound(false, new Result(new Miss(), new Strike()));
-        Round round2 = new FinalRound(true, new Result(new Strike(), new Miss()));
+        Round round1 = new FinalRound(new Result(new Miss(), new Strike()));
+        Round round2 = new FinalRound(new Result(new Strike(), new Miss()));
         RoundSet expect = new RoundSet(0, Arrays.asList(round1, round2));
 
         //when
@@ -55,9 +55,9 @@ public class RoundSetTest {
         //given
         int firstPoint = 1;
         int secondPoint = 9;
-        Round round1 = new FinalRound(false, new Result(new Miss(), new Miss(1)));
-        Round round2 = new FinalRound(false, new Result(new Miss(1), new Spare()));
-        Round round3 = new FinalRound(true, new Result(new Spare(), new Miss()));
+        Round round1 = new FinalRound(new Result(new Miss(), new Miss(1)));
+        Round round2 = new FinalRound(new Result(new Miss(1), new Spare()));
+        Round round3 = new FinalRound(new Result(new Spare(), new Miss()));
         RoundSet expect = new RoundSet(0, Arrays.asList(round1, round2, round3));
 
         //when
