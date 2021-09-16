@@ -72,10 +72,6 @@ public class Score {
             return Status.SPARE;
         }
 
-        if (scores.get(FIRST_INDEX) == Pin.NONE.getValue() || scores.get(SECOND_INDEX) == Pin.NONE.getValue()) {
-            return Status.GUTTER;
-        }
-
         return Status.MISS;
     }
 
