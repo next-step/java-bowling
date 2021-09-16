@@ -83,13 +83,7 @@ public class Frames {
     }
 
     private List<FrameScore> addScore(int countOfDownPin) {
-
-        for (int i = 0; i < scores.size(); i++) {
-            if (i == scores.size() - MINUS_INDEX_ONE) {
-                scores.get(i).addScore(countOfDownPin);
-            }
-        }
-
+        scores.get(scores.size() - MINUS_INDEX_ONE).addScore(countOfDownPin);
         return scores;
     }
 

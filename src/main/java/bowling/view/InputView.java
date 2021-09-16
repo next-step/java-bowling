@@ -11,20 +11,20 @@ import java.util.stream.IntStream;
 
 public class InputView {
 
-    private static Scanner scanner = new Scanner(System.in);
-    private static final int PLUS_SIZE_ONE = 1;
+    private Scanner scanner = new Scanner(System.in);
+    private final int PLUS_SIZE_ONE = 1;
 
-    public static Player player() {
+    public Player player() {
         System.out.print("플레이어 이름은(3 english letters)?:");
         return new Player(scanner.nextLine());
     }
 
-    public static int playerSize() {
+    public int playerSize() {
         System.out.print("How many people? ");
         return Integer.parseInt(scanner.nextLine());
     }
 
-    private static int framesSize(Frames frames) {
+    private int framesSize(Frames frames) {
         if (frames.isPitch()) {
             return frames.frames().size() + PLUS_SIZE_ONE;
         }
@@ -32,7 +32,7 @@ public class InputView {
         return frames.frames().size();
     }
 
-    public static Players players() {
+    public Players players() {
         List<Player> players = new ArrayList<>();
         int playerSize = playerSize();
 
@@ -43,7 +43,7 @@ public class InputView {
     }
 
 
-    public static int score(Player player, Frames frames) {
+    public int score(Player player, Frames frames) {
         System.out.printf("%s, %d프레임 투구 :"
                 , player.getName()
 //                , framesSize(player.frames()));

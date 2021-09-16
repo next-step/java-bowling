@@ -14,11 +14,19 @@ public class BowlingGame {
 
     private List<Frames> frames = new ArrayList<>();
 
+    private InputView inputView;
+    private ResultView resultView;
+
+    public BowlingGame(InputView inputView, ResultView resultView) {
+        this.inputView = inputView;
+        this.resultView = resultView;
+    }
+
     public void run() {
 
-        Players players = InputView.players();
+        Players players = inputView.players();
 
-        ResultView.bowlingBoard(players, Frames.init());
+        resultView.bowlingBoard(players, Frames.init());
 
         IntStream.range(ZERO, players.countOfPlayers())
                 .forEach(countOfFrames -> frames.add(Frames.init()));
@@ -31,8 +39,8 @@ public class BowlingGame {
 
         int playerIndex = players.index(player);
         while (!frames.get(playerIndex).isFrameCompleted(frameIndex)) {
-            frames.get(playerIndex).play(InputView.score(player, frames.get(playerIndex)));
-            ResultView.bowlingBoard(players, frames.get(playerIndex));
+            frames.get(playerIndex).play(inputView.score(player, frames.get(playerIndex)));
+            resultView.bowlingBoard(players, frames.get(playerIndex));
         }
     }
 }
