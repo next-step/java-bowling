@@ -3,6 +3,7 @@ package bowling.domain;
 import bowling.exception.BusinessException;
 
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
 
@@ -40,9 +41,9 @@ public class FinalFrame implements Frame {
     }
 
     public boolean isNormalEnd() {
-        boolean isMaximumSize = pitches.equalsToSize(NormalFrame.MAXIMUM_NORMAL_FRAME_PITCH);
+        boolean isNormalFrameSize = pitches.equalsToSize(NormalFrame.MAXIMUM_NORMAL_FRAME_PITCH);
         boolean isNormalPitch = pitches.sum() < Pitch.MAXIMUM_COUNT_OF_PINS;
-        return isMaximumSize && isNormalPitch;
+        return isNormalFrameSize && isNormalPitch;
     }
 
     @Override
@@ -68,7 +69,6 @@ public class FinalFrame implements Frame {
         if (pitches.isEmpty()) {
             return Score.cantCalculate();
         }
-
         pitchScoreUntilPossible(beforeScore);
 
         if (beforeScore.canCalculateScore()) {
