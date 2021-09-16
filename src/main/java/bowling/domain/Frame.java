@@ -9,9 +9,9 @@ public abstract class Frame {
     public static final int FIRST_FRAME = 1;
     public static final int EMPTY_FRAME = 0;
 
-    FrameIndex frameIndex;
-    Score score;
-    Status status;
+    protected FrameIndex frameIndex;
+    protected Score score;
+    protected Status status;
 
     public Frame(int hitNumberOfPin, int frameIndex) {
         if (hitNumberOfPin == Pin.MAX.getValue()) {
@@ -21,10 +21,7 @@ public abstract class Frame {
         this.frameIndex = new FrameIndex(frameIndex);
     }
 
-    public void secondBall(int hitNumberOfPin) {
-        score.secondBall(hitNumberOfPin);
-        status = score.frameStatus();
-    }
+    public abstract void secondBall(int hitNumberOfPin);
 
     public int firstScore() {
         return score.firstScore();
@@ -57,10 +54,9 @@ public abstract class Frame {
         return frameIndex.getValue() + 1;
     }
 
-    public int frameScore() {
-        return score.scores()
-                .stream()
-                .mapToInt(score -> score)
-                .sum();
-    }
+    public abstract int calculateFrameScore();
+
+    public abstract void validateFrameScore();
+
+    protected abstract int cacluateAdditionalScore(TotalScore totalScore);
 }

@@ -11,6 +11,8 @@ public class Score {
 
     private List<Integer> scores = new ArrayList<>();
 
+    private TotalScore totalScore;
+
     public Score(int firstBall) {
         validateNumberOfPin(firstBall);
 
@@ -18,11 +20,6 @@ public class Score {
     }
 
     public void secondBall(int second) {
-        if (scores.get(FIRST_INDEX) != Pin.MAX.getValue()
-                && scores.get(FIRST_INDEX) + second > Pin.MAX.getValue()) {
-            throw new IllegalArgumentException("핀의 최고 갯수는 10개 입니다.");
-        }
-
         scores.add(second);
     }
 
@@ -39,6 +36,13 @@ public class Score {
         validateExistSecondScore();
 
         return scores.get(SECOND_INDEX);
+    }
+
+    public int scoresSum() {
+        return scores
+                .stream()
+                .mapToInt(score -> score)
+                .sum();
     }
 
     private void validateNumberOfPin(int hitNumberOfPin) {
@@ -73,6 +77,22 @@ public class Score {
         }
 
         return Status.MISS;
+    }
+
+    public TotalScore createScore(Status status) {
+        int score = scoresSum();
+
+        if (status.equals(Status.STRIKE)) {
+            totalScore = TotalScore.strikeTotalScore(score);
+            return totalScore;
+        }
+        if (status.equals(Status.SPARE)) {
+            totalScore = TotalScore.spareTotalScore(score);
+            return totalScore;
+        }
+
+        totalScore = new TotalScore(score);
+        return totalScore;
     }
 
     @Override
