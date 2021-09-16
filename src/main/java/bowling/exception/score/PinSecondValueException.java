@@ -1,4 +1,4 @@
-package bowling.exception.Pin;
+package bowling.exception.score;
 
 import bowling.exception.CustomException;
 

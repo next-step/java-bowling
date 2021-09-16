@@ -1,6 +1,6 @@
 package bowling.domain.score;
 
-import bowling.exception.Pin.PinValueException;
+import bowling.exception.score.PinValueException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;

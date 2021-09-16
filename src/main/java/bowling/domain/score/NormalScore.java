@@ -1,6 +1,6 @@
 package bowling.domain.score;
 
-import bowling.exception.Pin.PinSecondValueException;
+import bowling.exception.score.PinSecondValueException;
 import java.util.Objects;
 
 public class NormalScore extends Score {

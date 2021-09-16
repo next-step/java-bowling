@@ -1,7 +1,7 @@
 package bowling.domain.score;
 
-import bowling.exception.Pin.PinBonusException;
-import bowling.exception.Pin.PinSecondValueException;
+import bowling.exception.score.PinBonusException;
+import bowling.exception.score.PinSecondValueException;
 import java.util.Objects;
 
 public class FinalScore extends Score {

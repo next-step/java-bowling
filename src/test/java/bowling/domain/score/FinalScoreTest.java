@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import bowling.exception.Pin.PinBonusException;
-import bowling.exception.Pin.PinSecondValueException;
+import bowling.exception.score.PinBonusException;
+import bowling.exception.score.PinSecondValueException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
