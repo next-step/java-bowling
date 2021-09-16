@@ -73,10 +73,6 @@ public class NormalFrame extends Frame {
         return nextFrame;
     }
 
-    public Frame getNextFrame() {
-        return nextFrame;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
