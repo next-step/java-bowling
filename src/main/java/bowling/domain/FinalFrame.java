@@ -37,26 +37,14 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isEnd() {
-        return (pitches.equalsToSize(NormalFrame.MAXIMUM_NORMAL_FRAME_PITCH)
-                && sum() < Pitch.MAXIMUM_COUNT_OF_PINS)
-                || pitches.equalsToSize(MAXIMUM_FINAL_FRAME_PITCH);
+        return isNormalEnd() || pitches.equalsToSize(MAXIMUM_FINAL_FRAME_PITCH);
     }
 
-
-    public int sum() {
-        return pitches.value()
-                .stream()
-                .map(Pitch::intValue)
-                .reduce(0, Integer::sum);
+    public boolean isNormalEnd() {
+        boolean isNormalFrameSize = pitches.equalsToSize(NormalFrame.MAXIMUM_NORMAL_FRAME_PITCH);
+        boolean isNormalPitch = pitches.sum() < Pitch.MAXIMUM_COUNT_OF_PINS;
+        return isNormalFrameSize && isNormalPitch;
     }
-
-//    @Override
-//    public String result() {
-//        return pitches.value()
-//                .stream()
-//                .map(Pitch::value)
-//                .collect(Collectors.joining(Pitch.SEPARATOR));
-//    }
 
     @Override
     public Frame next() {
@@ -74,6 +62,34 @@ public class FinalFrame implements Frame {
     @Override
     public Pitches pitches() {
         return pitches;
+    }
+
+    @Override
+    public Score addScore(final Score beforeScore) {
+        if (pitches.isEmpty()) {
+            return Score.cantCalculate();
+        }
+        pitchScoreUntilPossible(beforeScore);
+
+        if (beforeScore.canCalculateScore()) {
+            return beforeScore;
+        }
+        return Score.cantCalculate();
+    }
+
+    private void pitchScoreUntilPossible(final Score beforeScore) {
+        int range = Math.min(beforeScore.leftPitch(), pitches.size());
+        for (int i = 0; i < range; i++) {
+            beforeScore.pitch(pitches.get(i).intValue());
+        }
+    }
+
+    @Override
+    public Score score() {
+        if (!isEnd()) {
+            return Score.cantCalculate();
+        }
+        return Score.of(pitches.sum());
     }
 
     @Override

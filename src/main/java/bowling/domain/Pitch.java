@@ -68,4 +68,5 @@ public class Pitch {
     public int hashCode() {
         return Objects.hash(countOfPins, status);
     }
+
 }

@@ -33,7 +33,7 @@ class StatusTest {
 
     @DisplayName("두번째 투구 - gutter : 현재 투구가 0 이고 , 이전 투구 상태가 넘버이면 거터다.")
     @ParameterizedTest
-    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
     void second_gutter(int first) {
         assertThat(Status.second(new Pitch(first, Status.NUMBER), 0)).isEqualTo(Status.GUTTER);
     }

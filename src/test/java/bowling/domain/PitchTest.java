@@ -36,10 +36,10 @@ class PitchTest {
     }
 
     @DisplayName("처음 투구할 때 10개 이하를 쓰러트리면 Pitch 타입이 된다.")
-    @Test
-    void firstPitch() {
-        assertThat(Pitch.firstPitch(2).isStatus(Status.NUMBER)).isTrue();
-        assertThat(Pitch.firstPitch(2).isStatus(Status.STRIKE)).isTrue();
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
+    void firstPitch(int first) {
+        assertThat(Pitch.firstPitch(first).isStatus(Status.NUMBER)).isTrue();
     }
 
     @DisplayName("스트라이크 투구의 값은 X 이다.")

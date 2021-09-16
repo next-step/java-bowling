@@ -3,7 +3,6 @@ package bowling.domain;
 import bowling.exception.BusinessException;
 
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class NormalFrame implements Frame {
 
@@ -11,6 +10,7 @@ public class NormalFrame implements Frame {
 
     private final FrameNumber frameNumber;
     private Pitches pitches;
+    private Frame nextFrame;
 
     public NormalFrame(final int frameNumber) {
         this.frameNumber = new FrameNumber(frameNumber);
@@ -22,6 +22,9 @@ public class NormalFrame implements Frame {
         if (isEnd()) {
             throw new BusinessException("현재 프레임에서 투구할 수 있는 갯수를 초과했습니다.");
         }
+        if (pitches.size() == 1) {
+            pitches.validateNormalSecondPitch(countOfPins);
+        }
         addNextPitch(countOfPins);
         return this;
     }
@@ -32,9 +35,11 @@ public class NormalFrame implements Frame {
             return this;
         }
         if (frameNumber.isLastNormalNumber()) {
-            return new FinalFrame();
+            nextFrame = new FinalFrame();
+            return nextFrame;
         }
-        return new NormalFrame(frameNumber.nextNumber());
+        nextFrame = new NormalFrame(frameNumber.nextNumber());
+        return nextFrame;
     }
 
     @Override
@@ -45,6 +50,45 @@ public class NormalFrame implements Frame {
     @Override
     public Pitches pitches() {
         return pitches;
+    }
+
+    @Override
+    public Score addScore(final Score beforeScore) {
+        if (pitches.isEmpty()) {
+            return Score.cantCalculate();
+        }
+
+        pitchScoreUntilPossible(beforeScore);
+
+        if (beforeScore.canCalculateScore()) {
+            return beforeScore;
+        }
+        if (nextFrame == null) {
+            return Score.cantCalculate();
+        }
+        return nextFrame.addScore(beforeScore);
+    }
+
+    private void pitchScoreUntilPossible(final Score beforeScore) {
+        int range = Math.min(beforeScore.leftPitch(), pitches.size());
+        for (int i = 0; i < range; i++) {
+            beforeScore.pitch(pitches.get(i).intValue());
+        }
+    }
+
+    @Override
+    public Score score() {
+        if (!isEnd() || nextFrame == null) {
+            return Score.cantCalculate();
+        }
+        if (pitches.isLastPitchStatus(Status.SPARE)) {
+            return nextFrame.addScore(Score.ofSpare());
+        }
+        if (pitches.isLastPitchStatus(Status.STRIKE)) {
+            return nextFrame.addScore(Score.ofStrike());
+        }
+
+        return Score.of(pitches.sum());
     }
 
     private void addNextPitch(int countOfPins) {

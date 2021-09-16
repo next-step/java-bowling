@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -89,5 +90,22 @@ class FinalFrameTest {
     void next_error() {
         assertThatThrownBy(() -> new FinalFrame().pitch(1).pitch(2).next())
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("파이널 프레임에서 노멀투구 일때 (2번) 점수는 투구의 전체 합이다.")
+    @ParameterizedTest
+    @CsvSource(value = {"8:1:9", "2:2:4", "3:4:7"}, delimiter = ':')
+    void getScore_two(int first, int second, int expected) {
+        Frame finalFrame = new FinalFrame().pitch(first).pitch(second);
+        Assertions.assertThat(finalFrame.score().getScore()).isEqualTo(expected);
+    }
+
+
+    @DisplayName("파이널 프레임에서 스트라이크/스페어 투구 일때 (3번) 점수 투구의 전체 합이다.")
+    @ParameterizedTest
+    @CsvSource(value = {"8:2:10:20", "10:10:10:30", "10:0:10:20"}, delimiter = ':')
+    void getScore_three(int first, int second, int third, int expected) {
+        Frame finalFrame = new FinalFrame().pitch(first).pitch(second).pitch(third);
+        Assertions.assertThat(finalFrame.score().getScore()).isEqualTo(expected);
     }
 }

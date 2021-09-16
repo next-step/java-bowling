@@ -39,4 +39,5 @@ public class BowlingGame {
     public int currentFrameNumber() {
         return frames.size();
     }
+
 }

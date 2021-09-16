@@ -70,4 +70,86 @@ class NormalFrameTest {
     void next_final() {
         assertThat(new NormalFrame(9).pitch(10).next()).isEqualTo(new FinalFrame());
     }
+
+    @DisplayName("노멀프레임에서 스트라이크 일 때 현재 프레임의 점수 + 투구 두번의 합이 점수이다.")
+    @Test
+    void getScore_strike() {
+        Frame frame = new NormalFrame(1).pitch(10);
+        Frame next = frame.next().pitch(3).pitch(2);
+        next.next();
+
+        assertThat(frame.score().getScore()).isEqualTo(15);
+        assertThat(next.score().getScore()).isEqualTo(5);
+    }
+
+    @DisplayName("노멀프레임에서 스트라이크 일 때 현재 프레임의 점수 + 투구 두번의 합이 점수이다.")
+    @Test
+    void getScore_strike_strike() {
+        Frame frame = new NormalFrame(1).pitch(10);
+        frame.next().pitch(10).next().pitch(4);
+
+        assertThat(frame.score().getScore()).isEqualTo(24);
+    }
+
+    @DisplayName("노멀프레임에서 스페어 일때 현재 프레임의 점수 + 투구 한번의 합이 점수이다.")
+    @Test
+    void getScore_spare() {
+        Frame frame = new NormalFrame(2).pitch(8).pitch(2);
+        frame.next().pitch(8).pitch(2);
+
+        assertThat(frame.score().getScore()).isEqualTo(18);
+    }
+
+    @DisplayName("노멀프레임에서 스페어 일때 현재 프레임의 점수 + 투구 한번의 합이 점수이다.")
+    @Test
+    void getScore_normal() {
+        Frame frame = new NormalFrame(2).pitch(3).pitch(4);
+        frame.next().pitch(8);
+
+        assertThat(frame.score().getScore()).isEqualTo(7);
+    }
+
+    @DisplayName("노멀 마지막 프레임에서 스트라이크 일때 현재 프레임의 점수 + 투구 두번의 합이 점수이다.")
+    @Test
+    void addScore_nine_strike() {
+        Frame frame = new NormalFrame(9).pitch(10);
+        Frame finalFrame = frame.next();
+        finalFrame.pitch(10).pitch(10).pitch(10);
+
+        assertThat(frame.score().getScore()).isEqualTo(30);
+    }
+
+    @DisplayName("노멀 마지막 프레임에서 스페어 일때 현재 프레임의 점수 + 투구 한번의 합이 점수이다.")
+    @Test
+    void addScore_nine_spare() {
+        Frame frame = new NormalFrame(9).pitch(2).pitch(8);
+        Frame finalFrame = frame.next();
+        finalFrame.pitch(10).pitch(10).pitch(10);
+
+        assertThat(frame.score().getScore()).isEqualTo(20);
+    }
+
+    @DisplayName("노멀프레임에서 현재 프레임이 스페어 일때 투구를 1번 더 던지기 전까지 점수를 매길 수 없다. ")
+    @Test
+    void noScore_spare() {
+        Frame frame = new NormalFrame(1).pitch(2).pitch(8);
+        frame.next();
+        assertThat(frame.score().canCalculateScore()).isFalse();
+    }
+
+    @DisplayName("노멀프레임에서 현재 프레임이 스트라이크 일때 투구를 2번 더 던지기 전까지 점수를 매길 수 없다. ")
+    @Test
+    void noScore_strike() {
+        Frame frame = new NormalFrame(1).pitch(10).next().pitch(8);
+        frame.next();
+        assertThat(frame.score().canCalculateScore()).isFalse();
+    }
+
+    @DisplayName("스트라이크, 스페어가 아닌 두번째 투구에서 두 수의 합이 10 이상이면 에러가 발생한다. ")
+    @ParameterizedTest
+    @CsvSource(value = {"6:5", "9:2"}, delimiter = ':')
+    void two_pitch(int first, int second) {
+        assertThatThrownBy(() -> new NormalFrame(1).pitch(first).pitch(second))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
