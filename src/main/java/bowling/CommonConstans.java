@@ -44,5 +44,4 @@ public class CommonConstans {
     public static final Pattern PLAYER_NAME_CHECK = Pattern.compile("(^[a-zA-Z]{3})*$");
 
 
-
 }
