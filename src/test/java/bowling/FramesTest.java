@@ -14,12 +14,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("여러 프레임")
 public class FramesTest {
 
-    public static final Player P1 = new Player("TDD");
-
-
     public void playGame(Frames frames, List<Integer> countOfDownPins) {
         countOfDownPins.forEach(downPin -> {
-            if (frames.isPlay()) {
+            if (frames.isPlayComplited()) {
                 frames.play(downPin);
             }
         });
@@ -29,7 +26,7 @@ public class FramesTest {
     @DisplayName("frames 생성 확인")
     public void frames() throws Exception {
         //given
-        Frames frames = Frames.of(P1);
+        Frames frames = Frames.init();
         //when
 
         //then
@@ -41,7 +38,7 @@ public class FramesTest {
     @DisplayName("게임은 최대 10턴까지 진행")
     public void play(String pins, int turn) throws Exception {
         //given
-        Frames frames = Frames.of(P1);
+        Frames frames = Frames.init();
 
         //when
         List<Integer> countOfDownPins = Arrays.stream(pins.split(":"))
@@ -55,6 +52,5 @@ public class FramesTest {
         //then
         assertThat(size).isEqualTo(turn);
     }
-
 
 }

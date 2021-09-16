@@ -20,5 +20,4 @@ public class PinTest {
         assertThatThrownBy(() -> Pin.of(-1))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
 }
