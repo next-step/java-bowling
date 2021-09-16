@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import step3.state.FinalReady;
 import step3.state.State;
 
-public class FinalFrame implements Frame {
+public class FinalFrame extends Frame {
 
     private int turn;
     private List<State> states = new ArrayList<>();
@@ -18,6 +18,7 @@ public class FinalFrame implements Frame {
         turn = 0;
     }
 
+    @Override
     public Frame bowl(int fallenPins) {
         state = state.bowl(fallenPins);
         turn++;

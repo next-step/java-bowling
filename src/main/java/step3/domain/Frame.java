@@ -2,23 +2,23 @@ package step3.domain;
 
 import step3.state.State;
 
-public interface Frame {
+public abstract class Frame {
 
-    Frame bowl(int fallenPins);
+    public abstract Frame bowl(int fallenPins);
 
-    Score getScore();
+    public abstract Score getScore();
 
-    boolean isGameEnd();
+    public abstract boolean isGameEnd();
 
-    State getState();
+    public abstract State getState();
 
-    boolean isFinish();
+    public abstract boolean isFinish();
 
-    Score calculateAdditionalScore(Score score);
+    public abstract Score calculateAdditionalScore(Score score);
 
-    int number();
+    public abstract int number();
 
-    String getSymbol();
+    public abstract String getSymbol();
 
-    Frame createFrame();
+    public abstract Frame createFrame();
 }

@@ -22,7 +22,6 @@ public class Frames {
             frame = frame.createFrame();
         }
         return frame;
-//        frames.add(frame);
     }
 
     public List<Frame> getFrames() {

@@ -60,8 +60,9 @@ public class ResultView {
 
     public static void printScoreResult(Frames frames, Frame frame) {
         int totalScore = 0;
+
         for (Frame frame1 : frames.getFrames()) {
-            int currentFrameScore = printResultScoreByFrame(frame1, totalScore);
+            int currentFrameScore = printResultScoreByFrame(frame1);
             if (currentFrameScore == -1) {
                 printRightBlank();
                 continue;
@@ -70,21 +71,24 @@ public class ResultView {
             System.out.printf(OUTPUT_SCORE_FORMAT, totalScore);
         }
 
-        if (frame.number() == 10 && frame.isGameEnd()) {
-            FinalFrame finalFrame = (FinalFrame) frame;
-            System.out.printf(OUTPUT_SCORE_FORMAT, finalFrame.getLastFrameResult() + totalScore);
-        }
+        printLastFrame(frame, totalScore);
 
         if (!frame.isGameEnd()) {
             for (int i = frame.number(); i <= FRAME_NUMBER_END; i++) {
                 printRightBlank();
             }
         }
-
         System.out.println();
     }
 
-    private static int printResultScoreByFrame(Frame frame1, int totalScore) {
+    private static void printLastFrame(Frame frame, int totalScore) {
+        if (frame.number() == 10 && frame.isGameEnd()) {
+            FinalFrame finalFrame = (FinalFrame) frame;
+            System.out.printf(OUTPUT_SCORE_FORMAT, finalFrame.getLastFrameResult() + totalScore);
+        }
+    }
+
+    private static int printResultScoreByFrame(Frame frame1) {
         try {
             return frame1.getScore().getScore();
         } catch (CannotCalculateExceptions c) {

@@ -5,7 +5,7 @@ import step3.exceptions.CannotCalculateExceptions;
 import step3.state.Ready;
 import step3.state.State;
 
-public class NormalFrame implements Frame {
+public class NormalFrame extends Frame {
 
     private Frame next;
     private State state;
@@ -16,6 +16,7 @@ public class NormalFrame implements Frame {
         this.no = frameNum;
     }
 
+    @Override
     public Frame bowl(int fallenPins) {
         state = state.bowl(fallenPins);
         return this;
