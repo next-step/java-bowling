@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import bowling.exception.score.PinSaveExcessException;
 import bowling.exception.score.PinSecondValueException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -114,6 +115,22 @@ class NormalScoreTest {
 
         // then
         assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("현재 스코어에 pin이 전부 저장되어있을때 pin정보가 더 들어오면 Exception이 발생해야 한다.")
+    void savePinExceptionTest() {
+
+        // given
+        Score score = NormalScore.empty();
+        score = score.nextPin(Pin.of(5));
+        score = score.nextPin(Pin.of(5));
+
+        // when & then
+        Score result = score;
+        assertThatExceptionOfType(PinSaveExcessException.class)
+            .isThrownBy(() -> result.nextPin(Pin.of(5)))
+            .withMessageMatching("현재 Score가 다 차있을 때 더이상 Pin을 저장할 수 없다.");
     }
 
 }
