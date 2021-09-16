@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
 
 public class FinalFrame extends Frame {
@@ -14,7 +15,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public void saveScore(Score score) {
+    public void updateScoreByPin(Pin pin) {
 
     }
 }

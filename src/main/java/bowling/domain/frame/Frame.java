@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
 
 public abstract class Frame {
@@ -15,6 +16,6 @@ public abstract class Frame {
     }
 
     public abstract Frame createNextFrame();
-    public abstract void saveScore(Score score);
+    public abstract void updateScoreByPin(Pin pin);
 
 }

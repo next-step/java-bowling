@@ -2,9 +2,7 @@ package bowling.domain.frame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bowling.domain.score.NormalScore;
 import bowling.domain.score.Pin;
-import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -56,20 +54,37 @@ class NormalFrameTest {
     }
 
     @Test
-    @DisplayName("현재 라운드의 score를 저장할 수 있다.")
-    void saveNowScoreTest() {
+    @DisplayName("새로운 핀 정보를 받아서 현재 Frame의 score에 저장할 수 있다.")
+    void saveScoreByPinTest() {
 
         // given
-        Frame first = NormalFrame.createFirstFrame();
-        Score emptyScore = NormalScore.empty();
-        Score score = emptyScore.nextPin(Pin.of(10));
+        Pin pin = Pin.of(7);
+        Frame result = NormalFrame.createFirstFrame();
 
         // when
-        first.saveScore(score);
+        result.updateScoreByPin(pin);
 
         // then
-        assertThat(first).isInstanceOf(Frame.class);
-        assertThat(first).isInstanceOf(NormalFrame.class);
+        assertThat(result).isInstanceOf(Frame.class);
+        assertThat(result).isInstanceOf(NormalFrame.class);
+    }
+
+    @Test
+    @DisplayName("새로운 핀 정보를 받아서 스페어 처리를 할 수 있다.")
+    void saveScoreByPinSpareTest() {
+
+        // given
+        Pin pin = Pin.of(7);
+        Frame result = NormalFrame.createFirstFrame();
+        result.updateScoreByPin(pin);
+        Pin second = Pin.of(3);
+
+        // when
+        result.updateScoreByPin(second);
+
+        // then
+        assertThat(result).isInstanceOf(Frame.class);
+        assertThat(result).isInstanceOf(NormalFrame.class);
     }
 
 }
