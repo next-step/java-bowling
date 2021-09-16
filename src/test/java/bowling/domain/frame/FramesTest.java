@@ -1,19 +1,18 @@
 package bowling.domain.frame;
 
-import static bowling.domain.Fixture.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-
+import bowling.domain.Results;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import bowling.domain.Results;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
+import static bowling.domain.Fixture.NINE_STRIKE_STATE;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class FramesTest {

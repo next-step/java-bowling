@@ -1,10 +1,9 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import bowling.domain.Results;
-import bowling.domain.score.Score;
 
 public class Frames {
     public static final int TOTAL_FRAME_NUMBER = 10;
@@ -29,12 +28,12 @@ public class Frames {
     }
 
     private void throwBall(Score score) {
-        int framesIndex = frames.size() - 1;
+        int framesIndex = size() - 1;
         if (framesIndex >= 0 && !isNext()) {
-            frames.get(framesIndex).addScore(score);
+            nthFrameOf(framesIndex).addScore(score);
             return;
         }
-        addFrame(score);                       // first 프레임내 첫 투구
+        addFrame(score);
     }
 
     private void addFrame(Score score) {
@@ -54,27 +53,20 @@ public class Frames {
         }
 
         int frameNumberIndex = frames.size() - 1;
-        return frames.get(frameNumberIndex).isNextFrame();
+        return isNextNthFrameOf(frameNumberIndex);
     }
 
     public boolean isFinish() {
         return frames.size() == Frames.TOTAL_FRAME_NUMBER
-            && frames.get(Frames.TOTAL_FRAME_NUMBER - 1).isNextFrame();
-    }
-
-    public int frameNumber() {
-        if (frames.size() <= 0) {
-            return 1;
-        }
-
-        if (isNext()) {
-            return frames.size() + 1;
-        }
-        return frames.size();
+            && isNextNthFrameOf(Frames.TOTAL_FRAME_NUMBER - 1);
     }
 
     public List<Frame> frames() {
         return frames;
+    }
+
+    public int size() {
+        return frames.size();
     }
 
     public Frame lastFrame() {
@@ -83,7 +75,15 @@ public class Frames {
         );
     }
 
-    public List<String> results() {
-        return Results.from(this).results();
+    private boolean isNextNthFrameOf(int nth) {
+        return frames.get(nth).isNextFrame();
+    }
+
+    public Frame nthFrameOf(int nth) {
+        return frames.get(nth);
+    }
+
+    public List<Score> nthFrameScoresOf(int nth) {
+        return nthFrameOf(nth).scores();
     }
 }

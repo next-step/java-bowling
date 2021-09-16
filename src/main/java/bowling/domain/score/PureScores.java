@@ -1,14 +1,15 @@
 package bowling.domain.score;
 
-import static bowling.domain.frame.Frame.*;
-import static bowling.domain.frame.Frames.*;
+import bowling.domain.frame.Frames;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-import bowling.domain.frame.Frames;
+import static bowling.domain.frame.Frame.TEN_SCORE;
+import static bowling.domain.frame.Frames.TOTAL_FRAME_NUMBER;
 
 public class PureScores {
     private static final String SCORE_DATA_MUST_NOT_BE_NULL_EXCEPTION_STATEMENT = "점수 데이터 리스트는 null이 될 수 없습니다";
@@ -19,12 +20,12 @@ public class PureScores {
     private PureScores(List<Integer> scores) {
         validate(scores);
         this.lastCalculatedIndex = 0;
-        this.scores = new ArrayList<>();
+        this.scores = scores;
     }
 
     private PureScores(Frames frames, List<Integer> cumulativeScores) {
-        this(new ArrayList<>());
-        IntStream.range(0, frames.frames().size())
+        scores = new ArrayList<>();
+        IntStream.range(0, frames.size())
             .forEach(i -> initFrameAsScore(frames, i, cumulativeScores));
     }
 
@@ -43,10 +44,11 @@ public class PureScores {
     }
 
     private void initFrameAsScore(final Frames frames, final int index, List<Integer> cumulativeScores) {
-        List<Score> scores = frames.frames().get(index).scores();
+        List<Score> scores = frames.nthFrameScoresOf(index);
         IntStream.range(0, scores.size())
             .forEach(i -> {
-                this.scores.add(scores.get(i).score());
+                Score score = scores.get(i);
+                this.scores.add(score.score());
                 getCumulativeScores(frames, cumulativeScores);
             });
     }
@@ -104,14 +106,12 @@ public class PureScores {
         return false;
     }
 
-    private boolean calculateScoreIfMiss(List<Integer> cumulativeScores) {
+    private void calculateScoreIfMiss(List<Integer> cumulativeScores) {
         if ((lastCalculatedIndex + 1) < scores.size() && addAndGetScores(lastCalculatedIndex) != TEN_SCORE.score()) {
             cumulativeScores.add(addAndGetScores(lastCalculatedIndex));
             updateScoreBoard(cumulativeScores);
             lastCalculatedIndex += 2;
-            return true;
         }
-        return false;
     }
 
     private void updateScoreBoard(List<Integer> cumulativeScores) {
@@ -123,10 +123,10 @@ public class PureScores {
     }
 
     public void addScore(final Score score) {
-        scores().add(score.score());
+        scores.add(score.score());
     }
 
     public List<Integer> scores() {
-        return scores;
+        return Collections.unmodifiableList(scores);
     }
 }

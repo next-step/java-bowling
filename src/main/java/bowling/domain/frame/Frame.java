@@ -1,10 +1,10 @@
 package bowling.domain.frame;
 
-import java.util.List;
-import java.util.Objects;
-
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
+
+import java.util.List;
+import java.util.Objects;
 
 public abstract class Frame {
     public static final Score TEN_SCORE = Score.from(10);

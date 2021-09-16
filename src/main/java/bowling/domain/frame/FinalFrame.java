@@ -41,7 +41,7 @@ public class FinalFrame extends Frame {
     }
 
     private String changeScoreToSpareInFinalFrame(final Score firstTryScore, final Score secondTryScore,
-        final Score thirdTryScore) {
+                                                  final Score thirdTryScore) {
         if (!firstTryScore.equals(TEN_SCORE) && firstTryScore.isEqualTenAfterAdd(secondTryScore)) {
             return changeScoreToSpare(firstTryScore) + SEPARATOR_SYMBOL + changeScoreToSymbol(thirdTryScore);
         }

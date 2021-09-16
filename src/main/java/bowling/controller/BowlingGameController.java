@@ -1,43 +1,54 @@
 package bowling.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import bowling.domain.Player;
-import bowling.domain.Results;
-import bowling.domain.frame.Frames;
+import bowling.domain.frame.AllFrames;
+import bowling.domain.player.Player;
+import bowling.domain.player.Players;
 import bowling.domain.score.PureScores;
 import bowling.domain.score.Score;
+import bowling.domain.score.TotalScoreBoard;
 import bowling.view.InputView;
 import bowling.view.ResultView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 
 public class BowlingGameController {
     public static void main(String[] args) {
         InputView inputView = new InputView();
         ResultView resultView = new ResultView();
-        Frames frames = Frames.from(new ArrayList<>());
-        Player player = Player.from(inputView.inputPlayerName());
+        List<String> playerNames = inputView.inputPlayerNames();
 
-        resultView.outputScores(player.name(), Results.from(frames).results());
-        resultView.outputCumulativeScores(new ArrayList<>());
+        AllFrames allFrames = AllFrames.from(new ArrayList<>(), playerNames.size());
+        Players players = Players.init(playerNames, allFrames);
 
-        executeGame(frames, player.name());
+        resultView.outputScores(players, allFrames);
+        executeGame(players, allFrames);
         inputView.scannerClose();
     }
 
-    private static void executeGame(final Frames frames, final String playerName) {
+    private static void executeGame(Players players, AllFrames allFrames) {
+        while (!allFrames.isGameFinish()) {
+            IntStream.range(0, players.numberOfPlayers())
+                .forEach(playerNo -> loopInputAndOutput(players, allFrames, playerNo));
+        }
+    }
+
+    private static void loopInputAndOutput(Players players, AllFrames allFrames, int playerNo) {
         InputView inputView = new InputView();
         ResultView resultView = new ResultView();
-        List<Integer> cumulatedScores = new ArrayList<>();
-        PureScores pureScores = PureScores.from(frames, cumulatedScores);
-
-        while (!frames.isFinish()) {
-            int downPinNumber = inputView.inputNFrameThrow(frames.frameNumber());
+        Player player = players.nthOf(playerNo);
+        TotalScoreBoard totalScoreBoard = players.totalScoreBoard();
+        boolean isNext = false;
+        while (!isNext) {
+            List<Integer> cumulatedScores = totalScoreBoard.nthCumulativeScoresOf(playerNo);
+            PureScores pureScores = totalScoreBoard.nthPureScoresOf(playerNo);
+            int downPinNumber = inputView.inputPlayerTurnPinNumber(player.name());
             pureScores.addScore(Score.from(downPinNumber));
-            frames.throwBalls(downPinNumber);
-            resultView.outputScores(playerName, frames.results());
-            cumulatedScores = pureScores.getCumulativeScores(frames, cumulatedScores);
-            resultView.outputCumulativeScores(cumulatedScores);
+            allFrames.throwBallOfNthPlayer(playerNo, downPinNumber);
+            totalScoreBoard.updateNthCumulativeScoresOf(playerNo, pureScores.getCumulativeScores(allFrames.nthFramesOf(playerNo), cumulatedScores));
+            resultView.outputScores(players, allFrames);
+            isNext = allFrames.isNextOfNthPlayer(playerNo);
         }
     }
 }

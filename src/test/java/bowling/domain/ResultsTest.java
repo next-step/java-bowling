@@ -1,10 +1,9 @@
 package bowling.domain;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.Arrays;
-import java.util.stream.Stream;
-
+import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
+import bowling.domain.frame.NormalFrame;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,10 +12,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.Frames;
-import bowling.domain.frame.NormalFrame;
+import java.util.Arrays;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ResultsTest {

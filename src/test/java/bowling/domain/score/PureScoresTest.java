@@ -1,15 +1,15 @@
 package bowling.domain.score;
 
-import static org.assertj.core.api.Assertions.*;
+import bowling.domain.frame.Frames;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import bowling.domain.frame.Frames;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PureScoresTest {
     @DisplayName("점수를 의미하는 리스트 데이터와 계산이 진행된 인덱스가 주어지면, pureScoreData 객체를 생성한다")
