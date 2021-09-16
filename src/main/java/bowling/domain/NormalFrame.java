@@ -7,6 +7,7 @@ import java.util.Objects;
 public class NormalFrame implements Frame {
 
     public static final int MAXIMUM_NORMAL_FRAME_PITCH = 2;
+    private static final int FIRST_PITCH_COMPLETE_STATUS = 1;
 
     private final FrameNumber frameNumber;
     private Pitches pitches;
@@ -22,7 +23,7 @@ public class NormalFrame implements Frame {
         if (isEnd()) {
             throw new BusinessException("현재 프레임에서 투구할 수 있는 갯수를 초과했습니다.");
         }
-        if (pitches.size() == 1) {
+        if (pitches.size() == FIRST_PITCH_COMPLETE_STATUS) {
             pitches.validateNormalSecondPitch(countOfPins);
         }
         addNextPitch(countOfPins);
@@ -70,7 +71,7 @@ public class NormalFrame implements Frame {
     }
 
     private void pitchScoreUntilPossible(final Score beforeScore) {
-        int range = Math.min(beforeScore.leftPitch(), pitches.size());
+        int range = Math.min(beforeScore.leftPitchCount(), pitches.size());
         for (int i = 0; i < range; i++) {
             beforeScore.pitch(pitches.get(i).intValue());
         }

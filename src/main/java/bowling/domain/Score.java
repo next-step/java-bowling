@@ -10,11 +10,11 @@ public class Score {
     private static final int ZERO = 0;
 
     private int score;
-    private int leftPitch;
+    private int leftPitchCount;
 
-    public Score(final int score, final int leftPitch) {
+    public Score(final int score, final int leftPitchCount) {
         this.score = score;
-        this.leftPitch = leftPitch;
+        this.leftPitchCount = leftPitchCount;
     }
 
     public static Score ofStrike() {
@@ -34,7 +34,7 @@ public class Score {
     }
 
     public Score pitch(final int countOfPins) {
-        return new Score(score += countOfPins, leftPitch -= 1);
+        return new Score(score + countOfPins, leftPitchCount - 1);
     }
 
     public int getScore() {
@@ -45,11 +45,11 @@ public class Score {
     }
 
     public boolean canCalculateScore() {
-        return leftPitch == ZERO;
+        return leftPitchCount == ZERO;
     }
 
-    public int leftPitch() {
-        return leftPitch;
+    public int leftPitchCount() {
+        return leftPitchCount;
     }
 
     @Override
@@ -58,12 +58,12 @@ public class Score {
         if (o == null || getClass() != o.getClass()) return false;
         Score score1 = (Score) o;
         return score == score1.score &&
-                leftPitch == score1.leftPitch;
+                leftPitchCount == score1.leftPitchCount;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score, leftPitch);
+        return Objects.hash(score, leftPitchCount);
     }
 
 }
