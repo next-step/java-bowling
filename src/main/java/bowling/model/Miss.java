@@ -2,7 +2,7 @@ package bowling.model;
 
 import java.util.Objects;
 
-public class Miss implements GameResult {
+public class Miss implements State {
     private Point point;
 
     public Miss() {

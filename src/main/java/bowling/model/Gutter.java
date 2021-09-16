@@ -2,7 +2,7 @@ package bowling.model;
 
 import java.util.Objects;
 
-public class Gutter implements GameResult {
+public class Gutter implements State {
     private Point point;
 
     public Gutter() {

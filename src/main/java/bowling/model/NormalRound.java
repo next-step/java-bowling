@@ -15,14 +15,14 @@ public class NormalRound implements Round{
     }
 
     @Override
-    public GameResult play(Point pinCount, int tryCount) {
-        GameResult currentResult = findResult(pinCount, tryCount);
+    public State play(Point pinCount, int tryCount) {
+        State currentResult = findResult(pinCount, tryCount);
         this.result = new Result(result.getBefore(), currentResult);
         return currentResult;
     }
 
     @Override
-    public void next(List<Round> rounds, GameResult beforeResult) {
+    public void next(List<Round> rounds, State beforeResult) {
         if (!result.isStrike()) {
             rounds.add(new NormalRound(new Result(beforeResult, new Miss())));
         }
@@ -38,7 +38,7 @@ public class NormalRound implements Round{
     }
 
     @Override
-    public GameResult findResult(Point pinCount, int tryCount) {
+    public State findResult(Point pinCount, int tryCount) {
         if (pinCount.isStrike()) {
             return isStrikeOrSpare(tryCount);
         }
@@ -51,7 +51,7 @@ public class NormalRound implements Round{
     }
 
     @Override
-    public GameResult isStrikeOrSpare(int tryCount) {
+    public State isStrikeOrSpare(int tryCount) {
         if (tryCount == FIRST_TRY) {
             return new Strike();
         }

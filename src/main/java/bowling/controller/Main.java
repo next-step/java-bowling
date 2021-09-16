@@ -1,7 +1,7 @@
 package bowling.controller;
 
 import bowling.model.BowlingGame;
-import bowling.model.GameResult;
+import bowling.model.State;
 import bowling.model.User;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class Main {
     public static final int MAX_ROUND = 10;
     public static final int SECOND_TRY = 2;
 
-    public static List<GameResult> bowlingResults = new ArrayList<>();
+    public static List<State> bowlingResults = new ArrayList<>();
     public static List<List<String>> allResults = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -44,7 +44,7 @@ public class Main {
         }
     }
 
-    private static GameResult getBowlingResult() {
+    private static State getBowlingResult() {
         return bowlingResults.get(bowlingResults.size() - 1);
     }
 

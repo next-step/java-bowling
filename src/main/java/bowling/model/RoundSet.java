@@ -35,7 +35,7 @@ public class RoundSet {
 
         this.point = calcTotalPoint(pinCount);
 
-        GameResult result = getCurrentRound().play(this.point, tryCount);
+        State result = getCurrentRound().play(this.point, tryCount);
         bowlingResults.add(result);
 
         if (this.point.isStrike()) {
@@ -63,7 +63,7 @@ public class RoundSet {
         return new Point(point);
     }
 
-    private void next(GameResult currentResult) {
+    private void next(State currentResult) {
         getCurrentRound().next(this.rounds, currentResult);
     }
 

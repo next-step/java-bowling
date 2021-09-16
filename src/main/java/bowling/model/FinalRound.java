@@ -16,14 +16,14 @@ public class FinalRound implements Round{
     }
 
     @Override
-    public GameResult play(Point point, int tryCount) {
-        GameResult currentResult = findResult(point, tryCount);
+    public State play(Point point, int tryCount) {
+        State currentResult = findResult(point, tryCount);
         this.result = new Result(result.getBefore(), currentResult);
         return currentResult;
     }
 
     @Override
-    public void next(List<Round> rounds, GameResult beforeResult) {
+    public void next(List<Round> rounds, State beforeResult) {
         rounds.add(new FinalRound(new Result(beforeResult, new Miss())));
     }
 
@@ -45,7 +45,7 @@ public class FinalRound implements Round{
     }
 
     @Override
-    public GameResult findResult(Point point, int tryCount) {
+    public State findResult(Point point, int tryCount) {
         if (point.isStrike()) {
             return isStrikeOrSpare(tryCount);
         }
@@ -58,7 +58,7 @@ public class FinalRound implements Round{
     }
 
     @Override
-    public GameResult isStrikeOrSpare(int tryCount) {
+    public State isStrikeOrSpare(int tryCount) {
         if (tryCount == FIRST_TRY || result.getBefore() instanceof Strike || result.getBefore() instanceof Spare) {
             return new Strike();
         }

@@ -2,7 +2,7 @@ package bowling.model;
 
 import java.util.Objects;
 
-public class Strike implements GameResult {
+public class Strike implements State {
     private Point point;
 
     public Strike() {

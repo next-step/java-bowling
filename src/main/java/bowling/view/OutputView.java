@@ -62,7 +62,7 @@ public class OutputView {
         return addBlank(result);
     }
 
-    public static String changeScore(int score, GameResult bowlingResult) {
+    public static String changeScore(int score, State bowlingResult) {
         if (bowlingResult instanceof Strike) {
             return "X";
         }
