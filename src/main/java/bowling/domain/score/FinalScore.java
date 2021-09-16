@@ -1,6 +1,7 @@
 package bowling.domain.score;
 
 import bowling.exception.score.PinBonusException;
+import bowling.exception.score.PinSaveExcessException;
 import bowling.exception.score.PinSecondValueException;
 import java.util.Objects;
 
@@ -27,7 +28,10 @@ public class FinalScore extends Score {
         if (Objects.isNull(second)) {
             return createSecondPin(pin);
         }
-        return createBonusPin(pin);
+        if (Objects.isNull(bonus)){
+            return createBonusPin(pin);
+        }
+        throw new PinSaveExcessException();
     }
 
     private FinalScore createFirstPin(Pin pin) {
