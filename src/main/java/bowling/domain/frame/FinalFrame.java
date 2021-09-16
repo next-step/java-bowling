@@ -17,6 +17,6 @@ public class FinalFrame extends Frame {
 
     @Override
     public void updateScoreByPin(Pin pin) {
-
+        score = score.nextPin(pin);
     }
 }

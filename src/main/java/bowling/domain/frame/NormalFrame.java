@@ -32,7 +32,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public void updateScoreByPin(Pin pin) {
-        score.nextPin(pin);
+        score = score.nextPin(pin);
     }
 
 }
