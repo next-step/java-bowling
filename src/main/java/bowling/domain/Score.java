@@ -75,7 +75,7 @@ public class Score {
         return Status.MISS;
     }
 
-    public TotalScore createScore(Status status) {
+    public TotalScore createTotalScore(Status status) {
         int score = scoresSum();
 
         if (status.equals(Status.STRIKE)) {
@@ -88,6 +88,12 @@ public class Score {
         }
 
         totalScore = new TotalScore(score);
+        return totalScore;
+    }
+
+    public TotalScore createFinalFrameTotalScore() {
+        totalScore = new TotalScore(scoresSum());
+
         return totalScore;
     }
 

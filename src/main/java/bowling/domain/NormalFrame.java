@@ -35,7 +35,7 @@ public class NormalFrame extends Frame {
     @Override
     public int calculateFrameScore() {
         validateFrameScore();
-        TotalScore totalScore = score.createScore(status);
+        TotalScore totalScore = score.createTotalScore(status);
 
         if (totalScore.canCalucateScore()) {
             return totalScore.getScore();

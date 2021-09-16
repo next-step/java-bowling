@@ -50,7 +50,7 @@ public class FInalFrameTest {
         finalFrame.secondBall(8);
         finalFrame.finalBall(10);
 
-        assertThat(finalFrame.frameScore()).isEqualTo(20);
+        assertThat(finalFrame.calculateFrameScore()).isEqualTo(20);
     }
 
     @Test
@@ -65,5 +65,37 @@ public class FInalFrameTest {
                 .isInstanceOf(RuntimeException.class);
     }
 
+    @Test
+    @DisplayName("9프레임 스페어일 경우 계산")
+    void calculatePrevSpareFrame() {
+        frame = (NormalFrame) frame.nextFrame(9);
+        frame.secondBall(1);
+        FinalFrame finalFrame = (FinalFrame) frame.nextFrame(9);
+        finalFrame.secondBall(1);
+        finalFrame.finalBall(7);
 
+        assertThat(frame.calculateFrameScore()).isEqualTo(19);
+    }
+
+    @Test
+    @DisplayName("9프레임 스타라이크일 경우 계산")
+    void calculatePrevStrikeFrame() {
+        frame = (NormalFrame) frame.nextFrame(10);
+        FinalFrame finalFrame = (FinalFrame) frame.nextFrame(10);
+        finalFrame.secondBall(10);
+        finalFrame.finalBall(7);
+
+        assertThat(frame.calculateFrameScore()).isEqualTo(30);
+    }
+
+    @Test
+    @DisplayName("마지막 프레임 계산")
+    void calculateFinalFrameScore() {
+        frame = (NormalFrame) frame.nextFrame(10);
+        FinalFrame finalFrame = (FinalFrame) frame.nextFrame(10);
+        finalFrame.secondBall(10);
+        finalFrame.finalBall(7);
+
+        assertThat(finalFrame.calculateFrameScore()).isEqualTo(27);
+    }
 }

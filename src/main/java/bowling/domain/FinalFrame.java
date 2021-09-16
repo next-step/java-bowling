@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.LeftFrameBallException;
+
 import java.util.Objects;
 
 public class FinalFrame extends Frame {
@@ -11,6 +13,7 @@ public class FinalFrame extends Frame {
     }
 
     public void finalBall(int hitNumberOfPin) {
+        score.validateExistSecondScore();
         validateFinalBall();
         finalScore = hitNumberOfPin;
         score.finalBall(hitNumberOfPin);
@@ -20,6 +23,44 @@ public class FinalFrame extends Frame {
         if (!isSpare() && !isStrike()) {
             throw new RuntimeException("마지막 공은 스트라이크 또는 스페어인 경우 가능합니다.");
         }
+    }
+
+    @Override
+    public void secondBall(int hitNumberOfPin) {
+        if (!Status.STRIKE.equals(status) && score.firstScore() + hitNumberOfPin > Pin.MAX.getValue()) {
+            throw new IllegalArgumentException("핀의 최고 갯수는 10개 입니다.");
+        }
+
+        score.secondBall(hitNumberOfPin);
+        status = score.frameStatus();
+    }
+
+    @Override
+    public int calculateFrameScore() {
+        validateFrameScore();
+
+        score.createFinalFrameTotalScore();
+
+        return score.scoresSum();
+    }
+
+    @Override
+    public void validateFrameScore() {
+        if (status == null || (!status.equals(Status.MISS) && finalScore == 0)) {
+            throw new LeftFrameBallException("프레임이 아직 끝나지 않았습니다.");
+        }
+    }
+
+    @Override
+    protected int cacluateAdditionalScore(TotalScore totalScore) {
+        totalScore.calculate(firstScore());
+
+        if (totalScore.canCalucateScore()) {
+            return totalScore.getScore();
+        }
+
+        totalScore.calculate(secondScore());
+        return totalScore.getScore();
     }
 
     @Override
