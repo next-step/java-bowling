@@ -1,6 +1,5 @@
 package bowling.view;
 
-import bowling.Frames;
 import bowling.Player;
 import bowling.Players;
 
@@ -11,28 +10,20 @@ import java.util.stream.IntStream;
 
 public class InputView {
 
-    private Scanner scanner = new Scanner(System.in);
-    private final int PLUS_SIZE_ONE = 1;
+    private static Scanner scanner = new Scanner(System.in);
 
-    public Player player() {
+    public static Player player() {
         System.out.print("플레이어 이름은(3 english letters)?:");
         return new Player(scanner.nextLine());
     }
 
-    public int playerSize() {
+    public static int playerSize() {
         System.out.print("How many people? ");
         return Integer.parseInt(scanner.nextLine());
     }
 
-    private int framesSize(Frames frames) {
-        if (frames.isPitch()) {
-            return frames.frames().size() + PLUS_SIZE_ONE;
-        }
-        ;
-        return frames.frames().size();
-    }
 
-    public Players players() {
+    public static Players players() {
         List<Player> players = new ArrayList<>();
         int playerSize = playerSize();
 
@@ -43,11 +34,9 @@ public class InputView {
     }
 
 
-    public int score(Player player, Frames frames) {
-        System.out.printf("%s, %d프레임 투구 :"
-                , player.getName()
-//                , framesSize(player.frames()));
-                , framesSize(frames));
+    public static int score() {
         return scanner.nextInt();
     }
+
+
 }
