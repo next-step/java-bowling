@@ -7,12 +7,10 @@ public abstract class Frame {
 
     final int round;
     Score score;
-    Frame nextFrame;
 
-    Frame(int round, Score score, Frame nextFrame) {
+    Frame(int round, Score score) {
         this.round = round;
         this.score = score;
-        this.nextFrame = nextFrame;
     }
 
     public abstract Frame createNextFrame();
