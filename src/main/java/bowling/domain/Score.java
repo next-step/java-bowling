@@ -34,7 +34,8 @@ public class Score {
     }
 
     public Score pitch(final int countOfPins) {
-        return new Score(score + countOfPins, leftPitchCount - 1);
+
+        return new Score(score += countOfPins, leftPitchCount -= 1);
     }
 
     public int getScore() {
