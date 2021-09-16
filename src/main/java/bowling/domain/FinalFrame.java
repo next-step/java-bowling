@@ -18,12 +18,18 @@ public class FinalFrame extends Frame {
     }
 
     @Override
+    public boolean hasNext() {
+        return false;
+    }
+
+    @Override
     public Score getScore() {
         return pitch.getScore();
     }
 
     public Score additionalScore(Score score) {
         score = score.additionalScore(getFirstPin());
+
         if (score.canCalculate()) {
             return score;
         }
@@ -33,5 +39,10 @@ public class FinalFrame extends Frame {
         }
 
         return score.additionalScore(getSecondPin());
+    }
+
+    @Override
+    public boolean isEnd() {
+        return isFinish();
     }
 }

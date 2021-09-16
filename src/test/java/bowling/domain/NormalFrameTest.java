@@ -60,6 +60,4 @@ public class NormalFrameTest {
 
         assertThat(finalFrame.isFinish()).isFalse();
     }
-
-
 }

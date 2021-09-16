@@ -40,7 +40,6 @@ public class NormalFrame extends Frame {
         return Objects.nonNull(next);
     }
 
-
     @Override
     public Score getScore() {
         if (pitch.getState() == State.GUTTER || pitch.getState() == State.NORMAL || pitch.getState() == State.MISS) {
@@ -48,7 +47,11 @@ public class NormalFrame extends Frame {
         }
 
         if (!hasNext()) {
-            return Score.of(UN_SCORE, 0);
+            return Score.unScore();
+        }
+
+        if (!next.isFirstPitchDone()) {
+            return Score.unScore();
         }
 
         return next.additionalScore(pitch.getScore());
@@ -61,14 +64,24 @@ public class NormalFrame extends Frame {
             return score;
         }
 
-        if (!isSecondPitchDone() && !hasNext()) {
-            return Score.of(NormalFrame.UN_SCORE, 0);
+        if (hasNext() && next.isFirstPitchDone()) {
+            return next.additionalScore(score);
         }
 
-        if (hasNext()) {
-            return next.additionalScore(score);
+        if (hasNext() && !next.isFirstPitchDone()) {
+            return Score.unScore();
+        }
+
+        if (!hasNext() && !isSecondPitchDone()) {
+            return Score.unScore();
         }
 
         return score.additionalScore(getSecondPin());
     }
+
+    @Override
+    public boolean isEnd() {
+        return false;
+    }
+
 }

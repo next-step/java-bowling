@@ -16,25 +16,27 @@ public class ResultView {
     private static final String GUTTER = "- |";
     private static final String SPARE = "/ |";
 
-    public static void printFrames(String player, Frames frames) {
-        printTitle();
+    public static void printBowlingGame(BowlingGame bowlingGame) {
+        Players players = bowlingGame.getPlayers();
 
-        printPlayer(player);
+        players.list().forEach(player -> {
+            printPlayer(player.name());
 
-        printPitch(frames);
+            printPitch(bowlingGame.currentGame(player));
 
-        printRemainBoard(frames);
+            printRemainBoard(bowlingGame.currentGame(player));
 
-        printBlank();
+            printBlank();
 
-        printResultScore(frames);
+            printResultScore(bowlingGame.currentGame(player));
 
-        printRemain(frames);
+            printRemainScore(bowlingGame.currentGame(player));
 
-        System.out.println();
+            System.out.println();
+        });
     }
 
-    private static void printTitle() {
+    public static void printTitle() {
         System.out.println(TITLE);
     }
 
@@ -104,6 +106,7 @@ public class ResultView {
             System.out.print(SPARE);
             return;
         }
+
         System.out.print(secondPin.getFallenPins() + BLANK + BOUND_LINE);
     }
 
@@ -150,15 +153,31 @@ public class ResultView {
             System.out.println();
             return;
         }
-        if (currentFrame.isSecondPitchDone()) {
-            drawRemainSecondPitch(frames);
+
+        if (!currentFrame.isFirstPitchDone() && !currentFrame.isSecondPitchDone()) {
+            drawRemainNoPitch();
             System.out.println();
             return;
+        }
+
+        drawRemainSecondPitch(frames);
+        System.out.println();
+    }
+
+    private static void drawRemainNoPitch() {
+        for (int numberOfGame = 0; numberOfGame <= FINAL_FRAME; numberOfGame++) {
+            System.out.print(BLANK_FRAME);
         }
     }
 
     private static void drawRemainSecondPitch(Frames frames) {
         printRemain(frames);
+    }
+
+    private static void printRemain(Frames frames) {
+        for (int numberOfGame = frames.size(); numberOfGame <= FINAL_FRAME; numberOfGame++) {
+            System.out.print(BLANK_FRAME);
+        }
     }
 
     private static void drawRemainFirstPitch(Frames frames) {
@@ -199,8 +218,36 @@ public class ResultView {
         return resultScore;
     }
 
-    private static void printRemain(Frames frames) {
-        for (int numberOfGame = frames.size(); numberOfGame <= FINAL_FRAME; numberOfGame++) {
+    private static void printRemainScore(Frames frames) {
+        Frame currentFrame = frames.currentFrame();
+        States states = currentFrame.getStates();
+
+        if (currentFrame.isFirstPitchDone() && states.getFirstPitch() == State.STRIKE) {
+            printRemain(frames);
+            return;
+        }
+
+        if (currentFrame.isFirstPitchDone() && !currentFrame.isSecondPitchDone()) {
+            printFirstPitchRemain(frames);
+            return;
+        }
+
+        if (!currentFrame.isFirstPitchDone() && !currentFrame.isSecondPitchDone()) {
+            printNoRemainScore();
+            return;
+        }
+
+        printRemain(frames);
+    }
+
+    private static void printFirstPitchRemain(Frames frames) {
+        for (int numberOfGame = frames.size() - 1; numberOfGame <= FINAL_FRAME; numberOfGame++) {
+            System.out.print(BLANK_FRAME);
+        }
+    }
+
+    private static void printNoRemainScore() {
+        for (int numberOfGame = 0; numberOfGame <= FINAL_FRAME; numberOfGame++) {
             System.out.print(BLANK_FRAME);
         }
     }

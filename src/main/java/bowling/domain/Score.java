@@ -15,6 +15,10 @@ public class Score {
         return new Score(score, left);
     }
 
+    public static Score unScore() {
+        return new Score(NormalFrame.UN_SCORE, 0);
+    }
+
     public Score additionalScore(Pins pins) {
         if (canCalculate()) {
             return new Score(pins.sumOfScore(score), 0);
