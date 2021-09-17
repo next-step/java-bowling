@@ -14,6 +14,14 @@ public abstract class Frame {
         this.score = score;
     }
 
+    public static Frame getLastFrame(Frame frame) {
+        Frame resultFrame = frame;
+        while (Objects.nonNull(resultFrame.nextFrame())) {
+            resultFrame = resultFrame.nextFrame();
+        }
+        return resultFrame;
+    }
+
     public abstract Frame createNextFrame();
 
     public abstract Frame nextFrame();
@@ -28,14 +36,6 @@ public abstract class Frame {
 
     public boolean isNextScore() {
         return score.isNext();
-    }
-
-    public static Frame getLastFrame(Frame frame) {
-        Frame resultFrame = frame;
-        while (Objects.nonNull(resultFrame.nextFrame())) {
-            resultFrame = resultFrame.nextFrame();
-        }
-        return resultFrame;
     }
 
     @Override
