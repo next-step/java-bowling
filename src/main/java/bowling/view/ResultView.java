@@ -35,8 +35,9 @@ public class ResultView {
     private static void printEmptyScore(User user) {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format(SCORE_START_FORMAT, user.nameToString()));
-        IntStream.range(0, 10)
-            .forEach(index -> sb.append(SCORE_EMPTY_FORMAT));
+        sb.append(IntStream.range(0, 10)
+            .mapToObj(index -> SCORE_EMPTY_FORMAT)
+            .collect(joining()));
         System.out.println(sb.toString());
     }
 
