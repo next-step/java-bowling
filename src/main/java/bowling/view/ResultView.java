@@ -55,17 +55,14 @@ public class ResultView {
     }
 
     private static String scoreToString(Score score) {
-        StringBuilder sb = new StringBuilder();
         if (Objects.isNull(score)) {
             return "";
         }
         List<Pin> values = score.values();
-        for (int i = 0; i < values.size(); i++) {
-            if (Objects.nonNull(values.get(i))) {
-                sb.append(pinToString(values, i));
-            }
-        }
-        return sb.toString();
+        return IntStream.range(0, values.size())
+            .filter(index -> Objects.nonNull(values.get(index)))
+            .mapToObj(index -> pinToString(values, index))
+            .collect(Collectors.joining("|"));
     }
 
     private static String pinToString(List<Pin> score, int index) {
