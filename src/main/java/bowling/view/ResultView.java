@@ -105,5 +105,4 @@ public class ResultView {
         return valueOf(nowPin.value());
     }
 
-
 }
