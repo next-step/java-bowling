@@ -49,10 +49,14 @@ public class ResultView {
     private static void printScoreBoard() {
         StringBuilder sb = new StringBuilder();
         sb.append(SCORE_BOARD_START_FORMAT);
-        sb.append(IntStream.rangeClosed(1, 10)
-            .mapToObj(index -> String.format(SCORE_BOARD_FORMAT, index))
-            .collect(joining()));
+        sb.append(getEmptyScore());
         System.out.println(sb.toString());
+    }
+
+    private static String getEmptyScore() {
+        return IntStream.rangeClosed(1, 10)
+            .mapToObj(index -> String.format(SCORE_BOARD_FORMAT, index))
+            .collect(joining());
     }
 
     private static void printScore(User user, Frames frames) {
