@@ -76,7 +76,7 @@ public class Frame {
     }
 
     public boolean done() {
-        return strike() || (secondPitching != null);
+        return status() != Status.NULL;
     }
 
     public int firstScore() {
