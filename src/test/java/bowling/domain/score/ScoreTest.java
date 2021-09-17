@@ -1,9 +1,6 @@
-package bowling.domain;
+package bowling.domain.score;
 
-import bowling.domain.Pin;
-import bowling.domain.Score;
-import bowling.exception.BowlingPinException;
-import bowling.exception.BowlingScoreException;
+import bowling.domain.score.Score;
 import bowling.exception.BowlingStateException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

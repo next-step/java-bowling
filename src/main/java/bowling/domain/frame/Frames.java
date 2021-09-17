@@ -40,7 +40,7 @@ public class Frames {
     }
 
     public boolean finish() {
-        return frames.size() == FINAL_FRAME && lastFrame().finish();
+        return frames.size() == FINAL_FRAME && turnFinish();
     }
 
     public List<Frame> getFrames() {

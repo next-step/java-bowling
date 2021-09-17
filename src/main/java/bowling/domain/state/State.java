@@ -1,7 +1,7 @@
 package bowling.domain.state;
 
-import bowling.domain.Pin;
-import bowling.domain.Score;
+import bowling.domain.score.Pin;
+import bowling.domain.score.Score;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Objects;

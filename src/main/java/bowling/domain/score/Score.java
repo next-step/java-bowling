@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.score;
 
 import bowling.exception.BowlingStateException;
 

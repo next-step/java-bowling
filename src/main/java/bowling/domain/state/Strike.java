@@ -1,10 +1,9 @@
 package bowling.domain.state;
 
-import bowling.domain.Pin;
-import bowling.domain.Score;
-import bowling.exception.BowlingStateException;
+import bowling.domain.score.Pin;
+import bowling.domain.score.Score;
 
-public class Strike extends State {
+public class Strike extends Finished {
     public Strike() {
         firstPin = new Pin(MAX_PIN_NO);
         score = Score.ofStrike();
@@ -13,15 +12,5 @@ public class Strike extends State {
     @Override
     public Score getScore() {
         return Score.ofStrike();
-    }
-
-    @Override
-    public State bowl(int pin) {
-        throw new BowlingStateException("다음 프레임에서 투구해주세요.");
-    }
-
-    @Override
-    public boolean stateFinish() {
-        return true;
     }
 }

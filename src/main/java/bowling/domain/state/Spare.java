@@ -1,10 +1,10 @@
 package bowling.domain.state;
 
-import bowling.domain.Pin;
-import bowling.domain.Score;
+import bowling.domain.score.Pin;
+import bowling.domain.score.Score;
 import bowling.exception.BowlingStateException;
 
-public class Spare extends State {
+public class Spare extends Finished {
     public Spare(int firstCount, int secondCount) {
         pinValidate(firstCount, secondCount);
         this.firstPin = new Pin(firstCount);
@@ -21,15 +21,5 @@ public class Spare extends State {
     @Override
     public Score getScore() {
         return Score.ofSpare();
-    }
-
-    @Override
-    public State bowl(int pin) {
-        throw new BowlingStateException("다음 프레임에서 투구해주세요.");
-    }
-
-    @Override
-    public boolean stateFinish() {
-        return true;
     }
 }
