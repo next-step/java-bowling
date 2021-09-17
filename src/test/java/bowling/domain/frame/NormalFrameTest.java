@@ -30,13 +30,13 @@ class NormalFrameTest {
         
         // givne
         Frame first = NormalFrame.createFirstFrame();
+        Frame expected = NormalFrame.of(2, NormalScore.empty(), null);
         
         // when
         Frame result = first.createNextFrame();
 
         // then
-        assertThat(result).isInstanceOf(Frame.class);
-        assertThat(result).isInstanceOf(NormalFrame.class);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
