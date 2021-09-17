@@ -59,14 +59,22 @@ public class ResultView {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format(SCORE_START_FORMAT, user.nameToString()));
         List<Frame> framesList = frames.values();
-        sb.append(framesList.stream()
+        sb.append(getScoreByFrames(framesList));
+        sb.append(getEmptyScoreByFrames(framesList));
+        System.out.println(sb.toString());
+    }
+
+    private static String getScoreByFrames(List<Frame> framesList) {
+        return framesList.stream()
             .filter(Objects::nonNull)
             .map(frame -> String.format(SCORE_FORMAT, scoreToString(frame.score())))
-            .collect(joining()));
-        sb.append(IntStream.range(framesList.size(), 10)
+            .collect(joining());
+    }
+
+    private static String getEmptyScoreByFrames(List<Frame> framesList) {
+        return IntStream.range(framesList.size(), 10)
             .mapToObj(index -> String.format(SCORE_FORMAT, ""))
-            .collect(joining()));
-        System.out.println(sb.toString());
+            .collect(joining());
     }
 
     private static String scoreToString(Score score) {
