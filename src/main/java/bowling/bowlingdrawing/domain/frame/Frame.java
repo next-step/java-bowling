@@ -20,7 +20,7 @@ public class Frame {
         this(firstPitching, null);
     }
 
-    public void validateSumIsOverTen(Pitching firstPitching, Pitching secondPitching) {
+    private void validateSumIsOverTen(Pitching firstPitching, Pitching secondPitching) {
         if (secondPitching == null) {
             return;
         }
@@ -30,9 +30,13 @@ public class Frame {
         }
     }
 
-    public void secondPitching(Pitching secondPitching) {
-        validateSumIsOverTen(firstPitching, secondPitching);
-        this.secondPitching = secondPitching;
+    public void pitch(Pitching pitching) {
+        validateSumIsOverTen(firstPitching, pitching);
+        this.secondPitching = pitching;
+    }
+
+    public boolean done() {
+        return strike() || (secondPitching != null);
     }
 
     public Integer score() {
@@ -44,7 +48,7 @@ public class Frame {
             return firstScore() + secondPitching.score(Pitching.SCORE_LEVEL_OF_SPARE);
         }
 
-        return firstScore() + secondScore();
+        return firstPitching.sum(secondPitching);
     }
 
     public boolean strike() {
@@ -68,12 +72,6 @@ public class Frame {
         }
         return secondPitching.score(Pitching.SCORE_LEVEL_OF_MISS);
     }
-
-    public boolean done() {
-        return strike() || (secondPitching != null);
-    }
-
-
 
     @Override
     public boolean equals(Object o) {

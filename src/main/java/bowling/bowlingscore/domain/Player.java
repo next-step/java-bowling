@@ -1,7 +1,7 @@
-package bowling.bowlingdrawing.domain;
+package bowling.bowlingscore.domain;
 
-import bowling.bowlingdrawing.domain.frame.Frames;
-import bowling.bowlingdrawing.exception.CustomException;
+import bowling.bowlingscore.domain.frame.Frames;
+import bowling.bowlingscore.exception.CustomException;
 
 import java.util.regex.Pattern;
 

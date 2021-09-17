@@ -1,11 +1,12 @@
-package bowling.bowlingdrawing.domain.frame;
+package bowling.bowlingscore.domain.frame;
 
-import bowling.bowlingdrawing.domain.pitching.Pitching;
-import bowling.bowlingdrawing.exception.CustomException;
+import bowling.bowlingscore.domain.pitching.Pitching;
+import bowling.bowlingscore.exception.CustomException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FramesTest {
 

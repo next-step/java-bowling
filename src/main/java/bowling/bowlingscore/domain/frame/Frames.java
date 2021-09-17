@@ -1,7 +1,7 @@
-package bowling.bowlingdrawing.domain.frame;
+package bowling.bowlingscore.domain.frame;
 
-import bowling.bowlingdrawing.domain.pitching.Pitching;
-import bowling.bowlingdrawing.exception.CustomException;
+import bowling.bowlingscore.domain.pitching.Pitching;
+import bowling.bowlingscore.exception.CustomException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,7 +22,7 @@ public class Frames {
         currentPitching = changeCurrentPitching(pins);
 
         if (frames.isEmpty()) {
-            addNormalFrame(currentPitching);
+            addFirstFrame(currentPitching);
             return;
         }
 
@@ -58,13 +58,20 @@ public class Frames {
                 frames.get(MAXIMUM_INDEX_OF_FRAMES).done();
     }
 
-    private void addNormalFrame(Pitching pitching) {
-        Frame firstFrame = new Frame(pitching);
+    private void addFirstFrame(Pitching firstPitching) {
+        Frame firstFrame = new Frame(firstPitching);
         frames.add(firstFrame);
     }
 
+    private void addNormalFrame(Pitching pitching) {
+        Frame beforeFrame = frames.get(frames.size() - 1);
+        Frame normalFrame = new Frame(pitching, beforeFrame);
+        frames.add(normalFrame);
+    }
+
     private void addFinalFrame(Pitching pitching) {
-        Frame finalFrame = new FinalFrame(pitching);
+        Frame beforeFrame = frames.get(frames.size() - 1);
+        Frame finalFrame = new FinalFrame(pitching, beforeFrame);
         frames.add(finalFrame);
     }
 

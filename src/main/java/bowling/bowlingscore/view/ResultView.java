@@ -1,8 +1,9 @@
-package bowling.bowlingdrawing.view;
+package bowling.bowlingscore.view;
 
-import bowling.bowlingdrawing.domain.frame.FinalFrame;
-import bowling.bowlingdrawing.domain.frame.Frame;
-import bowling.bowlingdrawing.domain.Player;
+import bowling.bowlingscore.domain.Player;
+import bowling.bowlingscore.domain.frame.FinalFrame;
+import bowling.bowlingscore.domain.frame.Frame;
+import bowling.bowlingscore.domain.pitching.Pitching;
 
 import java.util.Formatter;
 import java.util.List;
@@ -11,41 +12,42 @@ public class ResultView {
 
 
     public static void showPlayBoard(Player player) {
-        Formatter formatter = new Formatter();
 
         List<Frame> frames = player.frames().frames();
         FinalFrame finalFrame = player.frames().finalFrame();
 
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |")
-                .append(System.lineSeparator());
+        StringBuilder stringBuilder = new StringBuilder("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
+        String result = stringBuilder.append(System.lineSeparator())
+                .append(framePitching(player, frames, finalFrame))
+                .append(System.lineSeparator())
+                .append(frameTotalScore(frames))
+                .toString();
 
+        System.out.println(result);
+    }
+    private static Formatter framePitching(Player player, List<Frame> frames, FinalFrame finalFrame) {
+        Formatter formatter = new Formatter();
         formatter.format("|  %-4s|", player.name());
 
         for (int i = 0; i < 9; i++) {
-            String score = framesToString(i, frames);
+            String score = framesPitchingToString(i, frames);
             formatter.format("  %-4s|", score);
         }
 
         String lastScore = lastScoreToString(finalFrame);
         formatter.format(" %-5s|", lastScore);
-
-
-        stringBuilder.append(formatter);
-
-        String result = stringBuilder.toString();
-
-        System.out.println(result);
+        return formatter;
     }
 
-    private static String framesToString(int indexFrame, List<Frame> frames) {
+
+    private static String framesPitchingToString(int indexFrame, List<Frame> frames) {
         if(indexFrame > frames.size()-1){
             return "";
         }
 
         Frame frame = frames.get(indexFrame);
 
-        return frameToString(frame);
+        return framePitchingToString(frame);
     }
 
     private static String lastScoreToString(FinalFrame finalFrame) {
@@ -56,10 +58,10 @@ public class ResultView {
         String firstBonusScoreString = convertBonusResult(finalFrame.firstBonusScore());
         String secondBonusScoreString = convertBonusResult(finalFrame.secondBonusScore());
 
-        return frameToString(finalFrame) + firstBonusScoreString + secondBonusScoreString;
+        return framePitchingToString(finalFrame) + firstBonusScoreString + secondBonusScoreString;
     }
 
-    private static String frameToString(Frame frame) {
+    private static String framePitchingToString(Frame frame) {
         String firstScoreString = convertFirstResult(frame.firstScore());
         String secondScoreString = convertNextResult(frame.secondScore());
 
@@ -112,5 +114,34 @@ public class ResultView {
 
         return "|" + score;
     }
+
+    private static Formatter frameTotalScore(List<Frame> frames) {
+        Formatter formatter = new Formatter();
+        formatter.format("|      |");
+
+        for (int i = 0; i < 10; i++) {
+            String score = framesTotalScoreToString(i, frames);
+            formatter.format("  %-4s|", score);
+        }
+        return formatter;
+    }
+
+    private static String framesTotalScoreToString(int indexFrame, List<Frame> frames) {
+        if(indexFrame > frames.size()-1){
+            return "";
+        }
+        
+        Frame frame = frames.get(indexFrame);
+
+        return frameTotalScoreToString(frame);
+    }
+
+    private static String frameTotalScoreToString(Frame frame) {
+        if (frame.totalScore() == Pitching.IS_NULL) {
+            return "";
+        }
+        return frame.totalScore() + "";
+    }
+
 
 }

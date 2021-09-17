@@ -1,16 +1,20 @@
-package bowling.bowlingdrawing.domain.frame;
+package bowling.bowlingscore.domain.frame;
 
-import bowling.bowlingdrawing.domain.pitching.Pitching;
+import bowling.bowlingscore.domain.pitching.Pitching;
 
 import java.util.Objects;
 
-public class FinalFrame extends Frame{
+public class FinalFrame extends Frame {
 
     private Pitching bonusPitching1;
     private Pitching bonusPitching2;
 
     public FinalFrame(Pitching firstPitching) {
         super(firstPitching);
+    }
+
+    public FinalFrame(Pitching firstPitching, Frame beforeFrame) {
+        super(firstPitching, beforeFrame);
     }
 
     @Override
@@ -45,14 +49,14 @@ public class FinalFrame extends Frame{
         if (bonusPitching1 == null) {
             return Pitching.IS_NULL;
         }
-        return bonusPitching1.score(Pitching.SCORE_LEVEL_OF_MISS);
+        return bonusPitching1.pins();
     }
 
     public Integer secondBonusScore() {
         if (bonusPitching2 == null) {
             return Pitching.IS_NULL;
         }
-        return bonusPitching2.score(Pitching.SCORE_LEVEL_OF_MISS);
+        return bonusPitching2.pins();
     }
 
     @Override

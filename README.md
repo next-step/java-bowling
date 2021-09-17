@@ -149,12 +149,9 @@ public class QnAService {
         - `Pitching bonusPitching1`
         - `Pitching bonusPitching2`
     2. 메서드
-        - `void secondPitching(Ptiching pitching)`
+        - `void pitch(Ptiching pitching)`
         - `void bonusPitching(Pitching pitching)`
-        - `int score()`
-        - `boolean strike()`
-        - `boolean spare()`
-        - `boolean end()`
+        - `boolean done()`
 5. Frame    
     1. 속성
         - `Pitching firstPitching`
@@ -166,22 +163,94 @@ public class QnAService {
         - `boolean strike()`
         - `boolean spare()`
         - `boolean done()`
-6. Pitchings
-    1. 속성
-        - `List<Pitching> pitchings`
-    2. 메서드
-        - `Pitching nextPitching(int pins)`
-7. Pitching
+6. Pitching
     1. 속성
         - `Pins pins`
         - `Pitching nextPitching`
     2. 메서드
         - `Integer score(int levelOfRecursion)`
-8. Pins
+7. Pins
     1. 속성
         - `int pins`
     2. 메서드
         - `void validateOverTen()`
 
-    
+-------
+## 3단계 - 볼링 점수판(점수 계산)
 
+### 0. 요구사항
+1. 기능 요구사항(추가)
+- 사용자 1명의 볼링 게임 점수를 관리할 수 있는 프로그램을 구현한다.
+- 스트라이크는 다음 2번의 투구까지 점수를 합산해야 한다. 스페어는 다음 1번의 투구까지 점수를 합산해야 한다.
+
+2. 프로그램 실행 결과
+```
+플레이어 이름은(3 english letters)?: PJS
+| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |
+|  PJS |      |      |      |      |      |      |      |      |      |      |
+|      |      |      |      |      |      |      |      |      |      |      |
+
+1프레임 투구 : 10
+| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |
+|  PJS |  X   |      |      |      |      |      |      |      |      |      |
+|      |      |      |      |      |      |      |      |      |      |      |
+
+2프레임 투구  : 8
+| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |
+|  PJS |  X   |  8   |      |      |      |      |      |      |      |      |
+|      |      |      |      |      |      |      |      |      |      |      |
+
+2프레임 투구 : 2
+| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |
+|  PJS |  X   |  8|/ |      |      |      |      |      |      |      |      |
+|      |  20  |      |      |      |      |      |      |      |      |      |
+
+3프레임 투구 : 8
+| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |
+|  PJS |  X   |  8|/ |   8  |      |      |      |      |      |      |      |
+|      |  20  |  38  |      |      |      |      |      |      |      |      |
+
+3프레임 투구 : 1
+| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |
+|  PJS |  X   |  8|/ |  8|1 |      |      |      |      |      |      |      |
+|      |  20  |  38  |  47  |      |      |      |      |      |      |      |
+...
+```
+
+### 1. 프로그래밍 요구사항
+1. 객체지향 5원칙을 지키면서 프로그래밍한다.
+- 객체지향 5원칙(SOLID)
+    1. SRP (단일책임의 원칙: Single Responsibility Principle)
+        - 작성된 클래스는 하나의 기능만 가지며 클래스가 제공하는 모든 서비스는 그 하나의 책임(변화의 축: axis of change)을 수행하는 데 집중되어 있어야 한다
+    2. OCP (개방폐쇄의 원칙: Open Close Principle)
+        - 소프트웨어의 구성요소(컴포넌트, 클래스, 모듈, 함수)는 확장에는 열려있고, 변경에는 닫혀있어야 한다.
+    3. LSP (리스코브 치환의 원칙: The Liskov Substitution Principle)
+        - 서브 타입은 언제나 기반 타입으로 교체할 수 있어야 한다. 즉, 서브 타입은 언제나 기반 타입과 호환될 수 있어야 한다.
+    4. ISP (인터페이스 분리의 원칙: Interface Segregation Principle)
+        - 한 클래스는 자신이 사용하지 않는 인터페이스는 구현하지 말아야 한다.
+    5. DIP (의존성역전의 원칙: Dependency Inversion Principle)
+        - 구조적 디자인에서 발생하던 하위 레벨 모듈의 변경이 상위 레벨 모듈의 변경을 요구하는 위계관계를 끊는 의미의 역전 원칙이다.
+
+2. 힌트
+- 점수를 구하는 역할을 각 Frame이 담당할 수 있도록 구현해 본다. Frame이 자신의 점수를 구하려면 다음 Frame에 접근할 수 있어야 한다. Frame이 LinkedList와 같은 자료 구조 기반으로 구현해 본다.
+- Frame 외부에서 점수를 계산해 set하는 것이 아니라 Frame 자체가 점수를 계산할 수 있도록 한다.
+    ```
+    Frame frame = new Frame(frameNo);
+    frame.bowl(10);
+    frame.bowl(8);
+    frame.bowl(2);
+    int score = frame.getScore();
+    // score는 20을 반환해야 한다.
+    ```
+- 자바의 다형성을 적용해 로직 구현에서 발생하는 수 많은 if/else를 제거한다.
+- 구현 중 해결책을 찾기 힘든 경우 볼링 점수판 리팩토링 힌트 문서를 참고해 구현해 본다.
+- 단, 정말 해결책을 찾으려다 포기하고 싶은 상황이 됐을 때 참고할 것을 추천한다.
+
+### 2. 기능 분석 (Domain 설계)
+- 각 Frame 점수의 경우 score 를 통해 이전 step 에서 구현 
+- 누적점수가 필요하므로 Frame 내 totalScore 추가 구현 필요
+5. Frame(추가 사항)
+    1. 속성
+        - `Frame beforeFrame`
+    2. 메서드
+        - `int totalScore()`
