@@ -3,7 +3,7 @@ package bowling.bowlingscore.domain.pitching;
 import java.util.Objects;
 
 public class Pitching {
-    
+
     public static final int IS_NULL = -1;
 
     private final Pins pins;
@@ -35,18 +35,26 @@ public class Pitching {
             return IS_NULL;
         }
 
-        return pins.pins() +  nextPitching.pins.pins() + nextPitching.nextPitching.pins.pins();
+        return sumScoresToNextLevel(2);
     }
 
     public int scoreToNextPitching() {
         if (nextPitching == null) {
             return IS_NULL;
         }
-        return pins.pins() + nextPitching.pins.pins();
+        return sumScoresToNextLevel(1);
     }
 
     public int pins() {
         return pins.pins();
+    }
+
+    private int sumScoresToNextLevel(int level) {
+        if(level == 0) {
+            return pins();
+        }
+
+        return pins() + nextPitching.sumScoresToNextLevel(level - 1);
     }
 
     public int sum(Pitching pitching) {
