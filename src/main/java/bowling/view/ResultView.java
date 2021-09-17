@@ -1,6 +1,7 @@
 package bowling.view;
 
 import static java.lang.String.valueOf;
+import static java.util.stream.Collectors.joining;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
@@ -9,7 +10,6 @@ import bowling.domain.score.Score;
 import bowling.domain.user.User;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class ResultView {
@@ -19,6 +19,12 @@ public class ResultView {
 
     private static final String SCORE_START_FORMAT = "|  %3s |";
     private static final String SCORE_FORMAT = "  %-3s |";
+
+    private static final String SCORE_DEMLIMITER = "|";
+
+    private static final String STRIKE = "X";
+    private static final String GUTTER = "-";
+    private static final String SPARE = "/";
 
     public static void printResult(User user, Frames frames) {
         printScoreBoard();
@@ -30,7 +36,7 @@ public class ResultView {
         sb.append(SCORE_BOARD_START_FORMAT);
         sb.append(IntStream.rangeClosed(1, 10)
             .mapToObj(index -> String.format(SCORE_BOARD_FORMAT, index))
-            .collect(Collectors.joining()));
+            .collect(joining()));
         System.out.println(sb.toString());
     }
 
@@ -38,16 +44,15 @@ public class ResultView {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format(SCORE_START_FORMAT, user.nameToString()));
         List<Frame> framesList = frames.values();
-        for (int i=0; i<framesList.size(); i++){
+        for (int i = 0; i < framesList.size(); i++) {
             if (Objects.isNull(framesList.get(i))) {
                 sb.append(String.format(SCORE_FORMAT, " "));
-            }
-            else {
+            } else {
                 Frame frame = framesList.get(i);
                 sb.append(String.format(SCORE_FORMAT, scoreToString(frame.score())));
             }
         }
-        for (int i= framesList.size(); i<10; i++) {
+        for (int i = framesList.size(); i < 10; i++) {
             sb.append(String.format(SCORE_FORMAT, " "));
         }
 
@@ -62,19 +67,19 @@ public class ResultView {
         return IntStream.range(0, values.size())
             .filter(index -> Objects.nonNull(values.get(index)))
             .mapToObj(index -> pinToString(values, index))
-            .collect(Collectors.joining("|"));
+            .collect(joining(SCORE_DEMLIMITER));
     }
 
     private static String pinToString(List<Pin> score, int index) {
         Pin nowPin = score.get(index);
         if (nowPin == Pin.of(10)) {
-            return "X";
+            return STRIKE;
         }
         if (nowPin == Pin.of(0)) {
-            return "-";
+            return GUTTER;
         }
         if (index == 1 && Score.isSpare(score.get(0), score.get(1))) {
-            return "/";
+            return SPARE;
         }
         return valueOf(nowPin.value());
     }
