@@ -30,6 +30,10 @@ public class RoundSet {
         this.rounds = rounds;
     }
 
+    public int size() {
+        return rounds.size();
+    }
+
     public int play(int pinCount) {
         int tryCount = rounds.size();
 
@@ -47,14 +51,6 @@ public class RoundSet {
         return maxTryCount;
     }
 
-    private Round getCurrentRound() {
-        return this.rounds.get(getSize() - 1);
-    }
-
-    private int getSize() {
-        return rounds.size();
-    }
-
     private Point calcTotalPoint(int point) {
         if (point != STRIKE_POINT) {
             return this.point.add(point);
@@ -64,11 +60,23 @@ public class RoundSet {
     }
 
     private void next(State currentResult) {
-        getCurrentRound().next(this.rounds, currentResult);
+        this.rounds.add(getCurrentRound().next(currentResult));
     }
 
-    public int size() {
-        return rounds.size();
+    private Round getCurrentRound() {
+        return this.rounds.get(size() - 1);
+    }
+
+    private boolean isNormalRound() {
+        return getCurrentRound() instanceof NormalRound;
+    }
+
+    public boolean isLastRound() {
+        if (isNormalRound() && ((NormalRound) getCurrentRound()).isLastRound(rounds.size())) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package bowling.model;
 
-import java.util.List;
 import java.util.Objects;
 
 public class NormalRound implements Round{
@@ -22,10 +21,8 @@ public class NormalRound implements Round{
     }
 
     @Override
-    public void next(List<Round> rounds, State beforeResult) {
-        if (!result.isStrike()) {
-            rounds.add(new NormalRound(new Result(beforeResult, new Miss())));
-        }
+    public Round next(State beforeResult) {
+        return new NormalRound(new Result(beforeResult, new Miss()));
     }
 
     @Override
@@ -57,6 +54,14 @@ public class NormalRound implements Round{
         }
 
         return new Spare();
+    }
+
+    public boolean isLastRound(int tryCount) {
+        if (result.isStrike() || tryCount == 3) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override

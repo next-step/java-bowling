@@ -4,7 +4,7 @@ import bowling.model.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class NormalRoundTest {
+public class RoundTest {
     @Test
     public void 스트라이크() {
         //given

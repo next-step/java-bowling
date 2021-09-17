@@ -3,15 +3,15 @@ package bowling.model;
 import java.util.Objects;
 
 public class Result {
-    private GameResult before;
-    private GameResult current;
+    private State before;
+    private State current;
 
-    public Result(GameResult before, GameResult current) {
+    public Result(State before, State current) {
         this.before = before;
         this.current = current;
     }
 
-    public GameResult getBefore() {
+    public State getBefore() {
         return before;
     }
 

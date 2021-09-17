@@ -9,7 +9,6 @@ public class BowlingGameTest {
     @Test
     public void 일반라운드에서_다음_라운드를_스킵할_경우_시도횟수는_한개가_줄어든다() {
         BowlingGame game = new BowlingGame();
-        game.roundInit();
         int tryCount = game.play(10);
 
         assertThat(tryCount).isEqualTo(-1);
@@ -18,7 +17,6 @@ public class BowlingGameTest {
     @Test
     public void 일반라운드에서_다음_라운드를_스킵하지_않을_경우_시도횟수는_변화가_없다() {
         BowlingGame game = new BowlingGame();
-        game.roundInit();
         int tryCount = game.play(9);
 
         assertThat(tryCount).isEqualTo(0);
@@ -39,6 +37,10 @@ public class BowlingGameTest {
         //when
         BowlingGame game = new BowlingGame(10);
         int tryCount = game.play(9);
+        //then
+        assertThat(tryCount).isEqualTo(0);
+
+        //when
         tryCount = game.play(1);
 
         //then

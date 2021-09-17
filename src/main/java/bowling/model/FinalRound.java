@@ -1,10 +1,10 @@
 package bowling.model;
 
-import java.util.List;
 import java.util.Objects;
 
 public class FinalRound implements Round{
     private static int bonusCount = 1;
+
     private Result result;
 
     public FinalRound() {
@@ -23,15 +23,12 @@ public class FinalRound implements Round{
     }
 
     @Override
-    public void next(List<Round> rounds, State beforeResult) {
-        rounds.add(new FinalRound(new Result(beforeResult, new Miss())));
+    public Round next(State beforeResult) {
+        return new FinalRound(new Result(beforeResult, new Miss()));
     }
 
     @Override
     public int calcMaxTryCount() {
-        System.out.println("bonusCount = " + bonusCount);
-        result.printResult();
-
         if (bonusCount == 0) {
             return 0;
         }

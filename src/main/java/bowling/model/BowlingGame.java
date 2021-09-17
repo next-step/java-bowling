@@ -9,6 +9,7 @@ public class BowlingGame {
 
     public BowlingGame() {
         this.allRounds = new ArrayList<>();
+        roundInit();
     }
 
     public BowlingGame(int index) {
@@ -17,16 +18,26 @@ public class BowlingGame {
     }
 
 
-    public void roundInit() {
+    private void roundInit() {
         allRounds.add(new RoundSet(allRounds.size() + 1));
     }
 
     public int play(int point) {
-        return getRoundSet(allRounds.size()).play(point);
+        int maxTryCount = getRoundSet().play(point);
+
+        if (isSkipNextRound(maxTryCount) || getRoundSet().isLastRound()) {
+            roundInit();
+        }
+
+        return maxTryCount;
     }
 
-    private RoundSet getRoundSet(int index) {
-        return allRounds.get(index - 1);
+    private boolean isSkipNextRound(int maxTryCount) {
+        return maxTryCount == -1;
+    }
+
+    private RoundSet getRoundSet() {
+        return allRounds.get(allRounds.size() - 1);
     }
 
     @Override

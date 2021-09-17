@@ -34,7 +34,7 @@ public class Main {
     private static void playRound(BowlingGame game, User user, int index) {
         int tryCount = 0;
         int maxRound = SECOND_TRY;
-        game.roundInit();
+
         while (tryCount++ < maxRound) {
             int pinCount = askDigit(index + "프레임 투구 : ");
             maxRound += game.play(pinCount);
