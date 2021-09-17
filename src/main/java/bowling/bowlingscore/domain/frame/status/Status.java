@@ -17,7 +17,7 @@ public enum Status {
     }
 
     public static Status of(Pitching firstPitching, Pitching secondPitching) {
-        if(firstPitching.score(0) == Pins.MAXIMUM_PINS) {
+        if(firstPitching.pins() == Pins.MAXIMUM_PINS) {
             return STRIKE;
         }
 

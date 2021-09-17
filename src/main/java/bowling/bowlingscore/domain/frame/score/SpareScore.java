@@ -5,6 +5,6 @@ import bowling.bowlingscore.domain.pitching.Pitching;
 public class SpareScore implements Score {
     @Override
     public int score(Pitching firstPitching) {
-        return firstPitching.score(2);
+        return firstPitching.scoreToNextTwoPitching();
     }
 }

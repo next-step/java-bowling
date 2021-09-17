@@ -3,10 +3,7 @@ package bowling.bowlingscore.domain.pitching;
 import java.util.Objects;
 
 public class Pitching {
-
-    public static final int SCORE_LEVEL_OF_STRIKE = 2;
-    public static final int SCORE_LEVEL_OF_SPARE = 1;
-    public static final int SCORE_LEVEL_OF_MISS = 0;
+    
     public static final int IS_NULL = -1;
 
     private final Pins pins;
@@ -33,41 +30,22 @@ public class Pitching {
         return nextPitching;
     }
 
-    public int score(int level) {
-        if (level == SCORE_LEVEL_OF_STRIKE) {
-            if (nextPitching == null || nextPitching.score(SCORE_LEVEL_OF_SPARE) == IS_NULL) {
-                return IS_NULL;
-            }
-
-            int nextPitchingScore = nextPitching.score(SCORE_LEVEL_OF_SPARE);
-
-            return pins.pins() + nextPitchingScore;
+    public int scoreToNextTwoPitching() {
+        if (nextPitching == null || nextPitching.nextPitching == null) {
+            return IS_NULL;
         }
-        if (level == SCORE_LEVEL_OF_SPARE) {
-            if (nextPitching == null) {
-                return IS_NULL;
-            }
-            return pins.pins() + nextPitching.score(SCORE_LEVEL_OF_MISS);
-        }
-        return pins.pins();
+
+        return pins.pins() +  nextPitching.pins.pins() + nextPitching.nextPitching.pins.pins();
     }
 
-    public int score1(int level) {
-        if (level == SCORE_LEVEL_OF_STRIKE) {
-            if (nextPitching == null || nextPitching.score(SCORE_LEVEL_OF_SPARE) == IS_NULL) {
-                return IS_NULL;
-            }
-
-            int nextPitchingScore = nextPitching.score(SCORE_LEVEL_OF_SPARE);
-
-            return pins.pins() + nextPitchingScore;
+    public int scoreToNextPitching() {
+        if (nextPitching == null) {
+            return IS_NULL;
         }
-        if (level == SCORE_LEVEL_OF_SPARE) {
-            if (nextPitching == null) {
-                return IS_NULL;
-            }
-            return pins.pins() + nextPitching.score(SCORE_LEVEL_OF_MISS);
-        }
+        return pins.pins() + nextPitching.pins.pins();
+    }
+
+    public int pins() {
         return pins.pins();
     }
 

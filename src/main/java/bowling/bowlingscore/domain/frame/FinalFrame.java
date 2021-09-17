@@ -49,14 +49,14 @@ public class FinalFrame extends Frame {
         if (bonusPitching1 == null) {
             return Pitching.IS_NULL;
         }
-        return bonusPitching1.score(Pitching.SCORE_LEVEL_OF_MISS);
+        return bonusPitching1.pins();
     }
 
     public Integer secondBonusScore() {
         if (bonusPitching2 == null) {
             return Pitching.IS_NULL;
         }
-        return bonusPitching2.score(Pitching.SCORE_LEVEL_OF_MISS);
+        return bonusPitching2.pins();
     }
 
     @Override

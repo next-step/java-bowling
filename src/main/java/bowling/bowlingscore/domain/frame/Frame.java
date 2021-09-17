@@ -80,14 +80,14 @@ public class Frame {
     }
 
     public int firstScore() {
-        return firstPitching.score(Pitching.SCORE_LEVEL_OF_MISS);
+        return firstPitching.pins();
     }
 
     public int secondScore() {
         if (secondPitching == null) {
             return Pitching.IS_NULL;
         }
-        return secondPitching.score(Pitching.SCORE_LEVEL_OF_MISS);
+        return secondPitching.pins();
     }
 
     @Override

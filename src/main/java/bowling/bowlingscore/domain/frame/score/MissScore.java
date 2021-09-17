@@ -5,6 +5,6 @@ import bowling.bowlingscore.domain.pitching.Pitching;
 public class MissScore implements Score {
     @Override
     public int score(Pitching firstPitching) {
-        return firstPitching.score(1);
+        return firstPitching.scoreToNextPitching();
     }
 }
