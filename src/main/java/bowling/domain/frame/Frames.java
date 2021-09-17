@@ -9,8 +9,8 @@ public class Frames {
 
     private static final int START_INDEX = 0;
 
-    private static final int START_FRAME_ROUND = 1;
-    private static final int FINAL_FRAME_ROUND = 10;
+    public static final int FIRST_FRAME_ROUND = 1;
+    public static final int FINAL_FRAME_ROUND = 10;
 
     private final List<Frame> frames;
 

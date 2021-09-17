@@ -1,13 +1,13 @@
 package bowling.domain.frame;
 
+import static bowling.domain.frame.Frames.FINAL_FRAME_ROUND;
+import static bowling.domain.frame.Frames.FIRST_FRAME_ROUND;
+
 import bowling.domain.score.FinalScore;
 import bowling.domain.score.NormalScore;
 import bowling.domain.score.Score;
 
 public class NormalFrame extends Frame {
-
-    private static final int FIRST_FRAME_ROUND = 1;
-    private static final int FINAL_FRAME_ROUND = 10;
 
     private Frame nextFrame;
 

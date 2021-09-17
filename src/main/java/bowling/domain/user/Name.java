@@ -11,6 +11,8 @@ public class Name {
 
     private static final String ALPHABET_REGEX = "^[a-zA-Z]*$";
 
+    private static final int NAME_LENGTH_LIMIT = 3;
+
     private final String name;
 
     private Name(String name) {
@@ -26,7 +28,7 @@ public class Name {
     }
 
     private static void checkNameLengthException(String name) {
-        if (name.length() > 3) {
+        if (name.length() > NAME_LENGTH_LIMIT) {
             throw new NameLengthException();
         }
     }
