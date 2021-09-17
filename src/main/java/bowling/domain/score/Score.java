@@ -20,7 +20,9 @@ public abstract class Score {
     }
 
     public abstract Score nextPin(Pin pin);
+
     public abstract boolean isNext();
+
     public abstract List<Pin> values();
 
 }

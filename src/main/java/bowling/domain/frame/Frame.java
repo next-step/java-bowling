@@ -15,6 +15,7 @@ public abstract class Frame {
     }
 
     public abstract Frame createNextFrame();
+
     public abstract Frame nextFrame();
 
     public void updateScoreByPin(Pin pin) {
@@ -31,7 +32,7 @@ public abstract class Frame {
 
     public static Frame getLastFrame(Frame frame) {
         Frame resultFrame = frame;
-        while(Objects.nonNull(resultFrame.nextFrame())) {
+        while (Objects.nonNull(resultFrame.nextFrame())) {
             resultFrame = resultFrame.nextFrame();
         }
         return resultFrame;

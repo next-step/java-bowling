@@ -30,7 +30,7 @@ public class FinalScore extends Score {
         if (Objects.isNull(second)) {
             return createSecondPin(pin);
         }
-        if (Objects.isNull(bonus)){
+        if (Objects.isNull(bonus)) {
             return createBonusPin(pin);
         }
         throw new PinSaveExcessException();

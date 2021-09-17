@@ -40,7 +40,7 @@ public class Name {
     }
 
     private static void checkNameAlphabetException(String name) {
-        if (!Pattern.matches(ALPHABET_REGEX, name)){
+        if (!Pattern.matches(ALPHABET_REGEX, name)) {
             throw new NameAlphabetPatternException();
         }
     }

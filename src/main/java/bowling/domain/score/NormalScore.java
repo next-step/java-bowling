@@ -29,7 +29,7 @@ public class NormalScore extends Score {
         throw new PinSaveExcessException();
     }
 
-    private NormalScore createFirstPin(Pin pin){
+    private NormalScore createFirstPin(Pin pin) {
         return new NormalScore(pin, null);
     }
 
