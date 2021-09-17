@@ -3,6 +3,7 @@ package bowling;
 import static bowling.view.InputView.inputNextFrameShot;
 import static bowling.view.InputView.inputUsername;
 import static bowling.view.ResultView.printResult;
+import static bowling.view.ResultView.printStartBoard;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
@@ -15,9 +16,7 @@ public class Main {
     public static void main(String[] args) {
         User user = User.of(inputUsername());
         Frame firstFrame = NormalFrame.createFirstFrame();
-
-        Frames frames = Frames.creatByFirstFrame(firstFrame);
-        printResult(user, frames);
+        printStartBoard(user);
 
 
         for (int i=1; i<=9; i++) {

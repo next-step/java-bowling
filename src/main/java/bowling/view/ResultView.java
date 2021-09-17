@@ -18,6 +18,7 @@ public class ResultView {
     private static final String SCORE_BOARD_FORMAT = "  %02d  |";
 
     private static final String SCORE_START_FORMAT = "|  %3s |";
+    private static final String SCORE_EMPTY_FORMAT = "      |";
     private static final String SCORE_FORMAT = "  %-3s |";
 
     private static final String SCORE_DEMLIMITER = "|";
@@ -25,6 +26,19 @@ public class ResultView {
     private static final String STRIKE = "X";
     private static final String GUTTER = "-";
     private static final String SPARE = "/";
+
+    public static void printStartBoard(User user) {
+        printScoreBoard();
+        printEmptyScore(user);
+    }
+
+    private static void printEmptyScore(User user) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format(SCORE_START_FORMAT, user.nameToString()));
+        IntStream.range(0, 10)
+            .forEach(index -> sb.append(SCORE_EMPTY_FORMAT));
+        System.out.println(sb.toString());
+    }
 
     public static void printResult(User user, Frames frames) {
         printScoreBoard();
@@ -44,16 +58,22 @@ public class ResultView {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format(SCORE_START_FORMAT, user.nameToString()));
         List<Frame> framesList = frames.values();
+        IntStream.range(0, framesList.size())
+            .filter(index -> Objects.nonNull(framesList.get(index)))
+            .mapToObj(framesList::get)
+            .map(pin -> sb.append(String.format(SCORE_FORMAT, scoreToString(pin.score()))));
+
+
         for (int i = 0; i < framesList.size(); i++) {
             if (Objects.isNull(framesList.get(i))) {
-                sb.append(String.format(SCORE_FORMAT, " "));
+                sb.append(String.format(SCORE_FORMAT, ""));
             } else {
                 Frame frame = framesList.get(i);
                 sb.append(String.format(SCORE_FORMAT, scoreToString(frame.score())));
             }
         }
         for (int i = framesList.size(); i < 10; i++) {
-            sb.append(String.format(SCORE_FORMAT, " "));
+            sb.append(String.format(SCORE_FORMAT, ""));
         }
 
         System.out.println(sb.toString());
