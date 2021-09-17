@@ -1,7 +1,5 @@
-package bowling.bowlingscore.frame;
+package bowling.bowlingscore.domain.frame;
 
-import bowling.bowlingscore.domain.frame.Frame;
-import bowling.bowlingscore.domain.frame.Frames;
 import bowling.bowlingscore.domain.pitching.Pitching;
 import bowling.bowlingscore.exception.CustomException;
 import org.junit.jupiter.api.DisplayName;

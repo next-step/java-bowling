@@ -1,6 +1,5 @@
-package bowling.bowlingscore;
+package bowling.bowlingscore.domain;
 
-import bowling.bowlingscore.domain.Player;
 import bowling.bowlingscore.exception.CustomException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
