@@ -19,4 +19,8 @@ public abstract class Frame {
         score = score.nextPin(pin);
     }
 
+    public Score score() {
+        return score;
+    }
+
 }

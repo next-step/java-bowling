@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
         User user = User.of(inputUsername());
-        Frames frames = Frames.empty();
+        Frames frames = Frames.init();
         printResult(user, frames);
     }
 

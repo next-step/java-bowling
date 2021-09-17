@@ -44,6 +44,10 @@ public class Pin {
         return pin;
     }
 
+    public Pin sum(Pin pin) {
+        return Pin.of(this.pin + pin.pin);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

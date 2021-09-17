@@ -2,6 +2,8 @@ package bowling.domain.score;
 
 import bowling.exception.score.PinSaveExcessException;
 import bowling.exception.score.PinSecondValueException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class NormalScore extends Score {
@@ -52,6 +54,11 @@ public class NormalScore extends Score {
     @Override
     public boolean isNext() {
         return Objects.isNull(first) || first != STRIKE;
+    }
+
+    @Override
+    public List<Pin> values() {
+        return Arrays.asList(first, second);
     }
 
 }

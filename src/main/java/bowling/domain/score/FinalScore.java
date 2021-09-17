@@ -3,6 +3,8 @@ package bowling.domain.score;
 import bowling.exception.score.PinBonusException;
 import bowling.exception.score.PinSaveExcessException;
 import bowling.exception.score.PinSecondValueException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class FinalScore extends Score {
@@ -68,6 +70,11 @@ public class FinalScore extends Score {
     public boolean isNext() {
         return Objects.isNull(first) || Objects.isNull(second)
             || (first == STRIKE && second == STRIKE) || (first.remainPin() == second.value());
+    }
+
+    @Override
+    public List<Pin> values() {
+        return Arrays.asList(first, second, bonus);
     }
 
 }
