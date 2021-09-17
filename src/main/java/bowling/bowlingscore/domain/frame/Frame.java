@@ -46,10 +46,6 @@ public class Frame {
         this.secondPitching = pitching;
     }
 
-    public boolean done() {
-        return strike() || (secondPitching != null);
-    }
-
     public int totalScore() {
         if (score() == Pitching.IS_NULL) {
             return Pitching.IS_NULL;
@@ -76,6 +72,18 @@ public class Frame {
             return false;
         }
         return firstPitching.sum(secondPitching) == Pins.MAXIMUM_PINS;
+    }
+
+    public boolean done() {
+        return strike() || (secondPitching != null);
+    }
+
+    public boolean strike1() {
+        return false;
+    }
+
+    public boolean spare1() {
+        return false;
     }
 
     public int firstScore() {

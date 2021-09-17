@@ -100,6 +100,39 @@ class FrameTest {
         assertThat(spare2).isFalse();
     }
 
+    @Test
+    @DisplayName("strike 여부 확인")
+    void strike1() {
+        // given
+        Pitching pitching1 = Pitching.first(10);
+        Frame frame1 = new Frame(pitching1);
+        Pitching pitching2 = pitching1.next(9);
+        Frame frame2 = new Frame(pitching2);
+        // when
+        boolean strike1 = frame1.strike1();
+        boolean strike2 = frame2.strike1();
+        // then
+        assertThat(strike1).isTrue();
+        assertThat(strike2).isFalse();
+    }
+
+    @Test
+    @DisplayName("spare 여부 확인")
+    void spare1() {
+        // given
+        Pitching pitching1 = Pitching.first(9);
+        Pitching pitching2 = pitching1.next(1);
+        Pitching pitching3 = pitching2.next(8);
+        Frame frame1 = new Frame(pitching1, pitching2);
+        Frame frame2 = new Frame(pitching2, pitching3);
+        // when
+        boolean spare1 = frame1.spare1();
+        boolean spare2 = frame2.spare1();
+        // then
+        assertThat(spare1).isTrue();
+        assertThat(spare2).isFalse();
+    }
+
     @ParameterizedTest(name = "해당 Frame 까지의 totalScore : All strike")
     @CsvSource({"10, 1, 30", "10, 10, 300"})
     void total_score_all_strike(int pins, int scoreFrame, int result) {
