@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
+import java.util.Objects;
 
 public abstract class Frame {
 
@@ -30,7 +31,7 @@ public abstract class Frame {
 
     public static Frame getLastFrame(Frame frame) {
         Frame resultFrame = frame;
-        while(resultFrame.nextFrame() != null) {
+        while(Objects.nonNull(resultFrame.nextFrame())) {
             resultFrame = resultFrame.nextFrame();
         }
         return resultFrame;
