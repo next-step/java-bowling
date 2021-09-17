@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import bowling.domain.score.FinalScore;
 import bowling.domain.score.NormalScore;
 import bowling.domain.score.Pin;
 import org.junit.jupiter.api.DisplayName;
@@ -44,17 +45,14 @@ class NormalFrameTest {
     void createFinalFrameTest() {
 
         // given
-        Frame first = NormalFrame.createFirstFrame();
-        for (int i=0; i<8; i++){
-            first = first.createNextFrame();
-        }
+        Frame input = NormalFrame.of(9, NormalScore.empty(), null);
+        Frame expected = FinalFrame.of(10, FinalScore.empty());
 
         // when
-        Frame result = first.createNextFrame();
+        Frame result = input.createNextFrame();
 
         // then
-        assertThat(result).isInstanceOf(Frame.class);
-        assertThat(result).isInstanceOf(FinalFrame.class);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
