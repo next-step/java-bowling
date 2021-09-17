@@ -1,5 +1,6 @@
 package bowling.view;
 
+import static bowling.domain.frame.Frames.FINAL_FRAME_ROUND;
 import static java.lang.String.valueOf;
 import static java.util.stream.Collectors.joining;
 
@@ -35,7 +36,7 @@ public class ResultView {
     private static void printEmptyScore(User user) {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format(SCORE_START_FORMAT, user.nameToString()));
-        sb.append(IntStream.range(0, 10)
+        sb.append(IntStream.range(0, FINAL_FRAME_ROUND)
             .mapToObj(index -> SCORE_EMPTY_FORMAT)
             .collect(joining()));
         System.out.println(sb.toString());
@@ -54,7 +55,7 @@ public class ResultView {
     }
 
     private static String getEmptyScore() {
-        return IntStream.rangeClosed(1, 10)
+        return IntStream.rangeClosed(1, FINAL_FRAME_ROUND)
             .mapToObj(index -> String.format(SCORE_BOARD_FORMAT, index))
             .collect(joining());
     }
@@ -76,7 +77,7 @@ public class ResultView {
     }
 
     private static String getEmptyScoreByFrames(List<Frame> framesList) {
-        return IntStream.range(framesList.size(), 10)
+        return IntStream.range(framesList.size(), FINAL_FRAME_ROUND)
             .mapToObj(index -> String.format(SCORE_FORMAT, ""))
             .collect(joining());
     }

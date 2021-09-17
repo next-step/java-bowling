@@ -1,5 +1,7 @@
 package bowling;
 
+import static bowling.domain.frame.Frames.FINAL_FRAME_ROUND;
+import static bowling.domain.frame.Frames.FIRST_FRAME_ROUND;
 import static bowling.view.InputView.inputNextFrameShot;
 import static bowling.view.InputView.inputUsername;
 import static bowling.view.ResultView.printResult;
@@ -19,7 +21,7 @@ public class Main {
         Frame firstFrame = NormalFrame.createFirstFrame();
         printStartBoard(user);
 
-        IntStream.range(1, 10)
+        IntStream.range(FIRST_FRAME_ROUND, FINAL_FRAME_ROUND)
             .forEach(round -> normalView(user, firstFrame, round));
         Frame lastFrame = Frame.getLastFrame(firstFrame);
         finalView(user, firstFrame, lastFrame);
@@ -41,10 +43,10 @@ public class Main {
     }
 
     private static void finalView(User user, Frame firstFrame, Frame lastFrame) {
-        printSingleScore(user, Frames.creatByFirstFrame(firstFrame), 10, lastFrame);
-        printSingleScore(user, Frames.creatByFirstFrame(firstFrame), 10, lastFrame);
+        printSingleScore(user, Frames.creatByFirstFrame(firstFrame), FINAL_FRAME_ROUND, lastFrame);
+        printSingleScore(user, Frames.creatByFirstFrame(firstFrame), FINAL_FRAME_ROUND, lastFrame);
         if (lastFrame.isNextScore()) {
-            printSingleScore(user, Frames.creatByFirstFrame(firstFrame), 10, lastFrame);
+            printSingleScore(user, Frames.creatByFirstFrame(firstFrame), FINAL_FRAME_ROUND, lastFrame);
         }
     }
 
