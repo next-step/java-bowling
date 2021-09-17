@@ -6,6 +6,7 @@ import static bowling.view.ResultView.printResult;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
+import bowling.domain.frame.NormalFrame;
 import bowling.domain.score.Pin;
 import bowling.domain.user.User;
 
@@ -13,21 +14,26 @@ public class Main {
 
     public static void main(String[] args) {
         User user = User.of(inputUsername());
-        Frames frames = Frames.init();
+        Frame firstFrame = NormalFrame.createFirstFrame();
+
+        Frames frames = Frames.creatByFirstFrame(firstFrame);
         printResult(user, frames);
 
-        Frame frame = frames.first();
-        for (int i=0; i<9; i++) {
-            Pin pin = Pin.of(inputNextFrameShot(i));
-            frame.updateScoreByPin(pin);
-            printResult(user, frames);
 
-
+        for (int i=1; i<=9; i++) {
+            Frame nowFrame = Frame.getLastFrame(firstFrame);
+            printSingleScore(user, Frames.creatByFirstFrame(firstFrame), i, nowFrame);
+            if (nowFrame.isNextScore()) {
+                printSingleScore(user, Frames.creatByFirstFrame(firstFrame), i, nowFrame);
+            }
+            nowFrame.createNextFrame();
         }
     }
 
-    public static void normalView(User user, Frame frame) {
-
+    private static void printSingleScore(User user, Frames frames, int i, Frame nowFrame) {
+        Pin pin = Pin.of(inputNextFrameShot(i));
+        nowFrame.updateScoreByPin(pin);
+        printResult(user, frames);
     }
 
 }

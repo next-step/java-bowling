@@ -15,10 +15,10 @@ import java.util.stream.IntStream;
 public class ResultView {
 
     private static final String SCORE_BOARD_START_FORMAT = "| NAME |";
-    private static final String SCORE_BOARD_FORMAT = "  %2d  |";
+    private static final String SCORE_BOARD_FORMAT = "  %02d  |";
 
     private static final String SCORE_START_FORMAT = "|  %3s |";
-    private static final String SCORE_FORMAT = "  %3s |";
+    private static final String SCORE_FORMAT = "  %-3s |";
 
     public static void printResult(User user, Frames frames) {
         printScoreBoard();
@@ -39,8 +39,16 @@ public class ResultView {
         sb.append(String.format(SCORE_START_FORMAT, user.nameToString()));
         List<Frame> framesList = frames.values();
         for (int i=0; i<framesList.size(); i++){
-            Frame frame = framesList.get(i);
-            sb.append(String.format(SCORE_FORMAT, scoreToString(frame.score())));
+            if (Objects.isNull(framesList.get(i))) {
+                sb.append(String.format(SCORE_FORMAT, " "));
+            }
+            else {
+                Frame frame = framesList.get(i);
+                sb.append(String.format(SCORE_FORMAT, scoreToString(frame.score())));
+            }
+        }
+        for (int i= framesList.size(); i<10; i++) {
+            sb.append(String.format(SCORE_FORMAT, " "));
         }
 
         System.out.println(sb.toString());

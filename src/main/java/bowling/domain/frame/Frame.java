@@ -24,4 +24,16 @@ public abstract class Frame {
         return score;
     }
 
+    public boolean isNextScore() {
+        return score.isNext();
+    }
+
+    public static Frame getLastFrame(Frame frame) {
+        Frame resultFrame = frame;
+        while(resultFrame.nextFrame() != null) {
+            resultFrame = resultFrame.nextFrame();
+        }
+        return resultFrame;
+    }
+
 }
