@@ -62,29 +62,13 @@ public class Frame {
         return score() + beforeFrame.totalScore();
     }
 
-    public int score1() {
+    public int score() {
         Status status = Status.of(firstPitching, secondPitching);
         return status.score(firstPitching);
     }
 
-    public int score() {
-        if (strike()) {
-            return strikeScore();
-        }
-
-        if (spare()) {
-            return spareScore();
-        }
-
-        return firstPitching.sum(secondPitching);
-    }
-
     public boolean strike() {
         return firstPitching.score(0) == Pins.MAXIMUM_PINS;
-    }
-
-    private int strikeScore() {
-        return firstPitching.score(Pitching.SCORE_LEVEL_OF_STRIKE);
     }
 
     public boolean spare() {
@@ -92,13 +76,6 @@ public class Frame {
             return false;
         }
         return firstPitching.sum(secondPitching) == Pins.MAXIMUM_PINS;
-    }
-
-    private int spareScore() {
-        if (secondPitching.score(Pitching.SCORE_LEVEL_OF_SPARE) == Pitching.IS_NULL) {
-            return Pitching.IS_NULL;
-        }
-        return firstScore() + secondPitching.score(Pitching.SCORE_LEVEL_OF_SPARE);
     }
 
     public int firstScore() {

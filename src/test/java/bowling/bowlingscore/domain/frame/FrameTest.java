@@ -56,30 +56,13 @@ class FrameTest {
         // given
         Pitching pitching = Pitching.first(firstPins);
         Pitching nextPitching1 = pitching.next(secondPins);
-        Pitching nextPitching2 = nextPitching1.next(thirdPins);
-        Frame frame = new Frame(pitching);
-        if (firstPins < 10) {
-            frame.pitch(nextPitching1);
-        }
-        // when
-        int score = frame.score();
-        // then
-        assertThat(score).isEqualTo(result);
-    }
-
-    @ParameterizedTest(name = "점수 계산 [{index}] {0}, {1}, {2} : {3}")
-    @CsvSource({"10, 10, 10, 30", "3, 7, 10, 20", "2, 7, 10, 9"})
-    void score1(int firstPins, int secondPins, int thirdPins, int result) {
-        // given
-        Pitching pitching = Pitching.first(firstPins);
-        Pitching nextPitching1 = pitching.next(secondPins);
         nextPitching1.next(thirdPins);
         Frame frame = new Frame(pitching);
         if (firstPins < 10) {
             frame.pitch(nextPitching1);
         }
         // when
-        int score = frame.score1();
+        int score = frame.score();
         // then
         assertThat(score).isEqualTo(result);
     }
