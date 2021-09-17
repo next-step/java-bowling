@@ -98,10 +98,10 @@ public class ResultView {
 
     private static String pinToString(List<Pin> score, int index) {
         Pin nowPin = score.get(index);
-        if (nowPin == Pin.of(10)) {
+        if (nowPin == Pin.of(Pin.PIN_MAX_VALUE)) {
             return STRIKE;
         }
-        if (nowPin == Pin.of(0)) {
+        if (nowPin == Pin.of(Pin.PIN_MIN_VALUE)) {
             return GUTTER;
         }
         if (index == 1 && Score.isSpare(score.get(0), score.get(1))) {

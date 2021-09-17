@@ -14,10 +14,10 @@ public abstract class Score {
     }
 
     public static boolean isSpare(Pin first, Pin second) {
-        if (first == Pin.of(10)) {
+        if (first == Pin.of(Pin.PIN_MAX_VALUE)) {
             return false;
         }
-        return first.sum(second) == Pin.of(10);
+        return first.sum(second) == Pin.of(Pin.PIN_MAX_VALUE);
     }
 
     public abstract Score nextPin(Pin pin);
