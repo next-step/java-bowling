@@ -1,6 +1,7 @@
 package bowling.domain.score;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Score {
 
@@ -24,5 +25,22 @@ public abstract class Score {
     public abstract boolean isNext();
 
     public abstract List<Pin> values();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Score score = (Score) o;
+        return Objects.equals(first, score.first) && Objects.equals(second, score.second);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(first, second);
+    }
 
 }

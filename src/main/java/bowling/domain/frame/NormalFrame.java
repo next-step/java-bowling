@@ -16,6 +16,10 @@ public class NormalFrame extends Frame {
         this.nextFrame = nextFrame;
     }
 
+    static Frame of(int round, Score score, Frame nextFrame) {
+        return new NormalFrame(round, score, nextFrame);
+    }
+
     public static Frame createFirstFrame() {
         return new NormalFrame(FIRST_FRAME_ROUND, NormalScore.empty(), null);
     }

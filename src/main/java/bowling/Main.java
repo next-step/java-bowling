@@ -27,17 +27,17 @@ public class Main {
         finalView(user, firstFrame, lastFrame);
     }
 
-    private static void normalView(User user, Frame firstFrame, int i) {
+    private static void normalView(User user, Frame firstFrame, int index) {
         Frame nowFrame = Frame.getLastFrame(firstFrame);
-        printSingleScore(user, Frames.creatByFirstFrame(firstFrame), i, nowFrame);
+        printSingleScore(user, Frames.creatByFirstFrame(firstFrame), index, nowFrame);
         if (nowFrame.isNextScore()) {
-            printSingleScore(user, Frames.creatByFirstFrame(firstFrame), i, nowFrame);
+            printSingleScore(user, Frames.creatByFirstFrame(firstFrame), index, nowFrame);
         }
         nowFrame.createNextFrame();
     }
 
-    private static void printSingleScore(User user, Frames frames, int i, Frame nowFrame) {
-        Pin pin = Pin.of(inputNextFrameShot(i));
+    private static void printSingleScore(User user, Frames frames, int index, Frame nowFrame) {
+        Pin pin = Pin.of(inputNextFrameShot(index));
         nowFrame.updateScoreByPin(pin);
         printResult(user, frames);
     }
