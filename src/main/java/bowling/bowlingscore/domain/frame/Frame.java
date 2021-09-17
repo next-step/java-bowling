@@ -8,15 +8,19 @@ import bowling.bowlingscore.exception.CustomException;
 import java.util.Objects;
 
 public class Frame {
+
     private final Pitching firstPitching;
     private Pitching secondPitching;
+
     private final Frame beforeFrame;
+    private Status status;
 
     public Frame(Pitching firstPitching, Pitching secondPitching, Frame beforeFrame) {
         validateSumIsOverTen(firstPitching, secondPitching);
         this.firstPitching = firstPitching;
         this.secondPitching = secondPitching;
         this.beforeFrame = beforeFrame;
+        this.status = Status.of(firstPitching, secondPitching);
     }
 
     public Frame(Pitching firstPitching, Pitching secondPitching) {
@@ -44,6 +48,7 @@ public class Frame {
     public void pitch(Pitching pitching) {
         validateSumIsOverTen(firstPitching, pitching);
         this.secondPitching = pitching;
+        this.status = Status.of(firstPitching, secondPitching);
     }
 
     public int totalScore() {
@@ -59,24 +64,19 @@ public class Frame {
     }
 
     public int score() {
-        Status status = status();
         return status.score(firstPitching);
     }
 
-    private Status status() {
-        return Status.of(firstPitching, secondPitching);
-    }
-
     public boolean strike() {
-        return status() == Status.STRIKE;
+        return status == Status.STRIKE;
     }
 
     public boolean spare() {
-        return status() == Status.SPARE;
+        return status == Status.SPARE;
     }
 
     public boolean done() {
-        return status() != Status.NULL;
+        return status != Status.NULL;
     }
 
     public int firstScore() {
