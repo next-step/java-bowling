@@ -27,6 +27,12 @@ public class Main {
             }
             nowFrame.createNextFrame();
         }
+        Frame lastFrame = Frame.getLastFrame(firstFrame);
+        printSingleScore(user, Frames.creatByFirstFrame(firstFrame), 10, lastFrame);
+        printSingleScore(user, Frames.creatByFirstFrame(firstFrame), 10, lastFrame);
+        if (lastFrame.isNextScore()) {
+            printSingleScore(user, Frames.creatByFirstFrame(firstFrame), 10, lastFrame);
+        }
     }
 
     private static void printSingleScore(User user, Frames frames, int i, Frame nowFrame) {
