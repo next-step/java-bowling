@@ -59,24 +59,13 @@ public class ResultView {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format(SCORE_START_FORMAT, user.nameToString()));
         List<Frame> framesList = frames.values();
-        IntStream.range(0, framesList.size())
-            .filter(index -> Objects.nonNull(framesList.get(index)))
-            .mapToObj(framesList::get)
-            .map(pin -> sb.append(String.format(SCORE_FORMAT, scoreToString(pin.score()))));
-
-
-        for (int i = 0; i < framesList.size(); i++) {
-            if (Objects.isNull(framesList.get(i))) {
-                sb.append(String.format(SCORE_FORMAT, ""));
-            } else {
-                Frame frame = framesList.get(i);
-                sb.append(String.format(SCORE_FORMAT, scoreToString(frame.score())));
-            }
-        }
-        for (int i = framesList.size(); i < 10; i++) {
-            sb.append(String.format(SCORE_FORMAT, ""));
-        }
-
+        sb.append(framesList.stream()
+            .filter(Objects::nonNull)
+            .map(frame -> String.format(SCORE_FORMAT, scoreToString(frame.score())))
+            .collect(joining()));
+        sb.append(IntStream.range(framesList.size(), 10)
+            .mapToObj(index -> String.format(SCORE_FORMAT, ""))
+            .collect(joining()));
         System.out.println(sb.toString());
     }
 
@@ -84,10 +73,13 @@ public class ResultView {
         if (Objects.isNull(score)) {
             return "";
         }
-        List<Pin> values = score.values();
-        return IntStream.range(0, values.size())
-            .filter(index -> Objects.nonNull(values.get(index)))
-            .mapToObj(index -> pinToString(values, index))
+        return pinsToString(score.values());
+    }
+
+    private static String pinsToString(List<Pin> pins) {
+        return IntStream.range(0, pins.size())
+            .filter(index -> Objects.nonNull(pins.get(index)))
+            .mapToObj(index -> pinToString(pins, index))
             .collect(joining(SCORE_DEMLIMITER));
     }
 
