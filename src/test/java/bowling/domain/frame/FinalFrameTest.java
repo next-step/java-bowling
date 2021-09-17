@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import bowling.exception.frame.FinalFrameCreateException;
@@ -13,12 +14,27 @@ class FinalFrameTest {
     void finalFrameCreateExceptionTest() {
 
         // given
-        Frame frame = new FinalFrame(10, null);
+        Frame frame = FinalFrame.of(10, null);
 
         // when & then
         assertThatExceptionOfType(FinalFrameCreateException.class)
             .isThrownBy(() -> frame.createNextFrame())
             .withMessageMatching("FinalFrame은 새로운 Frame을 생성할 수 없다.");
+    }
+
+    @Test
+    @DisplayName("FinalFrame의 다음 frame은 null이 반환되어야 한대")
+    void nextFrameTest() {
+
+
+        // given
+        Frame input = FinalFrame.of(10, null);
+
+        // when
+        Frame result = input.nextFrame();
+
+        // then
+        assertThat(result).isNull();
     }
 
 }

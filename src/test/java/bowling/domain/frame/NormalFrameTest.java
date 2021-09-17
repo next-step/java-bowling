@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import bowling.domain.score.Pin;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class NormalFrameTest {
@@ -85,6 +86,40 @@ class NormalFrameTest {
         // then
         assertThat(result).isInstanceOf(Frame.class);
         assertThat(result).isInstanceOf(NormalFrame.class);
+    }
+
+    @Nested
+    class getNextFrameTest {
+
+        @Test
+        @DisplayName("연결된 Frame이 null이 아니면 해당 Frame을 가져온다")
+        void notNullTest() {
+
+            // given
+            Frame first = NormalFrame.createFirstFrame();
+            Frame expected = first.nextFrame();
+
+            // when
+            Frame result = first.nextFrame();
+
+            // then
+            assertThat(result).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("연결된 Frame이 없으면 null반환")
+        void nullTest() {
+
+            // given
+            Frame first = NormalFrame.createFirstFrame();
+
+            // when
+            Frame result = first.nextFrame();
+
+            // then
+            assertThat(result).isNull();
+        }
+
     }
 
 }

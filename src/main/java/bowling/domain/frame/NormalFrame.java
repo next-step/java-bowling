@@ -26,7 +26,12 @@ public class NormalFrame extends Frame {
         if (nextRound < FINAL_FRAME_ROUND) {
             return this.nextFrame = new NormalFrame(round + 1, NormalScore.empty(), null);
         }
-        return this.nextFrame = new FinalFrame(FINAL_FRAME_ROUND, FinalScore.empty());
+        return this.nextFrame = FinalFrame.of(FINAL_FRAME_ROUND, FinalScore.empty());
+    }
+
+    @Override
+    public Frame nextFrame() {
+        return nextFrame;
     }
 
 }

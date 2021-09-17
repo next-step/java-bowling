@@ -5,13 +5,22 @@ import bowling.exception.frame.FinalFrameCreateException;
 
 public class FinalFrame extends Frame {
 
-    FinalFrame(int round, Score score) {
+    private FinalFrame(int round, Score score) {
         super(round, score);
+    }
+
+    public static Frame of(int round, Score score) {
+        return new FinalFrame(round, score);
     }
 
     @Override
     public Frame createNextFrame() {
         throw new FinalFrameCreateException();
+    }
+
+    @Override
+    public Frame nextFrame() {
+        return null;
     }
 
 }

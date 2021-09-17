@@ -14,6 +14,7 @@ public abstract class Frame {
     }
 
     public abstract Frame createNextFrame();
+    public abstract Frame nextFrame();
 
     public void updateScoreByPin(Pin pin) {
         score = score.nextPin(pin);
