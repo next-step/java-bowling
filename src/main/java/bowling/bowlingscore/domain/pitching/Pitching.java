@@ -52,6 +52,25 @@ public class Pitching {
         return pins.pins();
     }
 
+    public int score1(int level) {
+        if (level == SCORE_LEVEL_OF_STRIKE) {
+            if (nextPitching == null || nextPitching.score(SCORE_LEVEL_OF_SPARE) == IS_NULL) {
+                return IS_NULL;
+            }
+
+            int nextPitchingScore = nextPitching.score(SCORE_LEVEL_OF_SPARE);
+
+            return pins.pins() + nextPitchingScore;
+        }
+        if (level == SCORE_LEVEL_OF_SPARE) {
+            if (nextPitching == null) {
+                return IS_NULL;
+            }
+            return pins.pins() + nextPitching.score(SCORE_LEVEL_OF_MISS);
+        }
+        return pins.pins();
+    }
+
     public int sum(Pitching pitching) {
         if (pitching == null) {
             return IS_NULL;
