@@ -61,6 +61,10 @@ public class Frame {
         return score() + beforeFrame.totalScore();
     }
 
+    public int score1() {
+        return 0;
+    }
+
     public int score() {
         if (strike()) {
             return strikeScore();
