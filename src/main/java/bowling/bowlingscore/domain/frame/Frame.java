@@ -68,26 +68,15 @@ public class Frame {
     }
 
     public boolean strike() {
-        return firstPitching.score(0) == Pins.MAXIMUM_PINS;
+        return status() == Status.STRIKE;
     }
 
     public boolean spare() {
-        if (secondPitching == null) {
-            return false;
-        }
-        return firstPitching.sum(secondPitching) == Pins.MAXIMUM_PINS;
+        return status() == Status.SPARE;
     }
 
     public boolean done() {
         return strike() || (secondPitching != null);
-    }
-
-    public boolean strike1() {
-        return status() == Status.STRIKE;
-    }
-
-    public boolean spare1() {
-        return status() == Status.SPARE;
     }
 
     public int firstScore() {
