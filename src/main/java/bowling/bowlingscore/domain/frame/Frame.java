@@ -59,8 +59,12 @@ public class Frame {
     }
 
     public int score() {
-        Status status = Status.of(firstPitching, secondPitching);
+        Status status = status();
         return status.score(firstPitching);
+    }
+
+    private Status status() {
+        return Status.of(firstPitching, secondPitching);
     }
 
     public boolean strike() {
@@ -79,11 +83,11 @@ public class Frame {
     }
 
     public boolean strike1() {
-        return false;
+        return status() == Status.STRIKE;
     }
 
     public boolean spare1() {
-        return false;
+        return status() == Status.SPARE;
     }
 
     public int firstScore() {
