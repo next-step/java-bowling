@@ -2,6 +2,7 @@ package bowling.view;
 
 import bowling.domain.*;
 
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
