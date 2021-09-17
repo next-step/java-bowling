@@ -1,5 +1,6 @@
 package bowling.bowlingscore.domain.frame;
 
+import bowling.bowlingscore.domain.frame.status.Status;
 import bowling.bowlingscore.domain.pitching.Pins;
 import bowling.bowlingscore.domain.pitching.Pitching;
 import bowling.bowlingscore.exception.CustomException;
@@ -62,7 +63,8 @@ public class Frame {
     }
 
     public int score1() {
-        return 0;
+        Status status = Status.of(firstPitching, secondPitching);
+        return status.score(firstPitching);
     }
 
     public int score() {
