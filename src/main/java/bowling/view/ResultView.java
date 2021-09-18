@@ -27,7 +27,7 @@ public class ResultView {
     private static void printBottomBoard(Player player) {
         System.out.print(SEPARATOR + alignText(player.getName()) + SEPARATOR);
         printPinSectionBoard(player);
-        printEmptySectionBoard(player.getFrameIndex() - 1);
+        printEmptySectionBoard(player.getFrameIndex());
         System.out.println();
         int leftStartFrameIndex = printScoreSectionBoard(player);
         printEmptySectionBoard(leftStartFrameIndex);
@@ -40,29 +40,32 @@ public class ResultView {
         int frameIndex = 1;
 
         if (player.getFrameIndex() - 1 == Frame.EMPTY_FRAME) {
-            return Frame.EMPTY_FRAME;
+            return frameIndex;
         }
 
         Frame currentFrame = player.getFrame(frameIndex);
         TotalScore totalScore = currentFrame.totalScore();
 
-        while (currentFrame != null && totalScore != null && totalScore.canCalucateScore()) {
+        while (totalScore != null && totalScore.canCalucateScore() && currentFrame.isExistNextFrame()) {
             totalScoreSum += totalScore.getScore();
             System.out.print(alignText(Integer.toString(totalScoreSum)) + SEPARATOR);
 
             currentFrame = currentFrame.getNextFrame();
-            if (currentFrame == null) {
-                break;
-            }
             totalScore = currentFrame.totalScore();
             frameIndex++;
+        }
+
+        if (currentFrame instanceof FinalFrame && totalScore != null && totalScore.canCalucateScore()) {
+            totalScoreSum += totalScore.getScore();
+            System.out.print(alignText(Integer.toString(totalScoreSum)) + SEPARATOR);
+            frameIndex ++;
         }
 
         return frameIndex;
     }
 
     private static void printEmptySectionBoard(int emptyFrameStartIndex) {
-        for (int i = emptyFrameStartIndex; i < Frame.LAST_FRAME; i++) {
+        for (int i = emptyFrameStartIndex; i <= Frame.LAST_FRAME; i++) {
             System.out.print(alignText(BLANK) + SEPARATOR);
         }
     }
