@@ -16,15 +16,11 @@ public class Frames implements Iterable<Frame> {
         this.frames.add(this.currentPlayingFrame);
     }
 
-    private Frame currentPlayingFrame() {
-        return currentPlayingFrame;
-    }
-
     public void record(ShotResult shotResult) {
         if (isOver()) {
             return;
         }
-        currentPlayingFrame().record(shotResult);
+        currentPlayingFrame.record(shotResult);
         if (currentPlayingFrame.isOver()) {
             changeCurrentPlayingFrame();
         }
