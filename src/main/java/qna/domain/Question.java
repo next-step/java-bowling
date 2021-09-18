@@ -97,11 +97,25 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public DeleteHistory delete(User user) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User user) throws CannotDeleteException {
         if (!isOwner(user)) {
             throw new CannotDeleteException("작성자만이 질문글을 삭제할수 있습니다.");
         }
         this.deleted = true;
-        return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
+
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+        deleteHistories.addAll(deleteAnswers(user));
+
+        return deleteHistories;
+    }
+
+    private List<DeleteHistory> deleteAnswers(User user) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+
+        for (Answer answer : answers) {
+            deleteHistories.add(answer.delete(user));
+        }
+        return deleteHistories;
     }
 }
