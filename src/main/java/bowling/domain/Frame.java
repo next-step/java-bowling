@@ -71,32 +71,7 @@ public abstract class Frame {
 
     protected abstract void validateFrameScore();
 
-    public void calculateFrame() {
-        NormalFrame prevFrame = (NormalFrame) this.prevFrame;
-
-        if (prevFrame.isSpare()) {
-            prevFrame.calculateFrameScore();
-        }
-
-        if (prevFrame.isStrike()) {
-            NormalFrame prevPrevFrame = (NormalFrame) prevFrame.prevFrame;
-            if (prevPrevFrame.isStrike()) {
-                prevPrevFrame.calculateFrameScore();
-            }
-            if (isStrike()) {
-                if (isExistNextFrame()) {
-                    prevFrame.calculateFrameScore();
-                    return;
-                }
-            }
-            if (isMiss() || isSpare()) {
-                prevFrame.calculateFrameScore();
-            }
-        }
-        if (isMiss()) {
-            calculateFrameScore();
-        }
-    }
+    public abstract void calculateFrame();
 
     public abstract Frame getNextFrame();
 }

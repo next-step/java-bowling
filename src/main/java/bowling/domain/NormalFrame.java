@@ -26,6 +26,34 @@ public class NormalFrame extends Frame {
     }
 
     @Override
+    public void calculateFrame() {
+        NormalFrame prevFrame = (NormalFrame) this.prevFrame;
+
+        // 이전 프레임 스페이 경우, 현재 프레임 (첫번째 공) 에서 계산
+        if (prevFrame.isSpare()) {
+            prevFrame.calculateFrameScore();
+        }
+
+        // 이전 프레임 스트라이크 경우
+        if (prevFrame.isStrike()) {
+            NormalFrame prevPrevFrame = (NormalFrame) prevFrame.prevFrame;
+            // 이전이전 프레임도 스트라이크 경우, 현재 프레임 (첫번째 공) 에서 계산
+            if (prevPrevFrame.isStrike()) {
+                prevPrevFrame.calculateFrameScore();
+            }
+            // 미스 또는 스페어 경우, 이전 프레임 현재프레임 (두번째 공) 에서 계산
+            if (isMiss() || isSpare()) {
+                prevFrame.calculateFrameScore();
+            }
+        }
+
+        // 미스 경우, 현재 프레임 계산
+        if (isMiss()) {
+            calculateFrameScore();
+        }
+    }
+
+    @Override
     public int calculateFrameScore() {
         validateFrameScore();
 
@@ -40,12 +68,6 @@ public class NormalFrame extends Frame {
         return nextFrame.cacluateAdditionalScore(totalScore);
     }
 
-    private void validateNextFrame() {
-        if (!isExistNextFrame()) {
-            throw new CannotCalculateException("다음 프레임이 존재하지 않아 계산할 수 없습니다.");
-        }
-    }
-
     @Override
     protected void validateFrameScore() {
         if (status == null) {
@@ -53,9 +75,10 @@ public class NormalFrame extends Frame {
         }
     }
 
-    @Override
-    public Frame getNextFrame() {
-        return nextFrame;
+    private void validateNextFrame() {
+        if (!isExistNextFrame()) {
+            throw new CannotCalculateException("다음 프레임이 존재하지 않아 계산할 수 없습니다.");
+        }
     }
 
     @Override
@@ -73,6 +96,11 @@ public class NormalFrame extends Frame {
 
         totalScore.calculate(secondScore());
         return totalScore.getScore();
+    }
+
+    @Override
+    public Frame getNextFrame() {
+        return nextFrame;
     }
 
     @Override
