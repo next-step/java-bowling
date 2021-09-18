@@ -8,7 +8,9 @@ import java.util.Objects;
 
 public class FinalFrame extends Frame {
 
-    private int finalScore;
+    private static final int NOTHING = -1;
+
+    private int finalScore = NOTHING;
 
     public FinalFrame(int hitNumberOfPin) {
         super(hitNumberOfPin, Frame.LAST_FRAME);
@@ -38,6 +40,50 @@ public class FinalFrame extends Frame {
     }
 
     @Override
+    protected void validateFrameScore() {
+        if (status == null || (!status.equals(Status.MISS) && finalScore == 0)) {
+            throw new LeftFrameBallException("프레임이 아직 끝나지 않았습니다.");
+        }
+    }
+
+    @Override
+    public void calculateFrame() {
+        NormalFrame prevFrame = (NormalFrame) this.prevFrame;
+
+        // 이전 프레임 스페이 경우, 현재 프레임 (첫번째 공) 에서 계산
+        if (prevFrame.isSpare()) {
+            prevFrame.calculateFrameScore();
+        }
+
+        // 이전 프레임 스트라이크 경우
+        if (prevFrame.isStrike()) {
+            NormalFrame prevPrevFrame = (NormalFrame) prevFrame.prevFrame;
+            // 이전이전 프레임도 스트라이크 경우, 현재 프레임 (첫번째 공) 에서 계산
+            if (prevPrevFrame.isStrike()) {
+                prevPrevFrame.calculateFrameScore();
+            }
+            // 현재프레임 (두번째 공) 에서 계산
+            if (score.isExsitSecondScore()) {
+                prevFrame.calculateFrameScore();
+            }
+        }
+
+        // 마지막 프레임은 미스 또는 스트라이크, 스페어 경우 마지막 공 에서 계산
+        if (isMiss() || (isStrike() && isExistFinalBall()) || (isSpare() && isExistFinalBall())) {
+            calculateFrameScore();
+        }
+    }
+
+    private boolean isExistFinalBall() {
+        return finalScore != NOTHING;
+    }
+
+    @Override
+    public Frame getNextFrame() {
+        throw new NotExistNextFrameException("마지막 프레임의 다음 프레임은 존재하지 않습니다.");
+    }
+
+    @Override
     public int calculateFrameScore() {
         if (status == null) {
             return -1;
@@ -49,19 +95,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public void validateFrameScore() {
-        if (status == null || (!status.equals(Status.MISS) && finalScore == 0)) {
-            throw new LeftFrameBallException("프레임이 아직 끝나지 않았습니다.");
-        }
-    }
-
-    @Override
-    public Frame getNextFrame() {
-        throw new NotExistNextFrameException("마지막 프레임의 다음 프레임은 존재하지 않습니다.");
-    }
-
-    @Override
-    protected int cacluateAdditionalScore(TotalScore totalScore) {
+    public int cacluateAdditionalScore(TotalScore totalScore) {
         totalScore.calculate(firstScore());
 
         if (totalScore.canCalucateScore()) {

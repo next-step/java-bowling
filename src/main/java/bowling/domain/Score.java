@@ -52,9 +52,13 @@ public class Score {
     }
 
     public void validateExistSecondScore() {
-        if (scores.size() < SCORES_SECOND_SIZE) {
+        if (!isExsitSecondScore()) {
             throw new IllegalArgumentException("두번째 점수 입력해주세요.");
         }
+    }
+
+    public boolean isExsitSecondScore() {
+        return scores.size() == SCORES_SECOND_SIZE;
     }
 
     public List<Integer> scores() {
@@ -95,6 +99,10 @@ public class Score {
         return totalScore;
     }
 
+    private boolean isExistTotalScore() {
+        return totalScore != null;
+    }
+
     public TotalScore createFinalFrameTotalScore() {
         totalScore = new TotalScore(scoresSum());
 
@@ -103,10 +111,6 @@ public class Score {
 
     public TotalScore totalScore() {
         return totalScore;
-    }
-
-    private boolean isExistTotalScore() {
-        return totalScore != null;
     }
 
     @Override
