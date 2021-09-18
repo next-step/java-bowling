@@ -5,6 +5,14 @@ public class NormalFrame implements Frame {
 
     ShotResults shotResults = new ShotResults();
 
+    public ShotResults getShotResults() {
+        return shotResults;
+    }
+
+    public boolean sumIsStrike() {
+        return shotResults.sumOfPinDown() == ShotResult.MAX.getNumOfPinDown();
+    }
+
     @Override
     public void record(ShotResult shotResult) {
         if (isOver()) {
@@ -14,16 +22,7 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public ShotResults getShotResults() {
-        return shotResults;
-    }
-
-    @Override
     public boolean isOver() {
-        return sumIsMax() || shotResults.size() == NUMBER_OF_SHOTS;
-    }
-
-    public boolean sumIsMax() {
-        return shotResults.sumOfPinDown() == ShotResult.MAX.getNumOfPinDown();
+        return sumIsStrike() || shotResults.size() == NUMBER_OF_SHOTS;
     }
 }

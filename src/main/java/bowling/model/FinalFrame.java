@@ -6,17 +6,16 @@ public class FinalFrame implements Frame {
 
     ShotResults shotResults = new ShotResults();
 
+    public ShotResults getShotResults() {
+        return shotResults;
+    }
+
     @Override
     public void record(ShotResult shotResult) {
         if (isOver()) {
             return;
         }
         shotResults.add(shotResult);
-    }
-
-    @Override
-    public ShotResults getShotResults() {
-        return shotResults;
     }
 
     @Override

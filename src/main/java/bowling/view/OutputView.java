@@ -22,14 +22,13 @@ public class OutputView {
     }
 
     private static String frameToString(Frame frame) {
-        ShotResults shotResults = frame.getShotResults();
         if (frame instanceof FinalFrame) {
-            return shotResultsToString(shotResults);
+            return shotResultsToString(((FinalFrame) frame).getShotResults());
         }
-        if (((NormalFrame) frame).sumIsMax()) {
-            return replaceLastWithSpare(shotResultsToString(shotResults));
+        if (((NormalFrame) frame).sumIsStrike()) {
+            return replaceLastWithSpare(shotResultsToString(((NormalFrame) frame).getShotResults()));
         }
-        return shotResultsToString(shotResults);
+        return shotResultsToString(((NormalFrame) frame).getShotResults());
     }
 
     private static String shotResultsToString(ShotResults shotResults) {

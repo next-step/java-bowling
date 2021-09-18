@@ -14,5 +14,8 @@ class FramesTest {
             frames.record(ShotResult.TEN);
         }
         assertThat(frames.isOver()).isFalse();
+        frames.record(ShotResult.TEN);
+        frames.record(ShotResult.TEN);
+        assertThat(frames.isOver()).isTrue();
     }
 }

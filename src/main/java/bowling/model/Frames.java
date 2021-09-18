@@ -1,35 +1,46 @@
 package bowling.model;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Frames implements Iterable<Frame> {
     private static final int NORMAL_FRAME_SIZE = 9;
+    public static final int FRAME_SIZE = 10;
 
-    private final List<Frame> frames;
+    private final List<Frame> frames = new ArrayList<>();
+    private Frame currentPlayingFrame;
 
     public Frames() {
-        List<Frame> frames = IntStream.range(0, NORMAL_FRAME_SIZE).mapToObj(i -> new NormalFrame()).collect(Collectors.toList());
-        frames.add(new FinalFrame());
-        this.frames = frames;
+        this.currentPlayingFrame = new NormalFrame();
+        this.frames.add(this.currentPlayingFrame);
     }
 
     private Frame currentPlayingFrame() {
-        return frames.stream().filter(frame -> !frame.isOver()).findFirst().orElse(null);
+        return currentPlayingFrame;
     }
 
     public void record(ShotResult shotResult) {
+        if (isOver()) {
+            return;
+        }
         currentPlayingFrame().record(shotResult);
+        if (currentPlayingFrame.isOver()) {
+            changeCurrentPlayingFrame();
+        }
+    }
+
+    private void changeCurrentPlayingFrame() {
+        frames.add(currentPlayingFrame);
+        currentPlayingFrame = frames.size() == NORMAL_FRAME_SIZE ? new FinalFrame() : new NormalFrame();
     }
 
     public boolean isOver() {
-        return frames.stream().allMatch(Frame::isOver);
+        return frames.size() == FRAME_SIZE;
     }
 
     public int currentPlayingFrameIndex() {
-        return frames.indexOf(currentPlayingFrame());
+        return frames.size();
     }
 
     @Override
