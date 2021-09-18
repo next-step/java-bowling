@@ -8,9 +8,9 @@ import java.util.stream.IntStream;
 public class BowlingInputView {
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public static List<String> getStringsInput(int numberOfInputString, String message) {
+    public static List<String> getStringsInputWithFormatString(int numberOfInputString, String messageIncludeSingleIntegerFormat) {
         return IntStream.rangeClosed(1, numberOfInputString)
-                .mapToObj(i -> String.format(message, i))
+                .mapToObj(i -> String.format(messageIncludeSingleIntegerFormat, i))
                 .map(BowlingInputView::getStringInput)
                 .collect(Collectors.toList());
     }

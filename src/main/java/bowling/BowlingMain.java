@@ -9,7 +9,7 @@ public class BowlingMain {
     public static void main(String[] args) {
         int numberOfPlayers = BowlingInputView.getIntInput("How many people? ");
         List<String> playerNames =
-                BowlingInputView.getStringsInput(numberOfPlayers, "플레이어 %d의 이름은(3 english letters)?: ");
+                BowlingInputView.getStringsInputWithFormatString(numberOfPlayers, "플레이어 %d의 이름은(3 english letters)?: ");
 
         Players players = new Players(playerNames);
 
@@ -21,7 +21,7 @@ public class BowlingMain {
     }
 
     private static void playersDoBowl(Players players) {
-        for (Player player : players.getContinuablePlayers()) {
+        for (Player player : players) {
             doBowl(players, player);
         }
     }

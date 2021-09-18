@@ -6,24 +6,31 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayersTest {
+    private static final int FULL_TURN = 12;
+
     @Test
-    @DisplayName("볼링이 끝나지 않은 플레이어 확인")
-    void getContinuablePlayersTest() {
+    void isContinuedTest() {
         Players players = new Players(Arrays.asList("aaa", "bbb"));
 
-        for (Player player : players) {
-            if (player.getNameString().equals("aaa")) {
-                IntStream.range(0, 12).forEach(i -> player.playBowl(10));
-            }
+        boolean beforeStart = players.isContinued();
 
-            if (player.getNameString().equals("bbb")) {
-                IntStream.range(0, 10).forEach(i -> player.playBowl(10));
-            }
+        for (Player player : players) {
+            bowlToEnd(player);
         }
 
-        assertThat(players.getContinuablePlayers()).containsExactly(new Player("bbb"));
+        boolean afterFullBowl = players.isContinued();
+
+        assertThat(beforeStart).isTrue();
+        assertThat(afterFullBowl).isFalse();
+    }
+
+    private void bowlToEnd(Player player) {
+        for (int i = 0; i < FULL_TURN; i++) {
+            player.playBowl(10);
+        }
     }
 }
