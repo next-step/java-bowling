@@ -50,4 +50,32 @@ class GameTest {
         assertNotEquals(beforePitch, afterPitch);
         assertEquals(beforePitch.order() + 1, afterPitch.order());
     }
+
+    @Test
+    @DisplayName("열 번째 프레임에서 스트라이크를 치면 세 번 핏칭한다.")
+    void strikeAt10thFrame() {
+        for (int i = 0; i < 9; i++) {
+            game.pitch(10);
+        }
+        game.pitch(10);
+        assertFalse(game.isOver());
+        game.pitch(5);
+        assertFalse(game.isOver());
+        game.pitch(10);
+        assertTrue(game.isOver());
+    }
+
+    @Test
+    @DisplayName("열 번째 프레임에서 스페어를 치면 세 번 핏칭한다.")
+    void spareAt10thFrame() {
+        for (int i = 0; i < 9; i++) {
+            game.pitch(10);
+        }
+        game.pitch(5);
+        assertFalse(game.isOver());
+        game.pitch(5);
+        assertFalse(game.isOver());
+        game.pitch(10);
+        assertTrue(game.isOver());
+    }
 }
