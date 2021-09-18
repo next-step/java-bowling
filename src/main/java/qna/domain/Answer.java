@@ -70,19 +70,17 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
-    public void delete(User loginUser) throws CannotDeleteException {
+    public DeleteHistory deleteAndCreateDeleteHistory(User loginUser) throws CannotDeleteException {
         validateAnswerOfLoginUser(loginUser);
         deleted = true;
+
+        return new DeleteHistory(ContentType.ANSWER, this.getId(), writer, LocalDateTime.now());
     }
 
     private void validateAnswerOfLoginUser(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
-    }
-
-    public DeleteHistory createDeleteHistory() {
-        return new DeleteHistory(ContentType.ANSWER, this.getId(), writer, LocalDateTime.now());
     }
 
     @Override

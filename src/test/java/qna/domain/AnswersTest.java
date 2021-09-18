@@ -26,7 +26,7 @@ public class AnswersTest {
     @Test
     @DisplayName("답변들 삭제")
     void deleteAnswers() throws CannotDeleteException {
-        answers.deleteAnswers(UserTest.JAVAJIGI);
+        answers.deleteAnswersAndCreateDeleteHistories(UserTest.JAVAJIGI);
         assertAll(
                 () -> Assertions.assertThat(A1.isDeleted()).isTrue(),
                 () -> Assertions.assertThat(A3.isDeleted()).isTrue());
@@ -37,14 +37,14 @@ public class AnswersTest {
     void deleteAnswersAnotherUser() {
         answers = new Answers(Arrays.asList(A1, A2));
         assertThatThrownBy(() -> {
-            answers.deleteAnswers(UserTest.JAVAJIGI);
+            answers.deleteAnswersAndCreateDeleteHistories(UserTest.JAVAJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
 
     @Test
     @DisplayName("삭제 히스토리 생성")
-    void createDeleteHistories() {
-        List<DeleteHistory> deleteHistories = answers.createDeleteHistories();
+    void createDeleteHistories() throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = answers.deleteAnswersAndCreateDeleteHistories(UserTest.JAVAJIGI);
         assertThat(deleteHistories.contains(
                 new DeleteHistory(ContentType.ANSWER, A1.getId(), A1.getWriter(), LocalDateTime.now()))
                 && deleteHistories.contains(
