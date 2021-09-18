@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.view.ScoreType;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -16,8 +18,20 @@ public class Points {
         points = new ArrayList<>();
     }
 
-    public void addPoint(Point point) {
-        points.add(point);
+    public void addPoint(int point) {
+        points.add(new Point(point, findScoreType(point)));
+    }
+
+    public void addBonusPoint(int point) {
+        points.add(new Point(point, true, findScoreType(point)));
+    }
+
+
+    private ScoreType findScoreType(int point) {
+        if (point == Point.MAX_POINT && points.size() == FIRST_INDEX) {
+            return ScoreType.STRIKE;
+        }
+        return ScoreType.MISS;
     }
 
     public int findFirstPointScore() {

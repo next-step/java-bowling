@@ -33,7 +33,7 @@ public class NormalFrame implements Frame {
         if (currentPoint + hitPin > Point.MAX_POINT) {
             throw new IllegalArgumentException("합계 점수가 10이 넘을 수 없습니다");
         }
-        points.addPoint(new Point(hitPin));
+        points.addPoint(hitPin);
     }
 
     @Override

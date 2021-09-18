@@ -52,13 +52,13 @@ public class ResultView {
         StringBuilder stringBuilder = initResult();
 
         if (firstPoint == Point.MAX_POINT) {
-            stringBuilder.append(ScoreResultType.STRIKE.value());
+            stringBuilder.append(ScoreType.STRIKE.value());
             stringBuilder.append("   |");
             return stringBuilder.toString();
         }
 
         if (firstPoint == Point.MIN_POINT) {
-            stringBuilder.append(ScoreResultType.GUTTER.value());
+            stringBuilder.append(ScoreType.GUTTER.value());
             return stringBuilder.toString();
         }
         stringBuilder.append(firstPoint);
@@ -72,7 +72,7 @@ public class ResultView {
             return makeGutter(stringBuilder);
         }
         if (firstPoint + secondPoint == Point.MAX_POINT) {
-            stringBuilder.append(ScoreResultType.SPARE.value());
+            stringBuilder.append(ScoreType.SPARE.value());
             stringBuilder.append(BLANK_LINE);
             return stringBuilder.toString();
         }
@@ -88,7 +88,7 @@ public class ResultView {
             return makeGutter(stringBuilder);
         }
         if (bonusPoint == Point.MAX_POINT) {
-            stringBuilder.append(ScoreResultType.STRIKE.value());
+            stringBuilder.append(ScoreType.STRIKE.value());
             stringBuilder.append(BLANK_LINE);
             return stringBuilder.toString();
         }
@@ -108,7 +108,7 @@ public class ResultView {
     }
 
     private static String makeGutter(StringBuilder stringBuilder) {
-        stringBuilder.append(ScoreResultType.GUTTER.value());
+        stringBuilder.append(ScoreType.GUTTER.value());
         stringBuilder.append(BLANK_LINE);
         return stringBuilder.toString();
     }

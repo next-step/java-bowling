@@ -2,6 +2,7 @@ package bowling;
 
 import bowling.domain.NormalFrame;
 import bowling.domain.Point;
+import bowling.view.ScoreType;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,7 +33,7 @@ public class NormalFrameTest {
         NormalFrame normalFrame = NormalFrame.first();
         normalFrame.bowl(1);
         normalFrame.bowl(5);
-        assertThat(normalFrame.currentFramePoints().values()).contains(new Point(1), new Point(5));
+        assertThat(normalFrame.currentFramePoints().values()).contains(new Point(1, ScoreType.MISS), new Point(5, ScoreType.MISS));
     }
 
     @Test

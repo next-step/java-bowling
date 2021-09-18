@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.view.ScoreType;
+
 import java.util.Objects;
 
 public class Point {
@@ -10,13 +12,15 @@ public class Point {
 
     private int point;
     private boolean isBonusPoint;
-    
-    public Point(int point) {
-        this(point, false);
+    private ScoreType scoreType;
+
+    public Point(int point, ScoreType scoreType) {
+        this(point, false, scoreType);
     }
 
-    public Point(int point, boolean isBonusPoint) {
+    public Point(int point, boolean isBonusPoint, ScoreType scoreType) {
         validate(point);
+        this.scoreType = scoreType;
         this.point = point;
         this.isBonusPoint = isBonusPoint;
     }

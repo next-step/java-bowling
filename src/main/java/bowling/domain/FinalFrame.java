@@ -26,14 +26,14 @@ public class FinalFrame implements Frame {
 
     public void makePoint(int hitPin) {
         if (points.bowlCount() == MAX_TRY - 1) {
-            points.addPoint(new Point(hitPin, true));
+            points.addBonusPoint(hitPin);
             return;
         }
         if (points.currentPointSum() == Point.MAX_POINT && points.bowlCount() == MAX_TRY - 2) {
-            points.addPoint(new Point(hitPin, true));
+            points.addBonusPoint(hitPin);
             return;
         }
-        points.addPoint(new Point(hitPin));
+        points.addPoint(hitPin);
     }
 
     @Override

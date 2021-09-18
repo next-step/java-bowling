@@ -1,14 +1,15 @@
 package bowling.view;
 
-enum ScoreResultType {
+public enum ScoreType {
 
     GUTTER("-"),
     SPARE("/"),
-    STRIKE("X");
+    STRIKE("X"),
+    MISS("");
 
     private String type;
 
-    ScoreResultType(String type) {
+    ScoreType(String type) {
         this.type = type;
     }
 
