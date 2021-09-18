@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Frames {
 
-    private List<Frame> frames;
+    private final List<Frame> frames;
 
     public static final int FINAL_INDEX = 10;
 
@@ -22,11 +22,8 @@ public class Frames {
     }
 
     public boolean isFinished() {
-        if (frames.size() == FINAL_INDEX &&
-                frames.get(FINAL_INDEX - 1).isFinished()) {
-            return true;
-        }
-        return false;
+        return frames.size() == FINAL_INDEX &&
+                frames.get(FINAL_INDEX - 1).isFinished();
     }
 
     public List<Frame> values() {

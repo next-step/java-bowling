@@ -2,11 +2,14 @@ package bowling.domain;
 
 public class BowlingGame {
 
-    private Frames frames;
+    private final Frames frames;
     private static final int FINAL_GAME_INDEX = 9;
 
-    public void start() {
+    public BowlingGame() {
         frames = new Frames();
+    }
+
+    public void start() {
         frames.addFrame(NormalFrame.first());
     }
 

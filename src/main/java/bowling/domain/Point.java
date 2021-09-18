@@ -10,11 +10,9 @@ public class Point {
 
     private int point;
     private boolean isBonusPoint;
-
+    
     public Point(int point) {
-        validate(point);
-        this.point = point;
-        this.isBonusPoint = false;
+        this(point, false);
     }
 
     public Point(int point, boolean isBonusPoint) {

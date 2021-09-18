@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class UserName {
 
     private static final String NAME_REGEX = "^[a-zA-Z]{1,3}+$";
-
+    private static final Pattern NAME_PATTERN = Pattern.compile(NAME_REGEX);
     private String name;
 
     public UserName(String name) {
@@ -16,10 +16,9 @@ public class UserName {
 
     private void validated(String name) {
 
-        if (Pattern.matches(NAME_REGEX, name)) {
-            return;
+        if (!NAME_PATTERN.matcher(name).matches()) {
+            throw new IllegalArgumentException("이름은 영어 3글자까지 가능합니다.");
         }
-        throw new IllegalArgumentException("이름은 영어 3글자까지 가능합니다.");
     }
 
     @Override

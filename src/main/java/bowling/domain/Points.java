@@ -7,10 +7,10 @@ import java.util.Optional;
 
 public class Points {
 
-    private List<Point> points;
+    private final List<Point> points;
 
-    private final int FIRST_INDEX = 0;
-    private final int SECOND_INDEX = 1;
+    private static final int FIRST_INDEX = 0;
+    private static final int SECOND_INDEX = 1;
 
     public Points() {
         points = new ArrayList<>();
@@ -30,17 +30,15 @@ public class Points {
 
 
     public Optional<Point> findBonusPoint() {
-        return points.stream().filter(point -> point.isBonusPoint()).findFirst();
+        return points.stream()
+                .filter(point -> point.isBonusPoint())
+                .findFirst();
     }
 
     public int currentPointSum() {
         return points.stream()
                 .mapToInt(Point::currentPoint)
                 .sum();
-    }
-
-    public boolean isFinalFrame() {
-        return points.size() == Frames.FINAL_INDEX;
     }
 
     public List<Point> values() {
