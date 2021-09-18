@@ -2,6 +2,7 @@ package bowling.view;
 
 import bowling.domain.*;
 
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -16,22 +17,32 @@ public class ResultView {
     private ResultView() {
     }
 
-    public static void printInit(final BowlingGame bowlingGame) {
+    public static void printInit(final BowlingGames bowlingGames) {
         System.out.println(TITLE);
+        for (BowlingGame bowlingGame : bowlingGames.games()) {
+            printPlayerGame(bowlingGame);
+        }
+    }
+
+    private static void printPlayerGame(BowlingGame bowlingGame) {
         printName(bowlingGame.player());
         IntStream.range(FIRST_NUMBER, LAST_NUMBER)
                 .forEach(value -> System.out.print(String.format("%5s %s", BLANK, SEPARATOR)));
         System.out.println();
-        System.out.println();
+        System.out.print(SEPARATOR);
+        printBlock(LAST_NUMBER);
     }
 
-    public static void printResult(final BowlingGame bowlingGame) {
+    public static void printResult(final BowlingGames bowlingGames) {
         System.out.println(TITLE);
-        printName(bowlingGame.player());
+        for (BowlingGame bowlingGame : bowlingGames.games()) {
+            printName(bowlingGame.player());
 
-        printSymbol(bowlingGame.frames());
+            printSymbol(bowlingGame.frames());
 
-        printScore(bowlingGame.frames());
+            printScore(bowlingGame.frames());
+        }
+
     }
 
     private static void printSymbol(Frames frames) {
@@ -45,17 +56,30 @@ public class ResultView {
         System.out.print(String.format("%s%s %s", SEPARATOR, BLANK, SEPARATOR));
         int total = 0;
         for (Frame frame : frames.value()) {
-            Score score = frame.score();
-            String resultScore = BLANK;
-            if (score.canCalculateScore() && frame.isEnd()) {
-                total += score.getScore();
-                resultScore = String.valueOf(total);
-            }
-            System.out.print(String.format("%5s %s", resultScore, SEPARATOR));
+            int resultScore = scoreCalculate(frame);
+
+            total += resultScore;
+
+            System.out.print(String.format("%5s %s", printResultScore(resultScore, total), SEPARATOR));
         }
 
         printBlock(LAST_NUMBER - frames.size() - 1);
 
+    }
+
+    private static String printResultScore(int resultScore, int total) {
+        if (resultScore == 0) {
+            return BLANK;
+        }
+        return String.valueOf(total);
+    }
+
+    private static int scoreCalculate(Frame frame) {
+        Score score = frame.score();
+        if (score.canCalculateScore() && frame.isEnd()) {
+            return score.getScore();
+        }
+        return 0;
     }
 
     private static void printBlock(int range) {

@@ -65,7 +65,7 @@ public class Pitches {
     }
 
     public void validateNormalSecondPitch(int countOfPins) {
-        int sumOfNormalPitch = pitches.get(0).intValue() + countOfPins;
+        int sumOfNormalPitch = pitches.get(FIRST_PITCH_INDEX).intValue() + countOfPins;
 
         if (!pitches.isEmpty() && sumOfNormalPitch > Pitch.MAXIMUM_COUNT_OF_PINS) {
             throw new BusinessException("일반 투구의 합계는 10 이하여야 합니다.");

@@ -78,7 +78,7 @@ public class FinalFrame implements Frame {
     }
 
     private void pitchScoreUntilPossible(final Score beforeScore) {
-        int range = Math.min(beforeScore.leftPitch(), pitches.size());
+        int range = Math.min(beforeScore.leftPitchCount(), pitches.size());
         for (int i = 0; i < range; i++) {
             beforeScore.pitch(pitches.get(i).intValue());
         }
