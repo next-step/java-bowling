@@ -17,7 +17,7 @@ public class InputView {
             userName = new UserName(name);
         } catch (IllegalArgumentException e) {
             System.err.println(e.getMessage());
-            getUserName();
+            return getUserName();
         }
         return userName;
     }

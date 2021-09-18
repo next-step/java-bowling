@@ -12,7 +12,7 @@ public class Point {
 
     private int point;
     private boolean isBonusPoint;
-    private ScoreType scoreType;
+    private final ScoreType scoreType;
 
     public Point(int point, ScoreType scoreType) {
         this(point, false, scoreType);
@@ -31,6 +31,18 @@ public class Point {
 
     public boolean isBonusPoint() {
         return isBonusPoint;
+    }
+
+    public String findPointResult() {
+        if (scoreType.equals(ScoreType.MISS)) {
+            return String.valueOf(point);
+
+        }
+        return scoreType.value();
+    }
+
+    public ScoreType findScoreType() {
+        return scoreType;
     }
 
     private void validate(int point) {

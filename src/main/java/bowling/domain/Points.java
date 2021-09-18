@@ -23,13 +23,28 @@ public class Points {
     }
 
     public void addBonusPoint(int point) {
-        points.add(new Point(point, true, findScoreType(point)));
+        points.add(new Point(point, true, findBonusScoreType(point)));
     }
 
+    private ScoreType findBonusScoreType(int point) {
+        if (point == Point.MAX_POINT) {
+            return ScoreType.STRIKE;
+        }
+        if (point == Point.MIN_POINT) {
+            return ScoreType.GUTTER;
+        }
+        return ScoreType.MISS;
+    }
 
     private ScoreType findScoreType(int point) {
         if (point == Point.MAX_POINT && points.size() == FIRST_INDEX) {
             return ScoreType.STRIKE;
+        }
+        if (currentPointSum() + point == Point.MAX_POINT && bowlCount() > FIRST_INDEX) {
+            return ScoreType.SPARE;
+        }
+        if (point == Point.MIN_POINT) {
+            return ScoreType.GUTTER;
         }
         return ScoreType.MISS;
     }
@@ -38,8 +53,14 @@ public class Points {
         return points.get(FIRST_INDEX).currentPoint();
     }
 
-    public int findSecondPointScore() {
-        return points.get(SECOND_INDEX).currentPoint();
+
+    public Point findFirstPoint() {
+        return points.get(FIRST_INDEX);
+    }
+
+    public Point
+    findSecondPoint() {
+        return points.get(SECOND_INDEX);
     }
 
 
@@ -61,6 +82,14 @@ public class Points {
 
     public int bowlCount() {
         return points.size();
+    }
+
+    public boolean isNormalFrameEnd() {
+        return bowlCount() == NormalFrame.MAX_TRY;
+    }
+
+    public boolean isFinalFrameEnd() {
+        return bowlCount() == FinalFrame.MAX_TRY;
     }
 
     @Override

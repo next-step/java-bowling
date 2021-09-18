@@ -19,7 +19,7 @@ public class PointsTest {
         Points points = new Points();
         points.addPoint(1);
         points.addPoint(2);
-        assertThat(points.findSecondPointScore()).isEqualTo(2);
+        assertThat(points.findSecondPoint().currentPoint()).isEqualTo(2);
     }
 
 
