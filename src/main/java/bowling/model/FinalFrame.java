@@ -15,6 +15,11 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public ShotResults getShotResults() {
+        return shotResults;
+    }
+
+    @Override
     public boolean isOver() {
         return notGetBonusShot() || getBonusShot();
     }
@@ -25,10 +30,5 @@ public class FinalFrame implements Frame {
 
     private boolean notGetBonusShot() {
         return shotResults.size() == MIN_NUMBER_OF_SHOTS && shotResults.sumOfPinDown() < ShotResult.MAX.getNumOfPinDown();
-    }
-
-    @Override
-    public String toString() {
-        return shotResults.toString();
     }
 }

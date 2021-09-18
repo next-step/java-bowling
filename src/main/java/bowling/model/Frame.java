@@ -4,4 +4,6 @@ public interface Frame {
     boolean isOver();
 
     void record(ShotResult shotResult);
+
+    ShotResults getShotResults();
 }

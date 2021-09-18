@@ -14,26 +14,16 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public ShotResults getShotResults() {
+        return shotResults;
+    }
+
+    @Override
     public boolean isOver() {
         return sumIsMax() || shotResults.size() == NUMBER_OF_SHOTS;
     }
 
-    private boolean sumIsMax() {
+    public boolean sumIsMax() {
         return shotResults.sumOfPinDown() == ShotResult.MAX.getNumOfPinDown();
-    }
-
-    @Override
-    public String toString() {
-        String shotResultString = shotResults.toString();
-        if (sumIsMax()) {
-            return replaceLastWithSpare(shotResultString);
-        }
-        return shotResultString;
-    }
-
-    private String replaceLastWithSpare(String shotResultString) {
-        StringBuilder sb = new StringBuilder(shotResultString);
-        sb.setCharAt(shotResultString.length() - 1, '/');
-        return sb.toString();
     }
 }

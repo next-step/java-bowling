@@ -34,16 +34,4 @@ public enum ShotResult {
     public int getNumOfPinDown() {
         return numOfPinDown;
     }
-
-    @Override
-    public String toString() {
-        if (this == ZERO) {
-            return "-";
-        }
-        if (this == TEN) {
-            return "X";
-        }
-
-        return Integer.toString(numOfPinDown);
-    }
 }

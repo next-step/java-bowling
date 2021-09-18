@@ -3,6 +3,7 @@ package bowling.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class ShotResults implements Iterable<ShotResult> {
     private final List<ShotResult> shotResults = new ArrayList<>();
@@ -24,8 +25,7 @@ public class ShotResults implements Iterable<ShotResult> {
         return shotResults.iterator();
     }
 
-    @Override
-    public String toString() {
-        return shotResults.stream().map(ShotResult::toString).reduce((accu, curr) -> accu + "|" + curr).orElse("");
+    public Stream<ShotResult> stream() {
+        return shotResults.stream();
     }
 }
