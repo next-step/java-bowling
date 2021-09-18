@@ -17,4 +17,8 @@ public class InputView {
         }
         return raw;
     }
+
+    public static int readPinDownCount(int currentPlayingFrameIndex) {
+        return Integer.parseInt(getRawString(currentPlayingFrameIndex + 1 + "프레임 투구 : "));
+    }
 }

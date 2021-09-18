@@ -2,7 +2,6 @@ package bowling.view;
 
 import bowling.model.Frame;
 import bowling.model.Frames;
-import bowling.model.ShotResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +15,5 @@ public class OutputView {
             frameStrings.add(frame.toString());
         }
         System.out.printf("|  " + playerName + " |  %-4s|  %-4s|  %-4s|  %-4s|  %-4s|  %-4s|  %-4s|  %-4s|  %-4s| %-5s|\n", frameStrings.toArray());
-    }
-
-    public static void printShotResult(ShotResult shotResult, int currentPlayingFrameIndex) {
-        System.out.println(currentPlayingFrameIndex + 1 + "프레임 투구 : " + shotResult);
     }
 }

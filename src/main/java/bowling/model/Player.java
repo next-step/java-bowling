@@ -14,8 +14,8 @@ public class Player {
         this.name = name;
     }
 
-    public ShotResult pitch() {
-        return lane.pitch();
+    public ShotResult pitch(int pinDownCount) {
+        return lane.pitch(pinDownCount);
     }
 
     @Override

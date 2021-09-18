@@ -13,11 +13,10 @@ public class Main {
         Frames frames = new Frames();
         OutputView.printFrames(frames, player.toString());
 
-        while (!frames.isOver()) {
-            ShotResult shotResult = player.pitch();
-            OutputView.printShotResult(shotResult, frames.currentPlayingFrameIndex());
+        do {
+            ShotResult shotResult = player.pitch(InputView.readPinDownCount(frames.currentPlayingFrameIndex()));
             frames.record(shotResult);
             OutputView.printFrames(frames, player.toString());
-        }
+        } while (!frames.isOver());
     }
 }
