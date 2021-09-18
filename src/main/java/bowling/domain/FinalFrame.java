@@ -38,28 +38,18 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isFinished() {
-        if (points.bowlCount() == Point.MIN_POINT) {
-            return false;
-        }
-        if (points.bowlCount() == Point.MAX_POINT) {
-            return false;
-        }
         if (points.bowlCount() == MAX_TRY) {
             return true;
         }
-        if (hasNotBonusGame()) {
+        if (alreadyPlayBonusGame()) {
             return true;
         }
         return false;
     }
 
-    private boolean hasNotBonusGame() {
-        if ((points.findFirstPointScore() == Point.MAX_POINT && points.bowlCount() == MAX_TRY - 1)
-                ||
-                (points.values()
-                        .stream()
-                        .mapToInt(Point::currentPoint)
-                        .sum() == Point.MAX_POINT && points.bowlCount() == MAX_TRY)) {
+    private boolean alreadyPlayBonusGame() {
+
+        if (points.currentPointSum() > Point.MAX_POINT) {
             return true;
         }
         return false;

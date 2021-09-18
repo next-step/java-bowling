@@ -64,10 +64,11 @@ public class Points {
     }
 
 
-    public Optional<Point> findBonusPoint() {
-        return points.stream()
+    public Point findBonusPoint() {
+        Optional<Point> bonusPoint = points.stream()
                 .filter(point -> point.isBonusPoint())
                 .findFirst();
+        return bonusPoint.orElse(null);
     }
 
     public int currentPointSum() {

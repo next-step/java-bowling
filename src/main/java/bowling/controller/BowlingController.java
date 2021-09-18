@@ -14,10 +14,20 @@ public class BowlingController {
         bowlingGame.start();
 
         while (!bowlingGame.isFinished()) {
-            InputView.enterBowlPins(bowlingGame.currentFrame());
+            bowlPins(bowlingGame);
             bowlingGame.next();
             ResultView.printHeader();
             ResultView.printResult(userName, bowlingGame.getFrames());
+        }
+    }
+
+    private static void bowlPins(BowlingGame bowlingGame) {
+        try {
+            int downPins = InputView.enterBowlPins(bowlingGame.currentFrame());
+            bowlingGame.currentFrame().bowl(downPins);
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+            bowlPins(bowlingGame);
         }
     }
 }

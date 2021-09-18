@@ -3,6 +3,7 @@ package bowling.view;
 import bowling.domain.Frame;
 import bowling.domain.UserName;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class InputView {
@@ -22,14 +23,16 @@ public class InputView {
         return userName;
     }
 
-    public static void enterBowlPins(Frame frame) {
+    public static int enterBowlPins(Frame frame) {
+        int downPin = 0;
         try {
             System.out.print(frame.findCurrentIndex() + "프레임 투구: ");
-            int downPin = SCANNER.nextInt();
-            frame.bowl(downPin);
-        } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
-            enterBowlPins(frame);
+            downPin = SCANNER.nextInt();
+        } catch (InputMismatchException e) {
+            System.err.println("숫자만 입력 가능합니다");
+            SCANNER.next();
+            return enterBowlPins(frame);
         }
+        return downPin;
     }
 }

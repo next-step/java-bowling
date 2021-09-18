@@ -37,7 +37,7 @@ public class ResultView {
         }
         String result = makeFirstResult(points.findFirstPoint());
 
-        if (points.findBonusPoint().isPresent() && points.isNormalFrameEnd()) {
+        if (points.findBonusPoint() != null && points.isNormalFrameEnd()) {
             result = result + makeBonusResult(points);
             return result;
         }
@@ -70,7 +70,7 @@ public class ResultView {
     }
 
     private static String makeBonusResult(Points points) {
-        Point bonusPoint = points.findBonusPoint().get();
+        Point bonusPoint = points.findBonusPoint();
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append(bonusPoint.findPointResult());

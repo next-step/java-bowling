@@ -22,17 +22,18 @@ public class BowlingGame {
     }
 
     public void next() {
+        Frame currentFrame = currentFrame();
         if (isFinished()) {
             return;
         }
 
-        if (currentFrame().isFinished()
-                && currentFrame().findCurrentIndex() == FINAL_GAME_INDEX) {
+        if (currentFrame.isFinished()
+                && currentFrame.findCurrentIndex() == FINAL_GAME_INDEX) {
             frames.addFrame(new FinalFrame());
             return;
         }
 
-        if (currentFrame().isFinished()) {
+        if (currentFrame.isFinished()) {
             frames.addFrame(currentFrame().next());
         }
     }

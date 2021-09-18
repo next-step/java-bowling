@@ -35,6 +35,6 @@ public class PointsTest {
     public void has_bonus_point_test() {
         Points points = new Points();
         points.addBonusPoint(4);
-        assertThat(points.findBonusPoint().isPresent()).isEqualTo(true);
+        assertThat(points.findBonusPoint().isBonusPoint()).isEqualTo(true);
     }
 }
