@@ -3,21 +3,38 @@ package bowling;
 import bowling.view.BowlingInputView;
 import bowling.view.BowlingOutputView;
 
+import java.util.List;
+
 public class BowlingMain {
     public static void main(String[] args) {
-        String name = BowlingInputView.getPlayerNameWithPrompt("플레이어 이름은(3 english letters)?: ");
-        Player player = new Player(name);
+        int numberOfPlayers = BowlingInputView.getIntInput("How many people? ");
+        List<String> playerNames =
+                BowlingInputView.getStringsInputWithFormatString(numberOfPlayers, "플레이어 %d의 이름은(3 english letters)?: ");
 
-        ScoreFrames scoreFrames = new ScoreFrames();
-        BowlingOutputView.printFramesStatus(player, scoreFrames);
+        Players players = new Players(playerNames);
 
-        while (scoreFrames.isContinued()) {
-            String message = String.format("%d프레임 투구 : ", scoreFrames.getCurrentTurn());
-            int score = BowlingInputView.getBowlingScoreWithPrompt(message);
+        BowlingOutputView.printPlayerFrames(players);
 
-            scoreFrames.bowl(score);
+        while (players.isContinued()) {
+            playersDoBowl(players);
+        }
+    }
 
-            BowlingOutputView.printFramesStatus(player, scoreFrames);
+    private static void playersDoBowl(Players players) {
+        for (Player player : players) {
+            doBowl(players, player);
+        }
+    }
+
+    private static void doBowl(Players players, Player player) {
+        boolean frameUpdated = false;
+
+        while(!frameUpdated) {
+            String message = String.format("%s's turn : ", player.getNameString());
+            int score = BowlingInputView.getIntInput(message);
+            frameUpdated = player.playBowl(score);
+
+            BowlingOutputView.printPlayerFrames(players);
         }
     }
 }

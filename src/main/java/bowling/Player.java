@@ -1,15 +1,39 @@
 package bowling;
 
+import java.util.List;
+import java.util.Objects;
+
 public class Player {
     public static final int NAME_LENGTH = 3;
     public static final String ONLY_ENG_ALPHABETS = "^[a-zA-Z]*$";
 
     private final String name;
+    private final ScoreFrames scoreFrames = new ScoreFrames();
 
     public Player(String name) {
         validate(name);
 
         this.name = name;
+    }
+
+    public List<String> getScoreStrings() {
+        return scoreFrames.getScoreStrings();
+    }
+
+    public List<String> getCalculatedScoreStrings() {
+        return scoreFrames.getCalculatedScores();
+    }
+
+    public boolean isContinued() {
+        return scoreFrames.isContinued();
+    }
+
+    public boolean playBowl(int score) {
+        return scoreFrames.bowl(score);
+    }
+
+    public String getNameString() {
+        return name;
     }
 
     private void validate(String name) {
@@ -34,7 +58,16 @@ public class Player {
         return nonNullName.length() == NAME_LENGTH;
     }
 
-    public String getNameString() {
-        return name;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(name, player.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

@@ -1,17 +1,27 @@
 package bowling.view;
 
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class BowlingInputView {
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public static String getPlayerNameWithPrompt(String message) {
+    public static List<String> getStringsInputWithFormatString(int numberOfInputString, String messageIncludeSingleIntegerFormat) {
+        return IntStream.rangeClosed(1, numberOfInputString)
+                .mapToObj(i -> String.format(messageIncludeSingleIntegerFormat, i))
+                .map(BowlingInputView::getStringInput)
+                .collect(Collectors.toList());
+    }
+
+    public static String getStringInput(String message) {
         System.out.print(message);
 
         return SCANNER.nextLine();
     }
 
-    public static int getBowlingScoreWithPrompt(String message) {
+    public static int getIntInput(String message) {
         System.out.print(message);
 
         return toInt(SCANNER.nextLine());
