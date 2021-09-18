@@ -76,6 +76,10 @@ public class Score {
     }
 
     public TotalScore createTotalScore(Status status) {
+        if (isExistTotalScore()) {
+            return totalScore;
+        }
+
         int score = scoresSum();
 
         if (status.equals(Status.STRIKE)) {
@@ -95,6 +99,14 @@ public class Score {
         totalScore = new TotalScore(scoresSum());
 
         return totalScore;
+    }
+
+    public TotalScore totalScore() {
+        return totalScore;
+    }
+
+    private boolean isExistTotalScore() {
+        return totalScore != null;
     }
 
     @Override

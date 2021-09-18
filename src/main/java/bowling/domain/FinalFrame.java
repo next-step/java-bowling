@@ -1,6 +1,8 @@
 package bowling.domain;
 
-import bowling.LeftFrameBallException;
+import bowling.service.exception.LeftFrameBallException;
+import bowling.service.exception.NotExistNextFrameException;
+import bowling.service.exception.NotValidateFinalBallException;
 
 import java.util.Objects;
 
@@ -21,7 +23,7 @@ public class FinalFrame extends Frame {
 
     private void validateFinalBall() {
         if (!isSpare() && !isStrike()) {
-            throw new RuntimeException("마지막 공은 스트라이크 또는 스페어인 경우 가능합니다.");
+            throw new NotValidateFinalBallException("마지막 공은 스트라이크 또는 스페어인 경우 가능합니다.");
         }
     }
 
@@ -37,7 +39,9 @@ public class FinalFrame extends Frame {
 
     @Override
     public int calculateFrameScore() {
-        validateFrameScore();
+        if (status == null) {
+            return -1;
+        }
 
         score.createFinalFrameTotalScore();
 
@@ -52,6 +56,11 @@ public class FinalFrame extends Frame {
     }
 
     @Override
+    public Frame getNextFrame() {
+        throw new NotExistNextFrameException("마지막 프레임의 다음 프레임은 존재하지 않습니다.");
+    }
+
+    @Override
     protected int cacluateAdditionalScore(TotalScore totalScore) {
         totalScore.calculate(firstScore());
 
@@ -61,6 +70,11 @@ public class FinalFrame extends Frame {
 
         totalScore.calculate(secondScore());
         return totalScore.getScore();
+    }
+
+    @Override
+    public boolean isExistNextFrame() {
+        return false;
     }
 
     @Override

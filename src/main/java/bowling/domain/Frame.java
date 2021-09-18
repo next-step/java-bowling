@@ -12,6 +12,7 @@ public abstract class Frame {
     protected FrameIndex frameIndex;
     protected Score score;
     protected Status status;
+    protected Frame prevFrame;
 
     public Frame(int hitNumberOfPin, int frameIndex) {
         if (hitNumberOfPin == Pin.MAX.getValue()) {
@@ -46,6 +47,10 @@ public abstract class Frame {
         return Status.STRIKE.equals(status);
     }
 
+    public boolean isMiss() {
+        return Status.MISS.equals(status);
+    }
+
     public int frameIndex() {
         return frameIndex.getValue();
     }
@@ -54,9 +59,44 @@ public abstract class Frame {
         return frameIndex.getValue() + 1;
     }
 
+    public TotalScore totalScore() {
+        return score.totalScore();
+    }
+
     public abstract int calculateFrameScore();
 
-    public abstract void validateFrameScore();
-
     protected abstract int cacluateAdditionalScore(TotalScore totalScore);
+
+    public abstract boolean isExistNextFrame();
+
+    protected abstract void validateFrameScore();
+
+    public void calculateFrame() {
+        NormalFrame prevFrame = (NormalFrame) this.prevFrame;
+
+        if (prevFrame.isSpare()) {
+            prevFrame.calculateFrameScore();
+        }
+
+        if (prevFrame.isStrike()) {
+            NormalFrame prevPrevFrame = (NormalFrame) prevFrame.prevFrame;
+            if (prevPrevFrame.isStrike()) {
+                prevPrevFrame.calculateFrameScore();
+            }
+            if (isStrike()) {
+                if (isExistNextFrame()) {
+                    prevFrame.calculateFrameScore();
+                    return;
+                }
+            }
+            if (isMiss() || isSpare()) {
+                prevFrame.calculateFrameScore();
+            }
+        }
+        if (isMiss()) {
+            calculateFrameScore();
+        }
+    }
+
+    public abstract Frame getNextFrame();
 }

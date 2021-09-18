@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.service.exception.CannotCalculateException;
 import bowling.domain.NormalFrame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -82,6 +83,15 @@ public class NormalFrameTest {
         NormalFrame nextNextFrame = (NormalFrame) nextFrame.nextFrame(7);
         nextNextFrame.secondBall(3);
         assertThat(nextFrame.calculateFrameScore()).isEqualTo(20);
+    }
+
+    @Test
+    @DisplayName("strike, spare일 경우 다음 프레임 없으면 에러")
+    void calculateStrikeOrSpareScoreException() {
+        frame.secondBall(2);
+        assertThatThrownBy(() ->
+                frame.calculateFrameScore())
+                .isInstanceOf(CannotCalculateException.class);
     }
 
     @Test

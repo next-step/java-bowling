@@ -1,4 +1,4 @@
-package bowling;
+package bowling.service.exception;
 
 public class LeftFrameBallException extends RuntimeException{
 

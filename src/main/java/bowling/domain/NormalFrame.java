@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.LeftFrameBallException;
+import bowling.service.exception.CannotCalculateException;
 
 import java.util.Objects;
 
@@ -26,22 +26,36 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public void validateFrameScore() {
-        if (status == null) {
-            throw new LeftFrameBallException("프레임이 아직 끝나지 않았습니다.");
-        }
-    }
-
-    @Override
     public int calculateFrameScore() {
         validateFrameScore();
+
         TotalScore totalScore = score.createTotalScore(status);
 
         if (totalScore.canCalucateScore()) {
             return totalScore.getScore();
         }
 
+        validateNextFrame();
+
         return nextFrame.cacluateAdditionalScore(totalScore);
+    }
+
+    private void validateNextFrame() {
+        if (!isExistNextFrame()) {
+            throw new CannotCalculateException("다음 프레임이 존재하지 않아 계산할 수 없습니다.");
+        }
+    }
+
+    @Override
+    protected void validateFrameScore() {
+        if (status == null) {
+            throw new CannotCalculateException("프레임이 아직 끝나지 않았습니다.");
+        }
+    }
+
+    @Override
+    public Frame getNextFrame() {
+        return nextFrame;
     }
 
     @Override
@@ -53,11 +67,17 @@ public class NormalFrame extends Frame {
         }
 
         if (isStrike()) {
+            validateNextFrame();
             return nextFrame.cacluateAdditionalScore(totalScore);
         }
 
         totalScore.calculate(secondScore());
         return totalScore.getScore();
+    }
+
+    @Override
+    public boolean isExistNextFrame() {
+        return nextFrame != null;
     }
 
     public Frame nextFrame(int hitNumberOfPin) {
@@ -67,9 +87,11 @@ public class NormalFrame extends Frame {
 
         if (frameIndex.isBeforeFinalFrame()) {
             nextFrame = new FinalFrame(hitNumberOfPin);
+            nextFrame.prevFrame = this;
             return nextFrame;
         }
         nextFrame = new NormalFrame(hitNumberOfPin, frameIndex.getValue() + 1);
+        nextFrame.prevFrame = this;
         return nextFrame;
     }
 

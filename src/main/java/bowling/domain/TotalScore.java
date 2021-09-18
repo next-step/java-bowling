@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.service.exception.CannotCalculateException;
+
 public class TotalScore {
     private static final int STRIKE_LEFT = 2;
     private static final int SPARE_LEFT = 1;
