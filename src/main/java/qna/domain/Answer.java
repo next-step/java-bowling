@@ -45,11 +45,6 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
     }
@@ -79,7 +74,7 @@ public class Answer extends AbstractEntity {
         if (!isOwner(user)){
             throw new CannotDeleteException("답변 작성자만이 답변을 지울수 있습니다.");
         }
-        setDeleted(true);
+        this.deleted = true;
         return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
     }
 }

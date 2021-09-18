@@ -84,11 +84,6 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
     }
@@ -106,7 +101,7 @@ public class Question extends AbstractEntity {
         if (!isOwner(user)) {
             throw new CannotDeleteException("작성자만이 질문글을 삭제할수 있습니다.");
         }
-        setDeleted(true);
+        this.deleted = true;
         return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
     }
 }
