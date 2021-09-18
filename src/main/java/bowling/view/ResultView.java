@@ -1,8 +1,6 @@
 package bowling.view;
 
-import bowling.domain.Frame;
-import bowling.domain.NormalFrame;
-import bowling.domain.Player;
+import bowling.domain.*;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -28,9 +26,39 @@ public class ResultView {
 
     private static void printBottomBoard(Player player) {
         System.out.print(SEPARATOR + alignText(player.getName()) + SEPARATOR);
-        printScoreSectionBoard(player);
-        printEmptySectionBoard(player.getFrameIndex());
+        printPinSectionBoard(player);
+        printEmptySectionBoard(player.getFrameIndex() - 1);
         System.out.println();
+        int leftStartFrameIndex = printScoreSectionBoard(player);
+        printEmptySectionBoard(leftStartFrameIndex);
+        System.out.println();
+    }
+
+    private static int printScoreSectionBoard(Player player) {
+        System.out.print(SEPARATOR + alignText(BLANK) + SEPARATOR);
+        int totalScoreSum = 0;
+        int frameIndex = 1;
+
+        if (player.getFrameIndex() - 1 == Frame.EMPTY_FRAME) {
+            return Frame.EMPTY_FRAME;
+        }
+
+        Frame currentFrame = player.getFrame(frameIndex);
+        TotalScore totalScore = currentFrame.totalScore();
+
+        while (currentFrame != null && totalScore != null && totalScore.canCalucateScore()) {
+            totalScoreSum += totalScore.getScore();
+            System.out.print(alignText(Integer.toString(totalScoreSum)) + SEPARATOR);
+
+            currentFrame = currentFrame.getNextFrame();
+            if (currentFrame == null) {
+                break;
+            }
+            totalScore = currentFrame.totalScore();
+            frameIndex++;
+        }
+
+        return frameIndex;
     }
 
     private static void printEmptySectionBoard(int emptyFrameStartIndex) {
@@ -39,7 +67,7 @@ public class ResultView {
         }
     }
 
-    private static void printScoreSectionBoard(Player player) {
+    private static void printPinSectionBoard(Player player) {
         for (int i = 1; i < player.getFrameIndex(); i++) {
             printCurrentFrame(player, i);
         }

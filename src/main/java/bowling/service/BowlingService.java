@@ -27,13 +27,17 @@ public class BowlingService {
 
         NormalFrame nextFrame = (NormalFrame) frame.nextFrame(hitNumberOfPin);
         player.addFrame(nextFrame);
+        nextFrame.calculateFrame();
         ResultView.printScoreBoard(player);
 
-        if (!nextFrame.isStrike()) {
-            hitNumberOfPin = InputView.hitNumberOfPin(nextFrameIndex);
-            nextFrame.secondBall(hitNumberOfPin);
-            ResultView.printScoreBoard(player);
+        if (nextFrame.isStrike()) {
+            return nextFrame;
         }
+
+        hitNumberOfPin = InputView.hitNumberOfPin(nextFrameIndex);
+        nextFrame.secondBall(hitNumberOfPin);
+        nextFrame.calculateFrame();
+        ResultView.printScoreBoard(player);
 
         return nextFrame;
     }
@@ -44,15 +48,18 @@ public class BowlingService {
 
         FinalFrame finalFrame = (FinalFrame) frame.nextFrame(hitNumberOfPin);
         player.addFrame(finalFrame);
+        finalFrame.calculateFrame();
         ResultView.printScoreBoard(player);
 
         hitNumberOfPin = InputView.hitNumberOfPin(currentFrameIndex);
         finalFrame.secondBall(hitNumberOfPin);
+        finalFrame.calculateFrame();
         ResultView.printScoreBoard(player);
 
         if (finalFrame.isStrike() || finalFrame.isSpare()) {
             hitNumberOfPin = InputView.hitNumberOfPin(currentFrameIndex);
             finalFrame.finalBall(hitNumberOfPin);
+            finalFrame.calculateFrame();
             ResultView.printScoreBoard(player);
         }
     }
