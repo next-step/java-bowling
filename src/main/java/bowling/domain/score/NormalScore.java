@@ -1,5 +1,8 @@
 package bowling.domain.score;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 public class NormalScore extends Score {
@@ -7,7 +10,7 @@ public class NormalScore extends Score {
     private final boolean isDone;
 
     private NormalScore(int score, boolean isDone) {
-        super(score, 0);
+        super(score, -1);
         this.isDone = isDone;
     }
 
@@ -16,8 +19,8 @@ public class NormalScore extends Score {
         this.isDone = isDone;
     }
 
-    public static NormalScore start() {
-        return new NormalScore(0, 0, false);
+    public static NormalScore init() {
+        return new NormalScore(NONE, NONE, false);
     }
 
     public static NormalScore first(int score) {
@@ -31,24 +34,20 @@ public class NormalScore extends Score {
         return new NormalScore(this.first, score, true);
     }
 
-    public static NormalScore none() {
-        return new NormalScore(0, 0, true);
-    }
-
-    public static boolean isNone(NormalScore score) {
-        return none().equals(score);
-    }
-
     public boolean isDone() {
         return isDone;
     }
 
-
     @Override
     protected void validateCombinedScores(int score) {
-        if (this.first + score > MAX_SCORE) {
+        if (this.first + score > MAX) {
             throw new IllegalArgumentException("1차시도와 2차시도의 합계는 10점을 넘을 수 없습니다.");
         }
+    }
+
+    @Override
+    public List<Integer> getAll() {
+        return Collections.unmodifiableList(Arrays.asList(first, second));
     }
 
     @Override

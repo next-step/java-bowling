@@ -1,8 +1,12 @@
 package bowling.domain.score;
 
+import java.util.List;
+
 public abstract class Score {
 
-    protected static final int MAX_SCORE = 10;
+    protected static final int NONE = -1;
+
+    protected static final int MAX = 10;
 
     protected final int first;
 
@@ -21,16 +25,18 @@ public abstract class Score {
 
     protected abstract void validateCombinedScores(int scores);
 
+    public abstract List<Integer> getAll();
+
     private static boolean outOfRange(int score) {
-        return score < 0 || score > MAX_SCORE;
+        return score < 0 || score > MAX;
     }
 
     public boolean isStrike() {
-        return first == MAX_SCORE;
+        return first == MAX;
     }
 
     public boolean isSpare() {
-        return !isStrike() && first + second == MAX_SCORE;
+        return !isStrike() && first + second == MAX;
     }
 
     public boolean isFirstTryNoPoint() {

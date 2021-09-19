@@ -1,7 +1,9 @@
 package bowling.domain.frame;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class NormalFrames {
 
@@ -23,19 +25,9 @@ public class NormalFrames {
         return new NormalFrames(Arrays.asList(normalFrames));
     }
 
-    public List<NormalFrame> getAll() {
-        return Collections.unmodifiableList(normalFrames);
-    }
-
     public NormalFrames add(NormalFrame normalFrame) {
         normalFrames.add(normalFrame);
         return this;
-    }
-
-    public NormalFrames findByFrame(int frame) {
-        return normalFrames.stream()
-                .filter(normalFrame -> normalFrame.isFrame(frame))
-                .collect(Collectors.collectingAndThen(Collectors.toList(), NormalFrames::new));
     }
 
     @Override

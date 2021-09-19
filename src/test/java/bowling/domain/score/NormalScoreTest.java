@@ -20,14 +20,6 @@ public class NormalScoreTest {
     }
 
     @Test
-    public void 없는_숫자를_생성할_수_있다() {
-        //given
-        //when
-        //then
-        assertTrue(NormalScore.isNone(NormalScore.none()));
-    }
-
-    @Test
     public void NormalScore의_첫번째가_10점이면_스트라이크이다() {
         //given
         //when

@@ -6,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,15 +20,15 @@ public class FinalFrameTest {
         //given
         //when
         //then
-        assertThat(FinalFrame.init()).isEqualTo(FinalFrame.init());
+        assertThat(FinalFrame.start(1)).isEqualTo(FinalFrame.start(1));
     }
 
     @Test
     public void 첫번째_시도후_다음시도를_할_수_있다() {
         //given
-        FinalFrame frame = FinalFrame.init().tryFirst(8);
+        Frame frame = FinalFrame.start(8);
         //when
-        frame = frame.trySecond(2);
+        frame = frame.tryNext(2);
         //then
         assertThat(frame).isEqualTo(FinalFrame.of(FinalScore.first(8).second(2), 2, true, false));
     }
@@ -36,9 +37,9 @@ public class FinalFrameTest {
     @MethodSource
     public void 두번째_시도후_시도의_합이_10이상이면_세번째_시도를_할_수_있다(int first, int second) {
         //given
-        FinalFrame frame = FinalFrame.init().tryFirst(first).trySecond(second);
+        Frame frame = FinalFrame.start(first).tryNext(second);
         //when
-        frame = frame.tryThird(10);
+        frame = frame.tryNext(10);
         //then
         assertThat(frame).isEqualTo(
                 FinalFrame.of(FinalScore.first(first).second(second).third(10), 3, false, true));
@@ -57,13 +58,13 @@ public class FinalFrameTest {
     @MethodSource
     public void 두번째_시도후_시도의_합이_10이상이면_세번째_시도_후_끝났음을_알_수_있다(int first, int second) {
         //given
-        FinalFrame frame = FinalFrame.init().tryFirst(first).trySecond(second);
+        Frame frame1 = FinalFrame.start(first).tryNext(second);
+        Frame frame2 = FinalFrame.start(first).tryNext(second).tryNext(3);
         //when
-        FinalFrame lastFrame = frame.tryThird(10);
         //then
         assertAll(
-                () -> assertFalse(frame.isLast()),
-                () -> assertTrue(lastFrame.isLast())
+                () -> assertFalse(frame1.isLast()),
+                () -> assertTrue(frame2.isLast())
         );
     }
 
@@ -81,7 +82,7 @@ public class FinalFrameTest {
     public void 두번째_시도후_시도의_합이_10보다_작으면_두번째_시도_후_끝났음을_알_수_있다(int first, int second) {
         //given
         //when
-        FinalFrame frame = FinalFrame.init().tryFirst(first).trySecond(second);
+        Frame frame = FinalFrame.start(first).tryNext(second);
         //then
         assertTrue(frame.isLast());
     }
@@ -93,6 +94,17 @@ public class FinalFrameTest {
                 Arguments.of(2, 7),
                 Arguments.of(3, 3)
         );
+    }
+
+    @Test
+    public void 한_프레임의_모든점수를_가져올_수_있다() {
+        //given
+        Frame frame = FinalFrame.start(10).tryNext(9).tryNext(10);
+        //when
+        List<Integer> scores = frame.getAllScores();
+        //then
+        assertThat(scores).containsExactly(10, 9, 10);
+
     }
 
 }

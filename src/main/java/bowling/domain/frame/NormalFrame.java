@@ -1,12 +1,16 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.NormalScore;
+import bowling.domain.score.Score;
 
+import java.util.List;
 import java.util.Objects;
 
 public class NormalFrame extends Frame {
 
-    private static final int LAST_ROUND = 9;
+    private static final int FIRST_IDX = 1;
+
+    private static final int LAST = 9;
 
     private final int index;
 
@@ -18,66 +22,55 @@ public class NormalFrame extends Frame {
         this.score = score;
     }
 
-    public static NormalFrame init() {
-        return of(0, NormalScore.start(), 1);
+    public static NormalFrame start(int score) {
+        return of(FIRST_IDX, NormalScore.first(score), FIRST_TRIAL);
     }
 
     protected static NormalFrame of(int index, NormalScore score, int trial) {
         return new NormalFrame(index, score, trial);
     }
 
-    public NormalScore score() {
+    public Score score() {
         return score;
     }
 
-    public int nextIndex() {
-
-        if (isSecondTry()) {
-            return index + 2;
+    @Override
+    public int next() {
+        if (isNowFirstTry() && !this.score.isStrike()) {
+            return index;
         }
-
-        if (score.isStrike()) {
-            return index + 2;
-        }
-
         return index + 1;
-
     }
 
-    public NormalFrame tryFirst(int score) {
-        return of(index + 1, NormalScore.first(score), 1);
-    }
-
-
-    public NormalFrame trySecond(int score) {
-        this.score = this.score.second(score);
-        this.trial = 2;
-        return this;
+    @Override
+    public List<Integer> getAllScores() {
+        return score.getAll();
     }
 
     @Override
     public boolean isLast() {
-        if (index > LAST_ROUND) {
-            return true;
+        if (index == LAST) {
+            return score.isStrike() || isNowSecondTry();
         }
+        return index > LAST;
+    }
 
-        if (index == LAST_ROUND) {
-            return isNowFrameDone();
+    @Override
+    public Frame tryNext(int score) {
+        if (isNowFirstTry() && !this.score.isStrike()) {
+            return trySecond(score);
         }
-
-        return false;
+        return tryFirst(index + 1, score);
     }
 
-    public boolean isFrame(int frame) {
-        return this.index == frame;
+    private NormalFrame tryFirst(int index, int score) {
+        return new NormalFrame(index, NormalScore.first(score), FIRST_TRIAL);
     }
 
-    public boolean isNowFrameDone() {
-        return score.isStrike() || isSecondTry();
-    }
-
-    private boolean isSecondTry() {
-        return trial == 2;
+    private NormalFrame trySecond(int score) {
+        this.score = this.score.second(score);
+        this.trial = SECOND_TRIAL;
+        return this;
     }
 
     @Override
