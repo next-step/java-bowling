@@ -2,6 +2,7 @@ package qna.domain;
 
 import qna.ForbiddenException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Answers {
@@ -24,14 +25,17 @@ public class Answers {
         return deleted;
     }
 
-    public void delete(User loginUser) {
+    public List<DeleteHistory> delete(User loginUser) {
 
-        if (answers.stream().filter(answer -> !answer.isOwner(loginUser)).findFirst().isPresent()) {
+        if (answers.stream().anyMatch(answer -> !answer.isOwner(loginUser))) {
             throw new ForbiddenException("본인이 작성하지 않은 답변이 있어서, 삭제할 수 없습니다");
         }
 
-        answers.stream().forEach(answer -> answer.setDeleted(true));
-
+        answers.forEach(answer -> answer.setDeleted(true));
         setDeleted(true);
+
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        answers.forEach(answer -> deleteHistories.add(new DeleteHistory(answer)));
+        return deleteHistories;
     }
 }

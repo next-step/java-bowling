@@ -3,6 +3,7 @@ package qna.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
+import qna.ForbiddenException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -29,7 +30,7 @@ public class QuestionTest {
     @DisplayName("로그인 유저와 질문자가 같고 답변이 있고, 답변자가 다르면 에러")
     public void delete_question_answer_fail() {
         Q1.addAnswer(AnswerTest.A2);
-        assertThatThrownBy(() -> Q1.delete(UserTest.JAVAJIGI)).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> Q1.delete(UserTest.JAVAJIGI)).isInstanceOf(ForbiddenException.class);
     }
 
 
