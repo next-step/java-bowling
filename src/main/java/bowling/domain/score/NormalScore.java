@@ -19,9 +19,6 @@ public class NormalScore extends Score {
         this.isDone = isDone;
     }
 
-    public static NormalScore init() {
-        return new NormalScore(NONE, NONE, false);
-    }
 
     public static NormalScore first(int score) {
         validateScore(score);
@@ -32,10 +29,6 @@ public class NormalScore extends Score {
         validateScore(score);
         validateCombinedScores(score);
         return new NormalScore(this.first, score, true);
-    }
-
-    public boolean isDone() {
-        return isDone;
     }
 
     @Override

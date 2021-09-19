@@ -14,10 +14,6 @@ public abstract class Frame {
         this.trial = trial;
     }
 
-    public int getTrial() {
-        return trial;
-    }
-
     public boolean isNowFirstTry() {
         return trial == FIRST_TRIAL;
     }

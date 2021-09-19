@@ -33,10 +33,6 @@ public class FinalScore extends Score {
         return new FinalScore(getFirst(), getSecond(), score);
     }
 
-    public int getThird() {
-        return third;
-    }
-
     @Override
     public List<Integer> getAll() {
         return Collections.unmodifiableList(Arrays.asList(first, second, third));
