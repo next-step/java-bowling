@@ -14,7 +14,7 @@ class PlayerTest {
     @Test
     void isFinish() {
         Player player = new Player("KAJ");
-        assertThat(player.isFinish()).isFalse();
+        assertThat(player.finish()).isFalse();
     }
 
     @Test

@@ -1,12 +1,15 @@
 package bowling.domain.state;
 
-import bowling.domain.Pin;
-import bowling.domain.Score;
+import bowling.domain.score.Pin;
+import bowling.domain.score.Score;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Objects;
 
 public abstract class State {
+    protected static final int MAX_PIN_NO = 10;
+    protected static final int MISS_BONUS_NO = 0;
+
     protected Pin firstPin;
     protected Pin secondPin;
     protected Score score;
