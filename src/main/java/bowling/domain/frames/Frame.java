@@ -73,7 +73,7 @@ public abstract class Frame {
         return this.scores.size() >= 1 && !this.isFinish;
     }
 
-    public int total(final Frame nextFrame) {
+    public int score(final Frame nextFrame) {
         if (isStrike()) {
             return totalScore() + nextFrame.totalScore();
         }

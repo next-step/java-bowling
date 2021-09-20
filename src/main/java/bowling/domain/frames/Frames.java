@@ -49,41 +49,13 @@ public class Frames {
     }
 
     private int score(final int index) {
-
-        Frame currentFrame = this.frames.get(index);
-        Frame nextFrame = this.frames.get(index + 1);
-
-        if (!currentFrame.isFinish()) {
-            return 0;
-        }
-
-        if (!nextFrame.isFinish()) {
-            if (currentFrame.isSpare()) {
-                if (nextFrame.isInProgress() && !nextFrame.isStrike()) {
-                    return currentFrame.total(nextFrame);
-                }
-                return 0;
-            }
-            if (currentFrame.isStrike()) {
-                return 0;
-            }
-        }
-        if (currentFrame.isStrike() && nextFrame.isStrike()) {
-            return 0;
-        }
-
-        return currentFrame.total(nextFrame);
+        Frame currentFrame = frames.get(index);
+        Frame nextFrame = frames.get(index + 1);
+        return currentFrame.score(nextFrame);
     }
 
     public int total(final int index) {
-        int total = IntStream.range(0, index)
-                .map(this::score)
-                .sum();
-
-        Frame currentFrame = this.frames.get(index);
-        Frame nextFrame = this.frames.get(index + 1);
-
-        return total + currentFrame.total(nextFrame);
+        return IntStream.rangeClosed(0, index).map(this::score).sum();
     }
 
     private Frame currentFrame() {

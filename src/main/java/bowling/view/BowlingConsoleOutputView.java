@@ -45,11 +45,26 @@ public class BowlingConsoleOutputView {
         for (int i = 0; i < frames.elements().size() - 1; i++) {
             int total = frames.total(i);
 
+            Frame currentFrame = frames.elements().get(i);
+            Frame nextFrame = frames.elements().get(i + 1);
+
             if (frames.lastFinishIndex() <= i) {
                 System.out.print("      |");
-            } else {
-                System.out.printf("  %d  |", total);
+                continue;
             }
+
+            if (currentFrame.isSpare() && nextFrame.isInProgress() && !nextFrame.isStrike()) {
+                System.out.printf("  %d  |", total);
+                continue;
+            }
+
+            if (!nextFrame.isFinish() && (currentFrame.isStrike() || currentFrame.isSpare())) {
+                System.out.print("      |");
+                continue;
+            }
+
+            System.out.printf("  %d  |", total);
+
         }
         System.out.print("      |");
         System.out.println();
