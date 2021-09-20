@@ -65,8 +65,34 @@ public abstract class Frame {
         return this.scores;
     }
 
-    protected boolean isFinish() {
+    public boolean isFinish() {
         return this.isFinish;
+    }
+
+    public boolean isInProgress() {
+        return this.scores.size() >= 1 && !this.isFinish;
+    }
+
+    public int total(final Frame nextFrame) {
+        if (isStrike()) {
+            return totalScore() + nextFrame.totalScore();
+        }
+        if (isSpare()) {
+            return totalScore() + nextFrame.firstScore();
+        }
+        return totalScore();
+    }
+
+    private int firstScore() {
+        return this.scores.elements()
+                .stream()
+                .findFirst()
+                .orElse(Score.ZERO)
+                .getNumberOfPins();
+    }
+
+    private int totalScore() {
+        return this.scores.downPins();
     }
 
     @Override
