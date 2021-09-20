@@ -42,52 +42,17 @@ public class BowlingConsoleOutputView {
     private void printScoreFrames(final Frames frames) {
         System.out.print("|      |");
 
-        List<Frame> elements = frames.elements();
+        for (int i = 0; i < frames.elements().size() - 1; i++) {
+            int total = frames.total(i);
 
-        int total = 0;
-
-        for (int i = 0; i < elements.size() - 1; i++) {
-            Frame currentFrame = elements.get(i);
-            Frame nextFrame = elements.get(i + 1);
-
-            printScoreFrame(total, currentFrame, nextFrame);
-
-
-            total += currentFrame.total(nextFrame);
+            if (frames.lastFinishIndex() <= i) {
+                System.out.print("      |");
+            } else {
+                System.out.printf("  %d  |", total);
+            }
         }
         System.out.print("      |");
         System.out.println();
-
-    }
-
-    private void printScoreFrame(final int total, final Frame currentFrame, final Frame nextFrame) {
-        if (!currentFrame.isFinish()) {
-            System.out.print("      |");
-            return;
-        }
-
-        if (!nextFrame.isFinish()) {
-
-            // 현재가 스페어 이면서, 다음이 진행중이고 다음이 스트라이크가 아니면
-
-            if (currentFrame.isSpare()) {
-                if (nextFrame.isInProgress() && !nextFrame.isStrike()) {
-                    System.out.printf("  %d  |", total + currentFrame.total(nextFrame));
-                    return;
-                }
-                System.out.print("      |");
-                return;
-            }
-            if (currentFrame.isStrike()) {
-                System.out.print("      |");
-                return;
-            }
-        }
-        if (currentFrame.isStrike() && nextFrame.isStrike()) {
-            System.out.print("      |");
-            return;
-        }
-        System.out.printf("  %d  |", total + currentFrame.total(nextFrame));
     }
 
     private void printStatusFrame(final Frame frame) {
