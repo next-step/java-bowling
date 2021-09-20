@@ -26,8 +26,8 @@ public abstract class Frame {
         checkFinishFrame();
         checkValidNextScore(score);
         this.scores.roll(score);
-        if (isEnd()) {
-            isFinish = true;
+        if (isFinishGame()) {
+            this.isFinish = true;
         }
     }
 
@@ -37,7 +37,7 @@ public abstract class Frame {
         }
     }
 
-    protected abstract boolean isEnd();
+    protected abstract boolean isFinishGame();
 
     protected abstract boolean isOverAttempts();
 
@@ -62,11 +62,11 @@ public abstract class Frame {
     }
 
     public Scores getScores() {
-        return scores;
+        return this.scores;
     }
 
-    public boolean isFinish() {
-        return isFinish;
+    protected boolean isFinish() {
+        return this.isFinish;
     }
 
     @Override

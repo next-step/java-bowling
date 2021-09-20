@@ -21,7 +21,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    protected boolean isEnd() {
+    protected boolean isFinishGame() {
         if (isOverAttempts()) {
             return true;
         }

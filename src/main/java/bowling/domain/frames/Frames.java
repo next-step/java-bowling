@@ -11,19 +11,13 @@ import java.util.Objects;
 public class Frames {
 
     private List<Frame> frames;
-    private boolean isFinish;
 
     public Frames() {
-        this(init(), false);
+        this(init());
     }
 
-    public Frames(final boolean isFinish) {
-        this.isFinish = isFinish;
-    }
-
-    public Frames(final List<Frame> frames, final boolean isFinish) {
+    public Frames(final List<Frame> frames) {
         this.frames = frames;
-        this.isFinish = isFinish;
     }
 
     private static List<Frame> init() {
@@ -38,24 +32,30 @@ public class Frames {
     public void roll(final Score score) {
         checkFinishGame();
 
-        Frame currentFrame = frames.stream()
-                .filter(frame -> !frame.isFinish())
-                .findFirst()
-                .orElseThrow(FinishGameException::new);
-
+        Frame currentFrame = currentFrame();
         currentFrame.roll(score);
-
-        this.isFinish = this.frames.stream().allMatch(Frame::isFinish);
     }
 
     private void checkFinishGame() {
-        if (this.isFinish) {
+        if (this.isFinish()) {
             throw new FinishGameException();
         }
     }
 
+    public int lastFinishIndex() {
+        Frame currentFrame = currentFrame();
+        return frames.indexOf(currentFrame);
+    }
+
+    private Frame currentFrame() {
+        return frames.stream()
+                .filter(frame -> !frame.isFinish())
+                .findFirst()
+                .orElseThrow(FinishGameException::new);
+    }
+
     public boolean isFinish() {
-        return this.isFinish;
+        return this.frames.stream().allMatch(Frame::isFinish);
     }
 
     public List<Frame> elements() {
@@ -66,7 +66,6 @@ public class Frames {
     public String toString() {
         return "Frames{" +
                 "frames=" + frames +
-                ", isFinish=" + isFinish +
                 '}';
     }
 
@@ -75,11 +74,11 @@ public class Frames {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Frames frames1 = (Frames) o;
-        return isFinish == frames1.isFinish && Objects.equals(frames, frames1.frames);
+        return Objects.equals(frames, frames1.frames);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frames, isFinish);
+        return Objects.hash(frames);
     }
 }

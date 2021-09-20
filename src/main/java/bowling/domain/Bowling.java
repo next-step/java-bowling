@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.exception.FinishGameException;
-import bowling.domain.frames.Frame;
 import bowling.domain.frames.Frames;
 
 import java.util.Objects;
@@ -30,12 +28,7 @@ public class Bowling {
     }
 
     public int lastFinishIndex() {
-        Frame currentFrame = frames.elements()
-                .stream()
-                .filter(frame -> !frame.isFinish())
-                .findFirst()
-                .orElseThrow(FinishGameException::new);
-        return frames.elements().indexOf(currentFrame);
+        return this.frames.lastFinishIndex();
     }
 
     public Name getName() {
@@ -43,7 +36,7 @@ public class Bowling {
     }
 
     public Frames getFrames() {
-        return new Frames(frames.elements(), frames.isFinish());
+        return new Frames(frames.elements());
     }
 
     @Override

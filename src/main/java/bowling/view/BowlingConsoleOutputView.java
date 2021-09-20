@@ -36,16 +36,18 @@ public class BowlingConsoleOutputView {
     }
 
     private void printFrame(final Frame frame) {
-        String scoresText = toScoresText(frame.getScores());
-        if (frame.getScores().size() == 1) {
+        Scores scores = frame.getScores();
+        String scoresText = toScoresText(scores);
+
+        if (scores.size() == 1) {
             System.out.print(changeNumberToCharacter(firstBall(scoresText)));
             return;
         }
-        if (frame.getScores().size() == 2) {
+        if (scores.size() == 2) {
             System.out.print(changeNumberToCharacter(secondBall(scoresText)));
             return;
         }
-        if (frame.getScores().size() == 3) {
+        if (scores.size() == 3) {
             System.out.print(changeNumberToCharacter(lastBall(scoresText)));
             return;
         }

@@ -5,6 +5,8 @@ import bowling.domain.exception.FinishGameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.IntStream;
+
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -19,8 +21,13 @@ class FramesTest {
     @Test
     @DisplayName("finish 에서 투구할 경우 에러")
     void roll_finish_exception() {
-        Frames frames = new Frames(true);
+        Frames frames = new Frames();
+        finishGame(frames);
         assertThrows(FinishGameException.class, () -> frames.roll(Score.ONE));
     }
 
+    private void finishGame(final Frames frames) {
+        IntStream.range(0, 12)
+                .forEach(i -> frames.roll(Score.TEN));
+    }
 }
