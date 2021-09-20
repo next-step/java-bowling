@@ -17,7 +17,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    protected boolean isFinishGame() {
+    protected boolean isFinishFrame() {
         if (isOverAttempts()) {
             return true;
         }
