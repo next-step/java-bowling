@@ -239,7 +239,7 @@ public class QnAService {
     frame.bowl(10);
     frame.bowl(8);
     frame.bowl(2);
-    int score = frame.getScore();
+    int score =정 frame.getScore();
     // score는 20을 반환해야 한다.
     ```
 - 자바의 다형성을 적용해 로직 구현에서 발생하는 수 많은 if/else를 제거한다.
@@ -249,8 +249,26 @@ public class QnAService {
 ### 2. 기능 분석 (Domain 설계)
 - 각 Frame 점수의 경우 score 를 통해 이전 step 에서 구현 
 - 누적점수가 필요하므로 Frame 내 totalScore 추가 구현 필요
-5. Frame(추가 사항)
+1. Frame(추가 사항)
     1. 속성
         - `Frame beforeFrame`
     2. 메서드
         - `int totalScore()`
+2. Status(enum) - frame 의 상태를 알려주는 enum
+    1. enum
+        - STRIKE
+        - SPARE
+        - MISS
+        - NULL
+    2. 속성
+        - Score interface 구현체
+    3. 메서드
+        - `Status of(Pitching firstPitching, Pitching secondPitching`
+3. Score interface 및 구현체들
+    1. 구현체
+        - StrikeScore
+        - SpareScore
+        - MissScore
+        - NullScore
+    2. 메서드
+        - `int score()`
