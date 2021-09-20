@@ -7,7 +7,10 @@ import bowling.view.ResultView;
 public class BowlingGame {
 
     public static void main(String[] args) {
-        ResultView.startBowlingGame(InputView.players());
+
+        Players players = InputView.players();
+
+        ResultView.startBowlingGame(players, Frames.listOf(players.countOfPlayers()));
     }
 }
 

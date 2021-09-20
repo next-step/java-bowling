@@ -2,7 +2,6 @@ package bowling.view;
 
 import bowling.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -10,33 +9,27 @@ import static bowling.CommonConstans.*;
 
 public class ResultView {
 
-
-    private static List<Frames> frames = new ArrayList<>();
-
-
-    public static void startBowlingGame(Players bowlingPlayers) {
-        Players players = bowlingPlayers;
-
-        IntStream.range(ZERO, players.countOfPlayers())
-                .forEach(countOfFrames -> frames.add(Frames.init()));
+    public static void startBowlingGame(Players players, List<Frames> frames) {
 
         bowlingBoard(players, Frames.init());
 
 
         IntStream.range(0, LAST_FRAME_NUMBER)
-                .forEach(frameIndex -> players.forEach(user -> bowlingPlay(frameIndex, players, user)));
+                .forEach(frameIndex -> players.forEach(player -> bowlingPlay(frames, players, player)));
     }
 
-    public static void bowlingPlay(int frameIndex, Players players, Player player) {
+    public static void bowlingPlay(List<Frames> frames, Players players, Player player) {
         int playerIndex = players.index(player);
 
-        while (!frames.get(playerIndex).isFrameCompleted(frameIndex)) {
+        for (int i = 0; i < LAST_FRAME_NUMBER; i++) {
+            if (!frames.get(playerIndex).isFrameCompleted(i)) {
 
-            frames.set(playerIndex, frames.get(playerIndex).play(InputView.score()));
+                frames.set(playerIndex, frames.get(playerIndex).play(InputView.score()));
 
-            scorePrint(player, frames.get(playerIndex));
+                scorePrint(player, frames.get(playerIndex));
 
-            bowlingBoard(players, frames.get(playerIndex));
+                bowlingBoard(players, frames.get(playerIndex));
+            }
         }
     }
 
