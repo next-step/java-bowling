@@ -3,14 +3,13 @@ package bowling.domain.frames;
 import bowling.domain.Score;
 import bowling.domain.Scores;
 import bowling.domain.exception.FinishFrameException;
-import bowling.domain.exception.IncorrectNumberOfPinsException;
 
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Frame {
 
-    public static final int NUMBER_OF_PINS = 10;
+    protected static final int NUMBER_OF_PINS = 10;
 
     protected Scores scores;
     protected boolean isFinish;
@@ -24,41 +23,25 @@ public abstract class Frame {
     }
 
     public void roll(final Score score) {
-        this.checkFinish();
-        this.checkPossibleRoll(score);
+        checkFinishFrame();
+        checkValidNextScore(score);
         this.scores.roll(score);
-        this.finish();
-    }
-
-    abstract void checkPossibleRoll(final Score score);
-
-    abstract boolean isPossibleToAttempts();
-
-    abstract boolean isPossibleNextRoll();
-
-    abstract void finish();
-
-    public void checkPossibleSecondRoll(final Score score) {
-        if (this.scores.size() == 1) {
-            int pins = this.scores.downPins() + score.getNumberOfPins();
-            checkIncorrectNumberOfPins(pins);
+        if (isEnd()) {
+            isFinish = true;
         }
     }
 
-    private void checkIncorrectNumberOfPins(final int pins) {
-        if (isStrike()) {
-            return;
-        }
-        if (pins > NUMBER_OF_PINS || pins < 0) {
-            throw new IncorrectNumberOfPinsException();
-        }
-    }
-
-    private void checkFinish() {
+    private void checkFinishFrame() {
         if (this.isFinish) {
             throw new FinishFrameException();
         }
     }
+
+    protected abstract boolean isEnd();
+
+    protected abstract boolean isOverAttempts();
+
+    protected abstract void checkValidNextScore(final Score score);
 
     public boolean isSpare() {
         List<Score> elements = this.scores.elements();

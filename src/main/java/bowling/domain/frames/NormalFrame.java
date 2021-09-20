@@ -1,10 +1,12 @@
 package bowling.domain.frames;
 
 import bowling.domain.Score;
+import bowling.domain.exception.IncorrectNumberOfPinsException;
 
 public class NormalFrame extends Frame {
 
     private static final int FRAME_MAX_ATTEMPTS = 2;
+    private static final int TWO_STRIKES = 20;
 
     public NormalFrame() {
         super();
@@ -15,33 +17,29 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    void checkPossibleRoll(final Score score) {
-        checkPossibleSecondRoll(score);
-    }
-
-    @Override
-    public void finish() {
-        if (!isPossibleToAttempts()) {
-            super.isFinish = true;
+    protected boolean isEnd() {
+        if (isOverAttempts()) {
+            return true;
         }
-        if (!isPossibleNextRoll()) {
-            super.isFinish = true;
-        }
-    }
-
-    @Override
-    public boolean isPossibleNextRoll() {
         if (isSpare()) {
-            return false;
+            return true;
         }
-        if (isStrike()) {
-            return false;
-        }
-        return true;
+        return isStrike();
     }
 
     @Override
-    public boolean isPossibleToAttempts() {
-        return this.scores.size() < FRAME_MAX_ATTEMPTS;
+    public void checkValidNextScore(final Score nextScore) {
+        int nextDownPins = this.scores.downPins() + nextScore.getNumberOfPins();
+        if (nextDownPins == TWO_STRIKES) {
+            return;
+        }
+        if (nextDownPins > NUMBER_OF_PINS || nextDownPins < 0) {
+            throw new IncorrectNumberOfPinsException();
+        }
+    }
+
+    @Override
+    public boolean isOverAttempts() {
+        return this.scores.size() >= FRAME_MAX_ATTEMPTS;
     }
 }
