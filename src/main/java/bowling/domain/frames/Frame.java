@@ -43,6 +43,10 @@ public abstract class Frame {
 
     protected abstract void checkValidNextScore(final Score score);
 
+    public int numberOfRollAttempts() {
+        return this.scores.size();
+    }
+
     public boolean isSpare() {
         List<Score> elements = this.scores.elements();
         if (elements.size() < 2) {
@@ -69,29 +73,7 @@ public abstract class Frame {
         return this.isFinish;
     }
 
-    public boolean isInProgress() {
-        return this.scores.size() >= 1 && !this.isFinish;
-    }
-
-    public int score(final Frame nextFrame) {
-        if (isStrike()) {
-            return totalScore() + nextFrame.totalScore();
-        }
-        if (isSpare()) {
-            return totalScore() + nextFrame.firstScore();
-        }
-        return totalScore();
-    }
-
-    private int firstScore() {
-        return this.scores.elements()
-                .stream()
-                .findFirst()
-                .orElse(Score.ZERO)
-                .getNumberOfPins();
-    }
-
-    private int totalScore() {
+    public int totalScore() {
         return this.scores.downPins();
     }
 

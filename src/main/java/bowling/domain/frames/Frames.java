@@ -32,7 +32,6 @@ public class Frames {
 
     public void roll(final Score score) {
         checkFinishGame();
-
         Frame currentFrame = currentFrame();
         currentFrame.roll(score);
     }
@@ -48,14 +47,55 @@ public class Frames {
         return frames.indexOf(currentFrame);
     }
 
-    private int score(final int index) {
-        Frame currentFrame = frames.get(index);
-        Frame nextFrame = frames.get(index + 1);
-        return currentFrame.score(nextFrame);
+    // 스트라이크 -> 이후의 두번의 슈팅이 있어야 점수 계산 완료
+    // 스페어 -> 이후 한번의 슈팅이 있어야 점수 계산 완료
+    // 슈팅 횟수를 알려면
+    public boolean isScoresAddedUp(final int index) {
+        Frame currentFrame = this.frames.get(index);
+
+        int currentFrameAfterRollSize = currentFrame.numberOfRollAttempts();
+
+        if (index <= 8) {
+            Frame nextFrame = this.frames.get(index + 1);
+            currentFrameAfterRollSize += nextFrame.numberOfRollAttempts();
+        }
+        if (index <= 7) {
+            Frame nextNextFrame = this.frames.get(index + 2);
+            currentFrameAfterRollSize += nextNextFrame.numberOfRollAttempts();
+        }
+
+        if ((currentFrame.isStrike() || currentFrame.isSpare()) && currentFrameAfterRollSize >= 3) {
+            return true;
+        }
+
+        return !(currentFrame.isSpare() || currentFrame.isStrike()) && currentFrame.isFinish;
     }
 
-    public int total(final int index) {
-        return IntStream.rangeClosed(0, index).map(this::score).sum();
+    private int score(final int index) {
+        Frame currentFrame = index >= 10 ? new FinalFrame() : frames.get(index);
+        Frame nextFrame = index >= 9 ? new FinalFrame() : frames.get(index + 1);
+        Frame nextNextFrame = index >= 8 ? new FinalFrame() : frames.get(index + 2);
+
+        if (currentFrame.isStrike() && nextFrame.isStrike()) {
+            return currentFrame.totalScore() + nextFrame.totalScore() + nextNextFrame.totalScore();
+        }
+        if (currentFrame.isStrike()) {
+            return currentFrame.totalScore() + nextFrame.totalScore();
+        }
+        if (currentFrame.isSpare() && nextFrame.isStrike()) {
+            return currentFrame.totalScore() + nextFrame.firstScore() + nextNextFrame.totalScore();
+        }
+        if (currentFrame.isSpare()) {
+            return currentFrame.totalScore() + nextFrame.firstScore();
+        }
+        return currentFrame.totalScore();
+    }
+
+    public String total(final int index) {
+        int sum = IntStream.rangeClosed(0, index)
+                .map(this::score)
+                .sum();
+        return sum + "";
     }
 
     private Frame currentFrame() {
