@@ -33,11 +33,6 @@ public class FinalFrame extends Frame {
         return of(FinalScore.first(score), 1, false, false);
     }
 
-
-    public FinalScore getScore() {
-        return score;
-    }
-
     @Override
     public int next() {
         return IDX;
@@ -46,6 +41,11 @@ public class FinalFrame extends Frame {
     @Override
     public List<Integer> getAllScores() {
         return score.getAll();
+    }
+
+    @Override
+    public int calculateScore() {
+        return 0;
     }
 
     @Override
@@ -59,6 +59,21 @@ public class FinalFrame extends Frame {
     @Override
     public boolean isLast() {
         return !status.isThirdAvailable() && status.isDone();
+    }
+
+    @Override
+    protected int addWithFirstScore(int score) {
+        return this.score.getFirst() + score;
+    }
+
+    @Override
+    protected int getTotalScore() {
+        return 0;
+    }
+
+    @Override
+    protected Frame getNextFrame() {
+        return null;
     }
 
     private FinalFrame trySecond(int score) {

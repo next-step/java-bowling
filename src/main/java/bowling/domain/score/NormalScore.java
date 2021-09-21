@@ -31,6 +31,17 @@ public class NormalScore extends Score {
         return new NormalScore(this.first, score, true);
     }
 
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public int sum() {
+        if (isStrike()) {
+            return MAX;
+        }
+        return first + second;
+    }
+
     @Override
     protected void validateCombinedScores(int score) {
         if (this.first + score > MAX) {

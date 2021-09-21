@@ -8,6 +8,8 @@ public abstract class Frame {
 
     protected static int SECOND_TRIAL = 2;
 
+    protected static int NONE_SCORE = -1;
+
     protected int trial;
 
     protected Frame(int trial) {
@@ -26,7 +28,15 @@ public abstract class Frame {
 
     public abstract List<Integer> getAllScores();
 
-    protected abstract boolean isLast();
+    public abstract int calculateScore();
 
-    protected abstract Frame tryNext(int score);
+    public abstract Frame tryNext(int score);
+
+    public abstract boolean isLast();
+
+    protected abstract int addWithFirstScore(int score);
+
+    protected abstract int getTotalScore();
+
+    protected abstract Frame getNextFrame();
 }
