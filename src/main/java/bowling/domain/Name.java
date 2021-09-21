@@ -1,17 +1,20 @@
 package bowling.domain;
 
 import bowling.domain.exception.NameLengthExceededException;
+import bowling.domain.exception.NotEnglishNameException;
 
 import java.util.Objects;
 
 public class Name {
 
     private static final int MAX_NAME_LENGTH = 3;
+    private static final String ALL_ENGLISH_REGEX = "[a-zA-Z]+";
 
     private String name;
 
     private Name(final String name) {
         checkValidNameLength(name);
+        checkValidEnglishName(name);
         this.name = name;
     }
 
@@ -26,6 +29,12 @@ public class Name {
     private void checkValidNameLength(String name) {
         if (name.length() > MAX_NAME_LENGTH) {
             throw new NameLengthExceededException();
+        }
+    }
+
+    private void checkValidEnglishName(final String name) {
+        if (!name.matches(ALL_ENGLISH_REGEX)) {
+            throw new NotEnglishNameException();
         }
     }
 
