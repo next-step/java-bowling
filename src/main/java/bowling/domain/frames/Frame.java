@@ -43,10 +43,6 @@ public abstract class Frame {
 
     protected abstract void checkValidNextScore(final Score score);
 
-    public int numberOfRollAttempts() {
-        return this.scores.size();
-    }
-
     public boolean isSpare() {
         List<Score> elements = this.scores.elements();
         if (elements.size() < 2) {
@@ -71,10 +67,6 @@ public abstract class Frame {
 
     public boolean isFinish() {
         return this.isFinish;
-    }
-
-    public int totalScore() {
-        return this.scores.downPins();
     }
 
     @Override

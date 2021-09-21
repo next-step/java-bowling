@@ -24,7 +24,7 @@ public class BowlingConsoleOutputView {
     }
 
     private void printName(final Name player) {
-        System.out.printf("| %4s |", player.value());
+        System.out.printf("|%4s  |", player.value());
     }
 
     private void printFrames(final Frames frames) {
@@ -43,15 +43,19 @@ public class BowlingConsoleOutputView {
         System.out.print("|      |");
 
         for (int i = 0; i < frames.elements().size(); i++) {
-            String total = frames.total(i);
-            if (frames.isScoresAddedUp(i)) {
-                System.out.printf("  %s  |", total);
-                continue;
-            }
-            System.out.print("      |");
-
+            int totalScore = frames.totalScore(i);
+            boolean finishAddingUpScores = frames.isFinishAddingUpScores(i);
+            printTotalScore(totalScore, finishAddingUpScores);
         }
         System.out.println();
+    }
+
+    private void printTotalScore(int totalScore, boolean finishAddingUpScores) {
+        if (finishAddingUpScores) {
+            System.out.printf("%4s  |", totalScore);
+            return;
+        }
+        System.out.print("      |");
     }
 
     private void printStatusFrame(final Frame frame) {
@@ -67,7 +71,7 @@ public class BowlingConsoleOutputView {
             return;
         }
         if (scores.size() == 3) {
-            System.out.print(changeNumberToCharacter(lastBall(scoresText)));
+            System.out.print(changeNumberToCharacter(lastBall(scoresText)).substring(1, 7) + "|");
             return;
         }
         System.out.print("      |");

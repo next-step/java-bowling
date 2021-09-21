@@ -1,12 +1,10 @@
 package bowling.domain.frames;
 
 import bowling.domain.Score;
+import bowling.domain.Scores;
 import bowling.domain.exception.FinishGameException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class Frames {
@@ -47,55 +45,57 @@ public class Frames {
         return frames.indexOf(currentFrame);
     }
 
-    // 스트라이크 -> 이후의 두번의 슈팅이 있어야 점수 계산 완료
-    // 스페어 -> 이후 한번의 슈팅이 있어야 점수 계산 완료
-    // 슈팅 횟수를 알려면
-    public boolean isScoresAddedUp(final int index) {
+    public boolean isFinishAddingUpScores(final int index) {
         Frame currentFrame = this.frames.get(index);
 
-        int currentFrameAfterRollSize = currentFrame.numberOfRollAttempts();
+        int rollCountSinceIncludingCurrentFrame = this.frames.subList(index, frames.size())
+                .stream()
+                .map(Frame::getScores)
+                .map(Scores::size)
+                .reduce(0, Integer::sum);
 
-        if (index <= 8) {
-            Frame nextFrame = this.frames.get(index + 1);
-            currentFrameAfterRollSize += nextFrame.numberOfRollAttempts();
-        }
-        if (index <= 7) {
-            Frame nextNextFrame = this.frames.get(index + 2);
-            currentFrameAfterRollSize += nextNextFrame.numberOfRollAttempts();
-        }
-
-        if ((currentFrame.isStrike() || currentFrame.isSpare()) && currentFrameAfterRollSize >= 3) {
+        if ((currentFrame.isStrike() || currentFrame.isSpare()) && rollCountSinceIncludingCurrentFrame >= 3) {
             return true;
         }
 
-        return !(currentFrame.isSpare() || currentFrame.isStrike()) && currentFrame.isFinish;
+        return !(currentFrame.isSpare() || currentFrame.isStrike()) && currentFrame.isFinish();
     }
 
     private int score(final int index) {
-        Frame currentFrame = index >= 10 ? new FinalFrame() : frames.get(index);
-        Frame nextFrame = index >= 9 ? new FinalFrame() : frames.get(index + 1);
-        Frame nextNextFrame = index >= 8 ? new FinalFrame() : frames.get(index + 2);
+        Frame currentFrame = this.frames.get(index);
+        int totalScore = currentFrame.getScores().downPins();
 
-        if (currentFrame.isStrike() && nextFrame.isStrike()) {
-            return currentFrame.totalScore() + nextFrame.totalScore() + nextNextFrame.totalScore();
-        }
-        if (currentFrame.isStrike()) {
-            return currentFrame.totalScore() + nextFrame.totalScore();
-        }
-        if (currentFrame.isSpare() && nextFrame.isStrike()) {
-            return currentFrame.totalScore() + nextFrame.firstScore() + nextNextFrame.totalScore();
-        }
-        if (currentFrame.isSpare()) {
-            return currentFrame.totalScore() + nextFrame.firstScore();
-        }
-        return currentFrame.totalScore();
+        List<Frame> nextFrames = this.frames.subList(index + 1, this.frames.size());
+
+        int bonusScore = nextFrames.stream()
+                .map(Frame::getScores)
+                .map(Scores::elements)
+                .flatMap(Collection::stream)
+                .limit(bonusScorePlusCount(currentFrame))
+                .map(Score::getNumberOfPins)
+                .reduce(0, Integer::sum);
+
+        return totalScore + bonusScore;
     }
 
-    public String total(final int index) {
-        int sum = IntStream.rangeClosed(0, index)
+    private int bonusScorePlusCount(final Frame currentFrame) {
+        if (currentFrame.isStrike()) {
+            return 2;
+        }
+        if (currentFrame.isSpare()) {
+            return 1;
+        }
+        return 0;
+    }
+
+    public int totalScore(final int endInclusive) {
+        if (endInclusive <= this.frames.size()) {
+            throw new IllegalArgumentException();
+        }
+
+        return IntStream.rangeClosed(0, endInclusive)
                 .map(this::score)
                 .sum();
-        return sum + "";
     }
 
     private Frame currentFrame() {
