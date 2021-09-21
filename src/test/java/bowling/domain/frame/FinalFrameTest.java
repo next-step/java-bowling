@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.FinalScore;
+import bowling.domain.score.NormalScore;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -14,6 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SuppressWarnings("NonAsciiCharacters")
 public class FinalFrameTest {
+
+    private static final int NONE = -1;
+
 
     @Test
     public void 첫번째_FinalFrame을_만들_수_있다() {
@@ -30,7 +34,7 @@ public class FinalFrameTest {
         //when
         frame = frame.tryNext(2);
         //then
-        assertThat(frame).isEqualTo(FinalFrame.of(FinalScore.first(8).second(2), 2, true, false));
+        assertThat(frame).isEqualTo(FinalFrame.of(FinalScore.first(8).second(2), 2, true, false, null));
     }
 
     @ParameterizedTest
@@ -42,7 +46,7 @@ public class FinalFrameTest {
         frame = frame.tryNext(10);
         //then
         assertThat(frame).isEqualTo(
-                FinalFrame.of(FinalScore.first(first).second(second).third(10), 3, false, true));
+                FinalFrame.of(FinalScore.first(first).second(second).third(10), 3, false, true, null));
     }
 
     private static Stream<Arguments> 두번째_시도후_시도의_합이_10이상이면_세번째_시도를_할_수_있다() {
@@ -104,7 +108,41 @@ public class FinalFrameTest {
         List<Integer> scores = frame.getAllScores();
         //then
         assertThat(scores).containsExactly(10, 9, 10);
+    }
 
+    @Test
+    public void 마지막_프레임이_끝나면_점수를_계산할_수_있다(){
+        //given
+        Frame frame = NormalFrame.of(9, NormalScore.first(1).second(9), 2, 100);
+        FinalFrame finalFrame = FinalFrame.start(1, frame);
+        finalFrame.tryNext(7);
+        //when
+        int score = finalFrame.calculateScore();
+        //then
+        assertThat(score).isEqualTo(100 + 1 + 7);
+    }
+
+    @Test
+    public void 마지막_프레임이_끝나지_않으면_점수를_계산할_수_없다(){
+        //given
+        Frame frame = NormalFrame.of(9, NormalScore.first(1).second(9), 2, 100);
+        FinalFrame finalFrame = FinalFrame.start(1, frame);
+        //when
+        int score = finalFrame.calculateScore();
+        //then
+        assertThat(score).isEqualTo(NONE);
+    }
+
+    @Test
+    public void 이전_프레임의_점수를_계산할_수_없다면_마지막_프레임의_점수도_계산할_수_없다(){
+        //given
+        Frame frame = NormalFrame.of(9, NormalScore.first(10), 1, -1);
+        FinalFrame finalFrame = FinalFrame.start(1, frame);
+        finalFrame.tryNext(5);
+        //when
+        int score = finalFrame.calculateScore();
+        //then
+        assertThat(score).isEqualTo(NONE);
     }
 
 }

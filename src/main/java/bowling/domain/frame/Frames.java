@@ -43,7 +43,7 @@ public class Frames {
         Frame frame = frames.get(frames.size() - 1);
 
         if (frame.isLast()) {
-            frames.add(FinalFrame.start(score));
+            frames.add(FinalFrame.start(score, frame));
             return this;
         }
 

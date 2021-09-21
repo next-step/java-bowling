@@ -13,10 +13,6 @@ public class FinalScore extends Score {
         this.third = third;
     }
 
-    public static FinalScore start() {
-        return new FinalScore(NONE, NONE, NONE);
-    }
-
     public static FinalScore first(int score) {
         validateScore(score);
         return new FinalScore(score, NONE, NONE);

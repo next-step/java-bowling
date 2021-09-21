@@ -15,22 +15,26 @@ public class FinalFrame extends Frame {
 
     private FinalFrameStatus status;
 
-    private FinalFrame(FinalScore score, int trial, FinalFrameStatus status) {
-        super(trial);
+    private FinalFrame(FinalScore score, int trial, FinalFrameStatus status, Frame prevFrame) {
+        super(trial, -1, prevFrame);
         this.score = score;
         this.status = status;
     }
 
-    protected static FinalFrame of(FinalScore score, int trial, boolean isThirdAvailable, boolean isDone) {
-        return new FinalFrame(score, trial, FinalFrameStatus.of(isThirdAvailable, isDone));
+    protected static FinalFrame of(FinalScore score, int trial, boolean isThirdAvailable, boolean isDone, Frame prevFrame) {
+        return new FinalFrame(score, trial, FinalFrameStatus.of(isThirdAvailable, isDone), prevFrame);
     }
 
-    protected static FinalFrame of(FinalScore score, int trial, FinalFrameStatus status) {
-        return new FinalFrame(score, trial, status);
+    protected static FinalFrame of(FinalScore score, int trial, FinalFrameStatus status, Frame prevFrame) {
+        return new FinalFrame(score, trial, status, prevFrame);
     }
 
     public static FinalFrame start(int score) {
-        return of(FinalScore.first(score), 1, false, false);
+        return of(FinalScore.first(score), 1, false, false, null);
+    }
+
+    public static FinalFrame start(int score, Frame prevFrame) {
+        return of(FinalScore.first(score), 1, false, false, prevFrame);
     }
 
     @Override
@@ -44,16 +48,22 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public int calculateScore() {
-        return 0;
-    }
-
-    @Override
     public Frame tryNext(int score) {
         if (isNowFirstTry()) {
             return trySecond(score);
         }
         return tryThird(score);
+    }
+
+    @Override
+    protected void calculateWith(int baseScore) {
+        if (!isLast()) {
+            return;
+        }
+
+        totalScore = getAllScores().stream()
+                .filter(score -> score != NONE_SCORE)
+                .reduce(baseScore, Integer::sum);
     }
 
     @Override
@@ -64,11 +74,6 @@ public class FinalFrame extends Frame {
     @Override
     protected int addWithFirstScore(int score) {
         return this.score.getFirst() + score;
-    }
-
-    @Override
-    protected int getTotalScore() {
-        return 0;
     }
 
     @Override

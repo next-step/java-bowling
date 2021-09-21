@@ -20,18 +20,19 @@ public class NormalFrame extends Frame {
 
     private NormalScore score;
 
-    private int totalScore;
-
-    private final Frame prevFrame;
-
     private Frame nextFrame;
 
     private NormalFrame(int index, NormalScore score, int trial, Frame prevFrame, Frame nextFrame) {
-        super(trial);
+        super(trial, -1, prevFrame);
         this.index = index;
         this.score = score;
-        this.totalScore = -1;
-        this.prevFrame = prevFrame;
+        this.nextFrame = nextFrame;
+    }
+
+    private NormalFrame(int index, NormalScore score, int trial, int totalScore, Frame prevFrame, Frame nextFrame) {
+        super(trial, totalScore, prevFrame);
+        this.index = index;
+        this.score = score;
         this.nextFrame = nextFrame;
     }
 
@@ -41,6 +42,10 @@ public class NormalFrame extends Frame {
 
     protected static NormalFrame of(int index, NormalScore score, int trial) {
         return new NormalFrame(index, score, trial, null, null);
+    }
+
+    protected static NormalFrame of(int index, NormalScore score, int trial, int totalScore) {
+        return new NormalFrame(index, score, trial, totalScore, null, null);
     }
 
     protected static NormalFrame of(int index, NormalScore score, int trial, Frame prevFrame, Frame nextFrame) {
@@ -64,25 +69,7 @@ public class NormalFrame extends Frame {
         return score.getAll();
     }
 
-    @Override
-    public int calculateScore() {
-
-        if (hasTotalScore()) {
-            return totalScore;
-        }
-
-        int baseScore = baseScoreFromPrev();
-
-        if (noSet(baseScore)) {
-            return NONE_SCORE;
-        }
-
-        calculateWith(baseScore);
-
-        return totalScore;
-    }
-
-    private void calculateWith(int baseScore) {
+    protected void calculateWith(int baseScore) {
         if (endsWithNeitherSpareNorStrike()) {
             totalScore = baseScore + score.getFirst() + score.getSecond();
         }
@@ -130,31 +117,8 @@ public class NormalFrame extends Frame {
                 .collect(Collectors.toList());
     }
 
-    private boolean noSet(int baseScore) {
-        return baseScore == NONE_SCORE;
-    }
-
     private boolean endsWithNeitherSpareNorStrike() {
         return !score.isSpare() && !score.isStrike() && score.isDone();
-    }
-
-    private boolean hasTotalScore() {
-        return totalScore != NONE_SCORE;
-    }
-
-    private int baseScoreFromPrev() {
-        int baseScore = 0;
-
-        if (hasPrevFrame()) {
-            baseScore = prevFrame.getTotalScore();
-        }
-
-        return baseScore;
-
-    }
-
-    private boolean hasPrevFrame() {
-        return prevFrame != null;
     }
 
     @Override
@@ -168,11 +132,6 @@ public class NormalFrame extends Frame {
     @Override
     protected int addWithFirstScore(int score) {
         return this.score.getFirst() + score;
-    }
-
-    @Override
-    protected int getTotalScore() {
-        return totalScore;
     }
 
     @Override
@@ -206,11 +165,11 @@ public class NormalFrame extends Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalFrame that = (NormalFrame) o;
-        return index == that.index && trial == that.trial && Objects.equals(score, that.score);
+        return index == that.index && Objects.equals(score, that.score) && Objects.equals(nextFrame, that.nextFrame);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(index, score, trial);
+        return Objects.hash(index, score, nextFrame);
     }
 }
