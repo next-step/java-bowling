@@ -148,7 +148,7 @@ public class ScoresFrame {
             return outputScores + STRIKE;
         }
         if (score == NO_POINT_SCORE) {
-            return outputScores + SPARE;
+            return outputScores + NO_POINT;
         }
         return outputScores + score;
     }
