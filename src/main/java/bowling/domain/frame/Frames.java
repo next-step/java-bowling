@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,7 +22,7 @@ public class Frames {
     }
 
     public List<Frame> getAll() {
-        return frames;
+        return Collections.unmodifiableList(frames);
     }
 
     public int nextTryFrame() {
@@ -41,19 +42,16 @@ public class Frames {
         }
 
         Frame frame = frames.get(frames.size() - 1);
-
-        if (frame.isLast()) {
-            frames.add(FinalFrame.start(score, frame));
-            return this;
-        }
-
         frame = frame.tryNext(score);
 
         if (frame.isNowFirstTry()) {
             frames.add(frame);
-            return this;
         }
+        return this;
+    }
 
+    public Frames calculateScores() {
+        frames.forEach(Frame::calculateScore);
         return this;
     }
 

@@ -3,10 +3,15 @@ package bowling.presentation.output;
 import bowling.domain.Player;
 import bowling.domain.frame.Frames;
 import bowling.presentation.output.util.FramesOutputHelper;
+import bowling.presentation.output.util.ScoresOutputHelper;
 
 public class FrameOutputView {
 
     private static final String FIRST_ROW = "| NAME  |  01   |  02   |  03   |  04   |  05   |  06   |  07   |  08   |  09   |  10   |";
+
+    private static final String SECOND_ROW = "       |       |       |       |       |       |       |       |       |       |";
+
+    private static final String THIRD_ROW = "|       |       |       |       |       |       |       |       |       |       |       |";
 
     private static final String BOUNDARY = "|";
 
@@ -24,7 +29,9 @@ public class FrameOutputView {
 
     public void print(Player player) {
         System.out.println(FIRST_ROW);
-        System.out.println(name(player) + "       |       |       |       |       |       |       |       |       |       |");
+        System.out.println(name(player) + SECOND_ROW);
+        System.out.println(THIRD_ROW);
+        System.out.println();
     }
 
     public void print(Player player, Frames frames) {
@@ -35,7 +42,8 @@ public class FrameOutputView {
 
         secondRow
                 .append(name(player))
-                .append(FramesOutputHelper.create().output(frames));
+                .append(FramesOutputHelper.create().output(frames))
+                .append(ScoresOutputHelper.create().output(frames));
 
         System.out.println(secondRow);
 

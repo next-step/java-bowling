@@ -3,7 +3,7 @@ package bowling.presentation.output.util;
 import bowling.domain.frame.Frames;
 import bowling.presentation.output.ScoresFrame;
 
-public class FramesOutputHelper{
+public class FramesOutputHelper {
 
     private static final int WHOLE_FRAME_SIZE = 10;
 
@@ -27,6 +27,8 @@ public class FramesOutputHelper{
         for (int i = frames.size(); i < WHOLE_FRAME_SIZE; i++) {
             output.append(EMPTY_FRAME);
         }
+
+        output.append("\n");
 
         return output.toString();
     }

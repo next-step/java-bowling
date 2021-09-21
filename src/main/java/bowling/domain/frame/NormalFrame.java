@@ -147,14 +147,18 @@ public class NormalFrame extends Frame {
         return tryFirst(index + 1, score);
     }
 
-    private NormalFrame tryFirst(int index, int score) {
-        NormalFrame nextFrame =
-                of(index, NormalScore.first(score), FIRST_TRIAL, this, null);
+    private Frame tryFirst(int index, int score) {
+        if (index > LAST) {
+            Frame nextFrame = FinalFrame.start(score, this);
+            this.nextFrame = nextFrame;
+            return nextFrame;
+        }
+        Frame nextFrame = of(index, NormalScore.first(score), FIRST_TRIAL, this, null);
         this.nextFrame = nextFrame;
         return nextFrame;
     }
 
-    private NormalFrame trySecond(int score) {
+    private Frame trySecond(int score) {
         this.score = this.score.second(score);
         this.trial = SECOND_TRIAL;
         return this;

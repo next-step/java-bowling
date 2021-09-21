@@ -111,7 +111,7 @@ public class FinalFrameTest {
     }
 
     @Test
-    public void 마지막_프레임이_끝나면_점수를_계산할_수_있다(){
+    public void 마지막_프레임이_끝나면_점수를_계산할_수_있다() {
         //given
         Frame frame = NormalFrame.of(9, NormalScore.first(1).second(9), 2, 100);
         FinalFrame finalFrame = FinalFrame.start(1, frame);
@@ -123,7 +123,7 @@ public class FinalFrameTest {
     }
 
     @Test
-    public void 마지막_프레임이_끝나지_않으면_점수를_계산할_수_없다(){
+    public void 마지막_프레임이_끝나지_않으면_점수를_계산할_수_없다() {
         //given
         Frame frame = NormalFrame.of(9, NormalScore.first(1).second(9), 2, 100);
         FinalFrame finalFrame = FinalFrame.start(1, frame);
@@ -134,7 +134,7 @@ public class FinalFrameTest {
     }
 
     @Test
-    public void 이전_프레임의_점수를_계산할_수_없다면_마지막_프레임의_점수도_계산할_수_없다(){
+    public void 이전_프레임의_점수를_계산할_수_없다면_마지막_프레임의_점수도_계산할_수_없다() {
         //given
         Frame frame = NormalFrame.of(9, NormalScore.first(10), 1, -1);
         FinalFrame finalFrame = FinalFrame.start(1, frame);

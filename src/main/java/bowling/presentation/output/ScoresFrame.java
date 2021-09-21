@@ -8,7 +8,7 @@ public class ScoresFrame {
 
     private static final int NONE = -1;
 
-    private static final String NORMAL_STRIKE_FRAME = "  X    |";
+    private static final String NORMAL_STRIKE_FRAME = " X   ";
 
     private static final String BOUNDARY = "|";
 
