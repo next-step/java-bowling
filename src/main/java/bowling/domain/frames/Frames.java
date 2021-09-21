@@ -89,10 +89,6 @@ public class Frames {
     }
 
     public int totalScore(final int endInclusive) {
-        if (endInclusive <= this.frames.size()) {
-            throw new IllegalArgumentException();
-        }
-
         return IntStream.rangeClosed(0, endInclusive)
                 .map(this::score)
                 .sum();
