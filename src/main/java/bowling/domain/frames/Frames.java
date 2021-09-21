@@ -58,7 +58,7 @@ public class Frames {
             return true;
         }
 
-        return !(currentFrame.isSpare() || currentFrame.isStrike()) && currentFrame.isFinish();
+        return (!currentFrame.isSpare() && !currentFrame.isStrike()) && currentFrame.isFinish();
     }
 
     private int score(final int index) {
