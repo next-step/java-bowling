@@ -1,27 +1,29 @@
 package bowling.domain.frame.info;
 
-public class FinalFrameInfo implements FrameInfo {
+import java.util.Objects;
 
-    private static final int MAX_FINAL_ROUND = 2;
-    private static final int SECOND_ROUND = 1;
+public class FinalFrameInfo extends FrameInfo {
+
+    public static final int NEXT_ROUND = 1;
     private static final int LAST_FRAME_NUMBER = 9;
 
-    private final int frameNumber;
-    private final int round;
     private final boolean bonusRound;
 
     private FinalFrameInfo(int frameNumber, int round, boolean bonusRound) {
-        this.frameNumber = frameNumber;
-        this.round = round;
+        super(frameNumber, round);
         this.bonusRound = bonusRound;
     }
 
-    public static FinalFrameInfo of(int frameNumber, int round, boolean bonusFrame) {
-        return new FinalFrameInfo(frameNumber, round, bonusFrame);
+    public static FinalFrameInfo of(int frameNumber, int round, boolean bonusRound) {
+        return new FinalFrameInfo(frameNumber, round, bonusRound);
     }
 
     public static FinalFrameInfo create() {
-        return of(LAST_FRAME_NUMBER, FIRST_ROUND, false);
+        return of(LAST_FRAME_NUMBER, START_ROUND, false);
+    }
+
+    public FinalFrameInfo nextRoundWithBonusRound() {
+        return of(this.frameNumber(), this.round() + NEXT_ROUND, true);
     }
 
     public boolean hasBonusRound() {
@@ -29,32 +31,41 @@ public class FinalFrameInfo implements FrameInfo {
     }
 
     public boolean hasNextRound() {
-        return round < MAX_FINAL_ROUND || (round == MAX_FINAL_ROUND && bonusRound);
-    }
-
-    public FinalFrameInfo nextRoundWithBonusRound() {
-        return of(frameNumber, round + 1, true);
+        return this.round() == SECOND_ROUND && bonusRound || this.round() == START_ROUND;
     }
 
     @Override
     public FinalFrameInfo nextFrame() {
-        throw new IllegalArgumentException("Final Frame의 Next Round는 없습니다.");
+        throw new IllegalArgumentException("Final Frame의 Next Frame은 없습니다.");
     }
 
     @Override
     public FinalFrameInfo nextRound() {
-        return of(frameNumber, round + 1, bonusRound);
+        return of(this.frameNumber(), this.round() + SECOND_ROUND, bonusRound);
     }
 
     @Override
     public boolean isLastRound() {
-        return round == MAX_FINAL_ROUND;
+        return !hasNextRound();
     }
 
     @Override
-    public int currentFrameNumber() {
-        return frameNumber;
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        FinalFrameInfo that = (FinalFrameInfo) o;
+        return bonusRound == that.bonusRound;
     }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), bonusRound);
+    }
 }
