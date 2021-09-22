@@ -1,18 +1,33 @@
 package bowling.domain.frame;
 
-import bowling.domain.Status;
 import bowling.domain.frame.info.FrameInfo;
+import bowling.domain.pins.Status;
+import bowling.domain.score.Score;
+import java.util.Optional;
 
 public interface Frame {
 
-    Frame roll(int downPins);
+    void roll(int downPins);
+
+    Optional<Frame> nextRound();
 
     FrameInfo frameInfo();
 
     Status pinStatus();
 
-    int numberOfDownedPins();
+    Score numberOfDownedPins();
 
     boolean hasNextRound();
 
+    boolean isCurrentFrameEnd(int currentFrame);
+
+    Optional<Score> calcScore(Frames playerFrames);
+
+    default int compareTo(Frame other) {
+        return frameInfo().compareTo(other.frameInfo());
+    }
+
+    default boolean isRolled() {
+        return !pinStatus().equals(Status.READY);
+    }
 }

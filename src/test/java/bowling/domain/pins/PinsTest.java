@@ -1,7 +1,7 @@
 package bowling.domain.pins;
 
-import bowling.domain.Status;
-import bowling.domain.pins.Pins;
+import bowling.domain.frame.info.NormalFrameInfo;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,13 +9,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PinsTest {
 
-    @DisplayName("핀을 생성시에는 미스 상태이다")
+    @DisplayName("핀을 생성시에는 준비 상태이다")
     @Test
     void pinsCreateTest() {
         // Given
         Pins pins = Pins.create();
         // When && Then
-        assertThat(pins.status()).isEqualTo(Status.MISS);
+        assertThat(pins.status()).isEqualTo(Status.READY);
     }
 
     @DisplayName("핀을 1구에 다 쓰러뜨리면 스트라이크이다")
@@ -23,7 +23,7 @@ class PinsTest {
     void whenDownAllPinsThenReturnStrike() {
         // Given
         Pins pins = Pins.create();
-        Pins roll = pins.roll(10);
+        Pins roll = pins.roll(Score.from(10), NormalFrameInfo.of(0, 0));
         assertThat(roll.status()).isEqualTo(Status.STRIKE);
     }
 
@@ -32,8 +32,8 @@ class PinsTest {
     void ThenReturnSpare() {
         // Given
         Pins pins = Pins.create();
-        Pins pins2 = pins.roll(5);
-        Pins pins3 = pins2.roll(5);
+        Pins pins2 = pins.roll(Score.from(5), NormalFrameInfo.of(0, 0));
+        Pins pins3 = pins2.roll(Score.from(5), NormalFrameInfo.of(0, 1));
 
         assertThat(pins3.status()).isEqualTo(Status.SPARE);
     }
@@ -43,8 +43,8 @@ class PinsTest {
     void ThenReturnGutter() {
         // Given
         Pins pins = Pins.create();
-        Pins pins2 = pins.roll(5);
-        Pins pins3 = pins2.roll(0);
+        Pins pins2 = pins.roll(Score.from(5), NormalFrameInfo.of(0, 0));
+        Pins pins3 = pins2.roll(Score.create(), NormalFrameInfo.of(0, 1));
 
         assertThat(pins3.status()).isEqualTo(Status.GUTTER);
     }
@@ -54,8 +54,8 @@ class PinsTest {
     void ThenReturnMiss() {
         // Given
         Pins pins = Pins.create();
-        Pins pins2 = pins.roll(5);
-        Pins pins3 = pins2.roll(4);
+        Pins pins2 = pins.roll(Score.from(5), NormalFrameInfo.of(0, 0));
+        Pins pins3 = pins2.roll(Score.from(4), NormalFrameInfo.of(0, 1));
 
         assertThat(pins3.status()).isEqualTo(Status.MISS);
     }

@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.Frame;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -17,18 +16,22 @@ class FinalFrameTest {
     void firstRoundStrikeBonusRound() {
         // Given
         List<Frame> frames = new ArrayList<>();
-        Frame frame = FinalFrame.create();
-        frames.add(frame);
-        frame = frame.roll(10);
 
-        while (frame.hasNextRound()) {
-            frames.add(frame);
-            frame = frame.roll(2);
-        }
+        Frame round1 = FinalFrame.create();
+        round1.roll(10);
+        frames.add(round1);
+
+        Frame round2 = round1.nextRound().orElseThrow(IllegalArgumentException::new);
+        round2.roll(2);
+        frames.add(round2);
+
+        Frame nextRound3 = round2.nextRound().orElseThrow(IllegalArgumentException::new);
+        nextRound3.roll(10);
+        frames.add(nextRound3);
 
         // When & Then
         assertThat(frames.size()).isEqualTo(3);
-        assertThat(frames.get(0).numberOfDownedPins()).isEqualTo(10);
+        assertThat(frames.get(0).numberOfDownedPins()).isEqualTo(Score.from(10));
     }
 
     @DisplayName("final Frame에서 1구,2구에 strike이면 3구까지 던질 수 있다.")
@@ -37,18 +40,22 @@ class FinalFrameTest {
         // Given
         List<Frame> frames = new ArrayList<>();
         Frame frame = FinalFrame.create();
+        frames.add(frame);
 
         while (frame.hasNextRound()) {
+            frame.roll(10);
+            frame = frame.nextRound().orElse(frame);
             frames.add(frame);
-            frame = frame.roll(10);
         }
-        // When & Then
 
-        assertThat(frames.size()).isEqualTo(3);
-        assertThat(frames.get(0).numberOfDownedPins()).isEqualTo(10);
+        // When & Then
+        assertThat(frames.get(0).numberOfDownedPins()).isEqualTo(Score.from(10));
+        assertThat(frames.get(0).frameInfo().round()).isEqualTo(0);
+        assertThat(frames.get(2).numberOfDownedPins()).isEqualTo(Score.from(10));
+        assertThat(frames.get(2).frameInfo().round()).isEqualTo(2);
     }
 
-    @DisplayName("final Frame에서 1구나 2구에 spare처리하면 3구까지 던질 수 있다.")
+    @DisplayName("final Frame에서 2구에 spare처리하면 3구까지 던질 수 있다.")
     @Test
     void spareWithBonusRound() {
         // Given
@@ -57,17 +64,20 @@ class FinalFrameTest {
         frames.add(givenFirstRound);
 
         // When
-        Frame secondRound = givenFirstRound.roll(8);
-        frames.add(secondRound);
+        givenFirstRound.roll(8);
 
-        Frame finalFrame = secondRound.roll(2);
+        Frame secondRound = givenFirstRound.nextRound().orElseThrow(IllegalArgumentException::new);
+        frames.add(secondRound);
+        secondRound.roll(2);
+
+        Frame finalFrame = secondRound.nextRound().orElseThrow(IllegalArgumentException::new);
         finalFrame.roll(10);
         frames.add(finalFrame);
 
         // Then
-        assertThat(givenFirstRound.numberOfDownedPins()).isEqualTo(8);
-        assertThat(secondRound.numberOfDownedPins()).isEqualTo(2);
-        assertThat(finalFrame.numberOfDownedPins()).isEqualTo(10);
+        assertThat(givenFirstRound.numberOfDownedPins()).isEqualTo(Score.from(8));
+        assertThat(secondRound.numberOfDownedPins()).isEqualTo(Score.from(2));
+        assertThat(finalFrame.numberOfDownedPins()).isEqualTo(Score.from(10));
 
         assertThat(frames.size()).isEqualTo(3);
     }
@@ -79,12 +89,14 @@ class FinalFrameTest {
         Frame frame = FinalFrame.create();
 
         // When
-        Frame second = frame.roll(3);
-        Frame bonusFrame = second.roll(5);
+        frame.roll(3);
+        Frame second = frame.nextRound().orElseThrow(IllegalArgumentException::new);
+        second.roll(5);
 
         // Then
         assertThatIllegalArgumentException()
-            .isThrownBy(() -> bonusFrame.roll(3))
+            .isThrownBy(() -> second.nextRound().orElseThrow(() -> new IllegalArgumentException("스페어처리를 못하여서 3라운드를 진행 할 수 없습니다.")))
             .withMessage("스페어처리를 못하여서 3라운드를 진행 할 수 없습니다.");
+
     }
 }

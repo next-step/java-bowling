@@ -1,9 +1,11 @@
 package bowling.domain.frame;
 
-import bowling.domain.Status;
 import bowling.domain.frame.info.FrameInfo;
 import bowling.domain.frame.info.NormalFrameInfo;
 import bowling.domain.pins.Pins;
+import bowling.domain.pins.Status;
+import bowling.domain.score.Score;
+import java.util.Optional;
 
 public class NormalFrame implements Frame {
 
@@ -24,30 +26,69 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Frame roll(int downPins) {
-        Pins roll = pins.roll(downPins);
-
-        if (isLastFrame()) {
-            return FinalFrame.create();
-        }
-
-        if (hasNextFrame()) {
-            return of(frameInfo.nextFrame(), Pins.create());
-        }
-
-        return of(frameInfo.nextRound(), roll);
-    }
-
-    private boolean isLastFrame() {
-        return frameInfo.isEndFrame() && (frameInfo.isLastRound() || pins.isAllDown());
-    }
-
-    private boolean hasNextFrame() {
-        return frameInfo.isLastRound() || pins.isAllDown();
+    public void roll(int downPins) {
+        pins.roll(Score.from(downPins), frameInfo);
     }
 
     @Override
-    public int numberOfDownedPins() {
+    public Optional<Frame> nextRound() {
+        if (isLastFrame()) {
+            return Optional.of(FinalFrame.create());
+        }
+
+        if (isCurrentRoundEnd()) {
+            return Optional.of(of(frameInfo.nextFrame(), Pins.create()));
+        }
+
+        return Optional.of(of(frameInfo.nextRound(), Pins.of(pins, Status.READY)));
+    }
+
+    @Override
+    public boolean hasNextRound() {
+        return !frameInfo.isLastRound() || pins.isReady();
+    }
+
+    private boolean isLastFrame() {
+        return frameInfo.isEndFrame() && isCurrentRoundEnd();
+    }
+
+    public boolean isCurrentRoundEnd() {
+        return pins.isAllDown() || frameInfo.isLastRound();
+    }
+
+    @Override
+    public boolean isCurrentFrameEnd(int givenFrame) {
+        return hasNextRound() && frameInfo.isAfterFrame(givenFrame);
+    }
+
+    @Override
+    public Optional<Score> calcScore(Frames playerFrames) {
+        if (calcWhenStrike(playerFrames)) {
+            Frame nextFrame = playerFrames.nextFrame(this);
+            return Optional.of(numberOfDownedPins().sumWithFrames(nextFrame, playerFrames.nextFrame(nextFrame)));
+        }
+
+        if (calcWhenSpare(playerFrames)) {
+            return Optional.of(numberOfDownedPins().sumWithFrames(playerFrames.prev(this), playerFrames.nextFrame(this)));
+        }
+
+        if (!hasNextRound()) {
+            return Optional.of(numberOfDownedPins().sumWithFrames(playerFrames.prev(this)));
+        }
+
+        return Optional.empty();
+    }
+
+    private boolean calcWhenSpare(Frames playerFrames) {
+        return pins.isSpare() && playerFrames.hasNext(this);
+    }
+
+    private boolean calcWhenStrike(Frames playerFrames) {
+        return pins.isStrike() && playerFrames.hasNextNext(this);
+    }
+
+    @Override
+    public Score numberOfDownedPins() {
         return pins.numberOfPinDowns();
     }
 
@@ -56,10 +97,6 @@ public class NormalFrame implements Frame {
         return frameInfo;
     }
 
-    @Override
-    public boolean hasNextRound() {
-        return !frameInfo.isLastRound() || pins.isAllDown();
-    }
 
     @Override
     public Status pinStatus() {

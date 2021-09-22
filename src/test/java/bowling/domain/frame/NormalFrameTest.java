@@ -1,9 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.info.NormalFrameInfo;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -18,12 +16,13 @@ class NormalFrameTest {
     void roll_2() {
         // Given
         Frame givenFrame = NormalFrame.create();
-        Frame round1 = givenFrame.roll(5);
+        givenFrame.roll(5);
+        Frame round1 = givenFrame.nextRound().orElseThrow(IllegalArgumentException::new);
         round1.roll(5);
 
         // When && Then
-        assertThat(givenFrame.numberOfDownedPins()).isEqualTo(5);
-        assertThat(round1.numberOfDownedPins()).isEqualTo(5);
+        assertThat(givenFrame.numberOfDownedPins()).isEqualTo(Score.from(5));
+        assertThat(round1.numberOfDownedPins()).isEqualTo(Score.from(5));
     }
 
     @DisplayName("1프레임에 1구에 스트라이크시 2프레임으로 진행된다.")
@@ -31,15 +30,16 @@ class NormalFrameTest {
     void nextFrame() {
         // Given
         Frame givenFrame = NormalFrame.create();
-        Frame nextFrame = givenFrame.roll(10);
+        givenFrame.roll(10);
+        Frame nextFrame = givenFrame.nextRound().orElseThrow(IllegalArgumentException::new);
         nextFrame.roll(5);
 
         // When && Then
         assertThat(givenFrame.frameInfo()).isEqualTo(NormalFrameInfo.of(0, 0));
-        assertThat(givenFrame.numberOfDownedPins()).isEqualTo(10);
+        assertThat(givenFrame.numberOfDownedPins()).isEqualTo(Score.from(10));
 
         assertThat(nextFrame.frameInfo()).isEqualTo(NormalFrameInfo.of(1, 0));
-        assertThat(nextFrame.numberOfDownedPins()).isEqualTo(5);
+        assertThat(nextFrame.numberOfDownedPins()).isEqualTo(Score.from(5));
     }
 
     @DisplayName("Normal Frame은 9프레임까지 10프레임은 final Frame이다")
@@ -52,12 +52,15 @@ class NormalFrameTest {
 
         for (int i = 0; i < 8; i++) {
             frames.add(normalFrame);
-            normalFrame = normalFrame.roll(10);
+            normalFrame.roll(10);
+            normalFrame = normalFrame.nextRound().orElseThrow(IllegalArgumentException::new);
         }
 
-        Frame lastNormalFrame = normalFrame.roll(5);
+        normalFrame.roll(5);
+        Frame lastNormalFrame = normalFrame.nextRound().orElseThrow(IllegalArgumentException::new);
         frames.add(lastNormalFrame);
-        Frame lastNormalFrameRound = lastNormalFrame.roll(5);
+        lastNormalFrame.roll(5);
+        Frame lastNormalFrameRound = lastNormalFrame.nextRound().orElseThrow(IllegalArgumentException::new);
         frames.add(lastNormalFrameRound);
 
         // When && Then
