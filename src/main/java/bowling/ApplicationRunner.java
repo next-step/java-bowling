@@ -19,7 +19,7 @@ public class ApplicationRunner {
         Bowling bowling = new Bowling(playerText);
 
         while (!bowling.isFinish()) {
-            int index = bowling.lastFinishIndex();
+            int index = bowling.lastFinishedFrameIndex();
             String scoreText = inputView.enterScore(index + 1);
             bowling.roll(scoreText);
             outputView.print(bowling);

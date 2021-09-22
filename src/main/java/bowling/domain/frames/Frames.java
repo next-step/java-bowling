@@ -40,7 +40,7 @@ public class Frames {
         }
     }
 
-    public int lastFinishIndex() {
+    public int lastFinishedFrameIndex() {
         Frame currentFrame = currentFrame();
         return frames.indexOf(currentFrame);
     }
