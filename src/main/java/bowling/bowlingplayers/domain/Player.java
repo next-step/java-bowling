@@ -3,6 +3,7 @@ package bowling.bowlingplayers.domain;
 import bowling.bowlingplayers.domain.frame.Frames;
 import bowling.bowlingplayers.exception.CustomException;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Player {
@@ -40,5 +41,18 @@ public class Player {
 
     public int currentFrame() {
         return frames.currentFrameNumber();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Player)) return false;
+        Player player = (Player) o;
+        return Objects.equals(name, player.name) && Objects.equals(frames, player.frames);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, frames);
     }
 }
