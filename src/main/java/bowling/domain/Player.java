@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 public class Player {
 
     private static final String NAME_PATTERNS = "^[a-zA-Z]*$";
+    public static final int MAX_NAME_LENGTH = 3;
     private final String name;
 
     private Player(String name) {
@@ -19,7 +20,7 @@ public class Player {
     }
 
     private static void nameValidate(String name) {
-        if (name.length() > 3 || !Pattern.matches(NAME_PATTERNS, name)) {
+        if (name.length() > MAX_NAME_LENGTH || !Pattern.matches(NAME_PATTERNS, name)) {
             throw new IllegalArgumentException("3 english letters");
         }
     }
