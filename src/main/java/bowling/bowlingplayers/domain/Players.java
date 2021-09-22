@@ -1,9 +1,6 @@
 package bowling.bowlingplayers.domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Players {
 
@@ -19,25 +16,26 @@ public class Players {
         }
     }
 
-    public void pitch(int pins) {
-        Player player = pitchingPlayer();
-        player.pitch(pins);
-    }
-
-    private Player pitchingPlayer() {
-        return players.stream()
-                .filter((player) -> player.currentFrame() < currentFrame)
+    public Player pitchingPlayer() {
+        Player player = players.stream()
+                .filter(p -> p.currentFrame() == currentFrame)
                 .findFirst()
-                .orElse(firstPlayer());
-    }
+                .orElse(null);
 
-    private Player firstPlayer() {
-        currentFrame++;
-        return players.get(0);
+        if (player == null) {
+            currentFrame++;
+            return players.get(0);
+        }
+
+        return player;
     }
 
     public List<Player> players() {
         return Collections.unmodifiableList(players);
+    }
+
+    public boolean end() {
+        return players.get(players.size() - 1).end();
     }
 
     @Override
