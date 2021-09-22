@@ -1,6 +1,7 @@
 package bowling.bowlingplayers.view;
 
 import bowling.bowlingplayers.domain.Player;
+import bowling.bowlingplayers.domain.Players;
 import bowling.bowlingplayers.domain.frame.FinalFrame;
 import bowling.bowlingplayers.domain.frame.Frame;
 import bowling.bowlingplayers.domain.pitching.Pitching;
@@ -11,21 +12,30 @@ import java.util.List;
 public class ResultView {
 
 
-    public static void showPlayBoard(Player player) {
+    public static void showPlayBoard(Players players) {
+        StringBuilder stringBuilder = new StringBuilder("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
 
+        for (Player player : players.players()) {
+            getString(player, stringBuilder);
+        }
+
+        String result = stringBuilder.toString();
+        System.out.println(result);
+    }
+
+    private static void getString(Player player, StringBuilder stringBuilder) {
+        List<Frame> frames = player.frames().frames();
+
+        stringBuilder.append(System.lineSeparator())
+                .append(framePitching(player))
+                .append(System.lineSeparator())
+                .append(frameTotalScore(frames));
+    }
+
+    private static Formatter framePitching(Player player) {
         List<Frame> frames = player.frames().frames();
         FinalFrame finalFrame = player.frames().finalFrame();
 
-        StringBuilder stringBuilder = new StringBuilder("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
-        String result = stringBuilder.append(System.lineSeparator())
-                .append(framePitching(player, frames, finalFrame))
-                .append(System.lineSeparator())
-                .append(frameTotalScore(frames))
-                .toString();
-
-        System.out.println(result);
-    }
-    private static Formatter framePitching(Player player, List<Frame> frames, FinalFrame finalFrame) {
         Formatter formatter = new Formatter();
         formatter.format("|  %-4s|", player.name());
 
