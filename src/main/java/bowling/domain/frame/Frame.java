@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import java.util.Objects;
 
@@ -7,23 +7,31 @@ public class Frame {
     private final Pitch first;
     private final Pitch second;
 
-    private Frame(Inning inning) {
-        this(inning, new Pitch(), new Pitch());
-    }
-
-    public Frame(Inning inning, Pitch first) {
+    private Frame(Inning inning, Pitch first) {
         this(inning, first, new Pitch());
     }
 
-    public Frame(Inning inning, Pitch first, Pitch second) {
+    private Frame(Inning inning, Pitch first, Pitch second) {
         validateTotalScore(first, second);
         this.inning = inning;
         this.first = first;
         this.second = second;
     }
 
+    public static Frame of(Inning inning, Pitch first) {
+        return new Frame(inning, first, new Pitch());
+    }
+
+    public static Frame of(Inning inning, Pitch first, Pitch second) {
+        return new Frame(inning, first, second);
+    }
+
     public static Frame init() {
-        return new Frame(Inning.first());
+        return new Frame(Inning.first(), new Pitch());
+    }
+
+    private void validateTotalScore(Pitch first, Pitch second) {
+        first.checkTotal(second);
     }
 
     public Frame recode(Pitch pitch) {
@@ -37,10 +45,6 @@ public class Frame {
             return new Frame(inning, this.first, pitch);
         }
         return new Frame(inning.nextInning(), pitch);//다음 프레임에 첫번째 공 기록
-    }
-
-    private void validateTotalScore(Pitch first, Pitch second) {
-        first.checkTotal(second);
     }
 
     public Inning inning() {
@@ -90,12 +94,4 @@ public class Frame {
         return Objects.hash(inning, first, second);
     }
 
-    @Override
-    public String toString() {
-        return "Frame{" +
-                "inning=" + inning +
-                ", first=" + first +
-                ", second=" + second +
-                '}';
-    }
 }
