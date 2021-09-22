@@ -1,9 +1,6 @@
 package bowling.view;
 
-import bowling.domain.Bowling;
-import bowling.domain.Name;
-import bowling.domain.Score;
-import bowling.domain.Scores;
+import bowling.domain.*;
 import bowling.domain.frames.Frame;
 import bowling.domain.frames.Frames;
 
@@ -13,10 +10,16 @@ import java.util.stream.Collectors;
 
 public class BowlingConsoleOutputView {
 
-    public void print(final Bowling bowling) {
+    public void print(final Players players) {
         printHeader();
-        printName(bowling.getName());
-        printFrames(bowling.getFrames());
+        for (Player player : players.elements()) {
+            print(player);
+        }
+    }
+
+    private void print(final Player player) {
+        printName(player.getName());
+        printFrames(player.getFrames());
     }
 
     private void printHeader() {
