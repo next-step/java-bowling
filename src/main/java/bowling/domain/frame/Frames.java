@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,14 +50,14 @@ public class Frames implements Iterable<Frame> {
         frames.forEach(action);
     }
 
-    public boolean hasNext(Frame currentFrame) {
+    public boolean hasNextRoundScore(Frame currentFrame) {
         return latestFrame().compareTo(currentFrame) > 0;
     }
 
-    public boolean hasNextNext(Frame frame) {
-        if (hasNext(frame)) {
+    public boolean hasNextNextRoundScore(Frame frame) {
+        if (hasNextRoundScore(frame)) {
             Frame nextFrame = nextFrame(frame);
-            return hasNext(nextFrame) && nextFrame(nextFrame).isRolled();
+            return hasNextRoundScore(nextFrame) && nextFrame(nextFrame).isRolled();
         }
 
         return false;
@@ -86,5 +87,30 @@ public class Frames implements Iterable<Frame> {
         Scores scores = Scores.create();
         scores.scores(this);
         return scores;
+    }
+
+    public Score calcStrike(NormalFrame strikeFrame) {
+        Score score = Score.create();
+        if (!hasNextNextRoundScore(strikeFrame)) {
+            return score;
+        }
+
+        Frame nextFrame = nextFrame(strikeFrame);
+        return score.sumWithFrames(strikeFrame, nextFrame, nextFrame(nextFrame));
+    }
+
+    public Score calcSpare(NormalFrame spareFrame) {
+        Score score = Score.create();
+
+        if (!hasNextRoundScore(spareFrame)) {
+            return score;
+        }
+
+        return score.sumWithFrames(spareFrame, prev(spareFrame), nextFrame(spareFrame));
+    }
+
+    public Score calcMiss(NormalFrame missFrame) {
+        Score score = Score.create();
+        return score.sumWithFrames(missFrame, prev(missFrame));
     }
 }

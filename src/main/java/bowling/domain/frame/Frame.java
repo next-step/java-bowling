@@ -19,7 +19,7 @@ public interface Frame {
 
     boolean hasNextRound();
 
-    boolean isCurrentFrameEnd(int currentFrame);
+    boolean isFrameEnd(int currentFrame);
 
     Optional<Score> calcScore(Frames playerFrames);
 

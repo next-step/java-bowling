@@ -61,15 +61,17 @@ public class Pins {
             return Status.find(givenDown, false);
         }
 
-        if (isRolledSpare(standPinsCount, givenDown, frameInfo)) {
+        if (isSpare(standPinsCount, givenDown, frameInfo)) {
             return Status.find(MAX_DOWNED_PIN_SCORE, true);
         }
 
         return Status.find(givenDown, false);
     }
 
-    private boolean isRolledSpare(Score standPinsCount, Score givenDown, FrameInfo frameInfo) {
-        return frameInfo.isLastRound() && givenDown.sumWithScores(standPinsCount).equals(MAX_DOWNED_PIN_SCORE);
+    private boolean isSpare(Score standPinsCount, Score givenDown, FrameInfo frameInfo) {
+        Score score = Score.create();
+        Score sum = score.sumWithScores(givenDown, standPinsCount);
+        return frameInfo.isLastRound() && sum.equals(MAX_DOWNED_PIN_SCORE);
     }
 
     public Status status() {

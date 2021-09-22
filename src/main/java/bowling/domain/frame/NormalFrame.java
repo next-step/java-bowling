@@ -17,13 +17,14 @@ public class NormalFrame implements Frame {
         this.pins = pins;
     }
 
+    public static NormalFrame create() {
+        return of(NormalFrameInfo.create(), Pins.create());
+    }
+
     public static NormalFrame of(NormalFrameInfo normalFrameInfo, Pins pins) {
         return new NormalFrame(normalFrameInfo, pins);
     }
 
-    public static NormalFrame create() {
-        return of(NormalFrameInfo.create(), Pins.create());
-    }
 
     @Override
     public void roll(int downPins) {
@@ -52,39 +53,30 @@ public class NormalFrame implements Frame {
         return frameInfo.isEndFrame() && isCurrentRoundEnd();
     }
 
-    public boolean isCurrentRoundEnd() {
+    private boolean isCurrentRoundEnd() {
         return pins.isAllDown() || frameInfo.isLastRound();
     }
 
     @Override
-    public boolean isCurrentFrameEnd(int givenFrame) {
-        return hasNextRound() && frameInfo.isAfterFrame(givenFrame);
+    public boolean isFrameEnd(int givenFrame) {
+        return frameInfo.isAfterFrame(givenFrame);
     }
 
     @Override
     public Optional<Score> calcScore(Frames playerFrames) {
-        if (calcWhenStrike(playerFrames)) {
-            Frame nextFrame = playerFrames.nextFrame(this);
-            return Optional.of(numberOfDownedPins().sumWithFrames(nextFrame, playerFrames.nextFrame(nextFrame)));
+        if (pins.isStrike()) {
+            return Optional.of(playerFrames.calcStrike(this));
         }
 
-        if (calcWhenSpare(playerFrames)) {
-            return Optional.of(numberOfDownedPins().sumWithFrames(playerFrames.prev(this), playerFrames.nextFrame(this)));
+        if (pins.isSpare()) {
+            return Optional.of(playerFrames.calcSpare(this));
         }
 
         if (!hasNextRound()) {
-            return Optional.of(numberOfDownedPins().sumWithFrames(playerFrames.prev(this)));
+            return Optional.of(playerFrames.calcMiss(this));
         }
 
         return Optional.empty();
-    }
-
-    private boolean calcWhenSpare(Frames playerFrames) {
-        return pins.isSpare() && playerFrames.hasNext(this);
-    }
-
-    private boolean calcWhenStrike(Frames playerFrames) {
-        return pins.isStrike() && playerFrames.hasNextNext(this);
     }
 
     @Override
@@ -96,7 +88,6 @@ public class NormalFrame implements Frame {
     public FrameInfo frameInfo() {
         return frameInfo;
     }
-
 
     @Override
     public Status pinStatus() {

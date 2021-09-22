@@ -32,8 +32,6 @@ public class FinalFrame implements Frame {
 
     @Override
     public Optional<Frame> nextRound() {
-
-        /*if (hasNextRound() && isCurrentRoundEnd() || pins.isSpare()) {*/
         if (!frameInfo.isLastRound() && isCurrentRoundEnd() || pins.isSpare()) {
             return Optional.of(new FinalFrame(Pins.create(), frameInfo.nextRoundWithBonusRound()));
         }
@@ -55,7 +53,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public boolean isCurrentFrameEnd(int currentFrame) {
+    public boolean isFrameEnd(int currentFrame) {
         return !hasNextRound() || frameInfo.isAfterFrame(currentFrame);
     }
 

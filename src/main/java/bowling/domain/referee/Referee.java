@@ -44,6 +44,6 @@ public class Referee {
         return persons.stream()
             .map(board::get)
             .map(Frames::latestFrame)
-            .allMatch(frame -> frame.isCurrentFrameEnd(currentFrame));
+            .allMatch(frame -> frame.isFrameEnd(currentFrame));
     }
 }

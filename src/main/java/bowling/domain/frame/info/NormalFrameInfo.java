@@ -9,12 +9,12 @@ public class NormalFrameInfo extends FrameInfo {
         super(frameNumber, round);
     }
 
-    public static NormalFrameInfo of(int frameNumber, int round) {
-        return new NormalFrameInfo(frameNumber, round);
-    }
-
     public static NormalFrameInfo create() {
         return of(START_ROUND, START_ROUND);
+    }
+
+    public static NormalFrameInfo of(int frameNumber, int round) {
+        return new NormalFrameInfo(frameNumber, round);
     }
 
     @Override
