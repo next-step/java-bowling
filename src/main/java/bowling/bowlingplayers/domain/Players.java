@@ -25,11 +25,13 @@ public class Players {
     }
 
     private Player pitchingPlayer() {
-        for (Player player : players) {
-            if (player.currentFrame() < currentFrame) {
-                return player;
-            }
-        }
+        return players.stream()
+                .filter((player) -> player.currentFrame() < currentFrame)
+                .findFirst()
+                .orElse(firstPlayer());
+    }
+
+    private Player firstPlayer() {
         currentFrame++;
         return players.get(0);
     }
