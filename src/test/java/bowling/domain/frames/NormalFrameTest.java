@@ -33,6 +33,15 @@ class NormalFrameTest {
     }
 
     @Test
+    @DisplayName("투구 - 스페어면 finish")
+    void roll_finish_spare() {
+        Frame frame = new NormalFrame();
+        frame.roll(Score.EIGHT);
+        frame.roll(Score.TWO);
+        assertTrue(frame.isFinish());
+    }
+
+    @Test
     @DisplayName("투구 - finish 일때 투구하면 이미 종료된 프레임 에러")
     void roll_finish_exception() {
         Frame frame = new NormalFrame(true);

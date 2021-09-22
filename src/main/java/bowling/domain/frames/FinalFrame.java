@@ -40,9 +40,6 @@ public class FinalFrame extends Frame {
     }
 
     private boolean isPossibleThirdRoll() {
-        if (this.scores.size() != SECOND_ATTEMPTS) {
-            return false;
-        }
         if (isStrike()) {
             return true;
         }

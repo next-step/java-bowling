@@ -82,5 +82,4 @@ class FinalFrameTest {
         Frame frame = new FinalFrame();
         assertFalse(frame.isFinish());
     }
-
 }

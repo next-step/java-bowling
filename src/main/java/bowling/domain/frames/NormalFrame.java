@@ -17,13 +17,13 @@ public class NormalFrame extends Frame {
 
     @Override
     protected boolean isFinishFrame() {
-        if (isOverAttempts()) {
-            return true;
-        }
         if (isSpare()) {
             return true;
         }
-        return isStrike();
+        if (isStrike()) {
+            return true;
+        }
+        return isOverAttempts();
     }
 
     @Override

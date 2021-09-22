@@ -13,7 +13,10 @@ class NameTest {
     @Test
     @DisplayName("생성")
     public void create() {
-        assertDoesNotThrow(() -> Name.of("PJS").equals(Name.of("PJS")));
+        assertDoesNotThrow(() -> {
+            Name.of("PJS").equals(Name.of("PJS"));
+            Name.of("PJS").value().equals(Name.of("PJS").value());
+        });
     }
 
     @Test
