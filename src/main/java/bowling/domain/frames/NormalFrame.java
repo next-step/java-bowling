@@ -27,7 +27,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public void checkValidNextScore(final Score nextScore) {
+    protected void checkValidNextScore(final Score nextScore) {
         int nextDownPins = this.scores.downPins() + nextScore.getNumberOfPins();
         if (nextDownPins > NUMBER_OF_PINS || nextDownPins < 0) {
             throw new IncorrectNumberOfPinsException();
@@ -35,7 +35,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public boolean isOverAttempts() {
+    protected boolean isOverAttempts() {
         return this.scores.size() >= FRAME_MAX_ATTEMPTS;
     }
 }

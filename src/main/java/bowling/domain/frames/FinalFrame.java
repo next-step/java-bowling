@@ -29,7 +29,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public void checkValidNextScore(final Score score) {
+    protected void checkValidNextScore(final Score score) {
         int nextDownPins = this.scores.downPins() + score.getNumberOfPins();
         if (isStrike() || isSpare()) {
             return;

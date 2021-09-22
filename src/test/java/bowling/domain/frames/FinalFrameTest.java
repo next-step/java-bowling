@@ -5,6 +5,8 @@ import bowling.domain.exception.FinishFrameException;
 import bowling.domain.exception.IncorrectNumberOfPinsException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -53,11 +55,22 @@ class FinalFrameTest {
 
     @Test
     @DisplayName("투구 - 스페어면 begin")
-    void roll_finish_spare() {
+    void roll_begin_spare() {
         Frame frame = new FinalFrame();
         frame.roll(Score.ONE);
         frame.roll(Score.NINE);
         assertFalse(frame.isFinish());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"ONE,NINE,TWO", "ONE,NINE,TEN"})
+    @DisplayName("투구 - 스페어이후 투구하면 finish")
+    void roll_finish_spare(final String scores) {
+        Frame frame = new FinalFrame();
+        for (String score : scores.split(",")) {
+            frame.roll(Score.valueOf(score));
+        }
+        assertTrue(frame.isFinish());
     }
 
     @Test
