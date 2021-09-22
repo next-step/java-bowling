@@ -1,46 +1,57 @@
 package bowling;
 
-import bowling.domain.Person;
-import bowling.domain.ScoreBoard;
+import bowling.domain.Player;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
-import bowling.domain.frame.NormalFrame;
+import bowling.domain.referee.Referee;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
 public class BowlingGame {
 
+    public static final int MAX_FRAME = 10;
+    public static final int START_FRAME = 0;
+
     public static void main(String[] args) {
-        Person person = InputView.user();
+        Player person = InputView.user();
+        Referee referee = Referee.create();
+        referee.readyPerson(person);
 
-        ScoreBoard scoreBoard = ScoreBoard.create();
-
-        scoreBoard.write(person, NormalFrame.create());
-        startGame(person, scoreBoard);
+        runBowlingGames(referee);
     }
 
-    private static void startGame(Person person, ScoreBoard scoreBoard) {
-        Frames frames = scoreBoard.framesOfPerson(person);
+    private static void runBowlingGames(Referee referee) {
+        int currentFrame = START_FRAME;
+        do {
+            ResultView.showCurrentFrameInfo(currentFrame);
+            runPlayer(referee);
 
-        for (int i = 0; i < frames.size(); i++) {
-            Frame frame = frames.get(i);
-            ResultView.showCurrentFrameInfo(frame.frameInfo());
-            int downPinsCount = InputView.downPinsCount();
-
-            ResultView.showHead();
-
-            frame = frame.roll(downPinsCount);
-
-            ResultView.showPersonNameOnBoard(person);
-            ResultView.showScoreBoard(frames);
-
-            frames.addFrame(frame);
-
-            if (frames.isGameEnd()) {
-                break;
+            if (referee.isEndFrame(currentFrame)) {
+                currentFrame++;
             }
+        } while (currentFrame < MAX_FRAME);
+    }
+
+    private static void runPlayer(Referee referee) {
+        for (Player player : referee.persons()) {
+            Frames frames = referee.framesOfPerson(player);
+            Frame frame = frames.latestFrame();
+
+            next(referee, player, frame);
+
+            ResultView.showPersonNameOnBoard(player);
+            ResultView.showPlayerFrame(player, referee);
+            ResultView.showPlayerScore(player, referee);
         }
     }
 
+    private static void next(Referee referee, Player player, Frame frame) {
+        if (frame.hasNextRound()) {
+            int downPinsCount = InputView.downPinsCount();
+            ResultView.showHead();
+            frame.roll(downPinsCount);
+            frame.nextRound().ifPresent(frame1 -> referee.write(player, frame1));
+        }
+    }
 
 }
