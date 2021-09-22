@@ -3,6 +3,7 @@ package bowling.view;
 import bowling.domain.Player;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
+import bowling.domain.pins.Pins;
 import bowling.domain.pins.Status;
 import bowling.domain.referee.Referee;
 import bowling.domain.score.Score;
@@ -26,22 +27,24 @@ public class ResultView {
     public static void showPlayerFrame(Player player, Referee referee) {
         Frames frames = referee.framesOfPerson(player);
         for (Frame frame : frames) {
-            showCurrentFrameScore(frame);
+            showCurrentFrameScore(frame.pins());
         }
         System.out.println();
     }
 
-    public static void showCurrentFrameScore(Frame frame) {
-        if (frame.pinStatus() == Status.MISS) {
-            System.out.print(frame.numberOfDownedPins().score() + SPLIT_BAR);
+    public static void showCurrentFrameScore(Pins pins) {
+        Status status = pins.status();
+
+        if (status == Status.READY) {
             return;
         }
 
-        if (!frame.isRolled()) {
+        if (status == Status.MISS) {
+            System.out.print(pins.numberOfPinDowns().score() + SPLIT_BAR);
             return;
         }
 
-        System.out.print(frame.pinStatus().getLetter() + SPLIT_BAR);
+        System.out.print(status.getLetter() + SPLIT_BAR);
     }
 
     public static void showPersonNameOnBoard(Player person) {

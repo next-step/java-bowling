@@ -90,8 +90,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Status pinStatus() {
-        return pins.status();
+    public Pins pins() {
+        return pins;
     }
 
 }

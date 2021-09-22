@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.frame.info.FrameInfo;
-import bowling.domain.pins.Status;
+import bowling.domain.pins.Pins;
 import bowling.domain.score.Score;
 import java.util.Optional;
 
@@ -13,7 +13,7 @@ public interface Frame {
 
     FrameInfo frameInfo();
 
-    Status pinStatus();
+    Pins pins();
 
     Score numberOfDownedPins();
 
@@ -28,6 +28,6 @@ public interface Frame {
     }
 
     default boolean isRolled() {
-        return !pinStatus().equals(Status.READY);
+        return !pins().isReady();
     }
 }

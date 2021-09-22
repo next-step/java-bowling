@@ -67,8 +67,8 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Status pinStatus() {
-        return pins.status();
+    public Pins pins() {
+        return pins;
     }
 
     @Override
