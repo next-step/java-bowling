@@ -22,17 +22,32 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("pitch 시 다음 사람으로 넘어가는지 테스트")
-    void pitch() {
+    @DisplayName("pitchingPlayer 반환")
+    void pitchingPlayer() {
         // given
-        List<String> nameString = Arrays.asList("SYH", "JMK");
-        Players players = new Players(nameString);
-        players.pitch(10);
+        Players players = new Players(Arrays.asList("SYH", "JMK"));
         // when
-        players.pitch(10);
-        Player checkPlayer = new Player("JMK");
-        checkPlayer.pitch(10);
+        Player player = players.pitchingPlayer();
         // then
-        assertThat(players.players().get(1)).isEqualTo(checkPlayer);
+        assertThat(player).isEqualTo(new Player("SYH"));
+    }
+
+    @Test
+    @DisplayName("pitch 후 pitchingPlayer 반환")
+    void pitchingPlayer_() {
+        // given
+        Players players = new Players(Arrays.asList("SYH", "JMK"));
+        // when
+        Player player1 = players.pitchingPlayer();
+        player1.pitch(10);
+        Player player2 = players.pitchingPlayer();
+        player2.pitch(10);
+        Player player3 = players.pitchingPlayer();
+        player3.pitch(10);
+        Player player4 = players.pitchingPlayer();
+        player4.pitch(10);
+        // then
+        assertThat(player3).isEqualTo(player1);
+        assertThat(player4).isEqualTo(player2);
     }
 }
