@@ -7,15 +7,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 
-class PersonTest {
+class PlayerTest {
 
     @Test
     void createPerson() {
         // Given
         String givenName = "PHS";
-        Person person = Person.from(givenName);
+        Player player = Player.from(givenName);
 
-        assertThat(person.name()).isEqualTo(givenName);
+        assertThat(player.name()).isEqualTo(givenName);
     }
 
 
@@ -25,7 +25,7 @@ class PersonTest {
         // Given
         String givenName = "박박박";
 
-        assertThatIllegalArgumentException().isThrownBy(() -> Person.from(givenName));
+        assertThatIllegalArgumentException().isThrownBy(() -> Player.from(givenName));
     }
 
     @DisplayName("3자리 이상의 문자가 들어가면 IllegalArgumentException")
@@ -34,7 +34,7 @@ class PersonTest {
         // Given
         String givenName = "ABCD";
 
-        assertThatIllegalArgumentException().isThrownBy(() -> Person.from(givenName));
+        assertThatIllegalArgumentException().isThrownBy(() -> Player.from(givenName));
     }
 
 }
