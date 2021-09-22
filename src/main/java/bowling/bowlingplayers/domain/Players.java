@@ -8,6 +8,7 @@ import java.util.Objects;
 public class Players {
 
     private final List<Player> players;
+    private int currentFrame = 1;
 
     public Players(List<String> playersNames) {
         players = new ArrayList<>();
@@ -18,8 +19,19 @@ public class Players {
         }
     }
 
-    public void pitch(int i) {
+    public void pitch(int pins) {
+        Player player = pitchingPlayer();
+        player.pitch(pins);
+    }
 
+    private Player pitchingPlayer() {
+        for (Player player : players) {
+            if (player.currentFrame() < currentFrame) {
+                return player;
+            }
+        }
+        currentFrame++;
+        return players.get(0);
     }
 
     public List<Player> players() {
