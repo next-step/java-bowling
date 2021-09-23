@@ -239,7 +239,7 @@ public class QnAService {
     frame.bowl(10);
     frame.bowl(8);
     frame.bowl(2);
-    int score = frame.getScore();
+    int score =정 frame.getScore();
     // score는 20을 반환해야 한다.
     ```
 - 자바의 다형성을 적용해 로직 구현에서 발생하는 수 많은 if/else를 제거한다.
@@ -249,8 +249,97 @@ public class QnAService {
 ### 2. 기능 분석 (Domain 설계)
 - 각 Frame 점수의 경우 score 를 통해 이전 step 에서 구현 
 - 누적점수가 필요하므로 Frame 내 totalScore 추가 구현 필요
-5. Frame(추가 사항)
+1. Frame(추가 사항)
     1. 속성
         - `Frame beforeFrame`
     2. 메서드
         - `int totalScore()`
+2. Status(enum) - frame 의 상태를 알려주는 enum
+    1. enum
+        - STRIKE
+        - SPARE
+        - MISS
+        - NULL
+    2. 속성
+        - Score interface 구현체
+    3. 메서드
+        - `Status of(Pitching firstPitching, Pitching secondPitching`
+3. Score interface 및 구현체들
+    1. 구현체
+        - StrikeScore
+        - SpareScore
+        - MissScore
+        - NullScore
+    2. 메서드
+        - `int score()`
+
+--------
+## 4단계 - 볼링 점수판(n명)
+### 0. 요구사항
+1. 기능 요구사항
+- 1명 이상의 사용자가 사용할 수 있는 볼링게임 점수판을 구현한다.
+  
+2. 프로그램 실행 결과
+    ```
+    How many people? 2
+    플레이어 1의 이름은?(3 english letters): PJS
+    플레이어 2의 이름은?(3 english letters): KYJ
+    | NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |
+    |  PJS |      |      |      |      |      |      |      |      |      |      |
+    |      |      |      |      |      |      |      |      |      |      |      |
+    |  KYJ |      |      |      |      |      |      |      |      |      |      |
+    |      |      |      |      |      |      |      |      |      |      |      |
+    
+    PJS's turn : 10
+    | NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |
+    |  PJS |  X   |      |      |      |      |      |      |      |      |      |
+    |      |      |      |      |      |      |      |      |      |      |      |
+    |  KYJ |      |      |      |      |      |      |      |      |      |      |
+    |      |      |      |      |      |      |      |      |      |      |      |
+    
+    KYJ's turn : 8
+    | NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |
+    |  PJS |  X   |      |      |      |      |      |      |      |      |      |
+    |      |      |      |      |      |      |      |      |      |      |      |
+    |  KYJ |  8   |      |      |      |      |      |      |      |      |      |
+    |      |      |      |      |      |      |      |      |      |      |      |
+    
+    KYJ's turn : 2
+    | NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |
+    |  PJS |  X   |      |      |      |      |      |      |      |      |      |
+    |      |      |      |      |      |      |      |      |      |      |      |
+    |  KYJ |  8|/ |      |      |      |      |      |      |      |      |      |
+    |      |      |      |      |      |      |      |      |      |      |      |
+    
+    PJS's turn : 8
+    | NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |
+    |  PJS |  X   |  8   |      |      |      |      |      |      |      |      |
+    |      |      |      |      |      |      |      |      |      |      |      |
+    |  KYJ |  8|/ |      |      |      |      |      |      |      |      |      |
+    |      |      |      |      |      |      |      |      |      |      |      |
+    
+    PJS's turn : 2
+    | NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |
+    |  PJS |  X   |  8|/ |      |      |      |      |      |      |      |      |
+    |      |  20  |      |      |      |      |      |      |      |      |      |
+    |  KYJ |  8|/ |      |      |      |      |      |      |      |      |      |
+    |      |      |      |      |      |      |      |      |      |      |      |
+    
+    KYJ's turn : 10
+    | NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |
+    |  PJS |  X   |  8|/ |      |      |      |      |      |      |      |      |
+    |      |  20  |      |      |      |      |      |      |      |      |      |
+    |  KYJ |  8|/ |  X   |      |      |      |      |      |      |      |      |
+    |      |  20  |      |      |      |      |      |      |      |      |      |
+    
+    PJS's turn :
+    
+    ...
+    ```
+### 1. 기능 분석(Domain 설계)
+- Players 일급 컬렉션 만들어 구현
+1. Players
+    1. 속성
+        - `List<Player> players`
+    2. 메서드
+        - `void pitch()`
