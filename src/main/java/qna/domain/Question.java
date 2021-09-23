@@ -23,6 +23,8 @@ public class Question extends AbstractEntity {
     @OrderBy("id ASC")
     private List<Answer> answers = new ArrayList<>();
 
+    private Answers answers2 = new Answers();
+
     private boolean deleted = false;
 
     public Question() {
@@ -69,6 +71,7 @@ public class Question extends AbstractEntity {
     public void addAnswer(Answer answer) {
         answer.toQuestion(this);
         answers.add(answer);
+        answers2.add(answer);
     }
 
     public boolean isOwner(User loginUser) {
