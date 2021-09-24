@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import java.util.Objects;
 
@@ -7,8 +7,12 @@ public class Inning {
 
     private final int inning;
 
-    public Inning(int inning) {
+    private Inning(int inning) {
         this.inning = inning;
+    }
+
+    public static Inning from(int inning) {
+        return new Inning(inning);
     }
 
     public static Inning first() {
@@ -36,10 +40,4 @@ public class Inning {
         return Objects.hash(inning);
     }
 
-    @Override
-    public String toString() {
-        return "Inning{" +
-                "inning=" + inning +
-                '}';
-    }
 }

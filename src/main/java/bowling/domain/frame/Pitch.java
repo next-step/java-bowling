@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import bowling.exception.OverScoreException;
 import bowling.exception.PitchException;
@@ -15,9 +15,13 @@ public class Pitch {
         this.pitch = -1;
     }
 
-    public Pitch(int pitch) {
+    private Pitch(int pitch) {
         validatePitch(pitch);
         this.pitch = pitch;
+    }
+
+    public static Pitch from(int pitch) {
+        return new Pitch(pitch);
     }
 
     private void validatePitch(int pitch) {
@@ -37,6 +41,21 @@ public class Pitch {
         return pitch == 10;
     }
 
+    public void checkTotal(Pitch second) {
+        int totalScore = this.pitch + second.pitch;
+        if (totalScore > 10) {
+            throw new OverScoreException(totalScore);
+        }
+    }
+
+    public boolean isSpare(Pitch second) {
+        return this.pitch + second.pitch == 10;
+    }
+
+    public int getPitch() {
+        return pitch;
+    }
+
     public String score(Pitch second) {
         if ((this.pitch + second.pitch) == 10) {
             return String.format("  %d|/ |", this.pitch);
@@ -49,17 +68,6 @@ public class Pitch {
         }
 
         return String.format("  %d|%d |", this.pitch, second.pitch);
-    }
-
-    public void checkTotal(Pitch second) {
-        int totalScore = this.pitch + second.pitch;
-        if (totalScore > 10) {
-            throw new OverScoreException(totalScore);
-        }
-    }
-
-    public boolean isSpare(Pitch second) {
-        return this.pitch + second.pitch == 10;
     }
 
     @Override
@@ -75,10 +83,4 @@ public class Pitch {
         return Objects.hash(pitch);
     }
 
-    @Override
-    public String toString() {
-        return "Pitch{" +
-                "pitch=" + pitch +
-                '}';
-    }
 }

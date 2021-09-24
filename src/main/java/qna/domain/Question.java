@@ -1,3 +1,4 @@
+
 package qna.domain;
 
 import org.hibernate.annotations.Where;
