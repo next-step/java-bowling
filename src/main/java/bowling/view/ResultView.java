@@ -9,15 +9,37 @@ import static bowling.CommonConstans.*;
 
 public class ResultView {
 
-    public static void bowlingBoard(Players players, Frames frames) { //, Frames frames) {
+    public static void startBowlingGame(Players players, List<Frames> frames) {
+
+        bowlingBoard(players, Frames.init());
+
+
+        IntStream.range(0, LAST_FRAME_NUMBER)
+                .forEach(frameIndex -> players.forEach(player -> bowlingPlay(frames, players, player)));
+    }
+
+    public static void bowlingPlay(List<Frames> frames, Players players, Player player) {
+        int playerIndex = players.index(player);
+
+        for (int i = 0; i < LAST_FRAME_NUMBER; i++) {
+            if (!frames.get(playerIndex).isFrameCompleted(i)) {
+
+                frames.set(playerIndex, frames.get(playerIndex).play(InputView.score()));
+
+                scorePrint(player, frames.get(playerIndex));
+
+                bowlingBoard(players, frames.get(playerIndex));
+            }
+        }
+    }
+
+    public static void bowlingBoard(Players players, Frames playerFrame) {
         System.out.println(DEFAULT_BOARD);
 
         players.forEach(player -> {
             System.out.print(nameToString(player.getName()));
-//            System.out.println(frameBoardString(player.frames()));
-//            System.out.println(scoreBoardString(player.frames()));
-            System.out.println(frameBoardString(frames));
-            System.out.println(scoreBoardString(frames));
+            System.out.println(frameBoardString(playerFrame));
+            System.out.println(scoreBoardString(playerFrame));
         });
 
         System.out.println();
@@ -155,5 +177,19 @@ public class ResultView {
 
     private static int index(int size) {
         return size - MINUS_ONE;
+    }
+
+    public static void scorePrint(Player player, Frames playerFrame) {
+        System.out.printf("%s, %d프레임 투구 :"
+                , player.getName()
+                , framesSize(playerFrame));
+        System.out.println();
+    }
+
+    private static int framesSize(Frames frames) {
+        if (frames.isPitch()) {
+            return frames.frames().size() + 1;
+        }
+        return frames.frames().size();
     }
 }

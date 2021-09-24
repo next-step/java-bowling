@@ -3,9 +3,10 @@ package bowling;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-import static bowling.CommonConstans.MAX_SIZE;
-import static bowling.CommonConstans.MINUS_INDEX_ONE;
+import static bowling.CommonConstans.*;
 
 public class Frames {
 
@@ -25,6 +26,16 @@ public class Frames {
 
     public static Frames of(List<Frame> frames, List<FrameScore> scores) {
         return new Frames(frames, scores);
+    }
+
+    public static List<Frames> listOf(int playerCount) {
+
+        List<Frames> framesList = new ArrayList<>();
+
+        IntStream.range(ZERO, playerCount)
+                .forEach(index -> framesList.add(new Frames()));
+
+        return new ArrayList<>(framesList);
     }
 
     public static Frames init() {
@@ -83,14 +94,10 @@ public class Frames {
     }
 
     private List<FrameScore> addScore(int countOfDownPin) {
-
-        for (int i = 0; i < scores.size(); i++) {
-            if (i == scores.size() - MINUS_INDEX_ONE) {
-                scores.get(i).addScore(countOfDownPin);
-            }
-        }
-
-        return scores;
+        return scores.stream()
+                .filter(score -> score.checkFrameScoreIndex(scores))
+                .map(score -> score.addScore(countOfDownPin))
+                .collect(Collectors.toList());
     }
 
     private Pins ofPins() {

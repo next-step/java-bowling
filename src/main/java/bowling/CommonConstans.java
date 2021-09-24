@@ -1,5 +1,7 @@
 package bowling;
 
+import java.util.regex.Pattern;
+
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
@@ -39,6 +41,7 @@ public class CommonConstans {
     public static final String SCORE_FIRST = "|      |";
     public static final String PIPE = "|";
     public static final String MIN_SIZE_UNDER = "최소 참여자는 1명 입니다.";
+    public static final Pattern PLAYER_NAME_CHECK = Pattern.compile("(^[a-zA-Z]{3})*$");
 
 
 }

@@ -1,5 +1,7 @@
 package bowling;
 
+import java.util.List;
+
 import static bowling.CommonConstans.IS_NOT_END;
 
 public class FrameScore {
@@ -36,5 +38,9 @@ public class FrameScore {
         if (!frame.isEnd()) {
             throw new IllegalArgumentException(IS_NOT_END);
         }
+    }
+
+    public Boolean checkFrameScoreIndex(List<FrameScore> frameScores) {
+        return frameScores.indexOf(this) == frameScores.size() - 1;
     }
 }
