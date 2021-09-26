@@ -22,13 +22,6 @@ public class NormalFrame extends Frame {
 
     private Frame nextFrame;
 
-    private NormalFrame(int index, NormalScore score, int trial, Frame prevFrame, Frame nextFrame) {
-        super(trial, -1, prevFrame);
-        this.index = index;
-        this.score = score;
-        this.nextFrame = nextFrame;
-    }
-
     private NormalFrame(int index, NormalScore score, int trial, int totalScore, Frame prevFrame, Frame nextFrame) {
         super(trial, totalScore, prevFrame);
         this.index = index;
@@ -41,7 +34,7 @@ public class NormalFrame extends Frame {
     }
 
     protected static NormalFrame of(int index, NormalScore score, int trial) {
-        return new NormalFrame(index, score, trial, null, null);
+        return new NormalFrame(index, score, trial, -1, null, null);
     }
 
     protected static NormalFrame of(int index, NormalScore score, int trial, int totalScore) {
@@ -49,7 +42,7 @@ public class NormalFrame extends Frame {
     }
 
     protected static NormalFrame of(int index, NormalScore score, int trial, Frame prevFrame, Frame nextFrame) {
-        return new NormalFrame(index, score, trial, prevFrame, nextFrame);
+        return new NormalFrame(index, score, trial, -1, prevFrame, nextFrame);
     }
 
     public Score score() {
