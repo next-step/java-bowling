@@ -3,9 +3,7 @@ package bowling.model;
 public interface Round {
     int FIRST_TRY = 1;
 
-    State play(Point pinCount, int tryCount);
-    Round next(State beforeResult);
+    State bowl(int countOfPin);
+    Round next(State state);
     int calcMaxTryCount();
-    State findResult(Point point, int tryCount);
-    State isStrikeOrSpare(int tryCount);
 }

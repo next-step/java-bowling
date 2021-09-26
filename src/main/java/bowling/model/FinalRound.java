@@ -5,26 +5,26 @@ import java.util.Objects;
 public class FinalRound implements Round{
     private static int bonusCount = 1;
 
-    private Result result;
+    private State state;
+    private Score score;
 
     public FinalRound() {
-        result = new Result(new Miss(), new Miss());
+        this.state = new Ready();
     }
 
-    public FinalRound(Result result) {
-        this.result = result;
-    }
-
-    @Override
-    public State play(Point point, int tryCount) {
-        State currentResult = findResult(point, tryCount);
-        this.result = new Result(result.getBefore(), currentResult);
-        return currentResult;
+    public FinalRound(State state) {
+        this.state = state;
     }
 
     @Override
-    public Round next(State beforeResult) {
-        return new FinalRound(new Result(beforeResult, new Miss()));
+    public State bowl(int countOfPin) {
+        this.state = this.state.bowl(countOfPin);
+        return this.state;
+    }
+
+    @Override
+    public Round next(State state) {
+        return new FinalRound(state);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class FinalRound implements Round{
             return 0;
         }
 
-        if (result.isStrike() || result.isSpare()) {
+        if (state instanceof Strike || state instanceof Spare) {
             bonusCount -= 1;
             return 1;
         }
@@ -42,37 +42,15 @@ public class FinalRound implements Round{
     }
 
     @Override
-    public State findResult(Point point, int tryCount) {
-        if (point.isStrike()) {
-            return isStrikeOrSpare(tryCount);
-        }
-
-        if (point.isGutter()) {
-            return new Gutter();
-        }
-
-        return new Miss(point);
-    }
-
-    @Override
-    public State isStrikeOrSpare(int tryCount) {
-        if (tryCount == FIRST_TRY || result.getBefore() instanceof Strike || result.getBefore() instanceof Spare) {
-            return new Strike();
-        }
-
-        return new Spare();
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FinalRound that = (FinalRound) o;
-        return Objects.equals(result, that.result);
+        return Objects.equals(state, that.state) && Objects.equals(score, that.score);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(result);
+        return Objects.hash(state, score);
     }
 }

@@ -3,61 +3,39 @@ package bowling.model;
 import java.util.Objects;
 
 public class NormalRound implements Round{
-    private Result result;
+    private State state;
+    private Score score;
 
     public NormalRound() {
-        result = new Result(new Miss(), new Miss());
+        this.state = new Ready();
     }
 
-    public NormalRound(Result result) {
-        this.result = result;
-    }
-
-    @Override
-    public State play(Point pinCount, int tryCount) {
-        State currentResult = findResult(pinCount, tryCount);
-        this.result = new Result(result.getBefore(), currentResult);
-        return currentResult;
+    public NormalRound(State state) {
+        this.state = state;
     }
 
     @Override
-    public Round next(State beforeResult) {
-        return new NormalRound(new Result(beforeResult, new Miss()));
+    public State bowl(int countOfPin) {
+        this.state = this.state.bowl(countOfPin);
+        return this.state;
+    }
+
+    @Override
+    public Round next(State state) {
+        return new NormalRound(state);
     }
 
     @Override
     public int calcMaxTryCount() {
-        if (result.isStrike()) {
+        if (state instanceof Strike) {
             return -1;
         }
 
         return 0;
     }
 
-    @Override
-    public State findResult(Point pinCount, int tryCount) {
-        if (pinCount.isStrike()) {
-            return isStrikeOrSpare(tryCount);
-        }
-
-        if (pinCount.isGutter()) {
-            return new Gutter();
-        }
-
-        return new Miss(pinCount);
-    }
-
-    @Override
-    public State isStrikeOrSpare(int tryCount) {
-        if (tryCount == FIRST_TRY) {
-            return new Strike();
-        }
-
-        return new Spare();
-    }
-
     public boolean isLastRound(int tryCount) {
-        if (result.isStrike() || tryCount == 3) {
+        if (state instanceof Strike || tryCount == 3) {
             return true;
         }
 
@@ -69,11 +47,11 @@ public class NormalRound implements Round{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalRound that = (NormalRound) o;
-        return Objects.equals(result, that.result);
+        return Objects.equals(state, that.state) && Objects.equals(score, that.score);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(result);
+        return Objects.hash(state, score);
     }
 }
