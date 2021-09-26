@@ -4,12 +4,12 @@ import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
 import java.util.Objects;
 
-public abstract class Frame {
+public abstract class Frame implements FrameInterface {
 
-    final int round;
-    Score score;
+    private final int round;
+    private Score score;
 
-    Frame(int round, Score score) {
+    private Frame(int round, Score score) {
         this.round = round;
         this.score = score;
     }
