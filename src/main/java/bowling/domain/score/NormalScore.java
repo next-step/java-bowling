@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import static bowling.common.Pin.MAX;
+
 public class NormalScore extends BaseScore {
 
     private final boolean isDone;
@@ -32,7 +34,7 @@ public class NormalScore extends BaseScore {
 
     @Override
     protected void validateCombinedScores(int score) {
-        if (getFirst() + score > MAX) {
+        if (getFirst() + score > MAX.value()) {
             throw new IllegalArgumentException("1차시도와 2차시도의 합계는 10점을 넘을 수 없습니다.");
         }
     }

@@ -1,34 +1,17 @@
 package bowling.presentation.output;
 
+import bowling.common.Pin;
 import bowling.domain.frame.FrameType;
+import bowling.presentation.output.constant.ScoreOutput;
 
 import java.util.List;
 
+import static bowling.presentation.output.constant.FrameSize.*;
+import static bowling.presentation.output.constant.ScoreOutput.*;
+
 public class ScoresFrame {
 
-    private static final int NONE = -1;
-
     private static final String NORMAL_STRIKE_FRAME = " X   ";
-
-    private static final String BOUNDARY = "|";
-
-    private static final String SPACE = " ";
-
-    private static final String STRIKE = "X";
-
-    private static final String SPARE = "/";
-
-    private static final String NO_POINT = "-";
-
-    private static final int MAX_SCORE = 10;
-
-    private static final int NO_POINT_SCORE = 0;
-
-    private static final int NORMAL_FRAME_SIZE = 2;
-
-    private static final int FINAL_FRAME_SIZE = 3;
-
-    private static final int INDENT_SIZE = 5;
 
     private final List<Integer> scores;
 
@@ -56,7 +39,7 @@ public class ScoresFrame {
     }
 
     private static void checkScoresSize(List<Integer> scores) {
-        if (scores.size() < NORMAL_FRAME_SIZE || scores.size() > FINAL_FRAME_SIZE) {
+        if (scores.size() < NORMAL.value() || scores.size() > FINAL.value()) {
             throw new IllegalArgumentException("각 프레임은 2개 혹은 3개의 점수만을 가질 수 있습니다.");
         }
     }
@@ -64,12 +47,12 @@ public class ScoresFrame {
     public String toOutput() {
         StringBuilder frameOutput = new StringBuilder();
         String outputScores = outputScores();
-        frameOutput.append(SPACE).append(SPACE).append(outputScores);
-        for (int i = outputScores.length(); i < INDENT_SIZE; i++) {
-            frameOutput.append(SPACE);
+        frameOutput.append(SPACE.value()).append(SPACE.value()).append(outputScores);
+        for (int i = outputScores.length(); i < INDENT.value(); i++) {
+            frameOutput.append(SPACE.value());
         }
 
-        return frameOutput.append(BOUNDARY).toString();
+        return frameOutput.append(BOUNDARY.value()).toString();
     }
 
     private String outputScores() {
@@ -83,7 +66,7 @@ public class ScoresFrame {
 
         for (int i = 0; i < scores.size(); i++) {
             int score = scores.get(i);
-            if (score == NONE) {
+            if (score == Pin.NONE.value()) {
                 continue;
             }
             outputScores = firstScore(outputScores, i, score);
@@ -98,14 +81,14 @@ public class ScoresFrame {
         if (idx != 0) {
             return outputScores;
         }
-        if (score == MAX_SCORE && frameType == FrameType.NORMAL) {
+        if (score == Pin.MAX.value() && frameType == FrameType.NORMAL) {
             return outputScores + NORMAL_STRIKE_FRAME;
         }
-        if (score == MAX_SCORE) {
-            return outputScores + STRIKE;
+        if (score == Pin.MAX.value()) {
+            return outputScores + STRIKE.value();
         }
-        if (score == NO_POINT_SCORE) {
-            return outputScores + NO_POINT;
+        if (score == Pin.NO_POINT.value()) {
+            return outputScores + ScoreOutput.NO_POINT.value();
         }
         return outputScores + score;
     }
@@ -116,16 +99,16 @@ public class ScoresFrame {
         }
 
         int prev = scores.get(0);
-        outputScores += BOUNDARY;
+        outputScores += BOUNDARY.value();
 
-        if (prev != MAX_SCORE && prev + score == MAX_SCORE) {
-            return outputScores + SPARE;
+        if (prev != Pin.MAX.value() && prev + score == Pin.MAX.value()) {
+            return outputScores + SPARE.value();
         }
-        if (prev == MAX_SCORE && score == MAX_SCORE) {
-            return outputScores + STRIKE;
+        if (prev == Pin.MAX.value() && score == Pin.MAX.value()) {
+            return outputScores + STRIKE.value();
         }
-        if (score == NO_POINT_SCORE) {
-            return outputScores + NO_POINT;
+        if (score == Pin.NO_POINT.value()) {
+            return outputScores + NO_POINT.value();
         }
 
         return outputScores + score;
@@ -138,17 +121,17 @@ public class ScoresFrame {
 
         int score = scores.get(2);
 
-        if (score == NONE) {
+        if (score == Pin.NONE.value()) {
             return outputScores;
         }
 
-        outputScores += BOUNDARY;
+        outputScores += BOUNDARY.value();
 
-        if (score == MAX_SCORE) {
-            return outputScores + STRIKE;
+        if (score == Pin.MAX.value()) {
+            return outputScores + STRIKE.value();
         }
-        if (score == NO_POINT_SCORE) {
-            return outputScores + NO_POINT;
+        if (score == Pin.NO_POINT.value()) {
+            return outputScores + NO_POINT.value();
         }
         return outputScores + score;
     }

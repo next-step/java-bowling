@@ -5,6 +5,10 @@ import bowling.domain.frame.Frames;
 import bowling.presentation.output.util.FramesOutputHelper;
 import bowling.presentation.output.util.ScoresOutputHelper;
 
+import static bowling.presentation.output.constant.FrameSize.INDENT;
+import static bowling.presentation.output.constant.ScoreOutput.BOUNDARY;
+import static bowling.presentation.output.constant.ScoreOutput.SPACE;
+
 public class FrameOutputView {
 
     private static final String FIRST_ROW = "| NAME  |  01   |  02   |  03   |  04   |  05   |  06   |  07   |  08   |  09   |  10   |";
@@ -12,13 +16,6 @@ public class FrameOutputView {
     private static final String SECOND_ROW = "       |       |       |       |       |       |       |       |       |       |";
 
     private static final String THIRD_ROW = "|       |       |       |       |       |       |       |       |       |       |       |";
-
-    private static final String BOUNDARY = "|";
-
-    private static final String SPACE = " ";
-
-    private static final int INDENT_SIZE = 5;
-
 
     private FrameOutputView() {
     }
@@ -51,11 +48,11 @@ public class FrameOutputView {
 
     private StringBuilder name(Player player) {
         StringBuilder name = new StringBuilder();
-        name.append(BOUNDARY).append(SPACE).append(SPACE).append(player.getName());
-        for (int i = player.nameLength(); i < INDENT_SIZE; i++) {
-            name.append(SPACE);
+        name.append(BOUNDARY.value()).append(SPACE.value()).append(SPACE.value()).append(player.getName());
+        for (int i = player.nameLength(); i < INDENT.value(); i++) {
+            name.append(SPACE.value());
         }
-        return name.append(BOUNDARY);
+        return name.append(BOUNDARY.value());
     }
 
 

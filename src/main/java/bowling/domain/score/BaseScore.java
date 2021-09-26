@@ -1,11 +1,9 @@
 package bowling.domain.score;
 
+import static bowling.common.Pin.MAX;
+import static bowling.common.Pin.NO_POINT;
+
 public abstract class BaseScore implements Score {
-
-    protected static final int NONE = -1;
-
-    protected static final int MAX = 10;
-
     private final int first;
 
     private final int second;
@@ -22,30 +20,30 @@ public abstract class BaseScore implements Score {
     }
 
     private static boolean outOfRange(int score) {
-        return score < 0 || score > MAX;
+        return score < 0 || score > MAX.value();
     }
 
     public boolean isStrike() {
-        return first == MAX;
+        return first == MAX.value();
     }
 
     public int sum() {
         if (isStrike()) {
-            return MAX;
+            return MAX.value();
         }
         return first + second;
     }
 
     public boolean isSpare() {
-        return !isStrike() && first + second == MAX;
+        return !isStrike() && first + second == MAX.value();
     }
 
     public boolean isFirstTryNoPoint() {
-        return first == 0;
+        return first == NO_POINT.value();
     }
 
     public boolean isSecondTryNoPoint() {
-        return second == 0;
+        return second == NO_POINT.value();
     }
 
     public int getFirst() {

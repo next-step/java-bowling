@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import static bowling.common.Pin.MAX;
+import static bowling.common.Pin.NONE;
+
 public class FinalScore extends BaseScore {
     private final int third;
 
@@ -15,7 +18,7 @@ public class FinalScore extends BaseScore {
 
     public static FinalScore first(int score) {
         validateScore(score);
-        return new FinalScore(score, NONE, NONE);
+        return new FinalScore(score, NONE.value(), NONE.value());
     }
 
     public FinalScore second(int score) {
@@ -41,7 +44,7 @@ public class FinalScore extends BaseScore {
 
     @Override
     protected void validateCombinedScores(int score) {
-        if (!isStrike() && getFirst() + score > MAX) {
+        if (!isStrike() && getFirst() + score > MAX.value()) {
             throw new IllegalArgumentException(
                     "마지막 프레임의 첫시도가 스트라이크가 아닐 때, 1차시도와 2차시도의 합계는 10점을 넘을 수 없습니다.");
         }
