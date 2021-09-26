@@ -23,12 +23,12 @@ public class Main {
 
         IntStream.range(FIRST_FRAME_ROUND, FINAL_FRAME_ROUND)
             .forEach(round -> normalView(user, firstFrame, round));
-        Frame lastFrame = Frame.getLastFrame(firstFrame);
+        Frame lastFrame = Frame.lastFrame(firstFrame);
         finalView(user, firstFrame, lastFrame);
     }
 
     private static void normalView(User user, Frame firstFrame, int index) {
-        Frame nowFrame = Frame.getLastFrame(firstFrame);
+        Frame nowFrame = Frame.lastFrame(firstFrame);
         printSingleScore(user, Frames.creatByFirstFrame(firstFrame), index, nowFrame);
         if (nowFrame.isNextScore()) {
             printSingleScore(user, Frames.creatByFirstFrame(firstFrame), index, nowFrame);

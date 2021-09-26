@@ -14,7 +14,7 @@ public abstract class Frame {
         this.score = score;
     }
 
-    public static Frame getLastFrame(Frame frame) {
+    public static Frame lastFrame(Frame frame) {
         Frame resultFrame = frame;
         while (Objects.nonNull(resultFrame.nextFrame())) {
             resultFrame = resultFrame.nextFrame();
