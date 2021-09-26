@@ -10,9 +10,9 @@ public abstract class Frame {
 
     protected static int NONE_SCORE = -1;
 
-    protected int trial;
+    private int trial;
 
-    protected int totalScore;
+    private int totalScore;
 
     private final Frame prevFrame;
 
@@ -72,6 +72,14 @@ public abstract class Frame {
 
     protected boolean noSet(int baseScore) {
         return baseScore == NONE_SCORE;
+    }
+
+    protected void increaseTrial() {
+        this.trial++;
+    }
+
+    protected void setTotalScore(int totalScore) {
+        this.totalScore = totalScore;
     }
 
     public abstract int next();

@@ -9,8 +9,6 @@ public class FinalFrame extends Frame {
 
     private static final int IDX = 10;
 
-    private static final int THIRD_TRIAL = 3;
-
     private FinalScore score;
 
     private FinalFrameStatus status;
@@ -61,9 +59,11 @@ public class FinalFrame extends Frame {
             return;
         }
 
-        totalScore = getAllScores().stream()
-                .filter(score -> score != NONE_SCORE)
-                .reduce(baseScore, Integer::sum);
+        setTotalScore(
+                getAllScores().stream()
+                        .filter(score -> score != NONE_SCORE)
+                        .reduce(baseScore, Integer::sum)
+        );
     }
 
     @Override
@@ -83,7 +83,7 @@ public class FinalFrame extends Frame {
 
     private FinalFrame trySecond(int score) {
         this.score = this.score.second(score);
-        this.trial = SECOND_TRIAL;
+        increaseTrial();
         if (isThirdAvailable()) {
             this.status = FinalFrameStatus.of(true, false);
             return this;
@@ -98,7 +98,7 @@ public class FinalFrame extends Frame {
 
     private FinalFrame tryThird(int score) {
         this.score = this.score.third(score);
-        this.trial = THIRD_TRIAL;
+        increaseTrial();
         this.status = FinalFrameStatus.of(false, true);
         return this;
     }

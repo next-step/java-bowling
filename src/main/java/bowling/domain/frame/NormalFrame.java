@@ -71,7 +71,7 @@ public class NormalFrame extends Frame {
 
     protected void calculateWith(int baseScore) {
         if (endsWithNeitherSpareNorStrike()) {
-            totalScore = baseScore + score.getFirst() + score.getSecond();
+            setTotalScore(baseScore + score.getFirst() + score.getSecond());
         }
         calculateWhenSpareOrStrike(baseScore);
     }
@@ -89,7 +89,7 @@ public class NormalFrame extends Frame {
         if (!score.isSpare()) {
             return;
         }
-        totalScore = baseScore + nextFrame.addWithFirstScore(score.sum());
+        setTotalScore(baseScore + nextFrame.addWithFirstScore(score.sum()));
     }
 
     private void calculateTotalScoreIfStrike(int baseScore) {
@@ -101,7 +101,7 @@ public class NormalFrame extends Frame {
 
     private void calculateTotalScoreIfNextScoresMoreThanTwo(int baseScore, List<Integer> nextScores) {
         if (nextScores.size() > 1) {
-            totalScore = baseScore + score.getFirst() + nextScores.get(0) + nextScores.get(1);
+            setTotalScore(baseScore + score.getFirst() + nextScores.get(0) + nextScores.get(1));
         }
     }
 
@@ -160,7 +160,7 @@ public class NormalFrame extends Frame {
 
     private Frame trySecond(int score) {
         this.score = this.score.second(score);
-        this.trial = SECOND_TRIAL;
+        increaseTrial();
         return this;
     }
 
