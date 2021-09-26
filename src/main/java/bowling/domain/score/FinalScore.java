@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class FinalScore extends Score {
+public class FinalScore extends BaseScore {
     private final int third;
 
     private FinalScore(int first, int second, int third) {
@@ -30,8 +30,13 @@ public class FinalScore extends Score {
     }
 
     @Override
+    public int sum() {
+        return super.sum() + third;
+    }
+
+    @Override
     public List<Integer> getAll() {
-        return Collections.unmodifiableList(Arrays.asList(first, second, third));
+        return Collections.unmodifiableList(Arrays.asList(getFirst(), getSecond(), third));
     }
 
     @Override

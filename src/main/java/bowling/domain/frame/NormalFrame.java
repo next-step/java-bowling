@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.BaseScore;
 import bowling.domain.score.NormalScore;
-import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class NormalFrame extends BaseFrame {
         return new NormalFrame(index, score, trial, -1, prevFrame, nextFrame);
     }
 
-    public Score score() {
+    public BaseScore score() {
         return score;
     }
 
