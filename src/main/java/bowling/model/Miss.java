@@ -3,14 +3,22 @@ package bowling.model;
 import java.util.Objects;
 
 public class Miss implements State {
-    private Point point;
+    private Point firstPin;
+    private Point secondPin;
 
-    public Miss() {
-        this.point = new Point(0);
+    public Miss(Point firstPin, Point secondPin) {
+        this.firstPin = firstPin;
+        this.secondPin = secondPin;
     }
 
-    public Miss(Point point) {
-        this.point = point;
+    @Override
+    public State bowl(int countOfPin) {
+        Point currentPin = new Point(countOfPin);
+        if (currentPin.isStrike()) {
+            return new Strike();
+        }
+
+        return new Ready(currentPin);
     }
 
     @Override
@@ -18,11 +26,11 @@ public class Miss implements State {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Miss miss = (Miss) o;
-        return Objects.equals(point, miss.point);
+        return Objects.equals(firstPin, miss.firstPin) && Objects.equals(secondPin, miss.secondPin);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(point);
+        return Objects.hash(firstPin, secondPin);
     }
 }

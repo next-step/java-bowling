@@ -3,10 +3,22 @@ package bowling.model;
 import java.util.Objects;
 
 public class Gutter implements State {
-    private Point point;
+    private Point firstPin;
+    private Point secondPin;
 
-    public Gutter() {
-        this.point = new Point(0);
+    public Gutter(Point firstPin, Point secondPin) {
+        this.firstPin = firstPin;
+        this.secondPin = secondPin;
+    }
+
+    @Override
+    public State bowl(int countOfPin) {
+        Point currentPin = new Point(countOfPin);
+        if (currentPin.isStrike()) {
+            return new Strike();
+        }
+
+        return new Ready(currentPin);
     }
 
     @Override
@@ -14,11 +26,11 @@ public class Gutter implements State {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Gutter gutter = (Gutter) o;
-        return Objects.equals(point, gutter.point);
+        return Objects.equals(firstPin, gutter.firstPin) && Objects.equals(secondPin, gutter.secondPin);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(point);
+        return Objects.hash(firstPin, secondPin);
     }
 }

@@ -10,6 +10,17 @@ public class Strike implements State {
     }
 
     @Override
+    public State bowl(int countOfPin) {
+        Point currentPin = new Point(countOfPin);
+
+        if (currentPin.isStrike()) {
+            return new Strike();
+        }
+
+        return new FirstBowl(currentPin);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -21,4 +32,5 @@ public class Strike implements State {
     public int hashCode() {
         return Objects.hash(point);
     }
+
 }
