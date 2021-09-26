@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class NormalFrame extends Frame {
+public class NormalFrame extends BaseFrame {
 
     private static final int FIRST_IDX = 1;
 
@@ -41,7 +41,7 @@ public class NormalFrame extends Frame {
         return new NormalFrame(index, score, trial, totalScore, null, null);
     }
 
-    protected static NormalFrame of(int index, NormalScore score, int trial, Frame prevFrame, Frame nextFrame) {
+    protected static NormalFrame of(int index, NormalScore score, int trial, BaseFrame prevFrame, BaseFrame nextFrame) {
         return new NormalFrame(index, score, trial, -1, prevFrame, nextFrame);
     }
 
@@ -50,7 +50,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public int next() {
+    public int nextIdx() {
         if (isNowFirstTry() && !this.score.isStrike()) {
             return index;
         }
@@ -123,35 +123,35 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    protected int addWithFirstScore(int score) {
+    public int addWithFirstScore(int score) {
         return this.score.getFirst() + score;
     }
 
     @Override
-    protected Frame getNextFrame() {
+    public Frame getNextFrame() {
         return nextFrame;
     }
 
     @Override
-    public Frame tryNext(int score) {
+    public BaseFrame bowl(int score) {
         if (isNowFirstTry() && !this.score.isStrike()) {
-            return trySecond(score);
+            return bowlSecondTry(score);
         }
-        return tryFirst(index + 1, score);
+        return bowlFirstTry(index + 1, score);
     }
 
-    private Frame tryFirst(int index, int score) {
+    private BaseFrame bowlFirstTry(int index, int score) {
         if (index > LAST) {
-            Frame nextFrame = FinalFrame.start(score, this);
+            BaseFrame nextFrame = FinalFrame.start(score, this);
             this.nextFrame = nextFrame;
             return nextFrame;
         }
-        Frame nextFrame = of(index, NormalScore.first(score), FIRST_TRIAL, this, null);
+        BaseFrame nextFrame = of(index, NormalScore.first(score), FIRST_TRIAL, this, null);
         this.nextFrame = nextFrame;
         return nextFrame;
     }
 
-    private Frame trySecond(int score) {
+    private BaseFrame bowlSecondTry(int score) {
         this.score = this.score.second(score);
         increaseTrial();
         return this;

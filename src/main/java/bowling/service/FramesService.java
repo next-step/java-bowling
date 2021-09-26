@@ -17,7 +17,7 @@ public class FramesService {
     public Frames execute(Player player) {
         Frames frames = Frames.create();
         while (!frames.isLast()) {
-            int score = ScoreInputView.create().input(frames.nextTryFrame());
+            int score = ScoreInputView.create().input(frames.getNextTryFrame());
             frames = frames.execute(score).calculateScores();
             FrameOutputView.create().print(player, frames);
         }

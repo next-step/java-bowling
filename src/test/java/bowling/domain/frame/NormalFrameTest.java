@@ -31,7 +31,7 @@ class NormalFrameTest {
             assertAll(
                     () -> assertEquals(NormalFrame.start(1), NormalFrame.start(1)),
                     () -> assertEquals(NormalFrame.start(10), NormalFrame.of(1, NormalScore.first(10), 1)),
-                    () -> assertEquals(NormalFrame.start(0).tryNext(3), NormalFrame.of(1, NormalScore.first(0).second(3), 2))
+                    () -> assertEquals(NormalFrame.start(0).bowl(3), NormalFrame.of(1, NormalScore.first(0).second(3), 2))
             );
         }
 
@@ -41,7 +41,7 @@ class NormalFrameTest {
             //when
             Frame frame = NormalFrame.start(10);
             //then
-            assertThat(frame.next()).isEqualTo(2);
+            assertThat(frame.nextIdx()).isEqualTo(2);
         }
 
         @Test
@@ -50,7 +50,7 @@ class NormalFrameTest {
             //when
             Frame frame = NormalFrame.start(1);
             //then
-            assertThat(frame.next()).isEqualTo(1);
+            assertThat(frame.nextIdx()).isEqualTo(1);
         }
 
         @Test
@@ -65,7 +65,7 @@ class NormalFrameTest {
         @Test
         public void 한_프레임의_모든점수를_가져올_수_있다() {
             //given
-            Frame frame = NormalFrame.start(1).tryNext(3);
+            Frame frame = NormalFrame.start(1).bowl(3);
             //when
             List<Integer> scores = frame.getAllScores();
             //then
@@ -75,7 +75,7 @@ class NormalFrameTest {
         @Test
         public void 프레임이_스트라이크와_스페어가_아닐때의_프레임의_점수를_계산한다() {
             //given
-            Frame frame = NormalFrame.start(1).tryNext(3);
+            Frame frame = NormalFrame.start(1).bowl(3);
             //when
             int score = frame.calculateScore();
             //then
@@ -95,8 +95,8 @@ class NormalFrameTest {
         @Test
         public void 프레임이_스페어이고_다음_프레임의_첫시도가_주어졌을_때_프레임의_점수를_계산한다() {
             //given
-            Frame frame = NormalFrame.start(1).tryNext(9);
-            Frame nextFrame = frame.tryNext(10);
+            Frame frame = NormalFrame.start(1).bowl(9);
+            Frame nextFrame = frame.bowl(10);
             //when
             int score = frame.calculateScore();
             //then
@@ -106,7 +106,7 @@ class NormalFrameTest {
         @Test
         public void 프레임이_스페어이고_다음_프레임의_첫시도가_주어지지_않았다면_점수를_계산할_수_없다() {
             //given
-            Frame frame = NormalFrame.start(1).tryNext(9);
+            Frame frame = NormalFrame.start(1).bowl(9);
             //when
             int score = frame.calculateScore();
             //then
@@ -118,7 +118,7 @@ class NormalFrameTest {
         public void 프레임이_스트라이크이고_다음_프레임이_스트라이크가_아닐_때_점수를_계산할_수_있다(int first, int second) {
             //given
             Frame frame = NormalFrame.start(10);
-            Frame nextFrame = frame.tryNext(first).tryNext(second);
+            Frame nextFrame = frame.bowl(first).bowl(second);
             //when
             int score = frame.calculateScore();
             //then
@@ -138,7 +138,7 @@ class NormalFrameTest {
         public void 프레임이_스트라이크이고_다음_프레임이_스트라이크가_아닐_때_다음_프레임이_끝나지_않았다면_점수를_계산할_수_없다() {
             //given
             Frame frame = NormalFrame.start(10);
-            Frame nextFrame = frame.tryNext(3);
+            Frame nextFrame = frame.bowl(3);
             //when
             int score = frame.calculateScore();
             //then
@@ -150,8 +150,8 @@ class NormalFrameTest {
         public void 프레임이_스트라이크이고_다음_프레임이_스트라이크면_그_다음_프레임의_첫_점수를_합한값이_결과가_된다(int first) {
             //given
             Frame frame = NormalFrame.start(10);
-            Frame nextFrame = frame.tryNext(10);
-            Frame nextNextFrame = nextFrame.tryNext(first);
+            Frame nextFrame = frame.bowl(10);
+            Frame nextNextFrame = nextFrame.bowl(first);
             //when
             int score = frame.calculateScore();
             //then
@@ -162,7 +162,7 @@ class NormalFrameTest {
         public void 프레임이_스트라이크이고_다음_프레임이_스트라이크이면_그_다음_프레임이_끝나지_않았다면_점수를_계산할_수_없다() {
             //given
             Frame frame = NormalFrame.start(10);
-            Frame nextFrame = frame.tryNext(10);
+            Frame nextFrame = frame.bowl(10);
             //when
             int score = frame.calculateScore();
             //then
@@ -182,11 +182,11 @@ class NormalFrameTest {
             //given
             Frame frame = NormalFrame.of(8, NormalScore.first(3).second(3), 2);
             //when
-            frame = frame.tryNext(10);
+            frame = frame.bowl(10);
             //then
             Frame finalFrame = frame;
             assertAll(
-                    () -> assertEquals(10, finalFrame.next()),
+                    () -> assertEquals(10, finalFrame.nextIdx()),
                     () -> assertTrue(finalFrame.isLast())
             );
         }
@@ -196,11 +196,11 @@ class NormalFrameTest {
             //given
             Frame frame = NormalFrame.of(8, NormalScore.first(3).second(3), 2);
             //when
-            frame = frame.tryNext(8);
+            frame = frame.bowl(8);
             //then
             Frame finalFrame = frame;
             assertAll(
-                    () -> assertEquals(9, finalFrame.next()),
+                    () -> assertEquals(9, finalFrame.nextIdx()),
                     () -> assertFalse(finalFrame.isLast())
             );
         }
@@ -210,11 +210,11 @@ class NormalFrameTest {
             //given
             Frame frame = NormalFrame.of(8, NormalScore.first(3).second(3), 2);
             //when
-            frame = frame.tryNext(8).tryNext(2);
+            frame = frame.bowl(8).bowl(2);
             //then
             Frame finalFrame = frame;
             assertAll(
-                    () -> assertEquals(10, finalFrame.next()),
+                    () -> assertEquals(10, finalFrame.nextIdx()),
                     () -> assertTrue(finalFrame.isLast())
             );
         }
@@ -223,8 +223,8 @@ class NormalFrameTest {
         @Test
         public void 이전_프레임의_점수가_계산되어있지_않다면_현프레임의_점수를_계산할_수_없다() {
             //given
-            Frame prevFrame = NormalFrame.start(1).tryNext(3);
-            Frame frame = prevFrame.tryNext(4).tryNext(3);
+            Frame prevFrame = NormalFrame.start(1).bowl(3);
+            Frame frame = prevFrame.bowl(4).bowl(3);
             //when
             int score = frame.calculateScore();
             //then
@@ -240,14 +240,14 @@ class NormalFrameTest {
 
             @BeforeEach
             public void setup() {
-                prevFrame = NormalFrame.start(1).tryNext(3);
+                prevFrame = NormalFrame.start(1).bowl(3);
                 prevFrame.calculateScore();
             }
 
             @Test
             public void 현프레임이_스트라이크와_스페어가_아닐때의_프레임의_점수를_계산한다() {
                 //given
-                Frame frame = prevFrame.tryNext(4).tryNext(3);
+                Frame frame = prevFrame.bowl(4).bowl(3);
                 //when
                 prevFrame.calculateScore();
                 int score = frame.calculateScore();
@@ -258,7 +258,7 @@ class NormalFrameTest {
             @Test
             public void 프레임이_스트라이크와_스페어가_아닐때_두번째_시도가_끝나지_않았다면_점수를_계산할_수_없다() {
                 //given
-                Frame frame = prevFrame.tryNext(4);
+                Frame frame = prevFrame.bowl(4);
                 //when
                 prevFrame.calculateScore();
                 int score = frame.calculateScore();
@@ -270,8 +270,8 @@ class NormalFrameTest {
             @MethodSource
             public void 프레임이_스페어이고_다음_프레임의_첫시도가_주어졌을_때_프레임의_점수를_계산한다(int first, int second) {
                 //given
-                Frame frame = prevFrame.tryNext(1).tryNext(9);  // 스페어
-                Frame nextFrame = frame.tryNext(first).tryNext(second);
+                Frame frame = prevFrame.bowl(1).bowl(9);  // 스페어
+                Frame nextFrame = frame.bowl(first).bowl(second);
                 //when
                 prevFrame.calculateScore();
                 int score = frame.calculateScore();
@@ -292,7 +292,7 @@ class NormalFrameTest {
             @Test
             public void 프레임이_스페어이고_다음_프레임의_첫시도가_주어지지_않았다면_점수를_계산할_수_없다() {
                 //given
-                Frame frame = prevFrame.tryNext(1).tryNext(9);  // 스페어
+                Frame frame = prevFrame.bowl(1).bowl(9);  // 스페어
                 //when
                 prevFrame.calculateScore();
                 int score = frame.calculateScore();
@@ -304,8 +304,8 @@ class NormalFrameTest {
             @MethodSource
             public void 프레임이_스트라이크이고_다음_프레임이_스트라이크가_아닐_때_점수를_계산할_수_있다(int first, int second) {
                 //given
-                Frame frame = prevFrame.tryNext(10);    // 스트라이크
-                Frame nextFrame = frame.tryNext(first).tryNext(second);
+                Frame frame = prevFrame.bowl(10);    // 스트라이크
+                Frame nextFrame = frame.bowl(first).bowl(second);
                 //when
                 prevFrame.calculateScore();
                 int score = frame.calculateScore();
@@ -325,8 +325,8 @@ class NormalFrameTest {
             @Test
             public void 프레임이_스트라이크이고_다음_프레임이_스트라이크가_아닐_때_다음_프레임이_끝나지_않았다면_점수를_계산할_수_없다() {
                 //given
-                Frame frame = prevFrame.tryNext(10);    // 스트라이크
-                Frame nextFrame = frame.tryNext(5);
+                Frame frame = prevFrame.bowl(10);    // 스트라이크
+                Frame nextFrame = frame.bowl(5);
                 //when
                 prevFrame.calculateScore();
                 int score = frame.calculateScore();
@@ -338,9 +338,9 @@ class NormalFrameTest {
             @ValueSource(ints = {0, 1, 5, 10})
             public void 프레임이_스트라이크이고_다음_프레임이_스트라이크면_그_다음_프레임의_첫_점수를_합한값이_결과가_된다(int first) {
                 //given
-                Frame frame = prevFrame.tryNext(10);    // 스트라이크
-                Frame nextFrame = frame.tryNext(10);
-                Frame nextNextFrame = nextFrame.tryNext(first);
+                Frame frame = prevFrame.bowl(10);    // 스트라이크
+                Frame nextFrame = frame.bowl(10);
+                Frame nextNextFrame = nextFrame.bowl(first);
                 //when
                 prevFrame.calculateScore();
                 int score = frame.calculateScore();
@@ -351,8 +351,8 @@ class NormalFrameTest {
             @Test
             public void 프레임이_스트라이크이고_다음_프레임이_스트라이크이면_그_다음_프레임이_시작하지_않았다면_점수를_계산할_수_없다() {
                 //given
-                Frame frame = prevFrame.tryNext(10);    // 스트라이크
-                Frame nextFrame = frame.tryNext(10);
+                Frame frame = prevFrame.bowl(10);    // 스트라이크
+                Frame nextFrame = frame.bowl(10);
                 //when
                 prevFrame.calculateScore();
                 int score = frame.calculateScore();

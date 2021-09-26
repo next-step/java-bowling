@@ -5,7 +5,7 @@ import bowling.domain.score.FinalScore;
 import java.util.List;
 import java.util.Objects;
 
-public class FinalFrame extends Frame {
+public class FinalFrame extends BaseFrame {
 
     private static final int IDX = 10;
 
@@ -36,7 +36,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public int next() {
+    public int nextIdx() {
         return IDX;
     }
 
@@ -46,11 +46,34 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public Frame tryNext(int score) {
+    public BaseFrame bowl(int score) {
         if (isNowFirstTry()) {
-            return trySecond(score);
+            return bowlSecondTry(score);
         }
-        return tryThird(score);
+        return bowlThirdTry(score);
+    }
+
+    private FinalFrame bowlSecondTry(int score) {
+        this.score = this.score.second(score);
+        increaseTrial();
+        if (isThirdAvailable()) {
+            this.status = FinalFrameStatus.of(true, false);
+            return this;
+        }
+        this.status = FinalFrameStatus.of(false, true);
+        return this;
+    }
+
+    private boolean isThirdAvailable() {
+        return this.score.isStrike() || this.score.isSpare();
+    }
+
+
+    private FinalFrame bowlThirdTry(int score) {
+        this.score = this.score.third(score);
+        increaseTrial();
+        this.status = FinalFrameStatus.of(false, true);
+        return this;
     }
 
     @Override
@@ -72,35 +95,13 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    protected int addWithFirstScore(int score) {
+    public int addWithFirstScore(int score) {
         return this.score.getFirst() + score;
     }
 
     @Override
-    protected Frame getNextFrame() {
+    public BaseFrame getNextFrame() {
         return null;
-    }
-
-    private FinalFrame trySecond(int score) {
-        this.score = this.score.second(score);
-        increaseTrial();
-        if (isThirdAvailable()) {
-            this.status = FinalFrameStatus.of(true, false);
-            return this;
-        }
-        this.status = FinalFrameStatus.of(false, true);
-        return this;
-    }
-
-    private boolean isThirdAvailable() {
-        return this.score.isStrike() || this.score.isSpare();
-    }
-
-    private FinalFrame tryThird(int score) {
-        this.score = this.score.third(score);
-        increaseTrial();
-        this.status = FinalFrameStatus.of(false, true);
-        return this;
     }
 
     @Override

@@ -25,13 +25,13 @@ public class Frames {
         return Collections.unmodifiableList(frames);
     }
 
-    public int nextTryFrame() {
+    public int getNextTryFrame() {
         if (frames.isEmpty()) {
             return FIRST_TRIAL;
         }
 
         Frame frame = frames.get(frames.size() - 1);
-        return frame.next();
+        return frame.nextIdx();
     }
 
     public Frames execute(int score) {
@@ -42,7 +42,7 @@ public class Frames {
         }
 
         Frame frame = frames.get(frames.size() - 1);
-        frame = frame.tryNext(score);
+        frame = frame.bowl(score);
 
         if (frame.isNowFirstTry()) {
             frames.add(frame);
@@ -72,8 +72,8 @@ public class Frames {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Frames frames = (Frames) o;
-        return Objects.equals(this.frames, frames.frames);
+        Frames frames1 = (Frames) o;
+        return Objects.equals(frames, frames1.frames);
     }
 
     @Override
