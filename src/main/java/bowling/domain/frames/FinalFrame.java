@@ -4,7 +4,7 @@ package bowling.domain.frames;
 import bowling.domain.Score;
 import bowling.domain.exception.IncorrectNumberOfPinsException;
 
-public class FinalFrame extends Frame {
+public class FinalFrame extends AbstractFrame {
 
     private static final int FRAME_MAX_ATTEMPTS = 3;
     private static final int SECOND_ATTEMPTS = 2;

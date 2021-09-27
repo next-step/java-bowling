@@ -3,7 +3,7 @@ package bowling.domain.frames;
 import bowling.domain.Score;
 import bowling.domain.exception.IncorrectNumberOfPinsException;
 
-public class NormalFrame extends Frame {
+public class NormalFrame extends AbstractFrame {
 
     private static final int FRAME_MAX_ATTEMPTS = 2;
 
