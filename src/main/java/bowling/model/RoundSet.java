@@ -40,6 +40,7 @@ public class RoundSet {
         this.point = calcTotalPoint(pinCount);
 
         State result = getCurrentRound().bowl(pinCount);
+        List<Score> scores = getCurrentRound().calculateScore(pinCount);
         bowlingResults.add(result);
 
         if (this.point.isStrike()) {
@@ -47,7 +48,7 @@ public class RoundSet {
         }
 
         int maxTryCount = getCurrentRound().calcMaxTryCount();
-        next(result);
+        next(result, scores);
         return maxTryCount;
     }
 
@@ -59,8 +60,8 @@ public class RoundSet {
         return new Point(point);
     }
 
-    private void next(State state) {
-        this.rounds.add(getCurrentRound().next(state));
+    private void next(State state, List<Score> scores) {
+        this.rounds.add(getCurrentRound().next(state, scores));
     }
 
     private Round getCurrentRound() {
