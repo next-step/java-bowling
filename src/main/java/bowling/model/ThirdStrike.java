@@ -4,11 +4,11 @@ import bowling.CannotBowlException;
 
 import java.util.Objects;
 
-public class Miss implements State {
-    private Point countOfPin;
+public class ThirdStrike implements State {
+    private Point point;
 
-    public Miss(Point countOfPin) {
-        this.countOfPin = countOfPin;
+    public ThirdStrike() {
+        this.point = new Point(10);
     }
 
     @Override
@@ -20,12 +20,13 @@ public class Miss implements State {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Miss miss = (Miss) o;
-        return Objects.equals(countOfPin, miss.countOfPin);
+        ThirdStrike strike = (ThirdStrike) o;
+        return Objects.equals(point, strike.point);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(countOfPin);
+        return Objects.hash(point);
     }
+
 }

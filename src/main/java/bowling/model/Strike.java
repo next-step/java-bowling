@@ -3,10 +3,10 @@ package bowling.model;
 import java.util.Objects;
 
 public class Strike implements State {
-    private Point point;
+    private Point countOfPin;
 
     public Strike() {
-        this.point = new Point(10);
+        this.countOfPin = new Point(10);
     }
 
     @Override
@@ -14,10 +14,10 @@ public class Strike implements State {
         Point currentPin = new Point(countOfPin);
 
         if (currentPin.isStrike()) {
-            return new Strike();
+            return new SecondStrike();
         }
 
-        return new FirstBowl(currentPin);
+        return new SecondBowl(countOfPin);
     }
 
     @Override
@@ -25,12 +25,12 @@ public class Strike implements State {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Strike strike = (Strike) o;
-        return Objects.equals(point, strike.point);
+        return Objects.equals(countOfPin, strike.countOfPin);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(point);
+        return Objects.hash(countOfPin);
     }
 
 }

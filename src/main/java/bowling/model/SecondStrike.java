@@ -2,15 +2,11 @@ package bowling.model;
 
 import java.util.Objects;
 
-public class Spare implements State {
-    private Point countOfPin;
+public class SecondStrike implements State {
+    private Point point;
 
-    public Spare() {
-        this.countOfPin = new Point(10);
-    }
-
-    public Spare(Point countOfPin) {
-        this.countOfPin = countOfPin;
+    public SecondStrike() {
+        this.point = new Point(10);
     }
 
     @Override
@@ -21,19 +17,20 @@ public class Spare implements State {
             return new ThirdStrike();
         }
 
-        return new Miss(currentPin);
+        return new FirstBowl(countOfPin);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Spare spare = (Spare) o;
-        return Objects.equals(countOfPin, spare.countOfPin);
+        SecondStrike strike = (SecondStrike) o;
+        return Objects.equals(point, strike.point);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(countOfPin);
+        return Objects.hash(point);
     }
+
 }

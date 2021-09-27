@@ -4,10 +4,14 @@ import bowling.CannotBowlException;
 
 import java.util.Objects;
 
-public class Miss implements State {
+public class ThirdSpare implements State {
     private Point countOfPin;
 
-    public Miss(Point countOfPin) {
+    public ThirdSpare() {
+        this.countOfPin = new Point(10);
+    }
+
+    public ThirdSpare(Point countOfPin) {
         this.countOfPin = countOfPin;
     }
 
@@ -20,8 +24,8 @@ public class Miss implements State {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Miss miss = (Miss) o;
-        return Objects.equals(countOfPin, miss.countOfPin);
+        ThirdSpare spare = (ThirdSpare) o;
+        return Objects.equals(countOfPin, spare.countOfPin);
     }
 
     @Override

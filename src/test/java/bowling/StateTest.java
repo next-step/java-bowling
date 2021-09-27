@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class StateTest {
     @Test
-    public void 첫번째_시도에서_핀이_10개가_쓰러지면_스트라이크를_반환한다() {
+    public void 첫번째_시도에서_핀이_10개가_쓰러지면_스트라이크를_반환한다() throws CannotBowlException {
         //given
         State state = new Ready();
         int firstPin = 10;
@@ -20,7 +20,7 @@ public class StateTest {
     }
 
     @Test
-    public void 두번째_시도에서_핀이_10개_쓰러지면_스페어를_반환한다 () {
+    public void 두번째_시도에서_핀이_10개_쓰러지면_스페어를_반환한다 () throws CannotBowlException {
         //given
         State state = new Ready();
         int firstPin = 1;
@@ -29,7 +29,7 @@ public class StateTest {
         state = state.bowl(firstPin);
 
         //then
-        assertThat(state).isEqualTo(new FirstBowl(new Point(firstPin)));
+        assertThat(state).isEqualTo(new FirstBowl(firstPin));
 
 
         //given
@@ -39,11 +39,11 @@ public class StateTest {
         state = state.bowl(secondPin);
 
         //then
-        assertThat(state).isEqualTo(new Spare(new Point(firstPin), new Point(secondPin)));
+        assertThat(state).isEqualTo(new Spare());
     }
 
     @Test
-    public void 두번째_시도에서_핀이_10이하로_쓰러지면_미스를_반환한다 () {
+    public void 두번째_시도에서_핀이_10이하로_쓰러지면_미스를_반환한다 () throws CannotBowlException {
         //given
         State state = new Ready();
         int firstPin = 1;
@@ -52,7 +52,7 @@ public class StateTest {
         state = state.bowl(firstPin);
 
         //then
-        assertThat(state).isEqualTo(new FirstBowl(new Point(firstPin)));
+        assertThat(state).isEqualTo(new FirstBowl(firstPin));
 
 
         //given
@@ -62,34 +62,12 @@ public class StateTest {
         state = state.bowl(secondPin);
 
         //then
-        assertThat(state).isEqualTo(new Miss(new Point(firstPin), new Point(secondPin)));
+        assertThat(state).isEqualTo(new Miss(new Point(firstPin + secondPin)));
     }
 
-    @Test
-    public void 두번째_시도에서_핀이_0개_쓰러지면_거터를_반환한다 () {
-        //given
-        State state = new Ready();
-        int firstPin = 1;
-
-        //when
-        state = state.bowl(firstPin);
-
-        //then
-        assertThat(state).isEqualTo(new FirstBowl(new Point(firstPin)));
-
-
-        //given
-        int secondPin = 0;
-
-        //when
-        state = state.bowl(secondPin);
-
-        //then
-        assertThat(state).isEqualTo(new Gutter(new Point(firstPin), new Point(secondPin)));
-    }
 
     @Test
-    public void 연속_3번_스트라이크() {
+    public void 연속_3번_스트라이크() throws CannotBowlException {
         //given
         State state = new Ready();
 
@@ -99,21 +77,23 @@ public class StateTest {
         //then
         assertThat(state).isEqualTo(new Strike());
 
-        //when
-        state = state.bowl(10);
-
-        //then
-        assertThat(state).isEqualTo(new Strike());
 
         //when
         state = state.bowl(10);
 
         //then
-        assertThat(state).isEqualTo(new Strike());
+        assertThat(state).isEqualTo(new SecondStrike());
+
+
+        //when
+        state = state.bowl(10);
+
+        //then
+        assertThat(state).isEqualTo(new ThirdStrike());
     }
 
     @Test
-    public void 마지막_프레임_스트라이크_스페어() {
+    public void 마지막_프레임_스트라이크_스페어() throws CannotBowlException {
         //given
         State state = new Ready();
         int firstPin = 10;
@@ -124,6 +104,7 @@ public class StateTest {
         //then
         assertThat(state).isEqualTo(new Strike());
 
+
         //given
         int secondPin = 1;
 
@@ -131,7 +112,7 @@ public class StateTest {
         state = state.bowl(secondPin);
 
         //then
-        assertThat(state).isEqualTo(new FirstBowl(new Point(secondPin)));
+        assertThat(state).isEqualTo(new SecondBowl(secondPin));
 
 
         //given
@@ -141,11 +122,11 @@ public class StateTest {
         state = state.bowl(thirdPin);
 
         //then
-        assertThat(state).isEqualTo(new Spare(new Point(secondPin), new Point(thirdPin)));
+        assertThat(state).isEqualTo(new ThirdSpare());
     }
 
     @Test
-    public void 마지막_프레임_스페어_스트라이크() {
+    public void 마지막_프레임_스페어_스트라이크() throws CannotBowlException {
         //given
         State state = new Ready();
         int firstPin = 1;
@@ -154,7 +135,7 @@ public class StateTest {
         state = state.bowl(firstPin);
 
         //then
-        assertThat(state).isEqualTo(new FirstBowl(new Point(firstPin)));
+        assertThat(state).isEqualTo(new FirstBowl(firstPin));
 
 
         //given
@@ -164,7 +145,8 @@ public class StateTest {
         state = state.bowl(secondPin);
 
         //then
-        assertThat(state).isEqualTo(new Spare(new Point(firstPin), new Point(secondPin)));
+        assertThat(state).isEqualTo(new Spare());
+
 
         //given
         int thirdPin = 10;
@@ -173,6 +155,6 @@ public class StateTest {
         state = state.bowl(thirdPin);
 
         //then
-        assertThat(state).isEqualTo(new Strike());
+        assertThat(state).isEqualTo(new ThirdStrike());
     }
 }

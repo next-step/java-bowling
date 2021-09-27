@@ -2,10 +2,10 @@ package bowling.model;
 
 import java.util.Objects;
 
-public class FirstBowl implements State {
+public class SecondBowl implements State {
     private Point countOfPin;
 
-    public FirstBowl(int countOfPin) {
+    public SecondBowl(int countOfPin) {
         this.countOfPin = new Point(countOfPin);
     }
 
@@ -14,7 +14,7 @@ public class FirstBowl implements State {
         Point currentPin = this.countOfPin.add(countOfPin);
 
         if (currentPin.isStrike()) {
-            return new Spare();
+            return new ThirdSpare();
         }
 
         return new Miss(currentPin);
@@ -24,8 +24,8 @@ public class FirstBowl implements State {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FirstBowl firstBowl = (FirstBowl) o;
-        return Objects.equals(countOfPin, firstBowl.countOfPin);
+        SecondBowl that = (SecondBowl) o;
+        return Objects.equals(countOfPin, that.countOfPin);
     }
 
     @Override
