@@ -3,10 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.score.BaseScore;
 import bowling.domain.score.NormalScore;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -64,7 +61,7 @@ public class NormalFrame extends BaseFrame {
 
     protected void calculateWith(int baseScore) {
         if (endsWithNeitherSpareNorStrike()) {
-            setTotalScore(baseScore + score.getFirst() + score.getSecond());
+            calculateTotalScore(baseScore, score.getAll());
         }
         calculateWhenSpareOrStrike(baseScore);
     }
@@ -82,7 +79,7 @@ public class NormalFrame extends BaseFrame {
         if (!score.isSpare()) {
             return;
         }
-        setTotalScore(baseScore + nextFrame.addWithFirstScore(score.sum()));
+        calculateTotalScore(baseScore, nextFrame.addWithFirstScore(score.sum()));
     }
 
     private void calculateTotalScoreIfStrike(int baseScore) {
@@ -94,7 +91,7 @@ public class NormalFrame extends BaseFrame {
 
     private void calculateTotalScoreIfNextScoresMoreThanTwo(int baseScore, List<Integer> nextScores) {
         if (nextScores.size() > 1) {
-            setTotalScore(baseScore + score.getFirst() + nextScores.get(0) + nextScores.get(1));
+            calculateTotalScore(baseScore, score.getFirst(), nextScores.get(0), nextScores.get(1));
         }
     }
 

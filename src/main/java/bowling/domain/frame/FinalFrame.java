@@ -82,11 +82,8 @@ public class FinalFrame extends BaseFrame {
             return;
         }
 
-        setTotalScore(
-                getAllScores().stream()
-                        .filter(score -> score != NONE_SCORE)
-                        .reduce(baseScore, Integer::sum)
-        );
+        calculateTotalScore(baseScore, getAllScores());
+
     }
 
     @Override

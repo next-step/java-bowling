@@ -1,5 +1,10 @@
 package bowling.domain.frame;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public abstract class BaseFrame implements Frame {
 
     protected static int FIRST_TRIAL = 1;
@@ -78,8 +83,17 @@ public abstract class BaseFrame implements Frame {
         this.trial++;
     }
 
-    protected void setTotalScore(int totalScore) {
-        this.totalScore = totalScore;
+
+    protected void calculateTotalScore(int baseScore, Integer... scores) {
+        calculateTotalScore(baseScore, Arrays.asList(scores));
+    }
+
+    protected void calculateTotalScore(int baseScore, List<Integer> scores) {
+        totalScore = scores.stream().filter(score -> score != NONE_SCORE).reduce(baseScore, Integer::sum);
+    }
+
+    protected void calculateTotalScore(int baseScore, int score) {
+        totalScore = baseScore + score;
     }
 
 }
