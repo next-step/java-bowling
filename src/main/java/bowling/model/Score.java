@@ -6,6 +6,11 @@ public class Score {
     private int score;
     private int left;
 
+    public Score() {
+        this.score = 0;
+        this.left = 2;
+    }
+
     public Score(int score, int left) {
         this.score = score;
         this.left = left;
@@ -33,10 +38,6 @@ public class Score {
 
     public static Score ofMiss(int countOfPin) {
         return new Score(countOfPin, 0);
-    }
-
-    public static Score ofGutter() {
-        return new Score(0, 0);
     }
 
     @Override

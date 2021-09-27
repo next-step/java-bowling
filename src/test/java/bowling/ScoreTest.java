@@ -62,14 +62,5 @@ public class ScoreTest {
         assertThat(miss.getScore()).isEqualTo(4);
     }
 
-    @Test
-    public void 거터는_현재_투구까지_점수를_합산한다() {
-        //when
-        Score gutter = ofGutter();
 
-        //then
-        assertTrue(gutter.canCalculateScore());
-        assertThat(gutter).isEqualTo(new Score(0, 0));
-        assertThat(gutter.getScore()).isEqualTo(0);
-    }
 }
