@@ -4,7 +4,6 @@ import bowling.model.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
-import java.util.Queue;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,7 +13,7 @@ public class NormalRoundTest {
     public void 결과가_스트라이크이면_1회투구만_진행한다() throws CannotBowlException {
         //given
         State state = new Strike();
-        Queue<Score> scores = new LinkedList<>();
+        LinkedList<Score> scores = new LinkedList<>();
         scores.add(new Score(10, 1));
 
         //when
@@ -31,7 +30,7 @@ public class NormalRoundTest {
         //given
         int firstPin = 2;
         State state = new FirstBowl(firstPin);
-        Queue<Score> scores = new LinkedList<>();
+        LinkedList<Score> scores = new LinkedList<>();
         scores.add(new Score(2, 1));
 
         //when
@@ -59,7 +58,7 @@ public class NormalRoundTest {
     @Test
     public void 스트라이크일때_다음라운드_스코어_생성() throws CannotBowlException {
         //given
-        Queue<Score> expect = new LinkedList<>();
+        LinkedList<Score> expect = new LinkedList<>();
         expect.add(Score.ofStrike());
         expect.add(new Score());
 
@@ -74,7 +73,7 @@ public class NormalRoundTest {
     @Test
     public void 스페어일때_다음_라운드_스코어_생성() throws CannotBowlException {
         //given
-        Queue<Score> expect = new LinkedList<>();
+        LinkedList<Score> expect = new LinkedList<>();
         expect.add(Score.ofSpare());
         expect.add(new Score());
 
@@ -90,7 +89,7 @@ public class NormalRoundTest {
     @Test
     public void 미스일때_다음_라운드_스코어_생성() throws CannotBowlException {
         //given
-        Queue<Score> expect = new LinkedList<>();
+        LinkedList<Score> expect = new LinkedList<>();
         expect.add(new Score());
 
         //when

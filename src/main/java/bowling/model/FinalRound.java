@@ -1,8 +1,8 @@
 package bowling.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import bowling.CannotBowlException;
+
+import java.util.*;
 
 import static bowling.model.Score.*;
 
@@ -10,27 +10,39 @@ public class FinalRound implements Round{
     private static int bonusCount = 1;
 
     private State state;
-    private List<Score> scores;
+    private LinkedList<Score> scores;
 
     public FinalRound() {
         this.state = new Ready();
+        this.scores = new LinkedList<>();
+        this.scores.add(new Score());
     }
 
-    public FinalRound(State state, List<Score> scores) {
+    public FinalRound(State state, LinkedList<Score> scores) {
         this.state = state;
         this.scores = scores;
     }
 
     @Override
-    public State bowl(int countOfPin) {
-        this.state = this.state.bowl(countOfPin);
+    public State bowl(int countOfPin) throws CannotBowlException {
+        this.state = state.bowl(countOfPin);
+
         calculateScore(countOfPin);
-        this.scores.add(createScore(countOfPin));
-        return this.state;
+        this.scores = nextScore();
+
+        return state;
+    }
+
+    public boolean isFinish() {
+        if (state instanceof FirstBowl || state instanceof Strike || state instanceof Spare) {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
-    public Round next(State state, List<Score> scores) {
+    public Round next(State state, LinkedList<Score> scores) {
         return new FinalRound(state, scores);
     }
 
@@ -49,33 +61,32 @@ public class FinalRound implements Round{
     }
 
     @Override
-    public List<Score> calculateScore(int countOfPin) {
-        List<Score> list = new ArrayList<>();
-        for (Score score : scores) {
+    public void calculateScore(int countOfPin) {
+        for (int i = 0; i < scores.size(); i++) {
+            Score score = scores.remove().bowl(countOfPin);
+
             if (score.canCalculateScore()) {
                 System.out.println(score.getScore());
-            }else {
-                list.add(score.bowl(countOfPin));
+            }else{
+                scores.add(score);
             }
-
-            //score.output();
         }
-
-        this.scores = list;
-        return this.scores;
     }
 
     @Override
-    public Score createScore(int countOfPin) {
+    public LinkedList<Score> nextScore() {
+        LinkedList<Score> nextScore = scores;
+
         if (state instanceof Strike) {
-            return ofStrike();
+            nextScore.removeLast();
+            nextScore.add(ofStrike());
         }
 
         if (state instanceof Spare) {
-            return ofSpare();
+            nextScore.add(ofSpare());
         }
 
-        return ofMiss(countOfPin);
+        return nextScore;
     }
 
     @Override

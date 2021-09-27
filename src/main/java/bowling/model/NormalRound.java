@@ -8,7 +8,7 @@ import static bowling.model.Score.*;
 
 public class NormalRound implements Round{
     private State state;
-    private Queue<Score> scores;
+    private LinkedList<Score> scores;
 
     public NormalRound() {
         this.state = new Ready();
@@ -16,7 +16,7 @@ public class NormalRound implements Round{
         this.scores.add(new Score());
     }
 
-    public NormalRound(State state, Queue<Score> scores) {
+    public NormalRound(State state, LinkedList<Score> scores) {
         this.state = state;
         this.scores = scores;
     }
@@ -31,7 +31,7 @@ public class NormalRound implements Round{
     }
 
     @Override
-    public Round next(State state, Queue<Score> scores) {
+    public Round next(State state, LinkedList<Score> scores) {
         return new NormalRound(state, scores);
     }
 
@@ -58,8 +58,9 @@ public class NormalRound implements Round{
     }
 
     @Override
-    public Queue<Score> nextScore() {
-        Queue<Score> nextScore = new LinkedList<>();
+    public LinkedList<Score> nextScore() {
+        LinkedList<Score> nextScore = new LinkedList<>();
+
         if (state instanceof Strike) {
             nextScore.add(ofStrike());
         }
