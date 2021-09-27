@@ -58,16 +58,19 @@ public class NormalRound implements Round{
     }
 
     @Override
-    public Score createScore(int countOfPin) {
+    public Queue<Score> nextScore() {
+        Queue<Score> nextScore = new LinkedList<>();
         if (state instanceof Strike) {
-            return ofStrike();
+            nextScore.add(ofStrike());
         }
 
         if (state instanceof Spare) {
-            return ofSpare();
+            nextScore.add(ofSpare());
         }
-            //지워야한다..
-        return ofMiss(countOfPin);
+
+        nextScore.add(new Score());
+
+        return nextScore;
     }
 
     public boolean isLastRound(int tryCount) {

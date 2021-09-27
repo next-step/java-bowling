@@ -55,4 +55,50 @@ public class NormalRoundTest {
         assertThat(normalRound).isEqualTo(new NormalRound(state, scores));
         assertTrue(normalRound.isFinish());
     }
+
+    @Test
+    public void 스트라이크일때_다음라운드_스코어_생성() throws CannotBowlException {
+        //given
+        Queue<Score> expect = new LinkedList<>();
+        expect.add(Score.ofStrike());
+        expect.add(new Score());
+
+        //when
+        NormalRound normalRound = new NormalRound();
+        normalRound.bowl(10);
+
+        //then
+        assertThat(normalRound.nextScore()).isEqualTo(expect);
+    }
+
+    @Test
+    public void 스페어일때_다음_라운드_스코어_생성() throws CannotBowlException {
+        //given
+        Queue<Score> expect = new LinkedList<>();
+        expect.add(Score.ofSpare());
+        expect.add(new Score());
+
+        //when
+        NormalRound normalRound = new NormalRound();
+        normalRound.bowl(2);
+        normalRound.bowl(8);
+
+        //then
+        assertThat(normalRound.nextScore()).isEqualTo(expect);
+    }
+
+    @Test
+    public void 미스일때_다음_라운드_스코어_생성() throws CannotBowlException {
+        //given
+        Queue<Score> expect = new LinkedList<>();
+        expect.add(new Score());
+
+        //when
+        NormalRound normalRound = new NormalRound();
+        normalRound.bowl(1);
+        normalRound.bowl(8);
+
+        //then
+        assertThat(normalRound.nextScore()).isEqualTo(expect);
+    }
 }
