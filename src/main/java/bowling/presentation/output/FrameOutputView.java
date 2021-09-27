@@ -3,11 +3,11 @@ package bowling.presentation.output;
 import bowling.domain.Player;
 import bowling.domain.frame.Frames;
 import bowling.presentation.output.util.FramesOutputHelper;
-import bowling.presentation.output.util.ScoresOutputHelper;
+import bowling.presentation.output.util.TotalScoreOutputHelper;
 
 import static bowling.presentation.output.constant.FrameSize.INDENT;
-import static bowling.presentation.output.constant.ScoreOutput.BOUNDARY;
-import static bowling.presentation.output.constant.ScoreOutput.SPACE;
+import static bowling.presentation.output.constant.ScoreMarking.BOUNDARY;
+import static bowling.presentation.output.constant.ScoreMarking.SPACE;
 
 public class FrameOutputView {
 
@@ -40,7 +40,7 @@ public class FrameOutputView {
         secondRow
                 .append(name(player))
                 .append(FramesOutputHelper.create().output(frames))
-                .append(ScoresOutputHelper.create().output(frames));
+                .append(TotalScoreOutputHelper.create().output(frames));
 
         System.out.println(secondRow);
 

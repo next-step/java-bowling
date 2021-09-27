@@ -3,7 +3,7 @@ package bowling.presentation.output.util;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 
-public class ScoresOutputHelper {
+public class TotalScoreOutputHelper {
 
     private static final int WHOLE_FRAME_SIZE = 10;
 
@@ -15,11 +15,11 @@ public class ScoresOutputHelper {
 
     private static final String SPACE = " ";
 
-    private ScoresOutputHelper() {
+    private TotalScoreOutputHelper() {
     }
 
-    public static ScoresOutputHelper create() {
-        return new ScoresOutputHelper();
+    public static TotalScoreOutputHelper create() {
+        return new TotalScoreOutputHelper();
     }
 
     public String output(Frames frames) {

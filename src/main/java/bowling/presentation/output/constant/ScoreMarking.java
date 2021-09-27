@@ -1,12 +1,12 @@
 package bowling.presentation.output.constant;
 
-public enum ScoreOutput {
+public enum ScoreMarking {
 
     BOUNDARY("|"), SPACE(" "), STRIKE("X"), SPARE("/"), NO_POINT("-");
 
     private final String value;
 
-    ScoreOutput(String value) {
+    ScoreMarking(String value) {
         this.value = value;
     }
 

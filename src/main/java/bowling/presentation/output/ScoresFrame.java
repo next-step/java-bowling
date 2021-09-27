@@ -2,16 +2,16 @@ package bowling.presentation.output;
 
 import bowling.common.Pin;
 import bowling.domain.frame.FrameType;
-import bowling.presentation.output.constant.ScoreOutput;
+import bowling.presentation.output.util.ScoreMarker;
+import bowling.presentation.output.util.ScoreMarkerFactory;
 
 import java.util.List;
 
 import static bowling.presentation.output.constant.FrameSize.*;
-import static bowling.presentation.output.constant.ScoreOutput.*;
+import static bowling.presentation.output.constant.ScoreMarking.BOUNDARY;
+import static bowling.presentation.output.constant.ScoreMarking.SPACE;
 
 public class ScoresFrame {
-
-    private static final String NORMAL_STRIKE_FRAME = " X   ";
 
     private final List<Integer> scores;
 
@@ -81,16 +81,8 @@ public class ScoresFrame {
         if (idx != 0) {
             return outputScores;
         }
-        if (score == Pin.MAX.value() && frameType == FrameType.NORMAL) {
-            return outputScores + NORMAL_STRIKE_FRAME;
-        }
-        if (score == Pin.MAX.value()) {
-            return outputScores + STRIKE.value();
-        }
-        if (score == Pin.NO_POINT.value()) {
-            return outputScores + ScoreOutput.NO_POINT.value();
-        }
-        return outputScores + score;
+        ScoreMarker scoreMarker = ScoreMarkerFactory.newInstance().scoreMarker(score);
+        return scoreMarker.mark(outputScores, score);
     }
 
     private String secondScore(String outputScores, int idx, int score) {
@@ -101,17 +93,8 @@ public class ScoresFrame {
         int prev = scores.get(0);
         outputScores += BOUNDARY.value();
 
-        if (prev != Pin.MAX.value() && prev + score == Pin.MAX.value()) {
-            return outputScores + SPARE.value();
-        }
-        if (prev == Pin.MAX.value() && score == Pin.MAX.value()) {
-            return outputScores + STRIKE.value();
-        }
-        if (score == Pin.NO_POINT.value()) {
-            return outputScores + NO_POINT.value();
-        }
-
-        return outputScores + score;
+        ScoreMarker scoreMarker = ScoreMarkerFactory.newInstance().scoreMarker(prev, score);
+        return scoreMarker.mark(outputScores, score);
     }
 
     private String setThirdScore(String outputScores) {
@@ -120,20 +103,14 @@ public class ScoresFrame {
         }
 
         int score = scores.get(2);
-
         if (score == Pin.NONE.value()) {
             return outputScores;
         }
 
         outputScores += BOUNDARY.value();
 
-        if (score == Pin.MAX.value()) {
-            return outputScores + STRIKE.value();
-        }
-        if (score == Pin.NO_POINT.value()) {
-            return outputScores + NO_POINT.value();
-        }
-        return outputScores + score;
+        ScoreMarker scoreMarker = ScoreMarkerFactory.newInstance().scoreMarker(score);
+        return scoreMarker.mark(outputScores, score);
     }
 
 
