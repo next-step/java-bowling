@@ -1,34 +1,37 @@
 package bowling.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import bowling.CannotBowlException;
+
+import java.util.*;
 
 import static bowling.model.Score.*;
 
 public class NormalRound implements Round{
     private State state;
-    private List<Score> scores;
+    private Queue<Score> scores;
 
     public NormalRound() {
         this.state = new Ready();
-        this.scores = new ArrayList<>();
+        this.scores = new LinkedList<>();
+        this.scores.add(new Score());
     }
 
-    public NormalRound(State state, List<Score> scores) {
+    public NormalRound(State state, Queue<Score> scores) {
         this.state = state;
         this.scores = scores;
     }
 
     @Override
-    public State bowl(int countOfPin) {
-        state = state.bowl(countOfPin);
-        scores.add(createScore(countOfPin));
-        return this.state;
+    public State bowl(int countOfPin) throws CannotBowlException {
+        this.state = state.bowl(countOfPin);
+
+        calculateScore(countOfPin);
+
+        return state;
     }
 
     @Override
-    public Round next(State state, List<Score> scores) {
+    public Round next(State state, Queue<Score> scores) {
         return new NormalRound(state, scores);
     }
 
@@ -42,27 +45,16 @@ public class NormalRound implements Round{
     }
 
     @Override
-    public List<Score> calculateScore(int countOfPin) {
-        List<Score> list = new ArrayList<>();
-        System.out.println(scores.size());
-        for (Score score : scores) {
+    public void calculateScore(int countOfPin) {
+        for (int i = 0; i < scores.size(); i++) {
+            Score score = scores.remove().bowl(countOfPin);
+
             if (score.canCalculateScore()) {
                 System.out.println(score.getScore());
-            }else {
-                list.add(score.bowl(countOfPin));
+            }else{
+                scores.add(score);
             }
-
         }
-
-        this.scores = list;
-        this.scores.add(createScore(countOfPin));
-
-
-        for (Score score : scores) {
-
-            //score.output();
-        }
-        return this.scores;
     }
 
     @Override
@@ -74,12 +66,20 @@ public class NormalRound implements Round{
         if (state instanceof Spare) {
             return ofSpare();
         }
-
+            //지워야한다..
         return ofMiss(countOfPin);
     }
 
     public boolean isLastRound(int tryCount) {
         if (state instanceof Strike || tryCount == 3) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean isFinish() {
+        if (state instanceof Strike || !(state instanceof FirstBowl)) {
             return true;
         }
 
