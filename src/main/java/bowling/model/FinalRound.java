@@ -4,6 +4,7 @@ import bowling.CannotBowlException;
 
 import java.util.*;
 
+import static bowling.controller.Main.scoreResult;
 import static bowling.model.Score.*;
 
 public class FinalRound implements Round{
@@ -35,11 +36,11 @@ public class FinalRound implements Round{
 
     @Override
     public boolean isFinish() {
-        if (state instanceof FirstBowl || state instanceof Strike || state instanceof Spare) {
-            return false;
+        if (state instanceof Miss || state instanceof ThirdStrike || state instanceof ThirdSpare) {
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     @Override
@@ -62,7 +63,7 @@ public class FinalRound implements Round{
             Score score = scores.remove().bowl(countOfPin);
 
             if (score.canCalculateScore()) {
-                System.out.println(score.getScore());
+                scoreResult.add(score.getScore());
             }else{
                 scores.add(score);
             }
