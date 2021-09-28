@@ -2,7 +2,6 @@ package bowling.domain.frames;
 
 
 import bowling.domain.Score;
-import bowling.domain.exception.IncorrectNumberOfPinsException;
 
 public class FinalFrame extends AbstractFrame {
 
@@ -22,7 +21,7 @@ public class FinalFrame extends AbstractFrame {
         if (isOverAttempts()) {
             return true;
         }
-        if (this.scores.size() == SECOND_ATTEMPTS) {
+        if (this.numberOfRoll() == SECOND_ATTEMPTS) {
             return !isPossibleThirdRoll();
         }
         return false;
@@ -30,12 +29,8 @@ public class FinalFrame extends AbstractFrame {
 
     @Override
     protected void checkValidNextScore(final Score score) {
-        int nextDownPins = this.scores.downPins() + score.getNumberOfPins();
-        if (isStrike() || isSpare()) {
-            return;
-        }
-        if (nextDownPins > NUMBER_OF_PINS || nextDownPins < 0) {
-            throw new IncorrectNumberOfPinsException();
+        if (!isStrike() && !isSpare()) {
+            checkIncorrectNumberOfPins(score);
         }
     }
 
@@ -48,6 +43,6 @@ public class FinalFrame extends AbstractFrame {
 
     @Override
     protected boolean isOverAttempts() {
-        return this.scores.size() >= FRAME_MAX_ATTEMPTS;
+        return this.numberOfRoll() >= FRAME_MAX_ATTEMPTS;
     }
 }
