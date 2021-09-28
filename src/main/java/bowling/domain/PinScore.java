@@ -18,11 +18,11 @@ public class PinScore {
 
     private void validation(int score) throws CannotCreateException {
         if (score < MIN) {
-            throw new CannotCreateException(CannotCreateException.SCORE_EXCEPTION);
+            throw new CannotCreateException(CannotCreateException.SCORE_ERROR_MSG);
         }
 
         if (score > MAX) {
-            throw new CannotCreateException(CannotCreateException.SCORE_EXCEPTION);
+            throw new CannotCreateException(CannotCreateException.SCORE_ERROR_MSG);
         }
     }
 
