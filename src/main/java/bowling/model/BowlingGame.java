@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class BowlingGame {
+    private static final int LAST_FRAME_NO = 11;
+
     private int frameNo;
     private List<Round> rounds;
 
@@ -35,6 +37,14 @@ public class BowlingGame {
         return rounds.get(rounds.size() - 1);
     }
 
+    public boolean isEndGame() {
+        if (frameNo == LAST_FRAME_NO) {
+            return true;
+        }
+
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -47,4 +57,5 @@ public class BowlingGame {
     public int hashCode() {
         return Objects.hash(frameNo, rounds);
     }
+
 }
