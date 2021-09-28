@@ -1,12 +1,14 @@
 package bowling.model;
 
 import bowling.CannotBowlException;
-
 import java.util.*;
 
+import static bowling.controller.Main.scoreResult;
 import static bowling.model.Score.*;
 
 public class NormalRound implements Round{
+    private static final int FINAL_ROUND = 10;
+
     private State state;
     private LinkedList<Score> scores;
 
@@ -30,7 +32,10 @@ public class NormalRound implements Round{
         return state;
     }
 
-    public NormalRound next() {
+    public Round next(int frameNo) {
+        if (frameNo == FINAL_ROUND) {
+            return new FinalRound(new Ready(), nextScore());
+        }
         return new NormalRound(new Ready(), nextScore());
     }
 
@@ -49,7 +54,7 @@ public class NormalRound implements Round{
             Score score = scores.remove().bowl(countOfPin);
 
             if (score.canCalculateScore()) {
-                System.out.println(score.getScore());
+                scoreResult.add(score.getScore());
             }else{
                 scores.add(score);
             }

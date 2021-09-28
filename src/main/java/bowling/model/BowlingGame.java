@@ -13,7 +13,7 @@ public class BowlingGame {
     private List<Round> rounds;
 
     public BowlingGame() {
-        this.frameNo = 0;
+        this.frameNo = 1;
         this.rounds = new ArrayList<>();
         this.rounds.add(new NormalRound());
     }
@@ -24,10 +24,15 @@ public class BowlingGame {
     }
 
     public State bowl(int countOfPin) throws CannotBowlException {
+        System.out.println(frameNo);
         State state = currentFrame().bowl(countOfPin);
 
         if (currentFrame().isFinish()) {
             frameNo += 1;
+            if (currentFrame() instanceof NormalRound) {
+                Round round = ((NormalRound) currentFrame()).next(frameNo);
+                rounds.add(round);
+            }
         }
 
         return state;
@@ -45,6 +50,10 @@ public class BowlingGame {
         return false;
     }
 
+    public int getFrameNo() {
+        return this.frameNo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,5 +66,4 @@ public class BowlingGame {
     public int hashCode() {
         return Objects.hash(frameNo, rounds);
     }
-
 }
