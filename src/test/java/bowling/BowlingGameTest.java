@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import static bowling.model.Score.ofStrike;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,13 +17,19 @@ public class BowlingGameTest {
         State state = new Strike();
         LinkedList<Score> scores = new LinkedList<>();
         scores.add(new Score(10, 1));
+        NormalRound currentRound = new NormalRound(state, scores);
+
+        LinkedList<Score> nextScores = new LinkedList<>();
+        nextScores.add(ofStrike());
+        nextScores.add(new Score());
+        NormalRound nextRound = new NormalRound(new Ready(), nextScores);
 
         //when
         BowlingGame game = new BowlingGame();
         game.bowl(10);
 
         //then
-        assertThat(game).isEqualTo(new BowlingGame(1, Arrays.asList(new NormalRound(state, scores))));
+        assertThat(game).isEqualTo(new BowlingGame(2, Arrays.asList(currentRound, nextRound)));
     }
 
     @Test
