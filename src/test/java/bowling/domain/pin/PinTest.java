@@ -2,6 +2,7 @@ package bowling.domain.pin;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,6 +20,19 @@ class PinTest {
         assertThatExceptionOfType(RuntimeException.class)
             .isThrownBy(() -> Pin.of(input))
             .withMessageMatching("Pin은 0 ~ 10 사이의 수만 저장될 수 있습니다.");
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 3, 5, 7, 10})
+    @DisplayName("Pin 캐싱 테스트")
+    void pinCacheTest(int input) {
+
+        // when
+        Pin pin = Pin.of(input);
+
+        // then
+        assertTrue(pin == Pin.of(input));
+        assertThat(pin).isEqualTo(Pin.of(input));
     }
 
     @Test
