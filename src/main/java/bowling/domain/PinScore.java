@@ -16,6 +16,7 @@ public class PinScore {
         return this.score;
     }
 
+
     private void validation(int score) throws CannotCreateException {
         if (score < MIN) {
             throw new CannotCreateException(CannotCreateException.SCORE_ERROR_MSG);
