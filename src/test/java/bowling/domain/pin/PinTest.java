@@ -18,4 +18,5 @@ class PinTest {
             .isThrownBy(() -> Pin.of(input))
             .withMessageMatching("Pin은 0 ~ 10 사이의 수만 저장될 수 있습니다.");
     }
+
 }

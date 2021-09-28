@@ -71,7 +71,7 @@
 
 - pin
 - [x] pin은 0~10 사이의 값만 들어올 수 있다.
-- [ ] pin number를 캐싱할 수 있다.
+- [x] pin number를 캐싱할 수 있다.
 
 - score
 - [ ] 한 프레임의 score판은 NormalScore와 FinalScore로 나뉠 수 있다.
