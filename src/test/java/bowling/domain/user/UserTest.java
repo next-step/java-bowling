@@ -2,6 +2,7 @@ package bowling.domain.user;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+import bowling.exception.user.UsernameEnglishException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -14,7 +15,7 @@ public class UserTest {
     void nameEnglishExceptionTest(String input) {
 
         // when & then
-        assertThatExceptionOfType(RuntimeException.class)
+        assertThatExceptionOfType(UsernameEnglishException.class)
             .isThrownBy(() -> User.of(input))
             .withMessageMatching("유저의 이름은 영어만 들어와야 합니다.");
     }
