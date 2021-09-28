@@ -3,10 +3,9 @@ package bowling.domain.frames;
 import bowling.domain.Score;
 import bowling.domain.exception.IncorrectNumberOfPinsException;
 
-public class NormalFrame extends Frame {
+public class NormalFrame extends AbstractFrame {
 
     private static final int FRAME_MAX_ATTEMPTS = 2;
-    private static final int TWO_STRIKES = 20;
 
     public NormalFrame() {
         super();
@@ -18,28 +17,25 @@ public class NormalFrame extends Frame {
 
     @Override
     protected boolean isFinishFrame() {
-        if (isOverAttempts()) {
-            return true;
-        }
         if (isSpare()) {
             return true;
         }
-        return isStrike();
+        if (isStrike()) {
+            return true;
+        }
+        return isOverAttempts();
     }
 
     @Override
-    public void checkValidNextScore(final Score nextScore) {
+    protected void checkValidNextScore(final Score nextScore) {
         int nextDownPins = this.scores.downPins() + nextScore.getNumberOfPins();
-        if (nextDownPins == TWO_STRIKES) {
-            return;
-        }
         if (nextDownPins > NUMBER_OF_PINS || nextDownPins < 0) {
             throw new IncorrectNumberOfPinsException();
         }
     }
 
     @Override
-    public boolean isOverAttempts() {
+    protected boolean isOverAttempts() {
         return this.scores.size() >= FRAME_MAX_ATTEMPTS;
     }
 }

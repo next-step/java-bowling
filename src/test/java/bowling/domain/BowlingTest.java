@@ -42,7 +42,7 @@ class BowlingTest {
     @DisplayName("생성-  finish index 는 0")
     void create_finish_index() {
         Bowling bowling = new Bowling("pjs");
-        assertEquals(bowling.lastFinishIndex(), 0);
+        assertEquals(bowling.lastFinishedFrameIndex(), 0);
     }
 
     @Test

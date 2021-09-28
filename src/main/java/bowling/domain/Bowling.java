@@ -27,8 +27,8 @@ public class Bowling {
         return this.frames.isFinish();
     }
 
-    public int lastFinishIndex() {
-        return this.frames.lastFinishIndex();
+    public int lastFinishedFrameIndex() {
+        return this.frames.lastFinishedFrameIndex();
     }
 
     public Name getName() {
