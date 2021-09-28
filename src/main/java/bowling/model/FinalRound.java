@@ -33,6 +33,7 @@ public class FinalRound implements Round{
         return state;
     }
 
+    @Override
     public boolean isFinish() {
         if (state instanceof FirstBowl || state instanceof Strike || state instanceof Spare) {
             return false;

@@ -81,6 +81,7 @@ public class NormalRound implements Round{
         return false;
     }
 
+    @Override
     public boolean isFinish() {
         if (state instanceof Strike || !(state instanceof FirstBowl)) {
             return true;

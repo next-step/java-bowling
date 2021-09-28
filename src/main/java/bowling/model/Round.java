@@ -12,4 +12,5 @@ public interface Round {
     int calcMaxTryCount();
     LinkedList<Score> nextScore();
     void calculateScore(int countOfPin);
+    boolean isFinish();
 }
