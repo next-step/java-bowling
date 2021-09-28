@@ -1,43 +1,38 @@
 package bowling.model;
 
+import bowling.CannotBowlException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class BowlingGame {
-    private List<RoundSet> allRounds;
+    private int frameNo;
+    private List<Round> rounds;
 
     public BowlingGame() {
-        this.allRounds = new ArrayList<>();
-        roundInit();
+        this.frameNo = 0;
+        this.rounds = new ArrayList<>();
+        this.rounds.add(new NormalRound());
     }
 
-    public BowlingGame(int index) {
-        this.allRounds = new ArrayList<>();
-        allRounds.add(new RoundSet(index));
+    public BowlingGame(int frameNo, List<Round> rounds) {
+        this.frameNo = frameNo;
+        this.rounds = rounds;
     }
 
+    public State bowl(int countOfPin) throws CannotBowlException {
+        State state = currentFrame().bowl(countOfPin);
 
-    private void roundInit() {
-        allRounds.add(new RoundSet(allRounds.size() + 1));
-    }
-
-    public int play(int point) {
-        int maxTryCount = getRoundSet().play(point);
-
-        if (isSkipNextRound(maxTryCount) || getRoundSet().isLastRound()) {
-            roundInit();
+        if (currentFrame().isFinish()) {
+            frameNo += 1;
         }
 
-        return maxTryCount;
+        return state;
     }
 
-    private boolean isSkipNextRound(int maxTryCount) {
-        return maxTryCount == -1;
-    }
-
-    private RoundSet getRoundSet() {
-        return allRounds.get(allRounds.size() - 1);
+    private Round currentFrame() {
+        return rounds.get(rounds.size() - 1);
     }
 
     @Override
@@ -45,11 +40,11 @@ public class BowlingGame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BowlingGame game = (BowlingGame) o;
-        return Objects.equals(allRounds, game.allRounds);
+        return frameNo == game.frameNo && Objects.equals(rounds, game.rounds);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(allRounds);
+        return Objects.hash(frameNo, rounds);
     }
 }
