@@ -42,11 +42,6 @@ public class FinalRound implements Round{
     }
 
     @Override
-    public Round next(State state, LinkedList<Score> scores) {
-        return new FinalRound(state, scores);
-    }
-
-    @Override
     public int calcMaxTryCount() {
         if (bonusCount == 0) {
             return 0;

@@ -30,9 +30,8 @@ public class NormalRound implements Round{
         return state;
     }
 
-    @Override
-    public Round next(State state, LinkedList<Score> scores) {
-        return new NormalRound(state, scores);
+    public NormalRound next() {
+        return new NormalRound(new Ready(), nextScore());
     }
 
     @Override

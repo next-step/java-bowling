@@ -100,4 +100,21 @@ public class NormalRoundTest {
         //then
         assertThat(normalRound.nextScore()).isEqualTo(expect);
     }
+
+    @Test
+    public void 일반라운드는_다음라운드를_생성한다() throws CannotBowlException {
+        //given
+        LinkedList<Score> scores = new LinkedList<>();
+        scores.add(Score.ofStrike());
+        scores.add(new Score());
+        State state = new Ready();
+
+        //when
+        NormalRound normalRound = new NormalRound();
+        normalRound.bowl(10);
+        NormalRound expect = normalRound.next();
+
+        //then
+        assertThat(expect).isEqualTo(new NormalRound(state, scores));
+    }
 }
