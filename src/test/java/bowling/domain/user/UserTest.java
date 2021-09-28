@@ -1,10 +1,12 @@
 package bowling.domain.user;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import bowling.exception.user.UsernameEnglishException;
 import bowling.exception.user.UsernameLengthException;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -30,6 +32,19 @@ public class UserTest {
         assertThatExceptionOfType(UsernameLengthException.class)
             .isThrownBy(() -> User.of(input))
             .withMessageMatching("유저의 이름은 3글자 이하로 들어와야 합니다.");
+    }
+
+    @Test
+    @DisplayName("User equals, hashCode 재정의 테스트")
+    void userEqualsHashCodeTest() {
+
+        // given & when
+        User result = User.of("cjy");
+
+        // then
+        assertThat(result)
+            .isEqualTo(User.of("cjy"))
+            .hasSameHashCodeAs(User.of("cjy"));
     }
 
 }
