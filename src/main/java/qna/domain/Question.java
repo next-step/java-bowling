@@ -5,7 +5,6 @@ import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,7 +22,8 @@ public class Question extends AbstractEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+//    private List<Answer> answers = new ArrayList<>();
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -77,18 +77,8 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
     }
 
     @Override
@@ -97,26 +87,16 @@ public class Question extends AbstractEntity {
     }
 
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
-        for (Answer answer : answers) {
-            answer.delete(loginUser);
-        }
+        answers.delete(loginUser);
         isOwnerDelete(loginUser);
-        return deleteHistories();
+        return answers.deleteHistories(new DeleteHistory(ContentType.QUESTION, getId(), this.writer, LocalDateTime.now()));
     }
 
     private void isOwnerDelete(User loginUser) throws CannotDeleteException {
         if(!isOwner(loginUser)){
             throw new CannotDeleteException("작성자가 아닙니다.");
         }
-        setDeleted(true);
+        this.deleted = true;
     }
 
-    public List<DeleteHistory> deleteHistories() {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), this.writer, LocalDateTime.now()));
-        for (Answer answer : answers) {
-            deleteHistories.add(answer.deleteHistory());
-        }
-        return deleteHistories;
-    }
 }
