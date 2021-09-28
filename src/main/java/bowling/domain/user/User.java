@@ -1,6 +1,7 @@
 package bowling.domain.user;
 
 import bowling.exception.user.UsernameEnglishException;
+import bowling.exception.user.UsernameLengthException;
 import java.util.regex.Pattern;
 
 public class User {
@@ -14,13 +15,21 @@ public class User {
     }
 
     public static User of(String name) {
+        checkUsernameLength(name);
         checkUsernameEnglish(name);
+
         return new User(name);
     }
 
     private static void checkUsernameEnglish(String name) {
         if (!Pattern.matches(ENGLISH_REGEX, name)) {
             throw new UsernameEnglishException();
+        }
+    }
+
+    private static void checkUsernameLength(String name) {
+        if (name.length() > 3) {
+            throw new UsernameLengthException();
         }
     }
 
