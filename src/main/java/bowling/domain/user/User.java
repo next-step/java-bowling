@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 
 public class User {
 
+    private static final int USERNAME_MAX_LENGTH = 3;
+
     private static final String ENGLISH_REGEX = "^[a-zA-Z]*$";
 
     private final String name;
@@ -28,7 +30,7 @@ public class User {
     }
 
     private static void checkUsernameLength(String name) {
-        if (name.length() > 3) {
+        if (name.length() > USERNAME_MAX_LENGTH) {
             throw new UsernameLengthException();
         }
     }
