@@ -13,7 +13,7 @@ class PinScoreTest {
     @DisplayName("핀 점수 생성하기.")
     void createTest() throws CannotCreateException {
         PinScore ps = new PinScore(1);
-        assertThat(ps.score()).isEqualTo(1);
+        assertThat(ps.value()).isEqualTo(1);
     }
 
     @Test

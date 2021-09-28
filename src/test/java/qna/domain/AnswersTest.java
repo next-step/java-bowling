@@ -1,6 +1,7 @@
 package qna.domain;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
@@ -9,13 +10,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class AnswersTest {
-    private static Answers answers;
+    private Answers answers;
+
+    @BeforeEach
+    void initAnswers() {
+        answers = new Answers();
+    }
 
     @Test
     @DisplayName("일급객체 생성")
-    @BeforeAll
-    static void createTest() {
-        answers = new Answers();
+    void createTest(){
         assertThat(answers.size()).isEqualTo(0);
     }
 

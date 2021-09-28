@@ -3,8 +3,8 @@ package bowling.domain;
 import bowling.exception.CannotCreateException;
 
 public class PinScore {
-    private static final int MIN = 0;
-    private static final int MAX = 10;
+    public static final int MIN = 0;
+    public static final int MAX = 10;
     private int score;
 
     public PinScore(int score) throws CannotCreateException {
@@ -12,10 +12,9 @@ public class PinScore {
         this.score = score;
     }
 
-    public int score() {
+    public int value() {
         return this.score;
     }
-
 
     private void validation(int score) throws CannotCreateException {
         if (score < MIN) {
@@ -26,6 +25,5 @@ public class PinScore {
             throw new CannotCreateException(CannotCreateException.SCORE_ERROR_MSG);
         }
     }
-
 
 }
