@@ -1,5 +1,6 @@
 package bowling.domain.score;
 
+import bowling.exception.score.BonusPinValueException;
 import bowling.exception.score.SecondPinValueException;
 import java.util.Objects;
 
@@ -33,6 +34,7 @@ public class FinalScore implements Score {
             checkRemainPin(pin);
             return new FinalScore(first, pin, null);
         } else if (Objects.isNull(bonus)) {
+            checkBonusPin();
             return new FinalScore(first, second, pin);
         }
         return null;
@@ -42,6 +44,16 @@ public class FinalScore implements Score {
         if (first != STRIKE && first.remainPin() < pin.value()) {
             throw new SecondPinValueException();
         }
+    }
+
+    private void checkBonusPin() {
+        if (!isBonus()) {
+            throw new BonusPinValueException();
+        }
+    }
+
+    private boolean isBonus() {
+        return (first == STRIKE && second == STRIKE) || (first.remainPin() == second.value());
     }
 
     @Override
