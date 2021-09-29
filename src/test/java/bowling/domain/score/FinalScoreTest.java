@@ -92,11 +92,28 @@ class FinalScoreTest {
     }
 
     @Test
-    @DisplayName("bonus pin을 저장할 수 있다.")
+    @DisplayName("두번째 pin이 spare면 bonus pin을 저장할 수 있다.")
     void saveBonusPinTest() {
 
         // given
         Pin pin = Pin.of(5);
+        Score input = FinalScore.of(pin, pin, null);
+
+        Score expected = FinalScore.of(pin, pin, pin);
+
+        // when
+        Score result = input.saveNextPin(pin);
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("두번째 pin이 strike면 bonus pin을 저장할 수 있다.")
+    void saveBonusPinByStrikeTest() {
+
+        // given
+        Pin pin = Pin.of(10);
         Score input = FinalScore.of(pin, pin, null);
 
         Score expected = FinalScore.of(pin, pin, pin);
