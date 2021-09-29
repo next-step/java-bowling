@@ -74,9 +74,8 @@
 - [x] pin number를 캐싱할 수 있다.
 
 - score
-- [ ] score는 다음 score를 저장할 수 있는지 확인할 수 있다.
-- [ ] score는 다음 pin을 저장할 수 있다.
-- [ ] score는 다음 pin을 저장할 수 있는지 확인할 수 있다.
+- [x] score는 다음 pin을 저장할 수 있다.
+- [x] score는 다음 pin을 저장할 수 있는지 확인할 수 있다.
 
 - [ ] 한 프레임의 score판은 NormalScore와 FinalScore로 나뉠 수 있다.
 - Normal Score
