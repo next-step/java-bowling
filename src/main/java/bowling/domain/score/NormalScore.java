@@ -24,6 +24,8 @@ public class NormalScore implements Score {
     public Score saveNextPin(Pin pin) {
         if (Objects.isNull(first)) {
             return new NormalScore(pin, null);
+        } else if (Objects.isNull(second)) {
+            return new NormalScore(first, pin);
         }
         return null;
     }

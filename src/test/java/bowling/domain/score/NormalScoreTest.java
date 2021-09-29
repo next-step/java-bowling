@@ -38,4 +38,22 @@ class NormalScoreTest {
         assertThat(result).isEqualTo(expected);
     }
 
+    @Test
+    @DisplayName("두번째 pin이 비어있다면 저장할 수 있다.")
+    void saveSecondPinTest() {
+
+        // given
+        Pin first = Pin.of(3);
+        Pin second = Pin.of(4);
+        Score input = NormalScore.of(first, null);
+
+        Score expected = NormalScore.of(first, second);
+
+        // when
+        Score result = input.saveNextPin(second);
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
 }
