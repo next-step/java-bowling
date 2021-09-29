@@ -3,6 +3,7 @@ package bowling.domain.score;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+import bowling.exception.score.PinSaveExcessException;
 import bowling.exception.score.SecondPinValueException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -86,6 +87,20 @@ class NormalScoreTest {
         assertThatExceptionOfType(SecondPinValueException.class)
             .isThrownBy(() -> input.saveNextPin(second))
             .withMessageMatching("두번째 핀은 남은 핀만 저장할 수 있습니다.");
+    }
+
+    @Test
+    @DisplayName("Score를 다 저장했을 때 pin을 저장할 수 없다.")
+    void saveFailByFullPinTest() {
+
+        // given
+        Pin pin = Pin.of(2);
+        Score input = NormalScore.of(pin, pin);
+
+        // when & then
+        assertThatExceptionOfType(PinSaveExcessException.class)
+            .isThrownBy(() -> input.saveNextPin(pin))
+            .withMessageMatching("현재 Score가 다 차있어 저장할 수 없습니다.");
     }
 
     @Test
