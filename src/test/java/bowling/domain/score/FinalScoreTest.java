@@ -92,6 +92,23 @@ class FinalScoreTest {
     }
 
     @Test
+    @DisplayName("bonus pin을 저장할 수 있다.")
+    void saveBonusPinTest() {
+
+        // given
+        Pin pin = Pin.of(5);
+        Score input = FinalScore.of(pin, pin, null);
+
+        Score expected = FinalScore.of(pin, pin, pin);
+
+        // when
+        Score result = input.saveNextPin(pin);
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
     @DisplayName("FinalScore equals, hashCode 재정의 테스트")
     void finalScoreEqualsHashCodeTest() {
 

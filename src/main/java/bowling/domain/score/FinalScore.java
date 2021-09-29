@@ -32,6 +32,8 @@ public class FinalScore implements Score {
         } else if (Objects.isNull(second)) {
             checkRemainPin(pin);
             return new FinalScore(first, pin, null);
+        } else if (Objects.isNull(bonus)) {
+            return new FinalScore(first, second, pin);
         }
         return null;
     }
