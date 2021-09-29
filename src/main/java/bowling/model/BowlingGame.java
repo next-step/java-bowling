@@ -3,7 +3,6 @@ package bowling.model;
 import bowling.CannotBowlException;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,7 +30,6 @@ public class BowlingGame {
 
     public List<Integer> getScore() {
         List<Integer> scores = currentFrame().getScore();
-
         createNextFrame();
 
         return scores;
