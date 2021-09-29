@@ -18,6 +18,10 @@ public class FinalScore implements Score {
         return new FinalScore(first, second, bonus);
     }
 
+    public static Score emptyScore() {
+        return new FinalScore(null, null, null);
+    }
+
     @Override
     public Score saveNextPin(Pin pin) {
         return null;

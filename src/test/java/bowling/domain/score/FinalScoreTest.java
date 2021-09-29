@@ -8,6 +8,20 @@ import org.junit.jupiter.api.Test;
 class FinalScoreTest {
 
     @Test
+    @DisplayName("빈 FinalScore를 생성할 수 있다.")
+    void createEmptyScoreTest() {
+
+        // given
+        Score expected = FinalScore.of(null, null, null);
+
+        // when
+        Score result = FinalScore.emptyScore();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
     @DisplayName("FinalScore equals, hashCode 재정의 테스트")
     void finalScoreEqualsHashCodeTest() {
 
