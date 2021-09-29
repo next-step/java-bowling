@@ -88,4 +88,21 @@ class NormalScoreTest {
             .withMessageMatching("두번째 핀은 남은 핀만 저장할 수 있습니다.");
     }
 
+    @Test
+    @DisplayName("NormalScore equals, hashCode 재정의 테스트")
+    void normalScoreEqualsHashCodeTest() {
+
+        // given
+        Pin first = Pin.of(3);
+        Pin second = Pin.of(4);
+
+        // when
+        Score result = NormalScore.of(first, second);
+
+        // then
+        assertThat(result)
+            .isEqualTo(NormalScore.of(first, second))
+            .hasSameHashCodeAs(NormalScore.of(first, second));
+    }
+
 }
