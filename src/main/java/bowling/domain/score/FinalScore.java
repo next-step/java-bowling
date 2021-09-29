@@ -1,6 +1,7 @@
 package bowling.domain.score;
 
 import bowling.exception.score.BonusPinValueException;
+import bowling.exception.score.PinSaveExcessException;
 import bowling.exception.score.SecondPinValueException;
 import java.util.Objects;
 
@@ -37,7 +38,7 @@ public class FinalScore implements Score {
             checkBonusPin();
             return new FinalScore(first, second, pin);
         }
-        return null;
+        throw new PinSaveExcessException();
     }
 
     private void checkRemainPin(Pin pin) {
