@@ -1,5 +1,6 @@
 package bowling.domain.score;
 
+import bowling.exception.score.SecondPinValueException;
 import java.util.Objects;
 
 public class FinalScore implements Score {
@@ -27,9 +28,16 @@ public class FinalScore implements Score {
         if (Objects.isNull(first)) {
             return new FinalScore(pin, null, null);
         } else if (Objects.isNull(second)) {
+            checkRemainPin(pin);
             return new FinalScore(first, pin, null);
         }
         return null;
+    }
+
+    private void checkRemainPin(Pin pin) {
+        if (first.remainPin() < pin.value()) {
+            throw new SecondPinValueException();
+        }
     }
 
     @Override

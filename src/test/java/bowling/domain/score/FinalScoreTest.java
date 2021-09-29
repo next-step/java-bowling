@@ -1,7 +1,9 @@
 package bowling.domain.score;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+import bowling.exception.score.SecondPinValueException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -54,6 +56,21 @@ class FinalScoreTest {
 
         // then
         assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("첫번째 핀이 Strike가 아니면 남는 핀만 second pin으로 들어올 수 있다.")
+    void saveFailSecondPinByRemainTest() {
+
+        // given
+        Pin first = Pin.of(5);
+        Pin second = Pin.of(6);
+        Score input = FinalScore.of(first, null, null);
+
+        // when & then
+        assertThatExceptionOfType(SecondPinValueException.class)
+            .isThrownBy(() -> input.saveNextPin(second))
+            .withMessageMatching("두번째 핀은 남은 핀만 저장할 수 있습니다.");
     }
 
     @Test
