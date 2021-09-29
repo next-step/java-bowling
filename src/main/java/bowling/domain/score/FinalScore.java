@@ -26,6 +26,8 @@ public class FinalScore implements Score {
     public Score saveNextPin(Pin pin) {
         if (Objects.isNull(first)) {
             return new FinalScore(pin, null, null);
+        } else if (Objects.isNull(second)) {
+            return new FinalScore(first, pin, null);
         }
         return null;
     }
