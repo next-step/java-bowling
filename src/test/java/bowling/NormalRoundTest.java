@@ -14,7 +14,7 @@ public class NormalRoundTest {
         //given
         State state = new Strike();
         LinkedList<Score> scores = new LinkedList<>();
-        scores.add(new Score(10, 1));
+        scores.add(Score.ofStrike());
 
         //when
         NormalRound normalRound = new NormalRound();
@@ -99,9 +99,11 @@ public class NormalRoundTest {
         NormalRound normalRound = new NormalRound();
         normalRound.bowl(1);
         normalRound.bowl(8);
+        normalRound.getScore();
+        LinkedList<Score> actual = normalRound.nextScore();
 
         //then
-        assertThat(normalRound.nextScore()).isEqualTo(expect);
+        assertThat(actual).isEqualTo(expect);
     }
 
     @Test
@@ -136,16 +138,5 @@ public class NormalRoundTest {
 
         //then
         assertThat(expect).isEqualTo(new FinalRound(state, scores));
-    }
-
-    @Test
-    public void 스트라이크_미스_점수계산() {
-        //given
-        LinkedList<Score> scores = new LinkedList<>();
-        scores.add(new Score());
-
-        //when
-
-        //then
     }
 }

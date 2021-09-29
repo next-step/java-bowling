@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 import static bowling.model.Score.ofStrike;
 import static org.assertj.core.api.Assertions.*;
@@ -16,7 +17,7 @@ public class BowlingGameTest {
         //given
         State state = new Strike();
         LinkedList<Score> scores = new LinkedList<>();
-        scores.add(new Score(10, 1));
+        scores.add(ofStrike());
         NormalRound currentRound = new NormalRound(state, scores);
 
         LinkedList<Score> nextScores = new LinkedList<>();
@@ -27,9 +28,10 @@ public class BowlingGameTest {
         //when
         BowlingGame game = new BowlingGame();
         game.bowl(10);
-        game.getScore();
+        List<Integer> gameScore = game.getScore();
 
         //then
+        assertThat(gameScore).isEqualTo(Arrays.asList());
         assertThat(game).isEqualTo(new BowlingGame(2, Arrays.asList(currentRound, nextRound)));
     }
 
@@ -40,5 +42,147 @@ public class BowlingGameTest {
 
         //then
         assertTrue(game.isEndGame());
+    }
+
+    @Test
+    public void 스트라이크_미스_점수계산() throws CannotBowlException {
+        //given
+        BowlingGame game = new BowlingGame();
+
+        //when
+        game.bowl(10);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList());
+
+        //when
+        game.bowl(2);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList());
+
+        //when
+        game.bowl(3);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList(15, 20));
+    }
+
+    @Test
+    public void 스페어_미스_점수계산() throws CannotBowlException {
+        //given
+        BowlingGame game = new BowlingGame();
+
+        //when
+        game.bowl(8);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList());
+
+        //when
+        game.bowl(2);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList());
+
+        //when
+        game.bowl(3);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList(13));
+
+        //when
+        game.bowl(2);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList(18));
+    }
+
+    @Test
+    public void 미스_점수계산() throws CannotBowlException {
+        //given
+        BowlingGame game = new BowlingGame();
+
+        //when
+        game.bowl(2);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList());
+
+        //when
+        game.bowl(3);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList(5));
+    }
+
+    @Test
+    public void 거터_점수계산() throws CannotBowlException {
+        //given
+        BowlingGame game = new BowlingGame();
+
+        //when
+        game.bowl(0);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList());
+
+        //when
+        game.bowl(0);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList(0));
+    }
+
+    @Test
+    public void 트리플_스트라이크_점수계산() throws CannotBowlException {
+        //given
+        BowlingGame game = new BowlingGame(10, Arrays.asList(new FinalRound()));
+
+        //when
+        game.bowl(10);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList());
+
+        //when
+        game.bowl(10);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList());
+
+        //when
+        game.bowl(10);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList(30));
+    }
+
+    @Test
+    public void 스트라이크_스페어_점수계산() throws CannotBowlException {
+        //given
+        BowlingGame game = new BowlingGame(10, Arrays.asList(new FinalRound()));
+
+        //when
+        game.bowl(10);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList());
+
+        //when
+        game.bowl(9);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList());
+
+        //when
+        game.bowl(1);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList(20));
+    }
+
+    @Test
+    public void 스페어_스트라이크_점수계산() throws CannotBowlException {
+        //given
+        BowlingGame game = new BowlingGame(10, Arrays.asList(new FinalRound()));
+
+        //when
+        game.bowl(9);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList());
+
+        //when
+        game.bowl(1);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList());
+
+        //when
+        game.bowl(10);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList(20));
     }
 }

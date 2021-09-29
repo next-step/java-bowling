@@ -51,16 +51,16 @@ public class ScoreTest {
         assertThat(result.getScore()).isEqualTo(20);
     }
 
-    @Test
-    public void 미스는_현재_투구까지_점수를_합산한다() {
-        //when
-        Score miss = ofMiss(4);
-
-        //then
-        assertTrue(miss.canCalculateScore());
-        assertThat(miss).isEqualTo(new Score(4, 0));
-        assertThat(miss.getScore()).isEqualTo(4);
-    }
+//    @Test
+//    public void 미스는_현재_투구까지_점수를_합산한다() {
+//        //when
+//        Score miss = ofMiss(4);
+//
+//        //then
+//        assertTrue(miss.canCalculateScore());
+//        assertThat(miss).isEqualTo(new Score(4, 0));
+//        assertThat(miss.getScore()).isEqualTo(4);
+//    }
 
 
 }

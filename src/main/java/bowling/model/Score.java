@@ -11,6 +11,11 @@ public class Score {
         this.left = 2;
     }
 
+    public Score(int score) {
+        this.score = score;
+        this.left = 2;
+    }
+
     public Score(int score, int left) {
         this.score = score;
         this.left = left;
@@ -36,8 +41,8 @@ public class Score {
         return new Score(10, 1);
     }
 
-    public static Score ofMiss(int countOfPin) {
-        return new Score(countOfPin, 0);
+    public Score sum(int totalScore) {
+        return new Score(this.score + totalScore, this.left);
     }
 
     @Override
