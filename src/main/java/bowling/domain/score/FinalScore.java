@@ -24,6 +24,9 @@ public class FinalScore implements Score {
 
     @Override
     public Score saveNextPin(Pin pin) {
+        if (Objects.isNull(first)) {
+            return new FinalScore(pin, null, null);
+        }
         return null;
     }
 

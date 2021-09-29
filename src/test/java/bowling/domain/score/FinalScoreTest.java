@@ -22,6 +22,23 @@ class FinalScoreTest {
     }
 
     @Test
+    @DisplayName("첫번째 pin을 저장할 수 있다.")
+    void saveFirstPinTest() {
+
+        // given
+        Pin first = Pin.of(3);
+        Score input = FinalScore.emptyScore();
+
+        Score expected = FinalScore.of(first, null, null);
+
+        // when
+        Score result = input.saveNextPin(first);
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
     @DisplayName("FinalScore equals, hashCode 재정의 테스트")
     void finalScoreEqualsHashCodeTest() {
 
