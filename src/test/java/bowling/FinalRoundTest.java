@@ -34,8 +34,10 @@ public class FinalRoundTest {
 
         //given
         int secondPin = 3;
-        state = new Miss(new Point(firstPin + secondPin));
+        int totalPin = firstPin + secondPin;
+        state = new Miss(new Point(totalPin));
         scores = new LinkedList<>();
+        scores.add(new Score(totalPin, 0));
 
         //when
         finalRound.bowl(secondPin);
@@ -77,6 +79,7 @@ public class FinalRoundTest {
         int thirdPin = 10;
         state = new ThirdStrike();
         scores = new LinkedList<>();
+        scores.add(new Score(30, 0));
 
         //when
         finalRound.bowl(thirdPin);
@@ -119,6 +122,7 @@ public class FinalRoundTest {
         int thirdPin = 10;
         state = new ThirdStrike();
         scores = new LinkedList<>();
+        scores.add(new Score(20, 0));
 
         //when
         finalRound.bowl(thirdPin);

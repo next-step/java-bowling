@@ -44,8 +44,11 @@ public class NormalRoundTest {
 
         //given
         int secondPin = 3;
-        state = new Miss(new Point(firstPin + secondPin));
+        int totalPin = firstPin + secondPin;
+        state = new Miss(new Point(totalPin));
         scores = new LinkedList<>();
+        scores.add(new Score(totalPin, 0));
+
 
         //when
         normalRound.bowl(secondPin);
@@ -133,5 +136,16 @@ public class NormalRoundTest {
 
         //then
         assertThat(expect).isEqualTo(new FinalRound(state, scores));
+    }
+
+    @Test
+    public void 스트라이크_미스_점수계산() {
+        //given
+        LinkedList<Score> scores = new LinkedList<>();
+        scores.add(new Score());
+
+        //when
+
+        //then
     }
 }

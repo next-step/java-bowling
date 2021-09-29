@@ -3,6 +3,7 @@ package bowling.model;
 import bowling.CannotBowlException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static bowling.controller.Main.scoreResult;
 import static bowling.model.Score.*;
@@ -44,6 +45,14 @@ public class FinalRound implements Round{
     }
 
     @Override
+    public List<Integer> getScore() {
+        return scores.stream()
+                .filter(Score::canCalculateScore)
+                .map(Score::getScore)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public int calcMaxTryCount() {
         if (bonusCount == 0) {
             return 0;
@@ -60,13 +69,7 @@ public class FinalRound implements Round{
     @Override
     public void calculateScore(int countOfPin) {
         for (int i = 0; i < scores.size(); i++) {
-            Score score = scores.remove().bowl(countOfPin);
-
-            if (score.canCalculateScore()) {
-                scoreResult.add(score.getScore());
-            }else{
-                scores.add(score);
-            }
+            scores.add(scores.remove().bowl(countOfPin));
         }
     }
 
@@ -80,6 +83,7 @@ public class FinalRound implements Round{
         }
 
         if (state instanceof Spare) {
+            nextScore.removeLast();
             nextScore.add(ofSpare());
         }
 

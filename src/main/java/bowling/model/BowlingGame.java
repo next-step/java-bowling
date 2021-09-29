@@ -3,6 +3,7 @@ package bowling.model;
 import bowling.CannotBowlException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,8 +26,18 @@ public class BowlingGame {
 
     public State bowl(int countOfPin) throws CannotBowlException {
         System.out.println(frameNo);
-        State state = currentFrame().bowl(countOfPin);
+        return currentFrame().bowl(countOfPin);
+    }
 
+    public List<Integer> getScore() {
+        List<Integer> scores = currentFrame().getScore();
+
+        createNextFrame();
+
+        return scores;
+    }
+
+    private void createNextFrame() {
         if (currentFrame().isFinish()) {
             frameNo += 1;
             if (currentFrame() instanceof NormalRound) {
@@ -34,8 +45,6 @@ public class BowlingGame {
                 rounds.add(round);
             }
         }
-
-        return state;
     }
 
     private Round currentFrame() {

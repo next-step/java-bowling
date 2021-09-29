@@ -13,4 +13,5 @@ public interface Round {
     LinkedList<Score> nextScore();
     void calculateScore(int countOfPin);
     boolean isFinish();
+    List<Integer> getScore();
 }

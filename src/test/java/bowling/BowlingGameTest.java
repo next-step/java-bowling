@@ -27,6 +27,7 @@ public class BowlingGameTest {
         //when
         BowlingGame game = new BowlingGame();
         game.bowl(10);
+        game.getScore();
 
         //then
         assertThat(game).isEqualTo(new BowlingGame(2, Arrays.asList(currentRound, nextRound)));
