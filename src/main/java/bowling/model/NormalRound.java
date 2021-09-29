@@ -2,9 +2,7 @@ package bowling.model;
 
 import bowling.CannotBowlException;
 import java.util.*;
-import java.util.stream.Collectors;
 
-import static bowling.controller.Main.scoreResult;
 import static bowling.model.Score.*;
 
 public class NormalRound implements Round{
@@ -40,6 +38,14 @@ public class NormalRound implements Round{
         return new NormalRound(new Ready(), nextScore());
     }
 
+    public LinkedList<Score> nextScore() {
+        LinkedList<Score> scores = new LinkedList<>();
+        scores.addAll(this.scores);
+        scores.add(new Score());
+
+        return scores;
+    }
+
     @Override
     public int calcMaxTryCount() {
         if (state instanceof Strike) {
@@ -51,34 +57,21 @@ public class NormalRound implements Round{
 
     @Override
     public void calculateScore(int countOfPin) {
-        for (int i = 0; i < scores.size(); i++) {
+        int size = scores.size();
+
+        for (int i = 0; i < size; i++) {
             scores.add(scores.remove().bowl(countOfPin));
         }
-    }
-
-    @Override
-    public LinkedList<Score> nextScore() {
-        LinkedList<Score> nextScore = new LinkedList<>();
 
         if (state instanceof Strike) {
-            nextScore.add(ofStrike());
+            scores.removeLast();
+            scores.add(ofStrike());
         }
 
         if (state instanceof Spare) {
-            nextScore.add(ofSpare());
+            scores.removeLast();
+            scores.add(ofSpare());
         }
-
-        nextScore.add(new Score());
-
-        return nextScore;
-    }
-
-    public boolean isLastRound(int tryCount) {
-        if (state instanceof Strike || tryCount == 3) {
-            return true;
-        }
-
-        return false;
     }
 
     @Override
@@ -92,10 +85,22 @@ public class NormalRound implements Round{
 
     @Override
     public List<Integer> getScore() {
-        return scores.stream()
-                .filter(Score::canCalculateScore)
-                .map(Score::getScore)
-                .collect(Collectors.toList());
+        List<Integer> calculatedScore = new ArrayList<>();
+        int totalScore = 0;
+        int size = scores.size();
+
+        for (int i = 0; i < size; i++) {
+            Score score = scores.remove();
+
+            if (score.canCalculateScore()) {
+                totalScore += score.getScore();
+                calculatedScore.add(totalScore);
+            }else{
+                scores.add(score.sum(totalScore));
+            }
+        }
+
+        return calculatedScore;
     }
 
     @Override
