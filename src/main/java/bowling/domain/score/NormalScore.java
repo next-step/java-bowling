@@ -1,5 +1,6 @@
 package bowling.domain.score;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,8 +12,12 @@ public class NormalScore implements Score {
         this.pins = pins;
     }
 
-    static NormalScore of(List<Pin> pins) {
+    static Score of(List<Pin> pins) {
         return new NormalScore(pins);
+    }
+
+    public static Score emptyScore() {
+        return new NormalScore(new ArrayList<>());
     }
 
     @Override
