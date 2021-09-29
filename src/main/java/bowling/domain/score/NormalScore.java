@@ -22,6 +22,10 @@ public class NormalScore implements Score {
 
     @Override
     public Score saveNextPin(Pin pin) {
+        if (pins.isEmpty()) {
+            pins.add(pin);
+            return this;
+        }
         return null;
     }
 

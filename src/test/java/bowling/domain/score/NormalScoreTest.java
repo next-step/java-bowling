@@ -25,6 +25,23 @@ class NormalScoreTest {
     }
 
     @Test
+    @DisplayName("첫 Pin을 저장할 수 있다.")
+    void saveFirstPinTest() {
+
+        // given
+        Pin first = Pin.of(5);
+        Score input = NormalScore.emptyScore();
+
+        Score expected = NormalScore.of(Arrays.asList(first));
+
+        // when
+        Score result = input.saveNextPin(first);
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
     @DisplayName("NormalScore equals, hashCode 재정의 테스트")
     void normalScoreEqualsHashCodeTest() {
 

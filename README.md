@@ -80,7 +80,8 @@
 - [ ] 한 프레임의 score판은 NormalScore와 FinalScore로 나뉠 수 있다.
 - Normal Score
 - [ ] NormalScore는 핀을 두번 쓰러뜨릴 수 있다.
-- [ ] 빈 NormalScore를 생성할 수 있다.
+- [x] 빈 NormalScore를 생성할 수 있다.
+- [ ] 첫번째 핀을 저장할 수 있다.  
 - [ ] 첫번째 핀이 스트라이크가 될 경우 NormalScore에서 다음 핀을 칠 수 없다.
 - [ ] 첫번째 핀이 스트라이크가 되지 않을 경우 남은 핀만 NormalScore에 넣을 수 있다.
 - Final Score
