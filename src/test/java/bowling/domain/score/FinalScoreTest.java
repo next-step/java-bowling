@@ -74,6 +74,24 @@ class FinalScoreTest {
     }
 
     @Test
+    @DisplayName("첫번째 핀이 Strike면 두번째 핀은 자유롭게 들어올 수 있다.")
+    void saveSecondPinByStrikeTest() {
+
+        // given
+        Pin first = Pin.of(10);
+        Pin second = Pin.of(7);
+        Score input = FinalScore.of(first, null, null);
+
+        Score expected = FinalScore.of(first, second, null);
+
+        // when
+        Score result = input.saveNextPin(second);
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
     @DisplayName("FinalScore equals, hashCode 재정의 테스트")
     void finalScoreEqualsHashCodeTest() {
 

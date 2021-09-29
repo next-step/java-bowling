@@ -5,6 +5,8 @@ import java.util.Objects;
 
 public class FinalScore implements Score {
 
+    private static final Pin STRIKE = Pin.of(10);
+
     private final Pin first;
     private final Pin second;
     private final Pin bonus;
@@ -35,7 +37,7 @@ public class FinalScore implements Score {
     }
 
     private void checkRemainPin(Pin pin) {
-        if (first.remainPin() < pin.value()) {
+        if (first != STRIKE && first.remainPin() < pin.value()) {
             throw new SecondPinValueException();
         }
     }
