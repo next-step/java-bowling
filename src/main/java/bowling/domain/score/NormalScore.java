@@ -1,8 +1,11 @@
 package bowling.domain.score;
 
+import bowling.exception.score.SecondPinValueException;
 import java.util.Objects;
 
 public class NormalScore implements Score {
+
+    private static final Pin STRIKE = Pin.of(10);
 
     private final Pin first;
     private final Pin second;
@@ -25,9 +28,23 @@ public class NormalScore implements Score {
         if (Objects.isNull(first)) {
             return new NormalScore(pin, null);
         } else if (Objects.isNull(second)) {
+            checkFirstPinStrike();
+            checkRemainPin(pin);
             return new NormalScore(first, pin);
         }
         return null;
+    }
+
+    private void checkFirstPinStrike() {
+        if (first == STRIKE) {
+            throw new SecondPinValueException();
+        }
+    }
+
+    private void checkRemainPin(Pin pin) {
+        if (first.remainPin() < pin.value()) {
+            throw new SecondPinValueException();
+        }
     }
 
     @Override

@@ -1,6 +1,6 @@
 package bowling.domain.score;
 
-import bowling.exception.pin.PinRangeException;
+import bowling.exception.score.PinRangeException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -34,6 +34,14 @@ public class Pin {
         if (!pins.containsKey(pin)) {
             throw new PinRangeException();
         }
+    }
+
+    public int remainPin() {
+        return PIN_MAX_VALUE - pin;
+    }
+
+    public int value() {
+        return pin;
     }
 
     @Override
