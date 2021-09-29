@@ -4,12 +4,31 @@ import bowling.model.*;
 
 import java.util.List;
 
+import static bowling.controller.Main.scoreResult;
+import static bowling.controller.Main.stateResult;
+
 public class OutputView {
     public static final int MAX_ROUND = 10;
-    
-    public static void printBowlingScore(String name, List<List<String>> scoreList) {
+
+    public static void printResult(String name, List<String> states) {
         printHeader();
-        printAllScore(name, scoreList);
+        printState(name, states);
+        printScore();
+    }
+
+    private static void printScore() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("|      |");
+
+        for (int score : scoreResult) {
+            String result = addBlank(String.valueOf(score));
+            stringBuilder.append(result);
+        }
+
+        stringBuilder.append(formatEmptyScore(scoreResult.size()));
+
+        System.out.println(stringBuilder.toString());
     }
 
     private static void printHeader() {
@@ -26,56 +45,64 @@ public class OutputView {
         System.out.println(stringBuilder.toString());
     }
 
-    private static void printAllScore(String name, List<List<String>> scoreList) {
+    private static void printState(String name, List<String> states) {
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("|  " + name + " |");
 
-        for (List<String> roundScore : scoreList) {
-            String formatScore = formatRoundScore(roundScore);
-            stringBuilder.append(formatScore);
+        for (String state : states) {
+            String result = addBlank(state);
+            stringBuilder.append(result);
         }
 
-        stringBuilder.append(formatEmptyScore(scoreList));
+        stringBuilder.append(formatEmptyScore(states.size()));
 
         System.out.println(stringBuilder.toString());
     }
 
-    private static String formatEmptyScore(List<List<String>> scoreList) {
+    private static String formatEmptyScore(int stateSize) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = scoreList.size(); i < MAX_ROUND; i++) {
+        for (int i = 0; i < MAX_ROUND - stateSize; i++) {
             stringBuilder.append("      |");
         }
 
         return stringBuilder.toString();
     }
 
-    private static String formatRoundScore(List<String> roundScore) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String point : roundScore) {
-            stringBuilder.append("|" + point);
-        }
+    public static String changeScore(State state, int pinCount) {
+        String beforeResult = "";
 
-        String result = stringBuilder.toString();
-        result = result.substring(1);
-
-        return addBlank(result);
-    }
-
-    public static String changeScore(int score, State bowlingResult) {
-        if (bowlingResult instanceof Strike) {
+        if (state instanceof Strike) {
             return "X";
         }
 
-        if (bowlingResult instanceof Gutter) {
+        if (!(state instanceof FirstBowl)) {
+            if (!stateResult.isEmpty()) {
+                beforeResult = stateResult.removeLast();
+            }
+
+            if (state instanceof SecondStrike || state instanceof ThirdStrike) {
+                return beforeResult+"|X";
+            }
+
+            if (state instanceof Miss || state instanceof SecondBowl) {
+                if (new Point(pinCount).isGutter()) {
+                    return beforeResult + "|-";
+                }
+
+                return beforeResult+"|"+pinCount;
+            }
+
+            if (state instanceof Spare || state instanceof ThirdSpare) {
+                return beforeResult + "|/";
+            }
+        }
+
+        if (new Point(pinCount).isGutter()) {
             return "-";
         }
 
-        if (bowlingResult instanceof Spare) {
-            return "/";
-        }
-
-        return String.valueOf(score);
+        return String.valueOf(pinCount);
     }
 
     private static String addBlank(String score) {
