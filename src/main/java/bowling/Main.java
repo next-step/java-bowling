@@ -13,8 +13,7 @@ public class Main {
         User user = User.of(InputView.inputUsername());
         Frame frame = NormalFrame.createFirstFrame();
 
-        ResultView.printScoreBoard();
-        ResultView.printScoreResultBoard(user, Frames.createFramesByFirstFrame(frame).values());
+        ResultView.printBoard(user, Frames.createFramesByFirstFrame(frame).values());
     }
 
 }

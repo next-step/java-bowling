@@ -21,6 +21,11 @@ public class ResultView {
     private ResultView() {
     }
 
+    public static void printBoard(User user, List<Frame> frames) {
+        printScoreBoard();
+        printScoreResultBoard(user, frames);
+    }
+
     public static void printScoreBoard() {
         StringBuilder sb = new StringBuilder();
         sb.append(NAME_BOARD);
