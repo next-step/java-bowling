@@ -3,16 +3,17 @@ package bowling.domain.frames;
 import bowling.domain.Score;
 import bowling.domain.Scores;
 import bowling.domain.exception.FinishFrameException;
+import bowling.domain.exception.IncorrectNumberOfPinsException;
 
 import java.util.List;
 import java.util.Objects;
 
 public abstract class AbstractFrame implements Frame {
 
-    protected static final int NUMBER_OF_PINS = 10;
+    private static final int NUMBER_OF_PINS = 10;
 
-    protected Scores scores;
-    protected boolean isFinish;
+    private Scores scores;
+    private boolean isFinish;
 
     public AbstractFrame() {
         this.scores = new Scores();
@@ -36,6 +37,21 @@ public abstract class AbstractFrame implements Frame {
         if (this.isFinish) {
             throw new FinishFrameException();
         }
+    }
+
+    protected void checkIncorrectNumberOfPins(final Score score) {
+        int nextDownPins = this.downPins() + score.getNumberOfPins();
+        if (nextDownPins > NUMBER_OF_PINS || nextDownPins < 0) {
+            throw new IncorrectNumberOfPinsException();
+        }
+    }
+
+    protected int downPins() {
+        return this.scores.downPins();
+    }
+
+    protected int numberOfRoll() {
+        return this.scores.size();
     }
 
     protected abstract boolean isFinishFrame();

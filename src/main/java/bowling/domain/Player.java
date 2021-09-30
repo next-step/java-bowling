@@ -4,16 +4,16 @@ import bowling.domain.frames.Frames;
 
 import java.util.Objects;
 
-public class Bowling {
+public class Player {
 
     private Name name;
     private Frames frames;
 
-    public Bowling(final String name) {
+    public Player(final String name) {
         this(Name.of(name), new Frames());
     }
 
-    public Bowling(final Name name, final Frames frames) {
+    public Player(final Name name, final Frames frames) {
         this.name = name;
         this.frames = frames;
     }
@@ -27,8 +27,8 @@ public class Bowling {
         return this.frames.isFinish();
     }
 
-    public int lastFinishedFrameIndex() {
-        return this.frames.lastFinishedFrameIndex();
+    public int round() {
+        return this.frames.round();
     }
 
     public Name getName() {
@@ -43,8 +43,8 @@ public class Bowling {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Bowling bowling = (Bowling) o;
-        return Objects.equals(name, bowling.name) && Objects.equals(frames, bowling.frames);
+        Player player = (Player) o;
+        return Objects.equals(name, player.name) && Objects.equals(frames, player.frames);
     }
 
     @Override

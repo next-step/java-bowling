@@ -1,9 +1,11 @@
 package bowling;
 
-import bowling.domain.Bowling;
+import bowling.domain.Player;
+import bowling.domain.Players;
 import bowling.view.BowlingConsoleInputView;
 import bowling.view.BowlingConsoleOutputView;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ApplicationRunner {
@@ -14,15 +16,16 @@ public class ApplicationRunner {
         BowlingConsoleInputView inputView = new BowlingConsoleInputView(scanner);
         BowlingConsoleOutputView outputView = new BowlingConsoleOutputView();
 
-        String playerText = inputView.enterPlayer();
+        int playerNumber = inputView.enterPlayerNumber();
+        List<String> names = inputView.enterPlayers(playerNumber);
 
-        Bowling bowling = new Bowling(playerText);
+        Players players = new Players(names);
 
-        while (!bowling.isFinish()) {
-            int index = bowling.lastFinishedFrameIndex();
-            String scoreText = inputView.enterScore(index + 1);
-            bowling.roll(scoreText);
-            outputView.print(bowling);
+        while (!players.isFinish()) {
+            Player player = players.currentPlayer();
+            String scoreText = inputView.enterScore(player.getName().value());
+            players.roll(scoreText);
+            outputView.print(players);
         }
     }
 }

@@ -30,5 +30,4 @@ class NameTest {
     public void createNotEnglishName_exception() {
         assertThrows(NotEnglishNameException.class, () -> Name.of("123"));
     }
-
 }
