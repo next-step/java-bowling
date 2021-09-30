@@ -8,8 +8,6 @@ import java.util.stream.Collectors;
 import static bowling.model.Score.*;
 
 public class FinalRound implements Round{
-    private static int bonusCount = 1;
-
     private State state;
     private LinkedList<Score> scores;
 
@@ -51,17 +49,8 @@ public class FinalRound implements Round{
     }
 
     @Override
-    public int calcMaxTryCount() {
-        if (bonusCount == 0) {
-            return 0;
-        }
-
-        if (state instanceof Strike || state instanceof Spare) {
-            bonusCount -= 1;
-            return 1;
-        }
-
-        return 0;
+    public Round next(int frameNo) {
+        return new FinalRound();
     }
 
     @Override

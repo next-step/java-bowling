@@ -4,53 +4,70 @@ import bowling.CannotBowlException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class BowlingGame {
-    private static final int LAST_FRAME_NO = 11;
+    private static final int AFTER_FINAL_FRAME = 11;
+    private static final int BEFORE_FIRST_FRAME = 0;
 
-    private int frameNo;
+    private List<Integer> scores;
     private List<Round> rounds;
 
     public BowlingGame() {
-        this.frameNo = 1;
+        this.scores = new ArrayList<>();
         this.rounds = new ArrayList<>();
         this.rounds.add(new NormalRound());
     }
 
-    public BowlingGame(int frameNo, List<Round> rounds) {
-        this.frameNo = frameNo;
+    public BowlingGame(List<Integer> scores, List<Round> rounds) {
+        this.scores = scores;
         this.rounds = rounds;
     }
 
     public State bowl(int countOfPin) throws CannotBowlException {
-        System.out.println(frameNo);
         return currentFrame().bowl(countOfPin);
     }
 
     public List<Integer> getScore() {
         List<Integer> scores = currentFrame().getScore();
+
+        int lastScore = getLastScore();
+        List<Integer> calculatedScores = new ArrayList<>();
+        for (int i = 0; i < scores.size(); i++) {
+            lastScore += scores.get(i);
+            calculatedScores.add(lastScore);
+        }
+
         createNextFrame();
 
-        return scores;
+        this.scores.addAll(calculatedScores);
+        return calculatedScores;
+    }
+
+    private int getLastScore() {
+        if (scores.size() == 0) {
+            return 0;
+        }
+
+        return scores.get(scores.size() - 1);
     }
 
     private void createNextFrame() {
         if (currentFrame().isFinish()) {
-            frameNo += 1;
-            if (currentFrame() instanceof NormalRound) {
-                Round round = ((NormalRound) currentFrame()).next(frameNo);
-                rounds.add(round);
-            }
+            Round round = currentFrame().next(getFrameNo());
+            rounds.add(round);
         }
     }
 
     private Round currentFrame() {
+        if (getFrameNo() == BEFORE_FIRST_FRAME) {
+            rounds.add(new NormalRound());
+        }
+
         return rounds.get(rounds.size() - 1);
     }
 
     public boolean isEndGame() {
-        if (frameNo == LAST_FRAME_NO) {
+        if (getFrameNo() == AFTER_FINAL_FRAME) {
             return true;
         }
 
@@ -58,19 +75,8 @@ public class BowlingGame {
     }
 
     public int getFrameNo() {
-        return this.frameNo;
+        return rounds.size();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BowlingGame game = (BowlingGame) o;
-        return frameNo == game.frameNo && Objects.equals(rounds, game.rounds);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(frameNo, rounds);
-    }
 }

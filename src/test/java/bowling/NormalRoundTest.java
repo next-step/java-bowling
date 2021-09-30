@@ -134,7 +134,7 @@ public class NormalRoundTest {
         //when
         NormalRound normalRound = new NormalRound();
         normalRound.bowl(10);
-        Round expect = normalRound.next(10);
+        Round expect = normalRound.next(9);
 
         //then
         assertThat(expect).isEqualTo(new FinalRound(state, scores));

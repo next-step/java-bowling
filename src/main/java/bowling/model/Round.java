@@ -9,4 +9,5 @@ public interface Round {
     void calculateScore(int countOfPin);
     boolean isFinish();
     List<Integer> getScore();
+    Round next(int frameNo);
 }
