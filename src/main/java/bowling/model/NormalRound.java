@@ -6,7 +6,7 @@ import java.util.*;
 import static bowling.model.Score.*;
 
 public class NormalRound implements Round{
-    private static final int FINAL_ROUND = 10;
+    private static final int BEFORE_FINAL_FRAME = 9;
 
     private State state;
     private LinkedList<Score> scores;
@@ -31,8 +31,9 @@ public class NormalRound implements Round{
         return state;
     }
 
+    @Override
     public Round next(int frameNo) {
-        if (frameNo == FINAL_ROUND) {
+        if (frameNo == BEFORE_FINAL_FRAME) {
             return new FinalRound(new Ready(), nextScore());
         }
         return new NormalRound(new Ready(), nextScore());
@@ -44,15 +45,6 @@ public class NormalRound implements Round{
         scores.add(new Score());
 
         return scores;
-    }
-
-    @Override
-    public int calcMaxTryCount() {
-        if (state instanceof Strike) {
-            return -1;
-        }
-
-        return 0;
     }
 
     @Override
@@ -86,17 +78,15 @@ public class NormalRound implements Round{
     @Override
     public List<Integer> getScore() {
         List<Integer> calculatedScore = new ArrayList<>();
-        int totalScore = 0;
         int size = scores.size();
 
         for (int i = 0; i < size; i++) {
             Score score = scores.remove();
 
             if (score.canCalculateScore()) {
-                totalScore += score.getScore();
-                calculatedScore.add(totalScore);
+                calculatedScore.add(score.getScore());
             }else{
-                scores.add(score.sum(totalScore));
+                scores.add(score);
             }
         }
 
