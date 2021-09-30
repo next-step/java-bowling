@@ -59,7 +59,7 @@ public class FinalScore implements Score {
 
     @Override
     public boolean isNextStorable() {
-        return false;
+        return Objects.isNull(first) || Objects.isNull(second) || isBonus();
     }
 
     @Override
