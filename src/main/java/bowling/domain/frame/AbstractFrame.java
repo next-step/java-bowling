@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import static bowling.domain.frame.FinalFrame.FINAL_ROUND;
+
 import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
 import java.util.Objects;
@@ -16,7 +18,7 @@ public abstract class AbstractFrame implements Frame {
 
     public Frame lastFrame() {
         Frame resultFrame = this;
-        while (resultFrame.nextRound() == 10 && Objects.nonNull(resultFrame.nextFrame())) {
+        while (resultFrame.round() < FINAL_ROUND && Objects.nonNull(resultFrame.nextFrame())) {
             resultFrame = resultFrame.nextFrame();
         }
         return resultFrame;
@@ -38,8 +40,8 @@ public abstract class AbstractFrame implements Frame {
     }
 
     @Override
-    public int nextRound() {
-        return round + 1;
+    public int round() {
+        return round;
     }
 
     public abstract Frame createNextFrame();

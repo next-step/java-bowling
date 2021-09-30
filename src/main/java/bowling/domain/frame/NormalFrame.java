@@ -23,10 +23,10 @@ public class NormalFrame extends AbstractFrame {
 
     @Override
     public Frame createNextFrame() {
-        if (nextRound() == FinalFrame.FINAL_ROUND) {
+        if (round() + 1 == FinalFrame.FINAL_ROUND) {
             return this.nextFrame = FinalFrame.of(FinalScore.emptyScore());
         }
-        return this.nextFrame = NormalFrame.of(nextRound(), NormalScore.emptyScore(), null);
+        return this.nextFrame = NormalFrame.of(round() + 1, NormalScore.emptyScore(), null);
     }
 
     @Override

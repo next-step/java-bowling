@@ -19,6 +19,6 @@ public interface Frame {
     Frame nextFrame();
 
     // TODO : finalFrame exception
-    int nextRound();
+    int round();
 
 }
