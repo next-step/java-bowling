@@ -18,6 +18,12 @@ public class Main {
         ResultView.printBoard(user, Frames.createFramesByFirstFrame(frame).values());
         IntStream.range(1, 10)
             .forEach(index -> normalView(user, frame));
+        Frame finalFrame = frame.lastFrame();
+        shootPinAndPrintFrame(user, frame, finalFrame);
+        shootPinAndPrintFrame(user, frame, finalFrame);
+        if (finalFrame.isScoreNextStorable()) {
+            shootPinAndPrintFrame(user, frame, finalFrame);
+        }
     }
 
     private static void normalView(User user, Frame frame) {
