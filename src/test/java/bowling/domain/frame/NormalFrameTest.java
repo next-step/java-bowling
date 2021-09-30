@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import bowling.domain.score.FinalScore;
 import bowling.domain.score.NormalScore;
 import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
@@ -83,6 +84,22 @@ class NormalFrameTest {
 
         // then
         assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("다음 라운드가 마지막 라운드일 경우 다음 frame은 final frame으로 생성한다.")
+    void createNextFrameByFinalRoundTest() {
+
+        // given
+        Frame input = NormalFrame.of(9, NormalScore.emptyScore(), null);
+
+        Frame expected = FinalFrame.of(FinalScore.emptyScore());
+
+        // when
+        Frame result = input.createNextFrame();
+
+        // then
+        assertThat(result).isEqualTo(expected);
     }
 
 }

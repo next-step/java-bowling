@@ -6,7 +6,7 @@ import bowling.exception.frame.FinalFrameNextFrameException;
 
 public class FinalFrame extends AbstractFrame {
 
-    private static final int FINAL_ROUND = 10;
+    public static final int FINAL_ROUND = 10;
 
     private FinalFrame(Score score) {
         super(FINAL_ROUND, score);

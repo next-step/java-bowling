@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.FinalScore;
 import bowling.domain.score.NormalScore;
 import bowling.domain.score.Score;
 
@@ -22,6 +23,9 @@ public class NormalFrame extends AbstractFrame {
 
     @Override
     public Frame createNextFrame() {
+        if (nextRound() == FinalFrame.FINAL_ROUND) {
+            return this.nextFrame = FinalFrame.of(FinalScore.emptyScore());
+        }
         return this.nextFrame = NormalFrame.of(nextRound(), NormalScore.emptyScore(), null);
     }
 

@@ -103,7 +103,7 @@
 - Normal Frame
 - [x] 첫번째 프레임을 생성할 수 있다.
 - [x] 현재 프레임을 가지고 다음 프레임을 생성할 수 있다.
-- [ ] 다음 라운드가 final round일 경우 final frame을 생성해야한다.
+- [x] 다음 라운드가 final round일 경우 final frame을 생성해야한다.
 
 - [x] score를 받아 저장할 수 있다.
 
