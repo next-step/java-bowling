@@ -7,6 +7,7 @@ import bowling.domain.score.Pin;
 import bowling.domain.user.User;
 import bowling.view.InputView;
 import bowling.view.ResultView;
+import java.util.stream.IntStream;
 
 public class Main {
 
@@ -15,19 +16,24 @@ public class Main {
         Frame frame = NormalFrame.createFirstFrame();
 
         ResultView.printBoard(user, Frames.createFramesByFirstFrame(frame).values());
-        for (int i=0; i<9; i++){
-            Frame nowFrame = frame.lastFrame();
-            Pin first = Pin.of(InputView.inputFrameShot(nowFrame.round()));
-            nowFrame.updateScorePin(first);
-            ResultView.printBoard(user, Frames.createFramesByFirstFrame(frame).values());
-            if (nowFrame.isScoreNextStorable()) {
-                Pin second = Pin.of(InputView.inputFrameShot(nowFrame.round()));
-                nowFrame.updateScorePin(second);
-                ResultView.printBoard(user, Frames.createFramesByFirstFrame(frame).values());
-            }
-//            ResultView.printBoard(user, Frames.createFramesByFirstFrame());
-            nowFrame.createNextFrame();
+        IntStream.range(1, 10)
+            .forEach(index -> normalView(user, frame));
+    }
+
+    private static void normalView(User user, Frame frame) {
+        Frame nowFrame = frame.lastFrame();
+        shootPinAndPrintFrame(user, frame, nowFrame);
+        if (nowFrame.isScoreNextStorable()) {
+            shootPinAndPrintFrame(user, frame, nowFrame);
         }
+        nowFrame.createNextFrame();
+    }
+
+
+    private static void shootPinAndPrintFrame(User user, Frame frame, Frame nowFrame) {
+        Pin first = Pin.of(InputView.inputFrameShot(nowFrame.round()));
+        nowFrame.updateScorePin(first);
+        ResultView.printBoard(user, Frames.createFramesByFirstFrame(frame).values());
     }
 
 }
