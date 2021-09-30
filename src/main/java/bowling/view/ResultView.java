@@ -38,23 +38,30 @@ public class ResultView {
         StringBuilder sb = new StringBuilder();
         sb.append(toNameFormat(user));
 
-        for (int i=0; i<frames.size(); i++){
-            Frame frame = frames.get(i);
-            Score score = frame.score();
-            List<Pin> pins = score.values();
-            sb.append(pinsToStrine(pins));
-        }
-        for (int i=frames.size(); i<=10; i++) {
-            sb.append(String.format(BOARD_SCORE_FORMAT, ""));
-        }
+        sb.append(printFrameBoard(frames));
+        sb.append(printRemainBoard(frames));
         System.out.println(sb.toString());
+    }
+
+    private static String printFrameBoard(List<Frame> frames) {
+        return frames.stream()
+            .map(Frame::score)
+            .map(Score::values)
+            .map(ResultView::pinsToString)
+            .collect(Collectors.joining());
+    }
+
+    private static String printRemainBoard(List<Frame> frames) {
+        return IntStream.rangeClosed(frames.size(), 10)
+            .mapToObj(index -> String.format(BOARD_SCORE_FORMAT, ""))
+            .collect(Collectors.joining());
     }
 
     private static String toNameFormat(User user) {
         return String.format(BOARD_NAME_FORMAT, user.value());
     }
 
-    private static String pinsToStrine(List<Pin> pins) {
+    private static String pinsToString(List<Pin> pins) {
         return IntStream.range(0, pins.size())
             .filter(index -> Objects.nonNull(pins.get(index)))
             .mapToObj(index -> pinToString(pins, index))
