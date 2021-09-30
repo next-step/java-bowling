@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import bowling.domain.score.NormalScore;
 import bowling.domain.score.Score;
@@ -68,4 +69,20 @@ class NormalFrameTest {
         // then
         assertThat(result).isEqualTo(score);
     }
+
+    @Test
+    @DisplayName("score 추가 저장 유무를 반환할 수 있다.")
+    void isScoreNextStorableTest() {
+
+        // given
+        Score score = NormalScore.emptyScore();
+        Frame input = NormalFrame.of(2, score, null);
+
+        // when
+        boolean result = input.isScoreNextStorable();
+
+        // then
+        assertTrue(result);
+    }
+
 }

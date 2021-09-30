@@ -31,7 +31,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isScoreNextStorable() {
-        return false;
+        return score.isNextStorable();
     }
 
     @Override
