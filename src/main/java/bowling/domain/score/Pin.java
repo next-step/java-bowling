@@ -40,8 +40,16 @@ public class Pin {
         return Math.subtractExact(PIN_MAX_VALUE, pin);
     }
 
+    public Pin sum(Pin pin) {
+        return pins.get(Math.addExact(this.pin, pin.pin));
+    }
+
     public int value() {
         return pin;
+    }
+
+    public String valueToString() {
+        return String.valueOf(pin);
     }
 
     @Override

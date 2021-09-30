@@ -36,6 +36,10 @@ public class User {
         }
     }
 
+    public String value() {
+        return name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
