@@ -81,16 +81,21 @@ public class NormalRound implements Round{
         int size = scores.size();
 
         for (int i = 0; i < size; i++) {
-            Score score = scores.remove();
-
-            if (score.canCalculateScore()) {
-                calculatedScore.add(score.getScore());
-            }else{
-                scores.add(score);
-            }
+            saveCalculatedScore(calculatedScore);
         }
 
         return calculatedScore;
+    }
+
+    private void saveCalculatedScore(List<Integer> calculatedScore) {
+        Score score = scores.remove();
+        if (score.canCalculateScore()) {
+            calculatedScore.add(score.getScore());
+        }
+
+        if (!score.canCalculateScore()) {
+            scores.add(score);
+        }
     }
 
     @Override
