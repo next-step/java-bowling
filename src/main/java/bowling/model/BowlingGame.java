@@ -44,7 +44,7 @@ public class BowlingGame {
     }
 
     private int getLastScore() {
-        if (scores.size() == 0) {
+        if (scores.size() == BEFORE_FIRST_FRAME) {
             return 0;
         }
 

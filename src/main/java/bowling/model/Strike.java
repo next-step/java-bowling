@@ -3,7 +3,7 @@ package bowling.model;
 import java.util.Objects;
 
 public class Strike implements State {
-    private Point countOfPin;
+    private final Point countOfPin;
 
     public Strike() {
         this.countOfPin = new Point(10);

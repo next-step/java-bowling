@@ -3,7 +3,7 @@ package bowling.model;
 import java.util.Objects;
 
 public class SecondStrike implements State {
-    private Point point;
+    private final Point point;
 
     public SecondStrike() {
         this.point = new Point(10);

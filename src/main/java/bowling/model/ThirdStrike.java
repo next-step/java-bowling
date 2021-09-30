@@ -5,7 +5,7 @@ import bowling.CannotBowlException;
 import java.util.Objects;
 
 public class ThirdStrike implements State {
-    private Point point;
+    private final Point point;
 
     public ThirdStrike() {
         this.point = new Point(10);

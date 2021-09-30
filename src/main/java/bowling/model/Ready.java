@@ -3,14 +3,10 @@ package bowling.model;
 import java.util.Objects;
 
 public class Ready implements State {
-    Point countOfPin;
+    private final Point countOfPin;
     
     public Ready() {
         this.countOfPin = new Point(0);
-    }
-
-    public Ready(Point countOfPin) {
-        this.countOfPin = countOfPin;
     }
 
     @Override

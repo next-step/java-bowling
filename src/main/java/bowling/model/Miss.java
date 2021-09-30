@@ -5,7 +5,7 @@ import bowling.CannotBowlException;
 import java.util.Objects;
 
 public class Miss implements State {
-    private Point countOfPin;
+    private final Point countOfPin;
 
     public Miss(Point countOfPin) {
         this.countOfPin = countOfPin;

@@ -3,8 +3,8 @@ package bowling.model;
 import java.util.Objects;
 
 public class Score {
-    private int score;
-    private int left;
+    private final int score;
+    private final int left;
 
     public Score() {
         this.score = 0;

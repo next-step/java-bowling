@@ -36,12 +36,12 @@ public class NormalRound implements Round{
         if (frameNo == BEFORE_FINAL_FRAME) {
             return new FinalRound(new Ready(), nextScore());
         }
+
         return new NormalRound(new Ready(), nextScore());
     }
 
     public LinkedList<Score> nextScore() {
-        LinkedList<Score> scores = new LinkedList<>();
-        scores.addAll(this.scores);
+        LinkedList<Score> scores = new LinkedList<>(this.scores);
         scores.add(new Score());
 
         return scores;

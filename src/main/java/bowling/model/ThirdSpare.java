@@ -5,14 +5,10 @@ import bowling.CannotBowlException;
 import java.util.Objects;
 
 public class ThirdSpare implements State {
-    private Point countOfPin;
+    private final Point countOfPin;
 
     public ThirdSpare() {
         this.countOfPin = new Point(10);
-    }
-
-    public ThirdSpare(Point countOfPin) {
-        this.countOfPin = countOfPin;
     }
 
     @Override
