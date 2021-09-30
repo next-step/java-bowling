@@ -36,7 +36,7 @@ public abstract class AbstractFrame implements Frame {
 
     @Override
     public void updateScorePin(Pin pin) {
-        score.saveNextPin(pin);
+        score = score.saveNextPin(pin);
     }
 
     @Override

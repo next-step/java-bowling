@@ -53,13 +53,18 @@ public class ResultView {
             .map(Frame::score)
             .map(Score::values)
             .map(ResultView::pinsToString)
+            .map(ResultView::toScoreFormat)
             .collect(Collectors.joining());
     }
 
     private static String printRemainBoard(List<Frame> frames) {
-        return IntStream.rangeClosed(frames.size(), 10)
-            .mapToObj(index -> String.format(BOARD_SCORE_FORMAT, ""))
+        return IntStream.range(frames.size(), 10)
+            .mapToObj(index -> toScoreFormat(""))
             .collect(Collectors.joining());
+    }
+
+    private static String toScoreFormat(String s) {
+        return String.format(BOARD_SCORE_FORMAT, s);
     }
 
     private static String toNameFormat(User user) {
