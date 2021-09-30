@@ -3,7 +3,7 @@ package bowling.view;
 import static bowling.domain.frame.AbstractFrame.FINAL_ROUND;
 import static bowling.domain.frame.AbstractFrame.FIRST_ROUND;
 
-import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
 import bowling.domain.score.Pin;
 import bowling.domain.score.PinType;
 import bowling.domain.score.Score;
@@ -26,7 +26,7 @@ public class ResultView {
     private ResultView() {
     }
 
-    public static void printBoard(User user, List<Frame> frames) {
+    public static void printBoard(User user, Frames frames) {
         printScoreBoard();
         printScoreResultBoard(user, frames);
     }
@@ -44,7 +44,7 @@ public class ResultView {
         return String.format(BOARD_FORMAT, num);
     }
 
-    public static void printScoreResultBoard(User user, List<Frame> frames) {
+    public static void printScoreResultBoard(User user, Frames frames) {
         StringBuilder sb = new StringBuilder();
         sb.append(toNameFormat(user));
 
@@ -53,16 +53,15 @@ public class ResultView {
         System.out.println(sb.toString());
     }
 
-    private static String printFrameBoard(List<Frame> frames) {
-        return frames.stream()
-            .map(Frame::score)
+    private static String printFrameBoard(Frames frames) {
+        return frames.scores()
             .map(Score::values)
             .map(ResultView::pinsToString)
             .map(ResultView::toScoreFormat)
             .collect(Collectors.joining());
     }
 
-    private static String printRemainBoard(List<Frame> frames) {
+    private static String printRemainBoard(Frames frames) {
         return IntStream.range(frames.size(), FINAL_ROUND)
             .mapToObj(index -> toScoreFormat(""))
             .collect(Collectors.joining());

@@ -2,10 +2,11 @@ package bowling.domain.frame;
 
 import static bowling.domain.frame.AbstractFrame.FINAL_ROUND;
 
+import bowling.domain.score.Score;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class Frames {
 
@@ -29,8 +30,13 @@ public class Frames {
         return new Frames(frames);
     }
 
-    public List<Frame> values() {
-        return Collections.unmodifiableList(frames);
+    public int size() {
+        return frames.size();
+    }
+
+    public Stream<Score> scores() {
+        return frames.stream()
+            .map(Frame::score);
     }
 
     @Override
