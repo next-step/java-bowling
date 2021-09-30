@@ -26,7 +26,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public Score score() {
-        return null;
+        return score;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame nextFrame() {
-        return null;
+        return nextFrame;
     }
 
     @Override

@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import bowling.domain.score.NormalScore;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -36,5 +37,35 @@ class NormalFrameTest {
 
         // then
         assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("다음 Frame을 반환받을 수 있다.")
+    void nextFrameTest() {
+
+        // given
+        Frame expected = NormalFrame.of(3, NormalScore.emptyScore(), null);
+        Frame input = NormalFrame.of(2, NormalScore.emptyScore(), expected);
+
+        // when
+        Frame result = input.nextFrame();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("현재 score를 반환할 수 있다.")
+    void scoreTest() {
+
+        // given
+        Score score = NormalScore.emptyScore();
+        Frame input = NormalFrame.of(2, score, null);
+
+        // when
+        Score result = input.score();
+
+        // then
+        assertThat(result).isEqualTo(score);
     }
 }
