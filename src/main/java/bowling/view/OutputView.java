@@ -2,21 +2,19 @@ package bowling.view;
 
 import bowling.model.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
-import static bowling.controller.Main.scoreResult;
-import static bowling.controller.Main.stateResult;
-
 public class OutputView {
-    public static final int MAX_ROUND = 10;
+    public static final int FINAL_FRAME = 10;
 
-    public static void printResult(String name, List<String> states) {
+    public static void printResult(String name, List<String> states, List<Integer> scoreResult) {
         printHeader();
         printState(name, states);
-        printScore();
+        printScore(scoreResult);
     }
 
-    private static void printScore() {
+    private static void printScore(List<Integer> scoreResult) {
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("|      |");
@@ -36,7 +34,7 @@ public class OutputView {
 
         stringBuilder.append("| NAME |");
 
-        for (int i = 1; i < MAX_ROUND; i++) {
+        for (int i = 1; i < FINAL_FRAME; i++) {
             stringBuilder.append("  0" + i + "  |");
         }
 
@@ -62,14 +60,14 @@ public class OutputView {
 
     private static String formatEmptyScore(int stateSize) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < MAX_ROUND - stateSize; i++) {
+        for (int i = 0; i < FINAL_FRAME - stateSize; i++) {
             stringBuilder.append("      |");
         }
 
         return stringBuilder.toString();
     }
 
-    public static String changeScore(State state, int pinCount) {
+    public static String changeScore(LinkedList<String> stateResult, State state, int pinCount) {
         String beforeResult = "";
 
         if (state instanceof Strike) {
@@ -110,6 +108,10 @@ public class OutputView {
 
         if (length == 1) {
             return "  " + score + "   |";
+        }
+
+        if (length == 2) {
+            return "  " + score + "  |";
         }
 
         if (length == 5) {
