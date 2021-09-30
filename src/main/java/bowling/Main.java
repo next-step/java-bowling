@@ -1,5 +1,8 @@
 package bowling;
 
+import static bowling.domain.frame.AbstractFrame.FINAL_ROUND;
+import static bowling.domain.frame.AbstractFrame.FIRST_ROUND;
+
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.frame.NormalFrame;
@@ -16,7 +19,7 @@ public class Main {
         Frame frame = NormalFrame.createFirstFrame();
 
         ResultView.printBoard(user, Frames.createFramesByFirstFrame(frame).values());
-        IntStream.range(1, 10)
+        IntStream.range(FIRST_ROUND, FINAL_ROUND)
             .forEach(index -> normalView(user, frame));
         Frame finalFrame = frame.lastFrame();
         shootPinAndPrintFrame(user, frame, finalFrame);

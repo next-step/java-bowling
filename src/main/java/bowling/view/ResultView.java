@@ -1,5 +1,8 @@
 package bowling.view;
 
+import static bowling.domain.frame.AbstractFrame.FINAL_ROUND;
+import static bowling.domain.frame.AbstractFrame.FIRST_ROUND;
+
 import bowling.domain.frame.Frame;
 import bowling.domain.score.Pin;
 import bowling.domain.score.PinType;
@@ -18,6 +21,8 @@ public class ResultView {
     private static final String BOARD_NAME_FORMAT = "|  %-3s |";
     private static final String BOARD_SCORE_FORMAT = " %-5s|";
 
+    private static final String SCORE_DELIMITER = "|";
+
     private ResultView() {
     }
 
@@ -29,7 +34,7 @@ public class ResultView {
     public static void printScoreBoard() {
         StringBuilder sb = new StringBuilder();
         sb.append(NAME_BOARD);
-        sb.append(IntStream.rangeClosed(1, 10)
+        sb.append(IntStream.rangeClosed(FIRST_ROUND, FINAL_ROUND)
             .mapToObj(ResultView::toBoardFormat)
             .collect(Collectors.joining()));
         System.out.println(sb.toString());
@@ -58,7 +63,7 @@ public class ResultView {
     }
 
     private static String printRemainBoard(List<Frame> frames) {
-        return IntStream.range(frames.size(), 10)
+        return IntStream.range(frames.size(), FINAL_ROUND)
             .mapToObj(index -> toScoreFormat(""))
             .collect(Collectors.joining());
     }
@@ -75,7 +80,7 @@ public class ResultView {
         return IntStream.range(0, pins.size())
             .filter(index -> Objects.nonNull(pins.get(index)))
             .mapToObj(index -> pinToString(pins, index))
-            .collect(Collectors.joining("|"));
+            .collect(Collectors.joining(SCORE_DELIMITER));
     }
 
     private static String pinToString(List<Pin> pins, int index) {

@@ -1,12 +1,13 @@
 package bowling.domain.frame;
 
-import static bowling.domain.frame.FinalFrame.FINAL_ROUND;
-
 import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
 import java.util.Objects;
 
 public abstract class AbstractFrame implements Frame {
+
+    public static int FIRST_ROUND = 1;
+    public static int FINAL_ROUND = 10;
 
     private final int round;
     private Score score;
