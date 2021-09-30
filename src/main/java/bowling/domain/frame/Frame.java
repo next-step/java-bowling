@@ -5,7 +5,6 @@ import bowling.domain.score.Score;
 
 public interface Frame {
 
-    // TODO : finalFrame exception
     Frame lastFrame();
 
     Score score();
@@ -18,7 +17,6 @@ public interface Frame {
 
     Frame nextFrame();
 
-    // TODO : finalFrame exception
     int round();
 
 }

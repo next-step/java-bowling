@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import static bowling.domain.frame.AbstractFrame.FINAL_ROUND;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,7 +22,7 @@ public class Frames {
     public static Frames createFramesByFirstFrame(Frame frame) {
         List<Frame> frames = new ArrayList<>();
         frames.add(frame);
-        while (frame instanceof NormalFrame && Objects.nonNull(frame.nextFrame())) {
+        while (frame.round() < FINAL_ROUND && Objects.nonNull(frame.nextFrame())) {
             frame = frame.nextFrame();
             frames.add(frame);
         }

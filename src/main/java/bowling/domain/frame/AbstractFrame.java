@@ -17,6 +17,7 @@ public abstract class AbstractFrame implements Frame {
         this.score = score;
     }
 
+    @Override
     public Frame lastFrame() {
         Frame resultFrame = this;
         while (resultFrame.round() < FINAL_ROUND && Objects.nonNull(resultFrame.nextFrame())) {
