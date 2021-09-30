@@ -8,16 +8,16 @@ public class NormalFrame implements Frame {
 
     private final int round;
     private final Score score;
-    private Frame frame;
+    private Frame nextFrame;
 
-    public NormalFrame(int round, Score score, Frame frame) {
+    public NormalFrame(int round, Score score, Frame nextFrame) {
         this.round = round;
         this.score = score;
-        this.frame = frame;
+        this.nextFrame = nextFrame;
     }
 
-    static Frame of(int round, Score score, Frame frame) {
-        return new NormalFrame(round, score, frame);
+    static Frame of(int round, Score score, Frame nextFrame) {
+        return new NormalFrame(round, score, nextFrame);
     }
 
     public static Frame createFirstFrame() {
@@ -41,7 +41,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame createNextFrame() {
-        return null;
+        return this.nextFrame = NormalFrame.of(round + 1, NormalScore.emptyScore(), null);
     }
 
     @Override
@@ -59,12 +59,12 @@ public class NormalFrame implements Frame {
         }
         NormalFrame that = (NormalFrame) o;
         return round == that.round && Objects.equals(score, that.score) && Objects
-            .equals(frame, that.frame);
+            .equals(nextFrame, that.nextFrame);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(round, score, frame);
+        return Objects.hash(round, score, nextFrame);
     }
 
 }

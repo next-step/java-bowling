@@ -21,4 +21,20 @@ class NormalFrameTest {
         // then
         assertThat(result).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("다음 Frame을 생성할 수 있다.")
+    void createNextFrameTest() {
+
+        // given
+        Frame input = NormalFrame.of(2, NormalScore.emptyScore(), null);
+
+        Frame expected = NormalFrame.of(3, NormalScore.emptyScore(), null);
+
+        // when
+        Frame result = input.createNextFrame();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
 }
