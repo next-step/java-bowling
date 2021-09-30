@@ -17,7 +17,7 @@ public class SecondStrike implements State {
             return new ThirdStrike();
         }
 
-        return new FirstBowl(countOfPin);
+        return new Miss(currentPin);
     }
 
     @Override
