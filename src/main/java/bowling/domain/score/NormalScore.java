@@ -50,7 +50,7 @@ public class NormalScore implements Score {
 
     @Override
     public boolean isNextStorable() {
-        return false;
+        return Objects.isNull(first) || first != STRIKE;
     }
 
     @Override
