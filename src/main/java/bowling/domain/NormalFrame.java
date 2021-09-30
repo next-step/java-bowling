@@ -7,9 +7,7 @@ public class NormalFrame extends Frame{
     private FrameStatus status = FrameStatus.READY;
     private int score;
 
-    private Frame before;
     private Frame next;
-
 
     @Override
     public int score() {
@@ -56,6 +54,14 @@ public class NormalFrame extends Frame{
         if(score > PinScore.MAX){
             throw new CannotCreateException(CannotCreateException.SECOND_SCORE_ERROR_MSG);
         }
+    }
+
+    public void linkNextFrame(Frame next){
+        this.next = next;
+    }
+
+    public Frame next(){
+        return next;
     }
 
 }
