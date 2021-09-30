@@ -37,7 +37,7 @@ public class Pin {
     }
 
     public int remainPin() {
-        return PIN_MAX_VALUE - pin;
+        return Math.subtractExact(PIN_MAX_VALUE, pin);
     }
 
     public int value() {
