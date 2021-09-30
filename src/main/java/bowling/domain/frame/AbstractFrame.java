@@ -14,6 +14,14 @@ public abstract class AbstractFrame implements Frame {
         this.score = score;
     }
 
+    public Frame lastFrame() {
+        Frame resultFrame = this;
+        while (resultFrame.nextRound() == 10 && Objects.nonNull(resultFrame.nextFrame())) {
+            resultFrame = resultFrame.nextFrame();
+        }
+        return resultFrame;
+    }
+
     @Override
     public Score score() {
         return score;
@@ -29,7 +37,8 @@ public abstract class AbstractFrame implements Frame {
         score.saveNextPin(pin);
     }
 
-    int nextRound() {
+    @Override
+    public int nextRound() {
         return round + 1;
     }
 

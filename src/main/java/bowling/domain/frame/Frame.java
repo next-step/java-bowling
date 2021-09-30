@@ -5,6 +5,9 @@ import bowling.domain.score.Score;
 
 public interface Frame {
 
+    // TODO : finalFrame exception
+    Frame lastFrame();
+
     Score score();
 
     boolean isScoreNextStorable();
@@ -14,5 +17,8 @@ public interface Frame {
     Frame createNextFrame();
 
     Frame nextFrame();
+
+    // TODO : finalFrame exception
+    int nextRound();
 
 }
