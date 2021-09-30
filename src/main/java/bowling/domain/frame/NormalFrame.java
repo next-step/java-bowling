@@ -18,7 +18,7 @@ public class NormalFrame extends AbstractFrame {
     }
 
     public static Frame createFirstFrame() {
-        return new NormalFrame(1, NormalScore.emptyScore(), null);
+        return new NormalFrame(FIRST_ROUND, NormalScore.emptyScore(), null);
     }
 
     @Override
