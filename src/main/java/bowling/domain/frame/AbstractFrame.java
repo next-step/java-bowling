@@ -29,6 +29,10 @@ public abstract class AbstractFrame implements Frame {
         score.saveNextPin(pin);
     }
 
+    int nextRound() {
+        return round + 1;
+    }
+
     public abstract Frame createNextFrame();
 
     public abstract Frame nextFrame();

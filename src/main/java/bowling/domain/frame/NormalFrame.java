@@ -1,19 +1,14 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.NormalScore;
-import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
-import java.util.Objects;
 
-public class NormalFrame implements Frame {
+public class NormalFrame extends AbstractFrame {
 
-    private final int round;
-    private Score score;
     private Frame nextFrame;
 
     public NormalFrame(int round, Score score, Frame nextFrame) {
-        this.round = round;
-        this.score = score;
+        super(round, score);
         this.nextFrame = nextFrame;
     }
 
@@ -26,46 +21,13 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Score score() {
-        return score;
-    }
-
-    @Override
-    public boolean isScoreNextStorable() {
-        return score.isNextStorable();
-    }
-
-    @Override
-    public void updateScorePin(Pin pin) {
-        score = score.saveNextPin(pin);
-    }
-
-    @Override
     public Frame createNextFrame() {
-        return this.nextFrame = NormalFrame.of(round + 1, NormalScore.emptyScore(), null);
+        return this.nextFrame = NormalFrame.of(nextRound(), NormalScore.emptyScore(), null);
     }
 
     @Override
     public Frame nextFrame() {
         return nextFrame;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        NormalFrame that = (NormalFrame) o;
-        return round == that.round && Objects.equals(score, that.score) && Objects
-            .equals(nextFrame, that.nextFrame);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(round, score, nextFrame);
     }
 
 }
