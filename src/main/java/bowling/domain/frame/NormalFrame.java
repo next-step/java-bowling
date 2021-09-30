@@ -1,13 +1,14 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.NormalScore;
+import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
 
     private final int round;
-    private final Score score;
+    private Score score;
     private Frame nextFrame;
 
     public NormalFrame(int round, Score score, Frame nextFrame) {
@@ -35,8 +36,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public void updateScorePin() {
-
+    public void updateScorePin(Pin pin) {
+        score = score.saveNextPin(pin);
     }
 
     @Override

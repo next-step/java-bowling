@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
 
 public interface Frame {
@@ -8,7 +9,7 @@ public interface Frame {
 
     boolean isScoreNextStorable();
 
-    void updateScorePin();
+    void updateScorePin(Pin pin);
 
     Frame createNextFrame();
 
