@@ -3,6 +3,7 @@ package bowling.domain.state.running;
 import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
 import bowling.domain.state.State;
+import bowling.exception.state.RunningCreateScoreException;
 
 public class Ready implements State {
 
@@ -13,7 +14,7 @@ public class Ready implements State {
 
     @Override
     public Score createScore() {
-        return null;
+        throw new RunningCreateScoreException();
     }
 
     @Override
