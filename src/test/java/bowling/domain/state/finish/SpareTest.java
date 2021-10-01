@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import bowling.domain.score.Pin;
 import bowling.domain.state.State;
 import bowling.exception.state.FinishStateBowlException;
+import bowling.exception.state.SpareStateFirstPinStrikeException;
 import bowling.exception.state.SpareStatePinsException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,20 @@ public class SpareTest {
         assertThatExceptionOfType(SpareStatePinsException.class)
             .isThrownBy(() -> new Spare(first, second))
             .withMessageMatching("두 핀의 합이 10이 되지 않으면 Spare상태가 될 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("첫번째 핀이 strike인데 spare상태로 만드려면 exception이 발생해야 한다.")
+    void createByFirstStrikePinTest() {
+
+        // given
+        Pin first = Pin.of(10);
+        Pin second = Pin.of(0);
+
+        // when & then
+        assertThatExceptionOfType(SpareStateFirstPinStrikeException.class)
+            .isThrownBy(() -> new Spare(first, second))
+            .withMessageMatching("첫 핀이 스트라이크라면 Spare상태가 될 수 없습니다.");
     }
 
     @Test
