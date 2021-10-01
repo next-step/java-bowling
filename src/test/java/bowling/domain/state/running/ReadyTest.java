@@ -55,4 +55,19 @@ class ReadyTest {
         assertThat(result).isInstanceOf(Strike.class);
     }
 
+    @Test
+    @DisplayName("볼링을 했을 때 Pin이 strike가 아니면 현재 핀을 가진 first bowl 상태를 반환해야 한다.")
+    void bowlByNotStrikePinTest() {
+
+        // given
+        State state = new Ready();
+        Pin pin = Pin.of(3);
+
+        // when
+        State result = state.bowl(pin);
+
+        // then
+        assertThat(result).isInstanceOf(FirstBowl.class);
+    }
+
 }

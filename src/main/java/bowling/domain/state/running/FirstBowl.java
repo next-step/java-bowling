@@ -3,10 +3,14 @@ package bowling.domain.state.running;
 import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
 import bowling.domain.state.State;
-import bowling.domain.state.finish.Strike;
-import bowling.exception.state.RunningCreateScoreException;
 
-public class Ready implements State {
+public class FirstBowl implements State {
+
+    private final Pin pin;
+
+    public FirstBowl(Pin pin) {
+        this.pin = pin;
+    }
 
     @Override
     public boolean isFinished() {
@@ -15,15 +19,12 @@ public class Ready implements State {
 
     @Override
     public Score createScore() {
-        throw new RunningCreateScoreException();
+        return null;
     }
 
     @Override
     public State bowl(Pin pin) {
-        if (pin.isStrike()) {
-            return new Strike();
-        }
-        return new FirstBowl(pin);
+        return null;
     }
 
 }
