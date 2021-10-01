@@ -18,7 +18,7 @@ public class FirstBowl extends Running {
         if (first.isSpare(pin)) {
             return new Spare(first, pin);
         }
-        return new Miss();
+        return new Miss(first, pin);
     }
 
 }
