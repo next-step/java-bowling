@@ -3,6 +3,7 @@ package bowling.domain.state.finish;
 import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
 import bowling.domain.state.State;
+import bowling.exception.state.FinishStateBowlException;
 import bowling.exception.state.StrikeStatePinException;
 
 public class Strike implements State {
@@ -29,7 +30,7 @@ public class Strike implements State {
 
     @Override
     public State bowl(Pin pin) {
-        return null;
+        throw new FinishStateBowlException();
     }
 
 }

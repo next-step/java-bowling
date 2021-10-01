@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import bowling.domain.score.Pin;
 import bowling.domain.state.State;
+import bowling.exception.state.FinishStateBowlException;
 import bowling.exception.state.StrikeStatePinException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,4 +38,18 @@ public class StrikeTest {
         // then
         assertTrue(result);
     }
+
+    @Test
+    @DisplayName("Strike는 더이상 bowling을 던질 수 없다.")
+    void bowlExceptionTest() {
+
+        // given
+        State state = new Strike(Pin.of(10));
+
+        // when & then
+        assertThatExceptionOfType(FinishStateBowlException.class)
+            .isThrownBy(() -> state.bowl(Pin.of(0)))
+            .withMessageMatching("종료된 상태에서 더이상 볼링을 던질 수 없습니다.");
+    }
+
 }
