@@ -16,7 +16,7 @@ public class FirstBowl extends Running {
     @Override
     public State bowl(Pin pin) {
         if (first.isSpare(pin)) {
-            return new Spare();
+            return new Spare(first, pin);
         }
         return new Miss();
     }
