@@ -1,10 +1,12 @@
 package bowling.domain.state.running;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import bowling.domain.score.Pin;
 import bowling.domain.state.State;
+import bowling.domain.state.finish.Spare;
 import bowling.exception.state.RunningCreateScoreException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,6 +38,22 @@ class FirstBowlTest {
         assertThatExceptionOfType(RunningCreateScoreException.class)
             .isThrownBy(() -> state.createScore())
             .withMessageMatching("running 상태는 score를 반환할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("pin을 받아 현재 핀과 계산해서 spare라면 Spare 객체를 반환해야 한다.")
+    void bowlBySparePinTest() {
+
+        // given
+        Pin first = Pin.of(3);
+        Pin second = Pin.of(7);
+        State state = new FirstBowl(first);
+
+        // when
+        State result = state.bowl(second);
+
+        // then
+        assertThat(result).isInstanceOf(Spare.class);
     }
 
 }

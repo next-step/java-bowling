@@ -160,7 +160,7 @@
 - [x] 현재 핀이 strike가 아닌 경우 `FIRST BOWLING` 상태를 반환해야 한다.
 - first bowling
 - [ ] 핀을 가지고 다음 상태를 반환할 수 있다.
-- [ ] 현재 핀이 기존 핀과 합쳐서 spare인 경우 `SPARE`상태를 반환해야 한다.
+- [x] 현재 핀이 기존 핀과 합쳐서 spare인 경우 `SPARE`상태를 반환해야 한다.
 - [ ] 현재 핀이 기존 핀과 합쳐서 spare가 아닌 경우 `MISS`상태를 반환해야 한다.
 
 #### finished

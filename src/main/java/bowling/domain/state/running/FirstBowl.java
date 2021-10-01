@@ -3,14 +3,15 @@ package bowling.domain.state.running;
 import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
 import bowling.domain.state.State;
+import bowling.domain.state.finish.Spare;
 import bowling.exception.state.RunningCreateScoreException;
 
 public class FirstBowl implements State {
 
-    private final Pin pin;
+    private final Pin first;
 
-    public FirstBowl(Pin pin) {
-        this.pin = pin;
+    public FirstBowl(Pin first) {
+        this.first = first;
     }
 
     @Override
@@ -25,6 +26,9 @@ public class FirstBowl implements State {
 
     @Override
     public State bowl(Pin pin) {
+        if (first.isSpare(pin)) {
+            return new Spare();
+        }
         return null;
     }
 
