@@ -70,6 +70,41 @@ class PinTest {
         }
     }
 
+    @Nested
+    @DisplayName("스페어인지 확인할 수 있다.")
+    class isSpareTest {
+
+        @Test
+        @DisplayName("true")
+        void trueTest() {
+
+            // given
+            Pin pin = Pin.of(5);
+            Pin second = Pin.of(5);
+
+            // when
+            boolean result = pin.isSpare(second);
+
+            // then
+            assertTrue(result);
+        }
+
+        @Test
+        @DisplayName("false")
+        void falseTest() {
+
+            // given
+            Pin pin = Pin.of(7);
+            Pin second = Pin.of(1);
+
+            // when
+            boolean result = pin.isSpare(second);
+
+            // then
+            assertFalse(result);
+        }
+    }
+
     @Test
     @DisplayName("Pin equals, hashCode 재정의 테스트")
     void pinEqualsHashCodeTest() {

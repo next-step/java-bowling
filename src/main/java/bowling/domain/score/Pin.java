@@ -48,6 +48,10 @@ public class Pin {
         return pin == PIN_MAX_VALUE;
     }
 
+    public boolean isSpare(Pin pin) {
+        return Math.addExact(this.pin, pin.pin) == PIN_MAX_VALUE;
+    }
+
     public int value() {
         return pin;
     }
