@@ -1,21 +1,12 @@
 package bowling.domain.state.running;
 
 import bowling.domain.score.Pin;
-import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.finish.Strike;
-import bowling.exception.state.RunningCreateScoreException;
 
-public class Ready implements State {
+public class Ready extends Running {
 
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
-
-    @Override
-    public Score createScore() {
-        throw new RunningCreateScoreException();
+    public Ready() {
     }
 
     @Override
