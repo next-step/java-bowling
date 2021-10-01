@@ -19,7 +19,7 @@ public class Strike implements State {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override
