@@ -2,12 +2,10 @@ package bowling.domain.state.finish;
 
 import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
-import bowling.domain.state.State;
-import bowling.exception.state.FinishStateBowlException;
 import bowling.exception.state.SpareStateFirstPinStrikeException;
 import bowling.exception.state.SpareStatePinsException;
 
-public class Spare implements State {
+public class Spare extends Finish {
 
     private final Pin first;
     private final Pin second;
@@ -33,18 +31,8 @@ public class Spare implements State {
     }
 
     @Override
-    public boolean isFinished() {
-        return true;
-    }
-
-    @Override
     public Score createScore() {
         return null;
-    }
-
-    @Override
-    public State bowl(Pin pin) {
-        throw new FinishStateBowlException();
     }
 
 }
