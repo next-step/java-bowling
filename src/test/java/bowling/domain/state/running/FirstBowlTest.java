@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import bowling.domain.score.Pin;
 import bowling.domain.state.State;
+import bowling.domain.state.finish.Miss;
 import bowling.domain.state.finish.Spare;
 import bowling.exception.state.RunningCreateScoreException;
 import org.junit.jupiter.api.DisplayName;
@@ -54,6 +55,22 @@ class FirstBowlTest {
 
         // then
         assertThat(result).isInstanceOf(Spare.class);
+    }
+
+    @Test
+    @DisplayName("pin을 받아 현재 핀과 계산해서 spare가 아니라면 Miss 객체를 반환해야 한다.")
+    void bowlByNonSparePinTest() {
+
+        // given
+        Pin first = Pin.of(3);
+        Pin second = Pin.of(5);
+        State state = new FirstBowl(first);
+
+        // when
+        State result = state.bowl(second);
+
+        // then
+        assertThat(result).isInstanceOf(Miss.class);
     }
 
 }

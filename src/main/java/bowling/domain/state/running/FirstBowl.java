@@ -3,6 +3,7 @@ package bowling.domain.state.running;
 import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
 import bowling.domain.state.State;
+import bowling.domain.state.finish.Miss;
 import bowling.domain.state.finish.Spare;
 import bowling.exception.state.RunningCreateScoreException;
 
@@ -29,7 +30,7 @@ public class FirstBowl implements State {
         if (first.isSpare(pin)) {
             return new Spare();
         }
-        return null;
+        return new Miss();
     }
 
 }
