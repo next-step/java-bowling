@@ -2,9 +2,11 @@ package bowling.domain.score;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -33,6 +35,39 @@ class PinTest {
         // then
         assertTrue(pin == Pin.of(input));
         assertThat(pin).isEqualTo(Pin.of(input));
+    }
+
+    @Nested
+    @DisplayName("스트라이크인지 확인할 수 있다.")
+    class isStrikeTest {
+
+        @Test
+        @DisplayName("true")
+        void trueTest() {
+
+            // given
+            Pin pin = Pin.of(10);
+
+            // when
+            boolean result = pin.isStrike();
+
+            // then
+            assertTrue(result);
+        }
+
+        @Test
+        @DisplayName("false")
+        void falseTest() {
+
+            // given
+            Pin pin = Pin.of(7);
+
+            // when
+            boolean result = pin.isStrike();
+
+            // then
+            assertFalse(result);
+        }
     }
 
     @Test

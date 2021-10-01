@@ -44,6 +44,10 @@ public class Pin {
         return pins.get(Math.addExact(this.pin, pin.pin));
     }
 
+    public boolean isStrike() {
+        return pin == PIN_MAX_VALUE;
+    }
+
     public int value() {
         return pin;
     }
