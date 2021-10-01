@@ -12,7 +12,7 @@ public class Ready extends Running {
     @Override
     public State bowl(Pin pin) {
         if (pin.isStrike()) {
-            return new Strike();
+            return new Strike(pin);
         }
         return new FirstBowl(pin);
     }
