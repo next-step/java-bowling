@@ -52,6 +52,10 @@ public class Pin {
         return Math.addExact(this.pin, pin.pin) == PIN_MAX_VALUE;
     }
 
+    public boolean isMiss(Pin pin) {
+        return Math.addExact(this.pin, pin.pin) < PIN_MAX_VALUE;
+    }
+
     public int value() {
         return pin;
     }

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import bowling.domain.score.Pin;
 import bowling.domain.state.State;
 import bowling.exception.state.FinishStateBowlException;
+import bowling.exception.state.MissStateCrerateException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -36,6 +37,20 @@ class MissTest {
         assertThatExceptionOfType(FinishStateBowlException.class)
             .isThrownBy(() -> state.bowl(Pin.of(0)))
             .withMessageMatching("종료된 상태에서 더이상 볼링을 던질 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("두 핀의 합이 10이 되면 exception이 반환되어야 한다.")
+    void createMissExceptionTest() {
+
+        // given
+        Pin first = Pin.of(3);
+        Pin second = Pin.of(7);
+
+        // when & then
+        assertThatExceptionOfType(MissStateCrerateException.class)
+            .isThrownBy(() -> new Miss(first, second))
+            .withMessageMatching("Miss 상태는 두 핀의 합이 10이 넘을 수 없다.");
     }
 
 }
