@@ -26,6 +26,10 @@ public class NormalFrame implements Frame {
         return new NormalFrame(FIRST_ROUND, null, new Ready());
     }
 
+    public boolean isFinishState() {
+        return state.isFinished();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
