@@ -1,7 +1,7 @@
 package bowling.domain.state.finish;
 
 import bowling.domain.score.Pin;
-import bowling.domain.score.Score;
+import bowling.domain.scoretmp.Score;
 import bowling.exception.state.SpareStateFirstPinStrikeException;
 import bowling.exception.state.SpareStatePinsException;
 
