@@ -22,6 +22,8 @@ public interface Frame {
 
     int addWithFirstScore(int score);
 
-    Frame getNextFrame();
+    Frame prev();
+
+    Frame next();
 
 }

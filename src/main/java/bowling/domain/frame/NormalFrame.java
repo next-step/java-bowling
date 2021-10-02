@@ -1,11 +1,9 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.BaseScore;
 import bowling.domain.score.NormalScore;
+import bowling.domain.score.Score;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Objects;
 
 public class NormalFrame extends BaseFrame {
 
@@ -15,14 +13,11 @@ public class NormalFrame extends BaseFrame {
 
     private final int index;
 
-    private NormalScore score;
-
     private Frame nextFrame;
 
-    private NormalFrame(int index, NormalScore score, int trial, int totalScore, Frame prevFrame, Frame nextFrame) {
-        super(trial, totalScore, prevFrame);
+    private NormalFrame(int index, Score score, int trial, Frame prevFrame, Frame nextFrame) {
+        super(trial, score, prevFrame);
         this.index = index;
-        this.score = score;
         this.nextFrame = nextFrame;
     }
 
@@ -30,20 +25,12 @@ public class NormalFrame extends BaseFrame {
         return of(FIRST_IDX, NormalScore.first(score), FIRST_TRIAL);
     }
 
-    protected static NormalFrame of(int index, NormalScore score, int trial) {
-        return new NormalFrame(index, score, trial, -1, null, null);
+    protected static NormalFrame of(int index, Score score, int trial) {
+        return new NormalFrame(index, score, trial, null, null);
     }
 
-    protected static NormalFrame of(int index, NormalScore score, int trial, int totalScore) {
-        return new NormalFrame(index, score, trial, totalScore, null, null);
-    }
-
-    protected static NormalFrame of(int index, NormalScore score, int trial, BaseFrame prevFrame, BaseFrame nextFrame) {
-        return new NormalFrame(index, score, trial, -1, prevFrame, nextFrame);
-    }
-
-    public BaseScore score() {
-        return score;
+    protected static NormalFrame of(int index, Score score, int trial, BaseFrame prevFrame, BaseFrame nextFrame) {
+        return new NormalFrame(index, score, trial, prevFrame, nextFrame);
     }
 
     @Override
@@ -52,63 +39,6 @@ public class NormalFrame extends BaseFrame {
             return index;
         }
         return index + 1;
-    }
-
-    @Override
-    public List<Integer> getAllScores() {
-        return score.getAll();
-    }
-
-    protected void calculateWith(int baseScore) {
-        if (endsWithNeitherSpareNorStrike()) {
-            calculateTotalScore(baseScore, score.getAll());
-        }
-        calculateWhenSpareOrStrike(baseScore);
-    }
-
-    private void calculateWhenSpareOrStrike(int baseScore) {
-        if (nextFrame == null) {
-            return;
-        }
-
-        calculateTotalScoreIfSpare(baseScore);
-        calculateTotalScoreIfStrike(baseScore);
-    }
-
-    private void calculateTotalScoreIfSpare(int baseScore) {
-        if (!score.isSpare()) {
-            return;
-        }
-        calculateTotalScore(baseScore, nextFrame.addWithFirstScore(score.sum()));
-    }
-
-    private void calculateTotalScoreIfStrike(int baseScore) {
-        if (!score.isStrike()) {
-            return;
-        }
-        calculateTotalScoreIfNextScoresMoreThanTwo(baseScore, nextFramesScores());
-    }
-
-    private void calculateTotalScoreIfNextScoresMoreThanTwo(int baseScore, List<Integer> nextScores) {
-        if (nextScores.size() > 1) {
-            calculateTotalScore(baseScore, score.getFirst(), nextScores.get(0), nextScores.get(1));
-        }
-    }
-
-    private List<Integer> nextFramesScores() {
-
-        List<Integer> nextFrameAllScores = nextFrame.getAllScores();
-
-        List<Integer> nextNextFrameAllScores =
-                Optional.ofNullable(this.nextFrame.getNextFrame()).map(Frame::getAllScores).orElse(new ArrayList<>());
-
-        return Stream.concat(nextFrameAllScores.stream(), nextNextFrameAllScores.stream())
-                .filter(score -> score != NONE_SCORE)
-                .collect(Collectors.toList());
-    }
-
-    private boolean endsWithNeitherSpareNorStrike() {
-        return !score.isSpare() && !score.isStrike() && score.isDone();
     }
 
     @Override
@@ -125,7 +55,7 @@ public class NormalFrame extends BaseFrame {
     }
 
     @Override
-    public Frame getNextFrame() {
+    public Frame next() {
         return nextFrame;
     }
 
@@ -149,7 +79,7 @@ public class NormalFrame extends BaseFrame {
     }
 
     private BaseFrame bowlSecondTry(int score) {
-        this.score = this.score.second(score);
+        this.score = this.score.accumulate(score);
         increaseTrial();
         return this;
     }

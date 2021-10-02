@@ -31,7 +31,7 @@ class NormalFrameTest {
             assertAll(
                     () -> assertEquals(NormalFrame.start(1), NormalFrame.start(1)),
                     () -> assertEquals(NormalFrame.start(10), NormalFrame.of(1, NormalScore.first(10), 1)),
-                    () -> assertEquals(NormalFrame.start(0).bowl(3), NormalFrame.of(1, NormalScore.first(0).second(3), 2))
+                    () -> assertEquals(NormalFrame.start(0).bowl(3), NormalFrame.of(1, NormalScore.first(0).accumulate(3), 2))
             );
         }
 
@@ -180,7 +180,7 @@ class NormalFrameTest {
         @Test
         public void _9회차의_첫시도에서_스트라이크를_치면_끝난다() {
             //given
-            Frame frame = NormalFrame.of(8, NormalScore.first(3).second(3), 2);
+            Frame frame = NormalFrame.of(8, NormalScore.first(3).accumulate(3), 2);
             //when
             frame = frame.bowl(10);
             //then
@@ -194,7 +194,7 @@ class NormalFrameTest {
         @Test
         public void _9회차의_첫시도가_스트라이크가_아니면_끝나지_않는다() {
             //given
-            Frame frame = NormalFrame.of(8, NormalScore.first(3).second(3), 2);
+            Frame frame = NormalFrame.of(8, NormalScore.first(3).accumulate(3), 2);
             //when
             frame = frame.bowl(8);
             //then
@@ -208,7 +208,7 @@ class NormalFrameTest {
         @Test
         public void _9회차의_두번째_시도_후_끝난다() {
             //given
-            Frame frame = NormalFrame.of(8, NormalScore.first(3).second(3), 2);
+            Frame frame = NormalFrame.of(8, NormalScore.first(3).accumulate(3), 2);
             //when
             frame = frame.bowl(8).bowl(2);
             //then

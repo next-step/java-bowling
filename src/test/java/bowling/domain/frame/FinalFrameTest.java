@@ -34,7 +34,7 @@ public class FinalFrameTest {
         //when
         frame = frame.bowl(2);
         //then
-        assertThat(frame).isEqualTo(FinalFrame.of(FinalScore.first(8).second(2), 2, true, false, null));
+        assertThat(frame).isEqualTo(FinalFrame.of(FinalScore.first(8).accumulate(2), 2, true, false, null));
     }
 
     @ParameterizedTest
@@ -46,7 +46,7 @@ public class FinalFrameTest {
         frame = frame.bowl(10);
         //then
         assertThat(frame).isEqualTo(
-                FinalFrame.of(FinalScore.first(first).second(second).third(10), 3, false, true, null));
+                FinalFrame.of(FinalScore.first(first).accumulate(second).accumulate(10), 3, false, true, null));
     }
 
     private static Stream<Arguments> 두번째_시도후_시도의_합이_10이상이면_세번째_시도를_할_수_있다() {
@@ -113,7 +113,7 @@ public class FinalFrameTest {
     @Test
     public void 마지막_프레임이_끝나면_점수를_계산할_수_있다() {
         //given
-        Frame frame = NormalFrame.of(9, NormalScore.first(1).second(9), 2, 100);
+        Frame frame = NormalFrame.of(9, NormalScore.of(1, 2, 100, true), 2);
         Frame finalFrame = FinalFrame.start(1, frame);
         finalFrame.bowl(7);
         //when
@@ -125,7 +125,7 @@ public class FinalFrameTest {
     @Test
     public void 마지막_프레임이_끝나지_않으면_점수를_계산할_수_없다() {
         //given
-        Frame frame = NormalFrame.of(9, NormalScore.first(1).second(9), 2, 100);
+        Frame frame = NormalFrame.of(9, NormalScore.first(1).accumulate(9), 2);
         Frame finalFrame = FinalFrame.start(1, frame);
         //when
         int score = finalFrame.calculateScore();
@@ -136,7 +136,7 @@ public class FinalFrameTest {
     @Test
     public void 이전_프레임의_점수를_계산할_수_없다면_마지막_프레임의_점수도_계산할_수_없다() {
         //given
-        Frame frame = NormalFrame.of(9, NormalScore.first(10), 1, -1);
+        Frame frame = NormalFrame.of(9, NormalScore.first(10), 1);
         Frame finalFrame = FinalFrame.start(1, frame);
         finalFrame.bowl(5);
         //when

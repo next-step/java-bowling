@@ -1,5 +1,7 @@
 package bowling.domain.score;
 
+import bowling.domain.frame.Frame;
+
 import java.util.List;
 
 public interface Score {
@@ -19,5 +21,11 @@ public interface Score {
     int getFirst();
 
     int getSecond();
+
+    Score accumulate(int score);
+
+    int calculateWith(Frame prev);
+
+    int getTotal();
 
 }

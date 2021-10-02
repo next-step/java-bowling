@@ -1,9 +1,10 @@
 package bowling.domain.score;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import bowling.domain.frame.Frame;
+
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static bowling.common.Pin.MAX;
 
@@ -11,25 +12,75 @@ public class NormalScore extends BaseScore {
 
     private final boolean isDone;
 
-    private NormalScore(int first, int second, boolean isDone) {
-        super(first, second);
+    private NormalScore(int first, int second, int total, boolean isDone) {
+        super(first, second, total);
         this.isDone = isDone;
     }
 
+    private NormalScore(int first, int second, boolean isDone) {
+        this(first, second, -1, isDone);
+    }
+
+    public static NormalScore of(int first, int second, int total, boolean isDone) {
+        return new NormalScore(first, second, total, isDone);
+    }
 
     public static NormalScore first(int score) {
         validateScore(score);
         return new NormalScore(score, -1, false);
     }
 
-    public NormalScore second(int score) {
-        validateScore(score);
-        validateCombinedScores(score);
-        return new NormalScore(getFirst(), score, true);
+    @Override
+    protected int calculateWith(int base, Frame now) {
+
+        if(!isDone) {
+            return NONE;
+        }
+
+        if (neitherSpareNorStrike()) {
+            return getAll().stream().filter(score -> score != NONE).reduce(base, Integer::sum);
+        }
+
+        Frame next = now.next();
+        if (next == null) {
+            return NONE;
+        }
+
+        return calculateWhenSpareOrStrike(base, next);
     }
 
-    public boolean isDone() {
-        return isDone;
+    private boolean neitherSpareNorStrike() {
+        return !isSpare() && !isStrike();
+    }
+
+    private int calculateWhenSpareOrStrike(int base, Frame next) {
+        if (isSpare()) {
+            return base + next.addWithFirstScore(sum());
+        }
+
+        return calculateWhenStrike(base, next);
+    }
+
+    private int calculateWhenStrike(int base, Frame next) {
+        List<Integer> nextScores = scoresFrom(next);
+
+        if (nextScores.size() < 2) {
+            return NONE;
+        }
+
+        return base + getFirst() + nextScores.get(0) + nextScores.get(1);
+    }
+
+    private List<Integer> scoresFrom(Frame next) {
+
+        List<Integer> nextFrameAllScores = next.getAllScores();
+
+        List<Integer> nextNextFrameAllScores =
+                Optional.ofNullable(next.next()).map(Frame::getAllScores).orElse(new ArrayList<>());
+
+        return Stream.concat(nextFrameAllScores.stream(), nextNextFrameAllScores.stream())
+                .filter(score -> score != NONE)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -42,6 +93,17 @@ public class NormalScore extends BaseScore {
     @Override
     public List<Integer> getAll() {
         return Collections.unmodifiableList(Arrays.asList(getFirst(), getSecond()));
+    }
+
+    @Override
+    public Score accumulate(int score) {
+        return second(score);
+    }
+
+    private NormalScore second(int score) {
+        validateScore(score);
+        validateCombinedScores(score);
+        return new NormalScore(getFirst(), score, true);
     }
 
     @Override

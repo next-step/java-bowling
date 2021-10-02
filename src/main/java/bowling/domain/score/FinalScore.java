@@ -1,40 +1,55 @@
 package bowling.domain.score;
 
+import bowling.domain.frame.Frame;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 import static bowling.common.Pin.MAX;
-import static bowling.common.Pin.NONE;
 
 public class FinalScore extends BaseScore {
     private final int third;
 
     private FinalScore(int first, int second, int third) {
-        super(first, second);
+        super(first, second, -1);
         this.third = third;
     }
 
     public static FinalScore first(int score) {
         validateScore(score);
-        return new FinalScore(score, NONE.value(), NONE.value());
-    }
-
-    public FinalScore second(int score) {
-        validateScore(score);
-        validateCombinedScores(score);
-        return new FinalScore(getFirst(), score, this.third);
-    }
-
-    public FinalScore third(int score) {
-        validateScore(score);
-        return new FinalScore(getFirst(), getSecond(), score);
+        return new FinalScore(score, NONE, NONE);
     }
 
     @Override
     public int sum() {
         return super.sum() + third;
+    }
+
+    @Override
+    protected int calculateWith(int base, Frame now) {
+        if (!now.isLast()) return NONE;
+        return getAll().stream().filter(score -> score != NONE).reduce(base, Integer::sum);
+    }
+
+    @Override
+    public Score accumulate(int score) {
+        if (getSecond() == -1) {
+            return second(score);
+        }
+        return third(score);
+    }
+
+    private FinalScore second(int score) {
+        validateScore(score);
+        validateCombinedScores(score);
+        return new FinalScore(getFirst(), score, this.third);
+    }
+
+    private FinalScore third(int score) {
+        validateScore(score);
+        return new FinalScore(getFirst(), getSecond(), score);
     }
 
     @Override

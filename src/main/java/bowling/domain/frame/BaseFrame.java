@@ -1,8 +1,7 @@
 package bowling.domain.frame;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import bowling.domain.score.Score;
+
 import java.util.List;
 
 public abstract class BaseFrame implements Frame {
@@ -11,17 +10,15 @@ public abstract class BaseFrame implements Frame {
 
     protected static int SECOND_TRIAL = 2;
 
-    protected static int NONE_SCORE = -1;
-
     private int trial;
 
-    private int totalScore;
+    protected Score score;
 
     private final Frame prevFrame;
 
-    protected BaseFrame(int trial, int totalScore, Frame prevFrame) {
+    protected BaseFrame(int trial, Score score, Frame prevFrame) {
         this.trial = trial;
-        this.totalScore = totalScore;
+        this.score = score;
         this.prevFrame = prevFrame;
     }
 
@@ -34,66 +31,26 @@ public abstract class BaseFrame implements Frame {
     }
 
     public int getTotalScore() {
-        return totalScore;
+        return score.getTotal();
     }
 
     public int calculateScore() {
-
-        if (hasTotalScore()) {
-            return totalScore;
-        }
-
-        int baseScore = baseScoreFromPrev();
-
-        if (noSet(baseScore)) {
-            return NONE_SCORE;
-        }
-
-        calculateWith(baseScore);
-
-        return totalScore;
+        return score.calculateWith(this);
     }
 
-    protected abstract void calculateWith(int baseScore);
-
-    private boolean hasTotalScore() {
-        return totalScore != NONE_SCORE;
+    @Override
+    public Frame prev() {
+        return prevFrame;
     }
 
-    private int baseScoreFromPrev() {
-        int baseScore = 0;
 
-        if (hasPrevFrame()) {
-            baseScore = prevFrame.getTotalScore();
-        }
-
-        return baseScore;
-
-    }
-
-    private boolean hasPrevFrame() {
-        return prevFrame != null;
-    }
-
-    private boolean noSet(int baseScore) {
-        return baseScore == NONE_SCORE;
+    @Override
+    public List<Integer> getAllScores() {
+        return score.getAll();
     }
 
     protected void increaseTrial() {
         this.trial++;
-    }
-
-
-    protected void calculateTotalScore(int baseScore, Integer... scores) {
-        calculateTotalScore(baseScore, Arrays.asList(scores));
-    }
-
-    protected void calculateTotalScore(int baseScore, List<Integer> scores) {
-        totalScore = scores.stream().filter(score -> score != NONE_SCORE).reduce(baseScore, Integer::sum);
-    }
-
-    protected void calculateTotalScore(int baseScore, int score) {
-        totalScore = baseScore + score;
     }
 
 }

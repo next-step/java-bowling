@@ -1,16 +1,26 @@
 package bowling.domain.score;
 
+import bowling.domain.frame.Frame;
+
+import java.util.Optional;
+
 import static bowling.common.Pin.MAX;
 import static bowling.common.Pin.NO_POINT;
 
 public abstract class BaseScore implements Score {
+
+    protected static int NONE = -1;
+
     private final int first;
 
     private final int second;
 
-    protected BaseScore(int first, int second) {
+    private int total;
+
+    protected BaseScore(int first, int second, int total) {
         this.first = first;
         this.second = second;
+        this.total = total;
     }
 
     protected static void validateScore(int score) {
@@ -54,7 +64,32 @@ public abstract class BaseScore implements Score {
         return second;
     }
 
+    public int getTotal() {
+        return total;
+    }
+
+    public int calculateWith(Frame now) {
+        if (hasTotalScore()) {
+            return total;
+        }
+        int base = baseScoreFrom(now.prev());
+        if (base == NONE) {
+            return NONE;
+        }
+        total = calculateWith(base, now);
+        return total;
+    }
+
+    protected abstract int calculateWith(int base, Frame now);
+
     protected abstract void validateCombinedScores(int scores);
 
+    private boolean hasTotalScore() {
+        return total != NONE;
+    }
+
+    private int baseScoreFrom(Frame prev) {
+        return Optional.ofNullable(prev).map(Frame::getTotalScore).orElse(0);
+    }
 
 }

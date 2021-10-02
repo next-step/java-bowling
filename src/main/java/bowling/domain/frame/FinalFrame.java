@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.FinalScore;
+import bowling.domain.score.Score;
 
 import java.util.List;
 import java.util.Objects;
@@ -9,21 +10,18 @@ public class FinalFrame extends BaseFrame {
 
     private static final int IDX = 10;
 
-    private FinalScore score;
-
     private FinalFrameStatus status;
 
-    private FinalFrame(FinalScore score, int trial, FinalFrameStatus status, Frame prevFrame) {
-        super(trial, -1, prevFrame);
-        this.score = score;
+    private FinalFrame(Score score, int trial, FinalFrameStatus status, Frame prevFrame) {
+        super(trial, score, prevFrame);
         this.status = status;
     }
 
-    protected static FinalFrame of(FinalScore score, int trial, boolean isThirdAvailable, boolean isDone, Frame prevFrame) {
+    protected static FinalFrame of(Score score, int trial, boolean isThirdAvailable, boolean isDone, Frame prevFrame) {
         return new FinalFrame(score, trial, FinalFrameStatus.of(isThirdAvailable, isDone), prevFrame);
     }
 
-    protected static FinalFrame of(FinalScore score, int trial, FinalFrameStatus status, Frame prevFrame) {
+    protected static FinalFrame of(Score score, int trial, FinalFrameStatus status, Frame prevFrame) {
         return new FinalFrame(score, trial, status, prevFrame);
     }
 
@@ -54,7 +52,7 @@ public class FinalFrame extends BaseFrame {
     }
 
     private FinalFrame bowlSecondTry(int score) {
-        this.score = this.score.second(score);
+        this.score = this.score.accumulate(score);
         increaseTrial();
         if (isThirdAvailable()) {
             this.status = FinalFrameStatus.of(true, false);
@@ -68,22 +66,11 @@ public class FinalFrame extends BaseFrame {
         return this.score.isStrike() || this.score.isSpare();
     }
 
-
     private FinalFrame bowlThirdTry(int score) {
-        this.score = this.score.third(score);
+        this.score = this.score.accumulate(score);
         increaseTrial();
         this.status = FinalFrameStatus.of(false, true);
         return this;
-    }
-
-    @Override
-    protected void calculateWith(int baseScore) {
-        if (!isLast()) {
-            return;
-        }
-
-        calculateTotalScore(baseScore, getAllScores());
-
     }
 
     @Override
@@ -97,7 +84,7 @@ public class FinalFrame extends BaseFrame {
     }
 
     @Override
-    public BaseFrame getNextFrame() {
+    public BaseFrame next() {
         return null;
     }
 
