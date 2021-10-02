@@ -13,14 +13,14 @@ public class InputView {
     private InputView() {
     }
 
-    public static String inputUsername() {
-        System.out.print(INPUT_USERNAME_MESSAGE);
-        return scanner.nextLine();
-    }
-
-    public static int inputFrameShot(int round) {
-        System.out.printf(INPUT_FRAME_SHOT, round);
-        return Integer.parseInt(scanner.nextLine());
-    }
+//    public static String inputUsername() {
+//        System.out.print(INPUT_USERNAME_MESSAGE);
+//        return scanner.nextLine();
+//    }
+//
+//    public static int inputFrameShot(int round) {
+//        System.out.printf(INPUT_FRAME_SHOT, round);
+//        return Integer.parseInt(scanner.nextLine());
+//    }
 
 }

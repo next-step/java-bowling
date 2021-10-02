@@ -81,7 +81,7 @@
 - Normal Score
 - [x] NormalScore는 핀을 두번 쓰러뜨릴 수 있다.
 - [x] 빈 NormalScore를 생성할 수 있다.
-- [x] 첫번째 핀을 저장할 수 있다.  
+- [x] 첫번째 핀을 저장할 수 있다.
 - [x] 첫번째 핀이 스트라이크가 될 경우 NormalScore에서 다음 핀을 칠 수 없다.
 - [x] 첫번째 핀이 스트라이크가 되지 않을 경우 남은 핀만 NormalScore에 넣을 수 있다.
 - Final Score
@@ -186,3 +186,12 @@
 - [ ] 현재 frame의 score를 저장할 수 있다.
 - [ ] 현재 frame의 점수가 계산 가능한지 확인할 수 있다.
 - [ ] 현재 frame의 점수를 계산하여 반환할 수 있다.
+
+#### NormalFrame
+
+- [ ] 현재 round를 저장할 수 있다.
+- [ ] 다음 frame의 참조값을 저장할 수 있다.
+- [ ] 다음 frame을 생성할 수 있다.
+
+- [ ] 현재 frame의 state를 저장할 수 있다.
+- [ ] 현재 frame의 state에서 또 frame에 pin을 저장할 수 있는지 확인할 수 있다.

@@ -1,7 +1,7 @@
 package bowling.domain.state.running;
 
 import bowling.domain.score.Pin;
-import bowling.domain.scoretmp.Score;
+import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.exception.state.RunningCreateScoreException;
 

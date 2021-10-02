@@ -1,7 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.score.Pin;
-import bowling.domain.scoretmp.Score;
+import bowling.domain.score.Score;
 
 public interface State {
 
