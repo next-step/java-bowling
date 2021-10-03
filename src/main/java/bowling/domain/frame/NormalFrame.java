@@ -28,4 +28,9 @@ public class NormalFrame extends AbstractFrame {
         return nextFrame = NormalFrame.from(round() + 1, null, new Ready());
     }
 
+    @Override
+    public Frame nextFrame() {
+        return nextFrame;
+    }
+
 }

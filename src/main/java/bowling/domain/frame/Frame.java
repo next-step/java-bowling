@@ -10,4 +10,6 @@ public interface Frame {
 
     Frame createNextFrame();
 
+    Frame nextFrame();
+
 }

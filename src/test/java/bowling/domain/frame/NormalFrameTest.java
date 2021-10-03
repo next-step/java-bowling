@@ -107,4 +107,20 @@ class NormalFrameTest {
         assertThat(result).isEqualTo(expected);
     }
 
+    @Test
+    @DisplayName("다음 Frame을 반환할 수 있다.")
+    void nextFrameTest() {
+
+        // given
+        Frame expected = NormalFrame.from(2, null, new Ready());
+
+        Frame frame = NormalFrame.from(2, expected, new Ready());
+
+        // when
+        Frame result = frame.nextFrame();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
 }

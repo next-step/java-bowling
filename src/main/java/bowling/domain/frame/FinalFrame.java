@@ -17,4 +17,9 @@ public class FinalFrame extends AbstractFrame {
         return null;
     }
 
+    @Override
+    public Frame nextFrame() {
+        return null;
+    }
+
 }

@@ -23,6 +23,8 @@ public abstract class AbstractFrame implements Frame {
 
     public abstract Frame createNextFrame();
 
+    public abstract Frame nextFrame();
+
     @Override
     public boolean isFinishState() {
         return state.isFinished();
