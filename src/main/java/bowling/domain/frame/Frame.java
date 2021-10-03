@@ -8,4 +8,6 @@ public interface Frame {
 
     void updateStateByPin(Pin pin);
 
+    Frame createNextFrame();
+
 }

@@ -38,6 +38,11 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public Frame createNextFrame() {
+        return nextFrame = new NormalFrame(round + 1, null, new Ready());
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -46,12 +51,13 @@ public class NormalFrame implements Frame {
             return false;
         }
         NormalFrame that = (NormalFrame) o;
-        return round == that.round && Objects.equals(nextFrame, that.nextFrame);
+        return round == that.round && Objects.equals(nextFrame, that.nextFrame)
+            && state.getClass() == that.state.getClass();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(round, nextFrame);
+        return Objects.hash(round, nextFrame, state.getClass());
     }
 
 }

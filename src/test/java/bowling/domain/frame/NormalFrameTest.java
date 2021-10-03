@@ -75,4 +75,20 @@ class NormalFrameTest {
         assertTrue(frame.isFinishState());
     }
 
+    @Test
+    @DisplayName("다음 Frame을 생성할 수 있다.")
+    void createNextFrameTest() {
+
+        // given
+        Frame frame = NormalFrame.from(1, null, new Ready());
+
+        Frame expected = NormalFrame.from(2, null, new Ready());
+
+        // when
+        Frame result = frame.createNextFrame();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
 }
