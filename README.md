@@ -201,4 +201,4 @@
 
 #### FinalFrame
 - [x] FinalFrame은 다음 프레임을 생성할 수 없다.
-- [ ] FinalFrame은 다음 프레임을 반환할 수 없다.
+- [x] FinalFrame은 다음 프레임을 반환할 수 없다.

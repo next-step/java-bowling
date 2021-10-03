@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.state.State;
 import bowling.exception.frame.FinalFrameCreateFrameException;
+import bowling.exception.frame.FinalFrameNextFrameException;
 
 public class FinalFrame extends AbstractFrame {
 
@@ -20,7 +21,7 @@ public class FinalFrame extends AbstractFrame {
 
     @Override
     public Frame nextFrame() {
-        return null;
+        throw new FinalFrameNextFrameException();
     }
 
 }
