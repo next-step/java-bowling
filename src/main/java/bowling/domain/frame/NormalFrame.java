@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Pin;
 import bowling.domain.state.State;
 import bowling.domain.state.running.Ready;
 import java.util.Objects;
@@ -26,8 +27,14 @@ public class NormalFrame implements Frame {
         return new NormalFrame(FIRST_ROUND, null, new Ready());
     }
 
+    @Override
     public boolean isFinishState() {
         return state.isFinished();
+    }
+
+    @Override
+    public void updateStateByPin(Pin pin) {
+        state = state.bowl(pin);
     }
 
     @Override

@@ -60,4 +60,19 @@ class NormalFrameTest {
         }
     }
 
+    @Test
+    @DisplayName("pin을 받아서 state 상태를 업데이트할 수 있다.")
+    void updateStateTest() {
+
+        // given
+        Frame frame = NormalFrame.createFirstFrame();
+        Pin pin = Pin.of(10);
+
+        // when
+        frame.updateStateByPin(pin);
+
+        // then
+        assertTrue(frame.isFinishState());
+    }
+
 }

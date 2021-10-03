@@ -195,3 +195,4 @@
 
 - [ ] 현재 frame의 state를 저장할 수 있다.
 - [x] 현재 frame의 state에서 또 frame에 pin을 저장할 수 있는지 확인할 수 있다.
+- [ ] 현재 frame에서 state를 업데이트할 수 있다.
