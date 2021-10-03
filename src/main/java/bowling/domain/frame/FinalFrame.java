@@ -1,56 +1,76 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.FinalScore;
+import bowling.domain.score.Score;
 
+import java.util.List;
 import java.util.Objects;
 
-public class FinalFrame extends Frame {
+public class FinalFrame extends BaseFrame {
 
-    private FinalScore score;
+    private static final int IDX = 10;
 
-    private final FinalFrameStatus status;
+    private FinalFrameStatus status;
 
-    private FinalFrame(FinalScore score, int trial, FinalFrameStatus status) {
-        super(trial);
-        this.score = score;
+    private FinalFrame(Score score, int trial, FinalFrameStatus status, Frame prevFrame) {
+        super(trial, score, prevFrame);
         this.status = status;
     }
 
-    protected static FinalFrame of(FinalScore score, int trial, boolean isThirdAvailable, boolean isDone) {
-        return new FinalFrame(score, trial, FinalFrameStatus.of(isThirdAvailable, isDone));
+    protected static FinalFrame of(Score score, int trial, boolean isThirdAvailable, boolean isDone, Frame prevFrame) {
+        return new FinalFrame(score, trial, FinalFrameStatus.of(isThirdAvailable, isDone), prevFrame);
     }
 
-    protected static FinalFrame of(FinalScore score, int trial, FinalFrameStatus status) {
-        return new FinalFrame(score, trial, status);
+    protected static FinalFrame of(Score score, int trial, FinalFrameStatus status, Frame prevFrame) {
+        return new FinalFrame(score, trial, status, prevFrame);
     }
 
-
-    public static FinalFrame init() {
-        return of(FinalScore.start(), 1, false, false);
+    public static FinalFrame start(int score) {
+        return of(FinalScore.first(score), 1, false, false, null);
     }
 
-    public FinalScore getScore() {
-        return score;
+    public static FinalFrame start(int score, Frame prevFrame) {
+        return of(FinalScore.first(score), 1, false, false, prevFrame);
     }
 
-    public FinalFrame tryFirst(int score) {
-        return of(FinalScore.first(score), 1, FinalFrameStatus.of(false, false));
+    @Override
+    public int nextIdx() {
+        return IDX;
     }
 
-    public FinalFrame trySecond(int score) {
-        this.score = this.score.second(score);
-        if (isThirdAvailable()) {
-            return of(this.score, 2, FinalFrameStatus.of(true, false));
+    @Override
+    public List<Integer> getAllScores() {
+        return score.getAll();
+    }
+
+    @Override
+    public BaseFrame bowl(int score) {
+        if (isNowFirstTry()) {
+            return bowlSecondTry(score);
         }
-        return of(this.score, 2, FinalFrameStatus.of(false, true));
+        return bowlThirdTry(score);
+    }
+
+    private FinalFrame bowlSecondTry(int score) {
+        this.score = this.score.accumulate(score);
+        increaseTrial();
+        if (isThirdAvailable()) {
+            this.status = FinalFrameStatus.of(true, false);
+            return this;
+        }
+        this.status = FinalFrameStatus.of(false, true);
+        return this;
     }
 
     private boolean isThirdAvailable() {
         return this.score.isStrike() || this.score.isSpare();
     }
 
-    public FinalFrame tryThird(int score) {
-        return of(this.score.third(score), 3, FinalFrameStatus.of(false, true));
+    private FinalFrame bowlThirdTry(int score) {
+        this.score = this.score.accumulate(score);
+        increaseTrial();
+        this.status = FinalFrameStatus.of(false, true);
+        return this;
     }
 
     @Override
@@ -59,15 +79,25 @@ public class FinalFrame extends Frame {
     }
 
     @Override
+    public int addWithFirstScore(int score) {
+        return this.score.getFirst() + score;
+    }
+
+    @Override
+    public BaseFrame next() {
+        return null;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FinalFrame that = (FinalFrame) o;
-        return trial == that.trial && Objects.equals(score, that.score) && Objects.equals(status, that.status);
+        return Objects.equals(score, that.score) && Objects.equals(status, that.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score, trial, status);
+        return Objects.hash(score, status);
     }
 }

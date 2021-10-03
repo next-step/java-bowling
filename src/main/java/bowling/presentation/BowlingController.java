@@ -1,9 +1,9 @@
 package bowling.presentation;
 
 import bowling.domain.Player;
-import bowling.domain.frame.Frames;
 import bowling.presentation.input.PlayerInputView;
 import bowling.presentation.output.FrameOutputView;
+import bowling.service.FramesService;
 
 public class BowlingController {
 
@@ -17,9 +17,7 @@ public class BowlingController {
     public void execute() {
         Player player = Player.from(PlayerInputView.create().input());
         printBowlingStart(player);
-
-        Frames frames = Frames.create();
-        frames.execute(player);
+        FramesService.create().execute(player);
     }
 
     private void printBowlingStart(Player player) {

@@ -1,53 +1,31 @@
 package bowling.domain.score;
 
-public abstract class Score {
+import bowling.domain.frame.Frame;
 
-    protected static final int MAX_SCORE = 10;
+import java.util.List;
 
-    protected final int first;
+public interface Score {
 
-    protected final int second;
+    List<Integer> getAll();
 
-    protected Score(int first, int second) {
-        this.first = first;
-        this.second = second;
-    }
+    boolean isStrike();
 
-    protected static void validateScore(int score) {
-        if (outOfRange(score)) {
-            throw new IllegalArgumentException("잘못된 점수를 입력하였습니다.");
-        }
-    }
+    boolean isSpare();
 
-    protected abstract void validateCombinedScores(int scores);
+    int sum();
 
-    private static boolean outOfRange(int score) {
-        return score < 0 || score > MAX_SCORE;
-    }
+    boolean isFirstTryNoPoint();
 
-    public boolean isStrike() {
-        return first == MAX_SCORE;
-    }
+    boolean isSecondTryNoPoint();
 
-    public boolean isSpare() {
-        return !isStrike() && first + second == MAX_SCORE;
-    }
+    int getFirst();
 
-    public boolean isFirstTryNoPoint() {
-        return first == 0;
-    }
+    int getSecond();
 
-    public boolean isSecondTryNoPoint() {
-        return second == 0;
-    }
+    Score accumulate(int score);
 
-    public int getFirst() {
-        return first;
-    }
+    int calculateWith(Frame prev);
 
-    public int getSecond() {
-        return second;
-    }
-
+    int getTotal();
 
 }

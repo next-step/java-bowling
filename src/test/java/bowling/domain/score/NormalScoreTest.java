@@ -20,14 +20,6 @@ public class NormalScoreTest {
     }
 
     @Test
-    public void 없는_숫자를_생성할_수_있다() {
-        //given
-        //when
-        //then
-        assertTrue(NormalScore.isNone(NormalScore.none()));
-    }
-
-    @Test
     public void NormalScore의_첫번째가_10점이면_스트라이크이다() {
         //given
         //when
@@ -42,8 +34,8 @@ public class NormalScoreTest {
         //when
         //then
         assertAll(
-                () -> assertFalse(NormalScore.first(10).second(0).isSpare()),
-                () -> assertTrue(NormalScore.first(3).second(7).isSpare())
+                () -> assertFalse(NormalScore.first(10).accumulate(0).isSpare()),
+                () -> assertTrue(NormalScore.first(3).accumulate(7).isSpare())
         );
     }
 
@@ -52,7 +44,7 @@ public class NormalScoreTest {
         //given
         //when
         //then번
-        assertTrue(NormalScore.first(0).second(10).isFirstTryNoPoint());
+        assertTrue(NormalScore.first(0).accumulate(10).isFirstTryNoPoint());
     }
 
     @Test
@@ -60,7 +52,7 @@ public class NormalScoreTest {
         //given
         //when
         //then
-        assertTrue(NormalScore.first(7).second(0).isSecondTryNoPoint());
+        assertTrue(NormalScore.first(7).accumulate(0).isSecondTryNoPoint());
     }
 
 
@@ -82,7 +74,7 @@ public class NormalScoreTest {
         //when
         NormalScore score = NormalScore.first(3);
         //then
-        assertThatThrownBy(() -> score.second(value))
+        assertThatThrownBy(() -> score.accumulate(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("잘못된 점수를 입력하였습니다.");
     }
@@ -94,7 +86,7 @@ public class NormalScoreTest {
         //when
         NormalScore score = NormalScore.first(9);
         //then
-        assertThatThrownBy(() -> score.second(value))
+        assertThatThrownBy(() -> score.accumulate(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("1차시도와 2차시도의 합계는 10점을 넘을 수 없습니다.");
     }

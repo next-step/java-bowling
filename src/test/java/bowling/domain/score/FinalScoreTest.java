@@ -16,8 +16,8 @@ public class FinalScoreTest {
         //given
         //when
         //then
-        assertThat(FinalScore.first(9).second(1).third(10))
-                .isEqualTo(FinalScore.first(9).second(1).third(10));
+        assertThat(FinalScore.first(9).accumulate(1).accumulate(10))
+                .isEqualTo(FinalScore.first(9).accumulate(1).accumulate(10));
     }
 
     @Test
@@ -33,7 +33,7 @@ public class FinalScoreTest {
     public void 스페어인지_알_수_있다() {
         //given
         //when
-        FinalScore score = FinalScore.first(9).second(1);
+        Score score = FinalScore.first(9).accumulate(1);
         //then
         assertTrue(score.isSpare());
     }
@@ -45,7 +45,7 @@ public class FinalScoreTest {
         //when
         FinalScore score = FinalScore.first(3);
         //then
-        assertThatThrownBy(() -> score.second(value))
+        assertThatThrownBy(() -> score.accumulate(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("잘못된 점수를 입력하였습니다.");
     }
@@ -55,9 +55,9 @@ public class FinalScoreTest {
     public void FinalScore의_세번째_점수는_0에서_10점까지의_점수만을_가질수_있다(int value) {
         //given
         //when
-        FinalScore score = FinalScore.first(3).second(7);
+        Score score = FinalScore.first(3).accumulate(7);
         //then
-        assertThatThrownBy(() -> score.third(value))
+        assertThatThrownBy(() -> score.accumulate(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("잘못된 점수를 입력하였습니다.");
     }

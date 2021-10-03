@@ -1,90 +1,83 @@
 package bowling.domain.frame;
 
-import bowling.domain.Player;
-import bowling.presentation.input.ScoreInputView;
-import bowling.presentation.output.FrameOutputView;
-
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 public class Frames {
 
-    private final NormalFrames normalFrames;
+    private static final int FIRST_TRIAL = 1;
 
-    private FinalFrame finalFrame;
+    private static final int MAX_SIZE = 10;
 
-    private Frames(NormalFrames normalFrames, FinalFrame finalFrame) {
-        this.normalFrames = normalFrames;
-        this.finalFrame = finalFrame;
+    private final List<Frame> frames;
+
+    private Frames(List<Frame> frames) {
+        this.frames = frames;
     }
 
     public static Frames create() {
-        return new Frames(NormalFrames.empty(), FinalFrame.init());
+        return new Frames(new ArrayList<>());
     }
 
-    public void execute(Player player) {
-        executeNormalFrames(player);
-        finalFrame = executeFinalFrames(player);
+    public List<Frame> getAll() {
+        return Collections.unmodifiableList(frames);
     }
 
-    private void executeNormalFrames(Player player) {
-        NormalFrame normalFrame = NormalFrame.init();
-        while (!normalFrame.isLast()) {
-            normalFrame = tryFirst(player, normalFrames, normalFrame);
-            trySecond(player, normalFrames, normalFrame);
+    public int getNextTryFrame() {
+        if (frames.isEmpty()) {
+            return FIRST_TRIAL;
         }
+
+        Frame frame = frames.get(frames.size() - 1);
+        return frame.nextIdx();
     }
 
-    private NormalFrame tryFirst(Player player, NormalFrames normalFrames, NormalFrame normalFrame) {
-        normalFrame = normalFrame.tryFirst(ScoreInputView.create().input(normalFrame.nextIndex()));
-        normalFrames.add(normalFrame);
-        FrameOutputView.create().print(player, normalFrames);
-        return normalFrame;
-    }
+    public Frames execute(int score) {
 
-    private void trySecond(Player player, NormalFrames normalFrames, NormalFrame normalFrame) {
-        if (!normalFrame.isNowFrameDone()) {
-            normalFrame.trySecond(ScoreInputView.create().input(normalFrame.nextIndex()));
-            FrameOutputView.create().print(player, normalFrames);
+        if (frames.isEmpty()) {
+            frames.add(NormalFrame.start(score));
+            return this;
         }
-    }
 
-    private FinalFrame executeFinalFrames(Player player) {
-        FinalFrame finalFrame = FinalFrame.init();
-        finalFrame = tryFirst(player, normalFrames, finalFrame);
-        finalFrame = trySecond(player, normalFrames, finalFrame);
-        tryThird(player, normalFrames, finalFrame);
-        return finalFrame;
-    }
+        Frame frame = frames.get(frames.size() - 1);
+        frame = frame.bowl(score);
 
-    private FinalFrame tryFirst(Player player, NormalFrames normalFrames, FinalFrame finalFrame) {
-        finalFrame = finalFrame.tryFirst(ScoreInputView.create().inputLastFrameScore());
-        FrameOutputView.create().print(player, normalFrames, finalFrame);
-        return finalFrame;
-    }
-
-    private FinalFrame trySecond(Player player, NormalFrames normalFrames, FinalFrame finalFrame) {
-        finalFrame = finalFrame.trySecond(ScoreInputView.create().inputLastFrameScore());
-        FrameOutputView.create().print(player, normalFrames, finalFrame);
-        return finalFrame;
-    }
-
-    private void tryThird(Player player, NormalFrames normalFrames, FinalFrame finalFrame) {
-        if (!finalFrame.isLast()) {
-            finalFrame = finalFrame.tryThird(ScoreInputView.create().inputLastFrameScore());
-            FrameOutputView.create().print(player, normalFrames, finalFrame);
+        if (frame.isNowFirstTry()) {
+            frames.add(frame);
         }
+        return this;
+    }
+
+    public Frames calculateScores() {
+        frames.forEach(Frame::calculateScore);
+        return this;
+    }
+
+    public boolean isLast() {
+        if (frames.isEmpty()) return false;
+
+        int size = frames.size();
+        Frame frame = frames.get(size - 1);
+
+        return size == MAX_SIZE && frame.isLast();
+    }
+
+    public int size() {
+        return frames.size();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Frames frames = (Frames) o;
-        return Objects.equals(normalFrames, frames.normalFrames) && Objects.equals(finalFrame, frames.finalFrame);
+        Frames frames1 = (Frames) o;
+        return Objects.equals(frames, frames1.frames);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(normalFrames, finalFrame);
+        return Objects.hash(frames);
     }
 }

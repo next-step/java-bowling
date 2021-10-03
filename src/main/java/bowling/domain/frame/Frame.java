@@ -1,16 +1,29 @@
 package bowling.domain.frame;
 
-public abstract class Frame {
+import java.util.List;
 
-    protected int trial;
+public interface Frame {
 
-    protected Frame(int trial) {
-        this.trial = trial;
-    }
+    boolean isNowFirstTry();
 
-    public int getTrial() {
-        return trial;
-    }
+    boolean isNowSecondTry();
 
-    protected abstract boolean isLast();
+    int getTotalScore();
+
+    int calculateScore();
+
+    int nextIdx();
+
+    List<Integer> getAllScores();
+
+    Frame bowl(int score);
+
+    boolean isLast();
+
+    int addWithFirstScore(int score);
+
+    Frame prev();
+
+    Frame next();
+
 }
