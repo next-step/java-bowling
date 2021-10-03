@@ -198,3 +198,7 @@
 - [x] 현재 frame에서 state를 업데이트할 수 있다.
 - [x] 마지막 frame이 다음 frame이면 FinalFrame을 생성해야 한다.
 - [x] 다음 frame을 반환할 수 있다.
+
+#### FinalFrame
+- [x] FinalFrame은 다음 프레임을 생성할 수 없다.
+- [ ] FinalFrame은 다음 프레임을 반환할 수 없다.
