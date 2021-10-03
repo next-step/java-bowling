@@ -91,4 +91,20 @@ class NormalFrameTest {
         assertThat(result).isEqualTo(expected);
     }
 
+    @Test
+    @DisplayName("다음 frame이 마지막 frame인 경우 마지막 frame을 생성해야 한다.")
+    void createNextFinalFrameTest() {
+
+        // given
+        Frame frame = NormalFrame.from(9, null, new Ready());
+
+        Frame expected = FinalFrame.of(new Ready());
+
+        // when
+        Frame result = frame.createNextFrame();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
 }
