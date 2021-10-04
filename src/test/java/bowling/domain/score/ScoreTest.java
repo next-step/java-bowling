@@ -1,7 +1,9 @@
 package bowling.domain.score;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+import bowling.exception.state.MissStateCrerateException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -49,6 +51,20 @@ class ScoreTest {
 
         // then
         assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("miss 생성시 pin이 10개 이상 들어오면 exception이 발생해야 한다.")
+    void createMissExceptionTest() {
+
+        // given
+        Pin first = Pin.of(5);
+        Pin second = Pin.of(6);
+
+        // when & then
+        assertThatExceptionOfType(MissStateCrerateException.class)
+            .isThrownBy(() -> Score.miss(first.sum(second)))
+            .withMessageMatching("Miss 상태는 두 핀의 합이 10이 넘을 수 없다.");
     }
 
 }

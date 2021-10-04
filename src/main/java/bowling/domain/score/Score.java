@@ -1,5 +1,8 @@
 package bowling.domain.score;
 
+import static bowling.domain.score.Pin.PIN_MAX_VALUE;
+
+import bowling.exception.state.MissStateCrerateException;
 import java.util.Objects;
 
 public class Score {
@@ -17,15 +20,23 @@ public class Score {
     }
 
     public static Score strike() {
-        return new Score(10, 2);
+        return new Score(PIN_MAX_VALUE, 2);
     }
 
     public static Score spare() {
-        return new Score(10, 1);
+        return new Score(PIN_MAX_VALUE, 1);
     }
 
     public static Score miss(int pins) {
+        checkMissPinsSum(pins);
+
         return new Score(pins, 0);
+    }
+
+    private static void checkMissPinsSum(int pins) {
+        if (pins >= PIN_MAX_VALUE) {
+            throw new MissStateCrerateException();
+        }
     }
 
     @Override

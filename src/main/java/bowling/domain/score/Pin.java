@@ -8,8 +8,8 @@ import java.util.stream.IntStream;
 
 public class Pin {
 
-    private static final int PIN_MIN_VALUE = 0;
-    private static final int PIN_MAX_VALUE = 10;
+    public static final int PIN_MIN_VALUE = 0;
+    public static final int PIN_MAX_VALUE = 10;
 
     private static final Map<Integer, Pin> pins = new HashMap<>();
 
