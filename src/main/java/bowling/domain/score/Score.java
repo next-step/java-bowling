@@ -39,6 +39,10 @@ public class Score {
         }
     }
 
+    public boolean canCalculateScore() {
+        return left == 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

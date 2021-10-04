@@ -2,6 +2,7 @@ package bowling.domain.score;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import bowling.exception.state.MissStateCrerateException;
 import org.junit.jupiter.api.DisplayName;
@@ -65,6 +66,20 @@ class ScoreTest {
         assertThatExceptionOfType(MissStateCrerateException.class)
             .isThrownBy(() -> Score.miss(first.sum(second)))
             .withMessageMatching("Miss 상태는 두 핀의 합이 10이 넘을 수 없다.");
+    }
+
+    @Test
+    @DisplayName("현재 score가 반환할 수 있는지 확인할 수 있다.")
+    void canCalculateScoreTest() {
+
+        // given
+        Score score = Score.from(7, 0);
+
+        // when
+        boolean result = score.canCalculateScore();
+
+        // then
+        assertTrue(result);
     }
 
 }
