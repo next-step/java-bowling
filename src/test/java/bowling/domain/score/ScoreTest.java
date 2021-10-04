@@ -35,4 +35,20 @@ class ScoreTest {
         assertThat(result).isEqualTo(expected);
     }
 
+    @Test
+    @DisplayName("miss에 해당하는 score를 생성할 수 있다.")
+    void createMissTest() {
+
+        // given
+        Pin first = Pin.of(3);
+        Pin second = Pin.of(4);
+        Score expected = Score.from(7, 0);
+
+        // when
+        Score result = Score.miss(first.sum(second));
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
 }

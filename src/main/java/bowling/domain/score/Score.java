@@ -24,6 +24,10 @@ public class Score {
         return new Score(10, 1);
     }
 
+    public static Score miss(int pins) {
+        return new Score(pins, 0);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
