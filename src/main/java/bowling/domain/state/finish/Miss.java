@@ -24,7 +24,7 @@ public class Miss extends Finish {
 
     @Override
     public Score createScore() {
-        return null;
+        return Score.miss(first.sum(second));
     }
 
 }
