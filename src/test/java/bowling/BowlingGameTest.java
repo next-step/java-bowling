@@ -52,7 +52,7 @@ public class BowlingGameTest {
         //when
         game.bowl(2);
         //then
-        assertThat(game.getScore()).isEqualTo(Arrays.asList(18));
+        assertThat(game.getScore()).isEqualTo(Arrays.asList(5));
     }
 
     @Test
@@ -90,10 +90,9 @@ public class BowlingGameTest {
     @Test
     public void 트리플_스트라이크_점수계산() throws CannotBowlException {
         //given
-        List<Integer> scores = new ArrayList<>();
         List<Round> rounds = new ArrayList<>();
         rounds.add(new FinalRound());
-        BowlingGame game = new BowlingGame(scores, rounds);
+        BowlingGame game = new BowlingGame(rounds);
 
         //when
         game.bowl(10);
@@ -114,10 +113,9 @@ public class BowlingGameTest {
     @Test
     public void 스트라이크_스페어_점수계산() throws CannotBowlException {
         //given
-        List<Integer> scores = new ArrayList<>();
         List<Round> rounds = new ArrayList<>();
         rounds.add(new FinalRound());
-        BowlingGame game = new BowlingGame(scores, rounds);
+        BowlingGame game = new BowlingGame(rounds);
 
         //when
         game.bowl(10);
@@ -141,7 +139,7 @@ public class BowlingGameTest {
         List<Integer> scores = new ArrayList<>();
         List<Round> rounds = new ArrayList<>();
         rounds.add(new FinalRound());
-        BowlingGame game = new BowlingGame(scores, rounds);
+        BowlingGame game = new BowlingGame(rounds);
 
         //when
         game.bowl(9);

@@ -3,17 +3,17 @@ package bowling.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import static bowling.controller.Main.scoreResult;
+
 import bowling.CannotBowlException;
 
 public class BowlingGame {
     private static final int AFTER_FINAL_FRAME = 11;
     private static final int BEFORE_FIRST_FRAME = 0;
 
-    private List<Integer> scores;
     private List<Round> rounds;
 
     public BowlingGame() {
-        this.scores = new ArrayList<>();
         this.rounds = new ArrayList<>();
     }
 
@@ -22,8 +22,7 @@ public class BowlingGame {
         this.rounds.add(round);
     }
 
-    public BowlingGame(List<Integer> scores, List<Round> rounds) {
-        this.scores = scores;
+    public BowlingGame(List<Round> rounds) {
         this.rounds = rounds;
     }
 
@@ -40,19 +39,17 @@ public class BowlingGame {
             lastScore += scores.get(i);
             calculatedScores.add(lastScore);
         }
-
         createNextFrame();
 
-        this.scores.addAll(calculatedScores);
         return calculatedScores;
     }
 
     private int getLastScore() {
-        if (scores.size() == BEFORE_FIRST_FRAME) {
+        if (scoreResult.size() == BEFORE_FIRST_FRAME) {
             return 0;
         }
 
-        return scores.get(scores.size() - 1);
+        return scoreResult.get(scoreResult.size() - 1);
     }
 
     private void createNextFrame() {
