@@ -2,6 +2,7 @@ package bowling.domain.score;
 
 import static bowling.domain.score.Pin.PIN_MAX_VALUE;
 
+import bowling.exception.score.ScoreCanCalculateException;
 import bowling.exception.state.MissStateCrerateException;
 import java.util.Objects;
 
@@ -41,6 +42,13 @@ public class Score {
 
     public boolean canCalculateScore() {
         return left == 0;
+    }
+
+    public int score() {
+        if (!canCalculateScore()) {
+            throw new ScoreCanCalculateException();
+        }
+        return this.score;
     }
 
     @Override
