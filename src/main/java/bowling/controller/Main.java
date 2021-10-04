@@ -2,6 +2,7 @@ package bowling.controller;
 
 import bowling.CannotBowlException;
 import bowling.model.BowlingGame;
+import bowling.model.NormalRound;
 import bowling.model.State;
 import bowling.model.User;
 
@@ -19,7 +20,7 @@ public class Main {
         String userName = ask("플레이어 이름은(3 english letters)?:");
         User user = new User(userName);
 
-        BowlingGame game = new BowlingGame();
+        BowlingGame game = new BowlingGame(new NormalRound());
         List<Integer> scoreResult = new ArrayList<>();
         LinkedList<String> stateResult = new LinkedList<>();
         while (!game.isEndGame()) {

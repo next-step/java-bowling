@@ -13,7 +13,7 @@ public class BowlingGameTest {
     @Test
     public void 스트라이크_미스_점수계산() throws CannotBowlException {
         //given
-        BowlingGame game = new BowlingGame();
+        BowlingGame game = new BowlingGame(new NormalRound());
 
         //when
         game.bowl(10);
@@ -34,7 +34,7 @@ public class BowlingGameTest {
     @Test
     public void 스페어_미스_점수계산() throws CannotBowlException {
         //given
-        BowlingGame game = new BowlingGame();
+        BowlingGame game = new BowlingGame(new NormalRound());
 
         //when
         game.bowl(8);
@@ -60,7 +60,7 @@ public class BowlingGameTest {
     @Test
     public void 미스_점수계산() throws CannotBowlException {
         //given
-        BowlingGame game = new BowlingGame();
+        BowlingGame game = new BowlingGame(new NormalRound());
 
         //when
         game.bowl(2);
@@ -76,7 +76,7 @@ public class BowlingGameTest {
     @Test
     public void 거터_점수계산() throws CannotBowlException {
         //given
-        BowlingGame game = new BowlingGame();
+        BowlingGame game = new BowlingGame(new NormalRound());
 
         //when
         game.bowl(0);

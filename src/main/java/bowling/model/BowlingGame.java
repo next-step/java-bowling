@@ -15,7 +15,11 @@ public class BowlingGame {
     public BowlingGame() {
         this.scores = new ArrayList<>();
         this.rounds = new ArrayList<>();
-        this.rounds.add(new NormalRound());
+    }
+
+    public BowlingGame(Round round) {
+        this();
+        this.rounds.add(round);
     }
 
     public BowlingGame(List<Integer> scores, List<Round> rounds) {
