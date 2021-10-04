@@ -71,11 +71,7 @@ public class BowlingGame {
     }
 
     public boolean isEndGame() {
-        if (getFrameNo() == AFTER_FINAL_FRAME) {
-            return true;
-        }
-
-        return false;
+        return getFrameNo() == AFTER_FINAL_FRAME;
     }
 
     public int getFrameNo() {
