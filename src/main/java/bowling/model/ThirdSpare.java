@@ -1,8 +1,8 @@
 package bowling.model;
 
-import bowling.CannotBowlException;
-
 import java.util.Objects;
+
+import bowling.CannotBowlException;
 
 public class ThirdSpare implements State {
     private final Point countOfPin;

@@ -1,11 +1,13 @@
 package bowling.model;
 
-import bowling.CannotBowlException;
-
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static bowling.model.Score.*;
+
+import bowling.CannotBowlException;
 
 public class FinalRound implements Round{
     private State state;

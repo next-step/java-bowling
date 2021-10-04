@@ -1,8 +1,8 @@
 package bowling.model;
 
-import bowling.CannotBowlException;
-
 import java.util.List;
+
+import bowling.CannotBowlException;
 
 public interface Round {
     State bowl(int countOfPin) throws CannotBowlException;

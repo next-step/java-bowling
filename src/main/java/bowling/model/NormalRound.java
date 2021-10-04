@@ -1,9 +1,10 @@
 package bowling.model;
 
-import bowling.CannotBowlException;
 import java.util.*;
 
 import static bowling.model.Score.*;
+
+import bowling.CannotBowlException;
 
 public class NormalRound implements Round{
     private static final int BEFORE_FINAL_FRAME = 9;

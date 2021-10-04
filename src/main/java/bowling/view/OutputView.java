@@ -1,9 +1,9 @@
 package bowling.view;
 
-import bowling.model.*;
-
 import java.util.LinkedList;
 import java.util.List;
+
+import bowling.model.*;
 
 public class OutputView {
     public static final int MAX_ROUND = 10;

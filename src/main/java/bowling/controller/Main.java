@@ -1,11 +1,5 @@
 package bowling.controller;
 
-import bowling.CannotBowlException;
-import bowling.model.BowlingGame;
-import bowling.model.NormalRound;
-import bowling.model.State;
-import bowling.model.User;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,6 +8,12 @@ import static bowling.view.InputView.ask;
 import static bowling.view.InputView.askDigit;
 import static bowling.view.OutputView.changeScore;
 import static bowling.view.OutputView.printResult;
+
+import bowling.CannotBowlException;
+import bowling.model.BowlingGame;
+import bowling.model.NormalRound;
+import bowling.model.State;
+import bowling.model.User;
 
 public class Main {
     public static void main(String[] args) throws CannotBowlException {

@@ -1,11 +1,11 @@
 package bowling;
 
-import bowling.model.Score;
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import static bowling.model.Score.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import bowling.model.Score;
 
 public class ScoreTest {
     @Test

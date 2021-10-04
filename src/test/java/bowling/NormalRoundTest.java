@@ -1,12 +1,12 @@
 package bowling;
 
-import bowling.model.*;
-import org.junit.jupiter.api.Test;
-
 import java.util.LinkedList;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+import bowling.model.*;
 
 public class NormalRoundTest {
     @Test

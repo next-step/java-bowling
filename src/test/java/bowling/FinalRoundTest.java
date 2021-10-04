@@ -3,16 +3,12 @@ package bowling;
 import bowling.model.*;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.LinkedList;
 
-import static bowling.model.Score.ofSpare;
-import static bowling.model.Score.ofStrike;
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+
+import static bowling.model.Score.*;
 
 public class FinalRoundTest {
     @Test

@@ -1,8 +1,8 @@
 package bowling.model;
 
-import bowling.CannotBowlException;
-
 import java.util.Objects;
+
+import bowling.CannotBowlException;
 
 public class ThirdStrike implements State {
     private final Point point;

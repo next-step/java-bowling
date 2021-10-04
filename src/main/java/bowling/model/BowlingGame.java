@@ -1,9 +1,9 @@
 package bowling.model;
 
-import bowling.CannotBowlException;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import bowling.CannotBowlException;
 
 public class BowlingGame {
     private static final int AFTER_FINAL_FRAME = 11;
