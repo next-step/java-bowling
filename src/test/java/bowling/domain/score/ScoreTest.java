@@ -21,4 +21,18 @@ class ScoreTest {
         assertThat(result).isEqualTo(expected);
     }
 
+    @Test
+    @DisplayName("spare에 해당하는 score를 생성할 수 있다.")
+    void createSpareTest() {
+
+        // given
+        Score expected = Score.from(10, 1);
+
+        // when
+        Score result = Score.spare();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
 }

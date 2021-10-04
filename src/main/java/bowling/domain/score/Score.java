@@ -20,6 +20,10 @@ public class Score {
         return new Score(10, 2);
     }
 
+    public static Score spare() {
+        return new Score(10, 1);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
