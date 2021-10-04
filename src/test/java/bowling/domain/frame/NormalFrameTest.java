@@ -69,7 +69,7 @@ class NormalFrameTest {
         Pin pin = Pin.of(10);
 
         // when
-        frame.updateStateByPin(pin);
+        frame.bowling(pin);
 
         // then
         assertTrue(frame.isFinishState());

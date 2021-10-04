@@ -31,7 +31,7 @@ public abstract class AbstractFrame implements Frame {
     }
 
     @Override
-    public void updateStateByPin(Pin pin) {
+    public void bowling(Pin pin) {
         state = state.bowl(pin);
     }
 

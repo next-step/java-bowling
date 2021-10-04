@@ -6,7 +6,7 @@ public interface Frame {
 
     boolean isFinishState();
 
-    void updateStateByPin(Pin pin);
+    void bowling(Pin pin);
 
     Frame createNextFrame();
 
