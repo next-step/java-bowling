@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import bowling.exception.score.ScoreAddPinException;
 import bowling.exception.score.ScoreCanCalculateException;
 import bowling.exception.state.MissStateCrerateException;
 import org.junit.jupiter.api.DisplayName;
@@ -94,6 +95,19 @@ class ScoreTest {
         assertThatExceptionOfType(ScoreCanCalculateException.class)
             .isThrownBy(() -> score.score())
             .withMessageMatching("현재 score는 남은 보너스 횟수가 있어 반환할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("Score에 pin을 더할 때 left가 남아있지 않으면 exception이 발생되어야 한다.")
+    void scoreAddPinExceptionTest() {
+
+        // given
+        Score score = Score.from(3, 0);
+
+        // when & then
+        assertThatExceptionOfType(ScoreAddPinException.class)
+            .isThrownBy(() -> score.addPin(Pin.of(10)))
+            .withMessageMatching("현재 score는 남은 보너스 횟수가 없어 점수를 더할 수 없습니다.");
     }
 
 }
