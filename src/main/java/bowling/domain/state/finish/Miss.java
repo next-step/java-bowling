@@ -27,4 +27,13 @@ public class Miss extends Finish {
         return Score.miss(first.sum(second));
     }
 
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        score = score.addPin(first);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        return score.addPin(second);
+    }
+
 }
