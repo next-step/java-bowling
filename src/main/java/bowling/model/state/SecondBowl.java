@@ -1,4 +1,7 @@
-package bowling.model;
+package bowling.model.state;
+
+import bowling.model.Point;
+import bowling.model.State;
 
 import java.util.Objects;
 

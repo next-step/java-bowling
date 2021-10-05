@@ -1,14 +1,16 @@
-package bowling.model;
+package bowling.model.state;
 
 import java.util.Objects;
 
 import bowling.CannotBowlException;
+import bowling.model.Point;
+import bowling.model.State;
 
-public class ThirdSpare implements State {
+public class Miss implements State {
     private final Point countOfPin;
 
-    public ThirdSpare() {
-        this.countOfPin = new Point(10);
+    public Miss(Point countOfPin) {
+        this.countOfPin = countOfPin;
     }
 
     @Override
@@ -25,8 +27,8 @@ public class ThirdSpare implements State {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ThirdSpare spare = (ThirdSpare) o;
-        return Objects.equals(countOfPin, spare.countOfPin);
+        Miss miss = (Miss) o;
+        return Objects.equals(countOfPin, miss.countOfPin);
     }
 
     @Override

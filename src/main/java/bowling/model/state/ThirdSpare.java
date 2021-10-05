@@ -1,41 +1,38 @@
-package bowling.model;
+package bowling.model.state;
 
 import java.util.Objects;
 
-public class Strike implements State {
+import bowling.CannotBowlException;
+import bowling.model.Point;
+import bowling.model.State;
+
+public class ThirdSpare implements State {
     private final Point countOfPin;
 
-    public Strike() {
+    public ThirdSpare() {
         this.countOfPin = new Point(10);
     }
 
     @Override
-    public State bowl(int countOfPin) {
-        Point currentPin = new Point(countOfPin);
-
-        if (currentPin.isStrike()) {
-            return new SecondStrike();
-        }
-
-        return new SecondBowl(countOfPin);
+    public State bowl(int countOfPin) throws CannotBowlException {
+        throw new CannotBowlException();
     }
 
     @Override
     public boolean isFinish(int frameNo) {
-        return frameNo != FINAL_FRAME_NO;
+        return true;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Strike strike = (Strike) o;
-        return Objects.equals(countOfPin, strike.countOfPin);
+        ThirdSpare spare = (ThirdSpare) o;
+        return Objects.equals(countOfPin, spare.countOfPin);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(countOfPin);
     }
-
 }

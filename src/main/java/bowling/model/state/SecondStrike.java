@@ -1,12 +1,15 @@
-package bowling.model;
+package bowling.model.state;
+
+import bowling.model.Point;
+import bowling.model.State;
 
 import java.util.Objects;
 
-public class Ready implements State {
+public class SecondStrike implements State {
     private final Point countOfPin;
-    
-    public Ready() {
-        this.countOfPin = new Point(0);
+
+    public SecondStrike() {
+        this.countOfPin = new Point(10);
     }
 
     @Override
@@ -14,10 +17,10 @@ public class Ready implements State {
         Point currentPin = new Point(countOfPin);
 
         if (currentPin.isStrike()) {
-            return new Strike();
+            return new ThirdStrike();
         }
 
-        return new FirstBowl(countOfPin);
+        return new Miss(currentPin);
     }
 
     @Override
@@ -29,12 +32,13 @@ public class Ready implements State {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Ready ready = (Ready) o;
-        return Objects.equals(countOfPin, ready.countOfPin);
+        SecondStrike strike = (SecondStrike) o;
+        return Objects.equals(countOfPin, strike.countOfPin);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(countOfPin);
     }
+
 }
