@@ -1,9 +1,11 @@
 package bowling.domain.state.finish;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import bowling.domain.score.Pin;
+import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.exception.state.FinishStateBowlException;
 import bowling.exception.state.SpareStateFirstPinStrikeException;
@@ -66,6 +68,44 @@ public class SpareTest {
         assertThatExceptionOfType(FinishStateBowlException.class)
             .isThrownBy(() -> state.bowl(Pin.of(0)))
             .withMessageMatching("종료된 상태에서 더이상 볼링을 던질 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("이전 Score의 left가 1일 때 first만 업데이트할 수 있다.")
+    void calculateAdditionalScoreByLeftOneTest() {
+
+        // given
+        Score score = Score.from(10, 1);
+        Pin first = Pin.of(3);
+        Pin second = Pin.of(7);
+        State state = new Spare(first, second);
+
+        Score expected = Score.from(13, 0);
+
+        // when
+        Score result = state.calculateAdditionalScore(score);
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("이전 Score의 left가 2이면 second까지 업데이트할 수 있다.")
+    void calculateAdditionalScoreByLeftTwoTest() {
+
+        // given
+        Score score = Score.from(10, 2);
+        Pin first = Pin.of(3);
+        Pin second = Pin.of(7);
+        State state = new Spare(first, second);
+
+        Score expected = Score.from(20, 0);
+
+        // when
+        Score result = state.calculateAdditionalScore(score);
+
+        // then
+        assertThat(result).isEqualTo(expected);
     }
 
 }

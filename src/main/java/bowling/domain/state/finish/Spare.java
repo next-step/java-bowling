@@ -35,4 +35,13 @@ public class Spare extends Finish {
         return null;
     }
 
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        score = score.addPin(first);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        return score.addPin(second);
+    }
+
 }

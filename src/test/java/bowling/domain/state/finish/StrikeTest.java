@@ -60,7 +60,7 @@ public class StrikeTest {
 
         // given
         Score score = Score.from(10, 1);
-        Strike state = new Strike(Pin.of(10));
+        State state = new Strike(Pin.of(10));
 
         Score expected = Score.from(20, 0);
 
