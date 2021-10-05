@@ -11,15 +11,15 @@ public class BowlingGame {
     private static final int AFTER_FINAL_FRAME = 11;
     private static final int BEFORE_FIRST_FRAME = 0;
 
-    private List<Round> rounds;
+    private List<Frame> frames;
 
     public BowlingGame() {
-        this.rounds = new ArrayList<>();
+        this.frames = new ArrayList<>();
     }
 
-    public BowlingGame(Round round) {
+    public BowlingGame(Frame frame) {
         this();
-        this.rounds.add(round);
+        this.frames.add(frame);
     }
 
     public State bowl(int countOfPin) throws CannotBowlException {
@@ -50,17 +50,17 @@ public class BowlingGame {
 
     private void createNextFrame() {
         if (currentFrame().isFinish(getFrameNo())) {
-            Round round = currentFrame().next(getFrameNo());
-            rounds.add(round);
+            Frame frame = currentFrame().next(getFrameNo());
+            frames.add(frame);
         }
     }
 
-    private Round currentFrame() {
+    private Frame currentFrame() {
         if (getFrameNo() == BEFORE_FIRST_FRAME) {
-            rounds.add(new NormalRound());
+            frames.add(new NormalFrame());
         }
 
-        return rounds.get(rounds.size() - 1);
+        return frames.get(frames.size() - 1);
     }
 
     public boolean isEndGame() {
@@ -68,7 +68,7 @@ public class BowlingGame {
     }
 
     public int getFrameNo() {
-        return rounds.size();
+        return frames.size();
     }
 
 

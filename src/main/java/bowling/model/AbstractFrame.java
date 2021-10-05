@@ -1,13 +1,14 @@
 package bowling.model;
 
-import bowling.CannotBowlException;
-
 import java.util.LinkedList;
 
-import static bowling.model.Score.ofSpare;
-import static bowling.model.Score.ofStrike;
+import static bowling.model.Score.*;
 
-public abstract class AbstractRound implements Round{
+import bowling.CannotBowlException;
+import bowling.model.state.Spare;
+import bowling.model.state.Strike;
+
+public abstract class AbstractFrame implements Frame {
     protected State state;
     protected LinkedList<Score> scores;
 

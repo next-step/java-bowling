@@ -5,14 +5,16 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class FinalRound extends AbstractRound{
-    public FinalRound() {
+import bowling.model.state.Ready;
+
+public class FinalFrame extends AbstractFrame {
+    public FinalFrame() {
         this.state = new Ready();
         this.scores = new LinkedList<>();
         this.scores.add(new Score());
     }
 
-    public FinalRound(State state, LinkedList<Score> scores) {
+    public FinalFrame(State state, LinkedList<Score> scores) {
         this.state = state;
         this.scores = scores;
     }
@@ -26,15 +28,15 @@ public class FinalRound extends AbstractRound{
     }
 
     @Override
-    public Round next(int frameNo) {
-        return new FinalRound();
+    public Frame next(int frameNo) {
+        return new FinalFrame();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FinalRound that = (FinalRound) o;
+        FinalFrame that = (FinalFrame) o;
         return Objects.equals(state, that.state) && Objects.equals(scores, that.scores);
     }
 

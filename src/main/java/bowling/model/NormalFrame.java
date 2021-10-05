@@ -1,31 +1,33 @@
 package bowling.model;
 
+import bowling.model.state.Ready;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-public class NormalRound extends AbstractRound {
+public class NormalFrame extends AbstractFrame {
     private static final int BEFORE_FINAL_FRAME = 9;
 
-    public NormalRound() {
+    public NormalFrame() {
         this.state = new Ready();
         this.scores = new LinkedList<>();
         this.scores.add(new Score());
     }
 
-    public NormalRound(State state, LinkedList<Score> scores) {
+    public NormalFrame(State state, LinkedList<Score> scores) {
         this.state = state;
         this.scores = scores;
     }
 
     @Override
-    public Round next(int frameNo) {
+    public Frame next(int frameNo) {
         if (frameNo == BEFORE_FINAL_FRAME) {
-            return new FinalRound(new Ready(), nextScore());
+            return new FinalFrame(new Ready(), nextScore());
         }
 
-        return new NormalRound(new Ready(), nextScore());
+        return new NormalFrame(new Ready(), nextScore());
     }
 
     public LinkedList<Score> nextScore() {
@@ -62,7 +64,7 @@ public class NormalRound extends AbstractRound {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        NormalRound that = (NormalRound) o;
+        NormalFrame that = (NormalFrame) o;
         return Objects.equals(state, that.state) && Objects.equals(scores, that.scores);
     }
 

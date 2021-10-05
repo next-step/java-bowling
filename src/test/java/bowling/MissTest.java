@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import bowling.model.Point;
+import bowling.model.Pin;
 import bowling.model.State;
 import bowling.model.state.FirstBowl;
 import bowling.model.state.Miss;
@@ -27,6 +27,6 @@ public class MissTest {
         //when
         state = state.bowl(secondPin);
         //then
-        assertThat(state).isEqualTo(new Miss(new Point(firstPin), new Point(secondPin)));
+        assertThat(state).isEqualTo(new Miss(new Pin(firstPin), new Pin(secondPin)));
     }
 }

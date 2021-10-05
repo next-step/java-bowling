@@ -5,15 +5,15 @@ import java.util.Objects;
 import static bowling.controller.Main.stateResult;
 
 import bowling.CannotBowlException;
-import bowling.model.Point;
+import bowling.model.Pin;
 import bowling.model.State;
 
 
 public class Miss implements State {
-    private final Point firstPin;
-    private final Point secondPin;
+    private final Pin firstPin;
+    private final Pin secondPin;
 
-    public Miss(Point firstPin, Point secondPin) {
+    public Miss(Pin firstPin, Pin secondPin) {
         this.firstPin = firstPin;
         this.secondPin = secondPin;
     }

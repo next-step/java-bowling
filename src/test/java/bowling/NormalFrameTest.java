@@ -13,14 +13,14 @@ import bowling.model.state.Miss;
 import bowling.model.state.Ready;
 import bowling.model.state.Strike;
 
-public class NormalRoundTest {
+public class NormalFrameTest {
     private LinkedList<Score> scores;
-    private NormalRound normalRound;
+    private NormalFrame normalFrame;
 
     @BeforeEach
     void setUp() {
         scores = new LinkedList<>();
-        normalRound = new NormalRound();
+        normalFrame = new NormalFrame();
     }
 
     @Test
@@ -30,10 +30,10 @@ public class NormalRoundTest {
         scores.add(Score.ofStrike());
 
         //when
-        normalRound.bowl(10);
+        normalFrame.bowl(10);
 
         //then
-        assertThat(normalRound).isEqualTo(new NormalRound(state, scores));
+        assertThat(normalFrame).isEqualTo(new NormalFrame(state, scores));
     }
 
     @Test
@@ -43,20 +43,20 @@ public class NormalRoundTest {
         State state = new FirstBowl(firstPin);
         scores.add(new Score(2, 1));
         //when
-        normalRound.bowl(firstPin);
+        normalFrame.bowl(firstPin);
         //then
-        assertThat(normalRound).isEqualTo(new NormalRound(state, scores));
+        assertThat(normalFrame).isEqualTo(new NormalFrame(state, scores));
 
 
         //given
         int secondPin = 3;
-        state = new Miss(new Point(firstPin), new Point(secondPin));
+        state = new Miss(new Pin(firstPin), new Pin(secondPin));
         scores = new LinkedList<>();
         scores.add(new Score(firstPin + secondPin, 0));
         //when
-        normalRound.bowl(secondPin);
+        normalFrame.bowl(secondPin);
         //then
-        assertThat(normalRound).isEqualTo(new NormalRound(state, scores));
+        assertThat(normalFrame).isEqualTo(new NormalFrame(state, scores));
     }
 
     @Test
@@ -66,10 +66,10 @@ public class NormalRoundTest {
         scores.add(new Score());
 
         //when
-        normalRound.bowl(10);
+        normalFrame.bowl(10);
 
         //then
-        assertThat(normalRound.nextScore()).isEqualTo(scores);
+        assertThat(normalFrame.nextScore()).isEqualTo(scores);
     }
 
     @Test
@@ -79,11 +79,11 @@ public class NormalRoundTest {
         scores.add(new Score());
 
         //when
-        normalRound.bowl(2);
-        normalRound.bowl(8);
+        normalFrame.bowl(2);
+        normalFrame.bowl(8);
 
         //then
-        assertThat(normalRound.nextScore()).isEqualTo(scores);
+        assertThat(normalFrame.nextScore()).isEqualTo(scores);
     }
 
     @Test
@@ -92,12 +92,12 @@ public class NormalRoundTest {
         scores.add(new Score());
 
         //when
-        normalRound.bowl(1);
-        normalRound.bowl(8);
-        normalRound.getScore();
+        normalFrame.bowl(1);
+        normalFrame.bowl(8);
+        normalFrame.getScore();
 
         //then
-        assertThat(normalRound.nextScore()).isEqualTo(scores);
+        assertThat(normalFrame.nextScore()).isEqualTo(scores);
     }
 
     @Test
@@ -108,10 +108,10 @@ public class NormalRoundTest {
         scores.add(new Score());
 
         //when
-        normalRound.bowl(10);
+        normalFrame.bowl(10);
 
         //then
-        assertThat(normalRound.next(1)).isEqualTo(new NormalRound(state, scores));
+        assertThat(normalFrame.next(1)).isEqualTo(new NormalFrame(state, scores));
     }
 
     @Test
@@ -122,9 +122,9 @@ public class NormalRoundTest {
         scores.add(new Score());
 
         //when
-        normalRound.bowl(10);
+        normalFrame.bowl(10);
 
         //then
-        assertThat(normalRound.next(9)).isEqualTo(new FinalRound(state, scores));
+        assertThat(normalFrame.next(9)).isEqualTo(new FinalFrame(state, scores));
     }
 }

@@ -5,14 +5,14 @@ import java.util.Objects;
 import static bowling.controller.Main.stateResult;
 
 import bowling.CannotBowlException;
-import bowling.model.Point;
+import bowling.model.Pin;
 import bowling.model.State;
 
 public class ThirdStrike implements State {
-    private final Point countOfPin;
+    private final Pin countOfPin;
 
     public ThirdStrike() {
-        this.countOfPin = new Point(10);
+        this.countOfPin = new Pin(10);
     }
 
     @Override

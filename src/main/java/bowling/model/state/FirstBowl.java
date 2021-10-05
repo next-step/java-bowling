@@ -1,25 +1,25 @@
 package bowling.model.state;
 
-import bowling.model.Point;
-import bowling.model.State;
-
 import java.util.Objects;
 
+import bowling.model.Pin;
+import bowling.model.State;
+
 public class FirstBowl implements State {
-    private final Point countOfPin;
+    private final Pin countOfPin;
 
     public FirstBowl(int countOfPin) {
-        this.countOfPin = new Point(countOfPin);
+        this.countOfPin = new Pin(countOfPin);
     }
 
     @Override
     public State bowl(int countOfPin) {
-        Point currentPin = this.countOfPin.add(countOfPin);
+        Pin currentPin = this.countOfPin.add(countOfPin);
         if (currentPin.isStrike()) {
             return new Spare();
         }
 
-        return new Miss(this.countOfPin, new Point(countOfPin));
+        return new Miss(this.countOfPin, new Pin(countOfPin));
     }
 
     @Override

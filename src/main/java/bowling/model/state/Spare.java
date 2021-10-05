@@ -4,25 +4,25 @@ import java.util.Objects;
 
 import static bowling.controller.Main.stateResult;
 
-import bowling.model.Point;
+import bowling.model.Pin;
 import bowling.model.State;
 
 public class Spare implements State {
-    private final Point countOfPin;
+    private final Pin countOfPin;
 
     public Spare() {
-        this.countOfPin = new Point(10);
+        this.countOfPin = new Pin(10);
     }
 
     @Override
     public State bowl(int countOfPin) {
-        Point currentPin = new Point(countOfPin);
+        Pin currentPin = new Pin(countOfPin);
 
         if (currentPin.isStrike()) {
             return new ThirdStrike();
         }
 
-        return new Miss(this.countOfPin, new Point(countOfPin));
+        return new Miss(this.countOfPin, new Pin(countOfPin));
     }
 
     @Override
