@@ -5,8 +5,10 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import bowling.domain.score.Pin;
+import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.finish.Strike;
+import bowling.exception.state.ReadyStateCalculateScoreException;
 import bowling.exception.state.RunningCreateScoreException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -68,6 +70,19 @@ class ReadyTest {
 
         // then
         assertThat(result).isInstanceOf(FirstBowl.class);
+    }
+
+    @Test
+    @DisplayName("Ready 상태는 Score를 계산할 수 없다.")
+    void calculateAdditionalScoreExceptionTest() {
+
+        // given
+        Ready state = new Ready();
+
+        // when & then
+        assertThatExceptionOfType(ReadyStateCalculateScoreException.class)
+            .isThrownBy(() -> state.calculateAdditionalScore(Score.strike()))
+            .withMessageMatching("Ready상태는 Score를 계산할 수 없습니다.");
     }
 
 }

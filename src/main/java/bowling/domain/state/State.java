@@ -11,4 +11,6 @@ public interface State {
 
     State bowl(Pin pin);
 
+    Score calculateAdditionalScore(Score score);
+
 }
