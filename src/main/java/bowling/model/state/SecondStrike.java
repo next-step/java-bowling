@@ -1,9 +1,11 @@
 package bowling.model.state;
 
+import java.util.Objects;
+
+import static bowling.controller.Main.stateResult;
+
 import bowling.model.Point;
 import bowling.model.State;
-
-import java.util.Objects;
 
 public class SecondStrike implements State {
     private final Point countOfPin;
@@ -20,12 +22,17 @@ public class SecondStrike implements State {
             return new ThirdStrike();
         }
 
-        return new Miss(currentPin);
+        return new Miss(this.countOfPin, new Point(countOfPin));
     }
 
     @Override
     public boolean isFinish(int frameNo) {
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return stateResult.removeLast() + "|X";
     }
 
     @Override

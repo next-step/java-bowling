@@ -15,17 +15,21 @@ public class FirstBowl implements State {
     @Override
     public State bowl(int countOfPin) {
         Point currentPin = this.countOfPin.add(countOfPin);
-
         if (currentPin.isStrike()) {
             return new Spare();
         }
 
-        return new Miss(currentPin);
+        return new Miss(this.countOfPin, new Point(countOfPin));
     }
 
     @Override
     public boolean isFinish(int frameNo) {
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return countOfPin.toString();
     }
 
     @Override

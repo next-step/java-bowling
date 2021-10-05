@@ -2,6 +2,8 @@ package bowling.model.state;
 
 import java.util.Objects;
 
+import static bowling.controller.Main.stateResult;
+
 import bowling.CannotBowlException;
 import bowling.model.Point;
 import bowling.model.State;
@@ -21,6 +23,11 @@ public class ThirdSpare implements State {
     @Override
     public boolean isFinish(int frameNo) {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateResult.removeLast() + "|/";
     }
 
     @Override

@@ -1,20 +1,20 @@
 package bowling.view;
 
-import java.util.LinkedList;
-import java.util.List;
+import bowling.model.State;
 
-import bowling.model.*;
+import static bowling.controller.Main.scoreResult;
+import static bowling.controller.Main.stateResult;
 
 public class OutputView {
     public static final int MAX_ROUND = 10;
 
-    public static void printResult(String name, List<String> states, List<Integer> scoreResult) {
+    public static void printResult(String name) {
         printHeader();
-        printState(name, states);
-        printScore(scoreResult);
+        printState(name);
+        printScore();
     }
 
-    private static void printScore(List<Integer> scoreResult) {
+    private static void printScore() {
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("|      |");
@@ -43,17 +43,17 @@ public class OutputView {
         System.out.println(stringBuilder.toString());
     }
 
-    private static void printState(String name, List<String> states) {
+    private static void printState(String name) {
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("|  " + name + " |");
 
-        for (String state : states) {
+        for (String state : stateResult) {
             String result = addBlank(state);
             stringBuilder.append(result);
         }
 
-        stringBuilder.append(formatEmptyScore(states.size()));
+        stringBuilder.append(formatEmptyScore(stateResult.size()));
 
         System.out.println(stringBuilder.toString());
     }
@@ -67,42 +67,8 @@ public class OutputView {
         return stringBuilder.toString();
     }
 
-    public static String changeScore(LinkedList<String> stateResult, State state, int pinCount) {
-        if (state instanceof Strike) {
-            return "X";
-        }
-
-        if (!(state instanceof FirstBowl)) {
-            return addBeforeResult(stateResult, state, pinCount);
-        }
-
-        if (new Point(pinCount).isGutter()) {
-            return "-";
-        }
-
-        return String.valueOf(pinCount);
-    }
-
-    private static String addBeforeResult(LinkedList<String> stateResult, State state, int pinCount) {
-        String beforeResult = stateResult.removeLast();
-
-        if (state instanceof SecondStrike || state instanceof ThirdStrike) {
-            return beforeResult +"|X";
-        }
-
-        if (state instanceof Spare || state instanceof ThirdSpare) {
-            return beforeResult + "|/";
-        }
-
-        return formatMiss(pinCount, beforeResult);
-    }
-
-    private static String formatMiss(int pinCount, String beforeResult) {
-        if (new Point(pinCount).isGutter()) {
-            return beforeResult + "|-";
-        }
-
-        return beforeResult +"|"+ pinCount;
+    public static String changeScore(State state) {
+        return state.toString();
     }
 
     private static String addBlank(String score) {

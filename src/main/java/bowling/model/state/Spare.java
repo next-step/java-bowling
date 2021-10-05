@@ -1,19 +1,17 @@
 package bowling.model.state;
 
+import java.util.Objects;
+
+import static bowling.controller.Main.stateResult;
+
 import bowling.model.Point;
 import bowling.model.State;
-
-import java.util.Objects;
 
 public class Spare implements State {
     private final Point countOfPin;
 
     public Spare() {
         this.countOfPin = new Point(10);
-    }
-
-    public Spare(Point countOfPin) {
-        this.countOfPin = countOfPin;
     }
 
     @Override
@@ -24,12 +22,17 @@ public class Spare implements State {
             return new ThirdStrike();
         }
 
-        return new Miss(currentPin);
+        return new Miss(this.countOfPin, new Point(countOfPin));
     }
 
     @Override
     public boolean isFinish(int frameNo) {
         return frameNo != FINAL_FRAME_NO;
+    }
+
+    @Override
+    public String toString() {
+        return stateResult.removeLast() + "|/";
     }
 
     @Override

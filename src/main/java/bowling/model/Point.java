@@ -24,19 +24,17 @@ public class Point {
     }
 
     public boolean isStrike() {
-        if (this.point == MAX_POINT) {
-            return true;
-        }
-
-        return false;
+        return point == MAX_POINT;
     }
 
     public boolean isGutter() {
-        if (this.point == MIN_POINT) {
-            return true;
-        }
+        return point == MIN_POINT;
+    }
 
-        return false;
+    @Override
+    public String toString() {
+        return (isGutter()) ? "-" : String.valueOf(point);
+
     }
 
     @Override

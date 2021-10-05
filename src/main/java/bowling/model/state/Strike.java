@@ -24,6 +24,11 @@ public class Strike implements State {
     }
 
     @Override
+    public String toString() {
+        return "X";
+    }
+
+    @Override
     public boolean isFinish(int frameNo) {
         return frameNo != FINAL_FRAME_NO;
     }

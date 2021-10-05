@@ -2,15 +2,17 @@ package bowling.model.state;
 
 import java.util.Objects;
 
+import static bowling.controller.Main.stateResult;
+
 import bowling.CannotBowlException;
 import bowling.model.Point;
 import bowling.model.State;
 
 public class ThirdStrike implements State {
-    private final Point point;
+    private final Point countOfPin;
 
     public ThirdStrike() {
-        this.point = new Point(10);
+        this.countOfPin = new Point(10);
     }
 
     @Override
@@ -24,16 +26,21 @@ public class ThirdStrike implements State {
     }
 
     @Override
+    public String toString() {
+        return stateResult.removeLast() + "|X";
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ThirdStrike strike = (ThirdStrike) o;
-        return Objects.equals(point, strike.point);
+        return Objects.equals(countOfPin, strike.countOfPin);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(point);
+        return Objects.hash(countOfPin);
     }
 
 }
