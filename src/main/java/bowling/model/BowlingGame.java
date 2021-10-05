@@ -22,10 +22,6 @@ public class BowlingGame {
         this.rounds.add(round);
     }
 
-    public BowlingGame(List<Round> rounds) {
-        this.rounds = rounds;
-    }
-
     public State bowl(int countOfPin) throws CannotBowlException {
         return currentFrame().bowl(countOfPin);
     }
@@ -53,7 +49,7 @@ public class BowlingGame {
     }
 
     private void createNextFrame() {
-        if (currentFrame().isFinish()) {
+        if (currentFrame().isFinish(getFrameNo())) {
             Round round = currentFrame().next(getFrameNo());
             rounds.add(round);
         }

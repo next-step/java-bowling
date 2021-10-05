@@ -36,4 +36,9 @@ public abstract class AbstractRound implements Round{
             scores.add(ofSpare());
         }
     }
+
+    @Override
+    public boolean isFinish(int frameNo) {
+        return state.isFinish(frameNo);
+    }
 }

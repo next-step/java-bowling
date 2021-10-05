@@ -36,15 +36,6 @@ public class NormalRound extends AbstractRound {
     }
 
     @Override
-    public boolean isFinish() {
-        if (state instanceof Strike || !(state instanceof FirstBowl)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    @Override
     public List<Integer> getScore() {
         List<Integer> calculatedScore = new ArrayList<>();
         int size = scores.size();

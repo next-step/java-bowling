@@ -18,15 +18,6 @@ public class FinalRound extends AbstractRound{
     }
 
     @Override
-    public boolean isFinish() {
-        if (state instanceof Miss || state instanceof ThirdStrike || state instanceof ThirdSpare) {
-            return true;
-        }
-
-        return false;
-    }
-
-    @Override
     public List<Integer> getScore() {
         return scores.stream()
                 .filter(Score::canCalculateScore)
