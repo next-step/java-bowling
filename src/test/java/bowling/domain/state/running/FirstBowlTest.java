@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import bowling.domain.score.Pin;
+import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.finish.Miss;
 import bowling.domain.state.finish.Spare;
@@ -71,6 +72,23 @@ class FirstBowlTest {
 
         // then
         assertThat(result).isInstanceOf(Miss.class);
+    }
+
+    @Test
+    @DisplayName("이전 Score를 받아 first Pin을 더해 반환할 수 있다.")
+    void calculateAdditionalScoreTest() {
+
+        // given
+        Score score = Score.spare();
+        FirstBowl state = new FirstBowl(Pin.of(3));
+
+        Score expected = Score.from(13, 0);
+
+        // when
+        Score result = state.calculateAdditionalScore(score);
+
+        // then
+        assertThat(result).isEqualTo(expected);
     }
 
 }
