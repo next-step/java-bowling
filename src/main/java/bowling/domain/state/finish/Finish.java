@@ -19,4 +19,6 @@ public abstract class Finish implements State {
 
     public abstract Score createScore();
 
+    public abstract Score calculateAdditionalScore(Score score);
+
 }
