@@ -55,6 +55,22 @@ public class StrikeTest {
     }
 
     @Test
+    @DisplayName("Score 객체를 생성할 수 있다.")
+    void createScoreTest() {
+
+        // given
+        State state = new Strike(Pin.of(10));
+
+        Score expected = Score.strike();
+
+        // when
+        Score result = state.createScore();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
     @DisplayName("이전 Score를 받아 strike를 더해 반환할 수 있다.")
     void calculateAdditionalScoreTest() {
 

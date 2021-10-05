@@ -18,7 +18,7 @@ public class Strike extends Finish {
 
     @Override
     public Score createScore() {
-        return null;
+        return Score.strike();
     }
 
     @Override

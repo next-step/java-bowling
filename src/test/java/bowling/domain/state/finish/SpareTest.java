@@ -71,6 +71,22 @@ public class SpareTest {
     }
 
     @Test
+    @DisplayName("Score 객체를 생성할 수 있다.")
+    void createScoreTest() {
+
+        // given
+        State state = new Spare(Pin.of(3), Pin.of(7));
+
+        Score expected = Score.spare();
+
+        // when
+        Score result = state.createScore();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
     @DisplayName("이전 Score의 left가 1일 때 first만 업데이트할 수 있다.")
     void calculateAdditionalScoreByLeftOneTest() {
 
