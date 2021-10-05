@@ -1,9 +1,11 @@
 package bowling.domain.state.finish;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import bowling.domain.score.Pin;
+import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.exception.state.FinishStateBowlException;
 import bowling.exception.state.StrikeStatePinException;
@@ -50,6 +52,23 @@ public class StrikeTest {
         assertThatExceptionOfType(FinishStateBowlException.class)
             .isThrownBy(() -> state.bowl(Pin.of(0)))
             .withMessageMatching("종료된 상태에서 더이상 볼링을 던질 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("이전 Score를 받아 strike를 더해 반환할 수 있다.")
+    void calculateAdditionalScoreTest() {
+
+        // given
+        Score score = Score.from(10, 1);
+        Strike state = new Strike(Pin.of(10));
+
+        Score expected = Score.from(20, 0);
+
+        // when
+        Score result = state.calculateAdditionalScore(score);
+
+        // then
+        assertThat(result).isEqualTo(expected);
     }
 
 }

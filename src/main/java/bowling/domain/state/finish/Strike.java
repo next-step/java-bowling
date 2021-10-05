@@ -21,4 +21,9 @@ public class Strike extends Finish {
         return null;
     }
 
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        return score.addPin(Pin.of(10));
+    }
+
 }
