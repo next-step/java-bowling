@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import bowling.exception.score.CannotCalculateException;
 import bowling.exception.score.ScoreAddPinException;
-import bowling.exception.score.ScoreCanCalculateException;
 import bowling.exception.state.MissStateCrerateException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -92,7 +92,7 @@ class ScoreTest {
         Score score = Score.spare();
 
         // when & then
-        assertThatExceptionOfType(ScoreCanCalculateException.class)
+        assertThatExceptionOfType(CannotCalculateException.class)
             .isThrownBy(() -> score.score())
             .withMessageMatching("현재 score는 남은 보너스 횟수가 있어 반환할 수 없습니다.");
     }

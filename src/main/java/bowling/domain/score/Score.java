@@ -2,8 +2,8 @@ package bowling.domain.score;
 
 import static bowling.domain.score.Pin.PIN_MAX_VALUE;
 
+import bowling.exception.score.CannotCalculateException;
 import bowling.exception.score.ScoreAddPinException;
-import bowling.exception.score.ScoreCanCalculateException;
 import bowling.exception.state.MissStateCrerateException;
 import java.util.Objects;
 
@@ -17,7 +17,7 @@ public class Score {
         this.left = left;
     }
 
-    static Score from(int score, int left) {
+    public static Score from(int score, int left) {
         return new Score(score, left);
     }
 
@@ -47,7 +47,7 @@ public class Score {
 
     public int score() {
         if (!canCalculateScore()) {
-            throw new ScoreCanCalculateException();
+            throw new CannotCalculateException();
         }
         return this.score;
     }
