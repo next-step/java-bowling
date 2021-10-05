@@ -1,16 +1,12 @@
 package bowling.model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 
-import static bowling.model.Score.*;
-
-import bowling.CannotBowlException;
-
-public class NormalRound implements Round{
+public class NormalRound extends AbstractRound {
     private static final int BEFORE_FINAL_FRAME = 9;
-
-    private State state;
-    private LinkedList<Score> scores;
 
     public NormalRound() {
         this.state = new Ready();
@@ -21,15 +17,6 @@ public class NormalRound implements Round{
     public NormalRound(State state, LinkedList<Score> scores) {
         this.state = state;
         this.scores = scores;
-    }
-
-    @Override
-    public State bowl(int countOfPin) throws CannotBowlException {
-        this.state = state.bowl(countOfPin);
-
-        calculateScore(countOfPin);
-
-        return state;
     }
 
     @Override
@@ -46,25 +33,6 @@ public class NormalRound implements Round{
         scores.add(new Score());
 
         return scores;
-    }
-
-    @Override
-    public void calculateScore(int countOfPin) {
-        int size = scores.size();
-
-        for (int i = 0; i < size; i++) {
-            scores.add(scores.remove().bowl(countOfPin));
-        }
-
-        if (state instanceof Strike) {
-            scores.removeLast();
-            scores.add(ofStrike());
-        }
-
-        if (state instanceof Spare) {
-            scores.removeLast();
-            scores.add(ofSpare());
-        }
     }
 
     @Override

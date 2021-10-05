@@ -5,14 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static bowling.model.Score.*;
-
-import bowling.CannotBowlException;
-
-public class FinalRound implements Round{
-    private State state;
-    private LinkedList<Score> scores;
-
+public class FinalRound extends AbstractRound{
     public FinalRound() {
         this.state = new Ready();
         this.scores = new LinkedList<>();
@@ -22,15 +15,6 @@ public class FinalRound implements Round{
     public FinalRound(State state, LinkedList<Score> scores) {
         this.state = state;
         this.scores = scores;
-    }
-
-    @Override
-    public State bowl(int countOfPin) throws CannotBowlException {
-        this.state = state.bowl(countOfPin);
-
-        calculateScore(countOfPin);
-
-        return state;
     }
 
     @Override
@@ -54,24 +38,6 @@ public class FinalRound implements Round{
     public Round next(int frameNo) {
         return new FinalRound();
     }
-
-    @Override
-    public void calculateScore(int countOfPin) {
-        for (int i = 0; i < scores.size(); i++) {
-            scores.add(scores.remove().bowl(countOfPin));
-        }
-
-        if (state instanceof Strike) {
-            scores.removeLast();
-            scores.add(ofStrike());
-        }
-
-        if (state instanceof Spare) {
-            scores.removeLast();
-            scores.add(ofSpare());
-        }
-    }
-
 
     @Override
     public boolean equals(Object o) {
