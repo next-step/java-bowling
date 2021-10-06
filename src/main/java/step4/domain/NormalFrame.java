@@ -11,9 +11,14 @@ public class NormalFrame implements Frame {
     public NormalFrame(int round) {
         this.round = round;
         this.state = new Ready();
+
+    }
+
+    public Frame createFrame(int round) {
         if (round + 1 < 10) {
             this.nextFrame = new NormalFrame(round + 1);
         }
+        return this.nextFrame;
     }
 
     public void throwBowl(int falledPins) {
@@ -25,6 +30,27 @@ public class NormalFrame implements Frame {
     }
 
     public String getScore() {
-        return state.getScore();
+        Score score = state.score();
+
+        if (score.canCalculate()) {
+            return score.getScore();
+        }
+        System.out.println(nextFrame == null);
+        if (nextFrame == null) {
+            return "";
+        }
+        return nextFrame.calculateScoreFromNextFrame(score);
+    }
+
+    public String calculateScoreFromNextFrame(Score beforeScore) {
+         beforeScore = state.calculateScore(beforeScore);
+         if (beforeScore.canCalculate()) {
+             return beforeScore.getScore();
+         }
+        System.out.println(nextFrame == null);
+        if (nextFrame == null) {
+            return "";
+        }
+        return nextFrame.calculateScoreFromNextFrame(beforeScore);
     }
 }

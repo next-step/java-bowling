@@ -13,12 +13,26 @@ public class FirstBowl implements State {
 
     public State throwBowl(int falledPins) {
         if (this.falledPins + falledPins == 10) {
-            return new Spair();
+            return new Spare(this.falledPins, falledPins);
         }
-        return new LastBowl(this.falledPins + falledPins);
+        return new LastBowl(this.falledPins, falledPins);
     }
 
     public String getScore() {
         return score.getScore();
+    }
+
+    @Override
+    public Score score() {
+        return score;
+    }
+
+    @Override
+    public Score calculateScore(Score beforeScore) {
+        if (beforeScore.canCalculate()) {
+            return beforeScore;
+        }
+        beforeScore.throwBowl(falledPins);
+        return beforeScore;
     }
 }

@@ -3,16 +3,17 @@ package step4.domain.state;
 import java.util.Objects;
 import step4.domain.Score;
 
-public class Strike implements State{
-    private int falledPins;
+public class Spare implements State {
+    private int firstFalledPins;
+    private int secondFalledPins;
     private Score score;
 
-    public Strike() {
-        this.falledPins = 10;
-        this.score = new Score(10, 2);
+    public Spare(int firstFalledPins, int secondFalledPins) {
+        this.firstFalledPins = firstFalledPins;
+        this.secondFalledPins = secondFalledPins;
+        this.score = new Score(10, 1);
     }
 
-    @Override
     public State throwBowl(int falledPins) {
         return null;
     }
@@ -32,10 +33,13 @@ public class Strike implements State{
         if (beforeScore.canCalculate()) {
             return beforeScore;
         }
-        beforeScore.throwBowl(10);
+        beforeScore.throwBowl(firstFalledPins);
+        if (beforeScore.canCalculate()) {
+            return beforeScore;
+        }
+        beforeScore.throwBowl(secondFalledPins);
         return beforeScore;
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -45,12 +49,14 @@ public class Strike implements State{
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Strike strike = (Strike) o;
-        return falledPins == strike.falledPins;
+        Spare spare = (Spare) o;
+        return firstFalledPins == spare.firstFalledPins
+            && secondFalledPins == spare.secondFalledPins
+            && Objects.equals(score, spare.score);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(falledPins);
+        return Objects.hash(firstFalledPins, secondFalledPins, score);
     }
 }

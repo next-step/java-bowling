@@ -27,4 +27,8 @@ public class Score {
     public String getScore() {
         return Integer.toString(score);
     }
+
+    public boolean canCalculate() {
+        return left == 0;
+    }
 }

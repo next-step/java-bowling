@@ -20,4 +20,14 @@ public class Ready implements State {
     public String getScore() {
         return score.getScore();
     }
+
+    @Override
+    public Score score() {
+        return score;
+    }
+
+    @Override
+    public Score calculateScore(Score beforeScore) {
+        return null;
+    }
 }

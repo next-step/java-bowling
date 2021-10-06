@@ -4,12 +4,14 @@ import java.util.Objects;
 import step4.domain.Score;
 
 public class LastBowl implements State {
-    private int falledPins;
+    private int firstFalledPins;
+    private int lastFalledPins;
     private Score score;
 
-    public LastBowl(int falledPins) {
-        this.falledPins = falledPins;
-        this.score = new Score(falledPins, 0);
+    public LastBowl(int firstFalledPins, int lastFalledPins) {
+        this.firstFalledPins = firstFalledPins;
+        this.lastFalledPins = lastFalledPins;
+        this.score = new Score(firstFalledPins + lastFalledPins, 0);
     }
 
     @Override
@@ -23,6 +25,16 @@ public class LastBowl implements State {
     }
 
     @Override
+    public Score score() {
+        return score;
+    }
+
+    @Override
+    public Score calculateScore(Score beforeScore) {
+        return null;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -31,11 +43,13 @@ public class LastBowl implements State {
             return false;
         }
         LastBowl lastBowl = (LastBowl) o;
-        return falledPins == lastBowl.falledPins;
+        return firstFalledPins == lastBowl.firstFalledPins
+            && lastFalledPins == lastBowl.lastFalledPins
+            && Objects.equals(score, lastBowl.score);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(falledPins);
+        return Objects.hash(firstFalledPins, lastFalledPins, score);
     }
 }
