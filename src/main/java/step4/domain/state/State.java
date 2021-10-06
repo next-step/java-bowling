@@ -1,2 +1,5 @@
-package step4.domain.state;public class State {
+package step4.domain.state;
+
+public class State {
+
 }
