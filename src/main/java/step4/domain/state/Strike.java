@@ -6,6 +6,7 @@ import step4.domain.Score;
 public class Strike implements State{
     private int falledPins;
     private Score score;
+    private String symbol;
 
     public Strike() {
         this.falledPins = 10;
@@ -25,6 +26,10 @@ public class Strike implements State{
     @Override
     public Score score() {
         return score;
+    }
+
+    public String getSymbol() {
+        return symbol;
     }
 
     @Override

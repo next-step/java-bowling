@@ -17,4 +17,6 @@ public interface Frame {
     int round();
 
     Frame next();
+
+    String getSymbol();
 }

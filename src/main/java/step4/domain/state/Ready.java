@@ -4,9 +4,11 @@ import step4.domain.Score;
 
 public class Ready implements State {
     private Score score;
+    private String symbol;
 
     public Ready() {
         this.score = new Score(0, 2);
+        this.symbol = "";
     }
 
     public State throwBowl(int falledPins) {
@@ -34,5 +36,10 @@ public class Ready implements State {
     @Override
     public boolean isFinish() {
         return false;
+    }
+
+    @Override
+    public String getSymbol() {
+        return symbol;
     }
 }

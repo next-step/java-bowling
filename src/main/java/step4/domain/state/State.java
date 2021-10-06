@@ -13,4 +13,6 @@ public interface State {
     Score calculateScore(Score beforeScore);
 
     boolean isFinish();
+
+    String getSymbol();
 }

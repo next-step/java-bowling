@@ -7,11 +7,13 @@ public class Spare implements State {
     private int firstFalledPins;
     private int secondFalledPins;
     private Score score;
+    private String symbol;
 
     public Spare(int firstFalledPins, int secondFalledPins) {
         this.firstFalledPins = firstFalledPins;
         this.secondFalledPins = secondFalledPins;
         this.score = new Score(10, 1);
+        this.symbol = "-";
     }
 
     public State throwBowl(int falledPins) {
@@ -44,6 +46,11 @@ public class Spare implements State {
     @Override
     public boolean isFinish() {
         return true;
+    }
+
+    @Override
+    public String getSymbol() {
+        return symbol;
     }
 
     @Override

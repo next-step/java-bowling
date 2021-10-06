@@ -16,8 +16,8 @@ public class BowlingGameController {
 
 
         ResultView.printColumn();
-        ResultView.printName(nameOfPerson);
-        ResultView.printEmptyResult(10);
+        ResultView.printFirstColumn(nameOfPerson);
+        ResultView.printEmptyColumn(10);
 
         Frames frames = new Frames();
         Frame frame = new NormalFrame(1);
@@ -28,18 +28,30 @@ public class BowlingGameController {
                 int falledPins = InputView.throwBowl(nameOfPerson);
                 frame.throwBowl(falledPins);
                 ResultView.printColumn();
-                ResultView.printName(nameOfPerson);
+                ResultView.printFirstColumn(nameOfPerson);
 
-
-                Frame targetFrame = firstFrame;
-                while (targetFrame != null) {
-                    ResultView.printResult(targetFrame);
-                    targetFrame = targetFrame.next();
-                }
-                ResultView.printEmptyResult(10 - i);
+                printSymbol(firstFrame);
+                printTotalScore(firstFrame);
+                ResultView.printEmptyColumn(10 - i);
             }
             frame = frame.createFrame(i + 1);
             frames.add(frame);
+        }
+    }
+
+    private static void printSymbol(Frame firstFrame) {
+        Frame targetFrame = firstFrame;
+        while (targetFrame != null) {
+            ResultView.printSymbol(targetFrame);
+            targetFrame = targetFrame.next();
+        }
+    }
+
+    private static void printTotalScore(Frame firstFrame) {
+        Frame targetFrame = firstFrame;
+        while (targetFrame != null) {
+            ResultView.printResult(targetFrame);
+            targetFrame = targetFrame.next();
         }
     }
 }

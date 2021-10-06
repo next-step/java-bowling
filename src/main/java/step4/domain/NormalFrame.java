@@ -57,6 +57,12 @@ public class NormalFrame implements Frame {
         return nextFrame;
     }
 
+    @Override
+    public String getSymbol() {
+        return state.getSymbol();
+    }
+
+
     public String calculateScoreFromNextFrame(Score beforeScore) {
          beforeScore = state.calculateScore(beforeScore);
          if (beforeScore.canCalculate()) {
