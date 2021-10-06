@@ -14,10 +14,12 @@ public class BowlingGameController {
             personNames.add(nameOfPerson);
         }
 
-        for (int i = 0; i < 3; i++) {
-            ResultView.printColumn();
+        for (int i = 0; i < 1; i++) {
+
             for (String personName : personNames) {
                 InputView.throwBowl(personName);
+                ResultView.printColumn();
+                ResultView.printName(personName);
             }
         }
 
