@@ -1,5 +1,7 @@
 package step4.domain;
 
+import step4.exception.minimumLeftExcpetion;
+
 public class Score {
     private int score;
     private int left;
@@ -7,10 +9,22 @@ public class Score {
     public Score(int score, int left) {
         this.score = score;
         this.left = left;
+        checkValidLeft(left);
     }
 
     public void throwBowl(int falledPins) {
         this.score += falledPins;
-        this.left ++;
+        this.left --;
+        checkValidLeft(left);
+    }
+
+    private void checkValidLeft(int left) {
+        if (left < 0) {
+            throw new minimumLeftExcpetion();
+        }
+    }
+
+    public int getScore() {
+        return score;
     }
 }

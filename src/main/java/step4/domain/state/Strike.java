@@ -1,17 +1,25 @@
 package step4.domain.state;
 
 import java.util.Objects;
+import step4.domain.Score;
 
 public class Strike implements State{
     private int falledPins;
+    private Score score;
 
     public Strike() {
         this.falledPins = 10;
+        this.score = new Score(10, 2);
     }
 
     @Override
     public State throwBowl(int falledPins) {
         return null;
+    }
+
+    @Override
+    public int getScore() {
+        return score.getScore();
     }
 
     @Override

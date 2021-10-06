@@ -45,5 +45,11 @@ class NormalFrameTest {
         Assertions.assertThat(normalFrame.state()).isEqualTo(new Spair());
     }
 
-
+    @DisplayName("볼링 공을 한번 던 졌을 때 FirstBowl 상태에 대한 점수 확인")
+    @Test
+    void firstBowlScoreTest() {
+        NormalFrame normalFrame = new NormalFrame();
+        normalFrame.throwBowl(4);
+        Assertions.assertThat(normalFrame.getScore()).isEqualTo(4);
+    }
 }

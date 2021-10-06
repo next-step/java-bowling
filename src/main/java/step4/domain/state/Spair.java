@@ -1,16 +1,24 @@
 package step4.domain.state;
 
 import java.util.Objects;
+import step4.domain.Score;
 
 public class Spair implements State {
     private int falledPins;
+    private Score score;
 
     public Spair() {
         this.falledPins = 10;
+        this.score = new Score(10, 1);
     }
 
     public State throwBowl(int falledPins) {
         return null;
+    }
+
+    @Override
+    public int getScore() {
+        return score.getScore();
     }
 
     @Override

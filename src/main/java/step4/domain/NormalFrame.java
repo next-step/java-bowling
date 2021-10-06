@@ -4,7 +4,6 @@ import step4.domain.state.Ready;
 import step4.domain.state.State;
 
 public class NormalFrame {
-    private Score score;
     private State state;
 
     public NormalFrame() {
@@ -17,5 +16,9 @@ public class NormalFrame {
 
     public State state() {
         return state;
+    }
+
+    public int getScore() {
+        return state.getScore();
     }
 }
