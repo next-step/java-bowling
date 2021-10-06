@@ -1,2 +1,5 @@
-package step4.domain.state;public class Spare {
+package step4.domain.state;
+
+public class Spare extends State {
+
 }
