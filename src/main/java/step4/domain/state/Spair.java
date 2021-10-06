@@ -17,7 +17,7 @@ public class Spair implements State {
     }
 
     @Override
-    public int getScore() {
+    public String getScore() {
         return score.getScore();
     }
 

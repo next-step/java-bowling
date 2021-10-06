@@ -1,5 +1,5 @@
 package step4.domain;
 
-public class Frame {
+public interface Frame {
 
 }

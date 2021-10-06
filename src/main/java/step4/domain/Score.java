@@ -24,7 +24,7 @@ public class Score {
         }
     }
 
-    public int getScore() {
-        return score;
+    public String getScore() {
+        return Integer.toString(score);
     }
 }

@@ -5,5 +5,5 @@ public interface State {
     State throwBowl(int falledPins);
 
 
-    int getScore();
+    String getScore();
 }

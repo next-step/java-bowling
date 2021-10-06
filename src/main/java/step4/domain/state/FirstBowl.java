@@ -18,7 +18,7 @@ public class FirstBowl implements State {
         return new LastBowl(this.falledPins + falledPins);
     }
 
-    public int getScore() {
+    public String getScore() {
         return score.getScore();
     }
 }
