@@ -1,6 +1,6 @@
 package step4.domain.state;
 
-public class Ready {
+public class Ready implements State {
     public State throwBowl(int falledPins) {
         if (falledPins == 10) {
             return new Strike();
