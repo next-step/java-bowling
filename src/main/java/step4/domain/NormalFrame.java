@@ -35,7 +35,7 @@ public class NormalFrame implements Frame {
         if (score.canCalculate()) {
             return score.getScore();
         }
-        System.out.println(nextFrame == null);
+
         if (nextFrame == null) {
             return "";
         }
@@ -47,10 +47,11 @@ public class NormalFrame implements Frame {
          if (beforeScore.canCalculate()) {
              return beforeScore.getScore();
          }
-        System.out.println(nextFrame == null);
+
         if (nextFrame == null) {
             return "";
         }
+
         return nextFrame.calculateScoreFromNextFrame(beforeScore);
     }
 }

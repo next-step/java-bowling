@@ -43,18 +43,9 @@ class NormalFrameTest {
         Assertions.assertThat(normalFrame.state()).isEqualTo(new Spare(4, 6));
     }
 
-    @DisplayName("볼링 공을 한번 던 졌을 때 FirstBowl 상태에 대한 점수 확인")
+    @DisplayName("두 개의 프레임 스트라이크를 쳤을 때 공백 결과가 나타나는지 결과 확인")
     @Test
-    void LastBowlScoreTest() {
-        NormalFrame normalFrame = new NormalFrame(1);
-        normalFrame.throwBowl(4);
-        normalFrame.throwBowl(4);
-        Assertions.assertThat(normalFrame.getScore()).isEqualTo("8");
-    }
-
-    @DisplayName("두개의 프레임 스트라이크를 쳤을 때 공백 결과가 나타나는지 결과 확인")
-    @Test
-    void StrikeScoreTest() {
+    void strikeScoreTest() {
         Frame firstFrame = new NormalFrame(1);
         firstFrame.throwBowl(10);
         Frame secondFrame = firstFrame.createFrame(2);
@@ -63,9 +54,9 @@ class NormalFrameTest {
         Assertions.assertThat(firstFrame.getScore()).isEqualTo("");
     }
 
-    @DisplayName("세개의 프레임 모두 스트라이크를 쳤을 때 30점이 나타나는지 결과 확인")
+    @DisplayName("세 개의 프레임 모두 스트라이크를 쳤을 때 30점이 나타나는지 결과 확인")
     @Test
-    void StrikeScoreTest2() {
+    void strikeScoreTest2() {
         Frame firstFrame = new NormalFrame(1);
         firstFrame.throwBowl(10);
         Frame secondFrame = firstFrame.createFrame(2);
@@ -74,5 +65,46 @@ class NormalFrameTest {
         thirdFrame.throwBowl(10);
 
         Assertions.assertThat(firstFrame.getScore()).isEqualTo("30");
+    }
+
+    @DisplayName("한 개의 프레임을 스패어 처리했을 때 공백 결과가 나타나는지 확인")
+    @Test
+    void spairScoreTest() {
+        Frame firstFrame = new NormalFrame(1);
+        firstFrame.throwBowl(4);
+        firstFrame.throwBowl(6);
+
+        Assertions.assertThat(firstFrame.getScore()).isEqualTo("");
+    }
+
+    @DisplayName("한 개의 프레임을 스패어 처리하고 다음 프레임에 점수를 획득했을 때 점수 결과가 나타나는지 확인")
+    @Test
+    void spairScoreTest2() {
+        Frame firstFrame = new NormalFrame(1);
+        firstFrame.throwBowl(4);
+        firstFrame.throwBowl(6);
+        Frame secondFrame = firstFrame.createFrame(2);
+        secondFrame.throwBowl(5);
+
+        Assertions.assertThat(firstFrame.getScore()).isEqualTo("15");
+    }
+
+    @DisplayName("한 개의 프레임에서 공을 한번만 던 졌을 때 공백 결과가 나타나는지 확인")
+    @Test
+    void firstBowlScoreTest2() {
+        Frame firstFrame = new NormalFrame(1);
+        firstFrame.throwBowl(4);
+
+        Assertions.assertThat(firstFrame.getScore()).isEqualTo("");
+    }
+
+    @DisplayName("한 개의 프레임이 정상적으로 끝났을 때의 점수 결과 확인")
+    @Test
+    void lastBowlScoreTest() {
+        Frame firstFrame = new NormalFrame(1);
+        firstFrame.throwBowl(4);
+        firstFrame.throwBowl(5);
+
+        Assertions.assertThat(firstFrame.getScore()).isEqualTo("9");
     }
 }
