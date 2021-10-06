@@ -4,7 +4,7 @@ import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.finish.Strike;
-import bowling.exception.state.ReadyStateCalculateScoreException;
+import bowling.exception.state.RunningStateCalculateScoreException;
 
 public class Ready extends Running {
 
@@ -21,7 +21,7 @@ public class Ready extends Running {
 
     @Override
     public Score calculateAdditionalScore(Score score) {
-        throw new ReadyStateCalculateScoreException();
+        throw new RunningStateCalculateScoreException();
     }
 
 }

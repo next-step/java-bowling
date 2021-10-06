@@ -10,6 +10,7 @@ import bowling.domain.state.State;
 import bowling.domain.state.finish.Miss;
 import bowling.domain.state.finish.Spare;
 import bowling.exception.state.RunningCreateScoreException;
+import bowling.exception.state.RunningStateCalculateScoreException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -80,7 +81,7 @@ class FirstBowlTest {
 
         // given
         Score score = Score.spare();
-        FirstBowl state = new FirstBowl(Pin.of(3));
+        State state = new FirstBowl(Pin.of(3));
 
         Score expected = Score.from(13, 0);
 
@@ -89,6 +90,20 @@ class FirstBowlTest {
 
         // then
         assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("이전 Score를 받아 first pin을 더하고 횟수가 남으면 exception이 발생해야 한다.")
+    void calculateAdditionalScoreExceptionTest() {
+
+        // given
+        Score score = Score.from(10, 2);
+        State state = new FirstBowl(Pin.of(3));
+
+        // when & then
+        assertThatExceptionOfType(RunningStateCalculateScoreException.class)
+            .isThrownBy(() -> state.calculateAdditionalScore(score))
+            .withMessageMatching("현재 Running상태는 더이상 Score를 계산할 수 없습니다.");
     }
 
 }
