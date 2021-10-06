@@ -11,4 +11,6 @@ public interface State {
     Score score();
 
     Score calculateScore(Score beforeScore);
+
+    boolean isFinish();
 }

@@ -31,7 +31,20 @@ public class LastBowl implements State {
 
     @Override
     public Score calculateScore(Score beforeScore) {
-        return null;
+        if (score.canCalculate()) {
+            return beforeScore;
+        }
+        beforeScore.throwBowl(firstFalledPins);
+        if (score.canCalculate()) {
+            return  beforeScore;
+        }
+        beforeScore.throwBowl(lastFalledPins);
+        return beforeScore;
+    }
+
+    @Override
+    public boolean isFinish() {
+        return true;
     }
 
     @Override

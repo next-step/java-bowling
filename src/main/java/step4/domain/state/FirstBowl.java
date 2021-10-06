@@ -35,4 +35,9 @@ public class FirstBowl implements State {
         beforeScore.throwBowl(falledPins);
         return beforeScore;
     }
+
+    @Override
+    public boolean isFinish() {
+        return false;
+    }
 }

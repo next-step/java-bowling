@@ -30,4 +30,9 @@ public class Ready implements State {
     public Score calculateScore(Score beforeScore) {
         return null;
     }
+
+    @Override
+    public boolean isFinish() {
+        return false;
+    }
 }

@@ -15,7 +15,7 @@ public class NormalFrame implements Frame {
     }
 
     public Frame createFrame(int round) {
-        if (round + 1 < 10) {
+        if (round + 1 <= 10) {
             this.nextFrame = new NormalFrame(round + 1);
         }
         return this.nextFrame;
@@ -40,6 +40,21 @@ public class NormalFrame implements Frame {
             return "";
         }
         return nextFrame.calculateScoreFromNextFrame(score);
+    }
+
+    @Override
+    public boolean isFinish() {
+        return state.isFinish();
+    }
+
+    @Override
+    public int round() {
+        return round;
+    }
+
+    @Override
+    public Frame next() {
+        return nextFrame;
     }
 
     public String calculateScoreFromNextFrame(Score beforeScore) {

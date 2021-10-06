@@ -36,6 +36,11 @@ public class Strike implements State{
         return beforeScore;
     }
 
+    @Override
+    public boolean isFinish() {
+        return true;
+    }
+
 
     @Override
     public boolean equals(Object o) {

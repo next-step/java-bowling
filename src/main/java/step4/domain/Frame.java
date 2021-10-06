@@ -11,4 +11,10 @@ public interface Frame {
     Frame createFrame(int i);
 
     String getScore();
+
+    boolean isFinish();
+
+    int round();
+
+    Frame next();
 }
