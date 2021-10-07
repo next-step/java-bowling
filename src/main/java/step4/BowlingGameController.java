@@ -39,6 +39,8 @@ public class BowlingGameController {
             frame = frame.createFrame(i + 1);
             frames.add(frame);
         }
+
+
     }
 
     private static void printSymbol(Frame firstFrame) {

@@ -21,8 +21,7 @@ public class NormalFrame implements Frame {
 
         }
         nextFrame = new NormalFrame(10);
-        return nextFrame;
-//        return new LastFrame(10);
+        return new LastFrame(10);
 
     }
 
@@ -79,5 +78,9 @@ public class NormalFrame implements Frame {
         }
 
         return nextFrame.calculateScoreFromNextFrame(beforeScore);
+    }
+
+    public Boolean isGameEnd() {
+        return false;
     }
 }

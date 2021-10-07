@@ -1,13 +1,16 @@
 package step4.domain;
 
+import java.util.LinkedList;
+import java.util.stream.Collectors;
+import step4.domain.state.FirstBowl;
 import step4.domain.state.Ready;
 import step4.domain.state.State;
 
 public class LastFrame implements Frame {
-    private State state;
+    private LinkedList<State> states = new LinkedList<>();
 
     public LastFrame(int i) {
-        this.state = new Ready();
+        states.add(new Ready());
     }
 
     @Override
@@ -16,8 +19,16 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public void throwBowl(int i) {
+    public void throwBowl(int falledPins) {
+        State currentState = states.getLast();
 
+        if (currentState.isFinish()) {
+            states.add(new FirstBowl(falledPins));
+            return;
+        }
+
+        states.removeLast();
+        states.add(currentState.throwBowl(falledPins));
     }
 
     @Override
@@ -47,6 +58,8 @@ public class LastFrame implements Frame {
 
     @Override
     public String getSymbol() {
-        return null;
+        return states.stream()
+            .map(state -> state.getSymbol())
+            .collect(Collectors.joining("|"));
     }
 }
