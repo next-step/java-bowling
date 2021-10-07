@@ -13,7 +13,7 @@ public class Spare implements State {
         this.firstFalledPins = firstFalledPins;
         this.secondFalledPins = secondFalledPins;
         this.score = new Score(10, 1);
-        this.symbol = "-";
+        this.symbol = this.firstFalledPins + "|" + "-";
     }
 
     public State throwBowl(int falledPins) {

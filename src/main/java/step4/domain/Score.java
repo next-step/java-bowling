@@ -14,7 +14,7 @@ public class Score {
 
     public void throwBowl(int falledPins) {
         this.score += falledPins;
-        this.left --;
+        this.left -= 1;
         checkValidLeft(left);
     }
 

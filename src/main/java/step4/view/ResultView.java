@@ -32,8 +32,8 @@ public class ResultView {
 
 
 
-    public static void printResult(Frame frame) {
-        System.out.printf(MIDDLE_COLUMN, frame.getScore());
+    public static void printResult(int score) {
+        System.out.printf(MIDDLE_COLUMN, score);
     }
 
     public static void printSymbol(Frame frame) {

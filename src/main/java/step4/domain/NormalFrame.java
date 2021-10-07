@@ -16,9 +16,14 @@ public class NormalFrame implements Frame {
 
     public Frame createFrame(int round) {
         if (round + 1 <= 10) {
-            this.nextFrame = new NormalFrame(round + 1);
+            nextFrame = new NormalFrame(round + 1);
+            return nextFrame;
+
         }
-        return this.nextFrame;
+        nextFrame = new NormalFrame(10);
+        return nextFrame;
+//        return new LastFrame(10);
+
     }
 
     public void throwBowl(int falledPins) {

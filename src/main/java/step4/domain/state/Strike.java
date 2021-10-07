@@ -11,6 +11,7 @@ public class Strike implements State{
     public Strike() {
         this.falledPins = 10;
         this.score = new Score(10, 2);
+        this.symbol = "X";
     }
 
     @Override
