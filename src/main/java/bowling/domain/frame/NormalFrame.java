@@ -30,7 +30,7 @@ public class NormalFrame implements Frame {
     }
 
     public static Frame createFirstFrame() {
-        return new NormalFrame(1, null, new Ready());
+        return new NormalFrame(FIRST_ROUND, null, new Ready());
     }
 
     private Optional<Frame> nextFrame() {
@@ -71,6 +71,7 @@ public class NormalFrame implements Frame {
         return nextFrameCalculateAdditionalScore(score);
     }
 
+    @Override
     public Score calculateAdditionalScore(Score beforeScore) {
         Score score = state.calculateAdditionalScore(beforeScore);
         if (score.canCalculateScore()) {
