@@ -32,41 +32,6 @@ class NormalFrameTest {
     }
 
     @Test
-    @DisplayName("다음 frame을 생성할 수 있다.")
-    void createNextNormalFrameTest() {
-
-        // given
-        Frame frame = NormalFrame.from(2, null, new Ready());
-
-        Frame expected = NormalFrame.from(3, null, new Ready());
-
-        // when
-        Frame result = frame.createNextFrame();
-
-        // then
-        assertThat(result).isEqualTo(expected);
-    }
-
-    @Test
-    @DisplayName("다음 프레임이 마지막 프레임이라면 마지막 프레임을 생성할 수 있다.")
-    void createNextFinalFrameTest() {
-
-        // given
-        Frame frame = NormalFrame.from(9, null, new Ready());
-
-        Frame expected = FinalFrame.from(10, new Ready());
-
-        // when
-        Frame result = frame.createNextFrame();
-
-        // then
-        assertAll(
-            () -> assertThat(result).isEqualTo(expected),
-            () -> assertThat(result).isInstanceOf(FinalFrame.class)
-        );
-    }
-
-    @Test
     @DisplayName("bowling을 했을 때 현재 state를 변화할 수 있다.")
     void bowlingTest() {
 
@@ -97,7 +62,30 @@ class NormalFrameTest {
         Frame result = frame.bowling(pin);
 
         // then
-        assertThat(result).isEqualTo(expected);
+        assertAll(
+            () -> assertThat(result).isEqualTo(expected),
+            () -> assertThat(result).isInstanceOf(NormalFrame.class)
+        );
+    }
+
+    @Test
+    @DisplayName("bowling을 했을 때 완료되면 다음 frame이 마지막frame이라면 FinalFrame을 반환할 수 있다.")
+    void bowlingFinishedFinalFrameTest() {
+
+        // given
+        Pin pin = Pin.of(10);
+        Frame frame = NormalFrame.from(9, null, new Ready());
+
+        Frame expected = FinalFrame.createFinalFrame();
+
+        // when
+        Frame result = frame.bowling(pin);
+
+        // then
+        assertAll(
+            () -> assertThat(result).isEqualTo(expected),
+            () -> assertThat(result).isInstanceOf(FinalFrame.class)
+        );
     }
 
     @Test

@@ -32,11 +32,6 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Frame createNextFrame() {
-        return null;
-    }
-
-    @Override
     public FrameResult createFrameResult() {
         return null;
     }

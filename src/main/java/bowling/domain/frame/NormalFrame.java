@@ -46,8 +46,7 @@ public class NormalFrame implements Frame {
         return this;
     }
 
-    @Override
-    public Frame createNextFrame() {
+    private Frame createNextFrame() {
         if (round + 1 == FINAL_ROUND) {
             return FinalFrame.createFinalFrame();
         }
