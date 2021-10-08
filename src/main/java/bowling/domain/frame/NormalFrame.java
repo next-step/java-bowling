@@ -4,6 +4,7 @@ import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.running.Ready;
+import bowling.exception.frame.NextFrameNotFoundException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -59,7 +60,7 @@ public class NormalFrame implements Frame {
         }
         return nextFrame()
             .map(frame -> frame.calculateAdditionalScore(score))
-            .orElse(null);
+            .orElseThrow(NextFrameNotFoundException::new);
     }
 
     private Optional<Frame> nextFrame() {

@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import bowling.domain.score.Pin;
@@ -10,6 +11,7 @@ import bowling.domain.state.finish.Spare;
 import bowling.domain.state.finish.Strike;
 import bowling.domain.state.running.FirstBowl;
 import bowling.domain.state.running.Ready;
+import bowling.exception.frame.NextFrameNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -132,6 +134,19 @@ class NormalFrameTest {
 
         // then
         assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("nextFrame이 없는데 다음 frame state score를 더해 계산하려고하면 excpetion이 발생해야한다.")
+    void scoreExceptionByNullNextFrameTest() {
+
+        // given
+        NormalFrame frame = (NormalFrame) NormalFrame.from(1, null, new Strike(Pin.of(10)));
+
+        // when & then
+        assertThatExceptionOfType(NextFrameNotFoundException.class)
+            .isThrownBy(() -> frame.score())
+            .withMessageMatching("next frame가 존재하지 않습니다.");
     }
 
 }
