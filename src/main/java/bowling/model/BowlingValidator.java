@@ -6,9 +6,4 @@ public class BowlingValidator {
             throw new IllegalArgumentException("빈값입니다.다시 입력해주세요.");
         }
     }
-
-    public static int changeToInt(String pinCount) {
-        return Integer.parseInt(pinCount.trim());
-    }
-
 }

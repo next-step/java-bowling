@@ -1,47 +1,92 @@
 package bowling;
 
+import java.util.*;
+
 import bowling.model.*;
-import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 public class BowlingGameTest {
     @Test
-    public void 일반라운드에서_다음_라운드를_스킵할_경우_시도횟수는_최대가_된다() {
-        BowlingGame game = new BowlingGame();
-        game.roundInit();
-        int tryCount = game.play(10);
+    public void 스트라이크_미스_점수계산() throws CannotBowlException {
+        //given
+        BowlingGame game = new BowlingGame(new NormalFrame());
+        //when
+        game.bowl(10);
+        //then
+        assertThat(game.getScore()).isEqualTo(Collections.emptyList());
 
-        assertThat(tryCount).isEqualTo(-1);
-    }
-
-    @Test
-    public void 일반라운드에서_다음_라운드를_스킵하지_않을_경우_시도횟수는_변화가_없다() {
-        BowlingGame game = new BowlingGame();
-        game.roundInit();
-        int tryCount = game.play(9);
-
-        assertThat(tryCount).isEqualTo(0);
-    }
-
-    @Test
-    public void 파이널라운드_결과가_스트라이크일시_시도횟수는_1_반환() {
 
         //when
-        BowlingGame game = new BowlingGame(10);
-        int tryCount = game.play(10);
-
+        game.bowl(2);
         //then
-        assertThat(tryCount).isEqualTo(1);
+        assertThat(game.getScore()).isEqualTo(Collections.emptyList());
+
+
+        //when
+        game.bowl(3);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList(15, 20));
     }
 
     @Test
-    public void 파이널라운드_결과가_스페어일시_최대_시도횟수는_1반환() {
+    public void 스페어_미스_점수계산() throws CannotBowlException {
+        //given
+        BowlingGame game = new BowlingGame(new NormalFrame());
         //when
-        BowlingGame game = new BowlingGame(10);
-        int tryCount = game.play(10);
-
+        game.bowl(8);
         //then
-        assertThat(tryCount).isEqualTo(1);
+        assertThat(game.getScore()).isEqualTo(Collections.emptyList());
+
+
+        //when
+        game.bowl(2);
+        //then
+        assertThat(game.getScore()).isEqualTo(Collections.emptyList());
+
+
+        //when
+        game.bowl(3);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList(13));
+
+
+        //when
+        game.bowl(2);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList(5));
+    }
+
+    @Test
+    public void 미스_점수계산() throws CannotBowlException {
+        //given
+        BowlingGame game = new BowlingGame(new NormalFrame());
+
+        //when
+        game.bowl(2);
+        //then
+        assertThat(game.getScore()).isEqualTo(Collections.emptyList());
+
+        //when
+        game.bowl(3);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList(5));
+    }
+
+    @Test
+    public void 거터_점수계산() throws CannotBowlException {
+        //given
+        BowlingGame game = new BowlingGame(new NormalFrame());
+
+        //when
+        game.bowl(0);
+        //then
+        assertThat(game.getScore()).isEqualTo(Collections.emptyList());
+
+        //when
+        game.bowl(0);
+        //then
+        assertThat(game.getScore()).isEqualTo(Arrays.asList(0));
     }
 }
