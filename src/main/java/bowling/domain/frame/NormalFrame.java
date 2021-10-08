@@ -33,6 +33,10 @@ public class NormalFrame implements Frame {
         return new NormalFrame(1, null, new Ready());
     }
 
+    private Optional<Frame> nextFrame() {
+        return Optional.ofNullable(nextFrame);
+    }
+
     @Override
     public Frame bowling(Pin pin) {
         state = state.bowl(pin);
@@ -60,18 +64,12 @@ public class NormalFrame implements Frame {
 
     }
 
-    public Score score() {
+    Score score() {
         Score score = state.createScore();
         if (score.canCalculateScore()) {
             return score;
         }
-        return nextFrame()
-            .map(frame -> frame.calculateAdditionalScore(score))
-            .orElseThrow(NextFrameNotFoundException::new);
-    }
-
-    private Optional<Frame> nextFrame() {
-        return Optional.ofNullable(nextFrame);
+        return nextFrameCalculateAdditionalScore(score);
     }
 
     public Score calculateAdditionalScore(Score beforeScore) {
@@ -79,6 +77,10 @@ public class NormalFrame implements Frame {
         if (score.canCalculateScore()) {
             return score;
         }
+        return nextFrameCalculateAdditionalScore(score);
+    }
+
+    private Score nextFrameCalculateAdditionalScore(Score score) {
         return nextFrame()
             .map(frame -> frame.calculateAdditionalScore(score))
             .orElseThrow(NextFrameNotFoundException::new);
