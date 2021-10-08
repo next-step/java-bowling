@@ -8,22 +8,34 @@ import step4.domain.state.State;
 
 public class LastFrame implements Frame {
     private LinkedList<State> states = new LinkedList<>();
+    private int turn = 0;
 
     public LastFrame(int i) {
         states.add(new Ready());
     }
 
+    public LinkedList<State> getStates() {
+        return states;
+    }
+
     @Override
-    public String calculateScoreFromNextFrame(Score state) {
-        return null;
+    public String calculateScoreFromNextFrame(Score beforeScore) {
+        for (State state : states) {
+            beforeScore = state.calculateScore(beforeScore);
+            if (beforeScore.canCalculate()) {
+                return beforeScore.getScore();
+            }
+        }
+        return beforeScore.getScore();
     }
 
     @Override
     public void throwBowl(int falledPins) {
+        turn ++;
         State currentState = states.getLast();
 
         if (currentState.isFinish()) {
-            states.add(new FirstBowl(falledPins));
+            states.add(new Ready().throwBowl(falledPins));
             return;
         }
 
@@ -38,17 +50,17 @@ public class LastFrame implements Frame {
 
     @Override
     public String getScore() {
-        return null;
+        return states.getLast().getScore();
     }
 
     @Override
     public boolean isFinish() {
-        return false;
+        return states.getLast().isFinish();
     }
 
     @Override
     public int round() {
-        return 0;
+        return 10;
     }
 
     @Override
@@ -61,5 +73,22 @@ public class LastFrame implements Frame {
         return states.stream()
             .map(state -> state.getSymbol())
             .collect(Collectors.joining("|"));
+    }
+
+    @Override
+    public boolean isGameEnd() {
+        if (turn == 3 || secondTurnIsNotSpareOrStrike()) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean secondTurnIsNotSpareOrStrike() {
+        if (turn == 2) {
+            System.out.println(states.get(1).getSymbol());
+            System.out.println(Integer.parseInt(states.get(1).getScore()));
+            return Integer.parseInt(states.get(1).getScore()) != 10;
+        }
+        return false;
     }
 }

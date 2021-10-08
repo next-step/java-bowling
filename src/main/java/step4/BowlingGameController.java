@@ -23,22 +23,25 @@ public class BowlingGameController {
         Frame frame = new NormalFrame(1);
         frames.add(frame);
         Frame firstFrame = frames.ofFirst();
-        for (int i = 1; i <= 9; i++) {
-            while (!frame.isFinish()) {
-                int falledPins = InputView.throwBowl(nameOfPerson);
-                frame.throwBowl(falledPins);
-                ResultView.printColumn();
-                ResultView.printFirstColumn(nameOfPerson);
 
-                printSymbol(firstFrame);
-                ResultView.printEmptyColumn(10 - i);
-                ResultView.printFirstColumn("");
-                int round = printTotalScore(firstFrame);
-                ResultView.printEmptyColumn(10 - round);
+        while (!frame.isGameEnd()) {
+            int falledPins = InputView.throwBowl(nameOfPerson);
+            frame.throwBowl(falledPins);
+            ResultView.printColumn();
+            ResultView.printFirstColumn(nameOfPerson);
+
+            printSymbol(firstFrame);
+            ResultView.printEmptyColumn(10 - frame.round());
+            ResultView.printFirstColumn("");
+            int round = printTotalScore(firstFrame);
+            ResultView.printEmptyColumn(10 - round);
+
+            if (frame.round() != 10 && frame.isFinish()) {
+                frame = frame.createFrame(frame.round());
+                frames.add(frame);
             }
-            frame = frame.createFrame(i + 1);
-            frames.add(frame);
         }
+
 
 
     }

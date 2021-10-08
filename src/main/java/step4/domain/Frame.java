@@ -19,4 +19,6 @@ public interface Frame {
     Frame next();
 
     String getSymbol();
+
+    boolean isGameEnd();
 }

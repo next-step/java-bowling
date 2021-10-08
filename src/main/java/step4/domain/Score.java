@@ -1,6 +1,6 @@
 package step4.domain;
 
-import step4.exception.minimumLeftExcpetion;
+import step4.exception.MinimumTurnExcpetion;
 
 public class Score {
     private int score;
@@ -20,7 +20,7 @@ public class Score {
 
     private void checkValidLeft(int left) {
         if (left < 0) {
-            throw new minimumLeftExcpetion();
+            throw new MinimumTurnExcpetion();
         }
     }
 

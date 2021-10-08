@@ -15,13 +15,13 @@ public class NormalFrame implements Frame {
     }
 
     public Frame createFrame(int round) {
-        if (round + 1 <= 10) {
+        if (round + 1 < 10) {
             nextFrame = new NormalFrame(round + 1);
             return nextFrame;
 
         }
-        nextFrame = new NormalFrame(10);
-        return new LastFrame(10);
+        nextFrame = new LastFrame(10);
+        return nextFrame;
 
     }
 
@@ -80,7 +80,7 @@ public class NormalFrame implements Frame {
         return nextFrame.calculateScoreFromNextFrame(beforeScore);
     }
 
-    public Boolean isGameEnd() {
+    public boolean isGameEnd() {
         return false;
     }
 }
