@@ -77,4 +77,22 @@ class NormalFrameTest {
         assertThat(result).isEqualTo(expected);
     }
 
+    @Test
+    @DisplayName("bowling을 했을 때 완료되면 다음 frame을 반환할 수 있다.")
+    void bowlingFinishedTest() {
+
+        // given
+        // given
+        Pin pin = Pin.of(10);
+        Frame frame = NormalFrame.from(2, null, new Ready());
+
+        Frame expected = NormalFrame.from(3, null, new Ready());
+
+        // when
+        Frame result = frame.bowling(pin);
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
 }

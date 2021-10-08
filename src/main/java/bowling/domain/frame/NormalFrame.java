@@ -31,6 +31,9 @@ public class NormalFrame implements Frame {
     @Override
     public Frame bowling(Pin pin) {
         state = state.bowl(pin);
+        if (state.isFinished()) {
+            return createNextFrame();
+        }
         return this;
     }
 
