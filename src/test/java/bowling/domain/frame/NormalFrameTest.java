@@ -214,4 +214,20 @@ class NormalFrameTest {
         assertThat(result).isEqualTo(expected);
     }
 
+    @Test
+    @DisplayName("현재 state가 running 상태일 경우 score가 -1인 Score를 생성할 수 있다.")
+    void createRunningStateCreateFrameResultTest() {
+
+        // given
+        NormalFrame frame = (NormalFrame) NormalFrame.from(2, null, new FirstBowl(Pin.of(1)));
+
+        FrameResult expected = FrameResult.of(-1);
+
+        // when
+        FrameResult result = frame.createFrameResult();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
 }
