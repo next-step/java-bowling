@@ -30,7 +30,8 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame bowling(Pin pin) {
-        return null;
+        state = state.bowl(pin);
+        return this;
     }
 
     @Override
