@@ -5,6 +5,7 @@ import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.running.Ready;
 import bowling.exception.frame.NextFrameNotFoundException;
+import bowling.exception.state.StateCannotCalculateScoreException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -52,7 +53,7 @@ public class NormalFrame implements Frame {
     public FrameResult createFrameResult() {
         try {
             return FrameResult.of(score().score());
-        } catch (NextFrameNotFoundException e) {
+        } catch (NextFrameNotFoundException | StateCannotCalculateScoreException e) {
             return FrameResult.createEmptyScoreFrameResult();
         }
 

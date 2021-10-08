@@ -9,7 +9,7 @@ import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.finish.Strike;
 import bowling.exception.state.RunningCreateScoreException;
-import bowling.exception.state.RunningStateCalculateScoreException;
+import bowling.exception.state.StateCannotCalculateScoreException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -80,7 +80,7 @@ class ReadyTest {
         Ready state = new Ready();
 
         // when & then
-        assertThatExceptionOfType(RunningStateCalculateScoreException.class)
+        assertThatExceptionOfType(StateCannotCalculateScoreException.class)
             .isThrownBy(() -> state.calculateAdditionalScore(Score.strike()))
             .withMessageMatching("현재 Running상태는 더이상 Score를 계산할 수 없습니다.");
     }

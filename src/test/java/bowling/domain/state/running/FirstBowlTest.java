@@ -10,6 +10,7 @@ import bowling.domain.state.State;
 import bowling.domain.state.finish.Miss;
 import bowling.domain.state.finish.Spare;
 import bowling.exception.state.RunningCreateScoreException;
+import bowling.exception.state.StateCannotCalculateScoreException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -89,6 +90,20 @@ class FirstBowlTest {
 
         // then
         assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("이전 Score를 받아 left가 남아있다면 exception이 발생해야 한다.")
+    void calculateAdditionalScoreExceptionTest() {
+
+        // given
+        Score score = Score.strike();
+        State state = new FirstBowl(Pin.of(3));
+
+        // when & then
+        assertThatExceptionOfType(StateCannotCalculateScoreException.class)
+            .isThrownBy(() -> state.calculateAdditionalScore(score))
+            .withMessageMatching("현재 Running상태는 더이상 Score를 계산할 수 없습니다.");
     }
 
 }

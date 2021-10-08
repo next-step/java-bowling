@@ -197,4 +197,21 @@ class NormalFrameTest {
         assertThat(result).isEqualTo(expected);
     }
 
+    @Test
+    @DisplayName("다음 frame의 state가 더이상 더할 수 없는 경우 score가 -1인 Score를 생성할 수 있다.")
+    void createCannotCalculateStateTest() {
+
+        // given
+        NormalFrame nextFrame = (NormalFrame) NormalFrame.from(3, null, new Ready());
+        NormalFrame frame = (NormalFrame) NormalFrame.from(2, nextFrame, new Strike(Pin.of(10)));
+
+        FrameResult expected = FrameResult.of(-1);
+
+        // when
+        FrameResult result = frame.createFrameResult();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
 }
