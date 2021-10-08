@@ -149,4 +149,18 @@ class NormalFrameTest {
             .withMessageMatching("next frame가 존재하지 않습니다.");
     }
 
+    @Test
+    @DisplayName("calculateAdditionalScore 반환 시 nextFrame이 없는 경우 exception이 발생해야 한다.")
+    void calculateAdditionalScoreExceptionByNullNextFrameTest() {
+
+        // given
+        NormalFrame frame = (NormalFrame) NormalFrame.from(2, null, new Strike(Pin.of(10)));
+        Score beforeScore = Score.from(10, 2);
+
+        // when & then
+        assertThatExceptionOfType(NextFrameNotFoundException.class)
+            .isThrownBy(() -> frame.calculateAdditionalScore(beforeScore))
+            .withMessageMatching("next frame가 존재하지 않습니다.");
+    }
+
 }

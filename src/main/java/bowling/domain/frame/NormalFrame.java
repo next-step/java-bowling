@@ -72,7 +72,9 @@ public class NormalFrame implements Frame {
         if (score.canCalculateScore()) {
             return score;
         }
-        return null;
+        return nextFrame()
+            .map(frame -> frame.calculateAdditionalScore(score))
+            .orElseThrow(NextFrameNotFoundException::new);
     }
 
     @Override
