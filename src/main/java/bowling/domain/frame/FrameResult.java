@@ -14,6 +14,10 @@ public class FrameResult {
         return new FrameResult(score);
     }
 
+    public static FrameResult createEmptyScoreFrameResult() {
+        return new FrameResult(-1);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
