@@ -1,0 +1,62 @@
+package bowling.domain.frame;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+import bowling.domain.state.running.Ready;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+class NormalFrameTest {
+
+    @Test
+    @DisplayName("첫번째 frame을 생성할 수 있다.")
+    void createFirstFrameTest() {
+
+        // given
+        Frame expected = NormalFrame.from(1, null, new Ready());
+
+        // when
+        Frame result = NormalFrame.createFirstFrame();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("다음 frame을 생성할 수 있다.")
+    void createNextNormalFrameTest() {
+
+        // given
+        Frame frame = NormalFrame.from(2, null, new Ready());
+
+        Frame expected = NormalFrame.from(3, null, new Ready());
+
+        // when
+        Frame result = frame.createNextFrame();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("다음 프레임이 마지막 프레임이라면 마지막 프레임을 생성할 수 있다.")
+    void createNextFinalFrameTest() {
+
+        // given
+        Frame frame = NormalFrame.from(9, null, new Ready());
+
+        Frame expected = FinalFrame.from(10, new Ready());
+
+        // when
+        Frame result = frame.createNextFrame();
+
+        // then
+        assertAll(
+            () -> assertThat(result).isEqualTo(expected),
+            () -> assertThat(result).isInstanceOf(FinalFrame.class)
+        );
+
+    }
+
+}
