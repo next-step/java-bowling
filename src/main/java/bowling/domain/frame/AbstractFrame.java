@@ -17,22 +17,20 @@ public abstract class AbstractFrame implements Frame {
         this.state = state;
     }
 
+    @Override
     public int round() {
         return round;
     }
 
     public abstract Frame createNextFrame();
 
-    public abstract Frame nextFrame();
-
     @Override
-    public boolean isFinishState() {
-        return state.isFinished();
-    }
-
-    @Override
-    public void bowling(Pin pin) {
+    public Frame bowling(Pin pin) {
         state = state.bowl(pin);
+        if (state.isFinished()) {
+            return createNextFrame();
+        }
+        return this;
     }
 
     @Override
