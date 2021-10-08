@@ -1,9 +1,11 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.Pin;
+import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.running.Ready;
 import java.util.Objects;
+import java.util.Optional;
 
 public class NormalFrame implements Frame {
 
@@ -47,6 +49,28 @@ public class NormalFrame implements Frame {
 
     @Override
     public FrameResult createFrameResult() {
+        return null;
+    }
+
+    public Score score() {
+        Score score = state.createScore();
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        return nextFrame()
+            .map(frame -> frame.calculateAdditionalScore(score))
+            .orElse(null);
+    }
+
+    private Optional<Frame> nextFrame() {
+        return Optional.ofNullable(nextFrame);
+    }
+
+    public Score calculateAdditionalScore(Score beforeScore) {
+        Score score = state.calculateAdditionalScore(beforeScore);
+        if (score.canCalculateScore()) {
+            return score;
+        }
         return null;
     }
 

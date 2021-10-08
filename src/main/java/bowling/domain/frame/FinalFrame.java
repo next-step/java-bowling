@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import static bowling.domain.frame.NormalFrame.FINAL_ROUND;
 
 import bowling.domain.score.Pin;
+import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.running.Ready;
 import java.util.Objects;
@@ -37,6 +38,11 @@ public class FinalFrame implements Frame {
 
     @Override
     public FrameResult createFrameResult() {
+        return null;
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score score) {
         return null;
     }
 

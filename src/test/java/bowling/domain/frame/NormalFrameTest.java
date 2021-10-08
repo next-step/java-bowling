@@ -4,6 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import bowling.domain.score.Pin;
+import bowling.domain.score.Score;
+import bowling.domain.state.finish.Miss;
+import bowling.domain.state.finish.Spare;
+import bowling.domain.state.finish.Strike;
 import bowling.domain.state.running.FirstBowl;
 import bowling.domain.state.running.Ready;
 import org.junit.jupiter.api.DisplayName;
@@ -82,7 +86,6 @@ class NormalFrameTest {
     void bowlingFinishedTest() {
 
         // given
-        // given
         Pin pin = Pin.of(10);
         Frame frame = NormalFrame.from(2, null, new Ready());
 
@@ -90,6 +93,42 @@ class NormalFrameTest {
 
         // when
         Frame result = frame.bowling(pin);
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("현재 state가 바로 계산가능한 score를 반환할 수 있는 경우 반환한다.")
+    void scoreReturnTest() {
+
+        // given
+        Pin pin = Pin.of(1);
+        NormalFrame frame = (NormalFrame) NormalFrame.from(1, null, new Miss(pin, pin));
+
+        Score expected = Score.from(2, 0);
+
+        // when
+        Score result = frame.score();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("beforeScore를 받아 현재 frame의 state score를 더해 반환할 수 있다.")
+    void calculateAdditionalScoreTest() {
+
+        // given
+        Pin first = Pin.of(3);
+        Pin second = Pin.of(7);
+        NormalFrame nextFrame = (NormalFrame) NormalFrame.from(2, null, new Strike(Pin.of(10)));
+        NormalFrame frame = (NormalFrame) NormalFrame.from(1, nextFrame, new Spare(first, second));
+
+        Score expected = Score.from(20, 0);
+
+        // when
+        Score result = frame.score();
 
         // then
         assertThat(result).isEqualTo(expected);

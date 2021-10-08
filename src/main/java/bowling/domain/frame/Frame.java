@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.Pin;
+import bowling.domain.score.Score;
 
 public interface Frame {
 
@@ -9,5 +10,7 @@ public interface Frame {
     Frame createNextFrame();
 
     FrameResult createFrameResult();
+
+    Score calculateAdditionalScore(Score score);
 
 }
