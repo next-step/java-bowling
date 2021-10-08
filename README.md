@@ -182,23 +182,22 @@
 
 
 ### Frame
-- [x] 현재 frame의 state를 저장할 수 있다.
-- [ ] 현재 frame의 score를 저장할 수 있다.
-- [ ] 현재 frame의 점수가 계산 가능한지 확인할 수 있다.
-- [ ] 현재 frame의 점수를 계산하여 반환할 수 있다.
 
-#### NormalFrame
-- [x] 첫번째 frame을 생성할 수 있다.
-- [x] 현재 round를 저장할 수 있다.
-- [x] 다음 frame의 참조값을 저장할 수 있다.
-- [x] 다음 frame을 생성할 수 있다.
+- Frame은 pin을 받아서 bowling을 할 수 있어야 한다.
+  - pin을 받아서 상태가 변경되면 다음 frame을 반환할 수 있어야 한다.
+  - pin을 받아서 상태가 변경되지 않으면 현재 frame을 반환할 수 있어야 한다.
+- Frame은 다음 Frame을 생성할 수 있어야 한다.
+- Frame은 현재 정보를 가지고 Frame Result를 반환할 수 있어야 한다.
+  - 현재 score를 계산할 수 없는 상태라면 -1 을 가진 Frame Result를 반환할 수 있어야 한다.
+  - Score를 계산할 수 있는 상태라면 보너스 스코어를 계산해서 정상적인 현재 점수를 반환할 수 있어야 한다.
 
-- [x] 현재 frame의 state를 저장할 수 있다.
-- [x] 현재 frame의 state에서 또 frame에 pin을 저장할 수 있는지 확인할 수 있다.
-- [x] 현재 frame에서 state를 업데이트할 수 있다.
-- [x] 마지막 frame이 다음 frame이면 FinalFrame을 생성해야 한다.
-- [x] 다음 frame을 반환할 수 있다.
+### Normal Frame
 
-#### FinalFrame
-- [x] FinalFrame은 다음 프레임을 생성할 수 없다.
-- [x] FinalFrame은 다음 프레임을 반환할 수 없다.
+- Normal Frame은 첫번째 Frame을 생성할 수 있어야 한다.
+- 다음 frame을 생성할 때 다음 frame이 마지막 라운드라면 FinalFrame을 생성할 수 있어야 한다.
+
+### Final Frame
+
+- 다음 프레임을 생성할 수 없다.
+
+

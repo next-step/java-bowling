@@ -5,7 +5,6 @@ import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.finish.Miss;
 import bowling.domain.state.finish.Spare;
-import bowling.exception.state.RunningStateCalculateScoreException;
 
 public class FirstBowl extends Running {
 
@@ -25,11 +24,7 @@ public class FirstBowl extends Running {
 
     @Override
     public Score calculateAdditionalScore(Score score) {
-        score.addPin(first);
-        if (score.canCalculateScore()) {
-            return score.addPin(first);
-        }
-        throw new RunningStateCalculateScoreException();
+        return score.addPin(first);
     }
 
 }
