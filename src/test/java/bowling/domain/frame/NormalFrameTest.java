@@ -163,4 +163,22 @@ class NormalFrameTest {
             .withMessageMatching("next frame가 존재하지 않습니다.");
     }
 
+    @Test
+    @DisplayName("현재 Frame의 FrameResult를 생성할 수 있다.")
+    void createFrameResultTest() {
+
+        // given
+        Pin first = Pin.of(1);
+        Pin second = Pin.of(2);
+        NormalFrame frame = (NormalFrame) NormalFrame.from(2, null, new Miss(first, second));
+
+        FrameResult expected = FrameResult.of(first.sum(second));
+
+        // when
+        FrameResult result = frame.createFrameResult();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
 }

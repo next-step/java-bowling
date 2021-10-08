@@ -50,7 +50,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public FrameResult createFrameResult() {
-        return null;
+        return FrameResult.of(score().score());
     }
 
     public Score score() {
