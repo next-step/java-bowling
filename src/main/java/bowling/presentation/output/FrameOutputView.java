@@ -1,6 +1,7 @@
 package bowling.presentation.output;
 
 import bowling.domain.Player;
+import bowling.domain.Players;
 import bowling.domain.frame.Frames;
 import bowling.presentation.output.util.FramesOutputHelper;
 import bowling.presentation.output.util.TotalScoreOutputHelper;
@@ -24,10 +25,12 @@ public class FrameOutputView {
         return new FrameOutputView();
     }
 
-    public void print(Player player) {
-        System.out.println(FIRST_ROW);
-        System.out.println(name(player) + SECOND_ROW);
-        System.out.println(THIRD_ROW);
+    public void print(Players players) {
+        players.values().forEach(player -> {
+            System.out.println(FIRST_ROW);
+            System.out.println(name(player) + SECOND_ROW);
+            System.out.println(THIRD_ROW);
+        });
         System.out.println();
     }
 
