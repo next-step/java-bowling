@@ -3,7 +3,6 @@ package bowling.domain.frame;
 import bowling.domain.score.FinalScore;
 import bowling.domain.score.Score;
 
-import java.util.List;
 import java.util.Objects;
 
 public class FinalFrame extends BaseFrame {
@@ -39,11 +38,6 @@ public class FinalFrame extends BaseFrame {
     }
 
     @Override
-    public List<Integer> getAllScores() {
-        return score.getAll();
-    }
-
-    @Override
     public BaseFrame bowl(int score) {
         if (isNowFirstTry()) {
             return bowlSecondTry(score);
@@ -52,7 +46,7 @@ public class FinalFrame extends BaseFrame {
     }
 
     private FinalFrame bowlSecondTry(int score) {
-        this.score = this.score.accumulate(score);
+        accumulateScore(score);
         increaseTrial();
         if (isThirdAvailable()) {
             this.status = FinalFrameStatus.of(true, false);
@@ -62,12 +56,9 @@ public class FinalFrame extends BaseFrame {
         return this;
     }
 
-    private boolean isThirdAvailable() {
-        return this.score.isStrike() || this.score.isSpare();
-    }
 
     private FinalFrame bowlThirdTry(int score) {
-        this.score = this.score.accumulate(score);
+        accumulateScore(score);
         increaseTrial();
         this.status = FinalFrameStatus.of(false, true);
         return this;
@@ -76,11 +67,6 @@ public class FinalFrame extends BaseFrame {
     @Override
     public boolean isLast() {
         return !status.isThirdAvailable() && status.isDone();
-    }
-
-    @Override
-    public int addWithFirstScore(int score) {
-        return this.score.getFirst() + score;
     }
 
     @Override
@@ -93,11 +79,11 @@ public class FinalFrame extends BaseFrame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FinalFrame that = (FinalFrame) o;
-        return Objects.equals(score, that.score) && Objects.equals(status, that.status);
+        return Objects.equals(status, that.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score, status);
+        return Objects.hash(status);
     }
 }

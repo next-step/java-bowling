@@ -35,7 +35,7 @@ public class NormalFrame extends BaseFrame {
 
     @Override
     public int nextIdx() {
-        if (isNowFirstTry() && !this.score.isStrike()) {
+        if (isNowFirstTry() && !isStrike()) {
             return index;
         }
         return index + 1;
@@ -44,14 +44,9 @@ public class NormalFrame extends BaseFrame {
     @Override
     public boolean isLast() {
         if (index == LAST) {
-            return score.isStrike() || isNowSecondTry();
+            return isStrike() || isNowSecondTry();
         }
         return index > LAST;
-    }
-
-    @Override
-    public int addWithFirstScore(int score) {
-        return this.score.getFirst() + score;
     }
 
     @Override
@@ -61,7 +56,7 @@ public class NormalFrame extends BaseFrame {
 
     @Override
     public BaseFrame bowl(int score) {
-        if (isNowFirstTry() && !this.score.isStrike()) {
+        if (isNowFirstTry() && !isStrike()) {
             return bowlSecondTry(score);
         }
         return bowlFirstTry(index + 1, score);
@@ -79,7 +74,7 @@ public class NormalFrame extends BaseFrame {
     }
 
     private BaseFrame bowlSecondTry(int score) {
-        this.score = this.score.accumulate(score);
+        accumulateScore(score);
         increaseTrial();
         return this;
     }
@@ -89,11 +84,11 @@ public class NormalFrame extends BaseFrame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalFrame that = (NormalFrame) o;
-        return index == that.index && Objects.equals(score, that.score) && Objects.equals(nextFrame, that.nextFrame);
+        return index == that.index && Objects.equals(nextFrame, that.nextFrame);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(index, score, nextFrame);
+        return Objects.hash(index, nextFrame);
     }
 }

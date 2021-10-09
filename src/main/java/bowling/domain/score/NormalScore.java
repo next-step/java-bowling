@@ -27,13 +27,20 @@ public class NormalScore extends BaseScore {
 
     public static NormalScore first(int score) {
         validateScore(score);
+        if (isStrike(score)) {
+            return new NormalScore(score, -1, true);
+        }
         return new NormalScore(score, -1, false);
+    }
+
+    private static boolean isStrike(int score) {
+        return score == MAX.value();
     }
 
     @Override
     protected int calculateWith(int base, Frame now) {
 
-        if(!isDone) {
+        if (!isDone) {
             return NONE;
         }
 

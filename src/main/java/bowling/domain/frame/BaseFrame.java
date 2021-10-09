@@ -12,7 +12,7 @@ public abstract class BaseFrame implements Frame {
 
     private int trial;
 
-    protected Score score;
+    private Score score;
 
     private final Frame prevFrame;
 
@@ -49,8 +49,26 @@ public abstract class BaseFrame implements Frame {
         return score.getAll();
     }
 
+    @Override
+    public int addWithFirstScore(int score) {
+        return this.score.getFirst() + score;
+    }
+
+
     protected void increaseTrial() {
         this.trial++;
+    }
+
+    protected boolean isThirdAvailable() {
+        return this.score.isStrike() || this.score.isSpare();
+    }
+
+    protected void accumulateScore(int score) {
+        this.score = this.score.accumulate(score);
+    }
+
+    protected boolean isStrike() {
+        return this.score.isStrike();
     }
 
 }
