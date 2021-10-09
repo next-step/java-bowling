@@ -2,9 +2,9 @@ package step4.domain;
 
 import java.util.LinkedList;
 import java.util.stream.Collectors;
-import step4.domain.state.FirstBowl;
 import step4.domain.state.Ready;
 import step4.domain.state.State;
+import step4.exception.NeedAdditionalFrameException;
 
 public class LastFrame implements Frame {
     private LinkedList<State> states = new LinkedList<>();
@@ -19,14 +19,17 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public String calculateScoreFromNextFrame(Score beforeScore) {
+    public Score calculateScoreFromNextFrame(Score beforeScore) {
+        Score score = beforeScore;
+
         for (State state : states) {
-            beforeScore = state.calculateScore(beforeScore);
-            if (beforeScore.canCalculate()) {
-                return beforeScore.getScore();
+            score = state.calculateScore(score);
+            if (score.canCalculateScore()) {
+                return score;
             }
         }
-        return beforeScore.getScore();
+        throw new NeedAdditionalFrameException();
+
     }
 
     @Override
@@ -49,8 +52,9 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public String getScore() {
-        return states.getLast().getScore();
+    public Score getScore() {
+        int newScore = states.stream().map(state -> Integer.parseInt(state.score().getScore())).reduce(0, Integer::sum);
+        return new Score(newScore, 0);
     }
 
     @Override
@@ -85,9 +89,7 @@ public class LastFrame implements Frame {
 
     private boolean secondTurnIsNotSpareOrStrike() {
         if (turn == 2) {
-            System.out.println(states.get(1).getSymbol());
-            System.out.println(Integer.parseInt(states.get(1).getScore()));
-            return Integer.parseInt(states.get(1).getScore()) != 10;
+            return states.size() == 1 && Integer.parseInt(states.get(0).getScore()) != 10;
         }
         return false;
     }

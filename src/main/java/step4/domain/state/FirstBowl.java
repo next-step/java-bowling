@@ -1,6 +1,7 @@
 package step4.domain.state;
 
 import step4.domain.Score;
+import step4.exception.NeedAdditionalFrameException;
 
 public class FirstBowl implements State {
     private int falledPins;
@@ -35,11 +36,10 @@ public class FirstBowl implements State {
 
     @Override
     public Score calculateScore(Score beforeScore) {
-        if (beforeScore.canCalculate()) {
-            return beforeScore;
-        }
-        beforeScore.throwBowl(falledPins);
-        return beforeScore;
+
+        Score newScore = beforeScore.throwBowl(falledPins);
+        return newScore;
+
     }
 
     @Override

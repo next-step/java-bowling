@@ -41,7 +41,13 @@ public class LastBowl implements State {
         if (beforeScore.canCalculate()) {
             return  beforeScore;
         }
-        beforeScore.throwBowl(lastFalledPins);
+
+        beforeScore = beforeScore.throwBowl(firstFalledPins);
+        if (beforeScore.canCalculate()) {
+            return  beforeScore;
+        }
+
+        beforeScore = beforeScore.throwBowl(lastFalledPins);
         return beforeScore;
     }
 

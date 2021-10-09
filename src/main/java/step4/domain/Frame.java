@@ -4,13 +4,13 @@ import step4.domain.state.State;
 
 public interface Frame {
 
-    String calculateScoreFromNextFrame(Score state);
+    Score calculateScoreFromNextFrame(Score state);
 
     void throwBowl(int i);
 
     Frame createFrame(int i);
 
-    String getScore();
+    Score getScore();
 
     boolean isFinish();
 

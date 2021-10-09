@@ -35,10 +35,11 @@ public class Strike implements State{
 
     @Override
     public Score calculateScore(Score beforeScore) {
+
         if (beforeScore.canCalculate()) {
             return beforeScore;
         }
-        beforeScore.throwBowl(10);
+        beforeScore = beforeScore.throwBowl(10);
         return beforeScore;
     }
 

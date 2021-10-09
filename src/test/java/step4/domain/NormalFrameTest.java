@@ -7,6 +7,7 @@ import step4.domain.state.FirstBowl;
 import step4.domain.state.LastBowl;
 import step4.domain.state.Spare;
 import step4.domain.state.Strike;
+import step4.exception.NeedAdditionalFrameException;
 
 class NormalFrameTest {
     @DisplayName("Ready state -> Strike state 상태 변경 확인")
@@ -66,6 +67,57 @@ class NormalFrameTest {
 
         Assertions.assertThat(firstFrame.getScore()).isEqualTo("30");
     }
+
+    @DisplayName("두개의 프레임 스트라이크 나머지 1개의 프레임을 스트라이크 못 쳤을 때 결과 확인")
+    @Test
+    void strikeScoreTest3() {
+        Frame firstFrame = new NormalFrame(1);
+        firstFrame.throwBowl(10);
+        Frame secondFrame = firstFrame.createFrame(2);
+        secondFrame.throwBowl(10);
+        Frame thirdFrame = secondFrame.createFrame(3);
+        thirdFrame.throwBowl(4);
+        firstFrame.next().next();
+
+//        Assertions.assertThat(firstFrame.getScore()).isEqualTo("24");
+    }
+
+    @DisplayName("두개의 프레임 스트라이크 나머지 1개의 프레임을 스트라이크 못 쳤을 때 결과 확인")
+    @Test
+    void strikeScoreTest4() {
+        Frame firstFrame = new NormalFrame(1);
+        firstFrame.throwBowl(10);
+
+        Frame secondFrame = firstFrame.createFrame(2);
+        secondFrame.throwBowl(10);
+//        try {
+//            firstFrame.getScore().getScore();
+//        } catch (NeedAdditionalFrameException e) {
+//
+//        }
+
+
+        Frame thirdFrame = secondFrame.createFrame(3);
+        thirdFrame.throwBowl(4);
+        thirdFrame.throwBowl(5);
+
+        Assertions.assertThat(firstFrame.getScore().getScore()).isEqualTo("24");
+    }
+
+    @DisplayName("세 개의 프레임 모두 스트라이크를 쳤을 때 두번째 프레임 오류 확인")
+    @Test
+    void strikeScoreTest5() {
+        Frame firstFrame = new NormalFrame(1);
+        firstFrame.throwBowl(10);
+        Frame secondFrame = firstFrame.createFrame(2);
+        secondFrame.throwBowl(10);
+        Frame thirdFrame = secondFrame.createFrame(3);
+        thirdFrame.throwBowl(10);
+
+        Assertions.assertThatThrownBy(() -> {
+            secondFrame.getScore();}).isInstanceOf(NeedAdditionalFrameException.class);
+    }
+
 
     @DisplayName("한 개의 프레임을 스패어 처리했을 때 공백 결과가 나타나는지 확인")
     @Test

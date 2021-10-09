@@ -1,6 +1,8 @@
 package step4.domain;
 
+import step3.exceptions.CannotCalculateExceptions;
 import step4.exception.MinimumTurnExcpetion;
+import step4.exception.NeedAdditionalFrameException;
 
 public class Score {
     private int score;
@@ -12,10 +14,10 @@ public class Score {
         checkValidLeft(left);
     }
 
-    public void throwBowl(int falledPins) {
-        this.score += falledPins;
-        this.left -= 1;
+    public Score throwBowl(int falledPins) {
         checkValidLeft(left);
+        return new Score(this.score + falledPins, left - 1);
+
     }
 
     private void checkValidLeft(int left) {
@@ -25,7 +27,12 @@ public class Score {
     }
 
     public String getScore() {
+
         return Integer.toString(score);
+    }
+
+    public boolean canCalculateScore() {
+        return left == 0;
     }
 
     public boolean canCalculate() {

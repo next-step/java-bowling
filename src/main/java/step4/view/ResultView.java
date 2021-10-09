@@ -7,7 +7,7 @@ public class ResultView {
     private static String FIRST_COLUMN = "|  %4s |";
     private static String MIDDLE_COLUMN = " %3s  |";
 
-    public static void printColumn() {
+    public static void printMainColumn() {
         printFirstColumn("NAME");
         for (int i = 1; i <= 10; i++) {
             printMiddleColumn(Integer.toString(i));

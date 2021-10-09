@@ -35,11 +35,11 @@ public class Spare implements State {
         if (beforeScore.canCalculate()) {
             return beforeScore;
         }
-        beforeScore.throwBowl(firstFalledPins);
+        beforeScore = beforeScore.throwBowl(firstFalledPins);
         if (beforeScore.canCalculate()) {
             return beforeScore;
         }
-        beforeScore.throwBowl(secondFalledPins);
+        beforeScore = beforeScore.throwBowl(secondFalledPins);
         return beforeScore;
     }
 
