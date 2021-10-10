@@ -22,7 +22,7 @@ public class LastBowl implements State {
     }
 
     @Override
-    public String getScore() {
+    public int getScore() {
         return score.getScore();
     }
 

@@ -92,7 +92,7 @@ public class BowlingGameController {
         ResultView.printFirstColumn("");
         while (currentFrame != null) {
             try {
-                totalScore += Integer.parseInt(currentFrame.getScore().getScore());
+                totalScore += currentFrame.getScore().getScore();
                 ResultView.printResult(totalScore);
                 round ++;
                 currentFrame = currentFrame.next();

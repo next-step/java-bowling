@@ -6,7 +6,7 @@ public interface State {
 
     State throwBowl(int falledPins);
     
-    String getScore();
+    int getScore();
 
     Score score();
 

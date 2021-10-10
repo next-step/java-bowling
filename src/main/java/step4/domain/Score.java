@@ -24,8 +24,8 @@ public class Score {
         }
     }
 
-    public String getScore() {
-        return Integer.toString(score);
+    public int getScore() {
+        return score;
     }
 
     public boolean canCalculateScore() {

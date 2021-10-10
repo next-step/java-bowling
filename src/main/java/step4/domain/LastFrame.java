@@ -52,7 +52,7 @@ public class LastFrame implements Frame {
 
     @Override
     public Score getScore() {
-        int newScore = states.stream().map(state -> Integer.parseInt(state.score().getScore())).reduce(0, Integer::sum);
+        int newScore = states.stream().map(state -> state.score().getScore()).reduce(0, Integer::sum);
         return new Score(newScore, 0);
     }
 
@@ -88,7 +88,7 @@ public class LastFrame implements Frame {
 
     private boolean secondTurnIsNotSpareOrStrike() {
         if (turn == 2) {
-            return states.size() == 1 && Integer.parseInt(states.get(0).getScore()) != 10;
+            return states.size() == 1 && states.get(0).getScore() != 10;
         }
         return false;
     }

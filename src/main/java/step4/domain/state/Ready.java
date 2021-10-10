@@ -18,7 +18,7 @@ public class Ready implements State {
     }
 
     @Override
-    public String getScore() {
+    public int getScore() {
         return score.getScore();
     }
 
