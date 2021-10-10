@@ -1,17 +1,15 @@
 package step4.domain.state;
 
 import step4.domain.Score;
-import step4.exception.NeedAdditionalFrameException;
 
 public class FirstBowl implements State {
     private int falledPins;
     private Score score;
-    private String symbol;
+
 
     public FirstBowl(int falledPins) {
         this.falledPins = falledPins;
         this.score = new Score(falledPins, 1);
-        this.symbol = falledPins + "|";
     }
 
     public State throwBowl(int falledPins) {
@@ -26,7 +24,7 @@ public class FirstBowl implements State {
     }
 
     public String getSymbol() {
-        return symbol;
+        return falledPins + "|";
     }
 
     @Override

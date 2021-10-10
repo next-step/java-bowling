@@ -56,14 +56,11 @@ public class BowlingGameController {
 
     private static void playBowlingByCycle(Frame currentFrame, String nameOfPerson) {
         ResultView.printFirstColumn(nameOfPerson);
-        int lastFrameRound = printSymbol(currentFrame);
-        ResultView.printEmptyColumn(10 - lastFrameRound);
-        ResultView.printFirstColumn("");
-        lastFrameRound = printTotalScore(currentFrame);
-        ResultView.printEmptyColumn(10 - lastFrameRound);
+        printSymbol(currentFrame);
+        printTotalScore(currentFrame);
     }
 
-    private static int printSymbol(Frame currentFrame) {
+    private static void printSymbol(Frame currentFrame) {
         int round = 0;
         while (currentFrame != null) {
             try {
@@ -71,15 +68,17 @@ public class BowlingGameController {
                 round++;
                 currentFrame = currentFrame.next();
             } catch (NeedAdditionalFrameException e) {
-                return round;
+                ResultView.printEmptyColumn(10 - round);
+                return;
             }
         }
-        return round;
+        ResultView.printEmptyColumn(10 - round);
     }
 
-    private static int printTotalScore(Frame currentFrame) {
+    private static void printTotalScore(Frame currentFrame) {
         int totalScore = 0;
         int round = 0;
+        ResultView.printFirstColumn("");
         while (currentFrame != null) {
             try {
                 totalScore += Integer.parseInt(currentFrame.getScore().getScore());
@@ -87,10 +86,10 @@ public class BowlingGameController {
                 round ++;
                 currentFrame = currentFrame.next();
             } catch (NeedAdditionalFrameException e) {
-                return round;
+                ResultView.printEmptyColumn(10 - round);
+                return;
             }
         }
-
-        return round;
+        ResultView.printEmptyColumn(10 - round);
     }
 }

@@ -6,13 +6,11 @@ import step4.domain.Score;
 public class LastBowl implements State {
     private int firstFalledPins;
     private int lastFalledPins;
-    private String symbol;
     private Score score;
 
     public LastBowl(int firstFalledPins, int lastFalledPins) {
         this.firstFalledPins = firstFalledPins;
         this.lastFalledPins = lastFalledPins;
-        this.symbol = firstFalledPins + "|" + lastFalledPins;
         this.score = new Score(firstFalledPins + lastFalledPins, 0);
     }
 
@@ -32,7 +30,7 @@ public class LastBowl implements State {
     }
 
     public String getSymbol() {
-        return symbol;
+        return firstFalledPins + "|" + lastFalledPins;
     }
 
     @Override

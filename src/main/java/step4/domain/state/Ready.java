@@ -5,11 +5,9 @@ import step4.exception.NeedAdditionalFrameException;
 
 public class Ready implements State {
     private Score score;
-    private String symbol;
 
     public Ready() {
         this.score = new Score(0, 2);
-        this.symbol = "";
     }
 
     public State throwBowl(int falledPins) {
