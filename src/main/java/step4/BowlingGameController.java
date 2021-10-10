@@ -1,18 +1,18 @@
 package step4;
 
-import java.util.Map;
 import step4.domain.Frame;
 import step4.domain.Frames;
 import step4.domain.NormalFrame;
+import step4.domain.PlayersFrames;
 import step4.exception.NeedAdditionalFrameException;
 import step4.view.InputView;
 import step4.view.ResultView;
 
 public class BowlingGameController {
-    private Map<String, Frames> playersFrame;
+    private PlayersFrames playersFrames;
 
-    public BowlingGameController(Map<String, Frames> playersFrame) {
-        this.playersFrame = playersFrame;
+    public BowlingGameController(PlayersFrames playersFrames) {
+        this.playersFrames = playersFrames;
     }
 
     public void run() {
@@ -23,7 +23,7 @@ public class BowlingGameController {
     private void printZeroFrameResult() {
         ResultView.printMainColumn();
         Frame initInfoFrame = new NormalFrame(0);
-        for (String nameOfPerson : this.playersFrame.keySet()) {
+        for (String nameOfPerson : this.playersFrames.playerSet()) {
             printEachFrameResult(initInfoFrame, nameOfPerson);
         }
     }
@@ -35,12 +35,13 @@ public class BowlingGameController {
     }
 
     private void playBowlingByPlayer() {
-        for (String player : this.playersFrame.keySet()) {
-            Frames frames = playersFrame.get(player);
-            Frame frame = frames.ofLast();
-            playBowlingUntilFinish(player, frame);
-            createNewFrame(frames, frame);
-        }
+        playersFrames.playGame();
+//        for (String player : this.playersFrames.playerSet()) {
+//            Frames frames = playersFrames.ofFrames(player);
+//            Frame frame = frames.ofLast();
+//            playBowlingUntilFinish(player, frame);
+//            createNewFrame(frames, frame);
+//        }
     }
 
     private void createNewFrame(Frames frames, Frame frame) {
@@ -54,14 +55,14 @@ public class BowlingGameController {
         while (!frame.isFinish()) {
             int falledPins = InputView.throwBowl(nameOfPerson);
             frame.throwBowl(falledPins);
-            printPlayerEachFrameResult(playersFrame);
+            printPlayerEachFrameResult(playersFrames);
         }
     }
 
-    private static void printPlayerEachFrameResult(Map<String, Frames> playersFrame) {
+    private static void printPlayerEachFrameResult(PlayersFrames playersFrames) {
         ResultView.printMainColumn();
-        for (String player : playersFrame.keySet()) {
-            printEachFrameResult(playersFrame.get(player).ofFirst(), player);
+        for (String player : playersFrames.playerSet()) {
+            printEachFrameResult(playersFrames.ofFrames(player).ofFirst(), player);
         }
     }
 
