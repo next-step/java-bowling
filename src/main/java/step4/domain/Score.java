@@ -1,8 +1,6 @@
 package step4.domain;
 
-import step3.exceptions.CannotCalculateExceptions;
 import step4.exception.MinimumTurnExcpetion;
-import step4.exception.NeedAdditionalFrameException;
 
 public class Score {
     private int score;

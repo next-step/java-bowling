@@ -41,7 +41,6 @@ public class LastFrame implements Frame {
             states.add(new Ready().throwBowl(falledPins));
             return;
         }
-
         states.removeLast();
         states.add(currentState.throwBowl(falledPins));
     }

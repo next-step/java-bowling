@@ -1,8 +1,5 @@
 package step4;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import step4.domain.Frame;
 import step4.domain.Frames;
@@ -12,49 +9,63 @@ import step4.view.InputView;
 import step4.view.ResultView;
 
 public class BowlingGameController {
-    public static void run() {
-        int numOfPeople = InputView.numOfPeople();
-        List<String> players = new ArrayList<>();
-        Map<String, Frames> playersFrame = new HashMap<>();
+    private Map<String, Frames> playersFrame;
 
-        Frame initInfoFrame = new NormalFrame(0);
-        for (int i = 0; i < numOfPeople; i++) {
-            String nameOfPerson = InputView.nameOfPerson();
-            players.add(nameOfPerson);
-            Frame frame = new NormalFrame(1);
-            Frames frames = new Frames();
-            frames.add(frame);
-            playersFrame.put(nameOfPerson, frames);
-        }
+    public BowlingGameController(Map<String, Frames> playersFrame) {
+        this.playersFrame = playersFrame;
+    }
 
+    public void run() {
+        printZeroFrameResult();
+        playBowlingByFrame();
+    }
+
+    private void printZeroFrameResult() {
         ResultView.printMainColumn();
-        for (String nameOfPerson : players) {
-            playBowlingByCycle(initInfoFrame, nameOfPerson);
-        }
-
-        for (int i = 1; i <= 10; i++) {
-            for (String nameOfPerson : players) {
-                Frames frames = playersFrame.get(nameOfPerson);
-                Frame frame = frames.ofLast();
-                while (!frame.isFinish()) {
-                    int falledPins = InputView.throwBowl(nameOfPerson);
-                    frame.throwBowl(falledPins);
-
-                    ResultView.printMainColumn();
-                    for (String player : players) {
-                        playBowlingByCycle(playersFrame.get(player).ofFirst(), player);
-                    }
-                }
-
-                if (frame.round() != 10 && frame.isFinish()) {
-                    frame = frame.createFrame(frame.round() + 1);
-                    frames.add(frame);
-                }
-            }
+        Frame initInfoFrame = new NormalFrame(0);
+        for (String nameOfPerson : this.playersFrame.keySet()) {
+            printEachFrameResult(initInfoFrame, nameOfPerson);
         }
     }
 
-    private static void playBowlingByCycle(Frame currentFrame, String nameOfPerson) {
+    private void playBowlingByFrame() {
+        for (int i = 1; i <= 10; i++) {
+            playBowlingByPlayer();
+        }
+    }
+
+    private void playBowlingByPlayer() {
+        for (String player : this.playersFrame.keySet()) {
+            Frames frames = playersFrame.get(player);
+            Frame frame = frames.ofLast();
+            playBowlingUntilFinish(player, frame);
+            createNewFrame(frames, frame);
+        }
+    }
+
+    private void createNewFrame(Frames frames, Frame frame) {
+        if (frame.round() != 10 && frame.isFinish()) {
+            frame = frame.createFrame(frame.round() + 1);
+            frames.add(frame);
+        }
+    }
+
+    private void playBowlingUntilFinish(String nameOfPerson, Frame frame) {
+        while (!frame.isFinish()) {
+            int falledPins = InputView.throwBowl(nameOfPerson);
+            frame.throwBowl(falledPins);
+            printPlayerEachFrameResult(playersFrame);
+        }
+    }
+
+    private static void printPlayerEachFrameResult(Map<String, Frames> playersFrame) {
+        ResultView.printMainColumn();
+        for (String player : playersFrame.keySet()) {
+            printEachFrameResult(playersFrame.get(player).ofFirst(), player);
+        }
+    }
+
+    private static void printEachFrameResult(Frame currentFrame, String nameOfPerson) {
         ResultView.printFirstColumn(nameOfPerson);
         printSymbol(currentFrame);
         printTotalScore(currentFrame);
