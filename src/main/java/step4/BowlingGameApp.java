@@ -12,14 +12,10 @@ import step4.view.InputView;
 public class BowlingGameApp {
 
     public static void main(String[] args) {
-        int numOfPeople = InputView.numOfPeople();
-        List<String> players = new ArrayList<>();
         Map<String, Frames> playersFrame = new HashMap<>();
 
-
-        for (int i = 0; i < numOfPeople; i++) {
+        for (int i = 0; i < InputView.numOfPeople(); i++) {
             String nameOfPerson = InputView.nameOfPerson();
-            players.add(nameOfPerson);
             Frame frame = new NormalFrame(1);
             Frames frames = new Frames();
             frames.add(frame);

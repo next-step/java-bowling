@@ -38,8 +38,7 @@ public class FirstBowl implements State {
     @Override
     public Score calculateScore(Score beforeScore) {
 
-        Score newScore = beforeScore.throwBowl(falledPins);
-        return newScore;
+        return beforeScore.throwBowl(falledPins);
 
     }
 

@@ -74,16 +74,13 @@ public class LastFrame implements Frame {
     @Override
     public String getSymbol() {
         return states.stream()
-            .map(state -> state.getSymbol())
+            .map(State::getSymbol)
             .collect(Collectors.joining("|"));
     }
 
     @Override
     public boolean isGameEnd() {
-        if (turn == 3 || secondTurnIsNotSpareOrStrike()) {
-            return true;
-        }
-        return false;
+        return turn == 3 || secondTurnIsNotSpareOrStrike();
     }
 
     private boolean secondTurnIsNotSpareOrStrike() {
