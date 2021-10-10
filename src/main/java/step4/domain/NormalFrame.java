@@ -44,6 +44,7 @@ public class NormalFrame implements Frame {
         if (nextFrame == null) {
             throw new NeedAdditionalFrameException();
         }
+
         return nextFrame.calculateScoreFromNextFrame(score);
     }
 

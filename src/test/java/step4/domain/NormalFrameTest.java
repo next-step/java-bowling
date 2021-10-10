@@ -159,4 +159,6 @@ class NormalFrameTest {
 
         Assertions.assertThat(firstFrame.getScore()).isEqualTo("9");
     }
+
+
 }

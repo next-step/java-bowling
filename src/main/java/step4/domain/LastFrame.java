@@ -59,7 +59,7 @@ public class LastFrame implements Frame {
 
     @Override
     public boolean isFinish() {
-        return states.getLast().isFinish();
+        return isGameEnd();
     }
 
     @Override

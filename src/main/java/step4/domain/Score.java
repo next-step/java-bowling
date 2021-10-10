@@ -27,7 +27,6 @@ public class Score {
     }
 
     public String getScore() {
-
         return Integer.toString(score);
     }
 

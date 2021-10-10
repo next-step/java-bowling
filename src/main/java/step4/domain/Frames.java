@@ -1,10 +1,11 @@
 package step4.domain;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Frames {
-    private List<Frame> result = new ArrayList<>();
+    private LinkedList<Frame> result = new LinkedList<>();
 
 
     public void add(Frame frame) {
@@ -12,6 +13,10 @@ public class Frames {
     }
 
     public Frame ofFirst() {
-        return result.get(0);
+        return result.getFirst();
+    }
+
+    public Frame ofLast() {
+        return result.getLast();
     }
 }

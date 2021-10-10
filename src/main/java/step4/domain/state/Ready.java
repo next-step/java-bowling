@@ -1,6 +1,7 @@
 package step4.domain.state;
 
 import step4.domain.Score;
+import step4.exception.NeedAdditionalFrameException;
 
 public class Ready implements State {
     private Score score;
@@ -30,7 +31,7 @@ public class Ready implements State {
 
     @Override
     public Score calculateScore(Score beforeScore) {
-        return null;
+        throw new NeedAdditionalFrameException();
     }
 
     @Override
@@ -40,6 +41,6 @@ public class Ready implements State {
 
     @Override
     public String getSymbol() {
-        return symbol;
+        throw new NeedAdditionalFrameException();
     }
 }
