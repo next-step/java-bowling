@@ -1,6 +1,7 @@
 package step4.domain.state;
 
 import java.util.Objects;
+import step4.domain.Pins;
 import step4.domain.Score;
 
 public class Spare implements State {
@@ -12,6 +13,7 @@ public class Spare implements State {
         this.firstFalledPins = firstFalledPins;
         this.secondFalledPins = secondFalledPins;
         this.score = new Score(10, 1);
+        Pins.validPins(firstFalledPins + secondFalledPins);
     }
 
     public State throwBowl(int falledPins) {

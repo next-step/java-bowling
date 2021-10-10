@@ -1,6 +1,7 @@
 package step4.domain.state;
 
 import java.util.Objects;
+import step4.domain.Pins;
 import step4.domain.Score;
 
 public class Strike implements State{
@@ -10,6 +11,7 @@ public class Strike implements State{
     public Strike() {
         this.falledPins = 10;
         this.score = new Score(10, 2);
+        Pins.validPins(falledPins);
     }
 
     @Override

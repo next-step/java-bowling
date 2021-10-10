@@ -1,5 +1,6 @@
 package step4.domain.state;
 
+import step4.domain.Pins;
 import step4.domain.Score;
 
 public class FirstBowl implements State {
@@ -10,6 +11,7 @@ public class FirstBowl implements State {
     public FirstBowl(int falledPins) {
         this.falledPins = falledPins;
         this.score = new Score(falledPins, 1);
+        Pins.validPins(falledPins);
     }
 
     public State throwBowl(int falledPins) {

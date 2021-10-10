@@ -1,6 +1,7 @@
 package step4.domain.state;
 
 import java.util.Objects;
+import step4.domain.Pins;
 import step4.domain.Score;
 
 public class LastBowl implements State {
@@ -12,6 +13,7 @@ public class LastBowl implements State {
         this.firstFalledPins = firstFalledPins;
         this.lastFalledPins = lastFalledPins;
         this.score = new Score(firstFalledPins + lastFalledPins, 0);
+        Pins.validPins(firstFalledPins + lastFalledPins);
     }
 
     @Override
