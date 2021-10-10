@@ -1,5 +1,6 @@
 package step4.domain.state;
 
+import java.util.Objects;
 import step4.domain.Pins;
 import step4.domain.Score;
 
@@ -45,5 +46,22 @@ public class FirstBowl implements State {
     @Override
     public boolean isFinish() {
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        FirstBowl firstBowl = (FirstBowl) o;
+        return falledPins == firstBowl.falledPins && Objects.equals(score, firstBowl.score);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(falledPins, score);
     }
 }
