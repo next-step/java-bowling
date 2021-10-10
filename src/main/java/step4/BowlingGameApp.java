@@ -11,10 +11,10 @@ import step4.view.InputView;
 public class BowlingGameApp {
 
     public static void main(String[] args) {
-        int numOfPeople = InputView.numOfPeople();
+        NumOfPeoPle numOfPeople = new NumOfPeoPle(InputView.numOfPeople());
         PlayersFrames playersFrames = new PlayersFrames();
 
-        for (int i = 0; i < numOfPeople; i++) {
+        for (int i = 0; i < numOfPeople.num(); i++) {
             String nameOfPerson = InputView.nameOfPerson();
             Frame frame = new NormalFrame(1);
             Frames frames = new Frames();

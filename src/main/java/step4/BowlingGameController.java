@@ -35,13 +35,12 @@ public class BowlingGameController {
     }
 
     private void playBowlingByPlayer() {
-        playersFrames.playGame();
-//        for (String player : this.playersFrames.playerSet()) {
-//            Frames frames = playersFrames.ofFrames(player);
-//            Frame frame = frames.ofLast();
-//            playBowlingUntilFinish(player, frame);
-//            createNewFrame(frames, frame);
-//        }
+        for (String player : this.playersFrames.playerSet()) {
+            Frames frames = playersFrames.ofFrames(player);
+            Frame frame = frames.ofLast();
+            playBowlingUntilFinish(player, frame);
+            createNewFrame(frames, frame);
+        }
     }
 
     private void createNewFrame(Frames frames, Frame frame) {
