@@ -5,13 +5,12 @@ import bowling.domain.PinCount;
 import bowling.domain.state.State;
 import bowling.domain.state.StateFactory;
 
-public class BasicFrame implements Frame {
-    private final FrameNumber frameNumber;
+public class BasicFrame extends AbstractFrame {
 
     private State state;
 
     public BasicFrame(final FrameNumber frameNumber) {
-        this.frameNumber = frameNumber;
+        super(frameNumber);
         this.state = StateFactory.ready();
     }
 
@@ -25,16 +24,11 @@ public class BasicFrame implements Frame {
     }
 
     private Frame createFrame() {
-        FrameNumber nextFrameNumber = frameNumber.next();
+        FrameNumber nextFrameNumber = getFrameNumber().next();
         if (nextFrameNumber.isFinalNumber()) {
-            return new FinalFrame();
+            return new FinalFrame(nextFrameNumber);
         }
         return new BasicFrame(nextFrameNumber);
-    }
-
-    @Override
-    public FrameNumber getFrameNumber() {
-        return frameNumber;
     }
 
     @Override
