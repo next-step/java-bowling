@@ -5,54 +5,34 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
-public class Left {
+public enum Left {
+    ZERO(0),
+    ONE(1),
+    TWO(2);
+
     private static final int MIN = 0;
 
-    private static final int MAX = 2;
-
     private static final Map<Integer, Left> leftMap =
-            Collections.unmodifiableMap(IntStream.rangeClosed(MIN, MAX)
-            .boxed()
-            .collect(Collectors.toMap(Function.identity(), Left::new)));
-
-    public static final Left ZERO = Left.of(MIN);
-    public static final Left ONE = Left.of(1);
-    public static final Left TWO = Left.of(MAX);
+            Collections.unmodifiableMap(Stream.of(values())
+                    .collect(Collectors.toMap(left -> left.left, Function.identity())));
 
     private final int left;
 
-    public static Left of(final int inputLeft) {
-        Left left = leftMap.get(inputLeft);
-        if (Objects.isNull(left)) {
-            throw new IllegalArgumentException("left 범위를 벗어났습니다. left : " + inputLeft);
-        }
-        return left;
-    }
-
-    private Left(int left) {
+    Left(int left) {
         this.left = left;
     }
 
     public Left play() {
-        return Left.of(left - 1);
+        Left left = leftMap.get(this.left - 1);
+        if (Objects.isNull(left)) {
+            throw new IllegalArgumentException("left 범위를 벗어났습니다. left : " + (this.left - 1));
+        }
+        return left;
     }
 
     public boolean isFinished() {
         return Objects.equals(this.left, MIN);
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        final Left left1 = (Left) o;
-        return left == left1.left;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(left);
     }
 }
