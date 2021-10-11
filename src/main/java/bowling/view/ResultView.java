@@ -1,7 +1,6 @@
 package bowling.view;
 
 import bowling.domain.FrameResult;
-import bowling.domain.Indication;
 import bowling.domain.PlayerGame;
 import bowling.domain.frame.FrameNumber;
 
@@ -14,6 +13,8 @@ public class ResultView {
 
     private static final String BLANK = " ";
 
+    private static final String SEPARATOR = "|";
+
     public static void printResult(final PlayerGame playerGame) {
         printName("NAME");
         printFrameIndex();
@@ -22,31 +23,30 @@ public class ResultView {
     }
 
     private static void printName(final String name) {
-        System.out.print(Indication.SEPARATOR);
+        System.out.print(SEPARATOR);
         printContent(name);
     }
 
     private static void printFrameIndex() {
         for (int index = 1; index <= FrameNumber.FINAL_NUMBER; index++) {
-            System.out.print(Indication.SEPARATOR);
+            System.out.print(SEPARATOR);
             printContent(printFrameNumberDoubleDigits(index));
         }
-        System.out.println(Indication.SEPARATOR);
-        System.out.println();
+        System.out.println(SEPARATOR);
     }
 
     private static void printBowlingBoard(final List<FrameResult> frameResults) {
         for (int index = 1; index <= frameResults.size(); index++) {
-            System.out.print(Indication.SEPARATOR);
+            System.out.print(SEPARATOR);
             FrameResult frameResult = frameResults.get(index - 1);
             printContent(frameResult.showIndication());
         }
 
         for (int index = frameResults.size() + 1; index <= FrameNumber.FINAL_NUMBER; index++) {
-            System.out.print(Indication.SEPARATOR);
+            System.out.print(SEPARATOR);
             printContent("");
         }
-        System.out.println(Indication.SEPARATOR);
+        System.out.println(SEPARATOR);
         System.out.println();
     }
 
