@@ -7,9 +7,11 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static bowling.domain.Indication.GUTTER;
-
 public class PinCount {
+    private static final String SEPARATOR = "|";
+    private static final String SPARE = "/";
+    private static final String GUTTER = "-";
+
     public static final int MAX = 10;
 
     public static final int MIN = 0;
@@ -54,9 +56,16 @@ public class PinCount {
 
     public String showIndication() {
         if (isGutter()) {
-            return GUTTER.toString();
+            return GUTTER;
         }
         return String.valueOf(pinCount);
+    }
+
+    public String showIndication(final PinCount pinCount) {
+        if (isSpare(pinCount)) {
+            return showIndication() + SEPARATOR + SPARE;
+        }
+        return showIndication() + SEPARATOR + pinCount.showIndication();
     }
 
     private boolean isGutter() {
