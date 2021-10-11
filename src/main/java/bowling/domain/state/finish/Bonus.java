@@ -19,7 +19,7 @@ public class Bonus extends Finish {
 
     @Override
     public Score calculateAdditionalScore(Score score) {
-        return null;
+        return score.addPin(bonusPin);
     }
 
 }
