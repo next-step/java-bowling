@@ -4,8 +4,6 @@ import bowling.domain.Left;
 import bowling.domain.PinCount;
 import bowling.domain.Score;
 
-import static bowling.domain.Indication.*;
-
 public class Miss extends Finished {
     private final PinCount first;
 
@@ -26,7 +24,7 @@ public class Miss extends Finished {
 
     @Override
     public String showIndication() {
-        return first.showIndication() + SEPARATOR + second.showIndication();
+        return first.showIndication(second);
     }
 
     @Override

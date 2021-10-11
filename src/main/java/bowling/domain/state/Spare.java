@@ -3,8 +3,6 @@ package bowling.domain.state;
 import bowling.domain.PinCount;
 import bowling.domain.Score;
 
-import static bowling.domain.Indication.*;
-
 public class Spare extends Finished {
     private final PinCount first;
 
@@ -38,6 +36,6 @@ public class Spare extends Finished {
 
     @Override
     public String showIndication() {
-        return first.showIndication() + SEPARATOR + SPARE;
+        return first.showIndication(second);
     }
 }
