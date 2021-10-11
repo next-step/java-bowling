@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.Indication;
 import bowling.domain.PinCount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,20 +11,22 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static bowling.domain.frame.FrameNumber.FINAL_NUMBER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class FinalFrameTest {
+    private static final String SEPARATOR = "|";
 
     @DisplayName("isFinished, makeIndication 테스트")
     @ParameterizedTest(name = "{index}. {displayName}, arguments: {arguments}")
     @MethodSource("parameterProvider")
     void isFinished_And_MakeIndication(List<PinCount> pinCounts, boolean isFinished, String indication) {
-        FinalFrame finalFrame = new FinalFrame();
+        Frame finalFrame = new FinalFrame(FrameNumber.of(FINAL_NUMBER));
         for (PinCount pinCount : pinCounts) {
             finalFrame = finalFrame.play(pinCount);
         }
-        final FinalFrame finalFrame1 = finalFrame;
+        final FinalFrame finalFrame1 = (FinalFrame) finalFrame;
         assertAll(
                 () -> assertThat(finalFrame1.isFinished()).isEqualTo(isFinished),
                 () -> assertThat(finalFrame1.makeIndication()).isEqualTo(indication)
@@ -47,17 +48,17 @@ public class FinalFrameTest {
         List<PinCount> turkey = Arrays.asList(PinCount.MAX_PINS, PinCount.MAX_PINS, PinCount.MAX_PINS);
         return Stream.of(
                 Arguments.of(oncePitched, false, "5"),
-                Arguments.of(spare, false, "5" + Indication.SEPARATOR + "/"),
+                Arguments.of(spare, false, "5" + SEPARATOR + "/"),
                 Arguments.of(strike, false, "X"),
-                Arguments.of(strikeAndSecondPitched, false, "X" + Indication.SEPARATOR + "3"),
-                Arguments.of(doubleStrike, false, "X" + Indication.SEPARATOR + "X"),
-                Arguments.of(miss, true, "2" + Indication.SEPARATOR + "3"),
-                Arguments.of(spareAndSecondPitched, true, "2" + Indication.SEPARATOR + "/" + Indication.SEPARATOR + "5"),
-                Arguments.of(spareAndStrike, true, "2" + Indication.SEPARATOR + "/" + Indication.SEPARATOR + "X"),
-                Arguments.of(strikeAndMiss, true, "X" + Indication.SEPARATOR + "3" + Indication.SEPARATOR + "5"),
-                Arguments.of(strikeAndSpare, true, "X" + Indication.SEPARATOR + "3" + Indication.SEPARATOR + "/"),
-                Arguments.of(doubleAndThirdPitched, true, "X" + Indication.SEPARATOR + "X" + Indication.SEPARATOR + "7"),
-                Arguments.of(turkey, true, "X" + Indication.SEPARATOR + "X" + Indication.SEPARATOR + "X")
+                Arguments.of(strikeAndSecondPitched, false, "X" + SEPARATOR + "3"),
+                Arguments.of(doubleStrike, false, "X" + SEPARATOR + "X"),
+                Arguments.of(miss, true, "2" + SEPARATOR + "3"),
+                Arguments.of(spareAndSecondPitched, true, "2" + SEPARATOR + "/" + SEPARATOR + "5"),
+                Arguments.of(spareAndStrike, true, "2" + SEPARATOR + "/" + SEPARATOR + "X"),
+                Arguments.of(strikeAndMiss, true, "X" + SEPARATOR + "3" + SEPARATOR + "5"),
+                Arguments.of(strikeAndSpare, true, "X" + SEPARATOR + "3" + SEPARATOR + "/"),
+                Arguments.of(doubleAndThirdPitched, true, "X" + SEPARATOR + "X" + SEPARATOR + "7"),
+                Arguments.of(turkey, true, "X" + SEPARATOR + "X" + SEPARATOR + "X")
         );
     }
 }

@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
 import bowling.domain.FrameResult;
-import bowling.domain.Indication;
 import bowling.domain.PinCount;
 import bowling.domain.Score;
 import bowling.domain.state.State;
@@ -12,17 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static bowling.domain.frame.FrameNumber.FINAL_NUMBER;
-
-public class FinalFrame implements Frame {
+public class FinalFrame extends AbstractFrame {
+    private static final String SEPARATOR = "|";
     private final List<State> states = new ArrayList<>();
 
-    public FinalFrame() {
+    public FinalFrame(final FrameNumber frameNumber) {
+        super(frameNumber);
         this.states.add(StateFactory.ready());
     }
 
     @Override
-    public FinalFrame play(final PinCount pinCount) {
+    public Frame play(final PinCount pinCount) {
         if (isFinished()) {
             throw new GameEndException();
         }
@@ -56,11 +55,6 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public FrameNumber getFrameNumber() {
-        return FrameNumber.of(FINAL_NUMBER);
-    }
-
-    @Override
     public FrameResult makeResult() {
         return new FrameResult(makeIndication());
     }
@@ -68,6 +62,6 @@ public class FinalFrame implements Frame {
     String makeIndication() {
         return states.stream()
                 .map(State::showIndication)
-                .collect(Collectors.joining(Indication.SEPARATOR.toString()));
+                .collect(Collectors.joining(SEPARATOR));
     }
 }
