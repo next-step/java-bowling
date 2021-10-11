@@ -29,7 +29,7 @@ public class SpareTest {
     @Test
     void calculateBonusScore_ReturnPlusFirst_IfBeforeScoreIsSpare() {
         PinCount first = PinCount.of(5);
-        PinCount second = PinCount.of(4);
+        PinCount second = PinCount.of(5);
         State spare = new Spare(first, second);
 
         Score beforeScore = Score.SPARE;
@@ -41,7 +41,7 @@ public class SpareTest {
     @Test
     void calculateBonusScore_ReturnPlusFirstAndSecond_IfBeforeScoreIsStrike() {
         PinCount first = PinCount.of(5);
-        PinCount second = PinCount.of(4);
+        PinCount second = PinCount.of(5);
         State spare = new Spare(first, second);
 
         Score beforeScore = Score.STRIKE;
