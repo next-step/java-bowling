@@ -3,9 +3,8 @@ package bowling.domain.state;
 import bowling.domain.PinCount;
 import bowling.domain.Score;
 
-import static bowling.domain.Indication.STRIKE;
-
 public class Strike extends Finished {
+    private static final String INDICATION = "X";
     @Override
     public Score getScore() {
         return Score.STRIKE;
@@ -18,6 +17,6 @@ public class Strike extends Finished {
 
     @Override
     public String showIndication() {
-        return STRIKE.toString();
+        return INDICATION;
     }
 }
