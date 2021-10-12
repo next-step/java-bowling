@@ -66,4 +66,13 @@ class NormalFrameTest {
 
         assertThat(normalFrame.status()).isEqualTo(FrameStatus.GUTTER);
     }
+
+    @Test
+    @DisplayName("스코어 합산")
+    void checkPointTest() throws CannotCreateException {
+        normalFrame.firstShot(new PinScore(6));
+        normalFrame.secondShot(new PinScore(3));
+
+        assertThat(normalFrame.score()).isEqualTo(9);
+    }
 }

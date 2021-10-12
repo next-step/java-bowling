@@ -2,16 +2,19 @@ package bowling.domain;
 
 import bowling.exception.CannotCreateException;
 
-public class NormalFrame extends Frame{
+public class NormalFrame extends Frame {
 
     private FrameStatus status = FrameStatus.READY;
-    private int score;
-
+    private PinScore firstScore;
+    private PinScore secondScore;
     private Frame next;
 
     @Override
     public int score() {
-        return 0;
+        if (secondScore == null) {
+            return firstScore.value();
+        }
+        return firstScore.value() + secondScore.value();
     }
 
     @Override
@@ -20,30 +23,41 @@ public class NormalFrame extends Frame{
     }
 
     @Override
-    public void firstShot(PinScore pinScore){
-        this.score = pinScore.value();
+    public void firstShot(PinScore pinScore) throws CannotCreateException {
+        firstScore = pinScore;
         firstShotStatus();
     }
 
     @Override
     public void secondShot(PinScore pinScore) throws CannotCreateException {
-        this.score += pinScore.value();
+        secondScore = pinScore;
         secondShotStatus();
     }
 
-    private void firstShotStatus(){
-        if(score == PinScore.MAX){
+    public void linkNextFrame(Frame next) {
+        this.next = next;
+    }
+
+    @Override
+    public Frame next() {
+        return next;
+    }
+
+    private void firstShotStatus() throws CannotCreateException {
+        if (firstScore.value() == PinScore.MAX) {
             status = FrameStatus.STRIKE;
+            secondScore = new PinScore(0);
         }
     }
 
     private void secondShotStatus() throws CannotCreateException {
-        validation(score);
-        if(score == PinScore.MIN){
+        int addScore = firstScore.add(secondScore);
+        validation(addScore);
+        if (addScore == PinScore.MIN) {
             status = FrameStatus.GUTTER;
             return;
         }
-        if(score == PinScore.MAX){
+        if (addScore == PinScore.MAX) {
             status = FrameStatus.SPARE;
             return;
         }
@@ -51,17 +65,16 @@ public class NormalFrame extends Frame{
     }
 
     private void validation(int score) throws CannotCreateException {
-        if(score > PinScore.MAX){
+        if (score > PinScore.MAX) {
             throw new CannotCreateException(CannotCreateException.SECOND_SCORE_ERROR_MSG);
         }
     }
 
-    public void linkNextFrame(Frame next){
-        this.next = next;
+    @Override
+    public String toString() {
+        return "NormalFrame{" +
+                "status=" + status +
+                ",score=" + score()
+                + '}';
     }
-
-    public Frame next(){
-        return next;
-    }
-
 }

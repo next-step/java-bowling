@@ -5,6 +5,7 @@ import bowling.exception.CannotCreateException;
 public class PinScore {
     public static final int MIN = 0;
     public static final int MAX = 10;
+
     private int score;
 
     public PinScore(int score) throws CannotCreateException {
@@ -26,4 +27,7 @@ public class PinScore {
         }
     }
 
+    public int add(PinScore otherScore) {
+        return score + otherScore.value();
+    }
 }
