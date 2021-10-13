@@ -23,7 +23,6 @@ public class NormalFrame implements Frame {
         }
         nextFrame = new LastFrame(10);
         return nextFrame;
-
     }
 
     public void throwBowl(int falledPins) {

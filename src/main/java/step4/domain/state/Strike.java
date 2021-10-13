@@ -6,22 +6,11 @@ import step4.domain.Score;
 
 public class Strike extends Finished{
     private int falledPins;
-    private Score score;
 
     public Strike() {
+        super(10, 2);
         this.falledPins = 10;
-        this.score = new Score(10, 2);
         Pins.validPins(falledPins);
-    }
-
-    @Override
-    public int getScore() {
-        return score.getScore();
-    }
-
-    @Override
-    public Score score() {
-        return score;
     }
 
     public String getSymbol() {

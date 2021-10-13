@@ -7,21 +7,12 @@ import step4.domain.Score;
 public class LastBowl extends Finished {
     private int firstFalledPins;
     private int lastFalledPins;
-    private Score score;
 
     public LastBowl(int firstFalledPins, int lastFalledPins) {
+        super(firstFalledPins + lastFalledPins, 0);
         this.firstFalledPins = firstFalledPins;
         this.lastFalledPins = lastFalledPins;
-        this.score = new Score(firstFalledPins + lastFalledPins, 0);
         Pins.validPins(firstFalledPins + lastFalledPins);
-    }
-
-    public int getScore() {
-        return score.getScore();
-    }
-
-    public Score score() {
-        return score;
     }
 
     public String getSymbol() {
@@ -43,6 +34,7 @@ public class LastBowl extends Finished {
         return beforeScore;
     }
 
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -52,11 +44,11 @@ public class LastBowl extends Finished {
         }
         LastBowl lastBowl = (LastBowl) o;
         return firstFalledPins == lastBowl.firstFalledPins
-            && lastFalledPins == lastBowl.lastFalledPins
-            && Objects.equals(score, lastBowl.score);
+            && lastFalledPins == lastBowl.lastFalledPins;
     }
 
+    @Override
     public int hashCode() {
-        return Objects.hash(firstFalledPins, lastFalledPins, score);
+        return Objects.hash(firstFalledPins, lastFalledPins);
     }
 }

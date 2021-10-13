@@ -1,7 +1,5 @@
 package step4.domain;
 
-import step4.domain.state.State;
-
 public interface Frame {
 
     Score calculateScoreFromNextFrame(Score state);
@@ -12,13 +10,13 @@ public interface Frame {
 
     Score getScore();
 
-    boolean isFinish();
-
     int round();
 
     Frame next();
 
     String getSymbol();
+
+    boolean isFinish();
 
     boolean isGameEnd();
 }

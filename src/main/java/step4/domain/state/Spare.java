@@ -10,20 +10,10 @@ public class Spare extends Finished {
     private Score score;
 
     public Spare(int firstFalledPins, int secondFalledPins) {
+        super(10, 1);
         this.firstFalledPins = firstFalledPins;
         this.secondFalledPins = secondFalledPins;
-        this.score = new Score(10, 1);
         Pins.validPins(firstFalledPins + secondFalledPins);
-    }
-
-    @Override
-    public int getScore() {
-        return score.getScore();
-    }
-
-    @Override
-    public Score score() {
-        return score;
     }
 
     @Override
