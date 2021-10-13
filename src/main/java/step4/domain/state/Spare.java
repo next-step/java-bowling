@@ -4,7 +4,7 @@ import java.util.Objects;
 import step4.domain.Pins;
 import step4.domain.Score;
 
-public class Spare implements State {
+public class Spare extends Finished {
     private int firstFalledPins;
     private int secondFalledPins;
     private Score score;
@@ -14,10 +14,6 @@ public class Spare implements State {
         this.secondFalledPins = secondFalledPins;
         this.score = new Score(10, 1);
         Pins.validPins(firstFalledPins + secondFalledPins);
-    }
-
-    public State throwBowl(int falledPins) {
-        return null;
     }
 
     @Override
@@ -41,11 +37,6 @@ public class Spare implements State {
         }
         beforeScore = beforeScore.throwBowl(secondFalledPins);
         return beforeScore;
-    }
-
-    @Override
-    public boolean isFinish() {
-        return true;
     }
 
     @Override

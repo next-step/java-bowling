@@ -9,9 +9,11 @@ import step4.exception.NeedAdditionalFrameException;
 public class LastFrame implements Frame {
     private LinkedList<State> states = new LinkedList<>();
     private int turn = 0;
+    private int round;
 
     public LastFrame(int i) {
         states.add(new Ready());
+        this.round = round;
     }
 
     public LinkedList<State> getStates() {
