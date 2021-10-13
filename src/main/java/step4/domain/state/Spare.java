@@ -17,6 +17,16 @@ public class Spare extends Finished {
     }
 
     @Override
+    public int getScore() {
+        return score.getScore();
+    }
+
+    @Override
+    public Score score() {
+        return score;
+    }
+
+    @Override
     public Score calculateScore(Score beforeScore) {
         if (beforeScore.canCalculate()) {
             return beforeScore;

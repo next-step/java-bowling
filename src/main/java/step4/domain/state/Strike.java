@@ -14,6 +14,16 @@ public class Strike extends Finished{
         Pins.validPins(falledPins);
     }
 
+    @Override
+    public int getScore() {
+        return score.getScore();
+    }
+
+    @Override
+    public Score score() {
+        return score;
+    }
+
     public String getSymbol() {
         return "X";
     }

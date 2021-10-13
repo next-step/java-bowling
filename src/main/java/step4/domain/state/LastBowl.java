@@ -16,6 +16,14 @@ public class LastBowl extends Finished {
         Pins.validPins(firstFalledPins + lastFalledPins);
     }
 
+    public int getScore() {
+        return score.getScore();
+    }
+
+    public Score score() {
+        return score;
+    }
+
     public String getSymbol() {
         return firstFalledPins + "|" + lastFalledPins;
     }
