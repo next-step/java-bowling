@@ -6,17 +6,15 @@ public interface Frame {
 
     void throwBowl(int i);
 
-    Frame createFrame(int i);
+    String getSymbol();
 
     Score getScore();
 
-    int round();
-
-    Frame next();
-
-    String getSymbol();
+    boolean isGameEnd();
 
     boolean isFinish();
 
-    boolean isGameEnd();
+    Frame createFrame(int i);
+
+    int round();
 }

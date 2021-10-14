@@ -11,4 +11,5 @@ public abstract class ProtoTypeFrame implements Frame {
     public int round() {
         return this.round;
     }
+
 }

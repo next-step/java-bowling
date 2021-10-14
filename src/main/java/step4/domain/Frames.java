@@ -17,4 +17,8 @@ public class Frames {
     public Frame ofLast() {
         return result.getLast();
     }
+
+    public LinkedList<Frame> frames() {
+        return result;
+    }
 }

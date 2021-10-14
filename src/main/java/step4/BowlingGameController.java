@@ -23,8 +23,10 @@ public class BowlingGameController {
     private void printZeroFrameResult() {
         ResultView.printMainColumn();
         Frame initInfoFrame = new NormalFrame(0);
+        Frames frames = new Frames();
+        frames.add(initInfoFrame);
         for (String nameOfPerson : this.playersFrames.playerSet()) {
-            printEachFrameResult(initInfoFrame, nameOfPerson);
+            printEachFrameResult2(frames, nameOfPerson);
         }
     }
 
@@ -61,26 +63,40 @@ public class BowlingGameController {
     private static void printPlayerEachFrameResult(PlayersFrames playersFrames) {
         ResultView.printMainColumn();
         for (String player : playersFrames.playerSet()) {
-            printEachFrameResult(playersFrames.ofFrames(player).ofFirst(), player);
+            printEachFrameResult(playersFrames.ofFrames(player), player);
         }
     }
 
-    private static void printEachFrameResult(Frame currentFrame, String nameOfPerson) {
+    private static void printEachFrameResult(Frames playerFrames, String nameOfPerson) {
         ResultView.printFirstColumn(nameOfPerson);
-        printSymbol(currentFrame);
-        printTotalScore(currentFrame);
+        printSymbol(playerFrames);
+        printTotalScore(playerFrames);
     }
 
-    private static void printSymbol(Frame currentFrame) {
+    private static void printSymbol(Frames playerFrames) {
         int round = 0;
-        while (currentFrame != null) {
+        for (Frame frame: playerFrames.frames()) {
             try {
-                ResultView.printSymbol(currentFrame);
-                round++;
-                currentFrame = currentFrame.next();
+                ResultView.printSymbol(frame);
+                round = frame.round();
             } catch (NeedAdditionalFrameException e) {
-                ResultView.printEmptyColumn(10 - round);
-                return;
+
+            }
+        }
+        ResultView.printEmptyColumn(10 - round);
+    }
+
+    private static void printTotalScore(Frames playerFrames) {
+        int round = 0;
+        int totalScore = 0;
+        ResultView.printFirstColumn("");
+        for (Frame frame: playerFrames.frames()) {
+            try {
+                totalScore += frame.getScore().getScore();
+                ResultView.printResult(totalScore);
+                round ++;
+            } catch (NeedAdditionalFrameException e) {
+
             }
         }
         ResultView.printEmptyColumn(10 - round);
