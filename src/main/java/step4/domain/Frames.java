@@ -1,8 +1,6 @@
 package step4.domain;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 public class Frames {
     private LinkedList<Frame> result = new LinkedList<>();

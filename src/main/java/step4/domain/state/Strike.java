@@ -4,7 +4,7 @@ import java.util.Objects;
 import step4.domain.Pins;
 import step4.domain.Score;
 
-public class Strike extends Finished{
+public class Strike extends Finished {
     private int falledPins;
 
     public Strike() {

@@ -4,15 +4,13 @@ import step4.domain.state.Ready;
 import step4.domain.state.State;
 import step4.exception.NeedAdditionalFrameException;
 
-public class NormalFrame implements Frame {
-    private int round;
+public class NormalFrame extends ProtoTypeFrame {
     private State state;
     private Frame nextFrame;
 
     public NormalFrame(int round) {
-        this.round = round;
+        super(round);
         this.state = new Ready();
-
     }
 
     public Frame createFrame(int round) {
@@ -27,6 +25,9 @@ public class NormalFrame implements Frame {
 
     public void throwBowl(int falledPins) {
         state = state.throwBowl(falledPins);
+        if (isFinish()) {
+            nextFrame = createFrame(round() + 1);
+        }
     }
 
     public State state() {
@@ -50,11 +51,6 @@ public class NormalFrame implements Frame {
     @Override
     public boolean isFinish() {
         return state.isFinish();
-    }
-
-    @Override
-    public int round() {
-        return round;
     }
 
     @Override

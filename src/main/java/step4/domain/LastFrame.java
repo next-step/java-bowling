@@ -6,18 +6,13 @@ import step4.domain.state.Ready;
 import step4.domain.state.State;
 import step4.exception.NeedAdditionalFrameException;
 
-public class LastFrame implements Frame {
+public class LastFrame extends ProtoTypeFrame {
     private LinkedList<State> states = new LinkedList<>();
     private int turn = 0;
-    private int round;
 
-    public LastFrame(int i) {
+    public LastFrame(int round) {
+        super(round);
         states.add(new Ready());
-        this.round = round;
-    }
-
-    public LinkedList<State> getStates() {
-        return states;
     }
 
     @Override
@@ -31,7 +26,6 @@ public class LastFrame implements Frame {
             }
         }
         throw new NeedAdditionalFrameException();
-
     }
 
     @Override
@@ -61,11 +55,6 @@ public class LastFrame implements Frame {
     @Override
     public boolean isFinish() {
         return isGameEnd();
-    }
-
-    @Override
-    public int round() {
-        return 10;
     }
 
     @Override
