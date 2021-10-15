@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.stream.Collectors;
 import step4.domain.state.Ready;
 import step4.domain.state.State;
+import step4.exception.GameOverException;
 import step4.exception.NeedAdditionalFrameException;
 
 public class LastFrame extends ProtoTypeFrame {
@@ -28,12 +29,11 @@ public class LastFrame extends ProtoTypeFrame {
         throw new NeedAdditionalFrameException();
     }
 
-    public Frame createFrame(int i) {
-        return null;
-    }
-
     @Override
     public void throwBowl(int falledPins, Frames frames) {
+        if (isGameEnd()) {
+            throw new GameOverException();
+        }
         turn ++;
         State currentState = states.getLast();
 

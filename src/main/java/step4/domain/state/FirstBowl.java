@@ -27,7 +27,7 @@ public class FirstBowl implements State {
     }
 
     public String getSymbol() {
-        return falledPins + "|";
+        return Integer.toString(falledPins);
     }
 
     @Override
