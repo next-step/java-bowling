@@ -6,7 +6,7 @@ public abstract class Finished implements State {
     private Score score;
 
     public Finished(int score, int left) {
-        this.score = new Score(10, 2);
+        this.score = new Score(score, left);
     }
 
     @Override

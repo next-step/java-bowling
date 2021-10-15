@@ -40,22 +40,15 @@ public class BowlingGameController {
         for (String player : this.playersFrames.playerSet()) {
             Frames frames = playersFrames.ofFrames(player);
             Frame frame = frames.ofLast();
-            playBowlingUntilFinish(player, frame);
-            createNewFrame(frames, frame);
+            playBowlingUntilFinish(player, frames);
         }
     }
 
-    private void createNewFrame(Frames frames, Frame frame) {
-        if (frame.round() != 10 && frame.isFinish()) {
-            frame = frame.createFrame(frame.round() + 1);
-            frames.add(frame);
-        }
-    }
-
-    private void playBowlingUntilFinish(String nameOfPerson, Frame frame) {
+    private void playBowlingUntilFinish(String nameOfPerson, Frames frames) {
+        Frame frame = frames.ofLast();
         while (!frame.isFinish()) {
             int falledPins = InputView.throwBowl(nameOfPerson);
-            frame.throwBowl(falledPins);
+            frame.throwBowl(falledPins, frames);
             printEachFramePlayerResult(playersFrames);
         }
     }

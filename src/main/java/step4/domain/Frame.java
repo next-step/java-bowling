@@ -4,7 +4,7 @@ public interface Frame {
 
     Score calculateScoreFromNextFrame(Score state);
 
-    void throwBowl(int i);
+    void throwBowl(int falledPins, Frames frames);
 
     String getSymbol();
 
@@ -13,8 +13,4 @@ public interface Frame {
     boolean isGameEnd();
 
     boolean isFinish();
-
-    Frame createFrame(int i);
-
-    int round();
 }

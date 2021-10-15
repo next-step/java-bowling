@@ -21,12 +21,12 @@ public class LastBowl extends Finished {
 
     public Score calculateScore(Score beforeScore) {
 
-        if (beforeScore.canCalculate()) {
+        if (beforeScore.canCalculateScore()) {
             return  beforeScore;
         }
 
         beforeScore = beforeScore.throwBowl(firstFalledPins);
-        if (beforeScore.canCalculate()) {
+        if (beforeScore.canCalculateScore()) {
             return  beforeScore;
         }
 

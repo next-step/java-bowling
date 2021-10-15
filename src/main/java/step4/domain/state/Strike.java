@@ -20,7 +20,7 @@ public class Strike extends Finished {
     @Override
     public Score calculateScore(Score beforeScore) {
 
-        if (beforeScore.canCalculate()) {
+        if (beforeScore.canCalculateScore()) {
             return beforeScore;
         }
         beforeScore = beforeScore.throwBowl(10);

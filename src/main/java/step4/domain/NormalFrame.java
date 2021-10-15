@@ -23,10 +23,11 @@ public class NormalFrame extends ProtoTypeFrame {
         return nextFrame;
     }
 
-    public void throwBowl(int falledPins) {
+    public void throwBowl(int falledPins, Frames frames) {
         state = state.throwBowl(falledPins);
         if (isFinish()) {
             nextFrame = createFrame(round() + 1);
+            frames.add(nextFrame);
         }
     }
 
@@ -37,7 +38,7 @@ public class NormalFrame extends ProtoTypeFrame {
     public Score getScore() {
         Score score = state.score();
 
-        if (score.canCalculate()) {
+        if (score.canCalculateScore()) {
             return score;
         }
 
@@ -53,6 +54,7 @@ public class NormalFrame extends ProtoTypeFrame {
         return state.isFinish();
     }
 
+
     @Override
     public String getSymbol() {
         return state.getSymbol();
@@ -61,7 +63,7 @@ public class NormalFrame extends ProtoTypeFrame {
 
     public Score calculateScoreFromNextFrame(Score beforeScore) {
          Score score = state.calculateScore(beforeScore);
-         if (score.canCalculate()) {
+         if (score.canCalculateScore()) {
              return score;
          }
 

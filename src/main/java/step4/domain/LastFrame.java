@@ -28,8 +28,12 @@ public class LastFrame extends ProtoTypeFrame {
         throw new NeedAdditionalFrameException();
     }
 
+    public Frame createFrame(int i) {
+        return null;
+    }
+
     @Override
-    public void throwBowl(int falledPins) {
+    public void throwBowl(int falledPins, Frames frames) {
         turn ++;
         State currentState = states.getLast();
 
@@ -39,11 +43,6 @@ public class LastFrame extends ProtoTypeFrame {
         }
         states.removeLast();
         states.add(currentState.throwBowl(falledPins));
-    }
-
-    @Override
-    public Frame createFrame(int i) {
-        return null;
     }
 
     @Override

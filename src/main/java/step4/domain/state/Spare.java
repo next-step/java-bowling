@@ -18,11 +18,11 @@ public class Spare extends Finished {
 
     @Override
     public Score calculateScore(Score beforeScore) {
-        if (beforeScore.canCalculate()) {
+        if (beforeScore.canCalculateScore()) {
             return beforeScore;
         }
         beforeScore = beforeScore.throwBowl(firstFalledPins);
-        if (beforeScore.canCalculate()) {
+        if (beforeScore.canCalculateScore()) {
             return beforeScore;
         }
         beforeScore = beforeScore.throwBowl(secondFalledPins);

@@ -7,9 +7,7 @@ public abstract class ProtoTypeFrame implements Frame {
         this.round = round;
     }
 
-    @Override
     public int round() {
         return this.round;
     }
-
 }
