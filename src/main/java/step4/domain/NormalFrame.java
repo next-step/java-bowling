@@ -54,14 +54,6 @@ public class NormalFrame extends ProtoTypeFrame {
     }
 
     @Override
-    public Frame next() {
-        if (nextFrame == null) {
-            throw new NeedAdditionalFrameException();
-        }
-        return nextFrame;
-    }
-
-    @Override
     public String getSymbol() {
         return state.getSymbol();
     }

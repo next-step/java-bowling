@@ -26,7 +26,7 @@ public class BowlingGameController {
         Frames frames = new Frames();
         frames.add(initInfoFrame);
         for (String nameOfPerson : this.playersFrames.playerSet()) {
-            printEachFrameResult2(frames, nameOfPerson);
+            printEachFrameResult(frames, nameOfPerson);
         }
     }
 
@@ -56,11 +56,11 @@ public class BowlingGameController {
         while (!frame.isFinish()) {
             int falledPins = InputView.throwBowl(nameOfPerson);
             frame.throwBowl(falledPins);
-            printPlayerEachFrameResult(playersFrames);
+            printEachFramePlayerResult(playersFrames);
         }
     }
 
-    private static void printPlayerEachFrameResult(PlayersFrames playersFrames) {
+    private static void printEachFramePlayerResult(PlayersFrames playersFrames) {
         ResultView.printMainColumn();
         for (String player : playersFrames.playerSet()) {
             printEachFrameResult(playersFrames.ofFrames(player), player);
@@ -69,24 +69,24 @@ public class BowlingGameController {
 
     private static void printEachFrameResult(Frames playerFrames, String nameOfPerson) {
         ResultView.printFirstColumn(nameOfPerson);
-        printSymbol(playerFrames);
-        printTotalScore(playerFrames);
+        printAllFramesSymbol(playerFrames);
+        printAllFramesTotalScore(playerFrames);
     }
 
-    private static void printSymbol(Frames playerFrames) {
+    private static void printAllFramesSymbol(Frames playerFrames) {
         int round = 0;
         for (Frame frame: playerFrames.frames()) {
             try {
                 ResultView.printSymbol(frame);
-                round = frame.round();
-            } catch (NeedAdditionalFrameException e) {
+                round ++;
+            } catch (NeedAdditionalFrameException ignored) {
 
             }
         }
         ResultView.printEmptyColumn(10 - round);
     }
 
-    private static void printTotalScore(Frames playerFrames) {
+    private static void printAllFramesTotalScore(Frames playerFrames) {
         int round = 0;
         int totalScore = 0;
         ResultView.printFirstColumn("");
@@ -95,26 +95,8 @@ public class BowlingGameController {
                 totalScore += frame.getScore().getScore();
                 ResultView.printResult(totalScore);
                 round ++;
-            } catch (NeedAdditionalFrameException e) {
+            } catch (NeedAdditionalFrameException ignored) {
 
-            }
-        }
-        ResultView.printEmptyColumn(10 - round);
-    }
-
-    private static void printTotalScore(Frame currentFrame) {
-        int totalScore = 0;
-        int round = 0;
-        ResultView.printFirstColumn("");
-        while (currentFrame != null) {
-            try {
-                totalScore += currentFrame.getScore().getScore();
-                ResultView.printResult(totalScore);
-                round ++;
-                currentFrame = currentFrame.next();
-            } catch (NeedAdditionalFrameException e) {
-                ResultView.printEmptyColumn(10 - round);
-                return;
             }
         }
         ResultView.printEmptyColumn(10 - round);

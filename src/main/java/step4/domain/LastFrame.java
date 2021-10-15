@@ -58,11 +58,6 @@ public class LastFrame extends ProtoTypeFrame {
     }
 
     @Override
-    public Frame next() {
-        return null;
-    }
-
-    @Override
     public String getSymbol() {
         return states.stream()
             .map(State::getSymbol)

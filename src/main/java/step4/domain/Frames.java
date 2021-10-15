@@ -5,7 +5,6 @@ import java.util.LinkedList;
 public class Frames {
     private LinkedList<Frame> result = new LinkedList<>();
 
-
     public void add(Frame frame) {
         result.add(frame);
     }
