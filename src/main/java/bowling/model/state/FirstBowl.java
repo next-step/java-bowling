@@ -5,7 +5,7 @@ import bowling.model.Pin;
 public class FirstBowl extends Running{
     private final Pin firstPins;
 
-    public FirstBowl(int falledPins) {
+    FirstBowl(int falledPins) {
         this.firstPins = new Pin(falledPins);
     }
 
