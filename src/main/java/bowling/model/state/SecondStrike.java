@@ -12,7 +12,6 @@ public class SecondStrike extends Running{
     @Override
     public State bowl(int falledPins) {
         Pin secondPins = new Pin(falledPins);
-
         if (secondPins.isStrike()) {
             return new ThirdStrike();
         }
