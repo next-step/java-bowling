@@ -3,37 +3,37 @@ package bowling.model;
 import java.util.Objects;
 
 public class Pin {
-    private static final int MAX_POINT = 10;
-    private static final int MIN_POINT = 0;
+    private static final int MAX_PINS = 10;
+    private static final int MIN_PINS = 0;
 
-    private final int pin;
+    private final int falledPins;
 
-    public Pin(int pin) {
-        isValidRange(pin);
-        this.pin = pin;
+    public Pin(int falledPins) {
+        isValidRange(falledPins);
+        this.falledPins = falledPins;
     }
 
     public static void isValidRange(int pinCount) {
-        if(pinCount < MIN_POINT || pinCount > MAX_POINT) {
+        if(pinCount < MIN_PINS || pinCount > MAX_PINS) {
             throw new IllegalArgumentException("핀 갯수를 1개 이상 10개 이하로 입력해주세요.");
         }
     }
 
-    public Pin add(int pin) {
-        return new Pin(this.pin + pin);
-    }
-
     public boolean isStrike() {
-        return pin == MAX_POINT;
+        return falledPins == MAX_PINS;
     }
 
     public boolean isGutter() {
-        return pin == MIN_POINT;
+        return falledPins == MIN_PINS;
+    }
+
+    public boolean isSpare(Pin secondPins) {
+        return this.falledPins + secondPins.falledPins == MAX_PINS;
     }
 
     @Override
     public String toString() {
-        return (isGutter()) ? "-" : String.valueOf(pin);
+        return (isGutter()) ? "-" : String.valueOf(falledPins);
 
     }
 
@@ -42,11 +42,11 @@ public class Pin {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pin pin1 = (Pin) o;
-        return pin == pin1.pin;
+        return falledPins == pin1.falledPins;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pin);
+        return Objects.hash(falledPins);
     }
 }
