@@ -1,12 +1,7 @@
-package bowling.state;
+package bowling.model.state;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import bowling.model.state.FirstBowl;
-import bowling.model.state.Miss;
-import bowling.model.state.Spare;
-import bowling.model.state.State;
 
 public class FirstBowlTest {
     @Test

@@ -1,12 +1,7 @@
-package bowling.state;
+package bowling.model.state;
 
-import bowling.model.state.FirstBowl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import bowling.model.state.Ready;
-import bowling.model.state.State;
-import bowling.model.state.Strike;
 
 public class ReadyTest {
     @Test
