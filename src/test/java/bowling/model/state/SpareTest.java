@@ -1,7 +1,8 @@
 package bowling.model.state;
 
-import bowling.model.Pin;
 import org.junit.Test;
+
+import bowling.model.Pin;
 
 public class SpareTest {
     @Test(expected = IllegalArgumentException.class)

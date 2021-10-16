@@ -1,51 +1,22 @@
 package bowling.model.state;
 
-import java.util.Objects;
-
-import static bowling.controller.Main.stateResult;
-
 import bowling.model.Pin;
-import bowling.model.State;
 
-public class SecondStrike implements State {
-    private final Pin countOfPin;
+public class SecondStrike extends Running{
+    private final Pin firstPins;
 
-    public SecondStrike() {
-        this.countOfPin = new Pin(10);
+    SecondStrike() {
+        this.firstPins = new Pin(10);
     }
 
     @Override
-    public State bowl(int countOfPin) {
-        Pin currentPin = new Pin(countOfPin);
+    public State bowl(int falledPins) {
+        Pin secondPins = new Pin(falledPins);
 
-        if (currentPin.isStrike()) {
+        if (secondPins.isStrike()) {
             return new ThirdStrike();
         }
 
-        return new Miss(this.countOfPin, new Pin(countOfPin));
+        return new Miss(firstPins, secondPins);
     }
-
-    @Override
-    public boolean isFinish(int frameNo) {
-        return false;
-    }
-
-    @Override
-    public String toString() {
-        return stateResult.removeLast() + "|X";
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SecondStrike strike = (SecondStrike) o;
-        return Objects.equals(countOfPin, strike.countOfPin);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(countOfPin);
-    }
-
 }

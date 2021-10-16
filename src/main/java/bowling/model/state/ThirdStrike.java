@@ -1,46 +1,8 @@
 package bowling.model.state;
 
-import java.util.Objects;
-
-import static bowling.controller.Main.stateResult;
-
-import bowling.CannotBowlException;
-import bowling.model.Pin;
-import bowling.model.State;
-
-public class ThirdStrike implements State {
-    private final Pin countOfPin;
-
-    public ThirdStrike() {
-        this.countOfPin = new Pin(10);
-    }
-
+public class ThirdStrike extends Finished{
     @Override
-    public State bowl(int countOfPin) throws CannotBowlException {
-        throw new CannotBowlException();
+    public State bowl(int countOfPin) {
+        return null;
     }
-
-    @Override
-    public boolean isFinish(int frameNo) {
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return stateResult.removeLast() + "|X";
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ThirdStrike strike = (ThirdStrike) o;
-        return Objects.equals(countOfPin, strike.countOfPin);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(countOfPin);
-    }
-
 }
