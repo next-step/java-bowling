@@ -1,6 +1,5 @@
 package bowling.model.state;
 
-import bowling.CannotBowlException;
 import bowling.model.Pin;
 
 public class Miss extends Finished{
@@ -10,10 +9,5 @@ public class Miss extends Finished{
     Miss(Pin firstPins, Pin secondPins) {
         this.firstPins = firstPins;
         this.secondPins = secondPins;
-    }
-
-    @Override
-    public State bowl(int countOfPin) throws CannotBowlException {
-        throw new CannotBowlException();
     }
 }

@@ -8,15 +8,4 @@ public class Strike extends Finished{
     Strike() {
         this.firstPins = new Pin(10);
     }
-
-    @Override
-    public State bowl(int falledPins) {
-        Pin secondPins = new Pin(falledPins);
-
-        if (secondPins.isStrike()) {
-            return new SecondStrike();
-        }
-
-        return new SecondBowl(firstPins, secondPins);
-    }
 }

@@ -1,14 +1,12 @@
 package bowling.model.state;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
 
-import org.junit.jupiter.api.Test;
+import bowling.CannotBowlException;
 
 public class StrikeTest {
-    @Test
-    public void 상태가_SecondStrike로_바뀌어야한다() {
-        Strike strike = new Strike();
-        State state = strike.bowl(10);
-        assertTrue(state instanceof SecondStrike);
+    @Test(expected = CannotBowlException.class)
+    public void 더이상_투구를_할_수_없다() throws CannotBowlException {
+        new Strike().bowl(3);
     }
 }

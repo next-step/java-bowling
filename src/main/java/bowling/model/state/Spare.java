@@ -14,9 +14,4 @@ public class Spare extends Finished{
         this.firstPins = firstPins;
         this.secondPins = secondPins;
     }
-
-    @Override
-    public State bowl(int countOfPin) {
-        return null;
-    }
 }
