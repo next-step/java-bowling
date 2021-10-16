@@ -3,8 +3,12 @@ package bowling.model.state;
 import bowling.model.Pin;
 
 public class SecondBowl extends Running{
-    private final Pin firstPins;
-    private final Pin secondPins;
+    private Pin firstPins;
+    private Pin secondPins;
+
+    SecondBowl(Pin firstPins) {
+        this.firstPins = firstPins;
+    }
 
     SecondBowl(Pin firstPins, Pin secondPins) {
         if (!firstPins.isSpare(secondPins)) {
@@ -16,7 +20,12 @@ public class SecondBowl extends Running{
     }
 
     @Override
-    public State bowl(int countOfPin) {
-        return null;
+    public State bowl(int falledPins) {
+        Pin secondPins = new Pin(falledPins);
+        if (firstPins.isSpare(secondPins)) {
+            return new ThirdSpare();
+        }
+
+        return new Miss(firstPins, secondPins);
     }
 }
