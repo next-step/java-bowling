@@ -5,6 +5,7 @@ import bowling.model.Score;
 
 public interface Frame {
     int FINAL_FRAME_NO = 10;
+    int UN_SCORE_STATE = -1;
 
     Frame bowl(int countOfPin) throws CannotBowlException;
 
@@ -19,4 +20,6 @@ public interface Frame {
     void addFrameResult(Board board);
 
     FrameResult getFrameResult();
+
+    boolean isEndGame();
 }

@@ -1,5 +1,8 @@
 package bowling.model.frame;
 
+import java.util.LinkedList;
+import java.util.stream.Collectors;
+
 import bowling.CannotBowlException;
 import bowling.model.CannotCalculateException;
 import bowling.model.GameOverException;
@@ -7,12 +10,7 @@ import bowling.model.Score;
 import bowling.model.state.State;
 import bowling.model.state.StateFactory;
 
-import java.util.LinkedList;
-import java.util.stream.Collectors;
-
 public class FinalFrame implements Frame{
-    public static final int UN_SCORE_STATE = -1;
-
     private LinkedList<State> states = new LinkedList<>();
 
     public FinalFrame() {
@@ -64,6 +62,15 @@ public class FinalFrame implements Frame{
             return new FrameResult(getDesc(), getScore().getScore());
         } catch (CannotCalculateException e) {
             return new FrameResult(getDesc(), UN_SCORE_STATE);
+        }
+    }
+
+    @Override
+    public boolean isEndGame() {
+        try {
+            return isFinish();
+        } catch (CannotCalculateException e) {
+            return false;
         }
     }
 

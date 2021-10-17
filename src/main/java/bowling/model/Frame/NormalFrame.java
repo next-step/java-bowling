@@ -7,8 +7,6 @@ import bowling.model.state.State;
 import bowling.model.state.StateFactory;
 
 public class NormalFrame implements Frame{
-    public static final int UN_SCORE_STATE = -1;
-
     private Frame next;
     private State state;
     private int no;
@@ -78,6 +76,11 @@ public class NormalFrame implements Frame{
         }
     }
 
+    @Override
+    public boolean isEndGame() {
+        return false;
+    }
+
     public void addFrameResult(Board board) {
         board.add(getFrameResult());
 
@@ -91,5 +94,10 @@ public class NormalFrame implements Frame{
         Board board = new Board();
         addFrameResult(board);
         return board;
+    }
+
+    @Override
+    public String toString() {
+        return "state is " +state;
     }
 }
