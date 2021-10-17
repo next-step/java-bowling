@@ -23,4 +23,22 @@ public class NormalFrameTest {
         assertTrue(normalFrame.isFinish());
         assertEquals(2, next.getNo());
     }
+
+    @Test
+    public void 보드_생성() throws Exception {
+        Frame normalFrame = new NormalFrame(1);
+        normalFrame
+                .bowl(8).bowl(2)
+                .bowl(9).bowl(1)
+                .bowl(10)
+                .bowl(10)
+                .bowl(8).bowl(1)
+                .bowl(7).bowl(3)
+                .bowl(10)
+                .bowl(10)
+                .bowl(8).bowl(1)
+                .bowl(10).bowl(8).bowl(2);
+        Board board = normalFrame.createBoard();
+        System.out.println(board);
+    }
 }

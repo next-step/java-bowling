@@ -41,7 +41,6 @@ public class NormalFrame implements Frame{
 
     private Score getScore() {
         Score score = state.getScore();
-        System.out.println(score);
         if (score.canCalculateScore()) {
             return score;
         }
@@ -66,7 +65,8 @@ public class NormalFrame implements Frame{
         return new NormalFrame(no + 1);
     }
 
-    FrameResult  getFrameResult() {
+    @Override
+    public FrameResult getFrameResult() {
         if (!state.isFinish()) {
             return new FrameResult(state.getDesc(), UN_SCORE_STATE);
         }
@@ -76,5 +76,20 @@ public class NormalFrame implements Frame{
         } catch (CannotCalculateException e) {
             return new FrameResult(state.getDesc(), UN_SCORE_STATE);
         }
+    }
+
+    public void addFrameResult(Board board) {
+        board.add(getFrameResult());
+
+        if (next != null) {
+            next.addFrameResult(board);
+        }
+    }
+
+    @Override
+    public Board createBoard() {
+        Board board = new Board();
+        addFrameResult(board);
+        return board;
     }
 }

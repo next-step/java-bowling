@@ -27,6 +27,11 @@ public class FrameResult {
     }
 
     @Override
+    public String toString() {
+        return "FrameResult [desc=" + desc + ", score=" + score + ", totalScore=" + totalScore + "]";
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

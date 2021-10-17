@@ -11,6 +11,8 @@ import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame{
+    public static final int UN_SCORE_STATE = -1;
+
     private LinkedList<State> states = new LinkedList<>();
 
     public FinalFrame() {
@@ -51,6 +53,28 @@ public class FinalFrame implements Frame{
             score = state.calculateAdditionalScore(score);
         }
         return score;
+    }
+
+    public FrameResult getFrameResult() {
+        if (!isFinish()) {
+            return new FrameResult(getDesc(), UN_SCORE_STATE);
+        }
+
+        try {
+            return new FrameResult(getDesc(), getScore().getScore());
+        } catch (CannotCalculateException e) {
+            return new FrameResult(getDesc(), UN_SCORE_STATE);
+        }
+    }
+
+    @Override
+    public void addFrameResult(Board board) {
+        board.add(getFrameResult());
+    }
+
+    @Override
+    public Board createBoard() {
+        throw new UnsupportedOperationException();
     }
 
     public Score getScore() {
