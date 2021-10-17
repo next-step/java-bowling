@@ -1,24 +1,25 @@
 package bowling.view;
 
-import bowling.model.State;
+import bowling.model.frame.Board;
+import bowling.model.state.State;
 
-import static bowling.controller.Main.scoreResult;
-import static bowling.controller.Main.stateResult;
+import java.util.List;
 
 public class OutputView {
     public static final int MAX_ROUND = 10;
 
-    public static void printResult(String name) {
+    public static void printResult(String name, Board board) {
         printHeader();
-        printState(name);
-        printScore();
+        printState(name, board);
+        printScore(board);
     }
 
-    private static void printScore() {
+    private static void printScore(Board board) {
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("|      |");
 
+        List<Integer> scoreResult = board.getScoreResult();
         for (int score : scoreResult) {
             String result = addBlank(String.valueOf(score));
             stringBuilder.append(result);
@@ -43,11 +44,12 @@ public class OutputView {
         System.out.println(stringBuilder.toString());
     }
 
-    private static void printState(String name) {
+    private static void printState(String name, Board board) {
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("|  " + name + " |");
 
+        List<String> stateResult = board.getStateResult();
         for (String state : stateResult) {
             String result = addBlank(state);
             stringBuilder.append(result);
@@ -65,10 +67,6 @@ public class OutputView {
         }
 
         return stringBuilder.toString();
-    }
-
-    public static String changeScore(State state) {
-        return state.toString();
     }
 
     private static String addBlank(String score) {

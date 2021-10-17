@@ -12,6 +12,14 @@ public class FrameResult {
         this.score = score;
     }
 
+    public String getDesc() {
+        return desc;
+    }
+
+    public int getTotalScore() {
+        return totalScore;
+    }
+
     public int addTotalScore(int beforeTotalScore) {
         if (isUnScore()) {
             this.totalScore = this.score;
@@ -43,4 +51,5 @@ public class FrameResult {
     public int hashCode() {
         return Objects.hash(desc, score, totalScore);
     }
+
 }

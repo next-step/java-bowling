@@ -98,7 +98,7 @@ public class FinalFrame implements Frame{
 
     String getDesc() {
         return states.stream()
-                .map(State::getDesc)
-                .collect(Collectors.joining(" | "));
+                        .map(State::getDesc)
+                        .collect(Collectors.joining("|"));
     }
 }

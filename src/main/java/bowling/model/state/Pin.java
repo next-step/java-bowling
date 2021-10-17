@@ -67,14 +67,14 @@ public class Pin {
             return "X";
         }
 
-        return falledPins + " | ";
+        return toString() + "|";
     }
 
     String getDesc(Pin secondPins) {
         if (isSpare(secondPins)) {
-            return falledPins + " | /";
+            return toString() + "|/";
         }
 
-        return falledPins + " | " + secondPins.falledPins;
+        return toString() + "|" + secondPins.toString();
     }
 }

@@ -2,6 +2,7 @@ package bowling.model.frame;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Board {
     private List<FrameResult> frameResults;
@@ -18,8 +19,24 @@ public class Board {
         frameResults.add(result);
     }
 
+    public List<String> getStateResult() {
+        return frameResults.stream()
+                            .map(FrameResult::getDesc)
+                            .filter(frameResults -> !frameResults.equals(""))
+                            .collect(Collectors.toList());
+    }
+
+    public List<Integer> getScoreResult() {
+        return frameResults.stream()
+                            .map(FrameResult::getTotalScore)
+                            .filter(frameResults -> frameResults != -1)
+                            .collect(Collectors.toList());
+
+    }
+
     @Override
     public String toString() {
         return "Board [frameResults=" + frameResults + "]";
     }
+
 }
