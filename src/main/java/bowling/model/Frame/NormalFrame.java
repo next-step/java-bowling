@@ -1,6 +1,7 @@
 package bowling.model.frame;
 
 import bowling.CannotBowlException;
+import bowling.model.Score;
 import bowling.model.state.State;
 import bowling.model.state.StateFactory;
 
@@ -33,6 +34,15 @@ public class NormalFrame implements Frame{
     @Override
     public boolean isFinish() {
         return state.isFinish();
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score beforeScore) {
+        Score score = state.calculateAdditionalScore(beforeScore);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        return next.calculateAdditionalScore(score);
     }
 
     private Frame createFrame() {

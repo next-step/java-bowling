@@ -3,7 +3,6 @@ package bowling.model.state;
 import org.junit.Test;
 
 import bowling.CannotBowlException;
-import bowling.model.Pin;
 
 public class SpareTest {
     @Test(expected = IllegalArgumentException.class)

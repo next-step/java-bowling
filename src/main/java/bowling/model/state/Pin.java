@@ -1,9 +1,11 @@
-package bowling.model;
+package bowling.model.state;
+
+import bowling.model.Score;
 
 import java.util.Objects;
 
 public class Pin {
-    private static final int MAX_PINS = 10;
+    public static final int MAX_PINS = 10;
     private static final int MIN_PINS = 0;
 
     private final int falledPins;
@@ -31,6 +33,16 @@ public class Pin {
         return this.falledPins + secondPins.falledPins == MAX_PINS;
     }
 
+    public Score sumScore(Score score) {
+        return score.bowl(this.falledPins);
+    }
+
+    public int totalPins(Pin secondPins) {
+        int totalPins = this.falledPins + secondPins.falledPins;
+        isValidRange(totalPins);
+        return totalPins;
+    }
+
     @Override
     public String toString() {
         return (isGutter()) ? "-" : String.valueOf(falledPins);
@@ -48,5 +60,21 @@ public class Pin {
     @Override
     public int hashCode() {
         return Objects.hash(falledPins);
+    }
+
+    String getDesc() {
+        if (isStrike()) {
+            return "X";
+        }
+
+        return falledPins + " | ";
+    }
+
+    String getDesc(Pin secondPins) {
+        if (isSpare(secondPins)) {
+            return falledPins + " | /";
+        }
+
+        return falledPins + " | " + secondPins.falledPins;
     }
 }

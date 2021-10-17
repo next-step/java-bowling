@@ -1,6 +1,7 @@
 package bowling.model.state;
 
-import bowling.model.Pin;
+import bowling.model.CannotCalculateException;
+import bowling.model.Score;
 
 public class FirstBowl extends Running{
     private final Pin firstPins;
@@ -17,5 +18,20 @@ public class FirstBowl extends Running{
         }
 
         return new Miss(firstPins, secondPins);
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        score = firstPins.sumScore(score);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+
+        throw new CannotCalculateException();
+    }
+
+    @Override
+    public String getDesc() {
+        return firstPins.getDesc();
     }
 }

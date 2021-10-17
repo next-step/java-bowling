@@ -1,6 +1,7 @@
 package bowling.model.frame;
 
 import bowling.CannotBowlException;
+import bowling.model.Score;
 
 public interface Frame {
     int FINAL_FRAME_NO = 10;
@@ -10,5 +11,7 @@ public interface Frame {
     int getNo();
 
     boolean isFinish();
+
+    Score calculateAdditionalScore(Score beforeScore);
 
 }

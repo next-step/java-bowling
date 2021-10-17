@@ -1,6 +1,6 @@
 package bowling.model.state;
 
-import bowling.model.Pin;
+import bowling.model.Score;
 
 public class Spare extends Finished{
     private final Pin firstPins;
@@ -13,5 +13,25 @@ public class Spare extends Finished{
 
         this.firstPins = firstPins;
         this.secondPins = secondPins;
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        score = firstPins.sumScore(score);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        score = secondPins.sumScore(score);
+        return score;
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(Pin.MAX_PINS, 1);
+    }
+
+    @Override
+    public String getDesc() {
+        return firstPins.getDesc(secondPins);
     }
 }

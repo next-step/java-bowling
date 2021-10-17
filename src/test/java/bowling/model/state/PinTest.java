@@ -1,10 +1,8 @@
-package bowling.model;
+package bowling.model.state;
 
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-
-import bowling.model.Pin;
 
 public class PinTest {
     @Test
