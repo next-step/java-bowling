@@ -30,7 +30,9 @@ public class Pin {
     }
 
     public boolean isSpare(Pin secondPins) {
-        return this.falledPins + secondPins.falledPins == MAX_PINS;
+        int totalPins = this.falledPins + secondPins.falledPins;
+        isValidRange(totalPins);
+        return totalPins == MAX_PINS;
     }
 
     public Score sumScore(Score score) {
