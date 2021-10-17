@@ -1,4 +1,4 @@
-package bowling.model.Frame;
+package bowling.model.frame;
 
 import bowling.CannotBowlException;
 import bowling.model.state.State;
@@ -28,6 +28,11 @@ public class NormalFrame implements Frame{
     @Override
     public int getNo() {
         return no;
+    }
+
+    @Override
+    public boolean isFinish() {
+        return state.isFinish();
     }
 
     private Frame createFrame() {

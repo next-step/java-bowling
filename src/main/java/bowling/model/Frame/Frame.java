@@ -1,4 +1,4 @@
-package bowling.model.Frame;
+package bowling.model.frame;
 
 import bowling.CannotBowlException;
 
@@ -8,5 +8,7 @@ public interface Frame {
     Frame bowl(int countOfPin) throws CannotBowlException;
 
     int getNo();
+
+    boolean isFinish();
 
 }
