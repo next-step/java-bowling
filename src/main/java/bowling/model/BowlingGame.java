@@ -1,75 +1,69 @@
 package bowling.model;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
-import static bowling.controller.Main.scoreResult;
-
-import bowling.CannotBowlException;
+import bowling.model.frame.Board;
+import bowling.model.frame.NormalFrame;
 
 public class BowlingGame {
-    private static final int AFTER_FINAL_FRAME = 11;
-    private static final int BEFORE_FIRST_FRAME = 0;
-
-    private List<Frame> frames;
+    LinkedList<Player> players = new LinkedList<>();
 
     public BowlingGame() {
-        this.frames = new ArrayList<>();
     }
 
-    public BowlingGame(Frame frame) {
-        this();
-        this.frames.add(frame);
-    }
-
-    public State bowl(int countOfPin) throws CannotBowlException {
-        return currentFrame().bowl(countOfPin);
-    }
-
-    public List<Integer> getScore() {
-        List<Integer> scores = currentFrame().getScore();
-
-        int lastScore = getLastScore();
-        List<Integer> calculatedScores = new ArrayList<>();
-        for (int i = 0; i < scores.size(); i++) {
-            lastScore += scores.get(i);
-            calculatedScores.add(lastScore);
-        }
-        createNextFrame();
-
-        return calculatedScores;
-    }
-
-    private int getLastScore() {
-        if (scoreResult.size() == BEFORE_FIRST_FRAME) {
-            return 0;
-        }
-
-        return scoreResult.get(scoreResult.size() - 1);
-    }
-
-    private void createNextFrame() {
-        if (currentFrame().isFinish(getFrameNo())) {
-            Frame frame = currentFrame().next(getFrameNo());
-            frames.add(frame);
+    public BowlingGame(List<String> playerNames) {
+        for (String name : playerNames) {
+            players.add(new Player(name, new NormalFrame(1)));
         }
     }
 
-    private Frame currentFrame() {
-        if (getFrameNo() == BEFORE_FIRST_FRAME) {
-            frames.add(new NormalFrame());
-        }
-
-        return frames.get(frames.size() - 1);
+    public void register(String userName) {
+        players.add(new Player(userName, new NormalFrame(1)));
     }
 
     public boolean isEndGame() {
-        return getFrameNo() == AFTER_FINAL_FRAME;
+        return players.isEmpty();
     }
 
-    public int getFrameNo() {
-        return frames.size();
+    public Player getCurrentPlayer() {
+        return players.getFirst();
     }
 
+    public Board bowl(int falledPins) {
+        Player player = getCurrentPlayer();
+        boolean isFinish = player.bowl(falledPins);
 
+        if (!player.isEndGame() && isFinish) {
+            players.addLast(players.removeFirst());
+        }
+
+        if (player.isEndGame()) {
+            players.removeFirst();
+        }
+
+        return player.createBoard();
+    }
+
+    public String getName() {
+        return getCurrentPlayer().getName();
+    }
+
+    public int getNo() {
+        return getCurrentPlayer().getFrameNo();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BowlingGame game = (BowlingGame) o;
+        return players.equals(game.players);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(players);
+    }
 }
