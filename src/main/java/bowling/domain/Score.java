@@ -34,6 +34,10 @@ public class Score {
         return left.isFinished();
     }
 
+    public int getValue() {
+        return score;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
