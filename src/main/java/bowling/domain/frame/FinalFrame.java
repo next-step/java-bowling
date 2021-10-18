@@ -50,13 +50,43 @@ public class FinalFrame extends AbstractFrame {
         return score.canCalculate();
     }
 
+    @Override
+    public Score calculateScore() {
+        State firstState = states.get(0);
+        Score score = firstState.getScore();
+        if (!firstState.isFinished()) {
+            return score;
+        }
+        for (int i = 1; i < states.size(); i++) {
+            State state = states.get(i);
+            score = state.calculateBonusScore(score);
+        }
+        return score;
+    }
+
+    @Override
+    public Score plusBonusScore(final Score beforeScore) {
+        State firstState = states.get(0);
+        Score score = firstState.calculateBonusScore(beforeScore);
+
+        if (score.canCalculate() || !hasNextState(firstState)) {
+            return score;
+        }
+        State secondState = states.get(1);
+        return secondState.calculateBonusScore(score);
+    }
+
+    private boolean hasNextState(final State currentState) {
+        return states.size() > states.indexOf(currentState) + 1;
+    }
+
     private State getCurrentState() {
         return states.get(states.size() - 1);
     }
 
     @Override
     public FrameResult makeResult() {
-        return new FrameResult(makeIndication());
+        return new FrameResult(makeIndication(), calculateScore());
     }
 
     String makeIndication() {
