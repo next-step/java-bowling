@@ -8,7 +8,6 @@ import bowling.domain.frame.FrameNumber;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class PlayerGame {
     private final Name name;
@@ -48,8 +47,13 @@ public class PlayerGame {
     }
 
     public List<FrameResult> getFrameResults() {
-        return frames.stream()
-                .map(Frame::makeResult)
-                .collect(Collectors.toList());
+        List<FrameResult> frameResults = new ArrayList<>();
+        SumScore sumScore = SumScore.ZERO;
+        for (Frame frame : frames) {
+            FrameResult frameResult = frame.makeResult();
+            sumScore = frameResult.plusBeforeFrameSumScore(sumScore);
+            frameResults.add(frameResult);
+        }
+        return frameResults;
     }
 }
