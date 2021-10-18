@@ -16,7 +16,7 @@ public class Ready extends Playing {
 
     @Override
     public Score getScore() {
-        return new Score(PinCount.MIN, Left.ONE);
+        return new Score(PinCount.MIN, Left.TWO);
     }
 
     @Override
