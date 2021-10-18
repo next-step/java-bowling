@@ -19,7 +19,11 @@ public class ResultView {
         printName("NAME");
         printFrameIndex();
         printName(playerGame.getName());
-        printBowlingBoard(playerGame.getFrameResults());
+        List<FrameResult> frameResults = playerGame.getFrameResults();
+        printResult(toIndications(frameResults));
+        printName("");
+        printResult(toScores(frameResults));
+        System.out.println();
     }
 
     private static void printName(final String name) {
@@ -35,19 +39,17 @@ public class ResultView {
         System.out.println(SEPARATOR);
     }
 
-    private static void printBowlingBoard(final List<FrameResult> frameResults) {
-        for (int index = 1; index <= frameResults.size(); index++) {
+    private static void printResult(final List<String> results) {
+        for (int index = 1; index <= results.size(); index++) {
             System.out.print(SEPARATOR);
-            FrameResult frameResult = frameResults.get(index - 1);
-            printContent(frameResult.showIndication());
+            printContent(results.get(index - 1));
         }
 
-        for (int index = frameResults.size() + 1; index <= FrameNumber.FINAL_NUMBER; index++) {
+        for (int index = results.size() + 1; index <= FrameNumber.FINAL_NUMBER; index++) {
             System.out.print(SEPARATOR);
             printContent("");
         }
         System.out.println(SEPARATOR);
-        System.out.println();
     }
 
     private static void printContent(final String content) {
@@ -69,5 +71,17 @@ public class ResultView {
             return "0" + index;
         }
         return String.valueOf(index);
+    }
+
+    private static List<String> toIndications(final List<FrameResult> frameResults) {
+        return frameResults.stream()
+                .map(FrameResult::showIndication)
+                .collect(Collectors.toList());
+    }
+
+    private static List<String> toScores(final List<FrameResult> frameResults) {
+        return frameResults.stream()
+                .map(FrameResult::showScore)
+                .collect(Collectors.toList());
     }
 }
