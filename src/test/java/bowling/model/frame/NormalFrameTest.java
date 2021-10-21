@@ -12,7 +12,6 @@ public class NormalFrameTest {
     public void 스트라이크이면_프레임은_끝난다() throws CannotBowlException {
         NormalFrame normalFrame = new NormalFrame(1);
         Frame next = normalFrame.bowl(10);
-        assertTrue(normalFrame.isFinish());
         assertEquals(2, next.getNo());
     }
 
@@ -20,7 +19,6 @@ public class NormalFrameTest {
     public void 투구2회시_프레임은_끝난다() throws CannotBowlException {
         NormalFrame normalFrame = new NormalFrame(1);
         Frame next = normalFrame.bowl(2).bowl(3);
-        assertTrue(normalFrame.isFinish());
         assertEquals(2, next.getNo());
     }
 

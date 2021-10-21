@@ -31,7 +31,7 @@ public class Player {
         Frame nextFrame = currentFrame.bowl(falledPins);
         frames.add(nextFrame);
 
-        return currentFrame.isFinish();
+        return currentFrame.getNo() < nextFrame.getNo();
     }
 
     public Board createBoard() {

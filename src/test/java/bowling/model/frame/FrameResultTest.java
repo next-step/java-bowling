@@ -7,13 +7,13 @@ import static org.junit.Assert.assertEquals;
 public class FrameResultTest {
     @Test
     public void addTotalScore() throws Exception {
-        FrameResult result = new FrameResult("8 | 1", 9);
+        FrameResult result = new FrameResult("8|1", 9);
         assertEquals(19, result.addTotalScore(10));
     }
 
     @Test
     public void addTotalScoreWhenUnScore() throws Exception {
-        FrameResult result = new FrameResult("8 | ", NormalFrame.UN_SCORE_STATE);
+        FrameResult result = new FrameResult("8|", NormalFrame.UN_SCORE_STATE);
         assertEquals(NormalFrame.UN_SCORE_STATE, result.addTotalScore(10));
     }
 
@@ -22,7 +22,7 @@ public class FrameResultTest {
         NormalFrame normalFrame = new NormalFrame(1);
         normalFrame.bowl(8).bowl(1);
         FrameResult result = normalFrame.getFrameResult();
-        assertEquals(new FrameResult("8 | 1", 9), result);
+        assertEquals(new FrameResult("8|1", 9), result);
     }
 
     @Test
@@ -30,7 +30,7 @@ public class FrameResultTest {
         NormalFrame normalFrame = new NormalFrame(1);
         normalFrame.bowl(8);
         FrameResult result = normalFrame.getFrameResult();
-        assertEquals(new FrameResult("8 | ", NormalFrame.UN_SCORE_STATE), result);
+        assertEquals(new FrameResult("8|", NormalFrame.UN_SCORE_STATE), result);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class FrameResultTest {
         NormalFrame normalFrame = new NormalFrame(1);
         normalFrame.bowl(8).bowl(2).bowl(9);
         FrameResult result = normalFrame.getFrameResult();
-        assertEquals(new FrameResult("8 | /", 19), result);
+        assertEquals(new FrameResult("8|/", 19), result);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class FrameResultTest {
         NormalFrame normalFrame = new NormalFrame(1);
         normalFrame.bowl(8).bowl(2);
         FrameResult result = normalFrame.getFrameResult();
-        assertEquals(new FrameResult("8 | /", NormalFrame.UN_SCORE_STATE), result);
+        assertEquals(new FrameResult("8|/", NormalFrame.UN_SCORE_STATE), result);
     }
 
     @Test

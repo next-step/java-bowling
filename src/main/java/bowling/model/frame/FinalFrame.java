@@ -35,7 +35,7 @@ public class FinalFrame implements Frame {
         return this;
     }
 
-    public boolean isFinish() {
+    private boolean isFinish() {
         try {
             Score score = getScore();
             return score.canCalculateScore();
@@ -53,7 +53,7 @@ public class FinalFrame implements Frame {
         return score;
     }
 
-    public FrameResult getFrameResult() {
+    FrameResult getFrameResult() {
         if (!isFinish()) {
             return new FrameResult(getDesc(), UN_SCORE_STATE);
         }

@@ -21,19 +21,19 @@ public class FinalFrameTest {
     @Test
     public void 미스이면_프레임은_끝난다() {
         finalFrame.bowl(8).bowl(1);
-        assertTrue(finalFrame.isFinish());
+        assertTrue(finalFrame.isEndGame());
     }
 
     @Test
     public void 스페어이면_보너스_프레임이_주어진다() {
         finalFrame.bowl(8).bowl(2);
-        assertFalse(finalFrame.isFinish());
+        assertFalse(finalFrame.isEndGame());
     }
 
     @Test
     public void 스페어_게임종료() {
         finalFrame.bowl(8).bowl(2).bowl(3);
-        assertTrue(finalFrame.isFinish());
+        assertTrue(finalFrame.isEndGame());
     }
 
     @Test (expected = GameOverException.class)
@@ -95,19 +95,19 @@ public class FinalFrameTest {
     @Test
     public void getDesc_3Strike() {
         finalFrame.bowl(10).bowl(10).bowl(10);
-        assertThat(finalFrame.getDesc()).isEqualTo("X | X | X");
+        assertThat(finalFrame.getDesc()).isEqualTo("X|X|X");
     }
 
     @Test
     public void getDesc_Spare() {
         finalFrame.bowl(8).bowl(2).bowl(10);
-        assertThat(finalFrame.getDesc()).isEqualTo("8 | / | X");
+        assertThat(finalFrame.getDesc()).isEqualTo("8|/|X");
     }
 
     @Test
     public void getDesc_Miss() {
         finalFrame.bowl(8).bowl(1);
-        assertThat(finalFrame.getDesc()).isEqualTo("8 | 1");
+        assertThat(finalFrame.getDesc()).isEqualTo("8|1");
     }
 
 }

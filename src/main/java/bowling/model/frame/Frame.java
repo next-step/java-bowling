@@ -11,15 +11,11 @@ public interface Frame {
 
     int getNo();
 
-    boolean isFinish();
-
     Score calculateAdditionalScore(Score beforeScore);
 
     Board createBoard();
 
     void addFrameResult(Board board);
-
-    FrameResult getFrameResult();
 
     boolean isEndGame();
 }

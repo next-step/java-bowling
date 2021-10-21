@@ -19,7 +19,7 @@ public class NormalFrame implements Frame {
     @Override
     public Frame bowl(int countOfPin) throws CannotBowlException {
         state = state.bowl(countOfPin);
-        if (state.isFinish()) {
+        if (isFinish()) {
             next = createFrame();
             return next;
         }
@@ -32,8 +32,7 @@ public class NormalFrame implements Frame {
         return no;
     }
 
-    @Override
-    public boolean isFinish() {
+    private boolean isFinish() {
         return state.isFinish();
     }
 
@@ -63,9 +62,8 @@ public class NormalFrame implements Frame {
         return new NormalFrame(no + 1);
     }
 
-    @Override
-    public FrameResult getFrameResult() {
-        if (!state.isFinish()) {
+    FrameResult getFrameResult() {
+        if (!isFinish()) {
             return new FrameResult(state.getDesc(), UN_SCORE_STATE);
         }
 
