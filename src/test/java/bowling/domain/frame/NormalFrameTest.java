@@ -125,6 +125,25 @@ class NormalFrameTest {
     }
 
     @Test
+    @DisplayName("Strike이후 Strike 두번 치는 점수를 계산할 수 있다.")
+    void calculateStrikeThreeTest() {
+
+        // given
+        Pin pin = Pin.of(10);
+        NormalFrame third = (NormalFrame) NormalFrame.from(3, null, new Strike(pin));
+        NormalFrame second = (NormalFrame) NormalFrame.from(2, third, new Strike(pin));
+        NormalFrame start = (NormalFrame) NormalFrame.from(1, second, new Strike(pin));
+
+        Score expected = Score.from(30, 0);
+
+        // when
+        Score result = start.score();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
     @DisplayName("nextFrame이 없는데 다음 frame state score를 더해 계산하려고하면 excpetion이 발생해야한다.")
     void scoreExceptionByNullNextFrameTest() {
 
