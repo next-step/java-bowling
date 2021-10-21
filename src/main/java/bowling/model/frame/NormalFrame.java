@@ -9,7 +9,7 @@ import bowling.model.state.StateFactory;
 public class NormalFrame implements Frame {
     private Frame next;
     private State state;
-    private int no;
+    private final int no;
 
     public NormalFrame(int no) {
         this.state = StateFactory.ready();

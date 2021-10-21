@@ -8,7 +8,7 @@ import bowling.model.frame.Board;
 import bowling.model.frame.NormalFrame;
 
 public class BowlingGame {
-    LinkedList<Player> players = new LinkedList<>();
+    private LinkedList<Player> players = new LinkedList<>();
 
     public BowlingGame() {
     }

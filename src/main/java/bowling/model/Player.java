@@ -7,8 +7,8 @@ import bowling.model.frame.Board;
 import bowling.model.frame.Frame;
 
 public class Player {
-    String username;
-    LinkedList<Frame> frames = new LinkedList<>();
+    private final String username;
+    private LinkedList<Frame> frames = new LinkedList<>();
 
     public Player(String username, Frame frame) {
         isValid(username);

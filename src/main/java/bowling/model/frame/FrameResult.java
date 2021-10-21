@@ -3,8 +3,8 @@ package bowling.model.frame;
 import java.util.Objects;
 
 public class FrameResult {
-    private String desc;
-    private int score;
+    private final String desc;
+    private final int score;
     private int totalScore = -1;
 
     public FrameResult(String desc, int score) {
