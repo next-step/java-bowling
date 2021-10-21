@@ -1,9 +1,8 @@
 package bowling.view;
 
-import bowling.model.frame.Board;
-import bowling.model.state.State;
-
 import java.util.List;
+
+import bowling.model.frame.Board;
 
 public class OutputView {
     public static final int MAX_ROUND = 10;

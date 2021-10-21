@@ -3,14 +3,14 @@ package bowling.model.frame;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
-import bowling.CannotBowlException;
+import bowling.model.CannotBowlException;
 import bowling.model.CannotCalculateException;
 import bowling.model.GameOverException;
 import bowling.model.Score;
 import bowling.model.state.State;
 import bowling.model.state.StateFactory;
 
-public class FinalFrame implements Frame{
+public class FinalFrame implements Frame {
     private LinkedList<State> states = new LinkedList<>();
 
     public FinalFrame() {

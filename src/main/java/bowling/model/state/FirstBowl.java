@@ -3,7 +3,7 @@ package bowling.model.state;
 import bowling.model.CannotCalculateException;
 import bowling.model.Score;
 
-public class FirstBowl extends Running{
+public class FirstBowl extends Running {
     private final Pin firstPins;
 
     FirstBowl(int falledPins) {

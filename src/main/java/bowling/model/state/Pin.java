@@ -1,8 +1,8 @@
 package bowling.model.state;
 
-import bowling.model.Score;
-
 import java.util.Objects;
+
+import bowling.model.Score;
 
 public class Pin {
     public static final int MAX_PINS = 10;

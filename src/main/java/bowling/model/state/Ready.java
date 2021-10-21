@@ -3,7 +3,7 @@ package bowling.model.state;
 import bowling.model.CannotCalculateException;
 import bowling.model.Score;
 
-public class Ready extends Running{
+public class Ready extends Running {
     @Override
     public State bowl(int falledPins) {
         Pin currentPin = new Pin(falledPins);

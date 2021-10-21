@@ -5,7 +5,7 @@ import java.util.Scanner;
 import static bowling.model.BowlingValidator.isBlank;
 
 public class InputView {
-    public static String ask(String message){
+    public static String ask(String message) {
         Scanner scanner = new Scanner(System.in);
         System.out.print(message);
         String input = scanner.next();
@@ -13,7 +13,7 @@ public class InputView {
         return input;
     }
 
-    public static int askDigit(String message){
+    public static int askDigit(String message) {
         Scanner scanner = new Scanner(System.in);
         System.out.print(message);
         int input = scanner.nextInt();

@@ -1,6 +1,6 @@
 package bowling.model.state;
 
-import bowling.CannotBowlException;
+import bowling.model.CannotBowlException;
 import bowling.model.Score;
 
 public interface State {

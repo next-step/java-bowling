@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import bowling.CannotBowlException;
+import bowling.model.CannotBowlException;
 
 public class NormalFrameTest {
     @Test

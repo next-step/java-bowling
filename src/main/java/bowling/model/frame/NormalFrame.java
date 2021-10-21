@@ -1,12 +1,12 @@
 package bowling.model.frame;
 
-import bowling.CannotBowlException;
+import bowling.model.CannotBowlException;
 import bowling.model.CannotCalculateException;
 import bowling.model.Score;
 import bowling.model.state.State;
 import bowling.model.state.StateFactory;
 
-public class NormalFrame implements Frame{
+public class NormalFrame implements Frame {
     private Frame next;
     private State state;
     private int no;

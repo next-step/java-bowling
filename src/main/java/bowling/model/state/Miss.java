@@ -2,7 +2,7 @@ package bowling.model.state;
 
 import bowling.model.Score;
 
-public class Miss extends Finished{
+public class Miss extends Finished {
     private final Pin firstPins;
     private final Pin secondPins;
 

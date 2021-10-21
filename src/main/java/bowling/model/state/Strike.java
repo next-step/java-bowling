@@ -2,7 +2,7 @@ package bowling.model.state;
 
 import bowling.model.Score;
 
-public class Strike extends Finished{
+public class Strike extends Finished {
     @Override
     public Score calculateAdditionalScore(Score score) {
         if (score.canCalculateScore()) {
