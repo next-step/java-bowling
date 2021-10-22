@@ -63,6 +63,10 @@ public class NormalFrame extends AbstractFrame {
         if (score.canCalculateScore()) {
             return score;
         }
+        return calculateAdditionalScoreByNextFrame(score);
+    }
+
+    private Score calculateAdditionalScoreByNextFrame(Score score) {
         return nextFrame()
             .map(frame -> frame.calculateAdditionalScore(score))
             .orElseThrow(NextFrameNotFoundException::new);
@@ -74,9 +78,7 @@ public class NormalFrame extends AbstractFrame {
         if (score.canCalculateScore()) {
             return score;
         }
-        return nextFrame()
-            .map(frame -> frame.calculateAdditionalScore(score))
-            .orElseThrow(NextFrameNotFoundException::new);
+        return calculateAdditionalScoreByNextFrame(score);
     }
 
     @Override
