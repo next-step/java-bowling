@@ -2,12 +2,13 @@ package bowling.domain.frame;
 
 import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
+import java.util.Optional;
 
 public interface Frame {
 
     int round();
 
-    Frame nextFrame();
+    Optional<Frame> nextFrame();
 
     Frame lastFrame();
 

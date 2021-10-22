@@ -3,7 +3,6 @@ package bowling.domain.frame;
 import static bowling.domain.frame.NormalFrame.FINAL_ROUND;
 
 import bowling.exception.frame.FinalFrameNextFrameException;
-import bowling.exception.frame.NextFrameNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -26,16 +25,14 @@ public class FrameResults {
         results.add(frame.createFrameResult());
         try {
             addFrameResult(frame, results);
-        } catch (NextFrameNotFoundException | FinalFrameNextFrameException e) {
+        } catch (FinalFrameNextFrameException e) {
             return new FrameResults(results);
         } return new FrameResults(results);
-
-
     }
 
     private static void addFrameResult(Frame frame, List<FrameResult> results) {
-        while (frame.round() < FINAL_ROUND && Objects.nonNull(frame.nextFrame())) {
-            frame = frame.nextFrame();
+        while (frame.round() < FINAL_ROUND && frame.nextFrame().isPresent()) {
+            frame = frame.nextFrame().get();
             results.add(frame.createFrameResult());
         }
     }

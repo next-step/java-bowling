@@ -7,6 +7,7 @@ import bowling.domain.state.running.Ready;
 import bowling.exception.frame.NextFrameNotFoundException;
 import bowling.exception.state.RunningCreateScoreException;
 import bowling.exception.state.StateCannotCalculateScoreException;
+import java.util.Optional;
 
 public class NormalFrame extends AbstractFrame {
 
@@ -27,8 +28,8 @@ public class NormalFrame extends AbstractFrame {
         return new NormalFrame(FIRST_ROUND, null, new Ready());
     }
 
-    public Frame nextFrame() {
-        return nextFrame;
+    public Optional<Frame> nextFrame() {
+        return Optional.ofNullable(nextFrame);
     }
 
     @Override
@@ -61,7 +62,9 @@ public class NormalFrame extends AbstractFrame {
         if (score.canCalculateScore()) {
             return score;
         }
-        return nextFrame().calculateAdditionalScore(score);
+        return nextFrame()
+            .map(frame -> frame.calculateAdditionalScore(score))
+            .orElseThrow(NextFrameNotFoundException::new);
     }
 
     @Override
@@ -70,7 +73,9 @@ public class NormalFrame extends AbstractFrame {
         if (score.canCalculateScore()) {
             return score;
         }
-        return nextFrame().calculateAdditionalScore(score);
+        return nextFrame()
+            .map(frame -> frame.calculateAdditionalScore(score))
+            .orElseThrow(NextFrameNotFoundException::new);
     }
 
     @Override

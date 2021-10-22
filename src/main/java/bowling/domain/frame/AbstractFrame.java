@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
 import java.util.Objects;
+import java.util.Optional;
 
 public abstract class AbstractFrame implements Frame {
 
@@ -27,13 +28,13 @@ public abstract class AbstractFrame implements Frame {
     }
 
     private Frame calculateLastFrame(Frame resultFrame) {
-        while (resultFrame.round() < FINAL_ROUND && Objects.nonNull(resultFrame.nextFrame())) {
-            resultFrame = resultFrame.nextFrame();
+        while (resultFrame.round() < FINAL_ROUND && resultFrame.nextFrame().isPresent()) {
+            resultFrame = resultFrame.nextFrame().get();
         }
         return resultFrame;
     }
 
-    public abstract Frame nextFrame();
+    public abstract Optional<Frame> nextFrame();
 
     public abstract Frame bowling(Pin pin);
 
