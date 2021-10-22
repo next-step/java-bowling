@@ -15,4 +15,6 @@ public interface Frame {
 
     Score calculateAdditionalScore(Score score);
 
+    boolean isFinished();
+
 }

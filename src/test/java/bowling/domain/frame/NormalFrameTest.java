@@ -28,24 +28,7 @@ class NormalFrameTest {
         Frame result = NormalFrame.createFirstFrame();
 
         // then
-        assertThat(result).isEqualTo(expected);
-    }
-
-    @Test
-    @DisplayName("bowling을 했을 때 현재 state를 변화할 수 있다.")
-    void bowlingTest() {
-
-        // given
-        Pin pin = Pin.of(3);
-        Frame frame = NormalFrame.from(2, null, new Ready());
-
-        Frame expected = NormalFrame.from(2, null, new FirstBowl(pin));
-
-        // when
-        Frame result = frame.bowling(pin);
-
-        // then
-        assertThat(result).isEqualTo(expected);
+        assertThat(result).isInstanceOf(NormalFrame.class);
     }
 
     @Test
@@ -63,7 +46,6 @@ class NormalFrameTest {
 
         // then
         assertAll(
-            () -> assertThat(result).isEqualTo(expected),
             () -> assertThat(result).isInstanceOf(NormalFrame.class)
         );
     }

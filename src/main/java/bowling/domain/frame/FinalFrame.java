@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import static bowling.domain.frame.NormalFrame.FINAL_ROUND;
 import static bowling.domain.score.Pin.DESC_DELIMITER;
 
 import bowling.domain.score.Pin;
@@ -15,13 +14,12 @@ import bowling.exception.state.StateCannotCalculateScoreException;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
-public class FinalFrame implements Frame {
+public class FinalFrame extends AbstractFrame {
 
-    private final int round;
     private final LinkedList<State> states;
 
     private FinalFrame(int round, LinkedList<State> states) {
-        this.round = round;
+        super(round);
         this.states = states;
     }
 
@@ -33,11 +31,6 @@ public class FinalFrame implements Frame {
         LinkedList<State> states = new LinkedList<>();
         states.add(new Ready());
         return new FinalFrame(FINAL_ROUND, states);
-    }
-
-    @Override
-    public int round() {
-        return round;
     }
 
     @Override
@@ -64,9 +57,14 @@ public class FinalFrame implements Frame {
     }
 
     private void checkIsFinished() {
-        if (score().canCalculateScore()) {
+        if (isFinished()) {
             throw new FinalFrameBowlingException();
         }
+    }
+
+    @Override
+    public boolean isFinished() {
+        return score().canCalculateScore();
     }
 
     @Override

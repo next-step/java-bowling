@@ -9,17 +9,13 @@ import bowling.exception.state.RunningCreateScoreException;
 import bowling.exception.state.StateCannotCalculateScoreException;
 import java.util.Objects;
 
-public class NormalFrame implements Frame {
+public class NormalFrame extends AbstractFrame {
 
-    public static final int FIRST_ROUND = 1;
-    public static final int FINAL_ROUND = 10;
-
-    private final int round;
     private Frame nextFrame;
     private State state;
 
     private NormalFrame(int round, Frame nextFrame, State state) {
-        this.round = round;
+        super(round);
         this.nextFrame = nextFrame;
         this.state = state;
     }
@@ -44,11 +40,6 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public int round() {
-        return round;
-    }
-
-    @Override
     public Frame bowling(Pin pin) {
         state = state.bowl(pin);
         if (state.isFinished()) {
@@ -58,10 +49,10 @@ public class NormalFrame implements Frame {
     }
 
     private Frame createNextFrame() {
-        if (round + 1 == FINAL_ROUND) {
+        if (round() + 1 == FINAL_ROUND) {
             return FinalFrame.createFinalFrame();
         }
-        return new NormalFrame(round + 1, null, new Ready());
+        return new NormalFrame(round() + 1, null, new Ready());
     }
 
     @Override
@@ -91,21 +82,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        NormalFrame frame = (NormalFrame) o;
-        return round == frame.round && Objects.equals(nextFrame, frame.nextFrame)
-            && Objects.equals(state.getClass(), frame.state.getClass());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(round, nextFrame, state.getClass());
+    public boolean isFinished() {
+        return false;
     }
 
 }
