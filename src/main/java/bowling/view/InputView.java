@@ -17,10 +17,10 @@ public class InputView {
         System.out.print(INPUT_USERNAME_MESSAGE);
         return scanner.nextLine();
     }
-//
-//    public static int inputFrameShot(int round) {
-//        System.out.printf(INPUT_FRAME_SHOT, round);
-//        return Integer.parseInt(scanner.nextLine());
-//    }
+
+    public static int inputFrameShot(int round) {
+        System.out.printf(INPUT_FRAME_SHOT, round);
+        return Integer.parseInt(scanner.nextLine());
+    }
 
 }

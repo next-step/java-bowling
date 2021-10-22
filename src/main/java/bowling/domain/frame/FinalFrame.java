@@ -106,7 +106,7 @@ public class FinalFrame extends AbstractFrame {
                 return score;
             }
         }
-        return score;
+        throw new StateCannotCalculateScoreException();
     }
 
 }

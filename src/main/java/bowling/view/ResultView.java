@@ -46,6 +46,11 @@ public class ResultView {
 
         sb.append(printFrameResultDescBoard(frameResults));
         sb.append(printRemainBoard(frameResults));
+        sb.append("\n");
+
+        sb.append(toBlankFormat());
+        sb.append(printFrameResultScoreBoard(frameResults));
+        sb.append(printRemainBoard(frameResults));
         System.out.println(sb.toString());
     }
 
@@ -62,29 +67,23 @@ public class ResultView {
             .collect(Collectors.joining());
     }
 
-//    private static String printRemainBoard(Frames frames) {
-//        return IntStream.range(frames.size(), FINAL_ROUND)
-//            .mapToObj(index -> toScoreFormat(""))
-//            .collect(Collectors.joining());
-//    }
-//
+    private static String printFrameResultScoreBoard(FrameResults frameResults) {
+        return frameResults.values()
+            .map(frameResult -> frameResult.score())
+            .map(ResultView::toScoreFormat)
+            .collect(Collectors.joining());
+    }
+
     private static String toScoreFormat(String s) {
         return String.format(BOARD_SCORE_FORMAT, s);
     }
-//
+
     private static String toNameFormat(User user) {
         return String.format(BOARD_NAME_FORMAT, user.value());
     }
-//
-//    private static String pinsToString(List<Pin> pins) {
-//        return IntStream.range(0, pins.size())
-//            .filter(index -> Objects.nonNull(pins.get(index)))
-//            .mapToObj(index -> pinToString(pins, index))
-//            .collect(Collectors.joining(SCORE_DELIMITER));
-//    }
-//
-//    private static String pinToString(List<Pin> pins, int index) {
-//        return PinType.pinToString(pins, index);
-//    }
+
+    private static String toBlankFormat() {
+        return String.format(BOARD_NAME_FORMAT, "");
+    }
 
 }
