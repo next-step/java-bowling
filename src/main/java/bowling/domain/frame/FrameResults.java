@@ -2,7 +2,6 @@ package bowling.domain.frame;
 
 import static bowling.domain.frame.NormalFrame.FINAL_ROUND;
 
-import bowling.exception.frame.FinalFrameNextFrameException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -23,11 +22,8 @@ public class FrameResults {
     public static FrameResults createFrameResultsByFirstFrame(Frame frame) {
         List<FrameResult> results = new ArrayList<>();
         results.add(frame.createFrameResult());
-        try {
-            addFrameResult(frame, results);
-        } catch (FinalFrameNextFrameException e) {
-            return new FrameResults(results);
-        } return new FrameResults(results);
+        addFrameResult(frame, results);
+        return new FrameResults(results);
     }
 
     private static void addFrameResult(Frame frame, List<FrameResult> results) {
