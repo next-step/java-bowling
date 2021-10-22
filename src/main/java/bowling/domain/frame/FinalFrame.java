@@ -45,16 +45,18 @@ public class FinalFrame extends AbstractFrame {
 
         State state = states.getLast();
         if (state.isFinished()) {
-            return createFrameByNextStateBowl(pin);
+            return createFrameByNextStateBowl(pin, states);
         }
-        state.bowl(pin);
-        return new FinalFrame(FINAL_ROUND, new LinkedList<>(states));
+
+        states.removeLast();
+        states.add(state.bowl(pin));
+        return this;
     }
 
-    private Frame createFrameByNextStateBowl(Pin pin) {
+    private Frame createFrameByNextStateBowl(Pin pin, LinkedList<State> states) {
         State nextState = new Ready();
         states.add(nextState.bowl(pin));
-        return new FinalFrame(FINAL_ROUND, new LinkedList<>(states));
+        return new FinalFrame(FINAL_ROUND, states);
     }
 
     private void checkIsFinished() {
@@ -65,7 +67,11 @@ public class FinalFrame extends AbstractFrame {
 
     @Override
     public boolean isFinished() {
-        return score().canCalculateScore();
+        try {
+            return score().canCalculateScore();
+        } catch (RunningCreateScoreException e) {
+            return false;
+        }
     }
 
     @Override

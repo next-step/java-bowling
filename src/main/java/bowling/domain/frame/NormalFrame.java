@@ -43,9 +43,9 @@ public class NormalFrame extends AbstractFrame {
 
     private Frame createNextFrame() {
         if (round() + 1 == FINAL_ROUND) {
-            return FinalFrame.createFinalFrame();
+            return nextFrame = FinalFrame.createFinalFrame();
         }
-        return new NormalFrame(round() + 1, null, new Ready());
+        return nextFrame = new NormalFrame(round() + 1, null, new Ready());
     }
 
     @Override
