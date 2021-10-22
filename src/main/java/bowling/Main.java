@@ -1,5 +1,8 @@
 package bowling;
 
+import bowling.domain.user.User;
+import bowling.view.InputView;
+
 public class Main {
 
 //    public static void main(String[] args) {
@@ -32,5 +35,8 @@ public class Main {
 //        nowFrame.updateScorePin(first);
 //        ResultView.printBoard(user, Frames.createFramesByFirstFrame(frame));
 //    }
+    public static void main(String[] args) {
+        User user = User.of(InputView.inputUsername());
+    }
 
 }
