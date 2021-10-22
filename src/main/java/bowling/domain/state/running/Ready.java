@@ -24,4 +24,9 @@ public class Ready extends Running {
         throw new StateCannotCalculateScoreException();
     }
 
+    @Override
+    public String desc() {
+        return "";
+    }
+
 }

@@ -141,6 +141,40 @@ class PinTest {
     }
 
     @Test
+    @DisplayName("다음 pin을 받아서 spare 아닐 때 desc를 반환할 수 있다.")
+    void valueToStringWithNextPinTest() {
+
+        // given
+        Pin first = Pin.of(3);
+        Pin second = Pin.of(4);
+
+        String expected = "3|4";
+
+        // when
+        String result = first.valueToStringWithNextPin(second);
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("다음 pin을 받아서 spare일 때 desc를 반환할 수 있다.")
+    void valueToStringWithNextPinSpareTest() {
+
+        // given
+        Pin first = Pin.of(3);
+        Pin second = Pin.of(7);
+
+        String expected = "3|/";
+
+        // when
+        String result = first.valueToStringWithNextPin(second);
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
     @DisplayName("Pin equals, hashCode 재정의 테스트")
     void pinEqualsHashCodeTest() {
 

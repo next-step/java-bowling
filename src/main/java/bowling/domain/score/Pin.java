@@ -36,10 +36,6 @@ public class Pin {
         }
     }
 
-    public int remainPin() {
-        return Math.subtractExact(PIN_MAX_VALUE, pin);
-    }
-
     public int sum(Pin pin) {
         return Math.addExact(this.pin, pin.pin);
     }
@@ -62,6 +58,13 @@ public class Pin {
 
     public String valueToString() {
         return String.valueOf(pin);
+    }
+
+    public String valueToStringWithNextPin(Pin pin) {
+        if (isSpare(pin)) {
+            return this.pin + "|/";
+        }
+        return this.pin + "|" + pin.pin;
     }
 
     @Override

@@ -32,4 +32,9 @@ public class FirstBowl extends Running {
         throw new StateCannotCalculateScoreException();
     }
 
+    @Override
+    public String desc() {
+        return first.valueToString();
+    }
+
 }
