@@ -13,6 +13,7 @@ import bowling.domain.state.finish.Strike;
 import bowling.domain.state.running.FirstBowl;
 import bowling.exception.frame.FinalFrameBowlingException;
 import bowling.exception.frame.FinalFrameNextFrameException;
+import bowling.exception.state.StateCannotCalculateScoreException;
 import java.util.LinkedList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -406,6 +407,20 @@ class FinalFrameTest {
         assertThatExceptionOfType(FinalFrameNextFrameException.class)
             .isThrownBy(() -> frame.nextFrame())
             .withMessageMatching("final frame은 다음 frame을 확인할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("final frame이 score의 횟수를 다 채우지 못하면 excpetion이 발생해야 한다.")
+    void calculateAdditionalScoreExceptionTest() {
+
+        // given
+        Score score = Score.from(10, 3);
+        Frame frame = FinalFrame.createFinalFrame();
+
+        // when & then
+        assertThatExceptionOfType(StateCannotCalculateScoreException.class)
+            .isThrownBy(() -> frame.calculateAdditionalScore(score))
+            .withMessageMatching("현재 Running상태는 더이상 Score를 계산할 수 없습니다.");
     }
 
 }
