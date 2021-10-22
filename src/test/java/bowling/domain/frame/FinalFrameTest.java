@@ -175,4 +175,145 @@ class FinalFrameTest {
         }
     }
 
+    @Nested
+    @DisplayName("FinalFrame의 score를 계산할 수 있다.")
+    class getScoreTest {
+
+        private Score expected;
+
+        @Test
+        @DisplayName("strike - strike - strike : 30")
+        void strikeThreeTest() {
+
+            // given
+            List<State> states = new ArrayList<>();
+            states.add(new Strike(Pin.of(10)));
+            states.add(new Strike(Pin.of(10)));
+            states.add(new Strike(Pin.of(10)));
+            FinalFrame frame = (FinalFrame) FinalFrame.from(10, states);
+
+            expected = Score.from(30, 0);
+
+            // when
+            Score result = frame.score();
+
+            // then
+            assertThat(result).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("strike - strike - firstBowl : 20 + firstBowl pin")
+        void strikeTwoFirstBowlTest() {
+
+            // given
+            List<State> states = new ArrayList<>();
+            states.add(new Strike(Pin.of(10)));
+            states.add(new Strike(Pin.of(10)));
+            states.add(new FirstBowl(Pin.of(3)));
+            FinalFrame frame = (FinalFrame) FinalFrame.from(10, states);
+
+            expected = Score.from(23, 0);
+
+            // when
+            Score result = frame.score();
+
+            // then
+            assertThat(result).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("strike - spare : 20")
+        void strikeSpareTest() {
+
+            // given
+            List<State> states = new ArrayList<>();
+            states.add(new Strike(Pin.of(10)));
+            states.add(new Spare(Pin.of(3), Pin.of(7)));
+            FinalFrame frame = (FinalFrame) FinalFrame.from(10, states);
+
+            expected = Score.from(20, 0);
+
+            // when
+            Score result = frame.score();
+
+            // then
+            assertThat(result).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("strike - miss : 10 + miss score")
+        void strikeMissTest() {
+
+            // given
+            List<State> states = new ArrayList<>();
+            states.add(new Strike(Pin.of(10)));
+            states.add(new Miss(Pin.of(2), Pin.of(4)));
+            FinalFrame frame = (FinalFrame) FinalFrame.from(10, states);
+
+            expected = Score.from(16, 0);
+
+            // when
+            Score result = frame.score();
+
+            // then
+            assertThat(result).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("spare - strike : 20")
+        void spareStrikeTest() {
+
+            // given
+            List<State> states = new ArrayList<>();
+            states.add(new Spare(Pin.of(3), Pin.of(7)));
+            states.add(new Strike(Pin.of(10)));
+            FinalFrame frame = (FinalFrame) FinalFrame.from(10, states);
+
+            expected = Score.from(20, 0);
+
+            // when
+            Score result = frame.score();
+
+            // then
+            assertThat(result).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("spare - firstBowl : 10 + firstBowl pin")
+        void spareFirstBowlTest() {
+
+            // given
+            List<State> states = new ArrayList<>();
+            states.add(new Spare(Pin.of(3), Pin.of(7)));
+            states.add(new FirstBowl(Pin.of(3)));
+            FinalFrame frame = (FinalFrame) FinalFrame.from(10, states);
+
+            expected = Score.from(13, 0);
+
+            // when
+            Score result = frame.score();
+
+            // then
+            assertThat(result).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("miss : miss score")
+        void missTest() {
+
+            // given
+            List<State> states = new ArrayList<>();
+            states.add(new Miss(Pin.of(2), Pin.of(4)));
+            FinalFrame frame = (FinalFrame) FinalFrame.from(10, states);
+
+            expected = Score.from(6, 0);
+
+            // when
+            Score result = frame.score();
+
+            // then
+            assertThat(result).isEqualTo(expected);
+        }
+    }
+
 }

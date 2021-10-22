@@ -39,13 +39,13 @@ public class FinalFrame implements Frame {
         return null;
     }
 
-//    Score score() {
-//        Score score = state.createScore();
-//        if (score.canCalculateScore()) {
-//            return score;
-//        }
-//        return calculateAdditionalScore(score);
-//    }
+    Score score() {
+        Score score = states.get(0).createScore();
+        for (int i=1; i<states.size(); i++){
+            score = states.get(i).calculateAdditionalScore(score);
+        }
+        return score;
+    }
 
     @Override
     public Score calculateAdditionalScore(Score score) {
@@ -55,7 +55,7 @@ public class FinalFrame implements Frame {
                 return score;
             }
         }
-        throw new RuntimeException("더 이상 계산할 수 없습니다.");
+        return score;
     }
 
 }
