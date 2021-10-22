@@ -20,7 +20,7 @@ public class FrameResult {
     }
 
     public static FrameResult createFrameResultByNoCaculatedScore(String desc) {
-        return new FrameResult(-1, desc);
+        return new FrameResult(CANNOT_CALCULATED_SCORE_VALUE, desc);
     }
 
     public String score() {
