@@ -8,10 +8,12 @@ import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.running.Ready;
 import bowling.exception.frame.FinalFrameBowlingException;
+import bowling.exception.frame.FinalFrameNextFrameException;
 import bowling.exception.score.CannotCalculateException;
 import bowling.exception.state.RunningCreateScoreException;
 import bowling.exception.state.StateCannotCalculateScoreException;
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
@@ -32,6 +34,16 @@ public class FinalFrame implements Frame {
         LinkedList<State> states = new LinkedList<>();
         states.add(new Ready());
         return new FinalFrame(FINAL_ROUND, states);
+    }
+
+    @Override
+    public int round() {
+        return round;
+    }
+
+    @Override
+    public Optional<Frame> nextFrame() {
+        throw new FinalFrameNextFrameException();
     }
 
     @Override

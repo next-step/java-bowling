@@ -12,6 +12,7 @@ import bowling.domain.state.finish.Spare;
 import bowling.domain.state.finish.Strike;
 import bowling.domain.state.running.FirstBowl;
 import bowling.exception.frame.FinalFrameBowlingException;
+import bowling.exception.frame.FinalFrameNextFrameException;
 import java.util.LinkedList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -392,6 +393,19 @@ class FinalFrameTest {
 
         // then
         assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("Final Frame은 nextFrame을 호출하면 exception이 발생해야 한다.")
+    void nextFrameExceptionTest() {
+
+        // given
+        Frame frame = FinalFrame.from(10, new LinkedList<>());
+
+        // when & then
+        assertThatExceptionOfType(FinalFrameNextFrameException.class)
+            .isThrownBy(() -> frame.nextFrame())
+            .withMessageMatching("final frame은 다음 frame을 확인할 수 없습니다.");
     }
 
 }

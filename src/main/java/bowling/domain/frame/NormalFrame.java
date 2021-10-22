@@ -33,8 +33,13 @@ public class NormalFrame implements Frame {
         return new NormalFrame(FIRST_ROUND, null, new Ready());
     }
 
-    private Optional<Frame> nextFrame() {
+    public Optional<Frame> nextFrame() {
         return Optional.ofNullable(nextFrame);
+    }
+
+    @Override
+    public int round() {
+        return round;
     }
 
     @Override
