@@ -56,9 +56,9 @@ public class NormalFrame implements Frame {
     @Override
     public FrameResult createFrameResult() {
         try {
-            return FrameResult.of(score().score());
+            return FrameResult.of(score().score(), state.desc());
         } catch (NextFrameNotFoundException | StateCannotCalculateScoreException | RunningCreateScoreException e) {
-            return FrameResult.createEmptyScoreFrameResult();
+            return FrameResult.createFrameResultByNoCaculatedScore(state.desc());
         }
     }
 

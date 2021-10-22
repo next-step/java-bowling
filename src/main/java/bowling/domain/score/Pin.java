@@ -13,7 +13,7 @@ public class Pin {
     public static final int PIN_MIN_VALUE = 0;
     public static final int PIN_MAX_VALUE = 10;
 
-    private static final String DESC_DELIMITER = "|";
+    public static final String DESC_DELIMITER = "|";
 
     private static final Map<Integer, Pin> pins = new HashMap<>();
 

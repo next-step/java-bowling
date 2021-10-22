@@ -366,7 +366,7 @@ class FinalFrameTest {
         states.add(new Strike(Pin.of(10)));
         Frame frame = FinalFrame.from(10, states);
 
-        FrameResult expected = FrameResult.of(30);
+        FrameResult expected = FrameResult.of(30, "X|X|X");
 
         // when
         FrameResult result = frame.createFrameResult();
@@ -383,10 +383,9 @@ class FinalFrameTest {
         LinkedList<State> states = new LinkedList<>();
         states.add(new Strike(Pin.of(10)));
         states.add(new Strike(Pin.of(10)));
-        states.add(new Strike(Pin.of(10)));
         Frame frame = FinalFrame.from(10, states);
 
-        FrameResult expected = FrameResult.of(30);
+        FrameResult expected = FrameResult.of(-1, "X|X");
 
         // when
         FrameResult result = frame.createFrameResult();

@@ -178,7 +178,7 @@ class NormalFrameTest {
         Pin second = Pin.of(2);
         NormalFrame frame = (NormalFrame) NormalFrame.from(2, null, new Miss(first, second));
 
-        FrameResult expected = FrameResult.of(first.sum(second));
+        FrameResult expected = FrameResult.of(first.sum(second), "1|2");
 
         // when
         FrameResult result = frame.createFrameResult();
@@ -194,7 +194,7 @@ class NormalFrameTest {
         // given
         NormalFrame frame = (NormalFrame) NormalFrame.from(2, null, new Strike(Pin.of(10)));
 
-        FrameResult expected = FrameResult.of(-1);
+        FrameResult expected = FrameResult.of(-1, "X");
 
         // when
         FrameResult result = frame.createFrameResult();
@@ -211,7 +211,7 @@ class NormalFrameTest {
         NormalFrame nextFrame = (NormalFrame) NormalFrame.from(3, null, new Ready());
         NormalFrame frame = (NormalFrame) NormalFrame.from(2, nextFrame, new Strike(Pin.of(10)));
 
-        FrameResult expected = FrameResult.of(-1);
+        FrameResult expected = FrameResult.of(-1, "X");
 
         // when
         FrameResult result = frame.createFrameResult();
@@ -227,7 +227,7 @@ class NormalFrameTest {
         // given
         NormalFrame frame = (NormalFrame) NormalFrame.from(2, null, new FirstBowl(Pin.of(1)));
 
-        FrameResult expected = FrameResult.of(-1);
+        FrameResult expected = FrameResult.of(-1, "1");
 
         // when
         FrameResult result = frame.createFrameResult();

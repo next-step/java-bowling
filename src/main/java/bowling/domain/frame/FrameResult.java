@@ -5,17 +5,19 @@ import java.util.Objects;
 public class FrameResult {
 
     private final int score;
+    private final String desc;
 
-    private FrameResult(int score) {
+    private FrameResult(int score, String desc) {
         this.score = score;
+        this.desc = desc;
     }
 
-    public static FrameResult of(int score) {
-        return new FrameResult(score);
+    public static FrameResult of(int score, String desc) {
+        return new FrameResult(score, desc);
     }
 
-    public static FrameResult createEmptyScoreFrameResult() {
-        return new FrameResult(-1);
+    public static FrameResult createFrameResultByNoCaculatedScore(String desc) {
+        return new FrameResult(-1, desc);
     }
 
     @Override
@@ -26,13 +28,13 @@ public class FrameResult {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        FrameResult that = (FrameResult) o;
-        return score == that.score;
+        FrameResult result = (FrameResult) o;
+        return score == result.score && Objects.equals(desc, result.desc);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score);
+        return Objects.hash(score, desc);
     }
 
 }

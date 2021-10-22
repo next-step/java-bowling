@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import static bowling.domain.frame.NormalFrame.FINAL_ROUND;
+import static bowling.domain.score.Pin.DESC_DELIMITER;
 
 import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
@@ -11,6 +12,7 @@ import bowling.exception.score.CannotCalculateException;
 import bowling.exception.state.RunningCreateScoreException;
 import bowling.exception.state.StateCannotCalculateScoreException;
 import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
 
@@ -59,11 +61,17 @@ public class FinalFrame implements Frame {
     @Override
     public FrameResult createFrameResult() {
         try {
-            return FrameResult.of(score().score());
+            return FrameResult.of(score().score(), createDescByStates());
         }
         catch (CannotCalculateException | StateCannotCalculateScoreException | RunningCreateScoreException e) {
-            return FrameResult.createEmptyScoreFrameResult();
+            return FrameResult.createFrameResultByNoCaculatedScore(createDescByStates());
         }
+    }
+
+    private String createDescByStates() {
+        return states.stream()
+            .map(State::desc)
+            .collect(Collectors.joining(DESC_DELIMITER));
     }
 
     Score score() {
