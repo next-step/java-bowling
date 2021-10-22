@@ -16,9 +16,7 @@ public class ResultView {
 
     private static final String BOARD_NAME_FORMAT = "|  %-3s |";
     private static final String BOARD_SCORE_FORMAT = " %-5s|";
-
-    private static final String SCORE_DELIMITER = "|";
-
+    
     private ResultView() {
     }
 

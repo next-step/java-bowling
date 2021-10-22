@@ -4,6 +4,9 @@ import java.util.Objects;
 
 public class FrameResult {
 
+    private static final int CANNOT_CALCULATED_SCORE_VALUE = -1;
+    private static final String BLANK_SCORE_STRING = "";
+
     private final int score;
     private final String desc;
 
@@ -21,8 +24,8 @@ public class FrameResult {
     }
 
     public String score() {
-        if (score == -1) {
-            return "";
+        if (score == CANNOT_CALCULATED_SCORE_VALUE) {
+            return BLANK_SCORE_STRING;
         }
         return String.valueOf(score);
     }
