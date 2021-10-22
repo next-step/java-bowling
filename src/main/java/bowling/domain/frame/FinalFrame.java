@@ -13,7 +13,6 @@ import bowling.exception.score.CannotCalculateException;
 import bowling.exception.state.RunningCreateScoreException;
 import bowling.exception.state.StateCannotCalculateScoreException;
 import java.util.LinkedList;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
@@ -42,7 +41,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Optional<Frame> nextFrame() {
+    public Frame nextFrame() {
         throw new FinalFrameNextFrameException();
     }
 
