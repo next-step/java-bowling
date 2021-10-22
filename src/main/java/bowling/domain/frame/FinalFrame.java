@@ -55,7 +55,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public FrameResult createFrameResult() {
-        return null;
+        return FrameResult.of(score().score());
     }
 
     Score score() {

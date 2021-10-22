@@ -355,4 +355,24 @@ class FinalFrameTest {
         );
     }
 
+    @Test
+    @DisplayName("완료된 score를 가진 Frame으로 FrameResult를 생성할 수 있다.")
+    void createFrameResultTest() {
+
+        // given
+        LinkedList<State> states = new LinkedList<>();
+        states.add(new Strike(Pin.of(10)));
+        states.add(new Strike(Pin.of(10)));
+        states.add(new Strike(Pin.of(10)));
+        Frame frame = FinalFrame.from(10, states);
+
+        FrameResult expected = FrameResult.of(30);
+
+        // when
+        FrameResult result = frame.createFrameResult();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
 }
