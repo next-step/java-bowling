@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
@@ -11,8 +12,7 @@ import bowling.domain.state.finish.Spare;
 import bowling.domain.state.finish.Strike;
 import bowling.domain.state.running.FirstBowl;
 import bowling.exception.frame.FinalFrameBowlingException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -41,7 +41,7 @@ class FinalFrameTest {
             void twoStrikeTest() {
 
                 // given
-                List<State> states = new ArrayList<>();
+                LinkedList<State> states = new LinkedList<>();
                 states.add(new Strike(Pin.of(10)));
                 states.add(new Strike(Pin.of(10)));
                 Frame frame = FinalFrame.from(10, states);
@@ -60,7 +60,7 @@ class FinalFrameTest {
             void spareTest() {
 
                 // given
-                List<State> states = new ArrayList<>();
+                LinkedList<State> states = new LinkedList<>();
                 states.add(new Spare(Pin.of(3), Pin.of(7)));
                 Frame frame = FinalFrame.from(10, states);
 
@@ -78,7 +78,7 @@ class FinalFrameTest {
             void missTest() {
 
                 // given
-                List<State> states = new ArrayList<>();
+                LinkedList<State> states = new LinkedList<>();
                 states.add(new Miss(Pin.of(2), Pin.of(4)));
                 Frame frame = FinalFrame.from(10, states);
 
@@ -107,7 +107,7 @@ class FinalFrameTest {
             void strikeTest() {
 
                 // given
-                List<State> states = new ArrayList<>();
+                LinkedList<State> states = new LinkedList<>();
                 states.add(new Strike(Pin.of(10)));
                 states.add(new Strike(Pin.of(10)));
                 Frame frame = FinalFrame.from(10, states);
@@ -126,7 +126,7 @@ class FinalFrameTest {
             void spareTest() {
 
                 // given
-                List<State> states = new ArrayList<>();
+                LinkedList<State> states = new LinkedList<>();
                 states.add(new Spare(Pin.of(3), Pin.of(7)));
                 Frame frame = FinalFrame.from(10, states);
 
@@ -144,7 +144,7 @@ class FinalFrameTest {
             void missTest() {
 
                 // given
-                List<State> states = new ArrayList<>();
+                LinkedList<State> states = new LinkedList<>();
                 states.add(new Miss(Pin.of(2), Pin.of(4)));
                 Frame frame = FinalFrame.from(10, states);
 
@@ -162,7 +162,7 @@ class FinalFrameTest {
             void firstBowlTest() {
 
                 // given
-                List<State> states = new ArrayList<>();
+                LinkedList<State> states = new LinkedList<>();
                 states.add(new FirstBowl(Pin.of(2)));
                 Frame frame = FinalFrame.from(10, states);
 
@@ -188,7 +188,7 @@ class FinalFrameTest {
         void strikeThreeTest() {
 
             // given
-            List<State> states = new ArrayList<>();
+            LinkedList<State> states = new LinkedList<>();
             states.add(new Strike(Pin.of(10)));
             states.add(new Strike(Pin.of(10)));
             states.add(new Strike(Pin.of(10)));
@@ -208,7 +208,7 @@ class FinalFrameTest {
         void strikeTwoFirstBowlTest() {
 
             // given
-            List<State> states = new ArrayList<>();
+            LinkedList<State> states = new LinkedList<>();
             states.add(new Strike(Pin.of(10)));
             states.add(new Strike(Pin.of(10)));
             states.add(new FirstBowl(Pin.of(3)));
@@ -228,7 +228,7 @@ class FinalFrameTest {
         void strikeSpareTest() {
 
             // given
-            List<State> states = new ArrayList<>();
+            LinkedList<State> states = new LinkedList<>();
             states.add(new Strike(Pin.of(10)));
             states.add(new Spare(Pin.of(3), Pin.of(7)));
             FinalFrame frame = (FinalFrame) FinalFrame.from(10, states);
@@ -247,7 +247,7 @@ class FinalFrameTest {
         void strikeMissTest() {
 
             // given
-            List<State> states = new ArrayList<>();
+            LinkedList<State> states = new LinkedList<>();
             states.add(new Strike(Pin.of(10)));
             states.add(new Miss(Pin.of(2), Pin.of(4)));
             FinalFrame frame = (FinalFrame) FinalFrame.from(10, states);
@@ -266,7 +266,7 @@ class FinalFrameTest {
         void spareStrikeTest() {
 
             // given
-            List<State> states = new ArrayList<>();
+            LinkedList<State> states = new LinkedList<>();
             states.add(new Spare(Pin.of(3), Pin.of(7)));
             states.add(new Strike(Pin.of(10)));
             FinalFrame frame = (FinalFrame) FinalFrame.from(10, states);
@@ -285,7 +285,7 @@ class FinalFrameTest {
         void spareFirstBowlTest() {
 
             // given
-            List<State> states = new ArrayList<>();
+            LinkedList<State> states = new LinkedList<>();
             states.add(new Spare(Pin.of(3), Pin.of(7)));
             states.add(new FirstBowl(Pin.of(3)));
             FinalFrame frame = (FinalFrame) FinalFrame.from(10, states);
@@ -304,7 +304,7 @@ class FinalFrameTest {
         void missTest() {
 
             // given
-            List<State> states = new ArrayList<>();
+            LinkedList<State> states = new LinkedList<>();
             states.add(new Miss(Pin.of(2), Pin.of(4)));
             FinalFrame frame = (FinalFrame) FinalFrame.from(10, states);
 
@@ -323,7 +323,7 @@ class FinalFrameTest {
     void bowlingExceptionTest() {
 
         // given
-        List<State> states = new ArrayList<>();
+        LinkedList<State> states = new LinkedList<>();
         states.add(new Spare(Pin.of(3), Pin.of(7)));
         states.add(new Strike(Pin.of(10)));
         Frame frame = FinalFrame.from(10, states);
@@ -332,6 +332,27 @@ class FinalFrameTest {
         assertThatExceptionOfType(FinalFrameBowlingException.class)
             .isThrownBy(() -> frame.bowling(Pin.of(3)))
             .withMessageMatching("final frame이 종료되어 더이상 bowling할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("현재 bolwing 횟수가 남아있을 경우 bowling을 진행할 수 있다.")
+    void bowlingTest() {
+
+        // given
+        LinkedList<State> states = new LinkedList<>();
+        states.add(new Strike(Pin.of(10)));
+        FinalFrame frame = (FinalFrame) FinalFrame.from(10, states);
+
+        // when
+        FinalFrame firstBowl = (FinalFrame) frame.bowling(Pin.of(10));
+        FinalFrame result = (FinalFrame) firstBowl.bowling(Pin.of(10));
+
+        // then
+        assertAll(
+            () -> assertThat(result).isInstanceOf(FinalFrame.class),
+            () -> assertThat(result).isInstanceOf(Frame.class),
+            () -> assertThat(result.score()).isEqualTo(Score.from(30, 0))
+        );
     }
 
 }

@@ -7,25 +7,24 @@ import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.running.Ready;
 import bowling.exception.frame.FinalFrameBowlingException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 public class FinalFrame implements Frame {
 
     private final int round;
-    private final List<State> states;
+    private final LinkedList<State> states;
 
-    private FinalFrame(int round, List<State> states) {
+    private FinalFrame(int round, LinkedList<State> states) {
         this.round = round;
         this.states = states;
     }
 
-    static Frame from(int round, List<State> states) {
+    static Frame from(int round, LinkedList<State> states) {
         return new FinalFrame(round, states);
     }
 
     public static Frame createFinalFrame() {
-        List<State> states = new ArrayList<>();
+        LinkedList<State> states = new LinkedList<>();
         states.add(new Ready());
         return new FinalFrame(FINAL_ROUND, states);
     }
@@ -34,7 +33,14 @@ public class FinalFrame implements Frame {
     public Frame bowling(Pin pin) {
         checkIsFinished();
 
-        return this;
+        State state = states.getLast();
+        if (state.isFinished()) {
+            State nextState = new Ready();
+            states.add(nextState.bowl(pin));
+            return new FinalFrame(FINAL_ROUND, new LinkedList<>(states));
+        }
+        state.bowl(pin);
+        return new FinalFrame(FINAL_ROUND, new LinkedList<>(states));
     }
 
     private void checkIsFinished() {
