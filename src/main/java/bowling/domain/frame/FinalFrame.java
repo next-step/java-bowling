@@ -66,15 +66,6 @@ public class FinalFrame extends AbstractFrame {
     }
 
     @Override
-    public boolean isFinished() {
-        try {
-            return score().canCalculateScore();
-        } catch (RunningCreateScoreException e) {
-            return false;
-        }
-    }
-
-    @Override
     public FrameResult createFrameResult() {
         try {
             return FrameResult.of(score().score(), createDescByStates());
@@ -107,6 +98,15 @@ public class FinalFrame extends AbstractFrame {
             }
         }
         throw new StateCannotCalculateScoreException();
+    }
+
+    @Override
+    public boolean isFinished() {
+        try {
+            return score().canCalculateScore();
+        } catch (RunningCreateScoreException e) {
+            return false;
+        }
     }
 
 }

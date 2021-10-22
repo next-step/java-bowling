@@ -28,6 +28,7 @@ public class NormalFrame extends AbstractFrame {
         return new NormalFrame(FIRST_ROUND, null, new Ready());
     }
 
+    @Override
     public Optional<Frame> nextFrame() {
         return Optional.ofNullable(nextFrame);
     }
