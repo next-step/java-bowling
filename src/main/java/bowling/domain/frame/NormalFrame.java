@@ -60,7 +60,6 @@ public class NormalFrame implements Frame {
         } catch (NextFrameNotFoundException | StateCannotCalculateScoreException | RunningCreateScoreException e) {
             return FrameResult.createEmptyScoreFrameResult();
         }
-
     }
 
     Score score() {

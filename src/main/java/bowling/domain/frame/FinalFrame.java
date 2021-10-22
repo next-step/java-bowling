@@ -7,6 +7,9 @@ import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.running.Ready;
 import bowling.exception.frame.FinalFrameBowlingException;
+import bowling.exception.score.CannotCalculateException;
+import bowling.exception.state.RunningCreateScoreException;
+import bowling.exception.state.StateCannotCalculateScoreException;
 import java.util.LinkedList;
 
 public class FinalFrame implements Frame {
@@ -55,7 +58,12 @@ public class FinalFrame implements Frame {
 
     @Override
     public FrameResult createFrameResult() {
-        return FrameResult.of(score().score());
+        try {
+            return FrameResult.of(score().score());
+        }
+        catch (CannotCalculateException | StateCannotCalculateScoreException | RunningCreateScoreException e) {
+            return FrameResult.createEmptyScoreFrameResult();
+        }
     }
 
     Score score() {
