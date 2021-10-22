@@ -7,7 +7,6 @@ import bowling.domain.state.running.Ready;
 import bowling.exception.frame.NextFrameNotFoundException;
 import bowling.exception.state.RunningCreateScoreException;
 import bowling.exception.state.StateCannotCalculateScoreException;
-import java.util.Objects;
 
 public class NormalFrame extends AbstractFrame {
 
@@ -29,14 +28,7 @@ public class NormalFrame extends AbstractFrame {
     }
 
     public Frame nextFrame() {
-        checkNextFrameExist();
         return nextFrame;
-    }
-
-    private void checkNextFrameExist() {
-        if (Objects.isNull(nextFrame)) {
-            throw new NextFrameNotFoundException();
-        }
     }
 
     @Override

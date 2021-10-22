@@ -9,6 +9,8 @@ public interface Frame {
 
     Frame nextFrame();
 
+    Frame lastFrame();
+
     Frame bowling(Pin pin);
 
     FrameResult createFrameResult();
