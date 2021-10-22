@@ -8,26 +8,25 @@ import bowling.domain.state.State;
 import bowling.domain.state.running.Ready;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class FinalFrame implements Frame {
 
     private final int round;
-    private State state;
-    private List<State> bonus;
+    private final List<State> states;
 
-    private FinalFrame(int round, State state, List<State> bonus) {
+    private FinalFrame(int round, List<State> states) {
         this.round = round;
-        this.state = state;
-        this.bonus = bonus;
+        this.states = states;
     }
 
-    public static Frame from(int round, State state) {
-        return new FinalFrame(round, state, new ArrayList<>());
+    static Frame from(int round, List<State> states) {
+        return new FinalFrame(round, states);
     }
 
     public static Frame createFinalFrame() {
-        return new FinalFrame(FINAL_ROUND, new Ready(), new ArrayList<>());
+        List<State> states = new ArrayList<>();
+        states.add(new Ready());
+        return new FinalFrame(FINAL_ROUND, states);
     }
 
     @Override
@@ -40,25 +39,23 @@ public class FinalFrame implements Frame {
         return null;
     }
 
+//    Score score() {
+//        Score score = state.createScore();
+//        if (score.canCalculateScore()) {
+//            return score;
+//        }
+//        return calculateAdditionalScore(score);
+//    }
+
     @Override
     public Score calculateAdditionalScore(Score score) {
-        return null;
+        for (State state : states) {
+            score = state.calculateAdditionalScore(score);
+            if (score.canCalculateScore()) {
+                return score;
+            }
+        }
+        throw new RuntimeException("더 이상 계산할 수 없습니다.");
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        FinalFrame that = (FinalFrame) o;
-        return round == that.round && Objects.equals(state.getClass(), that.state.getClass());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(round, state.getClass());
-    }
 }
