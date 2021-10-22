@@ -32,15 +32,15 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame bowling(Pin pin) {
-        if (isFinished()) {
-            throw new FinalFrameBowlingException();
-        }
+        checkIsFinished();
+
         return this;
     }
 
-    private boolean isFinished() {
-        Score score = score();
-        return score.canCalculateScore();
+    private void checkIsFinished() {
+        if (score().canCalculateScore()) {
+            throw new FinalFrameBowlingException();
+        }
     }
 
     @Override
