@@ -85,4 +85,20 @@ class ReadyTest {
             .withMessageMatching("현재 Running상태는 더이상 Score를 계산할 수 없습니다.");
     }
 
+    @Test
+    @DisplayName("desc 반환 테스트")
+    void descTest() {
+
+        // given
+        State state = new Ready();
+
+        String expected = "";
+
+        // when
+        String result = state.desc();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
 }

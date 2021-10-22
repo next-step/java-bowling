@@ -87,4 +87,20 @@ public class StrikeTest {
         assertThat(result).isEqualTo(expected);
     }
 
+    @Test
+    @DisplayName("desc 반환 테스트")
+    void descTest() {
+
+        // given
+        State state = new Strike(Pin.of(10));
+
+        String expected = "X";
+
+        // when
+        String result = state.desc();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
 }

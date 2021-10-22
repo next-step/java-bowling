@@ -36,4 +36,9 @@ public class Miss extends Finish {
         return score.addPin(second);
     }
 
+    @Override
+    public String desc() {
+        return first.valueToStringWithNextPin(second);
+    }
+
 }

@@ -44,4 +44,9 @@ public class Spare extends Finish {
         return score.addPin(second);
     }
 
+    @Override
+    public String desc() {
+        return first.valueToStringWithNextPin(second);
+    }
+
 }

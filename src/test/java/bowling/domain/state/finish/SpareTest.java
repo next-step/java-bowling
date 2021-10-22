@@ -124,4 +124,20 @@ public class SpareTest {
         assertThat(result).isEqualTo(expected);
     }
 
+    @Test
+    @DisplayName("desc 반환 테스트")
+    void descTest() {
+
+        // given
+        State state = new Spare(Pin.of(3), Pin.of(7));
+
+        String expected = "3|/";
+
+        // when
+        String result = state.desc();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
 }

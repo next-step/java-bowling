@@ -111,4 +111,20 @@ class MissTest {
         assertThat(result).isEqualTo(expected);
     }
 
+    @Test
+    @DisplayName("desc 반환 테스트")
+    void descTest() {
+
+        // given
+        State state = new Miss(Pin.of(3), Pin.of(4));
+
+        String expected = "3|4";
+
+        // when
+        String result = state.desc();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
 }

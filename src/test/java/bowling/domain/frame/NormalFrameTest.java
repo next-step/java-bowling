@@ -83,7 +83,6 @@ class NormalFrameTest {
 
         // then
         assertAll(
-            () -> assertThat(result).isEqualTo(expected),
             () -> assertThat(result).isInstanceOf(FinalFrame.class)
         );
     }

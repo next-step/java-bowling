@@ -26,4 +26,9 @@ public class Strike extends Finish {
         return score.addPin(Pin.of(10));
     }
 
+    @Override
+    public String desc() {
+        return "X";
+    }
+
 }
