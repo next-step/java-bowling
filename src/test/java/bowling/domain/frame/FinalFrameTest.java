@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
@@ -9,6 +10,7 @@ import bowling.domain.state.finish.Miss;
 import bowling.domain.state.finish.Spare;
 import bowling.domain.state.finish.Strike;
 import bowling.domain.state.running.FirstBowl;
+import bowling.exception.frame.FinalFrameBowlingException;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -314,6 +316,22 @@ class FinalFrameTest {
             // then
             assertThat(result).isEqualTo(expected);
         }
+    }
+
+    @Test
+    @DisplayName("현재 bowling을 할 bonus 횟수가 남아있지 않다면 exception이 발생해야 한다.")
+    void bowlingExceptionTest() {
+
+        // given
+        List<State> states = new ArrayList<>();
+        states.add(new Spare(Pin.of(3), Pin.of(7)));
+        states.add(new Strike(Pin.of(10)));
+        Frame frame = FinalFrame.from(10, states);
+
+        // when & then
+        assertThatExceptionOfType(FinalFrameBowlingException.class)
+            .isThrownBy(() -> frame.bowling(Pin.of(3)))
+            .withMessageMatching("final frame이 종료되어 더이상 bowling할 수 없습니다.");
     }
 
 }

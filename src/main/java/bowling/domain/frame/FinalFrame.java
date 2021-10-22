@@ -6,6 +6,7 @@ import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.running.Ready;
+import bowling.exception.frame.FinalFrameBowlingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,15 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame bowling(Pin pin) {
-        return null;
+        if (isFinished()) {
+            throw new FinalFrameBowlingException();
+        }
+        return this;
+    }
+
+    private boolean isFinished() {
+        Score score = score();
+        return score.canCalculateScore();
     }
 
     @Override
