@@ -35,11 +35,15 @@ public class FinalFrame implements Frame {
 
         State state = states.getLast();
         if (state.isFinished()) {
-            State nextState = new Ready();
-            states.add(nextState.bowl(pin));
-            return new FinalFrame(FINAL_ROUND, new LinkedList<>(states));
+            return createFrameByNextStateBowl(pin);
         }
         state.bowl(pin);
+        return new FinalFrame(FINAL_ROUND, new LinkedList<>(states));
+    }
+
+    private Frame createFrameByNextStateBowl(Pin pin) {
+        State nextState = new Ready();
+        states.add(nextState.bowl(pin));
         return new FinalFrame(FINAL_ROUND, new LinkedList<>(states));
     }
 
