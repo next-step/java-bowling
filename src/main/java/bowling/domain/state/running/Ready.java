@@ -8,6 +8,8 @@ import bowling.exception.state.StateCannotCalculateScoreException;
 
 public class Ready extends Running {
 
+    private static final String EMPTY_DESC = "";
+
     public Ready() {
     }
 
@@ -26,7 +28,7 @@ public class Ready extends Running {
 
     @Override
     public String desc() {
-        return "";
+        return EMPTY_DESC;
     }
 
 }

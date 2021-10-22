@@ -6,6 +6,8 @@ import bowling.exception.state.StrikeStatePinException;
 
 public class Strike extends Finish {
 
+    private final String STRIKE_DESC = "X";
+
     public Strike(Pin first) {
         checkPinStrike(first);
     }
@@ -28,7 +30,7 @@ public class Strike extends Finish {
 
     @Override
     public String desc() {
-        return "X";
+        return STRIKE_DESC;
     }
 
 }

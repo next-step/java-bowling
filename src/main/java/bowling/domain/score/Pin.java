@@ -1,5 +1,7 @@
 package bowling.domain.score;
 
+import static bowling.domain.state.finish.Spare.SPARE_DESC_STRING;
+
 import bowling.exception.score.PinRangeException;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +12,8 @@ public class Pin {
 
     public static final int PIN_MIN_VALUE = 0;
     public static final int PIN_MAX_VALUE = 10;
+
+    private static final String DESC_DELIMITER = "|";
 
     private static final Map<Integer, Pin> pins = new HashMap<>();
 
@@ -62,9 +66,9 @@ public class Pin {
 
     public String valueToStringWithNextPin(Pin pin) {
         if (isSpare(pin)) {
-            return this.pin + "|/";
+            return this.pin + DESC_DELIMITER + SPARE_DESC_STRING;
         }
-        return this.pin + "|" + pin.pin;
+        return this.pin + DESC_DELIMITER + pin.pin;
     }
 
     @Override

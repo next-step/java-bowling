@@ -7,6 +7,8 @@ import bowling.exception.state.SpareStatePinsException;
 
 public class Spare extends Finish {
 
+    public static final String SPARE_DESC_STRING = "/";
+
     private final Pin first;
     private final Pin second;
 
