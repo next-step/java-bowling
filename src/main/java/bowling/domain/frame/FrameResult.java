@@ -20,6 +20,17 @@ public class FrameResult {
         return new FrameResult(-1, desc);
     }
 
+    public String score() {
+        if (score == -1) {
+            return "";
+        }
+        return String.valueOf(score);
+    }
+
+    public String desc() {
+        return desc;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
