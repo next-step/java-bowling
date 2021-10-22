@@ -12,7 +12,7 @@ public abstract class AbstractFrame implements Frame {
 
     private final int round;
 
-    public AbstractFrame(int round) {
+    AbstractFrame(int round) {
         this.round = round;
     }
 
