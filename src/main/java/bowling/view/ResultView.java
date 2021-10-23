@@ -67,7 +67,7 @@ public class ResultView {
 
     private static String printFrameResultScoreBoard(FrameResults frameResults) {
         return frameResults.values()
-            .map(frameResult -> frameResult.score())
+            .map(FrameResult::score)
             .map(ResultView::toScoreFormat)
             .collect(Collectors.joining());
     }
