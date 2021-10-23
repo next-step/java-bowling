@@ -368,7 +368,7 @@ class FinalFrameTest {
         states.add(new Strike(Pin.of(10)));
         Frame frame = FinalFrame.from(10, states);
 
-        FrameResult expected = FrameResult.of(30, "X|X|X");
+        FrameResult expected = FrameResult.ofScoreAndDesc(30, "X|X|X");
 
         // when
         FrameResult result = frame.createFrameResult();
@@ -387,7 +387,7 @@ class FinalFrameTest {
         states.add(new Strike(Pin.of(10)));
         Frame frame = FinalFrame.from(10, states);
 
-        FrameResult expected = FrameResult.of(-1, "X|X");
+        FrameResult expected = FrameResult.ofScoreAndDesc(-1, "X|X");
 
         // when
         FrameResult result = frame.createFrameResult();

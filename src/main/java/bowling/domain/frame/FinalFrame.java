@@ -68,7 +68,7 @@ public class FinalFrame extends AbstractFrame {
     @Override
     public FrameResult createFrameResult() {
         try {
-            return FrameResult.of(score().score(), createDescByStates());
+            return FrameResult.ofScoreAndDesc(score().score(), createDescByStates());
         }
         catch (CannotCalculateException | StateCannotCalculateScoreException | RunningCreateScoreException e) {
             return FrameResult.createFrameResultByNoCaculatedScore(createDescByStates());

@@ -52,7 +52,7 @@ public class NormalFrame extends AbstractFrame {
     @Override
     public FrameResult createFrameResult() {
         try {
-            return FrameResult.of(score().score(), state.desc());
+            return FrameResult.ofScoreAndDesc(score().score(), state.desc());
         } catch (NextFrameNotFoundException | StateCannotCalculateScoreException | RunningCreateScoreException e) {
             return FrameResult.createFrameResultByNoCaculatedScore(state.desc());
         }

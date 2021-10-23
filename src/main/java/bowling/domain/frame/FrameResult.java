@@ -4,30 +4,39 @@ import java.util.Objects;
 
 public class FrameResult {
 
-    private static final int CANNOT_CALCULATED_SCORE_VALUE = -1;
+    public static final int CANNOT_CALCULATED_SCORE_VALUE = -1;
     private static final String BLANK_SCORE_STRING = "";
 
+    private int totalScore;
     private final int score;
     private final String desc;
 
-    private FrameResult(int score, String desc) {
+    private FrameResult(int totalScore, int score, String desc) {
+        this.totalScore = totalScore;
         this.score = score;
         this.desc = desc;
     }
 
-    public static FrameResult of(int score, String desc) {
-        return new FrameResult(score, desc);
+    static FrameResult of(int totalScore, int score, String desc) {
+        return new FrameResult(totalScore, score, desc);
+    }
+
+    public static FrameResult ofScoreAndDesc(int score, String desc) {
+        return new FrameResult(CANNOT_CALCULATED_SCORE_VALUE, score, desc);
     }
 
     public static FrameResult createFrameResultByNoCaculatedScore(String desc) {
-        return new FrameResult(CANNOT_CALCULATED_SCORE_VALUE, desc);
+        return new FrameResult(CANNOT_CALCULATED_SCORE_VALUE, CANNOT_CALCULATED_SCORE_VALUE, desc);
     }
 
-    public String score() {
-        if (score == CANNOT_CALCULATED_SCORE_VALUE) {
-            return BLANK_SCORE_STRING;
+    public void addTotalScore(int beforeTotalScore) {
+        if (score != CANNOT_CALCULATED_SCORE_VALUE) {
+            this.totalScore = score + beforeTotalScore;
         }
-        return String.valueOf(score);
+    }
+
+    public int score() {
+        return score;
     }
 
     public String desc() {

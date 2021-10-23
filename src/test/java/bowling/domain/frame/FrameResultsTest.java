@@ -5,9 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import bowling.domain.score.Pin;
 import bowling.domain.state.State;
 import bowling.domain.state.finish.Strike;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,10 +20,10 @@ class FrameResultsTest {
         Frame secondFrame = NormalFrame.from(2, thirdFrame, new Strike(Pin.of(10)));
         Frame firstframe = NormalFrame.from(1, secondFrame, new Strike(Pin.of(10)));
 
-        List<FrameResult> frameResultList = new ArrayList<>();
-        frameResultList.add(FrameResult.of(30, "X"));
-        frameResultList.add(FrameResult.of(-1, "X"));
-        frameResultList.add(FrameResult.of(-1, "X"));
+        LinkedList<FrameResult> frameResultList = new LinkedList<>();
+        frameResultList.add(FrameResult.ofScoreAndDesc(30, "X"));
+        frameResultList.add(FrameResult.ofScoreAndDesc(-1, "X"));
+        frameResultList.add(FrameResult.ofScoreAndDesc(-1, "X"));
         FrameResults expected = FrameResults.of(frameResultList);
 
         // when
@@ -48,14 +46,48 @@ class FrameResultsTest {
         Frame secondFrame = NormalFrame.from(9, finalFrame, new Strike(Pin.of(10)));
         Frame firstframe = NormalFrame.from(8, secondFrame, new Strike(Pin.of(10)));
 
-        List<FrameResult> frameResultList = new ArrayList<>();
-        frameResultList.add(FrameResult.of(30, "X"));
-        frameResultList.add(FrameResult.of(30, "X"));
-        frameResultList.add(FrameResult.of(30, "X|X|X"));
+        LinkedList<FrameResult> frameResultList = new LinkedList<>();
+        frameResultList.add(FrameResult.ofScoreAndDesc(30, "X"));
+        frameResultList.add(FrameResult.ofScoreAndDesc(30, "X"));
+        frameResultList.add(FrameResult.ofScoreAndDesc(30, "X|X|X"));
         FrameResults expected = FrameResults.of(frameResultList);
 
         // when
         FrameResults result = FrameResults.createFrameResultsByFirstFrame(firstframe);
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("이전 totalScore를 받아 현재 totalScore를 변환할 수 있다.")
+    void addTotalScoreTest() {
+
+        // given
+        int beforeTotalScore = 20;
+
+        FrameResult expected = FrameResult.of(30, 10, "X");
+
+        // when
+        FrameResult result = FrameResult.ofScoreAndDesc(10, "X");
+        result.addTotalScore(beforeTotalScore);
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("현재 score가 계산 불가능한 상황이면 totalScore를 더하지 않는다.")
+    void notAddTotalScoreTest() {
+
+        // given
+        int beforeTotalScore = 20;
+
+        FrameResult expected = FrameResult.of(-1, -1, "");
+
+        // when
+        FrameResult result = FrameResult.ofScoreAndDesc(-1, "");
+        result.addTotalScore(beforeTotalScore);
 
         // then
         assertThat(result).isEqualTo(expected);
