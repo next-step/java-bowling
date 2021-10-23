@@ -2,34 +2,40 @@ package bowling.domain.frame;
 
 import static bowling.domain.frame.NormalFrame.FINAL_ROUND;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Objects;
 import java.util.stream.Stream;
 
 public class FrameResults {
 
-    private final List<FrameResult> frameResults;
+    private final LinkedList<FrameResult> frameResults;
 
-    private FrameResults(List<FrameResult> frameResults) {
+    private FrameResults(LinkedList<FrameResult> frameResults) {
         this.frameResults = frameResults;
     }
 
-    static FrameResults of(List<FrameResult> frameResults) {
+    static FrameResults of(LinkedList<FrameResult> frameResults) {
         return new FrameResults(frameResults);
     }
 
     public static FrameResults createFrameResultsByFirstFrame(Frame frame) {
-        List<FrameResult> results = new ArrayList<>();
-        results.add(frame.createFrameResult());
+        LinkedList<FrameResult> results = new LinkedList<>();
+
+        FrameResult frameResult = frame.createFrameResult();
+        frameResult.addTotalScore(0);
+        results.add(frameResult);
+
         addFrameResult(frame, results);
         return new FrameResults(results);
     }
 
-    private static void addFrameResult(Frame frame, List<FrameResult> results) {
+    private static void addFrameResult(Frame frame, LinkedList<FrameResult> results) {
         while (frame.round() < FINAL_ROUND && frame.nextFrame().isPresent()) {
             frame = frame.nextFrame().get();
-            results.add(frame.createFrameResult());
+
+            FrameResult frameResult = frame.createFrameResult();
+            frameResult.addTotalScore(results.getLast().totalScore());
+            results.add(frameResult);
         }
     }
 

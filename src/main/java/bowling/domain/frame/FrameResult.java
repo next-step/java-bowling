@@ -43,6 +43,17 @@ public class FrameResult {
         return desc;
     }
 
+    public int totalScore() {
+        return totalScore;
+    }
+
+    public String totalScoreToString() {
+        if (totalScore == CANNOT_CALCULATED_SCORE_VALUE) {
+            return BLANK_SCORE_STRING;
+        }
+        return String.valueOf(totalScore);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
