@@ -20,6 +20,8 @@ public interface Frame {
 
     boolean isLast();
 
+    boolean tryAll();
+
     int addWithFirstScore(int score);
 
     Frame prev();

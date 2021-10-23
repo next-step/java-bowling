@@ -70,6 +70,11 @@ public class FinalFrame extends BaseFrame {
     }
 
     @Override
+    public boolean tryAll() {
+        return isLast();
+    }
+
+    @Override
     public BaseFrame next() {
         return null;
     }

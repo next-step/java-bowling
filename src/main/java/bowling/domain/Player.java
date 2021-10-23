@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.frame.Frames;
+
 import java.util.Objects;
 
 public class Player {
@@ -8,13 +10,16 @@ public class Player {
 
     private final String name;
 
-    private Player(String name) {
+    private final Frames frames;
+
+    private Player(String name, Frames frames) {
         this.name = name;
+        this.frames = frames;
     }
 
     public static Player from(String name) {
         validate(name);
-        return new Player(name);
+        return new Player(name, Frames.create());
     }
 
     private static void validate(String name) {
@@ -45,12 +50,24 @@ public class Player {
         }
     }
 
+    public Frames getFrames() {
+        return frames;
+    }
+
     public String getName() {
         return name;
     }
 
     public int nameLength() {
         return name.length();
+    }
+
+    public Player bowl(int score) {
+        return new Player(name, frames.execute(score).calculateScores());
+    }
+
+    public boolean nowFrameEnd() {
+        return frames.nowFrameEnd();
     }
 
     @Override

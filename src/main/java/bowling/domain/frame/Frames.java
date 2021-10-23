@@ -7,8 +7,6 @@ import java.util.Objects;
 
 public class Frames {
 
-    private static final int FIRST_TRIAL = 1;
-
     private static final int MAX_SIZE = 10;
 
     private final List<Frame> frames;
@@ -23,15 +21,6 @@ public class Frames {
 
     public List<Frame> getAll() {
         return Collections.unmodifiableList(frames);
-    }
-
-    public int getNextTryFrame() {
-        if (frames.isEmpty()) {
-            return FIRST_TRIAL;
-        }
-
-        Frame frame = frames.get(frames.size() - 1);
-        return frame.nextIdx();
     }
 
     public Frames execute(int score) {
@@ -66,6 +55,14 @@ public class Frames {
 
     public int size() {
         return frames.size();
+    }
+
+    public boolean nowFrameEnd() {
+
+        int size = frames.size();
+        Frame frame = frames.get(size - 1);
+
+        return frame.tryAll();
     }
 
     @Override

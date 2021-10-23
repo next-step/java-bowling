@@ -30,7 +30,7 @@ public class Players {
         values.add(player);
     }
 
-    public List<Player> values() {
+    public List<Player> all() {
         return values;
     }
 

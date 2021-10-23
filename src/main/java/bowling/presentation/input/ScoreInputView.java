@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class ScoreInputView {
 
-    private static final String QUESTION = "%d프레임 투구 : ";
+    private static final String QUESTION = "%s's turn : ";
 
     private ScoreInputView() {
     }
@@ -13,13 +13,10 @@ public class ScoreInputView {
         return new ScoreInputView();
     }
 
-    public int inputLastFrameScore() {
-        return input(10);
-    }
-
-    public int input(int frame) {
+    public int input(String name) {
         Scanner sc = new Scanner(System.in);
-        System.out.printf(QUESTION, frame);
+        System.out.printf(QUESTION, name);
         return sc.nextInt();
     }
+
 }

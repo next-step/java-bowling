@@ -50,6 +50,11 @@ public class NormalFrame extends BaseFrame {
     }
 
     @Override
+    public boolean tryAll() {
+        return nextIdx() != this.index;
+    }
+
+    @Override
     public Frame next() {
         return nextFrame;
     }

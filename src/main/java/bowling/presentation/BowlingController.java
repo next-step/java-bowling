@@ -4,11 +4,7 @@ import bowling.domain.Player;
 import bowling.domain.Players;
 import bowling.presentation.input.PlayerCountInputView;
 import bowling.presentation.input.PlayerInputView;
-import bowling.presentation.output.FrameOutputView;
-import bowling.service.FramesService;
-
-import java.util.ArrayList;
-import java.util.List;
+import bowling.service.BowlingService;
 
 public class BowlingController {
 
@@ -25,13 +21,7 @@ public class BowlingController {
         for (int i = 0; i < playerCount; i++) {
             players.add(Player.from(PlayerInputView.create(i + 1).input()));
         }
-        printBowlingStart(players);
-//        FramesService.create().execute(player);
+        BowlingService.create(players).start();
     }
-
-    private void printBowlingStart(Players players) {
-        FrameOutputView.create().print(players);
-    }
-
 
 }

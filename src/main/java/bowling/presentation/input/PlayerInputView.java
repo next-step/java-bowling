@@ -4,9 +4,6 @@ import java.util.Scanner;
 
 public class PlayerInputView {
 
-
-    private static final String PLAYER_COUNT_QUESTION = "How many people? ";
-
     private static final String QUESTION = "플레이어 %d의 이름은(3 english letters)?: ";
 
     private final int index;

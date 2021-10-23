@@ -2,7 +2,6 @@ package bowling.presentation.output;
 
 import bowling.domain.Player;
 import bowling.domain.Players;
-import bowling.domain.frame.Frames;
 import bowling.presentation.output.util.FramesOutputHelper;
 import bowling.presentation.output.util.TotalScoreOutputHelper;
 
@@ -10,43 +9,32 @@ import static bowling.presentation.output.constant.FrameSize.INDENT;
 import static bowling.presentation.output.constant.ScoreMarking.BOUNDARY;
 import static bowling.presentation.output.constant.ScoreMarking.SPACE;
 
-public class FrameOutputView {
+public class PlayersFrameOutputView {
 
     private static final String FIRST_ROW = "| NAME  |  01   |  02   |  03   |  04   |  05   |  06   |  07   |  08   |  09   |  10   |";
 
-    private static final String SECOND_ROW = "       |       |       |       |       |       |       |       |       |       |";
+    private final Players players;
 
-    private static final String THIRD_ROW = "|       |       |       |       |       |       |       |       |       |       |       |";
-
-    private FrameOutputView() {
+    private PlayersFrameOutputView(Players players) {
+        this.players = players;
     }
 
-    public static FrameOutputView create() {
-        return new FrameOutputView();
+    public static PlayersFrameOutputView create(Players players) {
+        return new PlayersFrameOutputView(players);
     }
 
-    public void print(Players players) {
-        players.values().forEach(player -> {
+    public void print() {
+        players.all().forEach(player -> {
             System.out.println(FIRST_ROW);
-            System.out.println(name(player) + SECOND_ROW);
-            System.out.println(THIRD_ROW);
+            StringBuilder secondRow = new StringBuilder();
+
+            secondRow
+                    .append(name(player))
+                    .append(FramesOutputHelper.create().output(player.getFrames()))
+                    .append(TotalScoreOutputHelper.create().output(player.getFrames()));
+            System.out.println(secondRow);
         });
         System.out.println();
-    }
-
-    public void print(Player player, Frames frames) {
-
-        System.out.println(FIRST_ROW);
-
-        StringBuilder secondRow = new StringBuilder();
-
-        secondRow
-                .append(name(player))
-                .append(FramesOutputHelper.create().output(frames))
-                .append(TotalScoreOutputHelper.create().output(frames));
-
-        System.out.println(secondRow);
-
     }
 
     private StringBuilder name(Player player) {
