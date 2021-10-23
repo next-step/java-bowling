@@ -16,6 +16,8 @@ public class ResultView {
 
     private static final String BOARD_NAME_FORMAT = "|  %-3s |";
     private static final String BOARD_SCORE_FORMAT = " %-5s|";
+
+    private static final String BOARD_TOTAL_SCORE_FORMAT = "  %-4s|";
     
     private ResultView() {
     }
@@ -68,12 +70,16 @@ public class ResultView {
     private static String printFrameResultScoreBoard(FrameResults frameResults) {
         return frameResults.values()
             .map(FrameResult::totalScoreToString)
-            .map(ResultView::toScoreFormat)
+            .map(ResultView::toTotalScoreFormat)
             .collect(Collectors.joining());
     }
 
     private static String toScoreFormat(String s) {
         return String.format(BOARD_SCORE_FORMAT, s);
+    }
+
+    private static String toTotalScoreFormat(String s) {
+        return String.format(BOARD_TOTAL_SCORE_FORMAT, s);
     }
 
     private static String toNameFormat(User user) {
