@@ -1,48 +1,34 @@
 package bowling.model.state;
 
-import java.util.Objects;
+import bowling.model.Score;
 
-import static bowling.controller.Main.stateResult;
+public class Miss extends Finished {
+    private final Pin firstPins;
+    private final Pin secondPins;
 
-import bowling.CannotBowlException;
-import bowling.model.Pin;
-import bowling.model.State;
-
-
-public class Miss implements State {
-    private final Pin firstPin;
-    private final Pin secondPin;
-
-    public Miss(Pin firstPin, Pin secondPin) {
-        this.firstPin = firstPin;
-        this.secondPin = secondPin;
+    Miss(Pin firstPins, Pin secondPins) {
+        this.firstPins = firstPins;
+        this.secondPins = secondPins;
     }
 
     @Override
-    public State bowl(int countOfPin) throws CannotBowlException {
-        throw new CannotBowlException();
+    public Score calculateAdditionalScore(Score score) {
+        score = firstPins.sumScore(score);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        score = secondPins.sumScore(score);
+        return score;
     }
 
     @Override
-    public boolean isFinish(int frameNo) {
-        return true;
+    public Score getScore() {
+        return new Score(firstPins.totalPins(secondPins), 0);
     }
 
     @Override
-    public String toString() {
-        return stateResult.removeLast() + "|" + secondPin.toString();
+    public String getDesc() {
+        return firstPins.getDesc(secondPins);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Miss miss = (Miss) o;
-        return Objects.equals(firstPin, miss.firstPin) && Objects.equals(secondPin, miss.secondPin);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(firstPin, secondPin);
-    }
 }

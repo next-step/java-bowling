@@ -1,49 +1,22 @@
 package bowling.model.state;
 
-import java.util.Objects;
+import bowling.model.Score;
 
-import bowling.model.Pin;
-import bowling.model.State;
-
-public class Strike implements State {
-    private final Pin countOfPin;
-
-    public Strike() {
-        this.countOfPin = new Pin(10);
-    }
-
+public class Strike extends Finished {
     @Override
-    public State bowl(int countOfPin) {
-        Pin currentPin = new Pin(countOfPin);
-
-        if (currentPin.isStrike()) {
-            return new SecondStrike();
+    public Score calculateAdditionalScore(Score score) {
+        if (score.canCalculateScore()) {
+            return score;
         }
+        return score.bowl(Pin.MAX_PINS);
+    }
 
-        return new SecondBowl(countOfPin);
+    public Score getScore() {
+        return new Score(Pin.MAX_PINS, 2);
     }
 
     @Override
-    public String toString() {
+    public String getDesc() {
         return "X";
     }
-
-    @Override
-    public boolean isFinish(int frameNo) {
-        return frameNo != FINAL_FRAME_NO;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Strike strike = (Strike) o;
-        return Objects.equals(countOfPin, strike.countOfPin);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(countOfPin);
-    }
-
 }

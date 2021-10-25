@@ -1,50 +1,37 @@
 package bowling.model.state;
 
-import java.util.Objects;
+import bowling.model.Score;
 
-import static bowling.controller.Main.stateResult;
+public class Spare extends Finished {
+    private final Pin firstPins;
+    private final Pin secondPins;
 
-import bowling.model.Pin;
-import bowling.model.State;
-
-public class Spare implements State {
-    private final Pin countOfPin;
-
-    public Spare() {
-        this.countOfPin = new Pin(10);
-    }
-
-    @Override
-    public State bowl(int countOfPin) {
-        Pin currentPin = new Pin(countOfPin);
-
-        if (currentPin.isStrike()) {
-            return new ThirdStrike();
+    Spare(Pin firstPins, Pin secondPins) {
+        if (!firstPins.isSpare(secondPins)) {
+            throw new IllegalArgumentException();
         }
 
-        return new Miss(this.countOfPin, new Pin(countOfPin));
+        this.firstPins = firstPins;
+        this.secondPins = secondPins;
     }
 
     @Override
-    public boolean isFinish(int frameNo) {
-        return frameNo != FINAL_FRAME_NO;
+    public Score calculateAdditionalScore(Score score) {
+        score = firstPins.sumScore(score);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        score = secondPins.sumScore(score);
+        return score;
     }
 
     @Override
-    public String toString() {
-        return stateResult.removeLast() + "|/";
+    public Score getScore() {
+        return new Score(Pin.MAX_PINS, 1);
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Spare spare = (Spare) o;
-        return Objects.equals(countOfPin, spare.countOfPin);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(countOfPin);
+    public String getDesc() {
+        return firstPins.getDesc(secondPins);
     }
 }

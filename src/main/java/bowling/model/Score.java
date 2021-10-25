@@ -26,6 +26,9 @@ public class Score {
     }
 
     public int getScore() {
+        if (!canCalculateScore()) {
+            throw new CannotCalculateException();
+        }
         return this.score;
     }
 

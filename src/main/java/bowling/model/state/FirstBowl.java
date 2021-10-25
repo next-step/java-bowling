@@ -1,47 +1,37 @@
 package bowling.model.state;
 
-import java.util.Objects;
+import bowling.model.CannotCalculateException;
+import bowling.model.Score;
 
-import bowling.model.Pin;
-import bowling.model.State;
+public class FirstBowl extends Running {
+    private final Pin firstPins;
 
-public class FirstBowl implements State {
-    private final Pin countOfPin;
-
-    public FirstBowl(int countOfPin) {
-        this.countOfPin = new Pin(countOfPin);
+    FirstBowl(int falledPins) {
+        this.firstPins = new Pin(falledPins);
     }
 
     @Override
-    public State bowl(int countOfPin) {
-        Pin currentPin = this.countOfPin.add(countOfPin);
-        if (currentPin.isStrike()) {
-            return new Spare();
+    public State bowl(int falledPins) {
+        Pin secondPins = new Pin(falledPins);
+        if (firstPins.isSpare(secondPins)) {
+            return new Spare(firstPins, secondPins);
         }
 
-        return new Miss(this.countOfPin, new Pin(countOfPin));
+        return new Miss(firstPins, secondPins);
     }
 
     @Override
-    public boolean isFinish(int frameNo) {
-        return false;
+    public Score calculateAdditionalScore(Score score) {
+        score = firstPins.sumScore(score);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+
+        throw new CannotCalculateException();
     }
 
     @Override
-    public String toString() {
-        return countOfPin.toString();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FirstBowl firstBowl = (FirstBowl) o;
-        return Objects.equals(countOfPin, firstBowl.countOfPin);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(countOfPin);
+    public String getDesc() {
+        return firstPins.getDesc();
     }
 }
