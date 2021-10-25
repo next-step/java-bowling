@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
@@ -20,7 +22,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void 이름이_영어가_아니면_익셉션이_발생한다(){
+    public void 이름이_영어가_아니면_익셉션이_발생한다() {
         //given
         //when
         //then
@@ -49,5 +51,31 @@ public class PlayerTest {
         assertThatThrownBy(() -> Player.from(name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("이름은 3자를 넘을 수 없습니다.");
+    }
+
+    @Nested
+    @DisplayName("프레임 종료 확인 테스트")
+    class FrameEndTest {
+
+        @Test
+        public void 현재_프레임이_스트라이크라면_현재_프레임은_끝났다() {
+            //given
+            Player sml = Player.from("SML");
+            //when
+            sml = sml.bowl(10);
+            //then
+            assertThat(sml.nowFrameEnd()).isTrue();
+        }
+
+        @Test
+        public void 현재_프레임이_스트라이크가_아니고_첫시도라면_끝나지_않는다() {
+            //given
+            Player sml = Player.from("SML");
+            //when
+            sml = sml.bowl(8);
+            //then
+            assertThat(sml.nowFrameEnd()).isFalse();
+        }
+
     }
 }

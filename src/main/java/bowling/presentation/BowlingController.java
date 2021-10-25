@@ -1,9 +1,10 @@
 package bowling.presentation;
 
 import bowling.domain.Player;
+import bowling.domain.Players;
+import bowling.presentation.input.PlayerCountInputView;
 import bowling.presentation.input.PlayerInputView;
-import bowling.presentation.output.FrameOutputView;
-import bowling.service.FramesService;
+import bowling.service.BowlingService;
 
 public class BowlingController {
 
@@ -15,14 +16,12 @@ public class BowlingController {
     }
 
     public void execute() {
-        Player player = Player.from(PlayerInputView.create().input());
-        printBowlingStart(player);
-        FramesService.create().execute(player);
+        int playerCount = PlayerCountInputView.create().input();
+        Players players = Players.create();
+        for (int i = 0; i < playerCount; i++) {
+            players.add(Player.from(PlayerInputView.create(i + 1).input()));
+        }
+        BowlingService.create(players).start();
     }
-
-    private void printBowlingStart(Player player) {
-        FrameOutputView.create().print(player);
-    }
-
 
 }

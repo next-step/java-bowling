@@ -30,8 +30,6 @@ public class TotalScoreOutputHelper {
             output.append(EMPTY_FRAME);
         }
 
-        output.append("\n");
-
         return output.toString();
     }
 
