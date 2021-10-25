@@ -1,15 +1,11 @@
 package bowling.view;
 
-import static bowling.domain.frame.AbstractFrame.FINAL_ROUND;
-import static bowling.domain.frame.AbstractFrame.FIRST_ROUND;
+import static bowling.domain.frame.NormalFrame.FINAL_ROUND;
+import static bowling.domain.frame.NormalFrame.FIRST_ROUND;
 
-import bowling.domain.frame.Frames;
-import bowling.domain.score.Pin;
-import bowling.domain.score.PinType;
-import bowling.domain.score.Score;
+import bowling.domain.frame.FrameResult;
+import bowling.domain.frame.FrameResults;
 import bowling.domain.user.User;
-import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -21,14 +17,14 @@ public class ResultView {
     private static final String BOARD_NAME_FORMAT = "|  %-3s |";
     private static final String BOARD_SCORE_FORMAT = " %-5s|";
 
-    private static final String SCORE_DELIMITER = "|";
-
+    private static final String BOARD_TOTAL_SCORE_FORMAT = "  %-4s|";
+    
     private ResultView() {
     }
 
-    public static void printBoard(User user, Frames frames) {
+    public static void printBoard(User user, FrameResults frameResults) {
         printScoreBoard();
-        printScoreResultBoard(user, frames);
+        printScoreResultBoard(user, frameResults);
     }
 
     public static void printScoreBoard() {
@@ -44,26 +40,37 @@ public class ResultView {
         return String.format(BOARD_FORMAT, num);
     }
 
-    public static void printScoreResultBoard(User user, Frames frames) {
+    public static void printScoreResultBoard(User user, FrameResults frameResults) {
         StringBuilder sb = new StringBuilder();
         sb.append(toNameFormat(user));
 
-        sb.append(printFrameBoard(frames));
-        sb.append(printRemainBoard(frames));
+        sb.append(printFrameResultDescBoard(frameResults));
+        sb.append(printRemainBoard(frameResults));
+        sb.append("\n");
+
+        sb.append(toBlankFormat());
+        sb.append(printFrameResultScoreBoard(frameResults));
+        sb.append(printRemainBoard(frameResults));
         System.out.println(sb.toString());
     }
 
-    private static String printFrameBoard(Frames frames) {
-        return frames.scores()
-            .map(Score::values)
-            .map(ResultView::pinsToString)
+    private static String printFrameResultDescBoard(FrameResults frameResults) {
+        return frameResults.values()
+            .map(FrameResult::desc)
             .map(ResultView::toScoreFormat)
             .collect(Collectors.joining());
     }
 
-    private static String printRemainBoard(Frames frames) {
-        return IntStream.range(frames.size(), FINAL_ROUND)
+    private static String printRemainBoard(FrameResults frameResults) {
+        return IntStream.range(frameResults.size(), FINAL_ROUND)
             .mapToObj(index -> toScoreFormat(""))
+            .collect(Collectors.joining());
+    }
+
+    private static String printFrameResultScoreBoard(FrameResults frameResults) {
+        return frameResults.values()
+            .map(FrameResult::totalScoreToString)
+            .map(ResultView::toTotalScoreFormat)
             .collect(Collectors.joining());
     }
 
@@ -71,19 +78,16 @@ public class ResultView {
         return String.format(BOARD_SCORE_FORMAT, s);
     }
 
+    private static String toTotalScoreFormat(String s) {
+        return String.format(BOARD_TOTAL_SCORE_FORMAT, s);
+    }
+
     private static String toNameFormat(User user) {
         return String.format(BOARD_NAME_FORMAT, user.value());
     }
 
-    private static String pinsToString(List<Pin> pins) {
-        return IntStream.range(0, pins.size())
-            .filter(index -> Objects.nonNull(pins.get(index)))
-            .mapToObj(index -> pinToString(pins, index))
-            .collect(Collectors.joining(SCORE_DELIMITER));
-    }
-
-    private static String pinToString(List<Pin> pins, int index) {
-        return PinType.pinToString(pins, index);
+    private static String toBlankFormat() {
+        return String.format(BOARD_NAME_FORMAT, "");
     }
 
 }

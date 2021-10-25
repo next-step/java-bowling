@@ -3,42 +3,17 @@ package bowling.domain.frame;
 import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
 import java.util.Objects;
+import java.util.Optional;
 
 public abstract class AbstractFrame implements Frame {
 
-    public static int FIRST_ROUND = 1;
-    public static int FINAL_ROUND = 10;
+    public static final int FIRST_ROUND = 1;
+    public static final int FINAL_ROUND = 10;
 
     private final int round;
-    private Score score;
 
-    AbstractFrame(int round, Score score) {
+    AbstractFrame(int round) {
         this.round = round;
-        this.score = score;
-    }
-
-    @Override
-    public Frame lastFrame() {
-        Frame resultFrame = this;
-        while (resultFrame.round() < FINAL_ROUND && Objects.nonNull(resultFrame.nextFrame())) {
-            resultFrame = resultFrame.nextFrame();
-        }
-        return resultFrame;
-    }
-
-    @Override
-    public Score score() {
-        return score;
-    }
-
-    @Override
-    public boolean isScoreNextStorable() {
-        return score.isNextStorable();
-    }
-
-    @Override
-    public void updateScorePin(Pin pin) {
-        score = score.saveNextPin(pin);
     }
 
     @Override
@@ -46,9 +21,28 @@ public abstract class AbstractFrame implements Frame {
         return round;
     }
 
-    public abstract Frame createNextFrame();
+    @Override
+    public Frame lastFrame() {
+        Frame resultFrame = this;
+        return calculateLastFrame(resultFrame);
+    }
 
-    public abstract Frame nextFrame();
+    private Frame calculateLastFrame(Frame resultFrame) {
+        while (resultFrame.round() < FINAL_ROUND && resultFrame.nextFrame().isPresent()) {
+            resultFrame = resultFrame.nextFrame().get();
+        }
+        return resultFrame;
+    }
+
+    public abstract Optional<Frame> nextFrame();
+
+    public abstract Frame bowling(Pin pin);
+
+    public abstract FrameResult createFrameResult();
+
+    public abstract Score calculateAdditionalScore(Score score);
+
+    public abstract boolean isFinished();
 
     @Override
     public boolean equals(Object o) {
@@ -59,12 +53,12 @@ public abstract class AbstractFrame implements Frame {
             return false;
         }
         AbstractFrame that = (AbstractFrame) o;
-        return round == that.round && Objects.equals(score, that.score);
+        return round == that.round;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(round, score);
+        return Objects.hash(round);
     }
 
 }
