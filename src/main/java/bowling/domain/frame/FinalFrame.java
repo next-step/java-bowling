@@ -116,4 +116,9 @@ public class FinalFrame extends AbstractFrame {
         }
     }
 
+    @Override
+    public boolean frameIsFinished() {
+        return isFinished();
+    }
+
 }

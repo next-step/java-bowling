@@ -84,4 +84,9 @@ public class NormalFrame extends AbstractFrame {
         return false;
     }
 
+    @Override
+    public boolean frameIsFinished() {
+        return stateIsFinished();
+    }
+
 }

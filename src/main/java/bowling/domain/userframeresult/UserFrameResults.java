@@ -46,8 +46,8 @@ public class UserFrameResults {
     public void bowlingNowTurnUser(Pin pin) {
         UserFrameResult nowUserFrameResult = userFrameResults.get(nowTurnIndex);
         Frame frame = nowUserFrameResult.lastFrame();
-        Frame nextFrame = frame.bowling(pin);
-        if (frame != nextFrame) {
+        frame.bowling(pin);
+        if (frame.frameIsFinished()) {
             nowTurnIndex++;
             nowTurnIndex %= userFrameResults.size();
         }
