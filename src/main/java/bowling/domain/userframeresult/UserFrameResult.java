@@ -20,4 +20,8 @@ public class UserFrameResult {
         return new UserFrameResult(user, firstFrame, FrameResults.createFrameResultsByFirstFrame(firstFrame));
     }
 
+    public boolean isFinished() {
+        return firstFrame.lastFrame().isFinished();
+    }
+
 }
