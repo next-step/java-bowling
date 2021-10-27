@@ -1,6 +1,7 @@
 package bowling.domain.userframeresult;
 
 import bowling.domain.user.User;
+import bowling.exception.userframeresult.DuplicateUserException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,17 @@ public class UserFrameResults {
     }
 
     public void addUser(User user) {
+        checkDuplicateUser(user);
+
         userFrameResults.add(UserFrameResult.initByUser(user));
+    }
+
+    private void checkDuplicateUser(User user) {
+        for (UserFrameResult userFrameResult : userFrameResults) {
+            if (userFrameResult.user().equals(user.value())) {
+                throw new DuplicateUserException();
+            }
+        }
     }
 
 }

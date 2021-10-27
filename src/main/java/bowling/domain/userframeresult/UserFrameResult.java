@@ -27,6 +27,10 @@ public class UserFrameResult {
         return new UserFrameResult(user, firstFrame, FrameResults.createFrameResultsByFirstFrame(firstFrame));
     }
 
+    public String user() {
+        return user.value();
+    }
+
     public boolean isFinished() {
         return firstFrame.lastFrame().isFinished();
     }
