@@ -11,6 +11,7 @@ import bowling.domain.state.finish.Miss;
 import bowling.domain.state.finish.Spare;
 import bowling.domain.state.finish.Strike;
 import bowling.domain.state.running.FirstBowl;
+import bowling.domain.state.running.Ready;
 import bowling.exception.frame.FinalFrameBowlingException;
 import bowling.exception.frame.FinalFrameNextFrameException;
 import bowling.exception.state.StateCannotCalculateScoreException;
@@ -45,8 +46,7 @@ class FinalFrameTest {
                 // given
                 LinkedList<State> states = new LinkedList<>();
                 states.add(new Strike(Pin.of(10)));
-                states.add(new Strike(Pin.of(10)));
-                Frame frame = FinalFrame.from(10, states);
+                Frame frame = FinalFrame.from(10, new Strike(Pin.of(10)), states);
 
                 expected = Score.from(30, 0);
 
@@ -63,8 +63,7 @@ class FinalFrameTest {
 
                 // given
                 LinkedList<State> states = new LinkedList<>();
-                states.add(new Spare(Pin.of(3), Pin.of(7)));
-                Frame frame = FinalFrame.from(10, states);
+                Frame frame = FinalFrame.from(10, new Spare(Pin.of(3), Pin.of(7)), states);
 
                 expected = Score.from(20, 0);
 
@@ -81,8 +80,7 @@ class FinalFrameTest {
 
                 // given
                 LinkedList<State> states = new LinkedList<>();
-                states.add(new Miss(Pin.of(2), Pin.of(4)));
-                Frame frame = FinalFrame.from(10, states);
+                Frame frame = FinalFrame.from(10, new Miss(Pin.of(2), Pin.of(4)), states);
 
                 expected = Score.from(16, 0);
 
@@ -111,8 +109,7 @@ class FinalFrameTest {
                 // given
                 LinkedList<State> states = new LinkedList<>();
                 states.add(new Strike(Pin.of(10)));
-                states.add(new Strike(Pin.of(10)));
-                Frame frame = FinalFrame.from(10, states);
+                Frame frame = FinalFrame.from(10, new Strike(Pin.of(10)), states);
 
                 expected = Score.from(20, 0);
 
@@ -129,8 +126,7 @@ class FinalFrameTest {
 
                 // given
                 LinkedList<State> states = new LinkedList<>();
-                states.add(new Spare(Pin.of(3), Pin.of(7)));
-                Frame frame = FinalFrame.from(10, states);
+                Frame frame = FinalFrame.from(10, new Spare(Pin.of(3), Pin.of(7)), states);
 
                 expected = Score.from(13, 0);
 
@@ -147,8 +143,7 @@ class FinalFrameTest {
 
                 // given
                 LinkedList<State> states = new LinkedList<>();
-                states.add(new Miss(Pin.of(2), Pin.of(4)));
-                Frame frame = FinalFrame.from(10, states);
+                Frame frame = FinalFrame.from(10, new Miss(Pin.of(2), Pin.of(4)), states);
 
                 expected = Score.from(12, 0);
 
@@ -165,8 +160,7 @@ class FinalFrameTest {
 
                 // given
                 LinkedList<State> states = new LinkedList<>();
-                states.add(new FirstBowl(Pin.of(2)));
-                Frame frame = FinalFrame.from(10, states);
+                Frame frame = FinalFrame.from(10, new FirstBowl(Pin.of(2)), states);
 
                 expected = Score.from(12, 0);
 
@@ -193,8 +187,7 @@ class FinalFrameTest {
             LinkedList<State> states = new LinkedList<>();
             states.add(new Strike(Pin.of(10)));
             states.add(new Strike(Pin.of(10)));
-            states.add(new Strike(Pin.of(10)));
-            FinalFrame frame = (FinalFrame) FinalFrame.from(10, states);
+            FinalFrame frame = (FinalFrame) FinalFrame.from(10, new Strike(Pin.of(10)), states);
 
             expected = Score.from(30, 0);
 
@@ -212,9 +205,8 @@ class FinalFrameTest {
             // given
             LinkedList<State> states = new LinkedList<>();
             states.add(new Strike(Pin.of(10)));
-            states.add(new Strike(Pin.of(10)));
             states.add(new FirstBowl(Pin.of(3)));
-            FinalFrame frame = (FinalFrame) FinalFrame.from(10, states);
+            FinalFrame frame = (FinalFrame) FinalFrame.from(10, new Strike(Pin.of(10)), states);
 
             expected = Score.from(23, 0);
 
@@ -231,9 +223,8 @@ class FinalFrameTest {
 
             // given
             LinkedList<State> states = new LinkedList<>();
-            states.add(new Strike(Pin.of(10)));
             states.add(new Spare(Pin.of(3), Pin.of(7)));
-            FinalFrame frame = (FinalFrame) FinalFrame.from(10, states);
+            FinalFrame frame = (FinalFrame) FinalFrame.from(10, new Strike(Pin.of(10)), states);
 
             expected = Score.from(20, 0);
 
@@ -250,9 +241,8 @@ class FinalFrameTest {
 
             // given
             LinkedList<State> states = new LinkedList<>();
-            states.add(new Strike(Pin.of(10)));
             states.add(new Miss(Pin.of(2), Pin.of(4)));
-            FinalFrame frame = (FinalFrame) FinalFrame.from(10, states);
+            FinalFrame frame = (FinalFrame) FinalFrame.from(10, new Strike(Pin.of(10)), states);
 
             expected = Score.from(16, 0);
 
@@ -269,9 +259,8 @@ class FinalFrameTest {
 
             // given
             LinkedList<State> states = new LinkedList<>();
-            states.add(new Spare(Pin.of(3), Pin.of(7)));
             states.add(new Strike(Pin.of(10)));
-            FinalFrame frame = (FinalFrame) FinalFrame.from(10, states);
+            FinalFrame frame = (FinalFrame) FinalFrame.from(10, new Spare(Pin.of(3), Pin.of(7)), states);
 
             expected = Score.from(20, 0);
 
@@ -288,9 +277,8 @@ class FinalFrameTest {
 
             // given
             LinkedList<State> states = new LinkedList<>();
-            states.add(new Spare(Pin.of(3), Pin.of(7)));
             states.add(new FirstBowl(Pin.of(3)));
-            FinalFrame frame = (FinalFrame) FinalFrame.from(10, states);
+            FinalFrame frame = (FinalFrame) FinalFrame.from(10, new Spare(Pin.of(3), Pin.of(7)), states);
 
             expected = Score.from(13, 0);
 
@@ -307,8 +295,7 @@ class FinalFrameTest {
 
             // given
             LinkedList<State> states = new LinkedList<>();
-            states.add(new Miss(Pin.of(2), Pin.of(4)));
-            FinalFrame frame = (FinalFrame) FinalFrame.from(10, states);
+            FinalFrame frame = (FinalFrame) FinalFrame.from(10, new Miss(Pin.of(2), Pin.of(4)), states);
 
             expected = Score.from(6, 0);
 
@@ -326,9 +313,8 @@ class FinalFrameTest {
 
         // given
         LinkedList<State> states = new LinkedList<>();
-        states.add(new Spare(Pin.of(3), Pin.of(7)));
         states.add(new Strike(Pin.of(10)));
-        Frame frame = FinalFrame.from(10, states);
+        Frame frame = FinalFrame.from(10, new Spare(Pin.of(3), Pin.of(7)), states);
 
         // when & then
         assertThatExceptionOfType(FinalFrameBowlingException.class)
@@ -342,8 +328,7 @@ class FinalFrameTest {
 
         // given
         LinkedList<State> states = new LinkedList<>();
-        states.add(new Strike(Pin.of(10)));
-        FinalFrame frame = (FinalFrame) FinalFrame.from(10, states);
+        FinalFrame frame = (FinalFrame) FinalFrame.from(10, new Strike(Pin.of(10)), states);
 
         // when
         FinalFrame firstBowl = (FinalFrame) frame.bowling(Pin.of(10));
@@ -365,8 +350,7 @@ class FinalFrameTest {
         LinkedList<State> states = new LinkedList<>();
         states.add(new Strike(Pin.of(10)));
         states.add(new Strike(Pin.of(10)));
-        states.add(new Strike(Pin.of(10)));
-        Frame frame = FinalFrame.from(10, states);
+        Frame frame = FinalFrame.from(10, new Strike(Pin.of(10)), states);
 
         FrameResult expected = FrameResult.ofScoreAndDesc(30, "X|X|X");
 
@@ -384,8 +368,7 @@ class FinalFrameTest {
         // given
         LinkedList<State> states = new LinkedList<>();
         states.add(new Strike(Pin.of(10)));
-        states.add(new Strike(Pin.of(10)));
-        Frame frame = FinalFrame.from(10, states);
+        Frame frame = FinalFrame.from(10, new Strike(Pin.of(10)), states);
 
         FrameResult expected = FrameResult.ofScoreAndDesc(-1, "X|X");
 
@@ -401,7 +384,7 @@ class FinalFrameTest {
     void nextFrameExceptionTest() {
 
         // given
-        Frame frame = FinalFrame.from(10, new LinkedList<>());
+        Frame frame = FinalFrame.from(10, new Ready(), new LinkedList<>());
 
         // when & then
         assertThatExceptionOfType(FinalFrameNextFrameException.class)

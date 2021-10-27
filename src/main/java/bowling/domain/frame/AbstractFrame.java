@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
+import bowling.domain.state.State;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -11,9 +12,11 @@ public abstract class AbstractFrame implements Frame {
     public static final int FINAL_ROUND = 10;
 
     private final int round;
+    private State state;
 
-    AbstractFrame(int round) {
+    AbstractFrame(int round, State state) {
         this.round = round;
+        this.state = state;
     }
 
     @Override
@@ -32,6 +35,26 @@ public abstract class AbstractFrame implements Frame {
             resultFrame = resultFrame.nextFrame().get();
         }
         return resultFrame;
+    }
+
+    State stateBowling(Pin pin) {
+        return state = state.bowl(pin);
+    }
+
+    Score createScore() {
+        return state.createScore();
+    }
+
+    Score stateCalculateAdditionalScore(Score beforeScore) {
+        return state.calculateAdditionalScore(beforeScore);
+    }
+
+    boolean stateIsFinished() {
+        return state.isFinished();
+    }
+
+    String desc() {
+        return state.desc();
     }
 
     @Override

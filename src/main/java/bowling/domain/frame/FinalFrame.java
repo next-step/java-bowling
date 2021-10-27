@@ -12,26 +12,25 @@ import bowling.exception.score.CannotCalculateException;
 import bowling.exception.state.RunningCreateScoreException;
 import bowling.exception.state.StateCannotCalculateScoreException;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FinalFrame extends AbstractFrame {
 
-    private final LinkedList<State> states;
+    private final LinkedList<State> bonusStates;
 
-    private FinalFrame(int round, LinkedList<State> states) {
-        super(round);
-        this.states = states;
+    private FinalFrame(int round, State state, LinkedList<State> bonusStates) {
+        super(round, state);
+        this.bonusStates = bonusStates;
     }
 
-    static Frame from(int round, LinkedList<State> states) {
-        return new FinalFrame(round, states);
+    static Frame from(int round, State state, LinkedList<State> bonusStates) {
+        return new FinalFrame(round, state, bonusStates);
     }
 
     public static Frame createFinalFrame() {
-        LinkedList<State> states = new LinkedList<>();
-        states.add(new Ready());
-        return new FinalFrame(FINAL_ROUND, states);
+        return new FinalFrame(FINAL_ROUND, new Ready(), new LinkedList<>());
     }
 
     @Override
@@ -43,20 +42,26 @@ public class FinalFrame extends AbstractFrame {
     public Frame bowling(Pin pin) {
         checkIsFinished();
 
-        State state = states.getLast();
-        if (state.isFinished()) {
-            return createFrameByNextStateBowl(pin, states);
+        if (!stateIsFinished()) {
+            stateBowling(pin);
+            return this;
         }
 
-        states.removeLast();
-        states.add(state.bowl(pin));
-        return this;
-    }
+        if (bonusStates.isEmpty()) {
+            State nextState = new Ready();
+            bonusStates.add(nextState.bowl(pin));
+            return this;
+        }
+        State state = bonusStates.getLast();
+        if (state.isFinished()) {
+            State nextState = new Ready();
+            bonusStates.add(nextState.bowl(pin));
+            return this;
+        }
 
-    private Frame createFrameByNextStateBowl(Pin pin, LinkedList<State> states) {
-        State nextState = new Ready();
-        states.add(nextState.bowl(pin));
-        return new FinalFrame(FINAL_ROUND, states);
+        bonusStates.removeLast();
+        bonusStates.add(state.bowl(pin));
+        return this;
     }
 
     private void checkIsFinished() {
@@ -76,23 +81,31 @@ public class FinalFrame extends AbstractFrame {
     }
 
     private String createDescByStates() {
-        return states.stream()
+        if (bonusStates.isEmpty()) {
+            return desc();
+        }
+        return desc() + "|" + bonusStates.stream()
             .map(State::desc)
             .collect(Collectors.joining(DESC_DELIMITER));
     }
 
     Score score() {
-        Score score = states.get(0).createScore();
-        for (int i=1; i<states.size(); i++){
-            score = states.get(i).calculateAdditionalScore(score);
+        Score score = createScore();
+        for (State bonusState : bonusStates) {
+            score = bonusState.calculateAdditionalScore(score);
         }
         return score;
     }
 
     @Override
     public Score calculateAdditionalScore(Score score) {
-        for (State state : states) {
-            score = state.calculateAdditionalScore(score);
+        score = stateCalculateAdditionalScore(score);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+
+        for (State bonusState : bonusStates) {
+            score = bonusState.calculateAdditionalScore(score);
             if (score.canCalculateScore()) {
                 return score;
             }
