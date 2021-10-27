@@ -8,7 +8,7 @@ public class InputView {
 
     private static final String INPUT_USERNAME_MESSAGE = "플레이어 %d의 이름은?(3 english letters): ";
 
-    private static final String INPUT_FRAME_SHOT = "%d프레임 투구 : ";
+    private static final String INPUT_FRAME_SHOT = "%s's turn : ";
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -25,8 +25,8 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static int inputFrameShot(int round) {
-        System.out.printf(INPUT_FRAME_SHOT, round);
+    public static int inputFrameShot(String name) {
+        System.out.printf(INPUT_FRAME_SHOT, name);
         return Integer.parseInt(scanner.nextLine());
     }
 
