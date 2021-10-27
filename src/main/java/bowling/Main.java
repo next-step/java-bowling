@@ -24,7 +24,6 @@ public class Main {
         while (!userFrameResults.allBowlingFinished()) {
             Pin pin = Pin.of(InputView.inputFrameShot(userFrameResults.nowTurnUser()));
             userFrameResults.bowlingNowTurnUser(pin);
-            userFrameResults.createFrameResult();
             ResultView.printBoard(userFrameResults);
         }
     }

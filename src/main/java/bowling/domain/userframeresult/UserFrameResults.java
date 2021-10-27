@@ -51,9 +51,10 @@ public class UserFrameResults {
             nowTurnIndex++;
             nowTurnIndex %= userFrameResults.size();
         }
+        createFrameResult();
     }
 
-    public void createFrameResult() {
+    private void createFrameResult() {
         userFrameResults
             .forEach(UserFrameResult::createFrameResults);
     }
