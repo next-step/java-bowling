@@ -1,5 +1,7 @@
 package bowling.domain.userframeresult;
 
+import bowling.domain.frame.Frame;
+import bowling.domain.score.Pin;
 import bowling.domain.user.User;
 import bowling.exception.userframeresult.DuplicateUserException;
 import java.util.ArrayList;
@@ -38,6 +40,16 @@ public class UserFrameResults {
 
     public String nowTurnUser() {
         return userFrameResults.get(nowTurnIndex).user();
+    }
+
+    public void bowlingNowTurnUser(Pin pin) {
+        UserFrameResult nowUserFrameResult = userFrameResults.get(nowTurnIndex);
+        Frame frame = nowUserFrameResult.lastFrame();
+        Frame nextFrame = frame.bowling(pin);
+        if (frame != nextFrame) {
+            nowTurnIndex++;
+            nowTurnIndex %= userFrameResults.size();
+        }
     }
 
 }

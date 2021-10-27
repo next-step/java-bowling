@@ -31,8 +31,12 @@ public class UserFrameResult {
         return user.value();
     }
 
+    public Frame lastFrame() {
+        return firstFrame.lastFrame();
+    }
+
     public boolean isFinished() {
-        return firstFrame.lastFrame().isFinished();
+        return lastFrame().isFinished();
     }
 
     public void bowling(Pin pin) {
