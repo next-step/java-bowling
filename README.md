@@ -209,8 +209,8 @@
 
 ## todo
 
-- [ ] 사람 이름과 result를 함께 저장할 수 있다.
-- [ ] 사람 이름과 result를 함께 저장한 Frameresult 일급 컬랙션을 가질 수 있다.
+- [x] 사람 이름과 result를 함께 저장할 수 있다.
+- [x] 사람 이름과 result를 함께 저장한 Frameresult 일급 컬랙션을 가질 수 있다.
 
-- [ ] FrameResults가 전체 종료되었는지 확인할 수 있다.
+- [x] FrameResults가 전체 종료되었는지 확인할 수 있다.
 - [ ] FrameResult의 한 사용자가 종료되었는지 확인할 수 있다.

@@ -2,6 +2,7 @@ package bowling.domain.userframeresult;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.FrameResults;
+import bowling.domain.score.Pin;
 import bowling.domain.user.User;
 
 public class UserFrameResult {
@@ -22,6 +23,10 @@ public class UserFrameResult {
 
     public boolean isFinished() {
         return firstFrame.lastFrame().isFinished();
+    }
+
+    public void bowling(Pin pin) {
+        firstFrame.lastFrame().bowling(pin);
     }
 
 }
