@@ -7,6 +7,7 @@ import bowling.domain.user.User;
 import bowling.domain.userframeresult.UserFrameResults;
 import bowling.view.InputView;
 import bowling.view.ResultView;
+import java.util.stream.IntStream;
 
 public class Main {
 
@@ -14,10 +15,9 @@ public class Main {
         int userSize = InputView.inputUserSize();
 
         UserFrameResults userFrameResults = UserFrameResults.init();
-        for (int i = 1; i <= userSize; i++) {
-            User user = User.of(InputView.inputUsername(i));
-            userFrameResults.addUser(user);
-        }
+        IntStream.rangeClosed(1, userSize)
+            .mapToObj(index -> User.of(InputView.inputUsername(index)))
+            .forEach(userFrameResults::addUser);
 
 //        User user = User.of(InputView.inputUsername());
 //        Frame frame = NormalFrame.createFirstFrame();
