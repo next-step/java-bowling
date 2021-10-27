@@ -12,7 +12,6 @@ import bowling.exception.score.CannotCalculateException;
 import bowling.exception.state.RunningCreateScoreException;
 import bowling.exception.state.StateCannotCalculateScoreException;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -47,18 +46,13 @@ public class FinalFrame extends AbstractFrame {
             return this;
         }
 
-        if (bonusStates.isEmpty()) {
-            State nextState = new Ready();
-            bonusStates.add(nextState.bowl(pin));
-            return this;
-        }
-        State state = bonusStates.getLast();
-        if (state.isFinished()) {
+        if (bonusStates.isEmpty() || bonusStates.getLast().isFinished()) {
             State nextState = new Ready();
             bonusStates.add(nextState.bowl(pin));
             return this;
         }
 
+        State state = bonusStates.getLast();
         bonusStates.removeLast();
         bonusStates.add(state.bowl(pin));
         return this;
