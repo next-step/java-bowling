@@ -11,6 +11,8 @@ import bowling.view.ResultView;
 public class Main {
 
     public static void main(String[] args) {
+        int userSize = InputView.inputUserSize();
+
         User user = User.of(InputView.inputUsername());
         Frame frame = NormalFrame.createFirstFrame();
 
