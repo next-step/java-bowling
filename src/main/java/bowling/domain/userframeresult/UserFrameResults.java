@@ -52,4 +52,8 @@ public class UserFrameResults {
         }
     }
 
+    public boolean allBowlingFinished() {
+        return userFrameResults.get(userFrameResults.size()-1).isFinished();
+    }
+
 }
