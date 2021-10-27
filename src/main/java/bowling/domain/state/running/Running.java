@@ -17,8 +17,4 @@ public abstract class Running implements State {
         throw new RunningCreateScoreException();
     }
 
-    public abstract State bowl(Pin pin);
-
-    public abstract Score calculateAdditionalScore(Score score);
-
 }

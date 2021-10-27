@@ -17,8 +17,4 @@ public abstract class Finish implements State {
         throw new FinishStateBowlException();
     }
 
-    public abstract Score createScore();
-
-    public abstract Score calculateAdditionalScore(Score score);
-
 }

@@ -34,16 +34,6 @@ public abstract class AbstractFrame implements Frame {
         return resultFrame;
     }
 
-    public abstract Optional<Frame> nextFrame();
-
-    public abstract Frame bowling(Pin pin);
-
-    public abstract FrameResult createFrameResult();
-
-    public abstract Score calculateAdditionalScore(Score score);
-
-    public abstract boolean isFinished();
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
