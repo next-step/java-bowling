@@ -6,6 +6,7 @@ import bowling.domain.user.User;
 import bowling.exception.userframeresult.DuplicateUserException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class UserFrameResults {
 
@@ -39,7 +40,7 @@ public class UserFrameResults {
     }
 
     public String nowTurnUser() {
-        return userFrameResults.get(nowTurnIndex).user();
+        return userFrameResults.get(nowTurnIndex).user().value();
     }
 
     public void bowlingNowTurnUser(Pin pin) {
@@ -52,8 +53,17 @@ public class UserFrameResults {
         }
     }
 
+    public void createFrameResult() {
+        userFrameResults
+            .forEach(UserFrameResult::createFrameResults);
+    }
+
     public boolean allBowlingFinished() {
         return userFrameResults.get(userFrameResults.size()-1).isFinished();
+    }
+
+    public Stream<UserFrameResult> stream() {
+        return userFrameResults.stream();
     }
 
 }

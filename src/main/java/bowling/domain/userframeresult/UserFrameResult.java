@@ -27,8 +27,12 @@ public class UserFrameResult {
         return new UserFrameResult(user, firstFrame, FrameResults.createFrameResultsByFirstFrame(firstFrame));
     }
 
-    public String user() {
-        return user.value();
+    public User user() {
+        return user;
+    }
+
+    public FrameResults frameResults() {
+        return frameResults;
     }
 
     public Frame lastFrame() {
