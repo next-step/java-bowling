@@ -25,9 +25,13 @@ public class UserFrameResults {
 
     private void checkDuplicateUser(User user) {
         for (UserFrameResult userFrameResult : userFrameResults) {
-            if (userFrameResult.user().equals(user.value())) {
-                throw new DuplicateUserException();
-            }
+            checkUserEqual(user, userFrameResult);
+        }
+    }
+
+    private void checkUserEqual(User user, UserFrameResult userFrameResult) {
+        if (userFrameResult.user().equals(user.value())) {
+            throw new DuplicateUserException();
         }
     }
 
