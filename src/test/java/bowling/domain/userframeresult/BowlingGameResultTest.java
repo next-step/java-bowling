@@ -9,20 +9,20 @@ import bowling.exception.userframeresult.DuplicateUserException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class UserFrameResultsTest {
+class BowlingGameResultTest {
 
     @Test
     @DisplayName("동일한 이름의 유저가 더해지면 exception이 발생해야 한다.")
     void sameUserAddExceptionTest() {
 
         // given
-        UserFrameResults userFrameResults = UserFrameResults.init();
+        BowlingGameResult bowlingGameResult = BowlingGameResult.init();
         User user = User.of("pjs");
-        userFrameResults.addUser(user);
+        bowlingGameResult.addUser(user);
 
         // when & then
         assertThatExceptionOfType(DuplicateUserException.class)
-            .isThrownBy(() -> userFrameResults.addUser(user))
+            .isThrownBy(() -> bowlingGameResult.addUser(user))
             .withMessageMatching("동일한 이름의 유저를 더할 수 없습니다.");
     }
 
@@ -31,14 +31,14 @@ class UserFrameResultsTest {
     void bowlingNowTurnUserChangeTest() {
 
         // given
-        UserFrameResults userFrameResults = UserFrameResults.init();
-        userFrameResults.addUser(User.of("pjs"));
-        userFrameResults.addUser(User.of("jsp"));
+        BowlingGameResult bowlingGameResult = BowlingGameResult.init();
+        bowlingGameResult.addUser(User.of("pjs"));
+        bowlingGameResult.addUser(User.of("jsp"));
 
-        userFrameResults.bowlingNowTurnUser(Pin.of(10));
+        bowlingGameResult.bowlingNowTurnUser(Pin.of(10));
 
         // when
-        String result = userFrameResults.nowTurnUser();
+        String result = bowlingGameResult.nowTurnUser();
 
         // then
         assertThat(result).isEqualTo("jsp");
@@ -49,14 +49,14 @@ class UserFrameResultsTest {
     void bowlingNowTurnUserNotChangeTest() {
 
         // given
-        UserFrameResults userFrameResults = UserFrameResults.init();
-        userFrameResults.addUser(User.of("pjs"));
-        userFrameResults.addUser(User.of("jsp"));
+        BowlingGameResult bowlingGameResult = BowlingGameResult.init();
+        bowlingGameResult.addUser(User.of("pjs"));
+        bowlingGameResult.addUser(User.of("jsp"));
 
-        userFrameResults.bowlingNowTurnUser(Pin.of(1));
+        bowlingGameResult.bowlingNowTurnUser(Pin.of(1));
 
         // when
-        String result = userFrameResults.nowTurnUser();
+        String result = bowlingGameResult.nowTurnUser();
 
         // then
         assertThat(result).isEqualTo("pjs");

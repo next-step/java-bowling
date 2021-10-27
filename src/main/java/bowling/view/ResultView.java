@@ -6,7 +6,7 @@ import static bowling.domain.frame.NormalFrame.FIRST_ROUND;
 import bowling.domain.frame.FrameResult;
 import bowling.domain.frame.FrameResults;
 import bowling.domain.user.User;
-import bowling.domain.userframeresult.UserFrameResults;
+import bowling.domain.userframeresult.BowlingGameResult;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -23,9 +23,9 @@ public class ResultView {
     private ResultView() {
     }
 
-    public static void printBoard(UserFrameResults userFrameResults) {
+    public static void printBoard(BowlingGameResult bowlingGameResult) {
         printScoreBoard();
-        userFrameResults.stream()
+        bowlingGameResult.stream()
             .forEach(result -> printBoard(result.user(), result.frameResults()));
     }
 

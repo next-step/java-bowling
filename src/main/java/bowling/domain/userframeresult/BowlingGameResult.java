@@ -8,17 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class UserFrameResults {
+public class BowlingGameResult {
 
     private int nowTurnIndex = 0;
     private final List<UserFrameResult> userFrameResults;
 
-    private UserFrameResults(List<UserFrameResult> userFrameResults) {
+    private BowlingGameResult(List<UserFrameResult> userFrameResults) {
         this.userFrameResults = userFrameResults;
     }
 
-    public static UserFrameResults init() {
-        return new UserFrameResults(new ArrayList<>());
+    public static BowlingGameResult init() {
+        return new BowlingGameResult(new ArrayList<>());
     }
 
     public void addUser(User user) {
