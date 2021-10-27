@@ -60,7 +60,7 @@ public class BowlingGameResult {
     }
 
     public boolean allBowlingFinished() {
-        return userFrameResults.get(userFrameResults.size()-1).isFinished();
+        return userFrameResults.get(userFrameResults.size() - 1).isFinished();
     }
 
     public Stream<UserFrameResult> stream() {

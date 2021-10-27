@@ -19,7 +19,7 @@ public class ResultView {
     private static final String BOARD_SCORE_FORMAT = " %-5s|";
 
     private static final String BOARD_TOTAL_SCORE_FORMAT = "  %-4s|";
-    
+
     private ResultView() {
     }
 

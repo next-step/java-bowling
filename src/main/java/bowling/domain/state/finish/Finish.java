@@ -1,7 +1,6 @@
 package bowling.domain.state.finish;
 
 import bowling.domain.score.Pin;
-import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.exception.state.FinishStateBowlException;
 
