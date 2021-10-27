@@ -29,4 +29,8 @@ public class UserFrameResult {
         firstFrame.lastFrame().bowling(pin);
     }
 
+    public FrameResults createFrameResults() {
+        return frameResults = FrameResults.createFrameResultsByFirstFrame(firstFrame);
+    }
+
 }
