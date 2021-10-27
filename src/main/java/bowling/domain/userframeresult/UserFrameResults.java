@@ -7,6 +7,7 @@ import java.util.List;
 
 public class UserFrameResults {
 
+    private int nowTurnIndex = 0;
     private final List<UserFrameResult> userFrameResults;
 
     private UserFrameResults(List<UserFrameResult> userFrameResults) {
@@ -33,6 +34,10 @@ public class UserFrameResults {
         if (userFrameResult.user().equals(user.value())) {
             throw new DuplicateUserException();
         }
+    }
+
+    public String nowTurnUser() {
+        return userFrameResults.get(nowTurnIndex).user();
     }
 
 }
