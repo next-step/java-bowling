@@ -2,9 +2,9 @@ package bowling;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.FrameResults;
-import bowling.domain.frame.NormalFrame;
 import bowling.domain.score.Pin;
 import bowling.domain.user.User;
+import bowling.domain.userframeresult.UserFrameResults;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -13,11 +13,17 @@ public class Main {
     public static void main(String[] args) {
         int userSize = InputView.inputUserSize();
 
-        User user = User.of(InputView.inputUsername());
-        Frame frame = NormalFrame.createFirstFrame();
+        UserFrameResults userFrameResults = UserFrameResults.init();
+        for (int i = 1; i <= userSize; i++) {
+            User user = User.of(InputView.inputUsername(i));
+            userFrameResults.addUser(user);
+        }
 
-        ResultView.printBoard(user, FrameResults.createFrameResultsByFirstFrame(frame));
-        printBowlingGame(user, frame);
+//        User user = User.of(InputView.inputUsername());
+//        Frame frame = NormalFrame.createFirstFrame();
+//
+//        ResultView.printBoard(user, FrameResults.createFrameResultsByFirstFrame(frame));
+//        printBowlingGame(user, frame);
     }
 
     private static void printBowlingGame(User user, Frame frame) {
