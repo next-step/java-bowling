@@ -12,12 +12,10 @@ import java.util.Optional;
 public class NormalFrame extends AbstractFrame {
 
     private Frame nextFrame;
-    private State state;
 
     private NormalFrame(int round, Frame nextFrame, State state) {
-        super(round);
+        super(round, state);
         this.nextFrame = nextFrame;
-        this.state = state;
     }
 
     static Frame from(int round, Frame nextFrame, State state) {
@@ -35,8 +33,8 @@ public class NormalFrame extends AbstractFrame {
 
     @Override
     public Frame bowling(Pin pin) {
-        state = state.bowl(pin);
-        if (state.isFinished()) {
+        stateBowling(pin);
+        if (stateIsFinished()) {
             return createNextFrame();
         }
         return this;
@@ -52,14 +50,14 @@ public class NormalFrame extends AbstractFrame {
     @Override
     public FrameResult createFrameResult() {
         try {
-            return FrameResult.ofScoreAndDesc(score().score(), state.desc());
+            return FrameResult.ofScoreAndDesc(score().score(), desc());
         } catch (NextFrameNotFoundException | StateCannotCalculateScoreException | RunningCreateScoreException e) {
-            return FrameResult.createFrameResultByNoCaculatedScore(state.desc());
+            return FrameResult.createFrameResultByNoCaculatedScore(desc());
         }
     }
 
     Score score() {
-        Score score = state.createScore();
+        Score score = createScore();
         if (score.canCalculateScore()) {
             return score;
         }
@@ -74,7 +72,7 @@ public class NormalFrame extends AbstractFrame {
 
     @Override
     public Score calculateAdditionalScore(Score beforeScore) {
-        Score score = state.calculateAdditionalScore(beforeScore);
+        Score score = stateCalculateAdditionalScore(beforeScore);
         if (score.canCalculateScore()) {
             return score;
         }
@@ -84,6 +82,11 @@ public class NormalFrame extends AbstractFrame {
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    @Override
+    public boolean frameIsFinished() {
+        return stateIsFinished();
     }
 
 }

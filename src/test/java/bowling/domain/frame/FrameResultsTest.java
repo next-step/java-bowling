@@ -41,8 +41,7 @@ class FrameResultsTest {
         LinkedList<State> states = new LinkedList<>();
         states.add(new Strike(Pin.of(10)));
         states.add(new Strike(Pin.of(10)));
-        states.add(new Strike(Pin.of(10)));
-        Frame finalFrame = FinalFrame.from(10, states);
+        Frame finalFrame = FinalFrame.from(10, new Strike(Pin.of(10)), states);
         Frame secondFrame = NormalFrame.from(9, finalFrame, new Strike(Pin.of(10)));
         Frame firstframe = NormalFrame.from(8, secondFrame, new Strike(Pin.of(10)));
 

@@ -1,28 +1,30 @@
 package bowling;
 
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.FrameResults;
-import bowling.domain.frame.NormalFrame;
 import bowling.domain.score.Pin;
 import bowling.domain.user.User;
+import bowling.domain.userframeresult.BowlingGameResult;
 import bowling.view.InputView;
 import bowling.view.ResultView;
+import java.util.stream.IntStream;
 
 public class Main {
 
     public static void main(String[] args) {
-        User user = User.of(InputView.inputUsername());
-        Frame frame = NormalFrame.createFirstFrame();
+        int userSize = InputView.inputUserSize();
 
-        ResultView.printBoard(user, FrameResults.createFrameResultsByFirstFrame(frame));
-        printBowlingGame(user, frame);
+        BowlingGameResult bowlingGameResult = BowlingGameResult.init();
+        IntStream.rangeClosed(1, userSize)
+            .mapToObj(index -> User.of(InputView.inputUsername(index)))
+            .forEach(bowlingGameResult::addUser);
+
+        printBowlingGame(bowlingGameResult);
     }
 
-    private static void printBowlingGame(User user, Frame frame) {
-        while (!frame.lastFrame().isFinished()) {
-            Pin pin = Pin.of(InputView.inputFrameShot(frame.lastFrame().round()));
-            frame.lastFrame().bowling(pin);
-            ResultView.printBoard(user, FrameResults.createFrameResultsByFirstFrame(frame));
+    private static void printBowlingGame(BowlingGameResult bowlingGameResult) {
+        while (!bowlingGameResult.allBowlingFinished()) {
+            Pin pin = Pin.of(InputView.inputFrameShot(bowlingGameResult.nowTurnUser()));
+            bowlingGameResult.bowlingNowTurnUser(pin);
+            ResultView.printBoard(bowlingGameResult);
         }
     }
 

@@ -6,6 +6,7 @@ import static bowling.domain.frame.NormalFrame.FIRST_ROUND;
 import bowling.domain.frame.FrameResult;
 import bowling.domain.frame.FrameResults;
 import bowling.domain.user.User;
+import bowling.domain.userframeresult.BowlingGameResult;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -18,12 +19,17 @@ public class ResultView {
     private static final String BOARD_SCORE_FORMAT = " %-5s|";
 
     private static final String BOARD_TOTAL_SCORE_FORMAT = "  %-4s|";
-    
+
     private ResultView() {
     }
 
-    public static void printBoard(User user, FrameResults frameResults) {
+    public static void printBoard(BowlingGameResult bowlingGameResult) {
         printScoreBoard();
+        bowlingGameResult.stream()
+            .forEach(result -> printBoard(result.user(), result.frameResults()));
+    }
+
+    public static void printBoard(User user, FrameResults frameResults) {
         printScoreResultBoard(user, frameResults);
     }
 

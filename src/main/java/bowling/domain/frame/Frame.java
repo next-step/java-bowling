@@ -20,4 +20,6 @@ public interface Frame {
 
     boolean isFinished();
 
+    boolean frameIsFinished();
+
 }

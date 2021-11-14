@@ -1,7 +1,6 @@
 package bowling.domain.state.finish;
 
 import bowling.domain.score.Pin;
-import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.exception.state.FinishStateBowlException;
 
@@ -16,9 +15,5 @@ public abstract class Finish implements State {
     public State bowl(Pin pin) {
         throw new FinishStateBowlException();
     }
-
-    public abstract Score createScore();
-
-    public abstract Score calculateAdditionalScore(Score score);
 
 }

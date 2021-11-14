@@ -1,6 +1,5 @@
 package bowling.domain.state.running;
 
-import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.exception.state.RunningCreateScoreException;
@@ -16,9 +15,5 @@ public abstract class Running implements State {
     public Score createScore() {
         throw new RunningCreateScoreException();
     }
-
-    public abstract State bowl(Pin pin);
-
-    public abstract Score calculateAdditionalScore(Score score);
 
 }
