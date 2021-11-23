@@ -27,8 +27,7 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
-    public static DeleteHistory create(HistoryContent historyContent, User deletedBy,
-                                       LocalDateTime createDate) {
+    public static DeleteHistory create(HistoryContent historyContent, User deletedBy, LocalDateTime createDate) {
         return new DeleteHistory(historyContent, deletedBy, createDate);
     }
 
