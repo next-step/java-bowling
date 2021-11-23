@@ -55,7 +55,7 @@ public class Answer extends AbstractEntity {
 
         this.deleted = true;
 
-        return DeleteHistory.create(ContentType.ANSWER, getId(), loginUser, LocalDateTime.now());
+        return DeleteHistory.create(HistoryContent.create(ContentType.ANSWER, getId()), loginUser, LocalDateTime.now());
     }
 
     public boolean isDeleted() {
