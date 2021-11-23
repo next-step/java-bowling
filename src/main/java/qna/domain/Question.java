@@ -10,11 +10,8 @@ import java.util.Objects;
 
 @Entity
 public class Question extends AbstractEntity {
-    @Column(length = 100, nullable = false)
-    private String title;
-
-    @Lob
-    private String contents;
+    @Embedded
+    private Notice notice;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
@@ -25,26 +22,24 @@ public class Question extends AbstractEntity {
 
     private boolean deleted;
 
-    public Question() {
+    protected Question() {
     }
 
-    private Question(String title, String contents) {
-        this.title = title;
-        this.contents = contents;
+    private Question(Notice notice) {
+        this.notice = notice;
     }
 
-    private Question(long id, String title, String contents) {
+    private Question(long id, Notice notice) {
         super(id);
-        this.title = title;
-        this.contents = contents;
+        this.notice = notice;
     }
 
-    public static Question create(String title, String contents) {
-        return new Question(title, contents);
+    public static Question create(Notice notice) {
+        return new Question(notice);
     }
 
-    public static Question create(long id, String title, String contents) {
-        return new Question(id, title, contents);
+    public static Question create(long id, Notice notice) {
+        return new Question(id, notice);
     }
 
     public List<DeleteHistory> delete(User loginUser, long questionId) {
@@ -93,19 +88,17 @@ public class Question extends AbstractEntity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Question question = (Question) o;
-        return deleted == question.deleted && Objects.equals(title, question.title) && Objects.equals(
-                contents, question.contents) && Objects.equals(writer,
-                                                               question.writer) && Objects.equals(
-                answers, question.answers);
+        return deleted == question.deleted && Objects.equals(notice, question.notice) && Objects.equals(
+                writer, question.writer) && Objects.equals(answers, question.answers);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), title, contents, writer, answers, deleted);
+        return Objects.hash(super.hashCode(), notice, writer, answers, deleted);
     }
 
     @Override
     public String toString() {
-        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+        return "Question{notice=" + notice + ", writer=" + writer + ", answers=" + answers + ", deleted=" + deleted + '}';
     }
 }

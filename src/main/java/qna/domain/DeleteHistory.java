@@ -21,7 +21,7 @@ public class DeleteHistory {
 
     private LocalDateTime createDate = LocalDateTime.now();
 
-    private DeleteHistory() {
+    protected DeleteHistory() {
     }
 
     private DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {

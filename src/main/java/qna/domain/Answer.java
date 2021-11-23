@@ -23,7 +23,7 @@ public class Answer extends AbstractEntity {
 
     private boolean deleted;
 
-    public Answer() {
+    protected Answer() {
     }
 
     private Answer(Long id, User writer, Question question, String contents) {
