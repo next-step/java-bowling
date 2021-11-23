@@ -40,9 +40,6 @@ public class Notice {
 
     @Override
     public String toString() {
-        return "Notice{" +
-                "title='" + title + '\'' +
-                ", contents='" + contents + '\'' +
-                '}';
+        return "Notice{title='" + title + '\'' + ", contents='" + contents + '\'' + '}';
     }
 }
