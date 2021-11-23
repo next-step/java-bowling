@@ -24,16 +24,24 @@ public class User extends AbstractEntity {
     public User() {
     }
 
-    public User(String userId, String password, String name, String email) {
+    private User(String userId, String password, String name, String email) {
         this(null, userId, password, name, email);
     }
 
-    public User(Long id, String userId, String password, String name, String email) {
+    private User(Long id, String userId, String password, String name, String email) {
         super(id);
         this.userId = userId;
         this.password = password;
         this.name = name;
         this.email = email;
+    }
+
+    public static User create(String userId, String password, String name, String email) {
+        return create(null, userId, password, name, email);
+    }
+
+    public static User create(Long id, String userId, String password, String name, String email) {
+        return new User(id, userId, password, name, email);
     }
 
     public String getUserId() {

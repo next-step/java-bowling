@@ -1,9 +1,6 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,25 +15,31 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
     public Question() {
     }
 
-    public Question(String title, String contents) {
+    private Question(String title, String contents) {
         this.title = title;
         this.contents = contents;
     }
 
-    public Question(long id, String title, String contents) {
+    private Question(long id, String title, String contents) {
         super(id);
         this.title = title;
         this.contents = contents;
+    }
+
+    public static Question create(String title, String contents) {
+        return new Question(title, contents);
+    }
+
+    public static Question create(long id, String title, String contents) {
+        return new Question(id, title, contents);
     }
 
     public String getTitle() {
@@ -68,7 +71,7 @@ public class Question extends AbstractEntity {
 
     public void addAnswer(Answer answer) {
         answer.toQuestion(this);
-        answers.add(answer);
+        answers.addAnswer(answer);
     }
 
     public boolean isOwner(User loginUser) {
@@ -85,7 +88,7 @@ public class Question extends AbstractEntity {
     }
 
     public List<Answer> getAnswers() {
-        return answers;
+        return answers.getAnswers();
     }
 
     @Override

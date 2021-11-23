@@ -23,24 +23,32 @@ public class Answer extends AbstractEntity {
     public Answer() {
     }
 
-    public Answer(User writer, Question question, String contents) {
+    private Answer(User writer, Question question, String contents) {
         this(null, writer, question, contents);
     }
 
-    public Answer(Long id, User writer, Question question, String contents) {
+    private Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
 
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
 
         this.writer = writer;
         this.question = question;
         this.contents = contents;
+    }
+
+    public static Answer create(User writer, Question question, String contents) {
+        return create(null, writer, question, contents);
+    }
+
+    public static Answer create(Long id, User writer, Question question, String contents) {
+        return new Answer(id, writer, question, contents);
     }
 
     public Answer setDeleted(boolean deleted) {
