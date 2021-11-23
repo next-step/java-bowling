@@ -4,24 +4,38 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class AnswersTest {
-    private Answer answer;
+    private Answers answers;
 
     @BeforeEach
     void setup() {
-        User user = User.create(1L, "aiden", "password", "심준보", "s860620@gmail.com");
-        Question question = Question.create(1L, "제목", "본문");
-        answer = Answer.create(1L, user, question, "본문");
+        Answer answer1 = Answer.create(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+        Answer answer2 = Answer.create(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents2");
+
+        answers = Answers.create();
+        answers.addAnswer(answer1);
+        answers.addAnswer(answer2);
     }
 
     @Test
     @DisplayName("답변 추가 검증")
     void addAnswer() {
-        Answers answers = Answers.create();
+        Answer answer2 = Answer.create(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
 
         assertDoesNotThrow(
-                () -> answers.addAnswer(answer));
+                () -> answers.addAnswer(answer2));
+    }
+
+    @Test
+    @DisplayName("삭제 시, 정상적으로 삭제 이력 반환 검증")
+    void delete() {
+        List<DeleteHistory> deleteHistories = answers.delete(UserTest.JAVAJIGI);
+
+        assertThat(deleteHistories.size()).isEqualTo(2);
     }
 }

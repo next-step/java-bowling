@@ -42,6 +42,10 @@ public class Question extends AbstractEntity {
         return new Question(id, title, contents);
     }
 
+    public List<DeleteHistory> delete(User loginUser) {
+        return answers.delete(loginUser);
+    }
+
     public String getTitle() {
         return title;
     }
