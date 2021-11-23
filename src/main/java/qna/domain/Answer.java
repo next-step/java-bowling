@@ -6,6 +6,7 @@ import qna.UnAuthorizedException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -20,13 +21,9 @@ public class Answer extends AbstractEntity {
     @Lob
     private String contents;
 
-    private boolean deleted = false;
+    private boolean deleted;
 
     public Answer() {
-    }
-
-    private Answer(User writer, Question question, String contents) {
-        this(null, writer, question, contents);
     }
 
     private Answer(Long id, User writer, Question question, String contents) {
@@ -65,14 +62,6 @@ public class Answer extends AbstractEntity {
         return deleted;
     }
 
-    public boolean isOwner(User writer) {
-        return this.writer.equals(writer);
-    }
-
-    public User getWriter() {
-        return writer;
-    }
-
     public void toQuestion(Question question) {
         this.question = question;
     }
@@ -82,6 +71,26 @@ public class Answer extends AbstractEntity {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
     }
+
+    private boolean isOwner(User writer) {
+        return this.writer.equals(writer);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Answer answer = (Answer) o;
+        return deleted == answer.deleted && Objects.equals(writer, answer.writer) && Objects.equals(
+                question, answer.question) && Objects.equals(contents, answer.contents);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), writer, question, contents, deleted);
+    }
+
 
     @Override
     public String toString() {
