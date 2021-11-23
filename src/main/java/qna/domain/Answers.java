@@ -24,10 +24,6 @@ public class Answers {
         answers.add(answer);
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
     public List<DeleteHistory> delete(User loginUser) {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         answers.forEach(answer -> deleteHistories.add(answer.delete(loginUser)));

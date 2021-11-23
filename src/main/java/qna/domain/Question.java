@@ -1,7 +1,12 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -18,7 +23,7 @@ public class Question extends AbstractEntity {
     @Embedded
     private Answers answers = new Answers();
 
-    private boolean deleted = false;
+    private boolean deleted;
 
     public Question() {
     }
@@ -42,7 +47,19 @@ public class Question extends AbstractEntity {
         return new Question(id, title, contents);
     }
 
-    public List<DeleteHistory> delete(User loginUser) {
+    public List<DeleteHistory> delete(User loginUser, long questionId) {
+        validateUser(loginUser);
+
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+
+        this.deleted = true;
+
+        deleteHistories.add(DeleteHistory.create(ContentType.QUESTION, questionId, writer, LocalDateTime.now()));
+        deleteHistories.addAll(deleteAnswers(loginUser));
+        return deleteHistories;
+    }
+
+    private List<DeleteHistory> deleteAnswers(User loginUser) {
         return answers.delete(loginUser);
     }
 
@@ -60,17 +77,35 @@ public class Question extends AbstractEntity {
         answers.addAnswer(answer);
     }
 
-    public boolean isOwner(User loginUser) {
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    private void validateUser(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+    }
+
+    private boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Question question = (Question) o;
+        return deleted == question.deleted && Objects.equals(title, question.title) && Objects.equals(
+                contents, question.contents) && Objects.equals(writer,
+                                                               question.writer) && Objects.equals(
+                answers, question.answers);
     }
 
-    public boolean isDeleted() {
-        return deleted;
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), title, contents, writer, answers, deleted);
     }
 
     @Override
