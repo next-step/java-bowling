@@ -50,6 +50,16 @@ public class Question extends AbstractEntity {
         return getDeleteHistories(loginUser, questionId);
     }
 
+    private void validateUser(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+    }
+
+    private boolean isOwner(User loginUser) {
+        return writer.equals(loginUser);
+    }
+
     private List<DeleteHistory> getDeleteHistories(User loginUser, long questionId) {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(DeleteHistory.create(HistoryContent.create(ContentType.QUESTION, questionId), writer,
@@ -74,16 +84,6 @@ public class Question extends AbstractEntity {
 
     public boolean isDeleted() {
         return deleted;
-    }
-
-    private void validateUser(User loginUser) throws CannotDeleteException {
-        if (!isOwner(loginUser)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-        }
-    }
-
-    private boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
     }
 
     @Override
