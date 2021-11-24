@@ -21,7 +21,7 @@ public class User extends AbstractEntity {
 
     private String email;
 
-    public User() {
+    protected User() {
     }
 
     private User(String userId, String password, String name, String email) {
