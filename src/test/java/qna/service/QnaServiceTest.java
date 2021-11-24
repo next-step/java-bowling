@@ -35,8 +35,8 @@ public class QnaServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+        question = Question.create(1L, Notice.create("title1", "contents1")).writeBy(UserTest.JAVAJIGI);
+        answer = Answer.create(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
         question.addAnswer(answer);
     }
 
@@ -82,8 +82,10 @@ public class QnaServiceTest {
 
     private void verifyDeleteHistories() {
         List<DeleteHistory> deleteHistories = Arrays.asList(
-                new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()),
-                new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+                DeleteHistory.create(HistoryContent.create(ContentType.QUESTION, question.getId()), UserTest.JAVAJIGI,
+                                     LocalDateTime.now()),
+                DeleteHistory.create(HistoryContent.create(ContentType.ANSWER, answer.getId()), UserTest.JAVAJIGI,
+                                     LocalDateTime.now()));
         verify(deleteHistoryService).saveAll(deleteHistories);
     }
 }

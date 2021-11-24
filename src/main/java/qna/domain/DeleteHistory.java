@@ -6,14 +6,11 @@ import java.util.Objects;
 
 @Entity
 public class DeleteHistory {
-    @Id
-    @GeneratedValue
-    private Long id;
+    @EmbeddedId
+    private HistoryId historyId;
 
-    @Enumerated(EnumType.STRING)
-    private ContentType contentType;
-
-    private Long contentId;
+    @Embedded
+    private HistoryContent historyContent;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_deletehistory_to_user"))
@@ -21,14 +18,17 @@ public class DeleteHistory {
 
     private LocalDateTime createDate = LocalDateTime.now();
 
-    public DeleteHistory() {
+    protected DeleteHistory() {
     }
 
-    public DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
-        this.contentType = contentType;
-        this.contentId = contentId;
+    private DeleteHistory(HistoryContent historyContent, User deletedBy, LocalDateTime createDate) {
+        this.historyContent = historyContent;
         this.deletedBy = deletedBy;
         this.createDate = createDate;
+    }
+
+    public static DeleteHistory create(HistoryContent historyContent, User deletedBy, LocalDateTime createDate) {
+        return new DeleteHistory(historyContent, deletedBy, createDate);
     }
 
     @Override
@@ -36,20 +36,18 @@ public class DeleteHistory {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DeleteHistory that = (DeleteHistory) o;
-        return Objects.equals(id, that.id) &&
-                contentType == that.contentType &&
-                Objects.equals(contentId, that.contentId) &&
-                Objects.equals(deletedBy, that.deletedBy);
+        return Objects.equals(historyId, that.historyId) && Objects.equals(historyContent, that.historyContent)
+                && Objects.equals(deletedBy, that.deletedBy);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, contentType, contentId, deletedBy);
+        return Objects.hash(historyId, historyContent, deletedBy);
     }
 
     @Override
     public String toString() {
-        return "DeleteHistory [id=" + id + ", contentType=" + contentType + ", contentId=" + contentId + ", deletedBy="
-                + deletedBy + ", createDate=" + createDate + "]";
+        return "DeleteHistory{historyId=" + historyId + ", historyContent=" + historyContent + ", " +
+                "deletedBy=" + deletedBy + ", createDate=" + createDate + '}';
     }
 }
