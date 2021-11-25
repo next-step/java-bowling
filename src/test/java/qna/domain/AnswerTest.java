@@ -15,7 +15,7 @@ public class AnswerTest {
 	@Test
 	void delete() {
 		// given
-		Answer answer = A1;
+		Answer answer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
 
 		// when
 		DeleteHistory deleteHistory = answer.delete();
