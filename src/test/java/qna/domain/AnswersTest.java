@@ -46,8 +46,10 @@ class AnswersTest {
 		answers.add(AnswerTest.A1);
 		answers.add(AnswerTest.A1);
 
+		User loginUser = UserTest.JAVAJIGI;
+
 		// when
-		List<DeleteHistory> deleteHistories = answers.deleteAll();
+		List<DeleteHistory> deleteHistories = answers.deleteAll(loginUser);
 
 		// then
 		assertThat(deleteHistories).hasSize(2);

@@ -29,9 +29,9 @@ public class Answers {
 			.allMatch(answer -> answer.isOwner(writer));
 	}
 
-	public List<DeleteHistory> deleteAll() {
+	public List<DeleteHistory> deleteAll(User loginUser) {
 		return answers.stream()
-			.map(Answer::delete)
+			.map(answer -> answer.delete(loginUser))
 			.collect(toList());
 	}
 

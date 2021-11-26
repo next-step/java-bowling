@@ -95,7 +95,7 @@ public class Question extends AbstractEntity {
 		List<DeleteHistory> deleteHistories = new ArrayList<>();
 
 		deleteHistories.add(delete());
-		deleteHistories.addAll(answers.deleteAll());
+		deleteHistories.addAll(answers.deleteAll(loginUser));
 
 		return deleteHistories;
 	}
