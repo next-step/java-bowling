@@ -1,7 +1,5 @@
 package qna.domain;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
@@ -76,11 +74,7 @@ public class Answer extends AbstractEntity {
 
 	public DeleteHistory delete() {
 		this.deleted = true;
-		return createDeleteHistory();
-	}
-
-	private DeleteHistory createDeleteHistory() {
-		return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
+		return DeleteHistory.create(ContentType.ANSWER, getId(), writer);
 	}
 
 	@Override

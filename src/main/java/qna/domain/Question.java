@@ -1,6 +1,5 @@
 package qna.domain;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,11 +111,7 @@ public class Question extends AbstractEntity {
 
 	private DeleteHistory delete() {
 		this.deleted = true;
-		return createDeleteHistory();
-	}
-
-	private DeleteHistory createDeleteHistory() {
-		return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
+		return DeleteHistory.create(ContentType.QUESTION, getId(), writer);
 	}
 
 	@Override
