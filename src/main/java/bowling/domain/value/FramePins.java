@@ -4,6 +4,7 @@ import bowling.domain.type.BowlingRule;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class FramePins {
     private final List<Pins> pins;
@@ -40,5 +41,18 @@ public class FramePins {
 
     public BowlingRule matchForFinalFrame(int pins, boolean secondPitch, boolean totalPitch) {
         return BowlingRule.convertForFinalFrame(pins, secondPitch, totalPitch);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FramePins framePins = (FramePins) o;
+        return Objects.equals(pins, framePins.pins);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pins);
     }
 }
