@@ -7,6 +7,10 @@ import bowling.domain.value.Pins;
 public abstract class Frame {
     private Frame nextFrame;
 
+    public void setNext(Frame nextFrame) {
+        this.nextFrame = nextFrame;
+    }
+
     abstract boolean isLastFrameOver();
 
     abstract boolean isFrameOver();
@@ -18,10 +22,6 @@ public abstract class Frame {
     abstract boolean isSameFrameNumber(FrameNumber frameNumber);
 
     abstract FrameNumber getFrameNumber();
-
-    public void setNext(Frame nextFrame) {
-        this.nextFrame = nextFrame;
-    }
 
     public final void knockedDown(Pins pins) {
         if (isFrameOver()) {
