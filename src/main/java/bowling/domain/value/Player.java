@@ -3,6 +3,8 @@ package bowling.domain.value;
 import bowling.annotations.GetterForUI;
 import bowling.utils.Preconditions;
 
+import java.util.Objects;
+
 public class Player {
     private static final int MAXIMUM_PLAYER_NAME_LENGTH = 3;
 
@@ -23,5 +25,18 @@ public class Player {
     @GetterForUI
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(name, player.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

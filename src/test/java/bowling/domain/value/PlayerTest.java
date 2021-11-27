@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+@DisplayName("참가자 테스트")
 class PlayerTest {
     @Test
     @DisplayName("참가자 정상생성 검증")
