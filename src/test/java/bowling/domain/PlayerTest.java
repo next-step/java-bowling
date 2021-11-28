@@ -7,7 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import bowling.execption.PlayerNameSizeException;
+import bowling.exception.PlayerNameSizeException;
 
 class PlayerTest {
 	@DisplayName("플레이어 이름이 영어 3자일 경우 생성 검증")

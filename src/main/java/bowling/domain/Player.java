@@ -3,7 +3,7 @@ package bowling.domain;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import bowling.execption.PlayerNameSizeException;
+import bowling.exception.PlayerNameSizeException;
 
 public class Player {
 	private static final Pattern NAME_REGEX = Pattern.compile("^[a-zA-Z]{3}$");

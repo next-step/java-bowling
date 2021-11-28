@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.execption.UtilCreationException;
+import bowling.exception.UtilCreationException;
 
 public final class InputView {
 	private InputView() {

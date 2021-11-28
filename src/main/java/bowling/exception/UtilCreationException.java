@@ -1,4 +1,4 @@
-package bowling.execption;
+package bowling.exception;
 
 @SuppressWarnings("serial")
 public class UtilCreationException extends RuntimeException {
