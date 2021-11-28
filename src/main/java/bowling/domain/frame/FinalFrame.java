@@ -8,7 +8,6 @@ import bowling.domain.value.Pins;
 public class FinalFrame extends Frame {
     private static final FrameNumber FINAL_FRAME_NUMBER = FrameNumber.from(10);
     private static final int MAXIMUM_PITCH_COUNT = 3;
-    private static final int FIRST_PITCH = 1;
     private static final int SECOND_PITCH = 2;
 
     private final FramePins framePins;
@@ -24,10 +23,10 @@ public class FinalFrame extends Frame {
     @Override
     public void pitch(Pins pins) {
         framePins.addPins(pins);
-        addScore(pins);
     }
 
-    private void addScore(Pins pins) {
+    @Override
+    void countScore(Pins pins) {
         if (isSecondPitch()) {
             pins.addScore(framePins.isFirstPitchStrike() ?
                                   Score.convert(pins.getPins(), true) :
@@ -59,10 +58,6 @@ public class FinalFrame extends Frame {
 
     private boolean isMiss() {
         return isSecondPitch() && framePins.getTotalPins() < STRIKE_OR_SPARE_COUNT;
-    }
-
-    private boolean isFirstPitch() {
-        return framePins.isFrameOver(FIRST_PITCH);
     }
 
     private boolean isSecondPitch() {

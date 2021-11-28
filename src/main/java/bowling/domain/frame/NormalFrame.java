@@ -23,10 +23,10 @@ public class NormalFrame extends Frame {
     @Override
     public void pitch(Pins pins) {
         framePins.addPins(pins);
-        addScore(pins);
     }
 
-    private void addScore(Pins pins) {
+    @Override
+    void countScore(Pins pins) {
         if (isFirstPitch()) {
             pins.addScore(Score.convert(pins.getPins(), true));
             return;

@@ -19,6 +19,8 @@ public abstract class Frame {
 
     abstract void pitch(Pins pins);
 
+    abstract void countScore(Pins pins);
+
     abstract FramePins getPins();
 
     abstract boolean isSameFrameNumber(FrameNumber frameNumber);
@@ -32,6 +34,7 @@ public abstract class Frame {
         }
 
         pitch(pins);
+        countScore(pins);
     }
 
     public final FrameNumber getCurrentFrameNumber() {
