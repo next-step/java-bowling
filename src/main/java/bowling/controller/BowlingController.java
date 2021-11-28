@@ -1,7 +1,7 @@
 package bowling.controller;
 
-import bowling.domain.BowlingClub;
 import bowling.domain.factory.FrameFactory;
+import bowling.domain.frame.Frame;
 import bowling.domain.value.Pins;
 import bowling.domain.value.Player;
 import bowling.ui.InputView;
@@ -21,14 +21,14 @@ public class BowlingController {
     public void play() {
         Player player = inputView.inputPlayerName();
 
-        BowlingClub bowlingClub = BowlingClub.create(frameFactory.create());
+        Frame frame = frameFactory.create();
 
-        while (!bowlingClub.isGameOver()) {
-            Pins pins = inputView.inputPins(bowlingClub.getCurrentFrameNumber());
+        while (!frame.isGameOver()) {
+            Pins pins = inputView.inputPins(frame.getCurrentFrameNumber());
 
-            bowlingClub.knockedDown(pins);
+            frame.knockedDown(pins);
 
-            resultView.printBowlingResult(bowlingClub, player);
+            resultView.printBowlingResult(frame, player);
         }
     }
 }

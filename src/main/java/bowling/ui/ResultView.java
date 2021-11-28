@@ -1,6 +1,6 @@
 package bowling.ui;
 
-import bowling.domain.BowlingClub;
+import bowling.domain.frame.Frame;
 import bowling.domain.value.FrameNumber;
 import bowling.domain.value.FramePins;
 import bowling.domain.value.Pins;
@@ -16,9 +16,9 @@ public class ResultView {
     private static final String LINE = "|";
     private static final String ENTER = "\r\n";
 
-    public void printBowlingResult(BowlingClub bowlingClub, Player player) {
+    public void printBowlingResult(Frame frame, Player player) {
         printHead();
-        printBody(bowlingClub, player);
+        printBody(frame, player);
     }
 
     private void printHead() {
@@ -32,12 +32,12 @@ public class ResultView {
         System.out.println(bowlingBuilder.toString());
     }
 
-    private void printBody(BowlingClub bowlingClub, Player player) {
+    private void printBody(Frame frame, Player player) {
         StringBuilder bowlingBuilder = new StringBuilder();
         printPlayerName(bowlingBuilder, player.getName());
 
         for (int i = 1; i <= 10; i++) {
-            FramePins framePins = bowlingClub.getPins(FrameNumber.from(i));
+            FramePins framePins = frame.getPins(FrameNumber.from(i));
             printFrame(bowlingBuilder, printScore(framePins));
         }
 
