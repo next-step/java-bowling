@@ -36,10 +36,8 @@ public class FinalFrame extends Frame {
 
     @Override
     void countScore(Pins pins) {
-        if (isSecondPitch()) {
-            pins.addScore(framePins.isFirstPitchStrike() ?
-                                  Score.convert(pins.getPins(), true) :
-                                  Score.convert(framePins.getTotalPins(), false));
+        if (isSecondPitch() && !framePins.isFirstPitchStrike()) {
+            pins.addScore(Score.convert(framePins.getTotalPins(), false));
             return;
         }
 
@@ -57,7 +55,7 @@ public class FinalFrame extends Frame {
             return true;
         }
 
-        return framePins.isFrameOver(MAXIMUM_PITCH_COUNT);
+        return isMaximumPitch();
     }
 
     private boolean isMiss() {
@@ -66,5 +64,9 @@ public class FinalFrame extends Frame {
 
     private boolean isSecondPitch() {
         return framePins.isFrameOver(SECOND_PITCH);
+    }
+
+    private boolean isMaximumPitch() {
+        return framePins.isFrameOver(MAXIMUM_PITCH_COUNT);
     }
 }

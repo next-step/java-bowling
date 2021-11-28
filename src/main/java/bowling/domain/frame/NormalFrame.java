@@ -49,11 +49,15 @@ public class NormalFrame extends Frame {
             return true;
         }
 
-        return framePins.isFrameOver(MAXIMUM_PITCH_COUNT);
+        return isMaximumPitch();
     }
 
     private boolean isStrike() {
         return STRIKE_OR_SPARE_COUNT == framePins.getTotalPins();
+    }
+
+    private boolean isMaximumPitch() {
+        return framePins.isFrameOver(MAXIMUM_PITCH_COUNT);
     }
 
     @Override
