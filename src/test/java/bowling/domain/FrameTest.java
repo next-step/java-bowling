@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 class FrameTest {
     private Frame frame;
@@ -82,6 +83,22 @@ class FrameTest {
         frame.knockedDown(Pins.from(10));
         frame.knockedDown(Pins.from(10));
         frame.knockedDown(Pins.from(10));
+    }
+
+    @Test
+    @DisplayName("기본 프레임에서 투구의 합이 10핀이 넘어가는 경우 예외 발생")
+    void knockedDown_exception() {
+        frame.knockedDown(Pins.from(4));
+        assertThatIllegalArgumentException().isThrownBy(() -> frame.knockedDown(Pins.from(7)));
+    }
+
+    @Test
+    @DisplayName("마지막 프레임에서 두번째 투구의 합이 10핀이 넘어가는 경우 예외 발생")
+    void knockedDown_exception2() {
+        testNormalFrame();
+
+        frame.knockedDown(Pins.from(4));
+        assertThatIllegalArgumentException().isThrownBy(() -> frame.knockedDown(Pins.from(7)));
     }
 
     @Test
