@@ -8,9 +8,6 @@ import bowling.domain.value.Pins;
 public class NormalFrame extends Frame {
     private static final int MAXIMUM_PITCH_COUNT = 2;
 
-    private final FrameNumber frameNumber;
-    private final FramePins framePins;
-
     private NormalFrame(FrameNumber frameNumber) {
         this.frameNumber = frameNumber;
         this.framePins = FramePins.create();
@@ -55,20 +52,5 @@ public class NormalFrame extends Frame {
     @Override
     public boolean isLastFrameOver() {
         return false;
-    }
-
-    @Override
-    FramePins getPins() {
-        return framePins;
-    }
-
-    @Override
-    boolean isSameFrameNumber(FrameNumber frameNumber) {
-        return this.frameNumber.equals(frameNumber);
-    }
-
-    @Override
-    FrameNumber getFrameNumber() {
-        return frameNumber;
     }
 }

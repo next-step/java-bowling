@@ -8,24 +8,20 @@ public abstract class Frame {
     protected static final int STRIKE_OR_SPARE_COUNT = 10;
 
     private Frame nextFrame;
+    protected FrameNumber frameNumber;
+    protected FramePins framePins;
 
     public void setNext(Frame nextFrame) {
         this.nextFrame = nextFrame;
     }
 
-    abstract boolean isLastFrameOver();
-
     abstract boolean isFrameOver();
+
+    abstract boolean isLastFrameOver();
 
     abstract void pitch(Pins pins);
 
     abstract void countScore(Pins pins);
-
-    abstract FramePins getPins();
-
-    abstract boolean isSameFrameNumber(FrameNumber frameNumber);
-
-    abstract FrameNumber getFrameNumber();
 
     public final void knockedDown(Pins pins) {
         if (isFrameOver()) {
@@ -42,7 +38,7 @@ public abstract class Frame {
             return nextFrame.getCurrentFrameNumber();
         }
 
-        return getFrameNumber();
+        return frameNumber;
     }
 
     public final boolean isGameOver() {
@@ -54,8 +50,8 @@ public abstract class Frame {
     }
 
     public final FramePins getPins(FrameNumber frameNumber) {
-        if (isSameFrameNumber(frameNumber)) {
-            return getPins();
+        if (this.frameNumber.equals(frameNumber)) {
+            return framePins;
         }
 
         return nextFrame.getPins(frameNumber);

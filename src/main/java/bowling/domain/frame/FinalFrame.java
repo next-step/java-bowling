@@ -10,9 +10,8 @@ public class FinalFrame extends Frame {
     private static final int MAXIMUM_PITCH_COUNT = 3;
     private static final int SECOND_PITCH = 2;
 
-    private final FramePins framePins;
-
     private FinalFrame() {
+        this.frameNumber = FINAL_FRAME_NUMBER;
         this.framePins = FramePins.create();
     }
 
@@ -38,11 +37,6 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    FramePins getPins() {
-        return framePins;
-    }
-
-    @Override
     public boolean isFrameOver() {
         return false;
     }
@@ -62,15 +56,5 @@ public class FinalFrame extends Frame {
 
     private boolean isSecondPitch() {
         return framePins.isFrameOver(SECOND_PITCH);
-    }
-
-    @Override
-    boolean isSameFrameNumber(FrameNumber frameNumber) {
-        return FINAL_FRAME_NUMBER.equals(frameNumber);
-    }
-
-    @Override
-    FrameNumber getFrameNumber() {
-        return FINAL_FRAME_NUMBER;
     }
 }
