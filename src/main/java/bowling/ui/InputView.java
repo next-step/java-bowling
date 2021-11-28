@@ -13,7 +13,7 @@ public class InputView {
     }
 
     public Pins inputPins(FrameNumber frameNumber) {
-        int pins = InputUtils.inputToInteger(String.format("%d프레임 투구 : ", frameNumber.getFrameNumber()));
+        int pins = InputUtils.inputToInteger(String.format("%d 프레임 투구 : ", frameNumber.getFrameNumber()));
 
         return Pins.from(pins);
     }

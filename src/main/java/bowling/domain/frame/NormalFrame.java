@@ -33,7 +33,7 @@ public class NormalFrame extends Frame {
     }
 
     private boolean isFirstPitch() {
-        return MAXIMUM_PITCH_COUNT > framePins.getPitchCount();
+        return !framePins.isFrameOver(MAXIMUM_PITCH_COUNT);
     }
 
     @Override

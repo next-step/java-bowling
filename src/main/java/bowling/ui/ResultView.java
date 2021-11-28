@@ -13,8 +13,8 @@ public class ResultView {
     private static final int FINAL_FRAME = 10;
     private static final String PLAYER_NAME = "NAME";
     private static final String DELIMITER = "|";
-
     private static final String LINE = "|";
+    private static final String ENTER = "\r\n";
 
     public void printBowlingResult(BowlingClub bowlingClub, Player player) {
         printHead();
@@ -41,6 +41,7 @@ public class ResultView {
             printFrame(bowlingBuilder, printScore(framePins));
         }
 
+        bowlingBuilder.append(ENTER);
         System.out.println(bowlingBuilder.toString());
     }
 

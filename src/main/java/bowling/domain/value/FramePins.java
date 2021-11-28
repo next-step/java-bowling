@@ -31,11 +31,11 @@ public class FramePins {
                 .reduce(0, Integer::sum);
     }
 
-    public int getPitchCount() {
-        return pins.size();
-    }
-
     public boolean isFirstPitchStrike() {
+        if (pins.isEmpty()) {
+            return false;
+        }
+
         return pins.get(0).isStrike();
     }
 

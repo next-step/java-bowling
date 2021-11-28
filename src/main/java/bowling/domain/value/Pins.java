@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class Pins {
     private static final int GUTTER_COUNT = 0;
-    public static final int STRIKE_OR_SPARE_COUNT = 10;
+    private static final int STRIKE_OR_SPARE_COUNT = 10;
 
     private final int pins;
     private Score score;
@@ -30,12 +30,12 @@ public class Pins {
         this.score = score;
     }
 
-    public int getPins() {
-        return pins;
-    }
-
     public boolean isStrike() {
         return STRIKE_OR_SPARE_COUNT == pins;
+    }
+
+    public int getPins() {
+        return pins;
     }
 
     @GetterForUI
