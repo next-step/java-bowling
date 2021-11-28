@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.type.Score;
 import bowling.domain.value.FrameNumber;
 import bowling.domain.value.FramePins;
 import bowling.domain.value.Pins;
@@ -22,6 +23,20 @@ public class NormalFrame extends Frame {
     @Override
     public void pitch(Pins pins) {
         framePins.addPins(pins);
+        addScore(pins);
+    }
+
+    private void addScore(Pins pins) {
+        if (isFirstPitch()) {
+            pins.addScore(Score.convert(pins.getPins(), true));
+            return;
+        }
+
+        pins.addScore(Score.convert(framePins.getTotalPins(), false));
+    }
+
+    private boolean isFirstPitch() {
+        return MAXIMUM_PITCH_COUNT > framePins.getPitchCount();
     }
 
     @Override

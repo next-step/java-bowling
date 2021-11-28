@@ -1,5 +1,7 @@
 package bowling.domain.value;
 
+import bowling.annotations.GetterForUI;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -23,14 +25,23 @@ public class FramePins {
         return pins.size() == countOfPitch;
     }
 
-    public Pins getPins(int index) {
-        return pins.get(index);
-    }
-
     public int getTotalPins() {
         return pins.stream()
                 .map(Pins::getPins)
                 .reduce(0, Integer::sum);
+    }
+
+    public int getPitchCount() {
+        return pins.size();
+    }
+
+    public boolean isFirstPitchStrike() {
+        return pins.get(0).isStrike();
+    }
+
+    @GetterForUI
+    public List<Pins> getPins() {
+        return pins;
     }
 
     @Override
