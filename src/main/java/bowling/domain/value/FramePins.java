@@ -3,6 +3,7 @@ package bowling.domain.value;
 import bowling.annotations.GetterForUI;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -41,7 +42,7 @@ public class FramePins {
 
     @GetterForUI
     public List<Pins> getPins() {
-        return pins;
+        return Collections.unmodifiableList(new ArrayList<>(pins));
     }
 
     @Override
