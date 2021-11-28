@@ -15,8 +15,8 @@ class FramePinsTest {
     void setup() {
         framePins = FramePins.create();
 
-        framePins.addPins(Pins.from(4));
         framePins.addPins(Pins.from(10));
+        framePins.addPins(Pins.from(4));
     }
 
     @Test
@@ -35,5 +35,11 @@ class FramePinsTest {
     @DisplayName("핀 총함 검증")
     void getTotalPins() {
         assertThat(framePins.getTotalPins()).isEqualTo(14);
+    }
+
+    @Test
+    @DisplayName("첫번째 핀이 스트라이크 인지 검증")
+    void isFirstPitchStrike() {
+        assertThat(framePins.isFirstPitchStrike()).isTrue();
     }
 }
