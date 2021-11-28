@@ -4,6 +4,7 @@ import bowling.domain.type.Score;
 import bowling.domain.value.FrameNumber;
 import bowling.domain.value.FramePins;
 import bowling.domain.value.Pins;
+import bowling.utils.Preconditions;
 
 public class FinalFrame extends Frame {
     private static final FrameNumber FINAL_FRAME_NUMBER = FrameNumber.from(10);
@@ -21,7 +22,16 @@ public class FinalFrame extends Frame {
 
     @Override
     public void pitch(Pins pins) {
+        validatePins(pins);
+
         framePins.addPins(pins);
+    }
+
+    private void validatePins(Pins pins) {
+        if (!framePins.isFirstPitchStrike()) {
+            Preconditions.checkMaximumSize(framePins.getTotalPins() + pins.getPins(), STRIKE_OR_SPARE_COUNT,
+                                           "최대 투구수를 넘을 수 없습니다.");
+        }
     }
 
     @Override
