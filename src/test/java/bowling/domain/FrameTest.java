@@ -74,15 +74,9 @@ class FrameTest {
     }
 
     private void testNormalFrame() {
-        frame.knockedDown(Pins.from(10));
-        frame.knockedDown(Pins.from(10));
-        frame.knockedDown(Pins.from(10));
-        frame.knockedDown(Pins.from(10));
-        frame.knockedDown(Pins.from(10));
-        frame.knockedDown(Pins.from(10));
-        frame.knockedDown(Pins.from(10));
-        frame.knockedDown(Pins.from(10));
-        frame.knockedDown(Pins.from(10));
+        for (int i = 1; i < 10; i++) {
+            frame.knockedDown(Pins.from(10));
+        }
     }
 
     @Test
