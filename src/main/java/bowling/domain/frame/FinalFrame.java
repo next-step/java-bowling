@@ -22,15 +22,15 @@ public class FinalFrame extends Frame {
 
     @Override
     public void pitch(Pins pins) {
-        validatePins(pins);
-
         framePins.addPins(pins);
+
+        validatePins();
     }
 
-    private void validatePins(Pins pins) {
-        if (!framePins.isFirstPitchStrike()) {
-            Preconditions.checkMaximumSize(framePins.getTotalPins() + pins.getPins(), STRIKE_OR_SPARE_COUNT,
-                                           "최대 투구수를 넘을 수 없습니다.");
+    private void validatePins() {
+        if (isSecondPitch() && !framePins.isFirstPitchStrike()) {
+            Preconditions.checkMaximumSize(framePins.getTotalPins(),
+                                           STRIKE_OR_SPARE_COUNT, "최대 투구수를 넘을 수 없습니다.");
         }
     }
 
