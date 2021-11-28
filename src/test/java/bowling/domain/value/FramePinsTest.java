@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @DisplayName("프레임별 모든 볼링핀 테스트")
@@ -30,15 +29,6 @@ class FramePinsTest {
     @DisplayName("투구 숫자 검증")
     void getCountOfPitch() {
         assertThat(framePins.isFrameOver(2)).isTrue();
-    }
-
-    @Test
-    @DisplayName("투구 별, 핀 검증")
-    void getPins() {
-        assertAll(() -> {
-            assertThat(framePins.getPins(0)).isEqualTo(Pins.from(4));
-            assertThat(framePins.getPins(1)).isEqualTo(Pins.from(10));
-        });
     }
 
     @Test
