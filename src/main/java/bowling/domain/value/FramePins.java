@@ -1,7 +1,5 @@
 package bowling.domain.value;
 
-import bowling.domain.type.BowlingRule;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -33,14 +31,6 @@ public class FramePins {
         return pins.stream()
                 .map(Pins::getPins)
                 .reduce(0, Integer::sum);
-    }
-
-    public BowlingRule matchForNormalFrame(int pins, boolean firstPitch) {
-        return BowlingRule.convertForNormalFrame(pins, firstPitch);
-    }
-
-    public BowlingRule matchForFinalFrame(int pins, boolean secondPitch, boolean totalPitch) {
-        return BowlingRule.convertForFinalFrame(pins, secondPitch, totalPitch);
     }
 
     @Override

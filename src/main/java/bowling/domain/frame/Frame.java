@@ -5,6 +5,8 @@ import bowling.domain.value.FramePins;
 import bowling.domain.value.Pins;
 
 public abstract class Frame {
+    protected static final int STRIKE_OR_SPARE_COUNT = 10;
+
     private Frame nextFrame;
 
     public void setNext(Frame nextFrame) {

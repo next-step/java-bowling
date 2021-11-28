@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.type.BowlingRule;
 import bowling.domain.value.FrameNumber;
 import bowling.domain.value.FramePins;
 import bowling.domain.value.Pins;
@@ -27,11 +26,15 @@ public class NormalFrame extends Frame {
 
     @Override
     public boolean isFrameOver() {
-        return framePins.isFrameOver(MAXIMUM_PITCH_COUNT) || isStrike();
+        if (isStrike()) {
+            return true;
+        }
+
+        return framePins.isFrameOver(MAXIMUM_PITCH_COUNT);
     }
 
     private boolean isStrike() {
-        return BowlingRule.STRIKE == framePins.matchForNormalFrame(framePins.getTotalPins(), true);
+        return STRIKE_OR_SPARE_COUNT == framePins.getTotalPins();
     }
 
     @Override

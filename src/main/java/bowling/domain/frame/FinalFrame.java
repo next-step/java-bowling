@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.type.BowlingRule;
 import bowling.domain.value.FrameNumber;
 import bowling.domain.value.FramePins;
 import bowling.domain.value.Pins;
@@ -45,8 +44,7 @@ public class FinalFrame extends Frame {
     }
 
     private boolean isMiss() {
-        return BowlingRule.MISS == framePins
-                .matchForFinalFrame(framePins.getTotalPins(), isSecondPitch(), true);
+        return isSecondPitch() && framePins.getTotalPins() < STRIKE_OR_SPARE_COUNT;
     }
 
     private boolean isSecondPitch() {
