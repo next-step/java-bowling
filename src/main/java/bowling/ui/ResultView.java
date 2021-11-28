@@ -36,7 +36,7 @@ public class ResultView {
         StringBuilder bowlingBuilder = new StringBuilder();
         printPlayerName(bowlingBuilder, player.getName());
 
-        for (int i = 1; i <= 10; i++) {
+        for (int i = START_FRAME; i <= FINAL_FRAME; i++) {
             FramePins framePins = frame.getPins(FrameNumber.from(i));
             printFrame(bowlingBuilder, printScore(framePins));
         }
