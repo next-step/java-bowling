@@ -34,6 +34,8 @@ public class QnAService {
 
     @Transactional
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+
         Question question = findQuestionById(questionId);
         if (!question.isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
@@ -41,15 +43,12 @@ public class QnAService {
 
         List<Answer> answers = question.getAnswers();
         for (Answer answer : answers) {
-            answer.delete(loginUser);
+            deleteHistories.add(answer.delete(loginUser));
         }
 
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
         question.setDeleted(true);
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
-        for (Answer answer : answers) {
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }
+
         deleteHistoryService.saveAll(deleteHistories);
     }
 }
