@@ -16,9 +16,9 @@ public class AnswersTest {
     @Test
     void testDeleteSuccess() throws CannotDeleteException {
         Answers answersByJavajigi = new Answers(Arrays.asList(A1, A3));
-        assertThat(answersByJavajigi.delete(UserTest.JAVAJIGI)).isEqualTo(Arrays.asList(DELETE_HISTORY1, DELETE_HISTORY3));
+        assertThat(answersByJavajigi.delete(UserTest.JAVAJIGI)).isEqualTo(Arrays.asList(DELETE_HISTORY_A1, DELETE_HISTORY_A3));
         Answers answersBySanjigi = new Answers(Arrays.asList(A2, A4));
-        assertThat(answersBySanjigi.delete(UserTest.SANJIGI)).isEqualTo(Arrays.asList(DELETE_HISTORY2, DELETE_HISTORY4));
+        assertThat(answersBySanjigi.delete(UserTest.SANJIGI)).isEqualTo(Arrays.asList(DELETE_HISTORY_A2, DELETE_HISTORY_A4));
     }
 
     @DisplayName("Delete is failed when non-writer tries to delete answers")
