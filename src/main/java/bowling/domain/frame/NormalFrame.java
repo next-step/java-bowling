@@ -20,13 +20,14 @@ public class NormalFrame extends Frame {
 
     @Override
     public void pitch(Pins pins) {
-        framePins.addPins(pins);
+        validatePins(pins);
 
-        validatePins();
+        framePins.addPins(pins);
     }
 
-    private void validatePins() {
-        Preconditions.checkMaximumSize(framePins.getTotalPins(), STRIKE_OR_SPARE_COUNT, "최대 투구수를 넘을 수 없습니다.");
+    private void validatePins(Pins pins) {
+        Preconditions.checkMaximumSize(framePins.calculateTotalPins() + pins.getPins(),
+                                       STRIKE_OR_SPARE_COUNT, "최대 투구수를 넘을 수 없습니다.");
     }
 
     @Override
@@ -36,7 +37,7 @@ public class NormalFrame extends Frame {
             return;
         }
 
-        pins.addScore(Score.convert(framePins.getTotalPins(), false));
+        pins.addScore(Score.convert(framePins.calculateTotalPins(), false));
     }
 
     private boolean isFirstPitch() {
@@ -53,7 +54,7 @@ public class NormalFrame extends Frame {
     }
 
     private boolean isStrike() {
-        return STRIKE_OR_SPARE_COUNT == framePins.getTotalPins();
+        return STRIKE_OR_SPARE_COUNT == framePins.calculateTotalPins();
     }
 
     private boolean isMaximumPitch() {

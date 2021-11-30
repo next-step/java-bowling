@@ -8,8 +8,9 @@ import bowling.utils.Preconditions;
 
 public class FinalFrame extends Frame {
     private static final FrameNumber FINAL_FRAME_NUMBER = FrameNumber.from(10);
-    private static final int MAXIMUM_PITCH_COUNT = 3;
     private static final int SECOND_PITCH = 2;
+    private static final int MAXIMUM_PITCH_COUNT = 3;
+    private static final int CHECK_BEFORE_SECOND_PITCH = 1;
 
     private FinalFrame() {
         this.frameNumber = FINAL_FRAME_NUMBER;
@@ -22,14 +23,14 @@ public class FinalFrame extends Frame {
 
     @Override
     public void pitch(Pins pins) {
-        framePins.addPins(pins);
+        validatePins(pins);
 
-        validatePins();
+        framePins.addPins(pins);
     }
 
-    private void validatePins() {
-        if (isSecondPitch() && !framePins.isFirstPitchStrike()) {
-            Preconditions.checkMaximumSize(framePins.getTotalPins(),
+    private void validatePins(Pins pins) {
+        if (!framePins.isFirstPitchStrike() && framePins.isFrameOver(CHECK_BEFORE_SECOND_PITCH)) {
+            Preconditions.checkMaximumSize(framePins.calculateTotalPins() + pins.getPins(),
                                            STRIKE_OR_SPARE_COUNT, "최대 투구수를 넘을 수 없습니다.");
         }
     }
@@ -37,7 +38,7 @@ public class FinalFrame extends Frame {
     @Override
     void countScore(Pins pins) {
         if (isSecondPitch() && !framePins.isFirstPitchStrike()) {
-            pins.addScore(Score.convert(framePins.getTotalPins(), false));
+            pins.addScore(Score.convert(framePins.calculateTotalPins(), false));
             return;
         }
 
@@ -59,7 +60,7 @@ public class FinalFrame extends Frame {
     }
 
     private boolean isMiss() {
-        return isSecondPitch() && framePins.getTotalPins() < STRIKE_OR_SPARE_COUNT;
+        return isSecondPitch() && framePins.calculateTotalPins() < STRIKE_OR_SPARE_COUNT;
     }
 
     private boolean isSecondPitch() {
