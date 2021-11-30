@@ -33,8 +33,8 @@ class FramePinsTest {
 
     @Test
     @DisplayName("핀 총함 검증")
-    void getTotalPins() {
-        assertThat(framePins.getTotalPins()).isEqualTo(14);
+    void calculateTotalPins() {
+        assertThat(framePins.calculateTotalPins()).isEqualTo(14);
     }
 
     @Test

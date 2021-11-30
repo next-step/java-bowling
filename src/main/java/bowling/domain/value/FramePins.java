@@ -26,7 +26,7 @@ public class FramePins {
         return pins.size() == countOfPitch;
     }
 
-    public int getTotalPins() {
+    public int calculateTotalPins() {
         return pins.stream()
                 .map(Pins::getPins)
                 .reduce(0, Integer::sum);
