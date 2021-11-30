@@ -29,7 +29,7 @@ public class ResultView {
             printFrame(bowlingBuilder, String.valueOf(i));
         }
 
-        System.out.println(bowlingBuilder.toString());
+        System.out.println(bowlingBuilder);
     }
 
     private void printBody(Frame frame, Player player) {
