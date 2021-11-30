@@ -73,7 +73,7 @@ public class Question extends AbstractEntity {
     }
 
     private boolean isOwner(User user) {
-        return this.writer == user;
+        return writer.equals(user);
     }
 
     private List<DeleteHistory> deleteAnswers(User user) throws CannotDeleteException {
