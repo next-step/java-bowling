@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -19,8 +20,8 @@ public class QuestionTest {
     @DisplayName("Deletion of Question is succeeded when user is author")
     @Test
     void testDeleteSuccess() throws CannotDeleteException {
-        assertThat(Q1.delete(UserTest.JAVAJIGI)).isEqualTo(DELETE_HISTORY_Q1);
-        assertThat(Q2.delete(UserTest.SANJIGI)).isEqualTo(DELETE_HISTORY_Q2);
+        assertThat(Q1.delete(UserTest.JAVAJIGI)).isEqualTo(Arrays.asList(DELETE_HISTORY_Q1));
+        assertThat(Q2.delete(UserTest.SANJIGI)).isEqualTo(Arrays.asList(DELETE_HISTORY_Q2));
     }
 
     @DisplayName("Deletion of Question is succeeded when user is not author")
