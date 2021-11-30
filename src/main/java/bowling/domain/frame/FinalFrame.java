@@ -51,7 +51,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public boolean isLastFrameOver() {
+    public boolean isFinalFrameOver() {
         if (isMiss()) {
             return true;
         }

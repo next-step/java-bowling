@@ -62,7 +62,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public boolean isLastFrameOver() {
+    public boolean isFinalFrameOver() {
         return false;
     }
 }

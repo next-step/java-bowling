@@ -1,49 +1,50 @@
-package bowling.domain;
+package bowling.domain.value;
 
 import bowling.domain.factory.FrameFactory;
 import bowling.domain.frame.Frame;
-import bowling.domain.value.FrameNumber;
-import bowling.domain.value.FramePins;
-import bowling.domain.value.Pins;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-class FrameTest {
-    private Frame frame;
+class BowlingClubTest {
+    private BowlingClub bowlingClub;
 
     @BeforeEach
     void setup() {
         FrameFactory frameFactory = new FrameFactory();
-        frame = frameFactory.create();
+        List<Frame> frames = frameFactory.create();
+
+        bowlingClub = BowlingClub.from(frames);
     }
 
     @Test
     @DisplayName("기본 프레임에서 스트라이크가 발생되면 다음 프레임 넘어가는 부분 검증")
     void knockedDown() {
-        frame.knockedDown(Pins.from(10));
+        bowlingClub.knockedDown(Pins.from(10));
 
-        assertThat(frame.getCurrentFrameNumber()).isEqualTo(FrameNumber.from(2));
+        assertThat(bowlingClub.getCurrentFrameNumber()).isEqualTo(FrameNumber.from(2));
     }
 
     @Test
     @DisplayName("기본 프레임에서 투구수 2회 발생되면 다음 프레임 넘어가는 부분 검증")
     void knockedDown2() {
-        frame.knockedDown(Pins.from(4));
-        frame.knockedDown(Pins.from(3));
+        bowlingClub.knockedDown(Pins.from(4));
+        bowlingClub.knockedDown(Pins.from(3));
 
-        assertThat(frame.getCurrentFrameNumber()).isEqualTo(FrameNumber.from(2));
+        assertThat(bowlingClub.getCurrentFrameNumber()).isEqualTo(FrameNumber.from(2));
     }
 
     @Test
     @DisplayName("기본 프레임에서 스트라이크가 발생되지 않고 1회 투구 인 경우, 기존 프레임 유지 검증")
     void knockedDown3() {
-        frame.knockedDown(Pins.from(4));
+        bowlingClub.knockedDown(Pins.from(4));
 
-        assertThat(frame.getCurrentFrameNumber()).isEqualTo(FrameNumber.from(1));
+        assertThat(bowlingClub.getCurrentFrameNumber()).isEqualTo(FrameNumber.from(1));
     }
 
     @Test
@@ -51,12 +52,12 @@ class FrameTest {
     void isGameOver() {
         testNormalFrame();
 
-        assertThat(frame.isGameOver()).isFalse();
+        assertThat(bowlingClub.isGameOver()).isFalse();
 
-        frame.knockedDown(Pins.from(4));
-        frame.knockedDown(Pins.from(5));
+        bowlingClub.knockedDown(Pins.from(4));
+        bowlingClub.knockedDown(Pins.from(5));
 
-        assertThat(frame.isGameOver()).isTrue();
+        assertThat(bowlingClub.isGameOver()).isTrue();
     }
 
     @Test
@@ -64,26 +65,26 @@ class FrameTest {
     void isGameOver2() {
         testNormalFrame();
 
-        assertThat(frame.isGameOver()).isFalse();
+        assertThat(bowlingClub.isGameOver()).isFalse();
 
-        frame.knockedDown(Pins.from(4));
-        frame.knockedDown(Pins.from(6));
-        frame.knockedDown(Pins.from(4));
+        bowlingClub.knockedDown(Pins.from(4));
+        bowlingClub.knockedDown(Pins.from(6));
+        bowlingClub.knockedDown(Pins.from(4));
 
-        assertThat(frame.isGameOver()).isTrue();
+        assertThat(bowlingClub.isGameOver()).isTrue();
     }
 
     private void testNormalFrame() {
         for (int i = 1; i < 10; i++) {
-            frame.knockedDown(Pins.from(10));
+            bowlingClub.knockedDown(Pins.from(10));
         }
     }
 
     @Test
     @DisplayName("기본 프레임에서 투구의 합이 10핀이 넘어가는 경우 예외 발생")
     void knockedDown_exception() {
-        frame.knockedDown(Pins.from(4));
-        assertThatIllegalArgumentException().isThrownBy(() -> frame.knockedDown(Pins.from(7)));
+        bowlingClub.knockedDown(Pins.from(4));
+        assertThatIllegalArgumentException().isThrownBy(() -> bowlingClub.knockedDown(Pins.from(7)));
     }
 
     @Test
@@ -91,8 +92,8 @@ class FrameTest {
     void knockedDown_exception2() {
         testNormalFrame();
 
-        frame.knockedDown(Pins.from(4));
-        assertThatIllegalArgumentException().isThrownBy(() -> frame.knockedDown(Pins.from(7)));
+        bowlingClub.knockedDown(Pins.from(4));
+        assertThatIllegalArgumentException().isThrownBy(() -> bowlingClub.knockedDown(Pins.from(7)));
     }
 
     @Test
@@ -105,25 +106,25 @@ class FrameTest {
 
         first_frame:
         {
-            frame.knockedDown(first);
-            frame.knockedDown(second);
+            bowlingClub.knockedDown(first);
+            bowlingClub.knockedDown(second);
         }
 
         second_frame:
         {
-            frame.knockedDown(third);
+            bowlingClub.knockedDown(third);
         }
 
         // when
-        assertThat(frame.getCurrentFrameNumber()).isEqualTo(FrameNumber.from(3));
+        assertThat(bowlingClub.getCurrentFrameNumber()).isEqualTo(FrameNumber.from(3));
 
         // then
         FramePins firstExpected = getFramePins(first, second);
-        FramePins firstFramePins = frame.getPins(FrameNumber.from(1));
+        FramePins firstFramePins = bowlingClub.getPins(1);
         assertThat(firstFramePins).isEqualTo(firstExpected);
 
         FramePins secondExpected = getFramePins(third);
-        FramePins secondFramePins = frame.getPins(FrameNumber.from(2));
+        FramePins secondFramePins = bowlingClub.getPins(2);
         assertThat(secondFramePins).isEqualTo(secondExpected);
     }
 
@@ -138,5 +139,4 @@ class FrameTest {
         framePins.addPins(third);
         return framePins;
     }
-
 }

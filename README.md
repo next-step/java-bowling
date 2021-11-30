@@ -70,5 +70,6 @@
         - Pins : 쓰러트린 볼링핀 갯수
         - FramePins : Pins에 대한 일급컬렉션
         - Player : 참가자
+        - BowlingClub : Frame 관리 객체
     
     
