@@ -37,12 +37,7 @@ public class QnAService {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
 
         Question question = findQuestionById(questionId);
-        if (!question.isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
-
-        question.setDeleted(true);
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
+        deleteHistories.add(question.delete(loginUser));
 
         Answers answers = new Answers(question.getAnswers());
         deleteHistories.addAll(answers.delete(loginUser));
