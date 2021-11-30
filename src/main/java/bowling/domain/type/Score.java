@@ -7,7 +7,7 @@ import java.util.Arrays;
 public enum Score {
     STRIKE(10, "X"),
     SPARE(10, "/"),
-    MISS(1_9, ""),
+    MISS(-1, ""),
     GUTTER(0, "-");
 
     private final int pins;

@@ -42,7 +42,7 @@ public class ResultView {
         }
 
         bowlingBuilder.append(ENTER);
-        System.out.println(bowlingBuilder.toString());
+        System.out.println(bowlingBuilder);
     }
 
     private void printPlayerName(StringBuilder bowlingBuilder, String playerName) {
