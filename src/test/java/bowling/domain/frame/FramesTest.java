@@ -65,7 +65,7 @@ class FramesTest {
 		Frames frames = Frames.initialize();
 
 		// when
-		boolean hasNext = frames.hasNext();
+		boolean hasNext = frames.hasNextPitching();
 
 		// then
 		assertThat(hasNext).isTrue();

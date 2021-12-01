@@ -49,7 +49,7 @@ public class Frames {
 		return lastFrame.getFrameIndex();
 	}
 
-	public boolean hasNext() {
+	public boolean hasNextPitching() {
 		return !(getLastFrame().isEnd() && values.size() == Index.MAX_OF_INDEX);
 	}
 
