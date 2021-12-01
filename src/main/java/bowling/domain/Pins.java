@@ -57,4 +57,9 @@ public class Pins {
 	public int hashCode() {
 		return value;
 	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(value);
+	}
 }
