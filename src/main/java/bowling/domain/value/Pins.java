@@ -1,7 +1,7 @@
 package bowling.domain.value;
 
 import bowling.annotations.GetterForUI;
-import bowling.domain.type.Score;
+import bowling.domain.type.Mark;
 import bowling.utils.Preconditions;
 
 import java.util.Objects;
@@ -11,7 +11,7 @@ public class Pins {
     private static final int STRIKE_OR_SPARE_COUNT = 10;
 
     private final int pins;
-    private Score score;
+    private Mark mark;
 
     public Pins(int pins) {
         Preconditions.checkMinimumSize(pins, GUTTER_COUNT,
@@ -26,8 +26,8 @@ public class Pins {
         return new Pins(pins);
     }
 
-    public void addScore(Score score) {
-        this.score = score;
+    public void addScore(Mark mark) {
+        this.mark = mark;
     }
 
     public boolean isStrike() {
@@ -40,11 +40,11 @@ public class Pins {
 
     @GetterForUI
     public String getMark() {
-        if (score == Score.MISS) {
+        if (mark == Mark.MISS) {
             return String.valueOf(pins);
         }
 
-        return score.getMark();
+        return mark.getMark();
     }
 
     @Override

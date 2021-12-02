@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.type.Score;
+import bowling.domain.type.Mark;
 import bowling.domain.value.FrameNumber;
 import bowling.domain.value.FramePins;
 import bowling.domain.value.Pins;
@@ -38,11 +38,11 @@ public class FinalFrame extends Frame {
     @Override
     void countScore(Pins pins) {
         if (isSecondPitch() && !framePins.isFirstPitchStrike()) {
-            pins.addScore(Score.convert(framePins.calculateTotalPins(), false));
+            pins.addScore(Mark.convert(framePins.calculateTotalPins(), false));
             return;
         }
 
-        pins.addScore(Score.convert(pins.getPins(), true));
+        pins.addScore(Mark.convert(pins.getPins(), true));
     }
 
     @Override

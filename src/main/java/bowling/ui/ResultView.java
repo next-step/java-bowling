@@ -1,7 +1,9 @@
 package bowling.ui;
 
-import bowling.domain.frame.Frame;
-import bowling.domain.value.*;
+import bowling.domain.value.BowlingClub;
+import bowling.domain.value.FramePins;
+import bowling.domain.value.Pins;
+import bowling.domain.value.Player;
 
 import java.util.stream.Collectors;
 
