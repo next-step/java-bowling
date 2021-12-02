@@ -15,6 +15,8 @@ public class FirstBowl extends RunningState {
 
 	@Override
 	public State bowl(Pins pins) {
+		Pins.validateFirstBawl(first, pins);
+
 		if (first.isSpare(pins)) {
 			return Spare.create(first, pins);
 		}

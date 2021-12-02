@@ -12,6 +12,7 @@ public class Spare extends EndedState {
 	}
 
 	public static State create(Pins first, Pins second) {
+		Pins.validateSpare(first, second);
 		return new Spare(first, second);
 	}
 

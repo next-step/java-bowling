@@ -7,7 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import bowling.exception.PinsFirstBawlValidException;
 import bowling.exception.PinsRangeException;
+import bowling.exception.PinsStrikeValidException;
 
 class PinsTest {
 	@DisplayName("Pins 의 가능 범위가 아닐 경우 예외 발생")
@@ -17,6 +19,30 @@ class PinsTest {
 		// when then
 		assertThatExceptionOfType(PinsRangeException.class)
 			.isThrownBy(() -> Pins.create(invalidPins));
+	}
+
+	@DisplayName("FirstBawl 검증, 두 Pins 의 합이 10을 넘을 경우 예외 발생")
+	@Test
+	void validateFirstBawl() {
+		// given
+		Pins first = Pins.create(5);
+		Pins second = Pins.create(10);
+
+		// when then
+		assertThatExceptionOfType(PinsFirstBawlValidException.class)
+			.isThrownBy(() -> Pins.validateFirstBawl(first, second));
+	}
+
+	@DisplayName("Spare 검증, 두 Pins 의 합이 10이 아닐 경우 예외 발생")
+	@Test
+	void validateSpare() {
+		// given
+		Pins first = Pins.create(5);
+		Pins second = Pins.create(10);
+
+		// when then
+		assertThatExceptionOfType(PinsStrikeValidException.class)
+			.isThrownBy(() -> Pins.validateSpare(first, second));
 	}
 
 	@DisplayName("Pins 의 strike 여부 검증")
