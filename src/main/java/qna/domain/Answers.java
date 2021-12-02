@@ -24,11 +24,6 @@ public class Answers {
 		answers.add(answer);
 	}
 
-	public boolean isAllOwner(User writer) {
-		return answers.stream()
-			.allMatch(answer -> answer.isOwner(writer));
-	}
-
 	public List<DeleteHistory> deleteAll(User loginUser) {
 		return answers.stream()
 			.map(answer -> answer.delete(loginUser))

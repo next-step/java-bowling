@@ -75,7 +75,7 @@ public class Answer extends AbstractEntity {
 
 	public DeleteHistory delete(User loginUser) {
 		if (!isOwner(loginUser)) {
-			throw new CannotDeleteException("다른 사람이 쓴 답변이 이므로 삭제할 수 없습니다.");
+			throw new CannotDeleteException("다른 사람이 쓴 답변이므로 삭제할 수 없습니다.");
 		}
 
 		this.deleted = true;
