@@ -23,10 +23,6 @@ public class Pins {
 		return new Pins(value);
 	}
 
-	public int getValue() {
-		return value;
-	}
-
 	public boolean isStrike() {
 		return value == MAX_OF_PINS;
 	}

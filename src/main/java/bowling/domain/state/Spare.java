@@ -17,6 +17,6 @@ public class Spare extends EndedState {
 
 	@Override
 	public String symbol() {
-		return first.getValue() + "|/";
+		return first + "|/";
 	}
 }

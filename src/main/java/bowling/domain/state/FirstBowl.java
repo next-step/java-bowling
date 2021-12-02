@@ -23,6 +23,6 @@ public class FirstBowl extends RunningState {
 
 	@Override
 	public String symbol() {
-		return String.valueOf(first.getValue());
+		return first.toString();
 	}
 }

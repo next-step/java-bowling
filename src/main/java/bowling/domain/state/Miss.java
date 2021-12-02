@@ -17,13 +17,6 @@ public class Miss extends EndedState {
 
 	@Override
 	public String symbol() {
-		return first.getValue() + "|" + convertSecond();
-	}
-
-	private String convertSecond() {
-		if (second.isGutter()) {
-			return "-";
-		}
-		return String.valueOf(second.getValue());
+		return first + "|" + (second.isGutter() ? "-" : second);
 	}
 }

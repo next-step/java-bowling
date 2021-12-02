@@ -19,20 +19,6 @@ class PinsTest {
 			.isThrownBy(() -> Pins.create(invalidPins));
 	}
 
-	@DisplayName("Pins 의 value 값 검증")
-	@Test
-	void getValue() {
-		// given
-		int expected = 10;
-		Pins pins = Pins.create(expected);
-
-		// when
-		int result = pins.getValue();
-
-		// then
-		assertThat(result).isEqualTo(expected);
-	}
-
 	@DisplayName("Pins 의 strike 여부 검증")
 	@Test
 	void isStrike() {
