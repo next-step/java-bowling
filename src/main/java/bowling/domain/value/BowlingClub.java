@@ -5,7 +5,6 @@ import bowling.domain.frame.Frame;
 import bowling.utils.Preconditions;
 
 import java.util.List;
-import java.util.Objects;
 
 public class BowlingClub {
     private static final String EMPTY_SCORE = "";
@@ -29,6 +28,18 @@ public class BowlingClub {
 
         calculateAccumulationScore(pins);
 
+        checkFrameOver(frame);
+    }
+
+    private void calculateAccumulationScore(Pins pins) {
+        frames.forEach(frame -> {
+            if (frame.canAccumulateScore()) {
+                frame.accumulateScore(pins.getPins());
+            }
+        });
+    }
+
+    private void checkFrameOver(Frame frame) {
         if (frame.isFrameOver()) {
             frame.accumulateScore();
 
@@ -38,14 +49,6 @@ public class BowlingClub {
         if (frame.isFinalFrameOver()) {
             frame.accumulateScore();
         }
-    }
-
-    private void calculateAccumulationScore(Pins pins) {
-        frames.forEach(frame -> {
-            if (frame.isAccumulateScore()) {
-                frame.accumulateScore(pins.getPins());
-            }
-        });
     }
 
     private Frame getCurrentFrame() {
@@ -70,7 +73,7 @@ public class BowlingClub {
     public String getScore(int frameNumber) {
         Frame currentFrame = getFrame(frameNumber);
 
-        if (Objects.nonNull(currentFrame.getScore()) && currentFrame.getScore().canCalculateScore()) {
+        if (currentFrame.canCalculateScore()) {
             int score = frames.stream()
                     .limit(frameNumber)
                     .map(Frame::getScore)

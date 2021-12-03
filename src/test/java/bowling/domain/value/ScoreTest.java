@@ -14,8 +14,8 @@ class ScoreTest {
 
         assertThat(score.canCalculateScore()).isFalse();
 
-        score = score.bowl(5);
-        score = score.bowl(4);
+        score = score.accumulateScore(5);
+        score = score.accumulateScore(4);
         assertThat(score.canCalculateScore()).isTrue();
 
         assertThat(score).isEqualTo(Score.of(19, 0));
@@ -28,7 +28,7 @@ class ScoreTest {
 
         assertThat(score.canCalculateScore()).isFalse();
 
-        score = score.bowl(5);
+        score = score.accumulateScore(5);
         assertThat(score.canCalculateScore()).isTrue();
 
         assertThat(score).isEqualTo(Score.of(15, 0));

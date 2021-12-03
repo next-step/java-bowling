@@ -28,12 +28,16 @@ public abstract class Frame {
         countScore(pins);
     }
 
-    public boolean isAccumulateScore() {
-        return !score.canCalculateScore();
+    public boolean canAccumulateScore() {
+        return !canCalculateScore();
+    }
+
+    public boolean canCalculateScore() {
+        return score.canCalculateScore();
     }
 
     public void accumulateScore(int countOfPins) {
-        this.score = score.bowl(countOfPins);
+        this.score = score.accumulateScore(countOfPins);
     }
 
     @GetterForUI
