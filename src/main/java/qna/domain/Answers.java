@@ -2,11 +2,17 @@ package qna.domain;
 
 import qna.CannotDeleteException;
 
+import javax.persistence.Embeddable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Embeddable
 public class Answers {
-    private final List<Answer> answers;
+    private List<Answer> answers;
+
+    public Answers() {
+
+    }
 
     public Answers(List<Answer> answers) {
         this.answers = answers;

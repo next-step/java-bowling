@@ -25,6 +25,9 @@ public class Question extends AbstractEntity {
     @OrderBy("id ASC")
     private List<Answer> answers = new ArrayList<>();
 
+    @Embedded
+    private Answers answerCollection;
+
     private boolean deleted = false;
 
     public Question() {
@@ -77,7 +80,7 @@ public class Question extends AbstractEntity {
     }
 
     private List<DeleteHistory> deleteAnswers(User user) throws CannotDeleteException {
-        Answers answerCollection = new Answers(answers);
+        answerCollection = new Answers(answers);
 
         return answerCollection.delete(user);
     }
