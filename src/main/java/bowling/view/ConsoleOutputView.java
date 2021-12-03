@@ -2,9 +2,10 @@ package bowling.view;
 
 import java.util.stream.IntStream;
 
+import static bowling.controller.BowlingGame.*;
+
 public class ConsoleOutputView implements OutputView {
-    private static int FIRST_FRAME = 1;
-    private static int LAST_FRAME = 10;
+
 
     @Override
     public void questionPlayerName() {
@@ -17,7 +18,12 @@ public class ConsoleOutputView implements OutputView {
     }
 
     @Override
-    public void stagesOfBowling() {
+    public void resultsOfBowling() {
+        stagesOfBowling();
+        framesOfBowling();
+    }
+
+    private void stagesOfBowling() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("|   NAME   ");
         IntStream.rangeClosed(FIRST_FRAME, LAST_FRAME)
@@ -27,8 +33,7 @@ public class ConsoleOutputView implements OutputView {
         System.out.println(stringBuilder);
     }
 
-    @Override
-    public void framesOfBowling() {
+    private void framesOfBowling() {
 
     }
 }

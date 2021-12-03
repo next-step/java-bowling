@@ -3,6 +3,5 @@ package bowling.view;
 public interface OutputView {
     void questionPlayerName();
     void questionPinNumber(int frame);
-    void stagesOfBowling();
-    void framesOfBowling();
+    void resultsOfBowling(Frames frames);
 }
