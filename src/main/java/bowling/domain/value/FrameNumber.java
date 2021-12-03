@@ -17,7 +17,6 @@ public class FrameNumber {
         Preconditions.checkMaximumSize(frameNumber, FINAL_FRAME_NUMBER,
                                        String.format("볼링은 %d 프레임이 종료입니다.", FINAL_FRAME_NUMBER));
 
-
         this.frameNumber = frameNumber;
     }
 

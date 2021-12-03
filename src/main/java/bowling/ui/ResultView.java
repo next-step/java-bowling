@@ -14,10 +14,12 @@ public class ResultView {
     private static final String DELIMITER = "|";
     private static final String LINE = "|";
     private static final String ENTER = "\r\n";
+    private static final String EMPTY = "";
 
     public void printBowlingResult(BowlingClub bowlingClub, Player player) {
         printHead();
-        printBody(bowlingClub, player);
+        printMark(bowlingClub, player);
+        printScore(bowlingClub);
     }
 
     private void printHead() {
@@ -31,16 +33,15 @@ public class ResultView {
         System.out.println(bowlingBuilder);
     }
 
-    private void printBody(BowlingClub bowlingClub, Player player) {
+    private void printMark(BowlingClub bowlingClub, Player player) {
         StringBuilder bowlingBuilder = new StringBuilder();
         printPlayerName(bowlingBuilder, player.getName());
 
         for (int i = START_FRAME; i <= FINAL_FRAME; i++) {
             FramePins framePins = bowlingClub.getPins(i);
-            printFrame(bowlingBuilder, printScore(framePins));
+            printFrame(bowlingBuilder, printMark(framePins));
         }
 
-        bowlingBuilder.append(ENTER);
         System.out.println(bowlingBuilder);
     }
 
@@ -52,9 +53,22 @@ public class ResultView {
         bowlingBuilder.append(String.format("%7s", frameNumber)).append(LINE);
     }
 
-    private String printScore(FramePins framePins) {
+    private String printMark(FramePins framePins) {
         return framePins.getPins().stream()
                 .map(Pins::getMark)
                 .collect(Collectors.joining(DELIMITER));
+    }
+
+    private void printScore(BowlingClub bowlingClub) {
+        StringBuilder bowlingBuilder = new StringBuilder();
+        printPlayerName(bowlingBuilder, EMPTY);
+
+        for (int i = START_FRAME; i <= FINAL_FRAME; i++) {
+            String score = bowlingClub.getScore(i);
+            printFrame(bowlingBuilder, score);
+        }
+
+        bowlingBuilder.append(ENTER);
+        System.out.println(bowlingBuilder);
     }
 }

@@ -128,6 +128,42 @@ class BowlingClubTest {
         assertThat(secondFramePins).isEqualTo(secondExpected);
     }
 
+    @Test
+    @DisplayName("스트라이크는 다음 2번의 투구까지 점수를 누적해서 합산 검증")
+    void getScore() {
+        bowlingClub.knockedDown(Pins.from(10));
+        assertThat(bowlingClub.getScore(1)).isEmpty();
+
+        bowlingClub.knockedDown(Pins.from(10));
+        assertThat(bowlingClub.getScore(1)).isEmpty();
+
+        bowlingClub.knockedDown(Pins.from(10));
+        assertThat(bowlingClub.getScore(1)).isEqualTo("30");
+    }
+
+    @Test
+    @DisplayName("스페어는 다음 1번의 투구까지 점수를 누적해서 합산 검증")
+    void getScore2() {
+        bowlingClub.knockedDown(Pins.from(5));
+        assertThat(bowlingClub.getScore(1)).isEmpty();
+
+        bowlingClub.knockedDown(Pins.from(5));
+        assertThat(bowlingClub.getScore(1)).isEmpty();
+
+        bowlingClub.knockedDown(Pins.from(10));
+        assertThat(bowlingClub.getScore(1)).isEqualTo("20");
+    }
+
+    @Test
+    @DisplayName("미스는 현재 프레임의 투구 합산 검증")
+    void getScore3() {
+        bowlingClub.knockedDown(Pins.from(5));
+        assertThat(bowlingClub.getScore(1)).isEmpty();
+
+        bowlingClub.knockedDown(Pins.from(3));
+        assertThat(bowlingClub.getScore(1)).isEqualTo("8");
+    }
+
     private FramePins getFramePins(Pins first, Pins second) {
         FramePins framePins = getFramePins(first);
         framePins.addPins(second);

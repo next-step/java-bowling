@@ -4,6 +4,7 @@ import bowling.domain.type.Mark;
 import bowling.domain.value.FrameNumber;
 import bowling.domain.value.FramePins;
 import bowling.domain.value.Pins;
+import bowling.domain.value.Score;
 import bowling.utils.Preconditions;
 
 public class NormalFrame extends Frame {
@@ -12,6 +13,7 @@ public class NormalFrame extends Frame {
     private NormalFrame(FrameNumber frameNumber) {
         this.frameNumber = frameNumber;
         this.framePins = FramePins.create();
+        this.score = Score.init();
     }
 
     public static Frame create(FrameNumber frameNumber) {
@@ -54,7 +56,11 @@ public class NormalFrame extends Frame {
     }
 
     private boolean isStrike() {
-        return STRIKE_OR_SPARE_COUNT == framePins.calculateTotalPins();
+        return STRIKE_OR_SPARE_COUNT == framePins.calculateTotalPins() && !isMaximumPitch();
+    }
+
+    private boolean isSpare() {
+        return STRIKE_OR_SPARE_COUNT == framePins.calculateTotalPins() && isMaximumPitch();
     }
 
     private boolean isMaximumPitch() {
@@ -64,5 +70,20 @@ public class NormalFrame extends Frame {
     @Override
     public boolean isFinalFrameOver() {
         return false;
+    }
+
+    @Override
+    public void accumulateScore() {
+        if (isStrike()) {
+            score = Score.ofStrike();
+            return;
+        }
+
+        if (isSpare()) {
+            score = Score.ofSpare();
+            return;
+        }
+
+        score = Score.ofMiss(framePins.calculateTotalPins());
     }
 }
