@@ -86,7 +86,7 @@ public class LastFrame implements Frame {
 	}
 
 	private int convertIntScore(State state) {
-		return state.score().getLastFrameScore();
+		return state.score().getScoreWithoutException();
 	}
 
 	@Override

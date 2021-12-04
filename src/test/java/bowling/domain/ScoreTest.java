@@ -16,12 +16,12 @@ class ScoreTest {
 		Score incalculableScore = Score.createIncalculableScore();
 
 		// when
-		int lastFrameScore = incalculableScore.getLastFrameScore();
+		int score = incalculableScore.getScoreWithoutException();
 		boolean canCalculateScore = incalculableScore.canCalculateScore();
 
 		// then
 		assertAll(
-			() -> assertThat(lastFrameScore).isEqualTo(Score.INCALCULABLE_SCORE),
+			() -> assertThat(score).isEqualTo(Score.INCALCULABLE_SCORE),
 			() -> assertThat(canCalculateScore).isFalse(),
 			() -> assertThatExceptionOfType(CannotCalculateException.class)
 				.isThrownBy(incalculableScore::getScore)
@@ -64,16 +64,16 @@ class ScoreTest {
 			.doesNotThrowAnyException();
 	}
 
-	@DisplayName("마지막 프레임에서 호출 할 경우 left 횟수가 남아있어도 score 반환")
+	@DisplayName("예외 없이 현재 score value 반환")
 	@Test
-	void getLastFrameScore() {
+	void getScoreWithoutException() {
 		// given
 		Score score = Score.create(10, 2);
 
 		// when
-		int lastFrameScore = score.getLastFrameScore();
+		int result = score.getScoreWithoutException();
 
 		// then
-		assertThat(lastFrameScore).isEqualTo(10);
+		assertThat(result).isEqualTo(10);
 	}
 }

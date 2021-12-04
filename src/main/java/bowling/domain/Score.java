@@ -41,7 +41,7 @@ public class Score {
 		return this.score;
 	}
 
-	public int getLastFrameScore() {
+	public int getScoreWithoutException() {
 		return this.score;
 	}
 
