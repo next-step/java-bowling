@@ -49,6 +49,10 @@ public class Pins {
 		return value == MIN_OF_PINS;
 	}
 
+	public int value() {
+		return value;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
