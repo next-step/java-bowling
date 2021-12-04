@@ -45,7 +45,7 @@ public class FinalFrame extends Frame {
         State lastState = states.get(lastIndex);
 
         if (lastState.isFinish()) {
-            changeAddState(pins);
+            changeBonusState(pins);
             return;
         }
 
@@ -53,7 +53,7 @@ public class FinalFrame extends Frame {
         framePins.addPins(pins);
     }
 
-    private void changeAddState(Pins pins) {
+    private void changeBonusState(Pins pins) {
         State ready = Ready.of();
         states.add(ready.pitch(pins));
         framePins.addPins(pins);
