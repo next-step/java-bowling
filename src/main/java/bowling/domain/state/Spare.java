@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 
 public class Spare extends EndedState {
 	private final Pins first;
@@ -19,5 +20,19 @@ public class Spare extends EndedState {
 	@Override
 	public String symbol() {
 		return first + "|/";
+	}
+
+	@Override
+	public Score score() {
+		return Score.create(10, 1);
+	}
+
+	@Override
+	public Score calculateAdditionalScore(Score prevScore) {
+		prevScore = prevScore.bowl(first);
+		if (prevScore.canCalculateScore()) {
+			return prevScore;
+		}
+		return prevScore.bowl(second);
 	}
 }

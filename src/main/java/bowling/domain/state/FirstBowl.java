@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 
 public class FirstBowl extends RunningState {
 	private final Pins first;
@@ -26,5 +27,15 @@ public class FirstBowl extends RunningState {
 	@Override
 	public String symbol() {
 		return first.toString();
+	}
+
+	@Override
+	public Score score() {
+		return Score.create(first.value());
+	}
+
+	@Override
+	public Score calculateAdditionalScore(Score prevScore) {
+		return prevScore.bowl(first);
 	}
 }

@@ -13,6 +13,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
+import bowling.exception.CannotCalculateException;
 
 class ReadyTest {
 	private State ready;
@@ -51,6 +53,24 @@ class ReadyTest {
 
 		// then
 		assertThat(symbol).isBlank();
+	}
+
+	@DisplayName("현재 상태의 스코어 반환 검증")
+	@Test
+	void score() {
+		// when
+		Score score = ready.score();
+
+		// then
+		assertThat(score).isEqualTo(Score.createIncalculableScore());
+	}
+
+	@DisplayName("추가 점수 계산을 위한 스코어 반환 호출시 예외 발생")
+	@Test
+	void calculateAdditionalScore() {
+		// when then
+		assertThatExceptionOfType(CannotCalculateException.class)
+			.isThrownBy(() -> ready.calculateAdditionalScore(null));
 	}
 
 	private static Stream<Arguments> providePinsAndChangedState() {
