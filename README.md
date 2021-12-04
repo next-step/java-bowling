@@ -10,6 +10,22 @@
 - 10 프레임은 스트라이크이거나 스페어이면 한 번을 더 투구할 수 있다.
 - 스트라이크는 다음 2번의 투구까지 점수를 합산해야 한다. 스페어는 다음 1번의 투구까지 점수를 합산해야 한다.
 
+## 볼링 점수 경우의수
+
+### NormalFrame (1 ~ 9)
+- Strike
+- FirstBowl-Spare
+- FirstBowl-Miss
+
+### LastFrame (10)
+- Strike-Strike-Strike
+- Strike-Strike-FirstBowl
+- Strike-FirstBowl-Spare
+- Strike-FirstBowl-Miss
+- FirstBowl-Spare-Strike
+- FirstBowl-Spare-FirstBowl
+- FirstBowl-Miss
+
 ## 기능 목록
 
 - BowlingController
