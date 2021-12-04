@@ -2,7 +2,7 @@ package bowling.domain;
 
 import bowling.exception.PinsFirstBawlValidException;
 import bowling.exception.PinsRangeException;
-import bowling.exception.PinsStrikeValidException;
+import bowling.exception.PinsSpareValidException;
 
 public class Pins {
 	public static final int MIN_OF_PINS = 0;
@@ -33,7 +33,7 @@ public class Pins {
 
 	public static void validateSpare(Pins first, Pins second) {
 		if (!first.isSpare(second)) {
-			throw new PinsStrikeValidException();
+			throw new PinsSpareValidException();
 		}
 	}
 

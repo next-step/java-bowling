@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import bowling.exception.PinsFirstBawlValidException;
 import bowling.exception.PinsRangeException;
-import bowling.exception.PinsStrikeValidException;
+import bowling.exception.PinsSpareValidException;
 
 class PinsTest {
 	@DisplayName("Pins 의 가능 범위가 아닐 경우 예외 발생")
@@ -41,7 +41,7 @@ class PinsTest {
 		Pins second = Pins.create(10);
 
 		// when then
-		assertThatExceptionOfType(PinsStrikeValidException.class)
+		assertThatExceptionOfType(PinsSpareValidException.class)
 			.isThrownBy(() -> Pins.validateSpare(first, second));
 	}
 
