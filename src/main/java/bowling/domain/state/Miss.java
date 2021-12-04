@@ -18,7 +18,11 @@ public class Miss extends EndedState {
 
 	@Override
 	public String symbol() {
-		return first + "|" + (second.isGutter() ? "-" : second);
+		return convertIfGutter(first) + "|" + convertIfGutter(second);
+	}
+
+	private String convertIfGutter(Pins pins) {
+		return pins.isGutter() ? "-" : pins.toString();
 	}
 
 	@Override

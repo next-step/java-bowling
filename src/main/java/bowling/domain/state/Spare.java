@@ -19,7 +19,7 @@ public class Spare extends EndedState {
 
 	@Override
 	public String symbol() {
-		return first + "|/";
+		return (first.isGutter() ? "-" : first) + "|/";
 	}
 
 	@Override

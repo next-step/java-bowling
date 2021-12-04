@@ -26,7 +26,7 @@ public class FirstBowl extends RunningState {
 
 	@Override
 	public String symbol() {
-		return first.toString();
+		return (first.isGutter() ? "-" : first.toString());
 	}
 
 	@Override
