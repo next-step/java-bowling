@@ -18,7 +18,7 @@
 - FirstBowl-Spare
   - ex) 5|/
 - FirstBowl-Miss
-  - ex) 5/4
+  - ex) 5|4
 
 ### LastFrame (10)
 - Strike-Strike-Strike
