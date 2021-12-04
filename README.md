@@ -14,17 +14,27 @@
 
 ### NormalFrame (1 ~ 9)
 - Strike
+  - X
 - FirstBowl-Spare
+  - ex) 5|/
 - FirstBowl-Miss
+  - ex) 5/4
 
 ### LastFrame (10)
 - Strike-Strike-Strike
+  - ex) X|X|X
 - Strike-Strike-FirstBowl
+  - ex) X|X|5
 - Strike-FirstBowl-Spare
+  - ex) X|5|/
 - Strike-FirstBowl-Miss
+  - ex) X|5|3
 - FirstBowl-Spare-Strike
+  - ex) 8|/|X
 - FirstBowl-Spare-FirstBowl
+  - ex) 8|/|5
 - FirstBowl-Miss
+  - ex) 5|4
 
 ## 기능 목록
 
