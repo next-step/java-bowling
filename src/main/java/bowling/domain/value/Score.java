@@ -21,7 +21,7 @@ public class Score {
     }
 
     public static Score init() {
-        return new Score(STRIKE_OR_SPARE_COUNT, INIT_ACCUMULATION_COUNT);
+        return new Score(INIT_ACCUMULATION_COUNT, INIT_ACCUMULATION_COUNT);
     }
 
     public static Score of(int score, int accumulationCount) {
