@@ -38,6 +38,12 @@ class LastFrameTest {
 		verify(Arrays.asList(10, 5, 3), true, 2, "X|5|3");
 	}
 
+	@DisplayName("1spare 1strike")
+	@Test
+	void oneSpareOneStrike() {
+		verify(Arrays.asList(5, 5, 10), true, 2, "5|/|X");
+	}
+
 	@DisplayName("1spare 5pins")
 	@Test
 	void oneSpareFivePins() {
