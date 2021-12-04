@@ -65,11 +65,6 @@ public class BowlingClub {
     }
 
     @GetterForUI
-    public FramePins getPins(int frameNumber) {
-        return getFrame(frameNumber).getPins();
-    }
-
-    @GetterForUI
     public String getScore(int frameNumber) {
         Frame currentFrame = getFrame(frameNumber);
 

@@ -19,13 +19,12 @@ public abstract class Frame {
 
     public abstract void accumulateScore();
 
-    abstract void pitch(Pins pins);
+    public abstract String mark();
 
-    abstract void countScore(Pins pins);
+    abstract void pitch(Pins pins);
 
     public final void knockedDown(Pins pins) {
         pitch(pins);
-        countScore(pins);
     }
 
     public boolean canAccumulateScore() {
@@ -43,11 +42,6 @@ public abstract class Frame {
     @GetterForUI
     public final FrameNumber getCurrentFrameNumber() {
         return frameNumber;
-    }
-
-    @GetterForUI
-    public FramePins getPins() {
-        return framePins;
     }
 
     @GetterForUI

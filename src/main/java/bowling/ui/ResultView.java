@@ -1,17 +1,13 @@
 package bowling.ui;
 
+import bowling.domain.frame.Frame;
 import bowling.domain.value.BowlingClub;
-import bowling.domain.value.FramePins;
-import bowling.domain.value.Pins;
 import bowling.domain.value.Player;
-
-import java.util.stream.Collectors;
 
 public class ResultView {
     private static final int START_FRAME = 1;
     private static final int FINAL_FRAME = 10;
     private static final String PLAYER_NAME = "NAME";
-    private static final String DELIMITER = "|";
     private static final String LINE = "|";
     private static final String ENTER = "\r\n";
     private static final String EMPTY = "";
@@ -38,8 +34,8 @@ public class ResultView {
         printPlayerName(bowlingBuilder, player.getName());
 
         for (int i = START_FRAME; i <= FINAL_FRAME; i++) {
-            FramePins framePins = bowlingClub.getPins(i);
-            printFrame(bowlingBuilder, printMark(framePins));
+            Frame frame = bowlingClub.getFrame(i);
+            printFrame(bowlingBuilder, frame.mark());
         }
 
         System.out.println(bowlingBuilder);
@@ -51,12 +47,6 @@ public class ResultView {
 
     private void printFrame(StringBuilder bowlingBuilder, String frameNumber) {
         bowlingBuilder.append(String.format("%7s", frameNumber)).append(LINE);
-    }
-
-    private String printMark(FramePins framePins) {
-        return framePins.getPins().stream()
-                .map(Pins::getMark)
-                .collect(Collectors.joining(DELIMITER));
     }
 
     private void printScore(BowlingClub bowlingClub) {

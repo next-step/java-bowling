@@ -37,7 +37,7 @@ public class FramePins {
             return false;
         }
 
-        return pins.get(0).isStrike();
+        return pins.get(0).isStrikeOrSpare();
     }
 
     @GetterForUI

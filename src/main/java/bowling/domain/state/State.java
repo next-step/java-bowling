@@ -13,7 +13,6 @@ public interface State {
 
     String mark();
 
-
     default String checkGutter(Pins pins) {
         if (pins.isGutter()) {
             return GUTTER;

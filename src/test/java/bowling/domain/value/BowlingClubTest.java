@@ -97,38 +97,6 @@ class BowlingClubTest {
     }
 
     @Test
-    @DisplayName("프레임 정보 정상적으로 가지고 오는지 확인")
-    void getPins() {
-        // given
-        Pins first = Pins.from(4);
-        Pins second = Pins.from(6);
-        Pins third = Pins.from(10);
-
-        first_frame:
-        {
-            bowlingClub.knockedDown(first);
-            bowlingClub.knockedDown(second);
-        }
-
-        second_frame:
-        {
-            bowlingClub.knockedDown(third);
-        }
-
-        // when
-        assertThat(bowlingClub.getCurrentFrameNumber()).isEqualTo(FrameNumber.from(3));
-
-        // then
-        FramePins firstExpected = getFramePins(first, second);
-        FramePins firstFramePins = bowlingClub.getPins(1);
-        assertThat(firstFramePins).isEqualTo(firstExpected);
-
-        FramePins secondExpected = getFramePins(third);
-        FramePins secondFramePins = bowlingClub.getPins(2);
-        assertThat(secondFramePins).isEqualTo(secondExpected);
-    }
-
-    @Test
     @DisplayName("스트라이크는 다음 2번의 투구까지 점수를 누적해서 합산 검증")
     void getScore() {
         bowlingClub.knockedDown(Pins.from(10));
@@ -162,17 +130,5 @@ class BowlingClubTest {
 
         bowlingClub.knockedDown(Pins.from(3));
         assertThat(bowlingClub.getScore(1)).isEqualTo("8");
-    }
-
-    private FramePins getFramePins(Pins first, Pins second) {
-        FramePins framePins = getFramePins(first);
-        framePins.addPins(second);
-        return framePins;
-    }
-
-    private FramePins getFramePins(Pins third) {
-        FramePins framePins = FramePins.create();
-        framePins.addPins(third);
-        return framePins;
     }
 }

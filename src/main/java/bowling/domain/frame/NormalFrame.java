@@ -1,6 +1,9 @@
 package bowling.domain.frame;
 
-import bowling.domain.type.Mark;
+import bowling.domain.state.Ready;
+import bowling.domain.state.Spare;
+import bowling.domain.state.State;
+import bowling.domain.state.Strike;
 import bowling.domain.value.FrameNumber;
 import bowling.domain.value.FramePins;
 import bowling.domain.value.Pins;
@@ -8,12 +11,13 @@ import bowling.domain.value.Score;
 import bowling.utils.Preconditions;
 
 public class NormalFrame extends Frame {
-    private static final int MAXIMUM_PITCH_COUNT = 2;
+    private State state;
 
     private NormalFrame(FrameNumber frameNumber) {
         this.frameNumber = frameNumber;
         this.framePins = FramePins.create();
         this.score = Score.init();
+        this.state = Ready.of();
     }
 
     public static Frame create(FrameNumber frameNumber) {
@@ -24,6 +28,11 @@ public class NormalFrame extends Frame {
     public void pitch(Pins pins) {
         validatePins(pins);
 
+        changeState(pins);
+    }
+
+    private void changeState(Pins pins) {
+        this.state = state.pitch(pins);
         framePins.addPins(pins);
     }
 
@@ -33,38 +42,8 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    void countScore(Pins pins) {
-        if (isFirstPitch()) {
-            pins.addScore(Mark.convert(pins.getPins(), true));
-            return;
-        }
-
-        pins.addScore(Mark.convert(framePins.calculateTotalPins(), false));
-    }
-
-    private boolean isFirstPitch() {
-        return !framePins.isFrameOver(MAXIMUM_PITCH_COUNT);
-    }
-
-    @Override
     public boolean isFrameOver() {
-        if (isStrike()) {
-            return true;
-        }
-
-        return isMaximumPitch();
-    }
-
-    private boolean isStrike() {
-        return STRIKE_OR_SPARE_COUNT == framePins.calculateTotalPins() && !isMaximumPitch();
-    }
-
-    private boolean isSpare() {
-        return STRIKE_OR_SPARE_COUNT == framePins.calculateTotalPins() && isMaximumPitch();
-    }
-
-    private boolean isMaximumPitch() {
-        return framePins.isFrameOver(MAXIMUM_PITCH_COUNT);
+        return state.isFinish();
     }
 
     @Override
@@ -85,5 +64,18 @@ public class NormalFrame extends Frame {
         }
 
         score = Score.ofMiss(framePins.calculateTotalPins());
+    }
+
+    private boolean isStrike() {
+        return state instanceof Strike;
+    }
+
+    private boolean isSpare() {
+        return state instanceof Spare;
+    }
+
+    @Override
+    public String mark() {
+        return state.mark();
     }
 }
