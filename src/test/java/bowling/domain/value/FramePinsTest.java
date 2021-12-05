@@ -26,12 +26,6 @@ class FramePinsTest {
     }
 
     @Test
-    @DisplayName("투구 숫자 검증")
-    void getCountOfPitch() {
-        assertThat(framePins.isFrameOver(2)).isTrue();
-    }
-
-    @Test
     @DisplayName("핀 총함 검증")
     void calculateTotalPins() {
         assertThat(framePins.calculateTotalPins()).isEqualTo(14);

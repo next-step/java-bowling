@@ -14,5 +14,4 @@ public abstract class InprogressState implements State {
     public Score calculateScore() {
         throw new IllegalArgumentException(INVALID_SCORE);
     }
-
 }

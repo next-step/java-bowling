@@ -9,7 +9,7 @@ public class Miss extends FinishState {
     private final Pins secondPins;
 
     private Miss(Pins firstPins, Pins secondPins) {
-        Preconditions.checkMaximumSize(firstPins.sum(secondPins), MAXIMUM_COUNT, "최대 투구수를 넘을 수 없습니다.");
+        Preconditions.checkMaximumSize(firstPins.add(secondPins), MAXIMUM_COUNT, "최대 투구수를 넘을 수 없습니다.");
 
         this.firstPins = firstPins;
         this.secondPins = secondPins;
@@ -21,7 +21,12 @@ public class Miss extends FinishState {
 
     @Override
     public Score calculateScore() {
-        return Score.ofMiss(firstPins.sum(secondPins));
+        return Score.ofMiss(firstPins.add(secondPins));
+    }
+
+    @Override
+    public int calculatePins() {
+        return firstPins.add(secondPins);
     }
 
     @Override

@@ -24,6 +24,10 @@ public class Score {
         return new Score(INIT_ACCUMULATION_COUNT, INIT_ACCUMULATION_COUNT);
     }
 
+    public static Score of(int score) {
+        return new Score(score, ZERO_ACCUMULATION_COUNT);
+    }
+
     public static Score of(int score, int accumulationCount) {
         return new Score(score, accumulationCount);
     }

@@ -27,6 +27,11 @@ public class Ready extends InprogressState {
     }
 
     @Override
+    public int calculatePins() {
+        return 0;
+    }
+
+    @Override
     public String mark() {
         return EMPTY;
     }

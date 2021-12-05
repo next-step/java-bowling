@@ -12,6 +12,8 @@ public interface State {
 
     boolean isFinish();
 
+    int calculatePins();
+
     String mark();
 
     default String checkGutter(Pins pins) {

@@ -27,6 +27,11 @@ public class FirstBowl extends InprogressState {
     }
 
     @Override
+    public int calculatePins() {
+        return firstPins.getPins();
+    }
+
+    @Override
     public String mark() {
         return String.valueOf(firstPins.getPins());
     }

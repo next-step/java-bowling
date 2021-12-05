@@ -5,14 +5,14 @@ import bowling.utils.Preconditions;
 import java.util.Objects;
 
 public class Pins {
-    private static final int GUTTER_COUNT = 0;
+    private static final int ZERO_COUNT = 0;
     private static final int STRIKE_OR_SPARE_COUNT = 10;
 
     private final int pins;
 
     public Pins(int pins) {
-        Preconditions.checkMinimumSize(pins, GUTTER_COUNT,
-                                       String.format("쓰러트린 핀의 갯수는 %s 이상 이어야 합니다.", GUTTER_COUNT));
+        Preconditions.checkMinimumSize(pins, ZERO_COUNT,
+                                       String.format("쓰러트린 핀의 갯수는 %s 이상 이어야 합니다.", ZERO_COUNT));
         Preconditions.checkMaximumSize(pins, STRIKE_OR_SPARE_COUNT,
                                        String.format("쓰러트린 핀의 갯수는 %s 이하 이어야 합니다.", STRIKE_OR_SPARE_COUNT));
 
@@ -24,7 +24,7 @@ public class Pins {
     }
 
     public boolean isGutter() {
-        return GUTTER_COUNT == pins;
+        return ZERO_COUNT == pins;
     }
 
     public boolean isStrikeOrSpare() {
@@ -35,7 +35,7 @@ public class Pins {
         return STRIKE_OR_SPARE_COUNT == (this.pins + pins.getPins());
     }
 
-    public int sum(Pins pins) {
+    public int add(Pins pins) {
         if (Objects.isNull(pins)) {
             return this.pins;
         }

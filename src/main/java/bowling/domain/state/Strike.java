@@ -18,6 +18,11 @@ public class Strike extends FinishState {
     }
 
     @Override
+    public int calculatePins() {
+        return MAXIMUM_COUNT;
+    }
+
+    @Override
     public String mark() {
         return STRIKE;
     }

@@ -11,7 +11,7 @@ public class Spare extends FinishState {
     private final Pins secondPins;
 
     private Spare(Pins firstPins, Pins secondPins) {
-        Preconditions.checkMaximumSize(firstPins.sum(secondPins), MAXIMUM_COUNT, "최대 투구수를 넘을 수 없습니다.");
+        Preconditions.checkMaximumSize(firstPins.add(secondPins), MAXIMUM_COUNT, "최대 투구수를 넘을 수 없습니다.");
         Preconditions.checkState(firstPins.isSpare(secondPins), "투구의 합이 10이 되어야 합니다.");
 
         this.firstPins = firstPins;
@@ -25,6 +25,11 @@ public class Spare extends FinishState {
     @Override
     public Score calculateScore() {
         return Score.ofSpare();
+    }
+
+    @Override
+    public int calculatePins() {
+        return firstPins.add(secondPins);
     }
 
     @Override

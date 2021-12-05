@@ -5,6 +5,8 @@ import bowling.domain.frame.Frame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
 
@@ -47,29 +49,41 @@ class BowlingClubTest {
         assertThat(bowlingClub.getCurrentFrameNumber()).isEqualTo(FrameNumber.from(1));
     }
 
-    @Test
-    @DisplayName("마지막 프레임에서 미스가 발생되는 경우 정상 종료 확인")
-    void isGameOver() {
+    @ParameterizedTest
+    @CsvSource(value = {
+            "   4|      5",
+            "   4|      0"
+    }, delimiter = '|')
+    @DisplayName("마지막 프레임에서 미스/거터가 발생되는 경우 정상 종료 확인")
+    void isGameOver(int firstPitch, int secondPitch) {
         testNormalFrame();
 
         assertThat(bowlingClub.isGameOver()).isFalse();
 
-        bowlingClub.knockedDown(Pins.from(4));
-        bowlingClub.knockedDown(Pins.from(5));
+        bowlingClub.knockedDown(Pins.from(firstPitch));
+        bowlingClub.knockedDown(Pins.from(secondPitch));
 
         assertThat(bowlingClub.isGameOver()).isTrue();
     }
 
-    @Test
-    @DisplayName("마지막 프레임에서 투구수 3회 발생되는 경우 정상 종료 확인")
-    void isGameOver2() {
+    @ParameterizedTest
+    @CsvSource(value = {
+            "   4|      6|      4",
+            "   5|      5|     10",
+            "  10|      0|      5",
+            "  10|      0|     10",
+            "  10|     10|      5",
+            "  10|     10|     10"
+    }, delimiter = '|')
+    @DisplayName("마지막 프레임에서 투구수 3회 발생되는 경우(스페어, 스트라이크) 정상 종료 확인")
+    void isGameOver2(int firstPitch, int secondPitch, int bonusPitch) {
         testNormalFrame();
 
         assertThat(bowlingClub.isGameOver()).isFalse();
 
-        bowlingClub.knockedDown(Pins.from(4));
-        bowlingClub.knockedDown(Pins.from(6));
-        bowlingClub.knockedDown(Pins.from(4));
+        bowlingClub.knockedDown(Pins.from(firstPitch));
+        bowlingClub.knockedDown(Pins.from(secondPitch));
+        bowlingClub.knockedDown(Pins.from(bonusPitch));
 
         assertThat(bowlingClub.isGameOver()).isTrue();
     }
