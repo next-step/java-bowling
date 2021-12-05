@@ -92,21 +92,19 @@ public class LastFrame implements Frame {
 	@Override
 	public int calculateAdditionalScore(Score prevScore) {
 		try {
-			return catchCalculateAdditionalScore(prevScore);
-		} catch (CannotCalculateException e) {
+			return catchCalculateAdditionalScore(prevScore, 0);
+		} catch (CannotCalculateException | IndexOutOfBoundsException e) {
 			return Score.INCALCULABLE_SCORE;
 		}
 	}
 
-	private int catchCalculateAdditionalScore(Score prevScore) {
-		for (State state : states) {
-			Score score = state.calculateAdditionalScore(prevScore);
-			if (score.canCalculateScore()) {
-				return score.getScore();
-			}
-			prevScore = score;
+	private int catchCalculateAdditionalScore(Score prevScore, int index) {
+		State state = states.get(index);
+		Score score = state.calculateAdditionalScore(prevScore);
+		if (score.canCalculateScore()) {
+			return score.getScore();
 		}
-		throw new CannotCalculateException();
+		return catchCalculateAdditionalScore(score, index + 1);
 	}
 
 	protected int size() {
