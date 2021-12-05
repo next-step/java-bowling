@@ -9,6 +9,8 @@ public interface State {
 
     State pitch(Pins pins);
 
+    Score calculateScore();
+
     boolean isFinish();
 
     String mark();

@@ -18,8 +18,8 @@ public class Strike implements State {
     }
 
     @Override
-    public boolean isFinish() {
-        return true;
+    public Score calculateScore() {
+        return Score.ofStrike();
     }
 
     @Override

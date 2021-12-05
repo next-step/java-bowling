@@ -28,8 +28,8 @@ public class Spare implements State {
     }
 
     @Override
-    public boolean isFinish() {
-        return true;
+    public Score calculateScore() {
+        return Score.ofSpare();
     }
 
     @Override

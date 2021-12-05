@@ -31,8 +31,8 @@ public class Gutter implements State {
     }
 
     @Override
-    public boolean isFinish() {
-        return !Objects.isNull(secondPins);
+    public Score calculateScore() {
+        return Score.ofMiss(firstPins.sum(secondPins));
     }
 
     @Override
