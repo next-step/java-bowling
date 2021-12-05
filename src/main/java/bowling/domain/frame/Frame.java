@@ -11,7 +11,7 @@ public abstract class Frame {
 
     public abstract boolean isFrameOver();
 
-    public abstract boolean isFinalFrameOver();
+    public abstract boolean isGameOver();
 
     public abstract void accumulateScore();
 

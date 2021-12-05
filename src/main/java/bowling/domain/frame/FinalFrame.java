@@ -11,16 +11,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FinalFrame extends Frame {
-    private static final FrameNumber FINAL_FRAME_NUMBER = FrameNumber.from(10);
-    private static final int MAXIMUM_PITCH_COUNT = 3;
     private static final String DELIMITER = "|";
+    private static final int MAXIMUM_PITCH_COUNT = 3;
+    private static final int MAXIMUM_SPARE_STATE_COUNT = 2;
+    private static final int FINAL_FRAME_NUMBER = 10;
 
     private final List<State> states;
 
     private FinalFrame() {
         this.score = Score.init();
         this.states = new ArrayList<>(Collections.singletonList(Ready.of()));
-        this.frameNumber = FINAL_FRAME_NUMBER;
+        this.frameNumber = FrameNumber.from(FINAL_FRAME_NUMBER);
     }
 
     public static Frame create() {
@@ -55,13 +56,13 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public boolean isFinalFrameOver() {
+    public boolean isGameOver() {
         State lastState = states.get(states.size() - 1);
         if (lastState instanceof Miss || lastState instanceof SecondGutter) {
             return true;
         }
 
-        if (hasSpare() && states.size() == 2) {
+        if (hasSpare() && MAXIMUM_SPARE_STATE_COUNT == states.size()) {
             return true;
         }
 

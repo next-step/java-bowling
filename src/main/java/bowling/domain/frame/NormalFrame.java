@@ -30,7 +30,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public boolean isFinalFrameOver() {
+    public boolean isGameOver() {
         return false;
     }
 

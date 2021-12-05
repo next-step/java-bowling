@@ -46,7 +46,7 @@ public class BowlingClub {
             currentIndex++;
         }
 
-        if (frame.isFinalFrameOver()) {
+        if (frame.isGameOver()) {
             frame.accumulateScore();
         }
     }
@@ -56,7 +56,7 @@ public class BowlingClub {
     }
 
     public boolean isGameOver() {
-        return getCurrentFrame().isFinalFrameOver();
+        return getCurrentFrame().isGameOver();
     }
 
     @GetterForUI
