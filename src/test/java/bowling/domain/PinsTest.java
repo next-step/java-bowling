@@ -7,7 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import bowling.exception.PinsFirstBawlValidException;
 import bowling.exception.PinsRangeException;
+import bowling.exception.PinsSpareValidException;
 
 class PinsTest {
 	@DisplayName("Pins 의 가능 범위가 아닐 경우 예외 발생")
@@ -19,18 +21,28 @@ class PinsTest {
 			.isThrownBy(() -> Pins.create(invalidPins));
 	}
 
-	@DisplayName("Pins 의 value 값 검증")
+	@DisplayName("FirstBawl 검증, 두 Pins 의 합이 10을 넘을 경우 예외 발생")
 	@Test
-	void getValue() {
+	void validateFirstBawl() {
 		// given
-		int expected = 10;
-		Pins pins = Pins.create(expected);
+		Pins first = Pins.create(5);
+		Pins second = Pins.create(10);
 
-		// when
-		int result = pins.getValue();
+		// when then
+		assertThatExceptionOfType(PinsFirstBawlValidException.class)
+			.isThrownBy(() -> Pins.validateFirstBawl(first, second));
+	}
 
-		// then
-		assertThat(result).isEqualTo(expected);
+	@DisplayName("Spare 검증, 두 Pins 의 합이 10이 아닐 경우 예외 발생")
+	@Test
+	void validateSpare() {
+		// given
+		Pins first = Pins.create(5);
+		Pins second = Pins.create(10);
+
+		// when then
+		assertThatExceptionOfType(PinsSpareValidException.class)
+			.isThrownBy(() -> Pins.validateSpare(first, second));
 	}
 
 	@DisplayName("Pins 의 strike 여부 검증")
@@ -71,5 +83,32 @@ class PinsTest {
 
 		// then
 		assertThat(result).isTrue();
+	}
+
+	@DisplayName("Pins 를 스코어로 변환 검증")
+	@Test
+	void toScore() {
+		// given
+		Pins pins = Pins.create(5);
+
+		// when
+		Score score = pins.toScore();
+
+		// then
+		assertThat(score.getScore()).isEqualTo(5);
+	}
+
+	@DisplayName("Pins 를 스코어로 변환시 다른 핀과 점수 합산 검증")
+	@Test
+	void toScoreOtherPins() {
+		// given
+		Pins pins = Pins.create(5);
+		Pins otherPins = Pins.create(10);
+
+		// when
+		Score score = pins.toScore(otherPins);
+
+		// then
+		assertThat(score.getScore()).isEqualTo(15);
 	}
 }

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 
 class StrikeTest {
 	private State strike;
@@ -45,5 +46,28 @@ class StrikeTest {
 
 		// then
 		assertThat(symbol).isEqualTo("X");
+	}
+
+	@DisplayName("현재 상태의 스코어 반환 검증")
+	@Test
+	void score() {
+		// when
+		Score score = strike.score();
+
+		// then
+		assertThat(score).isEqualTo(Score.create(10, 2));
+	}
+
+	@DisplayName("추가 점수 계산을 위한 스코어 반환 검증")
+	@Test
+	void calculateAdditionalScore() {
+		// given
+		Score score = Score.create(10, 2);
+
+		// when
+		Score result = strike.calculateAdditionalScore(score);
+
+		// then
+		assertThat(result).isEqualTo(Score.create(20, 1));
 	}
 }

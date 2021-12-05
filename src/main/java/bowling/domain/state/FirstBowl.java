@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 
 public class FirstBowl extends RunningState {
 	private final Pins first;
@@ -15,6 +16,8 @@ public class FirstBowl extends RunningState {
 
 	@Override
 	public State bowl(Pins pins) {
+		Pins.validateFirstBawl(first, pins);
+
 		if (first.isSpare(pins)) {
 			return Spare.create(first, pins);
 		}
@@ -23,6 +26,16 @@ public class FirstBowl extends RunningState {
 
 	@Override
 	public String symbol() {
-		return String.valueOf(first.getValue());
+		return (first.isGutter() ? "-" : first.toString());
+	}
+
+	@Override
+	public Score score() {
+		return first.toScore();
+	}
+
+	@Override
+	public Score calculateAdditionalScore(Score prevScore) {
+		return prevScore.bowl(first.toScore());
 	}
 }

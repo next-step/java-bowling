@@ -8,7 +8,33 @@
   - 미스(miss) : 프레임의 두번재 투구에서도 모든 핀이 쓰러지지 않은 상태
   - 거터(gutter) : 핀을 하나도 쓰러트리지 못한 상태. 거터는 "-"로 표시
 - 10 프레임은 스트라이크이거나 스페어이면 한 번을 더 투구할 수 있다.
+- 스트라이크는 다음 2번의 투구까지 점수를 합산해야 한다. 스페어는 다음 1번의 투구까지 점수를 합산해야 한다.
 
+## 볼링 점수 경우의수
+
+### NormalFrame (1 ~ 9)
+- Strike
+  - X
+- FirstBowl-Spare
+  - ex) 5|/
+- FirstBowl-Miss
+  - ex) 5|4
+
+### LastFrame (10)
+- Strike-Strike-Strike
+  - ex) X|X|X
+- Strike-Strike-FirstBowl
+  - ex) X|X|5
+- Strike-FirstBowl-Spare
+  - ex) X|5|/
+- Strike-FirstBowl-Miss
+  - ex) X|5|3
+- FirstBowl-Spare-Strike
+  - ex) 8|/|X
+- FirstBowl-Spare-FirstBowl
+  - ex) 8|/|5
+- FirstBowl-Miss
+  - ex) 5|4
 
 ## 기능 목록
 
@@ -45,3 +71,7 @@
     - Strike : 1회 투구하여 스트라이크
     - Spare : 2회 투구시에 10개 핀을 쓰러뜨린 경우
     - Miss : 2회 투구하였으나 10개 핀을 모두 쓰러뜨리지 못한 경우
+  - Score
+    - Pins 정보를 입력받아 현재 스코어를 계산한다.
+    - 현재 스코어를 계산할수 있는지 반환한다.
+    - 현재 계산된 스코어 값을 반환한다.

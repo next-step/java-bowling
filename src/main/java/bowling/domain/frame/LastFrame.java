@@ -7,9 +7,11 @@ import java.util.LinkedList;
 
 import bowling.domain.Index;
 import bowling.domain.Pins;
+import bowling.domain.Score;
 import bowling.domain.state.Miss;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
+import bowling.exception.CannotCalculateException;
 
 public class LastFrame implements Frame {
 	private static final int MIN_OF_BOWL = 2;
@@ -70,6 +72,39 @@ public class LastFrame implements Frame {
 		return states.stream()
 			.map(State::symbol)
 			.collect(joining("|"));
+	}
+
+	@Override
+	public int score() {
+		if (!isEnd()) {
+			return Score.INCALCULABLE_SCORE;
+		}
+
+		return states.stream()
+			.mapToInt(this::convertIntScore)
+			.sum();
+	}
+
+	private int convertIntScore(State state) {
+		return state.score().getScoreWithoutException();
+	}
+
+	@Override
+	public int calculateAdditionalScore(Score prevScore) {
+		try {
+			return catchCalculateAdditionalScore(prevScore, 0);
+		} catch (CannotCalculateException | IndexOutOfBoundsException e) {
+			return Score.INCALCULABLE_SCORE;
+		}
+	}
+
+	private int catchCalculateAdditionalScore(Score prevScore, int index) {
+		State state = states.get(index);
+		Score score = state.calculateAdditionalScore(prevScore);
+		if (score.canCalculateScore()) {
+			return score.getScore();
+		}
+		return catchCalculateAdditionalScore(score, index + 1);
 	}
 
 	protected int size() {

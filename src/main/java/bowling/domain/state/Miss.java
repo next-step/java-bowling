@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 
 public class Miss extends EndedState {
 	private final Pins first;
@@ -17,13 +18,24 @@ public class Miss extends EndedState {
 
 	@Override
 	public String symbol() {
-		return first.getValue() + "|" + convertSecond();
+		return convertIfGutter(first) + "|" + convertIfGutter(second);
 	}
 
-	private String convertSecond() {
-		if (second.isGutter()) {
-			return "-";
+	private String convertIfGutter(Pins pins) {
+		return pins.isGutter() ? "-" : pins.toString();
+	}
+
+	@Override
+	public Score score() {
+		return first.toScore(second);
+	}
+
+	@Override
+	public Score calculateAdditionalScore(Score prevScore) {
+		prevScore = prevScore.bowl(first.toScore());
+		if (prevScore.canCalculateScore()) {
+			return prevScore;
 		}
-		return String.valueOf(second.getValue());
+		return prevScore.bowl(second.toScore());
 	}
 }

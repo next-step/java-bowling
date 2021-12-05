@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 
 class MissTest {
 	private static final Pins FIVE = Pins.create(5);
@@ -53,5 +54,32 @@ class MissTest {
 			() -> assertThat(symbol).isEqualTo("5|4"),
 			() -> assertThat(symbolGutter).isEqualTo("5|-")
 		);
+	}
+
+	@DisplayName("현재 상태의 스코어 반환 검증")
+	@Test
+	void score() {
+		// given
+		State miss = Miss.create(FIVE, FOUR);
+
+		// when
+		Score score = miss.score();
+
+		// then
+		assertThat(score).isEqualTo(Score.create(9));
+	}
+
+	@DisplayName("추가 점수 계산을 위한 스코어 반환 검증")
+	@Test
+	void calculateAdditionalScore() {
+		// given
+		State miss = Miss.create(FIVE, FOUR);
+		Score score = Score.create(10, 2);
+
+		// when
+		Score result = miss.calculateAdditionalScore(score);
+
+		// then
+		assertThat(result).isEqualTo(Score.create(19));
 	}
 }

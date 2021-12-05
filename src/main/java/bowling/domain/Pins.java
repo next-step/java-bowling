@@ -1,6 +1,8 @@
 package bowling.domain;
 
+import bowling.exception.PinsFirstBawlValidException;
 import bowling.exception.PinsRangeException;
+import bowling.exception.PinsSpareValidException;
 
 public class Pins {
 	public static final int MIN_OF_PINS = 0;
@@ -23,8 +25,16 @@ public class Pins {
 		return new Pins(value);
 	}
 
-	public int getValue() {
-		return value;
+	public static void validateFirstBawl(Pins first, Pins second) {
+		if (first.value + second.value > MAX_OF_PINS) {
+			throw new PinsFirstBawlValidException();
+		}
+	}
+
+	public static void validateSpare(Pins first, Pins second) {
+		if (!first.isSpare(second)) {
+			throw new PinsSpareValidException();
+		}
 	}
 
 	public boolean isStrike() {
@@ -37,6 +47,15 @@ public class Pins {
 
 	public boolean isGutter() {
 		return value == MIN_OF_PINS;
+	}
+
+	public Score toScore() {
+		return Score.create(value);
+	}
+
+	public Score toScore(Pins otherPins) {
+		int sum = value + otherPins.value;
+		return Score.create(sum);
 	}
 
 	@Override

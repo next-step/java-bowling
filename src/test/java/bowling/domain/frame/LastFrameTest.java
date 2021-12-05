@@ -1,10 +1,10 @@
 package bowling.domain.frame;
 
+import static java.util.Arrays.*;
+import static java.util.Collections.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -12,66 +12,73 @@ import org.junit.jupiter.api.Test;
 
 import bowling.domain.Index;
 import bowling.domain.Pins;
+import bowling.domain.Score;
 
 class LastFrameTest {
 	@DisplayName("3strike")
 	@Test
 	void threeStrike() {
-		verify(Arrays.asList(10, 10, 10), true, 3, "X|X|X");
+		verify(asList(10, 10, 10), true, 3, "X|X|X", 30);
 	}
 
 	@DisplayName("2strike 5pins")
 	@Test
 	void twoStrikeFivePins() {
-		verify(Arrays.asList(10, 10, 5), true, 3, "X|X|5");
+		verify(asList(10, 10, 5), true, 3, "X|X|5", 25);
 	}
 
 	@DisplayName("1strike spare")
 	@Test
 	void oneStrikeSpare() {
-		verify(Arrays.asList(10, 5, 5), true, 2, "X|5|/");
+		verify(asList(10, 5, 5), true, 2, "X|5|/", 20);
 	}
 
 	@DisplayName("1strike miss")
 	@Test
 	void oneStrikeMiss() {
-		verify(Arrays.asList(10, 5, 3), true, 2, "X|5|3");
+		verify(asList(10, 5, 3), true, 2, "X|5|3", 18);
+	}
+
+	@DisplayName("1spare 1strike")
+	@Test
+	void oneSpareOneStrike() {
+		verify(asList(5, 5, 10), true, 2, "5|/|X", 20);
 	}
 
 	@DisplayName("1spare 5pins")
 	@Test
 	void oneSpareFivePins() {
-		verify(Arrays.asList(5, 5, 5), true, 2, "5|/|5");
+		verify(asList(5, 5, 5), true, 2, "5|/|5", 15);
 	}
 
 	@DisplayName("miss")
 	@Test
 	void miss() {
-		verify(Arrays.asList(5, 4), true, 1, "5|4");
+		verify(asList(5, 4), true, 1, "5|4", 9);
 	}
 
 	@DisplayName("miss gutter")
 	@Test
 	void missWithGutter() {
-		verify(Arrays.asList(5, 0), true, 1, "5|-");
+		verify(asList(5, 0), true, 1, "5|-", 5);
 	}
 
 	@DisplayName("2strike")
 	@Test
 	void twoStrike() {
-		verify(Arrays.asList(10, 10), false, 2, "X|X");
+		verify(asList(10, 10), false, 2, "X|X", Score.INCALCULABLE_SCORE);
 	}
 
 	@DisplayName("5pins")
 	@Test
 	void fivePins() {
-		verify(Collections.singletonList(5), false, 1, "5");
+		verify(singletonList(5), false, 1, "5", Score.INCALCULABLE_SCORE);
 	}
 
-	@DisplayName("nothing")
+	@DisplayName("ready")
 	@Test
-	void nothing() {
-		verify(Collections.emptyList(), false, 1, "");
+	void ready() {
+		verify(emptyList(), false, 1, "", Score.INCALCULABLE_SCORE);
 	}
 
 	@DisplayName("LastFrame 의 index 검증")
@@ -87,7 +94,7 @@ class LastFrameTest {
 		assertThat(frameIndex).isEqualTo(Index.MAX_OF_INDEX);
 	}
 
-	private void verify(List<Integer> pinNumbers, boolean end, int size, String symbol) {
+	private void verify(List<Integer> pinNumbers, boolean end, int size, String symbol, int score) {
 		// given
 		LastFrame lastFrame = LastFrame.initialize();
 
@@ -100,7 +107,8 @@ class LastFrameTest {
 		assertAll(
 			() -> assertThat(lastFrame.isEnd()).isEqualTo(end),
 			() -> assertThat(lastFrame.size()).isEqualTo(size),
-			() -> assertThat(lastFrame.symbol()).isEqualTo(symbol)
+			() -> assertThat(lastFrame.symbol()).isEqualTo(symbol),
+			() -> assertThat(lastFrame.score()).isEqualTo(score)
 		);
 	}
 }

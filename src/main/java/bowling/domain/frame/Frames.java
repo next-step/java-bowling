@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import bowling.domain.Index;
@@ -10,25 +10,25 @@ import bowling.domain.Pins;
 public class Frames {
 	private static final String EMPTY_MESSAGE = "프레임 List 가 비어있습니다.";
 
-	private final List<Frame> values;
+	private final LinkedList<Frame> values;
 
-	private Frames(List<Frame> values) {
+	private Frames(LinkedList<Frame> values) {
 		validationSize(values);
 		this.values = values;
 	}
 
-	private void validationSize(List<Frame> values) {
+	private void validationSize(LinkedList<Frame> values) {
 		if (values == null || values.isEmpty()) {
 			throw new IllegalArgumentException(EMPTY_MESSAGE);
 		}
 	}
 
 	public static Frames initialize() {
-		return new Frames(new ArrayList<>(Collections.singletonList(NormalFrame.initialize())));
+		return new Frames(new LinkedList<>(Collections.singletonList(NormalFrame.initialize())));
 	}
 
 	public void bowl(Pins pins) {
-		Frame lastFrame = getLastFrame();
+		Frame lastFrame = values.getLast();
 		Frame resultFrame = lastFrame.bowl(pins);
 
 		if (isFrameCreated(lastFrame, resultFrame)) {
@@ -37,20 +37,18 @@ public class Frames {
 	}
 
 	private boolean isFrameCreated(Frame lastFrame, Frame resultFrame) {
-		return lastFrame.isEnd() && !resultFrame.isEnd();
-	}
-
-	private Frame getLastFrame() {
-		return values.get(values.size() - 1);
+		return lastFrame != resultFrame;
 	}
 
 	public int getLastFrameIndex() {
-		Frame lastFrame = getLastFrame();
-		return lastFrame.getFrameIndex();
+		return values.getLast().getFrameIndex();
 	}
 
 	public boolean hasNextPitching() {
-		return !(getLastFrame().isEnd() && values.size() == Index.MAX_OF_INDEX);
+		if (values.size() < Index.MAX_OF_INDEX) {
+			return true;
+		}
+		return !values.getLast().isEnd();
 	}
 
 	public List<Frame> getValues() {

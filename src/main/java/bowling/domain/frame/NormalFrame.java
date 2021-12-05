@@ -4,12 +4,15 @@ import java.util.Objects;
 
 import bowling.domain.Index;
 import bowling.domain.Pins;
+import bowling.domain.Score;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
+import bowling.exception.CannotCalculateException;
 
 public class NormalFrame implements Frame {
 	private final Index index;
 	private State state;
+	private Frame next;
 
 	private NormalFrame(Index index, State state) {
 		this.index = index;
@@ -40,9 +43,22 @@ public class NormalFrame implements Frame {
 
 	private Frame createNextFrame() {
 		if (index.next().isMax()) {
-			return LastFrame.initialize();
+			return createLastFrameAndSetNext();
 		}
-		return create(index.next());
+
+		return createNormalFrameAndSetNext();
+	}
+
+	private LastFrame createLastFrameAndSetNext() {
+		LastFrame next = LastFrame.initialize();
+		this.next = next;
+		return next;
+	}
+
+	private NormalFrame createNormalFrameAndSetNext() {
+		NormalFrame next = create(index.next());
+		this.next = next;
+		return next;
 	}
 
 	@Override
@@ -57,6 +73,39 @@ public class NormalFrame implements Frame {
 	@Override
 	public String symbol() {
 		return state.symbol();
+	}
+
+	@Override
+	public int score() {
+		if (!isEnd()) {
+			return Score.INCALCULABLE_SCORE;
+		}
+
+		Score score = state.score();
+		if (score.canCalculateScore()) {
+			return score.getScore();
+		}
+		return next.calculateAdditionalScore(score);
+	}
+
+	@Override
+	public int calculateAdditionalScore(Score prevScore) {
+		try {
+			return catchCalculateAdditionalScore(prevScore);
+		} catch (CannotCalculateException e) {
+			return Score.INCALCULABLE_SCORE;
+		}
+	}
+
+	private int catchCalculateAdditionalScore(Score prevScore) {
+		Score score = state.calculateAdditionalScore(prevScore);
+		if (score.canCalculateScore()) {
+			return score.getScore();
+		}
+		if (next == null) {
+			throw new CannotCalculateException();
+		}
+		return next.calculateAdditionalScore(score);
 	}
 
 	@Override
