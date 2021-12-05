@@ -29,10 +29,17 @@ public class FinalFrame extends Frame {
 
     @Override
     public void pitch(Pins pins) {
+        pitchOfFinalFrame(pins);
+
+        calculateScore();
+    }
+
+    private void pitchOfFinalFrame(Pins pins) {
         State lastState = states.getLast();
 
         if (lastState.isFinish()) {
-            changeBonusState(pins);
+            State ready = Ready.of();
+            states.add(ready.pitch(pins));
             return;
         }
 
@@ -40,9 +47,14 @@ public class FinalFrame extends Frame {
         states.add(lastState.pitch(pins));
     }
 
-    private void changeBonusState(Pins pins) {
-        State ready = Ready.of();
-        states.add(ready.pitch(pins));
+    private void calculateScore() {
+        if (isGameOver()) {
+            int accumulatePins = states.stream()
+                    .map(State::countPins)
+                    .reduce(0, Integer::sum);
+
+            score = Score.of(accumulatePins);
+        }
     }
 
     @Override
@@ -67,15 +79,6 @@ public class FinalFrame extends Frame {
     private boolean hasSpare() {
         return states.stream()
                 .anyMatch(Spare.class::isInstance);
-    }
-
-    @Override
-    public void accumulateScore() {
-        int accumulatePins = states.stream()
-                .map(State::countPins)
-                .reduce(0, Integer::sum);
-
-        score = Score.of(accumulatePins);
     }
 
     @Override

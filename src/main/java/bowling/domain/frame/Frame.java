@@ -13,8 +13,6 @@ public abstract class Frame {
 
     public abstract boolean isGameOver();
 
-    public abstract void accumulateScore();
-
     public abstract void pitch(Pins pins);
 
     public boolean canCalculateScore() {

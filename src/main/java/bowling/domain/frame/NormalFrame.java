@@ -22,6 +22,10 @@ public class NormalFrame extends Frame {
     @Override
     public void pitch(Pins pins) {
         this.state = state.pitch(pins);
+
+        if (isFrameOver()) {
+            score = state.calculateScore();
+        }
     }
 
     @Override
@@ -32,11 +36,6 @@ public class NormalFrame extends Frame {
     @Override
     public boolean isGameOver() {
         return false;
-    }
-
-    @Override
-    public void accumulateScore() {
-        score = state.calculateScore();
     }
 
     @Override
