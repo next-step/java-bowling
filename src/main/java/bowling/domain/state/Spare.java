@@ -23,11 +23,6 @@ public class Spare extends FinishState {
     }
 
     @Override
-    public State pitch(Pins pins) {
-        throw new IllegalArgumentException(INVALID_PITCH);
-    }
-
-    @Override
     public Score calculateScore() {
         return Score.ofSpare();
     }

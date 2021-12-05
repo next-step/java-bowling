@@ -6,7 +6,6 @@ public class FirstGutter extends InprogressState {
     private final Pins firstPins;
 
     private FirstGutter(Pins firstPins) {
-
         this.firstPins = firstPins;
     }
 
@@ -15,12 +14,16 @@ public class FirstGutter extends InprogressState {
     }
 
     @Override
-    public State pitch(Pins pins) {
-        if (pins.isStrikeOrSpare()) {
-            return Spare.of(firstPins, pins);
+    public State pitch(Pins secondPins) {
+        if (secondPins.isStrikeOrSpare()) {
+            return Spare.of(firstPins, secondPins);
         }
 
-        return Miss.of(firstPins, pins);
+        if (secondPins.isGutter()) {
+            return SecondGutter.of(firstPins, secondPins);
+        }
+
+        return Miss.of(firstPins, secondPins);
     }
 
     @Override

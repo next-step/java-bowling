@@ -22,10 +22,6 @@ public class FramePins {
         this.pins.add(pins);
     }
 
-    public boolean isFrameOver(int countOfPitch) {
-        return pins.size() == countOfPitch;
-    }
-
     public int calculateTotalPins() {
         return pins.stream()
                 .map(Pins::getPins)

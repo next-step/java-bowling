@@ -27,6 +27,14 @@ class FirstGutterTest {
         MatcherAssert.assertThat(miss, instanceOf(Miss.class));
     }
 
+    @Test
+    @DisplayName("첫번째 거터 상태에서 두번째 투구가 거터 검증")
+    void gutter_to_gutter() {
+        State firstGutter = FirstGutter.of(Pins.from(0));
+        State secondGutter = firstGutter.pitch(Pins.from(0));
+
+        MatcherAssert.assertThat(secondGutter, instanceOf(SecondGutter.class));
+    }
 
     @Test
     @DisplayName("거터 상태의 기록 검증")

@@ -20,11 +20,6 @@ public class SecondGutter extends FinishState {
     }
 
     @Override
-    public State pitch(Pins pins) {
-        return Miss.of(firstPins, pins);
-    }
-
-    @Override
     public Score calculateScore() {
         return Score.ofMiss(firstPins.sum(secondPins));
     }

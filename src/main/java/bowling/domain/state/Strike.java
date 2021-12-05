@@ -1,6 +1,5 @@
 package bowling.domain.state;
 
-import bowling.domain.value.Pins;
 import bowling.domain.value.Score;
 
 public class Strike extends FinishState {
@@ -11,11 +10,6 @@ public class Strike extends FinishState {
 
     public static State of() {
         return new Strike();
-    }
-
-    @Override
-    public State pitch(Pins pins) {
-        throw new IllegalArgumentException(INVALID_PITCH);
     }
 
     @Override

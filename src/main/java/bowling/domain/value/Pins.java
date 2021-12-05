@@ -35,6 +35,14 @@ public class Pins {
         return STRIKE_OR_SPARE_COUNT == (this.pins + pins.getPins());
     }
 
+    public int sum(Pins pins) {
+        if (Objects.isNull(pins)) {
+            return this.pins;
+        }
+
+        return this.pins + pins.pins;
+    }
+
     public int getPins() {
         return pins;
     }

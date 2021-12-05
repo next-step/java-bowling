@@ -24,7 +24,7 @@ class ReadyTest {
         State ready = Ready.of();
         State gutter = ready.pitch(Pins.from(0));
 
-        MatcherAssert.assertThat(gutter, instanceOf(SecondGutter.class));
+        MatcherAssert.assertThat(gutter, instanceOf(FirstGutter.class));
     }
 
     @Test
