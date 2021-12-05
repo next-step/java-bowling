@@ -19,16 +19,16 @@ public class BowlingController {
 		while (bowlingGames.hasNextPitching()) {
 			bowlingGames.increaseIndexIfFrameEnd();
 			bowlingGames.getValues()
-				.forEach(bowling -> play(bowlingGames, bowling));
+				.forEach(bowlingGame -> play(bowlingGames, bowlingGame));
 		}
 	}
 
-	private void play(BowlingGames bowlingGames, BowlingGame bowling) {
-		while (bowling.isFrameRunning(bowlingGames.getCurrentIndex())) {
-			String playerName = bowling.getPlayerName();
+	private void play(BowlingGames bowlingGames, BowlingGame bowlingGame) {
+		while (bowlingGame.isFrameRunning(bowlingGames.getCurrentIndex())) {
+			String playerName = bowlingGame.getPlayerName();
 			Pins pins = InputView.scanPins(playerName);
 
-			bowling.bowl(pins);
+			bowlingGame.bowl(pins);
 
 			ResultView.print(bowlingGames.getValues());
 		}

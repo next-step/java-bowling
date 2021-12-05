@@ -28,14 +28,14 @@ public final class ResultView {
 		throw new UtilCreationException();
 	}
 
-	public static void print(List<BowlingGame> bowlingGame) {
+	public static void print(List<BowlingGame> bowlingGames) {
 		initializeBuilder();
 
 		appendHead();
 
-		bowlingGame.forEach(bowling -> {
-			appendPlayerAndBody(bowling);
-			appendScore(bowling);
+		bowlingGames.forEach(bowlingGame -> {
+			appendPlayerAndBody(bowlingGame);
+			appendScore(bowlingGame);
 		});
 
 		printBuilder();
