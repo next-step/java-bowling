@@ -27,7 +27,7 @@ class BowlingClubTest {
     @Test
     @DisplayName("기본 프레임에서 스트라이크가 발생되면 다음 프레임 넘어가는 부분 검증")
     void knockedDown() {
-        bowlingClub.knockedDown(Pins.from(10));
+        bowlingClub.pitch(Pins.from(10));
 
         assertThat(bowlingClub.getCurrentFrameNumber()).isEqualTo(FrameNumber.from(2));
     }
@@ -35,8 +35,8 @@ class BowlingClubTest {
     @Test
     @DisplayName("기본 프레임에서 투구수 2회 발생되면 다음 프레임 넘어가는 부분 검증")
     void knockedDown2() {
-        bowlingClub.knockedDown(Pins.from(4));
-        bowlingClub.knockedDown(Pins.from(3));
+        bowlingClub.pitch(Pins.from(4));
+        bowlingClub.pitch(Pins.from(3));
 
         assertThat(bowlingClub.getCurrentFrameNumber()).isEqualTo(FrameNumber.from(2));
     }
@@ -44,7 +44,7 @@ class BowlingClubTest {
     @Test
     @DisplayName("기본 프레임에서 스트라이크가 발생되지 않고 1회 투구 인 경우, 기존 프레임 유지 검증")
     void knockedDown3() {
-        bowlingClub.knockedDown(Pins.from(4));
+        bowlingClub.pitch(Pins.from(4));
 
         assertThat(bowlingClub.getCurrentFrameNumber()).isEqualTo(FrameNumber.from(1));
     }
@@ -60,8 +60,8 @@ class BowlingClubTest {
 
         assertThat(bowlingClub.isGameOver()).isFalse();
 
-        bowlingClub.knockedDown(Pins.from(firstPitch));
-        bowlingClub.knockedDown(Pins.from(secondPitch));
+        bowlingClub.pitch(Pins.from(firstPitch));
+        bowlingClub.pitch(Pins.from(secondPitch));
 
         assertThat(bowlingClub.isGameOver()).isTrue();
     }
@@ -81,24 +81,24 @@ class BowlingClubTest {
 
         assertThat(bowlingClub.isGameOver()).isFalse();
 
-        bowlingClub.knockedDown(Pins.from(firstPitch));
-        bowlingClub.knockedDown(Pins.from(secondPitch));
-        bowlingClub.knockedDown(Pins.from(bonusPitch));
+        bowlingClub.pitch(Pins.from(firstPitch));
+        bowlingClub.pitch(Pins.from(secondPitch));
+        bowlingClub.pitch(Pins.from(bonusPitch));
 
         assertThat(bowlingClub.isGameOver()).isTrue();
     }
 
     private void testNormalFrame() {
         for (int i = 1; i < 10; i++) {
-            bowlingClub.knockedDown(Pins.from(10));
+            bowlingClub.pitch(Pins.from(10));
         }
     }
 
     @Test
     @DisplayName("기본 프레임에서 투구의 합이 10핀이 넘어가는 경우 예외 발생")
     void knockedDown_exception() {
-        bowlingClub.knockedDown(Pins.from(4));
-        assertThatIllegalArgumentException().isThrownBy(() -> bowlingClub.knockedDown(Pins.from(7)));
+        bowlingClub.pitch(Pins.from(4));
+        assertThatIllegalArgumentException().isThrownBy(() -> bowlingClub.pitch(Pins.from(7)));
     }
 
     @Test
@@ -106,43 +106,43 @@ class BowlingClubTest {
     void knockedDown_exception2() {
         testNormalFrame();
 
-        bowlingClub.knockedDown(Pins.from(4));
-        assertThatIllegalArgumentException().isThrownBy(() -> bowlingClub.knockedDown(Pins.from(7)));
+        bowlingClub.pitch(Pins.from(4));
+        assertThatIllegalArgumentException().isThrownBy(() -> bowlingClub.pitch(Pins.from(7)));
     }
 
     @Test
     @DisplayName("스트라이크는 다음 2번의 투구까지 점수를 누적해서 합산 검증")
     void getScore() {
-        bowlingClub.knockedDown(Pins.from(10));
+        bowlingClub.pitch(Pins.from(10));
         assertThat(bowlingClub.getScore(1)).isEmpty();
 
-        bowlingClub.knockedDown(Pins.from(10));
+        bowlingClub.pitch(Pins.from(10));
         assertThat(bowlingClub.getScore(1)).isEmpty();
 
-        bowlingClub.knockedDown(Pins.from(10));
+        bowlingClub.pitch(Pins.from(10));
         assertThat(bowlingClub.getScore(1)).isEqualTo("30");
     }
 
     @Test
     @DisplayName("스페어는 다음 1번의 투구까지 점수를 누적해서 합산 검증")
     void getScore2() {
-        bowlingClub.knockedDown(Pins.from(5));
+        bowlingClub.pitch(Pins.from(5));
         assertThat(bowlingClub.getScore(1)).isEmpty();
 
-        bowlingClub.knockedDown(Pins.from(5));
+        bowlingClub.pitch(Pins.from(5));
         assertThat(bowlingClub.getScore(1)).isEmpty();
 
-        bowlingClub.knockedDown(Pins.from(10));
+        bowlingClub.pitch(Pins.from(10));
         assertThat(bowlingClub.getScore(1)).isEqualTo("20");
     }
 
     @Test
     @DisplayName("미스는 현재 프레임의 투구 합산 검증")
     void getScore3() {
-        bowlingClub.knockedDown(Pins.from(5));
+        bowlingClub.pitch(Pins.from(5));
         assertThat(bowlingClub.getScore(1)).isEmpty();
 
-        bowlingClub.knockedDown(Pins.from(3));
+        bowlingClub.pitch(Pins.from(3));
         assertThat(bowlingClub.getScore(1)).isEqualTo("8");
     }
 }

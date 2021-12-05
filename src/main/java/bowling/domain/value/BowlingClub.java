@@ -22,7 +22,7 @@ public class BowlingClub {
         return new BowlingClub(frames);
     }
 
-    public void knockedDown(Pins pins) {
+    public void pitch(Pins pins) {
         Frame frame = getCurrentFrame();
         frame.pitch(pins);
 
