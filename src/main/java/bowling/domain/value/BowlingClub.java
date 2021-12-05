@@ -32,11 +32,9 @@ public class BowlingClub {
     }
 
     private void calculateAccumulationScore(Pins pins) {
-        frames.forEach(frame -> {
-            if (!frame.canCalculateScore()) {
-                frame.accumulateScore(pins.getPins());
-            }
-        });
+        frames.stream()
+                .filter(frame -> !frame.canCalculateScore())
+                .forEach(frame -> frame.accumulateScore(pins.getPins()));
     }
 
     private void checkFrameOver(Frame frame) {
