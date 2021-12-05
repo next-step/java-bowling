@@ -46,7 +46,7 @@ public class Score {
 	}
 
 	public boolean canCalculateScore() {
-		return left == 0;
+		return left == NO_LEFT;
 	}
 
 	@Override
