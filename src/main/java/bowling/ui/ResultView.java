@@ -35,7 +35,7 @@ public class ResultView {
 
         for (int i = START_FRAME; i <= FINAL_FRAME; i++) {
             Frame frame = bowlingClub.getFrame(i);
-            printFrame(bowlingBuilder, frame.mark());
+            printFrame(bowlingBuilder, frame.getMark());
         }
 
         System.out.println(bowlingBuilder);

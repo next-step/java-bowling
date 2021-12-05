@@ -17,12 +17,12 @@ class MissTest {
     @Test
     @DisplayName("Miss 상태의 기록 검증")
     void miss_mark() {
-        assertThat(Miss.of(Pins.from(3), Pins.from(4)).mark()).isEqualTo("3|4");
+        assertThat(Miss.of(Pins.from(3), Pins.from(4)).getMark()).isEqualTo("3|4");
     }
 
     @Test
     @DisplayName("Miss 상태의 기록 검증(거터 있는경우)")
     void miss_mark2() {
-        assertThat(Miss.of(Pins.from(0), Pins.from(4)).mark()).isEqualTo("-|4");
+        assertThat(Miss.of(Pins.from(0), Pins.from(4)).getMark()).isEqualTo("-|4");
     }
 }

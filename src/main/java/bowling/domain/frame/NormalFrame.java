@@ -40,7 +40,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public String mark() {
-        return state.mark();
+    public String getMark() {
+        return state.getMark();
     }
 }

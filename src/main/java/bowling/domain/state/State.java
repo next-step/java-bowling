@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.annotations.GetterForUI;
 import bowling.domain.value.Pins;
 import bowling.domain.value.Score;
 
@@ -12,9 +13,10 @@ public interface State {
 
     boolean isFinish();
 
-    int calculatePins();
+    int countPins();
 
-    String mark();
+    @GetterForUI
+    String getMark();
 
     default String checkGutter(Pins pins) {
         if (pins.isGutter()) {

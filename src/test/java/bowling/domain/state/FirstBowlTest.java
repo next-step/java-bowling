@@ -41,6 +41,6 @@ class FirstBowlTest {
     void firstBowl_mark() {
         State firstBowl = FirstBowl.of(Pins.from(5));
 
-        assertThat(firstBowl.mark()).isEqualTo("5");
+        assertThat(firstBowl.getMark()).isEqualTo("5");
     }
 }

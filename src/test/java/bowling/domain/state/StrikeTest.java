@@ -17,6 +17,6 @@ class StrikeTest {
     @Test
     @DisplayName("Strike 상태의 기록 검증")
     void strike_mark() {
-        assertThat(Strike.of().mark()).isEqualTo("X");
+        assertThat(Strike.of().getMark()).isEqualTo("X");
     }
 }

@@ -12,7 +12,7 @@ class SecondGutterTest {
     void gutter_mark() {
         State gutter = SecondGutter.of(Pins.from(5), Pins.from(0));
 
-        assertThat(gutter.mark()).isEqualTo("5|-");
+        assertThat(gutter.getMark()).isEqualTo("5|-");
     }
 
     @Test
@@ -20,6 +20,6 @@ class SecondGutterTest {
     void gutter_mark2() {
         State gutter = SecondGutter.of(Pins.from(0), Pins.from(0));
 
-        assertThat(gutter.mark()).isEqualTo("-|-");
+        assertThat(gutter.getMark()).isEqualTo("-|-");
     }
 }

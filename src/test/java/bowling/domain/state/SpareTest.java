@@ -30,6 +30,6 @@ class SpareTest {
     @Test
     @DisplayName("Spare 상태의 기록 검증")
     void spare_mark() {
-        assertThat(spare.mark()).isEqualTo("5|/");
+        assertThat(spare.getMark()).isEqualTo("5|/");
     }
 }

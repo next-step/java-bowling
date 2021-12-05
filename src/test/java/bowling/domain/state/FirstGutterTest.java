@@ -41,6 +41,6 @@ class FirstGutterTest {
     void gutter_mark() {
         State gutter = FirstGutter.of(Pins.from(0));
 
-        assertThat(gutter.mark()).isEqualTo("-");
+        assertThat(gutter.getMark()).isEqualTo("-");
     }
 }

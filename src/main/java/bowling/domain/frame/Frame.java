@@ -15,8 +15,6 @@ public abstract class Frame {
 
     public abstract void accumulateScore();
 
-    public abstract String mark();
-
     public boolean canAccumulateScore() {
         return !canCalculateScore();
     }
@@ -44,4 +42,7 @@ public abstract class Frame {
     public Score getScore() {
         return score;
     }
+
+    @GetterForUI
+    public abstract String getMark();
 }

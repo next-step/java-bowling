@@ -41,6 +41,6 @@ class ReadyTest {
     void ready_mark() {
         State ready = Ready.of();
 
-        assertThat(ready.mark()).isEmpty();
+        assertThat(ready.getMark()).isEmpty();
     }
 }

@@ -76,16 +76,16 @@ public class FinalFrame extends Frame {
     @Override
     public void accumulateScore() {
         int accumulatePins = states.stream()
-                .map(State::calculatePins)
+                .map(State::countPins)
                 .reduce(0, Integer::sum);
 
         score = Score.of(accumulatePins);
     }
 
     @Override
-    public String mark() {
+    public String getMark() {
         return states.stream()
-                .map(State::mark)
+                .map(State::getMark)
                 .collect(Collectors.joining(DELIMITER));
     }
 }

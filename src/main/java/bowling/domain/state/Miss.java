@@ -25,12 +25,12 @@ public class Miss extends FinishState {
     }
 
     @Override
-    public int calculatePins() {
+    public int countPins() {
         return firstPins.add(secondPins);
     }
 
     @Override
-    public String mark() {
+    public String getMark() {
         return checkGutter(firstPins) + DELIMITER + checkGutter(secondPins);
     }
 }

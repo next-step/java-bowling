@@ -27,12 +27,12 @@ public class FirstGutter extends InprogressState {
     }
 
     @Override
-    public int calculatePins() {
+    public int countPins() {
         return firstPins.getPins();
     }
 
     @Override
-    public String mark() {
+    public String getMark() {
         return checkGutter(firstPins);
     }
 }
