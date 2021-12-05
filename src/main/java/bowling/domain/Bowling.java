@@ -30,8 +30,8 @@ public class Bowling {
 		return frames.hasNextPitching();
 	}
 
-	public int getCurrentFrameIndex() {
-		return frames.getLastFrameIndex();
+	public boolean isFrameRunning(Index index) {
+		return frames.isFrameRunning(index);
 	}
 
 	public List<Frame> getFrames() {
