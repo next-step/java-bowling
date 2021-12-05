@@ -15,6 +15,8 @@ public abstract class Frame {
 
     public abstract void accumulateScore();
 
+    public abstract void pitch(Pins pins);
+
     public boolean canCalculateScore() {
         return score.canCalculateScore();
     }
@@ -22,12 +24,6 @@ public abstract class Frame {
     public void accumulateScore(int countOfPins) {
         this.score = score.accumulateScore(countOfPins);
     }
-
-    public final void knockedDown(Pins pins) {
-        pitch(pins);
-    }
-
-    abstract void pitch(Pins pins);
 
     @GetterForUI
     public final FrameNumber getCurrentFrameNumber() {

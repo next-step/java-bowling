@@ -24,7 +24,7 @@ public class BowlingClub {
 
     public void knockedDown(Pins pins) {
         Frame frame = getCurrentFrame();
-        frame.knockedDown(pins);
+        frame.pitch(pins);
 
         calculateAccumulationScore(pins);
 
