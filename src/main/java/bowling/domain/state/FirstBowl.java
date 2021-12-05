@@ -2,7 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.value.Pins;
 
-public class FirstBowl implements State {
+public class FirstBowl extends InprogressState {
     private final Pins firstPins;
 
     private FirstBowl(Pins firstPins) {
@@ -20,15 +20,10 @@ public class FirstBowl implements State {
         }
 
         if (secondPins.isGutter()) {
-            return Gutter.of(firstPins, secondPins);
+            return SecondGutter.of(firstPins, secondPins);
         }
 
         return Miss.of(firstPins, secondPins);
-    }
-
-    @Override
-    public boolean isFinish() {
-        return false;
     }
 
     @Override

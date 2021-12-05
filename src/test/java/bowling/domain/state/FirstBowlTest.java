@@ -24,7 +24,7 @@ class FirstBowlTest {
         State firstBowl = FirstBowl.of(Pins.from(5));
         State spare = firstBowl.pitch(Pins.from(0));
 
-        MatcherAssert.assertThat(spare, instanceOf(Gutter.class));
+        MatcherAssert.assertThat(spare, instanceOf(SecondGutter.class));
     }
 
     @Test

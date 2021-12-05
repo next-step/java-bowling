@@ -1,12 +1,16 @@
 package bowling.domain.state;
 
 import bowling.domain.value.Pins;
+import bowling.domain.value.Score;
+import bowling.utils.Preconditions;
 
-public class Miss implements State {
+public class Miss extends FinishState {
     private final Pins firstPins;
     private final Pins secondPins;
 
     private Miss(Pins firstPins, Pins secondPins) {
+        Preconditions.checkMaximumSize(firstPins.sum(secondPins), MAXIMUM_COUNT, "최대 투구수를 넘을 수 없습니다.");
+
         this.firstPins = firstPins;
         this.secondPins = secondPins;
     }

@@ -1,8 +1,9 @@
 package bowling.domain.state;
 
 import bowling.domain.value.Pins;
+import bowling.domain.value.Score;
 
-public class Strike implements State {
+public class Strike extends FinishState {
     private static final String STRIKE = "X";
 
     private Strike() {

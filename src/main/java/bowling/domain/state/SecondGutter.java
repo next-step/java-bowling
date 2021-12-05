@@ -1,32 +1,26 @@
 package bowling.domain.state;
 
 import bowling.domain.value.Pins;
+import bowling.domain.value.Score;
+import bowling.utils.Preconditions;
 
-import java.util.Objects;
-
-public class Gutter implements State {
+public class SecondGutter extends FinishState {
     private final Pins firstPins;
     private final Pins secondPins;
 
-    private Gutter(Pins firstPin, Pins secondPins) {
-        this.firstPins = firstPin;
+    private SecondGutter(Pins firstPins, Pins secondPins) {
+        Preconditions.checkMaximumSize(firstPins.sum(secondPins), MAXIMUM_COUNT, "최대 투구수를 넘을 수 없습니다.");
+
+        this.firstPins = firstPins;
         this.secondPins = secondPins;
     }
 
-    public static State of(Pins firstPin) {
-        return new Gutter(firstPin, null);
-    }
-
     public static State of(Pins firstPin, Pins secondPins) {
-        return new Gutter(firstPin, secondPins);
+        return new SecondGutter(firstPin, secondPins);
     }
 
     @Override
     public State pitch(Pins pins) {
-        if (pins.isStrikeOrSpare()) {
-            return Spare.of(firstPins, pins);
-        }
-
         return Miss.of(firstPins, pins);
     }
 
@@ -37,10 +31,6 @@ public class Gutter implements State {
 
     @Override
     public String mark() {
-        if (Objects.isNull(secondPins)) {
-            return checkGutter(firstPins);
-        }
-
         return checkGutter(firstPins) + DELIMITER + checkGutter(secondPins);
     }
 }
