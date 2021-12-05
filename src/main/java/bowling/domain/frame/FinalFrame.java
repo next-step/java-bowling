@@ -64,8 +64,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isGameOver() {
-        State lastState = states.getLast();
-        if (lastState instanceof Miss || lastState instanceof Gutter) {
+        if (states.getLast().isFrameOver()) {
             return true;
         }
 

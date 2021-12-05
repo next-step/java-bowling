@@ -18,6 +18,10 @@ public interface State {
     @GetterForUI
     String getMark();
 
+    default boolean isFrameOver() {
+        return this instanceof Miss || this instanceof Gutter;
+    }
+
     default String checkGutter(Pins pins) {
         if (pins.isGutter()) {
             return GUTTER;
