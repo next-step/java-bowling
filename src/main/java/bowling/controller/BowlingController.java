@@ -1,6 +1,9 @@
 package bowling.controller;
 
-import bowling.domain.Bowling;
+import java.util.List;
+
+import bowling.domain.BowlingGame;
+import bowling.domain.BowlingGames;
 import bowling.domain.Pins;
 import bowling.domain.Player;
 import bowling.view.InputView;
@@ -8,18 +11,26 @@ import bowling.view.ResultView;
 
 public class BowlingController {
 	public void play() {
-		Player player = InputView.scanPlayer();
-		Bowling bowling = Bowling.create(player);
+		List<Player> players = InputView.scanPlayers();
+		BowlingGames bowlingGames = BowlingGames.create(players);
 
-		ResultView.print(bowling);
+		ResultView.print(bowlingGames.getValues());
 
-		while (bowling.hasNextPitching()) {
-			int currentFrameIndex = bowling.getCurrentFrameIndex();
-			Pins pins = InputView.scanPins(currentFrameIndex);
+		while (bowlingGames.hasNextPitching()) {
+			bowlingGames.increaseIndexIfFrameEnd();
+			bowlingGames.getValues()
+				.forEach(bowling -> play(bowlingGames, bowling));
+		}
+	}
+
+	private void play(BowlingGames bowlingGames, BowlingGame bowling) {
+		while (bowling.isFrameRunning(bowlingGames.getCurrentIndex())) {
+			String playerName = bowling.getPlayerName();
+			Pins pins = InputView.scanPins(playerName);
 
 			bowling.bowl(pins);
 
-			ResultView.print(bowling);
+			ResultView.print(bowlingGames.getValues());
 		}
 	}
 }
