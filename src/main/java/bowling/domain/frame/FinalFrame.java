@@ -5,9 +5,8 @@ import bowling.domain.value.FrameNumber;
 import bowling.domain.value.Pins;
 import bowling.domain.value.Score;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 public class FinalFrame extends Frame {
@@ -16,11 +15,11 @@ public class FinalFrame extends Frame {
     private static final int MAXIMUM_SPARE_STATE_COUNT = 2;
     private static final int FINAL_FRAME_NUMBER = 10;
 
-    private final List<State> states;
+    private final LinkedList<State> states;
 
     private FinalFrame() {
         this.score = Score.init();
-        this.states = new ArrayList<>(Collections.singletonList(Ready.of()));
+        this.states = new LinkedList<>(Collections.singletonList(Ready.of()));
         this.frameNumber = FrameNumber.from(FINAL_FRAME_NUMBER);
     }
 
@@ -34,15 +33,15 @@ public class FinalFrame extends Frame {
     }
 
     private void changeState(Pins pins) {
-        int lastIndex = states.size() - 1;
-        State lastState = states.get(lastIndex);
+        State lastState = states.getLast();
 
         if (lastState.isFinish()) {
             changeBonusState(pins);
             return;
         }
 
-        states.set(lastIndex, lastState.pitch(pins));
+        states.removeLast();
+        states.add(lastState.pitch(pins));
     }
 
     private void changeBonusState(Pins pins) {
@@ -57,12 +56,12 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isGameOver() {
-        State lastState = states.get(states.size() - 1);
+        State lastState = states.getLast();
         if (lastState instanceof Miss || lastState instanceof SecondGutter) {
             return true;
         }
 
-        if (hasSpare() && MAXIMUM_SPARE_STATE_COUNT == states.size()) {
+        if (MAXIMUM_SPARE_STATE_COUNT == states.size() && hasSpare()) {
             return true;
         }
 
