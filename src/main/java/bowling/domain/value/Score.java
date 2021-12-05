@@ -45,7 +45,7 @@ public class Score {
     }
 
     public Score accumulateScore(int countOfPins) {
-        return new Score(score + countOfPins, accumulationCount - 1);
+        return Score.of(score + countOfPins, accumulationCount - 1);
     }
 
     public boolean canCalculateScore() {
