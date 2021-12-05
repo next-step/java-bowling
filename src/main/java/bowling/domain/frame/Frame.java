@@ -15,10 +15,6 @@ public abstract class Frame {
 
     public abstract void accumulateScore();
 
-    public boolean canAccumulateScore() {
-        return !canCalculateScore();
-    }
-
     public boolean canCalculateScore() {
         return score.canCalculateScore();
     }

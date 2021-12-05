@@ -33,7 +33,7 @@ public class BowlingClub {
 
     private void calculateAccumulationScore(Pins pins) {
         frames.forEach(frame -> {
-            if (frame.canAccumulateScore()) {
+            if (!frame.canCalculateScore()) {
                 frame.accumulateScore(pins.getPins());
             }
         });
@@ -45,10 +45,6 @@ public class BowlingClub {
 
             currentIndex++;
         }
-
-        if (frame.isGameOver()) {
-            frame.accumulateScore();
-        }
     }
 
     private Frame getCurrentFrame() {
@@ -56,7 +52,7 @@ public class BowlingClub {
     }
 
     public boolean isGameOver() {
-        return getCurrentFrame().isGameOver();
+        return frames.get(frames.size() - 1).isGameOver();
     }
 
     @GetterForUI

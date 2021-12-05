@@ -5,12 +5,12 @@ import bowling.annotations.GetterForUI;
 import java.util.Objects;
 
 public class Score {
-    private static final int STRIKE_ACCUMULATION_COUNT = 2;
-    private static final int SPARE_ACCUMULATION_COUNT = 1;
-    private static final int ZERO_ACCUMULATION_COUNT = 0;
     private static final int INIT_ACCUMULATION_COUNT = -1;
+    private static final int INIT_GUTTER_OR_MISS_ACCUMULATION_COUNT = 0;
+    private static final int INIT_SPARE_ACCUMULATION_COUNT = 1;
+    private static final int INIT_STRIKE_ACCUMULATION_COUNT = 2;
 
-    private static final int STRIKE_OR_SPARE_COUNT = 10;
+    private static final int STRIKE_OR_SPARE_SCORE = 10;
 
     private final int score;
     private final int accumulationCount;
@@ -20,28 +20,28 @@ public class Score {
         this.accumulationCount = accumulationCount;
     }
 
-    public static Score init() {
-        return new Score(INIT_ACCUMULATION_COUNT, INIT_ACCUMULATION_COUNT);
-    }
-
     public static Score of(int score) {
-        return new Score(score, ZERO_ACCUMULATION_COUNT);
+        return new Score(score, INIT_GUTTER_OR_MISS_ACCUMULATION_COUNT);
     }
 
     public static Score of(int score, int accumulationCount) {
         return new Score(score, accumulationCount);
     }
 
+    public static Score init() {
+        return new Score(INIT_ACCUMULATION_COUNT, INIT_ACCUMULATION_COUNT);
+    }
+
     public static Score ofStrike() {
-        return new Score(STRIKE_OR_SPARE_COUNT, STRIKE_ACCUMULATION_COUNT);
+        return new Score(STRIKE_OR_SPARE_SCORE, INIT_STRIKE_ACCUMULATION_COUNT);
     }
 
     public static Score ofSpare() {
-        return new Score(STRIKE_OR_SPARE_COUNT, SPARE_ACCUMULATION_COUNT);
+        return new Score(STRIKE_OR_SPARE_SCORE, INIT_SPARE_ACCUMULATION_COUNT);
     }
 
-    public static Score ofMiss(int score) {
-        return new Score(score, ZERO_ACCUMULATION_COUNT);
+    public static Score ofMissOrGutter(int score) {
+        return new Score(score, INIT_GUTTER_OR_MISS_ACCUMULATION_COUNT);
     }
 
     public Score accumulateScore(int countOfPins) {
@@ -49,7 +49,7 @@ public class Score {
     }
 
     public boolean canCalculateScore() {
-        return ZERO_ACCUMULATION_COUNT == accumulationCount;
+        return INIT_GUTTER_OR_MISS_ACCUMULATION_COUNT == accumulationCount;
     }
 
     @GetterForUI

@@ -38,7 +38,7 @@ class ScoreTest {
     @Test
     @DisplayName("마지막 투구 인 경우 검증")
     void ofMiss() {
-        Score score = Score.ofMiss(8);
+        Score score = Score.ofMissOrGutter(8);
         assertThat(score.canCalculateScore()).isTrue();
 
         assertThat(score).isEqualTo(Score.of(8, 0));

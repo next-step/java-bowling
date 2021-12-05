@@ -29,10 +29,6 @@ public class FinalFrame extends Frame {
 
     @Override
     public void pitch(Pins pins) {
-        changeState(pins);
-    }
-
-    private void changeState(Pins pins) {
         State lastState = states.getLast();
 
         if (lastState.isFinish()) {
@@ -51,7 +47,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isFrameOver() {
-        return false;
+        return isGameOver();
     }
 
     @Override

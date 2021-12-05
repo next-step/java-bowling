@@ -21,7 +21,7 @@ public class SecondGutter extends FinishState {
 
     @Override
     public Score calculateScore() {
-        return Score.ofMiss(firstPins.add(secondPins));
+        return Score.ofMissOrGutter(firstPins.add(secondPins));
     }
 
     @Override
