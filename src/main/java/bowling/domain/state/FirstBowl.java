@@ -31,11 +31,11 @@ public class FirstBowl extends RunningState {
 
 	@Override
 	public Score score() {
-		return Score.create(first.value());
+		return first.toScore();
 	}
 
 	@Override
 	public Score calculateAdditionalScore(Score prevScore) {
-		return prevScore.bowl(first);
+		return prevScore.bowl(first.toScore());
 	}
 }

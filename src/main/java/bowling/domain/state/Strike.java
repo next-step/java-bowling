@@ -20,6 +20,6 @@ public class Strike extends EndedState {
 
 	@Override
 	public Score calculateAdditionalScore(Score prevScore) {
-		return prevScore.bowl(Pins.create(Pins.MAX_OF_PINS));
+		return prevScore.bowl(Score.create((Pins.MAX_OF_PINS)));
 	}
 }

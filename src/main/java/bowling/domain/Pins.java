@@ -49,8 +49,13 @@ public class Pins {
 		return value == MIN_OF_PINS;
 	}
 
-	public int value() {
-		return value;
+	public Score toScore() {
+		return Score.create(value);
+	}
+
+	public Score toScore(Pins otherPins) {
+		int sum = value + otherPins.value;
+		return Score.create(sum);
 	}
 
 	@Override

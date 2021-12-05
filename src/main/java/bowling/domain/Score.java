@@ -30,8 +30,9 @@ public class Score {
 		return create(INCALCULABLE_SCORE, INCALCULABLE_LEFT);
 	}
 
-	public Score bowl(Pins pins) {
-		return create(score + pins.value(), left - 1);
+	public Score bowl(Score score) {
+		int sum = this.score + score.score;
+		return create(sum, left - 1);
 	}
 
 	public int getScore() {

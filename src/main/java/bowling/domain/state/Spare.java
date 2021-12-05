@@ -29,10 +29,10 @@ public class Spare extends EndedState {
 
 	@Override
 	public Score calculateAdditionalScore(Score prevScore) {
-		prevScore = prevScore.bowl(first);
+		prevScore = prevScore.bowl(first.toScore());
 		if (prevScore.canCalculateScore()) {
 			return prevScore;
 		}
-		return prevScore.bowl(second);
+		return prevScore.bowl(second.toScore());
 	}
 }

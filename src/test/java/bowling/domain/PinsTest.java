@@ -84,4 +84,31 @@ class PinsTest {
 		// then
 		assertThat(result).isTrue();
 	}
+
+	@DisplayName("Pins 를 스코어로 변환 검증")
+	@Test
+	void toScore() {
+		// given
+		Pins pins = Pins.create(5);
+
+		// when
+		Score score = pins.toScore();
+
+		// then
+		assertThat(score.getScore()).isEqualTo(5);
+	}
+
+	@DisplayName("Pins 를 스코어로 변환시 다른 핀과 점수 합산 검증")
+	@Test
+	void toScoreOtherPins() {
+		// given
+		Pins pins = Pins.create(5);
+		Pins otherPins = Pins.create(10);
+
+		// when
+		Score score = pins.toScore(otherPins);
+
+		// then
+		assertThat(score.getScore()).isEqualTo(15);
+	}
 }

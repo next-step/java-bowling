@@ -33,10 +33,10 @@ class ScoreTest {
 	void bowl() {
 		// given
 		Score score = Score.create(10, 2);
-		Pins pins = Pins.create(10);
+		Score other = Score.create(10);
 
 		// when
-		Score bowlScore = score.bowl(pins);
+		Score bowlScore = score.bowl(other);
 
 		// then
 		assertThat(bowlScore).isEqualTo(Score.create(20, 1));

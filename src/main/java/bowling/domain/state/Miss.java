@@ -27,15 +27,15 @@ public class Miss extends EndedState {
 
 	@Override
 	public Score score() {
-		return Score.create(first.value() + second.value());
+		return first.toScore(second);
 	}
 
 	@Override
 	public Score calculateAdditionalScore(Score prevScore) {
-		prevScore = prevScore.bowl(first);
+		prevScore = prevScore.bowl(first.toScore());
 		if (prevScore.canCalculateScore()) {
 			return prevScore;
 		}
-		return prevScore.bowl(second);
+		return prevScore.bowl(second.toScore());
 	}
 }
