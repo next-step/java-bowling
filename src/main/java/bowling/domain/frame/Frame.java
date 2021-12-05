@@ -2,26 +2,25 @@ package bowling.domain.frame;
 
 import bowling.annotations.GetterForUI;
 import bowling.domain.value.FrameNumber;
-import bowling.domain.value.FramePins;
 import bowling.domain.value.Pins;
+import bowling.domain.value.Score;
 
 public abstract class Frame {
-    protected static final int STRIKE_OR_SPARE_COUNT = 10;
-
+    protected Score score;
     protected FrameNumber frameNumber;
-    protected FramePins framePins;
 
     public abstract boolean isFrameOver();
 
-    public abstract boolean isFinalFrameOver();
+    public abstract boolean isGameOver();
 
-    abstract void pitch(Pins pins);
+    public abstract void pitch(Pins pins);
 
-    abstract void countScore(Pins pins);
+    public boolean canCalculateScore() {
+        return score.canCalculateScore();
+    }
 
-    public final void knockedDown(Pins pins) {
-        pitch(pins);
-        countScore(pins);
+    public void accumulateScore(int countOfPins) {
+        this.score = score.accumulateScore(countOfPins);
     }
 
     @GetterForUI
@@ -30,7 +29,10 @@ public abstract class Frame {
     }
 
     @GetterForUI
-    public FramePins getPins() {
-        return framePins;
+    public Score getScore() {
+        return score;
     }
+
+    @GetterForUI
+    public abstract String getMark();
 }

@@ -26,7 +26,7 @@ public class BowlingController {
         while (!bowlingClub.isGameOver()) {
             Pins pins = inputView.inputPins(bowlingClub.getCurrentFrameNumber());
 
-            bowlingClub.knockedDown(pins);
+            bowlingClub.pitch(pins);
 
             resultView.printBowlingResult(bowlingClub, player);
         }

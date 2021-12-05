@@ -7,6 +7,8 @@ import bowling.utils.Preconditions;
 import java.util.List;
 
 public class BowlingClub {
+    private static final String EMPTY_SCORE = "";
+
     private int currentIndex;
     private final List<Frame> frames;
 
@@ -20,10 +22,23 @@ public class BowlingClub {
         return new BowlingClub(frames);
     }
 
-    public void knockedDown(Pins pins) {
+    public void pitch(Pins pins) {
         Frame frame = getCurrentFrame();
-        frame.knockedDown(pins);
 
+        accumulateTotalScore(pins);
+
+        frame.pitch(pins);
+
+        checkFrameOver(frame);
+    }
+
+    private void accumulateTotalScore(Pins pins) {
+        frames.stream()
+                .filter(frame -> !frame.canCalculateScore())
+                .forEach(frame -> frame.accumulateScore(pins.getPins()));
+    }
+
+    private void checkFrameOver(Frame frame) {
         if (frame.isFrameOver()) {
             currentIndex++;
         }
@@ -34,7 +49,7 @@ public class BowlingClub {
     }
 
     public boolean isGameOver() {
-        return getCurrentFrame().isFinalFrameOver();
+        return frames.get(frames.size() - 1).isGameOver();
     }
 
     @GetterForUI
@@ -43,7 +58,23 @@ public class BowlingClub {
     }
 
     @GetterForUI
-    public FramePins getPins(int frameNumber) {
-        return frames.get(frameNumber - 1).getPins();
+    public String getScore(int frameNumber) {
+        Frame currentFrame = getFrame(frameNumber);
+
+        if (currentFrame.canCalculateScore()) {
+            int score = frames.stream()
+                    .limit(frameNumber)
+                    .map(Frame::getScore)
+                    .map(Score::getScore)
+                    .reduce(0, Integer::sum);
+            return String.valueOf(score);
+        }
+
+        return EMPTY_SCORE;
+    }
+
+    @GetterForUI
+    public Frame getFrame(int frameNumber) {
+        return frames.get(frameNumber - 1);
     }
 }
