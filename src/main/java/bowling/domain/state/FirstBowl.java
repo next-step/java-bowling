@@ -20,7 +20,7 @@ public class FirstBowl extends InprogressState {
         }
 
         if (secondPins.isGutter()) {
-            return SecondGutter.of(firstPins, secondPins);
+            return Gutter.of(firstPins, secondPins);
         }
 
         return Miss.of(firstPins, secondPins);
@@ -33,6 +33,6 @@ public class FirstBowl extends InprogressState {
 
     @Override
     public String getMark() {
-        return String.valueOf(firstPins.getPins());
+        return checkGutter(firstPins);
     }
 }

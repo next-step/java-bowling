@@ -18,10 +18,6 @@ public class Ready extends InprogressState {
             return Strike.of();
         }
 
-        if (pins.isGutter()) {
-            return FirstGutter.of(pins);
-        }
-
         return FirstBowl.of(pins);
     }
 
