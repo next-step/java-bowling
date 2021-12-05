@@ -5,17 +5,17 @@ import java.util.List;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 
-public class Bowling {
+public class BowlingGame {
 	private final Player player;
 	private final Frames frames;
 
-	private Bowling(Player player, Frames frames) {
+	private BowlingGame(Player player, Frames frames) {
 		this.player = player;
 		this.frames = frames;
 	}
 
-	public static Bowling create(Player player) {
-		return new Bowling(player, Frames.initialize());
+	public static BowlingGame create(Player player) {
+		return new BowlingGame(player, Frames.initialize());
 	}
 
 	public void bowl(Pins pins) {
