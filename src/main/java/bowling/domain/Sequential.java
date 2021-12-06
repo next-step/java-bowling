@@ -1,6 +1,7 @@
 package bowling.domain;
 
 public enum Sequential {
+    NONE(0),
     DOUBLE_STRIKE(1),
     STRIKE(2),
     SPARE(3);
