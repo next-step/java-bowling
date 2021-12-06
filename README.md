@@ -29,7 +29,7 @@
 * 볼링 게임의 단위인 Frame을 구현한다.
   * 1 ~ 9 프레임은 NormalFrame으로 구현한다.
   * 10 프레임은 FinalFrame으로 구현한다.
-  * 각 Frame은 FrameNumber와 PinNumbers 일급 콜렉션을 가진다.
+  * 각 Frame은 Sequential과 PinNumbers 일급 콜렉션을 가진다.
   * 다음 Frame을 현재 Frame에서 생성하는 방식으로 구현한다.
 
 # 질문 삭제하기 리팩토링
