@@ -22,6 +22,8 @@
 * 핀을 넘어뜨린 개수를 PinNumber로 구현한다.
   * 0 ~ 10의 범위가 아니면 예외를 던진다.
 * PinNumber의 일급 콜렉션인 PinNumbers를 구현한다.
+  * Strike인지 여부를 판단하는 함수를 구현한다.
+  * Spare인지 여부를 판단하는 함수를 구현한다.
 * 이전 프레임의 상태를 enum인 Sequential로 표현한다.
   * 더블 스트라이크 - DOUBLE_STRIKE
   * 스트라이크 - STRIKE
