@@ -13,7 +13,7 @@ public class FrameTest {
         Frame firstFrame = noneFrame();
         assertThat(firstFrame.pitch(10)).isEqualTo(new Frame(Sequential.STRIKE));
 
-        Frame secondFrame = noneFrame()
+        Frame secondFrame = noneFrame();
         assertThat(secondFrame.pitch(5)).isEqualTo(secondFrame);
         assertThat(secondFrame.pitch(5)).isEqualTo(new Frame(Sequential.SPARE));
 
@@ -39,7 +39,7 @@ public class FrameTest {
 
     @DisplayName("Test scores when Sequential is Strike")
     @Test
-    void testFrameWhenSequentialIsSpare() {
+    void testFrameWhenSequentialIsStrike() {
         Frame firstFrame = strikeFrame();
         assertThat(firstFrame.pitch(10)).isEqualTo(new Frame(Sequential.DOUBLE_STRIKE));
 
@@ -54,7 +54,7 @@ public class FrameTest {
 
     @DisplayName("Test scores when Sequential is Double Strike")
     @Test
-    void testFrameWhenSequentialIsSpare() {
+    void testFrameWhenSequentialIsDoubleStrike() {
         Frame firstFrame = doubleStrikeFrame();
         assertThat(firstFrame.pitch(10)).isEqualTo(new Frame(Sequential.DOUBLE_STRIKE));
 
@@ -72,7 +72,7 @@ public class FrameTest {
     }
 
     private Frame spareFrame() {
-        return new Frame(Sequential.SPARE;
+        return new Frame(Sequential.SPARE);
     }
 
     private Frame strikeFrame() {
