@@ -15,9 +15,9 @@ public class BowlingGame {
 
         outputView.questionPlayerName();
         String playerName = inputView.playerName();
-        outputView.resultsOfBowling();
-
         Frames frames = new Frames();
+        outputView.resultsOfBowling(frames);
+
         do {
             outputView.questionPinNumber(frame.frameNumber());
             int pinNumber = inputView.pinNumber();
