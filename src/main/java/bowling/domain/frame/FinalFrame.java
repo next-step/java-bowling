@@ -1,7 +1,8 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.*;
-import bowling.domain.value.FrameNumber;
+import bowling.domain.state.Ready;
+import bowling.domain.state.Spare;
+import bowling.domain.state.State;
 import bowling.domain.value.Pins;
 import bowling.domain.value.Score;
 
@@ -13,14 +14,12 @@ public class FinalFrame extends Frame {
     private static final String DELIMITER = "|";
     private static final int MAXIMUM_PITCH_COUNT = 3;
     private static final int MAXIMUM_SPARE_STATE_COUNT = 2;
-    private static final int FINAL_FRAME_NUMBER = 10;
 
     private final LinkedList<State> states;
 
     private FinalFrame() {
         this.score = Score.init();
         this.states = new LinkedList<>(Collections.singletonList(Ready.of()));
-        this.frameNumber = FrameNumber.from(FINAL_FRAME_NUMBER);
     }
 
     public static Frame create() {

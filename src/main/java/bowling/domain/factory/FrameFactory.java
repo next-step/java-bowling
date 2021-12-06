@@ -3,7 +3,6 @@ package bowling.domain.factory;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
-import bowling.domain.value.FrameNumber;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +21,7 @@ public class FrameFactory {
 
     private List<Frame> createNormalFrame() {
         return IntStream.rangeClosed(START_NORMAL_FRAME_NUMBER, END_NORMAL_FRAME_NUMBER)
-                .mapToObj(FrameNumber::from)
-                .map(NormalFrame::create)
+                .mapToObj(v -> NormalFrame.create())
                 .collect(Collectors.toList());
     }
 
