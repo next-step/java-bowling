@@ -70,4 +70,30 @@ class FramesTest {
 		// then
 		assertThat(hasNext).isTrue();
 	}
+
+	@DisplayName("특정 인덱스 프레임이 현재 진행중인지 여부 반환")
+	@Test
+	void isFrameRunning() {
+		// given
+		Frames frames = Frames.initialize();
+		Index index = Index.first();
+
+		// when
+		boolean frameRunning = frames.isFrameRunning(index);
+
+		// then
+		assertThat(frameRunning).isTrue();
+	}
+
+	@DisplayName("생성되지 않은 프레임 진행 여부 조회시 예외 발생")
+	@Test
+	void isFrameRunningInvalidIndex() {
+		// given
+		Frames frames = Frames.initialize();
+		Index index = Index.create(5);
+
+		// when then
+		assertThatExceptionOfType(IllegalArgumentException.class)
+			.isThrownBy(() -> frames.isFrameRunning(index));
+	}
 }

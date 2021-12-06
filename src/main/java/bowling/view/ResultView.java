@@ -5,7 +5,7 @@ import static java.util.stream.Collectors.*;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import bowling.domain.Bowling;
+import bowling.domain.BowlingGame;
 import bowling.domain.Index;
 import bowling.domain.Score;
 import bowling.domain.frame.Frame;
@@ -28,12 +28,15 @@ public final class ResultView {
 		throw new UtilCreationException();
 	}
 
-	public static void print(Bowling bowling) {
+	public static void print(List<BowlingGame> bowlingGames) {
 		initializeBuilder();
 
 		appendHead();
-		appendPlayerAndBody(bowling);
-		appendScore(bowling);
+
+		bowlingGames.forEach(bowlingGame -> {
+			appendPlayerAndBody(bowlingGame);
+			appendScore(bowlingGame);
+		});
 
 		printBuilder();
 	}
@@ -43,9 +46,9 @@ public final class ResultView {
 		appendNewlineToBuilder();
 	}
 
-	private static void appendPlayerAndBody(Bowling bowling) {
-		appendToBuilder(String.format(NAME, bowling.getPlayerName()));
-		appendToBuilder(createBody(bowling.getFrames()));
+	private static void appendPlayerAndBody(BowlingGame bowlingGame) {
+		appendToBuilder(String.format(NAME, bowlingGame.getPlayerName()));
+		appendToBuilder(createBody(bowlingGame.getFrames()));
 		appendNewlineToBuilder();
 	}
 
@@ -61,8 +64,8 @@ public final class ResultView {
 		return body + emptyBody;
 	}
 
-	private static void appendScore(Bowling bowling) {
-		appendToBuilder(createScore(bowling.getFrames()));
+	private static void appendScore(BowlingGame bowlingGame) {
+		appendToBuilder(createScore(bowlingGame.getFrames()));
 		appendNewlineToBuilder();
 	}
 

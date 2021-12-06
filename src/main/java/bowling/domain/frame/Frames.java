@@ -9,6 +9,7 @@ import bowling.domain.Pins;
 
 public class Frames {
 	private static final String EMPTY_MESSAGE = "프레임 List 가 비어있습니다.";
+	private static final String INVALID_INDEX_MESSAGE = "생성 되지 않은 인덱스 입니다.";
 
 	private final LinkedList<Frame> values;
 
@@ -49,6 +50,15 @@ public class Frames {
 			return true;
 		}
 		return !values.getLast().isEnd();
+	}
+
+	public boolean isFrameRunning(Index index) {
+		try {
+			Frame frame = values.get(index.getValue() - 1);
+			return !frame.isEnd();
+		} catch (IndexOutOfBoundsException e) {
+			throw new IllegalArgumentException(INVALID_INDEX_MESSAGE);
+		}
 	}
 
 	public List<Frame> getValues() {
