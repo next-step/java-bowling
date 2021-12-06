@@ -3,7 +3,7 @@ package bowling.domain;
 import java.util.Objects;
 
 public class Frame {
-    private final Sequential prevSequential;
+    private final Sequential previousSequential;
     private final PinNumbers pinNumbers;
 
     public Frame(Sequential sequential) {
@@ -11,7 +11,7 @@ public class Frame {
     }
 
     public Frame(Sequential sequential, PinNumbers pinNumbers) {
-        this.prevSequential = sequential;
+        this.previousSequential = sequential;
         this.pinNumbers = pinNumbers;
     }
 
@@ -42,7 +42,7 @@ public class Frame {
     }
 
     private boolean isPrevStrike() {
-        return prevSequential.equals(Sequential.STRIKE) || prevSequential.equals(Sequential.DOUBLE_STRIKE);
+        return previousSequential.equals(Sequential.STRIKE) || previousSequential.equals(Sequential.DOUBLE_STRIKE);
     }
 
     @Override
@@ -57,11 +57,11 @@ public class Frame {
 
         Frame frame = (Frame) object;
 
-        return prevSequential == frame.prevSequential && Objects.equals(pinNumbers, frame.pinNumbers);
+        return previousSequential == frame.previousSequential && Objects.equals(pinNumbers, frame.pinNumbers);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(prevSequential, pinNumbers);
+        return Objects.hash(previousSequential, pinNumbers);
     }
 }
