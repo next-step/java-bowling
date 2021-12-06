@@ -1,14 +1,11 @@
 package bowling.domain.value;
 
 import bowling.domain.factory.FrameFactory;
-import bowling.domain.frame.Frame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -19,9 +16,8 @@ class FramesTest {
     @BeforeEach
     void setup() {
         FrameFactory frameFactory = new FrameFactory();
-        List<Frame> frames = frameFactory.create();
 
-        this.frames = Frames.from(frames);
+        frames = Frames.from(frameFactory.create());
     }
 
     @ParameterizedTest

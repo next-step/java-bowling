@@ -2,7 +2,6 @@ package bowling.domain.frame;
 
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
-import bowling.domain.value.FrameNumber;
 import bowling.domain.value.Pins;
 import bowling.domain.value.Score;
 

@@ -2,20 +2,22 @@ package bowling.ui;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.value.BowlingClub;
-import bowling.domain.value.Player;
+import bowling.domain.value.BowlingGame;
 
 public class ResultView {
     private static final int START_FRAME = 1;
     private static final int FINAL_FRAME = 10;
     private static final String PLAYER_NAME = "NAME";
     private static final String LINE = "|";
-    private static final String ENTER = "\r\n";
     private static final String EMPTY = "";
 
-    public void printBowlingResult(BowlingClub bowlingClub, Player player) {
+    public void printBowlingResult(BowlingClub bowlingClub) {
         printHead();
-        printMark(bowlingClub, player);
-        printScore(bowlingClub);
+
+        bowlingClub.getBowlingGames().forEach(bowlingGame -> {
+            printMark(bowlingGame);
+            printScore(bowlingGame);
+        });
     }
 
     private void printHead() {
@@ -29,12 +31,12 @@ public class ResultView {
         System.out.println(bowlingBuilder);
     }
 
-    private void printMark(BowlingClub bowlingClub, Player player) {
+    private void printMark(BowlingGame bowlingGame) {
         StringBuilder bowlingBuilder = new StringBuilder();
-        printPlayerName(bowlingBuilder, player.getName());
+        printPlayerName(bowlingBuilder, bowlingGame.getPlayerName());
 
         for (int i = START_FRAME; i <= FINAL_FRAME; i++) {
-            Frame frame = bowlingClub.getFrame(i);
+            Frame frame = bowlingGame.getFrames(i);
             printFrame(bowlingBuilder, frame.getMark());
         }
 
@@ -49,16 +51,15 @@ public class ResultView {
         bowlingBuilder.append(String.format("%7s", frameNumber)).append(LINE);
     }
 
-    private void printScore(BowlingClub bowlingClub) {
+    private void printScore(BowlingGame bowlingGame) {
         StringBuilder bowlingBuilder = new StringBuilder();
         printPlayerName(bowlingBuilder, EMPTY);
 
         for (int i = START_FRAME; i <= FINAL_FRAME; i++) {
-            String score = bowlingClub.getScore(i);
+            String score = bowlingGame.getScore(i);
             printFrame(bowlingBuilder, score);
         }
 
-        bowlingBuilder.append(ENTER);
         System.out.println(bowlingBuilder);
     }
 }
