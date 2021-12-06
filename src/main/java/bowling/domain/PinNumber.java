@@ -1,8 +1,10 @@
 package bowling.domain;
 
+import java.util.Objects;
+
 public class PinNumber {
-    private static final int MINIMUM_NUMBER = 0;
-    private static final int MAXIMUM_NUMBER = 10;
+    public static final int MINIMUM_NUMBER = 0;
+    public static final int MAXIMUM_NUMBER = 10;
 
     private final int number;
 
@@ -16,5 +18,29 @@ public class PinNumber {
         }
 
         return number;
+    }
+
+    public PinNumber add(PinNumber other) {
+        return new PinNumber(this.number + other.number);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+
+        PinNumber pinNumber = (PinNumber) object;
+
+        return number == pinNumber.number;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number);
     }
 }
