@@ -17,7 +17,7 @@ public class ConsoleOutputView implements OutputView {
         System.out.printf("Pin number of %d frame: ", frame);
     }
 
-    @Override
+//    @Override
     public void resultsOfBowling() {
         stagesOfBowling();
         framesOfBowling();

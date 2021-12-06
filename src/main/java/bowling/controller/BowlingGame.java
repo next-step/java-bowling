@@ -15,14 +15,14 @@ public class BowlingGame {
 
         outputView.questionPlayerName();
         String playerName = inputView.playerName();
-        Frames frames = new Frames();
-        outputView.resultsOfBowling(frames);
-
-        do {
-            outputView.questionPinNumber(frame.frameNumber());
-            int pinNumber = inputView.pinNumber();
-            frames.save(pinNumber);
-            outputView.resultsOfBowling(frames);
-        } while(frameNumber != LAST_FRAME));
+//        Frames frames = new Frames();
+//        outputView.resultsOfBowling(frames);
+//
+//        do {
+//            outputView.questionPinNumber(frame.frameNumber());
+//            int pinNumber = inputView.pinNumber();
+//            frames.save(pinNumber);
+//            outputView.resultsOfBowling(frames);
+//        } while(frameNumber != LAST_FRAME));
     }
 }
