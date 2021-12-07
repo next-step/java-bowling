@@ -1,7 +1,6 @@
 package bowling.view;
 
-import bowling.domain.Frames;
-
+import bowling.domain.Game;
 import java.util.stream.IntStream;
 
 import static bowling.controller.BowlingGame.*;
@@ -9,7 +8,7 @@ import static bowling.controller.BowlingGame.*;
 public class ConsoleOutputView implements OutputView {
 
     @Override
-    public void resultsOfBowling(Frames frames) {
+    public void resultsOfBowling(Game game) {
         stagesOfBowling();
         framesOfBowling();
     }
