@@ -2,21 +2,19 @@ package bowling.domain.frame;
 
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
-import bowling.domain.value.FrameNumber;
 import bowling.domain.value.Pins;
 import bowling.domain.value.Score;
 
 public class NormalFrame extends Frame {
     private State state;
 
-    private NormalFrame(FrameNumber frameNumber) {
+    private NormalFrame() {
         this.score = Score.init();
         this.state = Ready.of();
-        this.frameNumber = frameNumber;
     }
 
-    public static Frame create(FrameNumber frameNumber) {
-        return new NormalFrame(frameNumber);
+    public static Frame create() {
+        return new NormalFrame();
     }
 
     @Override

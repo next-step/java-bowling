@@ -18,6 +18,11 @@ public class Strike extends FinishState {
     }
 
     @Override
+    public boolean isGameOver() {
+        return false;
+    }
+
+    @Override
     public int countPins() {
         return MAXIMUM_COUNT;
     }

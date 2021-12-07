@@ -13,6 +13,8 @@ public interface State {
 
     boolean isFinish();
 
+    boolean isGameOver();
+
     int countPins();
 
     @GetterForUI

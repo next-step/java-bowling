@@ -11,6 +11,11 @@ public abstract class InprogressState implements State {
     }
 
     @Override
+    public boolean isGameOver() {
+        return false;
+    }
+
+    @Override
     public Score calculateScore() {
         throw new IllegalArgumentException(INVALID_SCORE);
     }

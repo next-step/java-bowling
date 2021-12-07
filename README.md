@@ -73,10 +73,11 @@
             - 두번째 투구도 거터 가능
         - Miss
     - value(VO)
-        - FrameNumber : 프레임 번호
         - Pins : 쓰러트린 볼링핀 갯수
         - Player : 참가자
-        - BowlingClub : Frame 관리 객체
+        - Frames : Frame 일급컬렉션
         - Score : 프레임별 점수 계산
+        - BowlingGame : Frames와 Player를 관리하는 객체
+        - BowlingClub : BowlingGame의 일급컬렉션
     
     

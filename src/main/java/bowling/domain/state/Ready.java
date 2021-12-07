@@ -14,12 +14,8 @@ public class Ready extends InprogressState {
 
     @Override
     public State pitch(Pins pins) {
-        if (pins.isStrikeOrSpare()) {
+        if (pins.isStrike()) {
             return Strike.of();
-        }
-
-        if (pins.isGutter()) {
-            return FirstGutter.of(pins);
         }
 
         return FirstBowl.of(pins);

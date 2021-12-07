@@ -16,4 +16,9 @@ public abstract class FinishState implements State {
     public boolean isFinish() {
         return true;
     }
+
+    @Override
+    public boolean isGameOver() {
+        return true;
+    }
 }

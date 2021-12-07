@@ -10,6 +10,6 @@ public class BowlingApplication {
     public static void main(String[] args) {
         BowlingController bowlingController = new BowlingController(new InputView(), new ResultView(),
                                                                     new FrameFactory());
-        bowlingController.play();
+        bowlingController.start();
     }
 }
