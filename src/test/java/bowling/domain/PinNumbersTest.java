@@ -26,6 +26,8 @@ public class PinNumbersTest {
     @DisplayName("PinNumbers must be spare when its sum is ten")
     @Test
     void testSpare() {
-        assertThat(PIN_NUMBERS_SPARE.isSpare()).isTrue();
+        assertThat(PIN_NUMBERS_SPARE_FIRST_EIGHT.isSpare()).isTrue();
+        assertThat(PIN_NUMBERS_SPARE_FIRST_FIVE.isSpare()).isTrue();
+        assertThat(PIN_NUMBERS_SPARE_FIRST_ZERO.isSpare()).isTrue();
     }
 }

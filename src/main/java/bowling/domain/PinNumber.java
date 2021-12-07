@@ -24,6 +24,10 @@ public class PinNumber {
         return new PinNumber(this.number + other.number);
     }
 
+    public Score score() {
+        return new Score(number);
+    }
+
     @Override
     public boolean equals(Object object) {
         if (this == object) {

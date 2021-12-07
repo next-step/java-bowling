@@ -104,56 +104,56 @@ public class FrameTest {
 
     @DisplayName("Test score when current sequential is Double Strike")
     @Test
-    void testScore() {
-        assertThat(strikeFramePreviousStrike.score(strikeFramePreviousStrike, strikeFramePreviousStrike)).isEqualTo(30);
-        assertThat(strikeFramePreviousStrike.score(strikeFramePreviousStrike, spareFirstEightFramePreviousStrike)).isEqualTo(28);
-        assertThat(strikeFramePreviousStrike.score(strikeFramePreviousStrike, spareFirstFiveFramePreviousStrike)).isEqualTo(25);
-        assertThat(strikeFramePreviousStrike.score(strikeFramePreviousStrike, fivePinsFramePreviousStrike)).isEqualTo(25);
+    void testDoubleStrike() {
+        assertThat(strikeFramePreviousStrike.score(strikeFramePreviousStrike, strikeFramePreviousStrike)).isEqualTo(new Score(30));
+        assertThat(strikeFramePreviousStrike.score(strikeFramePreviousStrike, spareFirstEightFramePreviousStrike)).isEqualTo(new Score(28));
+        assertThat(strikeFramePreviousStrike.score(strikeFramePreviousStrike, spareFirstFiveFramePreviousStrike)).isEqualTo(new Score(25));
+        assertThat(strikeFramePreviousStrike.score(strikeFramePreviousStrike, fivePinsFramePreviousStrike)).isEqualTo(new Score(25));
 
-        assertThat(strikeFramePreviousDoubleStrike.score(strikeFramePreviousStrike, strikeFramePreviousStrike)).isEqualTo(30);
-        assertThat(strikeFramePreviousDoubleStrike.score(strikeFramePreviousStrike, spareFirstEightFramePreviousStrike)).isEqualTo(28);
-        assertThat(strikeFramePreviousDoubleStrike.score(strikeFramePreviousStrike, spareFirstFiveFramePreviousStrike)).isEqualTo(25);
-        assertThat(strikeFramePreviousDoubleStrike.score(strikeFramePreviousStrike, fivePinsFramePreviousStrike)).isEqualTo(25);
+        assertThat(strikeFramePreviousDoubleStrike.score(strikeFramePreviousStrike, strikeFramePreviousStrike)).isEqualTo(new Score(30));
+        assertThat(strikeFramePreviousDoubleStrike.score(strikeFramePreviousStrike, spareFirstEightFramePreviousStrike)).isEqualTo(new Score(28));
+        assertThat(strikeFramePreviousDoubleStrike.score(strikeFramePreviousStrike, spareFirstFiveFramePreviousStrike)).isEqualTo(new Score(25));
+        assertThat(strikeFramePreviousDoubleStrike.score(strikeFramePreviousStrike, fivePinsFramePreviousStrike)).isEqualTo(new Score(25));
     }
 
     @DisplayName("Test score when current sequential is Strike")
     @Test
-    void testScore() {
-        assertThat(strikeFramePreviousNone.score(spareFirstEightFramePreviousStrike, strikeFramePreviousSpare)).isEqualTo(20);
-        assertThat(strikeFramePreviousNone.score(spareFirstFiveFramePreviousStrike, strikeFramePreviousSpare)).isEqualTo(20);
-        assertThat(strikeFramePreviousNone.score(fivePinsFramePreviousStrike, strikeFramePreviousNone)).isEqualTo(15);
-        assertThat(strikeFramePreviousNone.score(zeroPinsFramePreviousStrike, strikeFramePreviousNone)).isEqualTo(10);
+    void testStrike() {
+        assertThat(strikeFramePreviousNone.score(spareFirstEightFramePreviousStrike, strikeFramePreviousSpare)).isEqualTo(new Score(20));
+        assertThat(strikeFramePreviousNone.score(spareFirstFiveFramePreviousStrike, strikeFramePreviousSpare)).isEqualTo(new Score(20));
+        assertThat(strikeFramePreviousNone.score(fivePinsFramePreviousStrike, strikeFramePreviousNone)).isEqualTo(new Score(15));
+        assertThat(strikeFramePreviousNone.score(zeroPinsFramePreviousStrike, strikeFramePreviousNone)).isEqualTo(new Score(10));
     }
 
     @DisplayName("Test score when current sequential is Spare")
     @Test
-    void testScore() {
-        assertThat(spareFirstEightFramePreviousStrike.score(strikeFramePreviousSpare, strikeFramePreviousSpare)).isEqualTo(20);
-        assertThat(spareFirstEightFramePreviousStrike.score(spareFirstEightFramePreviousSpare, strikeFramePreviousSpare)).isEqualTo(18);
-        assertThat(spareFirstEightFramePreviousStrike.score(spareFirstZeroFramePreviousSpare, strikeFramePreviousSpare)).isEqualTo(10);
-        assertThat(spareFirstEightFramePreviousStrike.score(fivePinsFramePreviousSpare, strikeFramePreviousSpare)).isEqualTo(15);
-        assertThat(spareFirstEightFramePreviousStrike.score(zeroPinsFramePreviousSpare, strikeFramePreviousSpare)).isEqualTo(10);
+    void testSpare() {
+        assertThat(spareFirstEightFramePreviousStrike.score(strikeFramePreviousSpare, strikeFramePreviousSpare)).isEqualTo(new Score(20));
+        assertThat(spareFirstEightFramePreviousStrike.score(spareFirstEightFramePreviousSpare, strikeFramePreviousSpare)).isEqualTo(new Score(18));
+        assertThat(spareFirstEightFramePreviousStrike.score(spareFirstZeroFramePreviousSpare, strikeFramePreviousSpare)).isEqualTo(new Score(10));
+        assertThat(spareFirstEightFramePreviousStrike.score(fivePinsFramePreviousSpare, strikeFramePreviousSpare)).isEqualTo(new Score(15));
+        assertThat(spareFirstEightFramePreviousStrike.score(zeroPinsFramePreviousSpare, strikeFramePreviousSpare)).isEqualTo(new Score(10));
 
-        assertThat(spareFirstFiveFramePreviousStrike.score(strikeFramePreviousSpare, strikeFramePreviousSpare)).isEqualTo(20);
-        assertThat(spareFirstFiveFramePreviousStrike.score(spareFirstEightFramePreviousSpare, strikeFramePreviousSpare)).isEqualTo(18);
-        assertThat(spareFirstFiveFramePreviousStrike.score(spareFirstZeroFramePreviousSpare, strikeFramePreviousSpare)).isEqualTo(10);
-        assertThat(spareFirstFiveFramePreviousStrike.score(fivePinsFramePreviousSpare, strikeFramePreviousSpare)).isEqualTo(15);
-        assertThat(spareFirstFiveFramePreviousStrike.score(zeroPinsFramePreviousSpare, strikeFramePreviousSpare)).isEqualTo(10);
+        assertThat(spareFirstFiveFramePreviousStrike.score(strikeFramePreviousSpare, strikeFramePreviousSpare)).isEqualTo(new Score(20));
+        assertThat(spareFirstFiveFramePreviousStrike.score(spareFirstEightFramePreviousSpare, strikeFramePreviousSpare)).isEqualTo(new Score(18));
+        assertThat(spareFirstFiveFramePreviousStrike.score(spareFirstZeroFramePreviousSpare, strikeFramePreviousSpare)).isEqualTo(new Score(10));
+        assertThat(spareFirstFiveFramePreviousStrike.score(fivePinsFramePreviousSpare, strikeFramePreviousSpare)).isEqualTo(new Score(15));
+        assertThat(spareFirstFiveFramePreviousStrike.score(zeroPinsFramePreviousSpare, strikeFramePreviousSpare)).isEqualTo(new Score(10));
     }
 
     @DisplayName("Test score when current sequential is None")
     @Test
-    void testScore() {
-        assertThat(fivePinsFramePreviousStrike.score(strikeFramePreviousNone, strikeFramePreviousStrike)).isEqualTo(5);
-        assertThat(fivePinsFramePreviousStrike.score(spareFirstEightFramePreviousStrike, strikeFramePreviousStrike)).isEqualTo(5);
-        assertThat(fivePinsFramePreviousStrike.score(fivePinsFramePreviousNone, spareFirstEightFramePreviousStrike)).isEqualTo(5);
+    void testNone() {
+        assertThat(fivePinsFramePreviousStrike.score(strikeFramePreviousNone, strikeFramePreviousStrike)).isEqualTo(new Score(5));
+        assertThat(fivePinsFramePreviousStrike.score(spareFirstEightFramePreviousStrike, strikeFramePreviousStrike)).isEqualTo(new Score(5));
+        assertThat(fivePinsFramePreviousStrike.score(fivePinsFramePreviousNone, spareFirstEightFramePreviousStrike)).isEqualTo(new Score(5));
 
-        assertThat(fivePinsFramePreviousSpare.score(strikeFramePreviousNone, strikeFramePreviousStrike)).isEqualTo(5);
-        assertThat(fivePinsFramePreviousSpare.score(spareFirstEightFramePreviousStrike, strikeFramePreviousStrike)).isEqualTo(5);
-        assertThat(fivePinsFramePreviousSpare.score(fivePinsFramePreviousNone, spareFirstEightFramePreviousStrike)).isEqualTo(5);
+        assertThat(fivePinsFramePreviousSpare.score(strikeFramePreviousNone, strikeFramePreviousStrike)).isEqualTo(new Score(5));
+        assertThat(fivePinsFramePreviousSpare.score(spareFirstEightFramePreviousStrike, strikeFramePreviousStrike)).isEqualTo(new Score(5));
+        assertThat(fivePinsFramePreviousSpare.score(fivePinsFramePreviousNone, spareFirstEightFramePreviousStrike)).isEqualTo(new Score(5));
 
-        assertThat(fivePinsFramePreviousNone.score(strikeFramePreviousNone, strikeFramePreviousStrike)).isEqualTo(5);
-        assertThat(fivePinsFramePreviousNone.score(spareFirstEightFramePreviousStrike, strikeFramePreviousStrike)).isEqualTo(5);
-        assertThat(fivePinsFramePreviousNone.score(fivePinsFramePreviousNone, spareFirstEightFramePreviousStrike)).isEqualTo(5);
+        assertThat(fivePinsFramePreviousNone.score(strikeFramePreviousNone, strikeFramePreviousStrike)).isEqualTo(new Score(5));
+        assertThat(fivePinsFramePreviousNone.score(spareFirstEightFramePreviousStrike, strikeFramePreviousStrike)).isEqualTo(new Score(5));
+        assertThat(fivePinsFramePreviousNone.score(fivePinsFramePreviousNone, spareFirstEightFramePreviousStrike)).isEqualTo(new Score(5));
     }
 }

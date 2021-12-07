@@ -2,6 +2,7 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 import static bowling.domain.PinNumber.MAXIMUM_NUMBER;
@@ -41,6 +42,17 @@ public class PinNumbers {
 
     public boolean isSpare() {
         return pinNumbers.size() != NUMBER_OF_TRIAL_FOR_STRIKE && sum().equals(new PinNumber(MAXIMUM_NUMBER));
+    }
+
+    public Score totalScore() {
+        return sum().score();
+    }
+
+    public Score firstScore() {
+        return pinNumbers.stream()
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("There is no first score"))
+                .score();
     }
 
     @Override

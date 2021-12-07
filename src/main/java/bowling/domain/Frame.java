@@ -2,6 +2,9 @@ package bowling.domain;
 
 import java.util.Objects;
 
+import static bowling.domain.Sequential.*;
+import static bowling.domain.Score.*;
+
 public class Frame {
     private final Sequential previousSequential;
     private final PinNumbers pinNumbers;
@@ -27,7 +30,7 @@ public class Frame {
 
     private Sequential currentSequential() {
         if (isPrevStrike() && pinNumbers.isStrike()) {
-            return Sequential.DOUBLE_STRIKE;
+            return DOUBLE_STRIKE;
         }
 
         if (pinNumbers.isStrike()) {
@@ -42,7 +45,26 @@ public class Frame {
     }
 
     private boolean isPrevStrike() {
-        return previousSequential.equals(Sequential.STRIKE) || previousSequential.equals(Sequential.DOUBLE_STRIKE);
+        return previousSequential.equals(Sequential.STRIKE) || previousSequential.equals(DOUBLE_STRIKE);
+    }
+
+    public Score score(Frame first, Frame second) {
+        Score res = pinNumbers.totalScore();
+
+        if (currentSequential().equals(DOUBLE_STRIKE)) {
+            return res.add(first.pinNumbers.totalScore())
+                    .add(second.pinNumbers.firstScore());
+        }
+
+        if (currentSequential().equals(Sequential.STRIKE)) {
+            return res.add(first.pinNumbers.totalScore());
+        }
+
+        if (currentSequential().equals(Sequential.SPARE)) {
+            return res.add(first.pinNumbers.firstScore());
+        }
+
+        return res;
     }
 
     @Override
