@@ -12,6 +12,10 @@ public class PinNumber {
         this.number = validatePinNumber(number);
     }
 
+    public int getNumber() {
+        return number;
+    }
+
     private int validatePinNumber(int number) {
         if (number < MINIMUM_NUMBER || number > MAXIMUM_NUMBER) {
             throw new IllegalArgumentException("Pin number must be between 0 and 10");

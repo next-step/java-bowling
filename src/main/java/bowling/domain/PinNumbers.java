@@ -55,6 +55,13 @@ public class PinNumbers {
                 .score();
     }
 
+    public List<Integer> info() {
+        List<Integer> pins = new ArrayList<>();
+        pinNumbers.forEach(pinNumber -> pins.add(pinNumber.getNumber()));
+
+        return pins;
+    }
+
     @Override
     public boolean equals(Object object) {
         if (this == object) {

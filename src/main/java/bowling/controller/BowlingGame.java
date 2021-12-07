@@ -1,5 +1,6 @@
 package bowling.controller;
 
+import bowling.domain.Frames;
 import bowling.view.ConsoleInputView;
 import bowling.view.ConsoleOutputView;
 import bowling.view.InputView;
@@ -15,14 +16,14 @@ public class BowlingGame {
 
         outputView.questionPlayerName();
         String playerName = inputView.playerName();
-//        Frames frames = new Frames();
-//        outputView.resultsOfBowling(frames);
-//
-//        do {
-//            outputView.questionPinNumber(frame.frameNumber());
-//            int pinNumber = inputView.pinNumber();
-//            frames.save(pinNumber);
-//            outputView.resultsOfBowling(frames);
-//        } while(frameNumber != LAST_FRAME));
+        Frames frames = new Frames();
+        outputView.resultsOfBowling(frames);
+
+        do {
+            outputView.questionPinNumber(frames.frameNumber());
+            int pinNumber = inputView.pinNumber();
+            frames.pitch(pinNumber);
+            outputView.resultsOfBowling(frames);
+        } while(!frames.finished());
     }
 }

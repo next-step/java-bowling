@@ -28,11 +28,18 @@
   * 더블 스트라이크 - DOUBLE_STRIKE
   * 스트라이크 - STRIKE
   * 스페어 - SPARE
+* 각 프레임의 점수인 Score class를 구현한다.
+  * 범위가 유효한 지 확인하는 함수를 구현한다.
+  * Score끼리 더하는 함수를 구현한다. 이 함수에서는 새로운 Score instance를 리턴한다.
 * 볼링 게임의 단위인 Frame을 구현한다.
   * 1 ~ 9 프레임은 NormalFrame으로 구현한다.
   * 10 프레임은 FinalFrame으로 구현한다.
   * 각 Frame은 Sequential과 PinNumbers 일급 콜렉션을 가진다.
   * 다음 Frame을 현재 Frame에서 생성하는 방식으로 구현한다.
+  * Frame의 점수를 Score로 리턴하는 함수를 구현한다.
+* Frame의 일급 콜렉션인 Frames를 구현한다.
+  * Frames에 넘어뜨린 핀 수를 입력하면 현재 진행중인 Frame을 현재 Frame 포인터로 저장한다. 진행이 끝난 Frame은 리스트에 저장한다.
+  * 출력을 위해 넘어뜨린 핀의 수를 int[]의 List로 리턴한다.
 
 # 질문 삭제하기 리팩토링
 ## 질문 삭제하기 기능

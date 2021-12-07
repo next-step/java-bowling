@@ -3,7 +3,6 @@ package bowling.domain;
 import java.util.Objects;
 
 import static bowling.domain.Sequential.*;
-import static bowling.domain.Score.*;
 
 public class Frame {
     private final Sequential previousSequential;
@@ -16,6 +15,14 @@ public class Frame {
     public Frame(Sequential sequential, PinNumbers pinNumbers) {
         this.previousSequential = sequential;
         this.pinNumbers = pinNumbers;
+    }
+
+    public PinNumbers getPinNumbers() {
+        return pinNumbers;
+    }
+
+    public boolean continuable() {
+        return pinNumbers.isContinuable();
     }
 
     public Frame pitch(int number) {

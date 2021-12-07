@@ -1,11 +1,12 @@
 package bowling.view;
 
+import bowling.domain.Frames;
+
 import java.util.stream.IntStream;
 
 import static bowling.controller.BowlingGame.*;
 
 public class ConsoleOutputView implements OutputView {
-
 
     @Override
     public void questionPlayerName() {
@@ -17,8 +18,8 @@ public class ConsoleOutputView implements OutputView {
         System.out.printf("Pin number of %d frame: ", frame);
     }
 
-//    @Override
-    public void resultsOfBowling() {
+    @Override
+    public void resultsOfBowling(Frames frames) {
         stagesOfBowling();
         framesOfBowling();
     }
