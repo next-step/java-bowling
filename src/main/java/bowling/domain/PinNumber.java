@@ -3,8 +3,10 @@ package bowling.domain;
 import java.util.Objects;
 
 public class PinNumber {
-    public static final int MINIMUM_NUMBER = 0;
-    public static final int MAXIMUM_NUMBER = 10;
+    public static final int GUTTER_PIN_NUMBER = 0;
+    public static final int SPARE_PIN_NUMBER = 10;
+
+    public static final int STRIKE_PIN_NUMBER = 10;
 
     private final int number;
 
@@ -17,7 +19,7 @@ public class PinNumber {
     }
 
     private int validatePinNumber(int number) {
-        if (number < MINIMUM_NUMBER || number > MAXIMUM_NUMBER) {
+        if (number < GUTTER_PIN_NUMBER || number > STRIKE_PIN_NUMBER) {
             throw new IllegalArgumentException("Pin number must be between 0 and 10");
         }
 

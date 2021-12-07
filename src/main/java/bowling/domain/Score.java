@@ -20,6 +20,10 @@ public class Score {
         return score;
     }
 
+    public int getScore() {
+        return score;
+    }
+
     public Score add(Score other) {
         return new Score(score + other.score);
     }

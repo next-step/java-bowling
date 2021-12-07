@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-import static bowling.domain.PinNumber.MAXIMUM_NUMBER;
-import static bowling.domain.PinNumber.MINIMUM_NUMBER;
+import static bowling.domain.PinNumber.*;
 
 public class PinNumbers {
-    private final int FIRST = 0;
-    private final int SECOND = 1;
-    private final int NUMBER_OF_TRIAL_FOR_STRIKE = 1;
-    private final int NUMBER_OF_MAXIMUM_TRIAL = 2;
+    private static final int FIRST = 0;
+    private static final int SECOND = 1;
+    public static final int NUMBER_OF_PITCH_FOR_BEGINNING = 0;
+    public static final int NUMBER_OF_PITCH_FOR_STRIKE = 1;
+    private static final int NUMBER_OF_MAXIMUM_PITCH = 2;
 
     private final List<PinNumber> pinNumbers;
 
@@ -29,19 +29,19 @@ public class PinNumbers {
     }
 
     public PinNumber sum() {
-        return pinNumbers.stream().reduce(new PinNumber(MINIMUM_NUMBER), PinNumber::add);
+        return pinNumbers.stream().reduce(new PinNumber(GUTTER_PIN_NUMBER), PinNumber::add);
     }
 
     public boolean isContinuable() {
-        return pinNumbers.size() < NUMBER_OF_MAXIMUM_TRIAL && !isStrike();
+        return pinNumbers.size() < NUMBER_OF_MAXIMUM_PITCH && !isStrike();
     }
 
     public boolean isStrike() {
-        return pinNumbers.size() == NUMBER_OF_TRIAL_FOR_STRIKE && pinNumbers.get(FIRST).equals(new PinNumber(MAXIMUM_NUMBER));
+        return pinNumbers.size() == NUMBER_OF_PITCH_FOR_STRIKE && pinNumbers.get(FIRST).equals(new PinNumber(STRIKE_PIN_NUMBER));
     }
 
     public boolean isSpare() {
-        return pinNumbers.size() != NUMBER_OF_TRIAL_FOR_STRIKE && sum().equals(new PinNumber(MAXIMUM_NUMBER));
+        return pinNumbers.size() != NUMBER_OF_PITCH_FOR_STRIKE && sum().equals(new PinNumber(STRIKE_PIN_NUMBER));
     }
 
     public Score totalScore() {

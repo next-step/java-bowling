@@ -24,6 +24,6 @@ public class BowlingGame {
             int pinNumber = inputView.pinNumber();
             game.pitch(pinNumber);
             outputView.resultsOfBowling(game);
-        } while(!game.finished());
+        } while (!game.finished());
     }
 }
