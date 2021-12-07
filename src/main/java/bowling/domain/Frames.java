@@ -22,19 +22,19 @@ public class Frames {
     }
 
     public void pitch(int pinNumber) {
+        if (frames.size() < FIRST_FRAME) {
+            frames.add(new Frame(Sequential.NONE));
+        }
+
         Frame currentFrame = currentFrame();
         Frame nextFrame = currentFrame.pitch(pinNumber);
 
-        if (currentFrame != nextFrame) {
+        if (currentFrame != nextFrame && frames.size() != LAST_FRAME) {
             frames.add(nextFrame);
         }
     }
 
     private Frame currentFrame() {
-        if (frames.size() < FIRST_FRAME) {
-            frames.add(new Frame(Sequential.NONE));
-        }
-
         return frames.get(currentIndex());
     }
 

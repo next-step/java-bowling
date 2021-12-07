@@ -7,10 +7,10 @@ import static bowling.domain.PinNumbersTest.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class FrameTest {
-    private final Frame doubleStrikeFrame = new Frame(Sequential.DOUBLE_STRIKE);
-    private final Frame strikeFrame = new Frame(Sequential.STRIKE);
-    private final Frame spareFrame = new Frame(Sequential.SPARE);
-    private final Frame noneFrame = new Frame(Sequential.NONE);
+    private static final Frame DOUBLE_STRIKE_FRAME = new Frame(Sequential.DOUBLE_STRIKE);
+    private static final Frame STRIKE_FRAME = new Frame(Sequential.STRIKE);
+    private static final Frame SPARE_FRAME = new Frame(Sequential.SPARE);
+    private static final Frame NONE_FRAME = new Frame(Sequential.NONE);
 
     private final Frame strikeFramePreviousSpare = new Frame(Sequential.SPARE, PIN_NUMBERS_STRIKE);
     private final Frame strikeFramePreviousStrike = new Frame(Sequential.STRIKE, PIN_NUMBERS_STRIKE);
@@ -29,76 +29,76 @@ public class FrameTest {
     @DisplayName("Test frame when Sequential is None")
     @Test
     void testFrameWhenSequentialIsNone() {
-        Frame firstFrame = noneFrame();
-        assertThat(firstFrame.pitch(10)).isEqualTo(strikeFrame);
+        Frame firstFrame = createNoneFrame();
+        assertThat(firstFrame.pitch(10)).isEqualTo(STRIKE_FRAME);
 
-        Frame secondFrame = noneFrame();
+        Frame secondFrame = createNoneFrame();
         assertThat(secondFrame.pitch(5)).isEqualTo(secondFrame);
-        assertThat(secondFrame.pitch(5)).isEqualTo(spareFrame);
+        assertThat(secondFrame.pitch(5)).isEqualTo(SPARE_FRAME);
 
-        Frame thirdFrame = noneFrame();
+        Frame thirdFrame = createNoneFrame();
         assertThat(thirdFrame.pitch(5)).isEqualTo(thirdFrame);
-        assertThat(thirdFrame.pitch(3)).isEqualTo(noneFrame);
+        assertThat(thirdFrame.pitch(3)).isEqualTo(NONE_FRAME);
     }
 
-    private Frame noneFrame() {
+    private Frame createNoneFrame() {
         return new Frame(Sequential.NONE);
     }
 
     @DisplayName("Test frame when Sequential is Spare")
     @Test
     void testFrameWhenSequentialIsSpare() {
-        Frame firstFrame = spareFrame();
-        assertThat(firstFrame.pitch(10)).isEqualTo(strikeFrame);
+        Frame firstFrame = createSpareFrame();
+        assertThat(firstFrame.pitch(10)).isEqualTo(STRIKE_FRAME);
 
-        Frame secondFrame = spareFrame();
+        Frame secondFrame = createSpareFrame();
         assertThat(secondFrame.pitch(5)).isEqualTo(secondFrame);
-        assertThat(secondFrame.pitch(5)).isEqualTo(spareFrame);
+        assertThat(secondFrame.pitch(5)).isEqualTo(SPARE_FRAME);
 
-        Frame thirdFrame = spareFrame();
+        Frame thirdFrame = createSpareFrame();
         assertThat(thirdFrame.pitch(5)).isEqualTo(thirdFrame);
-        assertThat(thirdFrame.pitch(3)).isEqualTo(noneFrame);
+        assertThat(thirdFrame.pitch(3)).isEqualTo(NONE_FRAME);
     }
 
-    private Frame spareFrame() {
+    private Frame createSpareFrame() {
         return new Frame(Sequential.SPARE);
     }
 
     @DisplayName("Test frame when Sequential is Strike")
     @Test
     void testFrameWhenSequentialIsStrike() {
-        Frame firstFrame = strikeFrame();
-        assertThat(firstFrame.pitch(10)).isEqualTo(doubleStrikeFrame);
+        Frame firstFrame = createStrikeFrame();
+        assertThat(firstFrame.pitch(10)).isEqualTo(DOUBLE_STRIKE_FRAME);
 
-        Frame secondFrame = strikeFrame();
+        Frame secondFrame = createStrikeFrame();
         assertThat(secondFrame.pitch(5)).isEqualTo(secondFrame);
-        assertThat(secondFrame.pitch(5)).isEqualTo(spareFrame);
+        assertThat(secondFrame.pitch(5)).isEqualTo(SPARE_FRAME);
 
-        Frame thirdFrame = strikeFrame();
+        Frame thirdFrame = createStrikeFrame();
         assertThat(thirdFrame.pitch(5)).isEqualTo(thirdFrame);
-        assertThat(thirdFrame.pitch(3)).isEqualTo(noneFrame);
+        assertThat(thirdFrame.pitch(3)).isEqualTo(NONE_FRAME);
     }
 
-    private Frame strikeFrame() {
+    private Frame createStrikeFrame() {
         return new Frame(Sequential.STRIKE);
     }
 
     @DisplayName("Test frame when Sequential is Double Strike")
     @Test
     void testFrameWhenSequentialIsDoubleStrike() {
-        Frame firstFrame = doubleStrikeFrame();
-        assertThat(firstFrame.pitch(10)).isEqualTo(doubleStrikeFrame);
+        Frame firstFrame = createDoubleStrikeFrame();
+        assertThat(firstFrame.pitch(10)).isEqualTo(DOUBLE_STRIKE_FRAME);
 
-        Frame secondFrame = doubleStrikeFrame();
+        Frame secondFrame = createDoubleStrikeFrame();
         assertThat(secondFrame.pitch(5)).isEqualTo(secondFrame);
-        assertThat(secondFrame.pitch(5)).isEqualTo(spareFrame);
+        assertThat(secondFrame.pitch(5)).isEqualTo(SPARE_FRAME);
 
-        Frame thirdFrame = doubleStrikeFrame();
+        Frame thirdFrame = createDoubleStrikeFrame();
         assertThat(thirdFrame.pitch(5)).isEqualTo(thirdFrame);
-        assertThat(thirdFrame.pitch(3)).isEqualTo(noneFrame);
+        assertThat(thirdFrame.pitch(3)).isEqualTo(NONE_FRAME);
     }
 
-    private Frame doubleStrikeFrame() {
+    private Frame createDoubleStrikeFrame() {
         return new Frame(Sequential.DOUBLE_STRIKE);
     }
 

@@ -5,7 +5,6 @@ import java.util.Objects;
 public class PinNumber {
     public static final int GUTTER_PIN_NUMBER = 0;
     public static final int SPARE_PIN_NUMBER = 10;
-
     public static final int STRIKE_PIN_NUMBER = 10;
 
     private final int number;
