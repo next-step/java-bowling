@@ -63,7 +63,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isGameOver() {
-        if (states.getLast().isFrameOver()) {
+        if (states.getLast().isGameOver()) {
             return true;
         }
 

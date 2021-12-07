@@ -28,6 +28,11 @@ public class Spare extends FinishState {
     }
 
     @Override
+    public boolean isGameOver() {
+        return false;
+    }
+
+    @Override
     public int countPins() {
         return firstPins.add(secondPins);
     }

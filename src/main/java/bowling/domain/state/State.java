@@ -13,14 +13,12 @@ public interface State {
 
     boolean isFinish();
 
+    boolean isGameOver();
+
     int countPins();
 
     @GetterForUI
     String getMark();
-
-    default boolean isFrameOver() {
-        return this instanceof Miss || this instanceof Gutter;
-    }
 
     default String checkGutter(Pins pins) {
         if (pins.isGutter()) {
