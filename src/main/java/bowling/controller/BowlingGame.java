@@ -14,13 +14,13 @@ public class BowlingGame {
         InputView inputView = new ConsoleInputView();
         OutputView outputView = new ConsoleOutputView();
 
-        outputView.questionPlayerName();
+        inputView.questionPlayerName();
         String playerName = inputView.playerName();
         Frames frames = new Frames();
         outputView.resultsOfBowling(frames);
 
         do {
-            outputView.questionPinNumber(frames.frameNumber());
+            inputView.questionPinNumber(frames.frameNumber());
             int pinNumber = inputView.pinNumber();
             frames.pitch(pinNumber);
             outputView.resultsOfBowling(frames);

@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static bowling.controller.BowlingGame.LAST_FRAME;
@@ -9,7 +10,7 @@ public class Frames {
     private final List<Frame> frames;
 
     public Frames() {
-        frames = new ArrayList<>();
+        frames = new ArrayList<>(Collections.singletonList(new Frame(Sequential.NONE)));
     }
 
     public int frameNumber() {

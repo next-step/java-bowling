@@ -9,16 +9,6 @@ import static bowling.controller.BowlingGame.*;
 public class ConsoleOutputView implements OutputView {
 
     @Override
-    public void questionPlayerName() {
-        System.out.print("What is player's name? (3 English Letters)");
-    }
-
-    @Override
-    public void questionPinNumber(int frame) {
-        System.out.printf("Pin number of %d frame: ", frame);
-    }
-
-    @Override
     public void resultsOfBowling(Frames frames) {
         stagesOfBowling();
         framesOfBowling();
