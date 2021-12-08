@@ -35,7 +35,7 @@ public class NormalFrame implements Frame {
 
     private void increaseRemainder() {
         if (pitches.containingFirstStike()) {
-            remainder += 2;
+            remainder += 1;
         }
 
         if (pitches.containingSpare()) {
@@ -53,6 +53,10 @@ public class NormalFrame implements Frame {
 
     public Score score() {
         return pitches.sum();
+    }
+
+    public boolean remainderLeft() {
+        return remainder > 0;
     }
 
     public void addPins(int pins) {

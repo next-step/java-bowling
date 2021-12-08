@@ -37,6 +37,12 @@ public class FinalFrame implements Frame {
         return pitches.sum();
     }
 
+    @Override
+    public boolean remainderLeft() {
+        return false;
+    }
+
+    @Override
     public void addPins(int pins) {
     }
 }
