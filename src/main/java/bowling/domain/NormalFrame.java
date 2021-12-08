@@ -3,6 +3,8 @@ package bowling.domain;
 public class NormalFrame implements Frame {
     public static final int INITIAL_REMAINDER = 2;
 
+    private static final int MAX_PITCHES = 2;
+
     private final Pitches pitches;
     private int remainder;
 
@@ -15,18 +17,38 @@ public class NormalFrame implements Frame {
         return pitches;
     }
 
-    public boolean continuable() {
-        return pitches.continuableForNormalFrame();
-    }
-
     public Frame pitch(int number) {
+        decreaseRemainder();
         pitches.add(new Pitch(number));
+        increaseRemainder();
 
-        if (pitches.continuableForNormalFrame()) {
+        if (continuable()) {
             return this;
         }
 
         return new NormalFrame();
+    }
+
+    private void decreaseRemainder() {
+        remainder--;
+    }
+
+    private void increaseRemainder() {
+        if (pitches.containingFirstStike()) {
+            remainder += 2;
+        }
+
+        if (pitches.containingSpare()) {
+            remainder += 1;
+        }
+    }
+
+    public boolean continuable() {
+        if (pitches.full(MAX_PITCHES)) {
+            return false;
+        }
+
+        return pitches.isFirstPitch() || !pitches.containingFirstStike();
     }
 
     public Score score() {
@@ -38,8 +60,7 @@ public class NormalFrame implements Frame {
             return;
         }
 
-        remainder--;
-
+        decreaseRemainder();
         pitches.add(new Pitch(pins));
     }
 }

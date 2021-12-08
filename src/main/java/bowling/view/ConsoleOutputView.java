@@ -1,7 +1,6 @@
 package bowling.view;
 
 import bowling.domain.Game;
-import bowling.domain.Pitches;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +9,6 @@ import java.util.stream.IntStream;
 import static bowling.controller.BowlingGame.*;
 import static bowling.domain.Pitch.*;
 import static bowling.domain.Pitches.NUMBER_OF_PITCH_FOR_BEGINNING;
-import static bowling.domain.Pitches.NUMBER_OF_PITCH_FOR_STRIKE;
 
 public class ConsoleOutputView implements OutputView {
     private static final int FIRST_PIN = 0;
@@ -79,9 +77,9 @@ public class ConsoleOutputView implements OutputView {
             convertedPins.add(SPACE);
         }
 
-        if (convertedPins.size() == NUMBER_OF_PITCH_FOR_STRIKE) {
-            convertedPins.add(SPACE);
-        }
+//        if (convertedPins.size() == NUMBER_OF_PITCH_FOR_STRIKE) {
+//            convertedPins.add(SPACE);
+//        }
 
         stringBuilder.append(String.format(PIN_FIELD,
                 convertedPins.get(FIRST_PIN),

@@ -3,6 +3,8 @@ package bowling.domain;
 import static bowling.domain.NormalFrame.INITIAL_REMAINDER;
 
 public class FinalFrame implements Frame {
+    private static final int MAX_PITCHES = 3;
+
     private final Pitches pitches;
     private int remainder;
 
@@ -18,7 +20,7 @@ public class FinalFrame implements Frame {
     public Frame pitch(int number) {
         pitches.add(new Pitch(number));
 
-        if (pitches.continuableForFinalFrame()) {
+        if (continuable()) {
             return this;
         }
 
@@ -26,7 +28,11 @@ public class FinalFrame implements Frame {
     }
 
     public boolean continuable() {
-        return pitches.continuableForFinalFrame();
+        if (pitches.full(MAX_PITCHES)) {
+            return false;
+        }
+
+        return pitches.isFirstPitch() || pitches.isSecondPitch() || pitches.containingStrikeOrSpare();
     }
 
     public Score score() {
