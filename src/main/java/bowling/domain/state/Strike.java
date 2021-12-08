@@ -7,10 +7,6 @@ import java.util.Objects;
 public class Strike extends Finished {
 
     private final Pin pin = Pin.TEN;
-    @Override
-    public State bowl(Pin pin) {
-        return null;
-    }
 
     @Override
     public boolean equals(Object o) {

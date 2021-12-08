@@ -4,23 +4,16 @@ import bowling.domain.Pin;
 
 import java.util.Objects;
 
-public class FirstBowl extends Running {
+public class Spare extends Finished {
 
     private final Pin firstPin;
+    private final Pin secondPin;
 
-    public FirstBowl(Pin firstPin) {
+    public Spare(Pin firstPin, Pin secondPin) {
         this.firstPin = firstPin;
+        this.secondPin = secondPin;
     }
-
-    @Override
-    public State bowl(Pin pin) {
-        if(firstPin.add(pin).isMaxCount()) {
-            return new Spare(firstPin, pin);
-        }
-
-        return new Miss(firstPin, pin);
-    }
-
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -29,12 +22,12 @@ public class FirstBowl extends Running {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        FirstBowl firstBowl = (FirstBowl) o;
-        return Objects.equals(firstPin, firstBowl.firstPin);
+        Spare miss = (Spare) o;
+        return Objects.equals(firstPin, miss.firstPin) && Objects.equals(secondPin, miss.secondPin);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstPin);
+        return Objects.hash(firstPin, secondPin);
     }
 }
