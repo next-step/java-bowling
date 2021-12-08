@@ -30,11 +30,7 @@ public class NormalFrame implements Frame {
     }
 
     private void increaseRemainder() {
-        if (pitches.containingFirstStrike()) {
-            remainder += 1;
-        }
-
-        if (pitches.containingSpare()) {
+        if (pitches.isStrike() || pitches.isSpare()) {
             remainder += 1;
         }
     }
@@ -44,7 +40,7 @@ public class NormalFrame implements Frame {
             return false;
         }
 
-        return pitches.isFirstPitch() || !pitches.containingFirstStrike();
+        return pitches.isFirstPitch() || !pitches.isStrike();
     }
 
     public Score score() {

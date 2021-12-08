@@ -9,9 +9,8 @@ public class Pitches {
     private static final int FIRST = 0;
     private static final int SECOND = 1;
     private static final int THIRD = 2;
-    public static final int NUMBER_OF_PITCH_FOR_BEGINNING = 0;
-    public static final int NUMBER_OF_PITCH_FOR_SECOND = 1;
-    public static final int NUMBER_OF_PITCH_FOR_THIRD = 2;
+    public static final int NUMBER_OF_PITCHES_AFTER_FIRST_PITCH = 1;
+    public static final int NUMBER_OF_PITCHES_AFTER_SECOND_PITH = 2;
     private static final Pitch STRIKE_PITCH = new Pitch(STRIKE_PIN_NUMBER);
     private static final Pitch GUTTER_PITCH = new Pitch(GUTTER_PIN_NUMBER);
     private static final char SPLITERATOR = '|';
@@ -44,43 +43,26 @@ public class Pitches {
     }
 
     public boolean isSecondPitch() {
-        return pitches.size() == NUMBER_OF_PITCH_FOR_SECOND;
+        return pitches.size() == NUMBER_OF_PITCHES_AFTER_FIRST_PITCH;
     }
 
-    public boolean containingFirstStrike() {
-        return !pitches.isEmpty() && isStrike();
+    public boolean isStrikeOrSpare() {
+        return isStrike() || isSpare();
     }
 
-    public boolean containingSpare() {
-        return pitches.size() > NUMBER_OF_PITCH_FOR_SECOND && isSpare(SECOND);
+    public boolean isStrike() {
+        return !pitches.isEmpty() && pitches.get(Pitches.FIRST).equals(STRIKE_PITCH);
     }
 
-    public boolean containingStrikeOrSpare() {
-        return isStrike() || isSpare(SECOND);
-    }
-
-    private boolean isStrike() {
-        return !empty() && pitches.get(Pitches.FIRST).equals(STRIKE_PITCH);
-    }
-
-    private boolean isSpare(int index) {
-        if (pitches.size() <= NUMBER_OF_PITCH_FOR_SECOND || index < SECOND) {
+    public boolean isSpare() {
+        if (pitches.size() <= NUMBER_OF_PITCHES_AFTER_FIRST_PITCH) {
             return false;
         }
 
-        return prevPitch(index).score().add(currentPitch(index).score()).equals(new Score(10));
-    }
+        Pitch currentPitch = pitches.get(SECOND);
+        Pitch previousPitch = pitches.get(FIRST);
 
-    private Pitch currentPitch(int index) {
-        return pitches.get(index);
-    }
-
-    private Pitch prevPitch(int index) {
-        return pitches.get(index - 1);
-    }
-
-    private boolean empty() {
-        return pitches.isEmpty();
+        return previousPitch.score().add(currentPitch.score()).equals(new Score(10));
     }
 
     public String state() {
@@ -112,7 +94,7 @@ public class Pitches {
         }
         stringBuilder.append(SPLITERATOR);
         stringBuilder.append(secondPitch().state(firstPitch()));
-        if (pitches.size() == NUMBER_OF_PITCH_FOR_THIRD || !containingStrikeOrSpare()) {
+        if (pitches.size() == NUMBER_OF_PITCHES_AFTER_SECOND_PITH || !isStrikeOrSpare()) {
             return stringBuilder.toString();
         }
         stringBuilder.append(SPLITERATOR);

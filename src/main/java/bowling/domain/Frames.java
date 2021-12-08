@@ -51,11 +51,11 @@ public class Frames {
     }
 
     private int currentIndex() {
-        return frames.size()-1;
+        return frames.size() - 1;
     }
 
     public String frameState(int frameNumber) {
-        if (frames.size() < frameNumber - 1) {
+        if (frames.size() < frameNumber) {
             throw new IndexOutOfBoundsException("That frame is not complete.");
         }
 

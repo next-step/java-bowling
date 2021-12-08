@@ -9,6 +9,7 @@ public class FinalFrame implements Frame {
         this.pitches = new Pitches();
     }
 
+    @Override
     public Frame frameAfterPitch(int number) {
         pitches.add(new Pitch(number));
 
@@ -19,14 +20,16 @@ public class FinalFrame implements Frame {
         return null;
     }
 
+    @Override
     public boolean continuable() {
         if (pitches.full(MAX_PITCHES)) {
             return false;
         }
 
-        return pitches.isFirstPitch() || pitches.isSecondPitch() || pitches.containingStrikeOrSpare();
+        return pitches.isFirstPitch() || pitches.isSecondPitch() || pitches.isStrikeOrSpare();
     }
 
+    @Override
     public Score score() {
         return pitches.sum();
     }
@@ -40,6 +43,7 @@ public class FinalFrame implements Frame {
     public void addPins(int pins) {
     }
 
+    @Override
     public String state() {
         return pitches.finalState();
     }

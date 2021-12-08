@@ -49,66 +49,66 @@ public class PitchesTest {
     }
 
     @Test
-    void testContainingFirstStrike() {
+    void testIsStrike() {
         Pitches pitches = new Pitches();
-        assertThat(pitches.containingFirstStrike()).isFalse();
+        assertThat(pitches.isStrike()).isFalse();
 
         pitches.add(PITCH_STRIKE);
-        assertThat(pitches.containingFirstStrike()).isTrue();
+        assertThat(pitches.isStrike()).isTrue();
 
         pitches.add(PITCH_STRIKE);
-        assertThat(pitches.containingFirstStrike()).isTrue();
+        assertThat(pitches.isStrike()).isTrue();
 
         pitches = new Pitches();
         pitches.add(PITCH_GUTTER);
-        assertThat(pitches.containingFirstStrike()).isFalse();
+        assertThat(pitches.isStrike()).isFalse();
 
         pitches.add(PITCH_STRIKE);
-        assertThat(pitches.containingFirstStrike()).isFalse();
+        assertThat(pitches.isStrike()).isFalse();
     }
 
     @Test
-    void testContainingSpare() {
+    void testIsSpare() {
         Pitches pitches = new Pitches();
-        assertThat(pitches.containingSpare()).isFalse();
+        assertThat(pitches.isSpare()).isFalse();
 
         pitches.add(PITCH_GUTTER);
-        assertThat(pitches.containingSpare()).isFalse();
+        assertThat(pitches.isSpare()).isFalse();
 
         pitches.add(PITCH_STRIKE);
-        assertThat(pitches.containingSpare()).isTrue();
+        assertThat(pitches.isSpare()).isTrue();
 
         pitches = new Pitches();
         pitches.add(PITCH_EIGHT_PINS);
-        assertThat(pitches.containingSpare()).isFalse();
+        assertThat(pitches.isSpare()).isFalse();
 
         pitches.add(PITCH_TWO_PINS);
-        assertThat(pitches.containingSpare()).isTrue();
+        assertThat(pitches.isSpare()).isTrue();
     }
 
     @Test
-    void testContiningStrikeOrSpare() {
+    void testIsStrikeOrSpare() {
         Pitches pitches = new Pitches();
-        assertThat(pitches.containingStrikeOrSpare()).isFalse();
+        assertThat(pitches.isStrikeOrSpare()).isFalse();
 
         pitches.add(PITCH_STRIKE);
-        assertThat(pitches.containingStrikeOrSpare()).isTrue();
+        assertThat(pitches.isStrikeOrSpare()).isTrue();
 
         pitches.add(PITCH_GUTTER);
-        assertThat(pitches.containingStrikeOrSpare()).isTrue();
+        assertThat(pitches.isStrikeOrSpare()).isTrue();
 
         pitches = new Pitches();
         pitches.add(PITCH_GUTTER);
-        assertThat(pitches.containingStrikeOrSpare()).isFalse();
+        assertThat(pitches.isStrikeOrSpare()).isFalse();
 
         pitches.add(PITCH_STRIKE);
-        assertThat(pitches.containingStrikeOrSpare()).isTrue();
+        assertThat(pitches.isStrikeOrSpare()).isTrue();
 
         pitches = new Pitches();
         pitches.add(PITCH_TWO_PINS);
-        assertThat(pitches.containingStrikeOrSpare()).isFalse();
+        assertThat(pitches.isStrikeOrSpare()).isFalse();
 
         pitches.add(PITCH_EIGHT_PINS);
-        assertThat(pitches.containingStrikeOrSpare()).isTrue();
+        assertThat(pitches.isStrikeOrSpare()).isTrue();
     }
 }

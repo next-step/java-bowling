@@ -72,8 +72,8 @@ public class FinalFrameTest {
         assertThat(frame.state()).isEqualTo("X");
         frame.frameAfterPitch(FIVE_PIN_NUMBER);
         assertThat(frame.state()).isEqualTo("X|5");
-        frame.frameAfterPitch(TWO_PIN_NUMBER);
-        assertThat(frame.state()).isEqualTo("X|5|2");
+        frame.frameAfterPitch(FIVE_PIN_NUMBER);
+        assertThat(frame.state()).isEqualTo("X|5|/");
 
         frame = new FinalFrame();
         frame.frameAfterPitch(FIVE_PIN_NUMBER);
