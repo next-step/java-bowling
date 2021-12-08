@@ -14,7 +14,18 @@
   - 0 <= pin <= 10 의 범위를 가진다.
   - 범위 를 벗어나는 값이 오면 illegalException  
   - add(Pin pin) 쓰러진 핀의 개수를 더해서 반환한다.
-  - isMaxCount() pin 쓰러진 pin의 개수가 10개인지 반환한다.  
+  - isMaxCount() pin 쓰러진 pin의 개수가 10개인지 반환한다.
+- State
+  - 프레임의 상태를 나타낸다
+  - bowl()을 호출하면 다음 상태를 반환한다
+  - isFinished() 종료상태인지 반환한다
+  - running
+    - ready
+    - firstBowl
+  - finished  
+    - Strike
+    - Miss
+    - Spare
 - Frame
   - bowl(PinCount pinCount) 공을 굴린다.
   - nextFrame() 다음 프레임을 반환한다.  

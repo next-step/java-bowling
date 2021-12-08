@@ -1,0 +1,36 @@
+package bowling.domain.state;
+
+import bowling.domain.Pin;
+
+import java.util.Objects;
+
+public class FirstBowl extends Running {
+
+    private final Pin firstPin;
+
+    public FirstBowl(Pin firstPin) {
+        this.firstPin = firstPin;
+    }
+
+    @Override
+    public State bowl(Pin pin) {
+        return null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        FirstBowl firstBowl = (FirstBowl) o;
+        return Objects.equals(firstPin, firstBowl.firstPin);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstPin);
+    }
+}
