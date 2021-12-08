@@ -17,7 +17,7 @@ public class FinalFrame implements Frame {
         return pitches;
     }
 
-    public Frame pitch(int number) {
+    public Frame frameAfterPitch(int number) {
         pitches.add(new Pitch(number));
 
         if (continuable()) {

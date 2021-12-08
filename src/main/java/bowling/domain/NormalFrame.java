@@ -17,7 +17,7 @@ public class NormalFrame implements Frame {
         return pitches;
     }
 
-    public Frame pitch(int number) {
+    public Frame frameAfterPitch(int number) {
         decreaseRemainder();
         pitches.add(new Pitch(number));
         increaseRemainder();

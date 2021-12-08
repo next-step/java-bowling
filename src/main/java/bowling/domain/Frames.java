@@ -26,7 +26,7 @@ public class Frames {
         }
 
         Frame currentFrame = currentFrame();
-        Frame nextFrame = currentFrame.pitch(pinNumber);
+        Frame nextFrame = currentFrame.frameAfterPitch(pinNumber);
 
         if (currentFrame == nextFrame) {
             return;
