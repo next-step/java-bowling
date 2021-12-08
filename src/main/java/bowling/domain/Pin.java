@@ -21,9 +21,8 @@ public class Pin {
             new Pin(9),
             new Pin(10)
     };
-
-    public static final int MAX = 10;
-    public static final int MIN = 0;
+    private static final int MIN = 0;
+    private static final int MAX = 10;
     public static final Pin TEN = zeroThroughTen[MAX];
 
     private final int count;

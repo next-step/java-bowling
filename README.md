@@ -26,6 +26,10 @@
     - Strike
     - Miss
     - Spare
+- Round
+  - 1~10의 값만을 가진다.
+  - isLastRound() 마지막 라운드일 경우 true 반환
+  - nextRound() 다음 라운드를 반환한다.
 - Frame
   - bowl(PinCount pinCount) 공을 굴린다.
   - nextFrame() 다음 프레임을 반환한다.  
