@@ -69,13 +69,13 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
-    public DeleteHistory delete(User user) throws CannotDeleteException {
+    public DeleteHistory delete(User user) {
         checkWrittenBy(user);
         deleted = true;
         return new DeleteHistory(ContentType.ANSWER, getId(), user);
     }
 
-    private void checkWrittenBy(User user) throws CannotDeleteException {
+    private void checkWrittenBy(User user) {
         if (!writer.equals(user)) {
             throw new CannotDeleteException("삭제할 권한이 없습니다.");
         }
