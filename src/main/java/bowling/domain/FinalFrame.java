@@ -6,11 +6,9 @@ public class FinalFrame implements Frame {
     private static final int MAX_PITCHES = 3;
 
     private final Pitches pitches;
-    private int remainder;
 
     public FinalFrame() {
         this.pitches = new Pitches();
-        remainder = INITIAL_REMAINDER;
     }
 
     public Pitches getPitches() {
@@ -39,8 +37,6 @@ public class FinalFrame implements Frame {
         return pitches.sum();
     }
 
-    @Override
     public void addPins(int pins) {
-
     }
 }
