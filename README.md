@@ -19,27 +19,25 @@
 * 플레이어의 이름인 Name을 구현한다.
   * Name의 이름이 알파벳이 아니면 예외를 던진다.
   * Name의 길이가 3자가 아니면 예외를 던진다.
-* 핀을 넘어뜨린 개수를 PinNumber로 구현한다.
+* 볼링공을 던지는 행위를 Pitch로 구현한다.
   * 0 ~ 10의 범위가 아니면 예외를 던진다.
-* PinNumber의 일급 콜렉션인 PinNumbers를 구현한다.
+* Pitch의 일급 콜렉션인 Pitches를 구현한다.
   * Strike인지 여부를 판단하는 함수를 구현한다.
   * Spare인지 여부를 판단하는 함수를 구현한다.
-* 이전 프레임의 상태를 enum인 Sequential로 표현한다.
-  * 더블 스트라이크 - DOUBLE_STRIKE
-  * 스트라이크 - STRIKE
-  * 스페어 - SPARE
 * 각 프레임의 점수인 Score class를 구현한다.
   * 범위가 유효한 지 확인하는 함수를 구현한다.
   * Score끼리 더하는 함수를 구현한다. 이 함수에서는 새로운 Score instance를 리턴한다.
 * 볼링 게임의 단위인 Frame을 구현한다.
   * 1 ~ 9 프레임은 NormalFrame으로 구현한다.
+    * NormalFrame은 remainder와 Pitches 일급 콜렉션을 가진다.
   * 10 프레임은 FinalFrame으로 구현한다.
-  * 각 Frame은 Sequential과 PinNumbers 일급 콜렉션을 가진다.
+    * FinalFrame은 Pitches 일급 콜렉션을 가진다.
   * 다음 Frame을 현재 Frame에서 생성하는 방식으로 구현한다.
   * Frame의 점수를 Score로 리턴하는 함수를 구현한다.
 * Frame의 일급 콜렉션인 Frames를 구현한다.
   * Frames에 넘어뜨린 핀 수를 입력하면 현재 진행중인 Frame을 현재 Frame 포인터로 저장한다. 진행이 끝난 Frame은 리스트에 저장한다.
-  * 출력을 위해 넘어뜨린 핀의 수를 int[]의 List로 리턴한다.
+* Game을 구현한다.
+  * 플레이어의 이름인 Name과 Frames를 가진다.
 
 # 질문 삭제하기 리팩토링
 ## 질문 삭제하기 기능
