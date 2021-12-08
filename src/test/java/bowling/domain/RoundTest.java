@@ -7,7 +7,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.junit.jupiter.api.Assertions.*;
 
 class RoundTest {
 
@@ -26,7 +25,7 @@ class RoundTest {
 
     @DisplayName("nextRound는 다음 라운드를 반환한다.")
     @ParameterizedTest
-    @CsvSource(value = {"1:2","2:3","4:5", "5:6", "6:7", "7:8", "8:9", "9:10"}, delimiter = ':')
+    @CsvSource(value = {"1:2", "2:3", "4:5", "5:6", "6:7", "7:8", "8:9", "9:10"}, delimiter = ':')
     void nextTest(int before, int after) {
         assertThat(Round.from(before).nextRound()).isEqualTo(Round.from(after));
     }

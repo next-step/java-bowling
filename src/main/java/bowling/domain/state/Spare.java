@@ -13,7 +13,7 @@ public class Spare extends Finished {
         this.firstPin = firstPin;
         this.secondPin = secondPin;
     }
-    
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

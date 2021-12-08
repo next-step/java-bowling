@@ -7,7 +7,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PinTest {
 
@@ -19,7 +18,7 @@ class PinTest {
 
     @DisplayName("쓰러진 핀의 갯수는 0~10 범위를 벗어나면 expception")
     @ParameterizedTest
-    @ValueSource(ints = {-1,11})
+    @ValueSource(ints = {-1, 11})
     void createFailTest(int count) {
         assertThatIllegalArgumentException().isThrownBy(() -> Pin.from(count));
     }
@@ -28,7 +27,7 @@ class PinTest {
     @Test
     void addFailTest() {
         assertThatIllegalArgumentException().isThrownBy(() ->
-            Pin.from(5).add(Pin.from(6))
+                Pin.from(5).add(Pin.from(6))
         );
     }
 

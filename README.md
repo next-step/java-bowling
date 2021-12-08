@@ -32,4 +32,6 @@
   - nextRound() 다음 라운드를 반환한다.
 - Frame
   - bowl(PinCount pinCount) 공을 굴린다.
-  - nextFrame() 다음 프레임을 반환한다.  
+  
+  - nextFrame() 다음 프레임을 반환한다. 
+  - 

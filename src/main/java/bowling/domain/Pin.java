@@ -1,8 +1,5 @@
 package bowling.domain;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Pin {
@@ -32,7 +29,7 @@ public class Pin {
     }
 
     private static void validCount(int count) {
-        if(count < MIN || count > MAX) {
+        if (count < MIN || count > MAX) {
             throw new IllegalArgumentException(String.format(NO_RANGE_EXCEPTION_MESSAGE_FORMAT, MIN, MAX));
         }
     }

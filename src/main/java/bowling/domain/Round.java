@@ -32,7 +32,7 @@ public class Round {
     }
 
     private static void validRound(int round) {
-        if(round < START || round > LAST) {
+        if (round < START || round > LAST) {
             throw new IllegalArgumentException(String.format(NO_RANGE_EXCEPTION_MESSAGE_FORMAT, START, LAST));
         }
     }

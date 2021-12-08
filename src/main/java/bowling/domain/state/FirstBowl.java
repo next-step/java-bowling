@@ -14,7 +14,7 @@ public class FirstBowl extends Running {
 
     @Override
     public State bowl(Pin pin) {
-        if(firstPin.add(pin).isMaxCount()) {
+        if (firstPin.add(pin).isMaxCount()) {
             return new Spare(firstPin, pin);
         }
 

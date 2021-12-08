@@ -12,13 +12,13 @@ class FirstBowlTest {
     @Test
     void bowlToMiss() {
         FirstBowl firstBowl = new FirstBowl(Pin.from(5));
-        assertThat(firstBowl.bowl(Pin.from(3))).isEqualTo(new Miss(Pin.from(5),Pin.from(3)));
+        assertThat(firstBowl.bowl(Pin.from(3))).isEqualTo(new Miss(Pin.from(5), Pin.from(3)));
     }
 
     @DisplayName("bowl() 시 두번의 합이 10이면 spare반환")
     @Test
     void bowlToSpare() {
         FirstBowl firstBowl = new FirstBowl(Pin.from(5));
-        assertThat(firstBowl.bowl(Pin.from(5))).isEqualTo(new Spare(Pin.from(5),Pin.from(5)));
+        assertThat(firstBowl.bowl(Pin.from(5))).isEqualTo(new Spare(Pin.from(5), Pin.from(5)));
     }
 }
