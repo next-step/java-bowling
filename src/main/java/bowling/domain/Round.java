@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Objects;
+
 public class Round {
 
     private static final int START = 1;
@@ -43,5 +45,22 @@ public class Round {
 
     public boolean isLast() {
         return this.round == LAST;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Round round1 = (Round) o;
+        return round == round1.round;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(round);
     }
 }

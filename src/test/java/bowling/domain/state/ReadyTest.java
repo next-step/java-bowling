@@ -14,14 +14,14 @@ class ReadyTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
     void bowlToFirstBowlTest(int count) {
-        Ready ready = new Ready();
+        Ready ready = Ready.getInstance();
         assertThat(ready.bowl(Pin.from(count))).isEqualTo(new FirstBowl(Pin.from(count)));
     }
 
     @DisplayName("쓰러진 갯수가 10개라면 Strike 반환")
     @Test
     void bowlToStrikeTest() {
-        Ready ready = new Ready();
+        Ready ready = Ready.getInstance();
         assertThat(ready.bowl(Pin.from(10))).isEqualTo(new Strike());
     }
 

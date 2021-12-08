@@ -30,8 +30,11 @@
   - 1~10의 값만을 가진다.
   - isLastRound() 마지막 라운드일 경우 true 반환
   - nextRound() 다음 라운드를 반환한다.
+- FrameFactory
+  - Round에 맞게 Frame을 반환한다.
 - Frame
-  - bowl(PinCount pinCount) 공을 굴린다.
-  
-  - nextFrame() 다음 프레임을 반환한다. 
+  - bowl(PinCount pinCount) 공을 굴린 후 Frame 을 반환한다
+    - finished 된 상태에서 bowl 이 호출되면 ileegalException
+    - 만약 finished 상태가 되었다면 다음 Frame을 반환한다.
+    - 아니라면 round는 같고 State는 다른 Frame을 반환한다.
   - 
