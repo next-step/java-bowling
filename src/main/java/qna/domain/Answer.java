@@ -65,6 +65,14 @@ public class Answer extends AbstractEntity {
         return contents;
     }
 
+    public Question getQuestion() {
+        return question;
+    }
+
+    public boolean questionEquals(Answer other) {
+        return question.equals(other.question);
+    }
+
     public void toQuestion(Question question) {
         this.question = question;
     }
@@ -77,7 +85,7 @@ public class Answer extends AbstractEntity {
 
     private void checkWrittenBy(User user) {
         if (!writer.equals(user)) {
-            throw new CannotDeleteException("삭제할 권한이 없습니다.");
+            throw new CannotDeleteException("답변을 삭제할 권한이 없습니다.");
         }
     }
 
