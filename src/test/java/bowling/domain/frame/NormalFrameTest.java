@@ -2,13 +2,13 @@ package bowling.domain.frame;
 
 import bowling.domain.Pin;
 import bowling.domain.Round;
-import bowling.domain.state.FirstBowl;
-import bowling.domain.state.Ready;
+import bowling.domain.state.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 class NormalFrameTest {
 
@@ -42,5 +42,21 @@ class NormalFrameTest {
     @Test
     void bowlToTest() {
         assertThat(readyFrame.bowl(Pin.from(5))).isEqualTo(NormalFrame.of(Round.from(1), new FirstBowl(Pin.from(5))));
+    }
+
+    @DisplayName("finish 상태에서 bowl을 호출 할 경우 illegal Exception")
+    @Test
+    void bowlFailTest() {
+        assertThatIllegalArgumentException().isThrownBy(() ->
+                NormalFrame.of(Round.from(1), new Miss(Pin.from(3), Pin.from(3))).bowl(Pin.from(2))
+        );
+
+        assertThatIllegalArgumentException().isThrownBy(() ->
+                NormalFrame.of(Round.from(1), new Spare(Pin.from(3), Pin.from(7))).bowl(Pin.from(2))
+        );
+
+        assertThatIllegalArgumentException().isThrownBy(() ->
+                NormalFrame.of(Round.from(1), new Strike()).bowl(Pin.from(2))
+        );
     }
 }

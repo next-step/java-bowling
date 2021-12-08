@@ -27,9 +27,12 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame bowl(Pin pin) {
+        if (state.isFinished()) {
+            throw new IllegalArgumentException();
+        }
         State nextState = state.bowl(pin);
         if (nextState.isFinished()) {
-            return FrameFactory.getFrame(this.round.nextRound());
+            return FrameFactory.getReadyFrame(this.round.nextRound());
         }
         return of(this.round, nextState);
     }
