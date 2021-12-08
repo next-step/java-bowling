@@ -3,8 +3,7 @@ package bowling.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import static bowling.controller.BowlingGame.FIRST_FRAME;
-import static bowling.controller.BowlingGame.LAST_FRAME;
+import static bowling.controller.BowlingGame.*;
 
 public class Frames {
     private final List<Frame> frames;
@@ -22,16 +21,22 @@ public class Frames {
     }
 
     public void pitch(int pinNumber) {
-        if (frames.size() < FIRST_FRAME) {
-            frames.add(new Frame(Sequential.NONE));
+        if (frameNumber() < FIRST_FRAME) {
+            frames.add(new NormalFrame());
         }
 
         Frame currentFrame = currentFrame();
         Frame nextFrame = currentFrame.pitch(pinNumber);
 
-        if (currentFrame != nextFrame && frames.size() != LAST_FRAME) {
-            frames.add(nextFrame);
+        if (currentFrame == nextFrame) {
+            return;
         }
+
+        if (frames.size() == NINTH_FRAME) {
+            nextFrame = new FinalFrame();
+        }
+
+        frames.add(nextFrame);
     }
 
     private Frame currentFrame() {
@@ -42,10 +47,14 @@ public class Frames {
         return frames.size()-1;
     }
 
-    public List<PinNumbers> pinNumbersPerFrame() {
-        List<PinNumbers> entirePinNumbers = new ArrayList<>();
-        frames.forEach(frame -> entirePinNumbers.add(frame.getPinNumbers()));
-
-        return entirePinNumbers;
+    private void addPins(int pinNumber) {
+        frames.forEach(it -> it.addPins(pinNumber));
     }
+
+//    public List<Pitches> pinNumbersPerFrame() {
+//        List<Pitches> entirePinNumbers = new ArrayList<>();
+//        frames.forEach(frame -> entirePinNumbers.add(frame.getPinNumbers()));
+//
+//        return entirePinNumbers;
+//    }
 }

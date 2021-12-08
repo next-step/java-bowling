@@ -3,10 +3,14 @@ package bowling.domain;
 import java.util.Objects;
 
 public class Score {
-    private final int MIN = 0;
-    private final int MAX = 30;
+    private static final int MIN = 0;
+    private static final int MAX = 30;
 
     private final int score;
+
+    public Score() {
+        this.score = MIN;
+    }
 
     public Score(int score) {
         this.score = validateScore(score);

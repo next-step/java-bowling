@@ -5,18 +5,17 @@ import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
 
-import static bowling.controller.BowlingGame.FIRST_FRAME;
-import static bowling.controller.BowlingGame.LAST_FRAME;
-import static bowling.domain.PinNumber.STRIKE_PIN_NUMBER;
+import static bowling.controller.BowlingGame.*;
+import static bowling.domain.Pitch.STRIKE_PIN_NUMBER;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class FramesTest {
-    private final int NINTH_FRAME = 9;
-
     @DisplayName("test finished function of Frames")
     @Test
     void testFinished() {
         Frames fullFrames = of(LAST_FRAME);
+        fullFrames.pitch(STRIKE_PIN_NUMBER);
+        fullFrames.pitch(STRIKE_PIN_NUMBER);
         assertThat(fullFrames.finished()).isTrue();
 
         Frames nineFrames = of(NINTH_FRAME);

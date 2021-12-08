@@ -15,9 +15,9 @@ public class Game {
         return name.getName();
     }
 
-    public List<PinNumbers> pinNumbersPerFrame() {
-        return frames.pinNumbersPerFrame();
-    }
+//    public List<Pitches> pinNumbersPerFrame() {
+//        return frames.pinNumbersPerFrame();
+//    }
 
     public void pitch(int pinNumber) {
         frames.pitch(pinNumber);

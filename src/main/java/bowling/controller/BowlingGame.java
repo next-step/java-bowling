@@ -8,6 +8,7 @@ import bowling.view.OutputView;
 
 public class BowlingGame {
     public static int FIRST_FRAME = 1;
+    public static final int NINTH_FRAME = 9;
     public static int LAST_FRAME = 10;
 
     public void run() {

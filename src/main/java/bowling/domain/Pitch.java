@@ -2,19 +2,15 @@ package bowling.domain;
 
 import java.util.Objects;
 
-public class PinNumber {
+public class Pitch {
     public static final int GUTTER_PIN_NUMBER = 0;
     public static final int SPARE_PIN_NUMBER = 10;
     public static final int STRIKE_PIN_NUMBER = 10;
 
-    private final int number;
+    private final int pins;
 
-    public PinNumber(int number) {
-        this.number = validatePinNumber(number);
-    }
-
-    public int getNumber() {
-        return number;
+    public Pitch(int pins) {
+        this.pins = validatePinNumber(pins);
     }
 
     private int validatePinNumber(int number) {
@@ -25,12 +21,12 @@ public class PinNumber {
         return number;
     }
 
-    public PinNumber add(PinNumber other) {
-        return new PinNumber(this.number + other.number);
+    public int getPins() {
+        return pins;
     }
 
     public Score score() {
-        return new Score(number);
+        return new Score(pins);
     }
 
     @Override
@@ -43,13 +39,13 @@ public class PinNumber {
             return false;
         }
 
-        PinNumber pinNumber = (PinNumber) object;
+        Pitch pin = (Pitch) object;
 
-        return number == pinNumber.number;
+        return pins == pin.pins;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number);
+        return Objects.hash(pins);
     }
 }

@@ -1,16 +1,16 @@
 package bowling.view;
 
 import bowling.domain.Game;
-import bowling.domain.PinNumbers;
+import bowling.domain.Pitches;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
 import static bowling.controller.BowlingGame.*;
-import static bowling.domain.PinNumber.*;
-import static bowling.domain.PinNumbers.NUMBER_OF_PITCH_FOR_BEGINNING;
-import static bowling.domain.PinNumbers.NUMBER_OF_PITCH_FOR_STRIKE;
+import static bowling.domain.Pitch.*;
+import static bowling.domain.Pitches.NUMBER_OF_PITCH_FOR_BEGINNING;
+import static bowling.domain.Pitches.NUMBER_OF_PITCH_FOR_STRIKE;
 
 public class ConsoleOutputView implements OutputView {
     private static final int FIRST_PIN = 0;
@@ -48,12 +48,12 @@ public class ConsoleOutputView implements OutputView {
     private void framesOfBowling(Game game) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(String.format(NAME_FIELD, game.getName()));
-        List<PinNumbers> entirePinNumbers = game.pinNumbersPerFrame();
+//        List<Pitches> entirePinNumbers = game.pinNumbersPerFrame();
 
-        entirePinNumbers.forEach(pinNumbers -> {
-                    List<Integer> pins = pinNumbers.info();
-                    stringBuilder.append(setFrame(pins, pinNumbers.sum().getNumber()));
-                });
+//        entirePinNumbers.forEach(pinNumbers -> {
+//                    List<Integer> pins = pinNumbers.info();
+//                    stringBuilder.append(setFrame(pins, pinNumbers.sum().getNumber()));
+//                });
 
         IntStream.rangeClosed(FIRST_FRAME, LAST_FRAME - game.frameNumber())
                         .forEach(i -> stringBuilder.append(fillEmptyFrame()));
@@ -69,7 +69,7 @@ public class ConsoleOutputView implements OutputView {
         return stringBuilder;
     }
 
-    private StringBuilder setFrame(List<Integer> pins, int totalScore) {
+    private StringBuilder setFrame(List<Integer> pins, int pinNumbers) {
         StringBuilder stringBuilder = new StringBuilder();
         List<Character> convertedPins = new ArrayList<>();
         pins.forEach(pin -> convertedPins.add(convertIntegerToPin(pin)));
@@ -86,7 +86,7 @@ public class ConsoleOutputView implements OutputView {
         stringBuilder.append(String.format(PIN_FIELD,
                 convertedPins.get(FIRST_PIN),
                 addSeparator(convertedPins.get(SECOND_PIN)),
-                convertSpare(convertedPins.get(SECOND_PIN), totalScore)
+                convertSpare(convertedPins.get(SECOND_PIN), pinNumbers)
         ));
 
         return stringBuilder;
