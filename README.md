@@ -7,3 +7,14 @@
 
 ## 온라인 코드 리뷰 과정
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
+
+## 기능목록
+- Pin
+  - 핀이 쓰러진 갯수를 구한다.
+  - 0 <= pin <= 10 의 범위를 가진다.
+  - 범위 를 벗어나는 값이 오면 illegalException  
+  - add(Pin pin) 쓰러진 핀의 개수를 더해서 반환한다.
+  - isMaxCount() pin 쓰러진 pin의 개수가 10개인지 반환한다.  
+- Frame
+  - bowl(PinCount pinCount) 공을 굴린다.
+  - nextFrame() 다음 프레임을 반환한다.  
