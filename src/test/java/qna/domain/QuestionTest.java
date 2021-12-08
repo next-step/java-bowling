@@ -39,7 +39,7 @@ public class QuestionTest {
         List<DeleteHistory> deleteHistories = question.delete(JAVAJIGI);
 
         //then
-        assertThat(deleteHistories).containsExactlyInAnyOrder(
+        assertThat(deleteHistories).containsExactly(
                 new DeleteHistory(ContentType.QUESTION, 1L, JAVAJIGI),
                 new DeleteHistory(ContentType.ANSWER, 1L, JAVAJIGI),
                 new DeleteHistory(ContentType.ANSWER, 2L, JAVAJIGI)

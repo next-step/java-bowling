@@ -84,9 +84,9 @@ public class Question extends AbstractEntity {
         checkWrittenBy(user);
         deleted = true;
 
-        List<DeleteHistory> deleteHistories = answers.delete(user);
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), user));
-
+        deleteHistories.addAll(answers.delete(user));
         return deleteHistories;
     }
 
@@ -101,8 +101,8 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return Collections.emptyList();
+    public Answers getAnswers() {
+        return answers;
     }
 
     @Override
