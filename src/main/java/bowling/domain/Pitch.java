@@ -25,10 +25,6 @@ public class Pitch {
         return pins;
     }
 
-    public int getPins() {
-        return pins;
-    }
-
     public Score score() {
         return new Score(pins);
     }

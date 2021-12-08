@@ -13,10 +13,6 @@ public class NormalFrame implements Frame {
         remainder = INITIAL_REMAINDER;
     }
 
-    public Pitches getPitches() {
-        return pitches;
-    }
-
     public Frame frameAfterPitch(int number) {
         decreaseRemainder();
         pitches.add(new Pitch(number));
@@ -34,7 +30,7 @@ public class NormalFrame implements Frame {
     }
 
     private void increaseRemainder() {
-        if (pitches.containingFirstStike()) {
+        if (pitches.containingFirstStrike()) {
             remainder += 1;
         }
 
@@ -48,7 +44,7 @@ public class NormalFrame implements Frame {
             return false;
         }
 
-        return pitches.isFirstPitch() || !pitches.containingFirstStike();
+        return pitches.isFirstPitch() || !pitches.containingFirstStrike();
     }
 
     public Score score() {
@@ -66,5 +62,9 @@ public class NormalFrame implements Frame {
 
         decreaseRemainder();
         pitches.add(new Pitch(pins));
+    }
+
+    public String state() {
+        return pitches.state();
     }
 }

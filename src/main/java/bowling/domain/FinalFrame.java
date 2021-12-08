@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import static bowling.domain.NormalFrame.INITIAL_REMAINDER;
-
 public class FinalFrame implements Frame {
     private static final int MAX_PITCHES = 3;
 
@@ -9,10 +7,6 @@ public class FinalFrame implements Frame {
 
     public FinalFrame() {
         this.pitches = new Pitches();
-    }
-
-    public Pitches getPitches() {
-        return pitches;
     }
 
     public Frame frameAfterPitch(int number) {
@@ -44,5 +38,9 @@ public class FinalFrame implements Frame {
 
     @Override
     public void addPins(int pins) {
+    }
+
+    public String state() {
+        return pitches.finalState();
     }
 }

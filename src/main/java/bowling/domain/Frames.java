@@ -11,6 +11,7 @@ public class Frames {
 
     public Frames() {
         frames = new ArrayList<>();
+        frames.add(new NormalFrame());
     }
 
     public int frameNumber() {
@@ -22,10 +23,6 @@ public class Frames {
     }
 
     public void pitch(int pins) {
-        if (frameNumber() < FIRST_FRAME) {
-            frames.add(new NormalFrame());
-        }
-
         addAdditionalPins(pins);
 
         Frame currentFrame = currentFrame();
@@ -57,10 +54,11 @@ public class Frames {
         return frames.size()-1;
     }
 
-//    public List<Pitches> pinNumbersPerFrame() {
-//        List<Pitches> entirePinNumbers = new ArrayList<>();
-//        frames.forEach(frame -> entirePinNumbers.add(frame.getPinNumbers()));
-//
-//        return entirePinNumbers;
-//    }
+    public String frameState(int frameNumber) {
+        if (frames.size() < frameNumber - 1) {
+            throw new IndexOutOfBoundsException("That frame is not complete.");
+        }
+
+        return frames.get(frameNumber - 1).state();
+    }
 }

@@ -57,4 +57,24 @@ public class NormalFrameTest {
         frame.addPins(STRIKE_PIN_NUMBER);
         assertThat(frame.score()).isEqualTo(new Score(20));
     }
+
+    @Test
+    void testState() {
+        Frame frame = new NormalFrame();
+        assertThat(frame.state()).isEqualTo("");
+        frame.frameAfterPitch(STRIKE_PIN_NUMBER);
+        assertThat(frame.state()).isEqualTo("X");
+
+        frame = new NormalFrame();
+        frame.frameAfterPitch(FIVE_PIN_NUMBER);
+        assertThat(frame.state()).isEqualTo("5");
+        frame.frameAfterPitch(FIVE_PIN_NUMBER);
+        assertThat(frame.state()).isEqualTo("5|/");
+
+        frame = new NormalFrame();
+        frame.frameAfterPitch(FIVE_PIN_NUMBER);
+        assertThat(frame.state()).isEqualTo("5");
+        frame.frameAfterPitch(TWO_PIN_NUMBER);
+        assertThat(frame.state()).isEqualTo("5|2");
+    }
 }

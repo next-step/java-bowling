@@ -55,4 +55,38 @@ public class FinalFrameTest {
         assertThat(frame.continuable()).isFalse();
         assertThat(frame.score()).isEqualTo(new Score(7));
     }
+
+    @Test
+    void testState() {
+        Frame frame = new FinalFrame();
+        assertThat(frame.state()).isEqualTo("");
+        frame.frameAfterPitch(STRIKE_PIN_NUMBER);
+        assertThat(frame.state()).isEqualTo("X");
+        frame.frameAfterPitch(STRIKE_PIN_NUMBER);
+        assertThat(frame.state()).isEqualTo("X|X");
+        frame.frameAfterPitch(STRIKE_PIN_NUMBER);
+        assertThat(frame.state()).isEqualTo("X|X|X");
+
+        frame = new FinalFrame();
+        frame.frameAfterPitch(STRIKE_PIN_NUMBER);
+        assertThat(frame.state()).isEqualTo("X");
+        frame.frameAfterPitch(FIVE_PIN_NUMBER);
+        assertThat(frame.state()).isEqualTo("X|5");
+        frame.frameAfterPitch(TWO_PIN_NUMBER);
+        assertThat(frame.state()).isEqualTo("X|5|2");
+
+        frame = new FinalFrame();
+        frame.frameAfterPitch(FIVE_PIN_NUMBER);
+        assertThat(frame.state()).isEqualTo("5");
+        frame.frameAfterPitch(FIVE_PIN_NUMBER);
+        assertThat(frame.state()).isEqualTo("5|/");
+        frame.frameAfterPitch(STRIKE_PIN_NUMBER);
+        assertThat(frame.state()).isEqualTo("5|/|X");
+
+        frame = new FinalFrame();
+        frame.frameAfterPitch(FIVE_PIN_NUMBER);
+        assertThat(frame.state()).isEqualTo("5");
+        frame.frameAfterPitch(TWO_PIN_NUMBER);
+        assertThat(frame.state()).isEqualTo("5|2");
+    }
 }

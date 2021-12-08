@@ -51,20 +51,20 @@ public class PitchesTest {
     @Test
     void testContainingFirstStrike() {
         Pitches pitches = new Pitches();
-        assertThat(pitches.containingFirstStike()).isFalse();
+        assertThat(pitches.containingFirstStrike()).isFalse();
 
         pitches.add(PITCH_STRIKE);
-        assertThat(pitches.containingFirstStike()).isTrue();
+        assertThat(pitches.containingFirstStrike()).isTrue();
 
         pitches.add(PITCH_STRIKE);
-        assertThat(pitches.containingFirstStike()).isTrue();
+        assertThat(pitches.containingFirstStrike()).isTrue();
 
         pitches = new Pitches();
         pitches.add(PITCH_GUTTER);
-        assertThat(pitches.containingFirstStike()).isFalse();
+        assertThat(pitches.containingFirstStrike()).isFalse();
 
         pitches.add(PITCH_STRIKE);
-        assertThat(pitches.containingFirstStike()).isFalse();
+        assertThat(pitches.containingFirstStrike()).isFalse();
     }
 
     @Test
