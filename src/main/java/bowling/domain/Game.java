@@ -3,12 +3,17 @@ package bowling.domain;
 import java.util.List;
 
 public class Game {
-    Frames frames;
     Name name;
+    Frames frames;
 
     public Game(String name) {
-        this.frames = new Frames();
         this.name = new Name(name);
+        this.frames = new Frames();
+    }
+
+    public Game(String name, Frames frames) {
+        this.name = new Name(name);
+        this.frames = frames;
     }
 
     public String getName() {

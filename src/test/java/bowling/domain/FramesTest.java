@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
@@ -33,7 +32,7 @@ public class FramesTest {
         assertThat(nineFrames.finished()).isFalse();
     }
 
-    private Frames ofStrikeFrames(int frameNumber) {
+    public static Frames ofStrikeFrames(int frameNumber) {
         Frames frames = new Frames();
 
         IntStream.rangeClosed(FIRST_FRAME, frameNumber)
@@ -42,7 +41,7 @@ public class FramesTest {
         return frames;
     }
 
-    private Frames ofSpareFrames(int frameNumber) {
+    public static Frames ofSpareFrames(int frameNumber) {
         Frames frames = new Frames();
 
         IntStream.rangeClosed(FIRST_FRAME, frameNumber)
