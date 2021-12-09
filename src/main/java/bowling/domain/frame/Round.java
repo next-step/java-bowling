@@ -7,9 +7,9 @@ public class Round {
     private static final int START = 1;
     private static final int LAST = 10;
     private static final int NEXT_ROUND_VALUE = 1;
+    private static final int CALC_INT_TO_ROUND_ARRAY = 1;
     private static final String NO_RANGE_EXCEPTION_MESSAGE_FORMAT = "Round는 %d ~ %d 만 존재합니다.";
-    private static final Round[] zeroThroughTen = {
-            new Round(0),
+    private static final Round[] oneThroughTen = {
             new Round(1),
             new Round(2),
             new Round(3),
@@ -30,7 +30,7 @@ public class Round {
 
     public static Round from(int round) {
         validRound(round);
-        return zeroThroughTen[round];
+        return oneThroughTen[round - CALC_INT_TO_ROUND_ARRAY];
     }
 
     private static void validRound(int round) {
