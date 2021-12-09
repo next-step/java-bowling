@@ -68,4 +68,17 @@ class FinalFrameTest {
         assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(10)).isGameEnd()).isFalse();
         assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(10)).isGameEnd()).isFalse();
     }
+
+    @DisplayName("isEqualsRound() round가 같으면 true를 반환한다.")
+    @Test
+    void isEqualsRoundTest() {
+        assertThat(ready.isEqualsRound(NormalFrame.readyFrame(Round.LAST))).isTrue();
+        assertThat(ready.isEqualsRound(NormalFrame.readyFrame(Round.from(2)))).isFalse();
+    }
+
+    @DisplayName("round() frame의 round를 반환한다.")
+    @Test
+    void roundTest() {
+        assertThat(ready.round()).isEqualTo(Round.LAST);
+    }
 }

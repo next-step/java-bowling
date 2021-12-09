@@ -41,10 +41,13 @@
     - finished 된 상태에서 bowl 이 호출되면 ileegalException
     - 만약 finished 상태가 되었다면 다음 Frame을 반환한다.
     - 아니라면 round는 같고 State는 다른 Frame을 반환한다.
+  - isEqualsRound() round 가 같으면 true를 반환한다.
+  - round() frame의 round를 반환한다.
 - Frames
   - Frame을 포함하는 1급 객체
   - isEndGame() 호출 시 마지막 Frame의 isEndGame을 리턴한다.
   - bowl() 마지막 프레임에 bowl() 을 호출 한다.
+  - bowl() 호출 후 다음 프레임이 반환되면 list에 add한다.
 - User
   - 이름은 3글자 영어 단어만 가능
 - BolwingGame

@@ -41,6 +41,16 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public boolean isEqualsRound(Frame frame) {
+        return round().equals(frame.round());
+    }
+
+    @Override
+    public Round round() {
+        return Round.LAST;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

@@ -14,7 +14,7 @@ class NormalFrameTest {
 
     @BeforeEach
     void setUp() {
-        readyFrame = NormalFrame.readyFrame(Round.from(1));
+        readyFrame = NormalFrame.readyFrame(Round.FIRST);
     }
 
     @DisplayName("정상 생성 테스트")
@@ -62,5 +62,18 @@ class NormalFrameTest {
     @Test
     void isEndGameTest() {
         assertThat(readyFrame.isGameEnd()).isFalse();
+    }
+
+    @DisplayName("isEqualsRound() round가 같으면 true를 반환한다.")
+    @Test
+    void isEqualsRoundTest() {
+        assertThat(readyFrame.isEqualsRound(NormalFrame.readyFrame(Round.FIRST))).isTrue();
+        assertThat(readyFrame.isEqualsRound(NormalFrame.readyFrame(Round.from(2)))).isFalse();
+    }
+
+    @DisplayName("round() frame의 round를 반환한다.")
+    @Test
+    void roundTest() {
+        assertThat(readyFrame.round()).isEqualTo(Round.FIRST);
     }
 }

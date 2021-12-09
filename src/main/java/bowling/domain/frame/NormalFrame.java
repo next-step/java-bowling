@@ -30,6 +30,16 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public boolean isEqualsRound(Frame frame) {
+        return round.equals(frame.round());
+    }
+
+    @Override
+    public Round round() {
+        return this.round;
+    }
+
+    @Override
     public Frame bowl(Pin pin) {
         if (state.isFinished()) {
             throw new IllegalArgumentException();

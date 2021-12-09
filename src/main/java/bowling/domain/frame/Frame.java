@@ -6,4 +6,8 @@ public interface Frame {
     boolean isGameEnd();
 
     boolean isFinished();
+
+    boolean isEqualsRound(Frame frame);
+
+    Round round();
 }
