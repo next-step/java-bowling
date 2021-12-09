@@ -8,7 +8,8 @@ import java.util.Objects;
 public class NormalFrame implements Frame {
 
     private final Round round;
-    private final State state;
+    private State state;
+    private Frame next;
 
     private NormalFrame(Round round, State state) {
         this.round = round;
@@ -33,11 +34,13 @@ public class NormalFrame implements Frame {
         if (state.isFinished()) {
             throw new IllegalArgumentException();
         }
-        State nextState = state.bowl(pin);
-        if (nextState.isFinished()) {
-            return FrameFactory.getReadyFrame(this.round.nextRound());
+        this.state = state.bowl(pin);
+
+        if (this.state.isFinished()) {
+            this.next = FrameFactory.getReadyFrame(this.round.nextRound());
+            return this.next;
         }
-        return of(this.round, nextState);
+        return this;
     }
 
     @Override

@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class FinalFrame implements Frame {
 
-    private final State state;
+    private State state;
 
     private FinalFrame(State state) {
         this.state = state;
@@ -26,7 +26,8 @@ public class FinalFrame implements Frame {
         if (state.isFinished()) {
             throw new IllegalArgumentException();
         }
-        return of(state.bowl(pin));
+        state = state.bowl(pin);
+        return this;
     }
 
     @Override
