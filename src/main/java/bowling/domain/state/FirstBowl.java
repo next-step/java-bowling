@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
-import bowling.domain.Pin;
+import bowling.domain.frame.Pin;
 
 import java.util.Objects;
 

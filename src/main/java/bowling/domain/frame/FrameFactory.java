@@ -1,12 +1,10 @@
 package bowling.domain.frame;
 
-import bowling.domain.Round;
-
 public class FrameFactory {
 
-    public static Frame getFrame(Round round) {
+    public static Frame getReadyFrame(Round round) {
         if (round.isLast()) {
-            return FinalFrame.readyFrame(round);
+            return FinalFrame.readyFrame();
         }
 
         return NormalFrame.readyFrame(round);

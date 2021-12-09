@@ -1,7 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.Pin;
-import bowling.domain.Round;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
