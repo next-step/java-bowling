@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Round {
 
-    private static final int START = 1;
-    private static final int LAST = 10;
+    private static final int FIRST_VALUE = 1;
+    private static final int LAST_VALUE = 10;
     private static final int NEXT_ROUND_VALUE = 1;
     private static final int CALC_INT_TO_ROUND_ARRAY = 1;
     private static final String NO_RANGE_EXCEPTION_MESSAGE_FORMAT = "Round는 %d ~ %d 만 존재합니다.";
@@ -21,6 +21,8 @@ public class Round {
             new Round(9),
             new Round(10)
     };
+    public static final Round FIRST = oneThroughTen[0];
+    public static final Round LAST = oneThroughTen[9];
 
     private final int round;
 
@@ -34,8 +36,8 @@ public class Round {
     }
 
     private static void validRound(int round) {
-        if (round < START || round > LAST) {
-            throw new IllegalArgumentException(String.format(NO_RANGE_EXCEPTION_MESSAGE_FORMAT, START, LAST));
+        if (round < FIRST_VALUE || round > LAST_VALUE) {
+            throw new IllegalArgumentException(String.format(NO_RANGE_EXCEPTION_MESSAGE_FORMAT, FIRST_VALUE, LAST_VALUE));
         }
     }
 
@@ -44,7 +46,7 @@ public class Round {
     }
 
     public boolean isLast() {
-        return this.round == LAST;
+        return this.round == LAST_VALUE;
     }
 
     @Override
