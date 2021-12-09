@@ -22,10 +22,14 @@
   - running
     - ready
     - firstBowl
-  - finished  
+  - finished
     - Strike
     - Miss
     - Spare
+  - finalFrameState
+    - 시도 횟수 3번
+    - miss 면 시도횟수 0번으로 변경
+    - isFinished() 는 시도횟수가 0번이면 발생
 - Round
   - 1~10의 값만을 가진다.
   - isLastRound() 마지막 라운드일 경우 true 반환
@@ -38,5 +42,4 @@
     - 만약 finished 상태가 되었다면 다음 Frame을 반환한다.
     - 아니라면 round는 같고 State는 다른 Frame을 반환한다.
   -
-- Score
-  - 남은 횟수와 
+
