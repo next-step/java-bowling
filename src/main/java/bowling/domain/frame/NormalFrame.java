@@ -41,6 +41,11 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public boolean isGameEnd() {
+        return false;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

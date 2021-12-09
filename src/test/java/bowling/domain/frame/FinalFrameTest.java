@@ -48,4 +48,24 @@ class FinalFrameTest {
                 ready.bowl(Pin.from(5)).bowl(Pin.from(4)).bowl(Pin.from(5))
         );
     }
+
+    @DisplayName("FinalFrame이 끝난 경우 isGameEnd는 True를 반환한다.")
+    @Test
+    void isGameEndTrueTest() {
+        assertThat(ready.bowl(Pin.from(5)).bowl(Pin.from(5)).bowl(Pin.from(5)).isGameEnd()).isTrue();
+        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(5)).bowl(Pin.from(5)).isGameEnd()).isTrue();
+        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(5)).bowl(Pin.from(4)).isGameEnd()).isTrue();
+        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(10)).bowl(Pin.from(4)).isGameEnd()).isTrue();
+        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(10)).bowl(Pin.from(10)).isGameEnd()).isTrue();
+    }
+
+    @DisplayName("FinalFrame이 끝나지 않은 경우 isGameEnd는 False를 반환한다.")
+    @Test
+    void isGameEndFalseTest() {
+        assertThat(ready.bowl(Pin.from(5)).bowl(Pin.from(5)).isGameEnd()).isFalse();
+        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(5)).isGameEnd()).isFalse();
+        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(5)).isGameEnd()).isFalse();
+        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(10)).isGameEnd()).isFalse();
+        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(10)).isGameEnd()).isFalse();
+    }
 }

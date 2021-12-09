@@ -30,6 +30,11 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public boolean isGameEnd() {
+        return isFinished();
+    }
+
+    @Override
     public boolean isFinished() {
         return state.isFinished();
     }

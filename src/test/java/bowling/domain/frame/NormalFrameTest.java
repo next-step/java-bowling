@@ -57,4 +57,10 @@ class NormalFrameTest {
                 NormalFrame.of(Round.from(1), new Strike()).bowl(Pin.from(2))
         );
     }
+
+    @DisplayName("nomalFrame인 경우는 isGameEnd는 false를 반환한다.")
+    @Test
+    void isEndGameTest() {
+        assertThat(readyFrame.isGameEnd()).isFalse();
+    }
 }
