@@ -9,6 +9,7 @@ public class FinalFrameState implements State {
     private static final int DEFAULT_LEFT = 3;
     private static final int END_LEFT = 0;
     private static final int MISS_STATE_LEFT = 0;
+    private static final int CALCULATE_LEFT_DEFAULT = 1;
 
     private final LinkedList<State> states;
     private final int left;
