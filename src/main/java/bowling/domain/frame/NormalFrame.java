@@ -24,6 +24,11 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public boolean isFinished() {
+        return state.isFinished();
+    }
+
+    @Override
     public Frame bowl(Pin pin) {
         if (state.isFinished()) {
             throw new IllegalArgumentException();

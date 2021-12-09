@@ -1,15 +1,12 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.FirstBowl;
-import bowling.domain.state.Ready;
-import bowling.domain.state.Spare;
+import bowling.domain.state.FinalFrameState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 class FinalFrameTest {
 
@@ -23,24 +20,32 @@ class FinalFrameTest {
     @DisplayName("정상 생성 테스트")
     @Test
     void createTest() {
-        assertThat(FinalFrame.readyFrame()).isEqualTo(FinalFrame.of(Arrays.asList(Ready.getInstance())));
+        assertThat(FinalFrame.readyFrame()).isEqualTo(FinalFrame.of(FinalFrameState.readyState()));
     }
 
-    @DisplayName("2번째 굴린 뒤 State가 Spare면 한번 더 칠 수 있다")
+    @DisplayName("3번까지 굴릴 수 있다.")
     @Test
     void bonusTest() {
-        FinalFrame spare = FinalFrame.of(Arrays.asList(new FirstBowl(Pin.from(5)), new Spare(Pin.from(5), Pin.from(5))));
-        FinalFrame spareExpect = FinalFrame.of(Arrays.asList(
-                        new FirstBowl(Pin.from(5)),
-                        new Spare(Pin.from(5), Pin.from(5)),
-                        new FirstBowl(Pin.from(5))
-        ));
-        assertThat(spare.bowl(Pin.from(5)))
-                .isEqualTo(spareExpect);
-
-//        FinalFrame strike =
-
-
+        assertThat(ready.bowl(Pin.from(5)).bowl(Pin.from(5)).bowl(Pin.from(5)).isFinished()).isTrue();
+        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(5)).bowl(Pin.from(5)).isFinished()).isTrue();
+        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(5)).bowl(Pin.from(4)).isFinished()).isTrue();
+        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(10)).bowl(Pin.from(4)).isFinished()).isTrue();
+        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(10)).bowl(Pin.from(10)).isFinished()).isTrue();
     }
 
+    @DisplayName("finish 상태에서 bowl을 호출 할 경우 illegal Exception")
+    @Test
+    void bowlFailTest() {
+        assertThatIllegalArgumentException().isThrownBy(() ->
+                ready.bowl(Pin.from(10)).bowl(Pin.from(10)).bowl(Pin.from(10)).bowl(Pin.from(5))
+        );
+
+        assertThatIllegalArgumentException().isThrownBy(() ->
+                ready.bowl(Pin.from(5)).bowl(Pin.from(5)).bowl(Pin.from(5)).bowl(Pin.from(5))
+        );
+
+        assertThatIllegalArgumentException().isThrownBy(() ->
+                ready.bowl(Pin.from(5)).bowl(Pin.from(4)).bowl(Pin.from(5))
+        );
+    }
 }

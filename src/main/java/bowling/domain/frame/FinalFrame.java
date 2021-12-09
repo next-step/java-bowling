@@ -1,52 +1,53 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.Ready;
+import bowling.domain.state.FinalFrameState;
 import bowling.domain.state.State;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Objects;
 
 public class FinalFrame implements Frame {
 
-    private static final int MAX_STATES_SIZE = 5;
+    private final State state;
 
-
-    private FinalFrame(List<State> states) {
-//        this.states = new ArrayList<>(states);
+    private FinalFrame(State state) {
+        this.state = state;
     }
 
     public static FinalFrame readyFrame() {
-        return of(Arrays.asList(Ready.getInstance()));
+        return of(FinalFrameState.readyState());
     }
 
-    public static FinalFrame of(List<State> states) {
-        return new FinalFrame(states);
+    public static FinalFrame of(State state) {
+        return new FinalFrame(state);
     }
 
     @Override
     public Frame bowl(Pin pin) {
-//        if (isFinished()) {
-//            throw new IllegalArgumentException();
-//        }
-//        State lastState = states.get(states.size() - 1);
-//        State nextState = lastState.bowl(pin);
-//        List<State> addedStates = nextStates(nextState);
-//        return of(addedStates);
-        return null;
+        if (state.isFinished()) {
+            throw new IllegalArgumentException();
+        }
+        return of(state.bowl(pin));
     }
-//
-//    public boolean isFinished() {
-//        if (states.size() == MAX_STATES_SIZE) {
-//            return true;
-//        }
-//
-//        State lastState = states.get(states.size() - 1);
-//
-//        if (lastState instanceof Miss) {
-//            return true;
-//        }
-//
-//        return false;
-//    }
 
+    @Override
+    public boolean isFinished() {
+        return state.isFinished();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        FinalFrame that = (FinalFrame) o;
+        return Objects.equals(state, that.state);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(state);
+    }
 }
