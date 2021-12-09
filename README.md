@@ -41,5 +41,7 @@
     - finished 된 상태에서 bowl 이 호출되면 ileegalException
     - 만약 finished 상태가 되었다면 다음 Frame을 반환한다.
     - 아니라면 round는 같고 State는 다른 Frame을 반환한다.
-  -
+- User
+  - 이름은 3글자 영어 단어만 가능
+  
 
