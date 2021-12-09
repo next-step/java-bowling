@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Frames {
 
-    private final LinkedList<Frame> frames;
+    private LinkedList<Frame> frames;
 
     private Frames(LinkedList<Frame> frames) {
         this.frames = new LinkedList<>(frames);
@@ -23,6 +23,14 @@ public class Frames {
 
     public boolean isGameEnd() {
         return frames.getLast().isGameEnd();
+    }
+
+    public void bowl(Pin pin) {
+        Frame frame = frames.getLast();
+        Frame nextFrame = frame.bowl(pin);
+        if (!frame.isEqualsRound(nextFrame)) {
+            frames.add(nextFrame);
+        }
     }
 
     @Override
