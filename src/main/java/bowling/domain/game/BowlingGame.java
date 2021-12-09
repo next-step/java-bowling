@@ -1,4 +1,4 @@
-package bowling.domain.Game;
+package bowling.domain.game;
 
 import bowling.domain.frame.Frames;
 import bowling.domain.user.User;
