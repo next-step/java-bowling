@@ -17,6 +17,7 @@ class FramesTest {
         LinkedList<Frame> frames = new LinkedList<>();
         frames.add(NormalFrame.readyFrame(Round.from(1)));
         assertThat(Frames.from(frames)).isEqualTo(Frames.from(frames));
+        assertThat(Frames.readyFrames()).isEqualTo(Frames.from(frames));
     }
 
     @DisplayName("마지막 frame의 isGameEnd를 반환한다.")

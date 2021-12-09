@@ -11,6 +11,12 @@ public class Frames {
         this.frames = new LinkedList<>(frames);
     }
 
+    public static Frames readyFrames() {
+        LinkedList<Frame> frames = new LinkedList<>();
+        frames.add(NormalFrame.readyFrame(Round.FIRST));
+        return from(frames);
+    }
+
     public static Frames from(LinkedList<Frame> frames) {
         return new Frames(frames);
     }
