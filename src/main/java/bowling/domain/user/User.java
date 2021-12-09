@@ -14,7 +14,7 @@ public class User {
         this.name = name;
     }
 
-    public static User of(String name) {
+    public static User from(String name) {
         validLength(name);
         validAlphabet(name);
 

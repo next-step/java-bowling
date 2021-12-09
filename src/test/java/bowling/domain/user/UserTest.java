@@ -13,20 +13,20 @@ public class UserTest {
     @DisplayName("생성 테스트")
     @Test
     void createTest() {
-        assertThat(User.of("ydh")).isEqualTo(User.of("ydh"));
+        assertThat(User.from("ydh")).isEqualTo(User.from("ydh"));
     }
 
     @DisplayName("3글자가 아니면 illegal exception")
     @ParameterizedTest
     @ValueSource(strings = {"ab", "abcd"})
     void nameLengthTest(String name) {
-        assertThatIllegalArgumentException().isThrownBy(()->User.of(name));
+        assertThatIllegalArgumentException().isThrownBy(() -> User.from(name));
     }
 
     @DisplayName("영문자가 아니면 illegal exception")
     @ParameterizedTest
     @ValueSource(strings = {"a1b", "123", "양도혁", "ㄱㄴㄷ"})
     void nameAlphabetTest(String name) {
-        assertThatIllegalArgumentException().isThrownBy(()->User.of(name));
+        assertThatIllegalArgumentException().isThrownBy(() -> User.from(name));
     }
 }

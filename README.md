@@ -44,7 +44,11 @@
 - Frames
   - Frame을 포함하는 1급 객체
   - isEndGame() 호출 시 마지막 Frame의 isEndGame을 리턴한다.
+  - bowl() 마지막 프레임에 bowl() 을 호출 한다.
 - User
   - 이름은 3글자 영어 단어만 가능
+- BolwingGame
+  - 볼링 게임을 관리하는 객체
+  - bowl()
   
 
