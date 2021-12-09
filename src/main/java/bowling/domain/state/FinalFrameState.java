@@ -2,28 +2,24 @@ package bowling.domain.state;
 
 import bowling.domain.frame.Pin;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class FinalFrameState implements State {
 
     private static final int DEFAULT_LEFT = 3;
     private static final int END_LEFT = 0;
     private static final int MISS_STATE_LEFT = 0;
-    private static final int CALCULATE_LEFT_DEFAULT = 1;
 
-    private final List<State> states;
+    private final LinkedList<State> states;
     private final int left;
 
     private FinalFrameState(List<State> states, int left) {
-        this.states = new ArrayList<>(states);
+        this.states = new LinkedList<>(states);
         this.left = left;
     }
 
     public static FinalFrameState readyState() {
-        return new FinalFrameState(Arrays.asList(Ready.getInstance()), DEFAULT_LEFT);
+        return of(Arrays.asList(Ready.getInstance()), DEFAULT_LEFT);
     }
 
     public static FinalFrameState of(List<State> states, int left) {
@@ -37,7 +33,7 @@ public class FinalFrameState implements State {
 
     @Override
     public State bowl(Pin pin) {
-        State lastState = states.get(states.size() - 1);
+        State lastState = states.getLast();
         return nextState(lastState.bowl(pin));
     }
 
