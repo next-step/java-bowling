@@ -15,10 +15,12 @@
   - 범위 를 벗어나는 값이 오면 illegalException  
   - add(Pin pin) 쓰러진 핀의 개수를 더해서 반환한다.
   - isMaxCount() pin 쓰러진 pin의 개수가 10개인지 반환한다.
+  - viewString() -> 현재 상태를 볼링 규칙에 맞게 반환한다.
 - State
   - 프레임의 상태를 나타낸다
   - bowl()을 호출하면 다음 상태를 반환한다
   - isFinished() 종료상태인지 반환한다
+  - viewString() -> 현재 상태를 볼링 규칙에 맞게 반환한다.
   - running
     - ready
     - firstBowl
@@ -50,8 +52,10 @@
   - bowl() 호출 후 다음 프레임이 반환되면 list에 add한다.
 - User
   - 이름은 3글자 영어 단어만 가능
+- GameResult
+  - 진행된 게임의 result를 저장하는 객체
 - BolwingGame
   - 볼링 게임을 관리하는 객체
-  - bowl()
+  - bowl() 후 GameResult를 반환한다.
   
 

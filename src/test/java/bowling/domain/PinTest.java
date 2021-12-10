@@ -4,6 +4,7 @@ import bowling.domain.frame.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,5 +44,15 @@ class PinTest {
     void isMaxCountTest() {
         assertThat(Pin.from(5).isMaxCount()).isFalse();
         assertThat(Pin.from(10).isMaxCount()).isTrue();
+    }
+
+    @DisplayName("viewString() 은 볼링 규칙에 맞게 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {
+            "0:-", "1:1", "2:2", "3:3", "4:4", "5:5",
+            "6:6", "7:7", "8:8", "9:9", "10:X"
+    }, delimiter = ':')
+    void viewStringTest(int pin, String view) {
+        assertThat(Pin.from(pin).viewString()).isEqualTo(view);
     }
 }
