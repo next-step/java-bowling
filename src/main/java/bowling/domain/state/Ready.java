@@ -4,6 +4,8 @@ import bowling.domain.frame.Pin;
 
 public class Ready extends Running {
 
+    private static final String BLANK_VIEW = "";
+
     private Ready() {
     }
 
@@ -22,7 +24,7 @@ public class Ready extends Running {
 
     @Override
     public String viewString() {
-        return null;
+        return BLANK_VIEW;
     }
 
     private static class InnerInstanceClazz {
