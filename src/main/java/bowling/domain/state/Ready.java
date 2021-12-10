@@ -20,6 +20,11 @@ public class Ready extends Running {
         return new FirstBowl(pin);
     }
 
+    @Override
+    public String viewString() {
+        return null;
+    }
+
     private static class InnerInstanceClazz {
         private static final Ready instance = new Ready();
     }

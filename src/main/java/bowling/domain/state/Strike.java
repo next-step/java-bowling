@@ -21,6 +21,11 @@ public class Strike extends Finished {
     }
 
     @Override
+    public String viewString() {
+        return pin.viewString();
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(pin);
     }

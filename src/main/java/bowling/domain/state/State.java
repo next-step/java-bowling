@@ -6,4 +6,6 @@ public interface State {
     boolean isFinished();
 
     State bowl(Pin pin);
+
+    String viewString();
 }

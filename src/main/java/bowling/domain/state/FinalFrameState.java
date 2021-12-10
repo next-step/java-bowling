@@ -28,6 +28,11 @@ public class FinalFrameState implements State {
     }
 
     @Override
+    public String viewString() {
+        return null;
+    }
+
+    @Override
     public boolean isFinished() {
         return left == END_LEFT;
     }

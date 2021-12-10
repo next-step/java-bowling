@@ -19,6 +19,11 @@ public class Spare extends Finished {
     }
 
     @Override
+    public String viewString() {
+        return null;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
