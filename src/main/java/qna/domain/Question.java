@@ -1,9 +1,11 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -18,14 +20,12 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private final Answers answers = new Answers();
 
     private boolean deleted = false;
 
-    public Question() {
+    protected Question() {
     }
 
     public Question(String title, String contents) {
@@ -80,11 +80,28 @@ public class Question extends AbstractEntity {
         return this;
     }
 
+    public List<DeleteHistory> delete(User user) {
+        checkWrittenBy(user);
+        deleted = true;
+
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), user));
+        deleteHistories.addAll(answers.delete(user));
+        return deleteHistories;
+    }
+
+    private void checkWrittenBy(User user) {
+        if (!writer.equals(user)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
+
     public boolean isDeleted() {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
     }
 
