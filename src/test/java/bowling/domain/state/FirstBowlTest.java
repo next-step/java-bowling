@@ -21,4 +21,10 @@ class FirstBowlTest {
         FirstBowl firstBowl = new FirstBowl(Pin.from(5));
         assertThat(firstBowl.bowl(Pin.from(5))).isEqualTo(new Spare(Pin.from(5), Pin.from(5)));
     }
+
+    @DisplayName("FirstBowl viewString()은 X를 반환한다.")
+    @Test
+    void viewStringTest() {
+        assertThat(new FirstBowl(Pin.from(5)).viewString()).isEqualTo("5");
+    }
 }

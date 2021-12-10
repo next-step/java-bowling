@@ -23,7 +23,7 @@ public class FirstBowl extends Running {
 
     @Override
     public String viewString() {
-        return null;
+        return firstPin.viewString();
     }
 
     @Override
