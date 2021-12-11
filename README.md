@@ -1,9 +1,27 @@
 # 볼링 게임 점수판
-## 진행 방법
-* 볼링 게임 점수판 요구사항을 파악한다.
-* 요구사항에 대한 구현을 완료한 후 자신의 github 아이디에 해당하는 브랜치에 Pull Request(이하 PR)를 통해 코드 리뷰 요청을 한다.
-* 코드 리뷰 피드백에 대한 개선 작업을 하고 다시 PUSH한다.
-* 모든 피드백을 완료하면 다음 단계를 도전하고 앞의 과정을 반복한다.
+- InputView
+  - 플레이어 이름을 입력받는다.
+  - 이번 투구에 넘어뜨린 핀 개수를 입력 받는다.
+- OutputView
+  - 플레이어의 이름을 출력한다.
+  - 프레임별로 현재 까지의 결과를 출력한다.
+    - 각 프레임이 스트라이크이면 "X", 스페어이면 "9 | /", 미스이면 "8 | 1", 과 같이 출력
+    
+- Pin: 한 투구에 넘어뜨린 핀의 개수
+  - 넘어뜨린 개수를 입력받아 Pin 생성
+ 
+- Bowl
+  - ProceedingBowl: 한번 더 투구를 할 수 있는 공
+    - FirstBowl
+    - NextBowl
+  - EndedBowl: 더이상 투구할 수 없는 공
+    - StrikeBowl
+    - SpareBowl
+    - MissBowl
+    - GutterBowl
 
-## 온라인 코드 리뷰 과정
-* [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
+- Frame: 하나의 프레임을 의미, 이번 프레임에 친 공을 인스턴스 변수로 갖는다.
+  - NormalFrame 1 ~ 9 프레임
+  - FinalFrame 10 프레임
+
+- Bowling
