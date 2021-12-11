@@ -28,7 +28,7 @@ public class NextBowl extends ProceedingBowl {
             return new SpareBowl();
         }
         if (sumOfPin.isNoneHit()) {
-            return new GutterBowl();
+            return GutterBowl.bowl();
         }
         return new MissBowl(previousPin, pin);
     }
