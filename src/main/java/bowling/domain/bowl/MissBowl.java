@@ -21,7 +21,7 @@ public class MissBowl extends FinishedBowl {
 
     private void checkMiss(Pin firstPin, Pin secondPin) {
         Pin sumOfPin = firstPin.plus(secondPin);
-        if (sumOfPin.isAllHit() || secondPin.isNoneHit()) {
+        if (sumOfPin.isAllHit() || sumOfPin.isNoneHit()) {
             throw new CanNotPitchException(NOT_MISS_MESSAGE);
         }
     }

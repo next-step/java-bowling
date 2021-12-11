@@ -27,7 +27,7 @@ class NextBowlTest {
             "5, 5",
     })
     void pitch_spare(int previousHitCount, int hitCount) {
-        assertThat(pitchOfNextBowl(previousHitCount, hitCount)).isInstanceOf(SpareBowl.class);
+        assertThat(pitchTwoBowls(previousHitCount, hitCount)).isInstanceOf(SpareBowl.class);
     }
 
     @DisplayName("미스")
@@ -35,21 +35,21 @@ class NextBowlTest {
     @CsvSource({
             "0, 4",
             "3, 6",
-            "1, 0",
+            "1, 0"
     })
     void pitch_miss(int previousHitCount, int hitCount) {
-        assertThat(pitchOfNextBowl(previousHitCount, hitCount)).isInstanceOf(MissBowl.class);
+        assertThat(pitchTwoBowls(previousHitCount, hitCount)).isInstanceOf(MissBowl.class);
     }
 
     @DisplayName("거터")
     @Test
     void pitch_gutter() {
-        assertThat(pitchOfNextBowl(0, 0)).isInstanceOf(GutterBowl.class);
+        assertThat(pitchTwoBowls(0, 0)).isInstanceOf(GutterBowl.class);
     }
 
-    private Bowl pitchOfNextBowl(int previousHitCount, int hitCount) {
-        Bowl nextBowl = new NextBowl(previousHitCount);
-        return nextBowl.pitch(pin(hitCount));
+    private Bowl pitchTwoBowls(int previousHitCount, int hitCount) {
+        Bowl bowl = new NextBowl(previousHitCount);
+        return bowl.pitch(pin(hitCount));
     }
 
     private static Pin pin(int hitCount) {
