@@ -25,7 +25,7 @@ public class NextBowl extends ProceedingBowl {
     public Bowl pitch(Pin pin) {
         Pin sumOfPin = previousPin.plus(pin);
         if (sumOfPin.isAllHit()) {
-            return new SpareBowl();
+            return new SpareBowl(previousPin, pin);
         }
         if (sumOfPin.isNoneHit()) {
             return GutterBowl.bowl();

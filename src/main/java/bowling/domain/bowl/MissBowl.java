@@ -9,8 +9,8 @@ public class MissBowl extends FinishedBowl {
     private final Pin firstPin;
     private final Pin secondPin;
 
-    public MissBowl(int firstPin, int secondPin) {
-        this(Pin.from(firstPin), Pin.from(secondPin));
+    public MissBowl(int firstHitCount, int secondHitCount) {
+        this(Pin.from(firstHitCount), Pin.from(secondHitCount));
     }
 
     public MissBowl(Pin firstPin, Pin secondPin) {
