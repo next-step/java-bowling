@@ -4,7 +4,7 @@ import bowling.domain.pin.Pin;
 
 public class NextBowl extends ProceedingBowl {
 
-    private final Pin perviousPin;
+    private final Pin previousPin;
 
     public NextBowl(int previousHitCount) {
         this(Pin.from(previousHitCount));
@@ -12,7 +12,7 @@ public class NextBowl extends ProceedingBowl {
 
     public NextBowl(Pin previousPin) {
         checkNotStrike(previousPin);
-        this.perviousPin = previousPin;
+        this.previousPin = previousPin;
     }
 
     private void checkNotStrike(Pin previousPin) {
@@ -23,13 +23,13 @@ public class NextBowl extends ProceedingBowl {
 
     @Override
     public Bowl pitch(Pin pin) {
-        Pin sumOfPin = perviousPin.plus(pin);
+        Pin sumOfPin = previousPin.plus(pin);
         if (sumOfPin.isAllHit()) {
             return new SpareBowl();
         }
         if (sumOfPin.isNoneHit()) {
             return new GutterBowl();
         }
-        return new MissBowl();
+        return new MissBowl(previousPin, pin);
     }
 }
