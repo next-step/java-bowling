@@ -61,4 +61,11 @@ public class Pin {
     public int hashCode() {
         return Objects.hash(hitCount);
     }
+
+    @Override
+    public String toString() {
+        return "Pin{" +
+                "hitCount=" + hitCount +
+                '}';
+    }
 }

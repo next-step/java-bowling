@@ -8,6 +8,6 @@ public class FirstBowl extends ProceedingBowl {
         if (pin.isAllHit()) {
             return new StrikeBowl();
         }
-        return new NextBowl();
+        return new NextBowl(pin);
     }
 }
