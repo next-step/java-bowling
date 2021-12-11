@@ -30,6 +30,15 @@ class AnswersTest {
         Answers answers = createAnswers(AnswerTest.A1, AnswerTest.A2);
         assertThat(answers.get().size()).isEqualTo(2);
     }
+    
+    @Test
+    @DisplayName("delete 함수 호출 후 isDeleted true로 되는 것 테스트")
+    void afterDeleteIsDeletedTrueTest() {
+        Answers answers = createAnswers(AnswerTest.A1, AnswerTest.A2);
+        answers.get().forEach(answer -> assertFalse(answer.isDeleted()));
+        answers.delete();
+        answers.get().forEach(answer -> assertTrue(answer.isDeleted()));
+    }
 
     private Answers createAnswers(Answer a1, Answer a2) {
         Answers AS = new Answers();
