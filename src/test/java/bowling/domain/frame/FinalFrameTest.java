@@ -34,7 +34,12 @@ class FinalFrameTest {
             "10, 10, 10",
             "0, 10, 10",
             "2, 8, 0",
-            "7, 3, 5"
+            "7, 3, 5",
+            "10, 0, 1",
+            "0, 10, 6",
+            "3, 7, 0",
+            "1, 9, 3",
+            "5, 5, 5"
     })
     void pitch_strikeOrSpare_getThreeChance(int first, int second, int third) {
         finalFrame.pitch(pin(first));
