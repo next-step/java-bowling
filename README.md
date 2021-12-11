@@ -12,9 +12,11 @@
  
 - Bowl
   - ProceedingBowl: 한번 더 투구를 할 수 있는 공
-    - FirstBowl
+    - FirstBowl: 
+      - 10: 스트라이크
+      - other: NextBowl
     - NextBowl
-  - EndedBowl: 더이상 투구할 수 없는 공
+  - FinishedBowl: 더이상 투구할 수 없는 공
     - StrikeBowl
     - SpareBowl
     - MissBowl

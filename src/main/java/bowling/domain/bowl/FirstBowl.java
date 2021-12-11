@@ -5,6 +5,9 @@ import bowling.domain.pin.Pin;
 public class FirstBowl extends ProceedingBowl {
     @Override
     public Bowl pitch(Pin pin) {
-        return null;
+        if (pin.isAllHit()) {
+            return new StrikeBowl();
+        }
+        return new NextBowl();
     }
 }
