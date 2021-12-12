@@ -7,10 +7,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class FrameResultTest {
 
+    public static FrameResult STRIKE_RESULT = new FrameResult("X");
+    public static FrameResult FIVE_POINT_RESULT = new FrameResult("5");
+
     @DisplayName("정상 생성 테스트")
     @Test
     void createTest() {
-        assertThat(new FrameResult("5")).isEqualTo(new FrameResult("5"));
+        assertThat(STRIKE_RESULT).isEqualTo(new FrameResult("X"));
     }
 
 }

@@ -57,8 +57,14 @@
   - 이름은 3글자 영어 단어만 가능
 - GameResult
   - 진행된 게임의 result를 저장하는 객체
+  - user / FrameResults 를 가짐
 - BolwingGame
-  - 볼링 게임을 관리하는 객체
+  - 한명의 볼링 게임을 관리하는 객체
   - bowl() 후 GameResult를 반환한다.
+- Board
+  - 점수판 객체
+- BolwingService
+  - 게임을 실행하고 관리하는 객체
+  - bowl() 호출 후 board를 반환한다.
   
 

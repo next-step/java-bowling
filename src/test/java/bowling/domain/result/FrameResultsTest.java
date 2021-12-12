@@ -9,10 +9,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class FrameResultsTest {
 
+    public static FrameResults STRIKE_AND_FIVE = new FrameResults(
+            Arrays.asList(FrameResultTest.STRIKE_RESULT, FrameResultTest.FIVE_POINT_RESULT)
+    );
+
     @DisplayName("정상 생성 테스트")
     @Test
     void createTest() {
-        assertThat(new FrameResults(Arrays.asList(new FrameResult("5"))))
-                .isEqualTo(new FrameResults(Arrays.asList(new FrameResult("5"))));
+        assertThat(new FrameResults(Arrays.asList(FrameResultTest.FIVE_POINT_RESULT)))
+                .isEqualTo(new FrameResults(Arrays.asList(FrameResultTest.FIVE_POINT_RESULT)));
     }
 }

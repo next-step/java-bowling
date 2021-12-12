@@ -10,6 +10,8 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 public class UserTest {
 
+    public static User MIZ = User.from("miz");
+
     @DisplayName("생성 테스트")
     @Test
     void createTest() {

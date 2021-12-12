@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Round {
@@ -39,6 +41,10 @@ public class Round {
         if (round < FIRST_VALUE || round > LAST_VALUE) {
             throw new IllegalArgumentException(String.format(NO_RANGE_EXCEPTION_MESSAGE_FORMAT, FIRST_VALUE, LAST_VALUE));
         }
+    }
+
+    public static List<Round> allRounds() {
+        return Arrays.asList(oneThroughTen);
     }
 
     public Round nextRound() {
