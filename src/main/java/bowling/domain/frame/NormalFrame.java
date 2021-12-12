@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.result.FrameResult;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
@@ -40,8 +41,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public String viewString() {
-        return state.viewString();
+    public FrameResult createResult() {
+        return new FrameResult(state.viewString());
     }
 
     @Override

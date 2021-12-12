@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.result.FrameResult;
+
 public interface Frame {
     Frame bowl(Pin pin);
 
@@ -11,5 +13,5 @@ public interface Frame {
 
     Round round();
 
-    String viewString();
+    FrameResult createResult();
 }

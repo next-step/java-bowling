@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Frames {
 
-    private Frame head;
+    private final Frame head;
     private Frame tail;
 
     private Frames(Frame head, Frame tail) {

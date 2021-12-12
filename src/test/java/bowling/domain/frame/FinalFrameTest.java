@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.result.FrameResult;
 import bowling.domain.state.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -251,15 +252,15 @@ class FinalFrameTest {
         assertThat(threeStrike.isFinished()).isTrue();
     }
 
-    @DisplayName("종료된 Frame viewString() 정상 생성 테스트")
+    @DisplayName("createResult() 정상 생성 테스트")
     @Test
     void finishFrameViewStringTest() {
-        assertThat(spareAndBowl.viewString()).isEqualTo("5|/|5");
-        assertThat(spareAndStrike.viewString()).isEqualTo("5|/|X");
-        assertThat(twoStrikeAndBowl.viewString()).isEqualTo("X|X|5");
-        assertThat(threeStrike.viewString()).isEqualTo("X|X|X");
-        assertThat(miss.viewString()).isEqualTo("5|3");
-        assertThat(oneStrikeAndMiss.viewString()).isEqualTo("X|5|3");
-        assertThat(oneStrikeAndSpare.viewString()).isEqualTo("X|5|/");
+        assertThat(spareAndBowl.createResult()).isEqualTo(new FrameResult("5|/|5"));
+        assertThat(spareAndStrike.createResult()).isEqualTo(new FrameResult("5|/|X"));
+        assertThat(twoStrikeAndBowl.createResult()).isEqualTo(new FrameResult("X|X|5"));
+        assertThat(threeStrike.createResult()).isEqualTo(new FrameResult("X|X|X"));
+        assertThat(miss.createResult()).isEqualTo(new FrameResult("5|3"));
+        assertThat(oneStrikeAndMiss.createResult()).isEqualTo(new FrameResult("X|5|3"));
+        assertThat(oneStrikeAndSpare.createResult()).isEqualTo(new FrameResult("X|5|/"));
     }
 }

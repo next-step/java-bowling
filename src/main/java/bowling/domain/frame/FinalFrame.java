@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.result.FrameResult;
 import bowling.domain.state.Miss;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
@@ -78,12 +79,12 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public String viewString() {
+    public FrameResult createResult() {
         if (isFinished()) {
-            return finishedViewString();
+            return new FrameResult(finishedViewString());
         }
 
-        return states.getLast().viewString();
+        return new FrameResult(states.getLast().viewString());
     }
 
     private String finishedViewString() {
