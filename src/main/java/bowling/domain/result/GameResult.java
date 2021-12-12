@@ -29,4 +29,12 @@ public class GameResult {
     public int hashCode() {
         return Objects.hash(user, results);
     }
+
+    @Override
+    public String toString() {
+        return "GameResult{" +
+                "user=" + user +
+                ", results=" + results +
+                '}';
+    }
 }

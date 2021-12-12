@@ -1,6 +1,8 @@
 package bowling.domain.game;
 
 import bowling.domain.frame.Frames;
+import bowling.domain.frame.Pin;
+import bowling.domain.result.GameResult;
 import bowling.domain.user.User;
 
 import java.util.Objects;
@@ -20,6 +22,11 @@ public class BowlingGame {
 
     public static BowlingGame of(User user, Frames frames) {
         return new BowlingGame(user, frames);
+    }
+
+    public GameResult bowl(Pin pin) {
+        frames.bowl(pin);
+        return new GameResult(user, frames.createResults());
     }
 
 

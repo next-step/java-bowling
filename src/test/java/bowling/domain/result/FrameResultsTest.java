@@ -7,10 +7,13 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class FrameResultsTest {
+public class FrameResultsTest {
 
     public static FrameResults STRIKE_AND_FIVE = new FrameResults(
             Arrays.asList(FrameResultTest.STRIKE_RESULT, FrameResultTest.FIVE_POINT_RESULT)
+    );
+    public static FrameResults STRIKE = new FrameResults(
+            Arrays.asList(FrameResultTest.STRIKE_RESULT, FrameResultTest.READY)
     );
 
     @DisplayName("정상 생성 테스트")

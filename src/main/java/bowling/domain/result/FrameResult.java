@@ -25,4 +25,11 @@ public class FrameResult {
     public int hashCode() {
         return Objects.hash(viewString);
     }
+
+    @Override
+    public String toString() {
+        return "FrameResult{" +
+                "viewString='" + viewString + '\'' +
+                '}';
+    }
 }
