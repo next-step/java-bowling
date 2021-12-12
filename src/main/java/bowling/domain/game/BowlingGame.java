@@ -2,6 +2,7 @@ package bowling.domain.game;
 
 import bowling.domain.frame.Frames;
 import bowling.domain.frame.Pin;
+import bowling.domain.frame.Round;
 import bowling.domain.result.GameResult;
 import bowling.domain.user.User;
 
@@ -29,6 +30,9 @@ public class BowlingGame {
         return new GameResult(user, frames.createResults());
     }
 
+    public Round round() {
+        return frames.round();
+    }
 
     @Override
     public boolean equals(Object o) {

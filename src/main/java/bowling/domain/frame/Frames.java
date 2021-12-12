@@ -50,6 +50,10 @@ public class Frames {
         return new FrameResults(results);
     }
 
+    public Round round() {
+        return tail.round();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

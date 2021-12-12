@@ -53,6 +53,7 @@
   - bowl() 마지막 프레임에 bowl() 을 호출 한다.
   - bowl() 호출 후 다음 프레임이 반환되면 tail을 변경한다.
   - createResult() 각각 프레임의 결과를 FrameResult를 Array로 반환한다.
+  - round() 현재 라운드를 반환한다.
 - User
   - 이름은 3글자 영어 단어만 가능
 - GameResult
@@ -61,6 +62,7 @@
 - BolwingGame
   - 한명의 볼링 게임을 관리하는 객체
   - bowl() 후 GameResult를 반환한다.
+  - round() 현재 라운드를 반환한다.
 - Board
   - 점수판 객체
 - BolwingService

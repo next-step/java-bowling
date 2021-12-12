@@ -64,4 +64,12 @@ class FramesTest {
         assertThat(ready.createResults()).isEqualTo(expect);
 
     }
+
+    @DisplayName("round() 현재 라운드를 반환한다.")
+    @Test
+    void roundTest() {
+        assertThat(ready.round()).isEqualTo(Round.FIRST);
+        Frames strike = ready.bowl(Pin.from(10));
+        assertThat(strike.round()).isEqualTo(Round.from(2));
+    }
 }
