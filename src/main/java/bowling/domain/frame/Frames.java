@@ -1,5 +1,10 @@
 package bowling.domain.frame;
 
+import bowling.domain.result.FrameResult;
+import bowling.domain.result.FrameResults;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Frames {
@@ -25,11 +30,24 @@ public class Frames {
         return tail.isGameEnd();
     }
 
-    public void bowl(Pin pin) {
+    public Frames bowl(Pin pin) {
         Frame nowFrame = tail.bowl(pin);
         if (!tail.isEqualsRound(nowFrame)) {
             tail = nowFrame;
         }
+        return this;
+    }
+
+    public FrameResults createResults() {
+        List<FrameResult> results = new ArrayList<>();
+        Frame now = head;
+        results.add(now.createResult());
+        while (now.hasNext()) {
+            now = now.next();
+            results.add(now.createResult());
+        }
+
+        return new FrameResults(results);
     }
 
     @Override

@@ -1,11 +1,15 @@
 package bowling.domain.frame;
 
+import bowling.domain.result.FrameResult;
+import bowling.domain.result.FrameResults;
 import bowling.domain.state.FirstBowl;
 import bowling.domain.state.Ready;
 import bowling.domain.state.Strike;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -49,5 +53,15 @@ class FramesTest {
                         NormalFrame.of(Round.FIRST, new Strike()),
                         NormalFrame.readyFrame(Round.from(2))
                 ));
+    }
+
+    @DisplayName("createResults() Frame들의 결과를 FrameResults로 반환한다.")
+    @Test
+    void createResultsTest() {
+        ready.bowl(Pin.TEN).bowl(Pin.from(5));
+
+        FrameResults expect = new FrameResults(Arrays.asList(new FrameResult("X"), new FrameResult("5")));
+        assertThat(ready.createResults()).isEqualTo(expect);
+
     }
 }
