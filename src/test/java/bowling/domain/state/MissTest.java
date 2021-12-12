@@ -17,14 +17,20 @@ class MissTest {
 
     @DisplayName("정상 생성 테스트")
     @Test
-    void createTest(){
+    void createTest() {
         Miss miss = new Miss(Pin.from(1), Pin.from(2));
         assertThat(miss).isEqualTo(new Miss(Pin.from(1), Pin.from(2)));
     }
 
     @DisplayName("쓰러트린 갯수가 10개이면 illegal Exception")
     @Test
-    void createFailTest(){
+    void createFailTest() {
         assertThatIllegalArgumentException().isThrownBy(() -> new Miss(Pin.from(5), Pin.from(5)));
+    }
+
+    @DisplayName("viewString()은 첫번쨰핀|두번째핀 반환한다.")
+    @Test
+    void viewStringTest() {
+        assertThat(new Miss(Pin.from(5), Pin.from(3)).viewString()).isEqualTo("5|3");
     }
 }

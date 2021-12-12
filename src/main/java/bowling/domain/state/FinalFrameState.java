@@ -3,6 +3,7 @@ package bowling.domain.state;
 import bowling.domain.frame.Pin;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class FinalFrameState implements State {
 
@@ -29,7 +30,23 @@ public class FinalFrameState implements State {
 
     @Override
     public String viewString() {
-        return null;
+        if (isFinished()) {
+            return finishedViewString();
+        }
+
+        return states.getLast().viewString();
+    }
+
+    private String finishedViewString() {
+        State bonusState = states.pollLast();
+        String basicViewString = states.stream()
+                .filter(State::isFinished)
+                .map(State::viewString)
+                .collect(Collectors.joining("|"));
+        if (bonusState instanceof Ready) {
+            return basicViewString;
+        }
+        return String.join("|", basicViewString, bonusState.viewString());
     }
 
     @Override
@@ -44,9 +61,9 @@ public class FinalFrameState implements State {
     }
 
     private State nextState(State state) {
-        ArrayList<State> nextStates = new ArrayList<>(this.states);
+        List<State> nextStates = new ArrayList<>(this.states);
         nextStates.add(state);
-        if (state instanceof Spare || state instanceof Strike) {
+        if (state.isFinished()) {
             nextStates.add(Ready.getInstance());
         }
         return of(nextStates, nextLeft(state));

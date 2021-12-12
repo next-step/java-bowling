@@ -47,9 +47,10 @@
   - round() frame의 round를 반환한다.
 - Frames
   - Frame을 포함하는 1급 객체
+  - getLastFrame() linkedlist 마지막 프레임을 반환한다.
   - isEndGame() 호출 시 마지막 Frame의 isEndGame을 리턴한다.
   - bowl() 마지막 프레임에 bowl() 을 호출 한다.
-  - bowl() 호출 후 다음 프레임이 반환되면 list에 add한다.
+  - bowl() 호출 후 다음 프레임이 반환되면 tail을 변경한다.
 - User
   - 이름은 3글자 영어 단어만 가능
 - GameResult

@@ -12,10 +12,80 @@ import static org.assertj.core.api.Assertions.assertThat;
 class FinalFrameStateTest {
 
     private FinalFrameState ready;
+    private FinalFrameState spareAndBowl;
+    private FinalFrameState spareAndStrike;
+    private FinalFrameState twoStrikeAndBowl;
+    private FinalFrameState threeStrike;
+    private FinalFrameState miss;
+    private FinalFrameState oneStrikeAndMiss;
+    private FinalFrameState oneStrikeAndSpare;
 
     @BeforeEach
     void setUp() {
         ready = FinalFrameState.readyState();
+
+        spareAndBowl = FinalFrameState.of(
+                Arrays.asList(
+                        Ready.getInstance(),
+                        new FirstBowl(Pin.from(5)),
+                        new Spare(Pin.from(5), Pin.from(5)),
+                        Ready.getInstance(),
+                        new FirstBowl(Pin.from(5))
+                ), 0);
+
+        spareAndStrike = FinalFrameState.of(
+                Arrays.asList(
+                        Ready.getInstance(),
+                        new FirstBowl(Pin.from(5)),
+                        new Spare(Pin.from(5), Pin.from(5)),
+                        Ready.getInstance(),
+                        new Strike()
+                ), 0);
+
+        twoStrikeAndBowl = FinalFrameState.of(
+                Arrays.asList(
+                        Ready.getInstance(),
+                        new Strike(),
+                        Ready.getInstance(),
+                        new Strike(),
+                        Ready.getInstance(),
+                        new FirstBowl(Pin.from(5))
+                ), 0);
+
+        threeStrike = FinalFrameState.of(
+                Arrays.asList(
+                        Ready.getInstance(),
+                        new Strike(),
+                        Ready.getInstance(),
+                        new Strike(),
+                        Ready.getInstance(),
+                        new Strike()
+                ), 0);
+
+        miss = FinalFrameState.of(
+                Arrays.asList(
+                        Ready.getInstance(),
+                        new FirstBowl(Pin.from(5)),
+                        new Miss(Pin.from(5), Pin.from(3)),
+                        Ready.getInstance()
+                ), 0);
+        oneStrikeAndMiss = FinalFrameState.of(
+                Arrays.asList(
+                        Ready.getInstance(),
+                        new Strike(),
+                        Ready.getInstance(),
+                        new FirstBowl(Pin.from(5)),
+                        new Miss(Pin.from(5), Pin.from(3))
+                ), 0);
+
+        oneStrikeAndSpare = FinalFrameState.of(
+                Arrays.asList(
+                        Ready.getInstance(),
+                        new Strike(),
+                        Ready.getInstance(),
+                        new FirstBowl(Pin.from(5)),
+                        new Spare(Pin.from(5), Pin.from(5))
+                ), 0);
     }
 
     @DisplayName("정상 생성 테스트")
@@ -111,60 +181,28 @@ class FinalFrameStateTest {
     @DisplayName("miss 상태에서는 isFinished()가 true이다.")
     @Test
     void missIsFinishedTest() {
-        FinalFrameState miss = FinalFrameState.of(
-                Arrays.asList(
-                        Ready.getInstance(),
-                        new FirstBowl(Pin.from(5)),
-                        new Miss(Pin.from(5), Pin.from(3))
-                ), 0);
         assertThat(miss.isFinished()).isTrue();
     }
 
     @DisplayName("3번 친 상태에서는 isFinished()가 true이다.")
     @Test
     void threeTimesIsFinishedTest() {
-        FinalFrameState spareAndBowl = FinalFrameState.of(
-                Arrays.asList(
-                        Ready.getInstance(),
-                        new FirstBowl(Pin.from(5)),
-                        new Spare(Pin.from(5), Pin.from(5)),
-                        Ready.getInstance(),
-                        new FirstBowl(Pin.from(5))
-                ), 0);
         assertThat(spareAndBowl.isFinished()).isTrue();
-
-        FinalFrameState spareAndStrike = FinalFrameState.of(
-                Arrays.asList(
-                        Ready.getInstance(),
-                        new FirstBowl(Pin.from(5)),
-                        new Spare(Pin.from(5), Pin.from(5)),
-                        Ready.getInstance(),
-                        new Strike()
-                ), 0);
         assertThat(spareAndStrike.isFinished()).isTrue();
-
-        FinalFrameState twoStrikeAndBowl = FinalFrameState.of(
-                Arrays.asList(
-                        Ready.getInstance(),
-                        new Strike(),
-                        Ready.getInstance(),
-                        new Strike(),
-                        Ready.getInstance(),
-                        new FirstBowl(Pin.from(5))
-                ), 0);
         assertThat(twoStrikeAndBowl.isFinished()).isTrue();
-
-        FinalFrameState threeStrike = FinalFrameState.of(
-                Arrays.asList(
-                        Ready.getInstance(),
-                        new Strike(),
-                        Ready.getInstance(),
-                        new Strike(),
-                        Ready.getInstance(),
-                        new Strike()
-                ), 0);
         assertThat(threeStrike.isFinished()).isTrue();
     }
 
+    @DisplayName("종료된 Frame viewString() 정상 생성 테스트")
+    @Test
+    void finishFrameViewStringTest() {
+        assertThat(spareAndBowl.viewString()).isEqualTo("5|/|5");
+        assertThat(spareAndStrike.viewString()).isEqualTo("5|/|X");
+        assertThat(twoStrikeAndBowl.viewString()).isEqualTo("X|X|5");
+        assertThat(threeStrike.viewString()).isEqualTo("X|X|X");
+        assertThat(miss.viewString()).isEqualTo("5|3");
+        assertThat(oneStrikeAndMiss.viewString()).isEqualTo("X|5|3");
+        assertThat(oneStrikeAndSpare.viewString()).isEqualTo("X|5|/");
+    }
 
 }

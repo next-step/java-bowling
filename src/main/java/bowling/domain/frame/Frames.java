@@ -1,35 +1,34 @@
 package bowling.domain.frame;
 
-import java.util.LinkedList;
 import java.util.Objects;
 
 public class Frames {
 
-    private LinkedList<Frame> frames;
+    private Frame head;
+    private Frame tail;
 
-    private Frames(LinkedList<Frame> frames) {
-        this.frames = new LinkedList<>(frames);
+    private Frames(Frame head, Frame tail) {
+        this.head = head;
+        this.tail = tail;
     }
 
     public static Frames readyFrames() {
-        LinkedList<Frame> frames = new LinkedList<>();
-        frames.add(NormalFrame.readyFrame(Round.FIRST));
-        return from(frames);
+        NormalFrame startFrame = NormalFrame.readyFrame(Round.FIRST);
+        return of(startFrame, startFrame);
     }
 
-    public static Frames from(LinkedList<Frame> frames) {
-        return new Frames(frames);
+    public static Frames of(Frame head, Frame tail) {
+        return new Frames(head, tail);
     }
 
     public boolean isGameEnd() {
-        return frames.getLast().isGameEnd();
+        return tail.isGameEnd();
     }
 
     public void bowl(Pin pin) {
-        Frame frame = frames.getLast();
-        Frame nextFrame = frame.bowl(pin);
-        if (!frame.isEqualsRound(nextFrame)) {
-            frames.add(nextFrame);
+        Frame nowFrame = tail.bowl(pin);
+        if (!tail.isEqualsRound(nowFrame)) {
+            tail = nowFrame;
         }
     }
 
@@ -41,12 +40,12 @@ public class Frames {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Frames frames1 = (Frames) o;
-        return Objects.equals(frames, frames1.frames);
+        Frames frames = (Frames) o;
+        return Objects.equals(head, frames.head) && Objects.equals(tail, frames.tail);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frames);
+        return Objects.hash(head, tail);
     }
 }
