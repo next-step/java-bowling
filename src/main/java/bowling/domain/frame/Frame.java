@@ -10,4 +10,6 @@ public interface Frame {
     boolean isEqualsRound(Frame frame);
 
     Round round();
+
+    String viewString();
 }

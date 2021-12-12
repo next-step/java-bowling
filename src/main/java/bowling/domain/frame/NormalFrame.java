@@ -40,6 +40,11 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public String viewString() {
+        return state.viewString();
+    }
+
+    @Override
     public Frame bowl(Pin pin) {
         if (state.isFinished()) {
             throw new IllegalArgumentException();

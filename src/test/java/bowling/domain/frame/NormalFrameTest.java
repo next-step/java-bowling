@@ -27,13 +27,13 @@ class NormalFrameTest {
     @Test
     void bowlToNextFrameTest() {
         //Strike
-        assertThat(readyFrame.bowl(Pin.from(10))).isEqualTo(NormalFrame.of(Round.from(2), Ready.getInstance()));
+        assertThat(NormalFrame.readyFrame(Round.FIRST).bowl(Pin.from(10))).isEqualTo(NormalFrame.of(Round.from(2), Ready.getInstance()));
 
         //Spare
-        assertThat(readyFrame.bowl(Pin.from(8)).bowl(Pin.from(2))).isEqualTo(NormalFrame.of(Round.from(2), Ready.getInstance()));
+        assertThat(NormalFrame.readyFrame(Round.FIRST).bowl(Pin.from(8)).bowl(Pin.from(2))).isEqualTo(NormalFrame.of(Round.from(2), Ready.getInstance()));
 
         //miss
-        assertThat(readyFrame.bowl(Pin.from(8)).bowl(Pin.from(1))).isEqualTo(NormalFrame.of(Round.from(2), Ready.getInstance()));
+        assertThat(NormalFrame.readyFrame(Round.FIRST).bowl(Pin.from(8)).bowl(Pin.from(1))).isEqualTo(NormalFrame.of(Round.from(2), Ready.getInstance()));
     }
 
     @DisplayName("bowl 후 strike가 아닐 경우 같은 round의 firstBowl 상태 프레임을 반환한다.")
