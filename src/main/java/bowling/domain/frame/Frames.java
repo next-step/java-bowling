@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Collections.singletonList;
+import static java.util.Collections.unmodifiableList;
 
 public class Frames {
 
@@ -44,4 +45,11 @@ public class Frames {
         frames.add(currentFrame().next());
     }
 
+    public int numberOfFrame() {
+        return currentFrame().getNumber();
+    }
+
+    public List<Frame> frames() {
+        return unmodifiableList(frames);
+    }
 }

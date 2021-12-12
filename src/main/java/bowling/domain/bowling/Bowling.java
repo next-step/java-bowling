@@ -1,8 +1,11 @@
 package bowling.domain.bowling;
 
+import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.participant.Participant;
 import bowling.domain.pin.Pin;
+
+import java.util.List;
 
 public class Bowling {
 
@@ -19,5 +22,17 @@ public class Bowling {
      */
     public boolean pitch(Pin pin) {
         return frames.pitch(pin);
+    }
+
+    public int numberOfFrame() {
+        return frames.numberOfFrame();
+    }
+
+    public String nameOfParticipant() {
+        return participant.getName();
+    }
+
+    public List<Frame> frames() {
+        return frames.frames();
     }
 }

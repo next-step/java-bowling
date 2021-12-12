@@ -16,8 +16,8 @@ public class InputView {
         return SCANNER.nextLine();
     }
 
-    public static int getHitCount(int frame) {
-        System.out.println(frame + "프레임 투구: ");
+    public static int getHitCount(int numberOfFrame) {
+        System.out.println(numberOfFrame + "프레임 투구: ");
         return parseInt(SCANNER.nextLine());
     }
 

@@ -23,4 +23,8 @@ public class Participant {
         return NAME_PATTERN.matcher(name)
                 .matches();
     }
+
+    public String getName() {
+        return name;
+    }
 }

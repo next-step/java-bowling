@@ -14,4 +14,5 @@ public interface Frame {
     boolean hasNextFrame();
 
     int getNumber();
+
 }
