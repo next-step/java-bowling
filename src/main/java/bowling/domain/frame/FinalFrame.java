@@ -87,6 +87,16 @@ public class FinalFrame implements Frame {
         return new FrameResult(states.getLast().viewString());
     }
 
+    @Override
+    public boolean hasNext() {
+        return false;
+    }
+
+    @Override
+    public Frame next() {
+        return null;
+    }
+
     private String finishedViewString() {
         State bonusState = states.pollLast();
         String basicViewString = states.stream()

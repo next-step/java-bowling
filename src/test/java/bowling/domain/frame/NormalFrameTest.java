@@ -76,4 +76,20 @@ class NormalFrameTest {
     void roundTest() {
         assertThat(readyFrame.round()).isEqualTo(Round.FIRST);
     }
+
+    @DisplayName("next() 다음 프레임이 있으면 다음 프레임을 반환하고 없으면 null을 반환한다.")
+    @Test
+    void nextNullTest() {
+        assertThat(readyFrame.next()).isNull();
+        readyFrame.bowl(Pin.from(10));
+        assertThat(readyFrame.next()).isEqualTo(NormalFrame.of(Round.from(2), Ready.getInstance()));
+    }
+
+    @DisplayName("hasNext() 다음 프레임이 있으면 true 없으면 false를 반환한다.")
+    @Test
+    void hasNextTest() {
+        assertThat(readyFrame.hasNext()).isFalse();
+        readyFrame.bowl(Pin.from(10));
+        assertThat(readyFrame.hasNext()).isTrue();
+    }
 }

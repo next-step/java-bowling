@@ -46,6 +46,16 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public boolean hasNext() {
+        return next != null;
+    }
+
+    @Override
+    public Frame next() {
+        return next;
+    }
+
+    @Override
     public Frame bowl(Pin pin) {
         if (state.isFinished()) {
             throw new IllegalArgumentException();

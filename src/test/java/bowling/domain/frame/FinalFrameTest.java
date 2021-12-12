@@ -263,4 +263,16 @@ class FinalFrameTest {
         assertThat(oneStrikeAndMiss.createResult()).isEqualTo(new FrameResult("X|5|3"));
         assertThat(oneStrikeAndSpare.createResult()).isEqualTo(new FrameResult("X|5|/"));
     }
+
+    @DisplayName("next() 마지막 프레임은 null을 반환한다.")
+    @Test
+    void nextNullTest() {
+        assertThat(ready.next()).isNull();
+    }
+
+    @DisplayName("hasNext() 마지막 프레임은 false를 반환한다.")
+    @Test
+    void hasNextTest() {
+        assertThat(ready.hasNext()).isFalse();
+    }
 }

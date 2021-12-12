@@ -14,4 +14,8 @@ public interface Frame {
     Round round();
 
     FrameResult createResult();
+
+    boolean hasNext();
+
+    Frame next();
 }
