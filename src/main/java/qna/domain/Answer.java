@@ -72,4 +72,9 @@ public class Answer extends AbstractEntity {
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
+
+    public Answer delete() {
+        setDeleted(true);
+        return this;
+    }
 }
