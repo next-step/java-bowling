@@ -48,6 +48,11 @@ public class Answer extends AbstractEntity {
         return this;
     }
 
+    public Answer toDeleted() {
+        this.deleted = true;
+        return this;
+    }
+
     public boolean isDeleted() {
         return deleted;
     }
