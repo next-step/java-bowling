@@ -87,8 +87,18 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public boolean hasOtherAnswer(User loginUser) {
+        return !this.answers.hasOwnAnswer(loginUser);
+    }
+
+    public List<DeleteHistory> getDeleteHistory() {
+        if (this.deleted) {
+            List<DeleteHistory> deleteHistories = new ArrayList<>();
+            deleteHistories.add(DeleteHistory.of(this));
+            deleteHistories.addAll(this.answers.getDeleteHistory());
+            return deleteHistories;
+        }
+        return Collections.emptyList();
     }
 
     @Override
