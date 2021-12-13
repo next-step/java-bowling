@@ -40,7 +40,7 @@ public class FinalFrame implements Frame {
         }
         State lastState = lastState();
         State nextState = lastState.bowl(pin);
-        addStates(nextState);
+        states.add(nextState);
         left = nextLeft(nextState);
         return this;
     }
@@ -51,10 +51,6 @@ public class FinalFrame implements Frame {
             return Ready.getInstance();
         }
         return states.pollLast();
-    }
-
-    private void addStates(State state) {
-        states.add(state);
     }
 
     private int nextLeft(State state) {

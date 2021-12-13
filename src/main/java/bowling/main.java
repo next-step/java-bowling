@@ -6,17 +6,18 @@ import bowling.domain.game.BowlingGame;
 import bowling.domain.user.User;
 import bowling.service.BowlingService;
 import bowling.view.InputView;
+import bowling.view.OutputView;
 
 public class main {
     public static void main(String[] args) {
         InputView inputView = new InputView();
+        OutputView outputView = new OutputView();
         BowlingService bowlingService = createBowlingService(inputView);
         while (!bowlingService.isGameEnd()) {
             int falldPins = inputView.inputPitch(bowlingService.round());
-            Board bowl = bowlingService.bowl(Pin.from(falldPins));
-            System.out.println(bowl);
+            Board board = bowlingService.bowl(Pin.from(falldPins));
+            outputView.renderBoard(board);
         }
-//        bowlingService.bowl(Pin.TEN);
     }
 
     private static BowlingService createBowlingService(InputView inputView) {

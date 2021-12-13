@@ -9,6 +9,10 @@ public class FrameResult {
         this.viewString = viewString;
     }
 
+    public String getViewString() {
+        return viewString;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

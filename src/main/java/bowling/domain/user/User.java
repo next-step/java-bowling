@@ -28,9 +28,13 @@ public class User {
     }
 
     private static void validLength(String name) {
-        if(name.length() != NAME_LENGTH) {
+        if (name.length() != NAME_LENGTH) {
             throw new IllegalArgumentException();
         }
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override

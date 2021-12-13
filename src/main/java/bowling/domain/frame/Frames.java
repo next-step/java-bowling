@@ -32,7 +32,6 @@ public class Frames {
 
     public Frames bowl(Pin pin) {
         tail = tail.bowl(pin);
-        System.out.println("tail = " + tail);
         return this;
     }
 
