@@ -5,9 +5,9 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
+import qna.CannotDeleteException;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.*;
 
 public class AnswersTest {
     public static Answers ANSWERS_A1A2 = Answers.of(List.of(AnswerTest.A1, AnswerTest.A2));
@@ -42,5 +42,15 @@ public class AnswersTest {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> ANSWERS_A1.append(answer))
                 .withMessageContaining("cannot be null");
+    }
+
+    @Test
+    public void deletable() {
+        assertThat(ANSWERS_A1.deletable(AnswerTest.A1.getWriter())).isTrue();
+    }
+
+    @Test
+    public void deletableFailed() {
+        assertThat(ANSWERS_A1A2.deletable(AnswerTest.A1.getWriter())).isFalse();
     }
 }

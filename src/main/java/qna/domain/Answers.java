@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
+import qna.CannotDeleteException;
 
 public class Answers {
     public static final Answers EMPTY = new Answers(Collections.emptyList());
@@ -35,6 +38,13 @@ public class Answers {
         newAnswers.addAll(answers);
         newAnswers.add(answer);
         return new Answers(newAnswers);
+    }
+
+    public boolean deletable(User loginUser) {
+        return answers.stream()
+                .filter(answer -> !answer.isOwner(loginUser))
+                .findAny()
+                .isEmpty();
     }
 
     @Override
