@@ -21,11 +21,7 @@ public class User extends AbstractEntity {
 
     private String email;
 
-    public User() {
-    }
-
-    public User(String userId, String password, String name, String email) {
-        this(null, userId, password, name, email);
+    protected User() {
     }
 
     public User(Long id, String userId, String password, String name, String email) {
@@ -36,48 +32,12 @@ public class User extends AbstractEntity {
         this.email = email;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public User setUserId(String userId) {
-        this.userId = userId;
-        return this;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public User setPassword(String password) {
-        this.password = password;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public User setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public User setEmail(String email) {
-        this.email = email;
-        return this;
-    }
-
     public void update(User loginUser, User target) {
-        if (!matchUserId(loginUser.getUserId())) {
+        if (!matchUserId(loginUser)) {
             throw new UnAuthorizedException();
         }
 
-        if (!matchPassword(target.getPassword())) {
+        if (!matchPassword(target)) {
             throw new UnAuthorizedException();
         }
 
@@ -85,12 +45,12 @@ public class User extends AbstractEntity {
         this.email = target.email;
     }
 
-    private boolean matchUserId(String userId) {
-        return this.userId.equals(userId);
+    private boolean matchUserId(User other) {
+        return this.userId.equals(other.userId);
     }
 
-    public boolean matchPassword(String targetPassword) {
-        return password.equals(targetPassword);
+    private boolean matchPassword(User other) {
+        return password.equals(other.password);
     }
 
     public boolean equalsNameAndEmail(User target) {
