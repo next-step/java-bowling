@@ -1,9 +1,10 @@
 package qna.domain;
 
-import qna.NotFoundException;
+import qna.CannotDeleteException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -11,65 +12,54 @@ public class Answer extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
-    private Question question;
-
     @Lob
     private String contents;
 
-    private boolean deleted = false;
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.UNDELETED;
 
-    public Answer() {
+    protected Answer() {
     }
 
-    public Answer(User writer, Question question, String contents) {
-        this(null, writer, question, contents);
-    }
-
-    public Answer(Long id, User writer, Question question, String contents) {
-        super(id);
-
-        if(writer == null) {
-            throw new UnAuthorizedException();
-        }
-
-        if(question == null) {
-            throw new NotFoundException();
-        }
+    public Answer(User writer, String contents) {
+        vadlidateWriter(writer);
 
         this.writer = writer;
-        this.question = question;
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    private void vadlidateWriter(User writer) {
+        if(writer == null) {
+            throw new UnAuthorizedException();
+        }
     }
 
     public boolean isDeleted() {
-        return deleted;
+        return status.isDeleted();
     }
 
-    public boolean isOwner(User writer) {
-        return this.writer.equals(writer);
+    public void delete(User loginUser) {
+        validateUser(loginUser);
+        this.status = Status.DELETED;
+    }
+
+    public void validateUser(User loginUser) throws CannotDeleteException {
+        if (!writer.equals(loginUser)) {
+            throw new CannotDeleteException("본인이 작성한 답변만 삭제할 수 있습니다.");
+        }
+    }
+
+    public DeleteHistory createDeleteHistory() {
+        return DeleteHistory.ofAnswer(super.getId(), writer, LocalDateTime.now());
     }
 
     public User getWriter() {
         return writer;
     }
 
-    public String getContents() {
-        return contents;
-    }
-
-    public void toQuestion(Question question) {
-        this.question = question;
-    }
-
     @Override
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
+
 }
