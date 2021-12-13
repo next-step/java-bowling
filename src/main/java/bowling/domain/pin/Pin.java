@@ -49,6 +49,10 @@ public class Pin {
         return hitCount == MIN_HIT_COUNT;
     }
 
+    public int getHitCount() {
+        return hitCount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

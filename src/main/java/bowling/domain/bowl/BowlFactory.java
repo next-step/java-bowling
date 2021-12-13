@@ -10,8 +10,14 @@ public class BowlFactory {
     }
 
     public static boolean isStrikeOrSpare(Bowl bowl) {
-        return StrikeBowl.class.isAssignableFrom(bowl.getClass())
-                || SpareBowl.class.isAssignableFrom(bowl.getClass());
+        return isStrike(bowl) || isSpare(bowl);
     }
 
+    private static boolean isStrike(Bowl bowl) {
+        return StrikeBowl.class.isAssignableFrom(bowl.getClass());
+    }
+
+    private static boolean isSpare(Bowl bowl) {
+        return SpareBowl.class.isAssignableFrom(bowl.getClass());
+    }
 }

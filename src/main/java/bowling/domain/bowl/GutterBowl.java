@@ -16,4 +16,9 @@ public class GutterBowl extends FinishedBowl {
     public static Bowl bowl() {
         return CACHED_BOWL;
     }
+
+    @Override
+    public String getView() {
+        return " -|-  ";
+    }
 }

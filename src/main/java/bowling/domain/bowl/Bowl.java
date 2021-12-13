@@ -7,4 +7,6 @@ public interface Bowl {
     Bowl pitch(Pin pin);
 
     boolean canPitch();
+
+    String getView();
 }

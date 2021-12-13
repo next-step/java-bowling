@@ -2,6 +2,8 @@ package bowling.domain.bowl;
 
 import bowling.domain.pin.Pin;
 
+import static java.lang.String.format;
+
 public class NextBowl extends ProceedingBowl {
 
     private final Pin previousPin;
@@ -31,5 +33,10 @@ public class NextBowl extends ProceedingBowl {
             return GutterBowl.bowl();
         }
         return new MissBowl(previousPin, pin);
+    }
+
+    @Override
+    public String getView() {
+        return format(" %s    ", previousPin.getHitCount());
     }
 }

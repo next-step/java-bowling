@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Collections.singletonList;
+import static java.util.Collections.unmodifiableList;
 
 public class FinalFrame implements Frame {
 
@@ -76,5 +77,10 @@ public class FinalFrame implements Frame {
     @Override
     public int getNumber() {
         return NUMBER;
+    }
+
+    @Override
+    public List<Bowl> bowls() {
+        return unmodifiableList(bowls);
     }
 }

@@ -1,6 +1,9 @@
 package bowling.domain.frame;
 
+import bowling.domain.bowl.Bowl;
 import bowling.domain.pin.Pin;
+
+import java.util.List;
 
 public interface Frame {
 
@@ -14,5 +17,7 @@ public interface Frame {
     boolean hasNextFrame();
 
     int getNumber();
+
+    List<Bowl> bowls();
 
 }

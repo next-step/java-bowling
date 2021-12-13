@@ -2,6 +2,8 @@ package bowling.domain.bowl;
 
 import bowling.domain.pin.Pin;
 
+import static java.lang.String.format;
+
 public class MissBowl extends FinishedBowl {
 
     public static final String NOT_MISS_MESSAGE = "미스가 아닙니다.";
@@ -24,5 +26,10 @@ public class MissBowl extends FinishedBowl {
         if (sumOfPin.isAllHit() || sumOfPin.isNoneHit()) {
             throw new CanNotPitchException(NOT_MISS_MESSAGE);
         }
+    }
+
+    @Override
+    public String getView() {
+        return format(" %s|%s  ", firstPin.getHitCount(), secondPin.getHitCount());
     }
 }

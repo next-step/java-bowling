@@ -12,12 +12,12 @@ public class InputView {
     }
 
     public static String getName() {
-        System.out.println("플레이어 이름은(3 english letters)?: ");
+        System.out.print("플레이어 이름은(3 english letters)?: ");
         return SCANNER.nextLine();
     }
 
     public static int getHitCount(int numberOfFrame) {
-        System.out.println(numberOfFrame + "프레임 투구: ");
+        System.out.print(numberOfFrame + "프레임 투구: ");
         return parseInt(SCANNER.nextLine());
     }
 

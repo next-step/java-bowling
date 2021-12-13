@@ -4,6 +4,10 @@ import bowling.domain.bowl.Bowl;
 import bowling.domain.bowl.BowlFactory;
 import bowling.domain.pin.Pin;
 
+import java.util.List;
+
+import static java.util.Collections.singletonList;
+
 public class NormalFrame implements Frame {
 
     private static final int MIN_NUMBER = 1;
@@ -44,5 +48,10 @@ public class NormalFrame implements Frame {
     @Override
     public int getNumber() {
         return number;
+    }
+
+    @Override
+    public List<Bowl> bowls() {
+        return singletonList(bowl);
     }
 }

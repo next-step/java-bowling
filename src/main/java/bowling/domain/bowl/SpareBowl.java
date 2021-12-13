@@ -2,6 +2,8 @@ package bowling.domain.bowl;
 
 import bowling.domain.pin.Pin;
 
+import static java.lang.String.format;
+
 public class SpareBowl extends FinishedBowl {
 
     public static final String NOT_SPARE_MESSAGE = "스페어가 아닙니다.";
@@ -24,5 +26,10 @@ public class SpareBowl extends FinishedBowl {
         if (firstPin.isAllHit() || !sumOfPin.isAllHit()) {
             throw new CanNotPitchException(NOT_SPARE_MESSAGE);
         }
+    }
+
+    @Override
+    public String getView() {
+        return format(" %s|/  ", firstPin.getHitCount());
     }
 }
