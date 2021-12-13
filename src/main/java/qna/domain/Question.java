@@ -1,11 +1,20 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
-import qna.CannotDeleteException;
-
-import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+
+import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -58,8 +67,9 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    public User getWriter() {
-        return writer;
+    public Question setDeleted(boolean deleted) {
+        this.deleted = deleted;
+        return this;
     }
 
     public Question writeBy(User loginUser) {
@@ -72,13 +82,12 @@ public class Question extends AbstractEntity {
         answers = answers.append(answer);
     }
 
-    public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
+    public User getWriter() {
+        return writer;
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public boolean isOwner(User loginUser) {
+        return writer.equals(loginUser);
     }
 
     public boolean isDeleted() {
@@ -89,7 +98,7 @@ public class Question extends AbstractEntity {
         return answers.collect();
     }
 
-    public Question delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
@@ -99,7 +108,19 @@ public class Question extends AbstractEntity {
         }
 
         this.deleted = true;
-        return this;
+
+        final List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), writer, LocalDateTime.now()));
+        // todo answers.delete()
+        // 위에 deletable이랑 합칠까?
+        // 지울수 있다면 답글을 먼저 지움 -> 논리적으론 맞다
+        // delete history에서 순서가 중요한것은 아닐듯?
+        answers.collect().forEach(answer -> {
+            answer.setDeleted(true);
+            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+        });
+
+        return deleteHistories;
     }
 
     @Override

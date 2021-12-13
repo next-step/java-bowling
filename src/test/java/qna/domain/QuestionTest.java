@@ -12,7 +12,8 @@ public class QuestionTest {
     @Test
     public void delete() throws CannotDeleteException {
         Question question = new Question("t1", "c1").writeBy(UserTest.JAVAJIGI);
-        assertThat(question.delete(UserTest.JAVAJIGI).isDeleted()).isTrue();
+        question.delete(UserTest.JAVAJIGI);
+        assertThat(question.isDeleted()).isTrue();
     }
 
     @Test
