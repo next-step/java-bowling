@@ -1,5 +1,6 @@
 package qna.domain;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -13,13 +14,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class QuestionTest {
-    public static final Question Q1 = new Question("title1", "contents1")
-            .writeBy(UserTest.JAVAJIGI);
+    private static Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+    private static Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
 
-    public static final Question Q2 = new Question("title2", "contents2")
-            .writeBy(UserTest.SANJIGI);
+    @BeforeEach
+    void setUp() {
+        Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
+    }
 
     @ParameterizedTest
+    @DisplayName("Answer를 추가한다")
     @MethodSource
     void addAnswer(Question question, Answer answer, int expectedSize) {
         question.addAnswer(answer);
@@ -66,9 +71,8 @@ public class QuestionTest {
     @DisplayName("작성자가 아닌 사람이 글 삭제시 예외가 발생한다")
     @MethodSource
     void deleteException(User loginUser, Question question) {
-        question.deleteQuestion(loginUser);
 
-        assertThatThrownBy(question::isDeleted).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> question.deleteQuestion(loginUser)).isInstanceOf(CannotDeleteException.class);
     }
 
     static Stream<Arguments> deleteException() {
