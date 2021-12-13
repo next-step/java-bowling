@@ -34,14 +34,9 @@ public class Question extends AbstractEntity {
     @OrderBy("id ASC")
     private List<Answer> answers = new ArrayList<>();
 
-    private boolean deleted = false;
+    private boolean deleted;
 
-    public Question() {
-    }
-
-    public Question(String title, String contents) {
-        this.title = title;
-        this.contents = contents;
+    private Question() {
     }
 
     public Question(long id, String title, String contents) {
@@ -63,27 +58,20 @@ public class Question extends AbstractEntity {
 
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         validateQuestionOwnerOrThrow(loginUser);
-        validateAnswersOwnerOrThrow(loginUser);
+
+        Answers answers = new Answers(this.answers);
+        List<DeleteHistory> answerDeleteHistories = answers.delete(loginUser);
 
         deleted = true;
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer));
-
-        answers.forEach(answer -> deleteHistories.add(answer.delete()));
+        deleteHistories.add(new DeleteHistory(this, writer));
+        deleteHistories.addAll(answerDeleteHistories);
         return deleteHistories;
     }
 
     private void validateQuestionOwnerOrThrow(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
-    }
-
-    private void validateAnswersOwnerOrThrow(User loginUser) throws CannotDeleteException {
-        boolean notOwnerExist = answers.stream()
-                                       .anyMatch(answer -> !answer.isOwner(loginUser));
-        if (notOwnerExist) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
     }
 

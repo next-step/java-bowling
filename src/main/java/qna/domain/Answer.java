@@ -22,13 +22,9 @@ public class Answer extends AbstractEntity {
     @Lob
     private String contents;
 
-    private boolean deleted = false;
+    private boolean deleted;
 
-    public Answer() {
-    }
-
-    public Answer(User writer, Question question, String contents) {
-        this(null, writer, question, contents);
+    private Answer() {
     }
 
     public Answer(Long id, User writer, Question question, String contents) {
@@ -47,9 +43,8 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public DeleteHistory delete() {
+    public void delete() {
         deleted = true;
-        return new DeleteHistory(ContentType.ANSWER, getId(), writer);
     }
 
     public boolean isDeleted() {

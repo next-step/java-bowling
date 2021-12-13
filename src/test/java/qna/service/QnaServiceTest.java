@@ -1,6 +1,7 @@
 package qna.service;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Optional;
@@ -66,8 +67,10 @@ public class QnaServiceTest {
 
         qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
 
-        assertThat(question.isDeleted()).isTrue();
-        assertThat(answer.isDeleted()).isTrue();
+        assertAll(
+                () -> assertThat(question.isDeleted()).isTrue(),
+                () -> assertThat(answer.isDeleted()).isTrue()
+        );
         verify(deleteHistoryService).saveAll(question.delete(UserTest.JAVAJIGI));
     }
 

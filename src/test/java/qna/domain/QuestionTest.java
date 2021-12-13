@@ -1,6 +1,7 @@
 package qna.domain;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,14 +23,15 @@ public class QuestionTest {
 
     @Test
     public void delete_성공시_DeleteHistory를_정상적으로_반환하는지_검증() throws CannotDeleteException {
-        List<DeleteHistory> expected = Arrays.asList(new DeleteHistory(ContentType.QUESTION, Q1.getId(), UserTest.JAVAJIGI),
-                                                     new DeleteHistory(ContentType.ANSWER, AnswerTest.A1.getId(),
-                                                                       UserTest.JAVAJIGI));
+        List<DeleteHistory> expected = Arrays.asList(new DeleteHistory(Q1, UserTest.JAVAJIGI),
+                                                     new DeleteHistory(AnswerTest.A1, UserTest.JAVAJIGI));
 
         List<DeleteHistory> deleteHistories = Q1.delete(UserTest.JAVAJIGI);
 
-        assertThat(Q1.isDeleted()).isTrue();
-        assertThat(deleteHistories).isEqualTo(expected);
+        assertAll(
+                () -> assertThat(Q1.isDeleted()).isTrue(),
+                () -> assertThat(deleteHistories).isEqualTo(expected)
+        );
     }
 
     @Test
