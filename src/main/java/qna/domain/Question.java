@@ -21,7 +21,7 @@ public class Question extends AbstractEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    private Answers answers = Answers.EMPTY;
 
     private boolean deleted = false;
 
@@ -68,7 +68,7 @@ public class Question extends AbstractEntity {
 
     public void addAnswer(Answer answer) {
         answer.toQuestion(this);
-        answers.add(answer);
+        answers = answers.append(answer);
     }
 
     public boolean isOwner(User loginUser) {
@@ -85,7 +85,7 @@ public class Question extends AbstractEntity {
     }
 
     public List<Answer> getAnswers() {
-        return answers;
+        return answers.collect();
     }
 
     @Override
