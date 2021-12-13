@@ -1,5 +1,7 @@
 package bowling.view;
 
+import bowling.domain.frame.Round;
+
 import java.util.Scanner;
 
 public class InputView {
@@ -10,4 +12,8 @@ public class InputView {
         return scanner.nextLine();
     }
 
+    public int inputPitch(Round round) {
+        System.out.println(String.format("%d 프레임 투구 : ", round.value()));
+        return scanner.nextInt();
+    }
 }

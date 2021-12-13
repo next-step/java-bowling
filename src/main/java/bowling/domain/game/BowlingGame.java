@@ -34,6 +34,10 @@ public class BowlingGame {
         return frames.round();
     }
 
+    public boolean isGameEnd() {
+        return frames.isGameEnd();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

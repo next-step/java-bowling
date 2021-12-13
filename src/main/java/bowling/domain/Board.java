@@ -30,4 +30,11 @@ public class Board {
     public int hashCode() {
         return Objects.hash(allRounds, gameResult);
     }
+
+    @Override
+    public String toString() {
+        return "Board{" +
+                ", gameResult=" + gameResult +
+                '}';
+    }
 }

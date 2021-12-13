@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.domain.Board;
 import bowling.domain.frame.Pin;
 import bowling.domain.game.BowlingGame;
 import bowling.domain.user.User;
@@ -10,8 +11,12 @@ public class main {
     public static void main(String[] args) {
         InputView inputView = new InputView();
         BowlingService bowlingService = createBowlingService(inputView);
-
-        bowlingService.bowl(Pin.TEN);
+        while (!bowlingService.isGameEnd()) {
+            int falldPins = inputView.inputPitch(bowlingService.round());
+            Board bowl = bowlingService.bowl(Pin.from(falldPins));
+            System.out.println(bowl);
+        }
+//        bowlingService.bowl(Pin.TEN);
     }
 
     private static BowlingService createBowlingService(InputView inputView) {

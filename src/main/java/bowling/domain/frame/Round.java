@@ -26,19 +26,19 @@ public class Round {
     public static final Round FIRST = oneThroughTen[0];
     public static final Round LAST = oneThroughTen[9];
 
-    private final int round;
+    private final int value;
 
-    private Round(int round) {
-        this.round = round;
+    private Round(int value) {
+        this.value = value;
     }
 
-    public static Round from(int round) {
-        validRound(round);
-        return oneThroughTen[round - CALC_INT_TO_ROUND_ARRAY];
+    public static Round from(int value) {
+        validRound(value);
+        return oneThroughTen[value - CALC_INT_TO_ROUND_ARRAY];
     }
 
-    private static void validRound(int round) {
-        if (round < FIRST_VALUE || round > LAST_VALUE) {
+    private static void validRound(int value) {
+        if (value < FIRST_VALUE || value > LAST_VALUE) {
             throw new IllegalArgumentException(String.format(NO_RANGE_EXCEPTION_MESSAGE_FORMAT, FIRST_VALUE, LAST_VALUE));
         }
     }
@@ -48,11 +48,15 @@ public class Round {
     }
 
     public Round nextRound() {
-        return from(this.round + NEXT_ROUND_VALUE);
+        return from(this.value + NEXT_ROUND_VALUE);
     }
 
     public boolean isLast() {
-        return this.round == LAST_VALUE;
+        return this.value == LAST_VALUE;
+    }
+
+    public int value() {
+        return value;
     }
 
     @Override
@@ -64,11 +68,11 @@ public class Round {
             return false;
         }
         Round round1 = (Round) o;
-        return round == round1.round;
+        return value == round1.value;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(round);
+        return Objects.hash(value);
     }
 }

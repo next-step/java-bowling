@@ -21,72 +21,76 @@ class FinalFrameTest {
     private Frame miss;
     private Frame oneStrikeAndMiss;
     private Frame oneStrikeAndSpare;
+    private Frame oneStrike;
+    private Frame twoStrike;
+    private Frame first;
+    private Frame spare;
 
     @BeforeEach
     void setUp() {
         ready = FinalFrame.readyFrame();
         spareAndBowl = FinalFrame.of(
                 Arrays.asList(
-                        Ready.getInstance(),
-                        new FirstBowl(Pin.from(5)),
                         new Spare(Pin.from(5), Pin.from(5)),
-                        Ready.getInstance(),
                         new FirstBowl(Pin.from(5))
                 ), 0);
 
         spareAndStrike = FinalFrame.of(
                 Arrays.asList(
-                        Ready.getInstance(),
-                        new FirstBowl(Pin.from(5)),
                         new Spare(Pin.from(5), Pin.from(5)),
-                        Ready.getInstance(),
                         new Strike()
                 ), 0);
 
         twoStrikeAndBowl = FinalFrame.of(
                 Arrays.asList(
-                        Ready.getInstance(),
                         new Strike(),
-                        Ready.getInstance(),
                         new Strike(),
-                        Ready.getInstance(),
                         new FirstBowl(Pin.from(5))
                 ), 0);
 
         threeStrike = FinalFrame.of(
                 Arrays.asList(
-                        Ready.getInstance(),
                         new Strike(),
-                        Ready.getInstance(),
                         new Strike(),
-                        Ready.getInstance(),
                         new Strike()
                 ), 0);
 
         miss = FinalFrame.of(
                 Arrays.asList(
-                        Ready.getInstance(),
-                        new FirstBowl(Pin.from(5)),
-                        new Miss(Pin.from(5), Pin.from(3)),
-                        Ready.getInstance()
+                        new Miss(Pin.from(5), Pin.from(3))
                 ), 0);
         oneStrikeAndMiss = FinalFrame.of(
                 Arrays.asList(
-                        Ready.getInstance(),
                         new Strike(),
-                        Ready.getInstance(),
-                        new FirstBowl(Pin.from(5)),
                         new Miss(Pin.from(5), Pin.from(3))
                 ), 0);
 
         oneStrikeAndSpare = FinalFrame.of(
                 Arrays.asList(
-                        Ready.getInstance(),
                         new Strike(),
-                        Ready.getInstance(),
-                        new FirstBowl(Pin.from(5)),
                         new Spare(Pin.from(5), Pin.from(5))
                 ), 0);
+
+        oneStrike = FinalFrame.of(
+                Arrays.asList(
+                        new Strike()
+                ), 2);
+
+        first = FinalFrame.of(
+                Arrays.asList(
+                        new FirstBowl(Pin.from(5))
+                ), 2);
+
+        spare = FinalFrame.of(
+                Arrays.asList(
+                        new Spare(Pin.from(5), Pin.from(5))
+                ), 1);
+
+        twoStrike = FinalFrame.of(
+                Arrays.asList(
+                        new Strike(),
+                        new Strike()
+                ), 1);
     }
 
     @DisplayName("정상 생성 테스트")
@@ -96,17 +100,6 @@ class FinalFrameTest {
                 Arrays.asList(Ready.getInstance()), 3
         ));
     }
-
-    @DisplayName("3번을 굴릴 수 있다.")
-    @Test
-    void bonusTest() {
-        assertThat(ready.bowl(Pin.from(5)).bowl(Pin.from(5)).bowl(Pin.from(5)).isFinished()).isTrue();
-        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(5)).bowl(Pin.from(5)).isFinished()).isTrue();
-        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(5)).bowl(Pin.from(4)).isFinished()).isTrue();
-        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(10)).bowl(Pin.from(4)).isFinished()).isTrue();
-        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(10)).bowl(Pin.from(10)).isFinished()).isTrue();
-    }
-
 
     @DisplayName("finish 상태에서 bowl을 호출 할 경우 illegal Exception")
     @Test
@@ -127,21 +120,18 @@ class FinalFrameTest {
     @DisplayName("FinalFrame이 끝난 경우 isGameEnd는 True를 반환한다.")
     @Test
     void isGameEndTrueTest() {
-        assertThat(ready.bowl(Pin.from(5)).bowl(Pin.from(5)).bowl(Pin.from(5)).isGameEnd()).isTrue();
-        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(5)).bowl(Pin.from(5)).isGameEnd()).isTrue();
-        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(5)).bowl(Pin.from(4)).isGameEnd()).isTrue();
-        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(10)).bowl(Pin.from(4)).isGameEnd()).isTrue();
-        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(10)).bowl(Pin.from(10)).isGameEnd()).isTrue();
+        assertThat(spareAndBowl.isGameEnd()).isTrue();
+        assertThat(oneStrikeAndSpare.isGameEnd()).isTrue();
+        assertThat(oneStrikeAndMiss.isGameEnd()).isTrue();
+        assertThat(twoStrikeAndBowl.isGameEnd()).isTrue();
+        assertThat(threeStrike.isGameEnd()).isTrue();
     }
 
     @DisplayName("FinalFrame이 끝나지 않은 경우 isGameEnd는 False를 반환한다.")
     @Test
     void isGameEndFalseTest() {
-        assertThat(ready.bowl(Pin.from(5)).bowl(Pin.from(5)).isGameEnd()).isFalse();
-        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(5)).isGameEnd()).isFalse();
-        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(5)).isGameEnd()).isFalse();
-        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(10)).isGameEnd()).isFalse();
-        assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(10)).isGameEnd()).isFalse();
+        assertThat(spare.isGameEnd()).isFalse();
+        assertThat(twoStrike.isGameEnd()).isFalse();
     }
 
     @DisplayName("isEqualsRound() round가 같으면 true를 반환한다.")
@@ -160,21 +150,18 @@ class FinalFrameTest {
     @DisplayName("공을 굴릴 때 마다 left가 하나 줄어든다.")
     @Test
     void bowlTest() {
-        Frame firstBowl = ready.bowl(Pin.from(5));
-        assertThat(firstBowl)
-                .isEqualTo(FinalFrame.of(Arrays.asList(Ready.getInstance(), new FirstBowl(Pin.from(5))), 2));
+        assertThat(ready.bowl(Pin.from(5)))
+                .isEqualTo(FinalFrame.of(Arrays.asList(new FirstBowl(Pin.from(5))), 2));
     }
 
     @DisplayName("Miss가 발생하면 left = 0 으로 변한다")
     @Test
     void missTest() {
-        assertThat(miss)
+        ready.bowl(Pin.from(5)).bowl(Pin.from(3));
+        assertThat(ready)
                 .isEqualTo(FinalFrame.of(
                         Arrays.asList(
-                                Ready.getInstance(),
-                                new FirstBowl(Pin.from(5)),
-                                new Miss(Pin.from(5), Pin.from(3)),
-                                Ready.getInstance()
+                                new Miss(Pin.from(5), Pin.from(3))
                         ), 0));
     }
 
@@ -187,11 +174,7 @@ class FinalFrameTest {
     @DisplayName("FirstBowl 상태에서는 isFinished()가 false이다.")
     @Test
     void firstIsFinishedTest() {
-        FinalFrame first = FinalFrame.of(
-                Arrays.asList(
-                        Ready.getInstance(),
-                        new FirstBowl(Pin.from(5))
-                ), 2);
+
         assertThat(first.isFinished()).isFalse();
 
         assertThat(ready.bowl(Pin.from(5)).isFinished()).isFalse();
@@ -200,11 +183,6 @@ class FinalFrameTest {
     @DisplayName("첫 Strike 상태에서는 isFinished()가 false이다.")
     @Test
     void oneStrikeIsFinishedTest() {
-        FinalFrame oneStrike = FinalFrame.of(
-                Arrays.asList(
-                        Ready.getInstance(),
-                        new Strike()
-                ), 2);
         assertThat(oneStrike.isFinished()).isFalse();
         assertThat(ready.bowl(Pin.from(10)).isFinished()).isFalse();
     }
@@ -212,12 +190,6 @@ class FinalFrameTest {
     @DisplayName("첫 spare 상태에서는 isFinished()가 false이다.")
     @Test
     void spareIsFinishedTest() {
-        FinalFrame spare = FinalFrame.of(
-                Arrays.asList(
-                        Ready.getInstance(),
-                        new FirstBowl(Pin.from(5)),
-                        new Spare(Pin.from(5), Pin.from(5))
-                ), 1);
         assertThat(spare.isFinished()).isFalse();
 
         assertThat(ready.bowl(Pin.from(5)).bowl(Pin.from(5)).isFinished()).isFalse();
@@ -226,13 +198,6 @@ class FinalFrameTest {
     @DisplayName("두번 Strike 상태에서는 isFinished()가 false이다.")
     @Test
     void twoStrikeIsFinishedTest() {
-        FinalFrame twoStrike = FinalFrame.of(
-                Arrays.asList(
-                        Ready.getInstance(),
-                        new Strike(),
-                        Ready.getInstance(),
-                        new Strike()
-                ), 1);
         assertThat(twoStrike.isFinished()).isFalse();
         assertThat(ready.bowl(Pin.from(10)).bowl(Pin.from(10)).isFinished()).isFalse();
     }
@@ -262,6 +227,10 @@ class FinalFrameTest {
         assertThat(miss.createResult()).isEqualTo(new FrameResult("5|3"));
         assertThat(oneStrikeAndMiss.createResult()).isEqualTo(new FrameResult("X|5|3"));
         assertThat(oneStrikeAndSpare.createResult()).isEqualTo(new FrameResult("X|5|/"));
+        assertThat(oneStrike.createResult()).isEqualTo(new FrameResult("X"));
+        assertThat(twoStrike.createResult()).isEqualTo(new FrameResult("X|X"));
+        assertThat(spare.createResult()).isEqualTo(new FrameResult("5|/"));
+        assertThat(first.createResult()).isEqualTo(new FrameResult("5"));
     }
 
     @DisplayName("next() 마지막 프레임은 null을 반환한다.")

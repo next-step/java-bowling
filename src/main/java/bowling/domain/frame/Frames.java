@@ -31,10 +31,8 @@ public class Frames {
     }
 
     public Frames bowl(Pin pin) {
-        Frame nowFrame = tail.bowl(pin);
-        if (!tail.isEqualsRound(nowFrame)) {
-            tail = nowFrame;
-        }
+        tail = tail.bowl(pin);
+        System.out.println("tail = " + tail);
         return this;
     }
 

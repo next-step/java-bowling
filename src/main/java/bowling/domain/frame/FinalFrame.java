@@ -5,7 +5,10 @@ import bowling.domain.state.Miss;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
@@ -14,8 +17,8 @@ public class FinalFrame implements Frame {
     private static final int MISS_STATE_LEFT = 0;
     private static final int CALCULATE_LEFT_DEFAULT = 1;
 
-    private final LinkedList<State> states;
-    private final int left;
+    private LinkedList<State> states;
+    private int left;
 
     private FinalFrame(List<State> states, int left) {
         this.states = new LinkedList<>(states);
@@ -35,20 +38,23 @@ public class FinalFrame implements Frame {
         if (isFinished()) {
             throw new IllegalArgumentException();
         }
-        State lastState = states.getLast();
+        State lastState = lastState();
         State nextState = lastState.bowl(pin);
-        nextStates(nextState);
-        nextLeft(nextState);
-        return of(nextStates(nextState), nextLeft(nextState));
+        addStates(nextState);
+        left = nextLeft(nextState);
+        return this;
     }
 
-    private List<State> nextStates(State state) {
-        List<State> nextStates = new ArrayList<>(this.states);
-        nextStates.add(state);
-        if (state.isFinished()) {
-            nextStates.add(Ready.getInstance());
+    private State lastState() {
+        State state = states.getLast();
+        if (state.isFinished() && states.size() < DEFAULT_LEFT) {
+            return Ready.getInstance();
         }
-        return nextStates;
+        return states.pollLast();
+    }
+
+    private void addStates(State state) {
+        states.add(state);
     }
 
     private int nextLeft(State state) {
@@ -80,11 +86,9 @@ public class FinalFrame implements Frame {
 
     @Override
     public FrameResult createResult() {
-        if (isFinished()) {
-            return new FrameResult(finishedViewString());
-        }
-
-        return new FrameResult(states.getLast().viewString());
+        return states.stream()
+                .map(State::viewString)
+                .collect(Collectors.collectingAndThen(Collectors.joining("|"), FrameResult::new));
     }
 
     @Override
@@ -95,18 +99,6 @@ public class FinalFrame implements Frame {
     @Override
     public Frame next() {
         return null;
-    }
-
-    private String finishedViewString() {
-        State bonusState = states.pollLast();
-        String basicViewString = states.stream()
-                .filter(State::isFinished)
-                .map(State::viewString)
-                .collect(Collectors.joining("|"));
-        if (bonusState instanceof Ready) {
-            return basicViewString;
-        }
-        return String.join("|", basicViewString, bonusState.viewString());
     }
 
     @Override
