@@ -5,6 +5,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
+import qna.CannotDeleteException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -52,5 +53,14 @@ public class AnswersTest {
     @Test
     public void deletableFailed() {
         assertThat(ANSWERS_A1A2.deletable(AnswerTest.A1.getWriter())).isFalse();
+    }
+
+    @Test
+    public void delete() throws CannotDeleteException {
+        Answer testAnswer = new Answer(101L, UserTest.JAVAJIGI, QuestionTest.Q1, "c1");
+        Answers answers = Answers.of(List.of(testAnswer));
+        List<DeleteHistory> histories = answers.delete(UserTest.JAVAJIGI);
+        assertThat(answers.collect().stream().map(Answer::isDeleted).reduce(true, (a, b) -> a & b)).isTrue();
+        assertThat(histories.stream().map(DeleteHistory::contentId)).containsExactly(testAnswer.getId());
     }
 }

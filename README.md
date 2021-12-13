@@ -3,11 +3,12 @@
 ## 1단계 - 질문 삭제하기 기능 리팩토링
 ### TODO
 * [x] Question#answers List<Answer>를 일급 컬랙션으로 변경
-  * [ ] answers를 지우는 메소드
-  * [ ] return delete history
+  * [x] answers를 지우는 메소드
+  * [x] return delete history
 * [x] 삭제 메소드를 Question에 구현
   * [x] 답변들이 삭제 가능한지 확인
   * [x] return delete history
+* [ ] DeleteHistories as first class collection
 
 ### 질문 삭제하기 요구사항
 * 질문 데이터를 데이터의 상태를 삭제 상태(deleted - boolean type)로 변경

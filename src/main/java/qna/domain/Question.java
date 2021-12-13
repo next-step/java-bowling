@@ -103,22 +103,12 @@ public class Question extends AbstractEntity {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
 
-        if (!answers.deletable(loginUser)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-        }
+        final List<DeleteHistory> deleteHistories = answers.delete(loginUser);
+        // 순서를 위해 앞에 삽입
+        // todo DeleteHistories as first class collection
+        deleteHistories.add(0, new DeleteHistory(ContentType.QUESTION, this.getId(), writer, LocalDateTime.now()));
 
         this.deleted = true;
-
-        final List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), writer, LocalDateTime.now()));
-        // todo answers.delete()
-        // 위에 deletable이랑 합칠까?
-        // 지울수 있다면 답글을 먼저 지움 -> 논리적으론 맞다
-        // delete history에서 순서가 중요한것은 아닐듯?
-        answers.collect().forEach(answer -> {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        });
 
         return deleteHistories;
     }
