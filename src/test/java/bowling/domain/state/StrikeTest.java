@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.frame.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,4 +14,9 @@ class StrikeTest {
         assertThat(new Strike().viewString()).isEqualTo("X");
     }
 
+    @DisplayName("score()은 Pin의 갯수의 합과 시도횟수 2번을 반환한다..")
+    @Test
+    void scoreTest() {
+        assertThat(new Strike().score()).isEqualTo(Score.of(10, 2));
+    }
 }
