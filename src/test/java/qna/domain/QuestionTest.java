@@ -31,13 +31,13 @@ public class QuestionTest {
     @Test
     void 삭제성공시_deleted_변경_확인() throws CannotDeleteException {
         // given
-        Q1.addAnswer(AnswerTest.A1);
+        Q2.addAnswer(AnswerTest.A2);
 
         // when
-        Q1.delete(UserTest.JAVAJIGI);
+        Q2.delete(UserTest.SANJIGI);
 
         // then
-        assertThat(Q1.isDeleted()).isTrue();
+        assertThat(Q2.isDeleted()).isTrue();
     }
 
 }
