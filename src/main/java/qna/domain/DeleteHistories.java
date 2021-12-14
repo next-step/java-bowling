@@ -18,15 +18,17 @@ public class DeleteHistories {
         if (question == null) {
             return new DeleteHistories(new ArrayList<>());
         }
+        return new DeleteHistories(addDeleteHistories(question));
+    }
 
+    private static List<DeleteHistory> addDeleteHistories(Question question) {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         List<Answer> answers = question.getAnswers();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()));
         for (Answer answer : answers) {
             deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         }
-
-        return new DeleteHistories(deleteHistories);
+        return deleteHistories;
     }
 
     public int size() {
