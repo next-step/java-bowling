@@ -64,6 +64,10 @@ public class Pin {
         return String.valueOf(falledPins);
     }
 
+    public int getFalledPins() {
+        return falledPins;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
