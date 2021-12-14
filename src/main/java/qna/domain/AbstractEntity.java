@@ -21,7 +21,7 @@ public class AbstractEntity {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    public AbstractEntity() {
+    protected AbstractEntity() {
     }
 
     public AbstractEntity(Long id) {
@@ -30,11 +30,6 @@ public class AbstractEntity {
 
     public Long getId() {
         return id;
-    }
-
-    public AbstractEntity setId(Long id) {
-        this.id = id;
-        return this;
     }
 
     @Override
