@@ -1,24 +1,23 @@
 package qna.service;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-import java.util.Optional;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
 import qna.CannotDeleteException;
-import qna.domain.Answer;
-import qna.domain.Question;
-import qna.domain.QuestionRepository;
-import qna.domain.QuestionTest;
-import qna.domain.UserTest;
+import qna.domain.*;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QnaServiceTest {
@@ -49,7 +48,7 @@ public class QnaServiceTest {
         qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
 
         assertThat(question.isDeleted()).isTrue();
-        verify(deleteHistoryService).saveAll(question.delete(UserTest.JAVAJIGI));
+        verifyDeleteHistories();
     }
 
     @Test
@@ -67,11 +66,9 @@ public class QnaServiceTest {
 
         qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
 
-        assertAll(
-                () -> assertThat(question.isDeleted()).isTrue(),
-                () -> assertThat(answer.isDeleted()).isTrue()
-        );
-        verify(deleteHistoryService).saveAll(question.delete(UserTest.JAVAJIGI));
+        assertThat(question.isDeleted()).isTrue();
+        assertThat(answer.isDeleted()).isTrue();
+        verifyDeleteHistories();
     }
 
     @Test
@@ -81,5 +78,12 @@ public class QnaServiceTest {
         assertThatThrownBy(() -> {
             qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
         }).isInstanceOf(CannotDeleteException.class);
+    }
+
+    private void verifyDeleteHistories() {
+        List<DeleteHistory> deleteHistories = Arrays.asList(
+                new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()),
+                new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+        verify(deleteHistoryService).saveAll(deleteHistories);
     }
 }
