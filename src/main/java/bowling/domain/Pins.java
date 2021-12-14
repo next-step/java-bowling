@@ -6,6 +6,7 @@ import java.util.List;
 public class Pins {
     private static final int PIN_MIN_COUNT = 1;
     private static final int PIN_MAX_COUNT = 10;
+    private static final int FIRST_PIN_INDEX = 0;
 
     private final List<Pin> pins = new ArrayList<>();
 
@@ -33,12 +34,32 @@ public class Pins {
         return new Pins(count);
     }
 
+    public int fallDown(int fallDownCount) {
+        validateFallDownCount(fallDownCount);
+        int startSize = size();
+        while (falling(startSize, fallDownCount)) {
+            pins.remove(FIRST_PIN_INDEX);
+        }
+        return size();
+    }
+
+    private boolean falling(int startSize, int fallDownCount) {
+        return size() != (startSize - fallDownCount);
+    }
+
+
     public List<Pin> pins() {
         return pins;
     }
 
     public int size() {
         return pins.size();
+    }
+
+    private void validateFallDownCount(int fallDownCount) {
+        if (pins.size() < fallDownCount) {
+            throw new IllegalArgumentException("남은 핀 개수 보다 많이 쓰러뜨릴 수 없습니다.");
+        }
     }
 
     private void validatePinsSize() {
