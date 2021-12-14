@@ -59,7 +59,7 @@ public class AnswersTest {
     public void delete() throws CannotDeleteException {
         Answer testAnswer = new Answer(101L, UserTest.JAVAJIGI, QuestionTest.Q1, "c1");
         Answers answers = Answers.of(List.of(testAnswer));
-        List<DeleteHistory> histories = answers.delete(UserTest.JAVAJIGI);
+        List<DeleteHistory> histories = answers.delete(UserTest.JAVAJIGI).collect();
         assertThat(answers.collect().stream().map(Answer::isDeleted).reduce(true, (a, b) -> a & b)).isTrue();
         assertThat(histories.stream().map(DeleteHistory::contentId)).containsExactly(testAnswer.getId());
     }

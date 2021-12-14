@@ -1,7 +1,6 @@
 package qna.domain;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -98,19 +97,14 @@ public class Question extends AbstractEntity {
         return answers.collect();
     }
 
-    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
 
-        final List<DeleteHistory> deleteHistories = answers.delete(loginUser);
-        // 순서를 위해 앞에 삽입
-        // todo DeleteHistories as first class collection
-        deleteHistories.add(0, new DeleteHistory(ContentType.QUESTION, this.getId(), writer, LocalDateTime.now()));
-
+        final DeleteHistories deleteHistories = answers.delete(loginUser);
         this.deleted = true;
-
-        return deleteHistories;
+        return  deleteHistories.prepend(new DeleteHistory(ContentType.QUESTION, this.getId(), writer, LocalDateTime.now()));
     }
 
     @Override
