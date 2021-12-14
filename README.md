@@ -10,7 +10,7 @@
   * [x] return delete history
 * [x] DeleteHistories as first class collection
   * [ ] abstract class FirstClassCollection (Answers, DeleteHistories)
-* [ ] DeleteHistory factory method
+* [x] DeleteHistory factory method
 
 ### 질문 삭제하기 요구사항
 * 질문 데이터를 데이터의 상태를 삭제 상태(deleted - boolean type)로 변경

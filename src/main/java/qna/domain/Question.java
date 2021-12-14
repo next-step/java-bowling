@@ -1,6 +1,5 @@
 package qna.domain;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -104,7 +103,7 @@ public class Question extends AbstractEntity {
 
         final DeleteHistories deleteHistories = answers.delete(loginUser);
         this.deleted = true;
-        return  deleteHistories.prepend(new DeleteHistory(ContentType.QUESTION, this.getId(), writer, LocalDateTime.now()));
+        return  deleteHistories.prepend(DeleteHistory.from(this));
     }
 
     @Override

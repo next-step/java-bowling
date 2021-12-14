@@ -1,6 +1,5 @@
 package qna.domain;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -56,8 +55,7 @@ public class Answers {
         answers.forEach(answer -> answer.setDeleted(true));
 
         return DeleteHistories.of(answers.stream()
-                // todo factory method to simplify
-                .map(answer -> new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()))
+                .map(DeleteHistory::from)
                 .collect(Collectors.toList()));
     }
 

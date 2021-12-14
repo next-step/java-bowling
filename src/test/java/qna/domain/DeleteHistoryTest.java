@@ -11,7 +11,25 @@ public class DeleteHistoryTest {
     public static DeleteHistory H2 = new DeleteHistory(ContentType.ANSWER, 200L, UserTest.SANJIGI, LocalDateTime.now());
 
     @Test
+    public void createFromQuestion() {
+        final DeleteHistory deleteHistory = DeleteHistory.from(QuestionTest.Q1);
+        assertThat(QuestionTest.Q1.getId()).isEqualTo(deleteHistory.contentId());
+        assertThat(QuestionTest.Q1.getWriter()).isEqualTo(deleteHistory.deletedBy());
+    }
+
+    @Test
+    public void createFromAnswer() {
+        final DeleteHistory deleteHistory = DeleteHistory.from(AnswerTest.A1);
+        assertThat(AnswerTest.A1.getWriter()).isEqualTo(deleteHistory.deletedBy());
+    }
+
+    @Test
     public void contentId() {
-        assertThat(H1.contentId()).isEqualTo(100L);
+        assertThat(100L).isEqualTo(H1.contentId());
+    }
+
+    @Test
+    public void deletedBy() {
+        assertThat(UserTest.JAVAJIGI).isEqualTo(H1.deletedBy());
     }
 }
