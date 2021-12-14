@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.frame.Pin;
+import bowling.domain.frame.Score;
 
 import java.util.Objects;
 
@@ -26,6 +27,11 @@ public class Miss extends Finished {
     @Override
     public String viewString() {
         return firstPin.viewString() + VIEW_STRING_DELIMITER + secondPin.viewString();
+    }
+
+    @Override
+    public Score score() {
+        return null;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.frame.Pin;
+import bowling.domain.frame.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -26,5 +27,11 @@ class FirstBowlTest {
     @Test
     void viewStringTest() {
         assertThat(new FirstBowl(Pin.from(5)).viewString()).isEqualTo("5");
+    }
+
+    @DisplayName("FirstBowl score()은 Pin의 갯수와 점수를 반환한다.")
+    @Test
+    void scoreTest() {
+        assertThat(new FirstBowl(Pin.from(5)).score()).isEqualTo(Score.of(5, 0));
     }
 }

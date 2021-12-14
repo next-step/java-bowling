@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.frame.Pin;
+import bowling.domain.frame.Score;
 
 public class Ready extends Running {
 
@@ -25,6 +26,11 @@ public class Ready extends Running {
     @Override
     public String viewString() {
         return BLANK_VIEW;
+    }
+
+    @Override
+    public Score score() {
+        return null;
     }
 
     private static class InnerInstanceClazz {

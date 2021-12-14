@@ -38,6 +38,12 @@ class ScoreTest {
         assertThat(Score.miss(Pin.from(5), Pin.from(3))).isEqualTo(Score.of(8, 0));
     }
 
+    @DisplayName("firstBowl(Pin) Pin value와 0번의 left를 반환한다.")
+    @Test
+    void firstBowlTest() {
+        assertThat(Score.firstBowl(Pin.from(5))).isEqualTo(Score.of(5, 0));
+    }
+
     @DisplayName("addScore(Score) score의 값을 더하고 left를 -1한다.")
     @Test
     void addScoreTest() {

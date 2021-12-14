@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.frame.Pin;
+import bowling.domain.frame.Score;
 
 import java.util.Objects;
 
@@ -24,6 +25,11 @@ public class FirstBowl extends Running {
     @Override
     public String viewString() {
         return firstPin.viewString();
+    }
+
+    @Override
+    public Score score() {
+        return Score.firstBowl(firstPin);
     }
 
     @Override

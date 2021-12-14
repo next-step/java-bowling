@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.frame.Pin;
+import bowling.domain.frame.Score;
 
 import java.util.Objects;
 
@@ -23,6 +24,11 @@ public class Strike extends Finished {
     @Override
     public String viewString() {
         return pin.viewString();
+    }
+
+    @Override
+    public Score score() {
+        return null;
     }
 
     @Override
