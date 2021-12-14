@@ -9,7 +9,7 @@
   * [x] 답변들이 삭제 가능한지 확인
   * [x] return delete history
 * [x] DeleteHistories as first class collection
-  * [ ] abstract class FirstClassCollection (Answers, DeleteHistories)
+  * [x] abstract class FirstClassCollection (Answers, DeleteHistories)
 * [x] DeleteHistory factory method
 
 ### 질문 삭제하기 요구사항
