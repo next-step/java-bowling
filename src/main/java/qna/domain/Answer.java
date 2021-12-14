@@ -50,13 +50,12 @@ public class Answer extends AbstractEntity {
     }
 
     @Transactional(rollbackFor = CannotDeleteException.class)
-    public Answer delete(User user) throws CannotDeleteException {
+    public void delete(User user) throws CannotDeleteException {
         if (!this.isOwner(user)) {
             throw new CannotDeleteException("답글을 삭제할 권한이 없습니다.");
         }
-        
+
         deleted = true;
-        return this;
     }
 
     public Answer setDeleted(boolean deleted) {
