@@ -1,9 +1,8 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
-
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -18,10 +17,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -80,12 +77,28 @@ public class Question extends AbstractEntity {
         return this;
     }
 
+    public Question toDeleted() {
+        this.deleted = true;
+        this.answers = this.answers.delete();
+        return this;
+    }
+
     public boolean isDeleted() {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public boolean hasOtherAnswer(User loginUser) {
+        return !this.answers.hasOwnAnswer(loginUser);
+    }
+
+    public List<DeleteHistory> getDeleteHistory() {
+        if (this.deleted) {
+            List<DeleteHistory> deleteHistories = new ArrayList<>();
+            deleteHistories.add(DeleteHistory.of(this));
+            deleteHistories.addAll(this.answers.getDeleteHistory());
+            return deleteHistories;
+        }
+        return Collections.emptyList();
     }
 
     @Override
