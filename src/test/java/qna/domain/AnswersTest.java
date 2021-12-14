@@ -7,8 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import qna.CannotDeleteException;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.*;
 
 public class AnswersTest {
     public static Answers ANSWERS_A1A2 = Answers.of(List.of(AnswerTest.A1, AnswerTest.A2));
@@ -46,21 +45,19 @@ public class AnswersTest {
     }
 
     @Test
-    public void deletable() {
-        assertThat(ANSWERS_A1.deletable(AnswerTest.A1.getWriter())).isTrue();
-    }
-
-    @Test
-    public void deletableFailed() {
-        assertThat(ANSWERS_A1A2.deletable(AnswerTest.A1.getWriter())).isFalse();
-    }
-
-    @Test
     public void delete() throws CannotDeleteException {
         Answer testAnswer = new Answer(101L, UserTest.JAVAJIGI, QuestionTest.Q1, "c1");
         Answers answers = Answers.of(List.of(testAnswer));
         List<DeleteHistory> histories = answers.delete(UserTest.JAVAJIGI).collect();
         assertThat(answers.collect().stream().map(Answer::isDeleted).reduce(true, (a, b) -> a & b)).isTrue();
         assertThat(histories.stream().map(DeleteHistory::contentId)).containsExactly(testAnswer.getId());
+    }
+
+    @Test
+    public void deleteFailed() {
+        Answers answers = Answers.of(List.of(new Answer(101L, UserTest.JAVAJIGI, QuestionTest.Q1, "c1")));
+        assertThatExceptionOfType(CannotDeleteException.class)
+                .isThrownBy(() -> answers.delete(UserTest.SANJIGI).collect())
+                        .withMessageContaining("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }
 }

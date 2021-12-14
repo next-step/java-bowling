@@ -31,21 +31,13 @@ public class Answers extends FirstClassCollection<Answer> {
                 .collect(Collectors.toList()));
     }
 
-    public boolean deletable(User loginUser) {
-        return stream()
-                .filter(answer -> !answer.isOwner(loginUser))
-                .findAny()
-                .isEmpty();
-    }
-
     public DeleteHistories delete(User loginUser) throws CannotDeleteException {
-        if (!deletable(loginUser)) {
+        if (stream().anyMatch(answer -> !answer.isOwner(loginUser))) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
 
-        forEach(answer -> answer.setDeleted(true));
-
         return DeleteHistories.of(stream()
+                .peek(answer -> answer.setDeleted(true))
                 .map(DeleteHistory::from)
                 .collect(Collectors.toList()));
     }
