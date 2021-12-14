@@ -31,7 +31,7 @@ public class Miss extends Finished {
 
     @Override
     public Score score() {
-        return null;
+        return Score.miss(firstPin, secondPin);
     }
 
     @Override
