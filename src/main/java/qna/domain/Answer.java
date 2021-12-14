@@ -1,9 +1,13 @@
 package qna.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
-
-import javax.persistence.*;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -18,13 +22,9 @@ public class Answer extends AbstractEntity {
     @Lob
     private String contents;
 
-    private boolean deleted = false;
+    private boolean deleted;
 
-    public Answer() {
-    }
-
-    public Answer(User writer, Question question, String contents) {
-        this(null, writer, question, contents);
+    private Answer() {
     }
 
     public Answer(Long id, User writer, Question question, String contents) {
@@ -34,7 +34,7 @@ public class Answer extends AbstractEntity {
             throw new UnAuthorizedException();
         }
 
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
 
@@ -43,9 +43,8 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public void delete() {
+        deleted = true;
     }
 
     public boolean isDeleted() {
@@ -54,14 +53,6 @@ public class Answer extends AbstractEntity {
 
     public boolean isOwner(User writer) {
         return this.writer.equals(writer);
-    }
-
-    public User getWriter() {
-        return writer;
-    }
-
-    public String getContents() {
-        return contents;
     }
 
     public void toQuestion(Question question) {
