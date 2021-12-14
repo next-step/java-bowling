@@ -2,6 +2,7 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Pins {
     private static final int PIN_MIN_COUNT = 1;
@@ -63,8 +64,21 @@ public class Pins {
     }
 
     private void validatePinsSize() {
-        if (pins.size() != PIN_MAX_COUNT) {
+        if (pins.size() > PIN_MAX_COUNT) {
             throw new IllegalArgumentException("핀들이 제대로 생성되지 않았습니다.");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pins pins1 = (Pins) o;
+        return Objects.equals(pins, pins1.pins);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pins);
     }
 }

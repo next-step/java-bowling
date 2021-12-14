@@ -19,11 +19,11 @@ public class PinsTest {
     }
 
     @Test
-    void 볼링_핀_10개가_생성되지_않으면_IllegalArgumentException_이_발생한다() {
+    void 볼링_핀_10개_초과하여_생성되면_IllegalArgumentException_이_발생한다() {
         //given
         //when
         //then
-        assertThatThrownBy(() -> Pins.create(9))
+        assertThatThrownBy(() -> Pins.create(11))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
