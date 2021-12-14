@@ -33,15 +33,14 @@ public class Pin {
         this.falledPins = falledPins;
     }
 
-    //TODO 예외 검증 메서드가 예외를 발생시킨다는걸 유추할 수 없는 네이밍이라 좀 더 나은 이름을 생각해보시는것도.
-    private static void validCount(int falledPins) {
+    private static void validateCountWithRange(int falledPins) {
         if (falledPins < MIN || falledPins > MAX) {
             throw new IllegalArgumentException(String.format(NO_RANGE_EXCEPTION_MESSAGE_FORMAT, MIN, MAX));
         }
     }
 
     public static Pin from(int falledPins) {
-        validCount(falledPins);
+        validateCountWithRange(falledPins);
         return zeroThroughTen[falledPins];
     }
 

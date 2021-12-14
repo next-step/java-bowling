@@ -23,7 +23,6 @@ public class main {
     private static BowlingService createBowlingService(InputView inputView) {
         String name = inputView.inputName();
         User user = User.from(name);
-        BowlingService bowlingService = new BowlingService(BowlingGame.readyGame(user));
-        return bowlingService;
+        return new BowlingService(BowlingGame.readyGame(user));
     }
 }
