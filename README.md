@@ -4,7 +4,10 @@
 
 **- TODO List**
 
-1. Answer
-   - Answers 일급 컬랙션 생성
-   - 검증로직 이동
+1. ~~Answer~~
+   - ~~Answers 일급 컬랙션 생성~~
+   - ~~검증로직 이동~~
    - 저장로직 이동
+2. Question
+   - ~~검증로직 Question 메소드로 이동~~
+   - 저장로직 이동 
