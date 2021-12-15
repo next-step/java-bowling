@@ -28,7 +28,7 @@
 
 ## 구현 내용
 
-* [ ] Entity: `Question` 의 Field: `List<Answer> answers`를 일급 컬랙션으로 변경
+* [X] Entity: `Question` 의 Field: `List<Answer> answers`를 일급 컬랙션으로 변경
     * [ ] answers를 지우는 메소드
     * [ ] return delete history
 * [ ] 삭제 메소드를 Question에 구현
