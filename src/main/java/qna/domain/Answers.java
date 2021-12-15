@@ -4,6 +4,7 @@ import qna.CannotDeleteException;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Answers {
     private final List<Answer> value;
@@ -24,6 +25,12 @@ public class Answers {
 
     public void deleteAll() {
         value.forEach(Answer::delete);
+    }
+
+    public List<DeleteHistory> makeDeleteHistories() {
+        return value.stream()
+                .map(Answer::makeDeleteHistory)
+                .collect(Collectors.toList());
     }
 
     public List<Answer> value() {
