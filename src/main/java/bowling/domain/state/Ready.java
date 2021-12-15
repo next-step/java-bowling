@@ -29,8 +29,8 @@ public class Ready extends Running {
     }
 
     @Override
-    public Score score() {
-        return null;
+    public Score calculateAdditionalScore(Score beforeScore) {
+        return beforeScore;
     }
 
     private static class InnerInstanceClazz {

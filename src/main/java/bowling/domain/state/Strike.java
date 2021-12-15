@@ -32,6 +32,11 @@ public class Strike extends Finished {
     }
 
     @Override
+    public Score calculateAdditionalScore(Score beforeScore) {
+        return beforeScore.addScoreByPin(pin);
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(pin);
     }

@@ -41,4 +41,13 @@ class SpareTest {
     void scoreTest() {
         assertThat(new Spare(Pin.from(5), Pin.from(5)).score()).isEqualTo(Score.of(10, 1));
     }
+
+    @DisplayName("calculateAdditionalScore() left에 따라 스코어를 반환한다.")
+    @Test
+    void calculateAdditionalScoreTest() {
+        assertThat(new Spare(Pin.from(4), Pin.from(6)).calculateAdditionalScore(Score.of(5, 2)))
+                .isEqualTo(Score.of(15, 0));
+        assertThat(new Spare(Pin.from(4), Pin.from(6)).calculateAdditionalScore(Score.of(5, 1)))
+                .isEqualTo(Score.of(9, 0));
+    }
 }

@@ -92,4 +92,28 @@ class NormalFrameTest {
         readyFrame.bowl(Pin.from(10));
         assertThat(readyFrame.hasNext()).isTrue();
     }
+
+    @DisplayName("Frame의 상태가 miss 일 경우 정상적으로 score를 반환한다.")
+    @Test
+    void missScoreTest() {
+        readyFrame.bowl(Pin.from(5)).bowl(Pin.from(3));
+        assertThat(readyFrame.score()).isEqualTo(Score.of(8, 0));
+    }
+
+    @DisplayName("score 를 반환할 수 없을 경우 score(-1,0)을 반환한다.")
+    @Test
+    void noCalculateScoreTest() {
+        readyFrame.bowl(Pin.from(5));
+        assertThat(readyFrame.score()).isEqualTo(Score.of(-1, 0));
+    }
+
+    @DisplayName("strike 이후 두 점수를 더해서 반환한다.")
+    @Test
+    void strikeScoreTest() {
+        Frame next = readyFrame.bowl(Pin.from(10)).bowl(Pin.from(5));
+//        assertThat(readyFrame.score()).isEqualTo(Score.of(-1, 0));
+        next.bowl(Pin.from(5));
+        assertThat(readyFrame.score()).isEqualTo(Score.of(20, 0));
+    }
+
 }

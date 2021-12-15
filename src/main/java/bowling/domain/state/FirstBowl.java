@@ -28,8 +28,8 @@ public class FirstBowl extends Running {
     }
 
     @Override
-    public Score score() {
-        return Score.firstBowl(firstPin);
+    public Score calculateAdditionalScore(Score beforeScore) {
+        return beforeScore.addScoreByPin(firstPin);
     }
 
     @Override

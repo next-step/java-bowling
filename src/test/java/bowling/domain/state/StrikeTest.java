@@ -19,4 +19,11 @@ class StrikeTest {
     void scoreTest() {
         assertThat(new Strike().score()).isEqualTo(Score.of(10, 2));
     }
+
+    @DisplayName("calculateAdditionalScore() 10점을 더해서 반환한다.")
+    @Test
+    void calculateAdditionalScoreTest() {
+        assertThat(new Strike().calculateAdditionalScore(Score.of(5, 1)))
+                .isEqualTo(Score.of(15, 0));
+    }
 }

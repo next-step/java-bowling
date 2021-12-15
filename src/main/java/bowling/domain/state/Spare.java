@@ -30,6 +30,16 @@ public class Spare extends Finished {
     }
 
     @Override
+    public Score calculateAdditionalScore(Score beforeScore) {
+        Score score = beforeScore.addScoreByPin(firstPin);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+
+        return score.addScoreByPin(secondPin);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

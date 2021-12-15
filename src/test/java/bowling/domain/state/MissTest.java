@@ -40,4 +40,14 @@ class MissTest {
     void scoreTest() {
         assertThat(new Miss(Pin.from(5), Pin.from(3)).score()).isEqualTo(Score.of(8, 0));
     }
+
+    @DisplayName("calculateAdditionalScore() left에 따라 핀을 더해서 스코어를 반환한다.")
+    @Test
+    void calculateAdditionalScoreTest() {
+        assertThat(new Miss(Pin.from(5), Pin.from(3)).calculateAdditionalScore(Score.of(5, 1)))
+                .isEqualTo(Score.of(10, 0));
+
+        assertThat(new Miss(Pin.from(5), Pin.from(3)).calculateAdditionalScore(Score.of(5, 2)))
+                .isEqualTo(Score.of(13, 0));
+    }
 }

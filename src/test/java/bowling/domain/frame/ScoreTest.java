@@ -26,6 +26,12 @@ class ScoreTest {
         assertThat(Score.strike()).isEqualTo(Score.of(10, 2));
     }
 
+    @DisplayName("noScore() 는 -1 에 추가 0번의 기회를 가진다.")
+    @Test
+    void noScoreTest() {
+        assertThat(Score.noScore()).isEqualTo(Score.of(-1, 0));
+    }
+
     @DisplayName("spare() 는 10점 에 추가 1번의 기회를 가진다.")
     @Test
     void spareTest() {
@@ -38,15 +44,9 @@ class ScoreTest {
         assertThat(Score.miss(Pin.from(5), Pin.from(3))).isEqualTo(Score.of(8, 0));
     }
 
-    @DisplayName("firstBowl(Pin) Pin value와 0번의 left를 반환한다.")
-    @Test
-    void firstBowlTest() {
-        assertThat(Score.firstBowl(Pin.from(5))).isEqualTo(Score.of(5, 0));
-    }
-
     @DisplayName("addScore(Score) score의 값을 더하고 left를 -1한다.")
     @Test
-    void addScoreTest() {
-        assertThat(Score.strike().addScore(Score.of(5, 2))).isEqualTo(Score.of(15, 1));
+    void addScoreWithPinTest() {
+        assertThat(Score.strike().addScoreByPin(Pin.from(5))).isEqualTo(Score.of(15, 1));
     }
 }

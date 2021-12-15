@@ -98,6 +98,16 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public Score score() {
+        return null;
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score beforeScore) {
+        return null;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

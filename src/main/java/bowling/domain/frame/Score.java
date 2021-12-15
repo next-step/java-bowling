@@ -11,6 +11,8 @@ public class Score {
     public static final int MISS_LEFT = 0;
     public static final int FIRST_BOWL_LEFT = 0;
     public static final int CALCULATE_LEFT_VALUE_WITH_ADD_SCORE = 1;
+    public static final int UN_SCORE = -1;
+    public static final int UN_SCORE_LEFT = 0;
     private final int score;
     private final int left;
 
@@ -31,8 +33,8 @@ public class Score {
         return of(firstPin.add(secondPin).getFalledPins(), MISS_LEFT);
     }
 
-    public static Score firstBowl(Pin pin) {
-        return of(pin.getFalledPins(), FIRST_BOWL_LEFT);
+    public static Score noScore() {
+        return of(UN_SCORE, UN_SCORE_LEFT);
     }
 
     public static Score of(int score, int left) {
@@ -43,11 +45,8 @@ public class Score {
         return left == POSSIBLE_CALCULATE_LEFT;
     }
 
-    public Score addScore(Score addValue) {
-        if (canCalculateScore()) {
-
-        }
-        return of(score + addValue.score, left - CALCULATE_LEFT_VALUE_WITH_ADD_SCORE);
+    public Score addScoreByPin(Pin pin) {
+        return of(score + pin.getFalledPins(), left - CALCULATE_LEFT_VALUE_WITH_ADD_SCORE);
     }
 
     @Override
@@ -65,5 +64,13 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(score, left);
+    }
+
+    @Override
+    public String toString() {
+        return "Score{" +
+                "score=" + score +
+                ", left=" + left +
+                '}';
     }
 }

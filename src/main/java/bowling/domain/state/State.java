@@ -11,4 +11,8 @@ public interface State {
     String viewString();
 
     Score score();
+
+    Score calculateAdditionalScore(Score beforeScore);
+
+
 }

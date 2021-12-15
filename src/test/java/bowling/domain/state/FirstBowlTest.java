@@ -29,9 +29,16 @@ class FirstBowlTest {
         assertThat(new FirstBowl(Pin.from(5)).viewString()).isEqualTo("5");
     }
 
-    @DisplayName("score()은 Pin의 갯수와 점수를 반환한다.")
+    @DisplayName("score()은 NoScore를 반환한다.")
     @Test
     void scoreTest() {
-        assertThat(new FirstBowl(Pin.from(5)).score()).isEqualTo(Score.of(5, 0));
+        assertThat(new FirstBowl(Pin.from(5)).score()).isEqualTo(Score.noScore());
+    }
+
+    @DisplayName("calculateAdditionalScore() 핀의 갯수를 더해서 반환한다..")
+    @Test
+    void calculateAdditionalScoreTest() {
+        assertThat(new FirstBowl(Pin.from(5)).calculateAdditionalScore(Score.of(5, 1)))
+                .isEqualTo(Score.of(10, 0));
     }
 }
