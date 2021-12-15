@@ -23,9 +23,8 @@ public class Pitch {
         return new Pitch(pins.size());
     }
 
-    public int run(PitchNumberStrategy numberStrategy) {
-        int fallDownCount = numberStrategy.generate(pins.size());
-        return pins.fallDown(fallDownCount);
+    public Pins run(Pins fallDownPins) {
+        return pins.fallDown(fallDownPins);
     }
 
     public int pinsSize() {

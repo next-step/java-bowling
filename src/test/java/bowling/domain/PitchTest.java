@@ -19,11 +19,11 @@ public class PitchTest {
     void 첫_투구_n개_이후_다음_투구를_생성한다() {
         //given
         Pitch pitch = Pitch.first();
-        int exist = pitch.run((bound) -> 6);
+        Pins pins = pitch.run(Pins.create(6));
         //when
         Pitch nextPitch = pitch.next();
         //then
-        assertThat(nextPitch.pinsSize()).isEqualTo(exist);
+        assertThat(nextPitch.pinsSize()).isEqualTo(pins.size());
     }
 
     @Test
@@ -31,8 +31,8 @@ public class PitchTest {
         //given
         Pitch pitch = Pitch.first();
         //when
-        int exist = pitch.run((bound) -> 7);
+        Pins pins = pitch.run(Pins.create(7));
         //then
-        assertThat(pitch.pinsSize()).isEqualTo(exist);
+        assertThat(pitch.pinsSize()).isEqualTo(pins.size());
     }
 }

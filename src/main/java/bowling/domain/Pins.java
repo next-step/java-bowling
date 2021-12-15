@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class Pins {
+    private static final int FIRST_PIN_INDEX = 0;
     private static final int PIN_MIN_COUNT = 1;
     private static final int PIN_MAX_COUNT = 10;
-    private static final int FIRST_PIN_INDEX = 0;
 
     private final List<Pin> pins = new ArrayList<>();
 
@@ -35,19 +35,19 @@ public class Pins {
         return new Pins(count);
     }
 
-    public int fallDown(int fallDownCount) {
+    public Pins fallDown(Pins fallDownPins) {
+        int fallDownCount = fallDownPins.size();
         validateFallDownCount(fallDownCount);
         int startSize = size();
         while (falling(startSize, fallDownCount)) {
             pins.remove(FIRST_PIN_INDEX);
         }
-        return size();
+        return this;
     }
 
     private boolean falling(int startSize, int fallDownCount) {
         return size() != (startSize - fallDownCount);
     }
-
 
     public List<Pin> pins() {
         return pins;

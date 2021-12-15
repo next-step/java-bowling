@@ -34,9 +34,9 @@ public class PinsTest {
         //given
         Pins pins = Pins.create();
         //when
-        int result = pins.fallDown(fallDownCount);
+        Pins existPins = pins.fallDown(Pins.create(fallDownCount));
         //then
-        assertThat(result).isEqualTo(existCount);
+        assertThat(existPins.size()).isEqualTo(existCount);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class PinsTest {
         Pins pins = Pins.create();
         //when
         //then
-        assertThatThrownBy(() -> pins.fallDown(11))
+        assertThatThrownBy(() -> pins.fallDown(Pins.create(11)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
