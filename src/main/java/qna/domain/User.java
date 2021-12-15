@@ -1,9 +1,11 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -34,6 +36,10 @@ public class User extends AbstractEntity {
         this.password = password;
         this.name = name;
         this.email = email;
+    }
+
+    public List<DeleteHistory> deleteQuestion(Question question) throws CannotDeleteException {
+        return question.deleteBy(this);
     }
 
     public String getUserId() {
