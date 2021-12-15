@@ -51,6 +51,11 @@ public class Answers {
         return answers.isEmpty();
     }
 
+    public boolean deletable(User loginUser) {
+        return answers.stream()
+                .allMatch(answer -> answer.isOwner(loginUser));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

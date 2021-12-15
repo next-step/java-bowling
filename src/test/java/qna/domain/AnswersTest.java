@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,6 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("질문에 대한 답변들 테스트")
 class AnswersTest {
+    public static Answers ANSWERS_A1 = Answers.from(Collections.singletonList(AnswerTest.A1));
+    public static Answers ANSWERS_A1A2 = Answers.from(Arrays.asList(AnswerTest.A1, AnswerTest.A2));
 
     private Answers answers;
 
@@ -88,5 +91,19 @@ class AnswersTest {
     void isEmptyTest() {
         // when & then
         assertThat(answers.isEmpty()).isTrue();
+    }
+
+    @DisplayName("답변들의 삭제 성공 여부 확인")
+    @Test
+    void deletableTrueTest() {
+        // when & then
+        assertThat(AnswersTest.ANSWERS_A1.deletable(AnswerTest.A1.getWriter())).isTrue();
+    }
+
+    @DisplayName("답변들의 삭제 실패 여부 확인")
+    @Test
+    void deletableFalseTest() {
+        // when & then
+        assertThat(AnswersTest.ANSWERS_A1A2.deletable(AnswerTest.A1.getWriter())).isFalse();
     }
 }

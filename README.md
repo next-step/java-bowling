@@ -28,8 +28,10 @@
 
 ## 구현 내용
 
-* [X] Entity: `Question` 의 Field: `List<Answer> answers`를 일급 컬랙션으로 변경
+* [X] Entity: `Question`의 Field: `List<Answer> answers`를 일급 컬랙션으로 변경
 * [X] Entity: `Answer`의 도메인 테스트 `AnswerTest` 추가
+* [X] Entity: `Question`의 삭제 메서드 `delete` 추가
+    * [X] VO: `Answers`의 삭제 여부 확인 메서드 `deletable` 추가
 
 ## 프로그래밍 요구사항
 
