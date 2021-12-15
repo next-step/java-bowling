@@ -29,10 +29,7 @@
 ## 구현 내용
 
 * [X] Entity: `Question` 의 Field: `List<Answer> answers`를 일급 컬랙션으로 변경
-    * [ ] answers를 지우는 메소드
-    * [ ] return delete history
-* [ ] 삭제 메소드를 Question에 구현
-    * [ ] 답변들이 삭제 가능한지 확인
+* [X] Entity: `Answer`의 도메인 테스트 `AnswerTest` 추가
 
 ## 프로그래밍 요구사항
 

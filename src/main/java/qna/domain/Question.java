@@ -63,7 +63,7 @@ public class Question extends AbstractEntity {
 
     public void addAnswer(Answer answer) {
         answer.toQuestion(this);
-        answers.add(answer);
+        answers = answers.add(answer);
     }
 
     public boolean isOwner(User loginUser) {
