@@ -11,7 +11,6 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static qna.domain.AnswerTest.A1;
 import static qna.domain.AnswerTest.A2;
 
 public class QuestionTest {
@@ -51,14 +50,14 @@ public class QuestionTest {
 
     @DisplayName("답변이 없는 경우 삭제가 가능.")
     @ParameterizedTest
-    @MethodSource(value = "provideQuestionAndUserAndNoAnswer")
+    @MethodSource(value = "provideQuestionAndUserWithNoAnswer")
     void delete_no_answer(Question question, User loginUser) throws CannotDeleteException {
         question.delete(loginUser);
-        assertThat(question.getAnswers()).hasSize(0);
+        assertThat(question.getAnswers().value()).hasSize(0);
         assertThat(question.isDeleted()).isTrue();
     }
 
-    private static Stream<Arguments> provideQuestionAndUserAndNoAnswer() {
+    private static Stream<Arguments> provideQuestionAndUserWithNoAnswer() {
         return Stream.of(
                 Arguments.of(new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI), UserTest.JAVAJIGI),
                 Arguments.of(new Question("title2", "contents2").writeBy(UserTest.SANJIGI), UserTest.SANJIGI)
@@ -67,17 +66,18 @@ public class QuestionTest {
 
     @DisplayName("질문자와 답변글의 모든 답변자가 로그인한 사용자로 같은 경우 삭제가 가능.")
     @ParameterizedTest
-    @MethodSource(value = "provideQuestionAndUserAndSelfAnswer")
+    @MethodSource(value = "provideQuestionAndUserWithSelfAnswer")
     void delete_answer_of_self(Question question, User loginUser) throws CannotDeleteException {
-        assertThat(question.getAnswers().size()).isGreaterThan(0);
+        assertThat(question.getAnswers().value().size()).isGreaterThan(0);
         question.delete(loginUser);
 
         assertThat(question.isDeleted()).isTrue();
     }
 
-    private static Stream<Arguments> provideQuestionAndUserAndSelfAnswer() {
+    private static Stream<Arguments> provideQuestionAndUserWithSelfAnswer() {
         Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
         question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "Answers Contents1"));
+        question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "Answers Contents2"));
         return Stream.of(
                 Arguments.of(question, UserTest.JAVAJIGI)
         );
@@ -85,15 +85,15 @@ public class QuestionTest {
 
     @DisplayName("질문자와 답변자가 다른 경우 답변을 삭제할 수 없다.")
     @ParameterizedTest
-    @MethodSource(value = "provideQuestionAndUserAndOthersAnswer")
-    void delete_answer_of_others(Question question, User loginUser) throws CannotDeleteException {
-        assertThat(question.getAnswers().size()).isGreaterThan(0);
+    @MethodSource(value = "provideQuestionAndUserWithOthersAnswer")
+    void delete_answer_of_others(Question question, User loginUser) {
+        assertThat(question.getAnswers().value().size()).isGreaterThan(0);
         assertThatThrownBy(() -> question.delete(loginUser))
                 .isInstanceOf(CannotDeleteException.class)
-                .hasMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+                .hasMessage(Answer.CANNOT_DELETE_MESSAGE);
     }
 
-    private static Stream<Arguments> provideQuestionAndUserAndOthersAnswer() {
+    private static Stream<Arguments> provideQuestionAndUserWithOthersAnswer() {
         Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
         question.addAnswer(A2);
         return Stream.of(
@@ -103,14 +103,46 @@ public class QuestionTest {
 
     @DisplayName("질문을 삭제할 때, 답변 또한 삭제. 답변의 삭제 또한 삭제 상태(deleted)를 변경")
     @ParameterizedTest
-    @MethodSource(value = "provideQuestionAndUserAndSelfAnswer")
+    @MethodSource(value = "provideQuestionAndUserWithSelfAnswer")
     void assert_answer_deleted(Question question, User loginUser) throws CannotDeleteException {
-        List<Answer> answers = question.getAnswers();
+        List<Answer> answers = question.getAnswers().value();
 
         assertThat(answers.size()).isGreaterThan(0);
         answers.forEach(answer -> assertThat(answer.isDeleted()).isFalse());
         question.delete(loginUser);
 
         answers.forEach(answer -> assertThat(answer.isDeleted()).isTrue());
+    }
+
+    @DisplayName("deleteHistories 생성")
+    @ParameterizedTest
+    @MethodSource(value = "provideQuestionWithSelfAnswer")
+    void makeDeleteHistories(Question question) throws CannotDeleteException {
+        assertThat(question.isDeleted()).isFalse();
+
+        question.delete(UserTest.JAVAJIGI);
+        assertThat(question.isDeleted()).isTrue();
+
+        List<DeleteHistory> deleteHistories = question.makeDeleteHistories();
+        assertThat(deleteHistories).hasSize(3);
+    }
+
+    @DisplayName("질문이 삭제되지 않아 deleteHistories 생성 실패")
+    @ParameterizedTest
+    @MethodSource(value = "provideQuestionWithSelfAnswer")
+    void makeDeleteHistories_fail(Question question) {
+        assertThat(question.isDeleted()).isFalse();
+        assertThatThrownBy(() -> question.makeDeleteHistories())
+                .isInstanceOf(CannotDeleteException.class)
+                .hasMessage(Question.CANNOT_MAKE_DELETE_HISTORIES_MESSAGE);
+    }
+
+    private static Stream<Arguments> provideQuestionWithSelfAnswer() {
+        Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "Answers Contents1"));
+        question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "Answers Contents2"));
+        return Stream.of(
+                Arguments.of(question, UserTest.JAVAJIGI)
+        );
     }
 }
