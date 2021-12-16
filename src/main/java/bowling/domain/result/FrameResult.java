@@ -3,10 +3,7 @@ package bowling.domain.result;
 import bowling.domain.frame.Score;
 import bowling.domain.state.State;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class FrameResult {
     private final List<State> states;
@@ -23,6 +20,14 @@ public class FrameResult {
 
     public static FrameResult ofFinalFrame(List<State> states, Score score) {
         return new FrameResult(states, score);
+    }
+
+    public List<State> getStates() {
+        return Collections.unmodifiableList(states);
+    }
+
+    public Score getScore() {
+        return score;
     }
 
     @Override

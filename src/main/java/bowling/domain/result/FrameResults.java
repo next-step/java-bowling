@@ -1,5 +1,6 @@
 package bowling.domain.result;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -17,6 +18,10 @@ public class FrameResults {
 //        }
 
         return Optional.empty();
+    }
+
+    public List<FrameResult> getValues() {
+        return Collections.unmodifiableList(values);
     }
 
     @Override
