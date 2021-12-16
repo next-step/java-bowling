@@ -48,4 +48,14 @@ public class PinsTest {
         assertThatThrownBy(() -> pins.fallDown(Pins.create(11)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    void 스트라이크() {
+        //given
+        Pins pins = Pins.create(0);
+        Pins fallDownPins = Pins.create(10);
+        //when
+        //then
+        assertThat(pins.strike(fallDownPins)).isTrue();
+    }
 }

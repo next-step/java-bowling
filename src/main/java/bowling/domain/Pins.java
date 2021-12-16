@@ -49,12 +49,20 @@ public class Pins {
         return size() != (startSize - fallDownCount);
     }
 
+    public boolean strike(Pins fallDownPins) {
+        return size() == FIRST_PIN_INDEX && fallDownPins.size() == PIN_MAX_COUNT;
+    }
+
     public List<Pin> pins() {
         return pins;
     }
 
     public int size() {
         return pins.size();
+    }
+
+    public boolean isEmpty() {
+        return size() == FIRST_PIN_INDEX;
     }
 
     private void validateFallDownCount(int fallDownCount) {
@@ -80,5 +88,12 @@ public class Pins {
     @Override
     public int hashCode() {
         return Objects.hash(pins);
+    }
+
+    @Override
+    public String toString() {
+        return "Pins{" +
+                "pins=" + pins +
+                '}';
     }
 }
