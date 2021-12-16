@@ -4,10 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static qna.domain.AnswerTest.*;
@@ -71,7 +67,7 @@ public class QuestionTest {
 
     @Test
     @DisplayName("답변이 존재하고 모든 답변이 자신이 작성한 것이 아닌 경우, User 자신이 작성하지 않은 Question 은 삭제가 불가하다.")
-    void deleteBy_answersExist_MultiUser_성공() throws CannotDeleteException {
+    void deleteBy_answersExist_MultiUser_성공() {
         // given
         Question question1 = new Question("title1", "contents1").writeBy(JAVAJIGI);
         Question question2 = new Question("title1", "contents1").writeBy(SANJIGI);
