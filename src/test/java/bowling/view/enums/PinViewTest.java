@@ -1,4 +1,4 @@
-package bowling.service.enums;
+package bowling.view.enums;
 
 import bowling.domain.frame.Pin;
 import org.junit.jupiter.api.DisplayName;
@@ -22,6 +22,6 @@ class PinViewTest {
     @CsvSource(value = {"0:-","1:1","2:2","3:3","4:4",
             "5:5","6:6","7:7","8:8","9:9","10:X"}, delimiter = ':')
     void getDescTest(int pin, String desc) {
-        assertThat(PinView.valueOf(Pin.from(pin)).getDesc()).isEqualTo(desc);
+        assertThat(PinView.valueOf(Pin.from(pin)).getDescription()).isEqualTo(desc);
     }
 }

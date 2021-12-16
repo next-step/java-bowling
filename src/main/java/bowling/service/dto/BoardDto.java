@@ -1,21 +1,33 @@
 package bowling.service.dto;
 
 import bowling.domain.Board;
+import bowling.domain.frame.Round;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BoardDto {
 
-    private final List<String> allRounds;
+    private final List<Integer> allRounds;
     private final GameResultDto gameResultDto;
 
-    private BoardDto(List<String> allRounds, GameResultDto gameResultDto, List<String> allRounds1, GameResultDto gameResultDto1) {
-        this.allRounds = allRounds1;
-        this.gameResultDto = gameResultDto1;
+    private BoardDto(List<Integer> allRounds, GameResultDto gameResultDto) {
+        this.allRounds = allRounds;
+        this.gameResultDto = gameResultDto;
     }
 
     public static BoardDto of(Board board) {
-        return null;
+        List<Integer> allRounds = board.getAllRounds().stream()
+                .map(Round::value)
+                .collect(Collectors.toList());
+        return new BoardDto(allRounds, GameResultDto.of(board.getGameResult()));
     }
 
+    public List<Integer> getAllRounds() {
+        return allRounds;
+    }
+
+    public GameResultDto getGameResultDto() {
+        return gameResultDto;
+    }
 }

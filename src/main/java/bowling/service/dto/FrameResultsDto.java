@@ -5,28 +5,33 @@ import bowling.domain.result.FrameResults;
 
 import java.util.List;
 
-public class FrameResultsDto {
-    private final List<String> frameDescriptions;
-    private final List<Integer> scores;
+import static java.util.stream.Collectors.toList;
 
-    private FrameResultsDto(List<String> frameDescriptions, List<Integer> scores) {
-        this.frameDescriptions = frameDescriptions;
-        this.scores = scores;
+public class FrameResultsDto {
+    private final List<FrameResultDto> frameResultDtos;
+
+    private FrameResultsDto(List<FrameResultDto> frameResultDtos) {
+        this.frameResultDtos = frameResultDtos;
     }
 
     public static FrameResultsDto of(FrameResults frameResults) {
         List<FrameResult> values = frameResults.getValues();
-//        values.stream()
-//                .map(FrameResult::getStates)
-//                .map()
-        return null;
+        List<FrameResultDto> frameResultDtos = values.stream()
+                .map(FrameResultDto::of)
+                .collect(toList());
+//
+//        List<String> frameDescriptions = frameResultDtos.stream()
+//                .map(FrameResultDto::getDescription)
+//                .collect(toList());
+//        List<Integer> scores = frameResultDtos.stream()
+//                .map(FrameResultDto::getScore)
+//                .filter(score -> score != NO_SCORE_VALUE)
+//                .collect(toList());
+
+        return new FrameResultsDto(frameResultDtos);
     }
 
-    public List<String> getFrameDescriptions() {
-        return frameDescriptions;
-    }
-
-    public List<Integer> getScores() {
-        return scores;
+    public List<FrameResultDto> getFrameResultDtos() {
+        return frameResultDtos;
     }
 }

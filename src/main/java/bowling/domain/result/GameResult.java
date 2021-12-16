@@ -18,6 +18,10 @@ public class GameResult {
         return user.getName();
     }
 
+    public FrameResults getResults() {
+        return results;
+    }
+
     public Optional<String> findFrameViewStringWithIndex(int index) {
         return results.findViewStringWithIndex(index);
     }

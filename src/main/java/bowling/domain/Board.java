@@ -36,6 +36,14 @@ public class Board {
         return gameResult.userName();
     }
 
+    public List<Round> getAllRounds() {
+        return allRounds;
+    }
+
+    public GameResult getGameResult() {
+        return gameResult;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

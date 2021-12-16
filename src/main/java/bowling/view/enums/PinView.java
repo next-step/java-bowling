@@ -1,4 +1,4 @@
-package bowling.service.enums;
+package bowling.view.enums;
 
 import bowling.domain.frame.Pin;
 
@@ -34,7 +34,7 @@ public enum PinView {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public String getDesc() {
+    public String getDescription() {
         return desc;
     }
 }

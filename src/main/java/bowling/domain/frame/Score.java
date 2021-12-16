@@ -12,11 +12,11 @@ public class Score {
     public static final int CALCULATE_LEFT_VALUE_WITH_ADD_SCORE = 1;
     public static final int UN_SCORE = -1;
     public static final int UN_SCORE_LEFT = 0;
-    private final int score;
+    private final int value;
     private final int left;
 
-    private Score(int score, int left) {
-        this.score = score;
+    private Score(int value, int left) {
+        this.value = value;
         this.left = left;
     }
 
@@ -36,8 +36,8 @@ public class Score {
         return of(UN_SCORE, UN_SCORE_LEFT);
     }
 
-    public static Score of(int score, int left) {
-        return new Score(score, left);
+    public static Score of(int value, int left) {
+        return new Score(value, left);
     }
 
     public boolean canCalculateScore() {
@@ -45,7 +45,11 @@ public class Score {
     }
 
     public Score addScoreByPin(Pin pin) {
-        return of(score + pin.getFalledPins(), left - CALCULATE_LEFT_VALUE_WITH_ADD_SCORE);
+        return of(value + pin.getFalledPins(), left - CALCULATE_LEFT_VALUE_WITH_ADD_SCORE);
+    }
+
+    public int getValue() {
+        return value;
     }
 
     @Override
@@ -57,18 +61,18 @@ public class Score {
             return false;
         }
         Score score1 = (Score) o;
-        return score == score1.score && left == score1.left;
+        return value == score1.value && left == score1.left;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score, left);
+        return Objects.hash(value, left);
     }
 
     @Override
     public String toString() {
         return "Score{" +
-                "score=" + score +
+                "score=" + value +
                 ", left=" + left +
                 '}';
     }

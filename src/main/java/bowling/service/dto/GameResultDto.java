@@ -13,7 +13,7 @@ public class GameResultDto {
     }
 
     public static GameResultDto of(GameResult gameResult) {
-        return null;
+        return new GameResultDto(gameResult.userName(), FrameResultsDto.of(gameResult.getResults()));
     }
 
 }
