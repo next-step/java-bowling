@@ -9,7 +9,6 @@ public class Score {
     public static final int STRIKE_LEFT = 2;
     public static final int SPARE_LEFT = 1;
     public static final int MISS_LEFT = 0;
-    public static final int FIRST_BOWL_LEFT = 0;
     public static final int CALCULATE_LEFT_VALUE_WITH_ADD_SCORE = 1;
     public static final int UN_SCORE = -1;
     public static final int UN_SCORE_LEFT = 0;

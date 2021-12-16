@@ -12,11 +12,11 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
+    public static final int CREATE_SCORE_LEFT = 0;
     private static final int DEFAULT_LEFT = 3;
     private static final int END_LEFT = 0;
     private static final int MISS_STATE_LEFT = 0;
     private static final int CALCULATE_LEFT_DEFAULT = 1;
-
     private LinkedList<State> states;
     private int left;
 
@@ -99,12 +99,29 @@ public class FinalFrame implements Frame {
 
     @Override
     public Score score() {
-        return null;
+        if (isFinished()) {
+            return createScore();
+        }
+        return Score.noScore();
+    }
+
+    private Score createScore() {
+        Score score = states.getFirst().score();
+        for (int i = 1; i < states.size(); i++) {
+            State state = states.get(i);
+            score = state.calculateAdditionalScore(score);
+        }
+        return score;
     }
 
     @Override
-    public Score calculateAdditionalScore(Score beforeScore) {
-        return null;
+    public Score calculateAdditionalScore(Score score) {
+        State first = states.getFirst();
+        score = first.calculateAdditionalScore(score);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        return Score.noScore();
     }
 
     @Override

@@ -233,6 +233,59 @@ class FinalFrameTest {
         assertThat(first.createResult()).isEqualTo(new FrameResult("5"));
     }
 
+    @DisplayName("score() 정상 생성 테스트")
+    @Test
+    void scoreTest() {
+        assertThat(spareAndBowl.score()).isEqualTo(Score.of(15, 0));
+        assertThat(spareAndStrike.score()).isEqualTo(Score.of(20, 0));
+        assertThat(twoStrikeAndBowl.score()).isEqualTo(Score.of(25, 0));
+        assertThat(threeStrike.score()).isEqualTo(Score.of(30, 0));
+        assertThat(miss.score()).isEqualTo(Score.of(8, 0));
+        assertThat(oneStrikeAndMiss.score()).isEqualTo(Score.of(18, 0));
+        assertThat(oneStrikeAndSpare.score()).isEqualTo(Score.of(20, 0));
+        assertThat(oneStrike.score()).isEqualTo(Score.noScore());
+        assertThat(twoStrike.score()).isEqualTo(Score.noScore());
+        assertThat(spare.score()).isEqualTo(Score.noScore());
+        assertThat(first.score()).isEqualTo(Score.noScore());
+    }
+
+    @DisplayName("calculateAdditionalScore()은 이전 프레임이 strike이면 두번 점수를 더해서 반환한다.")
+    @Test
+    void strikeAddTest() {
+        NormalFrame frame = NormalFrame.readyFrame(Round.from(9));
+
+        Frame finalFrame = frame.bowl(Pin.TEN);
+        finalFrame.bowl(Pin.from(5));
+        assertThat(frame.score()).isEqualTo(Score.noScore());
+        finalFrame.bowl(Pin.from(5));
+        assertThat(frame.score()).isEqualTo(Score.of(20, 0));
+    }
+
+    @DisplayName("calculateAdditionalScore()은 이전 프레임이 spare이면 한번 점수를 더해서 반환한다.")
+    @Test
+    void spareCalculateAdditionalScoreTest() {
+        NormalFrame frame = NormalFrame.readyFrame(Round.from(9));
+
+        Frame finalFrame = frame.bowl(Pin.from(5)).bowl(Pin.from(5));
+        finalFrame.bowl(Pin.from(5));
+        finalFrame.bowl(Pin.from(5));
+        finalFrame.bowl(Pin.from(5));
+        assertThat(frame.score()).isEqualTo(Score.of(15, 0));
+    }
+
+    @DisplayName("calculateAdditionalScore()은 이전 프레임이 strike이면 한번 점수를 더해서 반환한다.")
+    @Test
+    void strikeCalculateAdditionalScoreTest() {
+        NormalFrame frame = NormalFrame.readyFrame(Round.from(9));
+
+        Frame finalFrame = frame.bowl(Pin.from(10));
+        finalFrame.bowl(Pin.from(5));
+        finalFrame.bowl(Pin.from(5));
+        finalFrame.bowl(Pin.from(5));
+        assertThat(frame.score()).isEqualTo(Score.of(20, 0));
+    }
+
+
     @DisplayName("next() 마지막 프레임은 null을 반환한다.")
     @Test
     void nextNullTest() {
