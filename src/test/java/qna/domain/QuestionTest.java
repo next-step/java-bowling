@@ -4,8 +4,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import java.time.LocalDateTime;
+
+import static org.assertj.core.api.Assertions.*;
 
 public class QuestionTest {
 
@@ -24,6 +25,17 @@ public class QuestionTest {
     void checkQuestionOK() {
         assertThatCode(() -> Q1.checkDeleteAuth(UserTest.JAVAJIGI))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("DeleteHistories 에 질문 삭제 내역 저장")
+    void save() {
+        DeleteHistories histories = new DeleteHistories();
+        Q1.saveAtDeleteHistories(histories);
+        Q2.saveAtDeleteHistories(histories);
+        assertThat(histories.getHistories()).contains(new DeleteHistory(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), LocalDateTime.now()));
+        assertThat(histories.getHistories()).contains(new DeleteHistory(ContentType.QUESTION, Q2.getId(), Q2.getWriter(), LocalDateTime.now()));
+        assertThat(histories.getHistories()).size().isEqualTo(2);
     }
 
 }

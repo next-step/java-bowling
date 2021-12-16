@@ -19,9 +19,16 @@ public class Answers {
         this.answers = answers;
     }
 
-    public void checkExistentAnswer(User loginUser) throws CannotDeleteException {
+    public void checkExistentAnswers(User loginUser) throws CannotDeleteException {
         for (Answer answer : answers) {
             answer.checkExistentAnswer(loginUser);
+        }
+    }
+
+    public void saveAtDeleteHistories(DeleteHistories deleteHistories) {
+        for (Answer answer : answers) {
+            answer.setDeleted(true);
+            deleteHistories.addHistory(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         }
     }
 

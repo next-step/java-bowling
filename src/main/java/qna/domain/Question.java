@@ -96,6 +96,11 @@ public class Question extends AbstractEntity {
         }
     }
 
+    public void saveAtDeleteHistories(DeleteHistories deleteHistories) {
+        setDeleted(true);
+        deleteHistories.addHistory(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
+    }
+
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
