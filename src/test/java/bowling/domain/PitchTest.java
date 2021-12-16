@@ -35,4 +35,16 @@ public class PitchTest {
         //then
         assertThat(pitch.pinsSize()).isEqualTo(pins.size());
     }
+
+    @Test
+    void 마지막_프레임의_첫_투구가_스트라이크면_다음_투구에_핀은_10_개가_생성된다() {
+        //given
+        Pitch pitch = Pitch.first();
+        pitch.run(Pins.create(10));
+        assertThat(pitch.pinsSize()).isEqualTo(0);
+        //when
+        Pitch nextPitch = pitch.next();
+        //then
+        assertThat(nextPitch.pinsSize()).isEqualTo(10);
+    }
 }

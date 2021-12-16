@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.strategy.PitchNumberStrategy;
-
 import java.util.Objects;
 
 public class Pitch {
@@ -20,11 +18,18 @@ public class Pitch {
     }
 
     public Pitch next() {
+        if (pins.isEmpty()) {
+            return new Pitch();
+        }
         return new Pitch(pins.size());
     }
 
     public Pins run(Pins fallDownPins) {
         return pins.fallDown(fallDownPins);
+    }
+
+    public Pins pins() {
+        return pins;
     }
 
     public int pinsSize() {
