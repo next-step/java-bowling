@@ -11,4 +11,6 @@ public interface Frame {
     FrameInfo info();
 
     void changeState(State state);
+
+    State state();
 }

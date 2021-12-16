@@ -3,35 +3,19 @@ package bowling.domain;
 import bowling.domain.state.End;
 import bowling.domain.state.Start;
 import bowling.domain.state.State;
-import bowling.strategy.PitchNumberStrategy;
 
-public class NormalFrame implements Frame {
-    private final FrameInfo frameInfo;
-    private State state;
+public class NormalFrame extends TemplateFrame {
 
     private NormalFrame() {
-        this.frameInfo = FrameInfo.init();
-        this.state = new Start();
+        super();
     }
 
     private NormalFrame(FrameInfo frameInfo) {
-        this.frameInfo = frameInfo;
+        super(frameInfo, new Start());
     }
 
     public static Frame first() {
         return new NormalFrame();
-    }
-
-    @Override
-    public void run(PitchNumberStrategy numberStrategy) {
-        Pitch pitch = Pitch.first();
-        while (progressing()) {
-            int fallDownCount = numberStrategy.generate(pitch.pinsSize());
-            Pins fallDownPins = Pins.create(fallDownCount);
-            Pins pins = pitch.run(fallDownPins);
-            state.pitch(pins, fallDownPins, this);
-            pitch = pitch.next();
-        }
     }
 
     @Override
@@ -50,6 +34,11 @@ public class NormalFrame implements Frame {
     @Override
     public void changeState(State state) {
         this.state = state;
+    }
+
+    @Override
+    public State state() {
+        return state;
     }
 
     private boolean progressing() {
