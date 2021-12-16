@@ -1,16 +1,28 @@
 package bowling.domain.result;
 
+import bowling.domain.frame.Score;
+import bowling.domain.state.State;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class FrameResult {
-    private final String viewString;
+    private final List<State> states;
+    private final Score score;
 
-    public FrameResult(String viewString) {
-        this.viewString = viewString;
+    private FrameResult(List<State> states, Score score) {
+        this.states = new ArrayList<>(states);
+        this.score = score;
     }
 
-    public String getViewString() {
-        return viewString;
+    public static FrameResult ofNormalFrame(State state, Score score) {
+        return new FrameResult(Arrays.asList(state), score);
+    }
+
+    public static FrameResult ofFinalFrame(List<State> states, Score score) {
+        return new FrameResult(states, score);
     }
 
     @Override
@@ -22,18 +34,11 @@ public class FrameResult {
             return false;
         }
         FrameResult that = (FrameResult) o;
-        return Objects.equals(viewString, that.viewString);
+        return Objects.equals(states, that.states) && Objects.equals(score, that.score);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(viewString);
-    }
-
-    @Override
-    public String toString() {
-        return "FrameResult{" +
-                "viewString='" + viewString + '\'' +
-                '}';
+        return Objects.hash(states, score);
     }
 }

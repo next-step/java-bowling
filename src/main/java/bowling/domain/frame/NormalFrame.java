@@ -42,7 +42,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public FrameResult createResult() {
-        return new FrameResult(state.viewString());
+        return FrameResult.ofNormalFrame(state, score());
     }
 
     @Override

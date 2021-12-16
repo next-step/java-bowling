@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
     public static final int CREATE_SCORE_LEFT = 0;
@@ -82,9 +81,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public FrameResult createResult() {
-        return states.stream()
-                .map(State::viewString)
-                .collect(Collectors.collectingAndThen(Collectors.joining("|"), FrameResult::new));
+        return FrameResult.ofFinalFrame(states, score());
     }
 
     @Override

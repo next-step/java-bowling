@@ -12,9 +12,9 @@ public class FrameResults {
     }
 
     public Optional<String> findViewStringWithIndex(int index) {
-        if (0 <= index && index < values.size()) {
-            return Optional.of(values.get(index).getViewString());
-        }
+//        if (0 <= index && index < values.size()) {
+//            return Optional.of(values.get(index).getViewString());
+//        }
 
         return Optional.empty();
     }
