@@ -309,13 +309,12 @@ class FinalFrameTest {
         assertThat(frame.score()).isEqualTo(Score.of(15, 0));
     }
 
-    @DisplayName("calculateAdditionalScore()은 이전 프레임이 strike이면 한번 점수를 더해서 반환한다.")
+    @DisplayName("calculateAdditionalScore()은 이전 프레임이 strike이면 두번 점수를 더해서 반환한다.")
     @Test
     void strikeCalculateAdditionalScoreTest() {
         NormalFrame frame = NormalFrame.readyFrame(Round.from(9));
 
         Frame finalFrame = frame.bowl(Pin.from(10));
-        finalFrame.bowl(Pin.from(5));
         finalFrame.bowl(Pin.from(5));
         finalFrame.bowl(Pin.from(5));
         assertThat(frame.score()).isEqualTo(Score.of(20, 0));

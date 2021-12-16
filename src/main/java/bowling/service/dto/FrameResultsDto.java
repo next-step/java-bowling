@@ -34,4 +34,11 @@ public class FrameResultsDto {
     public List<FrameResultDto> getFrameResultDtos() {
         return frameResultDtos;
     }
+
+    @Override
+    public String toString() {
+        return "FrameResultsDto{" +
+                "frameResultDtos=" + frameResultDtos +
+                '}';
+    }
 }

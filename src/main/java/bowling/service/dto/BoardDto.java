@@ -30,4 +30,11 @@ public class BoardDto {
     public GameResultDto getGameResultDto() {
         return gameResultDto;
     }
+
+    @Override
+    public String toString() {
+        return "BoardDto{" +
+                ", gameResultDto=" + gameResultDto +
+                '}';
+    }
 }

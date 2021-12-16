@@ -1,6 +1,5 @@
 package bowling;
 
-import bowling.domain.Board;
 import bowling.domain.frame.Pin;
 import bowling.domain.game.BowlingGame;
 import bowling.domain.user.User;
@@ -15,8 +14,7 @@ public class main {
         BowlingService bowlingService = createBowlingService(inputView);
         while (!bowlingService.isGameEnd()) {
             int falldPins = inputView.inputPitch(bowlingService.round());
-            Board board = bowlingService.bowl(Pin.from(falldPins));
-            outputView.renderBoard(board);
+            outputView.renderBoard(bowlingService.bowl(Pin.from(falldPins)));
         }
     }
 

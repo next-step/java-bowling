@@ -16,4 +16,19 @@ public class GameResultDto {
         return new GameResultDto(gameResult.userName(), FrameResultsDto.of(gameResult.getResults()));
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public FrameResultsDto getFrameResultsDto() {
+        return frameResultsDto;
+    }
+
+    @Override
+    public String toString() {
+        return "GameResultDto{" +
+                "name='" + name + '\'' +
+                ", frameResultsDto=" + frameResultsDto +
+                '}';
+    }
 }

@@ -113,10 +113,11 @@ public class FinalFrame implements Frame {
 
     @Override
     public Score calculateAdditionalScore(Score score) {
-        State first = states.getFirst();
-        score = first.calculateAdditionalScore(score);
-        if (score.canCalculateScore()) {
-            return score;
+        for (State state : states) {
+            score = state.calculateAdditionalScore(score);
+            if (score.canCalculateScore()) {
+                return score;
+            }
         }
         return Score.noScore();
     }

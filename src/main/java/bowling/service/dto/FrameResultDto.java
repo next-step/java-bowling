@@ -40,4 +40,12 @@ public class FrameResultDto {
     public int getScore() {
         return score;
     }
+
+    @Override
+    public String toString() {
+        return "FrameResultDto{" +
+                "pins=" + pins +
+                ", score=" + score +
+                '}';
+    }
 }
