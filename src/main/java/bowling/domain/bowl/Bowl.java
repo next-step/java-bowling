@@ -8,5 +8,7 @@ public interface Bowl {
 
     boolean canPitch();
 
+    boolean typeEquals(BowlType bowlType);
+
     String getView();
 }

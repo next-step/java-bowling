@@ -6,6 +6,8 @@ import static java.lang.String.format;
 
 public class NextBowl extends ProceedingBowl {
 
+    private static final BowlType BOWL_TYPE = BowlType.NEXT;
+
     private final Pin previousPin;
 
     public NextBowl(int previousHitCount) {
@@ -33,6 +35,11 @@ public class NextBowl extends ProceedingBowl {
             return GutterBowl.bowl();
         }
         return new MissBowl(previousPin, pin);
+    }
+
+    @Override
+    public boolean typeEquals(BowlType bowlType) {
+        return BOWL_TYPE.equals(bowlType);
     }
 
     @Override

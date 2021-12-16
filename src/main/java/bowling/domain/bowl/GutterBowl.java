@@ -4,6 +4,7 @@ import bowling.domain.pin.Pin;
 
 public class GutterBowl extends FinishedBowl {
 
+    private static final BowlType BOWL_TYPE = BowlType.GUTTER;
     private static final GutterBowl CACHED_BOWL = new GutterBowl();
     private static final int NON_HIT = 0;
 
@@ -15,6 +16,11 @@ public class GutterBowl extends FinishedBowl {
 
     public static Bowl bowl() {
         return CACHED_BOWL;
+    }
+
+    @Override
+    public boolean typeEquals(BowlType bowlType) {
+        return BOWL_TYPE.equals(bowlType);
     }
 
     @Override

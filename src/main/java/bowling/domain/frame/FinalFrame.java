@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.bowl.Bowl;
 import bowling.domain.bowl.BowlFactory;
+import bowling.domain.bowl.BowlType;
 import bowling.domain.bowl.CanNotPitchException;
 import bowling.domain.pin.Pin;
 
@@ -53,7 +54,7 @@ public class FinalFrame implements Frame {
     }
 
     private boolean isStrikeOrSpare(Bowl bowl) {
-        return BowlFactory.isStrikeOrSpare(bowl);
+        return bowl.typeEquals(BowlType.STRIKE) || bowl.typeEquals(BowlType.SPARE);
     }
 
     private void setLastBowlTo(Bowl bowl) {

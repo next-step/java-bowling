@@ -7,6 +7,7 @@ import static java.lang.String.format;
 public class MissBowl extends FinishedBowl {
 
     public static final String NOT_MISS_MESSAGE = "미스가 아닙니다.";
+    private static final BowlType BOWL_TYPE = BowlType.MISS;
 
     private final Pin firstPin;
     private final Pin secondPin;
@@ -26,6 +27,11 @@ public class MissBowl extends FinishedBowl {
         if (sumOfPin.isAllHit() || sumOfPin.isNoneHit()) {
             throw new CanNotPitchException(NOT_MISS_MESSAGE);
         }
+    }
+
+    @Override
+    public boolean typeEquals(BowlType bowlType) {
+        return BOWL_TYPE.equals(bowlType);
     }
 
     @Override
