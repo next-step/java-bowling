@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Spare extends Finished {
-    private static final String VIEW_STRING_DELIMITER = "|";
     private static final String LESS_THAN_TEN_PIN_MESSAGE = "쓰러트린 핀의 갯수가 10개가 아닙니다.";
     private final Pin firstPin;
     private final Pin secondPin;
@@ -19,11 +18,6 @@ public class Spare extends Finished {
         }
         this.firstPin = firstPin;
         this.secondPin = secondPin;
-    }
-
-    @Override
-    public String viewString() {
-        return firstPin.viewString() + VIEW_STRING_DELIMITER + "/";
     }
 
     @Override

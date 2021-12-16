@@ -27,12 +27,6 @@ class ReadyTest {
         assertThat(ready.bowl(Pin.from(10))).isEqualTo(new Strike());
     }
 
-    @DisplayName("viewString()은 ''를 반환한다.")
-    @Test
-    void viewStringTest() {
-        assertThat(Ready.getInstance().viewString()).isEqualTo("");
-    }
-
     @DisplayName("pins() 는 빈 리스트를 반환한다.")
     @Test
     void pinsTest() {

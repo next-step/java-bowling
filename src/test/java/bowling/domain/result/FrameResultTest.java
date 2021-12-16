@@ -19,7 +19,7 @@ public class FrameResultTest {
     @DisplayName("정상 생성 테스트")
     @Test
     void createTest() {
-        assertThat(STRIKE_RESULT).isEqualTo(FrameResult.ofNormalFrame(new Strike(), Score.of(10, 0)));
+        assertThat(STRIKE_RESULT).isEqualTo(FrameResult.ofNormalFrame(new Strike(), Score.of(-1, 0)));
     }
 
 }

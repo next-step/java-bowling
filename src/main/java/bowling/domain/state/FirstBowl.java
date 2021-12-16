@@ -25,11 +25,6 @@ public class FirstBowl extends Running {
     }
 
     @Override
-    public String viewString() {
-        return firstPin.viewString();
-    }
-
-    @Override
     public Score calculateAdditionalScore(Score beforeScore) {
         return beforeScore.addScoreByPin(firstPin);
     }

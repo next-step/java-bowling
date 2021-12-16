@@ -24,11 +24,6 @@ public class Strike extends Finished {
     }
 
     @Override
-    public String viewString() {
-        return pin.viewString();
-    }
-
-    @Override
     public Score score() {
         return Score.strike();
     }

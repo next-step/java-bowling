@@ -32,12 +32,6 @@ class SpareTest {
         assertThatIllegalArgumentException().isThrownBy(() -> new Spare(Pin.from(5), Pin.from(4)));
     }
 
-    @DisplayName("Spare viewString()은 첫번쨰핀|/ 반환한다.")
-    @Test
-    void viewStringTest() {
-        assertThat(new Spare(Pin.from(5), Pin.from(5)).viewString()).isEqualTo("5|/");
-    }
-
     @DisplayName("score()은 Pin의 갯수의 합과 시도횟수 1번을 반환한다..")
     @Test
     void scoreTest() {

@@ -10,8 +10,6 @@ public interface State {
 
     State bowl(Pin pin);
 
-    String viewString();
-
     Score score();
 
     Score calculateAdditionalScore(Score beforeScore);

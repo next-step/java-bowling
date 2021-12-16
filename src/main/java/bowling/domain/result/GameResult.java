@@ -3,7 +3,6 @@ package bowling.domain.result;
 import bowling.domain.user.User;
 
 import java.util.Objects;
-import java.util.Optional;
 
 public class GameResult {
     private final User user;
@@ -20,10 +19,6 @@ public class GameResult {
 
     public FrameResults getResults() {
         return results;
-    }
-
-    public Optional<String> findFrameViewStringWithIndex(int index) {
-        return results.findViewStringWithIndex(index);
     }
 
     @Override

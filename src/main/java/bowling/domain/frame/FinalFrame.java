@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class FinalFrame implements Frame {
-    public static final int CREATE_SCORE_LEFT = 0;
     private static final int DEFAULT_LEFT = 3;
     private static final int END_LEFT = 0;
     private static final int MISS_STATE_LEFT = 0;

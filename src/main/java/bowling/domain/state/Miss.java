@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Miss extends Finished {
-    private static final String VIEW_STRING_DELIMITER = "|";
     private static final String NO_MISS_EXCEPTION_MESSAGE = "쓰러진 핀의 갯수가 10개면 Spare 처리가 되어야 합니다.";
 
     private final Pin firstPin;
@@ -24,11 +23,6 @@ public class Miss extends Finished {
         if (firstPin.add(secondPin).isMaxCount()) {
             throw new IllegalArgumentException(NO_MISS_EXCEPTION_MESSAGE);
         }
-    }
-
-    @Override
-    public String viewString() {
-        return firstPin.viewString() + VIEW_STRING_DELIMITER + secondPin.viewString();
     }
 
     @Override

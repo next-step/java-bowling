@@ -31,11 +31,6 @@ class MissTest {
         assertThatIllegalArgumentException().isThrownBy(() -> new Miss(Pin.from(5), Pin.from(5)));
     }
 
-    @DisplayName("viewString()은 첫번쨰핀|두번째핀 반환한다.")
-    @Test
-    void viewStringTest() {
-        assertThat(new Miss(Pin.from(5), Pin.from(3)).viewString()).isEqualTo("5|3");
-    }
 
     @DisplayName("score()은 Pin의 갯수의 합과 시도횟수 0번을 반환한다..")
     @Test

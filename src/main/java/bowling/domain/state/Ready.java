@@ -8,8 +8,6 @@ import java.util.List;
 
 public class Ready extends Running {
 
-    private static final String BLANK_VIEW = "";
-
     private Ready() {
     }
 
@@ -24,11 +22,6 @@ public class Ready extends Running {
         }
 
         return new FirstBowl(pin);
-    }
-
-    @Override
-    public String viewString() {
-        return BLANK_VIEW;
     }
 
     @Override
