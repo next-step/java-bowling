@@ -6,7 +6,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import qna.CannotDeleteException;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,7 +19,10 @@ public class DeleteHistoriesTest {
         assertThat(question.isDeleted()).isFalse();
 
         question.delete(UserTest.JAVAJIGI);
-        assertThat(new DeleteHistories(question, question.getAnswers()).value()).hasSize(3);
+        DeleteHistories deleteHistories = new DeleteHistories();
+        deleteHistories.add(question);
+        deleteHistories.addAll(question.getAnswers());
+        assertThat(deleteHistories.value()).hasSize(3);
     }
 
     @DisplayName("질문이 삭제되지 않아 deleteHistories 생성 실패")
@@ -28,7 +30,7 @@ public class DeleteHistoriesTest {
     @MethodSource(value = "provideQuestionWithSelfAnswer")
     void makeDeleteHistories_fail(Question question) {
         assertThat(question.isDeleted()).isFalse();
-        assertThatThrownBy(() -> new DeleteHistories(question, question.getAnswers()))
+        assertThatThrownBy(() -> new DeleteHistories().add(question))
                 .isInstanceOf(CannotDeleteException.class)
                 .hasMessage(DeleteHistories.CANNOT_MAKE_DELETE_HISTORIES_MESSAGE);
     }
