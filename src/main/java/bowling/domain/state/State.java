@@ -3,6 +3,8 @@ package bowling.domain.state;
 import bowling.domain.frame.Pin;
 import bowling.domain.frame.Score;
 
+import java.util.List;
+
 public interface State {
     boolean isFinished();
 
@@ -14,5 +16,5 @@ public interface State {
 
     Score calculateAdditionalScore(Score beforeScore);
 
-
+    List<Pin> pins();
 }

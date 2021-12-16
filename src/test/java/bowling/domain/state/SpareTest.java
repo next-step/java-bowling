@@ -5,6 +5,8 @@ import bowling.domain.frame.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.*;
 
 class SpareTest {
@@ -49,5 +51,13 @@ class SpareTest {
                 .isEqualTo(Score.of(15, 0));
         assertThat(new Spare(Pin.from(4), Pin.from(6)).calculateAdditionalScore(Score.of(5, 1)))
                 .isEqualTo(Score.of(9, 0));
+    }
+
+    @DisplayName("pins() 는 pin값을 담은 리스트를 반환한다.")
+    @Test
+    void pinsTest() {
+        assertThat(new Spare(Pin.from(4), Pin.from(6)).pins()).isEqualTo(
+                Arrays.asList(Pin.from(4), Pin.from(6))
+        );
     }
 }

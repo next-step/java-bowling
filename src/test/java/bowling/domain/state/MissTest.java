@@ -5,6 +5,8 @@ import bowling.domain.frame.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.*;
 
 class MissTest {
@@ -49,5 +51,13 @@ class MissTest {
 
         assertThat(new Miss(Pin.from(5), Pin.from(3)).calculateAdditionalScore(Score.of(5, 2)))
                 .isEqualTo(Score.of(13, 0));
+    }
+
+    @DisplayName("pins() 는 pin값을 담은 리스트를 반환한다.")
+    @Test
+    void pinsTest() {
+        assertThat(new Miss(Pin.from(5), Pin.from(3)).pins()).isEqualTo(
+                Arrays.asList(Pin.from(5), Pin.from(3))
+        );
     }
 }

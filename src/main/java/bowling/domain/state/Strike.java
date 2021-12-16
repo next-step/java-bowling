@@ -3,6 +3,8 @@ package bowling.domain.state;
 import bowling.domain.frame.Pin;
 import bowling.domain.frame.Score;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Strike extends Finished {
@@ -34,6 +36,11 @@ public class Strike extends Finished {
     @Override
     public Score calculateAdditionalScore(Score beforeScore) {
         return beforeScore.addScoreByPin(pin);
+    }
+
+    @Override
+    public List<Pin> pins() {
+        return Arrays.asList(pin);
     }
 
     @Override

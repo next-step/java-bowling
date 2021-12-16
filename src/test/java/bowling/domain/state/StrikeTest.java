@@ -1,8 +1,11 @@
 package bowling.domain.state;
 
+import bowling.domain.frame.Pin;
 import bowling.domain.frame.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,5 +28,13 @@ class StrikeTest {
     void calculateAdditionalScoreTest() {
         assertThat(new Strike().calculateAdditionalScore(Score.of(5, 1)))
                 .isEqualTo(Score.of(15, 0));
+    }
+
+    @DisplayName("pins() 는 pin값을 담은 리스트를 반환한다.")
+    @Test
+    void pinsTest() {
+        assertThat(new Strike().pins()).isEqualTo(
+                Arrays.asList(Pin.from(10))
+        );
     }
 }
