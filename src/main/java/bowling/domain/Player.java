@@ -13,6 +13,10 @@ public class Player {
         return new Player(name);
     }
 
+    public String name() {
+        return name.value();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
