@@ -6,5 +6,6 @@ public enum BowlType {
     GUTTER,
     MISS,
     SPARE,
-    STRIKE
+    STRIKE,
+    FINAL
 }
