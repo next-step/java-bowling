@@ -7,7 +7,7 @@ import bowling.service.BowlingService;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
-public class main {
+public class Bowling {
     public static void main(String[] args) {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
