@@ -1,13 +1,13 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
+    public static final String NO_AUTH_FOR_DELETE_MESSAGE = "질문을 삭제할 권한이 없습니다.";
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -18,10 +18,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -39,22 +37,24 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public String getTitle() {
-        return title;
+    public void delete(User loginUser) throws CannotDeleteException {
+        checkAuthenticationForDelete(loginUser);
+        checkAnswerForDelete(loginUser);
+
+        deleted = true;
+
+        Answers answers = getAnswers();
+        answers.deleteAll();
     }
 
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
+    private void checkAuthenticationForDelete(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(NO_AUTH_FOR_DELETE_MESSAGE);
+        }
     }
 
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
+    private void checkAnswerForDelete(User loginUser) throws CannotDeleteException {
+        getAnswers().checkOwnerForDelete(loginUser);
     }
 
     public User getWriter() {
@@ -75,16 +75,11 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
     }
 
