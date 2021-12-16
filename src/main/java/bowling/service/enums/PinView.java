@@ -1,4 +1,4 @@
-package bowling.service.convert.enums;
+package bowling.service.enums;
 
 import bowling.domain.frame.Pin;
 
