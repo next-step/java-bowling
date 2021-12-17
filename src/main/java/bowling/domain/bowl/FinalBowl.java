@@ -10,6 +10,9 @@ import static java.util.Collections.unmodifiableList;
 public class FinalBowl implements Bowl {
 
     private static final BowlType BOWL_TYPE = BowlType.FINAL;
+    private static final int NONE_LEFT_CHANCE = 0;
+    private static final int FIRST_PIN_INDEX = 0;
+    private static final int SIZE_OF_ONE_PIN = 1;
 
     private int leftChance = 2;
     private final List<Pin> pins;
@@ -41,7 +44,7 @@ public class FinalBowl implements Bowl {
 
     @Override
     public boolean canPitch() {
-        return leftChance > 0;
+        return leftChance > NONE_LEFT_CHANCE;
     }
 
     private boolean isStrike(Pin pin) {
@@ -49,11 +52,11 @@ public class FinalBowl implements Bowl {
     }
 
     private boolean isSpare(Pin pin) {
-        if (pins.size() != 1) {
+        if (pins.size() != SIZE_OF_ONE_PIN) {
             return false;
         }
 
-        Pin firstPin = pins.get(0);
+        Pin firstPin = pins.get(FIRST_PIN_INDEX);
         if (firstPin.isAllHit()) {
             return false;
         }
