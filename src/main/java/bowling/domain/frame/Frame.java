@@ -3,21 +3,44 @@ package bowling.domain.frame;
 import bowling.domain.bowl.Bowl;
 import bowling.domain.pin.Pin;
 
-import java.util.List;
+public class Frame {
 
-public interface Frame {
+    public static final int MAX_FRAME_NUMBER = 10;
+    private static final int MIN_FRAME_NUMBER = 1;
 
-    /**
-     * @return 이번 라운드에 더 투구할 수 있는지
-     */
-    boolean pitch(Pin pin);
+    private final int number;
+    private Bowl bowl;
 
-    Frame next();
+    public Frame(Bowl bowl) {
+        this(MIN_FRAME_NUMBER, bowl);
+    }
 
-    boolean hasNextFrame();
+    public Frame(int number, Bowl bowl) {
+        checkRangeOfNumber(number);
+        this.number = number;
+        this.bowl = bowl;
+    }
 
-    int getNumber();
+    private void checkRangeOfNumber(int number) {
+        if (number < MIN_FRAME_NUMBER || number > MAX_FRAME_NUMBER) {
+            throw new IllegalFrameNumberException();
+        }
+    }
 
-    List<Bowl> bowls();
+    public static Frame firstOf(Bowl bowl) {
+        return new Frame(bowl);
+    }
 
+    public Frame nextOf(Bowl bowl) {
+        return new Frame(number + 1, bowl);
+    }
+
+    public boolean pitch(Pin pin) {
+        bowl = bowl.pitch(pin);
+        return bowl.canPitch();
+    }
+
+    public int getNumber() {
+        return number;
+    }
 }

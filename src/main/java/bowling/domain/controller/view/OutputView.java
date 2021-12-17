@@ -31,7 +31,7 @@ public class OutputView {
     private static void printPlayedFrames(List<Frame> frames) {
         append(DELIMITER);
         for (Frame frame : frames) {
-            printBowls(frame.bowls());
+//            printBowls(frame.bowls());
             append(DELIMITER);
         }
         for (int i = 0; i < NUMBER_OF_FRAME - frames.size(); i++) {

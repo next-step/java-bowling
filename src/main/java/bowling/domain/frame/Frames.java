@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.bowl.FinalBowl;
+import bowling.domain.bowl.FirstBowl;
 import bowling.domain.pin.Pin;
 
 import java.util.ArrayList;
@@ -11,15 +13,20 @@ import static java.util.Collections.unmodifiableList;
 public class Frames {
 
     private static final int INDEX_UNIT = 1;
-    
+
     public final List<Frame> frames;
 
-    private Frames(List<Frame> frames) {
+    public Frames(Frame firstFrame) {
+        this(new ArrayList<>(singletonList(firstFrame)));
+    }
+
+    public Frames(List<Frame> frames) {
         this.frames = frames;
     }
 
     public static Frames init() {
-        return new Frames(new ArrayList<>(singletonList(FrameFactory.firstFrame())));
+        Frame firstFrame = Frame.firstOf(new FirstBowl());
+        return new Frames(firstFrame);
     }
 
     /**
@@ -30,23 +37,26 @@ public class Frames {
         if (currentFrame.pitch(pin)) {
             return true;
         }
-        if (currentFrame.hasNextFrame()) {
-            addNextFrame();
-            return true;
+        if (frames.size() == Frame.MAX_FRAME_NUMBER) {
+            return false;
         }
-        return false;
+        frames.add(createNextFrame(currentFrame));
+        return true;
     }
 
     private Frame currentFrame() {
         return frames.get(frames.size() - INDEX_UNIT);
     }
 
-    private void addNextFrame() {
-        frames.add(currentFrame().next());
+    private Frame createNextFrame(Frame currentFrame) {
+        if (frames.size() < Frame.MAX_FRAME_NUMBER - INDEX_UNIT) {
+            return currentFrame.nextOf(new FirstBowl());
+        }
+        return currentFrame.nextOf(new FinalBowl());
     }
 
     public int numberOfFrame() {
-        return currentFrame().getNumber();
+        return frames.size();
     }
 
     public List<Frame> frames() {
