@@ -1,5 +1,7 @@
 package bowling.view;
 
+import bowling.utils.InputNumberUtil;
+
 import java.util.Scanner;
 
 public class InputView {
@@ -9,5 +11,10 @@ public class InputView {
     public static String inputPlayerName() {
         System.out.println(INPUT_PLAYER_NAME_MESSAGE);
         return sc.nextLine();
+    }
+
+    public static int inputPitchNumber() {
+        String input = sc.nextLine();
+        return InputNumberUtil.parseInt(input);
     }
 }
