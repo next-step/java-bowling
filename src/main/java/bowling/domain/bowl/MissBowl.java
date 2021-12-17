@@ -2,7 +2,9 @@ package bowling.domain.bowl;
 
 import bowling.domain.pin.Pin;
 
-import static java.lang.String.format;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class MissBowl extends FinishedBowl {
 
@@ -35,7 +37,10 @@ public class MissBowl extends FinishedBowl {
     }
 
     @Override
-    public String getView() {
-        return format(" %s|%s  ", firstPin.getHitCount(), secondPin.getHitCount());
+    public List<Pin> pins() {
+        List<Pin> pins = new ArrayList<>();
+        pins.add(firstPin);
+        pins.add(secondPin);
+        return Collections.unmodifiableList(pins);
     }
 }

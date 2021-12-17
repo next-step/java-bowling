@@ -19,8 +19,5 @@ public class FirstBowl extends ProceedingBowl {
         return BOWL_TYPE.equals(bowlType);
     }
 
-    @Override
-    public String getView() {
-        return "      ";
-    }
+
 }

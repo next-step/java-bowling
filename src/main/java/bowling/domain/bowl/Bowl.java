@@ -2,6 +2,8 @@ package bowling.domain.bowl;
 
 import bowling.domain.pin.Pin;
 
+import java.util.List;
+
 public interface Bowl {
 
     Bowl pitch(Pin pin);
@@ -10,5 +12,5 @@ public interface Bowl {
 
     boolean typeEquals(BowlType bowlType);
 
-    String getView();
+    List<Pin> pins();
 }

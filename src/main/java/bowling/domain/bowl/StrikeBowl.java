@@ -1,5 +1,11 @@
 package bowling.domain.bowl;
 
+import bowling.domain.pin.Pin;
+
+import java.util.List;
+
+import static java.util.Collections.emptyList;
+
 public class StrikeBowl extends FinishedBowl {
 
     private static final BowlType BOWL_TYPE = BowlType.SPARE;
@@ -18,7 +24,7 @@ public class StrikeBowl extends FinishedBowl {
     }
 
     @Override
-    public String getView() {
-        return "  X   ";
+    public List<Pin> pins() {
+        return emptyList();
     }
 }

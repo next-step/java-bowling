@@ -2,8 +2,6 @@ package bowling.domain.bowl;
 
 import bowling.domain.pin.Pin;
 
-import static java.lang.String.format;
-
 public class NextBowl extends ProceedingBowl {
 
     private static final BowlType BOWL_TYPE = BowlType.NEXT;
@@ -40,10 +38,5 @@ public class NextBowl extends ProceedingBowl {
     @Override
     public boolean typeEquals(BowlType bowlType) {
         return BOWL_TYPE.equals(bowlType);
-    }
-
-    @Override
-    public String getView() {
-        return format(" %s    ", previousPin.getHitCount());
     }
 }

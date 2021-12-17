@@ -5,6 +5,8 @@ import bowling.domain.pin.Pin;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Collections.unmodifiableList;
+
 public class FinalBowl implements Bowl {
 
     private static final BowlType BOWL_TYPE = BowlType.FINAL;
@@ -62,7 +64,7 @@ public class FinalBowl implements Bowl {
     }
 
     @Override
-    public String getView() {
-        return null;
+    public List<Pin> pins() {
+        return unmodifiableList(pins);
     }
 }

@@ -15,14 +15,14 @@ public class BowlingController {
         Participant participant = new Participant(InputView.getName());
         Bowling bowling = new Bowling(participant);
 
-        boolean continued;
-        do {
+        boolean continued = true;
+        while (continued) {
             int numberOfFrame = bowling.numberOfFrame();
             int hitCount = InputView.getHitCount(numberOfFrame);
             continued = bowling.pitch(Pin.from(hitCount));
 
             OutputView.showBowling(bowling);
-        } while (continued);
+        }
     }
 
 }
