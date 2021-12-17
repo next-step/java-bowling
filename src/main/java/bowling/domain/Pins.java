@@ -49,7 +49,7 @@ public class Pins {
         return size() != (startSize - fallDownCount);
     }
 
-    public boolean strike(Pins fallDownPins) {
+    public boolean isStrike(Pins fallDownPins) {
         return size() == FIRST_PIN_INDEX && fallDownPins.size() == PIN_MAX_COUNT;
     }
 

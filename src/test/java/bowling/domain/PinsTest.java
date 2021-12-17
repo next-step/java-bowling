@@ -56,6 +56,6 @@ public class PinsTest {
         Pins fallDownPins = Pins.create(10);
         //when
         //then
-        assertThat(pins.strike(fallDownPins)).isTrue();
+        assertThat(pins.isStrike(fallDownPins)).isTrue();
     }
 }

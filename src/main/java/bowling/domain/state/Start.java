@@ -8,7 +8,7 @@ public class Start implements State {
 
     @Override
     public void pitch(Pins existPins, Pins fallDownPins, Frame frame) {
-        if (existPins.strike(fallDownPins)) {
+        if (existPins.isStrike(fallDownPins)) {
             checkFrame(frame);
             return;
         }
