@@ -7,11 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ResultView {
-    private static final String STRIKE = "X";
-    private static final String SPARE = "/";
-    private static final String GUTTER = "-";
     private static final String BOARD_HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-    private static final String BOARD_EMPTY_COLUMN = "|      ";
     private static final String BOARD_DIVISION = "|";
     private static final String BOARD_FRAME_DIVISION = " |  ";
     private static final String FALL_DOWN_PITCH_OF_FRAME_NO_MESSAGE = "%d프레임 투구 : %d\n";
@@ -32,17 +28,17 @@ public class ResultView {
     private static void showFrame(Player player, FrameInfo frameInfo, List<String> frameResultHistories) {
         List<String> pitchResults = new ArrayList<>();
         int pinsCount = PINS_MAX_COUNT;
-        int previousFallDownCount = PINS_MAX_COUNT;
+        Pitch previousPitch = null;
         for (Pitch pitch : frameInfo.pitches()) {
             int fallDownCount = pinsCount - pitch.pinsSize();
             showFallDownPitch(frameInfo.no(), fallDownCount);
             showFrameHeader();
             showPlayerName(player.name());
             showPrevResult(frameResultHistories);
-            pitchResults.add(pitchResult(previousFallDownCount, fallDownCount));
+            pitchResults.add(PitchResultHelper.pitchResult(previousPitch, pitch));
             showCurrentResult(pitchResults);
             pinsCount = pitchPinsSize(pitch.pinsSize());
-            previousFallDownCount = fallDownCount;
+            previousPitch = pitch;
             bodyEnd();
         }
         frameResultHistories.add(String.join(BOARD_DIVISION, pitchResults));
@@ -53,19 +49,6 @@ public class ResultView {
             return PINS_MAX_COUNT;
         }
         return pinsSize;
-    }
-
-    private static String pitchResult(int previousFallDownCount, int fallDownCount) {
-        if (previousFallDownCount == PINS_MAX_COUNT && fallDownCount == PINS_MAX_COUNT) { // strike
-            return STRIKE;
-        }
-        if (fallDownCount == PINS_MIN_COUNT) { // gutter
-            return GUTTER;
-        }
-        if (previousFallDownCount + fallDownCount == PINS_MAX_COUNT) { // spare
-            return SPARE;
-        }
-        return String.valueOf(fallDownCount);// miss
     }
 
     private static void showFallDownPitch(int no, int fallDownCount) {
