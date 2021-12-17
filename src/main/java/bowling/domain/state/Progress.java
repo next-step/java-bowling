@@ -27,6 +27,11 @@ public class Progress implements State {
         checkRetry(frame);
     }
 
+    @Override
+    public boolean progressing() {
+        return true;
+    }
+
     private void checkFrame(Frame frame) {
         if (frame instanceof FinalFrame) {
             checkPitchNo(frame);

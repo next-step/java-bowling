@@ -11,6 +11,11 @@ public class End implements State {
     }
 
     @Override
+    public boolean progressing() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return "End{}";
     }

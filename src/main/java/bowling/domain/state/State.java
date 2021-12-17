@@ -5,4 +5,6 @@ import bowling.domain.Pins;
 
 public interface State {
     void pitch(Pins existPins, Pins fallDownPins, Frame frame);
+
+    boolean progressing();
 }

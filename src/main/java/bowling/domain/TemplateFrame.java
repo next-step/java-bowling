@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.state.End;
 import bowling.domain.state.Start;
 import bowling.domain.state.State;
 import bowling.strategy.PitchNumberStrategy;
@@ -37,7 +36,7 @@ public abstract class TemplateFrame implements Frame {
     }
 
     private boolean progressing() {
-        return !(state instanceof End);
+        return state.progressing();
     }
 
     public abstract Frame next();
