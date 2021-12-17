@@ -1,14 +1,16 @@
 package bowling.domain.frame;
 
+import bowling.domain.bowl.Bowl;
 import bowling.domain.bowl.FinalBowl;
 import bowling.domain.bowl.FirstBowl;
 import bowling.domain.pin.Pin;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.Collections.singletonList;
-import static java.util.Collections.unmodifiableList;
 
 public class Frames {
 
@@ -59,7 +61,9 @@ public class Frames {
         return frames.size();
     }
 
-    public List<Frame> frames() {
-        return unmodifiableList(frames);
+    public List<Bowl> bowls() {
+        return frames.stream()
+                .map(Frame::getBowl)
+                .collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
     }
 }

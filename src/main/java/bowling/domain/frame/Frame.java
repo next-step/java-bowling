@@ -40,7 +40,7 @@ public class Frame {
         return bowl.canPitch();
     }
 
-    public int getNumber() {
-        return number;
+    public Bowl getBowl() {
+        return bowl;
     }
 }

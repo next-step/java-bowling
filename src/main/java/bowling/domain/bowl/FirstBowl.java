@@ -2,6 +2,9 @@ package bowling.domain.bowl;
 
 import bowling.domain.pin.Pin;
 
+import java.util.Collections;
+import java.util.List;
+
 public class FirstBowl extends ProceedingBowl {
 
     private static final BowlType BOWL_TYPE = BowlType.FIRST;
@@ -19,5 +22,8 @@ public class FirstBowl extends ProceedingBowl {
         return BOWL_TYPE.equals(bowlType);
     }
 
-
+    @Override
+    public List<Pin> pins() {
+        return Collections.emptyList();
+    }
 }

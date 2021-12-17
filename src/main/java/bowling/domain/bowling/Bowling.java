@@ -1,6 +1,6 @@
 package bowling.domain.bowling;
 
-import bowling.domain.frame.Frame;
+import bowling.domain.bowl.Bowl;
 import bowling.domain.frame.Frames;
 import bowling.domain.participant.Participant;
 import bowling.domain.pin.Pin;
@@ -32,7 +32,7 @@ public class Bowling {
         return participant.getName();
     }
 
-    public List<Frame> frames() {
-        return frames.frames();
+    public List<Bowl> bowls() {
+        return frames.bowls();
     }
 }

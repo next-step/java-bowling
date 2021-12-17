@@ -2,6 +2,10 @@ package bowling.domain.bowl;
 
 import bowling.domain.pin.Pin;
 
+import java.util.List;
+
+import static java.util.Collections.singletonList;
+
 public class NextBowl extends ProceedingBowl {
 
     private static final BowlType BOWL_TYPE = BowlType.NEXT;
@@ -38,5 +42,10 @@ public class NextBowl extends ProceedingBowl {
     @Override
     public boolean typeEquals(BowlType bowlType) {
         return BOWL_TYPE.equals(bowlType);
+    }
+
+    @Override
+    public List<Pin> pins() {
+        return singletonList(previousPin);
     }
 }
