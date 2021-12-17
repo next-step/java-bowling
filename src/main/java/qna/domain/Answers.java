@@ -20,7 +20,7 @@ public class Answers {
     }
 
     public void delete(User loginUser) throws CannotDeleteException {
-        for(Answer answer : answers) {
+        for (Answer answer : answers) {
             answer.delete(loginUser);
         }
     }
