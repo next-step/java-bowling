@@ -15,7 +15,11 @@ public class FinalBowl implements Bowl {
     private final List<Pin> pins;
 
     public FinalBowl() {
-        pins = new ArrayList<>();
+        this(new ArrayList<>());
+    }
+
+    public FinalBowl(List<Pin> pins) {
+        this.pins = pins;
     }
 
     @Override

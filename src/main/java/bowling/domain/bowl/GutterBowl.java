@@ -15,7 +15,7 @@ public class GutterBowl extends FinishedBowl {
     private final Pin secondPin;
 
     public GutterBowl() {
-        this(Pin.from(0), Pin.from(0));
+        this(Pin.noneHitPin(), Pin.noneHitPin());
     }
 
     private GutterBowl(Pin firstPin, Pin secondPin) {

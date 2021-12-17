@@ -14,7 +14,7 @@ public class StrikeBowl extends FinishedBowl {
     private final Pin pin;
 
     public StrikeBowl() {
-        this(Pin.from(10));
+        this(Pin.allHitPin());
     }
 
     private StrikeBowl(Pin pin) {

@@ -2,7 +2,6 @@ package bowling.domain.pin;
 
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -32,9 +31,20 @@ public class Pin {
         }
     }
 
+    public static Pin allHitPin() {
+        return CACHED_PINS.get(MAX_HIT_COUNT);
+    }
+
+    public static Pin noneHitPin() {
+        return CACHED_PINS.get(MIN_HIT_COUNT);
+    }
+
     public static Pin from(int hitCount) {
-        return Optional.ofNullable(CACHED_PINS.get(hitCount))
-                .orElseThrow(IllegalRangeOfHitCountException::new);
+        Pin pin = CACHED_PINS.get(hitCount);
+        if (pin == null) {
+            throw new IllegalRangeOfHitCountException();
+        }
+        return pin;
     }
 
     public Pin plus(Pin other) {
