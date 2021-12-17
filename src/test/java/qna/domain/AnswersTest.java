@@ -1,7 +1,9 @@
 package qna.domain;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+import java.lang.reflect.Field;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,25 +25,31 @@ class AnswersTest {
 
     @Test
     @DisplayName("Answers가 정상적으로 삭제되는지 확인한다.")
-    void deleteTest() throws CannotDeleteException {
+    void deleteTest() throws CannotDeleteException, NoSuchFieldException, IllegalAccessException {
         q1.addAnswer(AnswerTest.A1);
         q1.addAnswer(AnswerTest.A1);
 
-        Answers answers = q1.getAnswers();
+        Answers answers = getAnswersByReflection(q1);
 
         answers.delete(UserTest.JAVAJIGI);
-
         answers.getAnswers().forEach(answer -> assertThat(answer.isDeleted()).isTrue());
     }
 
     @Test
     @DisplayName("질문자와 삭제자가 다른경우, 예외가 발생한다.")
-    void deleteExceptionTest() {
+    void deleteExceptionTest() throws NoSuchFieldException, IllegalAccessException {
         q1.addAnswer(a2);
 
-        Answers answers = q1.getAnswers();
+        Answers answers = getAnswersByReflection(q1);
 
         assertThatExceptionOfType(CannotDeleteException.class)
             .isThrownBy(() -> answers.delete(UserTest.JAVAJIGI));
+    }
+
+    private Answers getAnswersByReflection(Question question)
+        throws NoSuchFieldException, IllegalAccessException {
+        Field answersField = Answers.class.getDeclaredField("answers");
+        answersField.setAccessible(true);
+        return (Answers) answersField.get(question);
     }
 }

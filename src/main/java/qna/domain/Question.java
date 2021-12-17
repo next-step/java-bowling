@@ -54,7 +54,7 @@ public class Question extends AbstractEntity {
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(
-            new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+            new DeleteHistory(ContentType.QUESTION, getId(), loginUser, LocalDateTime.now()));
 
         deleteHistories.addAll(answers.delete(loginUser));
         return deleteHistories;
@@ -92,9 +92,6 @@ public class Question extends AbstractEntity {
     }
 
 
-    public Answers getAnswers() {
-        return answers;
-    }
 
     @Override
     public String toString() {

@@ -14,8 +14,7 @@
 ## 🚀 1단계 - 질문 삭제하기 기능 리팩토링
 
 - [x] ServiceLayer 가독성 사전 개선 (Lombok 추가, 생성자 주입방식 변경)
-- [] `QnAService.deleteQuestion()` 메소드 기능별 분리
-    - [] 서비스 레이어 -> 도메인 레이어로 비즈니스 로직 분리
-    - [] 질문 삭제 권한 Validation 로직 분리
-    - [] `Getter` 최소화
+- [x] `QnAService.deleteQuestion()` 메소드 기능별 분리
+    - [x] 서비스 레이어 -> 도메인 레이어로 비즈니스 로직 분리
+    - [x] 질문 삭제 권한 Validation 로직 분리
     - [x] `List<Answer>` 일급 콜렉션 변환
