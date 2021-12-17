@@ -9,12 +9,7 @@ public abstract class TemplateFrame implements Frame {
     protected State state;
 
     protected TemplateFrame() {
-        this.frameInfo = FrameInfo.init();
-        this.state = new Start();
-    }
-
-    protected TemplateFrame(FrameInfo frameInfo) {
-        this.frameInfo = frameInfo;
+        this(FrameInfo.init(), new Start());
     }
 
     protected TemplateFrame(FrameInfo frameInfo, State state) {

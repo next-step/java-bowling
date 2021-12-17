@@ -13,18 +13,17 @@ public class Pins {
 
     private Pins() {
         init(PIN_MAX_COUNT);
-        validatePinsSize();
     }
 
     private Pins(int count) {
         init(count);
-        validatePinsSize();
     }
 
     private void init(int count) {
         for (int number = PIN_MIN_COUNT; number <= count; number++) {
             pins.add(Pin.from(number));
         }
+        validatePinsSize();
     }
 
     public static Pins create() {

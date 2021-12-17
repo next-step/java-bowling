@@ -9,15 +9,15 @@ public class Pin {
     private final int number;
 
     private Pin(int number) {
-        validateNumber(number);
         this.number = number;
     }
 
     public static Pin from(int number) {
+        validateNumber(number);
         return new Pin(number);
     }
 
-    private void validateNumber(int number) {
+    private static void validateNumber(int number) {
         if (number < PIN_MIN_NUMBER || number > PIN_MAX_NUMBER) {
             throw new IllegalArgumentException("유효하지 않는 핀 번호입니다.");
         }

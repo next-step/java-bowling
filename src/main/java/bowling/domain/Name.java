@@ -8,11 +8,11 @@ public class Name {
     private final String value;
 
     private Name(String value) {
-        validateNameLength(value);
         this.value = value;
     }
 
     public static Name from(String value) {
+        validateNameLength(value);
         return new Name(value);
     }
 
@@ -20,7 +20,7 @@ public class Name {
         return value;
     }
 
-    private void validateNameLength(String value) {
+    private static void validateNameLength(String value) {
         if (value.length() > NAME_MAX_LENGTH) {
             throw new IllegalArgumentException("이름의 길이는 3이하만 허용됩니다.");
         }

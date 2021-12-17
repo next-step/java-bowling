@@ -11,7 +11,7 @@ public class Progress implements State {
     private final boolean retry;
 
     public Progress() {
-        this.retry = false;
+        this(false);
     }
 
     public Progress(boolean retry) {
