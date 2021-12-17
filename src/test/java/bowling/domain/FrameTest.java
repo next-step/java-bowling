@@ -33,11 +33,11 @@ class FrameTest {
     @Test
     void 마지막_프레임을_생성한다() {
         //given
-        Frame frame = FinalFrame.create(FrameInfo.create(10));
+        Frame frame = FinalFrame.create(FrameInfo.create(9));
         //when
         FrameInfo frameInfo = frame.info();
         //then
-        assertThat(frameInfo.no()).isEqualTo(10);
+        assertThat(frameInfo.no()).isEqualTo(9);
     }
 
     @Test
@@ -45,16 +45,16 @@ class FrameTest {
         //given
         //when
         //then
-        assertThatThrownBy(() -> FinalFrame.create(FrameInfo.create(9)))
+        assertThatThrownBy(() -> FinalFrame.create(FrameInfo.create(8)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 마지막_프레임_생성_후_다음_프레임을_생성하면_IllegalArgumentException_이_발생한다() {
         //given
-        Frame finalFrame = FinalFrame.create(FrameInfo.create(10));
+        Frame finalFrame = FinalFrame.create(FrameInfo.create(9));
         FrameInfo frameInfo = finalFrame.info();
-        assertThat(frameInfo.no()).isEqualTo(10);
+        assertThat(frameInfo.no()).isEqualTo(9);
         //when
         //then
         assertThatThrownBy(finalFrame::next)

@@ -67,7 +67,7 @@ class StateTest {
     @Test
     void 마지막_프레임_첫_번째_투구가_미스_혹은_거터면_프레임_상태는_Progress_retry_false_이다() {
         //given
-        Frame frame = FinalFrame.create(FrameInfo.create(10));
+        Frame frame = FinalFrame.create(FrameInfo.create(9));
         assertThat(frame.state()).isInstanceOf(Start.class);
         //when
         frame.state().pitch(Pins.create(1), Pins.create(9), frame);
@@ -79,7 +79,7 @@ class StateTest {
     @Test
     void 마지막_프레임_첫_번째_투구가_스트라이크면_프레임_상태는_Progress_retry_true_이다() {
         //given
-        Frame frame = FinalFrame.create(FrameInfo.create(10));
+        Frame frame = FinalFrame.create(FrameInfo.create(9));
         assertThat(frame.state()).isInstanceOf(Start.class);
         //when
         frame.state().pitch(Pins.create(0), Pins.create(10), frame);
@@ -91,7 +91,7 @@ class StateTest {
     @Test
     void 마지막_프레임_첫_번째_투구가_스트라이크면_두_번째_투구_이후_프레임_상태는_Progress_retry_false_이다() {
         //given
-        Frame frame = FinalFrame.create(FrameInfo.create(10));
+        Frame frame = FinalFrame.create(FrameInfo.create(9));
         assertThat(frame.state()).isInstanceOf(Start.class);
         //when
         //first pitch
@@ -110,7 +110,7 @@ class StateTest {
     @Test
     void 종료_상태에서_투구하면_IllegalArgumentException_이_발생한다() {
         //given
-        Frame frame = FinalFrame.create(FrameInfo.create(10));
+        Frame frame = FinalFrame.create(FrameInfo.create(9));
         frame.changeState(new End());
         //when & then
         assertThatThrownBy(() -> frame.state().pitch(null, null, null))
