@@ -39,7 +39,6 @@ public abstract class TemplateFrame implements Frame {
         return state.progressing();
     }
 
-    public abstract Frame next();
     public abstract FrameInfo info();
     public abstract void changeState(State state);
     public abstract State state();

@@ -53,10 +53,6 @@ public class Pins {
         return size() == FIRST_PIN_INDEX && fallDownPins.size() == PIN_MAX_COUNT;
     }
 
-    public List<Pin> pins() {
-        return pins;
-    }
-
     public int size() {
         return pins.size();
     }

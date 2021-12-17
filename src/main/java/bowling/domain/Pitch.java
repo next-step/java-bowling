@@ -28,10 +28,6 @@ public class Pitch {
         return pins.fallDown(fallDownPins);
     }
 
-    public Pins pins() {
-        return pins;
-    }
-
     public int pinsSize() {
         return pins.size();
     }

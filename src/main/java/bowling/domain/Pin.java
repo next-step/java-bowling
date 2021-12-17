@@ -17,10 +17,6 @@ public class Pin {
         return new Pin(number);
     }
 
-    public int number() {
-        return number;
-    }
-
     private void validateNumber(int number) {
         if (number < PIN_MIN_NUMBER || number > PIN_MAX_NUMBER) {
             throw new IllegalArgumentException("유효하지 않는 핀 번호입니다.");

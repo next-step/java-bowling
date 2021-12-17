@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.state.End;
 import bowling.domain.state.Start;
 import bowling.domain.state.State;
 
@@ -39,9 +38,5 @@ public class NormalFrame extends TemplateFrame {
     @Override
     public State state() {
         return state;
-    }
-
-    private boolean progressing() {
-        return !(state instanceof End);
     }
 }

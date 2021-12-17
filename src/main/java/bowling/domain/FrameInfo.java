@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class FrameInfo {
@@ -33,11 +34,7 @@ public class FrameInfo {
     }
 
     public List<Pitch> pitches() {
-        return pitches;
-    }
-
-    public int pitchesSize() {
-        return pitches.size();
+        return Collections.unmodifiableList(pitches);
     }
 
     public boolean isSecondPitch() {
