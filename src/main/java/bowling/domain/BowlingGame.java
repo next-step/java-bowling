@@ -1,9 +1,9 @@
 package bowling.domain;
 
 import bowling.strategy.PitchNumberStrategy;
-import bowling.view.ResultView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class BowlingGame {
@@ -16,26 +16,26 @@ public class BowlingGame {
         return new BowlingGame();
     }
 
-    public void run(Player player, PitchNumberStrategy numberStrategy) {
+    public List<Frame> run(PitchNumberStrategy numberStrategy) {
         Frame frame = NormalFrame.first();
-        while (progressing()) {
+        while (progressing(frame)) {
             validateFrameCreate(frame);
             frame = run(frame, numberStrategy);
         }
-        ResultView.showBoard(player, frames);
+        return Collections.unmodifiableList(frames);
     }
 
     private Frame run(Frame frame, PitchNumberStrategy numberStrategy) {
         frame.run(numberStrategy);
         frames.add(frame);
-        if (!progressing()) {
-            return null;
+        if (frame.isFinal()) {
+            return frame;
         }
         return frame.next();
     }
 
-    private boolean progressing() {
-        return frames.size() < 10;
+    private boolean progressing(Frame frame) {
+        return frame.progressing();
     }
 
     private void validateFrameCreate(Frame frame) {

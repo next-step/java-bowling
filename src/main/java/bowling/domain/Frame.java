@@ -10,7 +10,15 @@ public interface Frame {
 
     FrameInfo info();
 
-    void changeState(State state);
+    void changeState();
 
     State state();
+
+    boolean isFinal();
+
+    boolean isStrike();
+
+    boolean isSpare();
+
+    boolean progressing();
 }

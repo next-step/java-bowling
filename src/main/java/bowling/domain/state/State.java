@@ -1,10 +1,17 @@
 package bowling.domain.state;
 
-import bowling.domain.Frame;
-import bowling.domain.Pins;
+import bowling.domain.*;
 
 public interface State {
-    void pitch(Pins existPins, Pins fallDownPins, Frame frame);
+
+    default void run(Pitch pitch, Frame frame) {
+        pitch.run();
+        FrameInfo frameInfo = frame.info();
+        frameInfo.addPitch(pitch);
+        frame.changeState();
+    }
 
     boolean progressing();
+
+    boolean retryable();
 }

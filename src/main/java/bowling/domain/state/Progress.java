@@ -1,10 +1,5 @@
 package bowling.domain.state;
 
-import bowling.domain.FinalFrame;
-import bowling.domain.Frame;
-import bowling.domain.FrameInfo;
-import bowling.domain.Pins;
-
 import java.util.Objects;
 
 public class Progress implements State {
@@ -19,43 +14,13 @@ public class Progress implements State {
     }
 
     @Override
-    public void pitch(Pins existPins, Pins fallDownPins, Frame frame) {
-        if (existPins.isStrike(fallDownPins)) {
-            checkFrame(frame);
-            return;
-        }
-        checkRetry(frame);
-    }
-
-    @Override
     public boolean progressing() {
         return true;
     }
 
-    private void checkFrame(Frame frame) {
-        if (frame instanceof FinalFrame) {
-            checkPitchNo(frame);
-            return;
-        }
-        frame.changeState(new End());
-    }
-
-    private void checkRetry(Frame frame) {
-        Progress progress = (Progress) frame.state();
-        if (progress.retry) {
-            checkPitchNo(frame);
-            return;
-        }
-        frame.changeState(new End());
-    }
-
-    private void checkPitchNo(Frame frame) {
-        FrameInfo frameInfo = frame.info();
-        if (frameInfo.isSecondPitch()) {
-            frame.changeState(new Progress());
-            return;
-        }
-        frame.changeState(new End());
+    @Override
+    public boolean retryable() {
+        return retry;
     }
 
     @Override

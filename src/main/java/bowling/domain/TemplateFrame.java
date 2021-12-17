@@ -19,22 +19,15 @@ public abstract class TemplateFrame implements Frame {
 
     @Override
     public void run(PitchNumberStrategy numberStrategy) {
-        Pitch pitch = Pitch.first();
+        Pitch pitch = Pitch.init();
         while (progressing()) {
-            int fallDownCount = numberStrategy.generate(pitch.pinsSize());
-            Pins fallDownPins = Pins.create(fallDownCount);
-            Pins existPins = pitch.run(fallDownPins);
-            frameInfo.addPitch(pitch);
-            state.pitch(existPins, fallDownPins, this);
-            pitch = pitch.next();
+            pitch = pitch.next(numberStrategy);
+            state.run(pitch, this);
         }
     }
 
-    private boolean progressing() {
+    @Override
+    public boolean progressing() {
         return state.progressing();
     }
-
-    public abstract FrameInfo info();
-    public abstract void changeState(State state);
-    public abstract State state();
 }
