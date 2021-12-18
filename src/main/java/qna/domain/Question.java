@@ -46,7 +46,7 @@ public class Question extends AbstractEntity {
         this.deleted = true;
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), writer, LocalDateTime.now()));
+        deleteHistories.add(DeleteHistory.of(ContentType.QUESTION, this.getId(), writer, LocalDateTime.now()));
         deleteHistories.addAll(deleteAnswers(loginUser));
         return deleteHistories;
     }
@@ -63,7 +63,7 @@ public class Question extends AbstractEntity {
         }
     }
 
-    private List<DeleteHistory> deleteAnswers(User loginUser) throws CannotDeleteException {
+    private List<DeleteHistory> deleteAnswers(User loginUser) {
         return answers.delete(loginUser);
     }
 

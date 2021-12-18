@@ -29,17 +29,17 @@ public class Answers {
 
     public List<DeleteHistory> delete(User loginUser) {
         return answers.stream()
-                .peek(answer -> delete(answer, loginUser))
-                .map(answer -> new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()))
+                .map(answer -> delete(answer, loginUser))
                 .collect(Collectors.toList());
     }
 
-    private void delete(Answer answer, User loginUser) {
+    private DeleteHistory delete(Answer answer, User loginUser) {
         try {
             answer.delete(loginUser);
         } catch (CannotDeleteException e) {
             e.printStackTrace();
         }
+        return DeleteHistory.of(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
     }
 
     public void add(Answer answer) {
