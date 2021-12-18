@@ -1,6 +1,9 @@
 package bowling.model.state;
 
+import bowling.model.Pins;
+
 public interface State {
-    State bowl(int knockedDownPin);
-    boolean isFinished();
+    State bowl(Pins knockedDownPin);
+    boolean isFinish();
+    String getDesc();
 }
