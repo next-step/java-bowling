@@ -28,14 +28,15 @@ public class QuestionTest {
     }
 
     @Test
-    @DisplayName("DeleteHistories 에 질문 삭제 내역 저장")
-    void save() {
+    @DisplayName("질문 삭제 -> delete 상태값 확인, 히스토리 안에 저장 유무 확인")
+    void delete() throws CannotDeleteException {
         DeleteHistories histories = new DeleteHistories();
-        Q1.saveAtDeleteHistories(histories);
-        Q2.saveAtDeleteHistories(histories);
+        Q1.delete(UserTest.JAVAJIGI, histories);
+        Q2.delete(UserTest.SANJIGI, histories);
+        assertThat(Q1.isDeleted()).isTrue();
+        assertThat(Q2.isDeleted()).isTrue();
         assertThat(histories.getHistories()).contains(new DeleteHistory(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), LocalDateTime.now()));
         assertThat(histories.getHistories()).contains(new DeleteHistory(ContentType.QUESTION, Q2.getId(), Q2.getWriter(), LocalDateTime.now()));
-        assertThat(histories.getHistories()).size().isEqualTo(2);
     }
 
 }

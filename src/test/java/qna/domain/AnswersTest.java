@@ -8,7 +8,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import qna.CannotDeleteException;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -57,18 +56,6 @@ public class AnswersTest {
                 Arguments.of(JAVAJIGI_A1, UserTest.JAVAJIGI),
                 Arguments.of(SANJIGI_A2, UserTest.SANJIGI)
         );
-    }
-
-    @Test
-    @DisplayName("DeleteHistories 에 댓글 삭제 내역 저장")
-    void saveHistory() {
-        DeleteHistories histories = new DeleteHistories();
-        Answers answers = new Answers(Arrays.asList(JAVAJIGI_A1, SANJIGI_A2));
-        answers.saveAtDeleteHistories(histories);
-
-        assertThat(histories.getHistories()).size().isEqualTo(2);
-        assertThat(histories.getHistories()).contains(new DeleteHistory(ContentType.ANSWER, JAVAJIGI_A1.getId(), JAVAJIGI_A1.getWriter(), LocalDateTime.now()));
-        assertThat(histories.getHistories()).contains(new DeleteHistory(ContentType.ANSWER, SANJIGI_A2.getId(), SANJIGI_A2.getWriter(), LocalDateTime.now()));
     }
 
 }

@@ -12,14 +12,6 @@ public class DeleteHistories {
         histories.add(deleteHistory);
     }
 
-    public void addQuestionHistory(Question question) {
-        question.saveAtDeleteHistories(this);
-    }
-
-    public void addAnswersHistory(Answers answers) {
-        answers.saveAtDeleteHistories(this);
-    }
-
     public List<DeleteHistory> getHistories() {
         return histories;
     }
