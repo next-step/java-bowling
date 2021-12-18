@@ -1,5 +1,9 @@
 package bowling.domain.state;
 
+import bowling.domain.Frame;
+import bowling.domain.FrameInfo;
+import bowling.domain.Pitch;
+
 import java.util.Objects;
 
 public class Progress implements State {
@@ -11,6 +15,14 @@ public class Progress implements State {
 
     public Progress(boolean retry) {
         this.retry = retry;
+    }
+
+    @Override
+    public void run(Pitch pitch, Frame frame) {
+        pitch.run();
+        FrameInfo frameInfo = frame.info();
+        frameInfo.addPitch(pitch);
+        frame.changeState();
     }
 
     @Override

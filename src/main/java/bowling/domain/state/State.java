@@ -4,12 +4,7 @@ import bowling.domain.*;
 
 public interface State {
 
-    default void run(Pitch pitch, Frame frame) {
-        pitch.run();
-        FrameInfo frameInfo = frame.info();
-        frameInfo.addPitch(pitch);
-        frame.changeState();
-    }
+    void run(Pitch pitch, Frame frame);
 
     boolean progressing();
 

@@ -6,9 +6,10 @@ import bowling.domain.state.Start;
 import bowling.domain.state.State;
 
 public class FinalFrame extends TemplateFrame {
+    private static final int FINAL_FRAME_NO = 9;
 
     private FinalFrame() {
-        super(FrameInfo.create(9), new Start());
+        super(FrameInfo.create(FINAL_FRAME_NO), new Start());
     }
 
     private FinalFrame(FrameInfo frameInfo) {
