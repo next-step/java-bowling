@@ -31,8 +31,8 @@ public class AnswerTest {
         assertThatThrownBy(() -> {
             A2.delete(loginUser);
         })
-        .isInstanceOf(CannotDeleteException.class)
-        .hasMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        .isInstanceOf(CannotDeleteException.class);
+        assertThat(A2.isDeleted()).isFalse();
     }
 
 }
