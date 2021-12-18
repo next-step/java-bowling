@@ -1,5 +1,7 @@
-package bowling.domain;
+package bowling.controller;
 
+import bowling.domain.Frame;
+import bowling.domain.NormalFrame;
 import bowling.strategy.PitchNumberStrategy;
 
 import java.util.ArrayList;
@@ -7,7 +9,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class BowlingGame {
-    private final List<Frame> frames = new ArrayList<>();
 
     private BowlingGame() {
     }
@@ -17,17 +18,18 @@ public class BowlingGame {
     }
 
     public List<Frame> run(PitchNumberStrategy numberStrategy) {
+        List<Frame> frames = new ArrayList<>();
         Frame frame = NormalFrame.first();
         while (progressing(frame)) {
             validateFrameCreate(frame);
-            frame = run(frame, numberStrategy);
+            frame.run(numberStrategy);
+            frames.add(frame);
+            frame = next(frame);
         }
         return Collections.unmodifiableList(frames);
     }
 
-    private Frame run(Frame frame, PitchNumberStrategy numberStrategy) {
-        frame.run(numberStrategy);
-        frames.add(frame);
+    private Frame next(Frame frame) {
         if (frame.isFinal()) {
             return frame;
         }

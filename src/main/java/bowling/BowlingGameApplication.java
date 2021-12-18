@@ -1,6 +1,6 @@
 package bowling;
 
-import bowling.domain.BowlingGame;
+import bowling.controller.BowlingGame;
 import bowling.domain.Frame;
 import bowling.domain.Player;
 import bowling.strategy.RandomPitchNumberStrategy;
