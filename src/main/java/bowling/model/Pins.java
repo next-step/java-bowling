@@ -43,8 +43,12 @@ public class Pins {
         return this.knockedDownPin == MAX_PIN_COUNT;
     }
 
-    public int getKnockedDownPin() {
-        return this.knockedDownPin;
+    public boolean isGutter() {
+        return this.knockedDownPin == MIN_PIN_COUNT;
+    }
+
+    public String count() {
+        return String.valueOf(this.knockedDownPin);
     }
 
     @Override

@@ -8,4 +8,9 @@ public class Strike extends Finished {
         if (o == null || getClass() != o.getClass()) return false;
         return true;
     }
+
+    @Override
+    public String getDesc() {
+        return "X";
+    }
 }

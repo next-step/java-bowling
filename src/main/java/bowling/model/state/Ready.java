@@ -5,11 +5,15 @@ import bowling.model.Pins;
 public class Ready extends Running {
 
     @Override
-    public State bowl(int knockedDownPin) {
-        Pins pin = Pins.knockedDown(knockedDownPin);
-        if(pin.isStrike()) {
+    public State bowl(Pins knockedDownPin) {
+        if(knockedDownPin.isStrike()) {
             return new Strike();
         }
-        return new FirstBowl(pin);
+        return new FirstBowl(knockedDownPin);
+    }
+
+    @Override
+    public String getDesc() {
+        return "";
     }
 }

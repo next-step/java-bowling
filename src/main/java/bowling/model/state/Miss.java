@@ -15,6 +15,18 @@ public class Miss extends Finished {
     }
 
     @Override
+    public String getDesc() {
+        if(isGutter()) {
+            return "-";
+        }
+        return this.secondPins.count();
+    }
+
+    private boolean isGutter() {
+        return secondPins.isGutter();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
