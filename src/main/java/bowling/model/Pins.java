@@ -1,5 +1,7 @@
 package bowling.model;
 
+import java.util.Objects;
+
 public class Pins {
 
     private static final int MAX_PIN_COUNT = 10;
@@ -43,5 +45,18 @@ public class Pins {
 
     public int getKnockedDownPin() {
         return this.knockedDownPin;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pins pins = (Pins) o;
+        return knockedDownPin == pins.knockedDownPin;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(knockedDownPin);
     }
 }
