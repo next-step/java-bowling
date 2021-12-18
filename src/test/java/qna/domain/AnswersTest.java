@@ -11,23 +11,27 @@ import qna.CannotDeleteException;
 
 class AnswersTest {
 
-    private Question q1;
+    private Question question;
+
+    public Answer a1;
     private Answer a2;
 
     @BeforeEach
     void init() {
-        q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        a2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
+        question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+
+        a1 = new Answer(UserTest.JAVAJIGI, question, "Answers Contents1");
+        a2 = new Answer(UserTest.SANJIGI, question, "Answers Contents2");
 
     }
 
     @Test
     @DisplayName("Answers가 정상적으로 삭제되는지 확인한다.")
     void deleteTest() throws CannotDeleteException, NoSuchFieldException, IllegalAccessException {
-        q1.addAnswer(AnswerTest.A1);
-        q1.addAnswer(AnswerTest.A1);
+        question.addAnswer(a1);
+        question.addAnswer(a1);
 
-        Answers answers = getAnswersByReflection(q1);
+        Answers answers = getAnswersByReflection(question);
 
         answers.delete(UserTest.JAVAJIGI);
         answers.getAnswers().forEach(answer -> assertThat(answer.isDeleted()).isTrue());
@@ -36,9 +40,9 @@ class AnswersTest {
     @Test
     @DisplayName("질문자와 삭제자가 다른경우, 예외가 발생한다.")
     void deleteExceptionTest() throws NoSuchFieldException, IllegalAccessException {
-        q1.addAnswer(a2);
+        question.addAnswer(a2);
 
-        Answers answers = getAnswersByReflection(q1);
+        Answers answers = getAnswersByReflection(question);
 
         assertThatExceptionOfType(CannotDeleteException.class)
             .isThrownBy(() -> answers.delete(UserTest.JAVAJIGI));
