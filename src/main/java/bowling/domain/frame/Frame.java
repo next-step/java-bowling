@@ -44,7 +44,14 @@ public class Frame {
     }
 
     public Frame nextOf(Bowl bowl) {
+        checkBowlIsFinished();
         return new Frame(number + NUMBER_UNIT, score.next(), bowl);
+    }
+
+    private void checkBowlIsFinished() {
+        if (bowl.canPitch()) {
+            throw new UnFinishedFrameException();
+        }
     }
 
     public boolean pitch(Pin pin) {

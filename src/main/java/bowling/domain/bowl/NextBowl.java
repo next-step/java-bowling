@@ -48,4 +48,11 @@ public class NextBowl extends ProceedingBowl {
     public List<Pin> pins() {
         return singletonList(previousPin);
     }
+
+    @Override
+    public String toString() {
+        return "NextBowl{" +
+                "previousPin=" + previousPin +
+                '}';
+    }
 }

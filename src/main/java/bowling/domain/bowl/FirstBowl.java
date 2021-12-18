@@ -26,4 +26,9 @@ public class FirstBowl extends ProceedingBowl {
     public List<Pin> pins() {
         return Collections.emptyList();
     }
+
+    @Override
+    public String toString() {
+        return "FirstBowl{}";
+    }
 }

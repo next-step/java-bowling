@@ -1,12 +1,18 @@
 package bowling.domain.frame;
 
+import bowling.domain.bowl.Bowl;
 import bowling.domain.bowl.FirstBowl;
+import bowling.domain.bowl.NextBowl;
 import bowling.domain.pin.Pin;
 import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.stream.Stream;
 
 import static bowling.domain.score.ScoreTest.score;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,6 +27,24 @@ class FrameTest {
         FirstBowl bowl = new FirstBowl();
         assertThatThrownBy(() -> new Frame(number, bowl))
                 .isInstanceOf(IllegalFrameNumberException.class);
+    }
+
+    @DisplayName("현재 프레임이 종료되지 않았는데 다음프레임을 생성하면 예외를 던진다.")
+    @ParameterizedTest(name = "[{index}] bowl: {0}")
+    @MethodSource("nextArguments")
+    void next(Bowl bowl) {
+        Frame frame = new Frame(bowl);
+        FirstBowl nextBowl = new FirstBowl();
+
+        assertThatThrownBy(() -> frame.nextOf(nextBowl))
+                .isInstanceOf(UnFinishedFrameException.class);
+    }
+
+    public static Stream<Arguments> nextArguments() {
+        return Stream.of(
+                Arguments.of(new FirstBowl()),
+                Arguments.of(new NextBowl(5))
+        );
     }
 
     @DisplayName("미스일 때 점수가 잘 더해지는지")
