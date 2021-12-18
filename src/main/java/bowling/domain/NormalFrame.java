@@ -47,7 +47,7 @@ public class NormalFrame extends TemplateFrame {
 
     @Override
     public void changeState() {
-        if (isStrike()) {
+        if (isStrike() || isSpare()) {
             changeState(new End());
             return;
         }
@@ -66,6 +66,14 @@ public class NormalFrame extends TemplateFrame {
         this.state = state;
     }
 
+    private boolean isStrike() {
+        return frameInfo.isStrike();
+    }
+
+    private boolean isSpare() {
+        return frameInfo.isSpare();
+    }
+
     @Override
     public State state() {
         return state;
@@ -74,15 +82,5 @@ public class NormalFrame extends TemplateFrame {
     @Override
     public boolean isFinal() {
         return false;
-    }
-
-    @Override
-    public boolean isStrike() {
-        return frameInfo.isStrike();
-    }
-
-    @Override
-    public boolean isSpare() {
-        return frameInfo.isSpare();
     }
 }

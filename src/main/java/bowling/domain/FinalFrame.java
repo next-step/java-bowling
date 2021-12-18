@@ -105,6 +105,14 @@ public class FinalFrame extends TemplateFrame {
         this.state = state;
     }
 
+    private boolean isStrike() {
+        return frameInfo.isStrike();
+    }
+
+    private boolean isSpare() {
+        return frameInfo.isSpare();
+    }
+
     @Override
     public State state() {
         return state;
@@ -113,16 +121,6 @@ public class FinalFrame extends TemplateFrame {
     @Override
     public boolean isFinal() {
         return true;
-    }
-
-    @Override
-    public boolean isStrike() {
-        return frameInfo.isStrike();
-    }
-
-    @Override
-    public boolean isSpare() {
-        return frameInfo.isSpare();
     }
 
     private static void validateFinalFrameNo(FrameInfo frameInfo) {

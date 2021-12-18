@@ -13,14 +13,14 @@ public class PitchResultHelper {
     //todo 상태 객체로 만들기..?
     public static String pitchResult(Pitch previousPitch, Pitch pitch) {
         if (!Objects.isNull(previousPitch) && previousPitch.isSecondStrike(pitch)
-                || pitch.isStrike()) {
+                || Objects.isNull(previousPitch) && pitch.isStrike()) {
             return STRIKE;
-        }
-        if (!Objects.isNull(previousPitch) && previousPitch.isSpare(pitch)) { // spare
-            return SPARE;
         }
         if (pitch.fallDownPinsSize() == PINS_MIN_COUNT) { // gutter
             return GUTTER;
+        }
+        if (!Objects.isNull(previousPitch) && previousPitch.isSpare(pitch)) { // spare
+            return SPARE;
         }
         return String.valueOf(pitch.fallDownPinsSize());// miss
     }

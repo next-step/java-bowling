@@ -22,9 +22,5 @@ public interface Frame {
 
     boolean isFinal();
 
-    boolean isStrike();
-
-    boolean isSpare();
-
     boolean progressing();
 }
