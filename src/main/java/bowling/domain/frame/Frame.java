@@ -44,11 +44,11 @@ public class Frame {
     }
 
     public Frame nextOf(Bowl bowl) {
-        checkBowlIsFinished();
+        checkFrameIsFinished();
         return new Frame(number + NUMBER_UNIT, score.next(), bowl);
     }
 
-    private void checkBowlIsFinished() {
+    private void checkFrameIsFinished() {
         if (bowl.canPitch()) {
             throw new UnFinishedFrameException();
         }
@@ -58,6 +58,16 @@ public class Frame {
         bowl = bowl.pitch(pin);
         score.add(bowl.score());
         return bowl.canPitch();
+    }
+
+    public void calculateScoreOfPreviousFrame(Score scoreToAdd, Frame previousFrame) {
+        Score addedScore = previousFrame.addBonusScore(scoreToAdd);
+        score.add(addedScore);
+    }
+
+    private Score addBonusScore(Score scoreToAdd) {
+        checkFrameIsFinished();
+        return score.addBonus(scoreToAdd);
     }
 
     public Bowl getBowl() {

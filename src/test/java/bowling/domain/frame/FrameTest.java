@@ -1,8 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.bowl.Bowl;
-import bowling.domain.bowl.FirstBowl;
-import bowling.domain.bowl.NextBowl;
+import bowling.domain.bowl.*;
 import bowling.domain.pin.Pin;
 import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +22,7 @@ class FrameTest {
     @ParameterizedTest(name = "[{index}] number: {0}")
     @ValueSource(ints = {-1, 0, 11})
     void create_illegalNumber(int number) {
-        FirstBowl bowl = new FirstBowl();
+        FirstBowl bowl = firstBowl();
         assertThatThrownBy(() -> new Frame(number, bowl))
                 .isInstanceOf(IllegalFrameNumberException.class);
     }
@@ -34,7 +32,7 @@ class FrameTest {
     @MethodSource("nextArguments")
     void next(Bowl bowl) {
         Frame frame = new Frame(bowl);
-        FirstBowl nextBowl = new FirstBowl();
+        FirstBowl nextBowl = firstBowl();
 
         assertThatThrownBy(() -> frame.nextOf(nextBowl))
                 .isInstanceOf(UnFinishedFrameException.class);
@@ -42,7 +40,7 @@ class FrameTest {
 
     public static Stream<Arguments> nextArguments() {
         return Stream.of(
-                Arguments.of(new FirstBowl()),
+                Arguments.of(firstBowl()),
                 Arguments.of(new NextBowl(5))
         );
     }
@@ -52,7 +50,7 @@ class FrameTest {
     void pitchMiss_addScore() {
         //given
         Score score = Score.base();
-        Frame frame = new Frame(score, new FirstBowl());
+        Frame frame = new Frame(score, firstBowl());
 
         //when
         frame.pitch(Pin.from(5));
@@ -67,13 +65,53 @@ class FrameTest {
     void pitchStrike_addScore() {
         //given
         Score score = Score.base();
-        Frame frame = new Frame(score, new FirstBowl());
+        Frame frame = new Frame(score, firstBowl());
 
         //when
         frame.pitch(Pin.from(10));
 
         //then
         assertThat(score).isEqualTo(score(10, 2));
+    }
+
+    @DisplayName("이전 프레임에 점수를 더하고 더해진 점수만큼 현재 프레임의 점수에도 반영한다.")
+    @Test
+    void calculateScoreOfPreviousFrame() {
+        //given
+        Score previousScore = Score.strike();
+        Frame previousFrame = new Frame(previousScore, new StrikeBowl());
+
+        Score currentScore = previousScore.next();
+        Frame currentFrame = new Frame(currentScore, firstBowl());
+
+        //when
+        currentFrame.calculateScoreOfPreviousFrame(score(5), previousFrame);
+
+        //then
+        assertThat(previousScore).isEqualTo(score(15, 1));
+        assertThat(currentScore).isEqualTo(score(15, 0));
+    }
+
+    @DisplayName("이전 프레임에 보너스 기회가 없다면 현재 프레임 점수는 변경이 없다.")
+    @Test
+    void calculateScoreOfPreviousFrame_previousFrameWithNoBonusChance() {
+        //given
+        Score previousScore = score(9, 0);
+        Frame previousFrame = new Frame(previousScore, new MissBowl(4, 5));
+
+        Score currentScore = previousScore.next();
+        Frame currentFrame = new Frame(currentScore, firstBowl());
+
+        //when
+        currentFrame.calculateScoreOfPreviousFrame(score(5), previousFrame);
+
+        //then
+        assertThat(previousScore).isEqualTo(score(9, 0));
+        assertThat(currentScore).isEqualTo(score(9, 0));
+    }
+
+    private static FirstBowl firstBowl() {
+        return new FirstBowl();
     }
 
 }
