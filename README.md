@@ -1,9 +1,22 @@
-# 볼링 게임 점수판
-## 진행 방법
-* 볼링 게임 점수판 요구사항을 파악한다.
-* 요구사항에 대한 구현을 완료한 후 자신의 github 아이디에 해당하는 브랜치에 Pull Request(이하 PR)를 통해 코드 리뷰 요청을 한다.
-* 코드 리뷰 피드백에 대한 개선 작업을 하고 다시 PUSH한다.
-* 모든 피드백을 완료하면 다음 단계를 도전하고 앞의 과정을 반복한다.
+## 1단계 - 질문 삭제하기 기능 리팩토링
+**- 요구사항**
+1. 단위 테스트하기 어려운 코드와 단위 테스트 가능한 코드를 분리
 
-## 온라인 코드 리뷰 과정
-* [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
+**- TODO List**
+
+1. ~~Answer~~
+   - ~~Answers 일급 컬랙션 생성~~
+   - ~~검증로직 이동~~
+   - ~~저장로직 이동~~
+2. ~~Question~~
+   - ~~검증로직 Question 메소드로 이동~~
+   - ~~저장로직 이동~~
+3. ~~DeleteHistory~~
+   - ~~DeleteHistories 일급 컬랙션 생성~~
+   - ~~삭제 히스토리에 Question 저장~~
+   - ~~삭제 히스토리에 Answers 저장~~
+
+**- 피드백**   
+
+1. History가 아닌 question에 메시지를 보내 question을 삭제하고 그에 대한 history가 생기도록 할 수 있을 것 같아요!   
+   - question, answer 객체가 삭제 메소드를 갖도록 변경하자
