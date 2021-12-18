@@ -2,6 +2,7 @@ package bowling.model.gameresult;
 
 public class GameResult {
 
+    private final static int FINAL_FRAME_NO = 10;
     private final int frameNo;
     private String stateDesc;
 
@@ -16,5 +17,9 @@ public class GameResult {
 
     public String getStatusDesc() {
         return this.stateDesc;
+    }
+
+    public boolean isFinalResult() {
+        return this.frameNo == FINAL_FRAME_NO;
     }
 }

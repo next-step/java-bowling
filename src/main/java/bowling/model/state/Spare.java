@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Spare extends Finished {
 
-    private static final String SPARE_DESC = "X";
+    private static final String SPARE_DESC = "/";
     private final Pins firstPins;
     private final Pins secondPins;
 
