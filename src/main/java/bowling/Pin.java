@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-public class Score {
+public class Pin {
 
-    private final static Map<Integer, Score> cache = new HashMap<>();
+    private final static Map<Integer, Pin> cache = new HashMap<>();
     private final static int MIN_PIN_COUNT = 0;
     private final static int MAX_PIN_COUNT = 10;
 
@@ -14,26 +14,26 @@ public class Score {
 
     static {
         IntStream.rangeClosed(MIN_PIN_COUNT, MAX_PIN_COUNT)
-            .forEach(number -> cache.put(number, new Score(number)));
+            .forEach(number -> cache.put(number, new Pin(number)));
     }
 
-    private Score(int score) {
+    private Pin(int score) {
         valid(score);
 
         this.score = score;
     }
 
-    public static Score of(int score) {
-        return cache.getOrDefault(score, new Score(score));
+    public static Pin of(int score) {
+        return cache.getOrDefault(score, new Pin(score));
     }
 
     private void valid(int score) {
         if (score < MIN_PIN_COUNT) {
-            throw new IllegalArgumentException("볼링점수는 음수가 나올 수 없어요.");
+            throw new IllegalArgumentException("Pin 갯수는 음수가 나올 수 없어요.");
         }
 
         if (score > MAX_PIN_COUNT) {
-            throw new IllegalArgumentException("볼링점수는 10점을 넘길 수 없어요.");
+            throw new IllegalArgumentException("Pin 갯수는 10개를 넘길 수 없어요.");
         }
     }
 }
