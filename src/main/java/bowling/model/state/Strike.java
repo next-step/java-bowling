@@ -2,6 +2,8 @@ package bowling.model.state;
 
 public class Strike extends Finished {
 
+    private static final String STRIKE_DESC = "X";
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -11,6 +13,6 @@ public class Strike extends Finished {
 
     @Override
     public String getDesc() {
-        return "X";
+        return STRIKE_DESC;
     }
 }

@@ -4,6 +4,8 @@ import bowling.model.Pins;
 
 public class Ready extends Running {
 
+    private static final String READY_DESC = "";
+
     @Override
     public State bowl(Pins knockedDownPin) {
         if(knockedDownPin.isStrike()) {
@@ -14,6 +16,6 @@ public class Ready extends Running {
 
     @Override
     public String getDesc() {
-        return "";
+        return READY_DESC;
     }
 }

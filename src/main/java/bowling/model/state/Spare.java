@@ -6,6 +6,7 @@ import java.util.Objects;
 
 public class Spare extends Finished {
 
+    private static final String SPARE_DESC = "X";
     private final Pins firstPins;
     private final Pins secondPins;
 
@@ -16,7 +17,7 @@ public class Spare extends Finished {
 
     @Override
     public String getDesc() {
-        return "/";
+        return SPARE_DESC;
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.util.Objects;
 
 public class Miss extends Finished {
 
+    private static final String GUTTER_DESC = "-";
     private final Pins firstPins;
     private final Pins secondPins;
 
@@ -17,7 +18,7 @@ public class Miss extends Finished {
     @Override
     public String getDesc() {
         if(isGutter()) {
-            return "-";
+            return GUTTER_DESC;
         }
         return this.secondPins.count();
     }
