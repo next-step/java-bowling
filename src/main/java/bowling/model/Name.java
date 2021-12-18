@@ -17,4 +17,8 @@ public class Name {
             throw new IllegalArgumentException("이름은 영어로 3글자여야 합니다.");
         }
     }
+
+    public String get() {
+        return this.name;
+    }
 }
