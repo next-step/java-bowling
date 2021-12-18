@@ -1,16 +1,32 @@
 package bowling;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.IntStream;
+
 public class Score {
+
+    private static final Map<Integer, Score> cache = new HashMap<>();
 
     private static final int MIN_SCORE = 0;
     private static final int MAX_SCORE = 300;
 
     private final int score;
 
-    public Score(int score) {
+
+    static {
+        IntStream.rangeClosed(MIN_SCORE, MAX_SCORE)
+            .forEach(number -> cache.put(number, new Score(number)));
+    }
+
+     private Score(int score) {
         valid(score);
 
         this.score = score;
+    }
+
+    public static Score of(int score) {
+        return cache.getOrDefault(score, new Score(score));
     }
 
     private void valid(int score) {
