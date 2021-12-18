@@ -12,13 +12,11 @@ import qna.CannotDeleteException;
 class AnswersTest {
 
     private Question q1;
-
     private Answer a2;
 
     @BeforeEach
     void init() {
         q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-
         a2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
 
     }
@@ -48,7 +46,7 @@ class AnswersTest {
 
     private Answers getAnswersByReflection(Question question)
         throws NoSuchFieldException, IllegalAccessException {
-        Field answersField = Answers.class.getDeclaredField("answers");
+        Field answersField = Question.class.getDeclaredField("answers");
         answersField.setAccessible(true);
         return (Answers) answersField.get(question);
     }
