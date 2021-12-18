@@ -1,6 +1,8 @@
 package bowling.view;
 
-import bowling.domain.*;
+import bowling.domain.Frame;
+import bowling.domain.Pitch;
+import bowling.domain.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,18 +22,17 @@ public class ResultView {
     public static void showBoard(Player player, List<Frame> frames) {
         List<String> frameResultHistories = new ArrayList<>();
         for (Frame frame : frames) {
-            FrameInfo frameInfo = frame.info();
-            showFrame(player, frameInfo, frameResultHistories);
+            showFrame(player, frame, frameResultHistories);
         }
     }
 
-    private static void showFrame(Player player, FrameInfo frameInfo, List<String> frameResultHistories) {
+    private static void showFrame(Player player, Frame frame, List<String> frameResultHistories) {
         List<String> pitchResults = new ArrayList<>();
         int pinsCount = PINS_MAX_COUNT;
         Pitch previousPitch = null;
-        for (Pitch pitch : frameInfo.pitches()) {
+        for (Pitch pitch : frame.pitches()) {
             int fallDownCount = pinsCount - pitch.pinsSize();
-            showFallDownPitch(frameInfo.no(), fallDownCount);
+            showFallDownPitch(frame.no(), fallDownCount);
             showFrameHeader();
             showPlayerName(player.name());
             showPrevResult(frameResultHistories);

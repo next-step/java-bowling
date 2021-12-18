@@ -1,7 +1,6 @@
 package bowling.domain.state;
 
 import bowling.domain.Frame;
-import bowling.domain.FrameInfo;
 import bowling.domain.Pitch;
 
 import java.util.Objects;
@@ -20,8 +19,7 @@ public class Progress implements State {
     @Override
     public void run(Pitch pitch, Frame frame) {
         pitch.run();
-        FrameInfo frameInfo = frame.info();
-        frameInfo.addPitch(pitch);
+        frame.addPitch(pitch);
         frame.changeState();
     }
 
