@@ -1,5 +1,6 @@
 package bowling;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -20,6 +21,12 @@ public class ScoresTest {
     @DisplayName("점수가 4개 이상이면 예외가 발생한다.")
     void createExceptionTest() {
         assertThatIllegalArgumentException().isThrownBy(() -> new Scores(1, 2, 3, 4));
+    }
+
+    @Test
+    @DisplayName("Score 점수 계산 테스트")
+    void sumScoreTest() {
+        assertThat(new Scores(7, 3).sumScore()).isEqualTo(10);
     }
 
 }

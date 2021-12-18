@@ -25,6 +25,12 @@ public class Scores {
         this.scores = scores;
     }
 
+    public int sumScore() {
+        return scores.stream()
+            .mapToInt(Score::getScore)
+            .sum();
+    }
+
 
     private static List<Score> toScore(int[] number) {
         return Arrays.stream(number)
