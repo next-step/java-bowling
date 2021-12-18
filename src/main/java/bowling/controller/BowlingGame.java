@@ -1,46 +1,52 @@
 package bowling.controller;
 
-import bowling.domain.Frame;
-import bowling.domain.NormalFrame;
+import bowling.domain.GameInfo;
+import bowling.domain.Player;
 import bowling.strategy.PitchNumberStrategy;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class BowlingGame {
+    private static final int FIRST_INDEX = 0;
 
-    private BowlingGame() {
+    private final List<GameInfo> gameInfos;
+    private final int index;
+
+    private BowlingGame(String name) {
+        this(Stream.of(name)
+                .map(Player::from)
+                .map(GameInfo::of)
+                .collect(Collectors.toList()), FIRST_INDEX);
     }
 
-    public static BowlingGame init() {
-        return new BowlingGame();
+    private BowlingGame(List<GameInfo> gameInfos, int index) {
+        this.gameInfos = gameInfos;
+        this.index = index;
     }
 
-    public List<Frame> run(PitchNumberStrategy numberStrategy) {
-        List<Frame> frames = new ArrayList<>();
-        Frame frame = NormalFrame.first();
-        while (progressing(frame)) {
-            validateFrameCreate(frame);
-            frame.run(numberStrategy);
-            frames.add(frame);
-            frame = next(frame);
+    public static BowlingGame create(String name) {
+        return new BowlingGame(name);
+    }
+
+    public GameInfo run(PitchNumberStrategy numberStrategy) {
+        GameInfo gameInfo = currentGameInfo();
+        while (!isGameEnd()) {
+            gameInfo.run(numberStrategy);
         }
-        return Collections.unmodifiableList(frames);
+        return gameInfo;
     }
 
-    private Frame next(Frame frame) {
-        if (frame.isFinal()) {
-            return frame;
-        }
-        return frame.next();
+    private boolean isGameEnd() {
+        return gameInfos.stream().allMatch(GameInfo::isGameEnd);
     }
 
-    private boolean progressing(Frame frame) {
-        return frame.progressing();
+    private GameInfo currentGameInfo() {
+        return gameInfos.get(currentGameIndex());
     }
 
-    private void validateFrameCreate(Frame frame) {
-        assert frame != null;
+    private int currentGameIndex() {
+        return index;
     }
 }

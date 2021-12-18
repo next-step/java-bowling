@@ -22,5 +22,5 @@ public interface Frame {
 
     boolean isFinal();
 
-    boolean progressing();
+    boolean isEnd();
 }
