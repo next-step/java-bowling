@@ -11,11 +11,11 @@ public class BowlingGameApp {
         ResultView.printResults(name,gameResults);
         BowlingGame game = new BowlingGame(name);
         while(game.canPlay()){
-            gameResults.addStateDesc(game.play());
+            gameResults.set(game.play());
             ResultView.printResults(name,gameResults);
         }
         if(game.bonusGame()) {
-            gameResults.addStateDesc(game.play());
+            gameResults.set(game.play());
             ResultView.printResults(name,gameResults);
         }
     }

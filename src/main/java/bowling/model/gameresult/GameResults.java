@@ -22,7 +22,7 @@ public class GameResults {
         }
     }
 
-    public void addStateDesc(GameResult gameResult) {
+    public void set(GameResult gameResult) {
         this.gameResults.set(gameResult.getFrameNo() - 1, gameResult);
     }
 

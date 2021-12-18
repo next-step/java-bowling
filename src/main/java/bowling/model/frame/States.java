@@ -1,5 +1,6 @@
 package bowling.model.frame;
 
+import bowling.model.state.Ready;
 import bowling.model.state.Spare;
 import bowling.model.state.State;
 import bowling.model.state.Strike;
@@ -39,7 +40,7 @@ public class States {
 
     public String getDesc() {
         return this.states.stream()
-                    .filter(state -> !state.getDesc().isEmpty())
+                    .filter(state -> !(state instanceof Ready))
                     .map(State::getDesc)
                     .collect(Collectors.joining("|"));
     }
