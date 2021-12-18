@@ -1,6 +1,7 @@
 package qna.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +30,10 @@ public class Answers {
 
     public void add(Answer answer) {
         this.answers.add(answer);
+    }
+
+    public void addAll(Answer... answers) {
+        this.answers.addAll(Arrays.asList(answers));
     }
 
     public List<Answer> getAnswers() {
