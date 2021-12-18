@@ -1,5 +1,7 @@
 package bowling.domain.pin;
 
+import bowling.domain.score.Score;
+
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -57,6 +59,10 @@ public class Pin {
 
     public boolean isNoneHit() {
         return hitCount == MIN_HIT_COUNT;
+    }
+
+    public Score toScore() {
+        return new Score(hitCount);
     }
 
     public int getHitCount() {
