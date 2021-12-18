@@ -13,12 +13,16 @@ public class FirstBowl extends Running {
     }
 
     @Override
-    public State bowl(int knockedDownPin) {
-        Pins secondPins = Pins.knockedDown(knockedDownPin);
-        if(secondPins.isSpare(this.firstPins)) {
-            return new Spare(this.firstPins, secondPins);
+    public State bowl(Pins knockedDownPin) {
+        if(knockedDownPin.isSpare(this.firstPins)) {
+            return new Spare(this.firstPins, knockedDownPin);
         }
-        return new Miss(this.firstPins, secondPins);
+        return new Miss(this.firstPins, knockedDownPin);
+    }
+
+    @Override
+    public String getDesc() {
+        return firstPins.count();
     }
 
     @Override
