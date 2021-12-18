@@ -1,10 +1,5 @@
 package bowling.model.state;
 
-import bowling.model.state.Ready;
-import bowling.model.state.Spare;
-import bowling.model.state.State;
-import bowling.model.state.Strike;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
