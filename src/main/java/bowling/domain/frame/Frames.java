@@ -35,26 +35,29 @@ public class Frames {
      * @return 더 투구할 수 있는지
      */
     public boolean pitch(Pin pin) {
-        Frame currentFrame = currentFrame();
-        if (currentFrame.pitch(pin)) {
+        if (currentFrame().pitch(pin)) {
             return true;
         }
         if (frames.size() == Frame.MAX_FRAME_NUMBER) {
             return false;
         }
-        frames.add(createNextFrame(currentFrame));
-        return true;
+        return frames.add(createNextFrame());
     }
 
     private Frame currentFrame() {
         return frames.get(frames.size() - INDEX_UNIT);
     }
 
-    private Frame createNextFrame(Frame currentFrame) {
-        if (frames.size() < Frame.MAX_FRAME_NUMBER - INDEX_UNIT) {
+    private Frame createNextFrame() {
+        Frame currentFrame = currentFrame();
+        if (isNormalFrameOrder()) {
             return currentFrame.nextOf(new FirstBowl());
         }
         return currentFrame.nextOf(new FinalBowl());
+    }
+
+    private boolean isNormalFrameOrder() {
+        return frames.size() < Frame.MAX_FRAME_NUMBER - INDEX_UNIT;
     }
 
     public int numberOfFrame() {

@@ -32,7 +32,7 @@ public class FinalBowl implements Bowl {
     public Bowl pitch(Pin pin) {
         checkCanAddPin();
 
-        if (!isStrike(pin) && !isSpare(pin)) {
+        if (isRegularPitch(pin)) {
             leftChance--;
         }
         pins.add(pin);
@@ -48,6 +48,10 @@ public class FinalBowl implements Bowl {
     @Override
     public boolean canPitch() {
         return leftChance > NONE_LEFT_CHANCE;
+    }
+
+    private boolean isRegularPitch(Pin pin) {
+        return !isStrike(pin) && !isSpare(pin);
     }
 
     private boolean isStrike(Pin pin) {
@@ -70,12 +74,12 @@ public class FinalBowl implements Bowl {
 
     @Override
     public Score score() {
-        checkPinIsNotEmpty();
+        checkPinIsExists();
         Pin lastPin = pins.get(pins.size() - INDEX_UNIT);
         return lastPin.toScore();
     }
 
-    private void checkPinIsNotEmpty() {
+    private void checkPinIsExists() {
         if (pins.isEmpty()) {
             throw new CanNotCalculateException();
         }
