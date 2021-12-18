@@ -3,6 +3,7 @@ package bowling.model.frame;
 import bowling.model.Pins;
 import bowling.model.state.Ready;
 import bowling.model.state.State;
+import bowling.model.state.States;
 
 public class NormalFrame extends Frame {
 

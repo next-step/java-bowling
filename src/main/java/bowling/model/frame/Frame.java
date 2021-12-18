@@ -1,5 +1,7 @@
 package bowling.model.frame;
 
+import bowling.model.state.States;
+
 public abstract class Frame {
     protected int frameNo;
     protected States states;

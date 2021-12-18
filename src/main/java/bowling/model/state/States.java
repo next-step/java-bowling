@@ -1,4 +1,4 @@
-package bowling.model.frame;
+package bowling.model.state;
 
 import bowling.model.state.Ready;
 import bowling.model.state.Spare;
