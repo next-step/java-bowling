@@ -26,6 +26,12 @@ class PinsTest {
         assertTrue(Pins.knockedDown(10).isStrike());
     }
 
+    @Test
+    @DisplayName("투구가 0이면 거터")
+    void isGutterTest(){
+        assertTrue(Pins.knockedDown(0).isGutter());
+    }
+
     @ParameterizedTest
     @CsvSource(value = {"2,8,true","3,7,true", "1,5,false"})
     @DisplayName("두번째 투구에서 10개를 쓰러트리면 스페어 테스트")
