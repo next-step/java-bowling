@@ -18,7 +18,6 @@ public enum PinView {
     NINE(Pin.from(9), "9"),
     STRIKE(Pin.from(10), "X");
 
-
     private final Pin pin;
     private final String desc;
 

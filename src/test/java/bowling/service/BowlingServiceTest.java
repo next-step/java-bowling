@@ -2,6 +2,7 @@ package bowling.service;
 
 import bowling.domain.frame.Pin;
 import bowling.domain.game.BowlingGame;
+import bowling.domain.state.Strike;
 import bowling.domain.user.UserTest;
 import bowling.service.dto.BoardDto;
 import bowling.service.dto.FrameResultDto;
@@ -28,6 +29,6 @@ class BowlingServiceTest {
     void bowlTest() {
         BoardDto boardDto = bowlingService.bowl(Pin.TEN);
         List<FrameResultDto> frameResultDtos = boardDto.getGameResultDto().getFrameResultsDto().getFrameResultDtos();
-        assertThat(frameResultDtos.get(0).getPins()).isEqualTo(Arrays.asList(Pin.TEN));
+        assertThat(frameResultDtos.get(0).getStates()).isEqualTo(Arrays.asList(new Strike()));
     }
 }

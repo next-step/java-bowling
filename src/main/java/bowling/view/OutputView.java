@@ -1,9 +1,9 @@
 package bowling.view;
 
-import bowling.domain.frame.Pin;
+import bowling.domain.state.State;
 import bowling.service.dto.BoardDto;
 import bowling.service.dto.FrameResultDto;
-import bowling.view.enums.PinView;
+import bowling.view.enums.StateView;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -60,8 +60,8 @@ public class OutputView {
         List<FrameResultDto> frameResultDtos = boardDto.getGameResultDto().getFrameResultsDto().getFrameResultDtos();
         List<String> frameViewResults = frameResultDtos
                 .stream()
-                .map(FrameResultDto::getPins)
-                .map(this::pinsToViewFormat)
+                .map(FrameResultDto::getStates)
+                .map(this::statesToViewFormat)
                 .collect(Collectors.toList());
         return frameViewResults;
     }
@@ -74,11 +74,12 @@ public class OutputView {
         return EMPTY_FRAME_RESULT_STRING;
     }
 
-    private String pinsToViewFormat(List<Pin> pins) {
-        return pins.stream()
-                .map(PinView::valueOf)
-                .map(PinView::getDescription)
-                .collect(Collectors.joining("|"));
+    private String statesToViewFormat(List<State> states) {
+        return states.stream()
+                .map(state -> {
+                    StateView stateView = StateView.valueOf(state);
+                    return stateView.convert(state);
+                }).collect(Collectors.joining("|"));
 
     }
 
