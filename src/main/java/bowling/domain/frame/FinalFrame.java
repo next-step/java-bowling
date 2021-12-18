@@ -9,14 +9,12 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
     private static final int DEFAULT_LEFT = 3;
     private static final int END_LEFT = 0;
     private static final int MISS_STATE_LEFT = 0;
     private static final int CALCULATE_LEFT_DEFAULT = 1;
-
     private LinkedList<State> states;
     private int left;
 
@@ -82,9 +80,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public FrameResult createResult() {
-        return states.stream()
-                .map(State::viewString)
-                .collect(Collectors.collectingAndThen(Collectors.joining("|"), FrameResult::new));
+        return FrameResult.ofFinalFrame(states, score());
     }
 
     @Override
@@ -95,6 +91,34 @@ public class FinalFrame implements Frame {
     @Override
     public Frame next() {
         return null;
+    }
+
+    @Override
+    public Score score() {
+        if (isFinished()) {
+            return createScore();
+        }
+        return Score.noScore();
+    }
+
+    private Score createScore() {
+        Score score = states.getFirst().score();
+        for (int i = 1; i < states.size(); i++) {
+            State state = states.get(i);
+            score = state.calculateAdditionalScore(score);
+        }
+        return score;
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        for (State state : states) {
+            score = state.calculateAdditionalScore(score);
+            if (score.canCalculateScore()) {
+                return score;
+            }
+        }
+        return Score.noScore();
     }
 
     @Override

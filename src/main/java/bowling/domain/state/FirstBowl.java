@@ -1,7 +1,10 @@
 package bowling.domain.state;
 
 import bowling.domain.frame.Pin;
+import bowling.domain.frame.Score;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class FirstBowl extends Running {
@@ -22,8 +25,13 @@ public class FirstBowl extends Running {
     }
 
     @Override
-    public String viewString() {
-        return firstPin.viewString();
+    public Score calculateAdditionalScore(Score beforeScore) {
+        return beforeScore.addScoreByPin(firstPin);
+    }
+
+    @Override
+    public List<Pin> pins() {
+        return Arrays.asList(firstPin);
     }
 
     @Override

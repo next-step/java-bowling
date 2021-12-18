@@ -1,8 +1,11 @@
 package bowling.domain.state;
 
 import bowling.domain.frame.Pin;
+import bowling.domain.frame.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -29,9 +32,26 @@ class SpareTest {
         assertThatIllegalArgumentException().isThrownBy(() -> new Spare(Pin.from(5), Pin.from(4)));
     }
 
-    @DisplayName("Spare viewString()은 첫번쨰핀|/ 반환한다.")
+    @DisplayName("score()은 Pin의 갯수의 합과 시도횟수 1번을 반환한다..")
     @Test
-    void viewStringTest() {
-        assertThat(new Spare(Pin.from(5), Pin.from(5)).viewString()).isEqualTo("5|/");
+    void scoreTest() {
+        assertThat(new Spare(Pin.from(5), Pin.from(5)).score()).isEqualTo(Score.of(10, 1));
+    }
+
+    @DisplayName("calculateAdditionalScore() left에 따라 스코어를 반환한다.")
+    @Test
+    void calculateAdditionalScoreTest() {
+        assertThat(new Spare(Pin.from(4), Pin.from(6)).calculateAdditionalScore(Score.of(5, 2)))
+                .isEqualTo(Score.of(15, 0));
+        assertThat(new Spare(Pin.from(4), Pin.from(6)).calculateAdditionalScore(Score.of(5, 1)))
+                .isEqualTo(Score.of(9, 0));
+    }
+
+    @DisplayName("pins() 는 pin값을 담은 리스트를 반환한다.")
+    @Test
+    void pinsTest() {
+        assertThat(new Spare(Pin.from(4), Pin.from(6)).pins()).isEqualTo(
+                Arrays.asList(Pin.from(4), Pin.from(6))
+        );
     }
 }

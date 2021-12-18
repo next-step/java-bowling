@@ -5,11 +5,7 @@ import java.util.Objects;
 public class Pin {
 
     private static final String NO_RANGE_EXCEPTION_MESSAGE_FORMAT = "핀의 갯수는 %d ~ %d 사이여야 합니다.";
-    private static final String GUTTER_STRING = "-";
-    private static final String STRIKE_STRING = "X";
-    private static final int GUTTER_PIN_COUNT = 0;
-    private static final int STRIKE_PIN_COUNT = 10;
-    private static final Pin[] zeroThroughTen = {
+    private static final Pin[] ZERO_THROUGH_TEN = {
             new Pin(0),
             new Pin(1),
             new Pin(2),
@@ -25,7 +21,7 @@ public class Pin {
 
     private static final int MIN = 0;
     private static final int MAX = 10;
-    public static final Pin TEN = zeroThroughTen[MAX];
+    public static final Pin TEN = ZERO_THROUGH_TEN[MAX];
 
     private final int falledPins;
 
@@ -33,16 +29,15 @@ public class Pin {
         this.falledPins = falledPins;
     }
 
-    //TODO 예외 검증 메서드가 예외를 발생시킨다는걸 유추할 수 없는 네이밍이라 좀 더 나은 이름을 생각해보시는것도.
-    private static void validCount(int falledPins) {
+    private static void validateCountWithRange(int falledPins) {
         if (falledPins < MIN || falledPins > MAX) {
             throw new IllegalArgumentException(String.format(NO_RANGE_EXCEPTION_MESSAGE_FORMAT, MIN, MAX));
         }
     }
 
     public static Pin from(int falledPins) {
-        validCount(falledPins);
-        return zeroThroughTen[falledPins];
+        validateCountWithRange(falledPins);
+        return ZERO_THROUGH_TEN[falledPins];
     }
 
     public Pin add(Pin other) {
@@ -53,16 +48,8 @@ public class Pin {
         return this.falledPins == MAX;
     }
 
-    public String viewString() {
-        if (falledPins == GUTTER_PIN_COUNT) {
-            return GUTTER_STRING;
-        }
-
-        if (falledPins == STRIKE_PIN_COUNT) {
-            return STRIKE_STRING;
-        }
-
-        return String.valueOf(falledPins);
+    public int getFalledPins() {
+        return falledPins;
     }
 
     @Override

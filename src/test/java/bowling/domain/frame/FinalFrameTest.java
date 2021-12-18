@@ -220,18 +220,106 @@ class FinalFrameTest {
     @DisplayName("createResult() 정상 생성 테스트")
     @Test
     void finishFrameViewStringTest() {
-        assertThat(spareAndBowl.createResult()).isEqualTo(new FrameResult("5|/|5"));
-        assertThat(spareAndStrike.createResult()).isEqualTo(new FrameResult("5|/|X"));
-        assertThat(twoStrikeAndBowl.createResult()).isEqualTo(new FrameResult("X|X|5"));
-        assertThat(threeStrike.createResult()).isEqualTo(new FrameResult("X|X|X"));
-        assertThat(miss.createResult()).isEqualTo(new FrameResult("5|3"));
-        assertThat(oneStrikeAndMiss.createResult()).isEqualTo(new FrameResult("X|5|3"));
-        assertThat(oneStrikeAndSpare.createResult()).isEqualTo(new FrameResult("X|5|/"));
-        assertThat(oneStrike.createResult()).isEqualTo(new FrameResult("X"));
-        assertThat(twoStrike.createResult()).isEqualTo(new FrameResult("X|X"));
-        assertThat(spare.createResult()).isEqualTo(new FrameResult("5|/"));
-        assertThat(first.createResult()).isEqualTo(new FrameResult("5"));
+        assertThat(spareAndBowl.createResult()).isEqualTo(
+                FrameResult.ofFinalFrame(Arrays.asList(
+                        new Spare(Pin.from(5), Pin.from(5)), new FirstBowl(Pin.from(5))
+                        ), Score.of(15, 0)
+                )
+        );
+        assertThat(spareAndStrike.createResult()).isEqualTo(
+                FrameResult.ofFinalFrame(Arrays.asList(
+                        new Spare(Pin.from(5), Pin.from(5)), new Strike()
+                ), Score.of(20, 0))
+        );
+        assertThat(twoStrikeAndBowl.createResult()).isEqualTo(
+                FrameResult.ofFinalFrame(Arrays.asList(
+                        new Strike(), new Strike(), new FirstBowl(Pin.from(5))
+                ), Score.of(25, 0)));
+        assertThat(threeStrike.createResult()).isEqualTo(
+                FrameResult.ofFinalFrame(Arrays.asList(
+                        new Strike(), new Strike(), new Strike()
+                ), Score.of(30, 0)));
+        assertThat(miss.createResult()).isEqualTo(
+                FrameResult.ofFinalFrame(Arrays.asList(
+                        new Miss(Pin.from(5), Pin.from(3))
+                ), Score.of(8, 0)));
+        assertThat(oneStrikeAndMiss.createResult()).isEqualTo(
+                FrameResult.ofFinalFrame(Arrays.asList(
+                        new Strike(), new Miss(Pin.from(5), Pin.from(3))
+                ), Score.of(18, 0)));
+        assertThat(oneStrikeAndSpare.createResult()).isEqualTo(
+                FrameResult.ofFinalFrame(Arrays.asList(
+                        new Strike(), new Spare(Pin.from(5), Pin.from(5))
+                ), Score.of(20, 0)));
+        assertThat(oneStrike.createResult()).isEqualTo(
+                FrameResult.ofFinalFrame(Arrays.asList(
+                        new Strike()
+                ), Score.of(-1, 0)));
+        assertThat(twoStrike.createResult()).isEqualTo(
+                FrameResult.ofFinalFrame(Arrays.asList(
+                        new Strike(), new Strike()
+                ), Score.of(-1, 0)));
+        assertThat(spare.createResult()).isEqualTo(
+                FrameResult.ofFinalFrame(Arrays.asList(
+                        new Spare(Pin.from(5), Pin.from(5))
+                ), Score.of(-1, 0)));
+        assertThat(first.createResult()).isEqualTo(
+                FrameResult.ofFinalFrame(Arrays.asList(
+                        new FirstBowl(Pin.from(5))
+                ), Score.of(-1, 0)));
     }
+
+    @DisplayName("score() 정상 생성 테스트")
+    @Test
+    void scoreTest() {
+        assertThat(spareAndBowl.score()).isEqualTo(Score.of(15, 0));
+        assertThat(spareAndStrike.score()).isEqualTo(Score.of(20, 0));
+        assertThat(twoStrikeAndBowl.score()).isEqualTo(Score.of(25, 0));
+        assertThat(threeStrike.score()).isEqualTo(Score.of(30, 0));
+        assertThat(miss.score()).isEqualTo(Score.of(8, 0));
+        assertThat(oneStrikeAndMiss.score()).isEqualTo(Score.of(18, 0));
+        assertThat(oneStrikeAndSpare.score()).isEqualTo(Score.of(20, 0));
+        assertThat(oneStrike.score()).isEqualTo(Score.noScore());
+        assertThat(twoStrike.score()).isEqualTo(Score.noScore());
+        assertThat(spare.score()).isEqualTo(Score.noScore());
+        assertThat(first.score()).isEqualTo(Score.noScore());
+    }
+
+    @DisplayName("calculateAdditionalScore()은 이전 프레임이 strike이면 두번 점수를 더해서 반환한다.")
+    @Test
+    void strikeAddTest() {
+        NormalFrame frame = NormalFrame.readyFrame(Round.from(9));
+
+        Frame finalFrame = frame.bowl(Pin.TEN);
+        finalFrame.bowl(Pin.from(5));
+        assertThat(frame.score()).isEqualTo(Score.noScore());
+        finalFrame.bowl(Pin.from(5));
+        assertThat(frame.score()).isEqualTo(Score.of(20, 0));
+    }
+
+    @DisplayName("calculateAdditionalScore()은 이전 프레임이 spare이면 한번 점수를 더해서 반환한다.")
+    @Test
+    void spareCalculateAdditionalScoreTest() {
+        NormalFrame frame = NormalFrame.readyFrame(Round.from(9));
+
+        Frame finalFrame = frame.bowl(Pin.from(5)).bowl(Pin.from(5));
+        finalFrame.bowl(Pin.from(5));
+        finalFrame.bowl(Pin.from(5));
+        finalFrame.bowl(Pin.from(5));
+        assertThat(frame.score()).isEqualTo(Score.of(15, 0));
+    }
+
+    @DisplayName("calculateAdditionalScore()은 이전 프레임이 strike이면 두번 점수를 더해서 반환한다.")
+    @Test
+    void strikeCalculateAdditionalScoreTest() {
+        NormalFrame frame = NormalFrame.readyFrame(Round.from(9));
+
+        Frame finalFrame = frame.bowl(Pin.from(10));
+        finalFrame.bowl(Pin.from(5));
+        finalFrame.bowl(Pin.from(5));
+        assertThat(frame.score()).isEqualTo(Score.of(20, 0));
+    }
+
 
     @DisplayName("next() 마지막 프레임은 null을 반환한다.")
     @Test

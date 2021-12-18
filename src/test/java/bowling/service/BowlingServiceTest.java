@@ -1,13 +1,16 @@
 package bowling.service;
 
-import bowling.domain.Board;
 import bowling.domain.frame.Pin;
 import bowling.domain.game.BowlingGame;
-import bowling.domain.result.GameResultTest;
 import bowling.domain.user.UserTest;
+import bowling.service.dto.BoardDto;
+import bowling.service.dto.FrameResultDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,10 +23,11 @@ class BowlingServiceTest {
         bowlingService = new BowlingService(BowlingGame.readyGame(UserTest.MIZ));
     }
 
-    @DisplayName("bowl 호출 시 Board 객체를 반환한다.")
+    @DisplayName("bowl 호출 시 BoardDto 객체를 반환한다.")
     @Test
     void bowlTest() {
-        assertThat(bowlingService.bowl(Pin.TEN))
-                .isEqualTo(new Board(GameResultTest.MIZ_STRIKE));
+        BoardDto boardDto = bowlingService.bowl(Pin.TEN);
+        List<FrameResultDto> frameResultDtos = boardDto.getGameResultDto().getFrameResultsDto().getFrameResultDtos();
+        assertThat(frameResultDtos.get(0).getPins()).isEqualTo(Arrays.asList(Pin.TEN));
     }
 }

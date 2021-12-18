@@ -1,9 +1,11 @@
 package bowling.domain.frame;
 
 import bowling.domain.result.FrameResult;
+import bowling.domain.result.FrameResultTest;
 import bowling.domain.result.FrameResults;
 import bowling.domain.state.FirstBowl;
 import bowling.domain.state.Ready;
+import bowling.domain.state.Spare;
 import bowling.domain.state.Strike;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -59,11 +61,22 @@ class FramesTest {
     @Test
     void createResultsTest() {
         ready.bowl(Pin.TEN).bowl(Pin.from(5));
-
-        FrameResults expect = new FrameResults(Arrays.asList(new FrameResult("X"), new FrameResult("5")));
+        FrameResults expect = new FrameResults(Arrays.asList(FrameResultTest.STRIKE_RESULT, FrameResultTest.FIVE_POINT_RESULT));
         assertThat(ready.createResults()).isEqualTo(expect);
-
     }
+
+    @DisplayName("createResults() Frame들의 결과를 FrameResults로 Score() 정상 생성 테스트.")
+    @Test
+    void createResultsWithScoreTest() {
+        ready.bowl(Pin.TEN).bowl(Pin.from(5)).bowl(Pin.from(5));
+        FrameResults expect = new FrameResults(Arrays.asList(
+                FrameResult.ofNormalFrame(new Strike(), Score.of(20, 0)),
+                FrameResult.ofNormalFrame(new Spare(Pin.from(5), Pin.from(5)), Score.of(-1, 0)),
+                FrameResult.ofNormalFrame(Ready.getInstance(), Score.of(-1, 0))
+        ));
+        assertThat(ready.createResults()).isEqualTo(expect);
+    }
+
 
     @DisplayName("round() 현재 라운드를 반환한다.")
     @Test

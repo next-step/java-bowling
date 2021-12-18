@@ -42,7 +42,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public FrameResult createResult() {
-        return new FrameResult(state.viewString());
+        return FrameResult.ofNormalFrame(state, score());
     }
 
     @Override
@@ -67,6 +67,31 @@ public class NormalFrame implements Frame {
             return this.next;
         }
         return this;
+    }
+
+    @Override
+    public Score score() {
+        Score score = state.score();
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        return calculateScoreNextFrame(score);
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score beforeScore) {
+        Score score = state.calculateAdditionalScore(beforeScore);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        return calculateScoreNextFrame(score);
+    }
+
+    private Score calculateScoreNextFrame(Score score) {
+        if (next == null) {
+            return Score.noScore();
+        }
+        return next.calculateAdditionalScore(score);
     }
 
     @Override

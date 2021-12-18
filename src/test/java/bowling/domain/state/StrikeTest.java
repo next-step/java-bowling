@@ -1,16 +1,33 @@
 package bowling.domain.state;
 
+import bowling.domain.frame.Pin;
+import bowling.domain.frame.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class StrikeTest {
-
-    @DisplayName("Strike viewString()은 X를 반환한다.")
+    @DisplayName("score()은 Pin의 갯수의 합과 시도횟수 2번을 반환한다..")
     @Test
-    void viewStringTest() {
-        assertThat(new Strike().viewString()).isEqualTo("X");
+    void scoreTest() {
+        assertThat(new Strike().score()).isEqualTo(Score.of(10, 2));
     }
 
+    @DisplayName("calculateAdditionalScore() 10점을 더해서 반환한다.")
+    @Test
+    void calculateAdditionalScoreTest() {
+        assertThat(new Strike().calculateAdditionalScore(Score.of(5, 1)))
+                .isEqualTo(Score.of(15, 0));
+    }
+
+    @DisplayName("pins() 는 pin값을 담은 리스트를 반환한다.")
+    @Test
+    void pinsTest() {
+        assertThat(new Strike().pins()).isEqualTo(
+                Arrays.asList(Pin.from(10))
+        );
+    }
 }

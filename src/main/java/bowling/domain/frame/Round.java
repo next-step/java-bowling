@@ -11,7 +11,7 @@ public class Round {
     private static final int NEXT_ROUND_VALUE = 1;
     private static final int CALC_INT_TO_ROUND_ARRAY = 1;
     private static final String NO_RANGE_EXCEPTION_MESSAGE_FORMAT = "Round는 %d ~ %d 만 존재합니다.";
-    private static final Round[] oneThroughTen = {
+    private static final Round[] ONE_THROUGH_TEN = {
             new Round(1),
             new Round(2),
             new Round(3),
@@ -23,8 +23,8 @@ public class Round {
             new Round(9),
             new Round(10)
     };
-    public static final Round FIRST = oneThroughTen[0];
-    public static final Round LAST = oneThroughTen[9];
+    public static final Round FIRST = ONE_THROUGH_TEN[0];
+    public static final Round LAST = ONE_THROUGH_TEN[9];
 
     private final int value;
 
@@ -34,7 +34,7 @@ public class Round {
 
     public static Round from(int value) {
         validRound(value);
-        return oneThroughTen[value - CALC_INT_TO_ROUND_ARRAY];
+        return ONE_THROUGH_TEN[value - CALC_INT_TO_ROUND_ARRAY];
     }
 
     private static void validRound(int value) {
@@ -44,7 +44,7 @@ public class Round {
     }
 
     public static List<Round> allRounds() {
-        return Arrays.asList(oneThroughTen);
+        return Arrays.asList(ONE_THROUGH_TEN);
     }
 
     public Round nextRound() {

@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ReadyTest {
@@ -25,10 +27,11 @@ class ReadyTest {
         assertThat(ready.bowl(Pin.from(10))).isEqualTo(new Strike());
     }
 
-    @DisplayName("viewString()은 ''를 반환한다.")
+    @DisplayName("pins() 는 빈 리스트를 반환한다.")
     @Test
-    void viewStringTest() {
-        assertThat(Ready.getInstance().viewString()).isEqualTo("");
+    void pinsTest() {
+        assertThat(Ready.getInstance().pins()).isEqualTo(
+                Arrays.asList()
+        );
     }
-
 }

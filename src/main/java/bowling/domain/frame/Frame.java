@@ -18,4 +18,8 @@ public interface Frame {
     boolean hasNext();
 
     Frame next();
+
+    Score score();
+
+    Score calculateAdditionalScore(Score beforeScore);
 }

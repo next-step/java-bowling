@@ -4,6 +4,7 @@ import bowling.domain.Board;
 import bowling.domain.frame.Pin;
 import bowling.domain.frame.Round;
 import bowling.domain.game.BowlingGame;
+import bowling.service.dto.BoardDto;
 
 public class BowlingService {
     private BowlingGame bowlingGame;
@@ -12,8 +13,9 @@ public class BowlingService {
         this.bowlingGame = bowlingGame;
     }
 
-    public Board bowl(Pin pin) {
-        return new Board(bowlingGame.bowl(pin));
+    public BoardDto bowl(Pin pin) {
+        Board board = new Board(bowlingGame.bowl(pin));
+        return BoardDto.of(board);
     }
 
     public boolean isGameEnd() {

@@ -1,8 +1,8 @@
 package bowling.domain.result;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public class FrameResults {
     private final List<FrameResult> values;
@@ -11,12 +11,8 @@ public class FrameResults {
         this.values = values;
     }
 
-    public Optional<String> findViewStringWithIndex(int index) {
-        if (0 <= index && index < values.size()) {
-            return Optional.of(values.get(index).getViewString());
-        }
-
-        return Optional.empty();
+    public List<FrameResult> getValues() {
+        return Collections.unmodifiableList(values);
     }
 
     @Override
