@@ -11,7 +11,15 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class ScoreTest {
+public class ScoreTest {
+
+    public static Score score(int score) {
+        return new Score(score);
+    }
+
+    public static Score score(int score, int bonusChance) {
+        return new Score(score, bonusChance);
+    }
 
     @DisplayName("점수가 음수라면 예외를 던진다.")
     @Test
@@ -82,7 +90,7 @@ class ScoreTest {
                 Arguments.of(score(10, 2), score(10), score(10))
         );
     }
-    
+
     @DisplayName("보너스기회가 남았는데 점수를 구하면 예외를 던진다.")
     @Test
     void score_remainingBonusChance_throwsException() {
@@ -98,14 +106,6 @@ class ScoreTest {
     void next() {
         Score nextScore = score(100, 1).next();
         assertThat(nextScore).isEqualTo(score(100));
-    }
-
-    private static Score score(int score) {
-        return new Score(score);
-    }
-
-    private static Score score(int score, int bonusChance) {
-        return new Score(score, bonusChance);
     }
 
 }
