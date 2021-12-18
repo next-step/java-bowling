@@ -15,4 +15,8 @@
    - ~~DeleteHistories 일급 컬랙션 생성~~
    - ~~삭제 히스토리에 Question 저장~~
    - ~~삭제 히스토리에 Answers 저장~~
-      
+
+**- 피드백**   
+
+1. History가 아닌 question에 메시지를 보내 question을 삭제하고 그에 대한 history가 생기도록 할 수 있을 것 같아요!   
+   - question, answer 객체가 삭제 메소드를 갖도록 변경하자
