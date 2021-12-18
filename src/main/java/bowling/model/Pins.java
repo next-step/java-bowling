@@ -35,10 +35,6 @@ public class Pins {
         return new Pins(knockedDownPin);
     }
 
-    public static Pins knockedDown(int knockedDownPin1, int knockedDownPin2) {
-        return new Pins(knockedDownPin1, knockedDownPin2);
-    }
-
     public boolean isSpare(Pins firstPin) {
         return new Pins(this.knockedDownPin, firstPin.knockedDownPin).isStrike();
     }
