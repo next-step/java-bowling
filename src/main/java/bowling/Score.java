@@ -29,6 +29,11 @@ public class Score {
         return cache.getOrDefault(score, new Score(score));
     }
 
+
+    public int getScore() {
+        return score;
+    }
+
     private void valid(int score) {
         if (score < MIN_SCORE) {
             throw new IllegalArgumentException("점수는 음수가 올 수 없어요");
