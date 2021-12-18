@@ -1,6 +1,7 @@
 package bowling.domain.bowl;
 
 import bowling.domain.pin.Pin;
+import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +30,12 @@ public class MissBowl extends FinishedBowl {
         if (sumOfPin.isAllHit() || sumOfPin.isNoneHit()) {
             throw new CanNotPitchException(NOT_MISS_MESSAGE);
         }
+    }
+
+    @Override
+    public Score score() {
+        Pin sumOfPin = firstPin.plus(secondPin);
+        return sumOfPin.toScore();
     }
 
     @Override

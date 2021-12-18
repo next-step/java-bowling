@@ -1,6 +1,7 @@
 package bowling.domain.bowl;
 
 import bowling.domain.pin.Pin;
+import bowling.domain.score.Score;
 
 import java.util.List;
 
@@ -23,6 +24,11 @@ public class StrikeBowl extends FinishedBowl {
 
     public static Bowl bowl() {
         return CACHED_BOWL;
+    }
+
+    @Override
+    public Score score() {
+        return Score.strike();
     }
 
     @Override

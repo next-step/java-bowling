@@ -1,6 +1,7 @@
 package bowling.domain.bowl;
 
 import bowling.domain.pin.Pin;
+import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +30,11 @@ public class SpareBowl extends FinishedBowl {
         if (firstPin.isAllHit() || !sumOfPin.isAllHit()) {
             throw new CanNotPitchException(NOT_SPARE_MESSAGE);
         }
+    }
+
+    @Override
+    public Score score() {
+        return Score.spare();
     }
 
     @Override

@@ -5,14 +5,14 @@ import java.util.Objects;
 public class Score {
 
     private static final int MIN_SCORE = 0;
+    private static final int MAX_SCORE_ON_ONE_PIN = 10;
+
     private static final int MIN_BONUS_CHANCE = 0;
+    private static final int BONUS_CHANCE_OF_SPARE = 1;
+    private static final int BONUS_CHANCE_OF_STRIKE = 2;
 
     private int value;
     private int bonusChance;
-
-    public Score() {
-        this(MIN_SCORE, MIN_BONUS_CHANCE);
-    }
 
     public Score(int value) {
         this(value, MIN_BONUS_CHANCE);
@@ -33,6 +33,18 @@ public class Score {
         }
     }
 
+    public static Score base() {
+        return new Score(MIN_SCORE, MIN_BONUS_CHANCE);
+    }
+
+    public static Score spare() {
+        return new Score(MAX_SCORE_ON_ONE_PIN, BONUS_CHANCE_OF_SPARE);
+    }
+
+    public static Score strike() {
+        return new Score(MAX_SCORE_ON_ONE_PIN, BONUS_CHANCE_OF_STRIKE);
+    }
+
     public Score next() {
         return new Score(value);
     }
@@ -47,7 +59,7 @@ public class Score {
      */
     public Score addBonus(Score other) {
         if (bonusChance == MIN_BONUS_CHANCE) {
-            return new Score();
+            return base();
         }
         bonusChance--;
         value += other.value;
