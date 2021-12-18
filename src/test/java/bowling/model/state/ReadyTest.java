@@ -14,7 +14,7 @@ class ReadyTest {
     @DisplayName("첫번째 타구로 10개 핀이 쓰러지면 Strike 반환 테스트")
     void afterBowlStrikeTest() {
         Ready ready = new Ready();
-        assertThat(ready.bowl(new Pins(10))).isEqualTo(new Strike());
+        assertThat(ready.bowl(Pins.knockedDown(10))).isEqualTo(new Strike());
     }
 
     @ParameterizedTest
@@ -22,6 +22,7 @@ class ReadyTest {
     @DisplayName("첫번째 타구로 10개 핀이 쓰러지지 않으면 FirstBowl 객체 반환 테스트")
     void afterBowlFirstBowlTest(int knockedDownPin) {
         Ready ready = new Ready();
-        assertThat(ready.bowl(new Pins(knockedDownPin))).isEqualTo(new FirstBowl(new Pins(knockedDownPin)));
+        assertThat(ready.bowl(Pins.knockedDown(knockedDownPin))).
+                isEqualTo(new FirstBowl(Pins.knockedDown(knockedDownPin)));
     }
 }

@@ -9,7 +9,7 @@ public class Pins {
 
     private final int knockedDownPin;
 
-    public Pins(int knockedDownPin) {
+    private Pins(int knockedDownPin) {
         checkPinCount(knockedDownPin);
         this.knockedDownPin = knockedDownPin;
     }
@@ -20,7 +20,7 @@ public class Pins {
         }
     }
 
-    public Pins(int knockedDownPin1, int knockedDownPin2) {
+    private Pins(int knockedDownPin1, int knockedDownPin2) {
         checkPinCount(knockedDownPin1, knockedDownPin2);
         this.knockedDownPin = knockedDownPin1 + knockedDownPin2;
     }
@@ -33,6 +33,10 @@ public class Pins {
 
     public static Pins knockedDown(int knockedDownPin) {
         return new Pins(knockedDownPin);
+    }
+
+    public static Pins knockedDown(int knockedDownPin1, int knockedDownPin2) {
+        return new Pins(knockedDownPin1, knockedDownPin2);
     }
 
     public boolean isSpare(Pins firstPin) {
