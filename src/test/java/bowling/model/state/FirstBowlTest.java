@@ -16,7 +16,7 @@ class FirstBowlTest {
     void pinSumOverTenExceptionTest(int firstPin, int secondPin) {
         FirstBowl firstBowl = new FirstBowl(new Pins(firstPin));
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> firstBowl.bowl(secondPin))
+                .isThrownBy(() -> firstBowl.bowl(new Pins(secondPin)))
                 .withMessage("투구로 쓰러진 핀의 총 개수는 10개를 넘을 수 없습니다.");
     }
 
@@ -25,7 +25,7 @@ class FirstBowlTest {
     @DisplayName("2번째 타구 후 쓰러뜨린 핀이 10개면 스페어 객체 반환 테스트")
     void afterBowlSpareTest(int firstPin, int secondPin) {
         FirstBowl firstBowl = new FirstBowl(new Pins(firstPin));
-        assertThat(firstBowl.bowl(secondPin)).isEqualTo(new Spare(new Pins(firstPin),new Pins(secondPin)));
+        assertThat(firstBowl.bowl(new Pins(secondPin))).isEqualTo(new Spare(new Pins(firstPin),new Pins(secondPin)));
     }
 
     @ParameterizedTest
@@ -33,6 +33,6 @@ class FirstBowlTest {
     @DisplayName("2번째 타구 후 쓰러뜨릴 핀이 남아있으면 MISS 객체 반환 테스트")
     void afterBowlMissTest(int firstPin, int secondPin) {
         FirstBowl firstBowl = new FirstBowl(new Pins(firstPin));
-        assertThat(firstBowl.bowl(secondPin)).isEqualTo(new Miss(new Pins(firstPin),new Pins(secondPin)));
+        assertThat(firstBowl.bowl(new Pins(secondPin))).isEqualTo(new Miss(new Pins(firstPin),new Pins(secondPin)));
     }
 }
