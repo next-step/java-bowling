@@ -1,13 +1,23 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import org.hibernate.annotations.Where;
+import org.springframework.transaction.annotation.Transactional;
+import qna.CannotDeleteException;
 
 @Entity
 public class Question extends AbstractEntity {
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -37,6 +47,32 @@ public class Question extends AbstractEntity {
         super(id);
         this.title = title;
         this.contents = contents;
+    }
+
+    @Transactional(rollbackFor = CannotDeleteException.class)
+    public DeleteHistories delete(User user) throws CannotDeleteException {
+        validOwner(user);
+
+        for (Answer answer : answers) {
+            deleteAnswer(user, answer);
+        }
+
+        this.deleted = true;
+        return DeleteHistories.from(this);
+    }
+
+    private void validOwner(User user) throws CannotDeleteException {
+        if (!this.isOwner(user)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
+    private void deleteAnswer(User user, Answer answer) throws CannotDeleteException {
+        try {
+            answer.delete(user);
+        } catch (CannotDeleteException e) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
     }
 
     public String getTitle() {
@@ -92,4 +128,5 @@ public class Question extends AbstractEntity {
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
+
 }
