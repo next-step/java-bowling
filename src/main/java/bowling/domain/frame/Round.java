@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Round {
-
     private static final int FIRST_VALUE = 1;
     private static final int LAST_VALUE = 10;
     private static final int NEXT_ROUND_VALUE = 1;

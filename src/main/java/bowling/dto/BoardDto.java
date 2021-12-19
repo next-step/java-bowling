@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BoardDto {
-
     private final List<Integer> allRounds;
     private final GameResultsDto gameResultsDto;
 

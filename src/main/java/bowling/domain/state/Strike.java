@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Strike extends Finished {
-
     private final Pin pin = Pin.TEN;
 
     @Override

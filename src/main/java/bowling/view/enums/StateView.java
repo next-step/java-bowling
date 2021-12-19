@@ -8,13 +8,11 @@ import bowling.view.strategy.StateToViewConvertStrategy;
 import java.util.Arrays;
 
 public enum StateView {
-
     READY_STATE(Ready.class, new BasicStateToViewConvertStrategy()),
     FIRST_BOWL_STATE(FirstBowl.class, new BasicStateToViewConvertStrategy()),
     MISS_STATE(Miss.class, new BasicStateToViewConvertStrategy()),
     STRIKE_STATE(Strike.class, new BasicStateToViewConvertStrategy()),
     SPARE_STATE(Spare.class, new SpareStateToViewConvertStrategy());
-
 
     private final Class clazz;
     private final StateToViewConvertStrategy stateToViewConvertStrategy;

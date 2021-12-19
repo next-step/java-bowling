@@ -3,7 +3,6 @@ package bowling.domain.frame;
 import java.util.Objects;
 
 public class Score {
-
     public static final int POSSIBLE_CALCULATE_LEFT = 0;
     public static final int STRIKE_SCORE = 10;
     public static final int STRIKE_LEFT = 2;

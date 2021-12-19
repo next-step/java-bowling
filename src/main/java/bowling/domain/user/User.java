@@ -4,7 +4,6 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class User {
-
     private static final int NAME_LENGTH = 3;
     private static final String ALPHABET_REGEX = "^[a-zA-Z]*$";
 

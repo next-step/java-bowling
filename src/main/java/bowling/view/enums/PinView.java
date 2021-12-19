@@ -5,7 +5,6 @@ import bowling.domain.frame.Pin;
 import java.util.Arrays;
 
 public enum PinView {
-
     GUTTER(Pin.from(0), "-"),
     ONE(Pin.from(1), "1"),
     TWO(Pin.from(2), "2"),

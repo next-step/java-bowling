@@ -6,8 +6,7 @@ import bowling.view.enums.PinView;
 import java.util.stream.Collectors;
 
 public class BasicStateToViewConvertStrategy implements StateToViewConvertStrategy {
-
-    public static final String DELIMITER = "|";
+    private static final String DELIMITER = "|";
 
     @Override
     public String convert(State state) {

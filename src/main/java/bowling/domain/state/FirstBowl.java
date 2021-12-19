@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class FirstBowl extends Running {
-
     private final Pin firstPin;
 
     public FirstBowl(Pin firstPin) {

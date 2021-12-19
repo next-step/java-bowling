@@ -12,7 +12,6 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 public class BowlingGames {
-
     private List<BowlingGame> values;
     private Round round;
 

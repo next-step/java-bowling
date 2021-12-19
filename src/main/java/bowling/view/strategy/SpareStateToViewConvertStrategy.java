@@ -5,10 +5,9 @@ import bowling.domain.state.State;
 import bowling.view.enums.PinView;
 
 public class SpareStateToViewConvertStrategy implements StateToViewConvertStrategy {
-
-    public static final String DELIMITER = "|";
-    public static final String SPARE_VIEW = "/";
-    public static final int FIRST_PIN_INDEX = 0;
+    private static final String DELIMITER = "|";
+    private static final String SPARE_VIEW = "/";
+    private static final int FIRST_PIN_INDEX = 0;
 
     @Override
     public String convert(State state) {

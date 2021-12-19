@@ -8,7 +8,6 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 public class GameResultsDto {
-
     private final List<GameResultDto> values;
 
     private GameResultsDto(List<GameResultDto> values) {

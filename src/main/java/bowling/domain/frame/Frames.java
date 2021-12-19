@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Frames {
-
     private final Frame head;
     private Frame tail;
 

@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    public static final String EMPTY_FRAME_RESULT_STRING = "";
-    public static final String EMPTY_SCORE_RESULT_STRING = "";
+    private static final String EMPTY_FRAME_RESULT_STRING = "";
+    private static final String EMPTY_SCORE_RESULT_STRING = "";
     private static final String BOARD_ROUND_FORMAT = "| NAME |  %02d  |  %02d  |  %02d  |  %02d  |  %02d  |  %02d  |  %02d  |  %02d  |  %02d  |  %02d  |";
     private static final String SCORE_FORMAT = "|      |  %-4s|  %-4s|  %-4s|  %-4s|  %-4s|  %-4s|  %-4s|  %-4s|  %-4s|  %-4s|";
     private static final String RESULT_FORMAT = "  %-4s|  %-4s|  %-4s|  %-4s|  %-4s|  %-4s|  %-4s|  %-4s|  %-4s|  %-4s|";
