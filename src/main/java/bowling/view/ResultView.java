@@ -19,13 +19,15 @@ public class ResultView {
     public static void showBoard(GameInfo gameInfo, Frame frame) {
         printPitchInfo(gameInfo.noOf(frame), gameInfo.fallDownPinsCountOf(frame));
 
-        printFrame(gameInfo.player().name(), gameInfo.frameResults());
+        printFrame(gameInfo.player().name(), gameInfo.frameResults(), Collections.emptyList());
     }
 
-    public static void printFrame(String name, List<String> frameResults) {
+    public static void printFrame(String name, List<String> frameResults, List<String> frameScores) {
         printFrameHeader();
 
         printFrameBody(name, frameResults);
+        printFrameBody(WHITE_SPACE, frameScores);
+        newLine();
     }
 
     private static void printPitchInfo(int no, int fallDownPinCount) {
@@ -39,11 +41,11 @@ public class ResultView {
         headEnd();
     }
 
-    private static void printFrameBody(String name, List<String> frameResults) {
+    private static void printFrameBody(String name, List<String> results) {
         printPlayerName(name);
-        printFrameBodyContent(frameResults);
+        printFrameBodyContent(results);
         printFrameBodyContent(new ArrayList<>(
-                Collections.nCopies(10 - frameResults.size(), WHITE_SPACE)));
+                Collections.nCopies(10 - results.size(), WHITE_SPACE)));
         bodyEnd();
     }
 
@@ -74,7 +76,6 @@ public class ResultView {
 
     private static void bodyEnd() {
         System.out.print(BOARD_DIVISION);
-        newLine();
         newLine();
     }
 

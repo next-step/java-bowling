@@ -12,7 +12,7 @@ import java.util.Collections;
 public class BowlingGameApplication {
     public static void main(String[] args) {
         String name = InputView.inputPlayerName();
-        ResultView.printFrame(name, Collections.emptyList());
+        ResultView.printFrame(name, Collections.emptyList(), Collections.emptyList());
 
         BowlingGame game = BowlingGame.create(name);
         while (!game.isGameEnd()) {
