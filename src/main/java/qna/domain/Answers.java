@@ -35,6 +35,7 @@ public class Answers {
     }
 
     public void checkOwnerForDelete(User loginUser) throws CannotDeleteException {
+
         for (Answer answer : answers) {
             answer.checkOwnerForDelete(loginUser);
         }
