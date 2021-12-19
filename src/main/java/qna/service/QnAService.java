@@ -36,8 +36,7 @@ public class QnAService {
     @Transactional(rollbackFor = CannotDeleteException.class)
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
         Question question = findQuestionById(questionId);
-        question.delete(loginUser);
-
-        deleteHistoryService.saveAll(DeleteHistories.from(question));
+        DeleteHistories deleteHistories = question.delete(loginUser);
+        deleteHistoryService.saveAll(deleteHistories);
     }
 }

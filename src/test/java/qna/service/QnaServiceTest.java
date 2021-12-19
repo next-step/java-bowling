@@ -17,7 +17,6 @@ import qna.domain.Answer;
 import qna.domain.DeleteHistories;
 import qna.domain.Question;
 import qna.domain.QuestionRepository;
-import qna.domain.QuestionTest;
 import qna.domain.UserTest;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -38,7 +37,7 @@ public class QnaServiceTest {
     @Before
     public void setUp() throws Exception {
         question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+        answer = new Answer(11L, UserTest.JAVAJIGI, question, "Answers Contents1");
         question.addAnswer(answer);
     }
 
@@ -77,9 +76,8 @@ public class QnaServiceTest {
     public void delete_답변_중_다른_사람이_쓴_글() throws Exception {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
-        assertThatThrownBy(() -> {
-            qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
-        }).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> qnAService.deleteQuestion(UserTest.SANJIGI, question.getId()))
+            .isInstanceOf(CannotDeleteException.class);
     }
 
     private void verifyDeleteHistories() {

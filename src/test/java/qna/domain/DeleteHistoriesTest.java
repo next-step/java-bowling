@@ -8,11 +8,11 @@ public class DeleteHistoriesTest {
 
     @Test
     void 객체생성() {
-        Question q1 = QuestionTest.Q1;
-        q1.addAnswer(AnswerTest.A1);
-        q1.addAnswer(AnswerTest.A2);
+        Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "Answers Contents1"));
+        question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "Answers Contents2"));
 
-        DeleteHistories deleteHistories = DeleteHistories.from(q1);
+        DeleteHistories deleteHistories = DeleteHistories.from(question);
         assertThat(deleteHistories.size()).isEqualTo(3);
     }
 

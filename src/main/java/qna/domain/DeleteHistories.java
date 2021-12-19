@@ -31,12 +31,12 @@ public class DeleteHistories {
         return deleteHistories;
     }
 
-    public int size() {
-        return deleteHistories.size();
-    }
-
     public List<DeleteHistory> deleteHistories() {
         return Collections.unmodifiableList(deleteHistories);
+    }
+
+    public int size() {
+        return deleteHistories.size();
     }
 
     @Override

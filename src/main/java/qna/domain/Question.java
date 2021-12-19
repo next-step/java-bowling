@@ -50,13 +50,15 @@ public class Question extends AbstractEntity {
     }
 
     @Transactional(rollbackFor = CannotDeleteException.class)
-    public void delete(User user) throws CannotDeleteException {
+    public DeleteHistories delete(User user) throws CannotDeleteException {
         validOwner(user);
+
         for (Answer answer : answers) {
             deleteAnswer(user, answer);
         }
 
-        deleted = true;
+        this.deleted = true;
+        return DeleteHistories.from(this);
     }
 
     private void validOwner(User user) throws CannotDeleteException {
