@@ -12,10 +12,14 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 public class BowlingGames {
+    private static final int ZERO_SIZE = 0;
+    private static final String ZERO_GAME_SIZE_EXCEPTION_MESSAGE = "Bowling 참가 유저는 1명 이상이여야 합니다.";
+
     private List<BowlingGame> values;
     private Round round;
 
     private BowlingGames(List<BowlingGame> values, Round round) {
+        validBowlingGamesSize(values);
         this.values = values;
         this.round = round;
     }
@@ -32,13 +36,20 @@ public class BowlingGames {
     }
 
     public static BowlingGames of(List<BowlingGame> bowlingGames, Round round) {
+        validBowlingGamesSize(bowlingGames);
         return new BowlingGames(bowlingGames, round);
+    }
+
+    private static void validBowlingGamesSize(List<BowlingGame> bowlingGames) {
+        if (bowlingGames.size() <= ZERO_SIZE) {
+            throw new IllegalArgumentException(ZERO_GAME_SIZE_EXCEPTION_MESSAGE);
+        }
     }
 
     public String nowTurnUserName() {
         return nowTurnBowlingGame().userName();
     }
-    
+
     public void bowlNowTurn(Pin pin) {
         nowTurnBowlingGame().bowl(pin);
         nextRound();
