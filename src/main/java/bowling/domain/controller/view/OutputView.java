@@ -28,9 +28,10 @@ public class OutputView {
         append(bowling.nameOfParticipant());
 
         appendBowlView(bowling.bowls());
-        STRING_BUILDER.append("\n");
+        appendNewLine();
 
         appendScoreView(bowling.scores());
+        appendNewLine();
         flushBuilder();
     }
 
@@ -94,6 +95,10 @@ public class OutputView {
             return String.format(BOARD_FORMAT, score.value());
         }
         return BOARD_EMPTY;
+    }
+
+    private static void appendNewLine() {
+        STRING_BUILDER.append("\n");
     }
 
     private static void flushBuilder() {

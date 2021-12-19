@@ -36,7 +36,7 @@ public class ScoreTest {
                 .hasMessage("보너스 기회가 음수일 수 없습니다.");
     }
 
-    @DisplayName("add:() 입력 점수의 score, bonusChance를 현재의 값에 각각 더한다.")
+    @DisplayName("현재 점수에 입력 점수를 더하고, 현재 보너스 기회를 입력 보너스 기회로 바꾼다")
     @Test
     void add() {
         //given
@@ -70,13 +70,6 @@ public class ScoreTest {
         assertThat(score.canCalculate()).isFalse();
         assertThatThrownBy(score::value)
                 .isInstanceOf(CanNotCalculateException.class);
-    }
-
-    @DisplayName("다음 프레임의 시작점수는 현재 프레임의 점수이고 보너스 기회는 없는 상태이다.")
-    @Test
-    void next() {
-        Score nextScore = score(100, 1).next();
-//        assertThat(nextScore).isEqualTo(score(100, 0, Score.BASE_BONUS_CHANCE));
     }
 
     @DisplayName("보너스 기회가 있다면 점수를 더하고 모든 다음 점수에도 반영한다.")

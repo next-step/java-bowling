@@ -67,10 +67,6 @@ public class Score {
         bonusChance = other.bonusChance;
     }
 
-    public boolean canCalculate() {
-        return bonusChance == MIN_BONUS_CHANCE;
-    }
-
     public void addBonus(Score bonusScore) {
         if (bonusChance == MIN_BONUS_CHANCE) {
             return;
@@ -80,12 +76,12 @@ public class Score {
         reflectAddedScoreIntoNextScore(bonusScore);
     }
 
-    private void reflectAddedScoreIntoNextScore(Score other) {
+    private void reflectAddedScoreIntoNextScore(Score addedScore) {
         if (nextScore.equals(NONE_SCORE)) {
             return;
         }
-        nextScore.value += other.value;
-        nextScore.reflectAddedScoreIntoNextScore(other);
+        nextScore.value += addedScore.value;
+        nextScore.reflectAddedScoreIntoNextScore(addedScore);
     }
 
     public int value() {
@@ -93,6 +89,10 @@ public class Score {
             return value;
         }
         throw new CanNotCalculateException();
+    }
+
+    public boolean canCalculate() {
+        return bonusChance == MIN_BONUS_CHANCE;
     }
 
     @Override

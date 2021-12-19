@@ -20,12 +20,12 @@ public class Frame {
         this(MIN_FRAME_NUMBER, bowl);
     }
 
-    public Frame(Score score, Bowl bowl) {
-        this(MIN_FRAME_NUMBER, score, bowl);
-    }
-
     public Frame(int number, Bowl bowl) {
         this(number, Score.base(), bowl);
+    }
+
+    public Frame(Score score, Bowl bowl) {
+        this(MIN_FRAME_NUMBER, score, bowl);
     }
 
     public Frame(int number, Score score, Bowl bowl) {
@@ -62,9 +62,9 @@ public class Frame {
         return bowl.canPitch();
     }
 
-    public void addBonusScore(Score scoreToAdd) {
+    public void addBonusScore(Score bonusScore) {
         checkFrameIsFinished();
-        score.addBonus(scoreToAdd);
+        score.addBonus(bonusScore);
     }
 
     public Score getScore() {

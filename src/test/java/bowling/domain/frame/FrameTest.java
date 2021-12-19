@@ -61,7 +61,7 @@ class FrameTest {
         assertThat(score).isEqualTo(score(6));
     }
 
-    @DisplayName("스트라이크일 때 점수와 보너스 기회가 잘 더해지는지")
+    @DisplayName("스트라이크일 때 점수와 보너스 기회가 주어지는지")
     @Test
     void pitchStrike_addScore() {
         //given

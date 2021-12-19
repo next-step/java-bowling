@@ -30,6 +30,10 @@ class FramesTest {
         return frames.pitch(pin(hitCount));
     }
 
+    private Pin pin(int i) {
+        return Pin.from(i);
+    }
+
     @DisplayName("게임이 끝나는 다양한 경우")
     @ParameterizedTest(name = "[{index}] hitCounts: {0}")
     @MethodSource("hitCounts")
@@ -76,10 +80,6 @@ class FramesTest {
         assertThat(scores.get(0).value()).isEqualTo(23);
         assertThat(scores.get(1).value()).isEqualTo(41);
         assertThat(scores.get(2).value()).isEqualTo(49);
-    }
-
-    private Pin pin(int i) {
-        return Pin.from(i);
     }
 
 }
