@@ -1,6 +1,8 @@
 package bowling.domain.frame;
 
-import bowling.domain.bowl.*;
+import bowling.domain.bowl.Bowl;
+import bowling.domain.bowl.FirstBowl;
+import bowling.domain.bowl.NextBowl;
 import bowling.domain.pin.Pin;
 import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
@@ -71,42 +73,6 @@ class FrameTest {
 
         //then
         assertThat(score).isEqualTo(score(10, 2));
-    }
-
-    @DisplayName("이전 프레임에 점수를 더하고 더해진 점수만큼 현재 프레임의 점수에도 반영한다.")
-    @Test
-    void calculateScoreOfPreviousFrame() {
-        //given
-        Score previousScore = Score.strike();
-        Frame previousFrame = new Frame(previousScore, new StrikeBowl());
-
-        Score currentScore = previousScore.next();
-        Frame currentFrame = new Frame(currentScore, FIRST_BOWL);
-
-        //when
-        currentFrame.calculateScoreOfPreviousFrame(score(5), previousFrame);
-
-        //then
-        assertThat(previousScore).isEqualTo(score(15, 1));
-        assertThat(currentScore).isEqualTo(score(15, 0));
-    }
-
-    @DisplayName("이전 프레임에 보너스 기회가 없다면 현재 프레임 점수는 변경이 없다.")
-    @Test
-    void calculateScoreOfPreviousFrame_previousFrameWithNoBonusChance() {
-        //given
-        Score previousScore = score(9, 0);
-        Frame previousFrame = new Frame(previousScore, new MissBowl(4, 5));
-
-        Score currentScore = previousScore.next();
-        Frame currentFrame = new Frame(currentScore, FIRST_BOWL);
-
-        //when
-        currentFrame.calculateScoreOfPreviousFrame(score(5), previousFrame);
-
-        //then
-        assertThat(previousScore).isEqualTo(score(9, 0));
-        assertThat(currentScore).isEqualTo(score(9, 0));
     }
 
 }

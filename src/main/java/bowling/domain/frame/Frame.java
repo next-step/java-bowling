@@ -62,14 +62,9 @@ public class Frame {
         return bowl.canPitch();
     }
 
-    public void calculateScoreOfPreviousFrame(Score scoreToAdd, Frame previousFrame) {
-        Score addedScore = previousFrame.addBonusScore(scoreToAdd);
-        score.add(addedScore);
-    }
-
-    private Score addBonusScore(Score scoreToAdd) {
+    public void addBonusScore(Score scoreToAdd) {
         checkFrameIsFinished();
-        return score.addBonus(scoreToAdd);
+        score.addBonus(scoreToAdd);
     }
 
     public Score getScore() {

@@ -2,11 +2,6 @@ package bowling.domain.score;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -19,6 +14,10 @@ public class ScoreTest {
 
     public static Score score(int score, int bonusChance) {
         return new Score(score, bonusChance);
+    }
+
+    public static Score score(int score, Score nextScore, int bonusChance) {
+        return new Score(score, nextScore, bonusChance);
     }
 
     @DisplayName("점수가 음수라면 예외를 던진다.")
@@ -50,22 +49,9 @@ public class ScoreTest {
         assertThat(score).isEqualTo(score(20, 2));
     }
 
-    @DisplayName("addBonus(): 보너스 기회가 없다면 점수는 변하지 않는다.")
+    @DisplayName("보너스 기회가 있다면 남은 기회를 하나 감소시키고 점수를 더한다.")
     @Test
-    void addBonus_noBonusChance() {
-        //given
-        Score score = score(10, 0);
-
-        //when
-        score.addBonus(score(10));
-
-        //then
-        assertThat(score).isEqualTo(score(10));
-    }
-
-    @DisplayName("addBonus(): 보너스 기회가 있다면 남은 기회를 하나 감소시키고 점수를 더한다.")
-    @Test
-    void addBonus() {
+    void addPlus() {
         //given
         Score baseScore = score(10, 1);
 
@@ -74,21 +60,6 @@ public class ScoreTest {
 
         //then
         assertThat(baseScore).isEqualTo(score(20));
-    }
-
-    @DisplayName("addBonus(): 추가된 점수를 반환한다.")
-    @ParameterizedTest(name = "[{index}] base: {0}, bonus: {1}, added: {2}")
-    @MethodSource("addBonusReturnAddedScoreArguments")
-    void addBonus_returnAddedScore(Score baseScore, Score bonusScore, Score addedScore) {
-        assertThat(baseScore.addBonus(bonusScore)).isEqualTo(addedScore);
-    }
-
-    public static Stream<Arguments> addBonusReturnAddedScoreArguments() {
-        return Stream.of(
-                Arguments.of(score(10, 0), score(5), score(0)),
-                Arguments.of(score(10, 1), score(5), score(5)),
-                Arguments.of(score(10, 2), score(10), score(10))
-        );
     }
 
     @DisplayName("보너스기회가 남았는데 점수를 구하면 예외를 던진다.")
@@ -106,6 +77,41 @@ public class ScoreTest {
     void next() {
         Score nextScore = score(100, 1).next();
         assertThat(nextScore).isEqualTo(score(100));
+    }
+
+    @DisplayName("보너스 기회가 있다면 점수를 더하고 모든 다음 점수에도 반영한다.")
+    @Test
+    void addBonus() {
+        //given
+        Score thirdScore = score(40, 1);
+        Score secondScore = score(30, thirdScore, 2);
+        Score firstScore = score(20, secondScore, 2);
+
+        //when
+        firstScore.addBonus(score(10));
+        firstScore.addBonus(score(5));
+
+        //then
+        assertThat(thirdScore).isEqualTo(score(55, 1));
+        assertThat(secondScore).isEqualTo(score(45, thirdScore, 2));
+        assertThat(firstScore).isEqualTo(score(35, secondScore, 0));
+    }
+
+    @DisplayName("보너스 기회가 없다면 현재점수, 다음점수 모두 변하지 않는다.")
+    @Test
+    void addBonus_noLeftChance() {
+        //given
+        Score thirdScore = score(40, 1);
+        Score secondScore = score(30, thirdScore, 2);
+        Score firstScore = score(20, secondScore, 0);
+
+        //when
+        firstScore.addBonus(score(10));
+
+        //then
+        assertThat(thirdScore).isEqualTo(score(40, 1));
+        assertThat(secondScore).isEqualTo(score(30, thirdScore, 2));
+        assertThat(firstScore).isEqualTo(score(20, secondScore, 0));
     }
 
 }

@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Score {
 
+    private static final Score NONE_SCORE = new Score(10_000, 10_000);
     private static final int MIN_SCORE = 0;
     private static final int MAX_SCORE_ON_ONE_PIN = 10;
 
@@ -13,14 +14,24 @@ public class Score {
 
     private int value;
     private int bonusChance;
+    private Score nextScore;
 
     public Score(int value) {
         this(value, MIN_BONUS_CHANCE);
     }
 
     public Score(int value, int bonusChance) {
+        this(value, NONE_SCORE, bonusChance);
+    }
+
+    public Score(int value, Score nextScore) {
+        this(value, nextScore, MIN_BONUS_CHANCE);
+    }
+
+    public Score(int value, Score nextScore, int bonusChance) {
         checkArguments(value, bonusChance);
         this.value = value;
+        this.nextScore = nextScore;
         this.bonusChance = bonusChance;
     }
 
@@ -46,7 +57,8 @@ public class Score {
     }
 
     public Score next() {
-        return new Score(value);
+        nextScore = new Score(value, NONE_SCORE);
+        return nextScore;
     }
 
     public void add(Score other) {
@@ -54,20 +66,25 @@ public class Score {
         bonusChance += other.bonusChance;
     }
 
-    /**
-     * @return 추가된 점수
-     */
-    public Score addBonus(Score other) {
-        if (bonusChance == MIN_BONUS_CHANCE) {
-            return base();
-        }
-        bonusChance--;
-        value += other.value;
-        return new Score(other.value);
-    }
-
     public boolean canCalculate() {
         return bonusChance == MIN_BONUS_CHANCE;
+    }
+
+    public void addBonus(Score bonusScore) {
+        if (bonusChance == MIN_BONUS_CHANCE) {
+            return;
+        }
+        bonusChance--;
+        value += bonusScore.value;
+        reflectAddedScoreIntoNextScore(bonusScore);
+    }
+
+    private void reflectAddedScoreIntoNextScore(Score other) {
+        if (nextScore.equals(NONE_SCORE)) {
+            return;
+        }
+        nextScore.value += other.value;
+        nextScore.reflectAddedScoreIntoNextScore(other);
     }
 
     public int value() {
@@ -81,13 +98,13 @@ public class Score {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Score score1 = (Score) o;
-        return value == score1.value && bonusChance == score1.bonusChance;
+        Score score = (Score) o;
+        return value == score.value && bonusChance == score.bonusChance && Objects.equals(nextScore, score.nextScore);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value, bonusChance);
+        return Objects.hash(value, bonusChance, nextScore);
     }
 
     @Override
@@ -95,6 +112,7 @@ public class Score {
         return "Score{" +
                 "value=" + value +
                 ", bonusChance=" + bonusChance +
+                ", nextScore=" + nextScore +
                 '}';
     }
 }

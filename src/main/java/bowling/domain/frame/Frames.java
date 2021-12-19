@@ -51,17 +51,17 @@ public class Frames {
     }
 
     private void calculateScoreOfPreviousFrame(Score score) {
-        Frame currentFrame = currentFrame();
-        for (Frame frame : framesToCalculate()) {
-            currentFrame.calculateScoreOfPreviousFrame(score, frame);
+        for (Frame frame : previousFrames()) {
+            frame.addBonusScore(score);
         }
     }
 
-    private List<Frame> framesToCalculate() {
+    private List<Frame> previousFrames() {
         int sizeOfFrames = frames.size();
         int endIndex = sizeOfFrames - INDEX_UNIT;
-        int startIndex = sizeOfFrames - NUMBER_OF_PREVIOUS_FRAMES_TO_CALCULATE - INDEX_UNIT;
-        return frames.subList(Math.max(MIN_INDEX, startIndex), endIndex);
+        int startIndex = Math.max(endIndex - NUMBER_OF_PREVIOUS_FRAMES_TO_CALCULATE, MIN_INDEX);
+
+        return frames.subList(startIndex, endIndex);
     }
 
     private Frame currentFrame() {
