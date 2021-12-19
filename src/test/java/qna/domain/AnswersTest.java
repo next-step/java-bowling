@@ -29,7 +29,10 @@ public class AnswersTest {
 
     @Test
     @DisplayName("Answers delete")
-    void delete() {
-//        ANSWERS.delete(UserTest.SANJIGI);
+    void delete() throws CannotDeleteException {
+        Answers answers = new Answers(Arrays.asList(AnswerTest.A1));
+        answers.delete(UserTest.JAVAJIGI);
+        Answer answer = answers.getAnswers().get(0);
+        assertThat(answer.isDeleted()).isTrue();
     }
 }

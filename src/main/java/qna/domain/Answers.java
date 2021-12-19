@@ -40,10 +40,10 @@ public class Answers {
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         validateDelete(loginUser);
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        for (Answer answer : answers) {
+        answers.forEach(answer -> {
             answer.setDeleted(true);
             deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }
+        });
         return deleteHistories;
     }
 
