@@ -59,7 +59,7 @@ public class ScoreTest {
         baseScore.addBonus(score(10));
 
         //then
-        assertThat(baseScore).isEqualTo(score(20));
+        assertThat(baseScore).isEqualTo(score(20, 0));
     }
 
     @DisplayName("보너스기회가 남았는데 점수를 구하면 예외를 던진다.")
@@ -76,7 +76,7 @@ public class ScoreTest {
     @Test
     void next() {
         Score nextScore = score(100, 1).next();
-        assertThat(nextScore).isEqualTo(score(100));
+//        assertThat(nextScore).isEqualTo(score(100, 0, Score.BASE_BONUS_CHANCE));
     }
 
     @DisplayName("보너스 기회가 있다면 점수를 더하고 모든 다음 점수에도 반영한다.")

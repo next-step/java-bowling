@@ -76,7 +76,7 @@ public class FinalBowl implements Bowl {
     public Score score() {
         checkPinIsExists();
         Pin lastPin = pins.get(pins.size() - INDEX_UNIT);
-        return lastPin.toScore();
+        return lastPin.toScore(leftChance);
     }
 
     private void checkPinIsExists() {

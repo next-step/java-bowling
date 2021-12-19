@@ -11,6 +11,7 @@ public class Score {
     private static final int MIN_BONUS_CHANCE = 0;
     private static final int BONUS_CHANCE_OF_SPARE = 1;
     private static final int BONUS_CHANCE_OF_STRIKE = 2;
+    private static final int BASE_BONUS_CHANCE = 100_000;
 
     private int value;
     private int bonusChance;
@@ -22,10 +23,6 @@ public class Score {
 
     public Score(int value, int bonusChance) {
         this(value, NONE_SCORE, bonusChance);
-    }
-
-    public Score(int value, Score nextScore) {
-        this(value, nextScore, MIN_BONUS_CHANCE);
     }
 
     public Score(int value, Score nextScore, int bonusChance) {
@@ -45,6 +42,10 @@ public class Score {
     }
 
     public static Score base() {
+        return new Score(MIN_SCORE, BASE_BONUS_CHANCE);
+    }
+
+    public static Score gutter() {
         return new Score(MIN_SCORE, MIN_BONUS_CHANCE);
     }
 
@@ -57,13 +58,13 @@ public class Score {
     }
 
     public Score next() {
-        nextScore = new Score(value, NONE_SCORE);
+        nextScore = new Score(value, NONE_SCORE, BASE_BONUS_CHANCE);
         return nextScore;
     }
 
     public void add(Score other) {
         value += other.value;
-        bonusChance += other.bonusChance;
+        bonusChance = other.bonusChance;
     }
 
     public boolean canCalculate() {
@@ -112,7 +113,6 @@ public class Score {
         return "Score{" +
                 "value=" + value +
                 ", bonusChance=" + bonusChance +
-                ", nextScore=" + nextScore +
                 '}';
     }
 }

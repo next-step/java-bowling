@@ -65,6 +65,10 @@ public class Pin {
         return new Score(hitCount);
     }
 
+    public Score toScore(int bonusChance) {
+        return new Score(hitCount, bonusChance);
+    }
+
     public int getHitCount() {
         return hitCount;
     }

@@ -30,7 +30,7 @@ public class GutterBowl extends FinishedBowl {
 
     @Override
     public Score score() {
-        return Score.base();
+        return Score.gutter();
     }
 
     @Override
