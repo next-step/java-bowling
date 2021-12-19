@@ -12,6 +12,7 @@ public class Score {
     public static final int CALCULATE_LEFT_VALUE_WITH_ADD_SCORE = 1;
     public static final int UN_SCORE = -1;
     public static final int UN_SCORE_LEFT = 0;
+
     private final int value;
     private final int left;
 
