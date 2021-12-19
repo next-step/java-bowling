@@ -1,4 +1,4 @@
-package bowling.service.dto;
+package bowling.dto;
 
 import bowling.domain.result.FrameResultsTest;
 import bowling.domain.state.Strike;

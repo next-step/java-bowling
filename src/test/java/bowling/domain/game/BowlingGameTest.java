@@ -3,7 +3,6 @@ package bowling.domain.game;
 import bowling.domain.frame.Frames;
 import bowling.domain.frame.Pin;
 import bowling.domain.frame.Round;
-import bowling.domain.result.GameResult;
 import bowling.domain.result.GameResultTest;
 import bowling.domain.user.User;
 import bowling.domain.user.UserTest;
@@ -25,11 +24,11 @@ class BowlingGameTest {
     @Test
     void bowlTest() {
         BowlingGame bowlingGame = BowlingGame.readyGame(UserTest.MIZ);
-        GameResult strike = bowlingGame.bowl(Pin.TEN);
-        assertThat(strike).isEqualTo(GameResultTest.MIZ_STRIKE);
+        bowlingGame.bowl(Pin.TEN);
+        assertThat(bowlingGame.createResult()).isEqualTo(GameResultTest.MIZ_STRIKE);
 
-        GameResult strikeAndFive = bowlingGame.bowl(Pin.from(5));
-        assertThat(strikeAndFive).isEqualTo(GameResultTest.MIZ_STRIKE_AND_FIVE);
+        bowlingGame.bowl(Pin.from(5));
+        assertThat(bowlingGame.createResult()).isEqualTo(GameResultTest.MIZ_STRIKE_AND_FIVE);
     }
 
     @DisplayName("round() 현재 라운드를 반환한다.")

@@ -18,16 +18,23 @@ public class BowlingGame {
     }
 
     public static BowlingGame readyGame(User user) {
-        return new BowlingGame(user, Frames.readyFrames());
+        return of(user, Frames.readyFrames());
     }
 
     public static BowlingGame of(User user, Frames frames) {
         return new BowlingGame(user, frames);
     }
 
-    public GameResult bowl(Pin pin) {
+    public void bowl(Pin pin) {
         frames.bowl(pin);
+    }
+
+    public GameResult createResult() {
         return new GameResult(user, frames.createResults());
+    }
+
+    public String userName() {
+        return user.getName();
     }
 
     public Round round() {
@@ -53,5 +60,13 @@ public class BowlingGame {
     @Override
     public int hashCode() {
         return Objects.hash(user, frames);
+    }
+
+    @Override
+    public String toString() {
+        return "BowlingGame{" +
+                "user=" + user +
+                ", frames=" + frames +
+                '}';
     }
 }

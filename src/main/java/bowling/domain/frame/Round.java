@@ -75,4 +75,11 @@ public class Round {
     public int hashCode() {
         return Objects.hash(value);
     }
+
+    @Override
+    public String toString() {
+        return "Round{" +
+                "value=" + value +
+                '}';
+    }
 }
