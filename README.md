@@ -14,4 +14,5 @@
     * Answers 일급 콜렉션 생성.
     * Answers - 답변을 삭제할 권한이 있는지 체크한다.
     * 로그인 사용자와 질문한 사람이 같은 경우 삭제 가능하다.
-    * FunctionalInterface을 추가하여 checked exception 처리. 
+    * FunctionalInterface을 추가하여 checked exception 처리.
+    * Answers delete 분리.

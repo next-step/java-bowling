@@ -26,4 +26,10 @@ public class AnswersTest {
             ANSWERS.validateDelete(UserTest.SANJIGI);
         }).isInstanceOf(RuntimeException.class);
     }
+
+    @Test
+    @DisplayName("Answers delete")
+    void delete() {
+//        ANSWERS.delete(UserTest.SANJIGI);
+    }
 }
