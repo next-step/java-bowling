@@ -1,6 +1,6 @@
 package qna.domain;
 
-import qna.UnAuthorizedException;
+import qna.exception.UnAuthorizedException;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -104,10 +104,6 @@ public class User extends AbstractEntity {
 
     public boolean isGuestUser() {
         return false;
-    }
-
-    public boolean isEqualsUser(User otherUser) {
-        return this.equals(otherUser);
     }
 
     private static class GuestUser extends User {
