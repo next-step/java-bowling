@@ -5,9 +5,6 @@ import bowling.domain.state.Progress;
 import bowling.domain.state.Start;
 import bowling.domain.state.State;
 
-import java.util.Collections;
-import java.util.List;
-
 public class NormalFrame extends TemplateFrame {
 
     private NormalFrame() {
@@ -33,11 +30,6 @@ public class NormalFrame extends TemplateFrame {
     @Override
     public void addPitch(Pitch pitch) {
         frameInfo.addPitch(pitch);
-    }
-
-    @Override
-    public List<Pitch> pitches() {
-        return Collections.unmodifiableList(frameInfo.pitches());
     }
 
     @Override

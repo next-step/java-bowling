@@ -5,9 +5,6 @@ import bowling.domain.state.Progress;
 import bowling.domain.state.Start;
 import bowling.domain.state.State;
 
-import java.util.Collections;
-import java.util.List;
-
 public class FinalFrame extends TemplateFrame {
     private static final int FINAL_FRAME_NO = 9;
 
@@ -36,11 +33,6 @@ public class FinalFrame extends TemplateFrame {
     @Override
     public void addPitch(Pitch pitch) {
         frameInfo.addPitch(pitch);
-    }
-
-    @Override
-    public List<Pitch> pitches() {
-        return Collections.unmodifiableList(frameInfo.pitches());
     }
 
     @Override

@@ -1,26 +1,30 @@
 package bowling.domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import bowling.strategy.PitchNumberStrategy;
+
 import java.util.List;
 
 public class FrameInfo {
-    private static final int ZERO = 0;
-    private static final int ONE = 1;
-    private static final int TWO = 2;
-    private static final int THREE = 3;
+    private static final int DEFAULT_NO = 0;
+    private static final int INCREASE_NO_COUNT = 1;
     private static final int END_FRAME_PREVIOUS_NO = 8;
     private static final int END_FRAME_NO = 9;
+    private static final int PINS_MAX_COUNT = 10;
 
     private final int no;
-    private final List<Pitch> pitches = new ArrayList<>();
+    private final Pitches pitches;
 
     private FrameInfo(int no) {
+        this(no, Pitches.init());
+    }
+
+    private FrameInfo(int no, Pitches pitches) {
         this.no = no;
+        this.pitches = pitches;
     }
 
     public static FrameInfo init() {
-        return new FrameInfo(ZERO);
+        return new FrameInfo(DEFAULT_NO);
     }
 
     public static FrameInfo create(int no) {
@@ -28,27 +32,15 @@ public class FrameInfo {
     }
 
     public FrameInfo next() {
-        return new FrameInfo(this.no + ONE);
+        return new FrameInfo(this.no + INCREASE_NO_COUNT);
     }
 
     public int no() {
         return no;
     }
 
-    public List<Pitch> pitches() {
-        return Collections.unmodifiableList(pitches);
-    }
-
-    public boolean isSecondPitch() {
-        return pitches.size() == TWO;
-    }
-
-    public boolean isThirdPitch() {
-        return pitches.size() == THREE;
-    }
-
-    public void addPitch(Pitch pitch) {
-        pitches.add(pitch);
+    public int fallDownPinsCount() {
+        return pitches.fallDownPinsSize();
     }
 
     public boolean last() {
@@ -59,58 +51,43 @@ public class FrameInfo {
         return no == END_FRAME_PREVIOUS_NO;
     }
 
-    public boolean isStrike() {
-        int currentPitchIndex = currentPitchIndex();
-        Pitch currentPitch = getPitch(currentPitchIndex);
-        if (retryable()) {
-            int previousPitchIndex = currentPitchIndex - ONE;
-            return currentPitch.isSecondStrike(getPitch(previousPitchIndex));
+    public Pitch createPitch(PitchNumberStrategy numberStrategy) {
+        if (isPitchesEmpty()) {
+            return Pitch.first(numberStrategy.generate(PINS_MAX_COUNT));
         }
-        return currentPitch.isStrike();
+        return currentPitch().next(numberStrategy);
+    }
+
+    private Pitch currentPitch() {
+        return pitches.currentPitch();
+    }
+
+    private boolean isPitchesEmpty() {
+        return pitches.isEmpty();
+    }
+
+    public boolean isSecondPitch() {
+        return pitches.isSecondPitch();
+    }
+
+    public boolean isThirdPitch() {
+        return pitches.isThirdPitch();
+    }
+
+    public void addPitch(Pitch pitch) {
+        pitches.add(pitch);
+    }
+
+    public boolean isStrike() {
+        return pitches.isStrike();
     }
 
     public boolean isSpare() {
-        int currentPitchIndex = currentPitchIndex();
-        if (retryable()) {
-            Pitch currentPitch = getPitch(currentPitchIndex);
-            int previousPitchIndex = currentPitchIndex - ONE;
-            return currentPitch.isSpare(getPitch(previousPitchIndex));
-        }
-        return false;
-    }
-
-    private boolean retryable() {
-        return pitches.size() >= TWO;
+        return pitches.isSpare();
     }
 
     public List<String> pitchResults() {
-        List<String> result = new ArrayList<>();
-        for (int pitchNo = ONE; pitchNo <= pitches.size(); pitchNo++) {
-            result.add(pitchSymbol(pitchNo, getPitch(pitchNo - 1)));
-        }
-        return result;
-    }
-
-    private String pitchSymbol(int pitchNo, Pitch pitch) {
-        if (pitch.isStrike()
-                || pitchNo >= TWO && pitch.isSecondStrike(getPitch(pitchNo - ONE))) {
-            return "X";
-        }
-        if (pitchNo >= TWO && pitch.isSpare(getPitch(pitchNo - ONE))) {
-            return "/";
-        }
-        if (pitch.isGutter()) {
-            return "-";
-        }
-        return Integer.toString(pitch.fallDownPinsSize());
-    }
-
-    private int currentPitchIndex() {
-        return pitches.size() - ONE;
-    }
-
-    private Pitch getPitch(int no) {
-        return pitches.get(no);
+        return pitches.pitchResults();
     }
 
     @Override

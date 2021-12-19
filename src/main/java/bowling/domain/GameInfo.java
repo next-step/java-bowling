@@ -21,8 +21,8 @@ public class GameInfo {
         return new GameInfo(player);
     }
 
-    public void run(PitchNumberStrategy numberStrategy) {
-        frames.run(numberStrategy);
+    public Frame run(PitchNumberStrategy numberStrategy) {
+        return frames.run(numberStrategy);
     }
 
     public boolean isGameEnd() {
@@ -33,15 +33,15 @@ public class GameInfo {
         return player;
     }
 
-    public List<Frame> frames() {
-        return frames.frames();
-    }
-
     public List<String> frameResults() {
         return frames.frameResults();
     }
 
-    public int currentFrameNo() {
-        return frames.currentEndedFrameNo();
+    public int noOf(Frame frame) {
+        return frames.noOf(frame);
+    }
+
+    public int fallDownPinsCountOf(Frame frame) {
+        return frames.fallDownPinsCountOf(frame);
     }
 }

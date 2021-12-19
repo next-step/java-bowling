@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.controller.BowlingGame;
+import bowling.domain.Frame;
 import bowling.domain.GameInfo;
 import bowling.strategy.RandomPitchNumberStrategy;
 import bowling.view.InputView;
@@ -13,9 +14,9 @@ public class BowlingGameApplication {
         BowlingGame game = BowlingGame.create(name);
         while (!game.isGameEnd()) {
             GameInfo gameInfo = game.currentGameInfo();
-            gameInfo.run(new RandomPitchNumberStrategy());
+            Frame frame = gameInfo.run(new RandomPitchNumberStrategy());
 
-            ResultView.showBoard(gameInfo);
+            ResultView.showBoard(gameInfo, frame);
         }
     }
 }

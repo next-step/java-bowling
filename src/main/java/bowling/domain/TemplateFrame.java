@@ -22,9 +22,8 @@ public abstract class TemplateFrame implements Frame {
 
     @Override
     public void run(PitchNumberStrategy numberStrategy) {
-        Pitch pitch = Pitch.init();
-        while (progressing()) {
-            pitch = pitch.next(numberStrategy);
+        if (progressing()) {
+            Pitch pitch = frameInfo.createPitch(numberStrategy);
             state.run(pitch, this);
         }
     }
@@ -46,5 +45,10 @@ public abstract class TemplateFrame implements Frame {
     @Override
     public int no() {
         return frameInfo.no();
+    }
+
+    @Override
+    public int fallDownPinsCount() {
+        return frameInfo.fallDownPinsCount();
     }
 }

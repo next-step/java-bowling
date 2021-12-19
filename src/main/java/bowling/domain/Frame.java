@@ -14,7 +14,7 @@ public interface Frame {
 
     int no();
 
-    List<Pitch> pitches();
+    int fallDownPinsCount();
 
     void changeState();
 

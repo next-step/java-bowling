@@ -1,5 +1,6 @@
 package bowling.controller;
 
+import bowling.domain.Frame;
 import bowling.domain.GameInfo;
 import bowling.strategy.RandomPitchNumberStrategy;
 import bowling.view.ResultView;
@@ -7,17 +8,14 @@ import org.junit.jupiter.api.RepeatedTest;
 
 class BowlingGameTest {
 
-    @RepeatedTest(100)
+    @RepeatedTest(1)
     void 게임을_시작한다() {
         BowlingGame game = BowlingGame.create("DDD");
         GameInfo gameInfo = game.currentGameInfo();
         while (!game.isGameEnd()) {
-            gameInfo.run(new RandomPitchNumberStrategy());
-            ResultView.showBoard(gameInfo);
-        }
-        System.out.println("======");
+            Frame frame = gameInfo.run(new RandomPitchNumberStrategy());
 
-        ResultView.showBoard(gameInfo.player(), gameInfo.frames());
-        ResultView.showBoard(gameInfo);
+            ResultView.showBoard(gameInfo, frame);
+        }
     }
 }

@@ -11,10 +11,6 @@ public class Pitch {
     private final Pins pins;
     private final Pins fallDownPins;
 
-    private Pitch() {
-        this(Pins.create(), Pins.create());
-    }
-
     private Pitch(int fallDownPinsCount) {
         this(Pins.create(), Pins.create(fallDownPinsCount));
     }
@@ -26,10 +22,6 @@ public class Pitch {
     private Pitch(Pins pins, Pins fallDownPins) {
         this.pins = pins;
         this.fallDownPins = fallDownPins;
-    }
-
-    public static Pitch init() {
-        return new Pitch();
     }
 
     public static Pitch init(int pinsCount, int fallDownPinsCount) {
@@ -44,7 +36,7 @@ public class Pitch {
         if (pins.isEmpty()) {
             return new Pitch(numberStrategy.generate(PINS_MAX_COUNT));
         }
-        return new Pitch(pins.size(), numberStrategy.generate(pinsSize()));
+        return new Pitch(pinsSize(), numberStrategy.generate(pinsSize()));
     }
 
     public void run() {
