@@ -15,7 +15,7 @@ class FirstBowlTest {
 
     @BeforeEach
     void initBowl() {
-        bowl = new FirstBowl();
+        bowl = FirstBowl.bowl();
     }
     
     @DisplayName("10개의 핀을 넘어 뜨렸다면 스트라이크를 반환한다.")

@@ -4,6 +4,7 @@ import bowling.domain.pin.Pin;
 import bowling.domain.score.Score;
 
 import java.util.List;
+import java.util.Objects;
 
 import static java.util.Collections.singletonList;
 
@@ -39,5 +40,18 @@ public class StrikeBowl extends FinishedBowl {
     @Override
     public List<Pin> pins() {
         return singletonList(pin);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StrikeBowl that = (StrikeBowl) o;
+        return Objects.equals(pin, that.pin);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pin);
     }
 }

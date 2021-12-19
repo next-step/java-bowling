@@ -4,6 +4,8 @@ import bowling.domain.bowl.Bowl;
 import bowling.domain.pin.Pin;
 import bowling.domain.score.Score;
 
+import java.util.Objects;
+
 public class Frame {
 
     public static final int MAX_FRAME_NUMBER = 10;
@@ -72,5 +74,18 @@ public class Frame {
 
     public Bowl getBowl() {
         return bowl;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Frame frame = (Frame) o;
+        return number == frame.number && Objects.equals(score, frame.score) && Objects.equals(bowl, frame.bowl);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number, score, bowl);
     }
 }

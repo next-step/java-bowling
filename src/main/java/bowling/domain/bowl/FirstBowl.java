@@ -9,6 +9,15 @@ public class FirstBowl extends ProceedingBowl {
 
     private static final BowlType BOWL_TYPE = BowlType.FIRST;
 
+    private static final Bowl CACHED_BOWL = new FirstBowl();
+
+    private FirstBowl() {
+    }
+
+    public static Bowl bowl() {
+        return CACHED_BOWL;
+    }
+
     @Override
     public Bowl pitch(Pin pin) {
         if (pin.isAllHit()) {
@@ -31,4 +40,6 @@ public class FirstBowl extends ProceedingBowl {
     public String toString() {
         return "FirstBowl{}";
     }
+
+
 }

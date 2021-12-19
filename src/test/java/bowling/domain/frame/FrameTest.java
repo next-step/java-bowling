@@ -18,12 +18,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FrameTest {
 
+    static final Bowl FIRST_BOWL = FirstBowl.bowl();
+
     @DisplayName("프레임 번호가 1 ~ 10 이 아니라면 예외를 던진다.")
     @ParameterizedTest(name = "[{index}] number: {0}")
     @ValueSource(ints = {-1, 0, 11})
     void create_illegalNumber(int number) {
-        FirstBowl bowl = firstBowl();
-        assertThatThrownBy(() -> new Frame(number, bowl))
+        assertThatThrownBy(() -> new Frame(number, FIRST_BOWL))
                 .isInstanceOf(IllegalFrameNumberException.class);
     }
 
@@ -32,15 +33,13 @@ class FrameTest {
     @MethodSource("nextArguments")
     void next(Bowl bowl) {
         Frame frame = new Frame(bowl);
-        FirstBowl nextBowl = firstBowl();
-
-        assertThatThrownBy(() -> frame.nextOf(nextBowl))
+        assertThatThrownBy(() -> frame.nextOf(FIRST_BOWL))
                 .isInstanceOf(UnFinishedFrameException.class);
     }
 
     public static Stream<Arguments> nextArguments() {
         return Stream.of(
-                Arguments.of(firstBowl()),
+                Arguments.of(FIRST_BOWL),
                 Arguments.of(new NextBowl(5))
         );
     }
@@ -50,7 +49,7 @@ class FrameTest {
     void pitchMiss_addScore() {
         //given
         Score score = Score.base();
-        Frame frame = new Frame(score, firstBowl());
+        Frame frame = new Frame(score, FIRST_BOWL);
 
         //when
         frame.pitch(Pin.from(5));
@@ -65,7 +64,7 @@ class FrameTest {
     void pitchStrike_addScore() {
         //given
         Score score = Score.base();
-        Frame frame = new Frame(score, firstBowl());
+        Frame frame = new Frame(score, FIRST_BOWL);
 
         //when
         frame.pitch(Pin.from(10));
@@ -82,7 +81,7 @@ class FrameTest {
         Frame previousFrame = new Frame(previousScore, new StrikeBowl());
 
         Score currentScore = previousScore.next();
-        Frame currentFrame = new Frame(currentScore, firstBowl());
+        Frame currentFrame = new Frame(currentScore, FIRST_BOWL);
 
         //when
         currentFrame.calculateScoreOfPreviousFrame(score(5), previousFrame);
@@ -100,7 +99,7 @@ class FrameTest {
         Frame previousFrame = new Frame(previousScore, new MissBowl(4, 5));
 
         Score currentScore = previousScore.next();
-        Frame currentFrame = new Frame(currentScore, firstBowl());
+        Frame currentFrame = new Frame(currentScore, FIRST_BOWL);
 
         //when
         currentFrame.calculateScoreOfPreviousFrame(score(5), previousFrame);
@@ -108,10 +107,6 @@ class FrameTest {
         //then
         assertThat(previousScore).isEqualTo(score(9, 0));
         assertThat(currentScore).isEqualTo(score(9, 0));
-    }
-
-    private static FirstBowl firstBowl() {
-        return new FirstBowl();
     }
 
 }
