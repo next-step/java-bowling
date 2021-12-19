@@ -106,6 +106,10 @@ public class User extends AbstractEntity {
         return false;
     }
 
+    public boolean isEqualsUser(User otherUser) {
+        return this.equals(otherUser);
+    }
+
     private static class GuestUser extends User {
         @Override
         public boolean isGuestUser() {
