@@ -72,6 +72,10 @@ public class Frame {
         return score.addBonus(scoreToAdd);
     }
 
+    public Score getScore() {
+        return score;
+    }
+
     public Bowl getBowl() {
         return bowl;
     }

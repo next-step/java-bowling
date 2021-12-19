@@ -79,7 +79,7 @@ class FramesTest {
         Frame fourthFrame = new Frame(4, score(42, 2), new StrikeBowl());
         Frame fifthFrame = new Frame(5, score(42, 0), FirstBowl.bowl());
 
-        assertThat(frames.frames).containsExactly(firstFrame, secondFrame, thirdFrame, fourthFrame, fifthFrame);
+        assertThat(frames).isEqualTo(new Frames(asList(firstFrame, secondFrame, thirdFrame, fourthFrame, fifthFrame)));
     }
 
     private Pin pin(int i) {

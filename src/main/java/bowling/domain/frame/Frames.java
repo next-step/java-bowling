@@ -9,6 +9,7 @@ import bowling.domain.score.Score;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.singletonList;
@@ -19,7 +20,7 @@ public class Frames {
     private static final int INDEX_UNIT = 1;
     private static final int NUMBER_OF_PREVIOUS_FRAMES_TO_CALCULATE = 2;
 
-    public final List<Frame> frames;
+    private final List<Frame> frames;
 
     public Frames(Frame firstFrame) {
         this(new ArrayList<>(singletonList(firstFrame)));
@@ -87,5 +88,24 @@ public class Frames {
         return frames.stream()
                 .map(Frame::getBowl)
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
+    }
+
+    public List<Score> scores() {
+        return frames.stream()
+                .map(Frame::getScore)
+                .collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Frames frames1 = (Frames) o;
+        return Objects.equals(frames, frames1.frames);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frames);
     }
 }
