@@ -23,4 +23,6 @@ public interface Frame {
     boolean isFinal();
 
     boolean isEnd();
+
+    List<String> pitchResults();
 }

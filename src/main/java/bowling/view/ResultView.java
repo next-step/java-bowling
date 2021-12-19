@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.domain.Frame;
+import bowling.domain.GameInfo;
 import bowling.domain.Pitch;
 import bowling.domain.Player;
 
@@ -18,6 +19,19 @@ public class ResultView {
     private static final int ONE = 1;
     private static final int PINS_MIN_COUNT = 0;
     private static final int PINS_MAX_COUNT = 10;
+
+    public static void showBoard(GameInfo gameInfo) {
+//        showFallDownPitch(gameInfo.currentFrameNo(), gameInfo.currentFallDownPinCount());
+        showFrameHeader();
+        showPlayerName(gameInfo.player().name());
+        showFrameBody(gameInfo.frameResults());
+    }
+
+    private static void showFrameBody(List<String> frameResults) {
+        frameResults.forEach(result ->
+                System.out.printf(BOARD_BODY_CONTENT, checkLengthAndFillBlank(result)));
+        bodyEnd();
+    }
 
     public static void showBoard(Player player, List<Frame> frames) {
         List<String> frameResultHistories = new ArrayList<>();

@@ -5,6 +5,8 @@ import bowling.domain.state.Start;
 import bowling.domain.state.State;
 import bowling.strategy.PitchNumberStrategy;
 
+import java.util.List;
+
 public abstract class TemplateFrame implements Frame {
     protected final FrameInfo frameInfo;
     protected State state;
@@ -34,5 +36,15 @@ public abstract class TemplateFrame implements Frame {
     @Override
     public boolean isEnd() {
         return state instanceof End;
+    }
+
+    @Override
+    public List<String> pitchResults() {
+        return frameInfo.pitchResults();
+    }
+
+    @Override
+    public int no() {
+        return frameInfo.no();
     }
 }

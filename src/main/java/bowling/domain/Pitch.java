@@ -5,6 +5,7 @@ import bowling.strategy.PitchNumberStrategy;
 import java.util.Objects;
 
 public class Pitch {
+    private static final int PINS_MIN_COUNT = 0;
     private static final int PINS_MAX_COUNT = 10;
 
     private final Pins pins;
@@ -60,6 +61,10 @@ public class Pitch {
 
     public boolean isSpare(Pitch pitch) {
         return this.fallDownPinsSize() + pitch.fallDownPinsSize() == PINS_MAX_COUNT;
+    }
+
+    public boolean isGutter() {
+        return this.fallDownPinsSize() == PINS_MIN_COUNT;
     }
 
     public int pinsSize() {

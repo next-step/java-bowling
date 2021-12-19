@@ -11,8 +11,11 @@ public class BowlingGameApplication {
         String name = InputView.inputPlayerName();
 
         BowlingGame game = BowlingGame.create(name);
-        GameInfo gameInfo = game.run(new RandomPitchNumberStrategy());
+        while (!game.isGameEnd()) {
+            GameInfo gameInfo = game.currentGameInfo();
+            gameInfo.run(new RandomPitchNumberStrategy());
 
-        ResultView.showBoard(gameInfo.player(), gameInfo.frames());
+            ResultView.showBoard(gameInfo);
+        }
     }
 }

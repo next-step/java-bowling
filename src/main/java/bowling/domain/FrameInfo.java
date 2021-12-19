@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class FrameInfo {
+    private static final int ZERO = 0;
     private static final int ONE = 1;
     private static final int TWO = 2;
     private static final int THREE = 3;
@@ -19,7 +20,7 @@ public class FrameInfo {
     }
 
     public static FrameInfo init() {
-        return new FrameInfo(0);
+        return new FrameInfo(ZERO);
     }
 
     public static FrameInfo create(int no) {
@@ -36,10 +37,6 @@ public class FrameInfo {
 
     public List<Pitch> pitches() {
         return Collections.unmodifiableList(pitches);
-    }
-
-    public boolean retryable() {
-        return pitches.size() >= TWO;
     }
 
     public boolean isSecondPitch() {
@@ -82,12 +79,38 @@ public class FrameInfo {
         return false;
     }
 
-    private Pitch getPitch(int no) {
-        return pitches.get(no);
+    private boolean retryable() {
+        return pitches.size() >= TWO;
+    }
+
+    public List<String> pitchResults() {
+        List<String> result = new ArrayList<>();
+        for (int pitchNo = ONE; pitchNo <= pitches.size(); pitchNo++) {
+            result.add(pitchSymbol(pitchNo, getPitch(pitchNo - 1)));
+        }
+        return result;
+    }
+
+    private String pitchSymbol(int pitchNo, Pitch pitch) {
+        if (pitch.isStrike()
+                || pitchNo >= TWO && pitch.isSecondStrike(getPitch(pitchNo - ONE))) {
+            return "X";
+        }
+        if (pitchNo >= TWO && pitch.isSpare(getPitch(pitchNo - ONE))) {
+            return "/";
+        }
+        if (pitch.isGutter()) {
+            return "-";
+        }
+        return Integer.toString(pitch.fallDownPinsSize());
     }
 
     private int currentPitchIndex() {
         return pitches.size() - ONE;
+    }
+
+    private Pitch getPitch(int no) {
+        return pitches.get(no);
     }
 
     @Override

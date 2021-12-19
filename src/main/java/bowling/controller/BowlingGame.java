@@ -30,19 +30,11 @@ public class BowlingGame {
         return new BowlingGame(name);
     }
 
-    public GameInfo run(PitchNumberStrategy numberStrategy) {
-        GameInfo gameInfo = currentGameInfo();
-        while (!isGameEnd()) {
-            gameInfo.run(numberStrategy);
-        }
-        return gameInfo;
-    }
-
-    private boolean isGameEnd() {
+    public boolean isGameEnd() {
         return gameInfos.stream().allMatch(GameInfo::isGameEnd);
     }
 
-    private GameInfo currentGameInfo() {
+    public GameInfo currentGameInfo() {
         return gameInfos.get(currentGameIndex());
     }
 

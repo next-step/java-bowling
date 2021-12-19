@@ -36,4 +36,12 @@ public class GameInfo {
     public List<Frame> frames() {
         return frames.frames();
     }
+
+    public List<String> frameResults() {
+        return frames.frameResults();
+    }
+
+    public int currentFrameNo() {
+        return frames.currentEndedFrameNo();
+    }
 }

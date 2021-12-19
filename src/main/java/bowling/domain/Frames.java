@@ -4,6 +4,7 @@ import bowling.strategy.PitchNumberStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Frames {
     private static final int ONE = 1;
@@ -40,11 +41,32 @@ public class Frames {
         return frames.stream().allMatch(Frame::isEnd);
     }
 
+    public List<String> frameResults() {
+        return frames.stream()
+                .filter(Frame::isEnd)
+                .map(results -> String.join("|", results.pitchResults()))
+                .collect(Collectors.toList());
+    }
+
+    public int currentEndedFrameNo() {
+        return currentEndedFrame().no();
+    }
+
     private Frame currentFrame() {
         return frames.get(currentFrameIndex());
     }
 
     private int currentFrameIndex() {
         return frames.size() - ONE;
+    }
+
+    private Frame currentEndedFrame() {
+        return frames.get(currentEndedFrameIndex());
+    }
+
+    private int currentEndedFrameIndex() {
+        return (int) frames.stream()
+                .filter(Frame::isEnd)
+                .count() - ONE;
     }
 }

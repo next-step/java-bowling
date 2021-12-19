@@ -36,11 +36,6 @@ public class NormalFrame extends TemplateFrame {
     }
 
     @Override
-    public int no() {
-        return frameInfo.no();
-    }
-
-    @Override
     public List<Pitch> pitches() {
         return Collections.unmodifiableList(frameInfo.pitches());
     }
