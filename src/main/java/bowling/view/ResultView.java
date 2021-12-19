@@ -3,6 +3,8 @@ package bowling.view;
 import bowling.domain.Frame;
 import bowling.domain.GameInfo;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -16,9 +18,14 @@ public class ResultView {
 
     public static void showBoard(GameInfo gameInfo, Frame frame) {
         printPitchInfo(gameInfo.noOf(frame), gameInfo.fallDownPinsCountOf(frame));
+
+        printFrame(gameInfo.player().name(), gameInfo.frameResults());
+    }
+
+    public static void printFrame(String name, List<String> frameResults) {
         printFrameHeader();
 
-        printFrameBody(gameInfo.player().name(), gameInfo.frameResults());
+        printFrameBody(name, frameResults);
     }
 
     private static void printPitchInfo(int no, int fallDownPinCount) {
@@ -34,9 +41,15 @@ public class ResultView {
 
     private static void printFrameBody(String name, List<String> frameResults) {
         printPlayerName(name);
+        printFrameBodyContent(frameResults);
+        printFrameBodyContent(new ArrayList<>(
+                Collections.nCopies(10 - frameResults.size(), WHITE_SPACE)));
+        bodyEnd();
+    }
+
+    private static void printFrameBodyContent(List<String> frameResults) {
         frameResults.forEach(result ->
                 System.out.printf(BOARD_FRAME_BODY_CONTENT_FORMAT, checkLengthAndFillBlank(result)));
-        bodyEnd();
     }
 
     private static void printPlayerName(String name) {
