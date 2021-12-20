@@ -9,7 +9,7 @@ public class Score {
     private static final Map<Integer, Score> cache = new HashMap<>();
 
     private static final int MIN_SCORE = 0;
-    private static final int MAX_SCORE = 300;
+    private static final int MAX_SCORE = 30;
 
     private final int score;
 

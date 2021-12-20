@@ -16,8 +16,8 @@ public class ScoreTest {
         assertThatCode(() -> Score.of(10)).doesNotThrowAnyException();
     }
 
-    @ValueSource(ints = {-1, 301})
-    @ParameterizedTest(name = "[{arguments}]점수는 0-300 이어야 한다.")
+    @ValueSource(ints = {-1, 31})
+    @ParameterizedTest(name = "[{arguments}]점수는 0-30 이어야 한다.")
     void createExceptionTest(int input) {
         assertThatIllegalArgumentException().isThrownBy(() -> Score.of(input));
     }
