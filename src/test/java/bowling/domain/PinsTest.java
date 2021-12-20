@@ -77,4 +77,12 @@ public class PinsTest {
         assertThat(Pins.create(1).isMiss(Pins.create(1))).isTrue();
         assertThat(Pins.create(9).isMiss(Pins.create(0))).isTrue();
     }
+
+    @Test
+    void 거터() {
+        //given
+        //when
+        //then
+        assertThat(Pins.create(0).isGutter()).isTrue();
+    }
 }

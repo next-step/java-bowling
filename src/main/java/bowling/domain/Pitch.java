@@ -4,10 +4,9 @@ import bowling.strategy.PitchNumberStrategy;
 
 import java.util.Objects;
 
-public class Pitch {
-    private static final int PINS_MIN_COUNT = 0;
-    private static final int PINS_MAX_COUNT = 10;
+import static bowling.domain.Pins.PINS_MAX_COUNT;
 
+public class Pitch {
     private final Pins pins;
     private final Pins fallDownPins;
 
@@ -39,24 +38,25 @@ public class Pitch {
         return new Pitch(pinsSize(), numberStrategy.generate(pinsSize()));
     }
 
-    public void run() {
+    public Pins run() {
         pins.fallDown(fallDownPins);
+        return fallDownPins;
     }
 
     public boolean isStrike() {
-        return pins.isStrike(fallDownPins);
+        return fallDownPins.isStrike();
     }
 
-    public boolean isSecondStrike(Pitch pitch) {
-        return pitch.fallDownPinsSize() == PINS_MAX_COUNT && pins.isStrike(fallDownPins);
+    public boolean isStrike(Pitch pitch) {
+        return fallDownPins.isStrike(pitch.fallDownPins);
     }
 
     public boolean isSpare(Pitch pitch) {
-        return this.fallDownPinsSize() + pitch.fallDownPinsSize() == PINS_MAX_COUNT;
+        return this.fallDownPins.isSpare(pitch.fallDownPins);
     }
 
     public boolean isGutter() {
-        return this.fallDownPinsSize() == PINS_MIN_COUNT;
+        return this.fallDownPins.isGutter();
     }
 
     public int pinsSize() {
