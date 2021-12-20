@@ -40,6 +40,7 @@
 * [X] Entity: `Answer`, `DeleteHistory`, `Question`, `User` 에 Field: `id` 기반 equals, hashCode 최적화
 * [X] Entity: `Answer`, `DeleteHistory`, `Question`, `User`의 toString 재정의
 * [X] Entity: `Answer` 삭제 로직 메서드로 위임
+* [X] Entity: `User`, `Question`의 사용하지 않는 getter, seter 제거
 
 ## 프로그래밍 요구사항
 
