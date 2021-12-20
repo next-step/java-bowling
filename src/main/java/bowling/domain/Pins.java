@@ -48,8 +48,20 @@ public class Pins {
         return size() != (startSize - fallDownCount);
     }
 
+    public boolean isStrike() {
+        return size() == PIN_MAX_COUNT;
+    }
+
     public boolean isStrike(Pins fallDownPins) {
-        return size() == FIRST_PIN_INDEX && fallDownPins.size() == PIN_MAX_COUNT;
+        return isStrike() && fallDownPins.size() == PIN_MAX_COUNT;
+    }
+
+    public boolean isSpare(Pins secondPins) {
+        return size() + secondPins.size() == PIN_MAX_COUNT;
+    }
+
+    public boolean isMiss(Pins secondPins) {
+        return size() + secondPins.size() < PIN_MAX_COUNT;
     }
 
     public int size() {
