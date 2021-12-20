@@ -26,6 +26,9 @@ public class Answers {
         this.answers = Collections.unmodifiableList(answers);
     }
 
+    protected Answers() {
+    }
+
     public static Answers from(List<Answer> answers) {
         if (Objects.isNull(answers)) {
             throw new IllegalArgumentException("생성에 필요한 answers가 null이 전달되었습니다.");
@@ -33,7 +36,8 @@ public class Answers {
         return new Answers(answers);
     }
 
-    protected Answers() {
+    public static Answers emptyInstance() {
+        return new Answers();
     }
 
     public Answers add(Answer answer) {

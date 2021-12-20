@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 @DisplayName("삭제 이력들 테스트")
 class DeleteHistoriesTest {
-    public static DeleteHistories DHS1 = DeleteHistories.from(Collections.singletonList(DeleteHistoryTest.DH1));
+    public static DeleteHistories DHS2 = DeleteHistories.from(Collections.singletonList(DeleteHistoryTest.DH2));
     public static DeleteHistories DHS12 = DeleteHistories.from(Arrays.asList(DeleteHistoryTest.DH1, DeleteHistoryTest.DH2));
 
     @DisplayName("삭제 이력들 생성")
@@ -43,7 +43,7 @@ class DeleteHistoriesTest {
     @DisplayName("삭제 이력 추가")
     @Test
     void appendTest() {
-        assertThat(DHS1.append(DeleteHistoryTest.DH2)).isEqualTo(DHS12);
+        assertThat(DHS2.prepend(DeleteHistoryTest.DH1)).isEqualTo(DHS12);
     }
 
     @DisplayName("삭제 이력 추가 예외 확인 - null 전달")
@@ -51,7 +51,7 @@ class DeleteHistoriesTest {
     @NullSource
     void appendFailedTest(DeleteHistory deleteHistory) {
         assertThatIllegalArgumentException().isThrownBy(
-                () -> DHS1.append(deleteHistory)
+                () -> DHS2.prepend(deleteHistory)
         );
     }
 }

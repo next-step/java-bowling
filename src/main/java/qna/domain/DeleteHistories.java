@@ -23,14 +23,14 @@ public class DeleteHistories {
         return deleteHistories;
     }
 
-    public DeleteHistories append(DeleteHistory deleteHistory) {
+    public DeleteHistories prepend(DeleteHistory deleteHistory) {
         if (deleteHistory == null) {
             throw new IllegalArgumentException("전달된 삭제 이력이 null입니다.");
         }
 
         List<DeleteHistory> newHistories = new ArrayList<>(deleteHistories.size() + 1);
-        newHistories.addAll(deleteHistories);
         newHistories.add(deleteHistory);
+        newHistories.addAll(deleteHistories);
         return new DeleteHistories(newHistories);
     }
 

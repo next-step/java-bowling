@@ -96,7 +96,8 @@ public class Question extends AbstractEntity {
 
         this.deleted = true;
 
-        return deleteHistories.append(new DeleteHistory(ContentType.QUESTION, this.getId(), writer, LocalDateTime.now()));
+        return deleteHistories.prepend(new DeleteHistory(ContentType.QUESTION, this.getId(), writer, LocalDateTime.now()));
+    }
 
     @Override
     public boolean equals(Object o) {
