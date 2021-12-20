@@ -1,8 +1,9 @@
-package bowling.domain;
+package bowling.domain.frame;
 
-import bowling.domain.state.End;
+import bowling.domain.Pitch;
 import bowling.domain.state.Start;
 import bowling.domain.state.State;
+import bowling.domain.state.end.End;
 import bowling.strategy.PitchNumberStrategy;
 
 import java.util.List;

@@ -27,10 +27,10 @@ public class Pitches {
 
     public boolean isStrike() {
         int currentPitchIndex = currentPitchIndex();
-        Pitch currentPitch = getPitch(currentPitchIndex);
+        Pitch currentPitch = pitch(currentPitchIndex);
         if (retryable()) {
             int previousPitchIndex = currentPitchIndex - ONE;
-            return currentPitch.isSecondStrike(getPitch(previousPitchIndex));
+            return currentPitch.isStrike(pitch(previousPitchIndex));
         }
         return currentPitch.isStrike();
     }
@@ -38,9 +38,9 @@ public class Pitches {
     public boolean isSpare() {
         int currentPitchIndex = currentPitchIndex();
         if (retryable()) {
-            Pitch currentPitch = getPitch(currentPitchIndex);
+            Pitch currentPitch = pitch(currentPitchIndex);
             int previousPitchIndex = currentPitchIndex - ONE;
-            return currentPitch.isSpare(getPitch(previousPitchIndex));
+            return currentPitch.isSpare(pitch(previousPitchIndex));
         }
         return false;
     }
@@ -48,17 +48,17 @@ public class Pitches {
     public List<String> pitchResults() {
         List<String> result = new ArrayList<>();
         for (int pitchNo = ZERO; pitchNo < pitches.size(); pitchNo++) {
-            result.add(pitchSymbol(pitchNo, getPitch(pitchNo)));
+            result.add(pitchSymbol(pitchNo, pitch(pitchNo)));
         }
         return result;
     }
 
     private String pitchSymbol(int pitchNo, Pitch pitch) {
         if (pitchNo >= ONE) {
-            if (pitch.isSecondStrike(getPitch(pitchNo - ONE))) {
+            if (pitch.isStrike(pitch(pitchNo - ONE))) {
                 return STRIKE;
             }
-            if (pitch.isSpare(getPitch(pitchNo - ONE))) {
+            if (pitch.isSpare(pitch(pitchNo - ONE))) {
                 return SPARE;
             }
         }
@@ -76,7 +76,7 @@ public class Pitches {
     }
 
     public Pitch currentPitch() {
-        return getPitch(currentPitchIndex());
+        return pitch(currentPitchIndex());
     }
 
     public int currentPitchIndex() {
@@ -85,10 +85,6 @@ public class Pitches {
 
     public boolean isEmpty() {
         return pitches.isEmpty();
-    }
-
-    public boolean isSecondPitch() {
-        return size() == TWO;
     }
 
     public boolean isThirdPitch() {
@@ -111,7 +107,11 @@ public class Pitches {
         return pitches.size();
     }
 
-    private Pitch getPitch(int index) {
+    private Pitch pitch(int index) {
         return pitches.get(index);
+    }
+
+    public List<Pitch> pitches() {
+        return pitches;
     }
 }

@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.Pitch;
 import bowling.domain.state.State;
 import bowling.strategy.PitchNumberStrategy;
 
@@ -16,8 +17,6 @@ public interface Frame {
 
     int fallDownPinsCount();
 
-    void changeState();
-
     State state();
 
     boolean isFinal();
@@ -25,4 +24,6 @@ public interface Frame {
     boolean isEnd();
 
     List<String> pitchResults();
+
+    boolean isThirdPitch();
 }

@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
 import bowling.strategy.PitchNumberStrategy;
 
 import java.util.List;

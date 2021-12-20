@@ -1,15 +1,19 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.Pitch;
+import bowling.domain.Pitches;
+import bowling.domain.Score;
 import bowling.strategy.PitchNumberStrategy;
 
 import java.util.List;
+
+import static bowling.domain.Pins.PINS_MAX_COUNT;
 
 public class FrameInfo {
     private static final int DEFAULT_NO = 0;
     private static final int INCREASE_NO_COUNT = 1;
     private static final int END_FRAME_PREVIOUS_NO = 8;
     private static final int END_FRAME_NO = 9;
-    private static final int PINS_MAX_COUNT = 10;
 
     private final int no;
     private final Pitches pitches;
@@ -66,24 +70,12 @@ public class FrameInfo {
         return pitches.isEmpty();
     }
 
-    public boolean isSecondPitch() {
-        return pitches.isSecondPitch();
-    }
-
     public boolean isThirdPitch() {
         return pitches.isThirdPitch();
     }
 
     public void addPitch(Pitch pitch) {
         pitches.add(pitch);
-    }
-
-    public boolean isStrike() {
-        return pitches.isStrike();
-    }
-
-    public boolean isSpare() {
-        return pitches.isSpare();
     }
 
     public List<String> pitchResults() {
