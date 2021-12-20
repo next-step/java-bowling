@@ -15,7 +15,6 @@ public class FinalScoresTest {
     void createTest() {
         assertThatCode(() -> new FinalScores(1)).doesNotThrowAnyException();
         assertThatCode(() -> new FinalScores(1, 2)).doesNotThrowAnyException();
-        assertThatCode(() -> new FinalScores(1, 2, 3)).doesNotThrowAnyException();
     }
 
     @Test

@@ -32,16 +32,29 @@ public class FinalScores extends Scores {
         if (sumScore() > MAX_OF_SCORE) {
             throw new IllegalArgumentException(String.format("라운드는 %d점을 넘길 수 없어요.", MAX_OF_SCORE));
         }
+
+        if (scores.size() == MAX_SCORE_SIZE && !isRunBonus()) {
+            throw new IllegalArgumentException("Strike 및 Spare를 치지 않은 경우는, 보너스 라운드가 없어요.");
+        }
+
     }
 
 
     @Override
     public boolean isClosed() {
-        if (scores.size() == 3) {
+        if (scores.size() == MAX_SCORE_SIZE) {
             return true;
         }
 
-        return scores.size() == 2 && sumScore() < 10;
+        return scores.size() == 2 && !isRunBonus();
     }
 
+
+    private boolean isRunBonus() {
+        if (containStrike()) {
+            return true;
+        }
+
+        return containSpare();
+    }
 }

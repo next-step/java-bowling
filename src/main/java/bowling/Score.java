@@ -19,7 +19,7 @@ public class Score {
             .forEach(number -> cache.put(number, new Score(number)));
     }
 
-     private Score(int score) {
+    private Score(int score) {
         valid(score);
 
         this.score = score;
@@ -29,6 +29,13 @@ public class Score {
         return cache.getOrDefault(score, new Score(score));
     }
 
+    public boolean isStrike() {
+        return score == 10;
+    }
+
+    public boolean isNonScore() {
+        return score == 0;
+    }
 
     public int getScore() {
         return score;

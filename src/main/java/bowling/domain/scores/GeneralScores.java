@@ -38,12 +38,13 @@ public class GeneralScores extends Scores {
 
     @Override
     public boolean isClosed() {
-        if (scores.size() == 2) {
+        if (scores.size() == MAX_SCORE_SIZE) {
             return true;
         }
 
-        return sumScore() == 10;
+        return containStrike();
     }
+
 
 
     @Override
