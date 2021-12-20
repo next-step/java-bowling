@@ -5,6 +5,7 @@ import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -60,12 +61,16 @@ public class Answer extends AbstractEntity {
         return this.writer.equals(writer);
     }
 
-    public void delete() {
-        deleted = true;
+    public DeleteHistory delete(User loginUser) {
+
+        validateUser(loginUser);
+        this.deleted = true;
+
+        return new DeleteHistory(ContentType.ANSWER, getId(), loginUser, LocalDateTime.now());
     }
 
-    public void checkOwnerForDelete(User loginUser) throws CannotDeleteException {
-        if(!isOwner(loginUser)) {
+    private void validateUser(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
             throw new CannotDeleteException(CANNOT_DELETE_MESSAGE);
         }
     }

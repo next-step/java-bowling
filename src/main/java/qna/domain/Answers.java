@@ -1,7 +1,6 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
-import qna.CannotDeleteException;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
@@ -30,15 +29,11 @@ public class Answers {
         return new Answers(answers);
     }
 
-    public void deleteAll() {
-        answers.forEach(Answer::delete);
-    }
+    public List<DeleteHistory> delete(User loginUser) {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        answers.forEach(answer -> deleteHistories.add(answer.delete(loginUser)));
 
-    public void checkOwnerForDelete(User loginUser) throws CannotDeleteException {
-
-        for (Answer answer : answers) {
-            answer.checkOwnerForDelete(loginUser);
-        }
+        return deleteHistories;
     }
 
     public void add(Answer answer) {
