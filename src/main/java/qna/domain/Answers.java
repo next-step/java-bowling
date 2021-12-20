@@ -8,9 +8,9 @@ import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static qna.exception.ConsumerExceptionWrapper.wrapper;
 
@@ -21,9 +21,7 @@ public class Answers {
     @OrderBy("id ASC")
     private List<Answer> answers;
 
-    public Answers() {
-
-    }
+    public Answers() {}
 
     public Answers(List<Answer> answers) {
         this.answers = answers;
@@ -39,12 +37,11 @@ public class Answers {
 
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         validateDelete(loginUser);
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        answers.forEach(answer -> {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        });
-        return deleteHistories;
+        return answers.stream()
+                .map(answer -> {
+                    answer.setDeleted(true);
+                    return new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());})
+                .collect(Collectors.toList());
     }
 
     public void validateDelete(User writer) throws CannotDeleteException {

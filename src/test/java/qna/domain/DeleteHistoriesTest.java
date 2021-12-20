@@ -18,20 +18,4 @@ public class DeleteHistoriesTest {
         assertThat(DELETE_HISTORIES)
                 .isEqualTo(new DeleteHistories(Arrays.asList(DH1, DH2)));
     }
-
-    @Test
-    @DisplayName("DeleteHistory 추가")
-    void add() {
-        DeleteHistories deleteHistories = new DeleteHistories();
-        deleteHistories.add(DH1);
-        assertThat(deleteHistories.getDeleteHistories().size()).isEqualTo(1);
-    }
-
-    @Test
-    @DisplayName("deleteHistories 추가")
-    void addAll() {
-        DeleteHistories deleteHistories = new DeleteHistories();
-        deleteHistories.addAll(Arrays.asList(DH1, DH2));
-        assertThat(deleteHistories.getDeleteHistories().size()).isEqualTo(2);
-    }
 }

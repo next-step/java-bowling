@@ -5,22 +5,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class DeleteHistories {
-    List<DeleteHistory> deleteHistories = new ArrayList<>();
+    private List<DeleteHistory> deleteHistories = new ArrayList<>();
 
-    public DeleteHistories() {
-
-    }
+    public DeleteHistories() {}
 
     public DeleteHistories(List<DeleteHistory> deleteHistories) {
         this.deleteHistories = deleteHistories;
-    }
-
-    public void add(DeleteHistory deleteHistory) {
-        deleteHistories.add(deleteHistory);
-    }
-
-    public void addAll(List<DeleteHistory> deleteHistories) {
-        this.deleteHistories.addAll(deleteHistories);
     }
 
     public List<DeleteHistory> getDeleteHistories() {
