@@ -16,6 +16,7 @@ public class DeleteHistories {
         if (deleteHistories == null) {
             throw new IllegalArgumentException("생성할 삭제 이력들이 null로 전달되었습니다.");
         }
+
         return new DeleteHistories(deleteHistories);
     }
 

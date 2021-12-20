@@ -44,7 +44,12 @@ public class DeleteHistory extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "DeleteHistory [contentType=" + contentType + ", contentId=" + contentId + ", deletedBy="
-                + deletedBy + ", createDate=" + createDate + "]";
+        return "DeleteHistory{" +
+                "id=" + id +
+                ", contentType=" + contentType +
+                ", contentId=" + contentId +
+                ", deletedBy=" + deletedBy +
+                ", createDate=" + createDate +
+                '}';
     }
 }
