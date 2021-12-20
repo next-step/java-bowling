@@ -21,11 +21,6 @@ public abstract class End implements State {
     }
 
     @Override
-    public boolean retryable() {
-        return false;
-    }
-
-    @Override
     public String toString() {
         return "End{}";
     }
