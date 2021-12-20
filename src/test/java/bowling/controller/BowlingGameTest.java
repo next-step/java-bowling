@@ -1,6 +1,6 @@
 package bowling.controller;
 
-import bowling.domain.Frame;
+import bowling.domain.frame.Frame;
 import bowling.domain.GameInfo;
 import bowling.strategy.RandomPitchNumberStrategy;
 import bowling.view.ResultView;
