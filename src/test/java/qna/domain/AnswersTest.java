@@ -3,10 +3,12 @@ package qna.domain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import qna.CannotDeleteException;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -105,5 +107,18 @@ class AnswersTest {
     void deletableFalseTest() {
         // when & then
         assertThat(AnswersTest.ANSWERS_A1A2.deletable(AnswerTest.A1.getWriter())).isFalse();
+    }
+
+    @DisplayName("답변들 삭제")
+    @Test
+    void delete() throws CannotDeleteException {
+        // given
+        Answer answer = new Answer(101L, UserTest.JAVAJIGI, QuestionTest.Q1, "content1");
+        Answers answers = Answers.from(Collections.singletonList(answer));
+        // when
+        List<DeleteHistory> histories = answers.delete(UserTest.JAVAJIGI);
+        // then
+        assertThat(answers.isDeleted()).isTrue();
+        assertThat(histories.stream().map(DeleteHistory::contentId)).containsExactly(answer.getId());
     }
 }

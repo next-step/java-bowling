@@ -1,15 +1,18 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Embeddable
 public class Answers {
@@ -54,6 +57,23 @@ public class Answers {
     public boolean deletable(User loginUser) {
         return answers.stream()
                 .allMatch(answer -> answer.isOwner(loginUser));
+    }
+
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        if (!deletable(loginUser)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+
+        answers.forEach(answer -> answer.setDeleted(true));
+
+        return answers.stream()
+                .map(answer -> new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()))
+                .collect(Collectors.toList());
+    }
+
+    public boolean isDeleted() {
+        return answers.stream()
+                .allMatch(Answer::isDeleted);
     }
 
     @Override

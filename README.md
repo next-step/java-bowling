@@ -29,6 +29,8 @@
 ## 구현 내용
 
 * [X] Entity: `Question`의 Field: `List<Answer> answers`를 일급 컬랙션으로 변경
+    * [X] `Question`에 속한 `List<Answer> answers` 삭제 메서드 `delete` 추가
+    * [X] `delete` 메서드 호출 이후, 삭제 이력 `List<DeleteHistory> deleteHistories` 반환
 * [X] Entity: `Answer`의 도메인 테스트 `AnswerTest` 추가
 * [X] Entity: `Question`의 삭제 메서드 `delete` 추가
     * [X] VO: `Answers`의 삭제 여부 확인 메서드 `deletable` 추가
