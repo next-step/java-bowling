@@ -6,6 +6,7 @@ import bowling.model.gameresult.GameResults;
 
 public class ResultView {
 
+    private static final String BOWLING_BOARD_HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     public static void printResults(Name name, GameResults gameResults) {
         printFrameHeader();
         printName(name);
@@ -17,7 +18,7 @@ public class ResultView {
     }
 
     public static void printFrameHeader() {
-        System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
+        System.out.println(BOWLING_BOARD_HEADER);
     }
 
     private static void printGameResults(GameResults gameResults) {

@@ -1,5 +1,7 @@
 package bowling.model.state;
 
+import bowling.model.Pins;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,5 +40,9 @@ public class States {
                     .filter(state -> !(state instanceof Ready))
                     .map(State::getDesc)
                     .collect(Collectors.joining("|"));
+    }
+
+    public State bowl(Pins knockedDown) {
+        return last().bowl(knockedDown);
     }
 }

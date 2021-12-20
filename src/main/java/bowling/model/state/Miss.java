@@ -29,8 +29,12 @@ public class Miss extends Finished {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Miss miss = (Miss) o;
         return Objects.equals(firstPins, miss.firstPins) && Objects.equals(secondPins, miss.secondPins);
     }

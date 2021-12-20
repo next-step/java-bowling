@@ -22,8 +22,12 @@ public class Spare extends Finished {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Spare spare = (Spare) o;
         return Objects.equals(firstPins, spare.firstPins) && Objects.equals(secondPins, spare.secondPins);
     }

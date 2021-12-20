@@ -15,8 +15,7 @@ public class FinalFrame extends Frame {
     @Override
     public Frame bowl(int knockedDownPin) {
         whenFinishResetStateForBonusBowl();
-        State state = states.last().bowl(Pins.knockedDown(knockedDownPin));
-        states.add(state);
+        states.add(states.bowl(Pins.knockedDown(knockedDownPin)));
         return this;
     }
 

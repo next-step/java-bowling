@@ -27,8 +27,12 @@ public class FirstBowl extends Running {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         FirstBowl firstBowl = (FirstBowl) o;
         return Objects.equals(firstPins, firstBowl.firstPins);
     }
