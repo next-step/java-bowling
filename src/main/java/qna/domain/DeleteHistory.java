@@ -2,9 +2,14 @@ package qna.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
-public class DeleteHistory extends AbstractEntity {
+public class DeleteHistory {
+    @Id
+    @GeneratedValue
+    private Long id;
+
     @Enumerated(EnumType.STRING)
     private ContentType contentType;
 
@@ -14,6 +19,7 @@ public class DeleteHistory extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_deletehistory_to_user"))
     private User deletedBy;
 
+    @Column(nullable = false)
     private LocalDateTime createDate = LocalDateTime.now();
 
     public DeleteHistory() {
@@ -40,6 +46,19 @@ public class DeleteHistory extends AbstractEntity {
 
     public User deletedBy() {
         return deletedBy;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DeleteHistory that = (DeleteHistory) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override
