@@ -3,6 +3,8 @@ package bowling;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import bowling.domain.factory.BowlingScoresFactory;
+import bowling.domain.scores.GeneralScores;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,12 +26,12 @@ public class ScoreBoardTest {
     void getLastFrameTest() {
         List<Frame> mockFrames = IntStream.range(0, 2)
             .boxed()
-            .map(round -> new Frame(round, new Scores(1, 2)))
+            .map(round -> new Frame(round, new GeneralScores(1, 2)))
             .collect(Collectors.toList());
 
         ScoreBoard scoreBoard = new ScoreBoard(mockFrames);
 
-        assertThat(scoreBoard.getLastFrame()).isEqualTo(new Frame(1, new Scores(1, 2)));
+        assertThat(scoreBoard.getLastFrame()).isEqualTo(new Frame(1, new GeneralScores(1, 2)));
     }
 
     @Test
@@ -37,7 +39,7 @@ public class ScoreBoardTest {
     void getLastFrameLastTest() {
         ScoreBoard scoreBoard = new ScoreBoard();
 
-        assertThat(scoreBoard.getLastFrame()).isEqualTo(new Frame(0));
+        assertThat(scoreBoard.getLastFrame()).isEqualTo(new Frame(0, new BowlingScoresFactory()));
     }
 
 }

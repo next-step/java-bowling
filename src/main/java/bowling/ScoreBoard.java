@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.domain.factory.BowlingScoresFactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class ScoreBoard {
 
     public Frame getLastFrame() {
         if (frames.isEmpty()) {
-            return new Frame(0);
+            return new Frame(0, new BowlingScoresFactory());
         }
 
         return frames.get(frames.size() - 1);

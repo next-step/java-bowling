@@ -1,0 +1,66 @@
+package bowling.domain.scores;
+
+import bowling.Score;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
+public class GeneralScores extends Scores {
+
+    private final static int MAX_SCORE_SIZE = 2;
+    private static final int MAX_OF_SCORE = 10;
+
+
+    public GeneralScores() {
+        this(new ArrayList<>());
+    }
+
+    public GeneralScores(int... number) {
+        this(toScore(number));
+    }
+
+    public GeneralScores(Score... scores) {
+        this(Arrays.asList(scores));
+    }
+
+    public GeneralScores(List<Score> scores) {
+        super(scores);
+
+        if (scores.size() > MAX_SCORE_SIZE) {
+            throw new IllegalArgumentException(String.format("점수는 %d개 이상일 수 없어요.", MAX_SCORE_SIZE));
+        }
+
+        if (sumScore() > MAX_OF_SCORE) {
+            throw new IllegalArgumentException(String.format("라운드는 %d점을 넘길 수 없어요.", MAX_OF_SCORE));
+        }
+    }
+
+    @Override
+    public boolean isClosed() {
+        if (scores.size() == 2) {
+            return true;
+        }
+
+        return sumScore() == 10;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        GeneralScores scores1 = (GeneralScores) o;
+        return Objects.equals(scores, scores1.scores);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(scores);
+    }
+
+}
