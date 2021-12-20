@@ -9,8 +9,8 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @DisplayName("질문 테스트")
 public class QuestionTest {
-    public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-    public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
+    public static final Question Q1 = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
+    public static final Question Q2 = new Question(2L, "title2", "contents2").writeBy(UserTest.SANJIGI);
 
     @DisplayName("질문 삭제")
     @Test

@@ -75,7 +75,7 @@ public class Answers {
 
     private DeleteHistories deleteHistories() {
         return DeleteHistories.from(answers.stream()
-                .map(answer -> new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()))
+                .map(DeleteHistory::from)
                 .collect(Collectors.toList()));
     }
 

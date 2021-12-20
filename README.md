@@ -36,6 +36,7 @@
     * [X] VO: `Answers`의 삭제 여부 확인 메서드 `deletable` 추가
     * [X] `List<DeleteHistory>` 반환 방식으로 변경
 * [X] Entity: `DeleteHistory`의 리스트 형태 사용 로직에 일급 컬렉션 `DeleteHistories` 적용
+* [X] `DeleteHistory` 생성 관련 로직을 정적 팩토리 메서드 위임
 
 ## 프로그래밍 요구사항
 

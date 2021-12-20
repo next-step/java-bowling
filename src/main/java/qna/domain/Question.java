@@ -3,7 +3,6 @@ package qna.domain;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -96,7 +95,7 @@ public class Question extends AbstractEntity {
 
         this.deleted = true;
 
-        return deleteHistories.prepend(new DeleteHistory(ContentType.QUESTION, this.getId(), writer, LocalDateTime.now()));
+        return deleteHistories.prepend(DeleteHistory.from(this));
     }
 
     @Override
