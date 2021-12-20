@@ -32,6 +32,7 @@
 * [X] Entity: `Answer`의 도메인 테스트 `AnswerTest` 추가
 * [X] Entity: `Question`의 삭제 메서드 `delete` 추가
     * [X] VO: `Answers`의 삭제 여부 확인 메서드 `deletable` 추가
+    * [X] `List<DeleteHistory>` 반환 방식으로 변경
 
 ## 프로그래밍 요구사항
 
