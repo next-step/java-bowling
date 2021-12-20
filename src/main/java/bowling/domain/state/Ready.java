@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Ready extends Running {
-
     private Ready() {
     }
 

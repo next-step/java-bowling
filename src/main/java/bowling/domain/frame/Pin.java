@@ -3,7 +3,6 @@ package bowling.domain.frame;
 import java.util.Objects;
 
 public class Pin {
-
     private static final String NO_RANGE_EXCEPTION_MESSAGE_FORMAT = "핀의 갯수는 %d ~ %d 사이여야 합니다.";
     private static final Pin[] ZERO_THROUGH_TEN = {
             new Pin(0),
@@ -18,7 +17,6 @@ public class Pin {
             new Pin(9),
             new Pin(10)
     };
-
     private static final int MIN = 0;
     private static final int MAX = 10;
     public static final Pin TEN = ZERO_THROUGH_TEN[MAX];

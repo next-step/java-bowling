@@ -7,7 +7,6 @@ import bowling.domain.state.State;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
-
     private final Round round;
     private State state;
     private Frame next;

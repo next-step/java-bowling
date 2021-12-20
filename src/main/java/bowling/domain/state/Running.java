@@ -3,7 +3,6 @@ package bowling.domain.state;
 import bowling.domain.frame.Score;
 
 public abstract class Running implements State {
-
     @Override
     public boolean isFinished() {
         return false;

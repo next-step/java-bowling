@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
 public class FrameFactory {
-
     private FrameFactory() {
 
     }

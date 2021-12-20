@@ -1,7 +1,7 @@
-package bowling.service.dto;
+package bowling.dto;
 
-import bowling.domain.frame.Pin;
 import bowling.domain.result.FrameResultsTest;
+import bowling.domain.state.Strike;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -17,10 +17,10 @@ class FrameResultsDtoTest {
         List<FrameResultDto> frameResultDtos = dto.getFrameResultDtos();
 
         assertThat(frameResultDtos.get(0).getScore()).isEqualTo(30);
-        assertThat(frameResultDtos.get(0).getPins()).isEqualTo(Arrays.asList(Pin.TEN));
+        assertThat(frameResultDtos.get(0).getStates()).isEqualTo(Arrays.asList(new Strike()));
         assertThat(frameResultDtos.get(1).getScore()).isEqualTo(-1);
-        assertThat(frameResultDtos.get(1).getPins()).isEqualTo(Arrays.asList(Pin.TEN));
+        assertThat(frameResultDtos.get(1).getStates()).isEqualTo(Arrays.asList(new Strike()));
         assertThat(frameResultDtos.get(2).getScore()).isEqualTo(-1);
-        assertThat(frameResultDtos.get(2).getPins()).isEqualTo(Arrays.asList(Pin.TEN));
+        assertThat(frameResultDtos.get(2).getStates()).isEqualTo(Arrays.asList(new Strike()));
     }
 }

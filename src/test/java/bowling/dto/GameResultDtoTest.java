@@ -1,4 +1,4 @@
-package bowling.service.dto;
+package bowling.dto;
 
 import bowling.domain.result.GameResultTest;
 import org.junit.jupiter.api.Test;

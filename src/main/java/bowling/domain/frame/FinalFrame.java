@@ -15,6 +15,7 @@ public class FinalFrame implements Frame {
     private static final int END_LEFT = 0;
     private static final int MISS_STATE_LEFT = 0;
     private static final int CALCULATE_LEFT_DEFAULT = 1;
+
     private LinkedList<State> states;
     private int left;
 

@@ -1,11 +1,10 @@
-package bowling.service.dto;
+package bowling.dto;
 
 import bowling.domain.result.GameResult;
 
 public class GameResultDto {
     private final String name;
     private final FrameResultsDto frameResultsDto;
-
 
     private GameResultDto(String name, FrameResultsDto frameResultsDto) {
         this.name = name;
