@@ -51,8 +51,8 @@ public class FinalScores extends Scores {
 
 
     private boolean isNotRunBonus() {
-        if (!containStrike()) {
-            return true;
+        if (containStrike()) {
+            return false;
         }
 
         return !containSpare();
