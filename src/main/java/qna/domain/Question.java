@@ -5,6 +5,7 @@ import qna.CannotDeleteException;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -19,7 +20,7 @@ public class Question extends AbstractEntity {
     private User writer;
 
     @Embedded
-    private Answers answers;
+    private Answers answers = Answers.emptyInstance();
 
     private boolean deleted = false;
 
@@ -96,6 +97,19 @@ public class Question extends AbstractEntity {
         this.deleted = true;
 
         return deleteHistories.append(new DeleteHistory(ContentType.QUESTION, this.getId(), writer, LocalDateTime.now()));
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Question question = (Question) o;
+        return deleted == question.deleted && Objects.equals(title, question.title) && Objects.equals(contents, question.contents) && Objects.equals(writer, question.writer) && Objects.equals(answers, question.answers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), title, contents, writer, answers, deleted);
     }
 
     @Override
