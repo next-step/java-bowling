@@ -29,4 +29,34 @@ public class ScoresTest {
         assertThat(new Scores(7, 3).sumScore()).isEqualTo(10);
     }
 
+    @Test
+    @DisplayName("프레임의 투구 횟수는 최대 2회이다.")
+    void isClosedTest() {
+        assertThat(new Scores(1).isClosed()).isFalse();
+        assertThat(new Scores(1, 2).isClosed()).isTrue();
+    }
+
+    @Test
+    @DisplayName("프레임의 첫번째 투구가 STRIKE 인경우, 프레임이 종료된다.")
+    void isClosedStrikeTest() {
+        assertThat(new Scores(10).isClosed()).isTrue();
+    }
+
+    @Test
+    @DisplayName("마지막 프레임의 투구 횟수는 최대 2회이다.")
+    void isClosedMaxRoundTest() {
+        assertThat(new Scores(1).isClosedMaxRound()).isFalse();
+        assertThat(new Scores(1, 2).isClosedMaxRound()).isTrue();
+    }
+
+    @Test
+    @DisplayName("마지막 프레임의 투구중 STRIKE 이거나, SPARE가 존재하면, 투구 횟수는 최대 3회이다.")
+    void isClosedMaxRoundStrikeOrSpareTest() {
+        assertThat(new Scores(10, 10).isClosedMaxRound()).isFalse();
+        assertThat(new Scores(3, 7).isClosedMaxRound()).isFalse();
+        assertThat(new Scores(10, 10).isClosedMaxRound()).isFalse();
+        assertThat(new Scores(10, 10, 5).isClosedMaxRound()).isTrue();
+    }
+
+
 }

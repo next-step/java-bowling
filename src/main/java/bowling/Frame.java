@@ -1,5 +1,7 @@
 package bowling;
 
+import java.util.Objects;
+
 public class Frame {
 
     private static final int MIN_ROUND = 0;
@@ -10,12 +12,24 @@ public class Frame {
     private final int round;
     private final Scores scores;
 
+    public Frame(int round) {
+        this(round, new Scores());
+    }
+
     public Frame(int round, Scores scores) {
 
         valid(round, scores);
 
         this.round = round;
         this.scores = scores;
+    }
+
+    public boolean isClosedStroke() {
+        if (round == MAX_ROUND) {
+            return scores.isClosedMaxRound();
+        }
+
+        return scores.isClosed();
     }
 
     private void valid(int round, Scores scores) {
@@ -37,4 +51,20 @@ public class Frame {
 
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Frame frame = (Frame) o;
+        return round == frame.round && Objects.equals(scores, frame.scores);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(round, scores);
+    }
 }

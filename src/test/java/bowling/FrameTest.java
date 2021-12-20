@@ -1,8 +1,9 @@
 package bowling;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,5 +23,21 @@ public class FrameTest {
 
         assertThatIllegalArgumentException().isThrownBy(
             () -> new Frame(9, new Scores(10, 10, 10, 1)));
+    }
+
+    @Test
+    @DisplayName("10라운드가 아닌경우, 동일 프레임에서 스트로크가 가능한지 기능을 확인한다.")
+    void isClosedStrokeTest() {
+        assertThat(new Frame(0, new Scores(10)).isClosedStroke()).isTrue();
+        assertThat(new Frame(0, new Scores(7, 3)).isClosedStroke()).isTrue();
+        assertThat(new Frame(0, new Scores(1, 2)).isClosedStroke()).isTrue();
+    }
+
+    @Test
+    @DisplayName("10라운드인경우, 동일 프레임에서 스트로크가 가능한지 기능을 확인한다.")
+    void isClosedStrokeLastRoundTest() {
+        assertThat(new Frame(9, new Scores(10)).isClosedStroke()).isFalse();
+        assertThat(new Frame(9, new Scores(7, 3)).isClosedStroke()).isFalse();
+        assertThat(new Frame(9, new Scores(10, 10, 10)).isClosedStroke()).isTrue();
     }
 }

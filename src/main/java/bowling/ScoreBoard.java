@@ -14,4 +14,16 @@ public class ScoreBoard {
     public ScoreBoard(List<Frame> frames) {
         this.frames = frames;
     }
+
+    public boolean lastFrameStrokeIsClosed() {
+        return getLastFrame().isClosedStroke();
+    }
+
+    public Frame getLastFrame() {
+        if (frames.isEmpty()) {
+            return new Frame(0);
+        }
+
+        return frames.get(frames.size() - 1);
+    }
 }

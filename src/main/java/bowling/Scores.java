@@ -1,7 +1,9 @@
 package bowling;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Scores {
@@ -9,6 +11,10 @@ public class Scores {
     private final static int MAX_SCORE_SIZE = 3;
 
     private final List<Score> scores;
+
+    public Scores() {
+        this(new ArrayList<>());
+    }
 
     public Scores(int... number) {
         this(toScore(number));
@@ -25,6 +31,23 @@ public class Scores {
         this.scores = scores;
     }
 
+    public boolean isClosed() {
+        if (scores.size() == 2) {
+            return true;
+        }
+
+        return sumScore() == 10;
+    }
+
+    public boolean isClosedMaxRound() {
+        if (scores.size() == 3) {
+            return true;
+        }
+
+        return scores.size() == 2 && sumScore() < 10;
+    }
+
+
     public int sumScore() {
         return scores.stream()
             .mapToInt(Score::getScore)
@@ -38,4 +61,23 @@ public class Scores {
             .map(Score::of)
             .collect(Collectors.toList());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Scores scores1 = (Scores) o;
+        return Objects.equals(scores, scores1.scores);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(scores);
+    }
+
+
 }
