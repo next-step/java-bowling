@@ -12,12 +12,12 @@ import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class ScoreBoardTest {
+public class FramesTest {
 
     @Test
     void createTest() {
         List<Frame> emptyFrames = new ArrayList<>();
-        assertThatCode(() -> new ScoreBoard(emptyFrames)).doesNotThrowAnyException();
+        assertThatCode(() -> new Frames(emptyFrames)).doesNotThrowAnyException();
     }
 
 
@@ -29,17 +29,17 @@ public class ScoreBoardTest {
             .map(round -> new Frame(round, new GeneralScores(1, 2)))
             .collect(Collectors.toList());
 
-        ScoreBoard scoreBoard = new ScoreBoard(mockFrames);
+        Frames frames = new Frames(mockFrames);
 
-        assertThat(scoreBoard.getLastFrame()).isEqualTo(new Frame(1, new GeneralScores(1, 2)));
+        assertThat(frames.getLastFrame()).isEqualTo(new Frame(1, new GeneralScores(1, 2)));
     }
 
     @Test
     @DisplayName("경기 최초에 프레임을 반환할 경우, 비어있는 프레임이 반환된다.")
     void getLastFrameLastTest() {
-        ScoreBoard scoreBoard = new ScoreBoard();
+        Frames frames = new Frames();
 
-        assertThat(scoreBoard.getLastFrame()).isEqualTo(new Frame(0, new BowlingScoresFactory()));
+        assertThat(frames.getLastFrame()).isEqualTo(new Frame(0, new BowlingScoresFactory()));
     }
 
 }

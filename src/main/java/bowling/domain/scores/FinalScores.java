@@ -34,7 +34,7 @@ public class FinalScores extends Scores {
         }
 
         if (scores.size() == MAX_SCORE_SIZE && isNotRunBonus()) {
-            throw new IllegalArgumentException("Strike 및 Spare를 치지 않은 경우는, 보너스 라운드가 없어요.");
+            throw new IllegalArgumentException("Strike 또는 Spare 를 치지 않은 경우는, 보너스 라운드가 없어요.");
         }
 
     }

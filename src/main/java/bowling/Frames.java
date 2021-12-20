@@ -4,15 +4,15 @@ import bowling.domain.factory.BowlingScoresFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScoreBoard {
+public class Frames {
 
     private final List<Frame> frames;
 
-    public ScoreBoard() {
+    public Frames() {
         this(new ArrayList<>());
     }
 
-    public ScoreBoard(List<Frame> frames) {
+    public Frames(List<Frame> frames) {
         this.frames = frames;
     }
 
