@@ -59,16 +59,20 @@ public class Answers {
                 .allMatch(answer -> answer.isOwner(loginUser));
     }
 
-    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
         if (!deletable(loginUser)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
 
         answers.forEach(answer -> answer.setDeleted(true));
 
-        return answers.stream()
+        return deleteHistories();
+    }
+
+    private DeleteHistories deleteHistories() {
+        return DeleteHistories.from(answers.stream()
                 .map(answer -> new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     public boolean isDeleted() {

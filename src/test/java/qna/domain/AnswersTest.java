@@ -111,12 +111,12 @@ class AnswersTest {
 
     @DisplayName("답변들 삭제")
     @Test
-    void delete() throws CannotDeleteException {
+    void deleteTest() throws CannotDeleteException {
         // given
         Answer answer = new Answer(101L, UserTest.JAVAJIGI, QuestionTest.Q1, "content1");
         Answers answers = Answers.from(Collections.singletonList(answer));
         // when
-        List<DeleteHistory> histories = answers.delete(UserTest.JAVAJIGI);
+        List<DeleteHistory> histories = answers.delete(UserTest.JAVAJIGI).getDeleteHistories();
         // then
         assertThat(answers.isDeleted()).isTrue();
         assertThat(histories.stream().map(DeleteHistory::contentId)).containsExactly(answer.getId());
