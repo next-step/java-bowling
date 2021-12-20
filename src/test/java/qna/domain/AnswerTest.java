@@ -32,7 +32,7 @@ class AnswerTest {
         Answer answer = new Answer();
         // when & then
         assertThat(answer.isDeleted()).isFalse();
-        answer.setDeleted(true);
+        answer.delete();
         assertThat(answer.isDeleted()).isTrue();
     }
 

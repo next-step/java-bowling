@@ -39,6 +39,7 @@
 * [X] `DeleteHistory` 생성 관련 로직을 정적 팩토리 메서드 위임
 * [X] Entity: `Answer`, `DeleteHistory`, `Question`, `User` 에 Field: `id` 기반 equals, hashCode 최적화
 * [X] Entity: `Answer`, `DeleteHistory`, `Question`, `User`의 toString 재정의
+* [X] Entity: `Answer` 삭제 로직 메서드로 위임
 
 ## 프로그래밍 요구사항
 
