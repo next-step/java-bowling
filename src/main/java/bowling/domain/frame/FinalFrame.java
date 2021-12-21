@@ -11,7 +11,8 @@ import java.util.List;
 public class FinalFrame extends TemplateFrame {
     private static final int FINAL_FRAME_NO = 9;
     public static final int STATES_SECOND_INDEX = 1;
-    public static final int INIT_COUNT = 0;
+    public static final int STATES_FIRST_INDEX = 0;
+    public static final int STATE_THIRD_INDEX = 3;
 
     private List<State> states = new LinkedList<>();
 
@@ -49,16 +50,29 @@ public class FinalFrame extends TemplateFrame {
 
     @Override
     public Score score() {
-        Score score = state.score();
-        return calculateBonusScore(score);
+        if (states.size() == STATES_SECOND_INDEX) {
+            return null;
+        }
+        Score score = states.get(STATES_SECOND_INDEX).score();
+        for (int index = STATE_THIRD_INDEX; index < states.size(); index++) {
+            Score nextScore = states.get(index).score();
+            score = score.add(nextScore);
+        }
+        return score;
     }
 
     @Override
     public Score calculateBonusScore(Score beforeScore) {
-        for (int index = STATES_SECOND_INDEX; index < states.size(); index++) {
-            beforeScore = beforeScore.next(states.get(index).score(), INIT_COUNT);
+        Score score = beforeScore;
+        if (score.calculated()) {
+            return score;
         }
-        return beforeScore.next(INIT_COUNT, INIT_COUNT);
+        int index = STATES_SECOND_INDEX;
+        for (int count = STATES_FIRST_INDEX; count < score.bonusCount(); count++) {
+            State state = states.get(index++);
+            score = state.calculateBonusScore(score);
+        }
+        return score;
     }
 
     @Override
@@ -74,6 +88,11 @@ public class FinalFrame extends TemplateFrame {
     @Override
     public void addState(State state) {
         states.add(state);
+    }
+
+    @Override
+    public State currentState() {
+        return states.get(states.size() - STATES_SECOND_INDEX);
     }
 
     private static void validateFinalFrameNo(FrameInfo frameInfo) {

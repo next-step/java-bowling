@@ -14,8 +14,8 @@ public class Miss extends End {
         this.secondPins = secondPins;
     }
 
-    public static Miss from(Pins secondPins) {
-        return new Miss(Pins.create(0), secondPins);
+    public static Miss from(Pins firstPins) {
+        return new Miss(firstPins, Pins.create(0));
     }
 
     public static Miss from(Pins firstPins, Pins secondPins) {

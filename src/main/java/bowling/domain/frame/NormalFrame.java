@@ -83,6 +83,11 @@ public class NormalFrame extends TemplateFrame {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public State currentState() {
+        throw new UnsupportedOperationException();
+    }
+
     private boolean isCalculateNextFrame() {
         return Objects.nonNull(nextFrame) && nextFrame.isEnd();
     }

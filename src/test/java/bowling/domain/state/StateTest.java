@@ -200,10 +200,10 @@ class StateTest {
         assertThat(state).isInstanceOf(Start.class);
         //when
         //first pitch
-        state = state.run(Pitch.init(10, 0), frame);
+        state = state.run(Pitch.init(10, 1), frame);
 
         //second pitch
-        state = state.run(Pitch.init(10, 10), frame);
+        state = state.run(Pitch.init(9, 9), frame);
 
         //third pitch
         state = state.run(Pitch.init(10, 1), frame);

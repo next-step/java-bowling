@@ -30,4 +30,6 @@ public interface Frame {
     Score calculateBonusScore(Score beforeScore);
 
     void addState(State state);
+
+    State currentState();
 }

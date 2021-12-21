@@ -56,6 +56,10 @@ public class Score {
         return new Score(this.score + score.score, bonusCount);
     }
 
+    public Score add(Score score) {
+        return new Score(this.score + score.score, this.bonusCount + score.bonusCount);
+    }
+
     public boolean calculated() {
         return this.bonusCount == DEFAULT_COUNT;
     }

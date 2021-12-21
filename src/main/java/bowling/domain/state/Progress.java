@@ -49,32 +49,32 @@ public class Progress implements State {
     }
 
     private State checkFinalState(Frame frame, Pins pins) {
-        if (beforePins.isStrike(pins)) {
+        if (beforePins.isStrike(pins) || pins.isStrike()) {
             return checkThirdPitchNoOfStrike(frame, pins);
         }
         return checkRetryOfMissAndSpare(frame, pins);
     }
 
     private State checkThirdPitchNoOfStrike(Frame frame, Pins pins) {
+        Strike strike = Strike.from();
+        frame.addState(strike);
         if (frame.isThirdPitch()) {
-            Strike strike = Strike.from();
-            frame.addState(strike);
             return strike;
         }
         return new Progress(pins);
     }
 
     private State checkRetryOfMissAndSpare(Frame frame, Pins pins) {
-        if (beforePins.isSpare(pins)) {
+        if (checkBeforeMiss(frame.currentState()) && beforePins.isSpare(pins)) {
             return checkThirdPitchNoOfSpare(frame, pins);
         }
         return checkThirdPitchNoOfMiss(frame, pins);
     }
 
     private State checkThirdPitchNoOfSpare(Frame frame, Pins pins) {
+        Spare spare = Spare.of(beforePins, pins);
+        frame.addState(spare);
         if (frame.isThirdPitch()) {
-            Spare spare = Spare.of(beforePins, pins);
-            frame.addState(spare);
             return spare;
         }
         return new Progress(pins);
@@ -88,7 +88,7 @@ public class Progress implements State {
     }
 
     private State checkCreateMiss(Frame frame, Pins pins) {
-        if (beforePins.isStrike() && pins.isMiss()) {
+        if (checkBeforeStrikeOrSpare(frame.currentState()) && pins.isMiss()) {
             Miss miss = Miss.from(pins);
             frame.addState(miss);
             return miss;
@@ -100,9 +100,34 @@ public class Progress implements State {
         if (retry) {
             return new Progress(pins);
         }
+        return checkBeforeStrikeOrSpareOfMiss(frame, pins);
+    }
+
+    private State checkBeforeStrikeOrSpareOfMiss(Frame frame, Pins pins) {
+        if (checkBeforeStrikeOrSpare(frame.currentState()) && pins.isMiss()) {
+            Miss miss = Miss.from(pins);
+            frame.addState(miss);
+            return miss;
+        }
         Miss miss = Miss.from(beforePins, pins);
         frame.addState(miss);
-        return Miss.from(beforePins, pins);
+        return miss;
+    }
+
+    private boolean checkBeforeStrikeOrSpare(State state) {
+        return checkBeforeStrike(state) || checkBeforeSpare(state);
+    }
+
+    private boolean checkBeforeStrike(State state) {
+        return state instanceof Strike;
+    }
+
+    private boolean checkBeforeSpare(State state) {
+        return state instanceof Spare;
+    }
+
+    private boolean checkBeforeMiss(State state) {
+        return state instanceof Miss;
     }
 
     private State checkNormalState(Pins pins) {
