@@ -9,13 +9,21 @@ public class Frame {
     private final Score sumScore;
 
     public Frame(Scores scores) {
-        this(scores, Score.of(scores.sumScore()));
+        this(scores, scores.sumScore());
     }
 
+    private Frame(Scores scores, int sumScore) {
+        this(scores, Score.of(sumScore));
+    }
 
     private Frame(Scores scores, Score sumScore) {
         this.scores = scores;
         this.sumScore = sumScore;
+    }
+
+    public Frame updateScore(int hitCount) {
+        Scores tempScore = this.scores.add(hitCount);
+        return new Frame(tempScore, tempScore.sumScore());
     }
 
     public boolean isClosedStroke() {

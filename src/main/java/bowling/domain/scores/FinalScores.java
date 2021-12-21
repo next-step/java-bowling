@@ -46,9 +46,8 @@ public class FinalScores extends Scores {
             throw new IllegalArgumentException("Strike 또는 Spare 를 치지 않은 경우는, 보너스 라운드가 없어요.");
         }
 
-        List<Score> tempScores = new ArrayList<>(this.scores);
-        tempScores.add(Score.of(hitCount));
-        return new FinalScores(tempScores);
+        scores.add(Score.of(hitCount));
+        return new FinalScores(scores);
     }
 
 

@@ -42,9 +42,8 @@ public class GeneralScores extends Scores {
             throw new IllegalArgumentException(String.format("점수는 %d개 이상일 수 없어요.", MAX_SCORE_SIZE));
         }
 
-        List<Score> tempScores = new ArrayList<>(this.scores);
-        tempScores.add(Score.of(hitCount));
-        return new FinalScores(tempScores);
+        this.scores.add(Score.of(hitCount));
+        return new GeneralScores(this.scores);
     }
 
     @Override

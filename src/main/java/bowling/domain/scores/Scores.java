@@ -17,7 +17,7 @@ public abstract class Scores {
     protected final List<Score> scores;
 
     public Scores(List<Score> scores) {
-        this.scores = Collections.unmodifiableList(scores);
+        this.scores = scores;
     }
 
     public abstract Scores add(int hitCount);
