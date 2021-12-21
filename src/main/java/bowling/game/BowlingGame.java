@@ -5,7 +5,7 @@ import bowling.model.frame.Frame;
 import bowling.model.frame.NormalFrame;
 import bowling.model.gameresult.GameResult;
 import bowling.model.gameresult.GameResults;
-import bowling.view.InputView;
+import bowling.view.PinsView;
 import bowling.view.ResultView;
 
 public class BowlingGame {
@@ -41,7 +41,7 @@ public class BowlingGame {
     }
 
     private GameResult bowl() {
-        int knockedDownPin = InputView.getIntValue(String.format("%d 프레임 투구 :", this.frame.getFrameNo()));
+        int knockedDownPin = PinsView.getKnockedDownPinCount(this.frame.getFrameNo());
         Frame nextFrame = frame.bowl(knockedDownPin);
         GameResult gameResult = getGameResult();
         this.frame = nextFrame;

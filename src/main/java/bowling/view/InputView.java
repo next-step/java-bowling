@@ -7,21 +7,22 @@ public class InputView {
 
     private static Scanner scanner = new Scanner(System.in);
     private static final Pattern intPattern = Pattern.compile("-?\\d+");
+    private static final String NOT_NUMBER_MESSAGE = "값이 숫자가 아닙니다.";
 
-    public static int getIntValue(String message) {
+    protected static int getIntValue(String message) {
         System.out.print(message);
         String input = scanner.nextLine();
-        checkIsInt(input);
+        checkIsNumber(input);
         return Integer.parseInt(input);
     }
 
-    private static void checkIsInt(String input) {
+    private static void checkIsNumber(String input) {
         if(!intPattern.matcher(input).matches()) {
-            throw new IllegalArgumentException("값이 숫자가 아닙니다.");
+            throw new IllegalArgumentException(NOT_NUMBER_MESSAGE);
         }
     }
 
-    public static String getStringValue(String message) {
+    protected static String getStringValue(String message) {
         System.out.print(message);
         return scanner.nextLine();
     }

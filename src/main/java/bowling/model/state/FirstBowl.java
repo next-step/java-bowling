@@ -6,6 +6,7 @@ import java.util.Objects;
 
 public class FirstBowl extends Running {
 
+    private static final String GUTTER_DESC = "-";
     private final Pins firstPins;
 
     public FirstBowl(Pins knockedDownPin) {
@@ -22,6 +23,9 @@ public class FirstBowl extends Running {
 
     @Override
     public String getDesc() {
+        if(firstPins.isGutter()) {
+            return GUTTER_DESC;
+        }
         return firstPins.count();
     }
 
