@@ -6,5 +6,7 @@ public interface ScoresFactory {
 
     Scores create(int round);
 
+    Scores create(int round, int hitCount);
+
 
 }
