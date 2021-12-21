@@ -25,7 +25,7 @@ public abstract class TemplateFrame implements Frame {
     public void run(PitchNumberStrategy numberStrategy) {
         if (progressing()) {
             Pitch pitch = frameInfo.createPitch(numberStrategy);
-            state.run(pitch, this);
+            state = state.run(pitch, this);
         }
     }
 
@@ -36,11 +36,6 @@ public abstract class TemplateFrame implements Frame {
     @Override
     public boolean isEnd() {
         return state instanceof End;
-    }
-
-    @Override
-    public List<String> pitchResults() {
-        return frameInfo.pitchResults();
     }
 
     @Override

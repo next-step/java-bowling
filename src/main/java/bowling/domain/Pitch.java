@@ -43,22 +43,6 @@ public class Pitch {
         return fallDownPins;
     }
 
-    public boolean isStrike() {
-        return fallDownPins.isStrike();
-    }
-
-    public boolean isStrike(Pitch pitch) {
-        return fallDownPins.isStrike(pitch.fallDownPins);
-    }
-
-    public boolean isSpare(Pitch pitch) {
-        return this.fallDownPins.isSpare(pitch.fallDownPins);
-    }
-
-    public boolean isGutter() {
-        return this.fallDownPins.isGutter();
-    }
-
     public int pinsSize() {
         return pins.size();
     }

@@ -1,10 +1,10 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pitch;
+import bowling.domain.Score;
 import bowling.domain.state.State;
 import bowling.strategy.PitchNumberStrategy;
 
-import java.util.List;
 
 public interface Frame {
     void run(PitchNumberStrategy numberStrategy);
@@ -23,7 +23,11 @@ public interface Frame {
 
     boolean isEnd();
 
-    List<String> pitchResults();
-
     boolean isThirdPitch();
+
+    Score score();
+
+    Score calculateBonusScore(Score beforeScore);
+
+    void addState(State state);
 }

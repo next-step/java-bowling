@@ -14,12 +14,12 @@ public class Strike extends End {
     }
 
     @Override
-    Score score() {
+    public Score score() {
         return Score.ofStrike();
     }
 
     @Override
-    Score calculateBonusScore(Score beforeScore) {
+    public Score calculateBonusScore(Score beforeScore) {
         if (beforeScore.calculated()) {
             return beforeScore;
         }
@@ -27,7 +27,7 @@ public class Strike extends End {
     }
 
     @Override
-    String symbol() {
+    public String symbol() {
         return STRIKE_SYMBOL;
     }
 }

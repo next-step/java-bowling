@@ -1,11 +1,19 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pitch;
+import bowling.domain.Score;
 import bowling.domain.state.Start;
 import bowling.domain.state.State;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class FinalFrame extends TemplateFrame {
     private static final int FINAL_FRAME_NO = 9;
+    public static final int STATES_SECOND_INDEX = 1;
+    public static final int INIT_COUNT = 0;
+
+    private List<State> states = new LinkedList<>();
 
     private FinalFrame() {
         super(FrameInfo.create(FINAL_FRAME_NO), new Start());
@@ -40,6 +48,20 @@ public class FinalFrame extends TemplateFrame {
     }
 
     @Override
+    public Score score() {
+        Score score = state.score();
+        return calculateBonusScore(score);
+    }
+
+    @Override
+    public Score calculateBonusScore(Score beforeScore) {
+        for (int index = STATES_SECOND_INDEX; index < states.size(); index++) {
+            beforeScore = beforeScore.next(states.get(index).score(), INIT_COUNT);
+        }
+        return beforeScore.next(INIT_COUNT, INIT_COUNT);
+    }
+
+    @Override
     public State state() {
         return state;
     }
@@ -47,6 +69,11 @@ public class FinalFrame extends TemplateFrame {
     @Override
     public boolean isFinal() {
         return true;
+    }
+
+    @Override
+    public void addState(State state) {
+        states.add(state);
     }
 
     private static void validateFinalFrameNo(FrameInfo frameInfo) {

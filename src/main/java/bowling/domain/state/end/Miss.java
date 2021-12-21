@@ -3,6 +3,8 @@ package bowling.domain.state.end;
 import bowling.domain.Pins;
 import bowling.domain.Score;
 
+import static bowling.domain.Pins.PINS_MIN_COUNT;
+
 public class Miss extends End {
     private Pins firstPins;
     private Pins secondPins;
@@ -24,12 +26,12 @@ public class Miss extends End {
     }
 
     @Override
-    Score score() {
+    public Score score() {
         return Score.ofMiss(firstPins.size() + secondPins.size());
     }
 
     @Override
-    Score calculateBonusScore(Score beforeScore) {
+    public Score calculateBonusScore(Score beforeScore) {
         Score score = beforeScore.next(firstPins.size());
         if (score.calculated()) {
             return score;
@@ -38,7 +40,15 @@ public class Miss extends End {
     }
 
     @Override
-    String symbol() {
-        return firstPins.size() + OR + secondPins.size();
+    public String symbol() {
+        String firstPinsSymbol = Integer.toString(firstPins.size());
+        String secondPinsSymbol = Integer.toString(secondPins.size());
+        if (firstPins.size() == PINS_MIN_COUNT) {
+            firstPinsSymbol = GUTTER_SYMBOL;
+        }
+        if (secondPins.size() == PINS_MIN_COUNT) {
+            secondPinsSymbol = GUTTER_SYMBOL;
+        }
+        return firstPinsSymbol + OR + secondPinsSymbol;
     }
 }

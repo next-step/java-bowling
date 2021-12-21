@@ -19,7 +19,7 @@ public class ResultView {
     public static void showBoard(GameInfo gameInfo, Frame frame) {
         printPitchInfo(gameInfo.noOf(frame), gameInfo.fallDownPinsCountOf(frame));
 
-        printFrame(gameInfo.player().name(), gameInfo.frameResults(), Collections.emptyList());
+        printFrame(gameInfo.player().name(), gameInfo.frameResults(), gameInfo.scoreResults());
     }
 
     public static void printFrame(String name, List<String> frameResults, List<String> frameScores) {

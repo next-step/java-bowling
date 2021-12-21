@@ -2,6 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.Pins;
 import bowling.domain.Pitch;
+import bowling.domain.Score;
 import bowling.domain.frame.Frame;
 import bowling.domain.state.end.Miss;
 import bowling.domain.state.end.Spare;
@@ -56,7 +57,9 @@ public class Progress implements State {
 
     private State checkThirdPitchNoOfStrike(Frame frame, Pins pins) {
         if (frame.isThirdPitch()) {
-            return Strike.from();
+            Strike strike = Strike.from();
+            frame.addState(strike);
+            return strike;
         }
         return new Progress(pins);
     }
@@ -70,29 +73,35 @@ public class Progress implements State {
 
     private State checkThirdPitchNoOfSpare(Frame frame, Pins pins) {
         if (frame.isThirdPitch()) {
-            return Spare.of(beforePins, pins);
+            Spare spare = Spare.of(beforePins, pins);
+            frame.addState(spare);
+            return spare;
         }
         return new Progress(pins);
     }
 
     private State checkThirdPitchNoOfMiss(Frame frame, Pins pins) {
         if (frame.isThirdPitch()) {
-            return checkCreateMiss(pins);
+            return checkCreateMiss(frame, pins);
         }
-        return checkRetryMiss(pins);
+        return checkRetryMiss(frame, pins);
     }
 
-    private State checkCreateMiss(Pins pins) {
+    private State checkCreateMiss(Frame frame, Pins pins) {
         if (beforePins.isStrike() && pins.isMiss()) {
-            return Miss.from(pins);
+            Miss miss = Miss.from(pins);
+            frame.addState(miss);
+            return miss;
         }
-        return checkRetryMiss(pins);
+        return checkRetryMiss(frame, pins);
     }
 
-    private State checkRetryMiss(Pins pins) {
+    private State checkRetryMiss(Frame frame, Pins pins) {
         if (retry) {
             return new Progress(pins);
         }
+        Miss miss = Miss.from(beforePins, pins);
+        frame.addState(miss);
         return Miss.from(beforePins, pins);
     }
 
@@ -106,6 +115,21 @@ public class Progress implements State {
     @Override
     public boolean progressing() {
         return true;
+    }
+
+    @Override
+    public Score score() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Score calculateBonusScore(Score beforeScore) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String symbol() {
+        return Integer.toString(beforePins.size());
     }
 
     @Override

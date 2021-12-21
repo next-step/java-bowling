@@ -8,6 +8,7 @@ import bowling.domain.state.State;
 public abstract class End implements State {
     protected static final String STRIKE_SYMBOL = "X";
     protected static final String SPARE_SYMBOL = "/";
+    protected static final String GUTTER_SYMBOL = "-";
     protected static final String OR = "|";
 
     @Override
@@ -24,8 +25,4 @@ public abstract class End implements State {
     public String toString() {
         return "End{}";
     }
-
-    abstract Score score();
-    abstract Score calculateBonusScore(Score beforeScore);
-    abstract String symbol();
 }

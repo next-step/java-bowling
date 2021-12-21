@@ -1,8 +1,9 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
-import bowling.domain.frame.Frame;
 import bowling.domain.Pitch;
+import bowling.domain.Score;
+import bowling.domain.frame.Frame;
 import bowling.domain.state.end.Strike;
 
 public class Start implements State {
@@ -27,6 +28,21 @@ public class Start implements State {
     @Override
     public boolean progressing() {
         return true;
+    }
+
+    @Override
+    public Score score() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Score calculateBonusScore(Score beforeScore) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String symbol() {
+        throw new UnsupportedOperationException();
     }
 
     @Override

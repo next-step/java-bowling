@@ -4,6 +4,7 @@ import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.strategy.PitchNumberStrategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameInfo {
@@ -37,6 +38,17 @@ public class GameInfo {
 
     public List<String> frameResults() {
         return frames.frameResults();
+    }
+
+    public List<String> scoreResults() {
+        List<String> result = new ArrayList<>();
+        int frameResult = 0;
+        List<Score> scores = frames.scoreResults();
+        for (Score score : scores) {
+            frameResult += score.score();
+            result.add(Integer.toString(frameResult));
+        }
+        return result;
     }
 
     public int noOf(Frame frame) {

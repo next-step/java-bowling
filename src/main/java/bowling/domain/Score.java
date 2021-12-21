@@ -1,12 +1,14 @@
 package bowling.domain;
 
-public class Score {
-    private static final int SCORE_OF_STRIKE = 10;
-    private static final int BONUS_COUNT_OF_STRIKE = 2;
-    private static final int BONUS_COUNT_OF_SPARE = 1;
-    private static final int DEFAULT_COUNT = 0;
+import java.util.Objects;
 
-    private final int score;
+public class Score {
+    private static final int DEFAULT_COUNT = 0;
+    private static final int BONUS_COUNT_OF_SPARE = 1;
+    private static final int BONUS_COUNT_OF_STRIKE = 2;
+    private static final int MAX_SCORE = 10;
+
+    private int score;
     private final int bonusCount;
 
     private Score() {
@@ -27,22 +29,56 @@ public class Score {
     }
 
     public static Score ofStrike() {
-        return new Score(SCORE_OF_STRIKE, BONUS_COUNT_OF_STRIKE);
+        return new Score(MAX_SCORE, BONUS_COUNT_OF_STRIKE);
     }
 
-    public static Score ofSpare(int score) {
-        return new Score(score, BONUS_COUNT_OF_SPARE);
+    public static Score ofSpare() {
+        return new Score(MAX_SCORE, BONUS_COUNT_OF_SPARE);
     }
 
     public static Score ofMiss(int score) {
         return new Score(score, DEFAULT_COUNT);
     }
 
+    public Score next(int score) {
+        return new Score(this.score + score, this.bonusCount - 1);
+    }
+
+    public Score next(int score, int bonusCount) {
+        return new Score(this.score + score, bonusCount);
+    }
+
     public Score next(Score score) {
         return new Score(this.score + score.score, this.bonusCount - 1);
     }
 
+    public Score next(Score score, int bonusCount) {
+        return new Score(this.score + score.score, bonusCount);
+    }
+
     public boolean calculated() {
         return this.bonusCount == DEFAULT_COUNT;
+    }
+
+    public int score() {
+        return score;
+    }
+
+    public int bonusCount() {
+        return bonusCount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Score score1 = (Score) o;
+        return score == score1.score &&
+                bonusCount == score1.bonusCount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score, bonusCount);
     }
 }

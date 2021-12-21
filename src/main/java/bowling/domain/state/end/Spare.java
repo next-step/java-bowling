@@ -20,12 +20,12 @@ public class Spare extends End {
     }
 
     @Override
-    Score score() {
+    public Score score() {
         return Score.ofSpare();
     }
 
     @Override
-    Score calculateBonusScore(Score beforeScore) {
+    public Score calculateBonusScore(Score beforeScore) {
         Score score = beforeScore.next(firstPins.size());
         if (score.calculated()) {
             return score;
@@ -34,7 +34,7 @@ public class Spare extends End {
     }
 
     @Override
-    String symbol() {
+    public String symbol() {
         return firstPins.size() + OR + SPARE_SYMBOL;
     }
 }

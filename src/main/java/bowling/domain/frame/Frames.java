@@ -1,9 +1,12 @@
 package bowling.domain.frame;
 
+import bowling.domain.Score;
+import bowling.domain.state.State;
 import bowling.strategy.PitchNumberStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Frames {
@@ -43,7 +46,18 @@ public class Frames {
 
     public List<String> frameResults() {
         return frames.stream()
-                .map(results -> String.join("|", results.pitchResults()))
+                .filter(Frame::isEnd)
+                .map(Frame::state)
+                .map(State::symbol)
+                .collect(Collectors.toList());
+    }
+
+    public List<Score> scoreResults() {
+        return frames.stream()
+                .filter(Frame::isEnd)
+                .map(Frame::score)
+                .filter(Objects::nonNull)
+                .filter(Score::calculated)
                 .collect(Collectors.toList());
     }
 

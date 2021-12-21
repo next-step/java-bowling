@@ -2,10 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.Pitch;
 import bowling.domain.Pitches;
-import bowling.domain.Score;
 import bowling.strategy.PitchNumberStrategy;
-
-import java.util.List;
 
 import static bowling.domain.Pins.PINS_MAX_COUNT;
 
@@ -76,10 +73,6 @@ public class FrameInfo {
 
     public void addPitch(Pitch pitch) {
         pitches.add(pitch);
-    }
-
-    public List<String> pitchResults() {
-        return pitches.pitchResults();
     }
 
     @Override
