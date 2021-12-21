@@ -10,21 +10,33 @@ public class Pin {
     private final static int MIN_PIN_COUNT = 0;
     private final static int MAX_PIN_COUNT = 10;
 
-    private final int score;
+    private final int hitCount;
 
     static {
         IntStream.rangeClosed(MIN_PIN_COUNT, MAX_PIN_COUNT)
             .forEach(number -> cache.put(number, new Pin(number)));
     }
 
-    private Pin(int score) {
-        valid(score);
+    private Pin(int hitCount) {
+        valid(hitCount);
 
-        this.score = score;
+        this.hitCount = hitCount;
     }
 
     public static Pin of(int score) {
         return cache.getOrDefault(score, new Pin(score));
+    }
+
+    public boolean isStrike() {
+        return hitCount == MAX_PIN_COUNT;
+    }
+
+    public boolean isNonHit() {
+        return hitCount == MIN_PIN_COUNT;
+    }
+
+    public int getHitCount() {
+        return hitCount;
     }
 
     private void valid(int score) {

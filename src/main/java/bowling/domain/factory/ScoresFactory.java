@@ -1,12 +1,12 @@
 package bowling.domain.factory;
 
-import bowling.domain.scores.Scores;
+import bowling.domain.scores.HitScores;
 
 public interface ScoresFactory {
 
-    Scores create(int round);
+    HitScores create(int round);
 
-    Scores create(int round, int hitCount);
+    HitScores create(int round, int hitCount);
 
 
 }

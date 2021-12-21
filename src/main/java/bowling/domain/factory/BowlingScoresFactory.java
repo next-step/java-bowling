@@ -1,8 +1,8 @@
 package bowling.domain.factory;
 
-import bowling.domain.scores.FinalScores;
-import bowling.domain.scores.GeneralScores;
-import bowling.domain.scores.Scores;
+import bowling.domain.scores.FinalHitScores;
+import bowling.domain.scores.GeneralHitScores;
+import bowling.domain.scores.HitScores;
 
 public class BowlingScoresFactory implements ScoresFactory {
 
@@ -10,25 +10,25 @@ public class BowlingScoresFactory implements ScoresFactory {
     private static final int MAX_ROUND = 9;
 
     @Override
-    public Scores create(int round) {
+    public HitScores create(int round) {
         valid(round);
 
         if (isFinalRound(round)) {
-            return new FinalScores();
+            return new FinalHitScores();
         }
 
-        return new GeneralScores();
+        return new GeneralHitScores();
     }
 
     @Override
-    public Scores create(int round, int hitCount) {
+    public HitScores create(int round, int hitCount) {
         valid(round);
 
         if (isFinalRound(round)) {
-            return new FinalScores(hitCount);
+            return new FinalHitScores(hitCount);
         }
 
-        return new GeneralScores(hitCount);
+        return new GeneralHitScores(hitCount);
     }
 
     private boolean isFinalRound(int round) {

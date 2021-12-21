@@ -1,32 +1,32 @@
 package bowling.domain.scores;
 
-import bowling.Score;
+import bowling.Pin;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FinalScores extends Scores {
+public class FinalHitScores extends HitScores {
 
     private static final int ADD_ABLE_SCORE_SIZE = 2;
     private static final int MAX_SCORE_SIZE = 3;
     private static final int MAX_OF_SCORE = 30;
 
-    public FinalScores() {
+    public FinalHitScores() {
         this(new ArrayList<>());
     }
 
-    public FinalScores(int... number) {
-        this(toScore(number));
+    public FinalHitScores(int... number) {
+        this(toPins(number));
     }
 
-    public FinalScores(Score... scores) {
-        this(Arrays.asList(scores));
+    public FinalHitScores(Pin... pins) {
+        this(Arrays.asList(pins));
     }
 
-    public FinalScores(List<Score> scores) {
-        super(scores);
+    public FinalHitScores(List<Pin> pins) {
+        super(pins);
 
-        if (scores.size() > MAX_SCORE_SIZE) {
+        if (pins.size() > MAX_SCORE_SIZE) {
             throw new IllegalArgumentException(String.format("점수는 %d개 이상일 수 없어요.", MAX_SCORE_SIZE));
         }
 
@@ -34,30 +34,30 @@ public class FinalScores extends Scores {
             throw new IllegalArgumentException(String.format("라운드는 %d점을 넘길 수 없어요.", MAX_OF_SCORE));
         }
 
-        if (scores.size() == MAX_SCORE_SIZE && isNotRunBonus()) {
+        if (pins.size() == MAX_SCORE_SIZE && isNotRunBonus()) {
             throw new IllegalArgumentException("Strike 또는 Spare 를 치지 않은 경우는, 보너스 라운드가 없어요.");
         }
 
     }
 
     @Override
-    public Scores add(int hitCount) {
-        if (scores.size() == ADD_ABLE_SCORE_SIZE && isNotRunBonus()) {
+    public HitScores add(int hitCount) {
+        if (hitPins.size() == ADD_ABLE_SCORE_SIZE && isNotRunBonus()) {
             throw new IllegalArgumentException("Strike 또는 Spare 를 치지 않은 경우는, 보너스 라운드가 없어요.");
         }
 
-        scores.add(Score.of(hitCount));
-        return new FinalScores(scores);
+        hitPins.add(Pin.of(hitCount));
+        return new FinalHitScores(hitPins);
     }
 
 
     @Override
     public boolean isClosed() {
-        if (scores.size() == MAX_SCORE_SIZE) {
+        if (hitPins.size() == MAX_SCORE_SIZE) {
             return true;
         }
 
-        return scores.size() == 2 && isNotRunBonus();
+        return hitPins.size() == ADD_ABLE_SCORE_SIZE && isNotRunBonus();
     }
 
 

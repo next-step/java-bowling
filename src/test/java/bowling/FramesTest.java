@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 import bowling.domain.factory.BowlingScoresFactory;
 import bowling.domain.factory.ScoresFactory;
-import bowling.domain.scores.GeneralScores;
+import bowling.domain.scores.GeneralHitScores;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,12 +35,12 @@ public class FramesTest {
     void getLastFrameTest() {
         List<Frame> mockFrames = IntStream.range(0, 2)
             .boxed()
-            .map(round -> new Frame(new GeneralScores(1, 2)))
+            .map(round -> new Frame(new GeneralHitScores(1, 2)))
             .collect(Collectors.toList());
 
         Frames frames = new Frames(scoresFactory, mockFrames);
 
-        assertThat(frames.getLastFrame()).isEqualTo(new Frame(new GeneralScores(1, 2)));
+        assertThat(frames.getLastFrame()).isEqualTo(new Frame(new GeneralHitScores(1, 2)));
     }
 
     @Test
