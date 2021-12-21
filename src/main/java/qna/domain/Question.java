@@ -18,6 +18,9 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
+    @Embedded
+    private Answers answers = new Answers();
+
     private boolean deleted = false;
 
     public Question() {
@@ -45,7 +48,7 @@ public class Question extends AbstractEntity {
 
     public void addAnswer(Answer answer) {
         answer.toQuestion(this);
-        Answers.add(answer);
+        answers.add(answer);
     }
 
     public boolean isOwner(User loginUser) {
@@ -63,9 +66,9 @@ public class Question extends AbstractEntity {
 
     public List<DeleteHistory> deleteQuestion(User loginUser) throws CannotDeleteException {
         checkLoginUser(loginUser);
-        Answers.checkUser(loginUser);
-        List<DeleteHistory> deleteHistories = Answers.delete();
-        setDeleted(true);
+        answers.checkUser(loginUser);
+        List<DeleteHistory> deleteHistories = answers.delete();
+        this.deleted = true;
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
 
         return deleteHistories;
