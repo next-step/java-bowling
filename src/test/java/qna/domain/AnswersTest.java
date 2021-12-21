@@ -13,8 +13,9 @@ public class AnswersTest {
     @Test
     @DisplayName("삭제된 답변을 저장한다.")
     public void deleteHistory() {
-        Answers.add(A1);
-        List<DeleteHistory> deleteHistories = Answers.delete();
+        Answers answers = new Answers();
+        answers.add(A1);
+        List<DeleteHistory> deleteHistories = answers.delete();
         assertThat(deleteHistories.size()).isNotZero();
     }
 
