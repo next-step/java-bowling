@@ -2,6 +2,7 @@ package bowling.model.state;
 
 import bowling.model.Pins;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -36,5 +37,14 @@ class FirstBowlTest {
         FirstBowl firstBowl = new FirstBowl(Pins.knockedDown(firstPin));
         assertThat(firstBowl.bowl(Pins.knockedDown(secondPin)))
                 .isEqualTo(new Miss(Pins.knockedDown(firstPin),Pins.knockedDown(secondPin)));
+    }
+
+    @Test
+    @DisplayName("거터일 떄 - 표시, 거터가 아니면 쓰러뜨린 핀 수 표시 테스트")
+    void getDescTest() {
+        FirstBowl firstBowl = new FirstBowl(Pins.knockedDown(0));
+        assertThat(firstBowl.getDesc()).isEqualTo("-");
+        firstBowl = new FirstBowl(Pins.knockedDown(8));
+        assertThat(firstBowl.getDesc()).isEqualTo("8");
     }
 }
