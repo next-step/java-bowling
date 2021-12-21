@@ -16,7 +16,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public Frame bowl(int knockedDownPin) {
-        State state = states.last().bowl(Pins.knockedDown(knockedDownPin));
+        State state = states.bowl(Pins.knockedDown(knockedDownPin));
         states.add(state);
         if(!isFinish()) {
             return this;

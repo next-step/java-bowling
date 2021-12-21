@@ -15,7 +15,7 @@ public class States {
         this.states.add(state);
     }
 
-    public State last() {
+    private State last() {
         return this.states.get(this.states.size() - 1);
     }
 
