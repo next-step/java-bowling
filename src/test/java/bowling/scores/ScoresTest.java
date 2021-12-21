@@ -9,31 +9,34 @@ import org.junit.jupiter.api.Test;
 
 public class ScoresTest {
 
+    private static final int STRIKE = 10;
+    private static final int[] SPARE = new int[]{3, 7};
+
 
     @Test
     @DisplayName("Strike가 있으면 true를 반환한다.")
     void containStrikeTrueTest() {
-        assertThat(new GeneralScores(10).containStrike()).isTrue();
+        assertThat(new GeneralScores(STRIKE).containStrike()).isTrue();
 
-        assertThat(new FinalScores(10).containStrike()).isTrue();
+        assertThat(new FinalScores(STRIKE).containStrike()).isTrue();
     }
 
     @Test
     @DisplayName("Strike가 없으면 false를 반환한다.")
     void containStrikeFalseTest() {
         assertThat(new GeneralScores(5).containStrike()).isFalse();
-        assertThat(new GeneralScores(5, 5).containStrike()).isFalse();
+        assertThat(new GeneralScores(SPARE).containStrike()).isFalse();
 
         assertThat(new FinalScores(5).containStrike()).isFalse();
-        assertThat(new FinalScores(5, 5).containStrike()).isFalse();
+        assertThat(new FinalScores(SPARE).containStrike()).isFalse();
     }
 
     @Test
     @DisplayName("Spare가 있으면 true를 반환한다.")
     void containSpareTrueTest() {
-        assertThat(new GeneralScores(1, 9).containSpare()).isTrue();
+        assertThat(new GeneralScores(SPARE).containSpare()).isTrue();
 
-        assertThat(new FinalScores(1, 9).containSpare()).isTrue();
+        assertThat(new FinalScores(SPARE).containSpare()).isTrue();
     }
 
     @Test
@@ -56,11 +59,11 @@ public class ScoresTest {
     @DisplayName("첫번째 투구가 Gutter 아니며, 두번째 투구가 Miss라면 false를 반환한다.")
     void isMissFalseTest() {
         assertThat(new GeneralScores(0).isMiss()).isFalse();
-        assertThat(new GeneralScores(0, 10).isMiss()).isFalse();
+        assertThat(new GeneralScores(0, STRIKE).isMiss()).isFalse();
 
         assertThat(new FinalScores(0).isMiss()).isFalse();
-        assertThat(new FinalScores(0, 10).isMiss()).isFalse();
-        assertThat(new FinalScores(0, 10, 0).isMiss()).isFalse();
+        assertThat(new FinalScores(0, STRIKE).isMiss()).isFalse();
+        assertThat(new FinalScores(0, STRIKE, 0).isMiss()).isFalse();
     }
 
     @Test
@@ -86,7 +89,10 @@ public class ScoresTest {
 
 
     @Test
+    @DisplayName("각 프레임별 점수 합산이 정상 동작한다.")
     void sumScoreTest() {
+        assertThat(new GeneralScores(1, 2).sumScore()).isEqualTo(3);
 
+        assertThat(new FinalScores(SPARE).add(5).sumScore()).isEqualTo(15);
     }
 }

@@ -7,6 +7,7 @@ import java.util.List;
 
 public class FinalScores extends Scores {
 
+    private static final int ADD_ABLE_SCORE_SIZE = 2;
     private static final int MAX_SCORE_SIZE = 3;
     private static final int MAX_OF_SCORE = 30;
 
@@ -39,6 +40,17 @@ public class FinalScores extends Scores {
 
     }
 
+    @Override
+    public Scores add(int hitCount) {
+        if (scores.size() == ADD_ABLE_SCORE_SIZE && isNotRunBonus()) {
+            throw new IllegalArgumentException("Strike 또는 Spare 를 치지 않은 경우는, 보너스 라운드가 없어요.");
+        }
+
+        List<Score> tempScores = new ArrayList<>(this.scores);
+        tempScores.add(Score.of(hitCount));
+        return new FinalScores(tempScores);
+    }
+
 
     @Override
     public boolean isClosed() {
@@ -51,10 +63,6 @@ public class FinalScores extends Scores {
 
 
     private boolean isNotRunBonus() {
-        if (containStrike()) {
-            return false;
-        }
-
-        return !containSpare();
+        return !(containStrike() || containSpare());
     }
 }

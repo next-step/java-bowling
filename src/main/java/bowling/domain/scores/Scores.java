@@ -2,6 +2,7 @@ package bowling.domain.scores;
 
 import bowling.Score;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -16,11 +17,12 @@ public abstract class Scores {
     protected final List<Score> scores;
 
     public Scores(List<Score> scores) {
-        this.scores = scores;
+        this.scores = Collections.unmodifiableList(scores);
     }
 
-    public abstract boolean isClosed();
+    public abstract Scores add(int hitCount);
 
+    public abstract boolean isClosed();
 
     public final boolean containStrike() {
         return scores.stream()
@@ -28,7 +30,7 @@ public abstract class Scores {
     }
 
     public final boolean containSpare() {
-        if (scores.size() != GENERAL_FRAME_NUMBER) {
+        if (scores.size() < GENERAL_FRAME_NUMBER) {
             return false;
         }
 
@@ -63,8 +65,8 @@ public abstract class Scores {
             .sum();
     }
 
-    protected static List<Score> toScore(int[] number) {
-        return Arrays.stream(number)
+    protected static List<Score> toScore(int[] numbers) {
+        return Arrays.stream(numbers)
             .boxed()
             .map(Score::of)
             .collect(Collectors.toList());

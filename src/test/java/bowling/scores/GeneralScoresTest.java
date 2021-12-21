@@ -10,6 +10,9 @@ import org.junit.jupiter.api.Test;
 
 public class GeneralScoresTest {
 
+    private static final int STRIKE = 10;
+    private static final int[] SPARE = new int[]{3, 7};
+
     @Test
     @DisplayName("점수 리스트가 정상적으로 생성된다.")
     void createTest() {
@@ -26,7 +29,7 @@ public class GeneralScoresTest {
     @Test
     @DisplayName("Score 점수 계산 테스트")
     void sumScoreTest() {
-        assertThat(new GeneralScores(7, 3).sumScore()).isEqualTo(10);
+        assertThat(new GeneralScores(SPARE).sumScore()).isEqualTo(10);
     }
 
     @Test
@@ -39,8 +42,24 @@ public class GeneralScoresTest {
     @Test
     @DisplayName("프레임의 첫번째 투구가 STRIKE 인경우, 프레임이 종료된다.")
     void isClosedStrikeTest() {
-        assertThat(new GeneralScores(10).isClosed()).isTrue();
+        assertThat(new GeneralScores(STRIKE).isClosed()).isTrue();
     }
 
+    @Test
+    @DisplayName("투구시 Score 추가가 정상적으로 된다.")
+    void addTest() {
+        assertThatCode(() -> new GeneralScores().add(3)).doesNotThrowAnyException();
+        assertThatCode(() -> new GeneralScores(0).add(3)).doesNotThrowAnyException();
+        assertThatCode(() -> new GeneralScores(STRIKE).add(3)).doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("투구시 최대 투구 횟수를 넘어가면 예외가 발생한다.")
+    void addExceptionTest() {
+        assertThatIllegalArgumentException().isThrownBy(() -> new GeneralScores(1, 0).add(3));
+        assertThatIllegalArgumentException().isThrownBy(() -> new GeneralScores(1, 0).add(3));
+        assertThatIllegalArgumentException().isThrownBy(
+            () -> new GeneralScores(STRIKE, STRIKE).add(STRIKE).add(STRIKE));
+    }
 
 }

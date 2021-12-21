@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class GeneralScores extends Scores {
 
-    private final static int MAX_SCORE_SIZE = 2;
+    private static final int MAX_SCORE_SIZE = 2;
     private static final int MAX_OF_SCORE = 10;
 
 
@@ -16,8 +16,8 @@ public class GeneralScores extends Scores {
         this(new ArrayList<>());
     }
 
-    public GeneralScores(int... number) {
-        this(toScore(number));
+    public GeneralScores(int... numbers) {
+        this(toScore(numbers));
     }
 
     public GeneralScores(Score... scores) {
@@ -37,6 +37,17 @@ public class GeneralScores extends Scores {
     }
 
     @Override
+    public Scores add(int hitCount) {
+        if (scores.size() >= MAX_SCORE_SIZE) {
+            throw new IllegalArgumentException(String.format("점수는 %d개 이상일 수 없어요.", MAX_SCORE_SIZE));
+        }
+
+        List<Score> tempScores = new ArrayList<>(this.scores);
+        tempScores.add(Score.of(hitCount));
+        return new FinalScores(tempScores);
+    }
+
+    @Override
     public boolean isClosed() {
         if (scores.size() == MAX_SCORE_SIZE) {
             return true;
@@ -44,7 +55,6 @@ public class GeneralScores extends Scores {
 
         return containStrike();
     }
-
 
 
     @Override

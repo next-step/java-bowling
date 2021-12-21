@@ -20,6 +20,18 @@ public class Frames {
         return getLastFrame().isClosedStroke();
     }
 
+    public Frames add(int hitCount) {
+        if (lastFrameStrokeIsClosed()) {
+            frames.add(new Frame(frames.size(), new BowlingScoresFactory(), hitCount));
+        }
+
+        Frame lastFrame = getLastFrame();
+//        lastFrame.
+
+        return null;
+//        return new Frames()
+    }
+
     public Frame getLastFrame() {
         if (frames.isEmpty()) {
             return new Frame(0, new BowlingScoresFactory());
