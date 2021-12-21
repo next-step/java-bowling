@@ -1,10 +1,12 @@
 package bowling.domain.bowl;
 
 import bowling.domain.pin.Pin;
+import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class MissBowl extends FinishedBowl {
 
@@ -32,6 +34,12 @@ public class MissBowl extends FinishedBowl {
     }
 
     @Override
+    public Score score() {
+        Pin sumOfPin = firstPin.plus(secondPin);
+        return sumOfPin.toScore();
+    }
+
+    @Override
     public boolean typeEquals(BowlType bowlType) {
         return BOWL_TYPE.equals(bowlType);
     }
@@ -42,5 +50,18 @@ public class MissBowl extends FinishedBowl {
         pins.add(firstPin);
         pins.add(secondPin);
         return Collections.unmodifiableList(pins);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MissBowl missBowl = (MissBowl) o;
+        return Objects.equals(firstPin, missBowl.firstPin) && Objects.equals(secondPin, missBowl.secondPin);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstPin, secondPin);
     }
 }

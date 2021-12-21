@@ -1,6 +1,8 @@
 package bowling.domain.bowl;
 
 import bowling.domain.pin.Pin;
+import bowling.domain.score.CanNotCalculateException;
+import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,7 @@ public class FinalBowl implements Bowl {
     private static final int NONE_LEFT_CHANCE = 0;
     private static final int FIRST_PIN_INDEX = 0;
     private static final int SIZE_OF_ONE_PIN = 1;
+    private static final int INDEX_UNIT = 1;
 
     private int leftChance = 2;
     private final List<Pin> pins;
@@ -29,7 +32,7 @@ public class FinalBowl implements Bowl {
     public Bowl pitch(Pin pin) {
         checkCanAddPin();
 
-        if (!isStrike(pin) && !isSpare(pin)) {
+        if (isRegularPitch(pin)) {
             leftChance--;
         }
         pins.add(pin);
@@ -45,6 +48,10 @@ public class FinalBowl implements Bowl {
     @Override
     public boolean canPitch() {
         return leftChance > NONE_LEFT_CHANCE;
+    }
+
+    private boolean isRegularPitch(Pin pin) {
+        return !isStrike(pin) && !isSpare(pin);
     }
 
     private boolean isStrike(Pin pin) {
@@ -63,6 +70,19 @@ public class FinalBowl implements Bowl {
 
         Pin sumOfPin = firstPin.plus(pin);
         return sumOfPin.isAllHit();
+    }
+
+    @Override
+    public Score score() {
+        checkPinIsExists();
+        Pin lastPin = pins.get(pins.size() - INDEX_UNIT);
+        return lastPin.toScore(leftChance);
+    }
+
+    private void checkPinIsExists() {
+        if (pins.isEmpty()) {
+            throw new CanNotCalculateException();
+        }
     }
 
     @Override

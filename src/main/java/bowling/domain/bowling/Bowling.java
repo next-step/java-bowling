@@ -4,6 +4,7 @@ import bowling.domain.bowl.Bowl;
 import bowling.domain.frame.Frames;
 import bowling.domain.participant.Participant;
 import bowling.domain.pin.Pin;
+import bowling.domain.score.Score;
 
 import java.util.List;
 
@@ -34,5 +35,9 @@ public class Bowling {
 
     public List<Bowl> bowls() {
         return frames.bowls();
+    }
+
+    public List<Score> scores() {
+        return frames.scores();
     }
 }

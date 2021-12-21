@@ -4,6 +4,7 @@ import bowling.domain.bowl.Bowl;
 import bowling.domain.bowl.BowlType;
 import bowling.domain.bowling.Bowling;
 import bowling.domain.pin.Pin;
+import bowling.domain.score.Score;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,18 +27,17 @@ public class OutputView {
         System.out.print(BOARD_OF_HEAD);
         append(bowling.nameOfParticipant());
 
-        List<Bowl> bowls = bowling.bowls();
-        bowls.forEach(bowl -> append(getBowlView(bowl)));
+        appendBowlView(bowling.bowls());
+        appendNewLine();
 
-        appendEmptyBody(bowls);
+        appendScoreView(bowling.scores());
+        appendNewLine();
         flushBuilder();
     }
 
-    private static void appendEmptyBody(List<Bowl> bowls) {
-        int size = bowls.size();
-        for (int number = size; number < NUMBER_OF_FRAME; number++) {
-            STRING_BUILDER.append(BOARD_EMPTY);
-        }
+    private static void appendBowlView(List<Bowl> bowls) {
+        bowls.forEach(bowl -> append(getBowlView(bowl)));
+        appendEmptyBody(bowls);
     }
 
     public static String getBowlView(Bowl bowl) {
@@ -73,6 +73,32 @@ public class OutputView {
 
     public static void append(String string) {
         STRING_BUILDER.append(format(BOARD_FORMAT, string));
+    }
+
+    private static void appendEmptyBody(List<?> objects) {
+        int size = objects.size();
+        for (int number = size; number < NUMBER_OF_FRAME; number++) {
+            STRING_BUILDER.append(BOARD_EMPTY);
+        }
+    }
+
+    private static void appendScoreView(List<Score> scores) {
+        STRING_BUILDER.append("|      |");
+        for (Score score : scores) {
+            STRING_BUILDER.append(getScoreView(score));
+        }
+        appendEmptyBody(scores);
+    }
+
+    private static String getScoreView(Score score) {
+        if (score.canCalculate()) {
+            return String.format(BOARD_FORMAT, score.value());
+        }
+        return BOARD_EMPTY;
+    }
+
+    private static void appendNewLine() {
+        STRING_BUILDER.append("\n");
     }
 
     private static void flushBuilder() {

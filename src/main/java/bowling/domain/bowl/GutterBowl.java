@@ -1,6 +1,7 @@
 package bowling.domain.bowl;
 
 import bowling.domain.pin.Pin;
+import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +26,11 @@ public class GutterBowl extends FinishedBowl {
 
     public static Bowl bowl() {
         return CACHED_BOWL;
+    }
+
+    @Override
+    public Score score() {
+        return Score.gutter();
     }
 
     @Override

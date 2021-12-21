@@ -4,19 +4,23 @@ import bowling.domain.bowl.Bowl;
 import bowling.domain.bowl.FinalBowl;
 import bowling.domain.bowl.FirstBowl;
 import bowling.domain.pin.Pin;
+import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.singletonList;
 
 public class Frames {
 
+    private static final int MIN_INDEX = 0;
     private static final int INDEX_UNIT = 1;
+    private static final int NUMBER_OF_PREVIOUS_FRAMES_TO_CALCULATE = 2;
 
-    public final List<Frame> frames;
+    private final List<Frame> frames;
 
     public Frames(Frame firstFrame) {
         this(new ArrayList<>(singletonList(firstFrame)));
@@ -27,7 +31,7 @@ public class Frames {
     }
 
     public static Frames init() {
-        Frame firstFrame = Frame.firstOf(new FirstBowl());
+        Frame firstFrame = Frame.firstOf(FirstBowl.bowl());
         return new Frames(firstFrame);
     }
 
@@ -35,26 +39,45 @@ public class Frames {
      * @return 더 투구할 수 있는지
      */
     public boolean pitch(Pin pin) {
-        Frame currentFrame = currentFrame();
-        if (currentFrame.pitch(pin)) {
+        calculateScoreOfPreviousFrame(pin.toScore());
+
+        if (currentFrame().pitch(pin)) {
             return true;
         }
         if (frames.size() == Frame.MAX_FRAME_NUMBER) {
             return false;
         }
-        frames.add(createNextFrame(currentFrame));
-        return true;
+        return frames.add(createNextFrame());
+    }
+
+    private void calculateScoreOfPreviousFrame(Score score) {
+        for (Frame frame : previousFrames()) {
+            frame.addBonusScore(score);
+        }
+    }
+
+    private List<Frame> previousFrames() {
+        int sizeOfFrames = frames.size();
+        int endIndex = sizeOfFrames - INDEX_UNIT;
+        int startIndex = Math.max(endIndex - NUMBER_OF_PREVIOUS_FRAMES_TO_CALCULATE, MIN_INDEX);
+
+        return frames.subList(startIndex, endIndex);
     }
 
     private Frame currentFrame() {
         return frames.get(frames.size() - INDEX_UNIT);
     }
 
-    private Frame createNextFrame(Frame currentFrame) {
-        if (frames.size() < Frame.MAX_FRAME_NUMBER - INDEX_UNIT) {
-            return currentFrame.nextOf(new FirstBowl());
+    private Frame createNextFrame() {
+        Frame currentFrame = currentFrame();
+        if (isNormalFrameOrder()) {
+            return currentFrame.nextOf(FirstBowl.bowl());
         }
         return currentFrame.nextOf(new FinalBowl());
+    }
+
+    private boolean isNormalFrameOrder() {
+        return frames.size() < Frame.MAX_FRAME_NUMBER - INDEX_UNIT;
     }
 
     public int numberOfFrame() {
@@ -65,5 +88,24 @@ public class Frames {
         return frames.stream()
                 .map(Frame::getBowl)
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
+    }
+
+    public List<Score> scores() {
+        return frames.stream()
+                .map(Frame::getScore)
+                .collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Frames frames1 = (Frames) o;
+        return Objects.equals(frames, frames1.frames);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frames);
     }
 }
