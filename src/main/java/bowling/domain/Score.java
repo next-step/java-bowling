@@ -11,21 +11,9 @@ public class Score {
     private int score;
     private final int bonusCount;
 
-    private Score() {
-        this(DEFAULT_COUNT, DEFAULT_COUNT);
-    }
-
     private Score(int score, int bonusCount) {
         this.score = score;
         this.bonusCount = bonusCount;
-    }
-
-    public static Score init() {
-        return new Score();
-    }
-
-    public static Score of(int score, int bonusCount) {
-        return new Score(score, bonusCount);
     }
 
     public static Score ofStrike() {
