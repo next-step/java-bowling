@@ -4,7 +4,7 @@ import bowling.domain.scores.FinalHitScores;
 import bowling.domain.scores.GeneralHitScores;
 import bowling.domain.scores.HitScores;
 
-public class BowlingScoresFactory implements ScoresFactory {
+public class BowlingHitScoresFactory implements HitScoresFactory {
 
     private static final int MIN_ROUND = 0;
     private static final int MAX_ROUND = 9;

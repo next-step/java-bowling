@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-import bowling.domain.factory.BowlingScoresFactory;
-import bowling.domain.factory.ScoresFactory;
+import bowling.domain.factory.BowlingHitScoresFactory;
+import bowling.domain.factory.HitScoresFactory;
 import bowling.domain.scores.GeneralHitScores;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +20,13 @@ public class FramesTest {
     private static final int[] END_OF_NINE_ROUND =
         new int[]{STRIKE, STRIKE, STRIKE, STRIKE, STRIKE, STRIKE, STRIKE, STRIKE, STRIKE};
 
-    private final ScoresFactory scoresFactory = new BowlingScoresFactory();
+    private final HitScoresFactory hitScoresFactory = new BowlingHitScoresFactory();
 
     @Test
     void createTest() {
         List<Frame> emptyFrames = new ArrayList<>();
         assertThatCode(
-            () -> new Frames(new BowlingScoresFactory(), emptyFrames)).doesNotThrowAnyException();
+            () -> new Frames(new BowlingHitScoresFactory(), emptyFrames)).doesNotThrowAnyException();
     }
 
 
@@ -38,7 +38,7 @@ public class FramesTest {
             .map(round -> new Frame(new GeneralHitScores(1, 2)))
             .collect(Collectors.toList());
 
-        Frames frames = new Frames(scoresFactory, mockFrames);
+        Frames frames = new Frames(hitScoresFactory, mockFrames);
 
         assertThat(frames.getLastFrame()).isEqualTo(new Frame(new GeneralHitScores(1, 2)));
     }
@@ -46,7 +46,7 @@ public class FramesTest {
     @Test
     @DisplayName("경기 최초에 프레임을 반환할 경우, 비어있는 프레임이 반환된다.")
     void getLastFrameLastTest() {
-        assertThat(new Frames().getLastFrame()).isEqualTo(new Frame(scoresFactory.create(0)));
+        assertThat(new Frames().getLastFrame()).isEqualTo(new Frame(hitScoresFactory.create(0)));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class FramesTest {
     @Test
     @DisplayName("마지막 프레임 수행시, 다음 프레임에 기록되어야 하며, STRIKE 또는 SPARE이 있는경우, 한번더 투구할 수 있다.")
     void addFinalFrameTest() {
-        Frames finalStartFrames = new Frames(scoresFactory, END_OF_NINE_ROUND);
+        Frames finalStartFrames = new Frames(hitScoresFactory, END_OF_NINE_ROUND);
         assertThat(finalStartFrames.size()).isEqualTo(9);
 
         Frames addFrame = finalStartFrames.add(3).add(7);// SPARE
@@ -86,7 +86,7 @@ public class FramesTest {
     @Test
     @DisplayName("마지막 프레임 수행시, 다음 프레임에 기록되어야 하며, STRIKE 또는 SPARE이 없는 경우, 투구는 최대 2회이다.")
     void addFinalFrameWithExceptionTest() {
-        Frames finalStartFrames = new Frames(scoresFactory, END_OF_NINE_ROUND);
+        Frames finalStartFrames = new Frames(hitScoresFactory, END_OF_NINE_ROUND);
         assertThat(finalStartFrames.size()).isEqualTo(9);
 
         Frames addFrame = finalStartFrames.add(3).add(3);// NON_SPARE

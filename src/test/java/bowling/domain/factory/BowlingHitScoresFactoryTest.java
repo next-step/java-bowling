@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 class BowlingHitScoresFactoryTest {
 
-    private final BowlingScoresFactory bowlingScoresFactory = new BowlingScoresFactory();
+    private final BowlingHitScoresFactory bowlingScoresFactory = new BowlingHitScoresFactory();
 
     @Test
     @DisplayName("1-9 라운드는 GeneralHitScores 가 생성된다.")

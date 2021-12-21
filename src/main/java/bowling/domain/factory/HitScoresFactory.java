@@ -2,7 +2,7 @@ package bowling.domain.factory;
 
 import bowling.domain.scores.HitScores;
 
-public interface ScoresFactory {
+public interface HitScoresFactory {
 
     HitScores create(int round);
 
