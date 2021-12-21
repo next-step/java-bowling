@@ -1,5 +1,6 @@
 package bowling.domain.factory;
 
+import bowling.Frames;
 import bowling.domain.scores.FinalHitScores;
 import bowling.domain.scores.GeneralHitScores;
 import bowling.domain.scores.HitScores;
@@ -22,6 +23,19 @@ public class BowlingHitScoresFactory implements HitScoresFactory {
 
     @Override
     public HitScores create(int round, int hitCount) {
+        valid(round);
+
+        if (isFinalRound(round)) {
+            return new FinalHitScores(hitCount);
+        }
+
+        return new GeneralHitScores(hitCount);
+    }
+
+    @Override
+    public HitScores create(Frames frames, int hitCount) {
+        int round = frames.round();
+
         valid(round);
 
         if (isFinalRound(round)) {

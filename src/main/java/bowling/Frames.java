@@ -1,7 +1,8 @@
 package bowling;
 
-import bowling.domain.factory.BowlingHitScoresFactory;
 import bowling.domain.factory.HitScoresFactory;
+import bowling.domain.scores.GeneralHitScores;
+import bowling.domain.scores.HitScores;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,56 +14,76 @@ public class Frames {
     private static final int START_FRAME_NUMBER = 0;
     private static final int ONE_NUMBER = 1;
 
-    private final HitScoresFactory hitScoresFactory;
     private final List<Frame> frames;
 
     public Frames() {
-        this(new BowlingHitScoresFactory(), new ArrayList<>());
+        this(new ArrayList<>());
     }
 
     public Frames(HitScoresFactory hitScoresFactory, int... numbers) {
-        this(hitScoresFactory, toFrame(hitScoresFactory, numbers));
+        this(toFrame(hitScoresFactory, numbers));
     }
 
 
-    public Frames(HitScoresFactory hitScoresFactory, Frame... frames) {
-        this(hitScoresFactory, Arrays.asList(frames));
+    public Frames(Frame... frames) {
+        this(Arrays.asList(frames));
     }
 
 
-    public Frames(HitScoresFactory hitScoresFactory, List<Frame> frames) {
-        this.hitScoresFactory = hitScoresFactory;
+    public Frames(List<Frame> frames) {
+        if (frames.isEmpty()) {
+            frames.add(new Frame(new GeneralHitScores()));
+        }
+
         this.frames = frames;
     }
 
-    public boolean lastFrameStrokeIsClosed() {
+
+    public int round() {
+        return frames.size();
+    }
+
+    public boolean isFrameClosed() {
         return getLastFrame().isClosedStroke();
     }
 
-    public Frames add(int hitCount) {
-        if (isNewFrame()) { // lastFrameStrokeIsClosed() 마지막 프레임이 닫혀있으면, 신규 프레임에 추가.
-            frames.add(new Frame(hitScoresFactory.create(frames.size())));
+    // 마지막 프레임을 가져온다. ifEmpty() 이면, 프레임을 생성한다.
+    public Frames add(HitScores hitScores) {
+
+        Frame lastFrame = getLastFrame();
+
+        if (!lastFrame.isClosedStroke()) { // lastFrameStrokeIsClosed() 마지막 프레임이 닫혀있으면, 신규 프레임에 추가.
+            throw new IllegalArgumentException("프레임의 투구가 끝나지 않았습니다.");
         }
 
+        frames.add(new Frame(hitScores));
+        return new Frames(frames);
+    }
+
+    public Frames update(int hitCount) {
+        Frame lastFrame = getLastFrame();
+
+        Frame updatedFrame = lastFrame.updateScore(hitCount);
+        frames.set(frames.size() - ONE_NUMBER, updatedFrame);
+
+        return new Frames(frames);
+    }
+
+
+    @Deprecated
+    public Frames add(int hitCount) {
         Frame updatedFrame = getLastFrame().updateScore(hitCount);
         frames.set(frames.size() - ONE_NUMBER, updatedFrame);
 
-        return new Frames(hitScoresFactory, frames);
+        return new Frames(frames);
     }
 
-    private boolean isNewFrame() {
-        return frames.isEmpty() || lastFrameStrokeIsClosed();
-    }
 
     public int size() {
         return frames.size();
     }
 
     public Frame getLastFrame() {
-        if (frames.isEmpty()) {
-            return new Frame(hitScoresFactory.create(START_FRAME_NUMBER));
-        }
-
         return frames.get(frames.size() - ONE_NUMBER);
     }
 
