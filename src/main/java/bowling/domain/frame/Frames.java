@@ -35,20 +35,17 @@ public class Frames {
         return new Frames(firstFrame);
     }
 
-    /**
-     * @return 더 투구할 수 있는지
-     */
-    public boolean pitch(Pin pin) {
+    public void pitch(Pin pin) {
         calculateScoreOfPreviousFrame(pin.toScore());
 
         Frame currentFrame = currentFrame();
         if (currentFrame.pitch(pin)) {
-            return true;
+            return;
         }
-        if (currentFrame.isLastFrame()) {
-            return false;
+
+        if (currentFrame.isNormalFrame()) {
+            frames.add(createNextFrame());
         }
-        return frames.add(createNextFrame());
     }
 
     private void calculateScoreOfPreviousFrame(Score score) {

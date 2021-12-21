@@ -26,8 +26,8 @@ class FramesTest {
         frames = Frames.init();
     }
 
-    private boolean pitch(int hitCount) {
-        return frames.pitch(pin(hitCount));
+    private void pitch(int hitCount) {
+        frames.pitch(pin(hitCount));
     }
 
     private Pin pin(int i) {
@@ -38,12 +38,10 @@ class FramesTest {
     @ParameterizedTest(name = "[{index}] hitCounts: {0}")
     @MethodSource("hitCounts")
     void pitch_endOfGame(List<Integer> hitCounts) {
-        boolean canPitchMore = true;
         for (Integer hitCount : hitCounts) {
-            canPitchMore = pitch(hitCount);
+            pitch(hitCount);
         }
 
-        assertThat(canPitchMore).isFalse();
         assertThatThrownBy(() -> pitch(1)).isInstanceOf(CanNotPitchException.class);
     }
 

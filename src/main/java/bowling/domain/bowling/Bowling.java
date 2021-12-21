@@ -32,11 +32,8 @@ public class Bowling {
         this.frames = frames;
     }
 
-    /**
-     * @return 더 투구할 수 있는지
-     */
-    public boolean pitch(Pin pin) {
-        return frames.pitch(pin);
+    public void pitch(Pin pin) {
+        frames.pitch(pin);
     }
 
     public int numberOfFrame() {

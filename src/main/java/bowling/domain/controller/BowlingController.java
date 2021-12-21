@@ -4,7 +4,6 @@ import bowling.domain.bowling.Bowling;
 import bowling.domain.controller.view.InputView;
 import bowling.domain.controller.view.OutputView;
 import bowling.domain.participant.Participant;
-import bowling.domain.pin.Pin;
 
 public class BowlingController {
 
@@ -19,7 +18,7 @@ public class BowlingController {
         while (continued) {
             int numberOfFrame = bowling.numberOfFrame();
             int hitCount = InputView.getHitCount(numberOfFrame);
-            continued = bowling.pitch(Pin.from(hitCount));
+//            continued = bowling.pitch(Pin.from(hitCount));
 
             OutputView.showBowling(bowling);
         }

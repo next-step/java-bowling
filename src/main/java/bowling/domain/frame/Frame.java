@@ -56,6 +56,9 @@ public class Frame {
         }
     }
 
+    /**
+     * @return 이번 프레임에 더 투구할 수 있는지
+     */
     public boolean pitch(Pin pin) {
         bowl = bowl.pitch(pin);
         score.add(bowl.score());
@@ -71,8 +74,8 @@ public class Frame {
         return bowl.canPitch();
     }
 
-    public boolean isLastFrame() {
-        return number == MAX_FRAME_NUMBER;
+    public boolean isNormalFrame() {
+        return number < MAX_FRAME_NUMBER;
     }
 
     public Score getScore() {

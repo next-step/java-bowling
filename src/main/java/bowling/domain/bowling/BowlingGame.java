@@ -19,7 +19,7 @@ public class BowlingGame {
     }
 
     /**
-     * @return 더 투구할 수 있는지
+     * @return 남은 차례가 있는지
      */
     public boolean pitch(Pin pin) {
         Bowling bowling = currentBowling();
@@ -30,15 +30,19 @@ public class BowlingGame {
             return true;
         }
 
-        bowlings.add(bowlings.poll());
-        return hasTurn();
+        changeTurn();
+        return hasRemainingPitch();
     }
 
     private Bowling currentBowling() {
         return bowlings.peek();
     }
 
-    private boolean hasTurn() {
+    private void changeTurn() {
+        bowlings.add(bowlings.poll());
+    }
+
+    private boolean hasRemainingPitch() {
         return currentBowling().canPitch();
     }
 
