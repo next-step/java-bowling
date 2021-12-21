@@ -41,10 +41,11 @@ public class Frames {
     public boolean pitch(Pin pin) {
         calculateScoreOfPreviousFrame(pin.toScore());
 
-        if (currentFrame().pitch(pin)) {
+        Frame currentFrame = currentFrame();
+        if (currentFrame.pitch(pin)) {
             return true;
         }
-        if (frames.size() == Frame.MAX_FRAME_NUMBER) {
+        if (currentFrame.isLastFrame()) {
             return false;
         }
         return frames.add(createNextFrame());
@@ -82,6 +83,18 @@ public class Frames {
 
     public int numberOfFrame() {
         return frames.size();
+    }
+
+    public boolean canPitchInFrame(int numberOfFrame) {
+        return canPitch(frames.get(numberOfFrame - INDEX_UNIT));
+    }
+
+    public boolean canPitch() {
+        return canPitch(currentFrame());
+    }
+
+    private boolean canPitch(Frame frame) {
+        return frame.canPitch();
     }
 
     public List<Bowl> bowls() {

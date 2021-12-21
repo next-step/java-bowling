@@ -67,6 +67,14 @@ public class Frame {
         score.addBonus(bonusScore);
     }
 
+    public boolean canPitch() {
+        return bowl.canPitch();
+    }
+
+    public boolean isLastFrame() {
+        return number == MAX_FRAME_NUMBER;
+    }
+
     public Score getScore() {
         return score;
     }
