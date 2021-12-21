@@ -2,7 +2,10 @@ package bowling.domain.controller.view;
 
 import bowling.domain.exception.ServiceException;
 
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class InputView {
 
@@ -11,13 +14,16 @@ public class InputView {
     private InputView() {
     }
 
-    public static String getName() {
-        System.out.print("플레이어 이름은(3 english letters)?: ");
-        return SCANNER.nextLine();
+    public static List<String> getNames() {
+        System.out.print("How many people? ");
+        int sizeOfPeople = nextInt();
+
+        return Stream.generate(InputView::getName)
+                .limit(sizeOfPeople)
+                .collect(Collectors.toList());
     }
 
-    public static int getHitCount(int numberOfFrame) {
-        System.out.print(numberOfFrame + "프레임 투구: ");
+    private static int nextInt() {
         return parseInt(SCANNER.nextLine());
     }
 
@@ -27,5 +33,15 @@ public class InputView {
         } catch (NumberFormatException e) {
             throw new ServiceException("숫자만 가능합니다.");
         }
+    }
+
+    private static String getName() {
+        System.out.print("플레이어 이름은(3 english letters)?: ");
+        return SCANNER.nextLine();
+    }
+
+    public static int getHitCount(String name) {
+        System.out.print(name + "'s turn: ");
+        return nextInt();
     }
 }

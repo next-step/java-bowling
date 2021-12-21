@@ -2,7 +2,12 @@ package bowling.domain.bowling;
 
 import bowling.domain.pin.Pin;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Queue;
+
+import static java.util.Collections.unmodifiableList;
 
 public class BowlingGame {
 
@@ -10,7 +15,7 @@ public class BowlingGame {
     private final List<Bowling> fixedBowlings;
 
     public BowlingGame(List<Bowling> bowlings) {
-        this(new LinkedList<>(bowlings), new ArrayList<>(bowlings));
+        this(new LinkedList<>(bowlings), bowlings);
     }
 
     private BowlingGame(Queue<Bowling> bowlings, List<Bowling> fixedBowlings) {
@@ -44,6 +49,14 @@ public class BowlingGame {
 
     private boolean hasRemainingPitch() {
         return currentBowling().canPitch();
+    }
+
+    public String currentNameOfParticipant() {
+        return currentBowling().nameOfParticipant();
+    }
+
+    public List<Bowling> bowlings() {
+        return unmodifiableList(fixedBowlings);
     }
 
     @Override

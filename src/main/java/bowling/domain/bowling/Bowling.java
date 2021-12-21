@@ -10,13 +10,15 @@ import bowling.domain.score.Score;
 import java.util.List;
 import java.util.Objects;
 
+import static java.util.stream.Collectors.toList;
+
 public class Bowling {
 
     private final Participant participant;
     private final Frames frames;
 
-    public Bowling(String name) {
-        this(new Participant(name));
+    public Bowling(String nameOfParticipant) {
+        this(new Participant(nameOfParticipant));
     }
 
     public Bowling(Participant participant) {
@@ -30,6 +32,12 @@ public class Bowling {
     public Bowling(Participant participant, Frames frames) {
         this.participant = participant;
         this.frames = frames;
+    }
+
+    public static List<Bowling> listOf(List<String> nameOfParticipants) {
+        return nameOfParticipants.stream()
+                .map(Bowling::new)
+                .collect(toList());
     }
 
     public void pitch(Pin pin) {

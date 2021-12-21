@@ -3,6 +3,7 @@ package bowling.domain.controller.view;
 import bowling.domain.bowl.Bowl;
 import bowling.domain.bowl.BowlType;
 import bowling.domain.bowling.Bowling;
+import bowling.domain.bowling.BowlingGame;
 import bowling.domain.pin.Pin;
 import bowling.domain.score.Score;
 
@@ -23,6 +24,12 @@ public class OutputView {
     private OutputView() {
     }
 
+    public static void showBowlingGame(BowlingGame bowlingGame) {
+        List<Bowling> bowlings = bowlingGame.bowlings();
+        bowlings.forEach(OutputView::showBowling);
+
+    }
+
     public static void showBowling(Bowling bowling) {
         System.out.print(BOARD_OF_HEAD);
         append(bowling.nameOfParticipant());
@@ -31,6 +38,7 @@ public class OutputView {
         appendNewLine();
 
         appendScoreView(bowling.scores());
+        appendNewLine();
         appendNewLine();
         flushBuilder();
     }
