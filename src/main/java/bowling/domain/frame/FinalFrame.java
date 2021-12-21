@@ -11,7 +11,7 @@ public class FinalFrame implements Frame {
     private static final int MAX_PIN = 10;
 
     private int ballCount;
-    private List<Pin> pin = new ArrayList<>();
+    private final List<Pin> pin = new ArrayList<>();
 
     public FinalFrame() {
         this.ballCount = NORMAL_BALL;
