@@ -14,13 +14,11 @@ public class NormalFrame implements Frame {
     private static final int NORMAL_BALL = 2;
     private static final int MAX_PIN = 10;
 
-    private final int frame;
     private int ballCount;
-    private List<Pin> pin = new ArrayList<>();
+    private final List<Pin> pin = new ArrayList<>();
 
     public NormalFrame(int frame) {
         validFrame(frame);
-        this.frame = frame;
         this.ballCount = NORMAL_BALL;
     }
 
@@ -72,7 +70,6 @@ public class NormalFrame implements Frame {
     public int getBallCount() {
         return ballCount;
     }
-
 
 }
 
