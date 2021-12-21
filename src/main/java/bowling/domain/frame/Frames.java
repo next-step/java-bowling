@@ -18,7 +18,7 @@ public class Frames {
 
     private void frame() {
         IntStream.range(MIN_FRAME, MAX_FRAME + 1)
-                .forEach(i -> setFrames(i));
+                .forEach(this::setFrames);
     }
 
     private void setFrames(int frame) {
@@ -32,7 +32,7 @@ public class Frames {
 
     public boolean isNotFinalFrame() {
         return frames.stream()
-                .anyMatch(i -> i.isBallCount());
+                .anyMatch(Frame::isBallCount);
     }
 
     public int frameNumber() {
