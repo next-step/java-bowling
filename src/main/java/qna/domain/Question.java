@@ -1,6 +1,8 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -50,15 +52,17 @@ public class Question extends AbstractEntity {
     }
 
     @Transactional(rollbackFor = CannotDeleteException.class)
-    public DeleteHistories delete(User user) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User user) throws CannotDeleteException {
         validOwner(user);
 
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
         for (Answer answer : answers) {
-            deleteAnswer(user, answer);
+            deleteHistories.add(deleteAnswer(user, answer));
         }
 
         this.deleted = true;
-        return DeleteHistories.from(this);
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now()));
+        return Collections.unmodifiableList(deleteHistories);
     }
 
     private void validOwner(User user) throws CannotDeleteException {
@@ -67,9 +71,9 @@ public class Question extends AbstractEntity {
         }
     }
 
-    private void deleteAnswer(User user, Answer answer) throws CannotDeleteException {
+    private DeleteHistory deleteAnswer(User user, Answer answer) throws CannotDeleteException {
         try {
-            answer.delete(user);
+            return answer.delete(user);
         } catch (CannotDeleteException e) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
