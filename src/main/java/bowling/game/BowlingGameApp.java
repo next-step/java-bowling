@@ -1,8 +1,5 @@
 package bowling.game;
-import bowling.model.gameresult.GameResults;
-import bowling.view.InputView;
 import bowling.view.NameView;
-import bowling.view.ResultView;
 import bowling.model.Name;
 
 public class BowlingGameApp {
