@@ -4,15 +4,18 @@ import bowling.domain.Pitch;
 import bowling.domain.Score;
 import bowling.domain.state.Start;
 import bowling.domain.state.State;
+import bowling.strategy.PitchNumberStrategy;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static bowling.domain.state.end.End.*;
 
 public class FinalFrame extends TemplateFrame {
     private static final int FINAL_FRAME_NO = 9;
     public static final int STATES_SECOND_INDEX = 1;
     public static final int STATES_FIRST_INDEX = 0;
-    public static final int STATE_THIRD_INDEX = 3;
 
     private List<State> states = new LinkedList<>();
 
@@ -34,6 +37,14 @@ public class FinalFrame extends TemplateFrame {
     }
 
     @Override
+    public void run(PitchNumberStrategy numberStrategy) {
+        if (state.progressing()) {
+            Pitch pitch = frameInfo.createPitch(numberStrategy);
+            state = state.run(pitch, this);
+        }
+    }
+
+    @Override
     public Frame next() {
         throw new IllegalArgumentException("마지막 프레임입니다.");
     }
@@ -50,26 +61,15 @@ public class FinalFrame extends TemplateFrame {
 
     @Override
     public Score score() {
-        if (states.size() == STATES_SECOND_INDEX) {
-            return null;
-        }
-        Score score = states.get(STATES_SECOND_INDEX).score();
-        for (int index = STATE_THIRD_INDEX; index < states.size(); index++) {
-            Score nextScore = states.get(index).score();
-            score = score.add(nextScore);
-        }
-        return score;
+          return Score.from(frameInfo.sumOfFallDownPins());
     }
 
     @Override
     public Score calculateBonusScore(Score beforeScore) {
         Score score = beforeScore;
-        if (score.calculated()) {
-            return score;
-        }
-        int index = STATES_SECOND_INDEX;
-        for (int count = STATES_FIRST_INDEX; count < score.bonusCount(); count++) {
-            State state = states.get(index++);
+        int size = states.size();
+        for (int index = STATES_FIRST_INDEX; index < size && !score.calculated(); index++) {
+            State state = states.get(index);
             score = state.calculateBonusScore(score);
         }
         return score;
@@ -93,6 +93,13 @@ public class FinalFrame extends TemplateFrame {
     @Override
     public State currentState() {
         return states.get(states.size() - STATES_SECOND_INDEX);
+    }
+
+    @Override
+    public String symbol() {
+        return frameInfo.fallDownPinsAll().stream()
+                .map(value -> Integer.toString(value))
+                .collect(Collectors.joining(OR));
     }
 
     private static void validateFinalFrameNo(FrameInfo frameInfo) {

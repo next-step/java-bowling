@@ -32,4 +32,6 @@ public interface Frame {
     void addState(State state);
 
     State currentState();
+
+    String symbol();
 }

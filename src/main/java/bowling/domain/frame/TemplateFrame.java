@@ -18,18 +18,6 @@ public abstract class TemplateFrame implements Frame {
     }
 
     @Override
-    public void run(PitchNumberStrategy numberStrategy) {
-        if (progressing()) {
-            Pitch pitch = frameInfo.createPitch(numberStrategy);
-            state = state.run(pitch, this);
-        }
-    }
-
-    private boolean progressing() {
-        return state.progressing();
-    }
-
-    @Override
     public boolean isEnd() {
         return state instanceof End;
     }

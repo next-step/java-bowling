@@ -6,10 +6,10 @@ import bowling.domain.frame.Frame;
 import bowling.domain.state.State;
 
 public abstract class End implements State {
-    protected static final String STRIKE_SYMBOL = "X";
-    protected static final String SPARE_SYMBOL = "/";
-    protected static final String GUTTER_SYMBOL = "-";
-    protected static final String OR = "|";
+    public static final String STRIKE_SYMBOL = "X";
+    public static final String SPARE_SYMBOL = "/";
+    public static final String GUTTER_SYMBOL = "-";
+    public static final String OR = "|";
 
     @Override
     public State run(Pitch pitch, Frame frame) {

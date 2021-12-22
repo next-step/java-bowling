@@ -10,6 +10,9 @@ import bowling.domain.state.end.Strike;
 
 import java.util.Objects;
 
+import static bowling.domain.state.end.End.GUTTER_SYMBOL;
+import static bowling.domain.state.end.End.STRIKE_SYMBOL;
+
 public class Progress implements State {
     private final Pins beforePins;
     private final boolean retry;
@@ -23,21 +26,6 @@ public class Progress implements State {
         this.retry = retry;
     }
 
-    /**
-     * Final Frame
-     * strike -> strike -> strike
-     *                  -> miss
-     *        -> miss -> spare
-     *                -> miss
-     * miss -> spare -> strike
-     *               -> miss
-     *      -> miss
-     *
-     * Normal Frame
-     * strike
-     * miss -> spare
-     *      -> miss
-     */
     @Override
     public State run(Pitch pitch, Frame frame) {
         Pins pins = pitch.run();
@@ -149,11 +137,17 @@ public class Progress implements State {
 
     @Override
     public Score calculateBonusScore(Score beforeScore) {
-        throw new UnsupportedOperationException();
+        return beforeScore.next(beforePins.size());
     }
 
     @Override
     public String symbol() {
+        if (beforePins.isStrike()) {
+            return STRIKE_SYMBOL;
+        }
+        if (beforePins.isGutter()) {
+            return GUTTER_SYMBOL;
+        }
         return Integer.toString(beforePins.size());
     }
 

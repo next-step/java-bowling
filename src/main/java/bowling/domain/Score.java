@@ -28,6 +28,10 @@ public class Score {
         return new Score(score, DEFAULT_COUNT);
     }
 
+    public static Score from(int score) {
+        return new Score(score, 0);
+    }
+
     public Score next(int score) {
         return new Score(this.score + score, this.bonusCount - 1);
     }
@@ -42,10 +46,6 @@ public class Score {
 
     public Score next(Score score, int bonusCount) {
         return new Score(this.score + score.score, bonusCount);
-    }
-
-    public Score add(Score score) {
-        return new Score(this.score + score.score, this.bonusCount + score.bonusCount);
     }
 
     public boolean calculated() {

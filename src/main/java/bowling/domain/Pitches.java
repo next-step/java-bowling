@@ -2,6 +2,7 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Pitches {
     private static final int ZERO = 0;
@@ -21,10 +22,10 @@ public class Pitches {
         pitches.add(pitch);
     }
 
-    public int sumOfFallDownPins() {
+    public List<Integer> fallDownPinsAll() {
         return pitches.stream()
                 .map(Pitch::fallDownPinsSize)
-                .reduce(ZERO, Integer::sum);
+                .collect(Collectors.toList());
     }
 
     public int currentFallDownPinsSize() {

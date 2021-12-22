@@ -47,12 +47,12 @@ public class Start implements State {
 
     @Override
     public Score calculateBonusScore(Score beforeScore) {
-        throw new UnsupportedOperationException();
+        return beforeScore;
     }
 
     @Override
     public String symbol() {
-        throw new UnsupportedOperationException();
+        return "";
     }
 
     @Override

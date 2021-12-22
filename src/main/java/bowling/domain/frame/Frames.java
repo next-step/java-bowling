@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.Score;
+import bowling.domain.state.State;
 import bowling.strategy.PitchNumberStrategy;
 
 import java.util.ArrayList;
@@ -45,9 +46,7 @@ public class Frames {
 
     public List<String> frameResults() {
         return frames.stream()
-                .filter(Frame::isEnd)
-                .map(Frame::state)
-                .map(State::symbol)
+                .map(Frame::symbol)
                 .collect(Collectors.toList());
     }
 

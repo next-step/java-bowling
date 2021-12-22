@@ -4,6 +4,7 @@ import bowling.domain.Pitch;
 import bowling.domain.Score;
 import bowling.domain.state.Start;
 import bowling.domain.state.State;
+import bowling.strategy.PitchNumberStrategy;
 
 import java.util.Objects;
 
@@ -22,6 +23,14 @@ public class NormalFrame extends TemplateFrame {
 
     public static Frame first() {
         return new NormalFrame();
+    }
+
+    @Override
+    public void run(PitchNumberStrategy numberStrategy) {
+        if (state.progressing()) {
+            Pitch pitch = frameInfo.createPitch(numberStrategy);
+            state = state.run(pitch, this);
+        }
     }
 
     @Override
@@ -72,6 +81,9 @@ public class NormalFrame extends TemplateFrame {
             return beforeScore;
         }
         Score score = state.calculateBonusScore(beforeScore);
+        if (score.calculated()) {
+            return score;
+        }
         if (!isCalculateNextFrame()) {
             return null;
         }
@@ -88,7 +100,12 @@ public class NormalFrame extends TemplateFrame {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public String symbol() {
+        return state.symbol();
+    }
+
     private boolean isCalculateNextFrame() {
-        return Objects.nonNull(nextFrame) && nextFrame.isEnd();
+        return Objects.nonNull(nextFrame) && !(nextFrame.state() instanceof Start);
     }
 }
