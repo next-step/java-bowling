@@ -1,14 +1,16 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.PinExpression;
 import bowling.domain.pitch.Pitch;
 import bowling.domain.score.Score;
 import bowling.domain.state.Start;
 import bowling.domain.state.State;
 import bowling.strategy.PitchNumberStrategy;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static bowling.domain.state.end.End.*;
 
@@ -97,9 +99,27 @@ public class FinalFrame extends TemplateFrame {
 
     @Override
     public String symbol() {
-        return frameInfo.fallDownPinsAll().stream()
-                .map(value -> Integer.toString(value))
-                .collect(Collectors.joining(OR));
+        List<Integer> fallDownPins = frameInfo.fallDownPinsAll();
+        if (fallDownPins.isEmpty()) {
+            return "";
+        }
+        Integer first = fallDownPins.get(0);
+        List<String> symbols = new ArrayList<>();
+        symbols.add(PinExpression.convert(first));
+        int size = fallDownPins.size();
+        for (int index = 1; index < size; index++) {
+            Integer second = fallDownPins.get(index);
+            symbols.add(checkSymbol(first, second));
+            first = second;
+        }
+        return String.join(OR, symbols);
+    }
+
+    private String checkSymbol(int first, int second) {
+        if (second != 0 && first + second == 10) {
+            return "/";
+        }
+        return PinExpression.convert(second);
     }
 
     private static void validateFinalFrameNo(FrameInfo frameInfo) {

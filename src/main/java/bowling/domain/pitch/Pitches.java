@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Pitches {
-    private static final int ZERO = 0;
     private static final int ONE = 1;
     private static final int THREE = 3;
 
