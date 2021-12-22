@@ -23,7 +23,7 @@ public class Answers {
     }
 
     public void delete() {
-        answers.stream().forEach(Answer::delete);
+        answers.forEach(Answer::delete);
     }
 
     public void add(Answer answer) {
