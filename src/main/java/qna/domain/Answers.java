@@ -2,6 +2,7 @@ package qna.domain;
 
 import org.hibernate.annotations.Where;
 import qna.exception.CannotDeleteException;
+import qna.exception.ConsumerExceptionWrapper;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
@@ -11,8 +12,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import static qna.exception.ConsumerExceptionWrapper.wrapper;
 
 @Embeddable
 public class Answers {
@@ -45,7 +44,7 @@ public class Answers {
     }
 
     public void validateDelete(User writer) throws CannotDeleteException {
-        answers.forEach(wrapper(answer -> {
+        answers.forEach(ConsumerExceptionWrapper.wrapper(answer -> {
             if (!answer.isOwner(writer)) {
                 throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
             }
