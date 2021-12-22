@@ -10,6 +10,10 @@ public class User {
 
     public User(String name) {
 
+        if(name == null && name.trim().isEmpty()) {
+            throw new NullPointerException("빈 값과 null값은 입력 하실수 없습니다!!!");
+        }
+
         if(name.length() > NAME_MAX_LENGTH) {
             throw new IllegalArgumentException(NAME_LENGTH_ERROR_MSG);
         }
