@@ -1,8 +1,15 @@
 package bowling.domain.value;
 
+import java.util.Objects;
+
 public class Pins {
+
+    private static final int MAX_PIN_COUNT = 10;
+    private static final int MIN_PIN_COUNT = 0;
+
     private static final String MIN_ERROR_MSG = "쓰러트린 볼링 핀의 갯수는 0보다 작을 수 없습니다!!!";
     private static final String MAX_ERROR_MSG = "쓰러트린 볼링 핀의 갯수는 10보다 클 수 없습니다!!!";
+    private static final String MAX_BOWL_ERROR_MSG = "쓰러트린 볼링 핀의 갯수는 10보다 클 수 없습니다!!!";
 
     private static final int MIN_COUNT = 0;
     private static final int MAX_COUNT = 10;
@@ -22,15 +29,45 @@ public class Pins {
         this.pins = pins;
     }
 
+    private Pins(int firstPins, int secondPins) {
+
+        if(firstPins + secondPins > MAX_COUNT) {
+            throw new IllegalArgumentException(MAX_BOWL_ERROR_MSG);
+        }
+
+        this.pins = firstPins + secondPins;
+    }
+
     public boolean isStrike() {
-        return this.pins == 10;
+        return this.pins == MAX_PIN_COUNT;
     }
 
     public boolean isGutter() {
-        return this.pins == 0;
+        return this.pins == MIN_PIN_COUNT;
+    }
+
+    public boolean isSpare(Pins secondPins) {
+        return new Pins(this.pins, secondPins.pins).isStrike();
     }
 
     public int getPins() {
         return pins;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Pins pins1 = (Pins) o;
+        return pins == pins1.pins;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pins);
     }
 }
