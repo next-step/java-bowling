@@ -36,18 +36,6 @@ public class Score {
         return new Score(this.score + score, this.bonusCount - 1);
     }
 
-    public Score next(int score, int bonusCount) {
-        return new Score(this.score + score, bonusCount);
-    }
-
-    public Score next(Score score) {
-        return new Score(this.score + score.score, this.bonusCount - 1);
-    }
-
-    public Score next(Score score, int bonusCount) {
-        return new Score(this.score + score.score, bonusCount);
-    }
-
     public boolean calculated() {
         return this.bonusCount == DEFAULT_COUNT;
     }

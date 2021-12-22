@@ -6,8 +6,8 @@ import bowling.domain.score.Score;
 import static bowling.domain.pin.Pins.PINS_MIN_COUNT;
 
 public class Miss extends End {
-    private Pins firstPins;
-    private Pins secondPins;
+    private final Pins firstPins;
+    private final Pins secondPins;
 
     private Miss(Pins firstPins, Pins secondPins) {
         this.firstPins = firstPins;

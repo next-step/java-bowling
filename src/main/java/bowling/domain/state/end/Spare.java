@@ -4,8 +4,8 @@ import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 
 public class Spare extends End {
-    private Pins firstPins;
-    private Pins secondPins;
+    private final Pins firstPins;
+    private final Pins secondPins;
 
     private Spare(Pins firstPins, Pins secondPins) {
         this.firstPins = firstPins;

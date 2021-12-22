@@ -16,10 +16,21 @@ public class ResultView {
     private static final String BOARD_FRAME_BODY_CONTENT_FORMAT = "| %4s ";
     private static final String WHITE_SPACE = " ";
 
+    private ResultView() {
+    }
+
     public static void showBoard(GameInfo gameInfo, Frame frame) {
         printPitchInfo(gameInfo.noOf(frame), gameInfo.currentFallDownPinsCountOf(frame));
 
         printFrame(gameInfo.player().name(), gameInfo.frameResults(), gameInfo.scoreResults());
+    }
+
+    public static void printFrame(String name) {
+        printFrameHeader();
+
+        printFrameBody(name, Collections.emptyList());
+        printFrameBody(WHITE_SPACE, Collections.emptyList());
+        newLine();
     }
 
     public static void printFrame(String name, List<String> frameResults, List<String> frameScores) {

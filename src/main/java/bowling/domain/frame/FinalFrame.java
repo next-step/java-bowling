@@ -8,18 +8,17 @@ import bowling.domain.state.State;
 import bowling.strategy.PitchNumberStrategy;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import static bowling.domain.state.end.End.*;
+import static bowling.domain.state.end.End.OR;
 
 public class FinalFrame extends TemplateFrame {
     private static final int FINAL_FRAME_NO = 9;
     public static final int STATES_SECOND_INDEX = 1;
     public static final int STATES_FIRST_INDEX = 0;
 
-    private List<State> states = new LinkedList<>();
+    private final List<State> states = new LinkedList<>();
 
     private FinalFrame() {
         super(FrameInfo.create(FINAL_FRAME_NO), new Start());
