@@ -22,6 +22,14 @@ public class Pins {
         this.pins = pins;
     }
 
+    public boolean isStrike() {
+        return this.pins == 10;
+    }
+
+    public boolean isGutter() {
+        return this.pins == 0;
+    }
+
     public int getPins() {
         return pins;
     }
