@@ -8,7 +8,7 @@ import org.junit.jupiter.api.RepeatedTest;
 
 class BowlingGameTest {
 
-    @RepeatedTest(1)
+    @RepeatedTest(100)
     void 게임을_시작한다() {
         BowlingGame game = BowlingGame.create("DDD");
         GameInfo gameInfo = game.currentGameInfo();

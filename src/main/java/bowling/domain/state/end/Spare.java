@@ -1,7 +1,7 @@
 package bowling.domain.state.end;
 
-import bowling.domain.Pins;
-import bowling.domain.Score;
+import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 
 public class Spare extends End {
     private Pins firstPins;

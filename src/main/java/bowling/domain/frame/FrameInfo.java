@@ -1,12 +1,12 @@
 package bowling.domain.frame;
 
-import bowling.domain.Pitch;
-import bowling.domain.Pitches;
+import bowling.domain.pitch.Pitch;
+import bowling.domain.pitch.Pitches;
 import bowling.strategy.PitchNumberStrategy;
 
 import java.util.List;
 
-import static bowling.domain.Pins.PINS_MAX_COUNT;
+import static bowling.domain.pin.Pins.PINS_MAX_COUNT;
 
 public class FrameInfo {
     private static final int DEFAULT_NO = 0;

@@ -1,8 +1,8 @@
 package bowling.domain.state;
 
-import bowling.domain.Pins;
-import bowling.domain.Pitch;
-import bowling.domain.Score;
+import bowling.domain.pin.Pins;
+import bowling.domain.pitch.Pitch;
+import bowling.domain.score.Score;
 import bowling.domain.frame.Frame;
 import bowling.domain.state.end.Miss;
 import bowling.domain.state.end.Spare;

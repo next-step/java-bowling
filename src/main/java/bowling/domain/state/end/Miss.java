@@ -1,9 +1,9 @@
 package bowling.domain.state.end;
 
-import bowling.domain.Pins;
-import bowling.domain.Score;
+import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 
-import static bowling.domain.Pins.PINS_MIN_COUNT;
+import static bowling.domain.pin.Pins.PINS_MIN_COUNT;
 
 public class Miss extends End {
     private Pins firstPins;

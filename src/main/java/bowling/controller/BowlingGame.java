@@ -1,8 +1,7 @@
 package bowling.controller;
 
 import bowling.domain.GameInfo;
-import bowling.domain.Player;
-import bowling.strategy.PitchNumberStrategy;
+import bowling.domain.player.Player;
 
 import java.util.List;
 import java.util.stream.Collectors;

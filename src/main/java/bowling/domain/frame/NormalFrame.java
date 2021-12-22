@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.domain.Pitch;
-import bowling.domain.Score;
+import bowling.domain.pitch.Pitch;
+import bowling.domain.score.Score;
 import bowling.domain.state.Start;
 import bowling.domain.state.State;
 import bowling.strategy.PitchNumberStrategy;

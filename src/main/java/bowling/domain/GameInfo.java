@@ -2,6 +2,8 @@ package bowling.domain;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
+import bowling.domain.player.Player;
+import bowling.domain.score.Score;
 import bowling.strategy.PitchNumberStrategy;
 
 import java.util.ArrayList;

@@ -1,10 +1,10 @@
-package bowling.domain;
+package bowling.domain.pin;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static bowling.domain.Pin.PIN_MIN_NUMBER;
+import static bowling.domain.pin.Pin.PIN_MIN_NUMBER;
 
 public class Pins {
     public static final int PINS_MIN_COUNT = 0;

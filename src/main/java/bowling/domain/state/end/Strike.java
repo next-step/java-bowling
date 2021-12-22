@@ -1,8 +1,8 @@
 package bowling.domain.state.end;
 
-import bowling.domain.Score;
+import bowling.domain.score.Score;
 
-import static bowling.domain.Pins.PINS_MAX_COUNT;
+import static bowling.domain.pin.Pins.PINS_MAX_COUNT;
 
 public class Strike extends End {
 

@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.Score;
-import bowling.domain.state.State;
+import bowling.domain.score.Score;
 import bowling.strategy.PitchNumberStrategy;
 
 import java.util.ArrayList;

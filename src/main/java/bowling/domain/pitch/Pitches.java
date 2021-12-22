@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.pitch;
 
 import java.util.ArrayList;
 import java.util.List;

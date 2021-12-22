@@ -1,9 +1,9 @@
 package bowling.domain.state;
 
-import bowling.domain.*;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
+import bowling.domain.pitch.Pitch;
 import bowling.domain.state.end.End;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

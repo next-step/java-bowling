@@ -1,10 +1,11 @@
-package bowling.domain;
+package bowling.domain.pitch;
 
+import bowling.domain.pin.Pins;
 import bowling.strategy.PitchNumberStrategy;
 
 import java.util.Objects;
 
-import static bowling.domain.Pins.PINS_MAX_COUNT;
+import static bowling.domain.pin.Pins.PINS_MAX_COUNT;
 
 public class Pitch {
     private final Pins pins;

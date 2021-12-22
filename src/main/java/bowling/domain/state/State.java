@@ -1,7 +1,7 @@
 package bowling.domain.state;
 
-import bowling.domain.Pitch;
-import bowling.domain.Score;
+import bowling.domain.pitch.Pitch;
+import bowling.domain.score.Score;
 import bowling.domain.frame.Frame;
 
 public interface State {
