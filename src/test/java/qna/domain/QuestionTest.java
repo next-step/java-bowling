@@ -18,11 +18,11 @@ public class QuestionTest {
         Question question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
 
         // when
-        DeleteHistory deleteHistory = question.delete(UserTest.JAVAJIGI);
+        DeleteHistories deleteHistories = question.delete(UserTest.JAVAJIGI);
 
         // then
         DeleteHistory expectedDeleteHistory = new DeleteHistory(ContentType.QUESTION,1L, UserTest.JAVAJIGI, LocalDateTime.now());
-        assertThat(deleteHistory).isEqualTo(expectedDeleteHistory);
+        assertThat(deleteHistories.getQuestionOfDeleteHistory()).isEqualTo(expectedDeleteHistory);
     }
 
     @Test

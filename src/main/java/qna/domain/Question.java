@@ -74,13 +74,25 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public DeleteHistory delete(User loginUser) throws CannotDeleteException {
+    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
+        DeleteHistories deleteHistories = new DeleteHistories();
+        deleteQuestion(loginUser, deleteHistories);
+        deleteAnswer(loginUser, deleteHistories);
+
+        return deleteHistories;
+    }
+
+    private void deleteQuestion(User loginUser, DeleteHistories deleteHistories) throws CannotDeleteException {
         if (!writer.equals(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-
         deleted = true;
-        return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+    }
+
+    private void deleteAnswer(User loginUser, DeleteHistories deleteHistories) throws CannotDeleteException {
+        Answers answers = new Answers(getAnswers());
+        answers.delete(loginUser, deleteHistories);
     }
 
     public boolean isDeleted() {

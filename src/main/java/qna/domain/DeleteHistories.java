@@ -16,8 +16,11 @@ public class DeleteHistories {
         this.deleteHistories.addAll(deleteHistories);
     }
 
+    public DeleteHistory getQuestionOfDeleteHistory() {
+        return deleteHistories.get(0);
+    }
+
     public List<DeleteHistory> getDeleteHistories() {
         return Collections.unmodifiableList(deleteHistories);
     }
-
 }
