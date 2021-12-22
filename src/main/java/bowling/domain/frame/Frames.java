@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
 import bowling.domain.Score;
-import bowling.domain.state.State;
 import bowling.strategy.PitchNumberStrategy;
 
 import java.util.ArrayList;
@@ -65,8 +64,8 @@ public class Frames {
         return frames.get(indexOf(frame)).no();
     }
 
-    public int fallDownPinsCountOf(Frame frame) {
-        return frames.get(indexOf(frame)).fallDownPinsCount();
+    public int currentFallDownPinsCountOf(Frame frame) {
+        return frames.get(indexOf(frame)).currentFallDownPinsCount();
     }
 
     private int indexOf(Frame frame) {

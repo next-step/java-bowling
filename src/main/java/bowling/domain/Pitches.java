@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pitches {
+    private static final int ZERO = 0;
     private static final int ONE = 1;
     private static final int THREE = 3;
 
@@ -20,7 +21,13 @@ public class Pitches {
         pitches.add(pitch);
     }
 
-    public int fallDownPinsSize() {
+    public int sumOfFallDownPins() {
+        return pitches.stream()
+                .map(Pitch::fallDownPinsSize)
+                .reduce(ZERO, Integer::sum);
+    }
+
+    public int currentFallDownPinsSize() {
         return currentPitch().fallDownPinsSize();
     }
 

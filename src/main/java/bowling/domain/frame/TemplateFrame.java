@@ -1,12 +1,8 @@
 package bowling.domain.frame;
 
-import bowling.domain.Pitch;
 import bowling.domain.state.Start;
 import bowling.domain.state.State;
 import bowling.domain.state.end.End;
-import bowling.strategy.PitchNumberStrategy;
-
-import java.util.List;
 
 public abstract class TemplateFrame implements Frame {
     protected final FrameInfo frameInfo;
@@ -44,7 +40,7 @@ public abstract class TemplateFrame implements Frame {
     }
 
     @Override
-    public int fallDownPinsCount() {
-        return frameInfo.fallDownPinsCount();
+    public int currentFallDownPinsCount() {
+        return frameInfo.currentFallDownPinsCount();
     }
 }

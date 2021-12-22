@@ -15,7 +15,7 @@ public interface Frame {
 
     int no();
 
-    int fallDownPinsCount();
+    int currentFallDownPinsCount();
 
     State state();
 

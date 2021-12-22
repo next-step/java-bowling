@@ -40,8 +40,12 @@ public class FrameInfo {
         return no;
     }
 
-    public int fallDownPinsCount() {
-        return pitches.fallDownPinsSize();
+    public int currentFallDownPinsCount() {
+        return pitches.currentFallDownPinsSize();
+    }
+
+    public int sumOfFallDownPins() {
+        return pitches.sumOfFallDownPins();
     }
 
     public boolean last() {

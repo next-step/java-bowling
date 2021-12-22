@@ -17,7 +17,7 @@ public class ResultView {
     private static final String WHITE_SPACE = " ";
 
     public static void showBoard(GameInfo gameInfo, Frame frame) {
-        printPitchInfo(gameInfo.noOf(frame), gameInfo.fallDownPinsCountOf(frame));
+        printPitchInfo(gameInfo.noOf(frame), gameInfo.currentFallDownPinsCountOf(frame));
 
         printFrame(gameInfo.player().name(), gameInfo.frameResults(), gameInfo.scoreResults());
     }
