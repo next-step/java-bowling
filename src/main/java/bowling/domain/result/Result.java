@@ -6,9 +6,9 @@ public class Result {
     private final int frameNo;
     private final String stateMark;
 
-    public Result(int frameNo, String stateDesc) {
+    public Result(int frameNo, String stateMark) {
         this.frameNo = frameNo;
-        this.stateMark = stateDesc;
+        this.stateMark = stateMark;
     }
 
     public int getFrameNo() {

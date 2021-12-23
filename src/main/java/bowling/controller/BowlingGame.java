@@ -28,7 +28,7 @@ public class BowlingGame {
         Results results = new Results();
         printBowlingResult(results);
 
-        while(isNotFinished()){
+        while(isNotFinished()) {
             results.set(bowl());
             printBowlingResult(results);
         }

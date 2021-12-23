@@ -10,7 +10,6 @@ public class OutputView {
     private static final String NAME_PRINT_FORMAT = "|  %s |";
     private static final String NORMAL_GAME_RESULT_PRINT_FORMAT = "  %-3s |";
     private static final String FINAL_GAME_RESULT_PRINT_FORMAT = " %-5s|";
-    private static final String EXIT_GAME = " 게임을 종료하겠습니다.";
 
     public void printBowlingResult(User user, Results results) {
         printHead();
@@ -44,10 +43,7 @@ public class OutputView {
     }
 
     private static String getFinalGameResult(Result gameResult) {
-        return String.format(FINAL_GAME_RESULT_PRINT_FORMAT,gameResult.getStatusMark());
+        return String.format(FINAL_GAME_RESULT_PRINT_FORMAT, gameResult.getStatusMark());
     }
 
-    public static void printExitGameMessage(String message) {
-        System.out.println(message + EXIT_GAME);
-    }
 }
