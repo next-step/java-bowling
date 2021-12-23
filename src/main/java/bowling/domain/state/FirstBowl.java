@@ -6,6 +6,8 @@ import java.util.Objects;
 
 public class FirstBowl extends ProgressState{
 
+    private static final String GUTTER_MARK = "-";
+
     private final Pins firstPins;
 
     public FirstBowl(Pins pins) {
@@ -20,6 +22,16 @@ public class FirstBowl extends ProgressState{
         }
 
         return new Miss(this.firstPins, secondPins);
+    }
+
+    @Override
+    public String getMark() {
+
+        if(firstPins.isGutter()){
+            return GUTTER_MARK;
+        }
+
+        return firstPins.count();
     }
 
     @Override

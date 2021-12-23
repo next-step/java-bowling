@@ -6,12 +6,19 @@ import java.util.Objects;
 
 public class Spare extends Finished{
 
+    private static final String SPARE_MARK = "/";
+
     private final Pins firstPin;
     private final Pins secondPin;
 
     public Spare(Pins firstPin, Pins secondPin) {
         this.firstPin = firstPin;
         this.secondPin = secondPin;
+    }
+
+    @Override
+    public String getMark() {
+        return SPARE_MARK;
     }
 
     @Override
@@ -30,4 +37,5 @@ public class Spare extends Finished{
     public int hashCode() {
         return Objects.hash(firstPin, secondPin);
     }
+
 }

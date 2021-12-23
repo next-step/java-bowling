@@ -1,8 +1,6 @@
-package bowling.domain.value;
+package bowling.domain.state;
 
-import bowling.domain.state.FirstBowl;
-import bowling.domain.state.Miss;
-import bowling.domain.state.Spare;
+import bowling.domain.value.Pins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -35,4 +33,5 @@ public class FirstBowlTest {
         assertThatThrownBy(() ->
                 firstBowl.bowl(new Pins(7))).isInstanceOf(IllegalArgumentException.class);
     }
+
 }

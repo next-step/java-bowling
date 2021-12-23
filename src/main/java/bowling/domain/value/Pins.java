@@ -50,6 +50,10 @@ public class Pins {
         return new Pins(this.pins, secondPins.pins).isStrike();
     }
 
+    public String count() {
+        return String.valueOf(this.pins);
+    }
+
     public int getPins() {
         return pins;
     }
@@ -70,4 +74,5 @@ public class Pins {
     public int hashCode() {
         return Objects.hash(pins);
     }
+
 }
