@@ -1,5 +1,6 @@
 package bowling.view;
 
+import bowling.controller.BowlingGame;
 import bowling.domain.GameInfo;
 import bowling.domain.frame.Frame;
 
@@ -12,37 +13,40 @@ public class ResultView {
     private static final String NAME = "NAME";
     private static final String BOARD_HEADER_CONTENT_FORMAT = "|  %02d  ";
     private static final String BOARD_DIVISION = "|";
-    private static final String PITCH_INFO = "%d프레임 투구 : %d\n";
+    private static final String PITCH_INFO = "%s's turn : %d\n";
     private static final String BOARD_FRAME_BODY_CONTENT_FORMAT = "| %4s ";
     private static final String WHITE_SPACE = " ";
 
     private ResultView() {
     }
 
-    public static void showBoard(GameInfo gameInfo, Frame frame) {
-        printPitchInfo(gameInfo.noOf(frame), gameInfo.currentFallDownPinsCountOf(frame));
-
-        printFrame(gameInfo.player().name(), gameInfo.frameResults(), gameInfo.scoreResults());
+    public static void showBoard(BowlingGame game, Frame frame) {
+        GameInfo currentGameInfo = game.currentGameInfo();
+        printPitchInfo(currentGameInfo.player().name(), currentGameInfo.currentFallDownPinsCountOf(frame));
+        printFrameHeader();
+        for (GameInfo gameInfo : game.gameInfos()) {
+            printFrame(gameInfo.player().name(), gameInfo.frameResults(), gameInfo.scoreResults());
+        }
+        newLine();
     }
 
-    public static void printFrame(String name) {
+    public static void printFrame(List<String> names) {
         printFrameHeader();
 
-        printFrameBody(name, Collections.emptyList());
-        printFrameBody(WHITE_SPACE, Collections.emptyList());
+        for (String name : names) {
+            printFrameBody(name, Collections.emptyList());
+            printFrameBody(WHITE_SPACE, Collections.emptyList());
+        }
         newLine();
     }
 
     public static void printFrame(String name, List<String> frameResults, List<String> frameScores) {
-        printFrameHeader();
-
         printFrameBody(name, frameResults);
         printFrameBody(WHITE_SPACE, frameScores);
-        newLine();
     }
 
-    private static void printPitchInfo(int no, int fallDownPinCount) {
-        System.out.printf(PITCH_INFO, no + 1, fallDownPinCount);
+    private static void printPitchInfo(String name, int fallDownPinCount) {
+        System.out.printf(PITCH_INFO, name, fallDownPinCount);
     }
 
     private static void printFrameHeader() {
