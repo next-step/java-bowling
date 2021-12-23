@@ -50,7 +50,7 @@ public class GeneralHitScoresTest {
     void addTest() {
         assertThatCode(() -> new GeneralHitScores().add(3)).doesNotThrowAnyException();
         assertThatCode(() -> new GeneralHitScores(0).add(3)).doesNotThrowAnyException();
-        assertThatCode(() -> new GeneralHitScores(STRIKE).add(3)).doesNotThrowAnyException();
+        assertThatCode(() -> new GeneralHitScores(STRIKE)).doesNotThrowAnyException();
     }
 
     @Test
@@ -62,4 +62,11 @@ public class GeneralHitScoresTest {
             () -> new GeneralHitScores(STRIKE, STRIKE).add(STRIKE).add(STRIKE));
     }
 
+    @Test
+    @DisplayName("투구시 최대 핀 갯수를 넘어가면 예외가 발생한다.")
+    void addExceptionTest2() {
+        assertThatIllegalArgumentException().isThrownBy(() -> new GeneralHitScores(9, 3));
+        assertThatIllegalArgumentException().isThrownBy(() -> new GeneralHitScores().add(9).add(3));
+        assertThatIllegalArgumentException().isThrownBy(() -> new GeneralHitScores().add(STRIKE).add(STRIKE));
+    }
 }
