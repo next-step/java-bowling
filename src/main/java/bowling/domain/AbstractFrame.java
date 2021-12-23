@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain;
 
 public abstract class AbstractFrame implements Frame {
     protected final KnockedPinCounts knockedPinCounts;

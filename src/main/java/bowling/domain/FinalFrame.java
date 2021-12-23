@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain;
 
 public class FinalFrame extends AbstractFrame {
     public static final String FINAL_FRAME_MESSAGE = "10프레임 이후 프레임은 없습니다.";

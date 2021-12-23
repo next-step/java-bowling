@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain;
 
 public class KnockedPinCount {
     public static final KnockedPinCount STRIKE_COUNT = new KnockedPinCount(10);

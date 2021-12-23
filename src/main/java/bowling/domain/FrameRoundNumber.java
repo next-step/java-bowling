@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain;
 
 public class FrameRoundNumber {
     public static final FrameRoundNumber BEFORE_FINAL_FRAME_NUMBER = new FrameRoundNumber(9);

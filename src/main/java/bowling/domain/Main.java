@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain;
 
 import bowling.view.InputView;
 import bowling.view.OutputView;

@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain;
 
 public class NormalFrame extends AbstractFrame {
     private final FrameRoundNumber roundNumber;
