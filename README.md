@@ -27,7 +27,11 @@
 - [x] 참가자를 표현하는 `Player` 객체 구현
     - [x] 참가자의 이름을 input 값으로 받아야 하며, 이름은 3글자이어야 함.
 
-- [] 각 프레임 정보와, `Frame` 추상 클래스 정의
-  - create() - 볼링판 생성 (`Chain of Responsibility Pattern` 으루 구현하기)
+- [] 프레임의 진행상황 여부를 담고있는 Status 구현
+  - Ready: 시작하기 이전 상태
+  - Progress: 진행중 상태
+  - End: 종료 상태
+
+- [] 각 프레임 정보를 담고있는, `Frame` 인터페이스 정의
   - bowl(int index) - 투구 기능
-  - 
+  - next() - 다음 프레임 확인
