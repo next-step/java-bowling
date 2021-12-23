@@ -1,17 +1,17 @@
 package bowling.domain.state.end.second;
 
-import bowling.domain.state.progress.SecondProgress;
+import bowling.domain.state.progress.GeneralProgress;
 
 public class Normal extends EndOfSecondState {
 
 
-    public Normal(SecondProgress secondProgress) {
-        super(secondProgress);
+    public Normal(GeneralProgress generalProgress) {
+        super(generalProgress);
     }
 
     @Override
     public String getPrintMark() {
-        return getSecondPrintMark(String.valueOf(secondProgress.getHitCount()));
+        return getSecondPrintMark(String.valueOf(generalProgress.getHitCount()));
     }
 
 }
