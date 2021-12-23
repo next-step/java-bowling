@@ -3,35 +3,40 @@ package bowling;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NormalKnockedPinCounts {
-    public static final String WRONG_BOWL_COUNT_MESSAGE = "잘못된 투구 수입니다.";
-    private static final int MAX_SIZE = 2;
+public class NormalKnockedPinCounts extends AbstractKnockedPinCounts {
+    public static final String NO_BONUS_MESSAGE = "일반 프레임은 bonus가 없습니다.";
 
-    private final List<KnockedPinCount> values;
+    private static final int MAX_SIZE = 2;
 
     public NormalKnockedPinCounts() {
         this(new ArrayList<>());
     }
 
     public NormalKnockedPinCounts(List<KnockedPinCount> knockedPinCounts) {
-        this.values = knockedPinCounts;
+        super(knockedPinCounts, MAX_SIZE);
+    }
 
-        if (knockedPinCounts.size() > MAX_SIZE) {
+    @Override
+    public void knockOut(int knockedOutCount) {
+        checkValidKnockedPinCounts(knockedOutCount);
+        if (isSecondEnd() || isStrike()) {
             throw new IllegalArgumentException(WRONG_BOWL_COUNT_MESSAGE);
         }
+        values.add(new KnockedPinCount(knockedOutCount));
     }
 
-    public void knockOut(int count) {
-        checkValidKnockedPinCounts(count);
-        values.add(new KnockedPinCount(count));
+    @Override
+    public boolean isKnockOutPinFinish() {
+        return isSecondEnd() || isStrike();
     }
 
-    private void checkValidKnockedPinCounts(int count) {
-        sum(count);
+    @Override
+    public boolean isFinal() {
+        return false;
     }
 
-    private KnockedPinCount sum(int count) {
-        return values.stream()
-                .reduce(new KnockedPinCount(count), (previous, current) -> previous.sum(current));
+    @Override
+    public boolean isBonusEnd() {
+        throw new IllegalArgumentException(NO_BONUS_MESSAGE);
     }
 }
