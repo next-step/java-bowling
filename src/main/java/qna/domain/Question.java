@@ -1,10 +1,12 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -18,10 +20,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private final Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -84,7 +84,7 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
     }
 
