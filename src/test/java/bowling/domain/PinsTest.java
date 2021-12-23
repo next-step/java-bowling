@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.pin.Pins;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -52,10 +53,37 @@ public class PinsTest {
     @Test
     void 스트라이크() {
         //given
-        Pins pins = Pins.create(0);
-        Pins fallDownPins = Pins.create(10);
         //when
         //then
-        assertThat(pins.isStrike(fallDownPins)).isTrue();
+        assertThat(Pins.create(10).isStrike()).isTrue();
+        assertThat(Pins.create(10).isStrike(Pins.create(10))).isTrue();
+    }
+
+    @Test
+    void 스페어() {
+        //given
+        //when
+        //then
+        assertThat(Pins.create(0).isSpare(Pins.create(10))).isTrue();
+        assertThat(Pins.create(1).isSpare(Pins.create(9))).isTrue();
+        assertThat(Pins.create(5).isSpare(Pins.create(5))).isTrue();
+    }
+
+    @Test
+    void 미스() {
+        //given
+        //when
+        //then
+        assertThat(Pins.create(0).isMiss(Pins.create(9))).isTrue();
+        assertThat(Pins.create(1).isMiss(Pins.create(1))).isTrue();
+        assertThat(Pins.create(9).isMiss(Pins.create(0))).isTrue();
+    }
+
+    @Test
+    void 거터() {
+        //given
+        //when
+        //then
+        assertThat(Pins.create(0).isGutter()).isTrue();
     }
 }

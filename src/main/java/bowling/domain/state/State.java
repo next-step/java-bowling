@@ -1,17 +1,21 @@
 package bowling.domain.state;
 
-import bowling.domain.*;
+import bowling.domain.pitch.Pitch;
+import bowling.domain.score.Score;
+import bowling.domain.frame.Frame;
 
 public interface State {
 
-    default void run(Pitch pitch, Frame frame) {
-        pitch.run();
-        FrameInfo frameInfo = frame.info();
-        frameInfo.addPitch(pitch);
-        frame.changeState();
-    }
+    State run(Pitch pitch);
 
-    boolean progressing();
+    Score score();
 
-    boolean retryable();
-}
+    Score calculateBonusScore(Score beforeScore);
+
+    String symbol();
+
+    boolean isMiss();
+
+    boolean isBonus();
+
+    boolean isEnd();}

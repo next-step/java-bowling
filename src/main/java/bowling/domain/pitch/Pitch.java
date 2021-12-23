@@ -1,18 +1,15 @@
-package bowling.domain;
+package bowling.domain.pitch;
 
+import bowling.domain.pin.Pins;
 import bowling.strategy.PitchNumberStrategy;
 
 import java.util.Objects;
 
-public class Pitch {
-    private static final int PINS_MAX_COUNT = 10;
+import static bowling.domain.pin.Pins.PINS_MAX_COUNT;
 
+public class Pitch {
     private final Pins pins;
     private final Pins fallDownPins;
-
-    private Pitch() {
-        this(Pins.create(), Pins.create());
-    }
 
     private Pitch(int fallDownPinsCount) {
         this(Pins.create(), Pins.create(fallDownPinsCount));
@@ -27,14 +24,6 @@ public class Pitch {
         this.fallDownPins = fallDownPins;
     }
 
-    public static Pitch init() {
-        return new Pitch();
-    }
-
-    public static Pitch init(int pinsCount, int fallDownPinsCount) {
-        return new Pitch(pinsCount, fallDownPinsCount);
-    }
-
     public static Pitch first(int fallDownPinsCount) {
         return new Pitch(fallDownPinsCount);
     }
@@ -43,23 +32,12 @@ public class Pitch {
         if (pins.isEmpty()) {
             return new Pitch(numberStrategy.generate(PINS_MAX_COUNT));
         }
-        return new Pitch(pins.size(), numberStrategy.generate(pinsSize()));
+        return new Pitch(pinsSize(), numberStrategy.generate(pinsSize()));
     }
 
-    public void run() {
+    public Pins run() {
         pins.fallDown(fallDownPins);
-    }
-
-    public boolean isStrike() {
-        return pins.isStrike(fallDownPins);
-    }
-
-    public boolean isSecondStrike(Pitch pitch) {
-        return pitch.fallDownPinsSize() == PINS_MAX_COUNT && pins.isStrike(fallDownPins);
-    }
-
-    public boolean isSpare(Pitch pitch) {
-        return this.fallDownPinsSize() + pitch.fallDownPinsSize() == PINS_MAX_COUNT;
+        return fallDownPins;
     }
 
     public int pinsSize() {

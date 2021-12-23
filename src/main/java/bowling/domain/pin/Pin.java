@@ -1,9 +1,9 @@
-package bowling.domain;
+package bowling.domain.pin;
 
 import java.util.Objects;
 
 public class Pin {
-    private static final int PIN_MIN_NUMBER = 1;
+    public static final int PIN_MIN_NUMBER = 1;
     private static final int PIN_MAX_NUMBER = 10;
 
     private final int number;

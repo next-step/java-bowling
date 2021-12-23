@@ -1,18 +1,19 @@
-package bowling.domain;
+package bowling.domain.pin;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static bowling.domain.pin.Pin.PIN_MIN_NUMBER;
+
 public class Pins {
-    private static final int FIRST_PIN_INDEX = 0;
-    private static final int PIN_MIN_COUNT = 1;
-    private static final int PIN_MAX_COUNT = 10;
+    public static final int PINS_MIN_COUNT = 0;
+    public static final int PINS_MAX_COUNT = 10;
 
     private final List<Pin> pins = new ArrayList<>();
 
     private Pins() {
-        init(PIN_MAX_COUNT);
+        init(PINS_MAX_COUNT);
     }
 
     private Pins(int count) {
@@ -20,7 +21,7 @@ public class Pins {
     }
 
     private void init(int count) {
-        for (int number = PIN_MIN_COUNT; number <= count; number++) {
+        for (int number = PIN_MIN_NUMBER; number <= count; number++) {
             pins.add(Pin.from(number));
         }
         validatePinsSize();
@@ -39,7 +40,7 @@ public class Pins {
         validateFallDownCount(fallDownCount);
         int startSize = size();
         while (falling(startSize, fallDownCount)) {
-            pins.remove(FIRST_PIN_INDEX);
+            pins.remove(PINS_MIN_COUNT);
         }
         return this;
     }
@@ -48,8 +49,24 @@ public class Pins {
         return size() != (startSize - fallDownCount);
     }
 
+    public boolean isStrike() {
+        return size() == PINS_MAX_COUNT;
+    }
+
     public boolean isStrike(Pins fallDownPins) {
-        return size() == FIRST_PIN_INDEX && fallDownPins.size() == PIN_MAX_COUNT;
+        return isStrike() && fallDownPins.size() == PINS_MAX_COUNT;
+    }
+
+    public boolean isSpare(Pins secondPins) {
+        return size() + secondPins.size() == PINS_MAX_COUNT;
+    }
+
+    public boolean isMiss(Pins secondPins) {
+        return size() + secondPins.size() < PINS_MAX_COUNT;
+    }
+
+    public boolean isGutter() {
+        return size() == PINS_MIN_COUNT;
     }
 
     public int size() {
@@ -57,7 +74,7 @@ public class Pins {
     }
 
     public boolean isEmpty() {
-        return size() == FIRST_PIN_INDEX;
+        return size() == PINS_MIN_COUNT;
     }
 
     private void validateFallDownCount(int fallDownCount) {
@@ -67,7 +84,7 @@ public class Pins {
     }
 
     private void validatePinsSize() {
-        if (pins.size() > PIN_MAX_COUNT) {
+        if (pins.size() > PINS_MAX_COUNT) {
             throw new IllegalArgumentException("핀들이 제대로 생성되지 않았습니다.");
         }
     }
