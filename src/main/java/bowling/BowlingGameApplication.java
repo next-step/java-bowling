@@ -1,13 +1,11 @@
 package bowling;
 
 import bowling.controller.BowlingGame;
-import bowling.domain.frame.Frame;
 import bowling.domain.GameInfo;
+import bowling.domain.frame.Frame;
 import bowling.strategy.RandomPitchNumberStrategy;
 import bowling.view.InputView;
 import bowling.view.ResultView;
-
-import java.util.Collections;
 
 public class BowlingGameApplication {
     public static void main(String[] args) {

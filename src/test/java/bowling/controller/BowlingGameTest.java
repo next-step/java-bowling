@@ -1,7 +1,7 @@
 package bowling.controller;
 
-import bowling.domain.frame.Frame;
 import bowling.domain.GameInfo;
+import bowling.domain.frame.Frame;
 import bowling.strategy.RandomPitchNumberStrategy;
 import bowling.view.ResultView;
 import org.junit.jupiter.api.RepeatedTest;
