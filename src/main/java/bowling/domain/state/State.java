@@ -6,13 +6,16 @@ import bowling.domain.frame.Frame;
 
 public interface State {
 
-    State run(Pitch pitch, Frame frame);
-
-    boolean progressing();
+    State run(Pitch pitch);
 
     Score score();
 
     Score calculateBonusScore(Score beforeScore);
 
     String symbol();
-}
+
+    boolean isMiss();
+
+    boolean isBonus();
+
+    boolean isEnd();}

@@ -1,17 +1,18 @@
 package bowling.domain.state;
 
-import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
-import bowling.domain.pitch.Pitch;
+import bowling.domain.pin.Pins;
 import bowling.domain.state.end.End;
+import bowling.domain.state.end.Miss;
+import bowling.domain.state.end.Spare;
+import bowling.domain.state.end.Strike;
+import bowling.domain.state.progress.FirstHit;
+import bowling.domain.state.progress.Start;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class StateTest {
 
@@ -25,262 +26,70 @@ class StateTest {
     }
 
     @Test
-    void 일반_프레임_첫_번째_투구가_Strike_이면_상태는_End_이다() {
+    void 첫_번째_투구_상태를_생성한다() {
         //given
-        Frame frame = NormalFrame.first();
-        State state = frame.state();
-        assertThat(state).isInstanceOf(Start.class);
+        State state = FirstHit.from(Pins.create(5));
         //when
-        state = state.run(Pitch.init(10, 10), frame);
+        //then
+        assertThat(state).isNotNull();
+    }
+
+    @Test
+    void 이전_투구가_스트라이크면_첫_번째_투구_상태를_생성할_수_없다() {
+        //given
+        //when
+        //then
+        assertThatThrownBy(() -> FirstHit.from(Pins.create(10)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 종료_상태_Strike_를_생성한다() {
+        //given
+        State state = Strike.from();
+        //when
         //then
         assertThat(state).isInstanceOf(End.class);
+        assertThat(state).isNotNull();
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"10,1", "10,0"})
-    void 일반_프레임_첫_번째_투구가_Miss_혹은_Gutter_이면_프레임_상태는_Progress_retry_false_이다(int existPinsCount, int fallDownPinsCount) {
+    @CsvSource(value = {"0,10", "1,9", "5,5", "9,1"})
+    void 종료_상태_Spare_를_생성한다(int firstPins, int secondPins) {
         //given
-        Frame frame = NormalFrame.first();
-        assertThat(frame.state()).isInstanceOf(Start.class);
+        State state = Spare.of(Pins.create(firstPins), Pins.create(secondPins));
         //when
-        State state = frame.state().run(Pitch.init(existPinsCount, fallDownPinsCount), frame);
         //then
-        assertThat(state).isInstanceOf(Progress.class);
+        assertThat(state).isInstanceOf(End.class);
+        assertThat(state).isNotNull();
+    }
+
+    @Test
+    void 종료_상태_Spare_를_생성_실패() {
+        //given
+        //when
+        //then
+        assertThatThrownBy(() -> Spare.of(Pins.create(5), Pins.create(1)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 종료_상태_Miss_를_생성한다() {
+        //given
+        State state = Miss.from(Pins.create(4), Pins.create(5));
+        //when
+        //then
+        assertThat(state).isInstanceOf(End.class);
+        assertThat(state).isNotNull();
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"10,2,8,2", "10,0,10,0", "10,5,5,5"})
-    void 일반_프레임_첫_번째_두_번째_투구가_Miss_Gutter_Spare_이면_프레임_상태는_End_이다(
-            int existPinsCount, int fallDownPinsCount, int secondExistPinsCount, int secondFallDownPinsCount) {
+    @CsvSource(value = {"0,10", "1,9", "5,5", "9,1"})
+    void 종료_상태_Miss_를_생성_실패(int firstPins, int secondPins) {
         //given
-        Frame frame = NormalFrame.first();
-        State state = frame.state();
-        assertThat(state).isInstanceOf(Start.class);
         //when
-        //first pitch
-        state = state.run(Pitch.init(existPinsCount, fallDownPinsCount), frame);
-        assertThat(state).isInstanceOf(Progress.class);
-
-        //second pitch
-        state = state.run(Pitch.init(secondExistPinsCount, secondFallDownPinsCount), frame);
         //then
-        assertThat(state).isInstanceOf(End.class);
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"10,1", "10,0"})
-    void 마지막_프레임_첫_번째_투구가_Miss_혹은_Gutter_면_프레임_상태는_Progress_retry_false_이다(
-            int existPinsCount, int fallDownPinsCount) {
-        //given
-        Frame frame = FinalFrame.create();
-        State state = frame.state();
-        assertThat(state).isInstanceOf(Start.class);
-        //when
-        state = state.run(Pitch.init(existPinsCount, fallDownPinsCount), frame);
-        //then
-        assertThat(state).isInstanceOf(Progress.class);
-    }
-
-    @Test
-    void 마지막_프레임_Miss_Miss_면_프레임_상태는_End_이다() {
-        //given
-        Frame frame = FinalFrame.create();
-        State state = frame.state();
-        assertThat(state).isInstanceOf(Start.class);
-        //when
-        state = state.run(Pitch.init(10, 1), frame);
-        state = state.run(Pitch.init(9, 1), frame);
-        //then
-        assertThat(state).isInstanceOf(End.class);
-    }
-
-    @Test
-    void 마지막_프레임_첫_번째_투구가_스트라이크면_프레임_상태는_Progress_retry_true_이다() {
-        //given
-        Frame frame = FinalFrame.create();
-        State state = frame.state();
-        assertThat(state).isInstanceOf(Start.class);
-        //when
-        state = state.run(Pitch.init(10, 10), frame);
-        //then
-        assertThat(state).isInstanceOf(Progress.class);
-    }
-
-    @Test
-    void 마지막_프레임_Strike_Strike_면_이후_프레임_상태는_Progress_retry_false_이다() {
-        //given
-        Frame frame = FinalFrame.create();
-        State state = frame.state();
-        assertThat(state).isInstanceOf(Start.class);
-        //when
-        //first pitch
-        state = state.run(Pitch.init(10, 10), frame);
-
-        //second pitch
-        state = state.run(Pitch.init(10, 10), frame);
-        //then
-        assertThat(state).isInstanceOf(Progress.class);
-    }
-
-    @Test
-    void 마지막_프레임_Strike_Strike_Miss_면_이후_프레임_상태는_End_이다() {
-        //given
-        Frame frame = FinalFrame.create();
-        State state = frame.state();
-        assertThat(state).isInstanceOf(Start.class);
-        //when
-        //first pitch
-        state = state.run(Pitch.init(10, 10), frame);
-
-        //second pitch
-        state = state.run(Pitch.init(10, 10), frame);
-
-        //second pitch
-        state = state.run(Pitch.init(10, 1), frame);
-        //then
-        assertThat(state).isInstanceOf(End.class);
-    }
-
-    @Test
-    void 마지막_프레임_Miss_Spare_면_이후_프레임_상태는_Progress_retry_false_이다() {
-        //given
-        Frame frame = FinalFrame.create();
-        State state = frame.state();
-        assertThat(state).isInstanceOf(Start.class);
-        //when
-        //first pitch
-        state = state.run(Pitch.init(10, 5), frame);
-
-        //second pitch
-        state = state.run(Pitch.init(5, 5), frame);
-        //then
-        assertThat(state).isInstanceOf(Progress.class);
-    }
-
-    @Test
-    void 마지막_프레임_Gutter_Spare_면_이후_프레임_상태는_Progress_retry_false_이다() {
-        //given
-        Frame frame = FinalFrame.create();
-        State state = frame.state();
-        assertThat(state).isInstanceOf(Start.class);
-        //when
-        //first pitch
-        state = state.run(Pitch.init(10, 0), frame);
-
-        //second pitch
-        state = state.run(Pitch.init(10, 10), frame);
-        //then
-        assertThat(state).isInstanceOf(Progress.class);
-    }
-
-    @Test
-    void 마지막_프레임_Gutter_Spare_Strike_면_이후_프레임_상태는_End_이다() {
-        //given
-        Frame frame = FinalFrame.create();
-        State state = frame.state();
-        assertThat(state).isInstanceOf(Start.class);
-        //when
-        //first pitch
-        state = state.run(Pitch.init(10, 0), frame);
-
-        //second pitch
-        state = state.run(Pitch.init(10, 10), frame);
-
-        //third pitch
-        state = state.run(Pitch.init(10, 10), frame);
-        //then
-        assertThat(state).isInstanceOf(End.class);
-    }
-
-    @Test
-    void 마지막_프레임_Gutter_Spare_Miss_면_이후_프레임_상태는_End_이다() {
-        //given
-        Frame frame = FinalFrame.create();
-        State state = frame.state();
-        assertThat(state).isInstanceOf(Start.class);
-        //when
-        //first pitch
-        state = state.run(Pitch.init(10, 1), frame);
-
-        //second pitch
-        state = state.run(Pitch.init(9, 9), frame);
-
-        //third pitch
-        state = state.run(Pitch.init(10, 1), frame);
-        //then
-        assertThat(state).isInstanceOf(End.class);
-    }
-
-    @Test
-    void 마지막_프레임_Strike_Strike_Strike_면_이후_프레임_상태는_End_이다() {
-        //given
-        Frame frame = FinalFrame.create();
-        State state = frame.state();
-        assertThat(state).isInstanceOf(Start.class);
-        //when
-        //first pitch
-        state = state.run(Pitch.init(10, 10), frame);
-
-        //second pitch
-        state = state.run(Pitch.init(10, 10), frame);
-
-        //third pitch
-        state = state.run(Pitch.init(10, 10), frame);
-        //then
-        assertThat(state).isInstanceOf(End.class);
-    }
-
-    @Test
-    void 마지막_프레임_Strike_Miss_Spare_후_상태는_End_이다() {
-        Frame frame = FinalFrame.create();
-        State state = frame.state();
-        assertThat(state).isInstanceOf(Start.class);
-        //when
-        //first pitch
-        state = state.run(Pitch.init(10, 10), frame);
-        assertThat(state).isInstanceOf(Progress.class);
-
-        //second pitch
-        state = state.run(Pitch.init(10, 1), frame);
-        assertThat(state).isInstanceOf(Progress.class);
-
-        //third pitch
-        state = state.run(Pitch.init(9, 9), frame);
-        //then
-        assertThat(state).isInstanceOf(End.class);
-    }
-
-    @Test
-    void 마지막_프레임_Strike_Miss_Miss_후_상태는_End_이다() {
-        Frame frame = FinalFrame.create();
-        State state = frame.state();
-        assertThat(state).isInstanceOf(Start.class);
-        //when
-        //first pitch
-        state = state.run(Pitch.init(10, 10), frame);
-
-        //second pitch
-        state = state.run(Pitch.init(10, 1), frame);
-
-        //third pitch
-        state = state.run(Pitch.init(9, 1), frame);
-        //then
-        assertThat(state).isInstanceOf(End.class);
-    }
-
-
-    @Test
-    void 종료_상태에서_투구하면_IllegalArgumentException_이_발생한다() {
-        //given
-        //when & then
-        assertThrows(IllegalArgumentException.class, () -> {
-            Frame frame = FinalFrame.create();
-            State state = frame.state();
-            state = state.run(Pitch.init(10, 1), frame);
-            state = state.run(Pitch.init(9, 1), frame);
-            assertThat(state).isInstanceOf(End.class);
-
-            state.run(Pitch.init(2, 2), frame);
-        });
+        assertThatThrownBy(() -> Miss.from(Pins.create(firstPins), Pins.create(secondPins)))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

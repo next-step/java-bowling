@@ -1,31 +1,35 @@
 package bowling.domain.frame;
 
-import bowling.domain.pin.PinExpression;
 import bowling.domain.pitch.Pitch;
 import bowling.domain.score.Score;
-import bowling.domain.state.Start;
+import bowling.domain.state.progress.Start;
 import bowling.domain.state.State;
+import bowling.domain.state.end.End;
 import bowling.strategy.PitchNumberStrategy;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static bowling.domain.state.end.End.OR;
 
-public class FinalFrame extends TemplateFrame {
+public class FinalFrame implements Frame {
     private static final int FINAL_FRAME_NO = 9;
-    public static final int STATES_SECOND_INDEX = 1;
     public static final int STATES_FIRST_INDEX = 0;
 
+    private int tryCount;
+    private final FrameInfo frameInfo;
     private final List<State> states = new LinkedList<>();
 
     private FinalFrame() {
-        super(FrameInfo.create(FINAL_FRAME_NO), new Start());
+        this(FrameInfo.create(FINAL_FRAME_NO));
     }
 
     private FinalFrame(FrameInfo frameInfo) {
-        super(frameInfo, new Start());
+        this.tryCount = 0;
+        this.frameInfo = frameInfo;
+        states.add(new Start());
     }
 
     public static Frame create() {
@@ -39,10 +43,37 @@ public class FinalFrame extends TemplateFrame {
 
     @Override
     public void run(PitchNumberStrategy numberStrategy) {
-        if (state.progressing()) {
+        if (!isEnd()) {
+            addTryCount();
             Pitch pitch = frameInfo.createPitch(numberStrategy);
-            state = state.run(pitch, this);
+            changeState(lastState().run(pitch));
+            addPitch(pitch);
+
+            checkBonusPitch();
         }
+    }
+
+    private void addTryCount() {
+        tryCount++;
+    }
+
+    private void changeState(State state) {
+        states.remove(states.size() - 1);
+        states.add(state);
+    }
+
+    private void checkBonusPitch() {
+        if (lastState().isBonus() && !checkTryCount()) {
+            states.add(new Start());
+        }
+    }
+
+    private boolean checkTryCount() {
+        return tryCount == 3;
+    }
+
+    private State lastState() {
+        return states.get(states.size() - 1);
     }
 
     @Override
@@ -56,8 +87,18 @@ public class FinalFrame extends TemplateFrame {
     }
 
     @Override
-    public boolean isThirdPitch() {
-        return frameInfo.isThirdPitch();
+    public int no() {
+        return frameInfo.no();
+    }
+
+    @Override
+    public int currentFallDownPinsCount() {
+        return frameInfo.currentFallDownPinsCount();
+    }
+
+    @Override
+    public State state() {
+        return lastState();
     }
 
     @Override
@@ -77,48 +118,20 @@ public class FinalFrame extends TemplateFrame {
     }
 
     @Override
-    public State state() {
-        return state;
-    }
-
-    @Override
     public boolean isFinal() {
         return true;
     }
 
     @Override
-    public void addState(State state) {
-        states.add(state);
-    }
-
-    @Override
-    public State currentState() {
-        return states.get(states.size() - STATES_SECOND_INDEX);
+    public boolean isEnd() {
+        return lastState() instanceof End || checkTryCount();
     }
 
     @Override
     public String symbol() {
-        List<Integer> fallDownPins = frameInfo.fallDownPinsAll();
-        if (fallDownPins.isEmpty()) {
-            return "";
-        }
-        Integer first = fallDownPins.get(0);
-        List<String> symbols = new ArrayList<>();
-        symbols.add(PinExpression.convert(first));
-        int size = fallDownPins.size();
-        for (int index = 1; index < size; index++) {
-            Integer second = fallDownPins.get(index);
-            symbols.add(checkSymbol(first, second));
-            first = second;
-        }
-        return String.join(OR, symbols);
-    }
-
-    private String checkSymbol(int first, int second) {
-        if (second != 0 && first + second == 10) {
-            return "/";
-        }
-        return PinExpression.convert(second);
+        return states.stream()
+                .map(State::symbol)
+                .collect(Collectors.joining(OR));
     }
 
     private static void validateFinalFrameNo(FrameInfo frameInfo) {

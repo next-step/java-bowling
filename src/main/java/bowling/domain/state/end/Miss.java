@@ -1,9 +1,8 @@
 package bowling.domain.state.end;
 
+import bowling.domain.pin.PinExpression;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
-
-import static bowling.domain.pin.Pins.PINS_MIN_COUNT;
 
 public class Miss extends End {
     private final Pins firstPins;
@@ -40,15 +39,12 @@ public class Miss extends End {
     }
 
     @Override
+    public boolean isMiss() {
+        return true;
+    }
+
+    @Override
     public String symbol() {
-        String firstPinsSymbol = Integer.toString(firstPins.size());
-        String secondPinsSymbol = Integer.toString(secondPins.size());
-        if (firstPins.size() == PINS_MIN_COUNT) {
-            firstPinsSymbol = GUTTER_SYMBOL;
-        }
-        if (secondPins.size() == PINS_MIN_COUNT) {
-            secondPinsSymbol = GUTTER_SYMBOL;
-        }
-        return firstPinsSymbol + OR + secondPinsSymbol;
+        return PinExpression.convert(firstPins.size()) + OR + PinExpression.convert(secondPins.size());
     }
 }

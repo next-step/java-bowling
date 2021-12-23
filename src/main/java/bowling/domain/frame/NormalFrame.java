@@ -2,23 +2,28 @@ package bowling.domain.frame;
 
 import bowling.domain.pitch.Pitch;
 import bowling.domain.score.Score;
-import bowling.domain.state.Start;
+import bowling.domain.state.progress.Start;
 import bowling.domain.state.State;
+import bowling.domain.state.end.End;
 import bowling.strategy.PitchNumberStrategy;
 
 import java.util.Objects;
 
-public class NormalFrame extends TemplateFrame {
+public class NormalFrame implements Frame {
+    private final FrameInfo frameInfo;
     private Frame nextFrame;
+    private State state;
 
     private NormalFrame() {
-        super();
+        this.frameInfo = FrameInfo.init();
         this.nextFrame = null;
+        this.state = new Start();
     }
 
     private NormalFrame(FrameInfo frameInfo) {
-        super(frameInfo, new Start());
+        this.frameInfo = frameInfo;
         this.nextFrame = null;
+        this.state = new Start();
     }
 
     public static Frame first() {
@@ -27,9 +32,10 @@ public class NormalFrame extends TemplateFrame {
 
     @Override
     public void run(PitchNumberStrategy numberStrategy) {
-        if (state.progressing()) {
+        if (!isEnd()) {
             Pitch pitch = frameInfo.createPitch(numberStrategy);
-            state = state.run(pitch, this);
+            state = state.run(pitch);
+            addPitch(pitch);
         }
     }
 
@@ -49,6 +55,16 @@ public class NormalFrame extends TemplateFrame {
     }
 
     @Override
+    public int no() {
+        return frameInfo.no();
+    }
+
+    @Override
+    public int currentFallDownPinsCount() {
+        return frameInfo.currentFallDownPinsCount();
+    }
+
+    @Override
     public State state() {
         return state;
     }
@@ -59,8 +75,8 @@ public class NormalFrame extends TemplateFrame {
     }
 
     @Override
-    public boolean isThirdPitch() {
-        return false;
+    public boolean isEnd() {
+        return state instanceof End;
     }
 
     @Override
@@ -88,16 +104,6 @@ public class NormalFrame extends TemplateFrame {
             return null;
         }
         return nextFrame.calculateBonusScore(score);
-    }
-
-    @Override
-    public void addState(State state) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public State currentState() {
-        throw new UnsupportedOperationException();
     }
 
     @Override

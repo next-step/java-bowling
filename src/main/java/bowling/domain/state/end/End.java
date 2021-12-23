@@ -11,13 +11,23 @@ public abstract class End implements State {
     public static final String OR = "|";
 
     @Override
-    public State run(Pitch pitch, Frame frame) {
+    public boolean isBonus() {
+        return isEnd() && !isMiss();
+    }
+
+    @Override
+    public State run(Pitch pitch) {
         throw new IllegalArgumentException("종료된 프레임 입니다.");
     }
 
     @Override
-    public boolean progressing() {
+    public boolean isMiss() {
         return false;
+    }
+
+    @Override
+    public boolean isEnd() {
+        return true;
     }
 
     @Override

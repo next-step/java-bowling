@@ -23,15 +23,9 @@ public interface Frame {
 
     boolean isEnd();
 
-    boolean isThirdPitch();
-
     Score score();
 
     Score calculateBonusScore(Score beforeScore);
-
-    void addState(State state);
-
-    State currentState();
 
     String symbol();
 }

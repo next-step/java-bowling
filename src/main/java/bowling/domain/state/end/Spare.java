@@ -1,5 +1,6 @@
 package bowling.domain.state.end;
 
+import bowling.domain.pin.PinExpression;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 
@@ -35,6 +36,6 @@ public class Spare extends End {
 
     @Override
     public String symbol() {
-        return firstPins.size() + OR + SPARE_SYMBOL;
+        return PinExpression.convert(firstPins.size()) + OR + SPARE_SYMBOL;
     }
 }
