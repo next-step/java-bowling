@@ -26,3 +26,8 @@
     - [x] `Pin`의 갯수는 1-10으로 한정되어 있으므로, 객체 캐싱 적용
 - [x] 참가자를 표현하는 `Player` 객체 구현
     - [x] 참가자의 이름을 input 값으로 받아야 하며, 이름은 3글자이어야 함.
+
+- [] 각 프레임 정보와, `Frame` 추상 클래스 정의
+  - create() - 볼링판 생성 (`Chain of Responsibility Pattern` 으루 구현하기)
+  - bowl(int index) - 투구 기능
+  - 
