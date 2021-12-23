@@ -11,10 +11,10 @@ public class BowlingGame {
     private static final int FIRST_INDEX = 0;
 
     private final List<GameInfo> gameInfos;
-    private final int index;
+    private int index;
 
-    private BowlingGame(String name) {
-        this(Stream.of(name)
+    private BowlingGame(List<String> names) {
+        this(names.stream()
                 .map(Player::from)
                 .map(GameInfo::of)
                 .collect(Collectors.toList()), FIRST_INDEX);
@@ -25,8 +25,8 @@ public class BowlingGame {
         this.index = index;
     }
 
-    public static BowlingGame create(String name) {
-        return new BowlingGame(name);
+    public static BowlingGame create(List<String> names) {
+        return new BowlingGame(names);
     }
 
     public boolean isGameEnd() {
@@ -39,5 +39,16 @@ public class BowlingGame {
 
     private int currentGameIndex() {
         return index;
+    }
+
+    public void changeTurn() {
+        index++;
+        if (index == gameInfos.size()) {
+            index = FIRST_INDEX;
+        }
+    }
+
+    public List<GameInfo> gameInfos() {
+        return gameInfos;
     }
 }

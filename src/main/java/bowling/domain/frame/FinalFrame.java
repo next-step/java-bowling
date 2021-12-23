@@ -123,7 +123,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isEnd() {
-        return lastState() instanceof End || checkTryCount();
+        return lastState().isEnd() || checkTryCount();
     }
 
     @Override

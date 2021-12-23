@@ -76,7 +76,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isEnd() {
-        return state instanceof End;
+        return state.isEnd();
     }
 
     @Override
