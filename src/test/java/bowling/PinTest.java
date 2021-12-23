@@ -28,4 +28,18 @@ public class PinTest {
     void cacheTest() {
         assertThat(Pin.of(10)).isSameAs(Pin.of(10));
     }
+
+    @Test
+    @DisplayName("Pin 합계가 정상적으로 반환된다.")
+    void sumTest() {
+        Pin sum = Pin.of(5).sum(Pin.of(5));
+        assertThat(sum).isEqualTo(Pin.of(10));
+    }
+
+
+    @Test
+    @DisplayName("Pin 합계가 10을 넘길 수 없다.")
+    void sumValidTest() {
+        assertThatIllegalArgumentException().isThrownBy(() -> Pin.of(10).sum(Pin.of(5)));
+    }
 }

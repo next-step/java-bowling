@@ -54,4 +54,8 @@ public class Pin {
     }
 
 
+    public Pin sum(Pin hitPin) {
+        int sumPinCount = this.hitCount + hitPin.hitCount;
+        return cache.getOrDefault(sumPinCount, new Pin(sumPinCount));
+    }
 }
