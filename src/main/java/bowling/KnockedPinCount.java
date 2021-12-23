@@ -15,6 +15,10 @@ public class KnockedPinCount {
         value = count;
     }
 
+    public KnockedPinCount sum(KnockedPinCount knockOutCount) {
+        return new KnockedPinCount(value + knockOutCount.value);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
