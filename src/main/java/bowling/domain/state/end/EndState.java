@@ -1,6 +1,6 @@
-package bowling.state.end;
+package bowling.domain.state.end;
 
-import bowling.state.State;
+import bowling.domain.state.State;
 
 public interface EndState extends State {
 

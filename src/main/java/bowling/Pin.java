@@ -31,6 +31,10 @@ public class Pin {
         return hitCount == MAX_PIN_COUNT;
     }
 
+    public boolean isSpare(Pin beforeHitPin) {
+        return (this.hitCount + beforeHitPin.hitCount) == MAX_PIN_COUNT;
+    }
+
     public boolean isNonHit() {
         return hitCount == MIN_PIN_COUNT;
     }
@@ -48,4 +52,6 @@ public class Pin {
             throw new IllegalArgumentException("Pin 갯수는 10개를 넘길 수 없어요.");
         }
     }
+
+
 }
