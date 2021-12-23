@@ -32,19 +32,18 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
-    public static DeleteHistory createQuestionDeleteHistory(Question question) {
+    public static DeleteHistory createQuestionDeleteHistory(Question question, LocalDateTime createDate) {
        question.setDeleted(true);
-       return new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now());
+       return new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), createDate);
     }
 
-    public static DeleteHistory createAnswerDeleteHistory(Answer answer) {
+    public static DeleteHistory createAnswerDeleteHistory(Answer answer, LocalDateTime createDate) {
         answer.setDeleted(true);
-        return new DeleteHistory(ContentType.QUESTION, answer.getId(), answer.getWriter(), LocalDateTime.now());
+        return new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), createDate);
     }
 
-    public static void addAnswersDeleteHistories(List<DeleteHistory> deleteHistories, Question question) {
-        Answers answers = question.getAnswers();
-        answers.addAnswersDeleteHistories(deleteHistories, question);
+    public static void addAnswersDeleteHistories(List<DeleteHistory> deleteHistories, Question question, LocalDateTime createDate) {
+        question.addAnswersDeleteHistories(deleteHistories, createDate);
     }
 
     @Override
