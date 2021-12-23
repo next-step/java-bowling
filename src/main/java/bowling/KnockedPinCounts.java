@@ -1,5 +1,7 @@
 package bowling;
 
+import bowling.annotations.ForUI;
+
 import java.util.List;
 
 public interface KnockedPinCounts {
@@ -11,6 +13,7 @@ public interface KnockedPinCounts {
 
     boolean isSpare();
 
+    @ForUI
     boolean isFinal();
 
     boolean isFirstEnd();
@@ -19,7 +22,9 @@ public interface KnockedPinCounts {
 
     boolean isBonusEnd();
 
+    @ForUI
     int getFirst();
 
+    @ForUI
     List<KnockedPinCount> getValues();
 }

@@ -1,6 +1,8 @@
 package bowling;
 
 
+import bowling.annotations.ForUI;
+
 public interface Frame {
     Frame next();
 
@@ -12,5 +14,6 @@ public interface Frame {
 
     boolean isFinalFrame();
 
+    @ForUI
     KnockedPinCounts getKnockedPinCounts();
 }
