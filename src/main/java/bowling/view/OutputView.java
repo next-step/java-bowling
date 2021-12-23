@@ -1,14 +1,16 @@
 package bowling.view;
 
-import bowling.domain.Frame;
-import bowling.domain.KnockedPinCounts;
-import bowling.domain.Player;
-import bowling.domain.Players;
+import bowling.Frame;
+import bowling.KnockedPinCounts;
+import bowling.Player;
+import bowling.Players;
 
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class OutputView {
+    public static final String CAN_NOT_MAKE_MARK_MESSAGE = "mark를 못 만들었습니다.";
+
     private static final String MAIN_BOARD_HEAD_MESSAGE = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     private static final String MAIN_BOARD_EMPTY_MESSAGE = "|      |      |      |      |      |      |      |      |      |      |      |";
     private static final String SCORE_BOARD_NAME_TEMPLATE = "|  %-4s|";

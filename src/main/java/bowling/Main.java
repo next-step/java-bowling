@@ -1,7 +1,5 @@
 package bowling;
 
-import bowling.domain.Player;
-import bowling.domain.Players;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
