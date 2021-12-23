@@ -4,8 +4,6 @@ import bowling.domain.pitch.Pitch;
 import bowling.domain.pitch.Pitches;
 import bowling.strategy.PitchNumberStrategy;
 
-import java.util.List;
-
 import static bowling.domain.pin.Pins.PINS_MAX_COUNT;
 
 public class FrameInfo {
@@ -52,10 +50,6 @@ public class FrameInfo {
                 .reduce(0, Integer::sum);
     }
 
-    public List<Integer> fallDownPinsAll() {
-        return pitches.fallDownPinsAll();
-    }
-
     public boolean last() {
         return no == END_FRAME_NO;
     }
@@ -77,10 +71,6 @@ public class FrameInfo {
 
     private boolean isPitchesEmpty() {
         return pitches.isEmpty();
-    }
-
-    public boolean isThirdPitch() {
-        return pitches.isThirdPitch();
     }
 
     public void addPitch(Pitch pitch) {

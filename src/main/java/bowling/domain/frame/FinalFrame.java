@@ -2,12 +2,11 @@ package bowling.domain.frame;
 
 import bowling.domain.pitch.Pitch;
 import bowling.domain.score.Score;
-import bowling.domain.state.progress.Start;
 import bowling.domain.state.State;
 import bowling.domain.state.end.End;
+import bowling.domain.state.progress.Start;
 import bowling.strategy.PitchNumberStrategy;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;

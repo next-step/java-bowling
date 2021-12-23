@@ -61,10 +61,6 @@ public class Pins {
         return size() + secondPins.size() == PINS_MAX_COUNT;
     }
 
-    public boolean isMiss() {
-        return size() < PINS_MAX_COUNT;
-    }
-
     public boolean isMiss(Pins secondPins) {
         return size() + secondPins.size() < PINS_MAX_COUNT;
     }

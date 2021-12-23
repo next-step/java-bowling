@@ -1,11 +1,9 @@
 package bowling.domain.frame;
 
 import bowling.domain.state.end.End;
-import bowling.domain.state.end.Miss;
 import bowling.domain.state.end.Spare;
 import bowling.domain.state.end.Strike;
 import bowling.domain.state.progress.FirstHit;
-import bowling.domain.state.progress.Start;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

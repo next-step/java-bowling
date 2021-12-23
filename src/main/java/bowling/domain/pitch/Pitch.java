@@ -24,10 +24,6 @@ public class Pitch {
         this.fallDownPins = fallDownPins;
     }
 
-    public static Pitch init(int pinsCount, int fallDownPinsCount) {
-        return new Pitch(pinsCount, fallDownPinsCount);
-    }
-
     public static Pitch first(int fallDownPinsCount) {
         return new Pitch(fallDownPinsCount);
     }

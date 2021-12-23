@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 public class Pitches {
     private static final int ONE = 1;
-    private static final int THREE = 3;
 
     private final List<Pitch> pitches = new ArrayList<>();
 
@@ -41,10 +40,6 @@ public class Pitches {
 
     public boolean isEmpty() {
         return pitches.isEmpty();
-    }
-
-    public boolean isThirdPitch() {
-        return size() == THREE;
     }
 
     private int currentSize() {
