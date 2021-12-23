@@ -23,7 +23,7 @@ public class InputView {
     }
 
     public static String readPlayerName() {
-        System.out.println(READ_PLAYER_MESSAGE);
+        System.out.print(READ_PLAYER_MESSAGE);
         return scanner.nextLine();
     }
 

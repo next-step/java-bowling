@@ -5,40 +5,51 @@ import java.util.Collections;
 import java.util.List;
 
 public class Frames {
-    private final Frame head;
-    private Frame current;
+    private final List<Frame> values;
 
     public Frames() {
-        head = NormalFrame.ofFirst();
-        current = head;
+        values = new ArrayList<>();
     }
 
     public boolean isEnd() {
-        return current.isFinalFrame() && current.isEnd();
+        return !values.isEmpty() && findCurrentFrame().isFinalFrame() && findCurrentFrame().isEnd();
     }
 
     public void bowl(int knockedOutCount) {
-        current.bowl(knockedOutCount);
+        findCurrentFrame().bowl(knockedOutCount);
     }
 
     public void prepareFrame() {
-        if (current.isEnd()) {
-            current = current.addNextFrame();
+        if (values.isEmpty()) {
+            values.add(NormalFrame.ofFirst());
         }
+
+        if (findCurrentFrame().isEnd()) {
+            nextFrame();
+        }
+    }
+
+    private Frame findCurrentFrame() {
+        return values.get(values.size() - 1);
+    }
+
+    private void nextFrame() {
+        if (isBeforeFinalFrame()) {
+            values.add(NormalFrame.ofFinal());
+            return;
+        }
+        values.add(NormalFrame.ofNext(findCurrentFrame()));
+    }
+
+    private boolean isBeforeFinalFrame() {
+        return findCurrentFrame().isBeforeFinalFrame();
     }
 
     public boolean isNotCurrentFrameEnd() {
-        return !current.isEnd();
+        return !findCurrentFrame().isEnd();
     }
 
     public List<Frame> values() {
-        Frame tmp = head;
-        List<Frame> list = new ArrayList<>();
-        while (tmp != null) {
-            list.add(tmp);
-            tmp = tmp.next();
-        }
-
-        return Collections.unmodifiableList(list);
+        return Collections.unmodifiableList(values);
     }
 }

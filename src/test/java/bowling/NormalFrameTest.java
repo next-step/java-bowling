@@ -1,5 +1,7 @@
 package bowling;
 
+import bowling.domain.FinalFrame;
+import bowling.domain.NormalFrame;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

@@ -1,5 +1,8 @@
 package bowling;
 
+import bowling.domain.AbstractKnockedPinCounts;
+import bowling.domain.KnockedPinCount;
+import bowling.domain.NormalKnockedPinCounts;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

@@ -1,8 +1,9 @@
 package bowling;
 
+import bowling.domain.AbstractKnockedPinCounts;
+import bowling.domain.FinalKnockedPinCounts;
+import bowling.domain.KnockedPinCount;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
