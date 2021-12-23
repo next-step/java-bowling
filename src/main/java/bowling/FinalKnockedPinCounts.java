@@ -16,8 +16,9 @@ public class FinalKnockedPinCounts extends AbstractKnockedPinCounts {
 
     @Override
     public void knockOut(int knockedOutCount) {
-        if (!isStrike() && !isSpare() && isSecondEnd()) {
-            throw new IllegalArgumentException(WRONG_BOWL_COUNT_MESSAGE);
+        if (isFirstBowl()) {
+            values.add(new KnockedPinCount(knockedOutCount));
+            return;
         }
 
         if (isFirstEnd() && !isStrike()) {
@@ -25,12 +26,21 @@ public class FinalKnockedPinCounts extends AbstractKnockedPinCounts {
             values.add(new KnockedPinCount(knockedOutCount));
             return;
         }
-        values.add(new KnockedPinCount(knockedOutCount));
+
+        if (isStrike() || isDouble() || (isSecondEnd() && isSpare())) {
+            values.add(new KnockedPinCount(knockedOutCount));
+            return;
+        }
+        throw new IllegalArgumentException(WRONG_BOWL_COUNT_MESSAGE);
     }
 
     @Override
     public boolean isKnockOutPinFinish() {
         return isBonusEnd() || (!isDouble() && !isSpare() && isSecondEnd());
+    }
+
+    private boolean isFirstBowl() {
+        return values.size() == ZERO;
     }
 
     private boolean isDouble() {

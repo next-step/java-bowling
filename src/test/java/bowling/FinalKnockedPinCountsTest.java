@@ -12,19 +12,11 @@ public class FinalKnockedPinCountsTest {
     private final FinalKnockedPinCounts finalKnockedPinCounts = new FinalKnockedPinCounts();
 
     @Test
-    void 핀은_3번까지만_쓰러뜨릴_수_있다_생성자() {
-        KnockedPinCount zero = new KnockedPinCount(0);
-        assertThatThrownBy(() -> new NormalKnockedPinCounts(Arrays.asList(zero, zero, zero, zero)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(AbstractKnockedPinCounts.WRONG_BOWL_COUNT_MESSAGE);
-    }
-
-    @Test
     void 핀은_스트라이크이면_3번까지_쓰러뜨릴_수_있다() {
         assertDoesNotThrow(() -> {
             finalKnockedPinCounts.knockOut(10);
-            finalKnockedPinCounts.knockOut(0);
-            finalKnockedPinCounts.knockOut(0);
+            finalKnockedPinCounts.knockOut(10);
+            finalKnockedPinCounts.knockOut(10);
         });
     }
 
