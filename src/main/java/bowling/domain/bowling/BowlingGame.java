@@ -2,52 +2,47 @@ package bowling.domain.bowling;
 
 import bowling.domain.pin.Pin;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Queue;
 
 import static java.util.Collections.unmodifiableList;
 
 public class BowlingGame {
 
-    private final Queue<Bowling> bowlings;
-    private final List<Bowling> fixedBowlings;
+    private static final int FIRST_TURN = 0;
+    private static final int TURN_UNIT = 1;
+
+    private int turn;
+    private final List<Bowling> bowlings;
 
     public BowlingGame(List<Bowling> bowlings) {
-        this(new LinkedList<>(bowlings), bowlings);
+        this(FIRST_TURN, bowlings);
     }
 
-    private BowlingGame(Queue<Bowling> bowlings, List<Bowling> fixedBowlings) {
+    public BowlingGame(int turn, List<Bowling> bowlings) {
+        this.turn = turn;
         this.bowlings = bowlings;
-        this.fixedBowlings = fixedBowlings;
     }
 
-    /**
-     * @return 남은 차례가 있는지
-     */
-    public boolean pitch(Pin pin) {
+    public void pitch(Pin pin) {
         Bowling bowling = currentBowling();
         int numberOfFrame = bowling.numberOfFrame();
 
         bowling.pitch(pin);
-        if (bowling.canPitchInFrame(numberOfFrame)) {
-            return true;
+        if (bowling.isFrameEnd(numberOfFrame)) {
+            changeTurn();
         }
-
-        changeTurn();
-        return hasRemainingPitch();
     }
 
     private Bowling currentBowling() {
-        return bowlings.peek();
+        return bowlings.get(turn);
     }
 
     private void changeTurn() {
-        bowlings.add(bowlings.poll());
+        turn = (turn + TURN_UNIT) % bowlings.size();
     }
 
-    private boolean hasRemainingPitch() {
+    public boolean isGameInProgress() {
         return currentBowling().canPitch();
     }
 
@@ -56,7 +51,7 @@ public class BowlingGame {
     }
 
     public List<Bowling> bowlings() {
-        return unmodifiableList(fixedBowlings);
+        return unmodifiableList(bowlings);
     }
 
     @Override

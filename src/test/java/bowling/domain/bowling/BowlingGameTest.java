@@ -29,7 +29,7 @@ class BowlingGameTest {
         bowlingGame.pitch(Pin.allHitPin());
 
         //then
-        assertThat(bowlingGame).isEqualTo(new BowlingGame(asList(bowlingCCC, bowlingAAA, bowlingBBB)));
+        assertThat(bowlingGame).isEqualTo(new BowlingGame(2, asList(bowlingAAA, bowlingBBB, bowlingCCC)));
     }
 
     @DisplayName("모든 플레이어의 턴이 끝났다면 게임이 종료되어야한다")
@@ -55,10 +55,10 @@ class BowlingGameTest {
 
         // C: 거터
         bowlingGame.pitch(Pin.noneHitPin());
-        boolean canPitch = bowlingGame.pitch(Pin.noneHitPin());
+        bowlingGame.pitch(Pin.noneHitPin());
 
         //then
-        assertThat(canPitch).isFalse();
+        assertThat(bowlingGame.isGameInProgress()).isFalse();
     }
 
     private Pin pin(int hitCount) {

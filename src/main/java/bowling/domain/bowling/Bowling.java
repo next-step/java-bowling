@@ -48,8 +48,8 @@ public class Bowling {
         return frames.numberOfFrame();
     }
 
-    public boolean canPitchInFrame(int numberOfFrame) {
-        return frames.canPitchInFrame(numberOfFrame);
+    public boolean isFrameEnd(int numberOfFrame) {
+        return !frames.canPitchInFrame(numberOfFrame);
     }
 
     public boolean canPitch() {

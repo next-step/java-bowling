@@ -17,11 +17,10 @@ public class BowlingController {
         List<Bowling> bowlings = Bowling.listOf(InputView.getNames());
         BowlingGame bowlingGame = new BowlingGame(bowlings);
 
-        boolean continued = true;
-        while (continued) {
-            String numberOfFrame = bowlingGame.currentNameOfParticipant();
-            int hitCount = InputView.getHitCount(numberOfFrame);
-            continued = bowlingGame.pitch(Pin.from(hitCount));
+        while (bowlingGame.isGameInProgress()) {
+            String nameOfParticipant = bowlingGame.currentNameOfParticipant();
+            int hitCount = InputView.getHitCount(nameOfParticipant);
+            bowlingGame.pitch(Pin.from(hitCount));
 
             OutputView.showBowlingGame(bowlingGame);
         }
