@@ -27,7 +27,8 @@ public class QuestionTest {
     @Test
     public void 다른_작성자_답변글_미존재_CannotDeleteException() {
         assertThatThrownBy(() -> {
-            Q1.validateDeleted(UserTest.SANJIGI);
+            Question question = new Question("title3", "contents3").writeBy(UserTest.JAVAJIGI);
+            question.validateDeleted(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
 
@@ -40,23 +41,20 @@ public class QuestionTest {
 
     @Test
     public void 같은_작성자_다른_답변글_CannotDeleteException() {
-        Q1.addAnswer(AnswerTest.A2);
         assertThatThrownBy(() -> {
-            Q1.validateDeleted(UserTest.JAVAJIGI);
+            Question question = new Question("title3", "contents3").writeBy(UserTest.JAVAJIGI);
+            question.addAnswer(AnswerTest.A2);
+            question.validateDeleted(UserTest.JAVAJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
 
     @Test
     public void 같은_작성자_같은_답변글_포함_다른_답변글_CannotDeleteException() {
-        Q1.addAnswer(AnswerTest.A1);
-        Q1.addAnswer(AnswerTest.A2);
         assertThatThrownBy(() -> {
-            Q1.validateDeleted(UserTest.JAVAJIGI);
+            Question question = new Question("title3", "contents3").writeBy(UserTest.JAVAJIGI);
+            question.addAnswer(AnswerTest.A1);
+            question.addAnswer(AnswerTest.A2);
+            question.validateDeleted(UserTest.JAVAJIGI);
         }).isInstanceOf(CannotDeleteException.class);
-    }
-
-    @Test
-    public void 삭제_이력() {
-        System.out.println(Q1.getDeleteHistories());
     }
 }

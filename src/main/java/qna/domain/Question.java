@@ -3,8 +3,11 @@ package qna.domain;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 import qna.CannotDeleteException;
 
 @Entity
@@ -88,8 +91,44 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public Answers getAnswers() {
-        return new Answers(answers);
+    public boolean validateDeleted(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(EXCEPTION_MESSAGE_NO_AUTH_DELETE_QUESTION);
+        }
+        if (isNotInAnswersOwner(loginUser)) {
+            throw new CannotDeleteException(EXCEPTION_MESSAGE_OTHER_PERSON_ANSWER_EXIST);
+        }
+        return true;
+    }
+
+    public boolean isNotInAnswersOwner(User loginUser) {
+        for (Answer answer : answers) {
+            if (!answer.isOwner(loginUser)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void addAnswersDeleteHistories(List<DeleteHistory> deleteHistories, LocalDateTime createDate) {
+        for (Answer answer : answers) {
+            answer.setDeleted(true);
+            deleteHistories.add(DeleteHistory.createAnswerDeleteHistory(answer, createDate));
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Question question = (Question) o;
+        return deleted == question.deleted && Objects.equals(title, question.title) && Objects.equals(contents, question.contents) && Objects.equals(writer, question.writer) && Objects.equals(answers, question.answers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), title, contents, writer, answers, deleted);
     }
 
     @Override
@@ -97,20 +136,5 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public boolean validateDeleted(User loginUser) throws CannotDeleteException {
-        if (!isOwner(loginUser)) {
-            throw new CannotDeleteException(EXCEPTION_MESSAGE_NO_AUTH_DELETE_QUESTION);
-        }
-        if (getAnswers().isNotOwner(loginUser)) {
-            throw new CannotDeleteException(EXCEPTION_MESSAGE_OTHER_PERSON_ANSWER_EXIST);
-        }
-        return true;
-    }
 
-    public List<DeleteHistory> getDeleteHistories(Question question) {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(DeleteHistory.createQuestionDeleteHistory(question));
-        DeleteHistory.addAnswersDeleteHistories(deleteHistories, question);
-        return deleteHistories;
-    }
 }
