@@ -2,8 +2,10 @@ package qna.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import qna.CannotDeleteException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class AnswerTest {
     public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
@@ -11,21 +13,16 @@ public class AnswerTest {
 
     @Test
     @DisplayName("로그인 한 사용자와 답변 작성자가 같으면 true를 반환한다")
-    void shouldReturnTrueWhenOwner() {
-        boolean result1 = A1.isOwner(UserTest.JAVAJIGI);
-        boolean result2 = A2.isOwner(UserTest.SANJIGI);
-
-        assertThat(result1).isTrue();
-        assertThat(result2).isTrue();
+    void shouldReturnTrueWhenOwner() throws CannotDeleteException {
+        boolean result = A1.isOwner(UserTest.JAVAJIGI);
+        assertThat(result).isTrue();
     }
 
     @Test
-    @DisplayName("로그인 한 사용자와 답변 작성자가 다르면 true를 반환한다")
+    @DisplayName("로그인 한 사용자와 답변 작성자가 다르면 예외를 던진다")
     void shouldReturnFalseWhenNotOwner() {
-        boolean result1 = A1.isOwner(UserTest.SANJIGI);
-        boolean result2 = A2.isOwner(UserTest.JAVAJIGI);
+        assertThatThrownBy(() -> A1.isOwner(UserTest.SANJIGI))
+                .isInstanceOf(CannotDeleteException.class);
 
-        assertThat(result1).isFalse();
-        assertThat(result2).isFalse();
     }
 }
