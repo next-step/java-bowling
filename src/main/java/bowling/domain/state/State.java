@@ -6,4 +6,5 @@ public interface State {
     State bowl(Pins pins);
     boolean isFinished();
     String getMark();
+
 }
