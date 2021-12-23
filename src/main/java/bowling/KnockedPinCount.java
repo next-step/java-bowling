@@ -1,6 +1,7 @@
 package bowling;
 
 public class KnockedPinCount {
+    public static final KnockedPinCount STRIKE_COUNT = new KnockedPinCount(10);
     public static final String INVALID_KNOCK_OUT_COUNT_MESSAGE = "쓰러뜨린 핀의 개수는 0~10개입니다.";
 
     private static final int MIN_VALUE = 0;
@@ -17,6 +18,10 @@ public class KnockedPinCount {
 
     public KnockedPinCount sum(KnockedPinCount knockOutCount) {
         return new KnockedPinCount(value + knockOutCount.value);
+    }
+
+    public int value() {
+        return value;
     }
 
     @Override
