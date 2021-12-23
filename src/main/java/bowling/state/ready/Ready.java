@@ -1,7 +1,7 @@
 package bowling.state.ready;
 
-import bowling.state.Status;
+import bowling.state.State;
 
-public class Ready implements Status {
+public class Ready implements State {
 
 }
