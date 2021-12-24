@@ -4,15 +4,17 @@ package bowling.domain;
 import bowling.annotations.ForUI;
 
 public interface Frame {
-    Frame next();
-
     void bowl(int knockedOutCount);
+
+    Frame addNextFrame();
 
     boolean isEnd();
 
-    boolean isBeforeFinalFrame();
+    boolean isNinthFrame();
 
     boolean isFinalFrame();
+
+    Frame next();
 
     @ForUI
     KnockedPinCounts getKnockedPinCounts();

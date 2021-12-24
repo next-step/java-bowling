@@ -8,17 +8,22 @@ public class FinalFrame extends AbstractFrame {
     }
 
     @Override
-    public Frame next() {
+    public Frame addNextFrame() {
         throw new IllegalArgumentException(FINAL_FRAME_MESSAGE);
     }
 
     @Override
-    public boolean isBeforeFinalFrame() {
+    public boolean isNinthFrame() {
         return false;
     }
 
     @Override
     public boolean isFinalFrame() {
         return true;
+    }
+
+    @Override
+    public Frame next() {
+        return null;
     }
 }
