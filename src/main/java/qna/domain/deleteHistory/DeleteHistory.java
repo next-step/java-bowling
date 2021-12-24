@@ -6,6 +6,7 @@ import qna.domain.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -46,8 +47,10 @@ public class DeleteHistory {
     }
 
     public List<DeleteHistory> merge(List<DeleteHistory> deleteHistories) {
-        deleteHistories.add(this);
-        return Collections.unmodifiableList(deleteHistories);
+        List<DeleteHistory> newDeleteHistories = new ArrayList<>(Collections.singleton(this));
+        newDeleteHistories.addAll(deleteHistories);
+
+        return Collections.unmodifiableList(newDeleteHistories);
     }
 
     @Override
