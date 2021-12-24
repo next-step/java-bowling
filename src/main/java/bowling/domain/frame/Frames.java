@@ -35,19 +35,17 @@ public class Frames {
         return new Frames(firstFrame);
     }
 
-    /**
-     * @return 더 투구할 수 있는지
-     */
-    public boolean pitch(Pin pin) {
+    public void pitch(Pin pin) {
         calculateScoreOfPreviousFrame(pin.toScore());
 
-        if (currentFrame().pitch(pin)) {
-            return true;
+        Frame currentFrame = currentFrame();
+        if (currentFrame.pitch(pin)) {
+            return;
         }
-        if (frames.size() == Frame.MAX_FRAME_NUMBER) {
-            return false;
+
+        if (currentFrame.isNormalFrame()) {
+            frames.add(createNextFrame());
         }
-        return frames.add(createNextFrame());
     }
 
     private void calculateScoreOfPreviousFrame(Score score) {
@@ -82,6 +80,18 @@ public class Frames {
 
     public int numberOfFrame() {
         return frames.size();
+    }
+
+    public boolean canPitchInFrame(int numberOfFrame) {
+        return canPitch(frames.get(numberOfFrame - INDEX_UNIT));
+    }
+
+    public boolean canPitch() {
+        return canPitch(currentFrame());
+    }
+
+    private boolean canPitch(Frame frame) {
+        return frame.canPitch();
     }
 
     public List<Bowl> bowls() {

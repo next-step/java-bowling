@@ -1,10 +1,12 @@
 package bowling.domain.controller;
 
 import bowling.domain.bowling.Bowling;
+import bowling.domain.bowling.BowlingGame;
 import bowling.domain.controller.view.InputView;
 import bowling.domain.controller.view.OutputView;
-import bowling.domain.participant.Participant;
 import bowling.domain.pin.Pin;
+
+import java.util.List;
 
 public class BowlingController {
 
@@ -12,16 +14,15 @@ public class BowlingController {
     }
 
     public static void main(String[] args) {
-        Participant participant = new Participant(InputView.getName());
-        Bowling bowling = new Bowling(participant);
+        List<Bowling> bowlings = Bowling.listOf(InputView.getNames());
+        BowlingGame bowlingGame = new BowlingGame(bowlings);
 
-        boolean continued = true;
-        while (continued) {
-            int numberOfFrame = bowling.numberOfFrame();
-            int hitCount = InputView.getHitCount(numberOfFrame);
-            continued = bowling.pitch(Pin.from(hitCount));
+        while (bowlingGame.isGameInProgress()) {
+            String nameOfParticipant = bowlingGame.currentNameOfParticipant();
+            int hitCount = InputView.getHitCount(nameOfParticipant);
+            bowlingGame.pitch(Pin.from(hitCount));
 
-            OutputView.showBowling(bowling);
+            OutputView.showBowlingGame(bowlingGame);
         }
     }
 
