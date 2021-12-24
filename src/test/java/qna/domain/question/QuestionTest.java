@@ -9,6 +9,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static qna.domain.question.Question.UNAUTHORIZED_QUESTION_MESSAGE;
 import static qna.domain.question.answer.AnswerTest.A1;
 import static qna.domain.question.answer.Answers.UNAUTHORIZED_ANSWER_MESSAGE;
 import static qna.domain.user.UserTest.JAVAJIGI;
@@ -35,7 +36,15 @@ public class QuestionTest {
     }
 
     @Test
-    @DisplayName("질문을 삭제하면 관련된 답변도 삭제된다")
+    @DisplayName("로그인 한 사용자와 질문 작성자가 다르면 예외를 던진다")
+    void shouldThrowWhenQuestionWriterNotEqualLoginUser() {
+        assertThatThrownBy(() -> Q2.delete(JAVAJIGI))
+                .isInstanceOf(CannotDeleteException.class)
+                .hasMessage(UNAUTHORIZED_QUESTION_MESSAGE);
+    }
+
+    @Test
+    @DisplayName("로그인 한 사용자와 질문 작성자, 답변 작성자가 같으면 모두 삭제한다")
     void shouldDeleteQuestionAndAnswer() throws CannotDeleteException {
         Q1.addAnswer(A1);
         List<DeleteHistory> deleteHistories = Q1.delete(JAVAJIGI);
