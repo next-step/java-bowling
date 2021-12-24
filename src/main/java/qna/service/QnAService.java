@@ -8,7 +8,6 @@ import qna.NotFoundException;
 import qna.domain.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @Service("qnaService")
 public class QnAService {
@@ -32,7 +31,7 @@ public class QnAService {
     @Transactional
     public void deleteQuestion(User loginUser, long questionId) {
         Question question = findQuestionById(questionId);
-        List<DeleteHistory> deleteHistories = question.delete(loginUser);
-        deleteHistoryService.saveAll(deleteHistories);
+        DeleteHistories deleteHistories = question.delete(loginUser);
+        deleteHistoryService.saveAll(deleteHistories.getDeleteHistories());
     }
 }
