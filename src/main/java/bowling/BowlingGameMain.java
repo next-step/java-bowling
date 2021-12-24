@@ -13,6 +13,7 @@ public class BowlingGameMain {
         OutputView outputView = new OutputView();
 
         Player player = inputView.inputPlayerName();
+        outputView.printResult(player);
 
         for (int index = 0; index < 10; index++) {
             Pin pin = inputView.inputBowlHitPin(index);

@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     private static final String DELIMITER = "|";
-    private static final String HEADER_BOARD = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-    private static final String NAME_BOARD_FORMAT = "|  %s |";
-    private static final String NORMAL_GAME_RESULT_PRINT_FORMAT = "  %-3s |";
+    private static final String HEADER_BOARD = "|  NAME |    01    |    02    |    03    |    04    |    05    |    06    |    07    |    08    |    09    |    10    |";
+    private static final String NAME_BOARD_FORMAT = "|   %s |";
+    private static final String NORMAL_GAME_RESULT_PRINT_FORMAT = "    %-5s |";
 
 
     public void printResult(Player player) {
