@@ -72,9 +72,4 @@ public class FinalFrame extends Frame {
         return this.results.stream()
             .anyMatch(result -> result instanceof BonusAbleState);
     }
-
-    @Override
-    public Optional<Frame> next() {
-        return Optional.empty();
-    }
 }

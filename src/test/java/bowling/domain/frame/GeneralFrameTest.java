@@ -22,7 +22,7 @@ class GeneralFrameTest {
 
     @BeforeEach
     void init() {
-        generalFrame = new GeneralFrame(null);
+        generalFrame = new GeneralFrame();
     }
 
     @Test

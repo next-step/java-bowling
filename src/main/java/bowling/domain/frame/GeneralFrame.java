@@ -12,11 +12,8 @@ public class GeneralFrame extends Frame {
 
     private static final int MAX_HIT_PIN_COUNT = 10;
 
-    private Frame next = null;
-
-    public GeneralFrame(Frame next) {
+    public GeneralFrame() {
         super();
-        this.next = next;
     }
 
     public GeneralFrame(Progress progress, List<EndState> results) {
@@ -54,9 +51,4 @@ public class GeneralFrame extends Frame {
         return (results.size() < GENERAL_ROUND_NUMBER) && (endState instanceof NextAbleState);
     }
 
-
-    @Override
-    public Optional<Frame> next() {
-        return Optional.ofNullable(next);
-    }
 }

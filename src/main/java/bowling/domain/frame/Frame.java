@@ -11,7 +11,6 @@ import bowling.domain.state.end.first.Gutter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Predicate;
 
 public abstract class Frame {
@@ -36,8 +35,6 @@ public abstract class Frame {
     protected abstract Progress nextProgress(EndState endState);
 
     protected abstract boolean isNextAbleState(EndState endState);
-
-    protected abstract Optional<Frame> next();
 
     public boolean isOpened() {
         return this.progress instanceof Opened;
