@@ -1,4 +1,4 @@
-package bowling.domain.state.progress.end;
+package bowling.domain.state.second.end;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

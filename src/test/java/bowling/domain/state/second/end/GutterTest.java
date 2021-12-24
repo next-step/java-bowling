@@ -1,8 +1,8 @@
-package bowling.domain.state.progress.end;
+package bowling.domain.state.second.end;
 
 import static org.assertj.core.api.Assertions.*;
 
-import bowling.domain.state.end.Gutter;
+import bowling.domain.state.end.first.Gutter;
 import org.junit.jupiter.api.Test;
 
 class GutterTest {

@@ -35,7 +35,7 @@ public class Pin {
         return (this.hitCount + beforeHitPin.hitCount) == MAX_PIN_COUNT;
     }
 
-    public boolean isNonHit() {
+    public boolean isGutter() {
         return hitCount == MIN_PIN_COUNT;
     }
 
