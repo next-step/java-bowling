@@ -9,11 +9,11 @@ public class FirstProgress implements Progress, Opened {
     @Override
     public EndState pitch(Pin pin) {
         if (pin.isStrike()) {
-            return StateFactory.strike();
+            return StateFactory.strike(pin);
         }
 
         if (pin.isGutter()) {
-            return StateFactory.gutter();
+            return StateFactory.gutter(pin);
         }
 
         return StateFactory.number(pin);

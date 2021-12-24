@@ -2,6 +2,7 @@ package bowling.domain.state.second;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import bowling.Pin;
 import bowling.domain.state.end.Spare;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +15,7 @@ public class SpareTest {
     @BeforeEach
     void init() {
 
-        spare = new Spare();
+        spare = new Spare(Pin.of(3));
     }
 
     @Test

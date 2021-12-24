@@ -24,7 +24,6 @@ class GeneralFrameTest {
     void init() {
         generalFrame = new GeneralFrame(null);
     }
-
     @Test
     @DisplayName("Strike시 해당 프레임은 종료된다.")
     void bowlStrikeTest() {

@@ -1,13 +1,23 @@
 package bowling.domain.state.end.first;
 
+import bowling.Pin;
 import bowling.domain.state.end.EndState;
+import bowling.domain.state.end.PinEndState;
 
 /**
  * 거터(gutter) : 핀을 하나도 쓰러트리지 못한 상태. 거터는 "-"로 표시
  */
-public class Gutter implements NextAbleState, EndState {
+public class Gutter extends PinEndState implements NextAbleState {
 
     private static final String MARKER = "-";
+
+    public Gutter(Pin pin) {
+        super(pin);
+
+        if (!pin.isGutter()) {
+            throw new IllegalArgumentException("Gutter이 아니에요.");
+        }
+    }
 
     @Override
     public String getPrintMark() {

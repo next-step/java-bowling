@@ -18,19 +18,19 @@ public class GeneralProgress implements Progress, Opened {
     public EndState pitch(Pin pin) {
         if (pin.isStrike()) {
             if (beforeState.isInstanceOf(Strike.class)) {
-                return StateFactory.strike();
+                return StateFactory.strike(pin);
             }
 
-            return StateFactory.spare();
+            return StateFactory.spare(pin);
         }
 
         if (pin.isGutter()) {
-            return StateFactory.gutter();
+            return StateFactory.gutter(pin);
         }
 
         if (beforeState.isInstanceOf(HitNumber.class)) {
             if (isSpare(pin, (HitNumber) this.beforeState)) {
-                return StateFactory.spare();
+                return StateFactory.spare(pin);
             }
         }
 

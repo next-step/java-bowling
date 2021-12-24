@@ -2,13 +2,12 @@ package bowling.domain.state.end.first;
 
 import bowling.Pin;
 import bowling.domain.state.end.EndState;
+import bowling.domain.state.end.PinEndState;
 
-public class HitNumber implements NextAbleState, EndState {
-
-    private final Pin pin;
+public class HitNumber extends PinEndState implements NextAbleState {
 
     public HitNumber(Pin pin) {
-        this.pin = pin;
+        super(pin);
     }
 
     @Override
@@ -25,7 +24,4 @@ public class HitNumber implements NextAbleState, EndState {
         return this.pin.isSpare(pin);
     }
 
-    public Pin getHitPin() {
-        return pin;
-    }
 }
