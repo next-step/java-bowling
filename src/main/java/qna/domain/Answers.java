@@ -17,17 +17,24 @@ public class Answers {
     @OrderBy("id ASC")
     private List<Answer> answers = new ArrayList<>();
 
+    public Answers() {
+    }
+
+    public Answers(List<Answer> answers) {
+        this.answers = answers;
+    }
+
     public void add(Answer answer) {
         answers.add(answer);
     }
 
-    public List<DeleteHistory> delete(User loginUser) {
+    public DeleteHistories delete(User loginUser) {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         for (Answer answer : answers) {
             DeleteHistory answerDeleteHistory = answer.delete(loginUser);
             deleteHistories.add(answerDeleteHistory);
         }
-        return deleteHistories;
+        return new DeleteHistories(deleteHistories);
     }
 
 }
