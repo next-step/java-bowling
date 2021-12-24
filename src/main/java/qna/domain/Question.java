@@ -3,11 +3,18 @@ package qna.domain;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import qna.CannotDeleteException;
 
 @Entity
 public class Question extends AbstractEntity {
+    private static final String EXCEPTION_MESSAGE_NO_AUTH_DELETE_QUESTION = "질문을 삭제할 권한이 없습니다.";
+
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -84,8 +91,34 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public List<DeleteHistory> getDeleteHistories(User loginUser, LocalDateTime createTime) throws CannotDeleteException {
+        validateQuestionDeleted(loginUser);
+        Answers answerGroup = new Answers(answers);
+        return answerGroup.getDeleteHistories(loginUser, setDeleted(true), createTime);
+    }
+
+    private void validateQuestionDeleted(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(EXCEPTION_MESSAGE_NO_AUTH_DELETE_QUESTION);
+        }
+    }
+
+    public DeleteHistory getDeleteHistory(LocalDateTime createTime) {
+        return new DeleteHistory(ContentType.QUESTION, getId(), writer, createTime);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Question question = (Question) o;
+        return deleted == question.deleted && Objects.equals(title, question.title) && Objects.equals(contents, question.contents) && Objects.equals(writer, question.writer) && Objects.equals(answers, question.answers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), title, contents, writer, answers, deleted);
     }
 
     @Override
