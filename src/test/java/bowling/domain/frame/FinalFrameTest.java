@@ -1,10 +1,14 @@
 package bowling.domain.frame;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import bowling.Pin;
 import bowling.domain.progress.Closed;
 import bowling.domain.progress.GeneralProgress;
+import bowling.domain.progress.ProgressFactory;
+import bowling.domain.state.end.first.HitNumber;
+import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,23 +30,35 @@ public class FinalFrameTest {
     }
 
     @Test
+    @DisplayName("일반 프레임에서는 점수의 합계가 10점을 넘길 수 없다.")
+    void createValidTest() {
+        assertThatIllegalArgumentException().isThrownBy(
+            () -> new FinalFrame(ProgressFactory.closed(),
+                Arrays.asList(mockSixHitNumber(), mockSixHitNumber())));
+    }
+
+    @Test
     @DisplayName("첫 투구가 Strike시 두번 더 투구할 수 있다.")
     void bowlStrikeTest() {
-        assertThat(finalFrame.bowl(STRIKE)).isInstanceOf(GeneralProgress.class);
-        assertThat(finalFrame.bowl(STRIKE)).isInstanceOf(GeneralProgress.class);
-        assertThat(finalFrame.bowl(STRIKE)).isInstanceOf(Closed.class);
+        Frame bowl = finalFrame.bowl(STRIKE);
+        assertThat(bowl.getProgress()).isInstanceOf(GeneralProgress.class);
+
+        Frame bowl2 = bowl.bowl(STRIKE);
+        assertThat(bowl2.getProgress()).isInstanceOf(GeneralProgress.class);
+
+        assertThat(bowl2.bowl(STRIKE).getProgress()).isInstanceOf(Closed.class);
     }
 
     @Test
     @DisplayName("일반 투구시, 해당 프레임은 다음 프레임으로 넘어간다.")
     void bowlGeneralTest() {
-        assertThat(finalFrame.bowl(NORMAL)).isInstanceOf(GeneralProgress.class);
+        assertThat(finalFrame.bowl(NORMAL).getProgress()).isInstanceOf(GeneralProgress.class);
     }
 
     @Test
     @DisplayName("MISS 시, 해당 프레임은 다음 프레임으로 넘어간다.")
     void bowlMissTest() {
-        assertThat(finalFrame.bowl(MISS)).isInstanceOf(GeneralProgress.class);
+        assertThat(finalFrame.bowl(MISS).getProgress()).isInstanceOf(GeneralProgress.class);
     }
 
     @Test
@@ -58,23 +74,37 @@ public class FinalFrameTest {
     @Test
     @DisplayName("2회 투구 안에, Strike가 있다면, 3번의 시도가 가능하다.")
     void bowlBonusRoundStrikeTest() {
-        assertThat(finalFrame.bowl(STRIKE)).isInstanceOf(GeneralProgress.class);
-        assertThat(finalFrame.bowl(MISS)).isInstanceOf(GeneralProgress.class);
-        assertThat(finalFrame.bowl(STRIKE)).isInstanceOf(Closed.class);
+        Frame bowl = finalFrame.bowl(STRIKE);
+        assertThat(bowl.getProgress()).isInstanceOf(GeneralProgress.class);
+
+        Frame bowl2 = bowl.bowl(MISS);
+        assertThat(bowl2.getProgress()).isInstanceOf(GeneralProgress.class);
+
+        assertThat(bowl2.bowl(STRIKE).getProgress()).isInstanceOf(Closed.class);
     }
 
     @Test
     @DisplayName("2회 투구 가 Spare이 있다면, 3번의 시도가 가능하다.")
     void bowlBonusRoundSpareTest() {
-        assertThat(finalFrame.bowl(FIRST_SPARE)).isInstanceOf(GeneralProgress.class);
-        assertThat(finalFrame.bowl(SPARE)).isInstanceOf(GeneralProgress.class);
-        assertThat(finalFrame.bowl(STRIKE)).isInstanceOf(Closed.class);
+        Frame bowl = finalFrame.bowl(FIRST_SPARE);
+        assertThat(bowl.getProgress()).isInstanceOf(GeneralProgress.class);
+
+        Frame bowl2 = bowl.bowl(SPARE);
+        assertThat(bowl2.getProgress()).isInstanceOf(GeneralProgress.class);
+
+        assertThat(bowl2.bowl(STRIKE).getProgress()).isInstanceOf(Closed.class);
     }
 
     @Test
     @DisplayName("2회 투구 가 Spare 또는 Strike가 없다면, 2번의 시도만 가능하다.")
     void bowlNotBonusRoundTest() {
-        assertThat(finalFrame.bowl(FIRST_SPARE)).isInstanceOf(GeneralProgress.class);
-        assertThat(finalFrame.bowl(NORMAL)).isInstanceOf(Closed.class);
+        Frame bowl = finalFrame.bowl(FIRST_SPARE);
+        assertThat(bowl.getProgress()).isInstanceOf(GeneralProgress.class);
+
+        assertThat(bowl.bowl(NORMAL).getProgress()).isInstanceOf(Closed.class);
+    }
+
+    private HitNumber mockSixHitNumber() {
+        return new HitNumber(Pin.of(6));
     }
 }

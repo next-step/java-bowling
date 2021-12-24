@@ -6,7 +6,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import bowling.Pin;
 import bowling.domain.progress.Closed;
 import bowling.domain.progress.GeneralProgress;
+import bowling.domain.progress.Progress;
+import bowling.domain.progress.ProgressFactory;
 import bowling.domain.state.end.Strike;
+import bowling.domain.state.end.first.HitNumber;
+import java.util.Arrays;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,29 +28,39 @@ class GeneralFrameTest {
     void init() {
         generalFrame = new GeneralFrame(null);
     }
+
+    @Test
+    @DisplayName("일반 프레임에서는 점수의 합계가 10점을 넘길 수 없다.")
+    void createValidTest() {
+        assertThatIllegalArgumentException().isThrownBy(
+            () -> new GeneralFrame(ProgressFactory.closed(),
+                Arrays.asList(mockSixHitNumber(), mockSixHitNumber())));
+    }
+
+
     @Test
     @DisplayName("Strike시 해당 프레임은 종료된다.")
     void bowlStrikeTest() {
-        assertThat(generalFrame.bowl(STRIKE)).isInstanceOf(Closed.class);
+        assertThat(generalFrame.bowl(STRIKE).getProgress()).isInstanceOf(Closed.class);
     }
 
     @Test
     @DisplayName("일반 투구시, 해당 프레임은 다음 프레임으로 넘어간다.")
     void bowlGeneralTest() {
-        assertThat(generalFrame.bowl(NORMAL)).isInstanceOf(GeneralProgress.class);
+        assertThat(generalFrame.bowl(NORMAL).getProgress()).isInstanceOf(GeneralProgress.class);
     }
 
     @Test
     @DisplayName("MISS 시, 해당 프레임은 다음 프레임으로 넘어간다.")
     void bowlMissTest() {
-        assertThat(generalFrame.bowl(MISS)).isInstanceOf(GeneralProgress.class);
+        assertThat(generalFrame.bowl(MISS).getProgress()).isInstanceOf(GeneralProgress.class);
     }
 
     @Test
     @DisplayName("Strike가 아닌경우 최대 2번의 시도가 가능하다.")
     void bowlTryCountTest() {
-        assertThat(generalFrame.bowl(NORMAL)).isInstanceOf(GeneralProgress.class);
-        assertThat(generalFrame.bowl(NORMAL)).isInstanceOf(Closed.class);
+        assertThat(generalFrame.bowl(NORMAL).getProgress()).isInstanceOf(GeneralProgress.class);
+        assertThat(generalFrame.bowl(NORMAL).getProgress()).isInstanceOf(Closed.class);
     }
 
     @Test
@@ -57,5 +71,9 @@ class GeneralFrameTest {
 
         generalFrame.bowl(NORMAL);
         assertThat(generalFrame.getResults()).hasSize(2);
+    }
+
+    private HitNumber mockSixHitNumber() {
+        return new HitNumber(Pin.of(6));
     }
 }
