@@ -1,13 +1,12 @@
 package qna.domain.question;
 
-import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 import qna.domain.AbstractEntity;
 import qna.domain.question.answer.Answer;
+import qna.domain.question.answer.Answers;
 import qna.domain.user.User;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,10 +21,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -92,7 +89,7 @@ public class Question extends AbstractEntity {
     }
 
     public List<Answer> getAnswers() {
-        return answers;
+        return answers.values();
     }
 
     @Override

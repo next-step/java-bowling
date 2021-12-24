@@ -1,10 +1,25 @@
 package qna.domain.question.answer;
 
+import org.hibernate.annotations.Where;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Embeddable;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Embeddable
 public class Answers {
-    private final List<Answer> values;
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    @Where(clause = "deleted = false")
+    @OrderBy("id ASC")
+    private List<Answer> values = new ArrayList<>();
+
+    public Answers() {
+
+    }
 
     public Answers(List<Answer> answers) {
         this.values = answers;
@@ -12,6 +27,14 @@ public class Answers {
 
     public static Answers from(List<Answer> answers) {
         return new Answers(answers);
+    }
+
+    public void add(Answer answer) {
+        values.add(answer);
+    }
+
+    public List<Answer> values() {
+        return values;
     }
 
     @Override
