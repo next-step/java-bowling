@@ -9,6 +9,7 @@ import qna.domain.question.answer.Answers;
 import qna.domain.user.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -47,10 +48,12 @@ public class Question extends AbstractEntity {
 
     public List<DeleteHistory> delete() {
         this.deleted = true;
-        DeleteHistory questionDeleteHistory = DeleteHistory.of(ContentType.QUESTION, this);
-        List<DeleteHistory> answerDeleteHistory = this.answers.delete();
 
-        return questionDeleteHistory.merge(answerDeleteHistory);
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(DeleteHistory.of(ContentType.QUESTION, this));
+        deleteHistories.addAll(answers.delete());
+
+        return deleteHistories;
     }
 
     public User getWriter() {

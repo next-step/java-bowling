@@ -46,13 +46,6 @@ public class DeleteHistory {
         return new DeleteHistory(contentType, answer.getId(), answer.getWriter(), LocalDateTime.now());
     }
 
-    public List<DeleteHistory> merge(List<DeleteHistory> deleteHistories) {
-        List<DeleteHistory> newDeleteHistories = new ArrayList<>(Collections.singleton(this));
-        newDeleteHistories.addAll(deleteHistories);
-
-        return Collections.unmodifiableList(newDeleteHistories);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
