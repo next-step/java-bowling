@@ -1,15 +1,13 @@
 package bowling.domain.progress;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import bowling.Pin;
 import bowling.domain.state.end.EndState;
-import bowling.domain.state.end.Miss;
 import bowling.domain.state.end.Spare;
 import bowling.domain.state.end.Strike;
 import bowling.domain.state.end.first.Gutter;
 import bowling.domain.state.end.first.HitNumber;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
