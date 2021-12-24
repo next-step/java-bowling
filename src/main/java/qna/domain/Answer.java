@@ -4,9 +4,11 @@ import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Answer extends AbstractEntity {
+
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
@@ -43,9 +45,17 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public DeleteHistory delete() {
+        if (isDeleted()) {
+            return null;
+        }
+
+        this.deleted = true;
+        return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
+    }
+
+    public void undelete() {
+        this.deleted = false;
     }
 
     public boolean isDeleted() {
@@ -58,6 +68,10 @@ public class Answer extends AbstractEntity {
 
     public User getWriter() {
         return writer;
+    }
+
+    public Question getQuestion() {
+        return question;
     }
 
     public String getContents() {
