@@ -3,7 +3,6 @@ package qna.domain;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -90,7 +89,7 @@ public class Question extends AbstractEntity {
 
         this.deleted = true;
         DeleteHistories deleteHistories = new DeleteHistories();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+        deleteHistories.add(new DeleteHistory(this));
 
         deleteHistories.addAll(answers.delete(loginUser));
 
