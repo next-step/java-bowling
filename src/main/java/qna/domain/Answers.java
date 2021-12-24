@@ -25,24 +25,9 @@ public class Answers {
   }
 
   public List<DeleteHistory> deleteAll(User loginUser) throws CannotDeleteException {
-    validWriter(loginUser);
     return list.stream()
-               .map(answer -> {
-                 answer.setDeleted(true);
-                 return DeleteHistory.from(answer);
-               })
+               .map(answer -> answer.delete(loginUser))
                .collect(toList());
-  }
-
-  private void validWriter(User loginUser) throws CannotDeleteException {
-    if (hasAnotherUser(loginUser)) {
-      throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-    }
-  }
-
-  private boolean hasAnotherUser(User loginUser) {
-    return list.stream()
-               .anyMatch(answer -> !answer.isOwner(loginUser));
   }
 
 }
