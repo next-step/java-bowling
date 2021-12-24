@@ -3,7 +3,11 @@ package qna.domain.question;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
+import qna.domain.deleteHistory.ContentType;
+import qna.domain.deleteHistory.DeleteHistory;
 import qna.domain.user.UserTest;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -33,5 +37,15 @@ public class QuestionTest {
     void shouldAddAnswers() {
         Q1.addAnswer(A1);
         assertThat(Q1.answers()).contains(A1);
+    }
+
+    @Test
+    @DisplayName("질문을 삭제하면 관련된 답변도 삭제된다")
+    void shouldDeleteQuestionAndAnswer() {
+        Q1.addAnswer(A1);
+        List<DeleteHistory> deleteHistories = Q1.delete();
+
+        assertThat(deleteHistories).contains(DeleteHistory.of(ContentType.QUESTION, Q1));
+        assertThat(deleteHistories).contains(DeleteHistory.of(ContentType.ANSWER, A1));
     }
 }

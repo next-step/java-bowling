@@ -1,11 +1,13 @@
 package qna.domain.deleteHistory;
 
-import qna.domain.question.answer.Answer;
 import qna.domain.question.Question;
+import qna.domain.question.answer.Answer;
 import qna.domain.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -41,6 +43,11 @@ public class DeleteHistory {
 
     public static DeleteHistory of(ContentType contentType, Answer answer) {
         return new DeleteHistory(contentType, answer.getId(), answer.getWriter(), LocalDateTime.now());
+    }
+
+    public List<DeleteHistory> merge(List<DeleteHistory> deleteHistories) {
+        deleteHistories.add(this);
+        return Collections.unmodifiableList(deleteHistories);
     }
 
     @Override

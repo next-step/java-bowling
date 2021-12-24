@@ -1,6 +1,7 @@
 package qna.domain.question.answer;
 
 import org.hibernate.annotations.Where;
+import qna.domain.deleteHistory.DeleteHistory;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
@@ -9,6 +10,7 @@ import javax.persistence.OrderBy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Embeddable
 public class Answers {
@@ -26,6 +28,12 @@ public class Answers {
 
     public static Answers from(List<Answer> answers) {
         return new Answers(answers);
+    }
+
+    public List<DeleteHistory> delete() {
+        return values.stream()
+                .map(Answer::delete)
+                .collect(Collectors.toList());
     }
 
     public void add(Answer answer) {
