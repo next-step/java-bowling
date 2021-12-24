@@ -5,31 +5,45 @@ import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 import qna.domain.deleteHistory.ContentType;
 import qna.domain.deleteHistory.DeleteHistory;
-import qna.domain.user.UserTest;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static qna.domain.question.Question.UNAUTHORIZED_ANSWER_MESSAGE;
+import static qna.domain.question.Question.UNAUTHORIZED_QUESTION_MESSAGE;
 import static qna.domain.question.answer.AnswerTest.A1;
+import static qna.domain.question.answer.AnswerTest.A2;
+import static qna.domain.user.UserTest.JAVAJIGI;
+import static qna.domain.user.UserTest.SANJIGI;
 
 
 public class QuestionTest {
-    public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-    public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
+    public static final Question Q1 = new Question("title1", "contents1").writeBy(JAVAJIGI);
+    public static final Question Q2 = new Question("title2", "contents2").writeBy(SANJIGI);
 
     @Test
     @DisplayName("로그인 한 사용자와 질문 작성자가 같으면 true를 반환한다")
     void shouldReturnTrueWhenOwner() throws CannotDeleteException {
-        boolean result = Q1.isOwner(UserTest.JAVAJIGI);
+        boolean result = Q1.isOwner(JAVAJIGI);
         assertThat(result).isTrue();
     }
 
     @Test
     @DisplayName("로그인 한 사용자와 질문 작성자가 다르면 예외를 던진다")
-    void shouldThrowWhenNotSameUser() {
-        assertThatThrownBy(() -> Q1.isOwner(UserTest.SANJIGI))
-                .isInstanceOf(CannotDeleteException.class);
+    void shouldThrowWhenNotEqualLoginUser() {
+        assertThatThrownBy(() -> Q1.isOwner(SANJIGI))
+                .isInstanceOf(CannotDeleteException.class)
+                .hasMessage(UNAUTHORIZED_QUESTION_MESSAGE);
+    }
+
+    @Test
+    @DisplayName("로그인 한 사용자와 답변 작성자가 다르면 예외를 던진다")
+    void shouldThrowWhenAnswerWriterNotEqualLoginUser() {
+        Q1.addAnswer(A2);
+        assertThatThrownBy(() -> Q1.isOwner(JAVAJIGI))
+                .isInstanceOf(CannotDeleteException.class)
+                .hasMessage(UNAUTHORIZED_ANSWER_MESSAGE);
     }
 
     @Test

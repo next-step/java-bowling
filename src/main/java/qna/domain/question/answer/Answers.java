@@ -2,6 +2,7 @@ package qna.domain.question.answer;
 
 import org.hibernate.annotations.Where;
 import qna.domain.deleteHistory.DeleteHistory;
+import qna.domain.user.User;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
@@ -34,6 +35,10 @@ public class Answers {
         return values.stream()
                 .map(Answer::delete)
                 .collect(Collectors.toList());
+    }
+
+    public boolean isOwner(User loginUser) {
+        return values.stream().allMatch(answer -> answer.isOwner(loginUser));
     }
 
     public void add(Answer answer) {
