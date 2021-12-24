@@ -9,6 +9,6 @@ public class FinalFrameTest {
     @Test
     void 마지막프레임이_맞는지_확인() {
         assertThat(new FinalFrame().isFinalFrame()).isTrue();
-        assertThat(new FinalFrame().isBeforeFinalFrame()).isFalse();
+        assertThat(new FinalFrame().isNinthFrame()).isFalse();
     }
 }

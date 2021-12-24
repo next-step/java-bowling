@@ -1,7 +1,7 @@
 package bowling.domain;
 
 public class FrameRoundNumber {
-    public static final FrameRoundNumber BEFORE_FINAL_FRAME_NUMBER = new FrameRoundNumber(9);
+    public static final FrameRoundNumber NINTH_FRAME_NUMBER = new FrameRoundNumber(9);
     public static final String WRONG_FRAME_NUMBER_MESSAGE = "잘못된 프레임넘버입니다.";
 
     private static final int MIN_VALUE = 1;

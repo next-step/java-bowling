@@ -2,8 +2,9 @@ package bowling.domain;
 
 public class NormalFrame extends AbstractFrame {
     private final FrameRoundNumber roundNumber;
+    private Frame next;
 
-    private NormalFrame(int number) {
+    public NormalFrame(int number) {
         this(new FrameRoundNumber(number));
     }
 
@@ -16,26 +17,33 @@ public class NormalFrame extends AbstractFrame {
         return new NormalFrame(1);
     }
 
-    public static Frame ofNext(Frame frame) {
-        return frame.next();
-    }
-
     public static Frame ofFinal() {
         return new FinalFrame();
     }
 
     @Override
-    public Frame next() {
-        return new NormalFrame(roundNumber.next());
+    public Frame addNextFrame() {
+        if (isNinthFrame()) {
+            next = NormalFrame.ofFinal();
+            return next;
+        }
+
+        next = new NormalFrame(roundNumber.next());
+        return next;
     }
 
     @Override
-    public boolean isBeforeFinalFrame() {
-        return roundNumber.equals(FrameRoundNumber.BEFORE_FINAL_FRAME_NUMBER);
+    public boolean isNinthFrame() {
+        return roundNumber.equals(FrameRoundNumber.NINTH_FRAME_NUMBER);
     }
 
     @Override
     public boolean isFinalFrame() {
         return false;
+    }
+
+    @Override
+    public Frame next() {
+        return next;
     }
 }
