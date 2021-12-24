@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 public class FinalFrameTest {
 
 
-    private static final Pin MISS = Pin.of(0);
+    private static final Pin GUTTER = Pin.of(0);
     private static final Pin FIRST_SPARE = Pin.of(3);
     private static final Pin SPARE = Pin.of(7);
     private static final Pin NORMAL = Pin.of(5);
@@ -56,10 +56,29 @@ public class FinalFrameTest {
     }
 
     @Test
-    @DisplayName("MISS 시, 해당 프레임은 다음 프레임으로 넘어간다.")
+    @DisplayName("Gutter 시, 해당 프레임은 다음 프레임으로 넘어간다.")
     void bowlMissTest() {
-        assertThat(finalFrame.bowl(MISS).getProgress()).isInstanceOf(GeneralProgress.class);
+        assertThat(finalFrame.bowl(GUTTER).getProgress()).isInstanceOf(GeneralProgress.class);
     }
+
+    @Test
+    @DisplayName("Gutter가 2회 인경우, Miss를 반환한다.")
+    void bowlGutterToMissTest() {
+        Frame bowl = finalFrame.bowl(GUTTER).bowl(GUTTER);
+        assertThat(bowl.getProgress()).isInstanceOf(Closed.class);
+
+        assertThat(bowl.getResults()).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("Gutter가 1회 인경우, Miss를 반환하지 않는다.")
+    void bowlGutterNotMissTest() {
+        Frame bowl = finalFrame.bowl(NORMAL).bowl(GUTTER);
+        assertThat(bowl.getProgress()).isInstanceOf(Closed.class);
+
+        assertThat(bowl.getResults()).hasSize(2);
+    }
+
 
     @Test
     @DisplayName("투구시 해당 프레임내 결과가 저장된다.")
@@ -77,7 +96,7 @@ public class FinalFrameTest {
         Frame bowl = finalFrame.bowl(STRIKE);
         assertThat(bowl.getProgress()).isInstanceOf(GeneralProgress.class);
 
-        Frame bowl2 = bowl.bowl(MISS);
+        Frame bowl2 = bowl.bowl(GUTTER);
         assertThat(bowl2.getProgress()).isInstanceOf(GeneralProgress.class);
 
         assertThat(bowl2.bowl(STRIKE).getProgress()).isInstanceOf(Closed.class);

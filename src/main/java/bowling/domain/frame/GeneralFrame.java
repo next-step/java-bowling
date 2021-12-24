@@ -7,12 +7,10 @@ import bowling.domain.state.end.EndState;
 import bowling.domain.state.end.first.NextAbleState;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 public class GeneralFrame extends Frame {
 
     private static final int MAX_HIT_PIN_COUNT = 10;
-    private static final int GENERAL_ROUND_NUMBER = 2;
 
     private Frame next = null;
 

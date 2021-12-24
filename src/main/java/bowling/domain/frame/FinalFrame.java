@@ -13,7 +13,6 @@ import java.util.Optional;
 public class FinalFrame extends Frame {
 
     private static final int MAX_OF_GENERAL_HIT_PIN_COUNT = 10;
-    private static final int GENERAL_ROUND_NUMBER = 2;
 
     public FinalFrame() {
 

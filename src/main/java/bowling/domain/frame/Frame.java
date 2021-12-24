@@ -4,8 +4,10 @@ import bowling.Pin;
 import bowling.domain.progress.Opened;
 import bowling.domain.progress.Progress;
 import bowling.domain.progress.ProgressFactory;
+import bowling.domain.state.StateFactory;
 import bowling.domain.state.end.EndState;
 import bowling.domain.state.end.PinEndState;
+import bowling.domain.state.end.first.Gutter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,6 +15,8 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 public abstract class Frame {
+
+    protected static final int GENERAL_ROUND_NUMBER = 2;
 
     protected final Progress progress;
 
@@ -45,9 +49,20 @@ public abstract class Frame {
 
     protected Progress searchNextProgress(Pin pin) {
         EndState endState = ((Opened) progress).pitch(pin);
+
+        if (isMiss(endState)) {
+            clearAndAddResultMiss();
+            return nextProgress(StateFactory.miss());
+        }
+
         results.add(endState);
 
         return nextProgress(endState);
+    }
+
+    private void clearAndAddResultMiss() {
+        results.clear();
+        results.add(StateFactory.miss());
     }
 
     protected int sumHitPinsCount(Predicate<? super EndState> predicate) {
@@ -56,6 +71,19 @@ public abstract class Frame {
             .filter(predicate)
             .mapToInt(result -> ((PinEndState) result).getHitPinCount())
             .sum();
+    }
+
+    protected boolean isMiss(EndState endState) {
+        if (results.isEmpty()) {
+            return false;
+        }
+
+        if (!endState.isInstanceOf(Gutter.class)) {
+            return false;
+        }
+
+        return results.stream()
+            .allMatch(result -> result.isInstanceOf(Gutter.class));
     }
 
     protected int sumHitPinsCount() {

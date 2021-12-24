@@ -1,24 +1,20 @@
 package bowling.domain.frame;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import bowling.Pin;
 import bowling.domain.progress.Closed;
 import bowling.domain.progress.GeneralProgress;
-import bowling.domain.progress.Progress;
 import bowling.domain.progress.ProgressFactory;
-import bowling.domain.state.end.Strike;
 import bowling.domain.state.end.first.HitNumber;
 import java.util.Arrays;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GeneralFrameTest {
 
-    private static final Pin MISS = Pin.of(0);
+    private static final Pin GUTTER = Pin.of(0);
     private static final Pin NORMAL = Pin.of(5);
     private static final Pin STRIKE = Pin.of(10);
 
@@ -51,17 +47,37 @@ class GeneralFrameTest {
     }
 
     @Test
-    @DisplayName("MISS 시, 해당 프레임은 다음 프레임으로 넘어간다.")
-    void bowlMissTest() {
-        assertThat(generalFrame.bowl(MISS).getProgress()).isInstanceOf(GeneralProgress.class);
+    @DisplayName("Gutter 시, 해당 프레임은 다음 프레임으로 넘어간다.")
+    void bowlGutterTest() {
+        assertThat(generalFrame.bowl(GUTTER).getProgress()).isInstanceOf(GeneralProgress.class);
     }
 
     @Test
     @DisplayName("Strike가 아닌경우 최대 2번의 시도가 가능하다.")
     void bowlTryCountTest() {
-        assertThat(generalFrame.bowl(NORMAL).getProgress()).isInstanceOf(GeneralProgress.class);
-        assertThat(generalFrame.bowl(NORMAL).getProgress()).isInstanceOf(Closed.class);
+        Frame bowl = generalFrame.bowl(NORMAL);
+        assertThat(bowl.getProgress()).isInstanceOf(GeneralProgress.class);
+        assertThat(bowl.bowl(NORMAL).getProgress()).isInstanceOf(Closed.class);
     }
+
+    @Test
+    @DisplayName("Gutter가 2회 인경우, Miss를 반환한다.")
+    void bowlGutterToMissTest() {
+        Frame bowl = generalFrame.bowl(GUTTER).bowl(GUTTER);
+        assertThat(bowl.getProgress()).isInstanceOf(Closed.class);
+
+        assertThat(bowl.getResults()).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("Gutter가 1회 인경우, Miss를 반환하지 않는다.")
+    void bowlGutterNotMissTest() {
+        Frame bowl = generalFrame.bowl(NORMAL).bowl(GUTTER);
+        assertThat(bowl.getProgress()).isInstanceOf(Closed.class);
+
+        assertThat(bowl.getResults()).hasSize(2);
+    }
+
 
     @Test
     @DisplayName("투구시 해당 프레임내 결과가 저장된다.")
