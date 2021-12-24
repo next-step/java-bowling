@@ -33,15 +33,22 @@ public class Question extends AbstractEntity {
     public Question() {
     }
 
-    public Question(String title, String contents) {
+    private Question(String title, String contents) {
+       this(null, title, contents);
+    }
+
+    private Question(Long id, String title, String contents) {
+        super(id);
         this.title = title;
         this.contents = contents;
     }
 
-    public Question(long id, String title, String contents) {
-        super(id);
-        this.title = title;
-        this.contents = contents;
+    public static Question of(String title, String contents) {
+     return new Question(title, contents);
+    }
+
+    public static Question of(Long id, String title, String contents) {
+        return new Question(id, title, contents);
     }
 
     public String getTitle() {
@@ -76,20 +83,6 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
-    }
-
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         validWriter(loginUser);
 
@@ -107,9 +100,23 @@ public class Question extends AbstractEntity {
 
     private void validWriter(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+            throw new CannotDeleteException("작성자와 다르므로 삭제할 수 없습니다.");
         }
     }
+
+    public boolean isOwner(User loginUser) {
+        return writer.equals(loginUser);
+    }
+
+    private Question setDeleted(boolean deleted) {
+        this.deleted = deleted;
+        return this;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
 
     @Override
     public String toString() {
