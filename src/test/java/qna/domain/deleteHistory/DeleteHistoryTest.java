@@ -1,7 +1,9 @@
-package qna.domain;
+package qna.domain.deleteHistory;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import qna.domain.question.answer.AnswerTest;
+import qna.domain.question.QuestionTest;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 

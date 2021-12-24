@@ -1,4 +1,8 @@
-package qna.domain;
+package qna.domain.deleteHistory;
+
+import qna.domain.question.answer.Answer;
+import qna.domain.question.Question;
+import qna.domain.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

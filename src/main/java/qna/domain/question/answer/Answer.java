@@ -1,8 +1,11 @@
-package qna.domain;
+package qna.domain.question.answer;
 
 import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
+import qna.domain.AbstractEntity;
+import qna.domain.user.User;
+import qna.domain.question.Question;
 
 import javax.persistence.*;
 
@@ -75,10 +78,5 @@ public class Answer extends AbstractEntity {
     @Override
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
-    }
-
-    public DeleteHistory delete() {
-        this.deleted = true;
-        return DeleteHistory.of(this);
     }
 }

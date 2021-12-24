@@ -1,7 +1,10 @@
-package qna.domain;
+package qna.domain.question;
 
 import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
+import qna.domain.AbstractEntity;
+import qna.domain.question.answer.Answer;
+import qna.domain.user.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
