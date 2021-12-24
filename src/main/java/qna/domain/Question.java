@@ -9,7 +9,6 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -99,7 +98,7 @@ public class Question extends AbstractEntity {
         setDeleted(true);
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), getWriter(), LocalDateTime.now()));
+        deleteHistories.add(DeleteHistory.from(this));
         deleteHistories.addAll(answerDeleteHistories);
         Collections.sort(deleteHistories);
 

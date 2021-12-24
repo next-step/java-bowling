@@ -7,7 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,11 +29,7 @@ public class Answers {
     return list.stream()
                .map(answer -> {
                  answer.setDeleted(true);
-                 return new DeleteHistory(
-                         ContentType.ANSWER,
-                         answer.getId(),
-                         answer.getWriter(),
-                         LocalDateTime.now());
+                 return DeleteHistory.from(answer);
                })
                .collect(toList());
   }
