@@ -1,6 +1,7 @@
 package qna.domain.question.answer;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 import qna.domain.deleteHistory.DeleteHistory;
 import qna.domain.user.User;
 
@@ -15,6 +16,8 @@ import java.util.stream.Collectors;
 
 @Embeddable
 public class Answers {
+    public static final String UNAUTHORIZED_ANSWER_MESSAGE = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
+
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
@@ -31,13 +34,17 @@ public class Answers {
         return new Answers(answers);
     }
 
-    public List<DeleteHistory> delete() {
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(UNAUTHORIZED_ANSWER_MESSAGE);
+        }
+
         return values.stream()
                 .map(Answer::delete)
                 .collect(Collectors.toList());
     }
 
-    public boolean isOwner(User loginUser) {
+    private boolean isOwner(User loginUser) {
         return values.stream().allMatch(answer -> answer.isOwner(loginUser));
     }
 
