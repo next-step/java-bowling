@@ -7,6 +7,7 @@ import qna.domain.user.UserTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static qna.domain.question.answer.AnswerTest.A1;
 
 
 public class QuestionTest {
@@ -25,5 +26,12 @@ public class QuestionTest {
     void shouldThrowWhenNotSameUser() {
         assertThatThrownBy(() -> Q1.isOwner(UserTest.SANJIGI))
                 .isInstanceOf(CannotDeleteException.class);
+    }
+
+    @Test
+    @DisplayName("질문에 답변을 추가한다")
+    void shouldAddAnswers() {
+        Q1.addAnswer(A1);
+        assertThat(Q1.answers()).contains(A1);
     }
 }

@@ -18,7 +18,6 @@ public class Answers {
     private List<Answer> values = new ArrayList<>();
 
     public Answers() {
-
     }
 
     public Answers(List<Answer> answers) {
