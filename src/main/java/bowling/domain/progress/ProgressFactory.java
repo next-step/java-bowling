@@ -1,6 +1,6 @@
 package bowling.domain.progress;
 
-import bowling.domain.state.end.ResultState;
+import bowling.domain.result.ResultState;
 
 public class ProgressFactory {
 

@@ -1,8 +1,7 @@
-package bowling.domain.state.end.first;
+package bowling.domain.result.status;
 
 import bowling.domain.Pin;
-import bowling.domain.state.end.ResultState;
-import bowling.domain.state.end.PinResultState;
+import bowling.domain.result.ResultState;
 
 /**
  * 거터(gutter) : 핀을 하나도 쓰러트리지 못한 상태. 거터는 "-"로 표시

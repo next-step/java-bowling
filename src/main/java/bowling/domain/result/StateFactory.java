@@ -1,12 +1,11 @@
-package bowling.domain.state;
+package bowling.domain.result;
 
 import bowling.domain.Pin;
-import bowling.domain.state.end.ResultState;
-import bowling.domain.state.end.Miss;
-import bowling.domain.state.end.Spare;
-import bowling.domain.state.end.Strike;
-import bowling.domain.state.end.first.Gutter;
-import bowling.domain.state.end.first.HitNumber;
+import bowling.domain.result.status.Miss;
+import bowling.domain.result.status.Spare;
+import bowling.domain.result.status.Strike;
+import bowling.domain.result.status.Gutter;
+import bowling.domain.result.status.HitNumber;
 
 public class StateFactory {
 

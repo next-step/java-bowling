@@ -1,4 +1,4 @@
-package bowling.domain.state.end;
+package bowling.domain.result.status;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -16,6 +16,7 @@ public class StrikeTest {
     }
 
     @Test
+    @DisplayName("Strike 표기가 출력된다.")
     void getPrintMarkTest() {
         assertThat(new Strike(Pin.of(10)).getPrintMark()).isEqualTo("X");
     }

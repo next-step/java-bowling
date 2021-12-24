@@ -4,11 +4,11 @@ import bowling.domain.Pin;
 import bowling.domain.progress.Opened;
 import bowling.domain.progress.Progress;
 import bowling.domain.progress.ProgressFactory;
-import bowling.domain.state.StateFactory;
-import bowling.domain.state.end.ResultState;
-import bowling.domain.state.end.PinResultState;
-import bowling.domain.state.end.Results;
-import bowling.domain.state.end.first.Gutter;
+import bowling.domain.result.StateFactory;
+import bowling.domain.result.ResultState;
+import bowling.domain.result.status.PinResultState;
+import bowling.domain.result.Results;
+import bowling.domain.result.status.Gutter;
 import java.util.function.Predicate;
 
 public abstract class Frame {

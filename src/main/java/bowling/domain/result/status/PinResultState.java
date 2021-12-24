@@ -1,6 +1,7 @@
-package bowling.domain.state.end;
+package bowling.domain.result.status;
 
 import bowling.domain.Pin;
+import bowling.domain.result.ResultState;
 
 public abstract class PinResultState implements ResultState {
 

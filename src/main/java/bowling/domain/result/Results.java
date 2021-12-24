@@ -1,4 +1,4 @@
-package bowling.domain.state.end;
+package bowling.domain.result;
 
 import java.util.ArrayList;
 import java.util.Collections;

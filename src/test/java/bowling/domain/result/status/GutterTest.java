@@ -1,9 +1,8 @@
-package bowling.domain.state.end;
+package bowling.domain.result.status;
 
 import static org.assertj.core.api.Assertions.*;
 
 import bowling.domain.Pin;
-import bowling.domain.state.end.first.Gutter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

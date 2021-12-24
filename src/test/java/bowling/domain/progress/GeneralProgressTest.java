@@ -3,11 +3,11 @@ package bowling.domain.progress;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import bowling.domain.Pin;
-import bowling.domain.state.end.ResultState;
-import bowling.domain.state.end.Spare;
-import bowling.domain.state.end.Strike;
-import bowling.domain.state.end.first.Gutter;
-import bowling.domain.state.end.first.HitNumber;
+import bowling.domain.result.ResultState;
+import bowling.domain.result.status.Spare;
+import bowling.domain.result.status.Strike;
+import bowling.domain.result.status.Gutter;
+import bowling.domain.result.status.HitNumber;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

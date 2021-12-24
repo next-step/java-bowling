@@ -1,7 +1,7 @@
 package bowling.domain.progress;
 
 import bowling.domain.Pin;
-import bowling.domain.state.end.ResultState;
+import bowling.domain.result.ResultState;
 
 public interface Opened {
 

@@ -7,7 +7,7 @@ import bowling.domain.Pin;
 import bowling.domain.progress.Closed;
 import bowling.domain.progress.GeneralProgress;
 import bowling.domain.progress.ProgressFactory;
-import bowling.domain.state.end.first.HitNumber;
+import bowling.domain.result.status.HitNumber;
 import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

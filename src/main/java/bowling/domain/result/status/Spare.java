@@ -1,6 +1,7 @@
-package bowling.domain.state.end;
+package bowling.domain.result.status;
 
 import bowling.domain.Pin;
+import bowling.domain.result.ResultState;
 
 /**
  * 스페어(spare) : 프레임의 두번재 투구에서 모든 핀(10개)을 쓰러트린 상태

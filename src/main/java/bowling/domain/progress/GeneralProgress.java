@@ -1,10 +1,10 @@
 package bowling.domain.progress;
 
 import bowling.domain.Pin;
-import bowling.domain.state.StateFactory;
-import bowling.domain.state.end.ResultState;
-import bowling.domain.state.end.Strike;
-import bowling.domain.state.end.first.HitNumber;
+import bowling.domain.result.StateFactory;
+import bowling.domain.result.ResultState;
+import bowling.domain.result.status.Strike;
+import bowling.domain.result.status.HitNumber;
 
 public class GeneralProgress implements Progress, Opened {
 

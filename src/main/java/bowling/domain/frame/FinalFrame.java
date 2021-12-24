@@ -3,11 +3,11 @@ package bowling.domain.frame;
 import bowling.domain.Pin;
 import bowling.domain.progress.Progress;
 import bowling.domain.progress.ProgressFactory;
-import bowling.domain.state.end.BonusAbleState;
-import bowling.domain.state.end.ResultState;
-import bowling.domain.state.end.Results;
-import bowling.domain.state.end.Strike;
-import bowling.domain.state.end.first.NextAbleState;
+import bowling.domain.result.status.BonusAbleState;
+import bowling.domain.result.ResultState;
+import bowling.domain.result.Results;
+import bowling.domain.result.status.Strike;
+import bowling.domain.result.status.NextAbleState;
 import java.util.List;
 
 public class FinalFrame extends Frame {

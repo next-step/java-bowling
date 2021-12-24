@@ -1,8 +1,8 @@
 package bowling.domain.progress;
 
 import bowling.domain.Pin;
-import bowling.domain.state.StateFactory;
-import bowling.domain.state.end.ResultState;
+import bowling.domain.result.StateFactory;
+import bowling.domain.result.ResultState;
 
 public class FirstProgress implements Progress, Opened {
 

@@ -1,13 +1,21 @@
-package bowling.domain.state.end.first;
+package bowling.domain.result.status;
 
 import bowling.domain.Pin;
-import bowling.domain.state.end.ResultState;
-import bowling.domain.state.end.PinResultState;
+import bowling.domain.result.ResultState;
 
 public class HitNumber extends PinResultState implements NextAbleState {
 
     public HitNumber(Pin pin) {
         super(pin);
+
+        valid(pin);
+    }
+
+    private void valid(Pin pin) {
+        if (pin.isStrike() || pin.isGutter()) {
+            throw new IllegalArgumentException("HitNumber이 아닌, 다른 값이 와야 해요.");
+        }
+
     }
 
     @Override

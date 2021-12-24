@@ -1,8 +1,8 @@
-package bowling.domain.state.second;
+package bowling.domain.result.status;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bowling.domain.state.end.Miss;
+import bowling.domain.result.status.Miss;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
