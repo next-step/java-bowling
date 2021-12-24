@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.Pin;
+import bowling.domain.Pin;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;

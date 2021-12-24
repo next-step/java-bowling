@@ -2,8 +2,7 @@ package bowling.domain.progress;
 
 import static org.assertj.core.api.Assertions.*;
 
-import bowling.Pin;
-import bowling.domain.progress.FirstProgress;
+import bowling.domain.Pin;
 import bowling.domain.state.end.Strike;
 import bowling.domain.state.end.first.HitNumber;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.Player;
+import bowling.domain.Player;
 import bowling.domain.frame.Frames;
 import bowling.domain.state.end.EndState;
 import java.util.List;

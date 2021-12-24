@@ -3,7 +3,7 @@ package bowling.domain.frame;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-import bowling.Pin;
+import bowling.domain.Pin;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;

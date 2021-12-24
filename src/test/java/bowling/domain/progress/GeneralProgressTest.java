@@ -2,7 +2,7 @@ package bowling.domain.progress;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bowling.Pin;
+import bowling.domain.Pin;
 import bowling.domain.state.end.EndState;
 import bowling.domain.state.end.Spare;
 import bowling.domain.state.end.Strike;

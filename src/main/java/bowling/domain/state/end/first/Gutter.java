@@ -1,6 +1,6 @@
 package bowling.domain.state.end.first;
 
-import bowling.Pin;
+import bowling.domain.Pin;
 import bowling.domain.state.end.EndState;
 import bowling.domain.state.end.PinEndState;
 

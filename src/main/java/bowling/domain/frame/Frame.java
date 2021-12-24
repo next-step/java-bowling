@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.Pin;
+import bowling.domain.Pin;
 import bowling.domain.progress.Opened;
 import bowling.domain.progress.Progress;
 import bowling.domain.progress.ProgressFactory;

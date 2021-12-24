@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain;
 
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 

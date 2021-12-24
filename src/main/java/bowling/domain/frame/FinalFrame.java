@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.Pin;
+import bowling.domain.Pin;
 import bowling.domain.progress.Progress;
 import bowling.domain.progress.ProgressFactory;
 import bowling.domain.state.end.BonusAbleState;
@@ -8,7 +8,6 @@ import bowling.domain.state.end.EndState;
 import bowling.domain.state.end.Strike;
 import bowling.domain.state.end.first.NextAbleState;
 import java.util.List;
-import java.util.Optional;
 
 public class FinalFrame extends Frame {
 

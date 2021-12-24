@@ -2,7 +2,7 @@ package bowling.domain.frame;
 
 import static org.assertj.core.api.Assertions.*;
 
-import bowling.Pin;
+import bowling.domain.Pin;
 import bowling.domain.progress.Closed;
 import bowling.domain.progress.GeneralProgress;
 import bowling.domain.progress.ProgressFactory;

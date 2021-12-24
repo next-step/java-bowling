@@ -1,6 +1,6 @@
 package bowling.domain.progress;
 
-import bowling.Pin;
+import bowling.domain.Pin;
 import bowling.domain.state.StateFactory;
 import bowling.domain.state.end.EndState;
 
