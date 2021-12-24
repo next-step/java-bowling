@@ -4,6 +4,7 @@ import bowling.domain.Pin;
 import bowling.domain.progress.Progress;
 import bowling.domain.progress.ProgressFactory;
 import bowling.domain.state.end.EndState;
+import bowling.domain.state.end.Results;
 import bowling.domain.state.end.first.NextAbleState;
 import java.util.List;
 
@@ -15,9 +16,12 @@ public class GeneralFrame extends Frame {
         super();
     }
 
-    public GeneralFrame(Progress progress, List<EndState> results) {
-        super(progress, results);
+    public GeneralFrame(Progress progress, List<EndState> endStates) {
+        this(progress, new Results(endStates));
+    }
 
+    public GeneralFrame(Progress progress, Results results) {
+        super(progress, results);
         valid();
     }
 

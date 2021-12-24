@@ -3,6 +3,7 @@ package bowling.view;
 import bowling.domain.Player;
 import bowling.domain.frame.Frames;
 import bowling.domain.state.end.EndState;
+import bowling.domain.state.end.Results;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,8 +38,8 @@ public class OutputView {
         System.out.println();
     }
 
-    private String resultToString(List<EndState> results) {
-        return results.stream()
+    private String resultToString(Results results) {
+        return results.getResults().stream()
             .map(EndState::getPrintMark)
             .collect(Collectors.joining(DELIMITER));
     }

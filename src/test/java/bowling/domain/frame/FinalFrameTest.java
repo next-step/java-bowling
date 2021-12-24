@@ -67,7 +67,7 @@ public class FinalFrameTest {
         Frame bowl = finalFrame.bowl(GUTTER).bowl(GUTTER);
         assertThat(bowl.getProgress()).isInstanceOf(Closed.class);
 
-        assertThat(bowl.getResults()).hasSize(1);
+        assertThat(bowl.getResults().size()).isEqualTo(1);
     }
 
     @Test
@@ -76,7 +76,7 @@ public class FinalFrameTest {
         Frame bowl = finalFrame.bowl(NORMAL).bowl(GUTTER);
         assertThat(bowl.getProgress()).isInstanceOf(Closed.class);
 
-        assertThat(bowl.getResults()).hasSize(2);
+        assertThat(bowl.getResults().size()).isEqualTo(2);
     }
 
 
@@ -84,10 +84,10 @@ public class FinalFrameTest {
     @DisplayName("투구시 해당 프레임내 결과가 저장된다.")
     void bowlStatueTest() {
         finalFrame.bowl(NORMAL);
-        assertThat(finalFrame.getResults()).hasSize(1);
+        assertThat(finalFrame.getResults().size()).isEqualTo(1);
 
         finalFrame.bowl(NORMAL);
-        assertThat(finalFrame.getResults()).hasSize(2);
+        assertThat(finalFrame.getResults().size()).isEqualTo(2);
     }
 
     @Test

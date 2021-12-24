@@ -66,7 +66,7 @@ class GeneralFrameTest {
         Frame bowl = generalFrame.bowl(GUTTER).bowl(GUTTER);
         assertThat(bowl.getProgress()).isInstanceOf(Closed.class);
 
-        assertThat(bowl.getResults()).hasSize(1);
+        assertThat(bowl.getResults().size()).isEqualTo(1);
     }
 
     @Test
@@ -75,7 +75,7 @@ class GeneralFrameTest {
         Frame bowl = generalFrame.bowl(NORMAL).bowl(GUTTER);
         assertThat(bowl.getProgress()).isInstanceOf(Closed.class);
 
-        assertThat(bowl.getResults()).hasSize(2);
+        assertThat(bowl.getResults().size()).isEqualTo(2);
     }
 
 
@@ -83,10 +83,10 @@ class GeneralFrameTest {
     @DisplayName("투구시 해당 프레임내 결과가 저장된다.")
     void bowlStatueTest() {
         generalFrame.bowl(NORMAL);
-        assertThat(generalFrame.getResults()).hasSize(1);
+        assertThat(generalFrame.getResults().size()).isEqualTo(1);
 
         generalFrame.bowl(NORMAL);
-        assertThat(generalFrame.getResults()).hasSize(2);
+        assertThat(generalFrame.getResults().size()).isEqualTo(2);
     }
 
     private HitNumber mockSixHitNumber() {

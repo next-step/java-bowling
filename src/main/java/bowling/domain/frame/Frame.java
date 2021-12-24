@@ -7,6 +7,7 @@ import bowling.domain.progress.ProgressFactory;
 import bowling.domain.state.StateFactory;
 import bowling.domain.state.end.EndState;
 import bowling.domain.state.end.PinEndState;
+import bowling.domain.state.end.Results;
 import bowling.domain.state.end.first.Gutter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,14 +19,14 @@ public abstract class Frame {
     protected static final int GENERAL_ROUND_NUMBER = 2;
 
     protected final Progress progress;
-
-    protected final List<EndState> results;
+    protected final Results results;
 
     protected Frame() {
-        this(ProgressFactory.create(), new ArrayList<>());
+        this(ProgressFactory.create(), new Results());
     }
 
-    protected Frame(Progress progress, List<EndState> results) {
+
+    protected Frame(Progress progress, Results results) {
         this.progress = progress;
         this.results = results;
     }
@@ -63,7 +64,7 @@ public abstract class Frame {
     }
 
     protected int sumHitPinsCount(Predicate<? super EndState> predicate) {
-        return results.stream()
+        return results.getResults().stream()
             .filter(result -> result.isInstanceOf(PinEndState.class))
             .filter(predicate)
             .mapToInt(result -> ((PinEndState) result).getHitPinCount())
@@ -79,7 +80,7 @@ public abstract class Frame {
             return false;
         }
 
-        return results.stream()
+        return results.getResults().stream()
             .allMatch(result -> result.isInstanceOf(Gutter.class));
     }
 
@@ -91,7 +92,7 @@ public abstract class Frame {
         return progress;
     }
 
-    public List<EndState> getResults() {
-        return Collections.unmodifiableList(results);
+    public Results getResults() {
+        return results;
     }
 }

@@ -5,6 +5,7 @@ import bowling.domain.progress.Progress;
 import bowling.domain.progress.ProgressFactory;
 import bowling.domain.state.end.BonusAbleState;
 import bowling.domain.state.end.EndState;
+import bowling.domain.state.end.Results;
 import bowling.domain.state.end.Strike;
 import bowling.domain.state.end.first.NextAbleState;
 import java.util.List;
@@ -18,6 +19,11 @@ public class FinalFrame extends Frame {
     }
 
     public FinalFrame(Progress progress, List<EndState> results) {
+        this(progress, new Results(results));
+    }
+
+
+    public FinalFrame(Progress progress, Results results) {
         super(progress, results);
 
         if (isGeneralRound()) {
@@ -68,7 +74,7 @@ public class FinalFrame extends Frame {
     }
 
     private boolean containBonusAbleState() {
-        return this.results.stream()
+        return this.results.getResults().stream()
             .anyMatch(result -> result instanceof BonusAbleState);
     }
 }
