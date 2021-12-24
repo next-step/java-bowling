@@ -3,7 +3,7 @@ package bowling.domain.progress;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import bowling.domain.Pin;
-import bowling.domain.state.end.EndState;
+import bowling.domain.state.end.ResultState;
 import bowling.domain.state.end.Spare;
 import bowling.domain.state.end.Strike;
 import bowling.domain.state.end.first.Gutter;
@@ -26,9 +26,9 @@ class GeneralProgressTest {
     @BeforeEach
     void init() {
         FirstProgress firstProgress = new FirstProgress();
-        EndState endState = firstProgress.pitch(FIRST_SPARE);
+        ResultState resultState = firstProgress.pitch(FIRST_SPARE);
 
-        generalProgress = new GeneralProgress(endState);
+        generalProgress = new GeneralProgress(resultState);
     }
 
 
@@ -53,8 +53,8 @@ class GeneralProgressTest {
     @Test
     @DisplayName("첫번째 투구가 Miss이고, 두번째 투구가 Strike이면, Spare이 반환된다.")
     void pitchSpareTest2() {
-        EndState endState = new FirstProgress().pitch(MISS);
-        generalProgress = new GeneralProgress(endState);
+        ResultState resultState = new FirstProgress().pitch(MISS);
+        generalProgress = new GeneralProgress(resultState);
 
         assertThat(generalProgress.pitch(STRIKE)).isInstanceOf(Spare.class);
     }
@@ -62,8 +62,8 @@ class GeneralProgressTest {
     @Test
     @DisplayName("첫번째 투구가 Strike이고, 두번째 투구가 Strike이면, Strike이 반환된다.")
     void pitchSpareTest3() {
-        EndState endState = new FirstProgress().pitch(STRIKE);
-        generalProgress = new GeneralProgress(endState);
+        ResultState resultState = new FirstProgress().pitch(STRIKE);
+        generalProgress = new GeneralProgress(resultState);
 
         assertThat(generalProgress.pitch(STRIKE)).isInstanceOf(Strike.class);
     }

@@ -5,13 +5,10 @@ import bowling.domain.progress.Opened;
 import bowling.domain.progress.Progress;
 import bowling.domain.progress.ProgressFactory;
 import bowling.domain.state.StateFactory;
-import bowling.domain.state.end.EndState;
-import bowling.domain.state.end.PinEndState;
+import bowling.domain.state.end.ResultState;
+import bowling.domain.state.end.PinResultState;
 import bowling.domain.state.end.Results;
 import bowling.domain.state.end.first.Gutter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.function.Predicate;
 
 public abstract class Frame {
@@ -33,9 +30,9 @@ public abstract class Frame {
 
     public abstract Frame bowl(Pin pin);
 
-    protected abstract Progress nextProgress(EndState endState);
+    protected abstract Progress nextProgress(ResultState resultState);
 
-    protected abstract boolean isNextAbleState(EndState endState);
+    protected abstract boolean isNextAbleState(ResultState resultState);
 
     public boolean isOpened() {
         return this.progress instanceof Opened;
@@ -46,16 +43,16 @@ public abstract class Frame {
     }
 
     protected Progress searchNextProgress(Pin pin) {
-        EndState endState = ((Opened) progress).pitch(pin);
+        ResultState resultState = ((Opened) progress).pitch(pin);
 
-        if (isMiss(endState)) {
+        if (isMiss(resultState)) {
             clearAndAddResultMiss();
             return nextProgress(StateFactory.miss());
         }
 
-        results.add(endState);
+        results.add(resultState);
 
-        return nextProgress(endState);
+        return nextProgress(resultState);
     }
 
     private void clearAndAddResultMiss() {
@@ -63,20 +60,20 @@ public abstract class Frame {
         results.add(StateFactory.miss());
     }
 
-    protected int sumHitPinsCount(Predicate<? super EndState> predicate) {
+    protected int sumHitPinsCount(Predicate<? super ResultState> predicate) {
         return results.getResults().stream()
-            .filter(result -> result.isInstanceOf(PinEndState.class))
+            .filter(result -> result.isInstanceOf(PinResultState.class))
             .filter(predicate)
-            .mapToInt(result -> ((PinEndState) result).getHitPinCount())
+            .mapToInt(result -> ((PinResultState) result).getHitPinCount())
             .sum();
     }
 
-    protected boolean isMiss(EndState endState) {
+    protected boolean isMiss(ResultState resultState) {
         if (results.isEmpty()) {
             return false;
         }
 
-        if (!endState.isInstanceOf(Gutter.class)) {
+        if (!resultState.isInstanceOf(Gutter.class)) {
             return false;
         }
 

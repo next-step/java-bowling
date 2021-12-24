@@ -4,7 +4,7 @@ import bowling.domain.Pin;
 import bowling.domain.progress.Progress;
 import bowling.domain.progress.ProgressFactory;
 import bowling.domain.state.end.BonusAbleState;
-import bowling.domain.state.end.EndState;
+import bowling.domain.state.end.ResultState;
 import bowling.domain.state.end.Results;
 import bowling.domain.state.end.Strike;
 import bowling.domain.state.end.first.NextAbleState;
@@ -18,7 +18,7 @@ public class FinalFrame extends Frame {
 
     }
 
-    public FinalFrame(Progress progress, List<EndState> results) {
+    public FinalFrame(Progress progress, List<ResultState> results) {
         this(progress, new Results(results));
     }
 
@@ -48,21 +48,21 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    protected Progress nextProgress(EndState endState) {
-        if (isGeneralRound() && nextBowlAble(endState)) {
-            return ProgressFactory.progress(endState);
+    protected Progress nextProgress(ResultState resultState) {
+        if (isGeneralRound() && nextBowlAble(resultState)) {
+            return ProgressFactory.progress(resultState);
         }
 
         return ProgressFactory.closed();
     }
 
-    private boolean nextBowlAble(EndState endState) {
-        return isNextAbleState(endState) || containBonusAbleState();
+    private boolean nextBowlAble(ResultState resultState) {
+        return isNextAbleState(resultState) || containBonusAbleState();
     }
 
     @Override
-    protected boolean isNextAbleState(EndState endState) {
-        return isGeneralRoundBefore() && endState.isInstanceOf(NextAbleState.class);
+    protected boolean isNextAbleState(ResultState resultState) {
+        return isGeneralRoundBefore() && resultState.isInstanceOf(NextAbleState.class);
     }
 
     private boolean isGeneralRoundBefore() {

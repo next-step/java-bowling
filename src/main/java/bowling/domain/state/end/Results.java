@@ -6,18 +6,18 @@ import java.util.List;
 
 public class Results {
 
-    private final List<EndState> results;
+    private final List<ResultState> results;
 
     public Results() {
         this(new ArrayList<>());
     }
 
-    public Results(List<EndState> results) {
+    public Results(List<ResultState> results) {
         this.results = results;
     }
 
-    public void add(EndState endState) {
-        this.results.add(endState);
+    public void add(ResultState resultState) {
+        this.results.add(resultState);
     }
 
     public void clear() {
@@ -32,7 +32,7 @@ public class Results {
         return results.size();
     }
 
-    public List<EndState> getResults() {
+    public List<ResultState> getResults() {
         return Collections.unmodifiableList(results);
     }
 }

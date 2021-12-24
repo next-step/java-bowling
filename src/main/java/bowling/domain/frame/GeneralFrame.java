@@ -3,7 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.Pin;
 import bowling.domain.progress.Progress;
 import bowling.domain.progress.ProgressFactory;
-import bowling.domain.state.end.EndState;
+import bowling.domain.state.end.ResultState;
 import bowling.domain.state.end.Results;
 import bowling.domain.state.end.first.NextAbleState;
 import java.util.List;
@@ -16,8 +16,8 @@ public class GeneralFrame extends Frame {
         super();
     }
 
-    public GeneralFrame(Progress progress, List<EndState> endStates) {
-        this(progress, new Results(endStates));
+    public GeneralFrame(Progress progress, List<ResultState> resultStates) {
+        this(progress, new Results(resultStates));
     }
 
     public GeneralFrame(Progress progress, Results results) {
@@ -41,17 +41,17 @@ public class GeneralFrame extends Frame {
     }
 
     @Override
-    protected Progress nextProgress(EndState endState) {
-        if (isNextAbleState(endState)) {
-            return ProgressFactory.progress(endState);
+    protected Progress nextProgress(ResultState resultState) {
+        if (isNextAbleState(resultState)) {
+            return ProgressFactory.progress(resultState);
         }
 
         return ProgressFactory.closed();
     }
 
     @Override
-    protected boolean isNextAbleState(EndState endState) {
-        return (results.size() < GENERAL_ROUND_NUMBER) && (endState instanceof NextAbleState);
+    protected boolean isNextAbleState(ResultState resultState) {
+        return (results.size() < GENERAL_ROUND_NUMBER) && (resultState instanceof NextAbleState);
     }
 
 }

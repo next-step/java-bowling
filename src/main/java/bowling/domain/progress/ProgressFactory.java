@@ -1,6 +1,6 @@
 package bowling.domain.progress;
 
-import bowling.domain.state.end.EndState;
+import bowling.domain.state.end.ResultState;
 
 public class ProgressFactory {
 
@@ -8,7 +8,7 @@ public class ProgressFactory {
         return new FirstProgress();
     }
 
-    public static Progress progress(EndState beforeState) {
+    public static Progress progress(ResultState beforeState) {
         return new GeneralProgress(beforeState);
     }
 

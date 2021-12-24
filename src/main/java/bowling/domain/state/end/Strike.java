@@ -7,7 +7,7 @@ import bowling.domain.Pin;
  *
  * @apiNote FinalFrame에서는 한번 더 시도할 수 있음.
  */
-public class Strike extends PinEndState implements BonusAbleState {
+public class Strike extends PinResultState implements BonusAbleState {
 
     private static final String MARKER = "X";
 
@@ -25,7 +25,7 @@ public class Strike extends PinEndState implements BonusAbleState {
     }
 
     @Override
-    public boolean isInstanceOf(Class<? extends EndState> clazz) {
+    public boolean isInstanceOf(Class<? extends ResultState> clazz) {
         return clazz.isInstance(this);
     }
 }

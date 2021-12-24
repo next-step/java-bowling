@@ -2,20 +2,20 @@ package bowling.domain.progress;
 
 import bowling.domain.Pin;
 import bowling.domain.state.StateFactory;
-import bowling.domain.state.end.EndState;
+import bowling.domain.state.end.ResultState;
 import bowling.domain.state.end.Strike;
 import bowling.domain.state.end.first.HitNumber;
 
 public class GeneralProgress implements Progress, Opened {
 
-    private final EndState beforeState;
+    private final ResultState beforeState;
 
-    public GeneralProgress(EndState beforeState) {
+    public GeneralProgress(ResultState beforeState) {
         this.beforeState = beforeState;
     }
 
     @Override
-    public EndState pitch(Pin pin) {
+    public ResultState pitch(Pin pin) {
         if (pin.isStrike()) {
             if (beforeState.isInstanceOf(Strike.class)) {
                 return StateFactory.strike(pin);

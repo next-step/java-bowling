@@ -1,13 +1,13 @@
 package bowling.domain.state.end.first;
 
 import bowling.domain.Pin;
-import bowling.domain.state.end.EndState;
-import bowling.domain.state.end.PinEndState;
+import bowling.domain.state.end.ResultState;
+import bowling.domain.state.end.PinResultState;
 
 /**
  * 거터(gutter) : 핀을 하나도 쓰러트리지 못한 상태. 거터는 "-"로 표시
  */
-public class Gutter extends PinEndState implements NextAbleState {
+public class Gutter extends PinResultState implements NextAbleState {
 
     private static final String MARKER = "-";
 
@@ -25,7 +25,7 @@ public class Gutter extends PinEndState implements NextAbleState {
     }
 
     @Override
-    public boolean isInstanceOf(Class<? extends EndState> clazz) {
+    public boolean isInstanceOf(Class<? extends ResultState> clazz) {
         return clazz.isInstance(this);
     }
 }

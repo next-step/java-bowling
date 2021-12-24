@@ -1,10 +1,10 @@
 package bowling.domain.state.end.first;
 
 import bowling.domain.Pin;
-import bowling.domain.state.end.EndState;
-import bowling.domain.state.end.PinEndState;
+import bowling.domain.state.end.ResultState;
+import bowling.domain.state.end.PinResultState;
 
-public class HitNumber extends PinEndState implements NextAbleState {
+public class HitNumber extends PinResultState implements NextAbleState {
 
     public HitNumber(Pin pin) {
         super(pin);
@@ -16,7 +16,7 @@ public class HitNumber extends PinEndState implements NextAbleState {
     }
 
     @Override
-    public boolean isInstanceOf(Class<? extends EndState> clazz) {
+    public boolean isInstanceOf(Class<? extends ResultState> clazz) {
         return clazz.isInstance(this);
     }
 
