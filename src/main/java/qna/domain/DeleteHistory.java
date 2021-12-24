@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-public class DeleteHistory {
+public class DeleteHistory implements Comparable<DeleteHistory>{
     @Id
     @GeneratedValue
     private Long id;
@@ -51,5 +51,10 @@ public class DeleteHistory {
     public String toString() {
         return "DeleteHistory [id=" + id + ", contentType=" + contentType + ", contentId=" + contentId + ", deletedBy="
                 + deletedBy + ", createDate=" + createDate + "]";
+    }
+
+    @Override
+    public int compareTo(DeleteHistory o) {
+        return o.createDate.compareTo(createDate);
     }
 }
