@@ -4,18 +4,14 @@ import java.util.Objects;
 
 public class BowlingPins {
 
-    private final int countOfPins;
+    private final int count;
 
-    public BowlingPins(int countOfPins) {
-        this.countOfPins = countOfPins;
+    public BowlingPins(int count) {
+        this.count = count;
     }
 
-    public BowlingPins down(int countOfHits) {
-        return new BowlingPins(this.countOfPins - countOfHits);
-    }
-
-    public int getCountOfPins() {
-        return countOfPins;
+    public int getCount() {
+        return count;
     }
 
     @Override
@@ -27,18 +23,18 @@ public class BowlingPins {
             return false;
         }
         BowlingPins that = (BowlingPins) o;
-        return countOfPins == that.countOfPins;
+        return count == that.count;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(countOfPins);
+        return Objects.hash(count);
     }
 
     @Override
     public String toString() {
         return "BowlingPins{" +
-                "countOfPins=" + countOfPins +
+                "countOfPins=" + count +
                 '}';
     }
 

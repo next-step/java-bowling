@@ -1,59 +1,64 @@
 package bowling.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class NormalFrame {
+public class NormalFrame implements Frame {
 
-    public static final int INITIALIZED_TO_ZERO = 0;
-    public static final int COUNT_OF_TEN_PINS = 10;
+    public static final int STRIKE_PITCHING = 1;
+    public static final int POSSIBLE_COUNT_OF_PITCHING = 2;
+    public static final int TOTAL_PINS = 10;
+    public static final String ERROR_TOTAL_PIN_VALUE_MSG = "핀의 총합은 10개입니다.";
+    public static final int ZERO_INDEX = 0;
 
-    private final Frame frame;
-    private final Pitching countOfPitching;
-    private final BowlingPins upPins;
+    private int countOfPitching;
+    private final List<BowlingPins> bowlingPins;
 
     public NormalFrame() {
-        this(INITIALIZED_TO_ZERO, COUNT_OF_TEN_PINS);
+        this.bowlingPins = new ArrayList<>();
+        this.countOfPitching = POSSIBLE_COUNT_OF_PITCHING;
     }
 
-    public NormalFrame(Frame nextFrame) {
-        this(nextFrame, INITIALIZED_TO_ZERO, COUNT_OF_TEN_PINS);
-    }
-
-    public NormalFrame(int countOfPitching, int upPins) {
-        this(new Frame(INITIALIZED_TO_ZERO), countOfPitching, upPins);
-    }
-
-    public NormalFrame(Frame frame, int countOfPitching, int upPins) {
-        this.frame = frame;
-        this.countOfPitching = new Pitching(countOfPitching);
-        this.upPins = new BowlingPins(upPins);
-    }
-
-    public Pitching plusCount() {
-        return this.countOfPitching.plusCount();
-    }
-
-    public BowlingPins downPins(int countOfHits) {
-        return this.upPins.down(countOfHits);
-    }
-
-    public NormalFrame createNextFrame(Pitching currentPitching) {
-        if (currentPitching.isSecondPitching()) {
-            return new NormalFrame(this.frame.nextFrame());
+    @Override
+    public void addKnockDownPins(int hittingPins) {
+        bowlingPins.add(new BowlingPins(hittingPins));
+        if (isStrike(hittingPins)) {
+            countOfPitching = STRIKE_PITCHING;
         }
-        return this;
+        checkHittingPins(hittingPins);
     }
 
-    public Frame getFrame() {
-        return frame;
+    private void checkHittingPins(int hittingPins) {
+        int totalPins = getFirstHittingPins() + hittingPins;
+        if (bowlingPins.size() == POSSIBLE_COUNT_OF_PITCHING && totalPins > TOTAL_PINS) {
+            throw new IllegalArgumentException(ERROR_TOTAL_PIN_VALUE_MSG);
+        }
     }
 
-    public Pitching getCountOfPitching() {
+    private int getFirstHittingPins() {
+        return this.bowlingPins.get(ZERO_INDEX).getCount();
+    }
+
+    @Override
+    public boolean isStrike(int hittingPins) {
+        return hittingPins == TOTAL_PINS;
+    }
+
+    @Override
+    public boolean isPossiblePitching() {
+        if (countOfPitching == STRIKE_PITCHING) {
+            return false;
+        }
+        return bowlingPins.size() < POSSIBLE_COUNT_OF_PITCHING;
+    }
+
+    public int getCountOfPitching() {
         return countOfPitching;
     }
 
-    public BowlingPins getUpPins() {
-        return upPins;
+    public List<BowlingPins> getBowlingPins() {
+        return bowlingPins;
     }
 
     @Override
@@ -65,12 +70,21 @@ public class NormalFrame {
             return false;
         }
         NormalFrame that = (NormalFrame) o;
-        return Objects.equals(countOfPitching, that.countOfPitching) && Objects.equals(upPins, that.upPins);
+        return countOfPitching == that.countOfPitching && Objects.equals(bowlingPins, that.bowlingPins);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(countOfPitching, upPins);
+        return Objects.hash(countOfPitching, bowlingPins);
     }
+
+    @Override
+    public String toString() {
+        return "NormalFrame{" +
+                "countOfPitching=" + countOfPitching +
+                ", bowlingPins=" + bowlingPins +
+                '}';
+    }
+
 
 }
