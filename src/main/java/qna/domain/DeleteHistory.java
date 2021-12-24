@@ -32,20 +32,6 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
-    public static DeleteHistory createQuestionDeleteHistory(Question question, LocalDateTime createDate) {
-       question.setDeleted(true);
-       return new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), createDate);
-    }
-
-    public static DeleteHistory createAnswerDeleteHistory(Answer answer, LocalDateTime createDate) {
-        answer.setDeleted(true);
-        return new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), createDate);
-    }
-
-    public static void addAnswersDeleteHistories(List<DeleteHistory> deleteHistories, Question question, LocalDateTime createDate) {
-        question.addAnswersDeleteHistories(deleteHistories, createDate);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -32,4 +32,10 @@ public class AnswerTest {
     public void 작성자_조회() {
         assertThat(A1.getWriter()).isEqualTo(UserTest.JAVAJIGI);
     }
+
+    @Test
+    public void 답변_삭제이력_비교() {
+        DeleteHistory deleteHistory = new DeleteHistory(ContentType.ANSWER, A1.getId(), UserTest.JAVAJIGI, UserTest.DEFAULT_TIME);
+        assertThat(A1.getDeleteHistory(UserTest.DEFAULT_TIME)).isEqualTo(deleteHistory);
+    }
 }

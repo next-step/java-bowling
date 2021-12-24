@@ -13,7 +13,7 @@ import qna.CannotDeleteException;
 @Entity
 public class Question extends AbstractEntity {
     private static final String EXCEPTION_MESSAGE_NO_AUTH_DELETE_QUESTION = "질문을 삭제할 권한이 없습니다.";
-    private static final String EXCEPTION_MESSAGE_OTHER_PERSON_ANSWER_EXIST = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
+
 
     @Column(length = 100, nullable = false)
     private String title;
@@ -91,30 +91,20 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public boolean validateDeleted(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> getDeleteHistories(User loginUser, LocalDateTime createTime) throws CannotDeleteException {
+        validateQuestionDeleted(loginUser);
+        Answers answerGroup = new Answers(answers);
+        return answerGroup.getDeleteHistories(loginUser, setDeleted(true), createTime);
+    }
+
+    private void validateQuestionDeleted(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException(EXCEPTION_MESSAGE_NO_AUTH_DELETE_QUESTION);
         }
-        if (isNotInAnswersOwner(loginUser)) {
-            throw new CannotDeleteException(EXCEPTION_MESSAGE_OTHER_PERSON_ANSWER_EXIST);
-        }
-        return true;
     }
 
-    public boolean isNotInAnswersOwner(User loginUser) {
-        for (Answer answer : answers) {
-            if (!answer.isOwner(loginUser)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void addAnswersDeleteHistories(List<DeleteHistory> deleteHistories, LocalDateTime createDate) {
-        for (Answer answer : answers) {
-            answer.setDeleted(true);
-            deleteHistories.add(DeleteHistory.createAnswerDeleteHistory(answer, createDate));
-        }
+    public DeleteHistory getDeleteHistory(LocalDateTime createTime) {
+        return new DeleteHistory(ContentType.QUESTION, getId(), writer, createTime);
     }
 
     @Override
@@ -135,6 +125,4 @@ public class Question extends AbstractEntity {
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
-
-
 }
