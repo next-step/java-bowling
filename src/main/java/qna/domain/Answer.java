@@ -1,9 +1,14 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -23,11 +28,11 @@ public class Answer extends AbstractEntity {
     public Answer() {
     }
 
-    public Answer(User writer, Question question, String contents) {
+    private Answer(User writer, Question question, String contents) {
         this(null, writer, question, contents);
     }
 
-    public Answer(Long id, User writer, Question question, String contents) {
+    private Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
         if(writer == null) {
@@ -43,7 +48,27 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
+    public static Answer of(User writer, Question question, String contents) {
+        return new Answer(writer, question, contents);
+    }
+
+    public static Answer of(Long id, User writer, Question question, String contents) {
+        return new Answer(id, writer, question, contents);
+    }
+
+    public DeleteHistory delete(User loginUser) {
+        validWriter(loginUser);
+        setDeleted(true);
+        return DeleteHistory.from(this);
+    }
+
+    private void validWriter(User loginUser) {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("작성자와 일치하지 않습니다.");
+        }
+    }
+
+    private Answer setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
     }
