@@ -40,10 +40,6 @@ public class FinalFrame extends Frame {
 
     @Override
     public Frame bowl(Pin pin) {
-        if (isClosed()) {
-            throw new BowlingProgressException("게임을 더 진행할 수 없는 상태입니다.");
-        }
-
         return new FinalFrame(searchNextProgress(pin), this.results);
     }
 

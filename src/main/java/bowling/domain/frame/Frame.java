@@ -43,6 +43,10 @@ public abstract class Frame {
     }
 
     protected Progress searchNextProgress(Pin pin) {
+        if (isClosed()) {
+            throw new BowlingProgressException();
+        }
+
         ResultState resultState = ((Opened) progress).pitch(pin);
 
         if (isMiss(resultState)) {
