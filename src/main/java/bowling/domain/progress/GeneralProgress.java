@@ -17,11 +17,7 @@ public class GeneralProgress implements Progress, Opened {
     @Override
     public ResultState pitch(Pin pin) {
         if (pin.isStrike()) {
-            if (beforeState.isInstanceOf(Strike.class)) {
-                return StateFactory.strike(pin);
-            }
-
-            return StateFactory.spare(pin);
+            return resultByBeforeState(pin);
         }
 
         if (pin.isGutter()) {
@@ -35,6 +31,14 @@ public class GeneralProgress implements Progress, Opened {
         }
 
         return StateFactory.number(pin);
+    }
+
+    private ResultState resultByBeforeState(Pin pin) {
+        if (beforeState.isInstanceOf(Strike.class)) {
+            return StateFactory.strike(pin);
+        }
+
+        return StateFactory.spare(pin);
     }
 
     private boolean isSpare(Pin pin, HitNumber beforeHitNumber) {
