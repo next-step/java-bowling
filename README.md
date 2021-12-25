@@ -41,6 +41,9 @@
 * [X] Entity: `Answer`, `DeleteHistory`, `Question`, `User`의 toString 재정의
 * [X] Entity: `Answer` 삭제 로직 메서드로 위임
 * [X] Entity: `User`, `Question`의 사용하지 않는 getter, seter 제거
+* [X] Entity: `Question` 질문 삭제 테스트
+    * [X] 질문 삭제 - 질문에 답변(들)이 있는데, 질문자와 답변자가 같은 경우
+    * [X] 질문 삭제 예외 - 질문에 답변(들)이 있는데, 질문자와 답변자가 다른 경우
 
 ## 프로그래밍 요구사항
 
