@@ -2,7 +2,10 @@ package bowling.domain.progress;
 
 import bowling.domain.result.ResultState;
 
-public class ProgressFactory {
+public final class ProgressFactory {
+
+    private ProgressFactory() {
+    }
 
     public static Progress create() {
         return new FirstProgress();

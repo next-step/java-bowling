@@ -7,7 +7,11 @@ import bowling.domain.result.status.Strike;
 import bowling.domain.result.status.Gutter;
 import bowling.domain.result.status.HitNumber;
 
-public class StateFactory {
+public final class StateFactory {
+
+    private StateFactory() {
+
+    }
 
     public static ResultState strike(Pin pin) {
         return new Strike(pin);
