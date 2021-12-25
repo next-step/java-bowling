@@ -32,6 +32,16 @@ public class Results {
         return results.size();
     }
 
+    public boolean sizeLessThan(int number) {
+        return size() < number;
+    }
+
+
+    public boolean sizeLessOrEqualThan(int number) {
+        return size() <= number;
+    }
+
+
     public List<ResultState> getResults() {
         return Collections.unmodifiableList(results);
     }

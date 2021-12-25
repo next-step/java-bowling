@@ -62,11 +62,11 @@ public class FinalFrame extends Frame {
     }
 
     private boolean isGeneralRoundBefore() {
-        return this.results.size() < GENERAL_ROUND_NUMBER;
+        return this.results.sizeLessThan(GENERAL_ROUND_NUMBER);
     }
 
     private boolean isGeneralRound() {
-        return this.results.size() <= GENERAL_ROUND_NUMBER;
+        return this.results.sizeLessOrEqualThan(GENERAL_ROUND_NUMBER);
     }
 
     private boolean containBonusAbleState() {
