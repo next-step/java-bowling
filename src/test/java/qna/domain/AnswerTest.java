@@ -2,8 +2,9 @@ package qna.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import qna.CannotDeleteException;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("답변 테스트")
@@ -29,11 +30,27 @@ class AnswerTest {
     @Test
     void deleteTest() {
         // given
-        Answer answer = new Answer();
+        User javajigi = UserTest.JAVAJIGI;
+        Answer answer = new Answer(javajigi, QuestionTest.Q1, "What is Justice?");
         // when & then
         assertThat(answer.isDeleted()).isFalse();
-        answer.delete();
+        // when
+        answer.delete(javajigi);
+        // then
         assertThat(answer.isDeleted()).isTrue();
+    }
+
+    @DisplayName("답변 삭제 실패 - 다른 작성자의 답변을 삭제하려는 경우")
+    @Test
+    void deleteFailedTest() {
+        // given
+        Answer answer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "What is Justice?");
+        // when & then
+        assertThat(answer.isDeleted()).isFalse();
+        // when
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> answer.delete(UserTest.SANJIGI))
+                .withMessageContaining("다른 작성자의 답변을 삭제할 수 없습니다.");
     }
 
     @DisplayName("답변 작성자 반환")

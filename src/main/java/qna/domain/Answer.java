@@ -20,7 +20,7 @@ public class Answer extends AbstractEntity {
 
     private boolean deleted = false;
 
-    public Answer() {
+    protected Answer() {
     }
 
     public Answer(User writer, Question question, String contents) {
@@ -43,7 +43,10 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public void delete() {
+    public void delete(User writer) {
+        if (!isOwner(writer)) {
+            throw new IllegalArgumentException("다른 작성자의 답변을 삭제할 수 없습니다.");
+        }
         this.deleted = true;
     }
 
