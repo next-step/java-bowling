@@ -1,7 +1,11 @@
 package bowling.domain;
 
+import bowling.annotations.ForUI;
+import bowling.domain.state.State;
+
 public class NormalFrame extends AbstractFrame {
-    private final FrameRoundNumber roundNumber;
+    private static final int FIRST = 1;
+
     private Frame next;
 
     public NormalFrame(int number) {
@@ -9,12 +13,11 @@ public class NormalFrame extends AbstractFrame {
     }
 
     private NormalFrame(FrameRoundNumber roundNumber) {
-        super(new NormalKnockedPinCounts());
-        this.roundNumber = roundNumber;
+        super(roundNumber);
     }
 
     public static Frame ofFirst() {
-        return new NormalFrame(1);
+        return new NormalFrame(FIRST);
     }
 
     public static Frame ofFinal() {
@@ -43,7 +46,18 @@ public class NormalFrame extends AbstractFrame {
     }
 
     @Override
+    public boolean isEnd() {
+        return state.isFinished();
+    }
+
+    @Override
     public Frame next() {
         return next;
+    }
+
+    @ForUI
+    @Override
+    public State getState() {
+        return state;
     }
 }

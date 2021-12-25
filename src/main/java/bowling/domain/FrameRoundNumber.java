@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.annotations.ForUI;
+
 public class FrameRoundNumber {
     public static final FrameRoundNumber NINTH_FRAME_NUMBER = new FrameRoundNumber(9);
     public static final String WRONG_FRAME_NUMBER_MESSAGE = "잘못된 프레임넘버입니다.";
@@ -18,6 +20,11 @@ public class FrameRoundNumber {
 
     public FrameRoundNumber next() {
         return new FrameRoundNumber(roundNumber + 1);
+    }
+
+    @ForUI
+    public int value() {
+        return roundNumber;
     }
 
     @Override

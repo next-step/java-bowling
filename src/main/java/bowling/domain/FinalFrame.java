@@ -1,10 +1,14 @@
 package bowling.domain;
 
+import bowling.domain.state.State;
+
 public class FinalFrame extends AbstractFrame {
     public static final String FINAL_FRAME_MESSAGE = "10프레임 이후 프레임은 없습니다.";
 
+    private static final int TEN = 10;
+
     public FinalFrame() {
-        super(new FinalKnockedPinCounts());
+        super(new FrameRoundNumber(TEN));
     }
 
     @Override
@@ -23,7 +27,17 @@ public class FinalFrame extends AbstractFrame {
     }
 
     @Override
+    public boolean isEnd() {
+        return state.isFinished() && !state.hasBonus();
+    }
+
+    @Override
     public Frame next() {
         return null;
+    }
+
+    @Override
+    public State getState() {
+        return state;
     }
 }

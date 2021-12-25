@@ -1,7 +1,7 @@
 package bowling.domain;
 
-
 import bowling.annotations.ForUI;
+import bowling.domain.state.State;
 
 public interface Frame {
     void bowl(int knockedOutCount);
@@ -17,5 +17,8 @@ public interface Frame {
     Frame next();
 
     @ForUI
-    KnockedPinCounts getKnockedPinCounts();
+    int getFrameNumber();
+
+    @ForUI
+    State getState();
 }
