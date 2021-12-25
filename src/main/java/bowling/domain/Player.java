@@ -21,12 +21,12 @@ public class Player {
         }
     }
 
-    public String getName() {
-        return name;
-    }
-
     public Frame play(int index, Pin pin) {
         return frames.bowl(index, pin);
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Frames getFrames() {

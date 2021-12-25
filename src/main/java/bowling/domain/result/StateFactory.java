@@ -10,7 +10,6 @@ import bowling.domain.result.status.HitNumber;
 public final class StateFactory {
 
     private StateFactory() {
-
     }
 
     public static ResultState strike(Pin pin) {

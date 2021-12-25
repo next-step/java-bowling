@@ -6,9 +6,9 @@ import java.util.stream.IntStream;
 
 public class Pin {
 
-    private final static Map<Integer, Pin> cache = new HashMap<>();
-    private final static int MIN_PIN_COUNT = 0;
-    private final static int MAX_PIN_COUNT = 10;
+    private static final Map<Integer, Pin> cache = new HashMap<>();
+    private static final int MIN_PIN_COUNT = 0;
+    private static final int MAX_PIN_COUNT = 10;
 
     private final int hitCount;
 
@@ -43,6 +43,11 @@ public class Pin {
         return hitCount;
     }
 
+    public Pin sum(Pin hitPin) {
+        int sumPinCount = this.hitCount + hitPin.hitCount;
+        return cache.getOrDefault(sumPinCount, new Pin(sumPinCount));
+    }
+
     private void valid(int score) {
         if (score < MIN_PIN_COUNT) {
             throw new IllegalArgumentException("Pin 갯수는 음수가 나올 수 없어요.");
@@ -53,9 +58,4 @@ public class Pin {
         }
     }
 
-
-    public Pin sum(Pin hitPin) {
-        int sumPinCount = this.hitCount + hitPin.hitCount;
-        return cache.getOrDefault(sumPinCount, new Pin(sumPinCount));
-    }
 }

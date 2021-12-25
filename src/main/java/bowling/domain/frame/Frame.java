@@ -28,17 +28,11 @@ public abstract class Frame {
         this.results = results;
     }
 
-    public abstract Frame bowl(Pin pin);
-
-    protected abstract Progress nextProgress(ResultState resultState);
-
-    protected abstract boolean isNextAbleState(ResultState resultState);
-
     public boolean isOpened() {
         return this.progress instanceof Opened;
     }
 
-    protected boolean isClosed() {
+    public boolean isClosed() {
         return !isOpened();
     }
 
@@ -57,11 +51,6 @@ public abstract class Frame {
         results.add(resultState);
 
         return nextProgress(resultState);
-    }
-
-    private void clearAndAddResultMiss() {
-        results.clear();
-        results.add(StateFactory.miss());
     }
 
     protected int sumHitPinsCount(Predicate<? super ResultState> predicate) {
@@ -85,9 +74,20 @@ public abstract class Frame {
             .allMatch(result -> result.isInstanceOf(Gutter.class));
     }
 
+    private void clearAndAddResultMiss() {
+        results.clear();
+        results.add(StateFactory.miss());
+    }
+
     protected int sumHitPinsCount() {
         return sumHitPinsCount(result -> true);
     }
+
+    protected abstract Progress nextProgress(ResultState resultState);
+
+    protected abstract boolean isNextAbleState(ResultState resultState);
+
+    public abstract Frame bowl(Pin pin);
 
     public Progress getProgress() {
         return progress;
