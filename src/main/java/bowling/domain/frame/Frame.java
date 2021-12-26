@@ -9,12 +9,14 @@ import bowling.domain.result.ResultState;
 import bowling.domain.result.status.PinResultState;
 import bowling.domain.result.Results;
 import bowling.domain.result.status.Gutter;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public abstract class Frame {
 
     protected static final int GENERAL_ROUND_NUMBER = 2;
 
+    protected Frame next;
     protected final Progress progress;
     protected final Results results;
 
@@ -37,10 +39,6 @@ public abstract class Frame {
     }
 
     protected Progress searchNextProgress(Pin pin) {
-        if (isClosed()) {
-            throw new BowlingProgressException();
-        }
-
         PinResultState resultState = ((Opened) progress).pitch(pin);
 
         if (isMiss(resultState)) {
@@ -84,6 +82,18 @@ public abstract class Frame {
     protected abstract boolean isNextAbleState(ResultState resultState);
 
     public abstract Frame bowl(Pin pin);
+
+    public void setNext(Frame next) {
+        if (next.equals(this)) {
+            throw new IllegalArgumentException("같은 프레임이 다음으로 올 수는 없어요.");
+        }
+
+        this.next = next;
+    }
+
+    public Optional<Frame> getNext() {
+        return Optional.ofNullable(next);
+    }
 
     public Progress getProgress() {
         return progress;

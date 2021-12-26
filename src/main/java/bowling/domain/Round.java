@@ -33,6 +33,14 @@ public class Round {
         return cache.getOrDefault(index, new Round(index));
     }
 
+    public boolean isStartRound() {
+        return this.index == MIN;
+    }
+
+    public Round before() {
+        int beforeIndex = this.index - 1;
+        return cache.getOrDefault(beforeIndex, new Round(beforeIndex));
+    }
 
     public int getIndex() {
         return index;
