@@ -79,6 +79,9 @@ https://www.bowlinggenius.com/
     * `Player`와 `Frames`를 이용한 볼링 게임 구현
 * `BowlingController`
     * View와 Model을 분리하기 위한 Controller로 게임 구현
+* `InputView`
+    * `Player` 이름 입력 기능 구현
+    * 투구 숫자 입력 기능 구현
 
 * * *
 
