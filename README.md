@@ -43,6 +43,10 @@
 * 1 ~ 9 프레임을 NormalFrame, 10 프레임을 FinalFrame과 같은 구조로 구현한 후 Frame을 추가해 중복을 제거해 본다.
 * 다음 Frame을 현재 Frame 외부에서 생성하기 보다 현재 Frame에서 다음 Frame을 생성하는 방식으로 구현해 보고, 어느 구현이 더 좋은지 검토해 본다.
 
+## 볼링 계산기 참고 링크
+
+https://www.bowlinggenius.com/
+
 ## 기능 목록
 
 * `Player`
