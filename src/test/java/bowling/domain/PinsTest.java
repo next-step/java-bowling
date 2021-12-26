@@ -8,7 +8,10 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-class PinsTest {
+public class PinsTest {
+    public static final Pins FIVE = Pins.create(5);
+    public static final Pins FOUR = Pins.create(4);
+    public static final Pins ZERO = Pins.create(0);
 
 	@DisplayName("Pin 생성")
     @ParameterizedTest
