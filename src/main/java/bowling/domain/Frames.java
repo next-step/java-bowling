@@ -26,7 +26,6 @@ public class Frames {
     }
 
     private void initFrame(int frameNumber) {
-//        checkFrameNumber(frameNumber);
         if (frameNumber < MAX_FRAME) {
             frames.add(new NormalFrame());
         }
@@ -35,13 +34,7 @@ public class Frames {
         }
     }
 
-//    private void checkFrameNumber(int frameNumber) {
-//        if (!(MIN_FRAME <= frameNumber && frameNumber <= MAX_FRAME)) {
-//            throw new IllegalArgumentException("");
-//        }
-//    }
-
-    public void addPinsCurrentFrame(int hittingPins) {
+    public void addHittingPinsAtCurrentFrame(int hittingPins) {
         getCurrentFrame().addKnockDownPins(hittingPins);
     }
 
@@ -50,7 +43,18 @@ public class Frames {
     }
 
     public void moveNextFrame() {
-        this.frameNumber += 1;
+        if (!getCurrentFrame().isPossiblePitching()) {
+            this.frameNumber += 1;
+        }
+    }
+
+    public boolean isNotFinalGame() {
+        return frames.stream()
+                .anyMatch(Frame::isPossiblePitching);
+    }
+
+    public Frame findFrame(int index) {
+        return this.getFrames().get(index);
     }
 
     public int getFrameNumber() {
@@ -77,4 +81,6 @@ public class Frames {
     public int hashCode() {
         return Objects.hash(frameNumber, frames);
     }
+
+
 }

@@ -33,7 +33,7 @@ class NormalFrameTest {
     }
 
     @Test
-    @DisplayName("맞춘 핀을 리스트에 담음 - 스트라이크가 아닐 경우")
+    @DisplayName("맞춘 핀을 리스트에 담음 - 1투구(3), 2투구(가능)")
     void addKnockDownPinsNoStrike() {
         NormalFrame normalFrame = new NormalFrame();
         normalFrame.addKnockDownPins(3);
@@ -43,13 +43,24 @@ class NormalFrameTest {
     }
 
     @Test
-    @DisplayName("맞춘 핀을 리스트에 다음 - 스트라이크 일 경우 - 다음 투구 불가능하도록 변경")
+    @DisplayName("맞춘 핀을 리스트에 다음 - 1투구(스트라이크), 2투구(불가능)")
     void addBowlingPinsStrike() {
         NormalFrame normalFrame = new NormalFrame();
         normalFrame.addKnockDownPins(10);
         assertThat(normalFrame.getBowlingPins()).size().isEqualTo(1);
         assertThat(normalFrame.getBowlingPins().get(0)).isEqualTo(new BowlingPins(10));
         assertThat(normalFrame.getCountOfPitching()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("맞춘 핀을 리스트에 다음 - 1투구(8), 2투구(스페어)")
+    void addBowlingPinsSpare() {
+        NormalFrame normalFrame = new NormalFrame();
+        normalFrame.addKnockDownPins(8);
+        normalFrame.addKnockDownPins(2);
+        assertThat(normalFrame.getBowlingPins()).size().isEqualTo(2);
+        assertThat(normalFrame.getBowlingPins()).containsExactly(new BowlingPins(8), new BowlingPins(2));
+        assertThat(normalFrame.getCountOfPitching()).isEqualTo(2);
     }
 
     @Test
@@ -76,6 +87,5 @@ class NormalFrameTest {
         normalFrame.addKnockDownPins(1);
         assertThat(normalFrame.isPossiblePitching()).isFalse();
     }
-
 
 }

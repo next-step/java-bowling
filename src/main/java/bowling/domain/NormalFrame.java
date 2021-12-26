@@ -6,18 +6,18 @@ import java.util.Objects;
 
 public class NormalFrame implements Frame {
 
-    public static final int STRIKE_PITCHING = 1;
-    public static final int POSSIBLE_COUNT_OF_PITCHING = 2;
-    public static final int TOTAL_PINS = 10;
-    public static final String ERROR_TOTAL_PIN_VALUE_MSG = "핀의 총합은 10개입니다.";
-    public static final int ZERO_INDEX = 0;
+    private static final int STRIKE_PITCHING = 1;
+    private static final int NORMAL_PITCHING = 2;
+    private static final int TOTAL_PINS = 10;
+    private static final int ZERO_INDEX = 0;
+    private static final String ERROR_TOTAL_PIN_VALUE_MSG = "핀의 총합은 10개입니다.";
 
     private int countOfPitching;
     private final List<BowlingPins> bowlingPins;
 
     public NormalFrame() {
+        this.countOfPitching = NORMAL_PITCHING;
         this.bowlingPins = new ArrayList<>();
-        this.countOfPitching = POSSIBLE_COUNT_OF_PITCHING;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class NormalFrame implements Frame {
 
     private void checkHittingPins(int hittingPins) {
         int totalPins = getFirstHittingPins() + hittingPins;
-        if (bowlingPins.size() == POSSIBLE_COUNT_OF_PITCHING && totalPins > TOTAL_PINS) {
+        if (bowlingPins.size() == NORMAL_PITCHING && totalPins > TOTAL_PINS) {
             throw new IllegalArgumentException(ERROR_TOTAL_PIN_VALUE_MSG);
         }
     }
@@ -50,7 +50,17 @@ public class NormalFrame implements Frame {
         if (countOfPitching == STRIKE_PITCHING) {
             return false;
         }
-        return bowlingPins.size() < POSSIBLE_COUNT_OF_PITCHING;
+        return bowlingPins.size() < NORMAL_PITCHING;
+    }
+
+    @Override
+    public int getCountOfPitchingSize() {
+        return this.bowlingPins.size();
+    }
+
+    @Override
+    public int getCountOfHits(int index) {
+        return this.bowlingPins.get(index).getCount();
     }
 
     public int getCountOfPitching() {
@@ -85,6 +95,5 @@ public class NormalFrame implements Frame {
                 ", bowlingPins=" + bowlingPins +
                 '}';
     }
-
 
 }
