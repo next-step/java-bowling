@@ -12,6 +12,7 @@ public class PinsTest {
     public static final Pins FIVE = Pins.create(5);
     public static final Pins FOUR = Pins.create(4);
     public static final Pins ZERO = Pins.create(0);
+    public static final Pins TEN = Pins.create(10);
 
 	@DisplayName("Pin 생성")
     @ParameterizedTest
