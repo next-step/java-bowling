@@ -19,6 +19,18 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 class ReadyTest {
     private ThrowingState ready;
 
+    private static Stream<Arguments> providePinsAndResultState() {
+        List<Arguments> bowlCases = firstBowlCases();
+        bowlCases.add(arguments(Pins.create(10), Strike.class));
+        return bowlCases.stream();
+    }
+
+    private static List<Arguments> firstBowlCases() {
+        return IntStream.rangeClosed(0, 9)
+                .mapToObj(v -> arguments(Pins.create(v), FirstBowl.class))
+                .collect(Collectors.toList());
+    }
+
     @BeforeEach
     void beforeEach() {
         ready = Ready.create();
@@ -44,17 +56,5 @@ class ReadyTest {
     void symbol() {
         // when & then
         assertThat(ready.symbol()).isBlank();
-    }
-
-    private static Stream<Arguments> providePinsAndResultState() {
-        List<Arguments> bowlCases = firstBowlCases();
-        bowlCases.add(arguments(Pins.create(10), Strike.class));
-        return bowlCases.stream();
-    }
-
-    private static List<Arguments> firstBowlCases() {
-        return IntStream.rangeClosed(0, 9)
-                .mapToObj(v -> arguments(Pins.create(v), FirstBowl.class))
-                .collect(Collectors.toList());
     }
 }

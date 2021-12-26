@@ -66,10 +66,10 @@ public class BasicFrame implements Frame {
     }
 
     private void validate(FrameIndex index, ThrowingState state) {
-        if(Objects.isNull(index)) {
+        if (Objects.isNull(index)) {
             throw new IllegalArgumentException("프레임을 셋팅할 인덱스가 null입니다.");
         }
-        if(Objects.isNull(state)) {
+        if (Objects.isNull(state)) {
             throw new IllegalArgumentException("프레임을 셋팅할 투구 상태가 null입니다.");
         }
     }

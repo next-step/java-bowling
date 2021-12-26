@@ -17,10 +17,6 @@ public class Player {
         return new Player(name);
     }
 
-    public String getName() {
-        return name;
-    }
-
     private static void validateName(String name) {
         if (name == null) {
             throw new IllegalArgumentException("플레이어 이름이 null이 전달되었습니다.");
@@ -28,6 +24,10 @@ public class Player {
         if (!NAME_REGEX.matcher(name).matches()) {
             throw new IllegalArgumentException("플레이어 이름은 영문이고 3자리만 허용합니다.");
         }
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override

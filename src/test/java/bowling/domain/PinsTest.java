@@ -14,7 +14,7 @@ public class PinsTest {
     public static final Pins ZERO = Pins.create(0);
     public static final Pins TEN = Pins.create(10);
 
-	@DisplayName("Pin 생성")
+    @DisplayName("Pin 생성")
     @ParameterizedTest
     @ValueSource(ints = {Pins.MIN_PINS, (Pins.MIN_PINS + Pins.MAX_PINS) / 2, Pins.MAX_PINS})
     void create(int pins) {

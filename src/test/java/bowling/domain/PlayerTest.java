@@ -5,7 +5,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class PlayerTest {
     public static Player PLAYER_AYM = Player.create("AYM");
@@ -15,7 +16,7 @@ public class PlayerTest {
     @ValueSource(strings = {"abc", "ABC", "aBc"})
     void create(String name) {
         // when & then
-		assertThat(Player.create(name)).isNotNull();
+        assertThat(Player.create(name)).isNotNull();
     }
 
     @DisplayName("플레이어 이름이 영어 3자가 아닐 경우 예외 발생")
