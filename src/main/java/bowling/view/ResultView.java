@@ -13,7 +13,7 @@ public class ResultView {
     private static final String THREE_SPACE = "   ";
     private static final String ZERO_STRING = "0";
     private static final String NAME_FORMAT = "|  %s |";
-    private static final String EMPTY_FRAME = "       ";
+    private static final String EMPTY_FRAME = "      ";
     private static final String ENTER = "\n";
     private static final int FINAL_FRAME = 10;
     private static final int FIRST_FRAME = 1;
@@ -77,7 +77,7 @@ public class ResultView {
     private static String printEachFrame(Frames frames) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < frames.getFrameNumber(); i++) {
-            String pin = scorePin(frames.findFrame(i));
+            String pin = convertScore(frames.findFrame(i));
             String spacing = spacing(pin);
             builder.append(spacing)
                     .append(pin)
@@ -87,17 +87,17 @@ public class ResultView {
         return builder.toString();
     }
 
-    private static String scorePin(Frame frame) {
+    private static String convertScore(Frame frame) {
         if (frame.getCountOfPitchingSize() == 1) {
-            return markScore(frame.getCountOfHits(0));
+            return scoreToMark(frame.getCountOfHits(0));
         }
         if (frame.getCountOfPitchingSize() == 2) {
-            return markScore(frame.getCountOfHits(0), frame.getCountOfHits(1));
+            return scoreToMark(frame.getCountOfHits(0), frame.getCountOfHits(1));
         }
-        return markScore(frame.getCountOfHits(0), frame.getCountOfHits(1), frame.getCountOfHits(2));
+        return scoreToMark(frame.getCountOfHits(0), frame.getCountOfHits(1), frame.getCountOfHits(2));
     }
 
-    private static String markScore(int first) {
+    private static String scoreToMark(int first) {
         if (first == MIN_PIN) {
             return GUTTER_MARK;
         }
@@ -107,7 +107,7 @@ public class ResultView {
         return String.valueOf(first);
     }
 
-    private static String markScore(int first, int second) {
+    private static String scoreToMark(int first, int second) {
         if (first + second == MAX_PIN && first == MIN_PIN) {
             return GUTTER_MARK + LINE_MARK + SPARE_MARK;
         }
@@ -117,14 +117,14 @@ public class ResultView {
         if (first + second == MIN_PIN) {
             return GUTTER_MARK;
         }
-        return markScore(first) + LINE_MARK + markScore(second);
+        return scoreToMark(first) + LINE_MARK + scoreToMark(second);
     }
 
-    private static String markScore(int first, int second, int bonus) {
+    private static String scoreToMark(int first, int second, int bonus) {
         if (first == MAX_PIN) {
-            return STRIKE_MARK + LINE_MARK + markScore(second, bonus);
+            return STRIKE_MARK + LINE_MARK + scoreToMark(second, bonus);
         }
-        return markScore(first, second) + LINE_MARK + markScore(bonus);
+        return scoreToMark(first, second) + LINE_MARK + scoreToMark(bonus);
     }
 
     private static String spacing(String text) {

@@ -8,17 +8,16 @@ import org.junit.jupiter.api.Test;
 class ResultViewTest {
 
     @Test
-    @DisplayName("")
+    @DisplayName("화면 출력 - 빈 프레임 보드 출력")
     void head() {
-        Player KYH = new Player("kyh");
-        Frames frames = new Frames();
-        ResultView.printScoreFrame(KYH, frames);
+        Player KYH = new Player("KYH");
+        ResultView.printEmptyFrame(KYH);
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("화면 출력 - 스코어 프레임 보드 출력")
     void test() {
-        Player KYH = new Player("kyh");
+        Player KYH = new Player("KYH");
         Frames frames = new Frames();
         frames.addHittingPinsAtCurrentFrame(3);
         frames.addHittingPinsAtCurrentFrame(7);
@@ -48,10 +47,7 @@ class ResultViewTest {
         frames.addHittingPinsAtCurrentFrame(10);
         frames.addHittingPinsAtCurrentFrame(1);
         frames.addHittingPinsAtCurrentFrame(9);
-
-        ResultView.printEmptyFrame(KYH);
         ResultView.printScoreFrame(KYH, frames);
-
     }
 
 }
