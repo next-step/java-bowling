@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-import bowling.engin.FrameNumber;
+import bowling.engin.Sequence;
 
-public class FrameSequence implements FrameNumber {
+public class FrameSequence implements Sequence {
     private static final int FIRST = 1;
     private static final int LAST = 10;
     private static final Map<Integer, FrameSequence> cache = new HashMap<>();
@@ -17,6 +17,8 @@ public class FrameSequence implements FrameNumber {
     private static void initElement(int index) {
         cache.put(index, new FrameSequence(index));
     }
+
+    public static final Sequence FINAL = cache.get(LAST);
 
     private final int frame;
 

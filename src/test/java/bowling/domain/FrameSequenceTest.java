@@ -27,4 +27,8 @@ public class FrameSequenceTest {
         assertThat(FrameSequence.of(9).isFinal()).isFalse();
         assertThat(FrameSequence.of(10).isFinal()).isTrue();
     }
+
+    public static FrameSequence fs(int sequence) {
+        return FrameSequence.of(sequence);
+    }
 }

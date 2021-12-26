@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import bowling.engin.FirstClassImmutableList;
 import bowling.engin.FirstClassList;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,7 +13,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class FirstClassListTest {
+public class FirstClassImmutableListTest {
     static final class TestObject {
         public static final TestObject OBJ1 = new TestObject(1);
         public static final TestObject OBJ2 = new TestObject(2);
@@ -46,58 +47,71 @@ public class FirstClassListTest {
         }
     }
 
-    static final class TestList extends FirstClassList<TestObject> {
-        public TestList(List<TestObject> collection) {
+    static final class TestImmutableList extends FirstClassImmutableList<TestObject> {
+        public TestImmutableList(List<TestObject> collection) {
             super(collection);
         }
 
-        public static TestList of(TestObject ... elements) {
-            return new TestList(Arrays.asList(elements));
+        public static TestImmutableList of(TestObject ... elements) {
+            return new TestImmutableList(Arrays.asList(elements));
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return super.equals(o);
         }
     }
 
     @Test
     public void create() {
-        assertThat(TestList.of(TestObject.OBJ1, TestObject.OBJ2)).isEqualTo(TestList.of(TestObject.OBJ1, TestObject.OBJ2));
+        assertThat(TestImmutableList.of(TestObject.OBJ1, TestObject.OBJ2)).isEqualTo(TestImmutableList.of(TestObject.OBJ1, TestObject.OBJ2));
     }
 
     @Test
     public void collect() {
-        assertThat(TestList.of(TestObject.OBJ1, TestObject.OBJ2).collect()).containsExactly(TestObject.OBJ1, TestObject.OBJ2);
+        assertThat(TestImmutableList.of(TestObject.OBJ1, TestObject.OBJ2).collect()).containsExactly(TestObject.OBJ1, TestObject.OBJ2);
     }
 
     @Test
     public void stream() {
-        assertThat(TestList.of(TestObject.OBJ1, TestObject.OBJ2).stream()).containsExactly(TestObject.OBJ1, TestObject.OBJ2);
+        assertThat(TestImmutableList.of(TestObject.OBJ1, TestObject.OBJ2).stream()).containsExactly(TestObject.OBJ1, TestObject.OBJ2);
     }
 
     @Test
     public void foreach() {
-        TestList testCollection = TestList.of(TestObject.OBJ1, TestObject.OBJ2);
+        TestImmutableList testCollection = TestImmutableList.of(TestObject.OBJ1, TestObject.OBJ2);
         testCollection.forEach(obj -> obj.flag = false);
         assertThat(testCollection.stream().filter(obj -> obj.flag).findAny()).isEmpty();
     }
 
     @Test
     public void size() {
-        assertThat(TestList.of(TestObject.OBJ1, TestObject.OBJ2).size()).isEqualTo(2);
+        assertThat(TestImmutableList.of(TestObject.OBJ1, TestObject.OBJ2).size()).isEqualTo(2);
     }
 
     @Test
     public void elementOf() {
-        assertThat(TestList.of(TestObject.OBJ1, TestObject.OBJ2).elementOf(0)).isEqualTo(TestObject.OBJ1);
+        assertThat(TestImmutableList.of(TestObject.OBJ1, TestObject.OBJ2).elementOf(0)).isEqualTo(TestObject.OBJ1);
     }
 
     @ParameterizedTest(name = "get failed: {arguments}")
     @ValueSource(ints = {-1, 5})
     public void elementOfFailed(int index) {
         assertThatExceptionOfType(IndexOutOfBoundsException.class)
-                .isThrownBy(() -> TestList.of(TestObject.OBJ1, TestObject.OBJ2).elementOf(index));
+                .isThrownBy(() -> TestImmutableList.of(TestObject.OBJ1, TestObject.OBJ2).elementOf(index));
     }
 
     @Test
     public void indexOf() {
-        assertThat(TestList.of(TestObject.OBJ1, TestObject.OBJ2).indexOf(TestObject.OBJ1)).isEqualTo(0);
+        assertThat(TestImmutableList.of(TestObject.OBJ1, TestObject.OBJ2).indexOf(TestObject.OBJ1)).isEqualTo(0);
+    }
+
+    @Test
+    public void append() {
+        final FirstClassList<TestObject> testList = TestImmutableList.of(TestObject.OBJ1);
+        assertThat(testList.append(TestObject.OBJ2).size()).isEqualTo(2);
+        assertThat(testList.append(TestObject.OBJ2).collect()).containsExactly(TestObject.OBJ1, TestObject.OBJ2);
+        assertThat(testList.append(TestObject.OBJ2)).isEqualTo(TestImmutableList.of(TestObject.OBJ1, TestObject.OBJ2));
     }
 }
 
