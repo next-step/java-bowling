@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PinCounts implements KnockedPinCounts {
+public class PinCounts {
     public static final String WRONG_BOWL_COUNT_MESSAGE = "잘못된 투구 수입니다.";
 
     private final List<KnockedPinCount> values;
@@ -33,13 +33,11 @@ public class PinCounts implements KnockedPinCounts {
         this(knockedPinCounts, MAX_SIZE);
     }
 
-    @Override
-    public KnockedPinCounts knockOut(int knockedOutCount) {
+    public PinCounts knockOut(int knockedOutCount) {
         values.add(new KnockedPinCount(knockedOutCount));
         return this;
     }
 
-    @Override
     public List<KnockedPinCount> getValues() {
         return Collections.unmodifiableList(values);
     }

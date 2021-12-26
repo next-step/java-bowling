@@ -27,7 +27,7 @@ public class Miss extends AbstractFinished {
 
     @Override
     public Score makeScore() {
-        List<KnockedPinCount> knockedPinCounts = this.knockedPinCounts.getValues();
+        List<KnockedPinCount> knockedPinCounts = this.pinCounts.getValues();
         return new Score(knockedPinCounts.get(ZERO).value() + knockedPinCounts.get(ONE).value(), 0);
     }
 

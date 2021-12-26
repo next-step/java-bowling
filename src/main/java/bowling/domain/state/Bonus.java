@@ -2,7 +2,7 @@ package bowling.domain.state;
 
 import bowling.annotations.ForUI;
 import bowling.domain.KnockedPinCount;
-import bowling.domain.KnockedPinCounts;
+import bowling.domain.PinCounts;
 import bowling.domain.Score;
 
 public class Bonus extends AbstractFinished {
@@ -12,23 +12,23 @@ public class Bonus extends AbstractFinished {
     private final int bonusCount;
     private final State previous;
 
-    public Bonus(KnockedPinCounts knockedPinCounts, int bonusCount, State state) {
-        super(knockedPinCounts);
+    public Bonus(PinCounts pinCounts, int bonusCount, State state) {
+        super(pinCounts);
         this.bonusCount = bonusCount;
         this.previous = state;
     }
 
-    public static Bonus ofSpare(KnockedPinCounts knockedPinCounts, Spare spare) {
-        return new Bonus(knockedPinCounts, SPARE_BONUS_COUNT - ONE, spare);
+    public static Bonus ofSpare(PinCounts pinCounts, Spare spare) {
+        return new Bonus(pinCounts, SPARE_BONUS_COUNT - ONE, spare);
     }
 
-    public static Bonus ofStrike(KnockedPinCounts knockedPinCounts, Strike strike) {
-        return new Bonus(knockedPinCounts, STRIKE_BONUS_COUNT - ONE, strike);
+    public static Bonus ofStrike(PinCounts pinCounts, Strike strike) {
+        return new Bonus(pinCounts, STRIKE_BONUS_COUNT - ONE, strike);
     }
 
     @Override
     public State bowl(int pinCount) {
-        return new Bonus(knockedPinCounts.knockOut(pinCount), bonusCount - ONE, previous);
+        return new Bonus(pinCounts.knockOut(pinCount), bonusCount - ONE, previous);
     }
 
     @Override

@@ -14,7 +14,7 @@ public class Spare extends AbstractFinished {
 
     @Override
     public State bowl(int pinCount) {
-        return Bonus.ofSpare(knockedPinCounts.knockOut(pinCount), this);
+        return Bonus.ofSpare(pinCounts.knockOut(pinCount), this);
     }
 
     @Override

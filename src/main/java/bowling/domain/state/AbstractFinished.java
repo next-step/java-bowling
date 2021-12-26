@@ -1,7 +1,6 @@
 package bowling.domain.state;
 
 import bowling.domain.KnockedPinCount;
-import bowling.domain.KnockedPinCounts;
 import bowling.domain.PinCounts;
 
 import java.util.Collections;
@@ -11,7 +10,7 @@ public abstract class AbstractFinished implements State, Finished {
     protected static final int ZERO = 0;
     protected static final int ONE = 1;
 
-    protected final KnockedPinCounts knockedPinCounts;
+    protected final PinCounts pinCounts;
 
     protected AbstractFinished(int... pinCounts) {
         this(new PinCounts(pinCounts));
@@ -21,12 +20,12 @@ public abstract class AbstractFinished implements State, Finished {
         this(new PinCounts(knockedPinCounts));
     }
 
-    public AbstractFinished(KnockedPinCounts knockedPinCounts) {
-        this.knockedPinCounts = knockedPinCounts;
+    public AbstractFinished(PinCounts pinCounts) {
+        this.pinCounts = pinCounts;
     }
 
     @Override
     public List<KnockedPinCount> getValues() {
-        return Collections.unmodifiableList(knockedPinCounts.getValues());
+        return Collections.unmodifiableList(pinCounts.getValues());
     }
 }

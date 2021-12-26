@@ -12,7 +12,7 @@ public class Strike extends AbstractFinished {
 
     @Override
     public State bowl(int pinCount) {
-        return Bonus.ofStrike(knockedPinCounts.knockOut(pinCount), this);
+        return Bonus.ofStrike(pinCounts.knockOut(pinCount), this);
     }
 
     @Override
