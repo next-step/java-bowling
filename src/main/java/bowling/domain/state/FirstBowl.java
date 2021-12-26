@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.KnockedPinCount;
+import bowling.domain.Score;
 
 public class FirstBowl implements State, Running {
     private final KnockedPinCount pinCount;
@@ -33,5 +34,15 @@ public class FirstBowl implements State, Running {
     @Override
     public boolean hasBonus() {
         return false;
+    }
+
+    @Override
+    public Score makeScore() {
+        return new Score(pinCount.value(), 0);
+    }
+
+    @Override
+    public Score additionalCalculate(Score beforeScore) {
+        return beforeScore.bowl(pinCount.value());
     }
 }

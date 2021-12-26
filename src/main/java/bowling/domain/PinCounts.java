@@ -18,6 +18,12 @@ public class PinCounts implements KnockedPinCounts {
         }
     }
 
+    public PinCounts(int... pinCounts) {
+        this(Arrays.stream(pinCounts)
+                .mapToObj(KnockedPinCount::new)
+                .collect(Collectors.toList()));
+    }
+
     public PinCounts(KnockedPinCount... knockedPinCounts) {
         this.values = Arrays.stream(knockedPinCounts)
                 .collect(Collectors.toList());

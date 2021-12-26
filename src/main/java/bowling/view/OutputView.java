@@ -9,7 +9,6 @@ import java.util.stream.IntStream;
 
 public class OutputView {
     private static final String MAIN_BOARD_HEAD_MESSAGE = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-    private static final String MAIN_BOARD_EMPTY_MESSAGE = "|      |      |      |      |      |      |      |      |      |      |      |";
     private static final String SCORE_BOARD_NAME_TEMPLATE = "|  %-4s|";
     private static final String SCORE_BOARD_EMPTY_TEMPLATE = "|      |";
     private static final String SCORE_BOARD_MARK_TEMPLATE = "  %-4s|";
@@ -115,7 +114,60 @@ public class OutputView {
     }
 
     private static void printScore(BowlingGame bowlingGame) {
-        System.out.println(MAIN_BOARD_EMPTY_MESSAGE);
+        clearStringBuilder();
+        sb.append(String.format(SCORE_BOARD_EMPTY_TEMPLATE));
+        int prevScore = 0;
+        for (int index = ZERO; index < TEN; index++) {
+            String score = score(index, bowlingGame);
+            prevScore = sumScore(prevScore, score);
+        }
+        System.out.println(sb);
+    }
+
+    private static String score(int index, BowlingGame bowlingGame) {
+        if (index < bowlingGame.frames().size()) {
+            Frame frame = bowlingGame.frames().get(index);
+            return makeScore(frame);
+        }
+        return EMPTY;
+    }
+
+    private static int sumScore(int prevScore, String score) {
+        if (!score.isEmpty()) {
+            prevScore += Integer.parseInt(score);
+            sb.append(String.format(SCORE_BOARD_SCORE_TEMPLATE, prevScore));
+            return prevScore;
+        }
+        sb.append(String.format(SCORE_BOARD_MARK_TEMPLATE, score));
+        return prevScore;
+    }
+
+    private static String makeScore(Frame frame) {
+        if (frame.isFinalFrame()) {
+            return makeFinalScore(frame);
+        }
+        return makeNormalScore(frame);
+    }
+
+    private static String makeFinalScore(Frame frame) {
+        if (frame.isEnd()) {
+            return toScore(frame.getScore());
+        }
+        return EMPTY;
+    }
+
+    private static String toScore(Score score) {
+        if (score.canCalculateScore()) {
+            return EMPTY + score.getScore();
+        }
+        return EMPTY;
+    }
+
+    private static String makeNormalScore(Frame frame) {
+        if (frame.getState() instanceof Finished) {
+            return toScore(frame.getScore());
+        }
+        return EMPTY;
     }
 
     private static void clearStringBuilder() {

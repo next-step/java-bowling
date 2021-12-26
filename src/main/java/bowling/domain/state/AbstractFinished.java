@@ -4,10 +4,18 @@ import bowling.domain.KnockedPinCount;
 import bowling.domain.KnockedPinCounts;
 import bowling.domain.PinCounts;
 
+import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractFinished implements State, Finished {
+    protected static final int ZERO = 0;
+    protected static final int ONE = 1;
+
     protected final KnockedPinCounts knockedPinCounts;
+
+    protected AbstractFinished(int... pinCounts) {
+        this(new PinCounts(pinCounts));
+    }
 
     protected AbstractFinished(KnockedPinCount ... knockedPinCounts) {
         this(new PinCounts(knockedPinCounts));
@@ -19,6 +27,6 @@ public abstract class AbstractFinished implements State, Finished {
 
     @Override
     public List<KnockedPinCount> getValues() {
-        return knockedPinCounts.getValues();
+        return Collections.unmodifiableList(knockedPinCounts.getValues());
     }
 }

@@ -60,4 +60,25 @@ public class NormalFrame extends AbstractFrame {
     public State getState() {
         return state;
     }
+
+    @Override
+    public Score getScore() {
+        Score score = state.makeScore();
+
+        if (score.canCalculateScore() || next == null){
+            return score;
+        }
+
+        return next.additionalCalculate(score);
+    }
+
+    @Override
+    public Score additionalCalculate(Score beforeScore) {
+        Score score = state.additionalCalculate(beforeScore);
+        if (score.canCalculateScore() || next == null) {
+            return score;
+        }
+
+        return next.additionalCalculate(score);
+    }
 }

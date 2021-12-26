@@ -40,4 +40,14 @@ public class FinalFrame extends AbstractFrame {
     public State getState() {
         return state;
     }
+
+    @Override
+    public Score getScore() {
+        return state.makeScore();
+    }
+
+    @Override
+    public Score additionalCalculate(Score beforeScore) {
+        return state.additionalCalculate(beforeScore);
+    }
 }

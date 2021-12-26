@@ -21,4 +21,9 @@ public interface Frame {
 
     @ForUI
     State getState();
+
+    @ForUI
+    Score getScore();
+
+    Score additionalCalculate(Score score);
 }

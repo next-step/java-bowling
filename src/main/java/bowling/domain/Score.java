@@ -44,4 +44,22 @@ public class Score {
     public boolean canCalculateScore() {
         return left == 0;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Score score1 = (Score) o;
+
+        if (score != score1.score) return false;
+        return left == score1.left;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = score;
+        result = 31 * result + left;
+        return result;
+    }
 }
