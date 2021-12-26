@@ -55,6 +55,9 @@ https://www.bowlinggenius.com/
 * `Pins`
     * `Pins` 생성
         * 핀의 갯수는 0개에서 10개까지 허용
+* `ThrowingState`
+    * `RunningState` 한 프레임이 진행중인 볼링 투구 상태
+    * `EndedState` 한 프레임이 끝난 볼링 투구 상태
 
 * * *
 
