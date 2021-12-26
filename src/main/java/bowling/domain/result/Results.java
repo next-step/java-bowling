@@ -12,7 +12,7 @@ public class Results {
     private final List<Result> gameResults;
 
     public Results() {
-        gameResults = new ArrayList<Result>(RESULT_COUNT);
+        gameResults = new ArrayList<>(RESULT_COUNT);
         initGameResult(gameResults);
     }
 
