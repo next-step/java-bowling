@@ -57,10 +57,12 @@ https://www.bowlinggenius.com/
         * 핀의 갯수는 0개에서 10개까지 허용
 * `ThrowingState`
     * `RunningState` 한 프레임이 진행중인 볼링 투구 상태
+        * `Ready` 한 프레임에서 투구를 던지기 전 준비 상태
         * `FirstBowl` 한 프레임에서 첫 번째 투구를 던지는 상태
     * `EndedState` 한 프레임이 끝난 볼링 투구 상태
         * `Miss` 한 프레임에서 더 이상 핀을 맞추지 못한 상태
         * `Spare` 한 프레임에서 두 번째 투구에서 모든 핀을 맞춘 상태
+        * `Strike` 한 프레임에서 첫 번째 투구로 모든 핀을 맞춘 상태
 
 * * *
 
