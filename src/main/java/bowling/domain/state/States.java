@@ -11,7 +11,7 @@ public class States {
     private final List<State> states;
 
     public States(State state) {
-       this.states = new ArrayList<>();
+        this.states = new ArrayList<>();
         this.states.add(state);
     }
 
