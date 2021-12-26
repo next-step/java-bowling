@@ -15,6 +15,10 @@ public class States {
         this.states.add(state);
     }
 
+    public States(List<State> states) {
+        this.states = states;
+    }
+
     private State end() {
         return this.states.get(this.states.size() - 1);
     }
