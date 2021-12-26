@@ -22,7 +22,7 @@ public class Results {
         }
     }
 
-    public void set(Result gameResult) {
+    public void setGameResult(Result gameResult) {
         this.gameResults.set(gameResult.getFrameNo() - 1, gameResult);
     }
 
