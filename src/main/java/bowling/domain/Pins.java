@@ -19,7 +19,7 @@ public class Pins {
 
     private static void validateRange(int value) {
         if (value < MIN_PINS || value > MAX_PINS) {
-            throw new IllegalArgumentException(String.format("볼링 핀은 %d ~ %d 사이만 가능합니다.", MIN_PINS, MAX_PINS));
+            throw new IllegalArgumentException(String.format("볼링 핀은 %d <= x <= %d 사이만 가능합니다.", MIN_PINS, MAX_PINS));
         }
     }
 
