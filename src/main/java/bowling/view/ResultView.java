@@ -13,7 +13,7 @@ public class ResultView {
     private static final String THREE_SPACE = "   ";
     private static final String ZERO_STRING = "0";
     private static final String NAME_FORMAT = "|  %s |";
-    private static final String EMPTY_FRAME = "      ";
+    private static final String EMPTY_FRAME = "       ";
     private static final String ENTER = "\n";
     private static final int FINAL_FRAME = 10;
     private static final int FIRST_FRAME = 1;
