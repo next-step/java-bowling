@@ -17,6 +17,10 @@ public class Player {
         return new Player(name);
     }
 
+    public String getName() {
+        return name;
+    }
+
     private static void validateName(String name) {
         if (name == null) {
             throw new IllegalArgumentException("플레이어 이름이 null이 전달되었습니다.");

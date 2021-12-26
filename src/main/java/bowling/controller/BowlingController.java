@@ -4,7 +4,7 @@ import bowling.domain.BowlingGame;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
-public class BowlingController {
+public final class BowlingController {
 
     private BowlingController() {
     }

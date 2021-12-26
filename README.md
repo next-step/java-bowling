@@ -82,6 +82,8 @@ https://www.bowlinggenius.com/
 * `InputView`
     * `Player` 이름 입력 기능 구현
     * 투구 숫자 입력 기능 구현
+* `OutputView`
+    * 현재 볼링 점수판 출력 기능 구현
 
 * * *
 
