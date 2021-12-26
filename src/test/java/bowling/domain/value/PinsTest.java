@@ -36,7 +36,7 @@ public class PinsTest {
     }
 
     @Test
-    @DisplayName("핀을 0개 치면 스트라이크 인지 아닌지 검증")
+    @DisplayName("핀을 0개 치면 거터 인지 아닌지 검증")
     void isGutterTest() {
         Pins pins = new Pins(0);
 
