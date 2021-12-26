@@ -5,9 +5,9 @@ import bowling.domain.Pins;
 public interface Frame {
     Frame bowl(Pins pins);
 
-    boolean isEnd();
-
     int getIndex();
+
+    boolean isEnd();
 
     String symbol();
 }
