@@ -29,7 +29,7 @@ public class StateFactoryTest {
 
     @Test
     void createMissTest() {
-        assertThat(StateFactory.miss()).isInstanceOf(Miss.class);
+        assertThat(StateFactory.miss(Pin.of(0))).isInstanceOf(Miss.class);
     }
 
     @Test

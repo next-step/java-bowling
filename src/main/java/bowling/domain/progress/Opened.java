@@ -1,9 +1,9 @@
 package bowling.domain.progress;
 
 import bowling.domain.Pin;
-import bowling.domain.result.ResultState;
+import bowling.domain.result.status.PinResultState;
 
 public interface Opened {
 
-    ResultState pitch(Pin pin);
+    PinResultState pitch(Pin pin);
 }

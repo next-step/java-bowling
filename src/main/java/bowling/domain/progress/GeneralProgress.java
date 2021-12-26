@@ -3,6 +3,7 @@ package bowling.domain.progress;
 import bowling.domain.Pin;
 import bowling.domain.result.StateFactory;
 import bowling.domain.result.ResultState;
+import bowling.domain.result.status.PinResultState;
 import bowling.domain.result.status.Strike;
 import bowling.domain.result.status.HitNumber;
 
@@ -15,7 +16,7 @@ public class GeneralProgress implements Progress, Opened {
     }
 
     @Override
-    public ResultState pitch(Pin pin) {
+    public PinResultState pitch(Pin pin) {
         if (pin.isStrike()) {
             return resultByBeforeState(pin);
         }
@@ -33,7 +34,7 @@ public class GeneralProgress implements Progress, Opened {
         return StateFactory.number(pin);
     }
 
-    private ResultState resultByBeforeState(Pin pin) {
+    private PinResultState resultByBeforeState(Pin pin) {
         if (beforeState.isInstanceOf(Strike.class)) {
             return StateFactory.strike(pin);
         }

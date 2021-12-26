@@ -6,6 +6,7 @@ import bowling.domain.progress.ProgressFactory;
 import bowling.domain.result.status.BonusAbleState;
 import bowling.domain.result.ResultState;
 import bowling.domain.result.Results;
+import bowling.domain.result.status.PinResultState;
 import bowling.domain.result.status.Strike;
 import bowling.domain.result.status.NextAbleState;
 import java.util.List;
@@ -18,7 +19,7 @@ public class FinalFrame extends Frame {
 
     }
 
-    public FinalFrame(Progress progress, List<ResultState> results) {
+    public FinalFrame(Progress progress, List<PinResultState> results) {
         this(progress, new Results(results));
     }
 

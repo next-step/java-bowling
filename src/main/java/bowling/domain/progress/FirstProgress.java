@@ -2,12 +2,12 @@ package bowling.domain.progress;
 
 import bowling.domain.Pin;
 import bowling.domain.result.StateFactory;
-import bowling.domain.result.ResultState;
+import bowling.domain.result.status.PinResultState;
 
 public class FirstProgress implements Progress, Opened {
 
     @Override
-    public ResultState pitch(Pin pin) {
+    public PinResultState pitch(Pin pin) {
         if (pin.isStrike()) {
             return StateFactory.strike(pin);
         }

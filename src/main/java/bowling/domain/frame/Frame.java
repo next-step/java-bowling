@@ -41,11 +41,11 @@ public abstract class Frame {
             throw new BowlingProgressException();
         }
 
-        ResultState resultState = ((Opened) progress).pitch(pin);
+        PinResultState resultState = ((Opened) progress).pitch(pin);
 
         if (isMiss(resultState)) {
-            clearAndAddResultMiss();
-            return nextProgress(StateFactory.miss());
+            clearAndAddResultMiss(pin);
+            return nextProgress(StateFactory.miss(pin));
         }
 
         results.add(resultState);
@@ -53,12 +53,12 @@ public abstract class Frame {
         return nextProgress(resultState);
     }
 
+    protected int sumHitPinsCount() {
+        return results.sumAll();
+    }
+
     protected int sumHitPinsCount(Predicate<? super ResultState> predicate) {
-        return results.getResults().stream()
-            .filter(result -> result.isInstanceOf(PinResultState.class))
-            .filter(predicate)
-            .mapToInt(result -> ((PinResultState) result).getHitPinCount())
-            .sum();
+        return results.sum(predicate);
     }
 
     protected boolean isMiss(ResultState resultState) {
@@ -74,13 +74,9 @@ public abstract class Frame {
             .allMatch(result -> result.isInstanceOf(Gutter.class));
     }
 
-    private void clearAndAddResultMiss() {
+    private void clearAndAddResultMiss(Pin pin) {
         results.clear();
-        results.add(StateFactory.miss());
-    }
-
-    protected int sumHitPinsCount() {
-        return sumHitPinsCount(result -> true);
+        results.add(StateFactory.miss(pin));
     }
 
     protected abstract Progress nextProgress(ResultState resultState);
