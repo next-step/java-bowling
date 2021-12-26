@@ -22,7 +22,11 @@ public class Player {
     }
 
     public Frame play(int index, Pin pin) {
-        return frames.bowl(index, pin);
+        return play(Round.of(index), pin);
+    }
+
+    public Frame play(Round round, Pin pin) {
+        return frames.bowl(round, pin);
     }
 
     public String getName() {

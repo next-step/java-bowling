@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pin;
+import bowling.domain.Round;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,13 +40,18 @@ public class Frames {
     }
 
     public Frame bowl(int index, Pin pin) {
-        Frame bowlAfterFrame = get(index).bowl(pin);
-        frames.set(index, bowlAfterFrame);
+        return bowl(Round.of(index), pin);
+    }
+
+    public Frame bowl(Round round, Pin pin) {
+        Frame bowlAfterFrame = get(round).bowl(pin);
+
+        frames.set(round.getIndex(), bowlAfterFrame);
 
         return bowlAfterFrame;
     }
 
-    public Frame get(int index) {
-        return this.frames.get(index);
+    public Frame get(Round round) {
+        return this.frames.get(round.getIndex());
     }
 }

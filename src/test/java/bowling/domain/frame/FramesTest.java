@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import bowling.domain.Pin;
+import bowling.domain.Round;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -47,7 +48,7 @@ class FramesTest {
         Frames frames = Frames.create();
         Frame bowl = frames.bowl(0, Pin.of(10));
 
-        assertThat(bowl).isEqualTo(frames.get(0));
+        assertThat(bowl).isEqualTo(frames.get(Round.of(0)));
 
     }
 }
