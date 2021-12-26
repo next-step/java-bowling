@@ -4,9 +4,13 @@ import java.util.Objects;
 
 public class BowlingPins {
 
+    public static final String ERROR_PINS_VALUE_MSG = "볼링 핀은 1-10 까지 입니다";
     private final int count;
 
     public BowlingPins(int count) {
+        if (!(1 <= count && count <= 10)) {
+            throw new IllegalArgumentException(ERROR_PINS_VALUE_MSG);
+        }
         this.count = count;
     }
 
