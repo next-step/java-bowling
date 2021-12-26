@@ -37,7 +37,6 @@ public class Frames {
         for (int round = ONE; round < MAX_OF_ROUND; round++) {
             Frame nextFrame = frames.get(round);
             frame.setNext(nextFrame);
-
             frame = nextFrame;
         }
     }
@@ -79,8 +78,13 @@ public class Frames {
 
         Frame updateFrame = originalFrame.bowl(pin);
 
+        if (updateFrame instanceof GeneralFrame) {
+            updateFrame.setNext(getNextFrame(originalFrame));
+        }
+
         if (round.isStartRound()) {
-            return updateStartFrame(originalFrame, updateFrame);
+            this.frame = updateFrame;
+            return updateFrame;
         }
 
         getBeforeFrame(round).setNext(updateFrame);
@@ -96,11 +100,6 @@ public class Frames {
         return findFrame;
     }
 
-    private Frame updateStartFrame(Frame originalFrame, Frame updateFrame) {
-        updateFrame.setNext(getNextFrame(originalFrame));
-        this.frame = updateFrame;
-        return updateFrame;
-    }
 
     private Frame getNextFrame(Frame targetFrame) {
         return targetFrame.getNext().orElseThrow(FrameNotFoundException::new);

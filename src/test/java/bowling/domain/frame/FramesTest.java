@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import bowling.domain.Pin;
@@ -22,6 +23,22 @@ class FramesTest {
             .collect(Collectors.toList());
 
         assertThatIllegalArgumentException().isThrownBy(() -> new Frames(frames));
+    }
+
+    @Test
+    @DisplayName("게임이 정상적으로 진행되어야 한다.")
+    void bowlTest() {
+        Frames frames = Frames.create();
+
+        assertThatCode(() -> {
+            for (int round = 0; round < 10; round++) {
+                Frame frame = frames.bowl(round, Pin.of(10));
+
+                while (frame.isOpened()) {
+                    frame = frames.bowl(round, Pin.of(10));
+                }
+            }
+        }).doesNotThrowAnyException();
     }
 
     @Test
