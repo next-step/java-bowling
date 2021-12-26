@@ -7,7 +7,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.*;
 
-class PlayerTest {
+public class PlayerTest {
+    public static Player PLAYER_AYM = Player.create("AYM");
 
     @DisplayName("플레이어 이름이 영어 3자일 경우 생성 검증")
     @ParameterizedTest

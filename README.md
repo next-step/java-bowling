@@ -75,6 +75,8 @@ https://www.bowlinggenius.com/
         * 추가 투구 기회는 앞 투구 2회에서 spare 또는 strike가 있어야한다.
 * `Frames`
     * 볼링에 필요한 10프레임을 구성하기 위한 일급컬렉션 구현
+* `BowlingGame`
+    * `Player`와 `Frames`를 이용한 볼링 게임 구현
 
 * * *
 
