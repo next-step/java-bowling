@@ -2,7 +2,7 @@ package bowling.view;
 
 import bowling.domain.Bowling;
 import bowling.domain.Frame;
-import bowling.domain.Index;
+import bowling.domain.FrameIndex;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -39,7 +39,7 @@ public final class ResultView {
 			.map(frame -> String.format(FRAME_RESULT, frame.symbol()))
 			.collect(joining());
 
-		String emptyBody = IntStream.rangeClosed(1, Index.MAX_INDEX - frames.size())
+		String emptyBody = IntStream.rangeClosed(1, FrameIndex.MAX_INDEX - frames.size())
 			.mapToObj(i -> FRAME_EMPTY)
 			.collect(joining());
 

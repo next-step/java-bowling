@@ -22,7 +22,7 @@ class FinalFrameTest {
     @DisplayName("FinalFrame의 index는 Index의 Max다.")
     @Test
     void index() {
-        assertThat(frame.getFrameIndex()).isEqualTo(Index.MAX_INDEX);
+        assertThat(frame.getFrameIndex()).isEqualTo(FrameIndex.MAX_INDEX);
     }
 
     @DisplayName("FinalFrame은 최소 2번 투구한다.")
@@ -39,6 +39,7 @@ class FinalFrameTest {
             frame.bowl(Pin.of(pinNumber));
         }
         assertThat(frame.symbol()).isEqualTo(symbol);
+        assertThat(frame.isEnd()).isTrue();
     }
 
     @DisplayName("FinalFrame은 첫 번째에 스트라이크이거나, 두 번째에서 스페어 처리한 경우 한 번 더 투구할 수 있다.")
@@ -56,5 +57,7 @@ class FinalFrameTest {
             frame.bowl(Pin.of(pinNumber));
         }
         assertThat(frame.symbol()).isEqualTo(symbol);
+        assertThat(frame.isEnd()).isTrue();
+
     }
 }

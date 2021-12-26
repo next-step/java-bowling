@@ -3,27 +3,27 @@ package bowling.domain;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
-    private final Index index;
+    private final FrameIndex index;
     private Pin first;
     private Pin second;
     private State state;
 
-    private NormalFrame(Index index, Pin pin, State state) {
+    private NormalFrame(FrameIndex index, Pin pin, State state) {
         this.index = index;
         this.first = pin;
         this.state = state;
     }
 
-    public static NormalFrame of(Index index, Pin pin, State state) {
+    public static NormalFrame of(FrameIndex index, Pin pin, State state) {
         return new NormalFrame(index, pin, state);
     }
 
-    public static NormalFrame of(Index index) {
+    public static NormalFrame of(FrameIndex index) {
         return of(index, new Pin(0), State.READY);
     }
 
     public static NormalFrame init() {
-        return of(Index.first());
+        return of(FrameIndex.first());
     }
 
     @Override
@@ -50,7 +50,7 @@ public class NormalFrame implements Frame {
     }
 
     public int getFrameIndex() {
-        return index.getValue();
+        return index.getIndex();
     }
 
     @Override

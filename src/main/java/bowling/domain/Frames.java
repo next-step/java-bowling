@@ -7,25 +7,24 @@ import java.util.List;
 public class Frames {
     private final List<Frame> frames;
 
-    private Frames(List<Frame> values) {
-        this.frames = values;
+    private Frames(List<Frame> frames) {
+        this.frames = frames;
     }
 
     public static Frames init() {
         return new Frames(new ArrayList<>(Collections.singletonList(NormalFrame.init())));
     }
 
-    public void bowl(Pin pins) {
-        Frame frame = getLastFrame();
-        Frame result = frame.bowl(pins);
-
-        if (isFrameCreated(frame, result)) {
-            frames.add(result);
+    public void bowl(Pin pin) {
+        Frame last = getLastFrame();
+        Frame next = last.bowl(pin);
+        if (isFrameCreated(last, next)) {
+            frames.add(next);
         }
     }
 
-    private boolean isFrameCreated(Frame lastFrame, Frame resultFrame) {
-        return lastFrame.isEnd() && !resultFrame.isEnd();
+    private boolean isFrameCreated(Frame first, Frame second) {
+        return first.getFrameIndex() != second.getFrameIndex();
     }
 
     private Frame getLastFrame() {
@@ -37,7 +36,7 @@ public class Frames {
     }
 
     public boolean hasNext() {
-        return !(getLastFrame().isEnd() && frames.size() == Index.MAX_INDEX);
+        return !(getLastFrame().isEnd() && frames.size() == FrameIndex.MAX_INDEX);
     }
 
     public List<Frame> getFrames() {

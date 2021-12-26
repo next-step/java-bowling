@@ -22,7 +22,7 @@ class NormalFrameTest {
     @DisplayName("bowl 호출 후 종료 상태이면 새로운 Frame을 생성하여 추가한다.")
     @Test
     void frameStateStrikeOrSpareOrMissOrGutter() {
-        assertThat(frame.bowl(Pin.of(10))).isEqualTo(NormalFrame.of(Index.of(2)));
+        assertThat(frame.bowl(Pin.of(10))).isEqualTo(NormalFrame.of(FrameIndex.of(2)));
     }
 
     @DisplayName("bowl 호출 후 종료 상태가 아니면 새로운 Frame을 생성하지 않고 현재 Frame을 반환한다.")
@@ -34,7 +34,7 @@ class NormalFrameTest {
     @DisplayName("bowl 호출 후 다음 index가 마지막인 경우 FinalFrame을 추가하고 반환한다.")
     @Test
     void finalFrame() {
-        for (int i = 0; i < Index.MAX_INDEX; i++) {
+        for (int i = 0; i < FrameIndex.MAX_INDEX; i++) {
             frame = frame.bowl(Pin.of(10));
         }
         assertThat(frame).isInstanceOf(FinalFrame.class);

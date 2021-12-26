@@ -29,7 +29,7 @@ public class FinalFrame implements Frame {
         State last = states.getLast();
 
         if (last.isEnd()) {
-            addNewStatus(pin);
+            addNewState(pin);
             return this;
         }
 
@@ -37,7 +37,7 @@ public class FinalFrame implements Frame {
         return this;
     }
 
-    private void addNewStatus(Pin pin) {
+    private void addNewState(Pin pin) {
         State ready = State.READY;
         states.add(ready.bowl(Pin.first(), pin));
         pins.add(pin);
@@ -67,7 +67,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public int getFrameIndex() {
-        return Index.MAX_INDEX;
+        return FrameIndex.MAX_INDEX;
     }
 
     @Override
