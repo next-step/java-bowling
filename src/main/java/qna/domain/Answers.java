@@ -7,29 +7,19 @@ import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Embeddable
 public class Answers {
 
-
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private final List<Answer> answers;
+    private final List<Answer> answers = new ArrayList<>();
 
     public Answers() {
-        answers = Collections.emptyList();
-    }
-
-    public Answers(Answer answer) {
-        this.answers = Collections.singletonList(answer);
-    }
-
-    public Answers(List<Answer> answers) {
-        this.answers = answers;
     }
 
     public DeleteHistories delete(User loginUser) throws CannotDeleteException {
