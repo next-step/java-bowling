@@ -3,8 +3,8 @@ package bowling.domain;
 import java.util.Objects;
 
 public class Pins {
-    static final int MIN_PINS = 0;
-    static final int MAX_PINS = 10;
+    public static final int MIN_PINS = 0;
+    public static final int MAX_PINS = 10;
 
     private final int value;
 
