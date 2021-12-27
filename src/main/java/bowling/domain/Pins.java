@@ -4,12 +4,25 @@ public class Pins {
 
     private static final int MINIMUM_PINS = 0;
     private static final int MAXIMUM_PINS = 10;
+    private static final Pins DEFAULT_PINS = new Pins(MINIMUM_PINS);
 
     private final int pins;
+
+	public Pins() {
+		this(MINIMUM_PINS);
+	}
 
     public Pins(int pins) {
         valid(pins);
         this.pins = pins;
+    }
+
+    public static Pins defaultPins() {
+        return DEFAULT_PINS;
+    }
+
+    public boolean isMaxPins() {
+        return pins == MAXIMUM_PINS;
     }
 
     private void valid(int pins) {
