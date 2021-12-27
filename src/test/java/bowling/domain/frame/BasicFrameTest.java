@@ -25,6 +25,17 @@ class BasicFrameTest {
         );
     }
 
+    @DisplayName("2번 투구를 하고 난 후, 다음 프레임 변경 확인")
+    @Test
+    void bowlTwoPitching() {
+        // given
+        BasicFrame basicFrame = BasicFrame.initialize();
+        // when
+        Frame frameAfterTwoPitching = basicFrame.bowl(PinsTest.FOUR).bowl(PinsTest.FIVE);
+        // then
+        assertThat(frameAfterTwoPitching.getIndex()).isEqualTo(2);
+    }
+
     @DisplayName("strike 이후에 다음 프레임인지 여부 확인")
     @Test
     void bowlStrike() {
@@ -34,18 +45,18 @@ class BasicFrameTest {
         assertThat(basicFrame.bowl(PinsTest.TEN)).isEqualTo(BasicFrame.create(FrameIndex.create(2)));
     }
 
-    @DisplayName("첫 투구 후 strike가 아닌 경우 현재 라운드인지 여부 확인")
+    @DisplayName("첫 투구 후 strike가 아닌 경우 현재 프레임인지 여부 확인")
     @Test
-    void bowlFirstBowl() {
+    void bowlFirst() {
         // given
         BasicFrame basicFrame = BasicFrame.initialize();
         // when & then
         assertThat(basicFrame.bowl(Pins.create(5))).isEqualTo(basicFrame);
     }
 
-    @DisplayName("마지막 전 라운드인 경우, 다음 라운드로 넘어가는지 여부 확인")
+    @DisplayName("마지막 전 프레임인 경우, 다음 프레임로 넘어가는지 여부 확인")
     @Test
-    void bowlLastFrame() {
+    void bowlSecondBeforeLastFrame() {
         // given
         BasicFrame basicFrame = BasicFrame.create(FrameIndex.create(9), Ready.create());
         // when & then
