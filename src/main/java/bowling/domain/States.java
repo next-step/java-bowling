@@ -1,20 +1,25 @@
 package bowling.domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.joining;
 
 public class States {
-    private final LinkedList<State> states;
+    private final List<State> states;
 
     private States() {
-        states = new LinkedList<>(Collections.singletonList(State.READY));
+        states = new ArrayList<>(Collections.singletonList(State.READY));
     }
 
     public static States init() {
         return new States();
+    }
+
+    private int getLastIndex() {
+        return states.size() - 1;
     }
 
     public void add(State state) {
@@ -22,7 +27,7 @@ public class States {
     }
 
     public State getLast() {
-        return states.getLast();
+        return states.get(getLastIndex());
     }
 
     public String symbol(Pins pins) {
@@ -32,7 +37,7 @@ public class States {
     }
 
     public void removeLast() {
-        states.removeLast();
+        states.remove(getLastIndex());
     }
 
 }

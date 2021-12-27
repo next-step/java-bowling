@@ -1,14 +1,13 @@
 package bowling.domain;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Pins {
-    private static final int MIN_SIZE = 2;
-
-    private final LinkedList<Pin> pins;
+    private final List<Pin> pins;
 
     private Pins() {
-        pins = new LinkedList<>();
+        pins = new ArrayList<>();
     }
 
     public static Pins init() {
@@ -19,15 +18,12 @@ public class Pins {
         pins.add(pin);
     }
 
-    public Pin getBeforeLast() {
-        if (pins.size() < MIN_SIZE) {
-            return pins.getLast();
-        }
-        return pins.get(pins.size() - 2);
+    private int getLastIndex() {
+        return pins.size() - 1;
     }
 
     public Pin getLast() {
-        return pins.getLast();
+        return pins.get(getLastIndex());
     }
 
     public int total() {
@@ -35,8 +31,8 @@ public class Pins {
     }
 
     public Pin get(int index) {
-        if (index > pins.size() - 1) {
-            return pins.getLast();
+        if (index > getLastIndex()) {
+            return getLast();
         }
         return pins.get(index);
     }
