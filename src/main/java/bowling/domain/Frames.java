@@ -36,7 +36,7 @@ public class Frames {
     }
 
     public boolean hasNext() {
-        return !(getLastFrame().isEnd() && frames.size() == FrameIndex.MAX_INDEX);
+        return !(getLastFrame().isEnd() && frames.size() == FrameIndex.MAX);
     }
 
     public List<Frame> getFrames() {

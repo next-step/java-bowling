@@ -12,7 +12,7 @@ class IndexTest {
     void max() {
         assertAll(
                 () -> assertThat(FrameIndex.first().max()).isFalse(),
-                () -> assertThat(FrameIndex.of(FrameIndex.MAX_INDEX).max()).isTrue()
+                () -> assertThat(FrameIndex.of(FrameIndex.MAX).max()).isTrue()
         );
     }
 }

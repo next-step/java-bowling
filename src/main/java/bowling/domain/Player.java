@@ -3,6 +3,7 @@ package bowling.domain;
 import java.util.Objects;
 
 public class Player {
+    private static final int NAME_LENGTH = 3;
     private final String name;
 
     public Player(String name) {
@@ -11,8 +12,8 @@ public class Player {
     }
 
     private void checkValidation(String name) {
-        if (name == null || name.length() != 3) {
-            throw new IllegalArgumentException("플레이어 이름 길이는 3입니다.");
+        if (name == null || name.length() != NAME_LENGTH) {
+            throw new IllegalArgumentException("플레이어 이름 길이는 " + NAME_LENGTH + "입니다.");
         }
     }
 

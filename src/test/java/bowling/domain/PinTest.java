@@ -16,7 +16,6 @@ class PinTest {
         int expected = 10;
         Pin pin = Pin.of(expected);
         assertThat(pin.getFallenPinCount()).isEqualTo(expected);
-        assertThat(pin).isEqualTo(new Pin(expected));
     }
 
     @DisplayName("Pin 입력 가능 범위가 아닐 경우 예외 발생")

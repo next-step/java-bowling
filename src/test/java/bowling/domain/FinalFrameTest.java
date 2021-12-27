@@ -22,7 +22,7 @@ class FinalFrameTest {
     @DisplayName("FinalFrame의 index는 Index의 Max다.")
     @Test
     void index() {
-        assertThat(frame.getFrameIndex()).isEqualTo(FrameIndex.MAX_INDEX);
+        assertThat(frame.getFrameIndex()).isEqualTo(FrameIndex.MAX);
     }
 
     @DisplayName("FinalFrame은 최소 2번 투구한다.")
@@ -30,7 +30,7 @@ class FinalFrameTest {
     @CsvSource(value = {
             "5, 4, 5|4",
             "5, 0, 5|-",
-            "0, 0, -",
+            "0, 0, -|-",
             "0, 3, -|3"
     })
     void twoBowls(int bowl1, int bowl2, String symbol) {

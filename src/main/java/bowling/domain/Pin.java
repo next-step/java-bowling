@@ -8,7 +8,7 @@ public class Pin {
 
     private final int fallenPinCount;
 
-    public Pin(int fallenPinCount) {
+    private Pin(int fallenPinCount) {
         validateRange(fallenPinCount);
         this.fallenPinCount = fallenPinCount;
     }

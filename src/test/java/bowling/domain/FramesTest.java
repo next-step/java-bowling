@@ -17,8 +17,8 @@ class FramesTest {
     @DisplayName("Frames 초기화")
     @Test
     void init() {
-        assertThat(frames.getLastFrameIndex()).isEqualTo(FrameIndex.MIN_INDEX);
-        assertThat(frames.getFrames().size()).isEqualTo(FrameIndex.MIN_INDEX);
+        assertThat(frames.getLastFrameIndex()).isEqualTo(FrameIndex.MIN);
+        assertThat(frames.getFrames().size()).isEqualTo(FrameIndex.MIN);
     }
 
     @DisplayName("프레임이 종료 상태가 아니면 새로운 프레임이 추가되지 않는다")
@@ -27,7 +27,7 @@ class FramesTest {
         // when
         frames.bowl(Pin.of(5));
         // then
-        assertThat(frames.getFrames()).hasSize(FrameIndex.MIN_INDEX);
+        assertThat(frames.getFrames()).hasSize(FrameIndex.MIN);
     }
 
     @DisplayName("프레임이 종료 상태로 변경되면 새로운 프레임이 추가된다")
@@ -37,7 +37,7 @@ class FramesTest {
         frames.bowl(Pin.of(10));
 
         // then
-        assertThat(frames.getFrames()).hasSize(FrameIndex.MIN_INDEX + 1);
+        assertThat(frames.getFrames()).hasSize(FrameIndex.MIN + 1);
     }
 
     @DisplayName("프레임이면서 종료 상태가 아니면 다음이 존재한다")

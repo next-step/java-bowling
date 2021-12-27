@@ -21,6 +21,6 @@ public final class InputView {
 	public static Pin fallenPins(int frameIndex) {
 		System.out.println(frameIndex + "프레임 투구 : ");
 		int pins = SCANNER.nextInt();
-		return new Pin(pins);
+		return Pin.of(pins);
 	}
 }

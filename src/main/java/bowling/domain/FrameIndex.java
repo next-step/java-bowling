@@ -3,8 +3,8 @@ package bowling.domain;
 import java.util.Objects;
 
 public class FrameIndex {
-    public static final int MIN_INDEX = 1;
-    public static final int MAX_INDEX = 10;
+    public static final int MIN = 1;
+    public static final int MAX = 10;
 
     private final int index;
 
@@ -17,7 +17,7 @@ public class FrameIndex {
     }
 
     public static FrameIndex first() {
-        return new FrameIndex(MIN_INDEX);
+        return new FrameIndex(MIN);
     }
 
     public FrameIndex next() {
@@ -30,7 +30,7 @@ public class FrameIndex {
     }
 
     public boolean max() {
-        return index == MAX_INDEX;
+        return index == MAX;
     }
 
     @Override

@@ -34,7 +34,7 @@ class NormalFrameTest {
     @DisplayName("bowl 호출 후 다음 index가 마지막인 경우 FinalFrame을 추가하고 반환한다.")
     @Test
     void finalFrame() {
-        for (int i = 0; i < FrameIndex.MAX_INDEX; i++) {
+        for (int i = 0; i < FrameIndex.MAX; i++) {
             frame = frame.bowl(Pin.of(10));
         }
         assertThat(frame).isInstanceOf(FinalFrame.class);
@@ -53,7 +53,7 @@ class NormalFrameTest {
     @CsvSource(value = {
             "5, 4, 5|4",
             "5, 0, 5|-",
-            "0, 0, -",
+            "0, 0, -|-",
             "0, 3, -|3",
             "8, 2, 8|/",
             "0, 10, -|/"

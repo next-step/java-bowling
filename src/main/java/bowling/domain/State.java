@@ -1,12 +1,11 @@
 package bowling.domain;
 
-import static bowling.domain.Pin.MAX_PIN_COUNT;
-import static bowling.domain.Pin.MIN_PIN_COUNT;
+import static bowling.domain.Pin.*;
 
 public enum State {
     STRIKE("X",true) {
-        public String symbol(Pin first, Pin second) {
-            return this.getSymbol();
+        public String symbol(Pin pin) {
+            return pin.symbol();
         }
         public State bowl(Pin first, Pin second) {
             if(second.isStrike()) {
@@ -16,16 +15,16 @@ public enum State {
         }
     },
     SPARE("/",true) {
-        public String symbol(Pin first, Pin second) {
-            return convertValue(first) + "|/";
+        public String symbol(Pin pin) {
+            return this.getSymbol();
         }
         public State bowl(Pin first, Pin second) {
             return SPARE;
         }
     },
     MISS("",true) {
-        public String symbol(Pin first, Pin second) {
-            return convertValue(first) + "|" + convertValue(second);
+        public String symbol(Pin pin) {
+            return pin.symbol();
         }
         public State bowl(Pin first, Pin second) {
             if(first.isGutter() && second.isGutter()) {
@@ -35,8 +34,8 @@ public enum State {
         }
     },
     GUTTER("-",true) {
-        public String symbol(Pin first, Pin second) {
-            return this.getSymbol();
+        public String symbol(Pin pin) {
+            return pin.symbol();
         }
         public State bowl(Pin first, Pin second) {
             if (!first.isGutter() || !second.isGutter()) {
@@ -46,11 +45,8 @@ public enum State {
         }
     },
     FIRST("",false) {
-        public String symbol(Pin first, Pin second) {
-            if(first.isGutter()) {
-                return "-";
-            }
-            return String.valueOf(second.getFallenPinCount());
+        public String symbol(Pin pin) {
+            return pin.symbol();
         }
         public State bowl(Pin first, Pin second) {
             if (first.isSpare(second)) {
@@ -63,11 +59,11 @@ public enum State {
         }
     },
     READY("",false) {
-        public String symbol(Pin first, Pin second) {
+        public String symbol(Pin pin) {
             return "";
         }
-        public State bowl(Pin first, Pin second) {
-            if (second.isStrike()) {
+        public State bowl(Pin meaningLess, Pin pin) {
+            if (pin.isStrike()) {
                 return STRIKE;
             }
             return FIRST;
@@ -79,7 +75,7 @@ public enum State {
     private final boolean isEnd;
 
     public abstract State bowl(Pin first, Pin second);
-    public abstract String symbol(Pin first, Pin second);
+    public abstract String symbol(Pin pin);
 
     State(String symbol, boolean isEnd) {
         this.symbol = symbol;
@@ -92,13 +88,6 @@ public enum State {
 
     public boolean isEnd() {
         return this.isEnd;
-    }
-
-    String convertValue(Pin pin) {
-        if (pin.isGutter()) {
-            return "-";
-        }
-        return String.valueOf(pin.getFallenPinCount());
     }
 
     public static String of(int pin) {
