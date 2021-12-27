@@ -4,7 +4,7 @@ import bowling.domain.Pins;
 
 public class Miss extends EndedState {
     private static final String FRAME_STATE_FORMAT = "%s|%s";
-    private static final String GITTER_SYMBOL = "-";
+    private static final String GUTTER_SYMBOL = "-";
 
     private final Pins first;
     private final Pins second;
@@ -25,7 +25,7 @@ public class Miss extends EndedState {
 
     private String secondValue() {
         if (second.isGutter()) {
-            return GITTER_SYMBOL;
+            return GUTTER_SYMBOL;
         }
         return String.valueOf(second.getValue());
     }
