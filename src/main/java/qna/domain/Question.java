@@ -1,13 +1,22 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
-
-import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.transaction.Transactional;
+import qna.CannotDeleteException;
 
 @Entity
 public class Question extends AbstractEntity {
+
+    private static final String MESSAGE_NO_PERMISSION_TO_DELETE = "질문을 삭제할 권한이 없습니다.";
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -18,10 +27,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -37,6 +44,25 @@ public class Question extends AbstractEntity {
         super(id);
         this.title = title;
         this.contents = contents;
+    }
+
+    @Transactional
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        validateDeleteConditions(loginUser);
+        setDeleted(true);
+
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), loginUser, LocalDateTime.now()));
+        deleteHistories.addAll(answers.deleteAllAfterDeletingQuestion(loginUser));
+
+        return deleteHistories;
+    }
+
+    private void validateDeleteConditions(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(MESSAGE_NO_PERMISSION_TO_DELETE);
+        }
     }
 
     public String getTitle() {
@@ -84,7 +110,7 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
     }
 

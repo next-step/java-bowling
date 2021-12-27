@@ -6,4 +6,8 @@ public class CannotDeleteException extends Exception {
     public CannotDeleteException(String message) {
         super(message);
     }
+
+    public CannotDeleteException(String message, Throwable throwable) {
+        super(message, throwable);
+    }
 }
