@@ -74,7 +74,7 @@ class LastFrameTest {
         verify(Arrays.asList(10, 10, 10), true, 3, "X|X|X");
     }
 
-    @DisplayName("LastFram 생성")
+    @DisplayName("LastFrame 생성")
     @Test
     void initialize() {
         // when & then
