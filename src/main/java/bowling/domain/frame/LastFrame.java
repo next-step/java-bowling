@@ -30,12 +30,12 @@ public class LastFrame implements Frame {
     @Override
     public Frame bowl(Pins pins) {
         count++;
-        ThrowingState last = recentState();
-        if (last.isEnd()) {
+        ThrowingState recent = recentState();
+        if (recent.isEnd()) {
             addNewStatus(pins);
             return this;
         }
-        changeLastStatus(pins, last);
+        changeRecentStatus(pins, recent);
         return this;
     }
 
@@ -72,8 +72,8 @@ public class LastFrame implements Frame {
         states.add(ready.bowl(pins));
     }
 
-    private void changeLastStatus(Pins pins, ThrowingState last) {
+    private void changeRecentStatus(Pins pins, ThrowingState recent) {
         states.removeLast();
-        states.add(last.bowl(pins));
+        states.add(recent.bowl(pins));
     }
 }

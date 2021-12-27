@@ -20,19 +20,19 @@ public class Frames {
     }
 
     public void bowl(Pins pins) {
-        Frame currentFrame = currentFrame();
-        Frame newFrame = currentFrame.bowl(pins);
-        if (isPossibleToCreate(currentFrame, newFrame)) {
-            frames.add(newFrame);
+        Frame recentFrame = recentFrame();
+        Frame resultFrame = recentFrame.bowl(pins);
+        if (isPossibleToCreate(recentFrame, resultFrame)) {
+            frames.add(resultFrame);
         }
     }
 
     public int lastFrameIndex() {
-        return currentFrame().getIndex();
+        return recentFrame().getIndex();
     }
 
     public boolean hasNextPitching() {
-        return !(currentFrame().isEnd() && hasLastFrame());
+        return !(recentFrame().isEnd() && hasLastFrame());
     }
 
     public List<Frame> getFrames() {
@@ -48,11 +48,11 @@ public class Frames {
         }
     }
 
-    private boolean isPossibleToCreate(Frame lastFrame, Frame resultFrame) {
-        return lastFrame.isEnd() && !resultFrame.isEnd();
+    private boolean isPossibleToCreate(Frame recentFrame, Frame resultFrame) {
+        return recentFrame.isEnd() && !resultFrame.isEnd();
     }
 
-    private Frame currentFrame() {
+    private Frame recentFrame() {
         return frames.get(frames.size() - 1);
     }
 
