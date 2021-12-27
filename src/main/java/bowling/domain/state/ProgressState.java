@@ -6,4 +6,9 @@ public abstract class ProgressState implements State{
     public boolean isFinished() {
         return false;
     }
+
+    @Override
+    public boolean isGameOver() {
+        return false;
+    }
 }

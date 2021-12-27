@@ -2,35 +2,42 @@ package bowling.domain.frame;
 
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
-import bowling.domain.state.States;
 import bowling.domain.value.Pins;
 
 public class NormalFrame extends Frame{
 
-    private static final int FINAL_FRAME_NO = 10;
+    private State state;
 
-    public NormalFrame(int frameNo) {
+    public NormalFrame() {
 
-        this.frameNo = frameNo;
-        states = new States(new Ready());
+        this.state = new Ready();
+    }
+
+    public static Frame create() {
+        return new NormalFrame();
     }
 
     @Override
-    public Frame bowl(int knockedDownPin) {
-
-        State state = states.bowl(new Pins(knockedDownPin));
-        states.add(state);
-        if(!isFinished()) {
-            return this;
-        }
-        return nextFrame();
+    public boolean isFrameOver() {
+        return state.isFinished();
     }
 
-    private Frame nextFrame() {
-        int nextFrameNo = this.frameNo + 1;
-        if (nextFrameNo == FINAL_FRAME_NO) {
-            return new FinalFrame(nextFrameNo);
-        }
-        return new NormalFrame(nextFrameNo);
+    @Override
+    public boolean isGameOver() {
+        return false;
+    }
+
+    @Override
+    public void bowl(Pins pins) {
+        this.state = state.bowl(pins);
+    }
+
+    @Override
+    public String getMark() {
+        return state.getMark();
+    }
+
+    public State getState() {
+        return state;
     }
 }
