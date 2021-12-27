@@ -6,8 +6,6 @@ import bowling.domain.value.Pins;
 
 public class BowlingResult {
 
-    private static final int FINAL_FRAME_NO = 10;
-
     private final Frames frames;
 
     private BowlingResult(Frames frames) {
@@ -20,10 +18,6 @@ public class BowlingResult {
 
     public void bowl(Pins pins) {
         frames.bowl(pins);
-    }
-
-    public boolean isFrameOver(int playFrameNumber) {
-        return currentFrameNumber() != playFrameNumber;
     }
 
     public int currentFrameNumber() {
