@@ -20,19 +20,19 @@ public class Frames {
     }
 
     public void bowl(Pins pins) {
-        Frame lastFrame = lastFrame();
-        Frame resultFrame = lastFrame.bowl(pins);
-        if (isPossibleToCreate(lastFrame, resultFrame)) {
-            frames.add(resultFrame);
+        Frame currentFrame = currentFrame();
+        Frame newFrame = currentFrame.bowl(pins);
+        if (isPossibleToCreate(currentFrame, newFrame)) {
+            frames.add(newFrame);
         }
     }
 
     public int lastFrameIndex() {
-        return lastFrame().getIndex();
+        return currentFrame().getIndex();
     }
 
     public boolean hasNext() {
-        return !(lastFrame().isEnd() && hasLastFrame());
+        return !(currentFrame().isEnd() && hasLastFrame());
     }
 
     public List<Frame> getFrames() {
@@ -52,7 +52,7 @@ public class Frames {
         return lastFrame.isEnd() && !resultFrame.isEnd();
     }
 
-    private Frame lastFrame() {
+    private Frame currentFrame() {
         return frames.get(frames.size() - 1);
     }
 
