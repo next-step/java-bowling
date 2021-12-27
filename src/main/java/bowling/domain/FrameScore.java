@@ -5,10 +5,6 @@ import java.util.Objects;
 import bowling.engine.Score;
 
 public class FrameScore implements Score {
-    public static final int GUTTER_SCORE = ShotResult.GUTTER.toInt();
-    public static final int DOUBLE_SCORE = 20;
-    public static final int TURKEY_SCORE = 30;
-
     private final int score;
 
     private FrameScore(int score) {

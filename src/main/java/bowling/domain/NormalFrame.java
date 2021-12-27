@@ -11,9 +11,6 @@ import bowling.engine.Sequence;
 import bowling.engine.Shot;
 
 public class NormalFrame extends FirstClassImmutableList<Shot> implements Frame {
-    public static final int NUMBER_OF_PINS = 10;
-    public static final int NUMBER_OF_SHOT = 2;
-
     private final Sequence sequence;
 
     protected NormalFrame(Sequence sequence, List<Shot> collection) {

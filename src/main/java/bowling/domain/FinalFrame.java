@@ -9,8 +9,6 @@ import bowling.engine.Shot;
 import static bowling.domain.ShotResult.STRIKE;
 
 public class FinalFrame extends NormalFrame {
-    private static final int NUMBER_OF_FINAL_SHOT = 3;
-
     protected FinalFrame(List<Shot> shots) {
         super(FrameSequence.FINAL, shots);
     }

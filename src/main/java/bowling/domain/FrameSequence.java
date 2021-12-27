@@ -7,8 +7,6 @@ import java.util.stream.IntStream;
 import bowling.engine.Sequence;
 
 public class FrameSequence implements Sequence {
-    private static final int FIRST = 1;
-    private static final int LAST = 10;
     private static final Map<Integer, FrameSequence> cache = new HashMap<>();
     static {
         IntStream.rangeClosed(FIRST, LAST)
