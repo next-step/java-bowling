@@ -4,7 +4,7 @@ import bowling.domain.value.Pins;
 
 import java.util.Objects;
 
-public class Spare extends Finished{
+public class Spare extends Finished {
 
     private static final String SPARE_MARK = "/";
 

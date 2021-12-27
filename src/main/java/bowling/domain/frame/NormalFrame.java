@@ -4,7 +4,7 @@ import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 import bowling.domain.value.Pins;
 
-public class NormalFrame extends Frame{
+public class NormalFrame extends Frame {
 
     private State state;
 

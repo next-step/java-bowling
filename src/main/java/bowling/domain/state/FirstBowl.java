@@ -4,7 +4,7 @@ import bowling.domain.value.Pins;
 
 import java.util.Objects;
 
-public class FirstBowl extends ProgressState{
+public class FirstBowl extends ProgressState {
 
     private static final String GUTTER_MARK = "-";
 

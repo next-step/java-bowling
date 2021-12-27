@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
-public class Strike extends Finished{
+public class Strike extends Finished {
     private static final String STRIKE_MARK = "X";
 
     @Override

@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
-public abstract class ProgressState implements State{
+public abstract class ProgressState implements State {
 
     @Override
     public boolean isFinished() {
