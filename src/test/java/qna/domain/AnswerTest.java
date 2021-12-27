@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class AnswerTest {
@@ -16,5 +17,15 @@ public class AnswerTest {
         //then
         assertThatThrownBy(() -> A1.validationWriterIsOwner(UserTest.SANJIGI))
                 .isInstanceOf(CannotDeleteException.class);
+    }
+
+
+    @Test
+    @DisplayName("답변이 삭제되었는지 확인")
+    void toDeleteHistory() {
+        //when
+        A1.toDeleteHistory();
+        //then
+        assertThat(A1.isDeleted()).isTrue();
     }
 }
