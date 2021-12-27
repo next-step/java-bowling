@@ -12,6 +12,6 @@ public class SpareTest {
     @DisplayName("스페어 표시 테스트")
     void markTest() {
         Spare spare = new Spare(new Pins(3), new Pins(7));
-        assertThat(spare.getMark()).isEqualTo("/");
+        assertThat(spare.getMark()).isEqualTo("3|/");
     }
 }

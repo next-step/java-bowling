@@ -9,6 +9,11 @@ public class Strike extends Finished{
     }
 
     @Override
+    public boolean isGameOver() {
+        return false;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

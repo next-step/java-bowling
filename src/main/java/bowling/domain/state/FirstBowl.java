@@ -21,6 +21,10 @@ public class FirstBowl extends ProgressState{
             return new Spare(this.firstPins, secondPins);
         }
 
+        if(secondPins.isGutter()) {
+            return new Gutter(this.firstPins, secondPins);
+        }
+
         return new Miss(this.firstPins, secondPins);
     }
 

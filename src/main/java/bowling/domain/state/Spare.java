@@ -17,8 +17,13 @@ public class Spare extends Finished{
     }
 
     @Override
+    public boolean isGameOver() {
+        return false;
+    }
+
+    @Override
     public String getMark() {
-        return SPARE_MARK;
+        return checkGutter(firstPin) + DELIMITER + SPARE_MARK;
     }
 
     @Override
