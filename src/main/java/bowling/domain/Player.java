@@ -2,7 +2,7 @@ package bowling.domain;
 
 import java.util.Objects;
 
-import bowling.engin.Name;
+import bowling.engine.Name;
 
 public class Player implements Name {
     private final String name;

@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import bowling.engin.FirstClassImmutableList;
-import bowling.engin.FirstClassList;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

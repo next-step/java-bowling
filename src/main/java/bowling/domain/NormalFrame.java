@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import bowling.engin.FirstClassImmutableList;
-import bowling.engin.Frame;
-import bowling.engin.Score;
-import bowling.engin.Sequence;
-import bowling.engin.Shot;
+import bowling.engine.FirstClassImmutableList;
+import bowling.engine.Frame;
+import bowling.engine.Score;
+import bowling.engine.Sequence;
+import bowling.engine.Shot;
 
 public class NormalFrame extends FirstClassImmutableList<Shot> implements Frame {
     public static final int NUMBER_OF_PINS = 10;

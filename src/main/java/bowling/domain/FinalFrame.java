@@ -2,9 +2,9 @@ package bowling.domain;
 
 import java.util.List;
 
-import bowling.engin.FirstClassList;
-import bowling.engin.Frame;
-import bowling.engin.Shot;
+import bowling.engine.FirstClassList;
+import bowling.engine.Frame;
+import bowling.engine.Shot;
 
 import static bowling.domain.ShotResult.STRIKE;
 

@@ -1,4 +1,4 @@
-package bowling.engin;
+package bowling.engine;
 
 public interface IntWrapper {
     int toInt();

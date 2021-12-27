@@ -1,4 +1,4 @@
-package bowling.engin;
+package bowling.engine;
 
 import java.util.List;
 import java.util.function.Consumer;

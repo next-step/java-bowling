@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-import bowling.engin.Sequence;
+import bowling.engine.Sequence;
 
 public class FrameSequence implements Sequence {
     private static final int FIRST = 1;

@@ -2,7 +2,7 @@ package bowling.domain;
 
 import java.util.Objects;
 
-import bowling.engin.Score;
+import bowling.engine.Score;
 
 public class FrameScore implements Score {
     public static final int GUTTER_SCORE = ShotResult.GUTTER.toInt();

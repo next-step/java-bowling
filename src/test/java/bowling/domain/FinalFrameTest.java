@@ -2,8 +2,8 @@ package bowling.domain;
 
 import java.util.stream.Stream;
 
-import bowling.engin.Frame;
-import bowling.engin.Shot;
+import bowling.engine.Frame;
+import bowling.engine.Shot;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

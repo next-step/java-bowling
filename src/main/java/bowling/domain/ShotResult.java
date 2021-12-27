@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import bowling.engin.Shot;
+import bowling.engine.Shot;
 
 public enum ShotResult implements Shot {
     GUTTER(0, "-"),
