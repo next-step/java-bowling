@@ -6,7 +6,7 @@ public class FinalFrame implements Frame {
     private static final int MIN_BOWL_COUNT = 2;
     private static final int MAX_BOWL_COUNT = 3;
 
-    FinalBowl bowl;
+    Bowl bowl;
     private int count;
 
     private FinalFrame() {

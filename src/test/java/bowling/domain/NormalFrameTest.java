@@ -22,7 +22,7 @@ class NormalFrameTest {
     @DisplayName("bowl 호출 후 종료 상태이면 새로운 Frame을 생성하여 추가한다.")
     @Test
     void frameStateStrikeOrSpareOrMissOrGutter() {
-        assertThat(frame.bowl(Pin.of(10))).isEqualTo(NormalFrame.of(FrameIndex.of(2)));
+        assertThat(frame.bowl(Pin.of(10))).isEqualTo(NormalFrame.next(FrameIndex.of(2)));
     }
 
     @DisplayName("bowl 호출 후 종료 상태가 아니면 새로운 Frame을 생성하지 않고 현재 Frame을 반환한다.")

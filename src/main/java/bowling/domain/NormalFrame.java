@@ -16,12 +16,12 @@ public class NormalFrame implements Frame {
         return new NormalFrame(index, bowl);
     }
 
-    public static NormalFrame of(FrameIndex index) {
+    public static NormalFrame next(FrameIndex index) {
         return of(index, Bowl.first());
     }
 
     public static NormalFrame init() {
-        return of(FrameIndex.first());
+        return next(FrameIndex.first());
     }
 
     @Override
@@ -37,7 +37,7 @@ public class NormalFrame implements Frame {
         if (index.next().max()) {
             return FinalFrame.init();
         }
-        return of(index.next());
+        return next(index.next());
     }
 
     @Override
