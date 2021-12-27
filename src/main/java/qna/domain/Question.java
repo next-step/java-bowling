@@ -9,20 +9,15 @@ import java.time.LocalDateTime;
 public class Question extends AbstractEntity {
 
     private static final String MESSAGE_NO_PERMISSION = "질문을 삭제할 권한이 없습니다.";
-
+    @Embedded
+    private final Answers answers = new Answers();
     @Column(length = 100, nullable = false)
     private String title;
-
     @Lob
     private String contents;
-
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
-
-    @Embedded
-    private final Answers answers = new Answers();
-
     private boolean deleted = false;
 
     public Question() {
@@ -93,13 +88,13 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
+    public boolean isDeleted() {
+        return deleted;
+    }
+
     public Question setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
     }
 
     @Override
