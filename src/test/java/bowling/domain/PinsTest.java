@@ -12,24 +12,24 @@ public class PinsTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
     @DisplayName("핀 생성 성공")
-    void create(int pin) {
-        assertThat(new Pins(pin)).isInstanceOf(Pins.class);
+    void create(int count) {
+        assertThat(Pins.of(count)).isInstanceOf(Pins.class);
     }
 
     @ParameterizedTest
     @ValueSource(ints = {-1, -2})
     @DisplayName("핀 수가 최소 수 보다 작을 경우")
-    void minimumException(int pin) {
+    void minimumException(int count) {
         assertThatExceptionOfType(IllegalArgumentException.class)
-            .isThrownBy(() -> new Pins(pin));
+            .isThrownBy(() -> Pins.of(count));
     }
 
     @ParameterizedTest
     @ValueSource(ints = {11, 12, 13})
     @DisplayName("핀 수가 최소 수 보다 작을 경우")
-    void maximumException(int pin) {
+    void maximumException(int count) {
         assertThatExceptionOfType(IllegalArgumentException.class)
-            .isThrownBy(() -> new Pins(pin));
+            .isThrownBy(() -> Pins.of(count));
     }
 
 }

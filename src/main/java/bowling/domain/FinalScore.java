@@ -12,7 +12,7 @@ public class FinalScore implements Score {
     private final Pins lastScore;
 
     public FinalScore() {
-        this(NORMAL_SCORE_TRY_COUNT, Pins.defaultPins(), Pins.defaultPins(), Pins.defaultPins());
+        this(NORMAL_SCORE_TRY_COUNT, Pins.of(0), Pins.of(0), Pins.of(0));
     }
 
     private FinalScore(int tryCount, Pins firstScore, Pins secondScore, Pins lastScore) {

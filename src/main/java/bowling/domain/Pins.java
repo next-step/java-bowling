@@ -1,37 +1,43 @@
 package bowling.domain;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.IntStream;
+
 public class Pins {
 
-    private static final int MINIMUM_PINS = 0;
-    private static final int MAXIMUM_PINS = 10;
-    private static final Pins DEFAULT_PINS = new Pins(MINIMUM_PINS);
+    private static final int MINIMUM = 0;
+    private static final int MAXIMUM = 10;
+    private static final Map<Integer, Pins> CACHE_PINS;
 
-    private final int pins;
+    private final int count;
 
-	public Pins() {
-		this(MINIMUM_PINS);
-	}
-
-    public Pins(int pins) {
-        valid(pins);
-        this.pins = pins;
+    static {
+        CACHE_PINS = new HashMap<>();
+        IntStream.rangeClosed(MINIMUM, MAXIMUM)
+            .forEach(num -> CACHE_PINS.put(num, new Pins(num)));
     }
 
-    public static Pins defaultPins() {
-        return DEFAULT_PINS;
+    private Pins(int pins) {
+        this.count = pins;
+    }
+
+    public static Pins of(int count) {
+        valid(count);
+        return CACHE_PINS.get(count);
     }
 
     public boolean isMaxPins() {
-        return pins == MAXIMUM_PINS;
+        return count == MAXIMUM;
     }
 
-    private void valid(int pins) {
-        if (pins < MINIMUM_PINS) {
-            throw new IllegalArgumentException(String.format("핀의 수는 %d 개 보다 작을 수 없습니다.", MINIMUM_PINS));
+    private static void valid(int pins) {
+        if (pins < MINIMUM) {
+            throw new IllegalArgumentException(String.format("쓰러트린 핀의 수는 %d 개 보다 작을 수 없습니다.", MINIMUM));
         }
 
-        if (pins > MAXIMUM_PINS) {
-            throw new IllegalArgumentException(String.format("핀의 수는 %d 개 보다 클 수 없습니다.", MAXIMUM_PINS));
+        if (pins > MAXIMUM) {
+            throw new IllegalArgumentException(String.format("쓰러트린 핀의 수는 %d 개 보다 클 수 없습니다.", MAXIMUM));
         }
     }
 

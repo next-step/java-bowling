@@ -15,14 +15,14 @@ public class NormalScoreTest {
     @Test
     void isNotNextScore() {
         Score score = new NormalScore();
-        score = score.firstScore(new Pins(10));
+        score = score.firstScore(Pins.of(10));
         assertThat(score.isNextScore()).isFalse();
     }
 
     @Test
     void isNextScore() {
         Score score = new NormalScore();
-        score = score.firstScore(new Pins(9));
+        score = score.firstScore(Pins.of(9));
         assertThat(score.isNextScore()).isTrue();
     }
 

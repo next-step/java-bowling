@@ -11,7 +11,7 @@ public class NormalScore implements Score {
     private final Pins secondScore;
 
     public NormalScore() {
-        this(NORMAL_SCORE_TRY_COUNT, Pins.defaultPins(), Pins.defaultPins());
+        this(NORMAL_SCORE_TRY_COUNT, Pins.of(0), Pins.of(0));
     }
 
     private NormalScore(int tryCount, Pins firstScore, Pins secondScore) {
