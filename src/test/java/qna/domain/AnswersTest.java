@@ -13,7 +13,7 @@ class AnswersTest {
 
 
     @Test
-    @DisplayName("Answers 삭제: 본인이 작성한 답변을 삭제할 경우")
+    @DisplayName("답변 작성자와 답변을 삭제하려는 사람이 같은 답변만 있을 경우 삭제 테스트")
     void allDeletedSameUser() throws CannotDeleteException {
         //given
         Answers answers = new Answers();
@@ -29,7 +29,7 @@ class AnswersTest {
     }
 
     @Test
-    @DisplayName("Answers 삭제: 다른 사람이 작성한 답변을 삭제할 경우")
+    @DisplayName("답변 작성자와 답변을 삭제하려는 사람이 다른 답변이 하나라도 있을 경우 삭제 테스트")
     void allDeletedOtherUser() {
         //given
         Answers answers = new Answers();
