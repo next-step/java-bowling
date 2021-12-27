@@ -45,7 +45,7 @@ public class FinalFrame extends Frame {
 
     private boolean hasSpare() {
         return states.stream()
-                .anyMatch(Spare.class::isInstance);
+                .anyMatch(Spare::isSpare);
 
     }
 

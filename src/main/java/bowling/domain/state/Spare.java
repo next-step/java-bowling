@@ -16,6 +16,10 @@ public class Spare extends Finished{
         this.secondPin = secondPin;
     }
 
+    public static boolean isSpare(State state) {
+        return true;
+    }
+
     @Override
     public boolean isGameOver() {
         return false;
