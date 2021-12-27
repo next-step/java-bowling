@@ -10,8 +10,15 @@ public class Miss extends EndedState {
     private final Pins second;
 
     private Miss(Pins first, Pins second) {
+        validate(first, second);
         this.first = first;
         this.second = second;
+    }
+
+    private void validate(Pins first, Pins second) {
+        if (!first.isMiss(second)) {
+            throw new IllegalArgumentException(String.format("first(%s), second(%s)는 miss 상태가 아닙니다.", first, second));
+        }
     }
 
     public static ThrowingState create(Pins first, Pins second) {

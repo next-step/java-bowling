@@ -10,6 +10,13 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class MissTest {
 
+    @DisplayName("Miss가 아닌 두 번의 투구로 Miss를 생성하는 경우")
+    @Test
+    void createFailed() {
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> Miss.create(PinsTest.FIVE, PinsTest.FIVE));
+    }
+
     @DisplayName("한 프레임 종료 후, 재투구시 예외 확인")
     @Test
     void bowl() {

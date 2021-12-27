@@ -31,8 +31,12 @@ public class Pins {
         return value == MAX_PINS;
     }
 
+    public boolean isMiss(Pins other) {
+        return Math.addExact(value, other.value) != MAX_PINS;
+    }
+
     public boolean isSpare(Pins other) {
-        return value + other.value == MAX_PINS;
+        return Math.addExact(value, other.value) == MAX_PINS;
     }
 
     public boolean isGutter() {
