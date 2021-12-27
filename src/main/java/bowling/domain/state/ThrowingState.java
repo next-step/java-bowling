@@ -8,4 +8,6 @@ public interface ThrowingState {
     boolean isEnd();
 
     String symbol();
+
+    boolean isMiss();
 }

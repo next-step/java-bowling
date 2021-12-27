@@ -11,4 +11,9 @@ public class Strike extends EndedState {
     public String symbol() {
         return STRIKE_SYMBOL;
     }
+
+    @Override
+    public boolean isMiss() {
+        return false;
+    }
 }

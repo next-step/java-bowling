@@ -23,6 +23,11 @@ public class Miss extends EndedState {
         return String.format(FRAME_STATE_FORMAT, first.getValue(), secondValue());
     }
 
+    @Override
+    public boolean isMiss() {
+        return true;
+    }
+
     private String secondValue() {
         if (second.isGutter()) {
             return GUTTER_SYMBOL;

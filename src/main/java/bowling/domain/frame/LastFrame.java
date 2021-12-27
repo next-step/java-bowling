@@ -2,7 +2,6 @@ package bowling.domain.frame;
 
 import bowling.domain.FrameIndex;
 import bowling.domain.Pins;
-import bowling.domain.state.Miss;
 import bowling.domain.state.Ready;
 import bowling.domain.state.ThrowingState;
 
@@ -31,7 +30,7 @@ public class LastFrame implements Frame {
     @Override
     public Frame bowl(Pins pins) {
         count++;
-        ThrowingState last = states.getLast();
+        ThrowingState last = recentState();
         if (last.isEnd()) {
             addNewStatus(pins);
             return this;
@@ -45,7 +44,11 @@ public class LastFrame implements Frame {
         if (count == MAX_BOWL) {
             return true;
         }
-        return count == MIN_BOWL && states.getLast() instanceof Miss;
+        return count == MIN_BOWL && recentState().isMiss();
+    }
+
+    private ThrowingState recentState() {
+        return states.getLast();
     }
 
     @Override

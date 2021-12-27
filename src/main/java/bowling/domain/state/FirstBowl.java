@@ -25,4 +25,9 @@ public class FirstBowl extends RunningState {
     public String symbol() {
         return String.valueOf(first.getValue());
     }
+
+    @Override
+    public boolean isMiss() {
+        return false;
+    }
 }

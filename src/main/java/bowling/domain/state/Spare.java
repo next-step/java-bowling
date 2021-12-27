@@ -21,4 +21,9 @@ public class Spare extends EndedState {
     public String symbol() {
         return String.format("%s|%s", first.getValue(), SPARE_SYMBOL);
     }
+
+    @Override
+    public boolean isMiss() {
+        return false;
+    }
 }

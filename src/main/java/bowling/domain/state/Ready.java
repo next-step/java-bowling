@@ -24,4 +24,9 @@ public class Ready extends RunningState {
     public String symbol() {
         return READY_SYMBOL;
     }
+
+    @Override
+    public boolean isMiss() {
+        return false;
+    }
 }
