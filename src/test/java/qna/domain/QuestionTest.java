@@ -13,7 +13,7 @@ public class QuestionTest {
 
 
     @Test
-    @DisplayName("작성자와 이름이 다를 경우")
+    @DisplayName("다른 사람이 작성한 질문을 삭제할 경우")
     void deleteByAnotherUser() {
         //then
         assertThatThrownBy(() -> Q1.deleteByUser(UserTest.SANJIGI))
@@ -22,7 +22,7 @@ public class QuestionTest {
 
 
     @Test
-    @DisplayName("작성자와 이름이 같을 경우")
+    @DisplayName("본인이 작성한 질문을 삭제할 경우")
     void deleteByWriter() throws CannotDeleteException {
         //when
         Q1.deleteByUser(UserTest.JAVAJIGI);
@@ -31,7 +31,7 @@ public class QuestionTest {
     }
 
     @Test
-    @DisplayName("작성자와 이름이 같지만, 다른 사람이 쓴 답변이 있을 경우")
+    @DisplayName("본인이 작성한 질문이지만, 다른 사람이 쓴 답변이 있을 경우")
     void deleteWithAnotherAnswer() {
         //given
         Q1.addAnswer(AnswerTest.A2);
@@ -41,7 +41,7 @@ public class QuestionTest {
     }
 
     @Test
-    @DisplayName("작성자와 이름이 같고, 작성자가 쓴 답변만 있을 경우")
+    @DisplayName("본인이 작성한 질문에 본인이 작성한 답변만 있을 경우")
     void deleteWithWriterAnswer() throws CannotDeleteException {
         //given
         Q2.addAnswer(AnswerTest.A2);
