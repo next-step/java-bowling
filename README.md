@@ -7,3 +7,13 @@
 
 ## 온라인 코드 리뷰 과정
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
+
+
+## 할 일 목록
+- [x] Answers 클래스 생성
+    - List<Answer>에 적용되는 로직 추가
+- [x] Answer delete 메소드 추가
+    - 삭제 로직 추가
+- [x] Question delete 메소드 추가
+    - 삭제 로직 추가
+- [x] QnAService 리팩토링

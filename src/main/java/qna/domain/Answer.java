@@ -1,12 +1,21 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.transaction.Transactional;
+import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
-import javax.persistence.*;
-
 @Entity
 public class Answer extends AbstractEntity {
+
+    private static final String MESSAGE_NO_PERMISSION_TO_DELETE = "답변을 삭제할 권한이 없습니다.";
+
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
@@ -43,9 +52,18 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
+    private void setDeleted(boolean deleted) {
         this.deleted = deleted;
-        return this;
+    }
+
+    @Transactional
+    public DeleteHistory delete(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(MESSAGE_NO_PERMISSION_TO_DELETE);
+        }
+
+        setDeleted(true);
+        return new DeleteHistory(ContentType.ANSWER, getId(), loginUser, LocalDateTime.now());
     }
 
     public boolean isDeleted() {
