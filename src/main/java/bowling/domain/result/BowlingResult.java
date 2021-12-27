@@ -4,18 +4,18 @@ import bowling.domain.frame.Frame;
 import bowling.domain.value.Frames;
 import bowling.domain.value.Pins;
 
-public class Result {
+public class BowlingResult {
 
     private static final int FINAL_FRAME_NO = 10;
 
     private final Frames frames;
 
-    private Result(Frames frames) {
+    private BowlingResult(Frames frames) {
         this.frames = frames;
     }
 
-    public static Result from(Frames frames) {
-        return new Result(frames);
+    public static BowlingResult from(Frames frames) {
+        return new BowlingResult(frames);
     }
 
     public void bowl(Pins pins) {
