@@ -23,6 +23,7 @@ import static bowling.domain.ShotResult.SIX;
 import static bowling.domain.ShotResult.STRIKE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 public class NormalFrameTest {
     @Test
@@ -73,7 +74,21 @@ public class NormalFrameTest {
     @ParameterizedTest
     @MethodSource("parseSecondFailed")
     public void secondFailed(Shot first, Shot second) {
-        assertThatIllegalArgumentException().isThrownBy(() -> NormalFrame.first(fs(1), first).second(second));
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> NormalFrame.first(fs(1), first).second(second));
+    }
+
+    @Test
+    public void build() {
+        assertThatIllegalStateException()
+                .isThrownBy(() -> NormalFrame.first(fs(1), GUTTER).second(GUTTER).second(GUTTER));
+    }
+
+    @Test
+    public void thirdFailed() {
+        final Frame frame = NormalFrame.first(fs(1), GUTTER);
+        assertThatIllegalStateException().isThrownBy(() -> frame.third(GUTTER));
+        assertThatIllegalStateException().isThrownBy(() -> frame.second(GUTTER).third(GUTTER));
     }
 
     @ParameterizedTest
@@ -132,4 +147,27 @@ public class NormalFrameTest {
         final Sequence sequence = fs(1);
         assertThat(NormalFrame.first(sequence, GUTTER).completed()).isFalse();
     }
+
+    public static Stream<Arguments> parseScore() {
+        return Stream.of(
+                Arguments.of(List.of(GUTTER, GUTTER), 0),
+                Arguments.of(List.of(GUTTER, NINE), 9),
+                Arguments.of(List.of(FIVE, FOUR), 9),
+                Arguments.of(List.of(SIX, FOUR), 10),
+                Arguments.of(List.of(STRIKE), 10)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("parseScore")
+    public void Score(List<Shot> shots, int expected) {
+        assertThat(NormalFrame.of(fs(1), shots).score()).isEqualTo(FrameScore.of(expected));
+    }
+
+    @ParameterizedTest
+    @MethodSource("parseScore")
+    public void sum(List<Shot> shots, int expected) {
+        assertThat(NormalFrame.sum(shots.stream())).isEqualTo(expected);
+    }
+
 }

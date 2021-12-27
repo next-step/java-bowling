@@ -19,6 +19,9 @@ public enum ShotResult implements Shot {
     NINE(9, "9"),
     STRIKE(10, "X");
 
+    public static final int DOUBLE_STRIKE_COUNT = 2;
+    public static final int TURKEY_STRIKE_COUNT = 3;
+
     private static final Map<Integer, ShotResult> frameScoreMap = new HashMap<>();
     static {
         Arrays.stream(values())
