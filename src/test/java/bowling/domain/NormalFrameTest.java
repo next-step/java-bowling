@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class NormalFrameTest {
     private static Frame frame;
@@ -65,5 +66,20 @@ class NormalFrameTest {
         }
         assertThat(frame.symbol()).isEqualTo(symbol);
         assertThat(frame.isEnd()).isTrue();
+    }
+
+    @DisplayName("NormalFrame에서 쓰러트릴 수 있는 볼링핀의 총 갯수는 10을 초과할 수 없다.")
+    @ParameterizedTest
+    @CsvSource(value = {
+            "1, 10",
+            "5, 6"
+    })
+    void exception(int bowl1, int bowl2) {
+        List<Integer> pinNumbers = Arrays.asList(bowl1, bowl2);
+        assertThatThrownBy( ()-> {
+            for (int pinNumber : pinNumbers) {
+                frame.bowl(Ball.of(pinNumber, State.READY));
+            }
+        }).isInstanceOf(IllegalArgumentException.class);
     }
 }
