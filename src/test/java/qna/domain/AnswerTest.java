@@ -24,6 +24,8 @@ public class AnswerTest {
     @DisplayName("답변의 작성자가 다르면 삭제가 안된다.")
     @Test
     void deleteFailAnswer() {
-        assertThatThrownBy(() -> A1.delete(UserTest.SANJIGI)).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> A1.delete(UserTest.SANJIGI))
+                .isInstanceOf(CannotDeleteException.class)
+                .hasMessageContaining("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }
 }
