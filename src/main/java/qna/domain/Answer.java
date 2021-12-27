@@ -47,13 +47,13 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
+    public boolean isDeleted() {
+        return deleted;
+    }
+
     public Answer setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
     }
 
     public boolean isOwner(User writer) {
@@ -79,6 +79,7 @@ public class Answer extends AbstractEntity {
     }
 
     public DeleteHistory toDeleteHistory() {
+        setDeleted(true);
         return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
     }
 

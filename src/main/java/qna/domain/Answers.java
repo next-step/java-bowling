@@ -35,7 +35,6 @@ public class Answers {
     public DeleteHistories delete(User loginUser) throws CannotDeleteException {
         validationWriter(loginUser);
         return answers.stream()
-                .peek(answer -> answer.setDeleted(true))
                 .map(Answer::toDeleteHistory)
                 .collect(Collectors.collectingAndThen(Collectors.toList(), DeleteHistories::new));
     }
