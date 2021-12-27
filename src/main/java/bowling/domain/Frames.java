@@ -37,16 +37,18 @@ public class Frames {
     public List<Frame> values() {
         Frame tmp = head;
         List<Frame> list = new ArrayList<>();
-        while (tmp != null) {
-            list.add(tmp);
+        list.add(tmp);
+
+        while (!tmp.isFinalFrame() && tmp.next() != null) {
             tmp = tmp.next();
+            list.add(tmp);
         }
 
         return Collections.unmodifiableList(list);
     }
 
     @ForUI
-    public Frame getCurrent() {
-        return current;
+    public int getCurrentFrameNumber() {
+        return current.getFrameNumber();
     }
 }

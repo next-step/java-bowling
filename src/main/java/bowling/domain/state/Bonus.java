@@ -12,7 +12,7 @@ public class Bonus extends AbstractFinished {
     private final int bonusCount;
     private final State previous;
 
-    public Bonus(PinCounts pinCounts, int bonusCount, State state) {
+    private Bonus(PinCounts pinCounts, int bonusCount, State state) {
         super(pinCounts);
         this.bonusCount = bonusCount;
         this.previous = state;
@@ -32,7 +32,7 @@ public class Bonus extends AbstractFinished {
     }
 
     @Override
-    public boolean isFinished() {
+    public boolean isEnd() {
         return bonusCount == ZERO;
     }
 
@@ -43,9 +43,9 @@ public class Bonus extends AbstractFinished {
 
     @Override
     public Score makeScore() {
-        int sum = getValues().stream().map(KnockedPinCount::value)
-                .reduce(ZERO, Integer::sum)
-                .intValue();
+        int sum = getValues().stream()
+                .map(KnockedPinCount::value)
+                .reduce(ZERO, Integer::sum);
         return new Score(sum, ZERO);
     }
 
@@ -56,6 +56,21 @@ public class Bonus extends AbstractFinished {
             return score;
         }
         return score.bowl(getValues().get(ONE).value());
+    }
+
+    @Override
+    public boolean isBonus() {
+        return true;
+    }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
+
+    @Override
+    public boolean isRunning() {
+        return false;
     }
 
     @ForUI

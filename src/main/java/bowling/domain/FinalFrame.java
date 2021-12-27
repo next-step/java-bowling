@@ -28,12 +28,12 @@ public class FinalFrame extends AbstractFrame {
 
     @Override
     public boolean isEnd() {
-        return state.isFinished() && !state.hasBonus();
+        return state.isEnd() && !state.hasBonus();
     }
 
     @Override
     public Frame next() {
-        return null;
+        throw new IllegalArgumentException(FINAL_FRAME_MESSAGE);
     }
 
     @Override

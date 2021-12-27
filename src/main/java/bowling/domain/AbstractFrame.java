@@ -21,6 +21,6 @@ public abstract class AbstractFrame implements Frame {
     @ForUI
     @Override
     public int getFrameNumber() {
-        return roundNumber.value();
+        return roundNumber.getRoundNumber();
     }
 }

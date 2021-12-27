@@ -16,10 +16,8 @@ public class BowlingGames {
     }
 
     public boolean isEnd() {
-        return !values.stream()
-                .filter(bowlingGame -> !bowlingGame.isEnd())
-                .findAny()
-                .isPresent();
+        return values.stream()
+                .allMatch(BowlingGame::isEnd);
     }
 
     @ForUI

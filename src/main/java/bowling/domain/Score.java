@@ -2,7 +2,7 @@ package bowling.domain;
 
 public class Score {
     private int score;
-    private int left;
+    private final int left;
 
     public Score(int score, int left) {
         this.score = score;

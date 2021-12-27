@@ -16,7 +16,7 @@ public class Strike extends AbstractFinished {
     }
 
     @Override
-    public boolean isFinished() {
+    public boolean isEnd() {
         return true;
     }
 
@@ -33,5 +33,20 @@ public class Strike extends AbstractFinished {
     @Override
     public Score additionalCalculate(Score beforeScore) {
         return beforeScore.bowl(STRIKE_PIN_COUNT);
+    }
+
+    @Override
+    public boolean isBonus() {
+        return false;
+    }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
+
+    @Override
+    public boolean isRunning() {
+        return false;
     }
 }

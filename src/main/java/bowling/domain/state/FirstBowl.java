@@ -27,7 +27,7 @@ public class FirstBowl implements State, Running {
     }
 
     @Override
-    public boolean isFinished() {
+    public boolean isEnd() {
         return false;
     }
 
@@ -44,5 +44,25 @@ public class FirstBowl implements State, Running {
     @Override
     public Score additionalCalculate(Score beforeScore) {
         return beforeScore.bowl(pinCount.value());
+    }
+
+    @Override
+    public boolean isBonus() {
+        return false;
+    }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
+    @Override
+    public boolean isRunning() {
+        return true;
     }
 }

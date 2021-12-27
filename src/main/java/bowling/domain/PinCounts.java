@@ -8,9 +8,11 @@ import java.util.stream.Collectors;
 public class PinCounts {
     public static final String WRONG_BOWL_COUNT_MESSAGE = "잘못된 투구 수입니다.";
 
+    private static final int MAX_SIZE = 2;
+
     private final List<KnockedPinCount> values;
 
-    public PinCounts(List<KnockedPinCount> knockedPinCounts, int maxSize) {
+    private PinCounts(List<KnockedPinCount> knockedPinCounts, int maxSize) {
         this.values = knockedPinCounts;
 
         if (knockedPinCounts.size() > maxSize) {
@@ -41,5 +43,4 @@ public class PinCounts {
     public List<KnockedPinCount> getValues() {
         return Collections.unmodifiableList(values);
     }
-    private static final int MAX_SIZE = 2;
 }

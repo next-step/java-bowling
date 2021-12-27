@@ -16,7 +16,7 @@ public class Ready implements State {
     }
 
     @Override
-    public boolean isFinished() {
+    public boolean isEnd() {
         return false;
     }
 
@@ -33,5 +33,25 @@ public class Ready implements State {
     @Override
     public Score additionalCalculate(Score beforeScore) {
         throw new IllegalArgumentException(READY_CANNOT_CALCULATE_SCORE_MESSAGE);
+    }
+
+    @Override
+    public boolean isBonus() {
+        return false;
+    }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
+    @Override
+    public boolean isRunning() {
+        return false;
     }
 }

@@ -27,10 +27,9 @@ public class OutputView {
 
     private OutputView() {}
 
-    public static void printBowlingBoard(BowlingGames bowlingGames) {
+    public static void printBowlingBoard(List<BowlingGame> bowlingGames) {
         System.out.println(MAIN_BOARD_HEAD_MESSAGE);
-        bowlingGames.values()
-                .forEach(OutputView::printMainBoardBody);
+        bowlingGames.forEach(OutputView::printMainBoardBody);
         System.out.println();
     }
 
@@ -66,23 +65,23 @@ public class OutputView {
     }
 
     private static String makeFinalScoreMark(State state) {
-        if (state instanceof Bonus && isSpare(state)) {
+        if (isBonusAndSpare(state)) {
             List<KnockedPinCount> values = ((Bonus) state).getValues();
             return toMark(values.get(ZERO).value()) + SEPARATOR + SPARE_MARK + SEPARATOR + toMark(values.get(TWO).value());
         }
         return makeScoreMark(state);
     }
 
-    private static boolean isSpare(State state) {
-        return ((Bonus) state).getPrevious() instanceof Spare;
+    private static boolean isBonusAndSpare(State state) {
+        return state.isBonus() && ((Bonus) state).getPrevious().isSpare();
     }
 
     private static String makeScoreMark(State state) {
-        if (state instanceof Finished) {
+        if (state.isFinished()) {
             return makeJoiningScoreMark((Finished) state);
         }
 
-        if (state instanceof Running) {
+        if (state.isRunning()) {
             return makeOneScoreMark((Running) state);
         }
 
@@ -90,7 +89,7 @@ public class OutputView {
     }
 
     private static String makeJoiningScoreMark(Finished state) {
-        if (state instanceof Spare) {
+        if (((State) state).isSpare()) {
             return toMark(state.getValues().get(ZERO).value()) + SEPARATOR + SPARE_MARK;
         }
 
@@ -164,7 +163,7 @@ public class OutputView {
     }
 
     private static String makeNormalScore(Frame frame) {
-        if (frame.getState() instanceof Finished) {
+        if (frame.getState().isFinished()) {
             return toScore(frame.getScore());
         }
         return EMPTY;

@@ -16,7 +16,7 @@ public class Miss extends AbstractFinished {
     }
 
     @Override
-    public boolean isFinished() {
+    public boolean isEnd() {
         return true;
     }
 
@@ -38,5 +38,20 @@ public class Miss extends AbstractFinished {
             return score;
         }
         return score.bowl(getValues().get(1).value());
+    }
+
+    @Override
+    public boolean isBonus() {
+        return false;
+    }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
+
+    @Override
+    public boolean isRunning() {
+        return false;
     }
 }

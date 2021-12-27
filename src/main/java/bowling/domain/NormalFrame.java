@@ -8,12 +8,16 @@ public class NormalFrame extends AbstractFrame {
 
     private Frame next;
 
-    public NormalFrame(int number) {
+    private NormalFrame(int number) {
         this(new FrameRoundNumber(number));
     }
 
     private NormalFrame(FrameRoundNumber roundNumber) {
         super(roundNumber);
+    }
+
+    public static Frame of(int number) {
+        return new NormalFrame(number);
     }
 
     public static Frame ofFirst() {
@@ -47,7 +51,7 @@ public class NormalFrame extends AbstractFrame {
 
     @Override
     public boolean isEnd() {
-        return state.isFinished();
+        return state.isEnd();
     }
 
     @Override
@@ -65,7 +69,7 @@ public class NormalFrame extends AbstractFrame {
     public Score getScore() {
         Score score = state.makeScore();
 
-        if (score.canCalculateScore() || next == null){
+        if (score.canCalculateScore() || next == null) {
             return score;
         }
 

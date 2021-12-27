@@ -42,12 +42,6 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static int readKnockedOutCountOf(Player player) {
-        System.out.printf(FRAME_COUNT_MESSAGE, player.getFrameNumber());
-        System.out.printf(PLAYER_TURN_MESSAGE, player.name());
-        return Integer.parseInt(scanner.nextLine());
-    }
-
     public static int readKnockedOutCountOf(BowlingGame bowlingGame) {
         System.out.printf(FRAME_COUNT_MESSAGE, bowlingGame.getCurrentFrameNumber());
         System.out.printf(PLAYER_TURN_MESSAGE, bowlingGame.player().name());

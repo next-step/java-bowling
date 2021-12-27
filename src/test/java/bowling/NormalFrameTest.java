@@ -30,12 +30,12 @@ public class NormalFrameTest {
 
     @Test
     void 프레임8에서_일반_프레임_생성() {
-        assertThat(new NormalFrame(8).addNextFrame()).isInstanceOf(NormalFrame.class);
+        assertThat(NormalFrame.of(8).addNextFrame()).isInstanceOf(NormalFrame.class);
     }
 
     @Test
     void 프레임9에서_마지막_프레임_생성() {
-        assertThat(new NormalFrame(9).addNextFrame()).isInstanceOf(FinalFrame.class);
+        assertThat(NormalFrame.of(9).addNextFrame()).isInstanceOf(FinalFrame.class);
     }
 
     @Test

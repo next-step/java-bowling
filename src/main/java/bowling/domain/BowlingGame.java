@@ -26,7 +26,7 @@ public class BowlingGame {
     }
 
     public int getCurrentFrameNumber() {
-        return frames.getCurrent().getFrameNumber();
+        return frames.getCurrentFrameNumber();
     }
 
     public void bowl(int knockedOutCount) {

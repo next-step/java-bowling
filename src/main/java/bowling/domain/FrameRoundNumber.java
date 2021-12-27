@@ -8,6 +8,7 @@ public class FrameRoundNumber {
 
     private static final int MIN_VALUE = 1;
     private static final int MAX_VALUE = 10;
+    private static final int ROUND_INTERVAL = 1;
 
     private final int roundNumber;
 
@@ -19,11 +20,11 @@ public class FrameRoundNumber {
     }
 
     public FrameRoundNumber next() {
-        return new FrameRoundNumber(roundNumber + 1);
+        return new FrameRoundNumber(roundNumber + ROUND_INTERVAL);
     }
 
     @ForUI
-    public int value() {
+    public int getRoundNumber() {
         return roundNumber;
     }
 
