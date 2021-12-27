@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.FrameIndex;
 import bowling.domain.Pins;
+import bowling.domain.PinsTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class LastFrameTest {
@@ -79,6 +81,17 @@ class LastFrameTest {
     void initialize() {
         // when & then
         assertThat(LastFrame.initialize()).isNotNull();
+    }
+
+    @DisplayName("2번 투구 후, miss인 상태에서 추가 투구시 예외")
+    @Test
+    void extraPitchAfter2PitchWithMiss() {
+        // given
+        LastFrame lastFrame = LastFrame.initialize();
+        Frame lastFrameWithMiss = lastFrame.bowl(PinsTest.FIVE).bowl(PinsTest.FOUR);
+        // when & then
+        assertThatExceptionOfType(UnsupportedOperationException.class)
+                .isThrownBy(() -> lastFrameWithMiss.bowl(PinsTest.FOUR));
     }
 
     @DisplayName("LastFrame 의 index 검증")

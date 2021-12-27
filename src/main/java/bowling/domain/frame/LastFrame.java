@@ -31,7 +31,7 @@ public class LastFrame implements Frame {
     public Frame bowl(Pins pins) {
         count++;
         ThrowingState recent = recentState();
-        if (recent.isEnd()) {
+        if (!recent.isMiss() && recent.isEnd()) {
             addNewStatus(pins);
             return this;
         }
