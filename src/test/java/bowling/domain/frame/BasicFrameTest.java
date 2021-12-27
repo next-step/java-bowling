@@ -36,7 +36,7 @@ class BasicFrameTest {
 
     @DisplayName("첫 투구 후 strike가 아닌 경우 현재 라운드인지 여부 확인")
     @Test
-    void bowlFistBowl() {
+    void bowlFirstBowl() {
         // given
         BasicFrame basicFrame = BasicFrame.initialize();
         // when & then
