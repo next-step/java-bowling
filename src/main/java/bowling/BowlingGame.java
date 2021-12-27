@@ -1,7 +1,7 @@
 package bowling;
 
+import bowling.domain.Ball;
 import bowling.domain.Bowling;
-import bowling.domain.Pin;
 import bowling.domain.Player;
 import bowling.view.InputView;
 import bowling.view.ResultView;
@@ -15,10 +15,8 @@ public class BowlingGame {
 
         while (bowling.hasNext()) {
             int currentFrameIndex = bowling.getCurrentFrameIndex();
-            Pin fallenPins = InputView.fallenPins(currentFrameIndex);
-
-            bowling.bowl(fallenPins);
-
+            Ball ball = InputView.fallenPins(currentFrameIndex);
+            bowling.bowl(ball);
             ResultView.print(bowling);
         }
     }

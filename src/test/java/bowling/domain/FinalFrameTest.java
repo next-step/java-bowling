@@ -36,7 +36,7 @@ class FinalFrameTest {
     void twoBowls(int bowl1, int bowl2, String symbol) {
         List<Integer> pinNumbers = Arrays.asList(bowl1, bowl2);
         for (int pinNumber : pinNumbers) {
-            frame.bowl(Pin.of(pinNumber));
+            frame.bowl(Ball.of(pinNumber, State.READY));
         }
         assertThat(frame.symbol()).isEqualTo(symbol);
         assertThat(frame.isEnd()).isTrue();
@@ -54,7 +54,7 @@ class FinalFrameTest {
     void threeBowls(int bowl1, int bowl2, int bowl3, String symbol) {
         List<Integer> pinNumbers = Arrays.asList(bowl1, bowl2, bowl3);
         for (int pinNumber : pinNumbers) {
-            frame.bowl(Pin.of(pinNumber));
+            frame.bowl(Ball.of(pinNumber, State.READY));
         }
         assertThat(frame.symbol()).isEqualTo(symbol);
         assertThat(frame.isEnd()).isTrue();

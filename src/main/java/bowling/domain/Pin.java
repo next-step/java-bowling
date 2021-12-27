@@ -43,10 +43,6 @@ public class Pin {
         return fallenPinCount == MIN_PIN_COUNT;
     }
 
-    public String symbol() {
-        return State.of(this.fallenPinCount);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,5 +54,10 @@ public class Pin {
     @Override
     public int hashCode() {
         return Objects.hash(fallenPinCount);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(fallenPinCount);
     }
 }

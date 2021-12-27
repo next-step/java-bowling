@@ -25,7 +25,7 @@ class FramesTest {
     @Test
     void bowlWithoutAddFrame() {
         // when
-        frames.bowl(Pin.of(5));
+        frames.bowl(Ball.of(5, State.READY));
         // then
         assertThat(frames.getFrames()).hasSize(FrameIndex.MIN);
     }
@@ -34,7 +34,7 @@ class FramesTest {
     @Test
     void bowlWithAddFrame() {
         // when
-        frames.bowl(Pin.of(10));
+        frames.bowl(Ball.of(10, State.READY));
 
         // then
         assertThat(frames.getFrames()).hasSize(FrameIndex.MIN + 1);

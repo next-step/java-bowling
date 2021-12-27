@@ -1,7 +1,7 @@
 package bowling.domain;
 
 public interface Frame {
-    Frame bowl(Pin pins);
+    Frame bowl(Ball ball);
 
     boolean isEnd();
 

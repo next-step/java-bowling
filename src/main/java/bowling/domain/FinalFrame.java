@@ -1,16 +1,16 @@
 package bowling.domain;
 
-import static bowling.domain.Pin.MAX_PIN_COUNT;
+import static bowling.domain.Ball.MAX_PIN_COUNT;
 
 public class FinalFrame implements Frame {
     private static final int MIN_BOWL_COUNT = 2;
     private static final int MAX_BOWL_COUNT = 3;
 
-    Bowl bowl;
+    Balls pins;
     private int count;
 
     private FinalFrame() {
-        this.bowl = FinalBowl.init();
+        this.pins = FinalBalls.init();
         this.count = 0;
     }
 
@@ -19,9 +19,9 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Frame bowl(Pin pin) {
+    public Frame bowl(Ball ball) {
         count++;
-        bowl.bowl(pin);
+        pins.bowl(ball);
         return this;
     }
 
@@ -34,7 +34,7 @@ public class FinalFrame implements Frame {
     }
 
     private int total() {
-        return bowl.pinsTotal();
+        return pins.total();
     }
 
     @Override
@@ -44,7 +44,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public String symbol() {
-        return bowl.symbol();
+        return pins.symbol();
     }
 
 }

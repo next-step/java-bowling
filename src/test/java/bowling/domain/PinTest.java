@@ -20,9 +20,9 @@ class PinTest {
 
     @DisplayName("Pin 입력 가능 범위가 아닐 경우 예외 발생")
     @ParameterizedTest
-    @ValueSource(ints = {Pin.MIN_PIN_COUNT - 1, Pin.MAX_PIN_COUNT + 1})
+    @ValueSource(ints = {Ball.MIN_PIN_COUNT - 1, Ball.MAX_PIN_COUNT + 1})
     void exception(int invalidPins) {
-        assertThatThrownBy(() -> Pin.of(invalidPins))
+        assertThatThrownBy(() -> Ball.of(invalidPins))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

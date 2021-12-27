@@ -4,20 +4,20 @@ import java.util.Objects;
 
 public class NormalFrame implements Frame {
     private final FrameIndex index;
-    private final Bowl bowl;
+    protected final Balls pins;
 
 
-    private NormalFrame(FrameIndex index, Bowl bowl) {
+    private NormalFrame(FrameIndex index, Balls pins) {
         this.index = index;
-        this.bowl = bowl;
+        this.pins = pins;
     }
 
-    public static NormalFrame of(FrameIndex index, Bowl bowl) {
-        return new NormalFrame(index, bowl);
+    public static NormalFrame of(FrameIndex index, Balls pins) {
+        return new NormalFrame(index, pins);
     }
 
     public static NormalFrame next(FrameIndex index) {
-        return of(index, Bowl.first());
+        return of(index, Balls.init());
     }
 
     public static NormalFrame init() {
@@ -25,8 +25,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Frame bowl(Pin pin) {
-        bowl.bowl(pin);
+    public Frame bowl(Ball ball) {
+        pins.bowl(ball);
         if (isEnd()) {
             return next();
         }
@@ -42,7 +42,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isEnd() {
-        return bowl.getLastState().isEnd();
+        return pins.isEnd();
     }
 
     public int getFrameIndex() {
@@ -51,7 +51,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public String symbol() {
-        return bowl.symbol();
+        return pins.symbol();
     }
 
     @Override

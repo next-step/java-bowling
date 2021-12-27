@@ -15,7 +15,7 @@ public class Frames {
         return new Frames(new ArrayList<>(Collections.singletonList(NormalFrame.init())));
     }
 
-    public void bowl(Pin pin) {
+    public void bowl(Ball pin) {
         Frame last = getLastFrame();
         Frame next = last.bowl(pin);
         if (isFrameCreated(last, next)) {

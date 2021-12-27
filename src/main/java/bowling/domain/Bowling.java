@@ -15,7 +15,7 @@ public class Bowling {
 		return new Bowling(player, Frames.init());
 	}
 
-	public void bowl(Pin pins) {
+	public void bowl(Ball pins) {
 		frames.bowl(pins);
 	}
 

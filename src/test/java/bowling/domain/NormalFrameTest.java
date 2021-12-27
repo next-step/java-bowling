@@ -22,20 +22,20 @@ class NormalFrameTest {
     @DisplayName("bowl 호출 후 종료 상태이면 새로운 Frame을 생성하여 추가한다.")
     @Test
     void frameStateStrikeOrSpareOrMissOrGutter() {
-        assertThat(frame.bowl(Pin.of(10))).isEqualTo(NormalFrame.next(FrameIndex.of(2)));
+        assertThat(frame.bowl(Ball.of(10, State.READY))).isEqualTo(NormalFrame.next(FrameIndex.of(2)));
     }
 
     @DisplayName("bowl 호출 후 종료 상태가 아니면 새로운 Frame을 생성하지 않고 현재 Frame을 반환한다.")
     @Test
     void frameStateReadyOrFirst() {
-        assertThat(frame.getFrameIndex()).isEqualTo(frame.bowl(Pin.of(5)).getFrameIndex());
+        assertThat(frame.getFrameIndex()).isEqualTo(frame.bowl(Ball.of(5, State.READY)).getFrameIndex());
     }
 
     @DisplayName("bowl 호출 후 다음 index가 마지막인 경우 FinalFrame을 추가하고 반환한다.")
     @Test
     void finalFrame() {
         for (int i = 0; i < FrameIndex.MAX; i++) {
-            frame = frame.bowl(Pin.of(10));
+            frame = frame.bowl(Ball.of(10, State.READY));
         }
         assertThat(frame).isInstanceOf(FinalFrame.class);
     }
@@ -43,7 +43,7 @@ class NormalFrameTest {
     @DisplayName("NormalFrame에서 첫 번째에 스트라이크 친 경우 한 번만 투구한다.")
     @Test
     void strike() {
-        frame.bowl(Pin.of(10));
+        frame.bowl(Ball.of(10, State.READY));
         assertThat(frame.symbol()).isEqualTo(State.STRIKE.getSymbol());
         assertThat(frame.isEnd()).isTrue();
     }
@@ -61,7 +61,7 @@ class NormalFrameTest {
     void twoBowls(int bowl1, int bowl2, String symbol) {
         List<Integer> pinNumbers = Arrays.asList(bowl1, bowl2);
         for (int pinNumber : pinNumbers) {
-            frame.bowl(Pin.of(pinNumber));
+            frame.bowl(Ball.of(pinNumber, State.READY));
         }
         assertThat(frame.symbol()).isEqualTo(symbol);
         assertThat(frame.isEnd()).isTrue();

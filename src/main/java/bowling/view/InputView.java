@@ -1,7 +1,8 @@
 package bowling.view;
 
-import bowling.domain.Pin;
+import bowling.domain.Ball;
 import bowling.domain.Player;
+import bowling.domain.State;
 
 import java.util.Scanner;
 
@@ -18,9 +19,9 @@ public final class InputView {
 		return new Player(name);
 	}
 
-	public static Pin fallenPins(int frameIndex) {
+	public static Ball fallenPins(int frameIndex) {
 		System.out.println(frameIndex + "프레임 투구 : ");
 		int pins = SCANNER.nextInt();
-		return Pin.of(pins);
+		return Ball.of(pins, State.READY);
 	}
 }

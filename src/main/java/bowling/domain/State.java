@@ -1,12 +1,7 @@
 package bowling.domain;
 
-import static bowling.domain.Pin.*;
-
 public enum State {
     STRIKE("X",true) {
-        public String symbol(Pin pin) {
-            return pin.symbol();
-        }
         public State bowl(Pin first, Pin second) {
             if(second.isStrike()) {
                 return STRIKE;
@@ -15,17 +10,11 @@ public enum State {
         }
     },
     SPARE("/",true) {
-        public String symbol(Pin pin) {
-            return this.getSymbol();
-        }
         public State bowl(Pin first, Pin second) {
             return SPARE;
         }
     },
     MISS("",true) {
-        public String symbol(Pin pin) {
-            return pin.symbol();
-        }
         public State bowl(Pin first, Pin second) {
             if(first.isGutter() && second.isGutter()) {
                 return GUTTER;
@@ -34,9 +23,6 @@ public enum State {
         }
     },
     GUTTER("-",true) {
-        public String symbol(Pin pin) {
-            return pin.symbol();
-        }
         public State bowl(Pin first, Pin second) {
             if (!first.isGutter() || !second.isGutter()) {
                 return MISS;
@@ -45,9 +31,6 @@ public enum State {
         }
     },
     FIRST("",false) {
-        public String symbol(Pin pin) {
-            return pin.symbol();
-        }
         public State bowl(Pin first, Pin second) {
             if (first.isSpare(second)) {
                 return SPARE;
@@ -59,9 +42,6 @@ public enum State {
         }
     },
     READY("",false) {
-        public String symbol(Pin pin) {
-            return "";
-        }
         public State bowl(Pin meaningLess, Pin pin) {
             if (pin.isStrike()) {
                 return STRIKE;
@@ -75,7 +55,6 @@ public enum State {
     private final boolean isEnd;
 
     public abstract State bowl(Pin first, Pin second);
-    public abstract String symbol(Pin pin);
 
     State(String symbol, boolean isEnd) {
         this.symbol = symbol;
@@ -86,20 +65,18 @@ public enum State {
         return this.symbol;
     }
 
-    public boolean isEnd() {
-        return this.isEnd;
+    public String getSymbol(Pin pin) {
+        if(this == FIRST || this == MISS) {
+            if (pin.isGutter()) {
+                return GUTTER.symbol;
+            }
+            return String.valueOf(pin);
+        }
+        return this.symbol;
     }
 
-    public static String of(int pin) {
-        if(pin == MAX_PIN_COUNT) {
-            return STRIKE.symbol;
-        }
-
-        if (pin == MIN_PIN_COUNT) {
-            return GUTTER.symbol;
-        }
-
-        return String.valueOf(pin);
+    public boolean isEnd() {
+        return this.isEnd;
     }
 
 }
