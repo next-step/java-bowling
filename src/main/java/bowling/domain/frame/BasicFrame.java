@@ -52,19 +52,6 @@ public class BasicFrame implements Frame {
         return state.symbol();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BasicFrame that = (BasicFrame) o;
-        return Objects.equals(index, that.index);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(index);
-    }
-
     private void validate(FrameIndex index, ThrowingState state) {
         if (Objects.isNull(index)) {
             throw new IllegalArgumentException("프레임을 셋팅할 인덱스가 null입니다.");
@@ -79,5 +66,18 @@ public class BasicFrame implements Frame {
             return LastFrame.initialize();
         }
         return create(index.next());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BasicFrame that = (BasicFrame) o;
+        return Objects.equals(index, that.index);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(index);
     }
 }
