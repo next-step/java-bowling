@@ -29,7 +29,7 @@ public class BowlingGame {
     }
 
     public boolean hasNextPitching() {
-        return frames.hasNext();
+        return frames.hasNextPitching();
     }
 
     public int getCurrentFrameIndex() {

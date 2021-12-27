@@ -31,7 +31,7 @@ public class Frames {
         return currentFrame().getIndex();
     }
 
-    public boolean hasNext() {
+    public boolean hasNextPitching() {
         return !(currentFrame().isEnd() && hasLastFrame());
     }
 

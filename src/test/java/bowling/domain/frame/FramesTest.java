@@ -62,12 +62,12 @@ class FramesTest {
         assertThat(frames.getFrames()).hasSize(2);
     }
 
-    @DisplayName("10프레임이면서 종료상태가 아니면 다음이 존재한다")
+    @DisplayName("프레임 진행 중에 다음 투구가 가능한지 확인")
     @Test
     void hasNext() {
         // given
         Frames frames = Frames.initialize();
         // when & then
-        assertThat(frames.hasNext()).isTrue();
+        assertThat(frames.hasNextPitching()).isTrue();
     }
 }
