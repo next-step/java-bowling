@@ -40,7 +40,7 @@ public class Question extends AbstractEntity {
     }
 
     private void validationWriter(User loginUser) throws CannotDeleteException {
-        if (!writer.equals(loginUser)) {
+        if (!isOwner(loginUser)) {
             throw new CannotDeleteException(MESSAGE_NO_PERMISSION);
         }
     }
