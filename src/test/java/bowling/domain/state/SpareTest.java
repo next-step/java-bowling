@@ -26,7 +26,7 @@ class SpareTest {
 
     @DisplayName("한 프레임에서 Spare 후, 투구하는 경우 예외")
     @Test
-    void bowl() {
+    void bowlFailed() {
         // when & then
         assertThatExceptionOfType(UnsupportedOperationException.class)
                 .isThrownBy(() -> spare.bowl(PinsTest.FIVE));

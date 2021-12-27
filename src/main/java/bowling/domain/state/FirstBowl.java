@@ -15,10 +15,17 @@ public class FirstBowl extends RunningState {
 
     @Override
     public ThrowingState bowl(Pins pins) {
+        validate(pins);
         if (first.isSpare(pins)) {
             return Spare.create(first, pins);
         }
         return Miss.create(first, pins);
+    }
+
+    private void validate(Pins second) {
+        if (!first.isValidSum(second)) {
+            throw new IllegalArgumentException(String.format("first(%s), second(%s)의 핀의 합은 %d를 넘을 수 없습니다.", first, second, Pins.MAX_PINS));
+        }
     }
 
     @Override

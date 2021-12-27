@@ -19,7 +19,7 @@ class MissTest {
 
     @DisplayName("한 프레임 종료 후, 재투구시 예외 확인")
     @Test
-    void bowl() {
+    void bowlFailed() {
         // given
         ThrowingState miss = Miss.create(PinsTest.FOUR, PinsTest.FIVE);
         // when & then
