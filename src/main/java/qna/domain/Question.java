@@ -21,7 +21,7 @@ public class Question extends AbstractEntity {
     private User writer;
 
     @Embedded
-    private Answers answers = new Answers();
+    private final Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -84,9 +84,9 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    public void setAnswers(Answers answers) {
-        this.answers = answers;
-        answers.toQuestion(this);
+    public void addAnswer(Answer answer) {
+        answer.toQuestion(this);
+        answers.add(answer);
     }
 
     public boolean isOwner(User loginUser) {

@@ -49,4 +49,7 @@ public class Answers {
         this.answers.forEach(answer -> answer.toQuestion(question));
     }
 
+    public void add(Answer answer) {
+        answers.add(answer);
+    }
 }

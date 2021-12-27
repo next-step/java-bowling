@@ -4,9 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
-import java.util.Collections;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -19,8 +16,10 @@ class AnswersTest {
     @DisplayName("Answer 전체 삭제: 작성자와 답변자가 동일할 경우")
     void allDeletedSameUser() throws CannotDeleteException {
         //given
-        List<Answer> collect = Collections.singletonList(A1);
-        Answers answers = new Answers(collect);
+        Answers answers = new Answers();
+        for (int i = 0; i < 10; i++) {
+            answers.add(A1);
+        }
 
         //when
         answers.delete(UserTest.JAVAJIGI);
@@ -33,9 +32,11 @@ class AnswersTest {
     @DisplayName("Answer 전체 삭제: 작성자와 답변자가 다를 경우")
     void allDeletedOtherUser() {
         //given
-        List<Answer> collect = Collections.singletonList(B1);
-        Answers answers = new Answers(collect);
-        QuestionTest.Q2.setAnswers(answers);
+        Answers answers = new Answers();
+        for (int i = 0; i < 10; i++) {
+            answers.add(A1);
+        }
+        answers.add(B1);
 
         //then
         assertThatThrownBy(() -> answers.delete(UserTest.JAVAJIGI))

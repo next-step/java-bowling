@@ -34,7 +34,7 @@ public class QuestionTest {
     @DisplayName("작성자와 이름이 같지만, 다른 사람이 쓴 답변이 있을 경우")
     void deleteWithAnotherAnswer() {
         //given
-        Q1.setAnswers(new Answers(AnswerTest.A2));
+        Q1.addAnswer(AnswerTest.A2);
         //then
         assertThatThrownBy(() -> Q1.deleteByUser(UserTest.JAVAJIGI))
                 .isInstanceOf(CannotDeleteException.class);
@@ -44,7 +44,7 @@ public class QuestionTest {
     @DisplayName("작성자와 이름이 같고, 작성자가 쓴 답변만 있을 경우")
     void deleteWithWriterAnswer() throws CannotDeleteException {
         //given
-        Q2.setAnswers(new Answers(AnswerTest.A2));
+        Q2.addAnswer(AnswerTest.A2);
         //when
         Q2.deleteByUser(UserTest.SANJIGI);
         //then

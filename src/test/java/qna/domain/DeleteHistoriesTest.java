@@ -12,8 +12,7 @@ class DeleteHistoriesTest {
     void prepend() throws CannotDeleteException {
         //given
         Question question = QuestionTest.Q1;
-        Answers answers = new Answers(AnswerTest.A1);
-        question.setAnswers(answers);
+        question.addAnswer(AnswerTest.A1);
 
         //when
         DeleteHistory questionDeleteHistory = question.toDeleteHistory();
