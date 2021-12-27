@@ -40,7 +40,7 @@ class AnswersTest {
         //then
         assertThatThrownBy(() -> answers.delete(UserTest.JAVAJIGI))
                 .isInstanceOf(CannotDeleteException.class)
-                .hasMessageContaining(Answers.MESSAGE_EXIST_ANSWER_BY_OTHER_USER);
+                .hasMessageContaining(Answer.MESSAGE_EXIST_ANSWER_BY_OTHER_USER);
     }
 
 }

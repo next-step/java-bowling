@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 @Embeddable
 public class Answers {
 
-    public static final String MESSAGE_EXIST_ANSWER_BY_OTHER_USER = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
@@ -43,9 +42,7 @@ public class Answers {
 
     private void validationWriter(User loginUser) throws CannotDeleteException {
         for (Answer answer : this.answers) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException(MESSAGE_EXIST_ANSWER_BY_OTHER_USER);
-            }
+            answer.validationWriterIsOwner(loginUser);
         }
     }
 
