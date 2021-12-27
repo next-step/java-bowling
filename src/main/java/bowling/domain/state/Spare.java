@@ -9,8 +9,15 @@ public class Spare extends EndedState {
     private final Pins second;
 
     private Spare(Pins first, Pins second) {
+        validate(first, second);
         this.first = first;
         this.second = second;
+    }
+
+    private void validate(Pins first, Pins second) {
+        if (!first.isSpare(second)) {
+            throw new IllegalArgumentException(String.format("first(%s), second(%s)는 spare 상태가 아닙니다.", first, second));
+        }
     }
 
     public static ThrowingState create(Pins first, Pins second) {

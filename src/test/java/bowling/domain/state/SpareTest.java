@@ -17,6 +17,13 @@ class SpareTest {
         spare = Spare.create(PinsTest.FIVE, PinsTest.FIVE);
     }
 
+    @DisplayName("Spare가 아닌 두 번의 투구로 Spare를 생성하는 경우")
+    @Test
+    void createFailed() {
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> Spare.create(PinsTest.FOUR, PinsTest.FIVE));
+    }
+
     @DisplayName("한 프레임에서 Spare 후, 투구하는 경우 예외")
     @Test
     void bowl() {
