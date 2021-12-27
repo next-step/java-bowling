@@ -1,13 +1,12 @@
 package bowling.view;
 
+import bowling.domain.value.Pins;
+
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class InputView {
 
     private static final String INPUT_NAME_MSG = "플레이어 이름은(3 english letters)?: ";
-    private static final String NOT_NUMBER_MESSAGE = "숫자만 입력 할 수 있습니다!!!";
-    private static final Pattern PATTERN = Pattern.compile("-?\\d+");
 
     private static Scanner sc = new Scanner(System.in);
 
@@ -18,19 +17,13 @@ public class InputView {
         return sc.nextLine();
     }
 
-    public int getBowlPinCount(int frameNo) {
+    public Pins getBowlPinCount(int frameNo) {
 
-        System.out.print(String.format("%d프레임 투구 : ", frameNo));
+        System.out.print(String.format("%d 프레임 투구 : ", frameNo + 1));
 
         String input = sc.nextLine();
-        checkNumber(input);
 
-        return Integer.parseInt(input);
+        return new Pins(input);
     }
 
-    private void checkNumber(String input) {
-        if(!PATTERN.matcher(input).matches()) {
-            throw new IllegalArgumentException(NOT_NUMBER_MESSAGE);
-        }
-    }
 }
