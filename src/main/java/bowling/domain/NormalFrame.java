@@ -4,12 +4,12 @@ import java.util.Objects;
 
 public class NormalFrame implements Frame {
     private final FrameIndex index;
-    protected final Balls pins;
+    private final Balls balls;
 
 
     private NormalFrame(FrameIndex index, Balls pins) {
         this.index = index;
-        this.pins = pins;
+        this.balls = pins;
     }
 
     public static NormalFrame of(FrameIndex index, Balls pins) {
@@ -26,7 +26,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame bowl(Ball ball) {
-        pins.bowl(ball);
+        balls.bowl(ball);
         if (isEnd()) {
             return next();
         }
@@ -42,7 +42,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isEnd() {
-        return pins.isEnd();
+        return balls.isEnd();
     }
 
     public int getFrameIndex() {
@@ -51,7 +51,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public String symbol() {
-        return pins.symbol();
+        return balls.symbol();
     }
 
     @Override

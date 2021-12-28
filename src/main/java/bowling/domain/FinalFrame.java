@@ -6,11 +6,11 @@ public class FinalFrame implements Frame {
     private static final int MIN_BOWL_COUNT = 2;
     private static final int MAX_BOWL_COUNT = 3;
 
-    Balls pins;
+    Balls balls;
     private int count;
 
     private FinalFrame() {
-        this.pins = FinalBalls.init();
+        this.balls = FinalBalls.init();
         this.count = 0;
     }
 
@@ -21,7 +21,7 @@ public class FinalFrame implements Frame {
     @Override
     public Frame bowl(Ball ball) {
         count++;
-        pins.bowl(ball);
+        balls.bowl(ball);
         return this;
     }
 
@@ -34,7 +34,7 @@ public class FinalFrame implements Frame {
     }
 
     private int total() {
-        return pins.total();
+        return balls.total();
     }
 
     @Override
@@ -44,7 +44,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public String symbol() {
-        return pins.symbol();
+        return balls.symbol();
     }
 
 }
