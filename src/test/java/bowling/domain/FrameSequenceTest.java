@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 public class FrameSequenceTest {
     @ParameterizedTest
@@ -26,6 +27,16 @@ public class FrameSequenceTest {
     public void isLast() {
         assertThat(FrameSequence.of(9).isFinal()).isFalse();
         assertThat(FrameSequence.of(10).isFinal()).isTrue();
+    }
+
+    @Test
+    public void next() {
+        assertThat(fs(8).next()).isEqualTo(fs(9));
+    }
+
+    @Test
+    public void nextFailed() {
+        assertThatIllegalStateException().isThrownBy(() -> fs(10).next());
     }
 
     public static FrameSequence fs(int sequence) {

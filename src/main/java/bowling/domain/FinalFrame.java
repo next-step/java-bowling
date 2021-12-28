@@ -2,7 +2,7 @@ package bowling.domain;
 
 import java.util.List;
 
-import bowling.engine.FirstClassList;
+import bowling.engine.collection.FirstClassList;
 import bowling.engine.Frame;
 import bowling.engine.Shot;
 
@@ -10,7 +10,7 @@ import static bowling.domain.ShotResult.STRIKE;
 
 public class FinalFrame extends NormalFrame {
     protected FinalFrame(List<Shot> shots) {
-        super(FrameSequence.FINAL, shots);
+        super(FrameSequence.FINAL_FRAME, shots);
     }
 
     static FinalFrame of(List<Shot> shots) {
@@ -31,19 +31,21 @@ public class FinalFrame extends NormalFrame {
             throw new IllegalStateException("the frame is already completed.");
         }
 
-        if (size() == NUMBER_OF_SHOT && !hasThirdChance()) {
-            throw new IllegalStateException("the third shot is allowed after clear");
-        }
-
         return of(append(shot).collect());
-    }
-
-    public boolean hasThirdChance() {
-        return isClear() || elementOf(FirstClassList.HEAD) == STRIKE;
     }
 
     @Override
     public boolean completed() {
         return hasThirdChance() ? size() == NUMBER_OF_FINAL_SHOT : super.completed();
+    }
+
+    @Override
+    public boolean hasThirdChance() {
+        return isClear() || elementOf(FirstClassList.HEAD) == STRIKE;
+    }
+
+    @Override
+    public boolean isFinal() {
+        return true;
     }
 }

@@ -13,13 +13,15 @@
   * [x] 10개의 프레임을 갖고 있는 점수판
     * [x] 최대 3글자의 이름
 * [ ] controller 설계
-    * [ ] 현재 프레임을 받아올 수 있어야함
-    * [ ] 10 프레임 종류 후 프로그램 종료
+    * [x] 현재 프레임을 받아올 수 있어야함
+    * [x] 10 프레임 종류 후 프로그램 종료
 * [ ] view 설계
   * [ ] 이름 입력
   * [ ] 투구 결과 입력
-* [ ] BowlingScoreBoard#current: 값이 변하는 변수
-* [ ] BowlingScoreBoard#nextShot: 한 메서드가 두가지 일을 한다
+* [x] BowlingScoreBoard#current: 값이 변하는 변수
+* [x] BowlingScoreBoard#nextShot: 한 메서드가 두가지 일을 한다
+* [ ] 현재 Frame에서 다음 Frame을 생성하는 방식으로 구현
+* [ ] 스페어 처리
 
 ## 기능 요구 사항
  * 최종 목표는 볼링 점수를 계산하는 프로그램을 구현

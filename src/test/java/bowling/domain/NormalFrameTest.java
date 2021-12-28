@@ -29,13 +29,21 @@ import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 public class NormalFrameTest {
     @Test
     public void create() {
-        assertThat(NormalFrame.ready(fs(1))).isInstanceOf(NormalFrame.class);
+        assertThat(NormalFrame.first(fs(1), GUTTER)).isInstanceOf(NormalFrame.class);
     }
 
-    @ParameterizedTest
-    @NullSource
-    public void createFailed(Sequence sequence) {
-        assertThatIllegalArgumentException().isThrownBy(() -> NormalFrame.ready(sequence));
+
+    public static Stream<Arguments> parseCreateFailed() {
+        return Stream.of(
+                Arguments.of(null, GUTTER),
+                Arguments.of(fs(1), null)
+        );
+    }
+
+    @ParameterizedTest(name = "create failed: {arguments}")
+    @MethodSource("parseCreateFailed")
+    public void createFailed(Sequence sequence, Shot shot) {
+        assertThatIllegalArgumentException().isThrownBy(() -> NormalFrame.first(sequence, shot));
     }
 
     @Test
@@ -142,6 +150,12 @@ public class NormalFrameTest {
     @Test
     public void hasThirdChance() {
         assertThat(fr(1).hasThirdChance()).isFalse();
+    }
+
+    @Test
+    public void isFinal() {
+        assertThat(fr(1).isFinal()).isFalse();
+        assertThat(fr(9).isFinal()).isFalse();
     }
 
     public static Frame fr(int sequence, Shot ... shots) {

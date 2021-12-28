@@ -9,4 +9,6 @@ public interface ScoreBoard {
     Sequence current();
 
     Name name();
+
+    boolean isEnded();
 }

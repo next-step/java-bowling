@@ -1,56 +1,64 @@
-package bowling.engine;
+package bowling.engine.collection;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public class FirstClassImmutableList<T> implements FirstClassList<T> {
+public abstract class AbstractFirstClassList<T> implements FirstClassList<T> {
+    private static final int LAST_DIFF = 1;
+
     private final List<T> collection;
 
-    protected FirstClassImmutableList(List<T> collection) {
-        this.collection = Collections.unmodifiableList(collection);
+    protected AbstractFirstClassList(List<T> collection) {
+        this.collection = collection;
     }
 
+    @Override
     public List<T> collect() {
         return collection;
     }
 
+    @Override
     public Stream<T> stream() {
         return collection.stream();
     }
 
+    @Override
     public void forEach(Consumer<? super T> action) {
         collection.forEach(action);
     }
 
+    @Override
     public int size() {
         return collection.size();
     }
 
+    @Override
     public T elementOf(int index) {
         return collection.get(index);
     }
 
+    @Override
     public int indexOf(T t) {
         return collection.indexOf(t);
     }
 
     @Override
-    public FirstClassList<T> append(T t) {
-        final List<T> listBuffer = new ArrayList<>(size() + 1);
-        listBuffer.addAll(collection);
-        listBuffer.add(t);
-        return new FirstClassImmutableList<>(listBuffer);
+    public T head() {
+        return elementOf(HEAD);
+    }
+
+    @Override
+    public T last() {
+        return elementOf(size() - LAST_DIFF);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof FirstClassImmutableList)) return false;
-        FirstClassImmutableList<?> that = (FirstClassImmutableList<?>) o;
+        if (!(o instanceof AbstractFirstClassList)) return false;
+        AbstractFirstClassList<?> that = (AbstractFirstClassList<?>) o;
         return Objects.equals(collection, that.collection);
     }
 

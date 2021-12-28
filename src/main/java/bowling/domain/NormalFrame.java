@@ -2,16 +2,16 @@ package bowling.domain;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Stream;
 
-import bowling.engine.FirstClassImmutableList;
+import bowling.engine.collection.FirstClassImmutableList;
 import bowling.engine.Frame;
 import bowling.engine.Score;
 import bowling.engine.Sequence;
 import bowling.engine.Shot;
 
 public class NormalFrame extends FirstClassImmutableList<Shot> implements Frame {
+    public static final Frame START_FRAME = new NormalFrame(FrameSequence.FIRST_FRAME, Collections.emptyList());
     private final Sequence sequence;
 
     protected NormalFrame(Sequence sequence, List<Shot> collection) {
@@ -34,8 +34,11 @@ public class NormalFrame extends FirstClassImmutableList<Shot> implements Frame 
         return new NormalFrame(sequence, shots);
     }
 
-    public static Frame ready(Sequence sequence) {
-        return of(sequence, Collections.emptyList());
+    public static Frame first(Sequence sequence, Shot shot) {
+        if (shot == null) {
+            throw new IllegalArgumentException("the first shot cannot be null");
+        }
+        return of(sequence, List.of(shot));
     }
 
     static int sum(Stream<Shot> shotStream) {
@@ -86,17 +89,8 @@ public class NormalFrame extends FirstClassImmutableList<Shot> implements Frame 
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        NormalFrame that = (NormalFrame) o;
-        return Objects.equals(sequence, that.sequence);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), sequence);
+    public boolean isFinal() {
+        return false;
     }
 
     @Override

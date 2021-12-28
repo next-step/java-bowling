@@ -16,7 +16,9 @@ public class FrameSequence implements Sequence {
         cache.put(index, new FrameSequence(index));
     }
 
-    public static final Sequence FINAL = cache.get(LAST);
+    public static final Sequence FIRST_FRAME = cache.get(FIRST);
+    public static final Sequence FINAL_FRAME = cache.get(LAST);
+    private static final int NEXT = 1;
 
     private final int frame;
 
@@ -35,6 +37,15 @@ public class FrameSequence implements Sequence {
     @Override
     public int toInt() {
         return frame;
+    }
+
+    @Override
+    public Sequence next() {
+        if (frame == LAST) {
+            throw new IllegalStateException("the last frame does not have next..");
+        }
+
+        return of(frame + NEXT);
     }
 
     @Override

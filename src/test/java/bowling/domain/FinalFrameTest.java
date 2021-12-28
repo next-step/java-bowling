@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import static bowling.domain.FrameSequenceTest.fs;
+import static bowling.domain.NormalFrameTest.fr;
 import static bowling.domain.ShotResult.FIVE;
 import static bowling.domain.ShotResult.FOUR;
 import static bowling.domain.ShotResult.GUTTER;
@@ -22,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 public class FinalFrameTest {
     @Test
     public void create() {
-        assertThat(NormalFrame.ready(fs(10))).isInstanceOf(FinalFrame.class);
+        assertThat(NormalFrame.first(fs(10), GUTTER)).isInstanceOf(FinalFrame.class);
     }
 
     public static Stream<Arguments> parseThird() {
@@ -93,6 +94,12 @@ public class FinalFrameTest {
         assertThat(frame.completed()).isFalse();
         assertThat(frame.nextShot(STRIKE).completed()).isFalse();
         assertThat(frame.nextShot(STRIKE).nextShot(STRIKE).completed()).isTrue();
+    }
+
+    @Test
+    public void isFinal() {
+        assertThat(ff(GUTTER).isFinal()).isTrue();
+        assertThat(fr(10).isFinal()).isTrue();
     }
 
     public static FinalFrame ff(Shot ... shots) {

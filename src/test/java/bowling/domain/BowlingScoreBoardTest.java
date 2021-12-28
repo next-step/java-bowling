@@ -1,12 +1,17 @@
 package bowling.domain;
 
+import java.util.List;
+
+import bowling.engine.Frame;
 import bowling.engine.Sequence;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 
+import static bowling.domain.FinalFrameTest.ff;
 import static bowling.domain.FrameSequenceTest.fs;
+import static bowling.domain.NormalFrameTest.fr;
 import static bowling.domain.ShotResult.GUTTER;
 import static bowling.domain.ShotResult.STRIKE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -58,6 +63,16 @@ public class BowlingScoreBoardTest {
         final Sequence sequence = fs(6);
         final BowlingScoreBoard board = BowlingScoreBoard.of("n1");
         assertThatIllegalStateException().isThrownBy(() -> board.score(sequence));
+    }
 
+    @Test
+    public void isEnd() {
+        final List<Frame> oneShotRemain = List.of(fr(1), fr(2), fr(3),
+                fr(4), fr(5), fr(6), fr(7),
+                fr(8), fr(9), ff(GUTTER));
+         final BowlingScoreBoard board = BowlingScoreBoard.of("n1", oneShotRemain);
+         assertThat(board.isEnded()).isFalse();
+         board.nextShot(GUTTER);
+         assertThat(board.isEnded()).isTrue();
     }
 }

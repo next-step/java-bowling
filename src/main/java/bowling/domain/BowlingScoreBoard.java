@@ -1,8 +1,7 @@
 package bowling.domain;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 import bowling.engine.Frame;
 import bowling.engine.Name;
@@ -10,22 +9,26 @@ import bowling.engine.Score;
 import bowling.engine.ScoreBoard;
 import bowling.engine.Sequence;
 import bowling.engine.Shot;
+import bowling.engine.collection.FirstClassMutableList;
 
-public class BowlingScoreBoard implements ScoreBoard {
+public class BowlingScoreBoard extends FirstClassMutableList<Frame> implements ScoreBoard {
+    private static final int FRAME_INDEX_DIFF = 1;
+
     private final Name name;
-    private final Map<Sequence, Frame> frames;
-    // todo final
-    private Sequence current;
 
-    protected BowlingScoreBoard(Name name, Map<Sequence, Frame> frames) {
+    protected BowlingScoreBoard(Name name, List<Frame> frames) {
+        super(frames);
         this.name = name;
-        this.frames = frames;
-        this.current = FrameSequence.of(Sequence.FIRST);
     }
 
     public static BowlingScoreBoard of(String name) {
+        List<Frame> frames = new ArrayList<>(NUMBER_OF_FRAME);
+        frames.add(NormalFrame.START_FRAME);
+        return new BowlingScoreBoard(Player.of(name), frames);
+    }
 
-        return new BowlingScoreBoard(Player.of(name), new HashMap<>());
+    public static BowlingScoreBoard of(String name, List<Frame> frames) {
+        return new BowlingScoreBoard(Player.of(name), frames);
     }
 
     @Override
@@ -34,37 +37,54 @@ public class BowlingScoreBoard implements ScoreBoard {
             throw new IllegalArgumentException("sequence cannot be null");
         }
 
-        if (!frames.containsKey(sequence)) {
+        if (size() < sequence.toInt()) {
             throw new IllegalStateException(sequence + " frame is not started.");
         }
 
-        return frames.get(sequence)
+        return elementOf(sequenceToIndex(sequence))
                 .score();
     }
 
     @Override
     public Frame nextShot(Shot shot) {
-        Frame frame = Optional.ofNullable(frames.get(current))
-                .orElse(NormalFrame.ready(current))
-                .nextShot(shot);
-        frames.put(current, frame);
+        Frame frame = last();
 
-        // todo refactoring next와 shot을 나누자
-        if (frame.completed()) {
-            // todo next
-            current = FrameSequence.of(current.toInt() + 1);
+        if (frame.completed()) { //todo refactor Frame#next
+            return nextFrame(frame.sequence(), shot);
         }
 
+        return setElement(sequenceToIndex(frame.sequence()), frame.nextShot(shot));
+    }
+
+    private Frame nextFrame(Sequence sequence, Shot shot) {
+        Frame frame = NormalFrame.first(sequence.next(), shot);
+        append(frame);
         return frame;
+    }
+
+    private int sequenceToIndex(Sequence sequence) {
+        return sequence.toInt() - FRAME_INDEX_DIFF;
     }
 
     @Override
     public Sequence current() {
-        return current;
+        Frame last = last();
+        if (last.isFinal() || !last().completed()) {
+            return last.sequence();
+        }
+
+        return last.sequence()
+                .next();
     }
 
     @Override
     public Name name() {
         return name;
+    }
+
+    @Override
+    public boolean isEnded() {
+        Frame last = last();
+        return last.isFinal() && last.completed();
     }
 }

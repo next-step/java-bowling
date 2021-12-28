@@ -1,4 +1,4 @@
-package bowling.engine;
+package bowling.engine.collection;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -15,6 +15,9 @@ public interface FirstClassList<T> {
 
     T elementOf(int index);
     int indexOf(T t);
+
+    T head();
+    T last();
 
     FirstClassList<T> append(T t);
 }
