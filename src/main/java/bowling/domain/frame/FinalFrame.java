@@ -71,7 +71,6 @@ public class FinalFrame extends Frame {
     }
 
     private boolean containBonusAbleState() {
-        return this.results.getResults().stream()
-            .anyMatch(result -> result instanceof BonusAbleState);
+        return this.results.containBonusAbleState();
     }
 }

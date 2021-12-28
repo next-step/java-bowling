@@ -68,8 +68,7 @@ public abstract class Frame {
             return false;
         }
 
-        return results.getResults().stream()
-            .allMatch(result -> result.isInstanceOf(Gutter.class));
+        return results.containAllIsGutter();
     }
 
     private void clearAndAddResultMiss(Pin pin) {

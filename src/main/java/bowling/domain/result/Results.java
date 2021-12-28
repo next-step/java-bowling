@@ -1,5 +1,7 @@
 package bowling.domain.result;
 
+import bowling.domain.result.status.BonusAbleState;
+import bowling.domain.result.status.Gutter;
 import bowling.domain.result.status.PinResultState;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,5 +58,19 @@ public class Results {
 
     public List<PinResultState> getResults() {
         return Collections.unmodifiableList(results);
+    }
+
+    public boolean containBonusAbleState() {
+        return this.results.stream()
+            .anyMatch(result -> result instanceof BonusAbleState);
+    }
+
+    public boolean containAllIsGutter() {
+        if (results.isEmpty()) {
+            return false;
+        }
+
+        return results.stream()
+            .allMatch(result -> result.isInstanceOf(Gutter.class));
     }
 }
