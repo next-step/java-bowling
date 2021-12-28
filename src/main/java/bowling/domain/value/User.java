@@ -4,14 +4,15 @@ import java.util.Objects;
 
 public class User {
     private static final String NAME_LENGTH_ERROR_MSG = "이름의 길으는 3글자를 초과 할 수 없습니다!!!";
+    private static final String NAME_NULL_ERROR_MSG = "빈 값과 null값은 입력 하실수 없습니다!!!";
     private static final int NAME_MAX_LENGTH = 3;
 
     private final String name;
 
     public User(String name) {
 
-        if(name == null && name.trim().isEmpty()) {
-            throw new NullPointerException("빈 값과 null값은 입력 하실수 없습니다!!!");
+        if(name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException(NAME_NULL_ERROR_MSG);
         }
 
         if(name.length() > NAME_MAX_LENGTH) {

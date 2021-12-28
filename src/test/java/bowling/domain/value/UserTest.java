@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 public class UserTest {
 
@@ -28,7 +27,8 @@ public class UserTest {
     @DisplayName("이름 생성할 null값이 들어가면 오류")
     @NullSource
     void nameExceptionTest(String inputData) {
-        assertThatThrownBy(() ->
-                new User(inputData)).isInstanceOf(NullPointerException.class);
+        assertThatIllegalArgumentException().isThrownBy(() ->
+                new User(inputData));
     }
+
 }
