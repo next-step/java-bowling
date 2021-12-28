@@ -27,8 +27,16 @@ public class Pins {
         return CACHE_PINS.get(count);
     }
 
-    public boolean isMaxPins() {
+    public boolean isStrike() {
         return count == MAXIMUM;
+    }
+
+    public int sumCount(Pins pins) {
+        return count + pins.count;
+    }
+
+    public boolean isSpare(Pins pins) {
+        return count < MAXIMUM && count + pins.count == MAXIMUM;
     }
 
     private static void valid(int pins) {
