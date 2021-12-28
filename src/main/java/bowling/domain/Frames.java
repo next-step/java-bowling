@@ -35,7 +35,7 @@ public class Frames {
     }
 
     public void addHittingPinsAtCurrentFrame(int hittingPins) {
-        getCurrentFrame().addKnockDownPins(hittingPins);
+        getCurrentFrame().pitching(hittingPins);
     }
 
     private Frame getCurrentFrame() {

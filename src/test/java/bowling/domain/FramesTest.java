@@ -36,7 +36,7 @@ class FramesTest {
         frames.addHittingPinsAtCurrentFrame(7);
         frames.addHittingPinsAtCurrentFrame(3);
         NormalFrame currentFrame = (NormalFrame) frames.getFrames().get(0);
-        assertThat(currentFrame.getBowlingPins()).containsExactly(new BowlingPins(7), new BowlingPins(3));
+        assertThat(currentFrame.getCountOfPitching()).isEqualTo(2);
     }
 
     @Test
