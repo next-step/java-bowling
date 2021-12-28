@@ -10,9 +10,9 @@ import bowling.view.OutputView;
 
 public class BowlingGame {
 
-    private static InputView inputView = new InputView();
-    private static OutputView outputView = new OutputView();
-    private static FrameFactory frameFactory = new FrameFactory();
+    private final InputView inputView;
+    private final OutputView outputView;
+    private final FrameFactory frameFactory;
 
     public BowlingGame(InputView inputView, OutputView outputView, FrameFactory frameFactory) {
         this.inputView = inputView;
