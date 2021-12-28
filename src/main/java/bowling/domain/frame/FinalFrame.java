@@ -7,6 +7,7 @@ import bowling.domain.value.Pins;
 
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class FinalFrame extends Frame {
@@ -15,7 +16,7 @@ public class FinalFrame extends Frame {
     private static final int MAXIMUM_PITCH_COUNT = 3;
     private static final int MAXIMUM_SPARE_STATE_COUNT = 2;
 
-    private final LinkedList<State> states;
+    private final List<State> states;
 
     public FinalFrame() {
         this.states = new LinkedList<>(Collections.singletonList(new Ready()));
@@ -32,7 +33,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isGameOver() {
-        if (states.getLast().isGameOver()) {
+        if (states.get(states.size() - 1).isGameOver()) {
             return true;
         }
 
@@ -55,7 +56,7 @@ public class FinalFrame extends Frame {
     }
 
     private void pitchOfFinalFrame(Pins pins) {
-        State lastState = states.getLast();
+        State lastState = states.get(states.size() - 1);
 
         if (lastState.isFinished()) {
             State ready = new Ready();
@@ -63,7 +64,7 @@ public class FinalFrame extends Frame {
             return;
         }
 
-        states.removeLast();
+        states.remove(states.size() - 1);
         states.add(lastState.bowl(pins));
     }
 
