@@ -3,11 +3,11 @@ package bowling.domain.frame;
 import bowling.domain.FrameIndex;
 import bowling.domain.Pins;
 import bowling.domain.PinsTest;
+import bowling.domain.Score;
 import bowling.domain.state.Ready;
 import bowling.domain.state.Strike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import qna.domain.Score;
 
 import java.util.Arrays;
 import java.util.Collections;

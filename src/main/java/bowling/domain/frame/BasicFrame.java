@@ -2,9 +2,9 @@ package bowling.domain.frame;
 
 import bowling.domain.FrameIndex;
 import bowling.domain.Pins;
+import bowling.domain.Score;
 import bowling.domain.state.Ready;
 import bowling.domain.state.ThrowingState;
-import qna.domain.Score;
 
 import java.util.Objects;
 

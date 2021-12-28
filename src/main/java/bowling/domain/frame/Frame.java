@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pins;
-import qna.domain.Score;
+import bowling.domain.Score;
 
 public interface Frame {
     Frame bowl(Pins pins);

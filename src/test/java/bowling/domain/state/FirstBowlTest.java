@@ -2,13 +2,13 @@ package bowling.domain.state;
 
 import bowling.domain.Pins;
 import bowling.domain.PinsTest;
+import bowling.domain.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import qna.domain.Score;
 
 import java.util.stream.Stream;
 

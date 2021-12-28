@@ -1,7 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
-import qna.domain.Score;
+import bowling.domain.Score;
 
 public class Ready extends RunningState {
     private static final String READY_SYMBOL = "";

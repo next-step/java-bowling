@@ -1,9 +1,9 @@
 package bowling.domain.state;
 
 import bowling.domain.PinsTest;
+import bowling.domain.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import qna.domain.Score;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;

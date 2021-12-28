@@ -1,4 +1,4 @@
-package qna.domain;
+package bowling.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

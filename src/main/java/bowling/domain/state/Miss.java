@@ -1,7 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
-import qna.domain.Score;
+import bowling.domain.Score;
 
 public class Miss extends EndedState {
     private static final String FRAME_STATE_FORMAT = "%s|%s";

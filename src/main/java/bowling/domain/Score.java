@@ -1,4 +1,4 @@
-package qna.domain;
+package bowling.domain;
 
 import java.util.Objects;
 

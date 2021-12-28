@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import qna.domain.Score;
-
 import java.util.Objects;
 
 public class Pins {
