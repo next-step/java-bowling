@@ -2,17 +2,17 @@ package bowling.domain;
 
 import java.util.ArrayList;
 
-public class NormalFlame extends DefaultFlame {
+public class NormalFrame extends DefaultFrame {
 
     private static final int FIRST_SCORE = 0;
     private static final int NORMAL_SCORE_TRY_COUNT = 2;
 
-    public NormalFlame() {
+    public NormalFrame() {
         super(new ArrayList<>());
     }
 
     @Override
-    public NormalFlame addScore(Pins pins) {
+    public NormalFrame addScore(Pins pins) {
         if (isStrike()) {
             throw new IllegalArgumentException("스트라이크");
         }

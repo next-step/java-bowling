@@ -2,14 +2,14 @@ package bowling.domain;
 
 import java.util.List;
 
-public abstract class DefaultFlame implements Flame {
+public abstract class DefaultFrame implements Frame {
 
     private static final int FIRST_SCORE = 0;
     private static final int SECOND_SCORE = 1;
 
     protected final List<Pins> score;
 
-    protected DefaultFlame(List<Pins> score) {
+    protected DefaultFrame(List<Pins> score) {
         this.score = score;
     }
 

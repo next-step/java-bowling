@@ -2,14 +2,14 @@ package bowling.domain;
 
 import java.util.ArrayList;
 
-public class FinalFlame extends DefaultFlame {
+public class FinalFrame extends DefaultFrame {
 
-    public FinalFlame() {
+    public FinalFrame() {
         super(new ArrayList<>());
     }
 
     @Override
-    public FinalFlame addScore(Pins pins) {
+    public FinalFrame addScore(Pins pins) {
         if (score.size() > 2) {
             throw new IllegalArgumentException("진행할 수 없는 프레임입니다.");
         }

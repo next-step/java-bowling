@@ -1,8 +1,8 @@
 package bowling.domain;
 
-public interface Flame {
+public interface Frame {
 
-    Flame addScore(Pins pins);
+    Frame addScore(Pins pins);
 
     boolean isStrike();
 
