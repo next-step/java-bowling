@@ -9,7 +9,7 @@ public abstract class Finished implements State {
 
     @Override
     public State bowl(Pins pins) {
-        throw new IllegalArgumentException(BOWL_ERROR_MSG);
+        throw new IllegalStateException(BOWL_ERROR_MSG);
     }
 
     @Override
