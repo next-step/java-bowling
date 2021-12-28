@@ -3,6 +3,7 @@ package bowling.domain.state;
 import bowling.domain.PinsTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import qna.domain.Score;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -47,5 +48,24 @@ class MissTest {
                 () -> assertThat(miss.symbol()).isEqualTo(String.format("%s|%s", PinsTest.FIVE.getValue(), PinsTest.FOUR.getValue())),
                 () -> assertThat(missWithGutter.symbol()).isEqualTo(String.format("%s|-", PinsTest.FIVE.getValue()))
         );
+    }
+
+    @DisplayName("현재 Score 반환 확인")
+    @Test
+    void score() {
+        // given
+        ThrowingState miss = Miss.create(PinsTest.FIVE, PinsTest.FOUR);
+        // when & then
+        assertThat(miss.score()).isEqualTo(Score.withNonRemainingPitches(9));
+    }
+
+    @DisplayName("1 Strike 1 Miss 이후, Score 반환 확인")
+    @Test
+    void scoreAfter() {
+        // given
+        ThrowingState miss = Miss.create(PinsTest.FIVE, PinsTest.FOUR);
+        Score strike = Score.of(10, 2);
+        // when & then
+        assertThat(miss.scoreAfter(strike)).isEqualTo(Score.withNonRemainingPitches(19));
     }
 }

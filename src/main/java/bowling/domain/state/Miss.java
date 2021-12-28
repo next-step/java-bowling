@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import qna.domain.Score;
 
 public class Miss extends EndedState {
     private static final String FRAME_STATE_FORMAT = "%s|%s";
@@ -33,6 +34,20 @@ public class Miss extends EndedState {
     @Override
     public boolean isMiss() {
         return true;
+    }
+
+    @Override
+    public Score score() {
+        return first.score(second);
+    }
+
+    @Override
+    public Score scoreAfter(Score prevScore) {
+        prevScore = prevScore.bowl(first.score());
+        if (prevScore.hasFinalScore()) {
+            return prevScore;
+        }
+        return prevScore.bowl(second.score());
     }
 
     private String formatValue(Pins pin) {
