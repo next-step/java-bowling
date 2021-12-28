@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -17,12 +18,6 @@ public class NormalFrame extends FirstClassImmutableList<Shot> implements Frame 
         super(collection);
         this.sequence = sequence;
     }
-
-    static int sum(Stream<Shot> shotStream) {
-        return shotStream.map(Shot::toInt)
-                .reduce(0, Integer::sum);
-    }
-
     static Frame of(Sequence sequence, List<Shot> shots) {
         if (sequence == null || shots == null) {
             throw new IllegalArgumentException("sequence or shots cannot be null");
@@ -39,21 +34,18 @@ public class NormalFrame extends FirstClassImmutableList<Shot> implements Frame 
         return new NormalFrame(sequence, shots);
     }
 
-    public static Frame strike(Sequence sequence) {
-        return of(sequence, List.of(ShotResult.STRIKE));
+    public static Frame ready(Sequence sequence) {
+        return of(sequence, Collections.emptyList());
     }
 
-    public static Frame first(Sequence sequence, Shot first) {
-        if (first == null) {
-            throw new IllegalArgumentException("shot results cannot be null");
-        }
-
-        return of(sequence, List.of(first));
+    static int sum(Stream<Shot> shotStream) {
+        return shotStream.map(Shot::toInt)
+                .reduce(0, Integer::sum);
     }
 
     @Override
-    public Frame second(Shot second) {
-        if (second == null) {
+    public Frame nextShot(Shot shot) {
+        if (shot == null) {
             throw new IllegalArgumentException("shot results cannot be null");
         }
 
@@ -65,12 +57,7 @@ public class NormalFrame extends FirstClassImmutableList<Shot> implements Frame 
             throw new IllegalStateException("the second shot is allowed after first shot.");
         }
 
-        return NormalFrame.of(sequence, append(second).collect());
-    }
-
-    @Override
-    public Frame third(Shot third) {
-        throw new IllegalStateException("the third shot is not allowed in normal frame");
+        return NormalFrame.of(sequence, append(shot).collect());
     }
 
     @Override
@@ -86,6 +73,11 @@ public class NormalFrame extends FirstClassImmutableList<Shot> implements Frame 
     @Override
     public Score score() {
         return FrameScore.of(sum(stream()));
+    }
+
+    @Override
+    public boolean hasThirdChance() {
+        return false;
     }
 
     @Override
