@@ -40,11 +40,7 @@ public class Frames {
     }
 
     public Frame bowl(Round round, Pin pin) {
-        Frame bowlAfterFrame = getFrame(round).bowl(pin);
-
-        frames.set(round.getIndex(), bowlAfterFrame);
-
-        return bowlAfterFrame;
+        return getFrame(round).bowl(pin);
     }
 
     public Frame getFrame(Round round) {

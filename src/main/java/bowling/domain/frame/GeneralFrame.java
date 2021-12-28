@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.Pin;
 import bowling.domain.progress.Progress;
 import bowling.domain.progress.ProgressFactory;
 import bowling.domain.result.ResultState;
@@ -30,11 +29,6 @@ public class GeneralFrame extends Frame {
         if (sumHitPinsCount() > MAX_HIT_PIN_COUNT) {
             throw new IllegalArgumentException("각 프레임별 HitPin 갯수는 10개를 넘길 수 없어요.");
         }
-    }
-
-    @Override
-    public Frame bowl(Pin pin) {
-        return new GeneralFrame(searchNextProgress(pin), this.results);
     }
 
     @Override

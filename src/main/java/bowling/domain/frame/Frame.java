@@ -4,21 +4,19 @@ import bowling.domain.Pin;
 import bowling.domain.progress.Opened;
 import bowling.domain.progress.Progress;
 import bowling.domain.progress.ProgressFactory;
-import bowling.domain.result.StateFactory;
 import bowling.domain.result.ResultState;
-import bowling.domain.result.status.PinResultState;
 import bowling.domain.result.Results;
+import bowling.domain.result.StateFactory;
 import bowling.domain.result.status.Gutter;
-import java.util.Optional;
+import bowling.domain.result.status.PinResultState;
 import java.util.function.Predicate;
 
 public abstract class Frame {
 
     protected static final int GENERAL_ROUND_NUMBER = 2;
 
-    protected Frame next;
-    protected final Progress progress;
-    protected final Results results;
+    protected Progress progress;
+    protected Results results;
 
     protected Frame() {
         this(ProgressFactory.create(), new Results());
@@ -30,15 +28,15 @@ public abstract class Frame {
         this.results = results;
     }
 
-    public boolean isOpened() {
+    public final boolean isOpened() {
         return this.progress instanceof Opened;
     }
 
-    public boolean isClosed() {
+    public final boolean isClosed() {
         return !isOpened();
     }
 
-    protected Progress searchNextProgress(Pin pin) {
+    protected final Progress updateNextProgress(Pin pin) {
         if (isClosed()) {
             throw new BowlingProgressException();
         }
@@ -55,15 +53,15 @@ public abstract class Frame {
         return nextProgress(resultState);
     }
 
-    protected int sumHitPinsCount() {
+    protected final int sumHitPinsCount() {
         return results.sumAll();
     }
 
-    protected int sumHitPinsCount(Predicate<? super ResultState> predicate) {
+    protected final int sumHitPinsCount(Predicate<? super ResultState> predicate) {
         return results.sum(predicate);
     }
 
-    protected boolean isMiss(ResultState resultState) {
+    protected final boolean isMiss(ResultState resultState) {
         if (results.isEmpty()) {
             return false;
         }
@@ -84,25 +82,16 @@ public abstract class Frame {
 
     protected abstract boolean isNextAbleState(ResultState resultState);
 
-    public abstract Frame bowl(Pin pin);
-
-    public void setNext(Frame next) {
-        if (next.equals(this)) {
-            throw new IllegalArgumentException("같은 프레임이 다음으로 올 수는 없어요.");
-        }
-
-        this.next = next;
+    public final Frame bowl(Pin pin) {
+        this.progress = updateNextProgress(pin);
+        return this;
     }
 
-    public Optional<Frame> getNext() {
-        return Optional.ofNullable(next);
-    }
-
-    public Progress getProgress() {
+    public final Progress getProgress() {
         return progress;
     }
 
-    public Results getResults() {
+    public final Results getResults() {
         return results;
     }
 }

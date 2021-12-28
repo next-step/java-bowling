@@ -1,14 +1,12 @@
 package bowling.domain.frame;
 
-import bowling.domain.Pin;
 import bowling.domain.progress.Progress;
 import bowling.domain.progress.ProgressFactory;
-import bowling.domain.result.status.BonusAbleState;
 import bowling.domain.result.ResultState;
 import bowling.domain.result.Results;
+import bowling.domain.result.status.NextAbleState;
 import bowling.domain.result.status.PinResultState;
 import bowling.domain.result.status.Strike;
-import bowling.domain.result.status.NextAbleState;
 import java.util.List;
 
 public class FinalFrame extends Frame {
@@ -37,11 +35,6 @@ public class FinalFrame extends Frame {
             > MAX_OF_GENERAL_HIT_PIN_COUNT) {
             throw new IllegalArgumentException("일반 게임의 HitPin 갯수는 10개를 넘길 수 없어요.");
         }
-    }
-
-    @Override
-    public Frame bowl(Pin pin) {
-        return new FinalFrame(searchNextProgress(pin), this.results);
     }
 
     @Override

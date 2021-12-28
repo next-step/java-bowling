@@ -11,7 +11,7 @@ public abstract class PinResultState implements ResultState {
         this.pin = pin;
     }
 
-    public int getHitPinCount() {
+    public final int getHitPinCount() {
         return this.pin.getHitCount();
     }
 
