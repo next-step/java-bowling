@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -7,85 +8,98 @@ import static org.assertj.core.api.Assertions.*;
 
 class NormalFrameTest {
 
+    private static final int STRIKE_PITCHING = 1;
+    private static final int NORMAL_PITCHING = 2;
+
+    private NormalFrame normalFrame;
+
+    @BeforeEach
+    void setUp() {
+        normalFrame = new NormalFrame();
+    }
+
     @Test
-    @DisplayName("노멀프레임 객체 생성 - 투구 개수, 리스트에 맞춘 핀 개수를 담는 리스트 생성")
+    @DisplayName("노멀프레임 객체 생성")
     void create() {
-        NormalFrame normalFrame = new NormalFrame();
         assertThat(normalFrame).isEqualTo(new NormalFrame());
     }
 
     @Test
-    @DisplayName("두번째 히팅 핀이 들어왔을 경우에, 두개 합이 11이상이면 IllegalArgumentException 반환")
+    @DisplayName("스트라이크 x -> 첫번째 투구 + 두번째 투구 핀의 합이 11이상이면 IllegalArgumentException 반환")
     void invalid() {
-        NormalFrame normalFrame = new NormalFrame();
-        normalFrame.addKnockDownPins(7);
-        assertThatThrownBy(() -> normalFrame.addKnockDownPins(4))
+        normalFrame.pitching(7);
+        assertThatThrownBy(() -> normalFrame.pitching(4))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    @DisplayName("두번째 히팅 핀이 들어왔을 경우에, 두개 합이 10이하이면 정상")
+    @DisplayName("스트라이크 o -> 두번째 투구를 할 경우, IllegalArgumentException 반환")
+    void invalidStrike() {
+        normalFrame.pitching(10);
+        assertThatThrownBy(() -> normalFrame.pitching(4))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("스트라이크 x -> 첫번째 투구 + 두번째 투구 핀의 합이 10이하이면 정상")
     void valid() {
-        NormalFrame normalFrame = new NormalFrame();
-        normalFrame.addKnockDownPins(7);
-        assertThatCode(() -> normalFrame.addKnockDownPins(3))
+        normalFrame.pitching(7);
+        assertThatCode(() -> normalFrame.pitching(3))
                 .doesNotThrowAnyException();
     }
 
     @Test
-    @DisplayName("맞춘 핀을 리스트에 담음 - 1투구(3), 2투구(가능)")
-    void addKnockDownPinsNoStrike() {
-        NormalFrame normalFrame = new NormalFrame();
-        normalFrame.addKnockDownPins(3);
-        assertThat(normalFrame.getBowlingPins()).size().isEqualTo(1);
-        assertThat(normalFrame.getBowlingPins().get(0)).isEqualTo(new BowlingPins(3));
-        assertThat(normalFrame.getCountOfPitching()).isEqualTo(2);
-    }
-
-    @Test
-    @DisplayName("맞춘 핀을 리스트에 다음 - 1투구(스트라이크), 2투구(불가능)")
-    void addBowlingPinsStrike() {
-        NormalFrame normalFrame = new NormalFrame();
-        normalFrame.addKnockDownPins(10);
-        assertThat(normalFrame.getBowlingPins()).size().isEqualTo(1);
-        assertThat(normalFrame.getBowlingPins().get(0)).isEqualTo(new BowlingPins(10));
+    @DisplayName("1투구(3), 2투구(가능)")
+    void pitching() {
+        normalFrame.pitching(3);
+        assertThat(normalFrame.getPitching()).isEqualTo(NORMAL_PITCHING);
         assertThat(normalFrame.getCountOfPitching()).isEqualTo(1);
     }
 
     @Test
-    @DisplayName("맞춘 핀을 리스트에 다음 - 1투구(8), 2투구(스페어)")
-    void addBowlingPinsSpare() {
-        NormalFrame normalFrame = new NormalFrame();
-        normalFrame.addKnockDownPins(8);
-        normalFrame.addKnockDownPins(2);
-        assertThat(normalFrame.getBowlingPins()).size().isEqualTo(2);
-        assertThat(normalFrame.getBowlingPins()).containsExactly(new BowlingPins(8), new BowlingPins(2));
+    @DisplayName("1투구(스트라이크), 2투구(불가능)")
+    void pitchingStrike() {
+        normalFrame.pitching(10);
+        assertThat(normalFrame.getPitching()).isEqualTo(STRIKE_PITCHING);
+        assertThat(normalFrame.getCountOfPitching()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("1투구(8), 2투구(스페어)")
+    void pitchingSpare() {
+        normalFrame.pitching(8);
+        normalFrame.pitching(2);
+        assertThat(normalFrame.getPitching()).isEqualTo(NORMAL_PITCHING);
         assertThat(normalFrame.getCountOfPitching()).isEqualTo(2);
     }
 
     @Test
     @DisplayName("투구가 가능한지 테스트")
     void isPossiblePitching() {
-        NormalFrame normalFrame = new NormalFrame();
-        normalFrame.addKnockDownPins(5);
+        normalFrame.pitching(5);
         assertThat(normalFrame.isPossiblePitching()).isTrue();
     }
 
     @Test
     @DisplayName("투구 불가능한지 테스트 - 스트라이크일 경우 false")
     void isImpossiblePitching() {
-        NormalFrame normalFrame = new NormalFrame();
-        normalFrame.addKnockDownPins(10);
+        normalFrame.pitching(10);
         assertThat(normalFrame.isPossiblePitching()).isFalse();
     }
 
     @Test
     @DisplayName("투구 불가능한지 테스트 - 2번 던졌을 경우 false")
     void isImpossiblePitching2() {
-        NormalFrame normalFrame = new NormalFrame();
-        normalFrame.addKnockDownPins(8);
-        normalFrame.addKnockDownPins(1);
+        normalFrame.pitching(8);
+        normalFrame.pitching(1);
         assertThat(normalFrame.isPossiblePitching()).isFalse();
+    }
+
+    @Test
+    @DisplayName("몇번째 투구인지 입력받아 맞춘 핀 가져오기")
+    void getCountOfHits() {
+        normalFrame.pitching(8);
+        assertThat(normalFrame.getCountOfHits(0)).isEqualTo(8);
     }
 
 }
