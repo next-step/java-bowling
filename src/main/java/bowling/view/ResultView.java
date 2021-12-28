@@ -62,11 +62,11 @@ public class ResultView {
         return String.valueOf(number);
     }
 
-    private static String printName(String name) {
+    static String printName(String name) {
         return String.format(NAME_FORMAT, name);
     }
 
-    private static String printEmptyScore(int countOfEmptyFrames) {
+    static String printEmptyScore(int countOfEmptyFrames) {
         StringBuilder builder = new StringBuilder();
         for (int i = FIRST_FRAME; i <= countOfEmptyFrames; i++) {
             builder.append(EMPTY_FRAME + LINE);
@@ -74,7 +74,7 @@ public class ResultView {
         return builder.toString();
     }
 
-    private static String printEachFrame(Frames frames) {
+    static String printEachFrame(Frames frames) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < frames.getFrameNumber(); i++) {
             String pin = convertScore(frames.findFrame(i));
@@ -88,13 +88,16 @@ public class ResultView {
     }
 
     private static String convertScore(Frame frame) {
-        if (frame.getCountOfPitchingSize() == 1) {
-            return scoreToMark(frame.getCountOfHits(0));
+        int first = frame.getCountOfHits(0);
+        int second = frame.getCountOfHits(1);
+        int bonus = frame.getCountOfHits(2);
+        if (frame.getCountOfPitching() == 1) {
+            return scoreToMark(first);
         }
-        if (frame.getCountOfPitchingSize() == 2) {
-            return scoreToMark(frame.getCountOfHits(0), frame.getCountOfHits(1));
+        if (frame.getCountOfPitching() == 2) {
+            return scoreToMark(first, second);
         }
-        return scoreToMark(frame.getCountOfHits(0), frame.getCountOfHits(1), frame.getCountOfHits(2));
+        return scoreToMark(first, second, bonus);
     }
 
     private static String scoreToMark(int first) {
@@ -131,11 +134,9 @@ public class ResultView {
         if (text.length() == 1) {
             return THREE_SPACE;
         }
-
         if (text.length() == 3) {
             return TWO_SPACE;
         }
-
         if (text.length() == 5) {
             return ONE_SPACE;
         }
