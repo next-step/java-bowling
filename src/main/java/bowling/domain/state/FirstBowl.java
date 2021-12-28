@@ -4,6 +4,8 @@ import bowling.domain.KnockedPinCount;
 import bowling.domain.Score;
 
 public class FirstBowl implements State, Running {
+    private static final int ZERO = 0;
+
     private final KnockedPinCount pinCount;
 
     public FirstBowl(int pinCount) {
@@ -38,7 +40,7 @@ public class FirstBowl implements State, Running {
 
     @Override
     public Score makeScore() {
-        return new Score(pinCount.value(), 0);
+        return new Score(pinCount.value(), ZERO);
     }
 
     @Override

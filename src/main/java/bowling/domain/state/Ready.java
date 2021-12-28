@@ -3,9 +3,10 @@ package bowling.domain.state;
 import bowling.domain.Score;
 
 public class Ready implements State {
-    private static final int STRIKE_COUNT = 10;
     public static final String READY_CANNOT_MAKE_SCORE_MESSAGE = "준비상태는 점수를 만들 수 없습니다.";
     public static final String READY_CANNOT_CALCULATE_SCORE_MESSAGE = "준비상태는 점수 계산을 할 수 없습니다.";
+
+    private static final int STRIKE_COUNT = 10;
 
     @Override
     public State bowl(int pinCount) {

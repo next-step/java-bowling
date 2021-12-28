@@ -34,7 +34,7 @@ public class Spare extends AbstractFinished {
 
     @Override
     public Score additionalCalculate(Score beforeScore) {
-        Score score = beforeScore.bowl(getValues().get(0).value());
+        Score score = beforeScore.bowl(getValues().get(ZERO).value());
         if (score.canCalculateScore()) {
             return score;
         }

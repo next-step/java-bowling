@@ -1,6 +1,13 @@
 package bowling.domain;
 
 public class Score {
+    private static final int TEN_SCORE = 10;
+    private static final int STRIKE_LEFT = 2;
+    private static final int SPARE_LEFT = 1;
+    private static final int NORMAL_LEFT = 0;
+    private static final int BOWL_COUNT = 1;
+    private static final int ZERO = 0;
+
     private int score;
     private final int left;
 
@@ -14,15 +21,15 @@ public class Score {
     }
 
     public static Score ofMiss(KnockedPinCount pinCount, KnockedPinCount newPinCount) {
-        return new Score(pinCount.value() + newPinCount.value(), 0);
+        return new Score(pinCount.value() + newPinCount.value(), ZERO);
     }
 
     public static Score ofStrike() {
-        return new Score(10, 2);
+        return new Score(TEN_SCORE, STRIKE_LEFT);
     }
 
     public static Score ofSpare() {
-        return new Score(10, 1);
+        return new Score(TEN_SCORE, SPARE_LEFT);
     }
 
     public static Score ofFirst(int pinCount) {
@@ -30,11 +37,11 @@ public class Score {
     }
 
     public static Score ofFirst(KnockedPinCount pinCount) {
-        return new Score(pinCount.value(), 0);
+        return new Score(pinCount.value(), NORMAL_LEFT);
     }
 
     public Score bowl(int countOfPins) {
-        return new Score(score += countOfPins, left - 1);
+        return new Score(score += countOfPins, left - BOWL_COUNT);
     }
 
     public int getScore() {
@@ -42,7 +49,7 @@ public class Score {
     }
 
     public boolean canCalculateScore() {
-        return left == 0;
+        return left == NORMAL_LEFT;
     }
 
     @Override

@@ -28,12 +28,12 @@ public class Miss extends AbstractFinished {
     @Override
     public Score makeScore() {
         List<KnockedPinCount> knockedPinCounts = this.pinCounts.getValues();
-        return new Score(knockedPinCounts.get(ZERO).value() + knockedPinCounts.get(ONE).value(), 0);
+        return new Score(knockedPinCounts.get(ZERO).value() + knockedPinCounts.get(ONE).value(), ZERO);
     }
 
     @Override
     public Score additionalCalculate(Score beforeScore) {
-        Score score = beforeScore.bowl(getValues().get(0).value());
+        Score score = beforeScore.bowl(getValues().get(ZERO).value());
         if (score.canCalculateScore()) {
             return score;
         }
