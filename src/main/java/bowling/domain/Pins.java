@@ -50,11 +50,11 @@ public class Pins {
     }
 
     public Score score() {
-        return Score.withNonLeftScore(value);
+        return Score.withNonRemainingPitches(value);
     }
 
     public Score score(Pins other) {
-        return Score.withNonLeftScore(Math.addExact(value, other.value));
+        return Score.withNonRemainingPitches(Math.addExact(value, other.value));
     }
 
     @Override

@@ -19,23 +19,15 @@ public class Score {
         this.remainingPitches = remainingPitches;
     }
 
-    public static Score withStrike() {
-        return create(10, 2);
-    }
-
-    public static Score withSpare() {
-        return create(10, 1);
-    }
-
-    public static Score withNonLeftScore(int value) {
-        return create(value, NO_REMAINING_PITCHES);
-    }
-
     public static Score withReady() {
         return new Score(READY_SCORE_VALUE, READY_REMAINING_PITCHES);
     }
 
-    public static Score create(int value, int remainingPitches) {
+    public static Score withNonRemainingPitches(int value) {
+        return of(value, NO_REMAINING_PITCHES);
+    }
+
+    public static Score of(int value, int remainingPitches) {
         validate(value, remainingPitches);
         return new Score(value, remainingPitches);
     }
@@ -53,7 +45,7 @@ public class Score {
 
     public Score bowl(Score nextValue) {
         int sum = this.value + nextValue.value;
-        return create(sum, remainingPitches - 1);
+        return of(sum, remainingPitches - 1);
     }
 
     public int getFinalValue() {

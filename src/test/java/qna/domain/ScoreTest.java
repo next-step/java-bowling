@@ -15,10 +15,8 @@ class ScoreTest {
     void create() {
         // when & then
         assertAll(
-                () -> assertThat(Score.create(1, 0)).isNotNull(),
-                () -> assertThat(Score.withNonLeftScore(8)).isNotNull(),
-                () -> assertThat(Score.withSpare()).isNotNull(),
-                () -> assertThat(Score.withStrike()).isNotNull(),
+                () -> assertThat(Score.of(1, 0)).isNotNull(),
+                () -> assertThat(Score.withNonRemainingPitches(8)).isNotNull(),
                 () -> assertThat(Score.withReady()).isNotNull()
         );
     }
@@ -45,7 +43,7 @@ class ScoreTest {
         int validExtraPitches = 2;
         // when & then
         assertThatIllegalArgumentException().isThrownBy(
-                () -> Score.create(invalidValue, validExtraPitches)
+                () -> Score.of(invalidValue, validExtraPitches)
         );
     }
 
@@ -57,7 +55,7 @@ class ScoreTest {
         int validValue = 5;
         // when & then
         assertThatIllegalArgumentException().isThrownBy(
-                () -> Score.create(validValue, invalidExtraPitches)
+                () -> Score.of(validValue, invalidExtraPitches)
         );
     }
 
@@ -65,10 +63,10 @@ class ScoreTest {
     @Test
     void bowlWithNonLeftScore() {
         // given
-        Score score = Score.withNonLeftScore(5);
+        Score score = Score.withNonRemainingPitches(5);
         // when & then
         assertAll(
-                () -> assertThat(score).isEqualTo(Score.create(5, 0)),
+                () -> assertThat(score).isEqualTo(Score.of(5, 0)),
                 () -> assertThat(score.getFinalValue()).isEqualTo(5)
         );
     }
@@ -77,12 +75,12 @@ class ScoreTest {
     @Test
     void bowlWithSpareNextScore() {
         // given
-        Score spareScore = Score.withSpare();
+        Score spareScore = Score.of(10, 1);
         // when
-        Score finalScore = spareScore.bowl(Score.withNonLeftScore(5));
+        Score finalScore = spareScore.bowl(Score.withNonRemainingPitches(5));
         // then
         assertAll(
-                () -> assertThat(finalScore).isEqualTo(Score.create(10 + 5, 0)),
+                () -> assertThat(finalScore).isEqualTo(Score.of(10 + 5, 0)),
                 () -> assertThat(finalScore.getFinalValue()).isEqualTo(15)
         );
     }
@@ -91,16 +89,16 @@ class ScoreTest {
     @Test
     void bowlWithStrikeNextScore() {
         // given
-        Score strikeScore = Score.withStrike();
+        Score strikeScore = Score.of(10, 2);
         // when
-        Score middleScore = strikeScore.bowl(Score.withNonLeftScore(5));
+        Score middleScore = strikeScore.bowl(Score.withNonRemainingPitches(5));
         // then
-        assertThat(middleScore).isEqualTo(Score.create(10 + 5, 1));
+        assertThat(middleScore).isEqualTo(Score.of(10 + 5, 1));
         // when
-        Score finalScore = middleScore.bowl(Score.withNonLeftScore(3));
+        Score finalScore = middleScore.bowl(Score.withNonRemainingPitches(3));
         // then
         assertAll(
-                () -> assertThat(finalScore).isEqualTo(Score.create(10 + 5 + 3, 0)),
+                () -> assertThat(finalScore).isEqualTo(Score.of(10 + 5 + 3, 0)),
                 () -> assertThat(finalScore.getFinalValue()).isEqualTo(18)
         );
     }
@@ -110,14 +108,14 @@ class ScoreTest {
     void getFinalValue() {
         // given
         int spareValue = 10;
-        Score spareScore = Score.create(spareValue, 1);
+        Score spareScore = Score.of(spareValue, 1);
         // when & then
         assertThatExceptionOfType(IllegalStateException.class)
                 .isThrownBy(spareScore::getFinalValue);
         // given
         int basicScore = 3;
         // when
-        Score finalScore = spareScore.bowl(Score.withNonLeftScore(basicScore));
+        Score finalScore = spareScore.bowl(Score.withNonRemainingPitches(basicScore));
         // then
         assertThat(finalScore.getFinalValue()).isEqualTo(spareValue + basicScore);
     }
@@ -127,13 +125,13 @@ class ScoreTest {
     void getValue() {
         // given
         int spareValue = 10;
-        Score spareScore = Score.create(10, 1);
+        Score spareScore = Score.of(10, 1);
         // when & then
         assertThat(spareScore.getValue()).isEqualTo(spareValue);
         // given
         int basicScore = 3;
         // when
-        Score finalScore = spareScore.bowl(Score.withNonLeftScore(basicScore));
+        Score finalScore = spareScore.bowl(Score.withNonRemainingPitches(basicScore));
         // then
         assertThat(finalScore.getValue()).isEqualTo(spareValue + basicScore);
     }

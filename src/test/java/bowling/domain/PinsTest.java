@@ -75,7 +75,7 @@ public class PinsTest {
         // given
         Pins pins = Pins.create(5);
         // when & then
-        assertThat(pins.score()).isEqualTo(Score.withNonLeftScore(5));
+        assertThat(pins.score()).isEqualTo(Score.withNonRemainingPitches(5));
     }
 
     @DisplayName("두 Pins 의 Score 합 반환")
@@ -87,6 +87,6 @@ public class PinsTest {
         // when
         Score score = Pins.create(pinScore).score(Pins.create(otherPinScore));
         // then
-        assertThat(score).isEqualTo(Score.withNonLeftScore(pinScore + otherPinScore));
+        assertThat(score).isEqualTo(Score.withNonRemainingPitches(pinScore + otherPinScore));
     }
 }
