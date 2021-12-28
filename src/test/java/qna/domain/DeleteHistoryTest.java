@@ -26,9 +26,9 @@ public class DeleteHistoryTest {
     @Test
     void createFromAnswerTest() {
         // when
-        DeleteHistory deleteHistory = DeleteHistory.from(AnswerTest.A1);
+        DeleteHistory deleteHistory = DeleteHistory.from(AnswerTest.A1_OF_JAVAJIGI);
         // then
-        assertThat(deleteHistory.deletedBy()).isEqualTo(AnswerTest.A1.getWriter());
+        assertThat(deleteHistory.deletedBy()).isEqualTo(AnswerTest.A1_OF_JAVAJIGI.getWriter());
     }
 
     @DisplayName("삭제 이력 대상 콘텐트 Id 확인")

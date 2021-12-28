@@ -74,13 +74,6 @@ public class User extends AbstractEntity {
         return false;
     }
 
-    private static class GuestUser extends User {
-        @Override
-        public boolean isGuestUser() {
-            return true;
-        }
-    }
-
     @Override
     public String toString() {
         return "User{" +
@@ -92,5 +85,12 @@ public class User extends AbstractEntity {
                 ", createdAt=" + getCreatedAt() +
                 ", updatedAt=" + getUpdatedAt() +
                 '}';
+    }
+
+    private static class GuestUser extends User {
+        @Override
+        public boolean isGuestUser() {
+            return true;
+        }
     }
 }

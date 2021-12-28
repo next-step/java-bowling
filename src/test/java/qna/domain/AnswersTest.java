@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("질문에 대한 답변들 테스트")
 class AnswersTest {
-    public static Answers ANSWERS_A1 = Answers.from(Collections.singletonList(AnswerTest.A1));
-    public static Answers ANSWERS_A1A2 = Answers.from(Arrays.asList(AnswerTest.A1, AnswerTest.A2));
+    public static Answers ANSWERS_A1 = Answers.from(Collections.singletonList(AnswerTest.A1_OF_JAVAJIGI));
+    public static Answers ANSWERS_A1A2 = Answers.from(Arrays.asList(AnswerTest.A1_OF_JAVAJIGI, AnswerTest.A2_OF_SANGJIGI));
 
     private Answers answers;
 
@@ -39,7 +39,7 @@ class AnswersTest {
     @Test
     void fromTest() {
         // given
-        List<Answer> answers = Arrays.asList(AnswerTest.A1, AnswerTest.A2);
+        List<Answer> answers = Arrays.asList(AnswerTest.A1_OF_JAVAJIGI, AnswerTest.A2_OF_SANGJIGI);
         // when
         Answers actual = Answers.from(answers);
         // then
@@ -62,12 +62,12 @@ class AnswersTest {
     @Test
     void addTest() {
         // when
-        Answers newAnswer1 = answers.add(AnswerTest.A1);
-        Answers newAnswer2 = newAnswer1.add(AnswerTest.A2);
+        Answers newAnswer1 = answers.add(AnswerTest.A1_OF_JAVAJIGI);
+        Answers newAnswer2 = newAnswer1.add(AnswerTest.A2_OF_SANGJIGI);
         // then
         assertAll(
-                () -> assertThat(newAnswer1.getAnswers()).containsOnly(AnswerTest.A1),
-                () -> assertThat(newAnswer2.getAnswers()).containsExactly(AnswerTest.A1, AnswerTest.A2)
+                () -> assertThat(newAnswer1.getAnswers()).containsOnly(AnswerTest.A1_OF_JAVAJIGI),
+                () -> assertThat(newAnswer2.getAnswers()).containsExactly(AnswerTest.A1_OF_JAVAJIGI, AnswerTest.A2_OF_SANGJIGI)
         );
     }
 
@@ -98,14 +98,14 @@ class AnswersTest {
     @Test
     void deletableTrueTest() {
         // when & then
-        assertThat(AnswersTest.ANSWERS_A1.deletable(AnswerTest.A1.getWriter())).isTrue();
+        assertThat(AnswersTest.ANSWERS_A1.deletable(AnswerTest.A1_OF_JAVAJIGI.getWriter())).isTrue();
     }
 
     @DisplayName("답변들의 삭제 실패 여부 확인")
     @Test
     void deletableFalseTest() {
         // when & then
-        assertThat(AnswersTest.ANSWERS_A1A2.deletable(AnswerTest.A1.getWriter())).isFalse();
+        assertThat(AnswersTest.ANSWERS_A1A2.deletable(AnswerTest.A1_OF_JAVAJIGI.getWriter())).isFalse();
     }
 
     @DisplayName("답변들 삭제")
