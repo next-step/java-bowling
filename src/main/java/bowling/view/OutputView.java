@@ -1,7 +1,8 @@
 package bowling.view;
 
-import bowling.domain.*;
-import bowling.domain.state.*;
+import bowling.domain.BowlingGame;
+import bowling.domain.Frame;
+import bowling.domain.Score;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,15 +15,10 @@ public class OutputView {
     private static final String SCORE_BOARD_MARK_TEMPLATE = "  %-4s|";
     private static final String SCORE_BOARD_SCORE_TEMPLATE = "  %-4d|";
 
-    private static final String STRIKE_MARK = "X";
-    private static final String SPARE_MARK = "/";
-    private static final String GUTTER_MARK = "-";
-    private static final String SEPARATOR = "|";
     private static final String EMPTY = "";
     private static final StringBuilder sb = new StringBuilder();
 
     private static final int ZERO = 0;
-    private static final int TWO = 2;
     private static final int TEN = 10;
 
     private OutputView() {}
@@ -51,65 +47,10 @@ public class OutputView {
     private static String scoreMark(int index, BowlingGame bowlingGame) {
         if (index < bowlingGame.frames().size()) {
             Frame frame = bowlingGame.frames().get(index);
-            return makeScoreMark(frame);
+            return frame.getState().display();
         }
 
         return EMPTY;
-    }
-
-    private static String makeScoreMark(Frame frame) {
-        if (frame.isFinalFrame()) {
-            return makeFinalScoreMark(frame.getState());
-        }
-        return makeScoreMark(frame.getState());
-    }
-
-    private static String makeFinalScoreMark(State state) {
-        if (isBonusAndSpare(state)) {
-            List<KnockedPinCount> values = ((Bonus) state).getValues();
-            return toMark(values.get(ZERO).value()) + SEPARATOR + SPARE_MARK + SEPARATOR + toMark(values.get(TWO).value());
-        }
-        return makeScoreMark(state);
-    }
-
-    private static boolean isBonusAndSpare(State state) {
-        return state.isBonus() && ((Bonus) state).getPrevious().isSpare();
-    }
-
-    private static String makeScoreMark(State state) {
-        if (state.isFinished()) {
-            return makeJoiningScoreMark((Finished) state);
-        }
-
-        if (state.isRunning()) {
-            return makeOneScoreMark((Running) state);
-        }
-
-        return EMPTY;
-    }
-
-    private static String makeJoiningScoreMark(Finished state) {
-        if (((State) state).isSpare()) {
-            return toMark(state.getValues().get(ZERO).value()) + SEPARATOR + SPARE_MARK;
-        }
-
-        return state.getValues().stream()
-                .map(knockedPinCount -> toMark(knockedPinCount.value()))
-                .collect(Collectors.joining(SEPARATOR));
-    }
-
-    private static String makeOneScoreMark(Running state) {
-        return toMark(state.getFirst());
-    }
-
-    private static String toMark(int knockOutCount) {
-        if (knockOutCount == TEN) {
-            return STRIKE_MARK;
-        }
-        if (knockOutCount == ZERO) {
-            return GUTTER_MARK;
-        }
-        return String.valueOf(knockOutCount);
     }
 
     private static void printScore(BowlingGame bowlingGame) {
@@ -163,7 +104,7 @@ public class OutputView {
     }
 
     private static String makeNormalScore(Frame frame) {
-        if (frame.getState().isFinished()) {
+        if (frame.isFinished()) {
             return toScore(frame.getScore());
         }
         return EMPTY;

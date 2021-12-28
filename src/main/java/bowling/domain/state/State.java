@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.annotations.ForUI;
 import bowling.domain.Score;
 
 public interface State {
@@ -7,12 +8,15 @@ public interface State {
     boolean isEnd();
     boolean hasBonus();
 
+    @ForUI
     Score makeScore();
 
+    @ForUI
     Score additionalCalculate(Score beforeScore);
 
-    boolean isBonus();
-    boolean isSpare();
+    @ForUI
     boolean isFinished();
-    boolean isRunning();
+
+    @ForUI
+    String display();
 }

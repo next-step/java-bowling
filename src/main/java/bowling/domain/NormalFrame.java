@@ -59,7 +59,6 @@ public class NormalFrame extends AbstractFrame {
         return next;
     }
 
-    @ForUI
     @Override
     public State getState() {
         return state;

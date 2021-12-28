@@ -14,7 +14,7 @@ public class Spare extends AbstractFinished {
 
     @Override
     public State bowl(int pinCount) {
-        return Bonus.ofSpare(pinCounts.knockOut(pinCount), this);
+        return Bonus.ofSpare(pinCounts.knockOut(pinCount));
     }
 
     @Override
@@ -39,20 +39,5 @@ public class Spare extends AbstractFinished {
             return score;
         }
         return score.bowl(getValues().get(1).value());
-    }
-
-    @Override
-    public boolean isBonus() {
-        return false;
-    }
-
-    @Override
-    public boolean isSpare() {
-        return true;
-    }
-
-    @Override
-    public boolean isRunning() {
-        return false;
     }
 }

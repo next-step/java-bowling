@@ -3,7 +3,7 @@ package bowling.domain.state;
 import bowling.domain.KnockedPinCount;
 import bowling.domain.Score;
 
-public class FirstBowl implements State, Running {
+public class FirstBowl implements State {
     private static final int ZERO = 0;
 
     private final KnockedPinCount pinCount;
@@ -21,11 +21,6 @@ public class FirstBowl implements State, Running {
         }
 
         return new Miss(this.pinCount, newPinCount);
-    }
-
-    @Override
-    public int getFirst() {
-        return pinCount.value();
     }
 
     @Override
@@ -49,22 +44,12 @@ public class FirstBowl implements State, Running {
     }
 
     @Override
-    public boolean isBonus() {
-        return false;
-    }
-
-    @Override
-    public boolean isSpare() {
-        return false;
-    }
-
-    @Override
     public boolean isFinished() {
         return false;
     }
 
     @Override
-    public boolean isRunning() {
-        return true;
+    public String display() {
+        return pinCount.display();
     }
 }

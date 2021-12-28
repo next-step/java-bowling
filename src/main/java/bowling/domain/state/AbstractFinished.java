@@ -30,6 +30,11 @@ public abstract class AbstractFinished implements State, Finished {
     }
 
     @Override
+    public String display() {
+        return pinCounts.display();
+    }
+
+    @Override
     public List<KnockedPinCount> getValues() {
         return Collections.unmodifiableList(pinCounts.getValues());
     }

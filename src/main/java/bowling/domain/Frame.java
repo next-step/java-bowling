@@ -17,6 +17,9 @@ public interface Frame {
     Frame next();
 
     @ForUI
+    boolean isFinished();
+
+    @ForUI
     int getFrameNumber();
 
     @ForUI

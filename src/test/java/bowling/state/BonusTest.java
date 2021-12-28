@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BonusTest {
-    private final State strikeBonus = Bonus.ofStrike(new PinCounts(10, 5), new Strike());
-    private final State spareBonus = Bonus.ofSpare(new PinCounts(5, 5).knockOut(4), new Spare(5, 5));
+    private final State strikeBonus = Bonus.ofStrike(new PinCounts(10, 5));
+    private final State spareBonus = Bonus.ofSpare(new PinCounts(5, 5).knockOut(4));
 
     @Test
     void 추가점수계산이_2회인경우_대상으로_보너스인_경우_점수계산() {
