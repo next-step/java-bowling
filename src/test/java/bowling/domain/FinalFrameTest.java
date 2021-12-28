@@ -12,9 +12,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import static bowling.domain.FrameSequenceTest.fs;
 import static bowling.domain.NormalFrameTest.fr;
+import static bowling.domain.ShotResult.EIGHT;
 import static bowling.domain.ShotResult.FIVE;
 import static bowling.domain.ShotResult.FOUR;
 import static bowling.domain.ShotResult.GUTTER;
+import static bowling.domain.ShotResult.NINE;
+import static bowling.domain.ShotResult.ONE;
+import static bowling.domain.ShotResult.SEVEN;
 import static bowling.domain.ShotResult.SIX;
 import static bowling.domain.ShotResult.STRIKE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -63,7 +67,7 @@ public class FinalFrameTest {
     public static Stream<Arguments> parseThirdFailed() {
         return Stream.of(
                 Arguments.of(ff(GUTTER, GUTTER), GUTTER),
-                Arguments.of(ff(GUTTER, GUTTER), GUTTER),
+                Arguments.of(ff(EIGHT, ONE), SEVEN),
                 Arguments.of(ff(STRIKE, FIVE), SIX)
         );
     }
@@ -79,21 +83,40 @@ public class FinalFrameTest {
         assertThatIllegalStateException().isThrownBy(() -> ff(STRIKE, STRIKE, STRIKE).nextShot(STRIKE));
     }
 
-    @Test
-    public void completedWithSecondShot() {
-        Frame frame = ff(GUTTER);
-        assertThat(frame.completed()).isFalse();
-        assertThat(frame.nextShot(GUTTER).completed()).isTrue();
-        assertThat(frame.nextShot(STRIKE).completed()).isFalse();
-        assertThat(frame.nextShot(STRIKE).nextShot(GUTTER).completed()).isTrue();
+    public static Stream<Arguments> parseCompletedWithSecondShot() {
+        return Stream.of(
+                Arguments.of(GUTTER, GUTTER),
+                Arguments.of(EIGHT, ONE),
+                Arguments.of(FOUR, FIVE)
+        );
     }
 
-    @Test
-    public void completedWithThirdShot() {
-        Frame frame = ff(STRIKE);
+    @ParameterizedTest(name = "completed with second shot: {arguments}")
+    @MethodSource("parseCompletedWithSecondShot")
+    public void completedWithSecondShot(Shot first, Shot second) {
+        Frame frame = ff(first);
         assertThat(frame.completed()).isFalse();
-        assertThat(frame.nextShot(STRIKE).completed()).isFalse();
-        assertThat(frame.nextShot(STRIKE).nextShot(STRIKE).completed()).isTrue();
+        assertThat(frame.nextShot(second).completed()).isTrue();
+        assertThatIllegalStateException().isThrownBy(() -> frame.nextShot(second).nextShot(GUTTER));
+    }
+
+    public static Stream<Arguments> parseCompletedWithThirdShot() {
+        return Stream.of(
+                Arguments.of(STRIKE, STRIKE, STRIKE),
+                Arguments.of(STRIKE, GUTTER, GUTTER),
+                Arguments.of(NINE, ONE, SEVEN),
+                Arguments.of(GUTTER, STRIKE, SIX)
+        );
+    }
+
+    @ParameterizedTest(name = "completed with third shot: {arguments}")
+    @MethodSource("parseCompletedWithThirdShot")
+    public void completedWithThirdShot(Shot first, Shot second, Shot third) {
+        Frame frame = ff(first);
+        assertThat(frame.completed()).isFalse();
+        assertThat(frame.nextShot(second).completed()).isFalse();
+        assertThat(frame.nextShot(second).nextShot(third).completed()).isTrue();
+        assertThatIllegalStateException().isThrownBy(() -> frame.nextShot(second).nextShot(third).nextShot(GUTTER));
     }
 
     @Test

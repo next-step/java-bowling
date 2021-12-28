@@ -36,7 +36,7 @@ public class FinalFrame extends NormalFrame {
 
     @Override
     public boolean completed() {
-        return hasThirdChance() ? size() == NUMBER_OF_FINAL_SHOT : super.completed();
+        return size() == NUMBER_OF_FINAL_SHOT | (!hasThirdChance() && size() == NUMBER_OF_SHOT);
     }
 
     @Override

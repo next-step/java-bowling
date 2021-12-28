@@ -2,6 +2,7 @@ package bowling.engine.collection;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -38,6 +39,16 @@ public abstract class AbstractFirstClassList<T> implements FirstClassList<T> {
     public T elementOf(int index) {
         return collection.get(index);
     }
+
+    @Override
+    public Optional<T> elementOfOptional(int index) {
+        if (index < HEAD || index >= size()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(collection.get(index));
+    }
+
 
     @Override
     public int indexOf(T t) {

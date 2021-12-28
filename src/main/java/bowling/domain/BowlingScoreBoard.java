@@ -2,6 +2,7 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import bowling.engine.Frame;
 import bowling.engine.Name;
@@ -32,17 +33,17 @@ public class BowlingScoreBoard extends FirstClassMutableList<Frame> implements S
     }
 
     @Override
-    public Score score(Sequence sequence) {
+    public Optional<Score> score(Sequence sequence) {
         if (sequence == null) {
             throw new IllegalArgumentException("sequence cannot be null");
         }
 
         if (size() < sequence.toInt()) {
-            throw new IllegalStateException(sequence + " frame is not started.");
+            return Optional.empty();
         }
 
-        return elementOf(sequenceToIndex(sequence))
-                .score();
+        return Optional.of(elementOf(sequenceToIndex(sequence))
+                .score());
     }
 
     @Override

@@ -18,6 +18,7 @@
 * [ ] view 설계
   * [ ] 이름 입력
   * [ ] 투구 결과 입력
+  * [x] 점수판 출력
 * [x] BowlingScoreBoard#current: 값이 변하는 변수
 * [x] BowlingScoreBoard#nextShot: 한 메서드가 두가지 일을 한다
 * [ ] 현재 Frame에서 다음 Frame을 생성하는 방식으로 구현

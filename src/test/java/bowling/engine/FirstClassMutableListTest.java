@@ -98,6 +98,20 @@ public class FirstClassMutableListTest {
     }
 
     @Test
+    public void elementOfOptional() {
+        final TestMutableList testList = TestMutableList.of(TestObject.OBJ1, TestObject.OBJ2);
+        assertThat(testList.elementOfOptional(0)).isPresent();
+        assertThat(testList.elementOfOptional(0)).contains(TestObject.OBJ1);
+    }
+
+    @ParameterizedTest(name = "get failed: {arguments}")
+    @ValueSource(ints = {-1, 5})
+    public void elementOfFailedOptional(int index) {
+        final TestMutableList testList = TestMutableList.of(TestObject.OBJ1, TestObject.OBJ2);
+        assertThat(testList.elementOfOptional(index)).isEmpty();
+    }
+
+    @Test
     public void indexOf() {
         assertThat(TestMutableList.of(TestObject.OBJ1, TestObject.OBJ2).indexOf(TestObject.OBJ1)).isEqualTo(0);
     }

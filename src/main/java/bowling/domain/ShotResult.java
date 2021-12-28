@@ -17,6 +17,7 @@ public enum ShotResult implements Shot {
     SEVEN(7, "7"),
     EIGHT(8, "8"),
     NINE(9, "9"),
+    SPARE(10, "/"),
     STRIKE(10, "X");
 
     private static final Map<Integer, ShotResult> frameScoreMap = new HashMap<>();

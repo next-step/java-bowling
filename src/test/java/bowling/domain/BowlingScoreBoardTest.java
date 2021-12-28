@@ -16,7 +16,6 @@ import static bowling.domain.ShotResult.GUTTER;
 import static bowling.domain.ShotResult.STRIKE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 public class BowlingScoreBoardTest {
     @Test
@@ -35,7 +34,8 @@ public class BowlingScoreBoardTest {
         final Sequence sequence = fs(1);
         final BowlingScoreBoard board = BowlingScoreBoard.of("n1");
         board.nextShot(STRIKE);
-        assertThat(board.score(sequence)).isEqualTo(FrameScore.of(STRIKE.toInt()));
+        assertThat(board.score(sequence)).isPresent();
+        assertThat(board.score(sequence)).contains(FrameScore.of(STRIKE.toInt()));
     }
 
     @Test
@@ -58,11 +58,11 @@ public class BowlingScoreBoardTest {
     }
 
     @Test
-    @DisplayName("score failed by not started frame")
-    public void scoreFailedByIllegalState() {
+    @DisplayName("score not started frame")
+    public void scoreNotStarted() {
         final Sequence sequence = fs(6);
         final BowlingScoreBoard board = BowlingScoreBoard.of("n1");
-        assertThatIllegalStateException().isThrownBy(() -> board.score(sequence));
+        assertThat(board.score(sequence)).isEmpty();
     }
 
     @Test
