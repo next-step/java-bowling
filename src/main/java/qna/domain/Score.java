@@ -10,6 +10,7 @@ public class Score {
     private static final int MAX_EXTRA_PITCHES = 2;
     private static final int MIN_EXTRA_PITCHES = 0;
     private static final int NO_REMAINING_PITCHES = 0;
+    private static final int ONE_PITCH_UNIT = 1;
 
     private final int value;
     private final int remainingPitches;
@@ -45,7 +46,7 @@ public class Score {
 
     public Score bowl(Score nextValue) {
         int sum = this.value + nextValue.value;
-        return of(sum, remainingPitches - 1);
+        return of(sum, remainingPitches - ONE_PITCH_UNIT);
     }
 
     public int getFinalValue() {

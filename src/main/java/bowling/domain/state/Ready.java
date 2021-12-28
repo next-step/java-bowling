@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import qna.domain.Score;
 
 public class Ready extends RunningState {
     private static final String READY_SYMBOL = "";
@@ -28,5 +29,15 @@ public class Ready extends RunningState {
     @Override
     public boolean isMiss() {
         return false;
+    }
+
+    @Override
+    public Score score() {
+        return Score.withReady();
+    }
+
+    @Override
+    public Score scoreAfter(Score prevScore) {
+        throw new IllegalStateException("이전 점수가 없는 준비 상태입니다.");
     }
 }
