@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class FinalFrame implements Frame {
@@ -9,78 +7,78 @@ public class FinalFrame implements Frame {
     private static final int NORMAL_PITCHING = 2;
     private static final int BONUS_PITCHING = 3;
     private static final int TOTAL_PINS = 10;
-    private static final int SECOND_PITCHING = 2;
-    private static final int ZERO_INDEX = 0;
     private static final String ERROR_TOTAL_PIN_VALUE_MSG = "핀의 총합은 10개입니다.";
 
-    private int countOfPitching;
-    private final List<BowlingPins> bowlingPins;
+    private int pitching;
+    private final TotalHittingPins totalPins;
 
     public FinalFrame() {
-        this.countOfPitching = NORMAL_PITCHING;
-        this.bowlingPins = new ArrayList<>();
+        this.pitching = NORMAL_PITCHING;
+        this.totalPins = new TotalHittingPins();
     }
 
     @Override
-    public boolean isPossiblePitching() {
-        if (this.countOfPitching == NORMAL_PITCHING) {
-            return bowlingPins.size() < NORMAL_PITCHING;
+    public void pitching(int hittingPins) {
+        HittingPins pins = new HittingPins(hittingPins);
+        this.totalPins.addPins(pins);
+        if (pins.isStrike() || isSpare()) {
+            this.pitching = BONUS_PITCHING;
         }
-        return bowlingPins.size() < BONUS_PITCHING;
-    }
-
-    @Override
-    public void addKnockDownPins(int hittingPins) {
-        this.bowlingPins.add(new BowlingPins(hittingPins));
-        if (isStrike(hittingPins) || isSpare()) {
-            this.countOfPitching = BONUS_PITCHING;
+        if (getCountOfPitching() == NORMAL_PITCHING) {
+            checkNormalPitching();
         }
-        if (bowlingPins.size() > 1) {
-            checkHittingPins(hittingPins, bowlingPins.size() - 2);
+        if (getCountOfPitching() == BONUS_PITCHING) {
+            checkBonusPitching();
         }
-    }
-
-    private void checkHittingPins(int hittingPins, int previous) {
-        int totalPins = getPreviousHittingPins(previous) + hittingPins;
-        if (getPreviousHittingPins(previous) != TOTAL_PINS && totalPins > TOTAL_PINS) {
-            throw new IllegalArgumentException(ERROR_TOTAL_PIN_VALUE_MSG);
-        }
-    }
-
-    private int getPreviousHittingPins(int previous) {
-        return this.bowlingPins.get(previous).getCount();
     }
 
     private boolean isSpare() {
-        if (bowlingPins.size() == SECOND_PITCHING) {
-            return bowlingPins.stream()
-                    .mapToInt(BowlingPins::getCount)
-                    .sum() == TOTAL_PINS;
+        if (getCountOfPitching() == NORMAL_PITCHING) {
+            return totalPins.isSpare();
         }
         return false;
     }
 
-    @Override
-    public boolean isStrike(int hittingPins) {
-        return hittingPins == TOTAL_PINS;
+    private void checkNormalPitching() {
+        int first = this.totalPins.getFirstPins();
+        int second = this.totalPins.getSecondPins();
+        if (first != TOTAL_PINS && first + second > TOTAL_PINS) {
+            throw new IllegalArgumentException(ERROR_TOTAL_PIN_VALUE_MSG);
+        }
+    }
+
+    private void checkBonusPitching() {
+        int first = this.totalPins.getFirstPins();
+        int second = this.totalPins.getSecondPins();
+        int third = this.totalPins.getThirdPins();
+        if ((first == TOTAL_PINS && second != TOTAL_PINS && second + third > TOTAL_PINS)) {
+            throw new IllegalArgumentException(ERROR_TOTAL_PIN_VALUE_MSG);
+        }
     }
 
     @Override
-    public int getCountOfHits(int index) {
-        return this.bowlingPins.get(index).getCount();
+    public boolean isPossiblePitching() {
+        if (this.totalPins.isTwoStrike()) {
+            return false;
+        }
+        if (this.pitching == NORMAL_PITCHING) {
+            return getCountOfPitching() < NORMAL_PITCHING;
+        }
+        return getCountOfPitching() < BONUS_PITCHING;
     }
 
     @Override
-    public int getCountOfPitchingSize() {
-        return this.bowlingPins.size();
+    public int getCountOfHits(int pitchingNumber) {
+        return this.totalPins.getCountOfHits(pitchingNumber);
     }
 
+    @Override
     public int getCountOfPitching() {
-        return countOfPitching;
+        return this.totalPins.size();
     }
 
-    public List<BowlingPins> getBowlingPins() {
-        return bowlingPins;
+    public int getPitching() {
+        return this.pitching;
     }
 
     @Override
@@ -92,19 +90,19 @@ public class FinalFrame implements Frame {
             return false;
         }
         FinalFrame that = (FinalFrame) o;
-        return countOfPitching == that.countOfPitching && Objects.equals(bowlingPins, that.bowlingPins);
+        return pitching == that.pitching && Objects.equals(totalPins, that.totalPins);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(countOfPitching, bowlingPins);
+        return Objects.hash(pitching, totalPins);
     }
 
     @Override
     public String toString() {
         return "FinalFrame{" +
-                "countOfPitching=" + countOfPitching +
-                ", bowlingPins=" + bowlingPins +
+                "pitching=" + pitching +
+                ", totalPins=" + totalPins +
                 '}';
     }
 
