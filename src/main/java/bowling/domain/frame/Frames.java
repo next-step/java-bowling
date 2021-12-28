@@ -3,20 +3,20 @@ package bowling.domain.frame;
 import bowling.domain.FrameIndex;
 import bowling.domain.Pins;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Frames {
-    private final List<Frame> frames;
+    private final LinkedList<Frame> frames;
 
-    private Frames(List<Frame> frames) {
+    private Frames(LinkedList<Frame> frames) {
         validate(frames);
         this.frames = frames;
     }
 
     public static Frames initialize() {
-        return new Frames(new ArrayList<>(Collections.singletonList(BasicFrame.initialize())));
+        return new Frames(new LinkedList<>(Collections.singletonList(BasicFrame.initialize())));
     }
 
     public void bowl(Pins pins) {
@@ -32,7 +32,10 @@ public class Frames {
     }
 
     public boolean hasNextPitching() {
-        return !(recentFrame().isEnd() && hasLastFrame());
+        if (hasNotLastFrame()) {
+            return true;
+        }
+        return !(recentFrame().isEnd());
     }
 
     public List<Frame> getFrames() {
@@ -49,14 +52,14 @@ public class Frames {
     }
 
     private boolean isPossibleToCreate(Frame recentFrame, Frame resultFrame) {
-        return recentFrame.isEnd() && !resultFrame.isEnd();
+        return recentFrame != resultFrame;
     }
 
     private Frame recentFrame() {
-        return frames.get(frames.size() - 1);
+        return frames.getLast();
     }
 
-    private boolean hasLastFrame() {
-        return frames.size() == FrameIndex.MAX_INDEX;
+    private boolean hasNotLastFrame() {
+        return frames.size() < FrameIndex.MAX_INDEX;
     }
 }
