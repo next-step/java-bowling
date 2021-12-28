@@ -8,21 +8,28 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class BowlingPinsTest {
+public class HittingPinsTest {
 
     @Test
     @DisplayName("볼링 핀 객체 생성")
     void create() {
-        BowlingPins pins = new BowlingPins(10);
-        assertThat(pins).isEqualTo(new BowlingPins(10));
+        HittingPins pins = new HittingPins(10);
+        assertThat(pins).isEqualTo(new HittingPins(10));
     }
 
     @ParameterizedTest
     @DisplayName("볼링 핀 검증 0-10 아닐 경우 -> IllegalArgumentException 반환")
     @ValueSource(ints = {-1, 11})
     void invalid(int pin) {
-        assertThatThrownBy(() -> new BowlingPins(pin))
+        assertThatThrownBy(() -> new HittingPins(pin))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("count 10 일 경우 스트라이크")
+    void isStrike() {
+        HittingPins pins = new HittingPins(10);
+        assertThat(pins.isStrike()).isTrue();
     }
 
 }
