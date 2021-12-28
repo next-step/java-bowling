@@ -25,10 +25,8 @@ public class GeneralProgress implements Progress, Opened {
             return StateFactory.gutter(pin);
         }
 
-        if (beforeState.isInstanceOf(HitNumber.class)) {
-            if (isSpare(pin, (HitNumber) this.beforeState)) {
-                return StateFactory.spare(pin);
-            }
+        if (beforeState.isInstanceOf(HitNumber.class) && isSpare(pin, (HitNumber) this.beforeState)) {
+            return StateFactory.spare(pin);
         }
 
         return StateFactory.number(pin);
