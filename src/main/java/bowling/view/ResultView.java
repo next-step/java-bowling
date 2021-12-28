@@ -87,17 +87,15 @@ public class ResultView {
         return builder.toString();
     }
 
-    private static String convertScore(Frame frame) {
+    static String convertScore(Frame frame) {
         int first = frame.getCountOfHits(0);
-        int second = frame.getCountOfHits(1);
-        int bonus = frame.getCountOfHits(2);
         if (frame.getCountOfPitching() == 1) {
             return scoreToMark(first);
         }
         if (frame.getCountOfPitching() == 2) {
-            return scoreToMark(first, second);
+            return scoreToMark(first, frame.getCountOfHits(1));
         }
-        return scoreToMark(first, second, bonus);
+        return scoreToMark(first, frame.getCountOfHits(1), frame.getCountOfHits(2));
     }
 
     private static String scoreToMark(int first) {
