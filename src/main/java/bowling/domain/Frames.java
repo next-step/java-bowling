@@ -42,4 +42,13 @@ public class Frames {
     public List<Frame> getFrames() {
         return Collections.unmodifiableList(frames);
     }
+
+    public boolean isRunning(FrameIndex index) {
+        try {
+            Frame frame = frames.get(index.getIndex() - 1);
+            return !frame.isEnd();
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException("invalid frame index");
+        }
+    }
 }

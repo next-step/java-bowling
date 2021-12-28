@@ -2,22 +2,35 @@ package bowling;
 
 import bowling.domain.Ball;
 import bowling.domain.Bowling;
+import bowling.domain.Bowlings;
 import bowling.domain.Player;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
+import java.util.List;
+
 public class BowlingGame {
     public static void play() {
-        Player player = InputView.player();
-        Bowling bowling = Bowling.create(player);
+        List<Player> players = InputView.players();
+        Bowlings bowlings = Bowlings.create(players);
 
-        ResultView.print(bowling);
+        ResultView.print(bowlings.getValues());
 
-        while (bowling.hasNext()) {
-            int currentFrameIndex = bowling.getCurrentFrameIndex();
-            Ball ball = InputView.fallenPins(currentFrameIndex);
+        while (bowlings.hasNextPitching()) {
+            bowlings.increaseIndexIfFrameEnd();
+            bowlings.getValues()
+                    .forEach(bowling -> play(bowlings, bowling));
+        }
+    }
+
+    private static void play(Bowlings bowlings, Bowling bowling) {
+        while (bowling.isRunning(bowlings.getCurrentIndex())) {
+            String playerName = bowling.getPlayerName();
+            Ball ball = InputView.fallenPins(playerName);
+
             bowling.bowl(ball);
-            ResultView.print(bowling);
+
+            ResultView.print(bowlings.getValues());
         }
     }
 }

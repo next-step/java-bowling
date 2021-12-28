@@ -26,12 +26,15 @@ public final class ResultView {
         throw new AssertionError();
     }
 
-    public static void print(Bowling bowling) {
+    public static void print(List<Bowling> bowlings) {
         initializeBuilder();
 
         appendHead();
-        appendPlayerAndBody(bowling);
-        appendScore(bowling);
+
+        bowlings.forEach(bowling -> {
+            appendPlayerAndBody(bowling);
+            appendScore(bowling);
+        });
 
         printBuilder();
     }
