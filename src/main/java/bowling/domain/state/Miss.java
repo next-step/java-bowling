@@ -27,7 +27,7 @@ public class Miss extends EndedState {
 
     @Override
     public String symbol() {
-        return String.format(FRAME_STATE_FORMAT, first.getValue(), secondValue());
+        return String.format(FRAME_STATE_FORMAT, formatValue(first), formatValue(second));
     }
 
     @Override
@@ -35,10 +35,10 @@ public class Miss extends EndedState {
         return true;
     }
 
-    private String secondValue() {
-        if (second.isGutter()) {
+    private String formatValue(Pins pin) {
+        if (pin.isGutter()) {
             return GUTTER_SYMBOL;
         }
-        return String.valueOf(second.getValue());
+        return String.valueOf(pin.getValue());
     }
 }

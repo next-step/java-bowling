@@ -3,6 +3,8 @@ package bowling.domain.state;
 import bowling.domain.Pins;
 
 public class FirstBowl extends RunningState {
+    private static final String GUTTER_SYMBOL = "-";
+
     private final Pins first;
 
     private FirstBowl(Pins first) {
@@ -30,6 +32,9 @@ public class FirstBowl extends RunningState {
 
     @Override
     public String symbol() {
+        if (first.isGutter()) {
+            return GUTTER_SYMBOL;
+        }
         return String.valueOf(first.getValue());
     }
 
