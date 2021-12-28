@@ -2,11 +2,13 @@ package bowling.domain.state;
 
 import bowling.domain.Pins;
 import bowling.domain.PinsTest;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import qna.domain.Score;
 
 import java.util.stream.Stream;
 
@@ -23,14 +25,19 @@ class FirstBowlTest {
         );
     }
 
+    private ThrowingState firstBowlWithFiveScore;
+
+    @BeforeEach
+    void beforeEach() {
+        firstBowlWithFiveScore = FirstBowl.create(PinsTest.FIVE);
+    }
+
     @DisplayName("첫 투구 이후, 남은 핀들을 넘어선 핀들을 투구한 경우 예외")
     @Test
     void bowlFailed() {
-        // given
-        ThrowingState firstBowl = FirstBowl.create(PinsTest.FIVE);
         // when & then
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> firstBowl.bowl(PinsTest.TEN));
+                .isThrownBy(() -> firstBowlWithFiveScore.bowl(PinsTest.TEN));
     }
 
     @DisplayName("한 프레임에서 볼링 투구이후 상태 확인")
@@ -46,18 +53,30 @@ class FirstBowlTest {
     @DisplayName("한 프레임 종료된 상태 확인")
     @Test
     void isEnd() {
-        // given
-        ThrowingState firstBowl = FirstBowl.create(Pins.create(9));
         // when & then
-        assertThat(firstBowl.isEnd()).isFalse();
+        assertThat(firstBowlWithFiveScore.isEnd()).isFalse();
     }
 
     @DisplayName("현재 상태의 symbol 검증")
     @Test
     void symbol() {
-        // given
-        ThrowingState firstBowl = FirstBowl.create(Pins.create(5));
         // when & then
-        assertThat(firstBowl.symbol()).isEqualTo(String.valueOf(5));
+        assertThat(firstBowlWithFiveScore.symbol()).isEqualTo(String.valueOf(5));
+    }
+
+    @DisplayName("현재 Score 반환 확인")
+    @Test
+    void score() {
+        // when & then
+        assertThat(firstBowlWithFiveScore.score()).isEqualTo(Score.withNonRemainingPitches(5));
+    }
+
+    @DisplayName("1 Strike 1 pitching 이후, Score 계산 반환 확인")
+    @Test
+    void scoreAfter() {
+        // given
+        Score strike = Score.of(10, 2);
+        // when & then
+        assertThat(firstBowlWithFiveScore.scoreAfter(strike)).isEqualTo(Score.of(15, 1));
     }
 }

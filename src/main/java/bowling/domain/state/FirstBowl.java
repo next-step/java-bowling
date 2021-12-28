@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import qna.domain.Score;
 
 public class FirstBowl extends RunningState {
     private static final String GUTTER_SYMBOL = "-";
@@ -41,5 +42,15 @@ public class FirstBowl extends RunningState {
     @Override
     public boolean isMiss() {
         return false;
+    }
+
+    @Override
+    public Score score() {
+        return first.score();
+    }
+
+    @Override
+    public Score scoreAfter(Score prevScore) {
+        return prevScore.bowl(first.score());
     }
 }
