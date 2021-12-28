@@ -8,7 +8,7 @@ import bowling.view.OutputView;
 public class Client {
     public static void main(String[] args) {
 
-        BowlingGame bowlingGame = new BowlingGame(new InputView(), new OutputView(), new FrameFactory());
+        BowlingGame bowlingGame = new BowlingGame(new InputView(), new OutputView());
         bowlingGame.start();
     }
 }

@@ -12,12 +12,10 @@ public class BowlingGame {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final FrameFactory frameFactory;
 
-    public BowlingGame(InputView inputView, OutputView outputView, FrameFactory frameFactory) {
+    public BowlingGame(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.frameFactory = frameFactory;
     }
 
     public void start() {
@@ -25,6 +23,7 @@ public class BowlingGame {
         String name = InputView.inputUserName();
         User user = new User(name);
 
+        FrameFactory frameFactory = new FrameFactory();
         BowlingResult result = BowlingResult.from(Frames.from(frameFactory.create()));
         outputView.printBowlingResult(user, result);
         while(!result.isGameOver()) {
