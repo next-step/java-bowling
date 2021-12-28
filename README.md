@@ -88,6 +88,8 @@ https://www.bowlinggenius.com/
 * `Pins`
     * `Pins` 생성
         * 핀의 갯수는 0개에서 10개까지 허용
+    * `Pins`의 `Score` 반환
+    * 서로 다른 두 `Pins`의 `Score`의 합인 `Score` 반환
 * `ThrowingState`
     * `RunningState` 한 프레임이 진행중인 볼링 투구 상태
         * `Ready` 한 프레임에서 투구를 던지기 전 준비 상태

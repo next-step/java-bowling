@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import qna.domain.Score;
+
 import java.util.Objects;
 
 public class Pins {
@@ -45,6 +47,14 @@ public class Pins {
 
     public boolean isGutter() {
         return value == MIN_PINS;
+    }
+
+    public Score score() {
+        return Score.withNonLeftScore(value);
+    }
+
+    public Score score(Pins other) {
+        return Score.withNonLeftScore(Math.addExact(value, other.value));
     }
 
     @Override

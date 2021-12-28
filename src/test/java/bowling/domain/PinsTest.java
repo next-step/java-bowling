@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import qna.domain.Score;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -66,5 +67,26 @@ public class PinsTest {
         Pins pins = Pins.create(0);
         // when & then
         assertThat(pins.isGutter()).isTrue();
+    }
+
+    @DisplayName("Pins 의 Score 반환")
+    @Test
+    void score() {
+        // given
+        Pins pins = Pins.create(5);
+        // when & then
+        assertThat(pins.score()).isEqualTo(Score.withNonLeftScore(5));
+    }
+
+    @DisplayName("두 Pins 의 Score 합 반환")
+    @Test
+    void scoreWithOtherPinsScore() {
+        // given
+        int pinScore = 5;
+        int otherPinScore = 5;
+        // when
+        Score score = Pins.create(pinScore).score(Pins.create(otherPinScore));
+        // then
+        assertThat(score).isEqualTo(Score.withNonLeftScore(pinScore + otherPinScore));
     }
 }
