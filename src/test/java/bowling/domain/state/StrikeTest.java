@@ -4,6 +4,7 @@ import bowling.domain.PinsTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import qna.domain.Score;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -36,5 +37,21 @@ class StrikeTest {
     void symbol() {
         // when & then
         assertThat(strike.symbol()).isEqualTo("X");
+    }
+
+    @DisplayName("현재 Score 반환 확인")
+    @Test
+    void score() {
+        // when & then
+        assertThat(strike.score()).isEqualTo(Score.of(10, 2));
+    }
+
+    @DisplayName("2 Strike 이후, Score 반환 확인")
+    @Test
+    void scoreAfter() {
+        // given
+        Score strike = Score.of(10, 2);
+        // when & then
+        assertThat(this.strike.scoreAfter(strike)).isEqualTo(Score.of(20, 1));
     }
 }
