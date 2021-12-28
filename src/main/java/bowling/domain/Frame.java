@@ -8,4 +8,8 @@ public interface Frame {
     int getFrameIndex();
 
     String symbol();
+
+    Score score();
+
+    Score additionalScore(Score previous);
 }

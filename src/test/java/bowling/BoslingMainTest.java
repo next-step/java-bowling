@@ -14,12 +14,12 @@ public class BoslingMainTest {
         String input = "YGB\n" +
                 "10\n" +
                 "10\n" +
-                "5 0\n" +
+                "5 2\n" +
+                "3 0\n" +
                 "0 2\n" +
-                "7 3\n" +
+                "9 1\n" +
                 "10\n" +
-                "4 3\n" +
-                "0 0\n" +
+                "2 2\n" +
                 "10\n" +
                 "8 2 10\n";
         InputStream in = new ByteArrayInputStream(input.getBytes());

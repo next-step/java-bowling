@@ -18,4 +18,10 @@ public class FinalBalls extends Balls {
         }
         return this;
     }
+
+    @Override
+    public Score score() {
+        return getBeforeLast().score().toScore(total());
+    }
+
 }

@@ -31,7 +31,7 @@ public class Balls {
     }
 
     public String symbol() {
-        return balls.stream().filter(pin -> !pin.isReady()).map(Ball::symbol).collect(joining("|"));
+        return balls.stream().filter(Ball::isNotReady).map(Ball::symbol).collect(joining("|"));
     }
 
     public Balls bowl(Ball ball) {
@@ -44,5 +44,29 @@ public class Balls {
 
     public boolean isEnd() {
         return getLast().isEnd();
+    }
+
+    public Ball getBeforeLast() {
+        if (getLastIndex() == 0) {
+            return Ball.first();
+        }
+        return balls.get(getLastIndex() - 1);
+    }
+
+    public Score score() {
+        return getLast().score().toScore(total());
+    }
+
+    public Score score(Score previous) {
+        Score score = previous;
+        for (Ball ball : balls) {
+            if (ball.isNotReady()) {
+                score = ball.score(score);
+            }
+            if (score.canCalculate()) {
+                return score;
+            }
+        }
+        return score;
     }
 }
