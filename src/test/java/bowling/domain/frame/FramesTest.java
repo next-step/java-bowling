@@ -32,10 +32,10 @@ class FramesTest {
 
         assertThatCode(() -> {
             for (int round = 0; round < 10; round++) {
-                Frame frame = frames.bowl(round, Pin.of(10));
+                Frame frame = frames.bowl(Round.of(round), Pin.of(10));
 
                 while (frame.isOpened()) {
-                    frame = frames.bowl(round, Pin.of(10));
+                    frame = frames.bowl(Round.of(round), Pin.of(10));
                 }
             }
         }).doesNotThrowAnyException();
@@ -63,7 +63,7 @@ class FramesTest {
     @DisplayName("frame 내 bowl을 시도하면, 내부 Frame 이 정상적으로 업데이트 된다.")
     void framesBowlModifyListTest() {
         Frames frames = Frames.create();
-        Frame bowl = frames.bowl(0, Pin.of(10));
+        Frame bowl = frames.bowl(Round.of(0), Pin.of(10));
 
         assertThat(bowl).isEqualTo(frames.getFrame(Round.of(0)));
     }

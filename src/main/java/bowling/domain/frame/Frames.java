@@ -66,10 +66,6 @@ public class Frames {
         return frames;
     }
 
-    public Frame bowl(int index, Pin pin) {
-        return bowl(Round.of(index), pin);
-    }
-
     public Frame bowl(Round round, Pin pin) {
         Frame originalFrame = getFrame(round);
         if (originalFrame.isClosed()) {
