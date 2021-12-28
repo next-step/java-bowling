@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import qna.domain.Score;
 
 public class Spare extends EndedState {
     private static final String SPARE_SYMBOL = "/";
@@ -32,5 +33,19 @@ public class Spare extends EndedState {
     @Override
     public boolean isMiss() {
         return false;
+    }
+
+    @Override
+    public Score score() {
+        return Score.of(Pins.MAX_PINS, 1);
+    }
+
+    @Override
+    public Score scoreAfter(Score prevScore) {
+        prevScore = prevScore.bowl(first.score());
+        if (prevScore.hasFinalScore()) {
+            return prevScore;
+        }
+        return prevScore.bowl(second.score());
     }
 }
