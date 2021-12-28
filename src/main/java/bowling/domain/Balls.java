@@ -27,18 +27,24 @@ public class Balls {
     }
 
     public int total() {
-        return balls.stream().map(Ball::getFallenPinCount).reduce(Integer::sum).orElse(0);
+        return balls.stream()
+                .map(Ball::getFallenPinCount)
+                .reduce(Integer::sum)
+                .orElse(0);
     }
 
     public String symbol() {
-        return balls.stream().filter(Ball::isNotReady).map(Ball::symbol).collect(joining("|"));
+        return balls.stream()
+                .filter(Ball::isNotReady)
+                .map(Ball::symbol)
+                .collect(joining("|"));
     }
 
     public Balls bowl(Ball ball) {
-        balls.add(getLast().bowl(ball));
-        if (total() > MAX_PIN_COUNT) {
+        if (ball.addPinCount(total()) > MAX_PIN_COUNT) {
             throw new IllegalArgumentException("1~9 프레임에서 쓰러트릴 수 있는 볼링핀의 총 갯수는 10을 초과할 수 없습니다.");
         }
+        balls.add(getLast().bowl(ball));
         return this;
     }
 

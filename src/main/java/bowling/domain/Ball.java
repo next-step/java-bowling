@@ -22,16 +22,12 @@ public class Ball {
         return new Ball(Pin.of(fallenPinCount), state);
     }
 
-    public static Ball of(int fallenPinCount) {
-        return new Ball(Pin.of(fallenPinCount), State.READY);
-    }
-
     public int getFallenPinCount() {
         return pin.getFallenPinCount();
     }
 
     public boolean isNotReady() {
-        return state != State.READY;
+        return state.isNotReady();
     }
 
     public String symbol() {
@@ -42,6 +38,10 @@ public class Ball {
         return new Ball(ball.pin, state.bowl(this.pin, ball.pin));
     }
 
+    public int addPinCount(int pinCount) {
+        return pin.add(pinCount);
+    }
+
     public Score score() {
         return state.score(pin);
     }
@@ -50,7 +50,6 @@ public class Ball {
         Score score = state.score(pin);
         return score.addScore(previous);
     }
-
 
     public boolean isEnd() {
         return state.isEnd();

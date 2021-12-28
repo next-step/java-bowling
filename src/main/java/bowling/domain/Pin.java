@@ -43,6 +43,10 @@ public class Pin {
         return fallenPinCount == MIN_PIN_COUNT;
     }
 
+    public int add(int pinCount) {
+        return fallenPinCount + pinCount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

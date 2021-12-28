@@ -90,12 +90,20 @@ public enum State {
 
     public String getSymbol(Pin pin) {
         if(this == FIRST || this == MISS) {
-            if (pin.isGutter()) {
-                return GUTTER.symbol;
-            }
-            return String.valueOf(pin);
+            return getStringOrGutter(pin);
         }
         return this.symbol;
+    }
+
+    private String getStringOrGutter(Pin pin) {
+        if (pin.isGutter()) {
+            return GUTTER.symbol;
+        }
+        return String.valueOf(pin);
+    }
+
+    public boolean isNotReady() {
+        return this != State.READY;
     }
 
 }
