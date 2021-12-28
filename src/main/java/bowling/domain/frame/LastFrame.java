@@ -4,6 +4,7 @@ import bowling.domain.FrameIndex;
 import bowling.domain.Pins;
 import bowling.domain.state.Ready;
 import bowling.domain.state.ThrowingState;
+import qna.domain.Score;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -61,6 +62,34 @@ public class LastFrame implements Frame {
         return states.stream()
                 .map(ThrowingState::symbol)
                 .collect(joining(DELIMITER_OF_SCORE));
+    }
+
+    @Override
+    public int score() {
+        if (!isEnd()) {
+            return Score.INCOMPUTABLE_SCORE_VALUE;
+        }
+        return states.stream()
+                .map(ThrowingState::score)
+                .mapToInt(Score::getValue)
+                .sum();
+    }
+
+    @Override
+    public int scoreAfter(Score prevScore) {
+        try {
+            return scoreAfter(prevScore, 0);
+        } catch (IllegalStateException | IndexOutOfBoundsException e) {
+            return Score.INCOMPUTABLE_SCORE_VALUE;
+        }
+    }
+
+    private int scoreAfter(Score prevScore, int index) {
+        Score score = states.get(index).scoreAfter(prevScore);
+        if (score.hasFinalScore()) {
+            return score.getValue();
+        }
+        return scoreAfter(score, index + 1);
     }
 
     int size() {
