@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Objects;
+
 public class Score {
     private final ScoreValue score;
     private final ScoreBonus bonus;
@@ -49,4 +51,16 @@ public class Score {
         return score.add(previous.score);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Score score1 = (Score) o;
+        return Objects.equals(score, score1.score) && Objects.equals(bonus, score1.bonus);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score, bonus);
+    }
 }

@@ -7,13 +7,13 @@ public class NormalFrame implements Frame {
     private final Balls balls;
     private Frame next;
 
-    private NormalFrame(FrameIndex index, Balls pins) {
+    private NormalFrame(FrameIndex index, Balls balls) {
         this.index = index;
-        this.balls = pins;
+        this.balls = balls;
     }
 
-    public static NormalFrame of(FrameIndex index, Balls pins) {
-        return new NormalFrame(index, pins);
+    public static NormalFrame of(FrameIndex index, Balls balls) {
+        return new NormalFrame(index, balls);
     }
 
     public static NormalFrame next(FrameIndex index) {

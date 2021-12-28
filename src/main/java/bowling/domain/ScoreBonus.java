@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Objects;
+
 public class ScoreBonus {
     private static final int BONUS_INIT = -1;
     private static final int MAX = 2;
@@ -10,7 +12,14 @@ public class ScoreBonus {
     private final int count;
 
     private ScoreBonus(int count) {
+        checkValidation(count);
         this.count = count;
+    }
+
+    private void checkValidation(int count) {
+        if (count < BONUS_INIT || count > MAX) {
+            throw new IllegalArgumentException("Score Bonus는 -1 ~ 2 사이 정수입니다.");
+        }
     }
 
     public static ScoreBonus of(int count) {
@@ -39,5 +48,18 @@ public class ScoreBonus {
 
     public ScoreBonus decrease() {
         return ScoreBonus.of(count + DECREASE);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ScoreBonus that = (ScoreBonus) o;
+        return count == that.count;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(count);
     }
 }
