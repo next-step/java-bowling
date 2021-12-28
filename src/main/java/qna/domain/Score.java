@@ -3,7 +3,7 @@ package qna.domain;
 import java.util.Objects;
 
 public class Score {
-    public static final int READY_SCORE_VALUE = -1;
+    public static final int INCOMPUTABLE_SCORE_VALUE = -1;
     public static final int MIN_SCORE = 0;
     public static final int MAX_SCORE = 30;
     private static final int READY_REMAINING_PITCHES = -1;
@@ -21,7 +21,7 @@ public class Score {
     }
 
     public static Score withReady() {
-        return new Score(READY_SCORE_VALUE, READY_REMAINING_PITCHES);
+        return new Score(INCOMPUTABLE_SCORE_VALUE, READY_REMAINING_PITCHES);
     }
 
     public static Score withNonRemainingPitches(int value) {

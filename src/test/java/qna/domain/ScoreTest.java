@@ -28,7 +28,7 @@ class ScoreTest {
         Score readyScore = Score.withReady();
         // when & then
         assertAll(
-                () -> assertThat(readyScore.getValue()).isEqualTo(Score.READY_SCORE_VALUE),
+                () -> assertThat(readyScore.getValue()).isEqualTo(Score.INCOMPUTABLE_SCORE_VALUE),
                 () -> assertThat(readyScore.hasFinalScore()).isFalse(),
                 () -> assertThatExceptionOfType(IllegalStateException.class)
                         .isThrownBy(readyScore::getFinalValue)
