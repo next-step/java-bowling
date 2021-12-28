@@ -1,24 +1,26 @@
 package bowling.domain;
 
-public abstract class AbstractFrame implements Frame {
-    protected final KnockedPinCounts knockedPinCounts;
+import bowling.annotations.ForUI;
+import bowling.domain.state.Ready;
+import bowling.domain.state.State;
 
-    public AbstractFrame(KnockedPinCounts knockedPinCounts) {
-        this.knockedPinCounts = knockedPinCounts;
+public abstract class AbstractFrame implements Frame {
+    protected final FrameRoundNumber roundNumber;
+    protected State state;
+
+    public AbstractFrame(FrameRoundNumber roundNumber) {
+        this.roundNumber = roundNumber;
+        this.state = new Ready();
     }
 
     @Override
     public void bowl(int knockedOutCount) {
-        knockedPinCounts.knockOut(knockedOutCount);
+        state = state.bowl(knockedOutCount);
     }
 
+    @ForUI
     @Override
-    public boolean isEnd() {
-        return knockedPinCounts.isKnockOutPinFinish();
-    }
-
-    @Override
-    public KnockedPinCounts getKnockedPinCounts() {
-        return knockedPinCounts;
+    public int getFrameNumber() {
+        return roundNumber.getRoundNumber();
     }
 }

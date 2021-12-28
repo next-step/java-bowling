@@ -1,5 +1,8 @@
 package bowling.view;
 
+import bowling.domain.BowlingGame;
+import bowling.domain.Player;
+
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -9,6 +12,7 @@ public class InputView {
     private static final String READ_PLAYERS_COUNT_MESSAGE = "How many people? ";
     private static final String READ_PLAYER_MESSAGE = "플레이어 이름은(3 english letters)?: ";
     private static final String READ_PLAYER_NAME_MESSAGE = "플레이어 %d의 이름은?(3 english letters): ";
+    private static final String FRAME_COUNT_MESSAGE = "%d프레임 투구 ";
     private static final String PLAYER_TURN_MESSAGE = "%s's turn : ";
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -38,8 +42,9 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static int readKnockedOutCountOf(String playerName) {
-        System.out.printf(PLAYER_TURN_MESSAGE, playerName);
+    public static int readKnockedOutCountOf(BowlingGame bowlingGame) {
+        System.out.printf(FRAME_COUNT_MESSAGE, bowlingGame.getCurrentFrameNumber());
+        System.out.printf(PLAYER_TURN_MESSAGE, bowlingGame.player().name());
         return Integer.parseInt(scanner.nextLine());
     }
 }

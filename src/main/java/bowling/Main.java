@@ -1,34 +1,37 @@
 package bowling;
 
-import bowling.domain.Player;
-import bowling.domain.Players;
+import bowling.domain.BowlingGame;
+import bowling.domain.BowlingGames;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Players players = new Players(Arrays.asList(InputView.readPlayerName()));
-        OutputView.printBowlingBoard(players);
+        String names = InputView.readPlayerName();
 
-        while (!players.isEndGame()) {
-            playBowlingGames(players);
+        BowlingGames bowlingGames = new BowlingGames(Arrays.asList(names));
+        OutputView.printBowlingBoard(bowlingGames.values());
+
+        while (!bowlingGames.isEnd()) {
+            playBowlingGames(bowlingGames.values());
         }
     }
 
-    private static void playBowlingGames(Players players) {
-        for (Player player : players.value()) {
-            playBowlingGameAndPrintScore(players, player);
+    private static void playBowlingGames(List<BowlingGame> bowlingGames) {
+        for (BowlingGame bowlingGame : bowlingGames) {
+            playBowlingGameAndPrintScore(bowlingGames, bowlingGame);
         }
     }
 
-    private static void playBowlingGameAndPrintScore(Players players, Player player) {
-        player.prepareFrame();
-        while (player.isNotCurrentFrameEnd()) {
-            int knockedOutCount = InputView.readKnockedOutCountOf(player.name());
-            player.bowl(knockedOutCount);
-            OutputView.printBowlingBoard(players);
+    private static void playBowlingGameAndPrintScore(List<BowlingGame> bowlingGames, BowlingGame bowlingGame) {
+        bowlingGame.prepareFrame();
+        while (!bowlingGame.isCurrentFrameEnd()) {
+            int knockedOutCount = InputView.readKnockedOutCountOf(bowlingGame);
+            bowlingGame.bowl(knockedOutCount);
+            OutputView.printBowlingBoard(bowlingGames);
         }
     }
 }

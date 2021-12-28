@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import java.util.List;
+import bowling.annotations.ForUI;
 
 public class Player {
     public static final String MAX_LENGTH_MESSAGE = "이름은 1~3글자입니다.";
@@ -8,7 +8,6 @@ public class Player {
     private static final int MAX_LENGTH = 3;
 
     private final String name;
-    private final Frames frames = new Frames();
 
     public Player(String name) {
         if (name == null || name.trim().isEmpty() || name.trim().length() > MAX_LENGTH) {
@@ -17,28 +16,9 @@ public class Player {
         this.name = name.trim();
     }
 
-    public boolean isEndGame() {
-        return frames.isEnd();
-    }
-
-    public void prepareFrame() {
-        frames.prepareFrame();
-    }
-
-    public boolean isNotCurrentFrameEnd() {
-        return frames.isNotCurrentFrameEnd();
-    }
-
-    public void bowl(int knockedOutCount) {
-        frames.bowl(knockedOutCount);
-    }
-
+    @ForUI
     public String name() {
         return name;
-    }
-
-    public List<Frame> frames() {
-        return frames.values();
     }
 
     @Override
