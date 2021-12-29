@@ -18,5 +18,8 @@ public interface State {
     boolean isFinished();
 
     @ForUI
+    boolean isSpare();
+
+    @ForUI
     String display();
 }

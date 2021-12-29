@@ -9,23 +9,25 @@ public class Bonus extends AbstractFinished {
     private static final int STRIKE_BONUS_COUNT = 2;
 
     private final int bonusCount;
+    private final State previous;
 
-    private Bonus(PinCounts pinCounts, int bonusCount) {
+    private Bonus(PinCounts pinCounts, int bonusCount, State state) {
         super(pinCounts);
         this.bonusCount = bonusCount;
+        this.previous = state;
     }
 
-    public static Bonus ofSpare(PinCounts pinCounts) {
-        return new Bonus(pinCounts, SPARE_BONUS_COUNT - ONE);
+    public static Bonus ofSpare(PinCounts pinCounts, Spare spare) {
+        return new Bonus(pinCounts, SPARE_BONUS_COUNT - ONE, spare);
     }
 
-    public static Bonus ofStrike(PinCounts pinCounts) {
-        return new Bonus(pinCounts, STRIKE_BONUS_COUNT - ONE);
+    public static Bonus ofStrike(PinCounts pinCounts, Strike strike) {
+        return new Bonus(pinCounts, STRIKE_BONUS_COUNT - ONE, strike);
     }
 
     @Override
     public State bowl(int pinCount) {
-        return new Bonus(pinCounts.knockOut(pinCount), bonusCount - ONE);
+        return new Bonus(pinCounts.knockOut(pinCount), bonusCount - ONE, previous);
     }
 
     @Override
@@ -53,5 +55,18 @@ public class Bonus extends AbstractFinished {
             return score;
         }
         return score.bowl(getValues().get(ONE).value());
+    }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
+
+    @Override
+    public String display() {
+        if (previous.isSpare()) {
+            return pinCounts.getFirst() + SEPARATE_MARK + SPARE_MARK + SEPARATE_MARK + pinCounts.getThird();
+        }
+        return pinCounts.display();
     }
 }

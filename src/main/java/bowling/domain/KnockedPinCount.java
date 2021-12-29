@@ -3,7 +3,6 @@ package bowling.domain;
 import bowling.annotations.ForUI;
 
 public class KnockedPinCount {
-    public static final KnockedPinCount ZERO_COUNT = new KnockedPinCount(0);
     public static final KnockedPinCount TEN_COUNT = new KnockedPinCount(10);
     public static final String INVALID_KNOCK_OUT_COUNT_MESSAGE = "쓰러뜨린 핀의 개수는 0~10개입니다.";
 

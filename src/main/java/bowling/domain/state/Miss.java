@@ -39,4 +39,14 @@ public class Miss extends AbstractFinished {
         }
         return score.bowl(getValues().get(1).value());
     }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
+
+    @Override
+    public String display() {
+        return pinCounts.getFirst() + SEPARATE_MARK + pinCounts.getSecond();
+    }
 }

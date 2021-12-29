@@ -43,6 +43,11 @@ public class Ready implements State {
     }
 
     @Override
+    public boolean isSpare() {
+        return false;
+    }
+
+    @Override
     public String display() {
         return EMPTY_MARK;
     }

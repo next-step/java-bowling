@@ -7,6 +7,9 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractFinished implements State, Finished {
+    protected static final String STRIKE_MARK = "X";
+    protected static final String SPARE_MARK = "/";
+    protected static final String SEPARATE_MARK = "|";
     protected static final int ZERO = 0;
     protected static final int ONE = 1;
 
@@ -27,11 +30,6 @@ public abstract class AbstractFinished implements State, Finished {
     @Override
     public boolean isFinished() {
         return true;
-    }
-
-    @Override
-    public String display() {
-        return pinCounts.display();
     }
 
     @Override

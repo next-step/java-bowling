@@ -49,6 +49,11 @@ public class FirstBowl implements State {
     }
 
     @Override
+    public boolean isSpare() {
+        return false;
+    }
+
+    @Override
     public String display() {
         return pinCount.display();
     }
