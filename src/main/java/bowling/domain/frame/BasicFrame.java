@@ -80,7 +80,7 @@ public class BasicFrame implements Frame {
         if (score.hasFinalScore()) {
             return score.getValue();
         }
-        if (next == null) {
+        if (Objects.isNull(next)) {
             throw new IllegalStateException("다음 프레임이 존재하지 않습니다.");
         }
         return next.scoreAfter(score);
