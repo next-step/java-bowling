@@ -22,9 +22,9 @@ public class Pins {
         this.fallenPins = pins;
     }
 
-    public static Pins of(int count) {
-        valid(count);
-        return CACHE_PINS.get(count);
+    public static Pins of(int fallenPins) {
+        valid(fallenPins);
+        return CACHE_PINS.get(fallenPins);
     }
 
     public boolean isStrike() {
@@ -43,12 +43,16 @@ public class Pins {
         return this.fallenPins;
     }
 
-    private static void valid(int pins) {
-        if (pins < MINIMUM) {
+    public int sumFallenPins(Pins secondPins) {
+        return this.fallenPins + secondPins.fallenPins;
+    }
+
+    private static void valid(int fallenPins) {
+        if (fallenPins < MINIMUM) {
             throw new IllegalArgumentException(String.format("쓰러트린 핀의 수는 %d 개 보다 작을 수 없습니다.", MINIMUM));
         }
 
-        if (pins > MAXIMUM) {
+        if (fallenPins > MAXIMUM) {
             throw new IllegalArgumentException(String.format("쓰러트린 핀의 수는 %d 개 보다 클 수 없습니다.", MAXIMUM));
         }
     }
