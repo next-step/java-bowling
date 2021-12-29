@@ -10,7 +10,7 @@ public class Pins {
     private static final int MAXIMUM = 10;
     private static final Map<Integer, Pins> CACHE_PINS;
 
-    private final int count;
+    private final int fallenPins;
 
     static {
         CACHE_PINS = new HashMap<>();
@@ -19,7 +19,7 @@ public class Pins {
     }
 
     private Pins(int pins) {
-        this.count = pins;
+        this.fallenPins = pins;
     }
 
     public static Pins of(int count) {
@@ -28,15 +28,19 @@ public class Pins {
     }
 
     public boolean isStrike() {
-        return count == MAXIMUM;
-    }
-
-    public int sumCount(Pins pins) {
-        return count + pins.count;
+        return this.fallenPins == MAXIMUM;
     }
 
     public boolean isSpare(Pins pins) {
-        return count < MAXIMUM && count + pins.count == MAXIMUM;
+        return this.fallenPins < MAXIMUM && (this.fallenPins + pins.fallenPins) == MAXIMUM;
+    }
+
+    public boolean isGutter() {
+        return this.fallenPins == MINIMUM;
+    }
+
+    public int fallenPins() {
+        return this.fallenPins;
     }
 
     private static void valid(int pins) {
