@@ -12,6 +12,7 @@ import bowling.engine.Shot;
 
 public class NormalFrame extends FirstClassImmutableList<Shot> implements Frame {
     public static final Frame START_FRAME = new NormalFrame(FrameSequence.FIRST_FRAME, Collections.emptyList());
+
     private final Sequence sequence;
 
     protected NormalFrame(Sequence sequence, List<Shot> collection) {

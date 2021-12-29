@@ -136,7 +136,7 @@ public class NormalFrameTest {
 
     @ParameterizedTest(name = "score: {arguments}")
     @MethodSource("parseScore")
-    public void Score(List<Shot> shots, int expected) {
+    public void score(List<Shot> shots, int expected) {
         assertThat(fr(1, shots).score()).isEqualTo(FrameScore.of(expected));
     }
 
