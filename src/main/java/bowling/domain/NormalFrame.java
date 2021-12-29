@@ -5,15 +5,15 @@ import java.util.Objects;
 public class NormalFrame implements Frame {
     private final FrameIndex index;
     private final Balls balls;
+    private Frame next;
 
-
-    private NormalFrame(FrameIndex index, Balls pins) {
+    private NormalFrame(FrameIndex index, Balls balls) {
         this.index = index;
-        this.balls = pins;
+        this.balls = balls;
     }
 
-    public static NormalFrame of(FrameIndex index, Balls pins) {
-        return new NormalFrame(index, pins);
+    public static NormalFrame of(FrameIndex index, Balls balls) {
+        return new NormalFrame(index, balls);
     }
 
     public static NormalFrame next(FrameIndex index) {
@@ -35,9 +35,11 @@ public class NormalFrame implements Frame {
 
     private Frame next() {
         if (index.next().max()) {
-            return FinalFrame.init();
+            this.next = FinalFrame.init();
+            return this.next;
         }
-        return next(index.next());
+        this.next = next(index.next());
+        return this.next;
     }
 
     @Override
@@ -52,6 +54,30 @@ public class NormalFrame implements Frame {
     @Override
     public String symbol() {
         return balls.symbol();
+    }
+
+    @Override
+    public Score score() {
+        if (!balls.isEnd()) {
+            return Score.init();
+        }
+        Score score = balls.score();
+        if (score.canCalculate()) {
+            return score;
+        }
+        return next.additionalScore(score);
+    }
+
+    @Override
+    public Score additionalScore(Score previous) {
+        Score nextScore = balls.score(previous);
+        if (nextScore.canCalculate()) {
+            return nextScore;
+        }
+        if (next == null) {
+            return nextScore.next();
+        }
+        return next.additionalScore(nextScore);
     }
 
     @Override

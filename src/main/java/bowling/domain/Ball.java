@@ -21,15 +21,14 @@ public class Ball {
     public static Ball of(int fallenPinCount, State state) {
         return new Ball(Pin.of(fallenPinCount), state);
     }
-    public static Ball of(int fallenPinCount) {
-        return new Ball(Pin.of(fallenPinCount), State.READY);
-    }
 
     public int getFallenPinCount() {
         return pin.getFallenPinCount();
     }
 
-    public boolean isReady() { return state == State.READY; }
+    public boolean isNotReady() {
+        return state.isNotReady();
+    }
 
     public String symbol() {
         return state.getSymbol(pin);
@@ -37,6 +36,19 @@ public class Ball {
 
     public Ball bowl(Ball ball) {
         return new Ball(ball.pin, state.bowl(this.pin, ball.pin));
+    }
+
+    public int addPinCount(int pinCount) {
+        return pin.add(pinCount);
+    }
+
+    public Score score() {
+        return state.score(pin);
+    }
+
+    public Score score(Score previous) {
+        Score score = state.score(pin);
+        return score.addScore(previous);
     }
 
     public boolean isEnd() {

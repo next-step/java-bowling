@@ -22,7 +22,7 @@ class PinTest {
     @ParameterizedTest
     @ValueSource(ints = {Ball.MIN_PIN_COUNT - 1, Ball.MAX_PIN_COUNT + 1})
     void exception(int invalidPins) {
-        assertThatThrownBy(() -> Ball.of(invalidPins))
+        assertThatThrownBy(() -> Ball.of(invalidPins, State.READY))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

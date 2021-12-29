@@ -6,12 +6,11 @@ public class FinalFrame implements Frame {
     private static final int MIN_BOWL_COUNT = 2;
     private static final int MAX_BOWL_COUNT = 3;
 
-    Balls balls;
-    private int count;
+    private final Balls balls;
+    private int count = 0;
 
     private FinalFrame() {
         this.balls = FinalBalls.init();
-        this.count = 0;
     }
 
     public static FinalFrame init() {
@@ -45,6 +44,26 @@ public class FinalFrame implements Frame {
     @Override
     public String symbol() {
         return balls.symbol();
+    }
+
+    @Override
+    public Score score() {
+        if (!isEnd()) {
+            return Score.init();
+        }
+        return Score.of(total());
+    }
+
+    @Override
+    public Score additionalScore(Score previous) {
+        Score nextScore = balls.score(previous);
+        if (nextScore.canCalculate()) {
+            return nextScore;
+        }
+        if (count > MIN_BOWL_COUNT) {
+            return Score.next(nextScore.addScoreValue(previous), ScoreBonus.display());
+        }
+        return Score.next(ScoreValue.of(total()), ScoreBonus.init());
     }
 
 }

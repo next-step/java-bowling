@@ -20,7 +20,7 @@ public class Pin {
     }
 
     public static Pin first() {
-        return new Pin(0);
+        return new Pin(MIN_PIN_COUNT);
     }
 
     public static Pin of(int fallenPinCount) {
@@ -43,6 +43,10 @@ public class Pin {
         return fallenPinCount == MIN_PIN_COUNT;
     }
 
+    public int add(int pinCount) {
+        return fallenPinCount + pinCount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,5 +63,13 @@ public class Pin {
     @Override
     public String toString() {
         return String.valueOf(fallenPinCount);
+    }
+
+    public Score toScoreVisible() {
+        return Score.next(ScoreValue.of(fallenPinCount), ScoreBonus.display());
+    }
+
+    public Score toScore(ScoreBonus bonus) {
+        return Score.next(ScoreValue.of(fallenPinCount), bonus);
     }
 }

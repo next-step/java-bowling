@@ -52,10 +52,25 @@ class NormalFrameTest {
     @DisplayName("NormalFrame은 최대 2번 투구한다.")
     @ParameterizedTest
     @CsvSource(value = {
-            "5, 4, 5|4",
-            "5, 0, 5|-",
-            "0, 0, -|-",
-            "0, 3, -|3",
+            "5, 4, 5|4, 9",
+            "5, 0, 5|-, 5",
+            "0, 0, -|-, 0",
+            "0, 3, -|3, 3"
+    })
+    void twoBowlsWithScore(int bowl1, int bowl2, String symbol, int score) {
+        List<Integer> pinNumbers = Arrays.asList(bowl1, bowl2);
+        for (int pinNumber : pinNumbers) {
+            frame.bowl(Ball.of(pinNumber, State.READY));
+        }
+        assertThat(frame.symbol()).isEqualTo(symbol);
+        assertThat(frame.isEnd()).isTrue();
+        assertThat(frame.score().getScore()).isEqualTo(score);
+
+    }
+
+    @DisplayName("NormalFrame은 최대 2번 투구한다.")
+    @ParameterizedTest
+    @CsvSource(value = {
             "8, 2, 8|/",
             "0, 10, -|/"
     })
@@ -81,5 +96,33 @@ class NormalFrameTest {
                 frame.bowl(Ball.of(pinNumber, State.READY));
             }
         }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("추가 점수 계산시에 스코어 계산 가능 상태이면 현재 점수 반환")
+    @Test
+    void calculateAdditionalScore() {
+        // given
+        NormalFrame normalFrame = NormalFrame.of(FrameIndex.of(5), Balls.init());
+        Score prevScore = Score.next(ScoreValue.of(10), ScoreBonus.oneMore());
+
+        // when
+        Score result = normalFrame.additionalScore(prevScore);
+
+        // then
+        assertThat(result.getScore()).isEqualTo(10);
+    }
+
+    @DisplayName("추가 점수 계산시에 다음 프레임이 null 이면 점수를 계산할 수 없다.")
+    @Test
+    void calculateAdditionalScoreNextFrameNull() {
+        // given
+        NormalFrame normalFrame = NormalFrame.of(FrameIndex.of(5), Balls.init());
+        Score prevScore = Score.strike();
+
+        // when
+        Score result = normalFrame.additionalScore(prevScore);
+
+        // then
+        assertThat(result.canCalculate()).isFalse();
     }
 }

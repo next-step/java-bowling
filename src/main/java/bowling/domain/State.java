@@ -8,10 +8,16 @@ public enum State {
             }
             return MISS;
         }
+        public Score score(Pin pin) {
+            return Score.strike();
+        }
     },
     SPARE("/",true) {
         public State bowl(Pin first, Pin second) {
             return SPARE;
+        }
+        public Score score(Pin pin) {
+            return pin.toScore(ScoreBonus.oneMore());
         }
     },
     MISS("",true) {
@@ -21,6 +27,9 @@ public enum State {
             }
             return MISS;
         }
+        public Score score(Pin pin) {
+            return pin.toScoreVisible();
+        }
     },
     GUTTER("-",true) {
         public State bowl(Pin first, Pin second) {
@@ -28,6 +37,9 @@ public enum State {
                 return MISS;
             }
             return GUTTER;
+        }
+        public Score score(Pin pin) {
+            return pin.toScoreVisible();
         }
     },
     FIRST("",false) {
@@ -40,6 +52,9 @@ public enum State {
             }
             return MISS;
         }
+        public Score score(Pin pin) {
+            return pin.toScore(ScoreBonus.oneMore());
+        }
     },
     READY("",false) {
         public State bowl(Pin meaningLess, Pin pin) {
@@ -48,6 +63,9 @@ public enum State {
             }
             return FIRST;
         }
+        public Score score(Pin pin) {
+            return Score.init();
+        }
     }
     ;
 
@@ -55,6 +73,7 @@ public enum State {
     private final boolean isEnd;
 
     public abstract State bowl(Pin first, Pin second);
+    public abstract Score score(Pin pin);
 
     State(String symbol, boolean isEnd) {
         this.symbol = symbol;
@@ -65,18 +84,26 @@ public enum State {
         return this.symbol;
     }
 
+    public boolean isEnd() {
+        return this.isEnd;
+    }
+
     public String getSymbol(Pin pin) {
         if(this == FIRST || this == MISS) {
-            if (pin.isGutter()) {
-                return GUTTER.symbol;
-            }
-            return String.valueOf(pin);
+            return getStringOrGutter(pin);
         }
         return this.symbol;
     }
 
-    public boolean isEnd() {
-        return this.isEnd;
+    private String getStringOrGutter(Pin pin) {
+        if (pin.isGutter()) {
+            return GUTTER.symbol;
+        }
+        return String.valueOf(pin);
+    }
+
+    public boolean isNotReady() {
+        return this != State.READY;
     }
 
 }
