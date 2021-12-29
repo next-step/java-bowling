@@ -23,7 +23,6 @@ import static bowling.domain.ShotResult.SIX;
 import static bowling.domain.ShotResult.STRIKE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 public class NormalFrameTest {
     @Test
@@ -68,11 +67,9 @@ public class NormalFrameTest {
 
 
     @Test
-    public void secondFailed() {
-        assertThatIllegalStateException()
-                .isThrownBy(() -> fr(1, STRIKE).nextShot(GUTTER));
-        assertThatIllegalStateException()
-                .isThrownBy(() -> fr(1, GUTTER, GUTTER).nextShot(GUTTER));
+    public void nextFrame() {
+        assertThat(fr(1, STRIKE).nextShot(GUTTER).sequence()).isEqualTo(fs(2));
+        assertThat(fr(1, GUTTER, GUTTER).nextShot(GUTTER).sequence()).isEqualTo(fs(2));
     }
 
     @ParameterizedTest(name = "sequence: {arguments}")

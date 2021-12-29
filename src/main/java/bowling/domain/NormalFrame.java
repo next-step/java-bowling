@@ -53,14 +53,11 @@ public class NormalFrame extends FirstClassImmutableList<Shot> implements Frame 
         }
 
         if (completed()) {
-            throw new IllegalStateException("the frame is already completed");
+            return NormalFrame.of(sequence.next(), List.of(shot));
         }
 
-        if (isSpareChallenge()) {
-            shot = SpareShotResult.of(last(), shot);
-        }
-
-        return NormalFrame.of(sequence, append(shot).collect());
+        Shot nextShot = isSpareChallenge() ? SpareShotResult.of(last(), shot) : shot;
+        return NormalFrame.of(sequence, append(nextShot).collect());
     }
 
     public boolean isSpareChallenge() {
@@ -74,7 +71,7 @@ public class NormalFrame extends FirstClassImmutableList<Shot> implements Frame 
 
     @Override
     public boolean isClear() {
-        return score().toInt() == NUMBER_OF_PINS;
+        return sum(stream()) == NUMBER_OF_PINS;
     }
 
     @Override
@@ -89,7 +86,7 @@ public class NormalFrame extends FirstClassImmutableList<Shot> implements Frame 
 
     @Override
     public boolean completed() {
-        return isClear() || size() == NUMBER_OF_SHOT;
+        return size() == NUMBER_OF_SHOT || isClear();
     }
 
     @Override

@@ -48,19 +48,13 @@ public class BowlingScoreBoard extends FirstClassMutableList<Frame> implements S
 
     @Override
     public Frame nextShot(Shot shot) {
-        Frame frame = last();
-
-        if (frame.completed()) { //todo refactor Frame#next
-            return nextFrame(frame.sequence(), shot);
+        Sequence sequence = last().sequence();
+        Frame frame = last().nextShot(shot);
+        if (!sequence.equals(frame.sequence())) {
+            append(frame);
         }
 
-        return setElement(sequenceToIndex(frame.sequence()), frame.nextShot(shot));
-    }
-
-    private Frame nextFrame(Sequence sequence, Shot shot) {
-        Frame frame = NormalFrame.first(sequence.next(), shot);
-        append(frame);
-        return frame;
+        return setElement(sequenceToIndex(frame.sequence()), frame);
     }
 
     private int sequenceToIndex(Sequence sequence) {
