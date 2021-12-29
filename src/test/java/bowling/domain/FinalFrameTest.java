@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static bowling.domain.FrameSequenceTest.fs;
 import static bowling.domain.NormalFrameTest.fr;
@@ -22,6 +23,7 @@ import static bowling.domain.ShotResult.SEVEN;
 import static bowling.domain.ShotResult.SIX;
 import static bowling.domain.ShotResult.STRIKE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 public class FinalFrameTest {
@@ -64,11 +66,16 @@ public class FinalFrameTest {
         assertThat(afterSecond.hasThirdChance()).isFalse();
     }
 
+
+    @Test
+    public void nextShotFailed() {
+        assertThatIllegalArgumentException().isThrownBy(() -> ff(STRIKE, FIVE).nextShot(SIX));
+    }
+
     public static Stream<Arguments> parseThirdFailed() {
         return Stream.of(
                 Arguments.of(ff(GUTTER, GUTTER), GUTTER),
-                Arguments.of(ff(EIGHT, ONE), SEVEN),
-                Arguments.of(ff(STRIKE, FIVE), SIX)
+                Arguments.of(ff(EIGHT, ONE), SEVEN)
         );
     }
 
@@ -123,6 +130,30 @@ public class FinalFrameTest {
     public void isFinal() {
         assertThat(ff(GUTTER).isFinal()).isTrue();
         assertThat(fr(10).isFinal()).isTrue();
+    }
+
+    @ParameterizedTest(name = "is spare challenge")
+    @ValueSource(ints = {1, 5, 9})
+    public void isSpareChallenge(int score) {
+        assertThat(ff(STRIKE).nextShot(ShotResult.of(score)).isSpareChallenge()).isTrue();
+    }
+
+    @Test
+    public void isNotSpareChallenge() {
+        assertThat(ff(STRIKE).isSpareChallenge()).isFalse();
+    }
+
+    public static Stream<Arguments> parseNotSpareChallenge() {
+        return Stream.of(
+                Arguments.of(NINE, ONE),
+                Arguments.of(GUTTER, STRIKE)
+        );
+    }
+
+    @ParameterizedTest(name = "is not spare challenge: {arguments}")
+    @MethodSource("parseNotSpareChallenge")
+    public void isNotSpareChallengeBySpare(Shot first, Shot second) {
+        assertThat(ff(first).nextShot(second).isSpareChallenge()).isFalse();
     }
 
     public static FinalFrame ff(Shot ... shots) {

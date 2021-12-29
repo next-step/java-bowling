@@ -22,7 +22,7 @@
 * [x] BowlingScoreBoard#current: 값이 변하는 변수
 * [x] BowlingScoreBoard#nextShot: 한 메서드가 두가지 일을 한다
 * [ ] 현재 Frame에서 다음 Frame을 생성하는 방식으로 구현
-* [ ] 스페어 처리
+* [x] 스페어 처리
 
 ## 기능 요구 사항
  * 최종 목표는 볼링 점수를 계산하는 프로그램을 구현

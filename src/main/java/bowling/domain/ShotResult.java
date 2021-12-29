@@ -17,17 +17,15 @@ public enum ShotResult implements Shot {
     SEVEN(7, "7"),
     EIGHT(8, "8"),
     NINE(9, "9"),
-    SPARE(10, "/"),
     STRIKE(10, "X");
 
-    private static final Map<Integer, ShotResult> frameScoreMap = new HashMap<>();
+    private static final Map<Integer, Shot> frameScoreMap = new HashMap<>();
     static {
         Arrays.stream(values())
                 .forEach(ShotResult::initFrameScore);
     }
-
-    private static void initFrameScore(ShotResult shotResult) {
-        frameScoreMap.put(shotResult.toInt(), shotResult);
+    private static void initFrameScore(Shot shot) {
+        frameScoreMap.put(shot.toInt(), shot);
     }
 
     private final int result;
@@ -38,7 +36,7 @@ public enum ShotResult implements Shot {
         this.display = display;
     }
 
-    public static ShotResult of(int score) {
+    public static Shot of(int score) {
         if (score < GUTTER.result || score > STRIKE.result) {
             throw new IllegalArgumentException("score must be 0 to 10");
         }
@@ -54,5 +52,10 @@ public enum ShotResult implements Shot {
     @Override
     public String toString() {
         return display;
+    }
+
+    @Override
+    public boolean isSpare() {
+        return false;
     }
 }

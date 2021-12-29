@@ -23,12 +23,12 @@ public class NormalFrame extends FirstClassImmutableList<Shot> implements Frame 
             throw new IllegalArgumentException("sequence or shots cannot be null");
         }
 
-        if (sum(shots.stream()) > NUMBER_OF_PINS) {
-            throw new IllegalArgumentException("sum of shot results cannot be larger than 10");
-        }
-
         if (sequence.isFinal()) {
             return FinalFrame.of(shots);
+        }
+
+        if (sum(shots.stream()) > NUMBER_OF_PINS) {
+            throw new IllegalArgumentException("sum of shot results cannot be larger than 10");
         }
 
         return new NormalFrame(sequence, shots);
@@ -52,15 +52,19 @@ public class NormalFrame extends FirstClassImmutableList<Shot> implements Frame 
             throw new IllegalArgumentException("shot results cannot be null");
         }
 
-        if (isClear()) {
-            throw new IllegalArgumentException("the frame is already clear");
+        if (completed()) {
+            throw new IllegalStateException("the frame is already completed");
         }
 
-        if (size() >= NUMBER_OF_SHOT) {
-            throw new IllegalStateException("the second shot is allowed after first shot.");
+        if (isSpareChallenge()) {
+            shot = SpareShotResult.of(last(), shot);
         }
 
         return NormalFrame.of(sequence, append(shot).collect());
+    }
+
+    public boolean isSpareChallenge() {
+        return size() != 0;
     }
 
     @Override

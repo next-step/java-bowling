@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static bowling.domain.FrameSequenceTest.fs;
@@ -53,27 +52,30 @@ public class NormalFrameTest {
         assertThat(frame.nextShot(ONE).collect()).containsExactly(GUTTER, ONE);
     }
 
-    public static Stream<Arguments> parseNextShotFailed() {
+    public static Stream<Arguments> parseNextShotFailedIllegalArguments() {
         return Stream.of(
                 Arguments.of(GUTTER, null),
-                Arguments.of(STRIKE, GUTTER),
                 Arguments.of(NINE, SIX)
         );
     }
 
-    @ParameterizedTest
-    @MethodSource("parseNextShotFailed")
-    public void secondFailed(Shot first, Shot second) {
+    @ParameterizedTest(name = "nest shot failed by illegal arguments: {arguments}")
+    @MethodSource("parseNextShotFailedIllegalArguments")
+    public void secondFailedByIllegalArguments(Shot first, Shot second) {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> fr(1, first).nextShot(second));
     }
 
+
     @Test
-    public void thirdFailed() {
-        assertThatIllegalStateException().isThrownBy(() -> fr(1, GUTTER, GUTTER).nextShot(GUTTER));
+    public void secondFailed() {
+        assertThatIllegalStateException()
+                .isThrownBy(() -> fr(1, STRIKE).nextShot(GUTTER));
+        assertThatIllegalStateException()
+                .isThrownBy(() -> fr(1, GUTTER, GUTTER).nextShot(GUTTER));
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "sequence: {arguments}")
     @ValueSource(ints = {1, 9})
     public void sequence(int sequence) {
         assertThat(fr(sequence, STRIKE).sequence()).isEqualTo(fs(sequence));
@@ -103,7 +105,7 @@ public class NormalFrameTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "not clear: {arguments}")
     @MethodSource("parseNotClear")
     public void isNotClear(List<Shot> shots) {
         assertThat(fr(1, shots).isClear()).isFalse();
@@ -135,13 +137,13 @@ public class NormalFrameTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "score: {arguments}")
     @MethodSource("parseScore")
     public void Score(List<Shot> shots, int expected) {
         assertThat(fr(1, shots).score()).isEqualTo(FrameScore.of(expected));
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "sum: {arguments}")
     @MethodSource("parseScore")
     public void sum(List<Shot> shots, int expected) {
         assertThat(NormalFrame.sum(shots.stream())).isEqualTo(expected);
@@ -156,6 +158,17 @@ public class NormalFrameTest {
     public void isFinal() {
         assertThat(fr(1).isFinal()).isFalse();
         assertThat(fr(9).isFinal()).isFalse();
+    }
+
+    @ParameterizedTest(name = "is spare challenge")
+    @ValueSource(ints = {1, 5, 9})
+    public void isSpareChallenge(int score) {
+        assertThat(fr(1, ShotResult.of(score)).isSpareChallenge()).isTrue();
+    }
+
+    @Test
+    public void isNotSpareChallenge() {
+        assertThat(fr(1).isSpareChallenge()).isFalse();
     }
 
     public static Frame fr(int sequence, Shot ... shots) {

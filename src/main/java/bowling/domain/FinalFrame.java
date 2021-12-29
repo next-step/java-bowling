@@ -3,7 +3,6 @@ package bowling.domain;
 import java.util.List;
 
 import bowling.engine.collection.FirstClassList;
-import bowling.engine.Frame;
 import bowling.engine.Shot;
 
 import static bowling.domain.ShotResult.STRIKE;
@@ -19,19 +18,15 @@ public class FinalFrame extends NormalFrame {
                 .filter(STRIKE::equals).count();
         if ((sum > FrameScore.DOUBLE_SCORE && strikeCount < ShotResult.DOUBLE_STRIKE_COUNT)
                 || sum > FrameScore.TURKEY_SCORE) {
-            throw new IllegalStateException("invalid score: " + sum);
+            throw new IllegalArgumentException("invalid score: " + sum);
         }
 
         return new FinalFrame(shots);
     }
 
     @Override
-    public Frame nextShot(Shot shot) {
-        if (completed()) {
-            throw new IllegalStateException("the frame is already completed.");
-        }
-
-        return of(append(shot).collect());
+    public boolean isSpareChallenge() {
+        return size() != 0 && last() != STRIKE && !last().isSpare();
     }
 
     @Override

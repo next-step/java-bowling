@@ -10,10 +10,11 @@ public interface Frame extends FirstClassList<Shot> {
     Frame nextShot(Shot shot);
 
     Sequence sequence();
-    boolean isClear();
     boolean completed();
     Score score();
 
-    boolean hasThirdChance();
+    boolean isClear();
     boolean isFinal();
+    boolean isSpareChallenge();
+    boolean hasThirdChance();
 }
