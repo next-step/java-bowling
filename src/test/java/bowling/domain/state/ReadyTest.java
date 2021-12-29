@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class ReadyTest {
@@ -56,5 +58,20 @@ class ReadyTest {
     void symbol() {
         // when & then
         assertThat(ready.symbol()).isBlank();
+    }
+
+    @DisplayName("현재 Score 반환 확인")
+    @Test
+    void score() {
+        // when & then
+        assertThat(ready.score()).isEqualTo(Score.withReady());
+    }
+
+    @DisplayName("Ready 상태에서 Score 계산 반환 확인")
+    @Test
+    void scoreAfter() {
+        // when & then
+        assertThatIllegalStateException()
+                .isThrownBy(() -> ready.scoreAfter(null));
     }
 }

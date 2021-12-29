@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 
 public class Miss extends EndedState {
     private static final String FRAME_STATE_FORMAT = "%s|%s";
@@ -27,7 +28,7 @@ public class Miss extends EndedState {
 
     @Override
     public String symbol() {
-        return String.format(FRAME_STATE_FORMAT, first.getValue(), secondValue());
+        return String.format(FRAME_STATE_FORMAT, formatValue(first), formatValue(second));
     }
 
     @Override
@@ -35,10 +36,24 @@ public class Miss extends EndedState {
         return true;
     }
 
-    private String secondValue() {
-        if (second.isGutter()) {
+    @Override
+    public Score score() {
+        return first.score(second);
+    }
+
+    @Override
+    public Score scoreAfter(Score prevScore) {
+        prevScore = prevScore.bowl(first.score());
+        if (prevScore.hasFinalScore()) {
+            return prevScore;
+        }
+        return prevScore.bowl(second.score());
+    }
+
+    private String formatValue(Pins pin) {
+        if (pin.isGutter()) {
             return GUTTER_SYMBOL;
         }
-        return String.valueOf(second.getValue());
+        return String.valueOf(pin.getValue());
     }
 }

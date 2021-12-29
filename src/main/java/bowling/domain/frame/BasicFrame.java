@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.FrameIndex;
 import bowling.domain.Pins;
+import bowling.domain.Score;
 import bowling.domain.state.Ready;
 import bowling.domain.state.ThrowingState;
 
@@ -10,6 +11,7 @@ import java.util.Objects;
 public class BasicFrame implements Frame {
     private final FrameIndex index;
     private ThrowingState state;
+    private Frame next;
 
     private BasicFrame(FrameIndex index, ThrowingState state) {
         validate(index, state);
@@ -52,6 +54,38 @@ public class BasicFrame implements Frame {
         return state.symbol();
     }
 
+    @Override
+    public int score() {
+        if (!isEnd()) {
+            return Score.INCOMPUTABLE_SCORE_VALUE;
+        }
+        Score score = state.score();
+        if (score.hasFinalScore()) {
+            return score.getValue();
+        }
+        return next.scoreAfter(score);
+    }
+
+    @Override
+    public int scoreAfter(Score prevScore) {
+        try {
+            return finalScoreAfter(prevScore);
+        } catch (IllegalStateException e) {
+            return Score.INCOMPUTABLE_SCORE_VALUE;
+        }
+    }
+
+    private int finalScoreAfter(Score prevScore) {
+        Score score = state.scoreAfter(prevScore);
+        if (score.hasFinalScore()) {
+            return score.getValue();
+        }
+        if (Objects.isNull(next)) {
+            throw new IllegalStateException("다음 프레임이 존재하지 않습니다.");
+        }
+        return next.scoreAfter(score);
+    }
+
     private void validate(FrameIndex index, ThrowingState state) {
         if (Objects.isNull(index)) {
             throw new IllegalArgumentException("프레임을 셋팅할 인덱스가 null입니다.");
@@ -63,9 +97,19 @@ public class BasicFrame implements Frame {
 
     private Frame createNextFrame() {
         if (index.next().isMax()) {
-            return LastFrame.initialize();
+            return nextLastFrame();
         }
-        return create(index.next());
+        return nextBasicFrame();
+    }
+
+    private Frame nextLastFrame() {
+        this.next = LastFrame.initialize();
+        return this.next;
+    }
+
+    private Frame nextBasicFrame() {
+        this.next = create(index.next());
+        return this.next;
     }
 
     @Override

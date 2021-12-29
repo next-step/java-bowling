@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 
 public interface Frame {
     Frame bowl(Pins pins);
@@ -10,4 +11,8 @@ public interface Frame {
     boolean isEnd();
 
     String symbol();
+
+    int score();
+
+    int scoreAfter(Score prevScore);
 }

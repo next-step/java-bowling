@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.PinsTest;
+import bowling.domain.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,5 +45,21 @@ class SpareTest {
     void symbol() {
         // when & then
         assertThat(spare.symbol()).isEqualTo(String.format("%s|/", PinsTest.FIVE.getValue()));
+    }
+
+    @DisplayName("현재 Score 반환 확인")
+    @Test
+    void score() {
+        // when & then
+        assertThat(spare.score()).isEqualTo(Score.of(10, 1));
+    }
+
+    @DisplayName("1 Strike 1 Spare 이후, Score 반환 확인")
+    @Test
+    void scoreAfter() {
+        // given
+        Score strike = Score.of(10, 2);
+        // when & then
+        assertThat(spare.scoreAfter(strike)).isEqualTo(Score.withNonRemainingPitches(20));
     }
 }

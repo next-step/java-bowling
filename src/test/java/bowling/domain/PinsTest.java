@@ -67,4 +67,25 @@ public class PinsTest {
         // when & then
         assertThat(pins.isGutter()).isTrue();
     }
+
+    @DisplayName("Pins 의 Score 반환")
+    @Test
+    void score() {
+        // given
+        Pins pins = Pins.create(5);
+        // when & then
+        assertThat(pins.score()).isEqualTo(Score.withNonRemainingPitches(5));
+    }
+
+    @DisplayName("두 Pins 의 Score 합 반환")
+    @Test
+    void scoreWithOtherPinsScore() {
+        // given
+        int pinScore = 5;
+        int otherPinScore = 5;
+        // when
+        Score score = Pins.create(pinScore).score(Pins.create(otherPinScore));
+        // then
+        assertThat(score).isEqualTo(Score.withNonRemainingPitches(pinScore + otherPinScore));
+    }
 }

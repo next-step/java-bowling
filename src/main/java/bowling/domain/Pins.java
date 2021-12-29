@@ -47,6 +47,14 @@ public class Pins {
         return value == MIN_PINS;
     }
 
+    public Score score() {
+        return Score.withNonRemainingPitches(value);
+    }
+
+    public Score score(Pins other) {
+        return Score.withNonRemainingPitches(Math.addExact(value, other.value));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

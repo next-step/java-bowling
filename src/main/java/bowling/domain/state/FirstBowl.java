@@ -1,8 +1,11 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 
 public class FirstBowl extends RunningState {
+    private static final String GUTTER_SYMBOL = "-";
+
     private final Pins first;
 
     private FirstBowl(Pins first) {
@@ -30,11 +33,24 @@ public class FirstBowl extends RunningState {
 
     @Override
     public String symbol() {
+        if (first.isGutter()) {
+            return GUTTER_SYMBOL;
+        }
         return String.valueOf(first.getValue());
     }
 
     @Override
     public boolean isMiss() {
         return false;
+    }
+
+    @Override
+    public Score score() {
+        return first.score();
+    }
+
+    @Override
+    public Score scoreAfter(Score prevScore) {
+        return prevScore.bowl(first.score());
     }
 }
