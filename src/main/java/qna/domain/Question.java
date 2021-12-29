@@ -3,6 +3,9 @@ package qna.domain;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -38,21 +41,26 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public void delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser, long questionId) throws CannotDeleteException {
 
-        if(!isOwner(loginUser)) {
-            throw new CannotDeleteException(CANNOT_DELETE_MESSAGE);
-        }
-        checkAnswerForDelete(loginUser);
-
+        validateUser(loginUser);
         deleted = true;
 
-        Answers answers = getAnswers();
-        answers.deleteAll();
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, writer, LocalDateTime.now()));
+        deleteHistories.addAll(deleteAnswers(loginUser));
+
+        return deleteHistories;
     }
 
-    private void checkAnswerForDelete(User loginUser) throws CannotDeleteException {
-        getAnswers().checkOwnerForDelete(loginUser);
+    private void validateUser(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(CANNOT_DELETE_MESSAGE);
+        }
+    }
+
+    private List<DeleteHistory> deleteAnswers(User loginUser) {
+        return answers.delete(loginUser);
     }
 
     public String getTitle() {
