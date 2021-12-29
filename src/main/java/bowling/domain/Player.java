@@ -12,6 +12,10 @@ public class Player {
         this.name = name;
     }
 
+    public String player() {
+        return name;
+    }
+
     private void valid(String name) throws PlayerLengthOutOfBoundException {
         if (name == null || name.isEmpty()) {
             throw new PlayerNameNullPointerException();

@@ -8,4 +8,6 @@ public interface Frame {
 
     boolean isFinished();
 
+    Frame nextFrame();
+
 }

@@ -57,6 +57,11 @@ public class FinalFrame implements Frame {
         return state.isFinished() && !isMaxPins(state);
     }
 
+    @Override
+    public Frame nextFrame() {
+        throw new RuntimeException("마지막 프레임 입니다.");
+    }
+
     private boolean isMaxPins(State state) {
         return state instanceof Strike || state instanceof Spare;
     }

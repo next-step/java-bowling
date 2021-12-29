@@ -4,6 +4,7 @@ public class Round {
 
     private static final int MINIMUM = 1;
     private static final int MAXIMUM = 10;
+    private static final int NORMAL_LAST_ROUND = 9;
 
     private final int round;
 
@@ -20,8 +21,8 @@ public class Round {
         return new Round(round + 1);
     }
 
-    public boolean lastRound() {
-        return round == MAXIMUM;
+    public boolean isNextLastRound() {
+        return round == NORMAL_LAST_ROUND;
     }
 
     private void valid(int round) {
