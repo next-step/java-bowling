@@ -18,7 +18,7 @@ class FinalFrameTest {
     }
 
     @Test
-    void 스페어_한번더() {
+    void 스페어_후_한번더() {
         Frame frame = new FinalFrame()
             .bowl(Pins.of(8))
             .bowl(Pins.of(2))

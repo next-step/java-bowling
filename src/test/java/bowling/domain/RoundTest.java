@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test;
 class RoundTest {
 
     @Test
-    void first() {
+    void 생성() {
         assertThat(Round.first()).isInstanceOf(Round.class);
     }
 
     @Test
-    void validException() {
+    void next_횟수_초과() {
         assertThatExceptionOfType(IllegalArgumentException.class)
             .isThrownBy(() -> Round.first()
                 .next()

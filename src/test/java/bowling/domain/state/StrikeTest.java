@@ -9,18 +9,18 @@ import org.junit.jupiter.api.Test;
 class StrikeTest {
 
     @Test
-    void create() {
+    void 생성() {
         assertThat(new Strike(Pins.of(10))).isInstanceOf(Strike.class);
     }
 
     @Test
-    void notStrike() {
+    void Strike_아닐경우() {
         assertThatExceptionOfType(IllegalArgumentException.class)
             .isThrownBy(() -> new Strike(Pins.of(9)));
     }
 
     @Test
-    void isFinished() {
+    void 완료여부() {
         assertThat(new Strike(Pins.of(10)).isFinished()).isTrue();
     }
 

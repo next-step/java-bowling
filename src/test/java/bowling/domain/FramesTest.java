@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Test;
 class FramesTest {
 
     @Test
-    void create() {
+    void 생성() {
         assertThat(Frames.init()).isInstanceOf(Frames.class);
     }
 
     @Test
-    void perfectBowlingGame() {
+    void 퍼펙트_볼링_게임() {
         Frames frames = Frames.init();
         frames = frames.bowl(Pins.of(10));
         frames = frames.bowl(Pins.of(10));

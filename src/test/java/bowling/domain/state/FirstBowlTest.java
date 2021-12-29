@@ -9,23 +9,23 @@ import org.junit.jupiter.api.Test;
 class FirstBowlTest {
 
     @Test
-    void mess() {
+    void mess_객체생성() {
         assertThat(new FirstBowl(Pins.of(2)).bowl(Pins.of(2))).isInstanceOf(Mess.class);
     }
 
     @Test
-    void spare() {
+    void spare_객체생성() {
         assertThat(new FirstBowl(Pins.of(2)).bowl(Pins.of(8))).isInstanceOf(Spare.class);
     }
 
     @Test
-    void isStrike() {
+    void strike_객체생성하려할시_예외처리() {
         assertThatExceptionOfType(IllegalArgumentException.class)
             .isThrownBy(() -> new FirstBowl(Pins.of(10)));
     }
 
     @Test
-    void isFinished() {
+    void 완료여부() {
         assertThat(new FirstBowl(Pins.of(2)).isFinished()).isFalse();
     }
 

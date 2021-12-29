@@ -13,20 +13,20 @@ public class PlayerTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"KDH", "KCY", "YSJ"})
-    void create(String name) throws PlayerLengthOutOfBoundException {
+    void 생성(String name) throws PlayerLengthOutOfBoundException {
         assertThat(new Player(name)).isInstanceOf(Player.class);
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"KD", "DONG", "YEAST"})
-    void lengthException(String name) {
+    void 지정된이름길이가아닌경우(String name) {
         assertThatExceptionOfType(PlayerLengthOutOfBoundException.class)
             .isThrownBy(() -> new Player(name));
     }
 
     @ParameterizedTest
     @NullAndEmptySource
-    void nullAndEmptyException(String name) {
+    void 이름이널혹은공백인경우(String name) {
         assertThatExceptionOfType(PlayerNameNullPointerException.class)
             .isThrownBy(() -> new Player(name));
     }

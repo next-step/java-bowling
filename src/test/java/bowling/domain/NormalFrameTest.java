@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 class NormalFrameTest {
 
     @Test
-    void isFinished() {
+    void 완료인경우() {
         assertAll(() -> assertTrue(NormalFrame.first().bowl(Pins.of(10)).isFinished()),
             () -> assertTrue(NormalFrame.first().bowl(Pins.of(6)).bowl(Pins.of(4)).isFinished()),
             () -> assertTrue(NormalFrame.first().bowl(Pins.of(6)).bowl(Pins.of(3)).isFinished())
@@ -18,12 +18,12 @@ class NormalFrameTest {
     }
 
     @Test
-    void isNotFinished() {
+    void 미완료인경우() {
         assertThat(NormalFrame.first().bowl(Pins.of(9)).isFinished()).isFalse();
     }
 
     @Test
-    void validException() {
+    void bowl_횟수초과() {
         assertThatExceptionOfType(RuntimeException.class)
             .isThrownBy(() -> NormalFrame.first().bowl(Pins.of(3)).bowl(Pins.of(3)).bowl(Pins.of(3)));
     }

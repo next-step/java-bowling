@@ -9,18 +9,18 @@ import org.junit.jupiter.api.Test;
 class SpareTest {
 
     @Test
-    void create() {
+    void 생성() {
         assertThat(new Spare(Pins.of(8), Pins.of(2))).isInstanceOf(Spare.class);
     }
 
     @Test
-    void notSpare() {
+    void spare_아닐경우() {
         assertThatExceptionOfType(IllegalArgumentException.class)
             .isThrownBy(() -> new Spare(Pins.of(8), Pins.of(1)));
     }
 
     @Test
-    void isFinished() {
+    void 완료여부() {
         assertThat(new Spare(Pins.of(8), Pins.of(2)).isFinished()).isTrue();
     }
 

@@ -10,19 +10,19 @@ import org.junit.jupiter.api.Test;
 class MessTest {
 
     @Test
-    void bowl() {
+    void bowl_진행할시_예외처리() {
         assertThatExceptionOfType(NotBowlingStateException.class)
             .isThrownBy(() -> new Mess(Pins.of(2), Pins.of(2)).bowl(Pins.of(2)));
     }
 
     @Test
-    void notMess() {
+    void mess_아닌경우() {
         assertThatExceptionOfType(IllegalArgumentException.class)
             .isThrownBy(() -> new Mess(Pins.of(8), Pins.of(2)));
     }
 
     @Test
-    void isFinished() {
+    void 완료여부() {
         assertThat(new Mess(Pins.of(2), Pins.of(2)).isFinished()).isTrue();
     }
 
