@@ -102,16 +102,14 @@ public class BasicFrame implements Frame {
         return nextBasicFrame();
     }
 
-    private LastFrame nextLastFrame() {
-        LastFrame next = LastFrame.initialize();
-        this.next = next;
-        return next;
+    private Frame nextLastFrame() {
+        this.next = LastFrame.initialize();
+        return this.next;
     }
 
-    private BasicFrame nextBasicFrame() {
-        BasicFrame next = create(index.next());
-        this.next = next;
-        return next;
+    private Frame nextBasicFrame() {
+        this.next = create(index.next());
+        return this.next;
     }
 
     @Override
