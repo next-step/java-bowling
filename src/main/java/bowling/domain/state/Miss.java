@@ -41,17 +41,12 @@ public class Miss extends AbstractFinished {
     }
 
     @Override
-    public boolean isBonus() {
-        return false;
-    }
-
-    @Override
     public boolean isSpare() {
         return false;
     }
 
     @Override
-    public boolean isRunning() {
-        return false;
+    public String display() {
+        return pinCounts.getFirst() + SEPARATE_MARK + pinCounts.getSecond();
     }
 }

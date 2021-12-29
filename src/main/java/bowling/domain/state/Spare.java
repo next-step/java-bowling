@@ -42,17 +42,12 @@ public class Spare extends AbstractFinished {
     }
 
     @Override
-    public boolean isBonus() {
-        return false;
-    }
-
-    @Override
     public boolean isSpare() {
         return true;
     }
 
     @Override
-    public boolean isRunning() {
-        return false;
+    public String display() {
+        return pinCounts.getFirst() + SEPARATE_MARK + SPARE_MARK;
     }
 }

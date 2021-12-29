@@ -5,14 +5,14 @@ import bowling.domain.BowlingGames;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        String names = InputView.readPlayerName();
+        int playersCount = InputView.readPlayersCount();
+        List<String> playersName = InputView.readPlayersName(playersCount);
 
-        BowlingGames bowlingGames = new BowlingGames(Arrays.asList(names));
+        BowlingGames bowlingGames = new BowlingGames(playersName);
         OutputView.printBowlingBoard(bowlingGames.values());
 
         while (!bowlingGames.isEnd()) {

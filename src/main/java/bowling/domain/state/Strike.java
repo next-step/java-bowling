@@ -36,17 +36,12 @@ public class Strike extends AbstractFinished {
     }
 
     @Override
-    public boolean isBonus() {
-        return false;
-    }
-
-    @Override
     public boolean isSpare() {
         return false;
     }
 
     @Override
-    public boolean isRunning() {
-        return false;
+    public String display() {
+        return STRIKE_MARK;
     }
 }

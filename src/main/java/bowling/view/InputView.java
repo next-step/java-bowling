@@ -10,7 +10,6 @@ import java.util.stream.IntStream;
 
 public class InputView {
     private static final String READ_PLAYERS_COUNT_MESSAGE = "How many people? ";
-    private static final String READ_PLAYER_MESSAGE = "플레이어 이름은(3 english letters)?: ";
     private static final String READ_PLAYER_NAME_MESSAGE = "플레이어 %d의 이름은?(3 english letters): ";
     private static final String FRAME_COUNT_MESSAGE = "%d프레임 투구 ";
     private static final String PLAYER_TURN_MESSAGE = "%s's turn : ";
@@ -24,11 +23,6 @@ public class InputView {
     public static int readPlayersCount() {
         System.out.print(READ_PLAYERS_COUNT_MESSAGE);
         return Integer.parseInt(scanner.nextLine());
-    }
-
-    public static String readPlayerName() {
-        System.out.print(READ_PLAYER_MESSAGE);
-        return scanner.nextLine();
     }
 
     public static List<String> readPlayersName(int playersCount) {

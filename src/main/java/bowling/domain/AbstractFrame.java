@@ -18,6 +18,11 @@ public abstract class AbstractFrame implements Frame {
         state = state.bowl(knockedOutCount);
     }
 
+    @Override
+    public boolean isFinished() {
+        return state.isFinished();
+    }
+
     @ForUI
     @Override
     public int getFrameNumber() {

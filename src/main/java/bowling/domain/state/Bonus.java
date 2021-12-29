@@ -1,6 +1,5 @@
 package bowling.domain.state;
 
-import bowling.annotations.ForUI;
 import bowling.domain.KnockedPinCount;
 import bowling.domain.PinCounts;
 import bowling.domain.Score;
@@ -59,22 +58,15 @@ public class Bonus extends AbstractFinished {
     }
 
     @Override
-    public boolean isBonus() {
-        return true;
-    }
-
-    @Override
     public boolean isSpare() {
         return false;
     }
 
     @Override
-    public boolean isRunning() {
-        return false;
-    }
-
-    @ForUI
-    public State getPrevious() {
-        return previous;
+    public String display() {
+        if (previous.isSpare()) {
+            return pinCounts.getFirst() + SEPARATE_MARK + SPARE_MARK + SEPARATE_MARK + pinCounts.getThird();
+        }
+        return pinCounts.display();
     }
 }
