@@ -24,10 +24,15 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame nextFrame() {
-        if (round.isNextLastRound()) {
+        if (round.isNextFinishRound()) {
             return new FinalFrame();
         }
         return new NormalFrame(round.next());
+    }
+
+    @Override
+    public Round round() {
+        return round;
     }
 
     @Override

@@ -10,4 +10,6 @@ public interface Frame {
 
     Frame nextFrame();
 
+    Round round();
+
 }

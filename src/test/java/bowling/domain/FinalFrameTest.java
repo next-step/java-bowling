@@ -9,7 +9,7 @@ class FinalFrameTest {
 
     @Test
     void 스트라이크3번() {
-        Frame frame = new FinalFrame()
+        FinalFrame frame = new FinalFrame()
             .bowl(Pins.of(10))
             .bowl(Pins.of(10))
             .bowl(Pins.of(10));
@@ -35,6 +35,15 @@ class FinalFrameTest {
                 .bowl(Pins.of(1))
                 .bowl(Pins.of(10))
             );
+    }
+
+    @Test
+    void 세번째가_FirstBowl_일경우() {
+        assertThat(new FinalFrame()
+            .bowl(Pins.of(6))
+            .bowl(Pins.of(4))
+            .bowl(Pins.of(4))
+            .isFinished()).isTrue();
     }
 
 }

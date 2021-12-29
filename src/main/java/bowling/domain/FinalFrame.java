@@ -29,21 +29,18 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Frame bowl(Pins pins) {
+    public FinalFrame bowl(Pins pins) {
         validFinished();
-        State state = states.removeLast();
-        if (isMaxPins(state)) {
-            states.addLast(new Ready().bowl(pins));
-            return new FinalFrame(states, tryCount - 1);
-        }
+        State state = states.removeLast().bowl(pins);
+        states.addLast(state);
 
-        states.addLast(state.bowl(pins));
-        return new FinalFrame(states, tryCount - 1);
+        return nextFinalFrame();
     }
 
     @Override
     public String mark() {
         return states.stream()
+            .filter(state -> !(state instanceof Ready))
             .map(State::mark)
             .collect(Collectors.joining(DELIMITER));
     }
@@ -62,8 +59,23 @@ public class FinalFrame implements Frame {
         throw new RuntimeException("마지막 프레임 입니다.");
     }
 
+    @Override
+    public Round round() {
+        return Round.last();
+    }
+
     private boolean isMaxPins(State state) {
         return state instanceof Strike || state instanceof Spare;
+    }
+
+    private FinalFrame nextFinalFrame() {
+        FinalFrame finalFrame = new FinalFrame(states, tryCount - 1);
+
+        if (finalFrame.isMaxPins(states.peekLast()) && !finalFrame.isFinished()) {
+            finalFrame.states.addLast(new Ready());
+        }
+
+        return finalFrame;
     }
 
     private void validFinished() {

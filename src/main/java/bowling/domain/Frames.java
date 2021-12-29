@@ -28,11 +28,15 @@ public class Frames {
             frames.addLast(frame.nextFrame());
         }
 
-        return new Frames(frames);
+        return this;
     }
 
     public boolean isFinished() {
         return frames.size() == LAST_FRAMES_SIZE && frames.peekLast().isFinished();
+    }
+
+    public Round currentRound() {
+        return frames.peekLast().round();
     }
 
     public List<Frame> frames() {
