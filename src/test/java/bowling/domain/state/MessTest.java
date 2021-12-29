@@ -4,13 +4,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import bowling.domain.Pins;
+import bowling.exception.NotBowlingStateException;
 import org.junit.jupiter.api.Test;
 
 class MessTest {
 
     @Test
     void bowl() {
-        assertThatExceptionOfType(RuntimeException.class)
+        assertThatExceptionOfType(NotBowlingStateException.class)
             .isThrownBy(() -> new Mess(Pins.of(2), Pins.of(2)).bowl(Pins.of(2)));
     }
 

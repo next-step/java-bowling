@@ -17,11 +17,6 @@ public class Spare extends Finished {
     }
 
     @Override
-    public State bowl(Pins pins) {
-        throw new RuntimeException("이미 완료된 상태 입니다.");
-    }
-
-    @Override
     public String mark() {
         return String.format(MARKING, firstPins.fallenPins());
     }
