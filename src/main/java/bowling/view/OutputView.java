@@ -16,7 +16,6 @@ public class OutputView {
     private static final String SCORE_FORMAT = LINE + "  %-3s  ";
     private static final String FINAL_SCORE_FORMAT = LINE + " %-5s ";
     private static final String EMPTY_SCORE = LINE + "       ";
-    private static final String SPARE_FORMAT = "%d|/";
 
     public static void printScoreBoard(ScoreBoard board) {
         System.out.println(HEADER);

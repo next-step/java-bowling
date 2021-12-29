@@ -12,12 +12,12 @@
     * [x] 나머지는 일반 프레임
   * [x] 10개의 프레임을 갖고 있는 점수판
     * [x] 최대 3글자의 이름
-* [ ] controller 설계
+* [x] controller 설계
     * [x] 현재 프레임을 받아올 수 있어야함
     * [x] 10 프레임 종류 후 프로그램 종료
-* [ ] view 설계
-  * [ ] 이름 입력
-  * [ ] 투구 결과 입력
+* [x] view 설계
+  * [x] 이름 입력
+  * [x] 투구 결과 입력
   * [x] 점수판 출력
 * [x] BowlingScoreBoard#current: 값이 변하는 변수
 * [x] BowlingScoreBoard#nextShot: 한 메서드가 두가지 일을 한다
