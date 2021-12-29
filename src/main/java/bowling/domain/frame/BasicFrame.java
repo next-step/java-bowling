@@ -39,7 +39,8 @@ public class BasicFrame implements Frame {
     public Frame bowl(Pins pins) {
         this.state = state.bowl(pins);
         if (state.isEnd()) {
-            return createNextFrame();
+            this.next = nextFrame();
+            return this.next;
         }
         return this;
     }
@@ -95,7 +96,7 @@ public class BasicFrame implements Frame {
         }
     }
 
-    private Frame createNextFrame() {
+    private Frame nextFrame() {
         if (index.next().isMax()) {
             return nextLastFrame();
         }
@@ -103,13 +104,11 @@ public class BasicFrame implements Frame {
     }
 
     private Frame nextLastFrame() {
-        this.next = LastFrame.initialize();
-        return this.next;
+        return LastFrame.initialize();
     }
 
     private Frame nextBasicFrame() {
-        this.next = create(index.next());
-        return this.next;
+        return create(index.next());
     }
 
     @Override
