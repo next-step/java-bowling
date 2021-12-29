@@ -3,20 +3,20 @@ package bowling.domain.frame;
 import bowling.domain.FrameIndex;
 import bowling.domain.Pins;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Frames {
-    private final LinkedList<Frame> frames;
+    private final List<Frame> frames;
 
-    private Frames(LinkedList<Frame> frames) {
+    private Frames(List<Frame> frames) {
         validate(frames);
         this.frames = frames;
     }
 
     public static Frames initialize() {
-        return new Frames(new LinkedList<>(Collections.singletonList(BasicFrame.initialize())));
+        return new Frames(new ArrayList<>(Collections.singletonList(BasicFrame.initialize())));
     }
 
     public void bowl(Pins pins) {
@@ -56,7 +56,7 @@ public class Frames {
     }
 
     private Frame recentFrame() {
-        return frames.getLast();
+        return frames.get(frames.size() - 1);
     }
 
     private boolean hasNotLastFrame() {
