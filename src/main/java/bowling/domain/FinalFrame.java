@@ -38,11 +38,13 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public String mark() {
-        return states.stream()
-            .filter(state -> !(state instanceof Ready))
-            .map(State::mark)
-            .collect(Collectors.joining(DELIMITER));
+    public Frame nextFrame() {
+        throw new RuntimeException("마지막 프레임 입니다.");
+    }
+
+    @Override
+    public Round round() {
+        return Round.last();
     }
 
     @Override
@@ -55,13 +57,11 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Frame nextFrame() {
-        throw new RuntimeException("마지막 프레임 입니다.");
-    }
-
-    @Override
-    public Round round() {
-        return Round.last();
+    public String mark() {
+        return states.stream()
+            .filter(state -> !(state instanceof Ready))
+            .map(State::mark)
+            .collect(Collectors.joining(DELIMITER));
     }
 
     private boolean isMaxPins(State state) {

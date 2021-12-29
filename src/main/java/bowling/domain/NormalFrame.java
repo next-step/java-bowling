@@ -23,6 +23,12 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public NormalFrame bowl(Pins pins) {
+        validFinished();
+        return new NormalFrame(round, state.bowl(pins));
+    }
+
+    @Override
     public Frame nextFrame() {
         if (round.isNextFinishRound()) {
             return new FinalFrame();
@@ -36,19 +42,13 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public NormalFrame bowl(Pins pins) {
-        validFinished();
-        return new NormalFrame(round, state.bowl(pins));
+    public boolean isFinished() {
+        return state.isFinished();
     }
 
     @Override
     public String mark() {
         return state.mark();
-    }
-
-    @Override
-    public boolean isFinished() {
-        return state.isFinished();
     }
 
     private void validFinished() {
