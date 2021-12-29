@@ -37,6 +37,10 @@ public class Player {
         return frames.frames();
     }
 
+    public int currentRound() {
+        return frames.currentRound().round();
+    }
+
     private void valid(String name) throws PlayerLengthOutOfBoundException {
         if (name == null || name.isEmpty()) {
             throw new PlayerNameNullPointerException();
@@ -47,7 +51,4 @@ public class Player {
         }
     }
 
-    public int currentRound() {
-        return frames.currentRound().round();
-    }
 }
