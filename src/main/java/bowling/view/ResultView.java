@@ -68,7 +68,7 @@ public final class ResultView {
         String body = frames.stream()
                 .map(frame -> {
                     if (frame.score().canCalculate()) {
-                        return totalScore(frames, frames.indexOf(frame) + 1);
+                        return String.format(SCORE_RESULT, frame.score(frames, frames.indexOf(frame) + 1));
                     }
                     return SCORE_EMPTY;
                 })
@@ -79,15 +79,6 @@ public final class ResultView {
                 .collect(joining());
 
         return SCORE_LEFT_PADDING + body + emptyBody;
-    }
-
-    private static String totalScore(List<Frame> frames, int limit) {
-        int sum = frames.stream()
-                .limit(limit)
-                .map(Frame::score)
-                .mapToInt(Score::getScore)
-                .sum();
-        return String.format(SCORE_RESULT, sum);
     }
 
     private static void initializeBuilder() {
