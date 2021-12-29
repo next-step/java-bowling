@@ -60,7 +60,7 @@ public class FinalFrame implements Frame {
         if (nextScore.canCalculate()) {
             return nextScore;
         }
-        if (balls.balls.size() > 4) {
+        if (count > MIN_BOWL_COUNT) {
             return Score.next(nextScore.addScoreValue(previous), ScoreBonus.display());
         }
         return Score.next(ScoreValue.of(total()), ScoreBonus.init());
