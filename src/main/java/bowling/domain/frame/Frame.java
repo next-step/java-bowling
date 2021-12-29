@@ -14,5 +14,5 @@ public interface Frame {
 
     int score();
 
-    int scoreAfter(Score prevScore);
+    int scoreAfter(Score previousScore);
 }

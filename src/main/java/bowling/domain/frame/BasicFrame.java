@@ -67,16 +67,16 @@ public class BasicFrame implements Frame {
     }
 
     @Override
-    public int scoreAfter(Score prevScore) {
+    public int scoreAfter(Score previousScore) {
         try {
-            return finalScoreAfter(prevScore);
+            return finalScoreAfter(previousScore);
         } catch (IllegalStateException e) {
             return Score.INCOMPUTABLE_SCORE_VALUE;
         }
     }
 
-    private int finalScoreAfter(Score prevScore) {
-        Score score = state.scoreAfter(prevScore);
+    private int finalScoreAfter(Score previousScore) {
+        Score score = state.scoreAfter(previousScore);
         if (score.hasFinalScore()) {
             return score.getValue();
         }

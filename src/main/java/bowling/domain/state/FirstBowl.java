@@ -50,7 +50,7 @@ public class FirstBowl extends RunningState {
     }
 
     @Override
-    public Score scoreAfter(Score prevScore) {
-        return prevScore.bowl(first.score());
+    public Score scoreAfter(Score previousScore) {
+        return previousScore.bowl(first.score());
     }
 }

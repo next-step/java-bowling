@@ -14,5 +14,5 @@ public interface ThrowingState {
 
     Score score();
 
-    Score scoreAfter(Score prevScore);
+    Score scoreAfter(Score previousScore);
 }

@@ -42,12 +42,12 @@ public class Miss extends EndedState {
     }
 
     @Override
-    public Score scoreAfter(Score prevScore) {
-        prevScore = prevScore.bowl(first.score());
-        if (prevScore.hasFinalScore()) {
-            return prevScore;
+    public Score scoreAfter(Score previousScore) {
+        previousScore = previousScore.bowl(first.score());
+        if (previousScore.hasFinalScore()) {
+            return previousScore;
         }
-        return prevScore.bowl(second.score());
+        return previousScore.bowl(second.score());
     }
 
     private String formatValue(Pins pin) {
