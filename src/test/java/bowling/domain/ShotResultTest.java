@@ -3,6 +3,7 @@ package bowling.domain;
 import java.util.stream.Stream;
 
 import bowling.engine.Shot;
+import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -13,6 +14,7 @@ import static bowling.domain.ShotResult.GUTTER;
 import static bowling.domain.ShotResult.NINE;
 import static bowling.domain.ShotResult.ONE;
 import static bowling.domain.ShotResult.STRIKE;
+import static bowling.domain.SpareShotResult.SPARE_NINE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -82,5 +84,12 @@ public class ShotResultTest {
         assertThat(SpareShotResult.of(first, secondShot).toInt()).isEqualTo(secondShot.toInt());
         assertThat(SpareShotResult.of(first, secondShot).isSpare()).isFalse();
         assertThat(SpareShotResult.of(first, secondShot)).isInstanceOf(ShotResult.class);
+    }
+
+    @Test
+    public void notEquals() {
+        assertThat(STRIKE.notEquals(GUTTER)).isTrue();
+        assertThat(STRIKE.notEquals(STRIKE)).isFalse();
+        assertThat(NINE.notEquals(SPARE_NINE)).isTrue();
     }
 }

@@ -13,15 +13,21 @@ public class FinalFrame extends NormalFrame {
     }
 
     static FinalFrame of(List<Shot> shots) {
-        int sum = sum(shots.stream());
-        long strikeCount = shots.stream()
-                .filter(STRIKE::equals).count();
-        if ((sum > FrameScore.DOUBLE_SCORE && strikeCount < ShotResult.DOUBLE_STRIKE_COUNT)
-                || sum > FrameScore.TURKEY_SCORE) {
-            throw new IllegalArgumentException("invalid score: " + sum);
+        if (hasNoSpare(shots) && sumWithoutStrike(shots) > NUMBER_OF_PINS) {
+            throw new IllegalArgumentException("invalid score: " + shots);
         }
 
         return new FinalFrame(shots);
+    }
+
+    private static boolean hasNoSpare(List<Shot> shots) {
+        return shots.stream()
+                .noneMatch(Shot::isSpare);
+    }
+
+    private static int sumWithoutStrike(List<Shot> shots) {
+        return sum(shots.stream()
+                .filter(STRIKE::notEquals));
     }
 
     @Override
