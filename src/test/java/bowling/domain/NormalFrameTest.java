@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import bowling.exception.NotBowlingStateException;
 import org.junit.jupiter.api.Test;
 
 class NormalFrameTest {
@@ -24,7 +25,7 @@ class NormalFrameTest {
 
     @Test
     void bowl_횟수초과() {
-        assertThatExceptionOfType(RuntimeException.class)
+        assertThatExceptionOfType(NotBowlingStateException.class)
             .isThrownBy(() -> NormalFrame.first().bowl(Pins.of(3)).bowl(Pins.of(3)).bowl(Pins.of(3)));
     }
 

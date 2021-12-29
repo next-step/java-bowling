@@ -3,6 +3,7 @@ package bowling.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+import bowling.exception.NotBowlingStateException;
 import org.junit.jupiter.api.Test;
 
 class FinalFrameTest {
@@ -29,7 +30,7 @@ class FinalFrameTest {
 
     @Test
     void 스페어_스트라이크_아닐경우() {
-        assertThatExceptionOfType(RuntimeException.class)
+        assertThatExceptionOfType(NotBowlingStateException.class)
             .isThrownBy(() -> new FinalFrame()
                 .bowl(Pins.of(8))
                 .bowl(Pins.of(1))

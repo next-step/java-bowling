@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
+import bowling.exception.NotBowlingStateException;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
@@ -53,7 +54,7 @@ public class NormalFrame implements Frame {
 
     private void validFinished() {
         if (isFinished()) {
-            throw new RuntimeException("진행할 수 없는 프레임 입니다.");
+            throw new NotBowlingStateException();
         }
     }
 
