@@ -14,6 +14,7 @@
     * 거터(gutter) : 핀을 하나도 쓰러트리지 못한 상태. 거터는 "-"로 표시
 * 스트라이크는 다음 2번의 투구까지 점수를 합산해야 한다. 스페어는 다음 1번의 투구까지 점수를 합산해야 한다.
 * 10 프레임은 스트라이크이거나 스페어이면 한 번을 더 투구할 수 있다.
+* 1명 이상의 사용자가 사용할 수 있는 볼링게임 점수판을 구현한다.
 
 ### 구현 시작 방법
 
@@ -22,7 +23,7 @@
 
 ### 프로그램 실행 결과
 
-![bowling_result](https://user-images.githubusercontent.com/15815583/147538656-7f5f112f-8964-460f-b7a6-8d877cf1c65c.png)
+![bowling_execution_results](https://user-images.githubusercontent.com/15815583/147674355-e0bf45a6-2bad-4ec9-8dae-9ba52d7b3f2d.png)
 
 ## 프로그래밍 요구사항
 
