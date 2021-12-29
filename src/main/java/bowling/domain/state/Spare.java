@@ -1,10 +1,8 @@
 package bowling.domain.state;
 
-import static java.lang.Boolean.TRUE;
-
 import bowling.domain.Pins;
 
-public class Spare implements State {
+public class Spare extends Finished {
 
     private static final String MARKING = "%d|/";
 
@@ -26,11 +24,6 @@ public class Spare implements State {
     @Override
     public String mark() {
         return String.format(MARKING, firstPins.fallenPins());
-    }
-
-    @Override
-    public boolean isFinished() {
-        return TRUE;
     }
 
     private void valid(Pins firstPins, Pins secondPins) {

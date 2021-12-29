@@ -1,10 +1,8 @@
 package bowling.domain.state;
 
-import static java.lang.Boolean.TRUE;
-
 import bowling.domain.Pins;
 
-public class Mess implements State {
+public class Mess extends Finished {
 
     private static final String MARKING = "%s|%s";
     private static final String ZERO_MARKING = "-";
@@ -27,11 +25,6 @@ public class Mess implements State {
     @Override
     public String mark() {
         return String.format(MARKING, countOfString(firstPins), countOfString(secondPins));
-    }
-
-    @Override
-    public boolean isFinished() {
-        return TRUE;
     }
 
     private String countOfString(Pins pins) {
