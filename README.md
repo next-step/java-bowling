@@ -132,12 +132,14 @@ https://www.bowlinggenius.com/
     * View와 Model을 분리하기 위한 Controller로 게임 구현
 * `InputView`
     * `Player` 이름 입력 기능 구현
+    * `Players` 다중 이름 입력 기능 구현
     * 다중 `Player` 정보 입력 기능 구현
         * 게임을 진행할 `Player` 수 입력
         * 게임을 진행할 `Player` 이름 입력
     * 투구 숫자 입력 기능 구현
 * `OutputView`
     * 현재 볼링 점수판 출력 기능 구현
+    * 다중 사용자 볼링 점수판 출력 기능 구현
 
 * * *
 

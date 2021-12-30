@@ -2,6 +2,7 @@ package bowling.view;
 
 import bowling.domain.Pins;
 import bowling.domain.Player;
+import bowling.domain.Players;
 
 import java.util.List;
 import java.util.Scanner;
@@ -24,11 +25,11 @@ public final class InputView {
         return Player.create(SCANNER.nextLine());
     }
 
-    public static List<Player> inputPlayersInformation() {
+    public static Players inputPlayersInformation() {
         System.out.print(INPUT_PLAYERS_SIZE_MESSAGE);
         int size = SCANNER.nextInt();
         SCANNER.nextLine();
-        return players(size);
+        return Players.from(players(size));
     }
 
     private static List<Player> players(int size) {

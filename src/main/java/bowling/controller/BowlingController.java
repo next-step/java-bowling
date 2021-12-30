@@ -1,5 +1,6 @@
 package bowling.controller;
 
+import bowling.domain.BowlingGames;
 import bowling.domain.BowlingGame;
 import bowling.view.InputView;
 import bowling.view.OutputView;
@@ -10,6 +11,8 @@ public final class BowlingController {
     }
 
     public static void play() {
+        BowlingGames bowlingGames = BowlingGames.create(InputView.inputPlayersInformation());
+        OutputView.printCurrentStatus(bowlingGames);
         BowlingGame bowlingGame = BowlingGame.create(InputView.inputPlayerName());
         OutputView.printCurrentStatus(bowlingGame);
         while (bowlingGame.hasNextPitching()) {
