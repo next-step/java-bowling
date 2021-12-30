@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class FirstClassCollectionTest {
+public class FirstClassListTest {
     static final class TestObject {
         public static final TestObject OBJ1 = new TestObject(1);
         public static final TestObject OBJ2 = new TestObject(2);
