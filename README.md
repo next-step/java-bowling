@@ -86,6 +86,10 @@ https://www.bowlinggenius.com/
 * `Player`
     * `Player` 생성
         * '영문 대소문', '3글자' 이름 조건 허용
+* `Players`
+    * `Players` 생성
+      * List `Player`를 관리하기 위한 새로운 타입 일급 컬렉션
+      * null 또는 비어있는 List `Player` 전달시 예외
 * `Pins`
     * `Pins` 생성
         * 핀의 갯수는 0개에서 10개까지 허용
