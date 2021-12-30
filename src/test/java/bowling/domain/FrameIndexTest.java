@@ -8,7 +8,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class FrameIndexTest {
+public class FrameIndexTest {
+    public static final FrameIndex FIRST_INDEX = FrameIndex.first();
+    public static final FrameIndex SECOND_INDEX = FrameIndex.create(2);
 
     @DisplayName("프레임 인덱스 생성시 범위 예외 확인")
     @ParameterizedTest

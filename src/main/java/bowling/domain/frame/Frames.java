@@ -43,6 +43,15 @@ public class Frames {
         return Collections.unmodifiableList(frames);
     }
 
+    public boolean hasFrameInProgress(FrameIndex index) {
+        try {
+            Frame frame = frames.get(index.getValue() - 1);
+            return !frame.isEnd();
+        } catch (IndexOutOfBoundsException e) {
+            throw new IndexOutOfBoundsException(String.format("반환하려는 인덱스(%s)는 존재하지 않는 프레임입니다.", index));
+        }
+    }
+
     private void validate(List<Frame> frames) {
         if (frames == null) {
             throw new IllegalArgumentException("전달된 프레임들이 null입니다.");

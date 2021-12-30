@@ -53,6 +53,13 @@ public class FrameIndex {
         return Objects.hash(value);
     }
 
+    @Override
+    public String toString() {
+        return "FrameIndex{" +
+                "value=" + value +
+                '}';
+    }
+
     private void validate(int value) {
         if (value < MIN_INDEX || value > MAX_INDEX) {
             throw new IllegalStateException(String.format("인덱스는 %d <= x <= %d 범위의 값이어야 합니다.", MIN_INDEX, MAX_INDEX));
