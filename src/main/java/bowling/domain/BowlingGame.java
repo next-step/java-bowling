@@ -36,6 +36,10 @@ public class BowlingGame {
         return frames.lastFrameIndex();
     }
 
+    public boolean hasFrameInProgress(FrameIndex index) {
+        return frames.hasFrameInProgress(index);
+    }
+
     public List<Frame> getFrames() {
         return frames.getFrames();
     }

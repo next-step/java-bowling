@@ -125,6 +125,7 @@ https://www.bowlinggenius.com/
     * 중간 점수를 확인하기 위한 반환 기능 구현
 * `BowlingGame`
     * `Player`와 `Frames`를 이용한 볼링 게임 구현
+    * `BowlingGame` 진행 중에 최근 `Frame` 투구가 진행중인지 확인하는 기능 구현
 * `BowlingGames`
     * List `BowlingGame`을 관리할 일급 컬렉션 `BowlingGames` 생성 기능 구현
     * List `BowlingGame`을 관리할 일급 컬렉션 `BowlingGames` 생성 검증 구현
