@@ -6,6 +6,7 @@ import bowling.domain.Pins;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Frames {
     private final List<Frame> frames;
@@ -61,5 +62,18 @@ public class Frames {
 
     private boolean hasNotLastFrame() {
         return frames.size() < FrameIndex.MAX_INDEX;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Frames frames1 = (Frames) o;
+        return Objects.equals(frames, frames1.frames);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frames);
     }
 }

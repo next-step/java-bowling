@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BowlingGameTest {
+    public static final BowlingGame GAME_WITH_PLAYER_AYM = BowlingGame.create(PlayerTest.PLAYER_AYM);
+    public static final BowlingGame GAME_WITH_PLAYER_KMS = BowlingGame.create(PlayerTest.PLAYER_KMS);
 
     BowlingGame bowlingGame;
 

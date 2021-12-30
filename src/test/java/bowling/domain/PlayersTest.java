@@ -16,11 +16,11 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PlayersTest {
-    public static final Players ONE_PLAYER = Players.from(Collections.singletonList(PlayerTest.PLAYER_AYM));
-    public static final Players TWO_PLAYERS = Players.from(Arrays.asList(PlayerTest.PLAYER_AYM, PlayerTest.PLAYER_KMS));
+    public static final Players PLAYERS_WITH_AYM = Players.from(Collections.singletonList(PlayerTest.PLAYER_AYM));
+    public static final Players PLAYERS_WITH_AYM_KMS = Players.from(Arrays.asList(PlayerTest.PLAYER_AYM, PlayerTest.PLAYER_KMS));
 
     private static Stream<Players> providePlayersCases() { // argument source method
-        return Stream.of(ONE_PLAYER, TWO_PLAYERS);
+        return Stream.of(PLAYERS_WITH_AYM, PLAYERS_WITH_AYM_KMS);
     }
 
     @DisplayName("플레이어들 생성 확인")
@@ -46,8 +46,8 @@ class PlayersTest {
     void getPlayers() {
         // when & then
         assertAll(
-                () -> assertThat(ONE_PLAYER.getPlayers()).isEqualTo(Collections.singletonList(PlayerTest.PLAYER_AYM)),
-                () -> assertThat(TWO_PLAYERS.getPlayers()).isEqualTo(Arrays.asList(PlayerTest.PLAYER_AYM, PlayerTest.PLAYER_KMS))
+                () -> assertThat(PLAYERS_WITH_AYM.getPlayers()).isEqualTo(Collections.singletonList(PlayerTest.PLAYER_AYM)),
+                () -> assertThat(PLAYERS_WITH_AYM_KMS.getPlayers()).isEqualTo(Arrays.asList(PlayerTest.PLAYER_AYM, PlayerTest.PLAYER_KMS))
         );
     }
 }
