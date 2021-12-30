@@ -130,6 +130,9 @@ https://www.bowlinggenius.com/
     * List `BowlingGame`을 관리할 일급 컬렉션 `BowlingGames` 생성 기능 구현
     * List `BowlingGame`을 관리할 일급 컬렉션 `BowlingGames` 생성 검증 구현
     * List `BowlingGame` 반환 기능 구현
+    * 현재 `BowlingGames`의 `FrameIndex`를 반환하는 기능 구현
+    * 다음 `BowlingGame`에서 투구를 할 수 있는지 확인 기능 구현
+    * 현재 `BowlingGames`을 다음 `FrameIndex`로 증가시키는 기능 구현
 * `BowlingGameController`
     * View와 Model을 분리하기 위한 Controller로 게임 구현
     * 다중 볼링 게임을 위해 `BowlingGames` 비즈니스 로직 구현
