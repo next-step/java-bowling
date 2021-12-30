@@ -2,47 +2,48 @@ package bowling.domain;
 
 import java.util.List;
 
+import bowling.engine.Frame;
+import bowling.engine.Shots;
 import bowling.engine.collection.FirstClassList;
 import bowling.engine.Shot;
 
 import static bowling.domain.ShotResult.STRIKE;
 
 public class FinalFrame extends NormalFrame {
-    protected FinalFrame(List<Shot> shots) {
+    protected FinalFrame(Shots shots) {
         super(FrameSequence.FINAL_FRAME, shots);
     }
 
-    static FinalFrame of(List<Shot> shots) {
-        if (hasNoSpare(shots) && sumWithoutStrike(shots) > NUMBER_OF_PINS) {
-            throw new IllegalArgumentException("invalid score: " + shots);
+    static FinalFrame of(Shots shots) {
+        if (shots == null) {
+            throw  new IllegalArgumentException("shots cannot be null");
         }
 
         return new FinalFrame(shots);
     }
 
-    private static boolean hasNoSpare(List<Shot> shots) {
-        return shots.stream()
-                .noneMatch(Shot::isSpare);
-    }
-
-    private static int sumWithoutStrike(List<Shot> shots) {
-        return sum(shots.stream()
-                .filter(STRIKE::notEquals));
+    static FinalFrame of(List<Shot> shots) {
+        return new FinalFrame(FrameShots.ofFinal(shots));
     }
 
     @Override
-    public boolean isSpareChallenge() {
-        return size() != 0 && last() != STRIKE && !last().isSpare();
+    public Frame nextShot(Shot shot) {
+        if (completed()) {
+            throw new IllegalStateException("the game is ended");
+        }
+
+        Shot nextShot = shots.isSpareChallenge() ? SpareShotResult.of(shots.last(), shot) : shot;
+        return FinalFrame.of(shots.nextShot(nextShot));
     }
 
     @Override
     public boolean completed() {
-        return size() == NUMBER_OF_FINAL_SHOT || (!hasThirdChance() && size() == NUMBER_OF_SHOT);
+        return shots.size() == NUMBER_OF_FINAL_SHOT || (!hasThirdChance() && super.completed());
     }
 
     @Override
     public boolean hasThirdChance() {
-        return isClear() || elementOf(FirstClassList.HEAD) == STRIKE;
+        return shots.isClear() || shots.elementOf(FirstClassList.HEAD) == STRIKE;
     }
 
     @Override

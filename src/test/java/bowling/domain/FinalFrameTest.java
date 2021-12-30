@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 import bowling.engine.Frame;
@@ -9,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.NullSource;
 
 import static bowling.domain.FrameSequenceTest.fs;
 import static bowling.domain.NormalFrameTest.fr;
@@ -30,6 +31,12 @@ public class FinalFrameTest {
     @Test
     public void create() {
         assertThat(NormalFrame.first(fs(10), GUTTER)).isInstanceOf(FinalFrame.class);
+    }
+
+    @ParameterizedTest(name = "create failed: {arguments}")
+    @NullSource
+    public void createFailed(List<Shot> shots) {
+        assertThatIllegalArgumentException().isThrownBy(() ->FinalFrame.of(shots));
     }
 
     public static Stream<Arguments> parseThird() {
@@ -130,30 +137,6 @@ public class FinalFrameTest {
     public void isFinal() {
         assertThat(ff(GUTTER).isFinal()).isTrue();
         assertThat(fr(10).isFinal()).isTrue();
-    }
-
-    @ParameterizedTest(name = "is spare challenge")
-    @ValueSource(ints = {1, 5, 9})
-    public void isSpareChallenge(int score) {
-        assertThat(ff(STRIKE).nextShot(ShotResult.of(score)).isSpareChallenge()).isTrue();
-    }
-
-    @Test
-    public void isNotSpareChallenge() {
-        assertThat(ff(STRIKE).isSpareChallenge()).isFalse();
-    }
-
-    public static Stream<Arguments> parseNotSpareChallenge() {
-        return Stream.of(
-                Arguments.of(NINE, ONE),
-                Arguments.of(GUTTER, STRIKE)
-        );
-    }
-
-    @ParameterizedTest(name = "is not spare challenge: {arguments}")
-    @MethodSource("parseNotSpareChallenge")
-    public void isNotSpareChallengeBySpare(Shot first, Shot second) {
-        assertThat(ff(first).nextShot(second).isSpareChallenge()).isFalse();
     }
 
     public static FinalFrame ff(Shot ... shots) {

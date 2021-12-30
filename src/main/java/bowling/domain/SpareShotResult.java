@@ -36,6 +36,10 @@ public enum SpareShotResult implements Shot {
     }
 
     public static Shot of(Shot previous, Shot score) {
+        if (previous == null || score == null) {
+            throw new IllegalArgumentException("shot results cannot be null");
+        }
+
         if (previous.toInt() + score.toInt() == 10) {
             return spareScoreMap.get(score.toInt());
         }

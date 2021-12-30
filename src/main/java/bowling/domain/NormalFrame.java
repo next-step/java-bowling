@@ -1,25 +1,26 @@
 package bowling.domain;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-import bowling.engine.collection.FirstClassImmutableList;
 import bowling.engine.Frame;
 import bowling.engine.Score;
 import bowling.engine.Sequence;
 import bowling.engine.Shot;
+import bowling.engine.Shots;
 
-public class NormalFrame extends FirstClassImmutableList<Shot> implements Frame {
-    public static final Frame START_FRAME = new NormalFrame(FrameSequence.FIRST_FRAME, Collections.emptyList());
+public class NormalFrame implements Frame {
+    public static final Frame START_FRAME = new NormalFrame(FrameSequence.FIRST_FRAME, FrameShots.EMPTY_SHOT);
 
     private final Sequence sequence;
+    protected final Shots shots;
 
-    protected NormalFrame(Sequence sequence, List<Shot> collection) {
-        super(collection);
+    protected NormalFrame(Sequence sequence, Shots shots) {
         this.sequence = sequence;
+        this.shots = shots;
     }
-    static Frame of(Sequence sequence, List<Shot> shots) {
+
+    static Frame of(Sequence sequence, Shots shots) {
         if (sequence == null || shots == null) {
             throw new IllegalArgumentException("sequence or shots cannot be null");
         }
@@ -28,11 +29,15 @@ public class NormalFrame extends FirstClassImmutableList<Shot> implements Frame 
             return FinalFrame.of(shots);
         }
 
-        if (sum(shots.stream()) > NUMBER_OF_PINS) {
-            throw new IllegalArgumentException("sum of shot results cannot be larger than 10");
+        return new NormalFrame(sequence, shots);
+    }
+
+    static Frame of(Sequence sequence, List<Shot> shots) {
+        if (shots == null) {
+            throw new IllegalArgumentException("sequence or shots cannot be null");
         }
 
-        return new NormalFrame(sequence, shots);
+        return of(sequence, FrameShots.of(shots));
     }
 
     public static Frame first(Sequence sequence, Shot shot) {
@@ -49,20 +54,11 @@ public class NormalFrame extends FirstClassImmutableList<Shot> implements Frame 
 
     @Override
     public Frame nextShot(Shot shot) {
-        if (shot == null) {
-            throw new IllegalArgumentException("shot results cannot be null");
-        }
-
         if (completed()) {
             return NormalFrame.of(sequence.next(), List.of(shot));
         }
 
-        Shot nextShot = isSpareChallenge() ? SpareShotResult.of(last(), shot) : shot;
-        return NormalFrame.of(sequence, append(nextShot).collect());
-    }
-
-    public boolean isSpareChallenge() {
-        return size() != 0;
+        return NormalFrame.of(sequence, shots.nextShot(shot));
     }
 
     @Override
@@ -71,13 +67,8 @@ public class NormalFrame extends FirstClassImmutableList<Shot> implements Frame 
     }
 
     @Override
-    public boolean isClear() {
-        return sum(stream()) == NUMBER_OF_PINS;
-    }
-
-    @Override
     public Score score() {
-        return FrameScore.of(sum(stream()));
+        return shots.score();
     }
 
     @Override
@@ -87,7 +78,7 @@ public class NormalFrame extends FirstClassImmutableList<Shot> implements Frame 
 
     @Override
     public boolean completed() {
-        return size() == NUMBER_OF_SHOT || isClear();
+        return shots.size() == NUMBER_OF_SHOT || shots.isClear();
     }
 
     @Override
@@ -96,10 +87,15 @@ public class NormalFrame extends FirstClassImmutableList<Shot> implements Frame 
     }
 
     @Override
+    public Stream<Shot> stream() {
+        return shots.stream();
+    }
+
+    @Override
     public String toString() {
         return "NormalFrame{" +
                 "sequence=" + sequence +
-                ", shots=" + collect().toString() +
+                ", shots=" + shots +
                 '}';
     }
 }

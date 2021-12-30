@@ -11,6 +11,10 @@ public class FirstClassImmutableList<T> extends AbstractFirstClassList<T> {
 
     @Override
     public FirstClassList<T> append(T t) {
+        if (t == null) {
+            throw new IllegalArgumentException("append null is not allowed");
+        }
+
         final List<T> listBuffer = new ArrayList<>(size() + 1);
         listBuffer.addAll(collect());
         listBuffer.add(t);

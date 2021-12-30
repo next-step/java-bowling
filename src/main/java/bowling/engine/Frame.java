@@ -1,8 +1,8 @@
 package bowling.engine;
 
-import bowling.engine.collection.FirstClassList;
+import java.util.stream.Stream;
 
-public interface Frame extends FirstClassList<Shot> {
+public interface Frame {
     int NUMBER_OF_PINS = 10;
     int NUMBER_OF_SHOT = 2;
     int NUMBER_OF_FINAL_SHOT = 3;
@@ -13,8 +13,8 @@ public interface Frame extends FirstClassList<Shot> {
     boolean completed();
     Score score();
 
-    boolean isClear();
     boolean isFinal();
-    boolean isSpareChallenge();
     boolean hasThirdChance();
+
+    Stream<Shot> stream();
 }
