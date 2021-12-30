@@ -129,8 +129,9 @@ https://www.bowlinggenius.com/
     * List `BowlingGame`을 관리할 일급 컬렉션 `BowlingGames` 생성 기능 구현
     * List `BowlingGame`을 관리할 일급 컬렉션 `BowlingGames` 생성 검증 구현
     * List `BowlingGame` 반환 기능 구현
-* `BowlingController`
+* `BowlingGameController`
     * View와 Model을 분리하기 위한 Controller로 게임 구현
+    * 다중 볼링 게임을 위해 `BowlingGames` 비즈니스 로직 구현
 * `InputView`
     * `Player` 이름 입력 기능 구현
     * `Players` 다중 이름 입력 기능 구현

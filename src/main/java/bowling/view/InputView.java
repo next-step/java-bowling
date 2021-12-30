@@ -19,12 +19,6 @@ public final class InputView {
     private InputView() {
     }
 
-    @Deprecated
-    public static Player inputPlayerName() {
-        System.out.print(INPUT_PLAYER_NAME_MESSAGE);
-        return Player.create(SCANNER.nextLine());
-    }
-
     public static Players inputPlayersInformation() {
         System.out.print(INPUT_PLAYERS_SIZE_MESSAGE);
         int size = SCANNER.nextInt();
@@ -43,7 +37,7 @@ public final class InputView {
         return Player.create(SCANNER.nextLine());
     }
 
-    public static Pins inputFallenPins(int playerName) {
+    public static Pins inputFallenPins(String playerName) {
         System.out.printf(INPUT_FALLEN_PINS_MESSAGE, playerName);
         return Pins.create(Integer.parseInt(SCANNER.nextLine()));
     }
