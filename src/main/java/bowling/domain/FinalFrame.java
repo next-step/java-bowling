@@ -2,7 +2,7 @@ package bowling.domain;
 
 import static bowling.domain.Ball.MAX_PIN_COUNT;
 
-public class FinalFrame implements Frame {
+public class FinalFrame extends Frame {
     private static final int MIN_BOWL_COUNT = 2;
     private static final int MAX_BOWL_COUNT = 3;
 
