@@ -36,4 +36,9 @@ public class FrameScore implements Score {
     public int toInt() {
         return score;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(score);
+    }
 }
