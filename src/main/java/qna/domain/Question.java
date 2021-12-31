@@ -24,7 +24,7 @@ public class Question extends AbstractEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private Answers answers;
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -97,7 +97,7 @@ public class Question extends AbstractEntity {
     }
 
     public void delete(User loginUser) throws CannotDeleteException {
-        if (isOwner(loginUser)) {
+        if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
         answers.delete(loginUser);
