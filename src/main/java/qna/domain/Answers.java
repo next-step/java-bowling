@@ -8,7 +8,7 @@ import java.util.List;
 public class Answers {
     private boolean deleted = false;
 
-    private List<Answer> answers;
+    private final List<Answer> answers;
 
     public Answers() {
         this.answers = new ArrayList<>();
@@ -29,12 +29,12 @@ public class Answers {
         answers.add(answer);
     }
 
+    public boolean isDeleted() {
+        return deleted;
+    }
+
     public Answers setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
     }
 }
