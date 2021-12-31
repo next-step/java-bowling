@@ -9,12 +9,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static bowling.domain.ShotResult.EIGHT;
 import static bowling.domain.ShotResult.GUTTER;
-import static bowling.domain.ShotResult.NINE;
-import static bowling.domain.ShotResult.ONE;
 import static bowling.domain.ShotResult.STRIKE;
-import static bowling.domain.SpareShotResult.SPARE_NINE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -22,8 +18,8 @@ public class ShotResultTest {
     public static Stream<Arguments> parseCreate() {
         return Stream.of(
                 Arguments.of(0, GUTTER),
-                Arguments.of(1, ShotResult.ONE),
-                Arguments.of(10, ShotResult.STRIKE)
+                Arguments.of(1, ONE),
+                Arguments.of(10, STRIKE)
         );
     }
 
@@ -41,20 +37,6 @@ public class ShotResultTest {
         assertThatIllegalArgumentException().isThrownBy(() -> ShotResult.of(score));
     }
 
-    public static Stream<Arguments> parseDisplay() {
-        return Stream.of(
-                Arguments.of(0, "-"),
-                Arguments.of(1, "1"),
-                Arguments.of(10, "X")
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("parseDisplay")
-    public void display(int score, String expected) {
-        assertThat(ShotResult.of(score).toString()).isEqualTo(expected);
-    }
-
     public static Stream<Arguments> parseSpare() {
         return Stream.of(
                 Arguments.of(GUTTER, STRIKE),
@@ -65,10 +47,9 @@ public class ShotResultTest {
     @ParameterizedTest
     @MethodSource("parseSpare")
     public void spare(Shot first, Shot secondShot) {
-        assertThat(SpareShotResult.of(first, secondShot).toInt()).isEqualTo(secondShot.toInt());
-        assertThat(SpareShotResult.of(first, secondShot).toString()).isEqualTo("/");
-        assertThat(SpareShotResult.of(first, secondShot).isSpare()).isTrue();
-        assertThat(SpareShotResult.of(first, secondShot)).isInstanceOf(SpareShotResult.class);
+        assertThat(ShotResult.of(first, secondShot).toInt()).isEqualTo(secondShot.toInt());
+        assertThat(ShotResult.of(first, secondShot).isSpare()).isTrue();
+        assertThat(ShotResult.of(first, secondShot)).isInstanceOf(ShotResult.class);
     }
 
     public static Stream<Arguments> parseNotSpare() {
@@ -81,9 +62,9 @@ public class ShotResultTest {
     @ParameterizedTest
     @MethodSource("parseNotSpare")
     public void notSpare(Shot first, Shot secondShot) {
-        assertThat(SpareShotResult.of(first, secondShot).toInt()).isEqualTo(secondShot.toInt());
-        assertThat(SpareShotResult.of(first, secondShot).isSpare()).isFalse();
-        assertThat(SpareShotResult.of(first, secondShot)).isInstanceOf(ShotResult.class);
+        assertThat(ShotResult.of(first, secondShot).toInt()).isEqualTo(secondShot.toInt());
+        assertThat(ShotResult.of(first, secondShot).isSpare()).isFalse();
+        assertThat(ShotResult.of(first, secondShot)).isInstanceOf(ShotResult.class);
     }
 
     @Test
@@ -92,4 +73,17 @@ public class ShotResultTest {
         assertThat(STRIKE.notEquals(STRIKE)).isFalse();
         assertThat(NINE.notEquals(SPARE_NINE)).isTrue();
     }
+
+    public static final Shot ONE = ShotResult.of(1);
+    @SuppressWarnings("unused")
+    public static final Shot TWO = ShotResult.of(2);
+    public static final Shot THREE = ShotResult.of(3);
+    public static final Shot FOUR = ShotResult.of(4);
+    public static final Shot FIVE = ShotResult.of(5);
+    public static final Shot SIX = ShotResult.of(6);
+    public static final Shot SEVEN = ShotResult.of(7);
+    public static final Shot EIGHT = ShotResult.of(8);
+    public static final Shot NINE = ShotResult.of(9);
+
+    public static final Shot SPARE_NINE = ShotResult.of(ONE, NINE);
 }

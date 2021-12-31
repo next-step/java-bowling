@@ -32,8 +32,7 @@ public class FinalFrame extends NormalFrame {
             throw new IllegalStateException("the game is ended");
         }
 
-        Shot nextShot = shots.isSpareChallenge() ? SpareShotResult.of(shots.last(), shot) : shot;
-        return FinalFrame.of(shots.nextShot(nextShot));
+        return FinalFrame.of(shots.nextShot(shot));
     }
 
     @Override

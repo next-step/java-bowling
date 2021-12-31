@@ -14,13 +14,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static bowling.domain.FrameSequenceTest.fs;
-import static bowling.domain.ShotResult.FIVE;
-import static bowling.domain.ShotResult.FOUR;
 import static bowling.domain.ShotResult.GUTTER;
-import static bowling.domain.ShotResult.NINE;
-import static bowling.domain.ShotResult.ONE;
-import static bowling.domain.ShotResult.SIX;
 import static bowling.domain.ShotResult.STRIKE;
+import static bowling.domain.ShotResultTest.NINE;
+import static bowling.domain.ShotResultTest.ONE;
+import static bowling.domain.ShotResultTest.SIX;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 

@@ -1,47 +1,51 @@
 package bowling.domain;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 import bowling.engine.Shot;
 
-public enum ShotResult implements Shot {
-    GUTTER(0, "-"),
-    ONE(1, "1"),
-    TWO(2, "2"),
-    THREE(3, "3"),
-    FOUR(4, "4"),
-    FIVE(5, "5"),
-    SIX(6, "6"),
-    SEVEN(7, "7"),
-    EIGHT(8, "8"),
-    NINE(9, "9"),
-    STRIKE(10, "X");
-
+public class ShotResult implements Shot {
     private static final Map<Integer, Shot> frameScoreMap = new HashMap<>();
+    private static void initFrameScore(int score) {
+        frameScoreMap.put(score, new ShotResult(score, false));
+    }
+
     static {
-        Arrays.stream(values())
+        IntStream.rangeClosed(0, 10)
                 .forEach(ShotResult::initFrameScore);
     }
-    private static void initFrameScore(Shot shot) {
-        frameScoreMap.put(shot.toInt(), shot);
-    }
+
+    public static final Shot GUTTER = frameScoreMap.get(0);
+    public static final Shot STRIKE = frameScoreMap.get(10);
 
     private final int result;
-    private final String display;
+    private final boolean isSpare;
 
-    ShotResult(int result, String display) {
+    protected ShotResult(int result, boolean isSpare) {
         this.result = result;
-        this.display = display;
+        this.isSpare = isSpare;
     }
 
     public static Shot of(int score) {
-        if (score < GUTTER.result || score > STRIKE.result) {
+        if (score < GUTTER.toInt() || score > STRIKE.toInt()) {
             throw new IllegalArgumentException("score must be 0 to 10");
         }
 
         return frameScoreMap.get(score);
+    }
+
+    public static Shot of(Shot previous, Shot shot) {
+        if (previous == null || shot == null) {
+            throw new IllegalArgumentException("shot results cannot be null");
+        }
+
+        if (previous.toInt() + shot.toInt() == 10) {
+            return new ShotResult(shot.toInt(), true);
+        }
+
+        return shot;
     }
 
     @Override
@@ -50,12 +54,7 @@ public enum ShotResult implements Shot {
     }
 
     @Override
-    public String toString() {
-        return display;
-    }
-
-    @Override
     public boolean isSpare() {
-        return false;
+        return isSpare;
     }
 }

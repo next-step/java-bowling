@@ -13,15 +13,15 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static bowling.domain.ShotResult.FIVE;
-import static bowling.domain.ShotResult.FOUR;
 import static bowling.domain.ShotResult.GUTTER;
-import static bowling.domain.ShotResult.NINE;
-import static bowling.domain.ShotResult.ONE;
-import static bowling.domain.ShotResult.SEVEN;
-import static bowling.domain.ShotResult.SIX;
+import static bowling.domain.ShotResultTest.ONE;
+import static bowling.domain.ShotResultTest.THREE;
+import static bowling.domain.ShotResultTest.FOUR;
+import static bowling.domain.ShotResultTest.FIVE;
+import static bowling.domain.ShotResultTest.SIX;
+import static bowling.domain.ShotResultTest.SEVEN;
+import static bowling.domain.ShotResultTest.NINE;
 import static bowling.domain.ShotResult.STRIKE;
-import static bowling.domain.ShotResult.THREE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
