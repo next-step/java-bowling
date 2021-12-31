@@ -11,5 +11,4 @@ public interface Shots extends FirstClassList<Shot> {
 
     Score score();
     boolean isClear();
-    boolean isSpareChallenge();
 }

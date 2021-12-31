@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 import bowling.engine.Shot;
+import bowling.engine.Shots;
 
 public class ShotResult implements Shot {
     private static final Map<Integer, Shot> frameScoreMap = new HashMap<>();
@@ -41,7 +42,7 @@ public class ShotResult implements Shot {
             throw new IllegalArgumentException("shot results cannot be null");
         }
 
-        if (previous.toInt() + shot.toInt() == 10) {
+        if (shot.isSpareWith(previous)) {
             return new ShotResult(shot.toInt(), true);
         }
 
@@ -54,7 +55,25 @@ public class ShotResult implements Shot {
     }
 
     @Override
+    public Shot add(Shot other) {
+        return of(result + other.toInt());
+    }
+
+    @Override
     public boolean isSpare() {
         return isSpare;
+    }
+
+    @Override
+    public boolean isSpareWith(Shot previous) {
+        return previous != STRIKE && !previous.isSpare() && add(previous).toInt() == Shots.NUMBER_OF_PINS;
+    }
+
+    @Override
+    public String toString() {
+        return "ShotResult{" +
+                "result=" + result +
+                ", isSpare=" + isSpare +
+                '}';
     }
 }

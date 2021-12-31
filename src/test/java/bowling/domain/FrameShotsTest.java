@@ -11,7 +11,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import static bowling.domain.ShotResult.GUTTER;
 import static bowling.domain.ShotResultTest.ONE;
@@ -140,33 +139,6 @@ class FrameShotsTest {
     @Test
     public void isClearByStrike() {
         assertThat(ss(STRIKE).isClear()).isTrue();
-    }
-
-    @ParameterizedTest(name = "is spare challenge: {arguments}")
-    @ValueSource(ints = {1, 5, 9})
-    public void isSpareChallenge(int score) {
-        assertThat(ss(ShotResult.of(score)).isSpareChallenge()).isTrue();
-        assertThat(fss(STRIKE).nextShot(ShotResult.of(score)).isSpareChallenge()).isTrue();
-    }
-
-    @Test
-    public void isNotSpareChallenge() {
-        assertThat(ss().isSpareChallenge()).isFalse();
-        assertThat(ss(STRIKE).isSpareChallenge()).isFalse();
-    }
-
-
-    static Stream<Arguments> parseNotSpareChallenge() {
-        return Stream.of(
-                Arguments.of(NINE, ONE),
-                Arguments.of(GUTTER, STRIKE)
-        );
-    }
-
-    @ParameterizedTest(name = "is not spare challenge: {arguments}")
-    @MethodSource("parseNotSpareChallenge")
-    public void isNotSpareChallengeBySpare(Shot first, Shot second) {
-        assertThat(ss(first).nextShot(second).isSpareChallenge()).isFalse();
     }
 
     static Stream<Arguments> parseScore() {

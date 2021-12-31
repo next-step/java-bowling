@@ -65,6 +65,14 @@ public abstract class AbstractFirstClassList<T> implements FirstClassList<T> {
         return elementOf(size() - LAST_DIFF);
     }
 
+    public Optional<T> lastOptional() {
+        if (collect().isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(elementOf(size() - LAST_DIFF));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

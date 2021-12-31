@@ -77,7 +77,8 @@ public class FrameShots extends FirstClassImmutableList<Shot> implements Shots {
 
     @Override
     public Shots nextShot(Shot shot) {
-        Shot nextShot = isSpareChallenge() ? ShotResult.of(last(), shot) : shot;
+        Shot nextShot = lastOptional().map(last -> ShotResult.of(last, shot))
+                .orElse(shot);
         List<Shot> nextShots = append(nextShot).collect();
 
         return of(nextShots, isFinal);
@@ -91,11 +92,5 @@ public class FrameShots extends FirstClassImmutableList<Shot> implements Shots {
     @Override
     public boolean isClear() {
         return sum(stream()) == NUMBER_OF_PINS;
-    }
-
-    @Override
-    public boolean isSpareChallenge() {
-        // todo refactor: 이 메서드를 만든건 리스트가 비었을때 last()가 실패해서이다. 나머지는 ShotResult 안에서 하는게 맞다
-        return size() != 0 && last() != STRIKE && !last().isSpare();
     }
 }

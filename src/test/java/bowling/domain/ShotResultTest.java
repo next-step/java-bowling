@@ -44,12 +44,14 @@ public class ShotResultTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "check spare: {arguments}")
     @MethodSource("parseSpare")
-    public void spare(Shot first, Shot secondShot) {
-        assertThat(ShotResult.of(first, secondShot).toInt()).isEqualTo(secondShot.toInt());
-        assertThat(ShotResult.of(first, secondShot).isSpare()).isTrue();
-        assertThat(ShotResult.of(first, secondShot)).isInstanceOf(ShotResult.class);
+    public void spare(Shot first, Shot second) {
+        assertThat(ShotResult.of(first, second).toInt()).isEqualTo(second.toInt());
+        assertThat(ShotResult.of(first, second).isSpare()).isTrue();
+        assertThat(ShotResult.of(first, second)).isInstanceOf(ShotResult.class);
+
+        assertThat(second.isSpareWith(first)).isTrue();
     }
 
     public static Stream<Arguments> parseNotSpare() {
@@ -59,12 +61,14 @@ public class ShotResultTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "check not spare: {arguments}")
     @MethodSource("parseNotSpare")
-    public void notSpare(Shot first, Shot secondShot) {
-        assertThat(ShotResult.of(first, secondShot).toInt()).isEqualTo(secondShot.toInt());
-        assertThat(ShotResult.of(first, secondShot).isSpare()).isFalse();
-        assertThat(ShotResult.of(first, secondShot)).isInstanceOf(ShotResult.class);
+    public void notSpare(Shot first, Shot second) {
+        assertThat(ShotResult.of(first, second).toInt()).isEqualTo(second.toInt());
+        assertThat(ShotResult.of(first, second).isSpare()).isFalse();
+        assertThat(ShotResult.of(first, second)).isInstanceOf(ShotResult.class);
+
+        assertThat(second.isSpareWith(first)).isFalse();
     }
 
     @Test
@@ -72,6 +76,34 @@ public class ShotResultTest {
         assertThat(STRIKE.notEquals(GUTTER)).isTrue();
         assertThat(STRIKE.notEquals(STRIKE)).isFalse();
         assertThat(NINE.notEquals(SPARE_NINE)).isTrue();
+    }
+
+    public static Stream<Arguments> parseAdd() {
+        return Stream.of(
+                Arguments.of(GUTTER, ONE, ONE),
+                Arguments.of(ONE, ONE, TWO),
+                Arguments.of(NINE, ONE, STRIKE)
+        );
+    }
+
+    @ParameterizedTest(name = "add: {arguments}")
+    @MethodSource("parseAdd")
+    public void add(Shot first, Shot second, Shot expected) {
+        assertThat(first.add(second)).isEqualTo(expected);
+    }
+
+    public static Stream<Arguments> parseAddFailed() {
+        return Stream.of(
+                Arguments.of(STRIKE, ONE),
+                Arguments.of(NINE, TWO),
+                Arguments.of(SEVEN, SIX)
+        );
+    }
+
+    @ParameterizedTest(name = "add failed {arguments}")
+    @MethodSource("parseAddFailed")
+    public void addFailed(Shot first, Shot second) {
+        assertThatIllegalArgumentException().isThrownBy(() -> first.add(second));
     }
 
     public static final Shot ONE = ShotResult.of(1);

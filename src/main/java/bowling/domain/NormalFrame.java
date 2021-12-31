@@ -47,11 +47,6 @@ public class NormalFrame implements Frame {
         return of(sequence, List.of(shot));
     }
 
-    static int sum(Stream<Shot> shotStream) {
-        return shotStream.map(Shot::toInt)
-                .reduce(0, Integer::sum);
-    }
-
     @Override
     public Frame nextShot(Shot shot) {
         if (completed()) {
@@ -78,7 +73,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean completed() {
-        return shots.size() == NUMBER_OF_SHOT || shots.isClear();
+        return shots.size() == Shots.NUMBER_OF_SHOT || shots.isClear();
     }
 
     @Override

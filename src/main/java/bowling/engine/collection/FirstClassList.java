@@ -20,6 +20,7 @@ public interface FirstClassList<T> {
 
     T head();
     T last();
+    Optional<T> lastOptional();
 
     FirstClassList<T> append(T t);
 }
