@@ -39,7 +39,8 @@ public class BasicFrame implements Frame {
     public Frame bowl(Pins pins) {
         this.state = state.bowl(pins);
         if (state.isEnd()) {
-            return createNextFrame();
+            this.next = nextFrame();
+            return this.next;
         }
         return this;
     }
@@ -67,16 +68,16 @@ public class BasicFrame implements Frame {
     }
 
     @Override
-    public int scoreAfter(Score prevScore) {
+    public int scoreAfter(Score previousScore) {
         try {
-            return finalScoreAfter(prevScore);
+            return finalScoreAfter(previousScore);
         } catch (IllegalStateException e) {
             return Score.INCOMPUTABLE_SCORE_VALUE;
         }
     }
 
-    private int finalScoreAfter(Score prevScore) {
-        Score score = state.scoreAfter(prevScore);
+    private int finalScoreAfter(Score previousScore) {
+        Score score = state.scoreAfter(previousScore);
         if (score.hasFinalScore()) {
             return score.getValue();
         }
@@ -95,7 +96,7 @@ public class BasicFrame implements Frame {
         }
     }
 
-    private Frame createNextFrame() {
+    private Frame nextFrame() {
         if (index.next().isMax()) {
             return nextLastFrame();
         }
@@ -103,13 +104,11 @@ public class BasicFrame implements Frame {
     }
 
     private Frame nextLastFrame() {
-        this.next = LastFrame.initialize();
-        return this.next;
+        return LastFrame.initialize();
     }
 
     private Frame nextBasicFrame() {
-        this.next = create(index.next());
-        return this.next;
+        return create(index.next());
     }
 
     @Override

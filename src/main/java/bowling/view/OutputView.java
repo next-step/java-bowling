@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.domain.BowlingGame;
+import bowling.domain.BowlingGames;
 import bowling.domain.FrameIndex;
 import bowling.domain.Score;
 import bowling.domain.frame.Frame;
@@ -20,6 +21,11 @@ public final class OutputView {
     private static final String SCORE_EMPTY_FORMAT = "      |";
 
     private OutputView() {
+    }
+
+    public static void printCurrentStatus(BowlingGames bowlingGames) {
+        bowlingGames.getBowlingGames()
+                .forEach(OutputView::printCurrentStatus);
     }
 
     public static void printCurrentStatus(BowlingGame bowlingGame) {

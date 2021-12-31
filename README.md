@@ -14,6 +14,7 @@
     * 거터(gutter) : 핀을 하나도 쓰러트리지 못한 상태. 거터는 "-"로 표시
 * 스트라이크는 다음 2번의 투구까지 점수를 합산해야 한다. 스페어는 다음 1번의 투구까지 점수를 합산해야 한다.
 * 10 프레임은 스트라이크이거나 스페어이면 한 번을 더 투구할 수 있다.
+* 1명 이상의 사용자가 사용할 수 있는 볼링게임 점수판을 구현한다.
 
 ### 구현 시작 방법
 
@@ -22,7 +23,7 @@
 
 ### 프로그램 실행 결과
 
-![bowling_result](https://user-images.githubusercontent.com/15815583/147538656-7f5f112f-8964-460f-b7a6-8d877cf1c65c.png)
+![bowling_execution_results](https://user-images.githubusercontent.com/15815583/147674355-e0bf45a6-2bad-4ec9-8dae-9ba52d7b3f2d.png)
 
 ## 프로그래밍 요구사항
 
@@ -85,6 +86,10 @@ https://www.bowlinggenius.com/
 * `Player`
     * `Player` 생성
         * '영문 대소문', '3글자' 이름 조건 허용
+* `Players`
+    * `Players` 생성
+      * List `Player`를 관리하기 위한 새로운 타입 일급 컬렉션
+      * null 또는 비어있는 List `Player` 전달시 예외
 * `Pins`
     * `Pins` 생성
         * 핀의 갯수는 0개에서 10개까지 허용
@@ -110,6 +115,7 @@ https://www.bowlinggenius.com/
         * 추가 투구 기회는 앞 투구 2회에서 spare 또는 strike가 있어야한다.
 * `Frames`
     * 볼링에 필요한 10프레임을 구성하기 위한 일급컬렉션 구현
+    * 최근 진행하는 `Frame`이 투구가 진행중인지 확인하는 기능 구현
 * `Score`
     * 투구 점수 생성 기능 구현
     * 투구 점수 생성 검증 구현
@@ -119,13 +125,27 @@ https://www.bowlinggenius.com/
     * 중간 점수를 확인하기 위한 반환 기능 구현
 * `BowlingGame`
     * `Player`와 `Frames`를 이용한 볼링 게임 구현
-* `BowlingController`
+    * `BowlingGame` 진행 중에 최근 `Frame` 투구가 진행중인지 확인하는 기능 구현
+* `BowlingGames`
+    * List `BowlingGame`을 관리할 일급 컬렉션 `BowlingGames` 생성 기능 구현
+    * List `BowlingGame`을 관리할 일급 컬렉션 `BowlingGames` 생성 검증 구현
+    * List `BowlingGame` 반환 기능 구현
+    * 현재 `BowlingGames`의 `FrameIndex`를 반환하는 기능 구현
+    * 다음 `BowlingGame`에서 투구를 할 수 있는지 확인 기능 구현
+    * 현재 `BowlingGames`을 다음 `FrameIndex`로 증가시키는 기능 구현
+* `BowlingGameController`
     * View와 Model을 분리하기 위한 Controller로 게임 구현
+    * 다중 볼링 게임을 위해 `BowlingGames` 비즈니스 로직 구현
 * `InputView`
     * `Player` 이름 입력 기능 구현
+    * `Players` 다중 이름 입력 기능 구현
+    * 다중 `Player` 정보 입력 기능 구현
+        * 게임을 진행할 `Player` 수 입력
+        * 게임을 진행할 `Player` 이름 입력
     * 투구 숫자 입력 기능 구현
 * `OutputView`
     * 현재 볼링 점수판 출력 기능 구현
+    * 다중 사용자 볼링 점수판 출력 기능 구현
 
 * * *
 

@@ -3,20 +3,21 @@ package bowling.domain.frame;
 import bowling.domain.FrameIndex;
 import bowling.domain.Pins;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class Frames {
-    private final LinkedList<Frame> frames;
+    private final List<Frame> frames;
 
-    private Frames(LinkedList<Frame> frames) {
+    private Frames(List<Frame> frames) {
         validate(frames);
         this.frames = frames;
     }
 
     public static Frames initialize() {
-        return new Frames(new LinkedList<>(Collections.singletonList(BasicFrame.initialize())));
+        return new Frames(new ArrayList<>(Collections.singletonList(BasicFrame.initialize())));
     }
 
     public void bowl(Pins pins) {
@@ -42,6 +43,15 @@ public class Frames {
         return Collections.unmodifiableList(frames);
     }
 
+    public boolean hasFrameInProgress(FrameIndex index) {
+        try {
+            Frame frame = frames.get(index.getValue() - 1);
+            return !frame.isEnd();
+        } catch (IndexOutOfBoundsException e) {
+            throw new IndexOutOfBoundsException(String.format("반환하려는 인덱스(%s)는 존재하지 않는 프레임입니다.", index));
+        }
+    }
+
     private void validate(List<Frame> frames) {
         if (frames == null) {
             throw new IllegalArgumentException("전달된 프레임들이 null입니다.");
@@ -56,10 +66,23 @@ public class Frames {
     }
 
     private Frame recentFrame() {
-        return frames.getLast();
+        return frames.get(frames.size() - 1);
     }
 
     private boolean hasNotLastFrame() {
         return frames.size() < FrameIndex.MAX_INDEX;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Frames frames1 = (Frames) o;
+        return Objects.equals(frames, frames1.frames);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frames);
     }
 }

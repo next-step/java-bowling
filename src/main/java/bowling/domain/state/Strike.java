@@ -26,7 +26,7 @@ public class Strike extends EndedState {
     }
 
     @Override
-    public Score scoreAfter(Score prevScore) {
-        return prevScore.bowl(Score.withNonRemainingPitches(Pins.MAX_PINS));
+    public Score scoreAfter(Score previousScore) {
+        return previousScore.bowl(Score.withNonRemainingPitches(Pins.MAX_PINS));
     }
 }

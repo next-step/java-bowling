@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class PlayerTest {
     public static Player PLAYER_AYM = Player.create("AYM");
+    public static Player PLAYER_KMS = Player.create("KMS");
 
     @DisplayName("플레이어 이름이 영어 3자일 경우 생성 검증")
     @ParameterizedTest

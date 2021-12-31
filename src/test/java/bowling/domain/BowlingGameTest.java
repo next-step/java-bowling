@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BowlingGameTest {
+    public static final BowlingGame GAME_WITH_PLAYER_AYM = BowlingGame.create(PlayerTest.PLAYER_AYM);
+    public static final BowlingGame GAME_WITH_PLAYER_KMS = BowlingGame.create(PlayerTest.PLAYER_KMS);
 
     BowlingGame bowlingGame;
 
@@ -61,5 +63,21 @@ class BowlingGameTest {
     void getFrames() {
         // then
         assertThat(bowlingGame.getFrames()).hasSize(1);
+    }
+
+    @DisplayName("게임 진행 중에 최근 프레임 투구가 진행하는 경우 확인")
+    @Test
+    void hasFrameInProgress() {
+        // when & then
+        assertThat(bowlingGame.hasFrameInProgress(FrameIndexTest.FIRST_INDEX)).isTrue();
+    }
+
+    @DisplayName("게임 진행 중에 최근 프레임 투구가 종료된 경우 확인")
+    @Test
+    void hasFrameFinished() {
+        // when
+        bowlingGame.bowl(PinsTest.TEN);
+        // then
+        assertThat(bowlingGame.hasFrameInProgress(FrameIndexTest.FIRST_INDEX)).isFalse();
     }
 }

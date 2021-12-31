@@ -103,21 +103,27 @@ class ScoreTest {
         );
     }
 
-    @DisplayName("투구가 남아있는 경우, 최종 점수 반환 예외 발생과 정상 반환 확인")
+    @DisplayName("모든 투구 이후, 최종 점수 반환 확인")
     @Test
     void getFinalValue() {
         // given
         int spareValue = 10;
-        Score spareScore = Score.of(spareValue, 1);
-        // when & then
-        assertThatExceptionOfType(IllegalStateException.class)
-                .isThrownBy(spareScore::getFinalValue);
-        // given
         int basicScore = 3;
+        Score spareScore = Score.of(spareValue, 1);
         // when
         Score finalScore = spareScore.bowl(Score.withNonRemainingPitches(basicScore));
         // then
         assertThat(finalScore.getFinalValue()).isEqualTo(spareValue + basicScore);
+    }
+
+    @DisplayName("투구가 남아있는 경우, 최종 점수 반환 예외 확인")
+    @Test
+    void getFinalValueFailed() {
+        // given
+        Score spareScore = Score.of(10, 1);
+        // when & then
+        assertThatExceptionOfType(IllegalStateException.class)
+                .isThrownBy(spareScore::getFinalValue);
     }
 
     @DisplayName("투구가 남아있는 경우, 점수 반환 확인")

@@ -76,16 +76,16 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public int scoreAfter(Score prevScore) {
+    public int scoreAfter(Score previousScore) {
         try {
-            return scoreAfter(prevScore, 0);
+            return scoreAfter(previousScore, 0);
         } catch (IllegalStateException | IndexOutOfBoundsException e) {
             return Score.INCOMPUTABLE_SCORE_VALUE;
         }
     }
 
-    private int scoreAfter(Score prevScore, int index) {
-        Score score = states.get(index).scoreAfter(prevScore);
+    private int scoreAfter(Score previousScore, int index) {
+        Score score = states.get(index).scoreAfter(previousScore);
         if (score.hasFinalScore()) {
             return score.getValue();
         }

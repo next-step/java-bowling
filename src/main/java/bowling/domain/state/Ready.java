@@ -37,7 +37,7 @@ public class Ready extends RunningState {
     }
 
     @Override
-    public Score scoreAfter(Score prevScore) {
+    public Score scoreAfter(Score previousScore) {
         throw new IllegalStateException("이전 점수가 없는 준비 상태입니다.");
     }
 }

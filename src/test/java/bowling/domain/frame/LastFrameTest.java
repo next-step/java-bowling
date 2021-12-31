@@ -104,6 +104,26 @@ class LastFrameTest {
         assertThat(lastFrame.getIndex()).isEqualTo(FrameIndex.MAX_INDEX);
     }
 
+    @DisplayName("추가 점수 계산이 가능한 시점에 추가 점수 계산")
+    @Test
+    void calculateAdditionalScore() {
+        // given
+        LastFrame lastFrame = LastFrame.initialize();
+        lastFrame.bowl(Pins.create(10));
+        lastFrame.bowl(Pins.create(10));
+        // when & then
+        assertThat(lastFrame.scoreAfter(Score.of(10, 2))).isEqualTo(30);
+    }
+
+    @DisplayName("추가 점수를 계산할 시점이 아니어서 계산할 수 없는 경우")
+    @Test
+    void calculateAdditionalScoreInvalid() {
+        // given
+        LastFrame lastFrame = LastFrame.initialize();
+        // when & then
+        assertThat(lastFrame.scoreAfter(Score.of(10, 2))).isEqualTo(Score.INCOMPUTABLE_SCORE_VALUE);
+    }
+
     private void verify(List<Integer> pinNumbers, boolean isEnd, int stateSize, String symbol, int score) {
         // given
         LastFrame lastFrame = LastFrame.initialize();

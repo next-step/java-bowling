@@ -36,6 +36,10 @@ public class BowlingGame {
         return frames.lastFrameIndex();
     }
 
+    public boolean hasFrameInProgress(FrameIndex index) {
+        return frames.hasFrameInProgress(index);
+    }
+
     public List<Frame> getFrames() {
         return frames.getFrames();
     }
@@ -47,5 +51,18 @@ public class BowlingGame {
         if (Objects.isNull(frames)) {
             throw new IllegalArgumentException("전달된 볼링의 프레임들이 null입니다.");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BowlingGame that = (BowlingGame) o;
+        return Objects.equals(player, that.player) && Objects.equals(frames, that.frames);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(player, frames);
     }
 }
