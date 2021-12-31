@@ -1,12 +1,23 @@
 package qna.domain;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DeleteHistories {
-    private List<DeleteHistory> deleteHistories;
+    private List<DeleteHistory> deleteHistories = new ArrayList<>();
+
+    public DeleteHistories() {
+    }
+
+    public DeleteHistories(List<DeleteHistory> deleteHistories) {
+        this.deleteHistories = deleteHistories;
+    }
 
     public void add(DeleteHistory deleteHistory) {
         deleteHistories.add(deleteHistory);
+    }
+
+    public List<DeleteHistory> getDeleteHistories() {
+        return deleteHistories;
     }
 }
