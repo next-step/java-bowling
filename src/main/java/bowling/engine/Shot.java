@@ -8,4 +8,5 @@ public interface Shot extends IntWrapper {
     default boolean notEquals(Object other) {
         return !equals(other);
     }
+
 }

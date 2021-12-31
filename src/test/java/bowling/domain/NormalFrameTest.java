@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -100,11 +101,47 @@ public class NormalFrameTest {
         assertThat(fr(9).isFinal()).isFalse();
     }
 
+    @Test
+    public void completedBonusByNotClear() {
+        Frame frame = fr(1, GUTTER);
+        assertThat(frame.complectedBonus()).isTrue();
+        assertThat(frame.nextShot(GUTTER).complectedBonus()).isTrue();
+    }
+
+    @Test
+    public void completedBonusBySpare() {
+        Frame frame = fr(1, GUTTER);
+        assertThat(frame.complectedBonus()).isTrue();
+        assertThat(frame.nextShot(STRIKE).complectedBonus()).isFalse();
+        frame.nextShot(GUTTER);
+        assertThat(frame.complectedBonus()).isTrue();
+    }
+
+    @Test
+    public void completedBonusByStrike() {
+        Frame frame = fr(1, STRIKE);
+        assertThat(frame.complectedBonus()).isFalse();
+        frame.nextShot(GUTTER);
+        assertThat(frame.complectedBonus()).isFalse();
+        frame.nextShot(GUTTER);
+        assertThat(frame.complectedBonus()).isTrue();
+    }
+
+    @Test
+    public void completedBonusByTurkey() {
+        Frame frame = fr(1, STRIKE);
+        assertThat(frame.complectedBonus()).isFalse();
+        Frame next = frame.nextShot(STRIKE);
+        assertThat(frame.complectedBonus()).isFalse();
+        next.nextShot(STRIKE);
+        assertThat(frame.complectedBonus()).isTrue();
+    }
+
     public static Frame fr(int sequence, Shot ... shots) {
-        return NormalFrame.of(fs(sequence), Arrays.asList(shots));
+        return NormalFrame.of(fs(sequence), Arrays.asList(shots), Collections.emptyList());
     }
 
     public static Frame fr(int sequence, List<Shot> shots) {
-        return NormalFrame.of(fs(sequence), shots);
+        return NormalFrame.of(fs(sequence), shots, Collections.emptyList());
     }
 }

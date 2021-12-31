@@ -14,7 +14,7 @@ public class InputView {
 
     public static int inputShotResult(int currentFrame) {
         System.out.printf(INPUT_SHOT_MESSAGE, currentFrame);
-        int number = 4;//scanner.nextInt();
+        int number = 5;//scanner.nextInt();
         //flush();
         return number;
     }

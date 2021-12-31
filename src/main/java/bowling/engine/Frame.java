@@ -12,5 +12,7 @@ public interface Frame {
     boolean isFinal();
     boolean hasThirdChance();
 
+    boolean complectedBonus();
+
     Stream<Shot> stream();
 }
