@@ -2,7 +2,7 @@ package bowling.domain;
 
 import java.util.Objects;
 
-public class NormalFrame implements Frame {
+public class NormalFrame extends Frame {
     private final FrameIndex index;
     private final Balls balls;
     private Frame next;

@@ -34,4 +34,9 @@ public class Bowling {
     public List<Frame> getFrames() {
         return frames.getFrames();
     }
+
+    public boolean isRunning(FrameIndex index) {
+        return frames.isRunning(index);
+    }
+
 }

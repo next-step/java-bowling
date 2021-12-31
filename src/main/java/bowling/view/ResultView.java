@@ -3,7 +3,6 @@ package bowling.view;
 import bowling.domain.Bowling;
 import bowling.domain.Frame;
 import bowling.domain.FrameIndex;
-import bowling.domain.Score;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -26,12 +25,15 @@ public final class ResultView {
         throw new AssertionError();
     }
 
-    public static void print(Bowling bowling) {
+    public static void print(List<Bowling> bowlings) {
         initializeBuilder();
 
         appendHead();
-        appendPlayerAndBody(bowling);
-        appendScore(bowling);
+
+        bowlings.forEach(bowling -> {
+            appendPlayerAndBody(bowling);
+            appendScore(bowling);
+        });
 
         printBuilder();
     }
@@ -66,12 +68,7 @@ public final class ResultView {
 
     private static String createScore(List<Frame> frames) {
         String body = frames.stream()
-                .map(frame -> {
-                    if (frame.score().canCalculate()) {
-                        return String.format(SCORE_RESULT, frame.score(frames, frames.indexOf(frame) + 1));
-                    }
-                    return SCORE_EMPTY;
-                })
+                .map(frame -> getScore(frames, frame))
                 .collect(joining());
 
         String emptyBody = IntStream.rangeClosed(1, FrameIndex.MAX - frames.size())
@@ -79,6 +76,13 @@ public final class ResultView {
                 .collect(joining());
 
         return SCORE_LEFT_PADDING + body + emptyBody;
+    }
+
+    private static String getScore(List<Frame> frames, Frame frame) {
+        if (frame.score().canCalculate()) {
+            return String.format(SCORE_RESULT, frame.score(frames, frames.indexOf(frame) + 1));
+        }
+        return SCORE_EMPTY;
     }
 
     private static void initializeBuilder() {

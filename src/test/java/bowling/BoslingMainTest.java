@@ -11,17 +11,29 @@ public class BoslingMainTest {
 
     @BeforeEach
     void init() {
-        String input = "YGB\n" +
+        String input = "2\n" +
+                "YGB\n" +
+                "AAA\n" +
+                "10\n" +
+                "7 3\n" +
+                "10\n" +
+                "8 1\n" +
                 "10\n" +
                 "10\n" +
-                "5 2\n" +
-                "3 0\n" +
-                "0 2\n" +
+                "10\n" +
+                "0 0\n" +
+                "10\n" +
+                "1 2\n" +
+                "10\n" +
+                "10\n" +
+                "10\n" +
+                "10\n" +
+                "10\n" +
                 "9 1\n" +
                 "10\n" +
-                "2 2\n" +
-                "10\n" +
-                "8 2 10\n";
+                "5 3\n" +
+                "10 10 10\n" +
+                "6 4 7\n";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
     }

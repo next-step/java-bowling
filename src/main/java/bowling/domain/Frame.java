@@ -2,24 +2,26 @@ package bowling.domain;
 
 import java.util.List;
 
-public interface Frame {
-    Frame bowl(Ball ball);
+public abstract class Frame {
 
-    boolean isEnd();
+    abstract Frame bowl(Ball ball);
 
-    int getFrameIndex();
+    abstract boolean isEnd();
 
-    String symbol();
+    abstract int getFrameIndex();
 
-    Score score();
+    public abstract String symbol();
 
-    Score additionalScore(Score previous);
+    public abstract Score score();
 
-    default int score(List<Frame> frames, int limit) {
+    abstract Score additionalScore(Score previous);
+
+    public int score(List<Frame> frames, int limit) {
         return frames.stream()
                 .limit(limit)
                 .map(Frame::score)
                 .mapToInt(Score::getScore)
                 .sum();
     }
+
 }
