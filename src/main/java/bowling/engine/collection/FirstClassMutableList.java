@@ -22,6 +22,9 @@ public class FirstClassMutableList<T> extends AbstractFirstClassList<T> {
 
     @Override
     public FirstClassList<T> append(T t) {
+        if (t == null) {
+            throw new IllegalArgumentException("new element is cannot be null");
+        }
         super.collect()
                 .add(t);
         return this;
