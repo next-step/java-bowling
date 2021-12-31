@@ -1,5 +1,6 @@
 package qna.domain;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import qna.CannotDeleteException;
@@ -9,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class AnswersTest {
     @Test
-    public void delete() throws CannotDeleteException {
+    public void delete_성공() throws CannotDeleteException {
         Question question = new Question(3L, "test title", "test content");
         User user = new User(1L,"mj","1234","minjoon","minjoon@naver.com");
 
@@ -25,7 +26,7 @@ public class AnswersTest {
     }
 
     @Test
-    public void checkDeleteValidation() {
+    public void delete_답변_중_다른_사람이_쓴_글() {
         Question question = new Question(3L, "test title", "test content");
         User userA = new User(1L,"A","1234","minjoon","minjoon@naver.com");
         User userB = new User(2L,"B","1234","minjoon","minjoon@naver.com");
