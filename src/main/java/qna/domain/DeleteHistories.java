@@ -20,4 +20,19 @@ public class DeleteHistories {
     public List<DeleteHistory> getDeleteHistories() {
         return deleteHistories;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DeleteHistories that = (DeleteHistories) o;
+
+        return deleteHistories != null ? deleteHistories.equals(that.deleteHistories) : that.deleteHistories == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return deleteHistories != null ? deleteHistories.hashCode() : 0;
+    }
 }
