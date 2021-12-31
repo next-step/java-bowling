@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import bowling.engine.Frame;
 import bowling.engine.ScoreBoard;
 import bowling.engine.Sequence;
-import bowling.engine.Shot;
 
 public class OutputView {
     private static final String HEADER = "| NAME |  0 1  |  0 2  |  0 3  |  0 4  |  0 5  |  0 6  |  0 7  |  0 8  |  0 9  |  1 0  |";
@@ -40,7 +39,8 @@ public class OutputView {
 
     public static String parseFrameScore(Frame frame) {
         return frame.stream()
-                .map(Shot::toString)
+                .map(ShotScore::of)
+                .map(ShotScore::toString)
                 .collect(Collectors.joining(LINE));
     }
 }
