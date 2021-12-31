@@ -21,7 +21,7 @@ public class AnswersTest {
         answers.add(answerB);
         answers.delete(user);
 
-        assertThat(answers.isDeleted()).isEqualTo(true);
+        assertThat(answers.isDeleted()).isTrue();
     }
 
     @Test
