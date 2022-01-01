@@ -5,9 +5,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
+import bowling.engine.BonusScores;
 import bowling.engine.Frame;
 import bowling.engine.Sequence;
 import bowling.engine.Shot;
+import bowling.engine.Shots;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -20,17 +22,18 @@ import static bowling.domain.ShotResult.STRIKE;
 import static bowling.domain.ShotResultTest.NINE;
 import static bowling.domain.ShotResultTest.ONE;
 import static bowling.domain.ShotResultTest.SIX;
+import static bowling.domain.ShotResultTest.THREE;
+import static bowling.domain.ShotResultTest.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class NormalFrameTest {
     @Test
     public void create() {
-        assertThat(NormalFrame.first(fs(1), GUTTER)).isInstanceOf(NormalFrame.class);
+        assertThat(NormalFrame.ready(fs(1), GUTTER)).isInstanceOf(NormalFrame.class);
     }
 
-
-    public static Stream<Arguments> parseCreateFailed() {
+    public static Stream<Arguments> parseReadyFailed() {
         return Stream.of(
                 Arguments.of(null, GUTTER),
                 Arguments.of(fs(1), null)
@@ -38,9 +41,24 @@ public class NormalFrameTest {
     }
 
     @ParameterizedTest(name = "create failed: {arguments}")
+    @MethodSource("parseReadyFailed")
+    public void readyFailed(Sequence sequence, Shot shot) {
+        assertThatIllegalArgumentException().isThrownBy(() -> NormalFrame.ready(sequence, shot));
+    }
+
+
+    public static Stream<Arguments> parseCreateFailed() {
+        return Stream.of(
+                Arguments.of(null, FrameShots.of(List.of(GUTTER)), Collections.emptyList()),
+                Arguments.of(fs(1), null, Collections.emptyList()),
+                Arguments.of(fs(1), FrameShots.of(List.of(GUTTER)), null)
+        );
+    }
+
+    @ParameterizedTest(name = "create failed: {arguments}")
     @MethodSource("parseCreateFailed")
-    public void createFailed(Sequence sequence, Shot shot) {
-        assertThatIllegalArgumentException().isThrownBy(() -> NormalFrame.first(sequence, shot));
+    public void createFailed(Sequence sequence, Shots shots, List<BonusScores> bonusScores) {
+        assertThatIllegalArgumentException().isThrownBy(() -> NormalFrame.of(sequence, shots, bonusScores));
     }
 
     @Test
@@ -48,6 +66,15 @@ public class NormalFrameTest {
         final Frame frame = fr(1, GUTTER);
         assertThat(frame.nextShot(GUTTER)).isInstanceOf(NormalFrame.class);
         assertThat(frame.nextShot(ONE).score()).isEqualTo(FrameScore.of(1));
+    }
+
+    @Test
+    public void nextShotWithBonus() {
+        final Frame frame = fr(1, STRIKE);
+        frame.nextShot(TWO);
+        assertThat(frame.score()).isEqualTo(FrameScore.of(12));
+        frame.nextShot(ONE);
+        assertThat(frame.score()).isEqualTo(FrameScore.of(13));
     }
 
     public static Stream<Arguments> parseNextShotFailedIllegalArguments() {
@@ -110,11 +137,10 @@ public class NormalFrameTest {
 
     @Test
     public void completedBonusBySpare() {
-        Frame frame = fr(1, GUTTER);
-        assertThat(frame.complectedBonus()).isTrue();
-        assertThat(frame.nextShot(STRIKE).complectedBonus()).isFalse();
-        frame.nextShot(GUTTER);
-        assertThat(frame.complectedBonus()).isTrue();
+        Frame frame = fr(1, GUTTER).nextShot(STRIKE);
+        assertThat(frame.complectedBonus()).isFalse();
+        Frame next = frame.nextShot(GUTTER);
+        assertThat(next.complectedBonus()).isTrue();
     }
 
     @Test
@@ -135,6 +161,11 @@ public class NormalFrameTest {
         assertThat(frame.complectedBonus()).isFalse();
         next.nextShot(STRIKE);
         assertThat(frame.complectedBonus()).isTrue();
+    }
+
+    @Test
+    public void stream() {
+        assertThat(fr(1, TWO, THREE).stream()).containsExactly(TWO, THREE);
     }
 
     public static Frame fr(int sequence, Shot ... shots) {

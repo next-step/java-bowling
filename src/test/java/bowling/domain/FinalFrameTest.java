@@ -1,11 +1,12 @@
 package bowling.domain;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
 
+import bowling.engine.Bonus;
 import bowling.engine.Frame;
 import bowling.engine.Shot;
+import bowling.engine.Shots;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -30,13 +31,20 @@ import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 public class FinalFrameTest {
     @Test
     public void create() {
-        assertThat(NormalFrame.first(fs(10), GUTTER)).isInstanceOf(FinalFrame.class);
+        assertThat(NormalFrame.ready(fs(10), GUTTER)).isInstanceOf(FinalFrame.class);
+    }
+
+    public static Stream<Arguments> parseCreateFailed() {
+        return Stream.of(
+                Arguments.of(null, FrameBonus.NONE),
+                Arguments.of(FrameShots.emptyShot(), null)
+        );
     }
 
     @ParameterizedTest(name = "create failed: {arguments}")
-    @NullSource
-    public void createFailed(List<Shot> shots) {
-        assertThatIllegalArgumentException().isThrownBy(() ->FinalFrame.of(shots));
+    @MethodSource("parseCreateFailed")
+    public void createFailed(Shots shots, Bonus bonus) {
+        assertThatIllegalArgumentException().isThrownBy(() ->FinalFrame.of(shots, bonus));
     }
 
     public static Stream<Arguments> parseThird() {
@@ -73,10 +81,17 @@ public class FinalFrameTest {
         assertThat(afterSecond.hasThirdChance()).isFalse();
     }
 
+    public static Stream<Arguments> parseNextShotFailed() {
+        return Stream.of(
+                Arguments.of(SIX)
+        );
+    }
 
-    @Test
-    public void nextShotFailed() {
-        assertThatIllegalArgumentException().isThrownBy(() -> ff(STRIKE, FIVE).nextShot(SIX));
+    @ParameterizedTest(name = "next shot failed: {arguments}")
+    @NullSource
+    @MethodSource("parseNextShotFailed")
+    public void nextShotFailed(Shot shot) {
+        assertThatIllegalArgumentException().isThrownBy(() -> ff(STRIKE, FIVE).nextShot(shot));
     }
 
     public static Stream<Arguments> parseThirdFailed() {
@@ -128,9 +143,11 @@ public class FinalFrameTest {
     public void completedWithThirdShot(Shot first, Shot second, Shot third) {
         Frame frame = ff(first);
         assertThat(frame.completed()).isFalse();
-        assertThat(frame.nextShot(second).completed()).isFalse();
-        assertThat(frame.nextShot(second).nextShot(third).completed()).isTrue();
-        assertThatIllegalStateException().isThrownBy(() -> frame.nextShot(second).nextShot(third).nextShot(GUTTER));
+        Frame afterSecond = frame.nextShot(second);
+        assertThat(afterSecond.completed()).isFalse();
+        Frame afterThird = afterSecond.nextShot(third);
+        assertThat(afterSecond.completed()).isTrue();
+        assertThatIllegalStateException().isThrownBy(() -> afterThird.nextShot(GUTTER));
     }
 
     @Test

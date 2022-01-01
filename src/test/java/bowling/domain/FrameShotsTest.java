@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
 
 import static bowling.domain.ShotResult.GUTTER;
+import static bowling.domain.ShotResultTest.EIGHT;
 import static bowling.domain.ShotResultTest.ONE;
 import static bowling.domain.ShotResultTest.THREE;
 import static bowling.domain.ShotResultTest.FOUR;
@@ -155,6 +156,39 @@ class FrameShotsTest {
     @MethodSource("parseScore")
     public void score(List<Shot> shots, int expected) {
         assertThat(ss(shots).score()).isEqualTo(FrameScore.of(expected));
+    }
+
+    static Stream<Arguments> parseClearBonus() {
+        return Stream.of(
+                Arguments.of(ONE, NINE),
+                Arguments.of(GUTTER, STRIKE),
+                Arguments.of(SIX, FOUR)
+        );
+    }
+
+    @ParameterizedTest(name = "clear bonus: {arguments}")
+    @MethodSource("parseClearBonus")
+    public void clearBonus(Shot first, Shot second) {
+        assertThat(ss(first).nextShot(second).clearBonus().remain()).isTrue();
+    }
+
+    @Test
+    public void clearBonusByStrike() {
+        assertThat(ss(STRIKE).clearBonus().remain()).isTrue();
+    }
+
+    static Stream<Arguments> parseNoBonus() {
+        return Stream.of(
+                Arguments.of(ONE, EIGHT),
+                Arguments.of(GUTTER, NINE),
+                Arguments.of(SIX, THREE)
+        );
+    }
+
+    @ParameterizedTest(name = "no bonus: {arguments}")
+    @MethodSource("parseNoBonus")
+    public void noBonus(Shot first, Shot second) {
+        assertThat(ss(first).nextShot(second).clearBonus().remain()).isFalse();
     }
 
     public static Shots ss(Shot ... shots) {

@@ -14,7 +14,7 @@ import static bowling.view.OutputView.LINE;
 
 public class ScoreBoardPrinter {
     private static final String EMPTY = LINE + "      ";
-    private static final String SCORE_FORMAT = LINE + "  %3s ";
+    private static final String SCORE_FORMAT = LINE + "  %-3s ";
     private static final String FINAL_SCORE_FORMAT = LINE + " %-5s";
 
     private static final int NORMAL_SCORE_LENGTH = 3;

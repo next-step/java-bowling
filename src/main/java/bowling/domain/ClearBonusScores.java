@@ -29,17 +29,20 @@ public class ClearBonusScores extends FirstClassMutableList<Score> implements Bo
 
     @Override
     public void appendBonus(Score score) {
-        if (completed()) {
-            throw new IllegalStateException("bonus is already completed");
+        if (!completed()) {
+            append(score);
         }
-
-        append(score);
     }
 
     @Override
     public Score sum() {
         return FrameScore.of(stream().map(Score::toInt)
                 .reduce(ACCUMULATION_BASE, Integer::sum));
+    }
+
+    @Override
+    public boolean remain() {
+        return size() < limit;
     }
 
     @Override

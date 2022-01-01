@@ -4,21 +4,17 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
+import bowling.engine.BonusScores;
 import bowling.engine.Score;
 import bowling.engine.Shot;
 import bowling.engine.Shots;
-import bowling.engine.collection.FirstClassImmutableList;
+import bowling.engine.collection.FirstClassMutableList;
 
 import static bowling.domain.ShotResult.STRIKE;
 
-public class FrameShots extends FirstClassImmutableList<Shot> implements Shots {
-    public static final FrameShots EMPTY_SHOT = new FrameShots(Collections.emptyList(), false);
-
-    private final boolean isFinal;
-
-    protected FrameShots(List<Shot> collection, boolean isFinal) {
+public class FrameShots extends FirstClassMutableList<Shot> implements Shots {
+    protected FrameShots(List<Shot> collection) {
         super(collection);
-        this.isFinal = isFinal;
     }
 
     static Shots of(List<Shot> shots, boolean isFinal) {
@@ -30,7 +26,7 @@ public class FrameShots extends FirstClassImmutableList<Shot> implements Shots {
             throw new IllegalArgumentException("invalid score: " + shots);
         }
 
-        return new FrameShots(shots, isFinal);
+        return new FrameShots(shots);
     }
 
     public static Shots of(List<Shot> shots) {
@@ -39,6 +35,10 @@ public class FrameShots extends FirstClassImmutableList<Shot> implements Shots {
 
     public static Shots ofFinal(List<Shot> shots) {
         return of(shots, true);
+    }
+
+    public static FrameShots emptyShot() {
+        return new FrameShots(Collections.emptyList());
     }
 
     static int sum(Stream<Shot> shotStream) {
@@ -79,9 +79,9 @@ public class FrameShots extends FirstClassImmutableList<Shot> implements Shots {
     public Shots nextShot(Shot shot) {
         Shot nextShot = lastOptional().map(last -> ShotResult.of(last, shot))
                 .orElse(shot);
-        List<Shot> nextShots = append(nextShot).collect();
+        append(nextShot);
 
-        return of(nextShots, isFinal);
+        return this;
     }
 
     @Override
@@ -92,5 +92,24 @@ public class FrameShots extends FirstClassImmutableList<Shot> implements Shots {
     @Override
     public boolean isClear() {
         return sum(stream()) == NUMBER_OF_PINS;
+    }
+
+    @Override
+    public BonusScores clearBonus() {
+        return lastOptional()
+                .map(this::bonusScores)
+                .orElse(ClearBonusScores.byNone());
+    }
+
+    private BonusScores bonusScores(Shot shot) {
+        if (shot.isSpare()) {
+            return ClearBonusScores.bySpare();
+        }
+
+        if (shot.equals(STRIKE) && size() == 1) { // isStrike
+            return ClearBonusScores.byStrike();
+        }
+
+        return ClearBonusScores.byNone();
     }
 }

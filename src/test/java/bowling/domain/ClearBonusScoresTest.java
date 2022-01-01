@@ -1,10 +1,10 @@
 package bowling.domain;
 
 import bowling.engine.BonusScores;
+import bowling.engine.Score;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 public class ClearBonusScoresTest {
     @Test
@@ -23,9 +23,13 @@ public class ClearBonusScoresTest {
     }
 
     @Test
-    public void bonusFailed() {
+    public void bonusNotApplied() {
         BonusScores bonus = ClearBonusScores.byNone();
-        assertThatIllegalStateException().isThrownBy(() -> bonus.appendBonus(FrameScore.of(1)));
+        Score before = bonus.sum();
+        Score bonusScore = FrameScore.of(1);
+        bonus.appendBonus(bonusScore);
+        assertThat(bonus.sum()).isEqualTo(before);
+        assertThat(bonus.collect()).doesNotContain(bonusScore);
     }
 
     @Test
@@ -37,26 +41,32 @@ public class ClearBonusScoresTest {
     }
 
     @Test
-    public void completeByNone() {
+    public void remainAndCompleteByNone() {
         BonusScores bonus = ClearBonusScores.byNone();
         assertThat(bonus.completed()).isTrue();
+        assertThat(bonus.remain()).isFalse();
     }
 
     @Test
-    public void completeBySpare() {
+    public void remainAndCompleteBySpare() {
         BonusScores bonus = ClearBonusScores.bySpare();
         assertThat(bonus.completed()).isFalse();
+        assertThat(bonus.remain()).isTrue();
         bonus.append(FrameScore.of(0));
         assertThat(bonus.completed()).isTrue();
+        assertThat(bonus.remain()).isFalse();
     }
 
     @Test
-    public void completeByStrike() {
+    public void remainAndCompleteByStrike() {
         BonusScores bonus = ClearBonusScores.byStrike();
         assertThat(bonus.completed()).isFalse();
+        assertThat(bonus.remain()).isTrue();
         bonus.append(FrameScore.of(0));
         assertThat(bonus.completed()).isFalse();
+        assertThat(bonus.remain()).isTrue();
         bonus.append(FrameScore.of(0));
         assertThat(bonus.completed()).isTrue();
+        assertThat(bonus.remain()).isFalse();
     }
 }

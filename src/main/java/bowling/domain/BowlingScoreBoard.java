@@ -24,7 +24,7 @@ public class BowlingScoreBoard extends FirstClassMutableList<Frame> implements S
 
     public static BowlingScoreBoard of(String name) {
         List<Frame> frames = new ArrayList<>(NUMBER_OF_FRAME);
-        frames.add(NormalFrame.START_FRAME);
+        frames.add(NormalFrame.startFrame());
         return new BowlingScoreBoard(Player.of(name), frames);
     }
 
