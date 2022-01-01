@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+import bowling.engine.BonusScores;
+import bowling.engine.Score;
 import bowling.engine.Shot;
 import bowling.engine.Shots;
 
@@ -50,13 +52,18 @@ public class ShotResult implements Shot {
     }
 
     @Override
+    public Shot add(Shot other) {
+        return of(result + other.toInt());
+    }
+
+    @Override
     public int toInt() {
         return result;
     }
 
     @Override
-    public Shot add(Shot other) {
-        return of(result + other.toInt());
+    public boolean isClear() {
+        return isSpare || result == Shots.NUMBER_OF_PINS;
     }
 
     @Override
@@ -66,7 +73,25 @@ public class ShotResult implements Shot {
 
     @Override
     public boolean isSpareWith(Shot previous) {
-        return previous != STRIKE && !previous.isSpare() && add(previous).toInt() == Shots.NUMBER_OF_PINS;
+        return previous != STRIKE && !previous.isSpare() && add(previous).isClear();
+    }
+
+    @Override
+    public Score score() {
+        return BowlingScore.of(result);
+    }
+
+    @Override
+    public BonusScores bonusScore() {
+        if (isSpare) {
+            return ClearBonusScores.bySpare();
+        }
+
+        if (isClear()) {
+            return ClearBonusScores.byStrike();
+        }
+
+        return ClearBonusScores.byNone();
     }
 
     @Override

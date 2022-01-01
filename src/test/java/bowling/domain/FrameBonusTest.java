@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import static bowling.domain.ShotResult.GUTTER;
+import static bowling.domain.ShotResultTest.FIVE;
 import static bowling.domain.ShotResultTest.THREE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -45,35 +46,35 @@ public class FrameBonusTest {
         FrameBonus.of(previous, current).applyBonus(GUTTER);
 
         assertThat(previous.stream().allMatch(BonusScores::completed)).isTrue();
-        assertThat(previous.stream().allMatch(scores -> scores.stream().allMatch(FrameScore.of(0)::equals))).isTrue();
+        assertThat(previous.stream().allMatch(scores -> scores.stream().allMatch(BowlingScore.of(0)::equals))).isTrue();
 
         assertThat(current.completed()).isTrue();
-        assertThat(current.collect()).containsExactly(FrameScore.of(0));
+        assertThat(current.collect()).containsExactly(BowlingScore.of(0));
     }
 
     @Test
     public void applyBonusOnlyRemains() {
         BonusScores previous = ClearBonusScores.bySpare();
-        previous.appendBonus(FrameScore.of(5));
+        previous.appendBonus(FIVE);
         BonusScores current = ClearBonusScores.bySpare();
 
         FrameBonus.of(List.of(previous), current).applyBonus(GUTTER);
 
         assertThat(previous.completed()).isTrue();
-        assertThat(previous.collect()).doesNotContain(FrameScore.of(0));
+        assertThat(previous.collect()).doesNotContain(BowlingScore.of(0));
 
         assertThat(current.completed()).isTrue();
-        assertThat(current.collect()).containsExactly(FrameScore.of(0));
+        assertThat(current.collect()).containsExactly(BowlingScore.of(0));
     }
 
     @Test
     public void score() {
         BonusScores previous = ClearBonusScores.bySpare();
-        previous.appendBonus(FrameScore.of(5));
+        previous.appendBonus(FIVE);
         BonusScores current = ClearBonusScores.bySpare();
 
         Bonus bonus = FrameBonus.of(List.of(previous), current).applyBonus(THREE);
-        assertThat(bonus.score()).isEqualTo(FrameScore.of(3));
+        assertThat(bonus.score()).isEqualTo(BowlingScore.of(3));
         assertThat(bonus.score()).isEqualTo(current.sum());
     }
 

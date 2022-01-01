@@ -9,7 +9,7 @@ public interface Shots extends FirstClassList<Shot> {
 
     Shots nextShot(Shot shot);
 
-    Score score();
+    Score score(Bonus bonus);
     boolean isClear();
 
     BonusScores clearBonus();

@@ -71,6 +71,17 @@ public class ShotResultTest {
         assertThat(second.isSpareWith(first)).isFalse();
     }
 
+
+    @Test
+    public void isClear() {
+        assertThat(STRIKE.isClear()).isTrue();
+        assertThat(ShotResult.of(SEVEN, THREE).isClear()).isTrue();
+
+        assertThat(ShotResult.of(SEVEN, TWO).isClear()).isFalse();
+        assertThat(SEVEN.isClear()).isFalse();
+    }
+
+
     @Test
     public void notEquals() {
         assertThat(STRIKE.notEquals(GUTTER)).isTrue();
@@ -106,8 +117,22 @@ public class ShotResultTest {
         assertThatIllegalArgumentException().isThrownBy(() -> first.add(second));
     }
 
+    @Test
+    public void score() {
+        assertThat(GUTTER.score()).isEqualTo(BowlingScore.of(0));
+        assertThat(STRIKE.score()).isEqualTo(BowlingScore.of(10));
+    }
+
+    @Test
+    public void bonusScore() {
+        assertThat(STRIKE.bonusScore().remain()).isTrue();
+        assertThat(ShotResult.of(SEVEN, THREE).bonusScore().remain()).isTrue();
+
+        assertThat(ShotResult.of(SEVEN, TWO).bonusScore().remain()).isFalse();
+        assertThat(SEVEN.bonusScore().remain()).isFalse();
+    }
+
     public static final Shot ONE = ShotResult.of(1);
-    @SuppressWarnings("unused")
     public static final Shot TWO = ShotResult.of(2);
     public static final Shot THREE = ShotResult.of(3);
     public static final Shot FOUR = ShotResult.of(4);

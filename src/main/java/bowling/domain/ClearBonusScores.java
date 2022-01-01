@@ -4,10 +4,12 @@ import java.util.Collections;
 
 import bowling.engine.BonusScores;
 import bowling.engine.Score;
+import bowling.engine.Shot;
 import bowling.engine.collection.FirstClassMutableList;
 
+import static bowling.domain.BowlingScore.ACCUMULATION_BASE;
+
 public class ClearBonusScores extends FirstClassMutableList<Score> implements BonusScores {
-    private static final int ACCUMULATION_BASE = 0;
     private final int limit;
 
     protected ClearBonusScores(int limit) {
@@ -28,16 +30,15 @@ public class ClearBonusScores extends FirstClassMutableList<Score> implements Bo
     }
 
     @Override
-    public void appendBonus(Score score) {
+    public void appendBonus(Shot shot) {
         if (!completed()) {
-            append(score);
+            append(shot.score());
         }
     }
 
     @Override
     public Score sum() {
-        return FrameScore.of(stream().map(Score::toInt)
-                .reduce(ACCUMULATION_BASE, Integer::sum));
+        return stream().reduce(ACCUMULATION_BASE, Score::add);
     }
 
     @Override

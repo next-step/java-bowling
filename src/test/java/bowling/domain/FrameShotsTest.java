@@ -155,7 +155,7 @@ class FrameShotsTest {
     @ParameterizedTest(name = "score: {arguments}")
     @MethodSource("parseScore")
     public void score(List<Shot> shots, int expected) {
-        assertThat(ss(shots).score()).isEqualTo(FrameScore.of(expected));
+        assertThat(ss(shots).score(FrameBonus.NONE)).isEqualTo(BowlingScore.of(expected));
     }
 
     static Stream<Arguments> parseClearBonus() {

@@ -82,8 +82,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public Score score() {
-        // todo refactor Score#add
-        return FrameScore.of(shots.score().toInt() + bonus.score().toInt());
+        return shots.score(bonus);
     }
 
     @Override

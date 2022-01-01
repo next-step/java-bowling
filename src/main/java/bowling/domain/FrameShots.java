@@ -4,12 +4,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
+import bowling.engine.Bonus;
 import bowling.engine.BonusScores;
 import bowling.engine.Score;
 import bowling.engine.Shot;
 import bowling.engine.Shots;
 import bowling.engine.collection.FirstClassMutableList;
 
+import static bowling.domain.BowlingScore.ACCUMULATION_BASE;
 import static bowling.domain.ShotResult.STRIKE;
 
 public class FrameShots extends FirstClassMutableList<Shot> implements Shots {
@@ -85,8 +87,10 @@ public class FrameShots extends FirstClassMutableList<Shot> implements Shots {
     }
 
     @Override
-    public Score score() {
-        return FrameScore.of(sum(stream()));
+    public Score score(Bonus bonus) {
+        return stream().map(Shot::score)
+                .reduce(ACCUMULATION_BASE, Score::add)
+                .add(bonus.score());
     }
 
     @Override
@@ -97,19 +101,7 @@ public class FrameShots extends FirstClassMutableList<Shot> implements Shots {
     @Override
     public BonusScores clearBonus() {
         return lastOptional()
-                .map(this::bonusScores)
+                .map(Shot::bonusScore)
                 .orElse(ClearBonusScores.byNone());
-    }
-
-    private BonusScores bonusScores(Shot shot) {
-        if (shot.isSpare()) {
-            return ClearBonusScores.bySpare();
-        }
-
-        if (shot.equals(STRIKE) && size() == 1) { // isStrike
-            return ClearBonusScores.byStrike();
-        }
-
-        return ClearBonusScores.byNone();
     }
 }

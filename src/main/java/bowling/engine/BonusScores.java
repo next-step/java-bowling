@@ -7,7 +7,7 @@ public interface BonusScores extends FirstClassList<Score> {
     int NUMBER_OF_SPARE_BONUS = 1;
     int NUMBER_OF_STRIKE_BONUS = 2;
 
-    void appendBonus(Score score);
+    void appendBonus(Shot shot);
     Score sum();
     boolean remain();
     boolean completed();

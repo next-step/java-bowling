@@ -35,7 +35,7 @@ public class BowlingScoreBoardTest {
         final BowlingScoreBoard board = BowlingScoreBoard.of("n1");
         board.nextShot(STRIKE);
         assertThat(board.score(sequence)).isPresent();
-        assertThat(board.score(sequence)).contains(FrameScore.of(STRIKE.toInt()));
+        assertThat(board.score(sequence)).contains(BowlingScore.of(STRIKE.toInt()));
     }
 
     @Test

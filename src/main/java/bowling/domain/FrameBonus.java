@@ -51,7 +51,7 @@ public class FrameBonus extends FirstClassImmutableList<BonusScores> implements 
 
     @Override
     public Bonus applyBonus(Shot shot) {
-        stream().forEach(bonus -> bonus.appendBonus(FrameScore.of(shot.toInt())));
+        stream().forEach(bonus -> bonus.appendBonus(shot));
         return this;
     }
 

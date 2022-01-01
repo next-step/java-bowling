@@ -4,6 +4,7 @@ import bowling.engine.BonusScores;
 import bowling.engine.Score;
 import org.junit.Test;
 
+import static bowling.domain.ShotResultTest.ONE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ClearBonusScoresTest {
@@ -17,27 +18,26 @@ public class ClearBonusScoresTest {
     @Test
     public void bonus() {
         BonusScores bonus = ClearBonusScores.bySpare();
-        bonus.appendBonus(FrameScore.of(1));
+        bonus.appendBonus(ONE);
         assertThat(bonus.size()).isEqualTo(1);
-        assertThat(bonus.collect()).containsExactly(FrameScore.of(1));
+        assertThat(bonus.collect()).containsExactly(BowlingScore.of(1));
     }
 
     @Test
     public void bonusNotApplied() {
         BonusScores bonus = ClearBonusScores.byNone();
         Score before = bonus.sum();
-        Score bonusScore = FrameScore.of(1);
-        bonus.appendBonus(bonusScore);
+        bonus.appendBonus(ONE);
         assertThat(bonus.sum()).isEqualTo(before);
-        assertThat(bonus.collect()).doesNotContain(bonusScore);
+        assertThat(bonus.collect()).doesNotContain(BowlingScore.of(1));
     }
 
     @Test
     public void sum() {
         BonusScores bonus = ClearBonusScores.bySpare();
-        assertThat(bonus.sum()).isEqualTo(FrameScore.of(0));
-        bonus.append(FrameScore.of(5));
-        assertThat(bonus.sum()).isEqualTo(FrameScore.of(5));
+        assertThat(bonus.sum()).isEqualTo(BowlingScore.of(0));
+        bonus.append(BowlingScore.of(5));
+        assertThat(bonus.sum()).isEqualTo(BowlingScore.of(5));
     }
 
     @Test
@@ -52,7 +52,7 @@ public class ClearBonusScoresTest {
         BonusScores bonus = ClearBonusScores.bySpare();
         assertThat(bonus.completed()).isFalse();
         assertThat(bonus.remain()).isTrue();
-        bonus.append(FrameScore.of(0));
+        bonus.append(BowlingScore.of(0));
         assertThat(bonus.completed()).isTrue();
         assertThat(bonus.remain()).isFalse();
     }
@@ -62,10 +62,10 @@ public class ClearBonusScoresTest {
         BonusScores bonus = ClearBonusScores.byStrike();
         assertThat(bonus.completed()).isFalse();
         assertThat(bonus.remain()).isTrue();
-        bonus.append(FrameScore.of(0));
+        bonus.append(BowlingScore.of(0));
         assertThat(bonus.completed()).isFalse();
         assertThat(bonus.remain()).isTrue();
-        bonus.append(FrameScore.of(0));
+        bonus.append(BowlingScore.of(0));
         assertThat(bonus.completed()).isTrue();
         assertThat(bonus.remain()).isFalse();
     }
