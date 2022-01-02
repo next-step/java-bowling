@@ -10,5 +10,5 @@ public interface Bonus extends FirstClassList<BonusScores> {
     Score score();
 
     List<BonusScores> remainBonus();
-    boolean completed();
+    boolean remain();
 }

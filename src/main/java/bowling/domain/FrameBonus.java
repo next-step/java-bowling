@@ -67,7 +67,7 @@ public class FrameBonus extends FirstClassImmutableList<BonusScores> implements 
     }
 
     @Override
-    public boolean completed() {
-        return stream().allMatch(BonusScores::completed);
+    public boolean remain() {
+        return stream().anyMatch(BonusScores::remain);
     }
 }

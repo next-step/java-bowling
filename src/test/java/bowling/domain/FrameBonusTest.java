@@ -45,10 +45,10 @@ public class FrameBonusTest {
 
         FrameBonus.of(previous, current).applyBonus(GUTTER);
 
-        assertThat(previous.stream().allMatch(BonusScores::completed)).isTrue();
+        assertThat(previous.stream().allMatch(BonusScores::remain)).isFalse();
         assertThat(previous.stream().allMatch(scores -> scores.stream().allMatch(BowlingScore.of(0)::equals))).isTrue();
 
-        assertThat(current.completed()).isTrue();
+        assertThat(current.remain()).isFalse();
         assertThat(current.collect()).containsExactly(BowlingScore.of(0));
     }
 
@@ -60,10 +60,10 @@ public class FrameBonusTest {
 
         FrameBonus.of(List.of(previous), current).applyBonus(GUTTER);
 
-        assertThat(previous.completed()).isTrue();
+        assertThat(previous.remain()).isFalse();
         assertThat(previous.collect()).doesNotContain(BowlingScore.of(0));
 
-        assertThat(current.completed()).isTrue();
+        assertThat(current.remain()).isFalse();
         assertThat(current.collect()).containsExactly(BowlingScore.of(0));
     }
 
@@ -86,10 +86,10 @@ public class FrameBonusTest {
         Bonus bonus = FrameBonus.of(List.of(previous), current);
         assertThat(bonus.remainBonus().size()).isEqualTo(2);
         assertThat(bonus.remainBonus()).containsExactly(previous, current);
-        assertThat(bonus.completed()).isFalse();
+        assertThat(bonus.remain()).isTrue();
         bonus.applyBonus(THREE);
         assertThat(bonus.remainBonus().isEmpty()).isTrue();
-        assertThat(bonus.completed()).isTrue();
+        assertThat(bonus.remain()).isFalse();
     }
 
 }

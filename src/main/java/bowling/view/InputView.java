@@ -12,9 +12,12 @@ public class InputView {
         return "sid";//scanner.nextLine();
     }
 
+    private static boolean flag = true;
     public static int inputShotResult(int currentFrame) {
         System.out.printf(INPUT_SHOT_MESSAGE, currentFrame);
-        int number = 5;//scanner.nextInt();
+
+        int number = flag ? 1 : 9;//scanner.nextInt();
+        flag = !flag;
         //flush();
         return number;
     }

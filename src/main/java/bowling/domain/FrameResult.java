@@ -49,7 +49,7 @@ public class FrameResult implements Result {
 
         return of(List.of(shot), Collections.emptyList());
     }
-    public static Result empty() {
+    public static Result emptyResult() {
         return of(FrameShots.emptyShot(), FrameBonus.NONE);
     }
 
@@ -74,13 +74,18 @@ public class FrameResult implements Result {
     }
 
     @Override
+    public boolean notEmpty() {
+        return shots.notEmpty();
+    }
+
+    @Override
     public boolean completed() {
         return shots.size() == Shots.NUMBER_OF_SHOT || shots.isClear();
     }
 
     @Override
-    public boolean completedBonus() {
-        return bonus.completed();
+    public boolean remainBonus() {
+        return bonus.remain();
     }
 
     @Override

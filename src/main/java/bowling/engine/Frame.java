@@ -6,12 +6,13 @@ public interface Frame {
     Frame nextShot(Shot shot);
 
     Sequence sequence();
-    boolean completed();
     Score score();
+    boolean completed();
+    boolean notEmpty();
 
     boolean isFinal();
 
-    boolean completedBonus();
+    boolean remainBonus();
 
     Stream<Shot> stream();
 }

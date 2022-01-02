@@ -98,4 +98,10 @@ public class AbstractFirstClassListTest {
         assertThat(TestList.of(TestObject.OBJ1, TestObject.OBJ2).lastOptional()).contains(TestObject.OBJ2);
         assertThat(TestList.of().lastOptional()).isEmpty();
     }
+
+    @Test
+    public void notEmpty() {
+        assertThat(TestList.of().notEmpty()).isFalse();
+        assertThat(TestList.of(TestObject.OBJ1).notEmpty()).isTrue();
+    }
 }

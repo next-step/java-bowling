@@ -42,7 +42,7 @@ public class ScoreBoardPrinter {
     }
 
     public void printScore(int sequence) {
-        if (scoreBoard.size() <= sequence) {
+        if (scoreBoard.empty(sequence) || scoreBoard.remainBonuses(sequence)) {
             System.out.print(EMPTY);
             return;
         }

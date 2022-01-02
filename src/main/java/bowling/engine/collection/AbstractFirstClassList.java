@@ -49,6 +49,10 @@ public abstract class AbstractFirstClassList<T> implements FirstClassList<T> {
         return Optional.of(collection.get(index));
     }
 
+    @Override
+    public boolean notEmpty() {
+        return !collection.isEmpty();
+    }
 
     @Override
     public int indexOf(T t) {

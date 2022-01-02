@@ -6,13 +6,15 @@ import java.util.stream.Stream;
 public interface Result {
     Result next(Shot shot);
     Score score();
+    boolean notEmpty();
     boolean completed();
-    boolean completedBonus();
+    boolean remainBonus();
 
     int size();
-    boolean hasThirdChance();
 
+    boolean hasThirdChance();
     Bonus bonus();
     List<Shot> collect();
+
     Stream<Shot> stream();
 }

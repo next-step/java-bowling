@@ -10,5 +10,4 @@ public interface BonusScores extends FirstClassList<Score> {
     void appendBonus(Shot shot);
     Score sum();
     boolean remain();
-    boolean completed();
 }

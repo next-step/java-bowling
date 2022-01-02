@@ -31,7 +31,7 @@ public class ClearBonusScores extends FirstClassMutableList<Score> implements Bo
 
     @Override
     public void appendBonus(Shot shot) {
-        if (!completed()) {
+        if (remain()) {
             append(shot.score());
         }
     }
@@ -43,11 +43,6 @@ public class ClearBonusScores extends FirstClassMutableList<Score> implements Bo
 
     @Override
     public boolean remain() {
-        return size() < limit;
-    }
-
-    @Override
-    public boolean completed() {
-        return size() >= limit;
+        return limit > NUMBER_OF_NO_BONUS && size() < limit;
     }
 }

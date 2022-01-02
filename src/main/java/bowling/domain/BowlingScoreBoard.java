@@ -2,11 +2,9 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import bowling.engine.Frame;
 import bowling.engine.Name;
-import bowling.engine.Score;
 import bowling.engine.ScoreBoard;
 import bowling.engine.Sequence;
 import bowling.engine.Shot;
@@ -33,17 +31,18 @@ public class BowlingScoreBoard extends FirstClassMutableList<Frame> implements S
     }
 
     @Override
-    public Optional<Score> score(Sequence sequence) {
-        if (sequence == null) {
-            throw new IllegalArgumentException("sequence cannot be null");
-        }
+    public boolean empty(int sequence) {
+        return elementOfOptional(sequence)
+                .filter(Frame::notEmpty)
+                .isEmpty();
+    }
 
-        if (size() < sequence.toInt()) {
-            return Optional.empty();
-        }
-
-        return Optional.of(elementOf(sequenceToIndex(sequence))
-                .score());
+    @Override
+    public boolean remainBonuses(int sequence) {
+        return elementOfOptional(sequence)
+                .filter(Frame::completed)
+                .filter(Frame::remainBonus)
+                .isPresent();
     }
 
     @Override

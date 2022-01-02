@@ -34,7 +34,7 @@ public class NormalFrame implements Frame {
     }
 
     public static Frame startFrame() {
-        return new NormalFrame(FrameSequence.FIRST_FRAME, FrameResult.empty());
+        return new NormalFrame(FrameSequence.FIRST_FRAME, FrameResult.emptyResult());
     }
 
     @Override
@@ -57,13 +57,18 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public boolean completedBonus() {
-        return result.completedBonus();
+    public boolean remainBonus() {
+        return result.remainBonus();
     }
 
     @Override
     public boolean completed() {
         return result.completed();
+    }
+
+    @Override
+    public boolean notEmpty() {
+        return result.notEmpty();
     }
 
     @Override

@@ -41,32 +41,26 @@ public class ClearBonusScoresTest {
     }
 
     @Test
-    public void remainAndCompleteByNone() {
+    public void remainByNone() {
         BonusScores bonus = ClearBonusScores.byNone();
-        assertThat(bonus.completed()).isTrue();
         assertThat(bonus.remain()).isFalse();
     }
 
     @Test
-    public void remainAndCompleteBySpare() {
+    public void remainBySpare() {
         BonusScores bonus = ClearBonusScores.bySpare();
-        assertThat(bonus.completed()).isFalse();
         assertThat(bonus.remain()).isTrue();
         bonus.append(BowlingScore.of(0));
-        assertThat(bonus.completed()).isTrue();
         assertThat(bonus.remain()).isFalse();
     }
 
     @Test
-    public void remainAndCompleteByStrike() {
+    public void remainByStrike() {
         BonusScores bonus = ClearBonusScores.byStrike();
-        assertThat(bonus.completed()).isFalse();
         assertThat(bonus.remain()).isTrue();
         bonus.append(BowlingScore.of(0));
-        assertThat(bonus.completed()).isFalse();
         assertThat(bonus.remain()).isTrue();
         bonus.append(BowlingScore.of(0));
-        assertThat(bonus.completed()).isTrue();
         assertThat(bonus.remain()).isFalse();
     }
 }

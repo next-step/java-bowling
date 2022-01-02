@@ -1,13 +1,12 @@
 package bowling.engine;
 
-import java.util.Optional;
-
 import bowling.engine.collection.FirstClassList;
 
 public interface ScoreBoard extends FirstClassList<Frame> {
     int NUMBER_OF_FRAME = 10;
 
-    Optional<Score> score(Sequence sequence);
+    boolean empty(int sequence);
+    boolean remainBonuses(int sequence);
     Frame nextShot(Shot shot);
 
     Sequence current();

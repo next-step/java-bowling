@@ -72,36 +72,36 @@ public class FrameResultTest {
     @Test
     public void completedBonusByNotClear() {
         Result result = r(GUTTER);
-        assertThat(result.completedBonus()).isTrue();
-        assertThat(result.next(GUTTER).completedBonus()).isTrue();
+        assertThat(result.remainBonus()).isFalse();
+        assertThat(result.next(GUTTER).remainBonus()).isFalse();
     }
 
     @Test
     public void completedBonusBySpare() {
         Result result = r( GUTTER).next(STRIKE);
-        assertThat(result.completedBonus()).isFalse();
+        assertThat(result.remainBonus()).isTrue();
         Result next = result.next(GUTTER);
-        assertThat(next.completedBonus()).isTrue();
+        assertThat(next.remainBonus()).isFalse();
     }
 
     @Test
     public void completedBonusByStrike() {
         Result result = r( STRIKE);
-        assertThat(result.completedBonus()).isFalse();
+        assertThat(result.remainBonus()).isTrue();
         result.next(GUTTER);
-        assertThat(result.completedBonus()).isFalse();
+        assertThat(result.remainBonus()).isTrue();
         result.next(GUTTER);
-        assertThat(result.completedBonus()).isTrue();
+        assertThat(result.remainBonus()).isFalse();
     }
 
     @Test
     public void completedBonusByTurkey() {
         Result result = r(STRIKE);
-        assertThat(result.completedBonus()).isFalse();
+        assertThat(result.remainBonus()).isTrue();
         Result next = result.next(STRIKE);
-        assertThat(result.completedBonus()).isFalse();
+        assertThat(result.remainBonus()).isTrue();
         next.next(STRIKE);
-        assertThat(result.completedBonus()).isTrue();
+        assertThat(result.remainBonus()).isFalse();
     }
 
 
