@@ -39,51 +39,7 @@ class FrameShotsTest {
     @MethodSource("parseCreate")
     public void create(List<Shot> shots) {
         assertThat(FrameShots.of(shots)).isInstanceOf(FrameShots.class);
-    }
-
-    public static Stream<Arguments> parseCreateFinal() {
-        return Stream.of(
-                Arguments.of(List.of(STRIKE, STRIKE, STRIKE)),
-                Arguments.of(List.of(STRIKE, GUTTER, GUTTER)),
-                Arguments.of(List.of(GUTTER, STRIKE, SIX))
-        );
-    }
-
-    @ParameterizedTest(name = "create final: {arguments}")
-    @MethodSource("parseCreateFinal")
-    public void createFinal(List<Shot> shots) {
         assertThat(FrameShots.ofFinal(shots)).isInstanceOf(FrameShots.class);
-    }
-
-    public static Stream<Arguments> parseCreateFailed() {
-        return Stream.of(
-                Arguments.of(List.of(SIX, SEVEN)),
-                Arguments.of(List.of(GUTTER, GUTTER, GUTTER)),
-                Arguments.of(List.of(GUTTER, GUTTER, GUTTER, GUTTER))
-        );
-    }
-
-    @ParameterizedTest(name = "create failed: {arguments}")
-    @NullSource
-    @MethodSource("parseCreateFailed")
-    public void createFailed(List<Shot> shots) {
-        assertThatIllegalArgumentException().isThrownBy(() -> FrameShots.of(shots));
-    }
-
-    public static Stream<Arguments> parseCreateFailedFinal() {
-        return Stream.of(
-                Arguments.of(List.of(SIX, SEVEN)),
-                Arguments.of(List.of(STRIKE, SIX, SEVEN)),
-                Arguments.of(List.of(GUTTER, GUTTER, GUTTER)),
-                Arguments.of(List.of(GUTTER, GUTTER, GUTTER, GUTTER))
-        );
-    }
-
-    @ParameterizedTest(name = "create failed final: {arguments}")
-    @NullSource
-    @MethodSource("parseCreateFailedFinal")
-    public void createFailedFinal(List<Shot> shots) {
-        assertThatIllegalArgumentException().isThrownBy(() -> FrameShots.ofFinal(shots));
     }
 
     @Test
