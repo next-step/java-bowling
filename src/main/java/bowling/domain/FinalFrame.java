@@ -23,6 +23,11 @@ public class FinalFrame extends NormalFrame {
     }
 
     @Override
+    public boolean remainBonus() {
+        return false;
+    }
+
+    @Override
     public boolean isFinal() {
         return true;
     }

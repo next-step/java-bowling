@@ -29,7 +29,7 @@ public class FinalFrameResult extends FrameResult {
             throw new IllegalArgumentException("shots cannot be null");
         }
 
-        return ofFinal(shots, FrameBonus.of(bonusScoresList, shots.clearBonus()));
+        return ofFinal(shots, FrameBonus.of(bonusScoresList));
     }
 
     static Result ofFinal(List<Shot> shots, List<BonusScores> bonusScoresList) {
@@ -46,6 +46,21 @@ public class FinalFrameResult extends FrameResult {
         }
 
         return ofFinal(FrameShots.ofFinal(result.collect()), result.bonus());
+    }
+
+    @Override
+    public Result next(Shot shot) {
+        if (shot == null) {
+            throw new IllegalArgumentException("the shot cannot be null");
+        }
+
+        bonus.applyBonus(shot);
+
+        if (completed()) {
+            throw new IllegalStateException("the game is ended");
+        }
+
+        return ofFinal(shots.nextShot(shot), bonus.remainBonus());
     }
 
     @Override

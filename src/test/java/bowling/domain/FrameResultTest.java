@@ -70,23 +70,23 @@ public class FrameResultTest {
 
 
     @Test
-    public void completedBonusByNotClear() {
+    public void remainBonusByNotClear() {
         Result result = r(GUTTER);
         assertThat(result.remainBonus()).isFalse();
         assertThat(result.next(GUTTER).remainBonus()).isFalse();
     }
 
     @Test
-    public void completedBonusBySpare() {
-        Result result = r( GUTTER).next(STRIKE);
+    public void remainBonusBySpare() {
+        Result result = r(GUTTER).next(STRIKE);
         assertThat(result.remainBonus()).isTrue();
         Result next = result.next(GUTTER);
         assertThat(next.remainBonus()).isFalse();
     }
 
     @Test
-    public void completedBonusByStrike() {
-        Result result = r( STRIKE);
+    public void remainBonusByStrike() {
+        Result result = r(STRIKE);
         assertThat(result.remainBonus()).isTrue();
         result.next(GUTTER);
         assertThat(result.remainBonus()).isTrue();
@@ -95,7 +95,7 @@ public class FrameResultTest {
     }
 
     @Test
-    public void completedBonusByTurkey() {
+    public void remainBonusByTurkey() {
         Result result = r(STRIKE);
         assertThat(result.remainBonus()).isTrue();
         Result next = result.next(STRIKE);
