@@ -1,78 +1,49 @@
 package bowling.domain;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.stream.Stream;
 
-import bowling.engine.Bonus;
-import bowling.engine.BonusScores;
 import bowling.engine.Frame;
+import bowling.engine.Result;
 import bowling.engine.Score;
 import bowling.engine.Sequence;
 import bowling.engine.Shot;
-import bowling.engine.Shots;
 
 public class NormalFrame implements Frame {
     private final Sequence sequence;
-    // todo extract FrameResult
-    protected final Shots shots;
-    protected final Bonus bonus;
+    protected final Result result;
 
-    protected NormalFrame(Sequence sequence, Shots shots, Bonus bonus) {
+    protected NormalFrame(Sequence sequence, Result result) {
         this.sequence = sequence;
-        this.shots = shots;
-        this.bonus = bonus;
+        this.result = result;
     }
 
-    static Frame of(Sequence sequence, Shots shots, Bonus bonus) {
-        if (sequence == null || shots == null || bonus == null) {
-            throw new IllegalArgumentException("sequence or shots or bonus cannot be null");
+    static Frame of(Sequence sequence, Result result) {
+        if (sequence == null || result == null) {
+            throw new IllegalArgumentException("sequence or result cannot be null");
         }
 
         if (sequence.isFinal()) {
-            return FinalFrame.of(shots, bonus);
+            return FinalFrame.of(result);
         }
 
-        return new NormalFrame(sequence, shots, bonus);
-    }
-
-    static Frame of(Sequence sequence, Shots shots, List<BonusScores> bonusScoresList) {
-        if (shots == null) {
-            throw new IllegalArgumentException("shots cannot be null");
-        }
-
-        return of(sequence, shots, FrameBonus.of(bonusScoresList, shots.clearBonus()));
-    }
-
-    static Frame of(Sequence sequence, List<Shot> shots, List<BonusScores> bonusScoresList) {
-        return of(sequence, FrameShots.of(shots), bonusScoresList);
+        return new NormalFrame(sequence, result);
     }
 
     public static Frame ready(Sequence sequence, Shot shot) {
-        if (shot == null) {
-            throw new IllegalArgumentException("the first shot cannot be null");
-        }
-
-        return of(sequence, List.of(shot), Collections.emptyList());
+        return of(sequence, FrameResult.of(shot));
     }
 
     public static Frame startFrame() {
-        return new NormalFrame(FrameSequence.FIRST_FRAME, FrameShots.emptyShot(), FrameBonus.NONE);
+        return new NormalFrame(FrameSequence.FIRST_FRAME, FrameResult.empty());
     }
 
     @Override
     public Frame nextShot(Shot shot) {
-        if (shot == null) {
-            throw new IllegalArgumentException("the shot cannot be null");
-        }
-
-        bonus.applyBonus(shot);
-
         if (completed()) {
-            return NormalFrame.of(sequence.next(), List.of(shot), bonus.remainBonus());
+            return of(sequence.next(), result.next(shot));
         }
 
-        return NormalFrame.of(sequence, shots.nextShot(shot), bonus.remainBonus());
+        return of(sequence, result.next(shot));
     }
 
     @Override
@@ -82,22 +53,17 @@ public class NormalFrame implements Frame {
 
     @Override
     public Score score() {
-        return shots.score(bonus);
+        return result.score();
     }
 
     @Override
-    public boolean hasThirdChance() {
-        return false;
-    }
-
-    @Override
-    public boolean complectedBonus() {
-        return bonus.completed();
+    public boolean completedBonus() {
+        return result.completedBonus();
     }
 
     @Override
     public boolean completed() {
-        return shots.size() == Shots.NUMBER_OF_SHOT || shots.isClear();
+        return result.completed();
     }
 
     @Override
@@ -107,14 +73,14 @@ public class NormalFrame implements Frame {
 
     @Override
     public Stream<Shot> stream() {
-        return shots.stream();
+        return result.stream();
     }
 
     @Override
     public String toString() {
         return "NormalFrame{" +
                 "sequence=" + sequence +
-                ", shots=" + shots +
+                ", result=" + result +
                 '}';
     }
 }

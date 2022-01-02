@@ -10,9 +10,8 @@ public interface Frame {
     Score score();
 
     boolean isFinal();
-    boolean hasThirdChance();
 
-    boolean complectedBonus();
+    boolean completedBonus();
 
     Stream<Shot> stream();
 }

@@ -19,6 +19,7 @@ public class FrameShots extends FirstClassMutableList<Shot> implements Shots {
         super(collection);
     }
 
+    //todo 너무 복잡하니 builder를 만들어보자
     static Shots of(List<Shot> shots, boolean isFinal) {
         if (shots == null) {
             throw new IllegalArgumentException("shots cannot be null");
