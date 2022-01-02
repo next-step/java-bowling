@@ -9,16 +9,14 @@ public class InputView {
 
     public static String inputName() {
         System.out.print(INPUT_NAME_MESSAGE);
-        return "sid";//scanner.nextLine();
+        return scanner.nextLine();
     }
 
-    private static boolean flag = true;
     public static int inputShotResult(int currentFrame) {
         System.out.printf(INPUT_SHOT_MESSAGE, currentFrame);
 
-        int number = flag ? 1 : 9;//scanner.nextInt();
-        flag = !flag;
-        //flush();
+        int number = scanner.nextInt();
+        flush();
         return number;
     }
 
