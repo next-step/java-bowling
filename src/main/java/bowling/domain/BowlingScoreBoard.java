@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bowling.domain.frame.BowlingFrame;
+import bowling.engine.Bonus;
 import bowling.engine.Frame;
 import bowling.engine.Name;
 import bowling.engine.Result;
 import bowling.engine.ScoreBoard;
 import bowling.engine.Sequence;
 import bowling.engine.Shot;
+import bowling.engine.Shots;
 import bowling.engine.collection.FirstClassMutableList;
 
 public class BowlingScoreBoard extends FirstClassMutableList<Frame> implements ScoreBoard {
@@ -34,7 +36,8 @@ public class BowlingScoreBoard extends FirstClassMutableList<Frame> implements S
     public boolean empty(int sequence) {
         return elementOfOptional(sequence)
                 .map(Frame::result)
-                .map(Result::notEmpty)
+                .map(Result::shots)
+                .filter(Shots::notEmpty)
                 .isEmpty();
     }
 
@@ -43,7 +46,8 @@ public class BowlingScoreBoard extends FirstClassMutableList<Frame> implements S
         return elementOfOptional(sequence)
                 .map(Frame::result)
                 .filter(Result::completed)
-                .filter(Result::remainBonus)
+                .map(Result::bonus)
+                .filter(Bonus::remain)
                 .isPresent();
     }
 

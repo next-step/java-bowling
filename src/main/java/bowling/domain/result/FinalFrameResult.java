@@ -28,8 +28,7 @@ public class FinalFrameResult extends FrameResult {
         return ofFinal(shots.nextShot(shot), bonus.remainBonus());
     }
 
-    @Override
-    public boolean hasThirdChance() {
+    boolean hasThirdChance() {
         return shots.head() == STRIKE || shots.isClear();
     }
 

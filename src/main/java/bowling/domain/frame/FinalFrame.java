@@ -11,10 +11,6 @@ public class FinalFrame extends BowlingFrame {
         super(FrameSequence.FINAL_FRAME, FinalFrameResult.ofFinal(result));
     }
 
-    public static Frame of(Result result) {
-        return new FinalFrame(result);
-    }
-
     @Override
     public Frame nextShot(Shot shot) {
         if (result.completed()) {

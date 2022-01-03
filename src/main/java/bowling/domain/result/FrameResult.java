@@ -1,7 +1,6 @@
 package bowling.domain.result;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import bowling.domain.FrameBonus;
 import bowling.domain.shot.FrameShots;
@@ -73,7 +72,7 @@ public abstract class FrameResult implements Result {
             return result;
         }
 
-        return ofFinal(FrameShots.ofFinal(result.collect()), result.bonus());
+        return ofFinal(result.shots(), result.bonus());
     }
 
     public static Result emptyResult() {
@@ -86,38 +85,13 @@ public abstract class FrameResult implements Result {
     }
 
     @Override
-    public boolean notEmpty() {
-        return shots.notEmpty();
-    }
-
-    @Override
-    public boolean remainBonus() {
-        return bonus.remain();
-    }
-
-    @Override
-    public Stream<Shot> stream() {
-        return shots.stream();
-    }
-
-    @Override
-    public int size() {
-        return shots.size();
+    public Shots shots() {
+        return shots;
     }
 
     @Override
     public Bonus bonus() {
         return bonus;
-    }
-
-    @Override
-    public List<Shot> collect() {
-        return shots.collect();
-    }
-
-    @Override
-    public Shots shots() {
-        return shots;
     }
 
     @Override

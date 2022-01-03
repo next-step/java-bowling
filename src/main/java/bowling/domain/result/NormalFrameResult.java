@@ -31,9 +31,4 @@ public class NormalFrameResult extends FrameResult {
     public boolean completed() {
         return shots.size() == Shots.NUMBER_OF_SHOT || shots.isClear();
     }
-
-    @Override
-    public boolean hasThirdChance() {
-        return false;
-    }
 }

@@ -78,7 +78,7 @@ public class FrameBonusTest {
     }
 
     @Test
-    public void remainAndCompleted() {
+    public void remain() {
         BonusScores previous = ClearBonusScores.bySpare();
         BonusScores current = ClearBonusScores.bySpare();
 

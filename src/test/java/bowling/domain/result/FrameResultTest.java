@@ -20,7 +20,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import static bowling.domain.shot.ShotResult.GUTTER;
 import static bowling.domain.shot.ShotResult.STRIKE;
 import static bowling.domain.shot.ShotResultTest.ONE;
-import static bowling.domain.shot.ShotResultTest.THREE;
 import static bowling.domain.shot.ShotResultTest.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -71,52 +70,6 @@ public class FrameResultTest {
         assertThat(r(GUTTER).completed()).isFalse();
     }
 
-
-    @Test
-    public void remainBonusByNotClear() {
-        Result result = r(GUTTER);
-        assertThat(result.remainBonus()).isFalse();
-        assertThat(result.next(GUTTER).remainBonus()).isFalse();
-    }
-
-    @Test
-    public void remainBonusBySpare() {
-        Result result = r(GUTTER).next(STRIKE);
-        assertThat(result.remainBonus()).isTrue();
-        Result next = result.next(GUTTER);
-        assertThat(next.remainBonus()).isFalse();
-    }
-
-    @Test
-    public void remainBonusByStrike() {
-        Result result = r(STRIKE);
-        assertThat(result.remainBonus()).isTrue();
-        result.next(GUTTER);
-        assertThat(result.remainBonus()).isTrue();
-        result.next(GUTTER);
-        assertThat(result.remainBonus()).isFalse();
-    }
-
-    @Test
-    public void remainBonusByTurkey() {
-        Result result = r(STRIKE);
-        assertThat(result.remainBonus()).isTrue();
-        Result next = result.next(STRIKE);
-        assertThat(result.remainBonus()).isTrue();
-        next.next(STRIKE);
-        assertThat(result.remainBonus()).isFalse();
-    }
-
-
-    @Test
-    public void size() {
-        assertThat(r(TWO, THREE).size()).isEqualTo(2);
-    }
-
-    @Test
-    public void stream() {
-        assertThat(r(TWO, THREE).stream()).containsExactly(TWO, THREE);
-    }
 
     public static Result r(Shot... shots) {
         return FrameResult.of(Arrays.asList(shots), Collections.emptyList());
