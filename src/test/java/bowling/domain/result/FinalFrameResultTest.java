@@ -1,6 +1,5 @@
 package bowling.domain.result;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.stream.Stream;
 
@@ -10,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import static bowling.domain.shot.FrameShotsTest.fss;
 import static bowling.domain.shot.ShotResult.GUTTER;
 import static bowling.domain.shot.ShotResultTest.FIVE;
 import static bowling.domain.shot.ShotResultTest.FOUR;
@@ -32,7 +32,7 @@ public class FinalFrameResultTest {
     }
 
     public static Result rf(Shot... shots) {
-        return FinalFrameResult.ofFinal(Arrays.asList(shots), Collections.emptyList());
+        return FinalFrameResult.ofFinal(fss(shots), Collections.emptyList());
     }
 
 }

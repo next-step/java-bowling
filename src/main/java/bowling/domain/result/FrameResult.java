@@ -8,7 +8,6 @@ import bowling.engine.Bonus;
 import bowling.engine.BonusScores;
 import bowling.engine.Result;
 import bowling.engine.Score;
-import bowling.engine.Shot;
 import bowling.engine.Shots;
 
 public abstract class FrameResult implements Result {
@@ -38,14 +37,6 @@ public abstract class FrameResult implements Result {
         return of(shots, FrameBonus.of(bonusScoresList, shots.clearBonus()));
     }
 
-    static Result of(List<Shot> shots, List<BonusScores> bonusScoresList) {
-        return of(FrameShots.of(shots), bonusScoresList);
-    }
-
-    public static Result of(Shot shot) {
-        return of(FrameShots.bySingleShot(shot), FrameBonus.NONE);
-    }
-
     static Result ofFinal(Shots shots, Bonus bonus) {
         if (shots == null || bonus == null) {
             throw new IllegalArgumentException("shots or bonus cannot be null");
@@ -57,10 +48,6 @@ public abstract class FrameResult implements Result {
 
     static Result ofFinal(Shots shots, List<BonusScores> bonusScoresList) {
         return ofFinal(shots, FrameBonus.of(bonusScoresList));
-    }
-
-    static Result ofFinal(List<Shot> shots, List<BonusScores> bonusScoresList) {
-        return ofFinal(FrameShots.ofFinal(shots), bonusScoresList);
     }
 
     public static Result ofFinal(Result result) {

@@ -2,6 +2,7 @@ package bowling.domain.result;
 
 import java.util.List;
 
+import bowling.domain.shot.FrameShots;
 import bowling.engine.Bonus;
 import bowling.engine.Result;
 import bowling.engine.Shot;
@@ -21,7 +22,7 @@ public class NormalFrameResult extends FrameResult {
         bonus.applyBonus(shot);
 
         if (completed()) {
-            return of(List.of(shot), bonus.remainBonus());
+            return of(FrameShots.bySingleShot(shot), bonus.remainBonus());
         }
 
         return of(shots.nextShot(shot), bonus.remainBonus());

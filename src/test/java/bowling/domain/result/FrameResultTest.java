@@ -17,6 +17,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import static bowling.domain.shot.FrameShotsTest.ss;
 import static bowling.domain.shot.ShotResult.GUTTER;
 import static bowling.domain.shot.ShotResult.STRIKE;
 import static bowling.domain.shot.ShotResultTest.ONE;
@@ -25,11 +26,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class FrameResultTest {
-    @Test
-    public void create() {
-        assertThat(FrameResult.of(GUTTER)).isInstanceOf(FrameResult.class);
-    }
-
     public static Stream<Arguments> parseCreateFailed() {
         return Stream.of(
                 Arguments.of(null, FrameBonus.NONE),
@@ -72,10 +68,10 @@ public class FrameResultTest {
 
 
     public static Result r(Shot... shots) {
-        return FrameResult.of(Arrays.asList(shots), Collections.emptyList());
+        return r(Arrays.asList(shots));
     }
 
     public static Result r(List<Shot> shots) {
-        return FrameResult.of(shots, Collections.emptyList());
+        return FrameResult.of(ss(shots), Collections.emptyList());
     }
 }

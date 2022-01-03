@@ -27,7 +27,7 @@ import static bowling.domain.shot.ShotResult.STRIKE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-class FrameShotsTest {
+public class FrameShotsTest {
     public static Stream<Arguments> parseCreate() {
         return Stream.of(
                 Arguments.of(List.of(STRIKE)),

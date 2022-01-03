@@ -1,7 +1,9 @@
 package bowling.domain.frame;
 
+import bowling.domain.FrameBonus;
 import bowling.domain.result.FrameResult;
 import bowling.domain.FrameSequence;
+import bowling.domain.shot.FrameShots;
 import bowling.engine.Frame;
 import bowling.engine.Result;
 import bowling.engine.Sequence;
@@ -33,7 +35,7 @@ public abstract class BowlingFrame implements Frame {
     }
 
     public static Frame ready(Sequence sequence, Shot shot) {
-        return of(sequence, FrameResult.of(shot));
+        return of(sequence, FrameResult.of(FrameShots.bySingleShot(shot), FrameBonus.NONE));
     }
 
     public static Frame startFrame() {
