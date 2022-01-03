@@ -63,16 +63,16 @@ public class NormalFrameTest {
     public void nextShot() {
         final Frame frame = fr(1, GUTTER);
         assertThat(frame.nextShot(GUTTER)).isInstanceOf(NormalFrame.class);
-        assertThat(frame.nextShot(ONE).score()).isEqualTo(BowlingScore.of(1));
+        assertThat(frame.nextShot(ONE).result().score()).isEqualTo(BowlingScore.of(1));
     }
 
     @Test
     public void nextShotWithBonus() {
         final Frame frame = fr(1, STRIKE);
         frame.nextShot(TWO);
-        assertThat(frame.score()).isEqualTo(BowlingScore.of(12));
+        assertThat(frame.result().score()).isEqualTo(BowlingScore.of(12));
         frame.nextShot(ONE);
-        assertThat(frame.score()).isEqualTo(BowlingScore.of(13));
+        assertThat(frame.result().score()).isEqualTo(BowlingScore.of(13));
     }
 
     public static Stream<Arguments> parseNextShotFailedIllegalArguments() {

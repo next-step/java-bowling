@@ -6,9 +6,11 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import bowling.engine.Frame;
+import bowling.engine.Result;
 import bowling.engine.Score;
 import bowling.engine.ScoreBoard;
 import bowling.engine.Sequence;
+import bowling.engine.Shots;
 
 import static bowling.view.OutputView.LINE;
 
@@ -35,7 +37,10 @@ public class ScoreBoardPrinter {
 
     public void printShotResult(int sequence) {
         Optional<Frame> frame = scoreBoard.elementOfOptional(sequence);
-        String shotResults = frame.map(this::parseFrameScore)
+        String shotResults = frame
+                .map(Frame::result)
+                .map(Result::shots)
+                .map(this::parseFrameScore)
                 .map(this::formatFrameBoard)
                 .orElse(EMPTY);
         System.out.print(shotResults);
@@ -49,7 +54,8 @@ public class ScoreBoardPrinter {
 
         int score = scoreBoard.stream()
                 .limit(sequence + SIZE_SEQUENCE_DIFF)
-                .map(Frame::score)
+                .map(Frame::result)
+                .map(Result::score)
                 .map(Score::toInt)
                 .reduce(HEAD, Integer::sum);
 
@@ -64,8 +70,8 @@ public class ScoreBoardPrinter {
         return String.format(SCORE_FORMAT, score);
     }
 
-    public String parseFrameScore(Frame frame) {
-        return frame.stream()
+    public String parseFrameScore(Shots shots) {
+        return shots.stream()
                 .map(ShotScore::of)
                 .map(ShotScore::toString)
                 .collect(Collectors.joining(LINE));

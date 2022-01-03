@@ -1,6 +1,5 @@
 package bowling.domain.result;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -114,6 +113,11 @@ public abstract class FrameResult implements Result {
     @Override
     public List<Shot> collect() {
         return shots.collect();
+    }
+
+    @Override
+    public Shots shots() {
+        return shots;
     }
 
     @Override

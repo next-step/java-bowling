@@ -17,16 +17,11 @@ public class FinalFrame extends BowlingFrame {
 
     @Override
     public Frame nextShot(Shot shot) {
-        if (completed()) {
+        if (result.completed()) {
             throw new IllegalStateException("the game is ended");
         }
 
         return ofFinal(result.next(shot));
-    }
-
-    @Override
-    public boolean remainBonus() {
-        return false;
     }
 
     @Override

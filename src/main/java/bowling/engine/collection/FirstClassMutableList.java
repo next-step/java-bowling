@@ -17,7 +17,7 @@ public class FirstClassMutableList<T> extends AbstractFirstClassList<T> {
 
     @Override
     public List<T> collect() {
-        return Collections.unmodifiableList(super.collect());
+        return Collections.unmodifiableList(collection);
     }
 
     @Override
@@ -25,13 +25,11 @@ public class FirstClassMutableList<T> extends AbstractFirstClassList<T> {
         if (t == null) {
             throw new IllegalArgumentException("new element is cannot be null");
         }
-        super.collect()
-                .add(t);
+        collection.add(t);
         return this;
     }
 
     public T setElement(int index, T t) {
-        return super.collect()
-                .set(index, t);
+        return collection.set(index, t);
     }
 }

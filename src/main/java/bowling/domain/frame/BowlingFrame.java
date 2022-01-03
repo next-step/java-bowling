@@ -1,12 +1,9 @@
 package bowling.domain.frame;
 
-import java.util.stream.Stream;
-
 import bowling.domain.result.FrameResult;
 import bowling.domain.FrameSequence;
 import bowling.engine.Frame;
 import bowling.engine.Result;
-import bowling.engine.Score;
 import bowling.engine.Sequence;
 import bowling.engine.Shot;
 
@@ -49,23 +46,8 @@ public abstract class BowlingFrame implements Frame {
     }
 
     @Override
-    public Score score() {
-        return result.score();
-    }
-
-    @Override
-    public boolean completed() {
-        return result.completed();
-    }
-
-    @Override
-    public boolean notEmpty() {
-        return result.notEmpty();
-    }
-
-    @Override
-    public Stream<Shot> stream() {
-        return result.stream();
+    public Result result() {
+        return result;
     }
 
     @Override

@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 public abstract class AbstractFirstClassList<T> implements FirstClassList<T> {
     private static final int LAST_DIFF = 1;
 
-    private final List<T> collection;
+    protected final List<T> collection;
 
     protected AbstractFirstClassList(List<T> collection) {
         this.collection = collection;

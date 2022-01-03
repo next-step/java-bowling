@@ -17,4 +17,6 @@ public interface Result {
     List<Shot> collect();
 
     Stream<Shot> stream();
+
+    Shots shots();
 }

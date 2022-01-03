@@ -13,16 +13,11 @@ public class NormalFrame extends BowlingFrame {
 
     @Override
     public Frame nextShot(Shot shot) {
-        if (completed()) {
+        if (result.completed()) {
             return of(sequence.next(), result.next(shot));
         }
 
         return of(sequence, result.next(shot));
-    }
-
-    @Override
-    public boolean remainBonus() {
-        return result.remainBonus();
     }
 
     @Override
