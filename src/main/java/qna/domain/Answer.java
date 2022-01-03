@@ -1,5 +1,6 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
@@ -50,12 +51,13 @@ public class Answer extends AbstractEntity {
     }
 
     @Transactional(rollbackFor = CannotDeleteException.class)
-    public void delete(User user) throws CannotDeleteException {
+    public DeleteHistory delete(User user) throws CannotDeleteException {
         if (!this.isOwner(user)) {
             throw new CannotDeleteException("답글을 삭제할 권한이 없습니다.");
         }
 
         deleted = true;
+        return new DeleteHistory(ContentType.ANSWER, this.getId(), this.writer, LocalDateTime.now());
     }
 
     public Answer setDeleted(boolean deleted) {

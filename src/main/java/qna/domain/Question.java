@@ -1,17 +1,16 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import org.hibernate.annotations.Where;
 import org.springframework.transaction.annotation.Transactional;
 import qna.CannotDeleteException;
 
@@ -28,10 +27,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -50,28 +47,20 @@ public class Question extends AbstractEntity {
     }
 
     @Transactional(rollbackFor = CannotDeleteException.class)
-    public DeleteHistories delete(User user) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User user) throws CannotDeleteException {
         validOwner(user);
 
-        for (Answer answer : answers) {
-            deleteAnswer(user, answer);
-        }
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.addAll(answers.deleteAll(user));
 
         this.deleted = true;
-        return DeleteHistories.from(this);
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now()));
+        return Collections.unmodifiableList(deleteHistories);
     }
 
     private void validOwner(User user) throws CannotDeleteException {
         if (!this.isOwner(user)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
-    }
-
-    private void deleteAnswer(User user, Answer answer) throws CannotDeleteException {
-        try {
-            answer.delete(user);
-        } catch (CannotDeleteException e) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
     }
 
@@ -121,7 +110,7 @@ public class Question extends AbstractEntity {
     }
 
     public List<Answer> getAnswers() {
-        return answers;
+        return answers.getAnswers();
     }
 
     @Override
