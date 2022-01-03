@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.shot;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -10,10 +10,10 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
 
-import static bowling.domain.ShotResult.GUTTER;
-import static bowling.domain.ShotResult.STRIKE;
-import static bowling.domain.ShotResultTest.SEVEN;
-import static bowling.domain.ShotResultTest.SIX;
+import static bowling.domain.shot.ShotResult.GUTTER;
+import static bowling.domain.shot.ShotResult.STRIKE;
+import static bowling.domain.shot.ShotResultTest.SEVEN;
+import static bowling.domain.shot.ShotResultTest.SIX;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -38,40 +38,40 @@ public class FinalFrameShotBuilderTest {
     @ParameterizedTest(name = "create: {arguments}")
     @MethodSource("parseValidShots")
     public void create(List<Shot> shots) {
-        assertThat(FinalFrameShotsBuilder.of(shots)).isInstanceOf(FinalFrameShotsBuilder.class);
+        assertThat(FrameShotsBuilder.ofFinal(shots)).isInstanceOf(FinalFrameShotsBuilder.class);
     }
 
     @ParameterizedTest(name = "create failed: {arguments}")
     @NullSource
     public void createFailed(List<Shot> shots) {
-        assertThatIllegalArgumentException().isThrownBy(() -> FinalFrameShotsBuilder.of(shots));
+        assertThatIllegalArgumentException().isThrownBy(() -> FrameShotsBuilder.ofFinal(shots));
     }
 
     @ParameterizedTest(name = "build: {arguments}")
     @MethodSource("parseValidShots")
     public void build(List<Shot> shots) {
-        final ShotsBuilder builder = FinalFrameShotsBuilder.of(shots);
+        final ShotsBuilder builder = FrameShotsBuilder.ofFinal(shots);
         assertThat(builder.build()).isInstanceOf(FrameShots.class);
     }
 
     @ParameterizedTest(name = "build failed: {arguments}")
     @MethodSource("parseInvalidShots")
     public void buildFailed(List<Shot> shots) {
-        final ShotsBuilder builder = FinalFrameShotsBuilder.of(shots);
+        final ShotsBuilder builder = FrameShotsBuilder.ofFinal(shots);
         assertThatIllegalArgumentException().isThrownBy(builder::build);
     }
 
     @ParameterizedTest(name = "build: {arguments}")
     @MethodSource("parseValidShots")
     public void validate(List<Shot> shots) {
-        final ShotsBuilder builder = FinalFrameShotsBuilder.of(shots);
+        final ShotsBuilder builder = FrameShotsBuilder.ofFinal(shots);
         assertThat(builder.validate()).isTrue();
     }
 
     @ParameterizedTest(name = "build failed: {arguments}")
     @MethodSource("parseInvalidShots")
     public void invalidate(List<Shot> shots) {
-        final ShotsBuilder builder = FinalFrameShotsBuilder.of(shots);
+        final ShotsBuilder builder = FrameShotsBuilder.ofFinal(shots);
         assertThatIllegalArgumentException().isThrownBy(builder::validate);
     }
 

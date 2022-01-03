@@ -1,9 +1,11 @@
-package bowling.domain;
+package bowling.domain.shot;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+import bowling.domain.BowlingScore;
+import bowling.domain.FrameBonus;
 import bowling.engine.Shot;
 import bowling.engine.Shots;
 import org.junit.jupiter.api.Test;
@@ -12,16 +14,16 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
 
-import static bowling.domain.ShotResult.GUTTER;
-import static bowling.domain.ShotResultTest.EIGHT;
-import static bowling.domain.ShotResultTest.ONE;
-import static bowling.domain.ShotResultTest.THREE;
-import static bowling.domain.ShotResultTest.FOUR;
-import static bowling.domain.ShotResultTest.FIVE;
-import static bowling.domain.ShotResultTest.SIX;
-import static bowling.domain.ShotResultTest.SEVEN;
-import static bowling.domain.ShotResultTest.NINE;
-import static bowling.domain.ShotResult.STRIKE;
+import static bowling.domain.shot.ShotResult.GUTTER;
+import static bowling.domain.shot.ShotResultTest.EIGHT;
+import static bowling.domain.shot.ShotResultTest.ONE;
+import static bowling.domain.shot.ShotResultTest.THREE;
+import static bowling.domain.shot.ShotResultTest.FOUR;
+import static bowling.domain.shot.ShotResultTest.FIVE;
+import static bowling.domain.shot.ShotResultTest.SIX;
+import static bowling.domain.shot.ShotResultTest.SEVEN;
+import static bowling.domain.shot.ShotResultTest.NINE;
+import static bowling.domain.shot.ShotResult.STRIKE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -40,6 +42,27 @@ class FrameShotsTest {
     public void create(List<Shot> shots) {
         assertThat(FrameShots.of(shots)).isInstanceOf(FrameShots.class);
         assertThat(FrameShots.ofFinal(shots)).isInstanceOf(FrameShots.class);
+    }
+
+    public static Stream<Arguments> parseCreateBySingleShot() {
+        return Stream.of(
+                Arguments.of(STRIKE),
+                Arguments.of(GUTTER),
+                Arguments.of(NINE),
+                Arguments.of(ONE)
+        );
+    }
+
+    @ParameterizedTest(name = "create by single shot: {arguments}")
+    @MethodSource("parseCreateBySingleShot")
+    public void createBySingleShot(Shot shot) {
+        assertThat(FrameShots.bySingleShot(shot)).isInstanceOf(FrameShots.class);
+    }
+
+    @ParameterizedTest(name = "create failed by single shot: {arguments}")
+    @NullSource
+    public void createFailedBySingleShot(Shot shot) {
+        assertThatIllegalArgumentException().isThrownBy(() -> FrameShots.bySingleShot(shot));
     }
 
     @Test

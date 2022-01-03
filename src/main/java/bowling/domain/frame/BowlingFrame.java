@@ -1,18 +1,20 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import java.util.stream.Stream;
 
+import bowling.domain.result.FrameResult;
+import bowling.domain.FrameSequence;
 import bowling.engine.Frame;
 import bowling.engine.Result;
 import bowling.engine.Score;
 import bowling.engine.Sequence;
 import bowling.engine.Shot;
 
-public class NormalFrame implements Frame {
-    private final Sequence sequence;
+public abstract class BowlingFrame implements Frame {
+    protected final Sequence sequence;
     protected final Result result;
 
-    protected NormalFrame(Sequence sequence, Result result) {
+    protected BowlingFrame(Sequence sequence, Result result) {
         this.sequence = sequence;
         this.result = result;
     }
@@ -23,10 +25,14 @@ public class NormalFrame implements Frame {
         }
 
         if (sequence.isFinal()) {
-            return FinalFrame.of(result);
+            return ofFinal(result);
         }
 
         return new NormalFrame(sequence, result);
+    }
+
+    public static Frame ofFinal(Result result) {
+        return new FinalFrame(result);
     }
 
     public static Frame ready(Sequence sequence, Shot shot) {
@@ -34,16 +40,7 @@ public class NormalFrame implements Frame {
     }
 
     public static Frame startFrame() {
-        return new NormalFrame(FrameSequence.FIRST_FRAME, FrameResult.emptyResult());
-    }
-
-    @Override
-    public Frame nextShot(Shot shot) {
-        if (completed()) {
-            return of(sequence.next(), result.next(shot));
-        }
-
-        return of(sequence, result.next(shot));
+        return of(FrameSequence.FIRST_FRAME, FrameResult.emptyResult());
     }
 
     @Override
@@ -57,11 +54,6 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public boolean remainBonus() {
-        return result.remainBonus();
-    }
-
-    @Override
     public boolean completed() {
         return result.completed();
     }
@@ -72,18 +64,13 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public boolean isFinal() {
-        return false;
-    }
-
-    @Override
     public Stream<Shot> stream() {
         return result.stream();
     }
 
     @Override
     public String toString() {
-        return "NormalFrame{" +
+        return "BowlingFrame{" +
                 "sequence=" + sequence +
                 ", result=" + result +
                 '}';

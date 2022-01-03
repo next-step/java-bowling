@@ -3,6 +3,7 @@ package bowling.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import bowling.domain.frame.BowlingFrame;
 import bowling.engine.Frame;
 import bowling.engine.Name;
 import bowling.engine.ScoreBoard;
@@ -22,7 +23,7 @@ public class BowlingScoreBoard extends FirstClassMutableList<Frame> implements S
 
     public static BowlingScoreBoard of(String name) {
         List<Frame> frames = new ArrayList<>(NUMBER_OF_FRAME);
-        frames.add(NormalFrame.startFrame());
+        frames.add(BowlingFrame.startFrame());
         return new BowlingScoreBoard(Player.of(name), frames);
     }
 

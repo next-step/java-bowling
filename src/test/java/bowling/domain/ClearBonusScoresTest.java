@@ -4,7 +4,7 @@ import bowling.engine.BonusScores;
 import bowling.engine.Score;
 import org.junit.Test;
 
-import static bowling.domain.ShotResultTest.ONE;
+import static bowling.domain.shot.ShotResultTest.ONE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ClearBonusScoresTest {

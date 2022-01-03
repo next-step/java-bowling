@@ -1,7 +1,7 @@
 package bowling.controller;
 
 import bowling.domain.BowlingScoreBoard;
-import bowling.domain.ShotResult;
+import bowling.domain.shot.ShotResult;
 import bowling.engine.ScoreBoard;
 import bowling.view.InputView;
 import bowling.view.OutputView;

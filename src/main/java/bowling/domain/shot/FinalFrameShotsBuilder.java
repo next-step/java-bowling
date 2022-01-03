@@ -1,26 +1,17 @@
-package bowling.domain;
+package bowling.domain.shot;
 
 import java.util.List;
 
 import bowling.engine.Shot;
-import bowling.engine.ShotsBuilder;
 
-import static bowling.domain.ShotResult.GUTTER;
-import static bowling.domain.ShotResult.STRIKE;
+import static bowling.domain.shot.ShotResult.GUTTER;
+import static bowling.domain.shot.ShotResult.STRIKE;
 import static bowling.engine.Shots.NUMBER_OF_PINS;
 import static bowling.engine.Shots.NUMBER_OF_SHOT;
 
 public class FinalFrameShotsBuilder extends FrameShotsBuilder {
     protected FinalFrameShotsBuilder(List<Shot> shots) {
         super(shots);
-    }
-
-    public static ShotsBuilder of(List<Shot> shots) {
-        if (shots == null) {
-            throw new IllegalArgumentException("shots cannot be null");
-        }
-
-        return new FinalFrameShotsBuilder(shots);
     }
 
     public boolean validate() {

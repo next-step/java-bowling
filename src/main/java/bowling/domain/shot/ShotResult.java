@@ -1,9 +1,11 @@
-package bowling.domain;
+package bowling.domain.shot;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+import bowling.domain.BowlingScore;
+import bowling.domain.ClearBonusScores;
 import bowling.engine.BonusScores;
 import bowling.engine.Score;
 import bowling.engine.Shot;

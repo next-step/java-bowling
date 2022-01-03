@@ -1,9 +1,10 @@
-package bowling.domain;
+package bowling.domain.shot;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
+import bowling.domain.ClearBonusScores;
 import bowling.engine.Bonus;
 import bowling.engine.BonusScores;
 import bowling.engine.Score;
@@ -26,8 +27,16 @@ public class FrameShots extends FirstClassMutableList<Shot> implements Shots {
         return FrameShotsBuilder.of(shots).build();
     }
 
+    public static Shots bySingleShot(Shot shot) {
+        if (shot == null) {
+            throw new IllegalArgumentException("the first shot cannot be null");
+        }
+
+        return byBuilder(List.of(shot));
+    }
+
     public static Shots ofFinal(List<Shot> shots) {
-        return FinalFrameShotsBuilder.of(shots).build();
+        return FrameShotsBuilder.ofFinal(shots).build();
     }
 
     public static FrameShots emptyShot() {

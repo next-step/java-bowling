@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import java.util.stream.Stream;
 
@@ -11,16 +11,16 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
 
-import static bowling.domain.FinalFrameResultTest.rf;
+import static bowling.domain.result.FinalFrameResultTest.rf;
 import static bowling.domain.FrameSequenceTest.fs;
-import static bowling.domain.NormalFrameTest.fr;
-import static bowling.domain.ShotResult.GUTTER;
-import static bowling.domain.ShotResult.STRIKE;
-import static bowling.domain.ShotResultTest.EIGHT;
-import static bowling.domain.ShotResultTest.FIVE;
-import static bowling.domain.ShotResultTest.ONE;
-import static bowling.domain.ShotResultTest.SEVEN;
-import static bowling.domain.ShotResultTest.SIX;
+import static bowling.domain.frame.NormalFrameTest.fr;
+import static bowling.domain.shot.ShotResult.GUTTER;
+import static bowling.domain.shot.ShotResult.STRIKE;
+import static bowling.domain.shot.ShotResultTest.EIGHT;
+import static bowling.domain.shot.ShotResultTest.FIVE;
+import static bowling.domain.shot.ShotResultTest.ONE;
+import static bowling.domain.shot.ShotResultTest.SEVEN;
+import static bowling.domain.shot.ShotResultTest.SIX;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
@@ -28,13 +28,13 @@ import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 public class FinalFrameTest {
     @Test
     public void create() {
-        assertThat(NormalFrame.ready(fs(10), GUTTER)).isInstanceOf(FinalFrame.class);
+        assertThat(BowlingFrame.ready(fs(10), GUTTER)).isInstanceOf(FinalFrame.class);
     }
 
     @ParameterizedTest(name = "create failed: {arguments}")
     @NullSource
     public void createFailed(Result result) {
-        assertThatIllegalArgumentException().isThrownBy(() ->FinalFrame.of(result));
+        assertThatIllegalArgumentException().isThrownBy(() -> BowlingFrame.ofFinal(result));
     }
 
     public static Stream<Arguments> parseThird() {
@@ -90,6 +90,6 @@ public class FinalFrameTest {
     }
 
     public static Frame ff(Shot ... shots) {
-        return FinalFrame.of(rf(shots));
+        return BowlingFrame.ofFinal(rf(shots));
     }
 }

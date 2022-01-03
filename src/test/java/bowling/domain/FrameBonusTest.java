@@ -10,9 +10,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import static bowling.domain.ShotResult.GUTTER;
-import static bowling.domain.ShotResultTest.FIVE;
-import static bowling.domain.ShotResultTest.THREE;
+import static bowling.domain.shot.ShotResult.GUTTER;
+import static bowling.domain.shot.ShotResultTest.FIVE;
+import static bowling.domain.shot.ShotResultTest.THREE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -20,7 +20,6 @@ public class FrameBonusTest {
     @Test
     public void create() {
         assertThat(FrameBonus.of(List.of(), ClearBonusScores.byNone())).isInstanceOf(FrameBonus.class);
-        assertThat(FrameBonus.of(ClearBonusScores.byNone())).isInstanceOf(FrameBonus.class);
         assertThat(FrameBonus.of(List.of())).isInstanceOf(FrameBonus.class);
     }
 

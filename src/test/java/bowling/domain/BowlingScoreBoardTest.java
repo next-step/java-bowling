@@ -5,13 +5,13 @@ import java.util.List;
 import bowling.engine.Frame;
 import org.junit.jupiter.api.Test;
 
-import static bowling.domain.FinalFrameTest.ff;
+import static bowling.domain.frame.FinalFrameTest.ff;
 import static bowling.domain.FrameSequenceTest.fs;
-import static bowling.domain.NormalFrameTest.fr;
-import static bowling.domain.ShotResult.GUTTER;
-import static bowling.domain.ShotResult.STRIKE;
-import static bowling.domain.ShotResultTest.NINE;
-import static bowling.domain.ShotResultTest.ONE;
+import static bowling.domain.frame.NormalFrameTest.fr;
+import static bowling.domain.shot.ShotResult.GUTTER;
+import static bowling.domain.shot.ShotResult.STRIKE;
+import static bowling.domain.shot.ShotResultTest.NINE;
+import static bowling.domain.shot.ShotResultTest.ONE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BowlingScoreBoardTest {

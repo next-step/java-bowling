@@ -1,9 +1,11 @@
-package bowling.domain;
+package bowling.domain.result;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
+import bowling.domain.FrameBonus;
+import bowling.domain.shot.FrameShots;
 import bowling.engine.Bonus;
 import bowling.engine.BonusScores;
 import bowling.engine.Result;
@@ -11,7 +13,7 @@ import bowling.engine.Score;
 import bowling.engine.Shot;
 import bowling.engine.Shots;
 
-public class FrameResult implements Result {
+public abstract class FrameResult implements Result {
     public static final Result EMPTY_RESULT = of(FrameShots.emptyShot(), FrameBonus.NONE);
 
     protected final Shots shots;
@@ -27,7 +29,7 @@ public class FrameResult implements Result {
             throw new IllegalArgumentException("shots or bonus cannot be null");
         }
 
-        return new FrameResult(shots, bonus);
+        return new NormalFrameResult(shots, bonus);
     }
 
     static Result of(Shots shots, List<BonusScores> bonusScoresList) {
@@ -43,29 +45,40 @@ public class FrameResult implements Result {
     }
 
     public static Result of(Shot shot) {
-        if (shot == null) {
-            throw new IllegalArgumentException("the first shot cannot be null");
+        return of(FrameShots.bySingleShot(shot), FrameBonus.NONE);
+    }
+
+    static Result ofFinal(Shots shots, Bonus bonus) {
+        if (shots == null || bonus == null) {
+            throw new IllegalArgumentException("shots or bonus cannot be null");
         }
 
-        return of(List.of(shot), Collections.emptyList());
+        return new FinalFrameResult(shots, bonus);
+
     }
+
+    static Result ofFinal(Shots shots, List<BonusScores> bonusScoresList) {
+        return ofFinal(shots, FrameBonus.of(bonusScoresList));
+    }
+
+    static Result ofFinal(List<Shot> shots, List<BonusScores> bonusScoresList) {
+        return ofFinal(FrameShots.ofFinal(shots), bonusScoresList);
+    }
+
+    public static Result ofFinal(Result result) {
+        if (result == null) {
+            throw new IllegalArgumentException("the result cannot be null");
+        }
+
+        if (result instanceof FinalFrameResult) {
+            return result;
+        }
+
+        return ofFinal(FrameShots.ofFinal(result.collect()), result.bonus());
+    }
+
     public static Result emptyResult() {
         return of(FrameShots.emptyShot(), FrameBonus.NONE);
-    }
-
-    @Override
-    public Result next(Shot shot) {
-        if (shot == null) {
-            throw new IllegalArgumentException("the shot cannot be null");
-        }
-
-        bonus.applyBonus(shot);
-
-        if (completed()) {
-            return of(List.of(shot), bonus.remainBonus());
-        }
-
-        return of(shots.nextShot(shot), bonus.remainBonus());
     }
 
     @Override
@@ -76,11 +89,6 @@ public class FrameResult implements Result {
     @Override
     public boolean notEmpty() {
         return shots.notEmpty();
-    }
-
-    @Override
-    public boolean completed() {
-        return shots.size() == Shots.NUMBER_OF_SHOT || shots.isClear();
     }
 
     @Override
@@ -96,11 +104,6 @@ public class FrameResult implements Result {
     @Override
     public int size() {
         return shots.size();
-    }
-
-    @Override
-    public boolean hasThirdChance() {
-        return false;
     }
 
     @Override

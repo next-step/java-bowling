@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.result;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,10 +11,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import static bowling.domain.ShotResult.GUTTER;
-import static bowling.domain.ShotResult.STRIKE;
-import static bowling.domain.ShotResultTest.FIVE;
-import static bowling.domain.ShotResultTest.FOUR;
+import static bowling.domain.shot.ShotResult.GUTTER;
+import static bowling.domain.shot.ShotResult.STRIKE;
+import static bowling.domain.shot.ShotResultTest.FIVE;
+import static bowling.domain.shot.ShotResultTest.FOUR;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FinalFrameResultTest {

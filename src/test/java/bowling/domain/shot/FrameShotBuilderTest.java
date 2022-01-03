@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.shot;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -10,12 +10,12 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
 
-import static bowling.domain.ShotResult.GUTTER;
-import static bowling.domain.ShotResult.STRIKE;
-import static bowling.domain.ShotResultTest.NINE;
-import static bowling.domain.ShotResultTest.ONE;
-import static bowling.domain.ShotResultTest.SEVEN;
-import static bowling.domain.ShotResultTest.SIX;
+import static bowling.domain.shot.ShotResult.GUTTER;
+import static bowling.domain.shot.ShotResult.STRIKE;
+import static bowling.domain.shot.ShotResultTest.NINE;
+import static bowling.domain.shot.ShotResultTest.ONE;
+import static bowling.domain.shot.ShotResultTest.SEVEN;
+import static bowling.domain.shot.ShotResultTest.SIX;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 

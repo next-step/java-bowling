@@ -32,13 +32,16 @@ public class FrameBonus extends FirstClassImmutableList<BonusScores> implements 
             throw new IllegalArgumentException("previous bonus cannot be larger than 2");
         }
 
-        List<BonusScores> bonuses = Stream.concat(
-                    previousBonuses.stream(),
-                    Stream.of(current))
-                        .collect(Collectors.toList()
-                );
+        Stream<BonusScores> previous = previousBonuses.stream()
+                .filter(BonusScores::remain);
 
-        return new FrameBonus(bonuses, current);
+        if (current.remain()) {
+            List<BonusScores> bonuses = Stream.concat(previous, Stream.of(current))
+                    .collect(Collectors.toList());
+            return new FrameBonus(bonuses, current);
+        }
+
+        return new FrameBonus(previous.collect(Collectors.toList()), current);
     }
 
     public static FrameBonus of(BonusScores current) {

@@ -1,9 +1,11 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+import bowling.domain.BowlingScore;
+import bowling.domain.result.FrameResult;
 import bowling.engine.Frame;
 import bowling.engine.Result;
 import bowling.engine.Sequence;
@@ -14,21 +16,21 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static bowling.domain.FrameResultTest.r;
+import static bowling.domain.result.FrameResultTest.r;
 import static bowling.domain.FrameSequenceTest.fs;
-import static bowling.domain.ShotResult.GUTTER;
-import static bowling.domain.ShotResult.STRIKE;
-import static bowling.domain.ShotResultTest.NINE;
-import static bowling.domain.ShotResultTest.ONE;
-import static bowling.domain.ShotResultTest.SIX;
-import static bowling.domain.ShotResultTest.TWO;
+import static bowling.domain.shot.ShotResult.GUTTER;
+import static bowling.domain.shot.ShotResult.STRIKE;
+import static bowling.domain.shot.ShotResultTest.NINE;
+import static bowling.domain.shot.ShotResultTest.ONE;
+import static bowling.domain.shot.ShotResultTest.SIX;
+import static bowling.domain.shot.ShotResultTest.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class NormalFrameTest {
     @Test
     public void create() {
-        assertThat(NormalFrame.ready(fs(1), GUTTER)).isInstanceOf(NormalFrame.class);
+        assertThat(BowlingFrame.ready(fs(1), GUTTER)).isInstanceOf(NormalFrame.class);
     }
 
     public static Stream<Arguments> parseReadyFailed() {
@@ -41,7 +43,7 @@ public class NormalFrameTest {
     @ParameterizedTest(name = "create failed: {arguments}")
     @MethodSource("parseReadyFailed")
     public void readyFailed(Sequence sequence, Shot shot) {
-        assertThatIllegalArgumentException().isThrownBy(() -> NormalFrame.ready(sequence, shot));
+        assertThatIllegalArgumentException().isThrownBy(() -> BowlingFrame.ready(sequence, shot));
     }
 
     public static Stream<Arguments> parseCreateFailed() {
@@ -54,7 +56,7 @@ public class NormalFrameTest {
     @ParameterizedTest(name = "create failed: {arguments}")
     @MethodSource("parseCreateFailed")
     public void createFailed(Sequence sequence, Result result) {
-        assertThatIllegalArgumentException().isThrownBy(() -> NormalFrame.of(sequence, result));
+        assertThatIllegalArgumentException().isThrownBy(() -> BowlingFrame.of(sequence, result));
     }
 
     @Test
@@ -110,10 +112,10 @@ public class NormalFrameTest {
 
 
     public static Frame fr(int sequence, Shot ... shots) {
-        return NormalFrame.of(fs(sequence), r(Arrays.asList(shots)));
+        return BowlingFrame.of(fs(sequence), r(Arrays.asList(shots)));
     }
 
     public static Frame fr(int sequence, List<Shot> shots) {
-        return NormalFrame.of(fs(sequence), r(shots));
+        return BowlingFrame.of(fs(sequence), r(shots));
     }
 }

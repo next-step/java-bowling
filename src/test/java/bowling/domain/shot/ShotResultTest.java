@@ -1,7 +1,9 @@
-package bowling.domain;
+package bowling.domain.shot;
 
 import java.util.stream.Stream;
 
+import bowling.domain.BowlingScore;
+import bowling.domain.shot.ShotResult;
 import bowling.engine.Shot;
 import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,8 +11,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static bowling.domain.ShotResult.GUTTER;
-import static bowling.domain.ShotResult.STRIKE;
+import static bowling.domain.shot.ShotResult.GUTTER;
+import static bowling.domain.shot.ShotResult.STRIKE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 

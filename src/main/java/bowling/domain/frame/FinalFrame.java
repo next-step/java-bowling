@@ -1,10 +1,12 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.result.FinalFrameResult;
+import bowling.domain.FrameSequence;
 import bowling.engine.Frame;
 import bowling.engine.Result;
 import bowling.engine.Shot;
 
-public class FinalFrame extends NormalFrame {
+public class FinalFrame extends BowlingFrame {
     protected FinalFrame(Result result) {
         super(FrameSequence.FINAL_FRAME, FinalFrameResult.ofFinal(result));
     }
@@ -19,7 +21,7 @@ public class FinalFrame extends NormalFrame {
             throw new IllegalStateException("the game is ended");
         }
 
-        return of(result.next(shot));
+        return ofFinal(result.next(shot));
     }
 
     @Override
@@ -30,13 +32,5 @@ public class FinalFrame extends NormalFrame {
     @Override
     public boolean isFinal() {
         return true;
-    }
-
-
-    @Override
-    public String toString() {
-        return "FinalNormalFrame{" +
-                "result=" + result +
-                '}';
     }
 }
