@@ -19,6 +19,8 @@ public class Output {
             System.out.print(sb.toString());
             sb.setLength(0);
         }
+        System.out.println();
+
     }
 
 }
