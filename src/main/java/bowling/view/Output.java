@@ -1,48 +1,24 @@
 package bowling.view;
 
 import bowling.domain.Board;
-import bowling.domain.Game;
+import bowling.domain.Frame;
 import bowling.domain.Player;
 
-import java.util.stream.IntStream;
-
 public class Output {
-    public static void outputBoard(Game game, Player player) {
-        Board board = game.getBoard();
+    public static void outputBoard(Board board, Player player) {
         System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
         StringBuilder sb = new StringBuilder();
-        System.out.print("|  " + player.getName() + " |");
-        board.getFrames().stream().forEach(frame -> {
-            if (!frame.isLastFrame()) {
-                sb.append("  " + frame.convert());
-                IntStream.rangeClosed(frame.convert().length() + 2, 5).forEach(i -> sb.append(" "));
-                sb.append("|");
+        System.out.print("|  "+player.getName()+" |");
+        for (Frame frame : board.getFrames()) {
+            sb.append("  ");
+            sb.append(frame.convert());
+            for (int i = sb.length(); i < 6; i++) {
+                sb.append(" ");
             }
-            if (frame.isLastFrame()) {
-                sb.append(" " + frame.convert());
-                IntStream.rangeClosed(frame.convert().length() + 1, 5).forEach(i -> sb.append(" "));
-                sb.append("|");
-            }
-        });
-
-
-//        IntStream.rangeClosed(0, 9).forEach(index -> {
-//            if (game.isRecorded(index) && game.isLastFrame()) {
-//                sb.append(" " + board.getFrames().get(index).convert());
-//            }
-//            if (game.isRecorded(index) && !game.isLastFrame()) {
-//                sb.append("  " + board.getFrames().get(index).convert());
-//            }
-//
-//            IntStream.rangeClosed(sb.length(), 7 * (index + 1) - 2).forEach(i -> {
-//                        sb.append(" ");
-//                    }
-//            );
-//            sb.append("|");
-//        });
-
-        System.out.print(sb);
-        sb.setLength(0);
-        System.out.println();
+            sb.append("|");
+            System.out.print(sb.toString());
+            sb.setLength(0);
+        }
     }
+
 }
