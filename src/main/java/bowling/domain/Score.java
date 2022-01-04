@@ -22,4 +22,11 @@ public class Score {
         return score;
     }
 
+    public String isZero() {
+        if (score == 0) {
+            return "-";
+        }
+        return Integer.toString(score);
+    }
+
 }
