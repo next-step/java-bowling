@@ -22,8 +22,15 @@ public class Score {
         return score;
     }
 
-    public String isZero() {
+    public boolean isZero() {
         if (score == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public String convert() {
+        if (isZero()) {
             return "-";
         }
         return Integer.toString(score);
