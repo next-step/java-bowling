@@ -13,4 +13,9 @@ public class Player {
             throw new IllegalArgumentException("name's length must be 3");
         }
     }
+
+    public String getName() {
+        return name;
+    }
+
 }
