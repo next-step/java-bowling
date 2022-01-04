@@ -27,16 +27,14 @@ public class Frame {
         return false;
     }
 
-    public String convertScore() {
+    public String convert() {
         if (isStrike()) {
             return "X";
         }
         if (isSpare()) {
             return firstScore + "|" + "/";
         }
-        if (firstScore.equals(new Score(0))) {
+        return firstScore.convert() + "|" + secondScore.convert();
 
         }
-        return firstScore + "|" + secondScore;
-    }
 }
