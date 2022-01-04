@@ -11,7 +11,6 @@ public class Input {
 
     public static int inputScore(int index) {
         System.out.println();
-        System.out.println();
         System.out.print(index+" 프레임 투구 : ");
         return SCANNER.nextInt();
     }
