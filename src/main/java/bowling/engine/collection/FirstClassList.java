@@ -22,6 +22,7 @@ public interface FirstClassList<T> {
     T head();
     T last();
     Optional<T> lastOptional();
+    T nextOfRing(T t);
 
     FirstClassList<T> append(T t);
 }

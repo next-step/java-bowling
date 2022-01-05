@@ -69,12 +69,27 @@ public abstract class AbstractFirstClassList<T> implements FirstClassList<T> {
         return elementOf(size() - LAST_DIFF);
     }
 
+    @Override
     public Optional<T> lastOptional() {
         if (collect().isEmpty()) {
             return Optional.empty();
         }
 
         return Optional.of(elementOf(size() - LAST_DIFF));
+    }
+
+    @Override
+    public T nextOfRing(T t) {
+        if (t == null || !collect().contains(t)) {
+            throw new IllegalStateException("cannot find: " + t);
+        }
+
+        int index = indexOf(t) + LAST_DIFF;
+        if (index == size()) {
+            return head();
+        }
+
+        return elementOf(index);
     }
 
     @Override
