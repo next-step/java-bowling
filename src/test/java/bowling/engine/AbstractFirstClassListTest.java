@@ -91,4 +91,17 @@ public class AbstractFirstClassListTest {
         assertThat(TestList.of(TestObject.OBJ1, TestObject.OBJ2).head()).isEqualTo(TestObject.OBJ1);
         assertThat(TestList.of(TestObject.OBJ1, TestObject.OBJ2).last()).isEqualTo(TestObject.OBJ2);
     }
+
+    @Test
+    public void lastOptional() {
+        assertThat(TestList.of(TestObject.OBJ1, TestObject.OBJ2).lastOptional()).isPresent();
+        assertThat(TestList.of(TestObject.OBJ1, TestObject.OBJ2).lastOptional()).contains(TestObject.OBJ2);
+        assertThat(TestList.of().lastOptional()).isEmpty();
+    }
+
+    @Test
+    public void notEmpty() {
+        assertThat(TestList.of().notEmpty()).isFalse();
+        assertThat(TestList.of(TestObject.OBJ1).notEmpty()).isTrue();
+    }
 }

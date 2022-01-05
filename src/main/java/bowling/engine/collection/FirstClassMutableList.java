@@ -17,18 +17,19 @@ public class FirstClassMutableList<T> extends AbstractFirstClassList<T> {
 
     @Override
     public List<T> collect() {
-        return Collections.unmodifiableList(super.collect());
+        return Collections.unmodifiableList(collection);
     }
 
     @Override
     public FirstClassList<T> append(T t) {
-        super.collect()
-                .add(t);
+        if (t == null) {
+            throw new IllegalArgumentException("new element is cannot be null");
+        }
+        collection.add(t);
         return this;
     }
 
     public T setElement(int index, T t) {
-        return super.collect()
-                .set(index, t);
+        return collection.set(index, t);
     }
 }

@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 public abstract class AbstractFirstClassList<T> implements FirstClassList<T> {
     private static final int LAST_DIFF = 1;
 
-    private final List<T> collection;
+    protected final List<T> collection;
 
     protected AbstractFirstClassList(List<T> collection) {
         this.collection = collection;
@@ -49,6 +49,10 @@ public abstract class AbstractFirstClassList<T> implements FirstClassList<T> {
         return Optional.of(collection.get(index));
     }
 
+    @Override
+    public boolean notEmpty() {
+        return !collection.isEmpty();
+    }
 
     @Override
     public int indexOf(T t) {
@@ -63,6 +67,14 @@ public abstract class AbstractFirstClassList<T> implements FirstClassList<T> {
     @Override
     public T last() {
         return elementOf(size() - LAST_DIFF);
+    }
+
+    public Optional<T> lastOptional() {
+        if (collect().isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(elementOf(size() - LAST_DIFF));
     }
 
     @Override
