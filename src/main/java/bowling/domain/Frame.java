@@ -1,40 +1,16 @@
 package bowling.domain;
 
-public class Frame {
-    private Score firstScore;
-    private Score secondScore;
-    private Score thirdScore;
+public interface Frame {
 
-    public Frame(Score firstScore) {
-        this.firstScore = firstScore;
-    }
+    void setSecondScore(Score secondScore);
 
-    public void setSecondScore(Score secondScore) {
-        this.secondScore = secondScore;
-    }
+    String convert();
 
-    private boolean isStrike() {
-        if (firstScore.isStrike()) {
-            return true;
-        }
-        return false;
-    }
+    boolean isStrike();
 
-    private boolean isSpare() {
-        if (!firstScore.isStrike() && firstScore.add(secondScore).equals(new Score(10))) {
-            return true;
-        }
-        return false;
-    }
+    boolean isSpare();
 
-    public String convert() {
-        if (isStrike()) {
-            return "X";
-        }
-        if (isSpare()) {
-            return firstScore + "|" + "/";
-        }
-        return firstScore.convert() + "|" + secondScore.convert();
+    void setThirdScore(Score thirdScore);
 
-        }
+    boolean isLastFrame();
 }
