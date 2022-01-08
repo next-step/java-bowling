@@ -11,13 +11,9 @@ public class BowlingGame {
     private final Player player;
     private final Frames frames;
 
-    private BowlingGame(Player player, Frames frames) {
+    public BowlingGame(Player player) {
         this.player = player;
-        this.frames = frames;
-    }
-
-    public static BowlingGame create(Player player) {
-        return new BowlingGame(player, Frames.first());
+        this.frames = Frames.first();
     }
 
     public void bowl(Pins pins) {

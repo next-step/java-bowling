@@ -9,7 +9,7 @@ public class BowlingController {
     private BowlingController() {}
 
     public static void play() {
-        BowlingGame bowlingGame = BowlingGame.create(InputView.inputPlayerName());
+        BowlingGame bowlingGame = new BowlingGame(InputView.inputPlayerName());
         OutputView.printCurrentStatus(bowlingGame);
 
         while (bowlingGame.hasNextPitching()) {
