@@ -25,10 +25,10 @@ class LastFrameTest {
     void 예외_미스_상태에서_투구() {
         // given
         Frame first = LastFrame.first();
-        Frame miss = first.bowl(Pins.create(3)).bowl(Pins.create(2));
+        Frame miss = first.bowl(new Pins(3)).bowl(new Pins(2));
 
         // when
-        assertThatThrownBy(() -> miss.bowl(Pins.create(1)))
+        assertThatThrownBy(() -> miss.bowl(new Pins(1)))
                 // then
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("프레임이 끝난 상태는 투구할 수 없습니다.");
@@ -38,10 +38,10 @@ class LastFrameTest {
     void 스페어이면_한_번_더_투구() {
         // given
         Frame first = LastFrame.first();
-        Frame spare = first.bowl(Pins.create(3)).bowl(Pins.create(7));
+        Frame spare = first.bowl(new Pins(3)).bowl(new Pins(7));
 
         // when
-        Frame bonusBowl = spare.bowl(Pins.create(4));
+        Frame bonusBowl = spare.bowl(new Pins(4));
 
         assertThat(bonusBowl.getIndex()).isEqualTo(FrameIndex.MAX_INDEX);
         assertThat(bonusBowl.isEnd()).isTrue();
@@ -54,7 +54,7 @@ class LastFrameTest {
         Frame first = LastFrame.first();
 
         // when
-        Frame strike = first.bowl(Pins.create(10)).bowl(Pins.create(10)).bowl(Pins.create(3));
+        Frame strike = first.bowl(new Pins(10)).bowl(new Pins(10)).bowl(new Pins(3));
 
         // then
         assertThat(strike.getIndex()).isEqualTo(FrameIndex.MAX_INDEX);

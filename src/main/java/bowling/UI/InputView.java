@@ -21,6 +21,6 @@ public class InputView {
 
     public static Pins inputFallenPins(int currentFrameIndex) {
         System.out.printf(INPUT_FALLEN_PINS_MESSAGE, currentFrameIndex);
-        return Pins.create(SCANNER.nextInt());
+        return new Pins(SCANNER.nextInt());
     }
 }

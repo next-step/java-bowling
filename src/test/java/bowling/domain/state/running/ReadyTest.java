@@ -18,11 +18,11 @@ class ReadyTest {
         return Stream.of(
                 dynamicTest("스트라이크", () -> {
                     ThrowingState ready = Ready.create();
-                    assertThat(ready.bowl(Pins.create(10))).isInstanceOf(Strike.class);
+                    assertThat(ready.bowl(new Pins(10))).isInstanceOf(Strike.class);
                 }),
                 dynamicTest("FirstBowl", () -> {
                     ThrowingState ready = Ready.create();
-                    assertThat(ready.bowl(Pins.create(3))).isInstanceOf(FirstBowl.class);
+                    assertThat(ready.bowl(new Pins(3))).isInstanceOf(FirstBowl.class);
                 })
         );
     }

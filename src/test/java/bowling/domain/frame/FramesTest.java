@@ -24,7 +24,7 @@ class FramesTest {
         Frames frames = Frames.first();
 
         // when
-        frames.bowl(Pins.create(5));
+        frames.bowl(new Pins(5));
 
         // then
         assertThat(frames.lastFrameIndex()).isEqualTo(FrameIndex.MIN_INDEX);
@@ -36,8 +36,8 @@ class FramesTest {
         Frames frames = Frames.first();
 
         // when
-        frames.bowl(Pins.create(3));
-        frames.bowl(Pins.create(7));
+        frames.bowl(new Pins(3));
+        frames.bowl(new Pins(7));
 
         // then
         assertThat(frames.lastFrameIndex()).isEqualTo(2);
@@ -49,7 +49,7 @@ class FramesTest {
         Frames frames = Frames.first();
 
         // when
-        frames.bowl(Pins.create(10));
+        frames.bowl(new Pins(10));
 
         // then
         assertThat(frames.lastFrameIndex()).isEqualTo(2);

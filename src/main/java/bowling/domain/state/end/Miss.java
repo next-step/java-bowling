@@ -1,8 +1,10 @@
 package bowling.domain.state.end;
 
 import bowling.domain.Pins;
+import bowling.domain.frame.Score;
 import bowling.domain.state.ThrowingState;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Miss extends EndedState {
@@ -41,6 +43,12 @@ public class Miss extends EndedState {
     @Override
     public boolean isMiss() {
         return true;
+    }
+
+    private int sumScore() {
+        return Arrays.stream(symbol().split("\\|"))
+                .mapToInt(Integer::parseInt)
+                .sum();
     }
 
     private static void validate(Pins pins, Pins secondPins) {

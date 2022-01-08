@@ -32,10 +32,6 @@ public class NormalFrame implements Frame {
         return this;
     }
 
-    private boolean isLastBeforeFrame() {
-        return state.isEnd() && index.lastBeforeIndex();
-    }
-
     @Override
     public int getIndex() {
         return index.getIndex();
@@ -70,5 +66,9 @@ public class NormalFrame implements Frame {
                 "index=" + index +
                 ", state=" + state +
                 '}';
+    }
+
+    private boolean isLastBeforeFrame() {
+        return state.isEnd() && index.lastBeforeIndex();
     }
 }

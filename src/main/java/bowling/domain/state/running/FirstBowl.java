@@ -5,6 +5,7 @@ import bowling.domain.state.ThrowingState;
 import bowling.domain.state.end.Miss;
 import bowling.domain.state.end.Spare;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class FirstBowl extends RunningState {

@@ -9,13 +9,9 @@ public class Pins {
 
     private final int pinCount;
 
-    private Pins(int pinCount) {
-        this.pinCount = pinCount;
-    }
-
-    public static Pins create(int pinCount) {
+    public Pins(int pinCount) {
         validateRange(pinCount);
-        return new Pins(pinCount);
+        this.pinCount = pinCount;
     }
 
     private static void validateRange(int pinCount) {

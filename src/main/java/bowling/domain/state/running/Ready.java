@@ -4,6 +4,8 @@ import bowling.domain.Pins;
 import bowling.domain.state.ThrowingState;
 import bowling.domain.state.end.Strike;
 
+import java.util.Arrays;
+
 public class Ready extends RunningState {
 
     private Ready() {}

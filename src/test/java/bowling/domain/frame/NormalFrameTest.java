@@ -25,7 +25,7 @@ class NormalFrameTest {
         Frame first = NormalFrame.first();
 
         // when
-        Frame next = first.bowl(Pins.create(1)).bowl(Pins.create(3));
+        Frame next = first.bowl(new Pins(1)).bowl(new Pins(3));
 
         // then
         assertThat(next.getIndex()).isEqualTo(2);
@@ -37,7 +37,7 @@ class NormalFrameTest {
         Frame first = NormalFrame.first();
 
         // when
-        Frame next = first.bowl(Pins.create(Pins.MAX_RANGE));
+        Frame next = first.bowl(new Pins(Pins.MAX_RANGE));
 
         // then
         assertThat(next.getIndex()).isEqualTo(2);
@@ -50,7 +50,7 @@ class NormalFrameTest {
         Frame first = NormalFrame.first();
 
         // when가
-        Frame next = first.bowl(Pins.create(3));
+        Frame next = first.bowl(new Pins(3));
 
         // then
         assertThat(next).isEqualTo(first);
@@ -62,17 +62,47 @@ class NormalFrameTest {
         // given
         Frame first = NormalFrame.first();
         // when
-        Frame next = first.bowl(Pins.create(10))
-                .bowl(Pins.create(10))
-                .bowl(Pins.create(10))
-                .bowl(Pins.create(10))
-                .bowl(Pins.create(10))
-                .bowl(Pins.create(10))
-                .bowl(Pins.create(10))
-                .bowl(Pins.create(10))
-                .bowl(Pins.create(10)); // 10프레임
+        Frame next = first.bowl(new Pins(10))
+                .bowl(new Pins(10))
+                .bowl(new Pins(10))
+                .bowl(new Pins(10))
+                .bowl(new Pins(10))
+                .bowl(new Pins(10))
+                .bowl(new Pins(10))
+                .bowl(new Pins(10))
+                .bowl(new Pins(10)); // 10프레임
 
         // then
         assertThat(next).isInstanceOf(LastFrame.class);
     }
+
+//    @Test
+//    void 미스_점수_계산() {
+//        // given
+//        Frame missFrame = NormalFrame.first();
+//        missFrame.bowl(new Pins(1));
+//        missFrame.bowl(new Pins(3));
+//
+//        // when
+//        int score = missFrame.calculateScore();
+//
+//        // then
+//        assertThat(score).isEqualTo(4);
+//    }
+//
+//    @Test
+//    void 스페어_점수_계산() {
+//        // given
+////        Frame spareFrame = NormalFrame.first();
+////        spareFrame.bowl(new Pins(1));
+////        Frame nextFirstFrame = spareFrame.bowl(new Pins(9));
+////
+////        nextFirstFrame.bowl(new Pins(3));
+////
+////        // when
+////        int score = spareFrame.calculateScore();
+////
+////        // then
+////        assertThat(score).isEqualTo(13);
+//    }
 }

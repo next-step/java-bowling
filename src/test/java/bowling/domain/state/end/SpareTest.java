@@ -13,7 +13,7 @@ class SpareTest {
     @DisplayName("두 번의 투구가 10개를 쓰러트리지 못했는데 스페어가 생성될 경우")
     @Test
     void 예외_스페어가_아닌_경우() {
-        assertThatThrownBy(() -> Spare.create(Pins.create(1), Pins.create(2)))
+        assertThatThrownBy(() -> Spare.create(new Pins(1), new Pins(2)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(String.format("스페어는 두번의 투구로 %d개 모두 쓰러트려야 합니다.", Pins.MAX_RANGE));
     }
@@ -22,10 +22,10 @@ class SpareTest {
     @Test
     void 예외_스페어인데_투구() {
         // given
-        ThrowingState state = Spare.create(Pins.create(1), Pins.create(9));
+        ThrowingState state = Spare.create(new Pins(1), new Pins(9));
 
         // when
-        assertThatThrownBy(() -> state.bowl(Pins.create(1)))
+        assertThatThrownBy(() -> state.bowl(new Pins(1)))
                 // then
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("프레임이 끝난 상태는 투구할 수 없습니다.");
@@ -33,13 +33,13 @@ class SpareTest {
 
     @Test
     void 투구_끝_여부_확인() {
-        ThrowingState state = Spare.create(Pins.create(1), Pins.create(9));
+        ThrowingState state = Spare.create(new Pins(1), new Pins(9));
         assertThat(state.isEnd()).isTrue();
     }
 
     @Test
     void 심볼_확인() {
-        ThrowingState state = Spare.create(Pins.create(1), Pins.create(9));
+        ThrowingState state = Spare.create(new Pins(1), new Pins(9));
         assertThat(state.symbol()).isEqualTo("1|9");
     }
 }

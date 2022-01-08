@@ -30,7 +30,6 @@ public class Spare extends EndedState {
         return false;
     }
 
-
     private static void validate(Pins pins, Pins secondPins) {
         if (!pins.isSpare(secondPins)) {
             throw new IllegalArgumentException(String.format("스페어는 두번의 투구로 %d개 모두 쓰러트려야 합니다.", Pins.MAX_RANGE));
