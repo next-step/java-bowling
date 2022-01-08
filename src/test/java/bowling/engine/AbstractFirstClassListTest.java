@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 public class AbstractFirstClassListTest {
     static final class TestList extends AbstractFirstClassList<TestObject> {
@@ -97,6 +98,18 @@ public class AbstractFirstClassListTest {
         assertThat(TestList.of(TestObject.OBJ1, TestObject.OBJ2).lastOptional()).isPresent();
         assertThat(TestList.of(TestObject.OBJ1, TestObject.OBJ2).lastOptional()).contains(TestObject.OBJ2);
         assertThat(TestList.of().lastOptional()).isEmpty();
+    }
+
+    @Test
+    public void nextOfRing() {
+        assertThat(TestList.of(TestObject.OBJ1, TestObject.OBJ2).nextOfRing(TestObject.OBJ1)).isEqualTo(TestObject.OBJ2);
+        assertThat(TestList.of(TestObject.OBJ1, TestObject.OBJ2).nextOfRing(TestObject.OBJ2)).isEqualTo(TestObject.OBJ1);
+    }
+
+    @Test
+    public void nextOfRingFailed() {
+        assertThatIllegalStateException().isThrownBy(() -> TestList.of(TestObject.OBJ1).nextOfRing(TestObject.OBJ2));
+        assertThatIllegalStateException().isThrownBy(() -> TestList.of().nextOfRing(TestObject.OBJ2));
     }
 
     @Test

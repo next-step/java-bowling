@@ -1,22 +1,34 @@
 package bowling.controller;
 
-import bowling.domain.BowlingScoreBoard;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import bowling.domain.BowlingScoreBoards;
 import bowling.domain.shot.ShotResult;
 import bowling.engine.ScoreBoard;
+import bowling.engine.ScoreBoards;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
 public class BowlingGame {
     public void play() {
-        final String name = InputView.inputName();
-        ScoreBoard scoreBoard = BowlingScoreBoard.of(name);
-        OutputView.printScoreBoard(scoreBoard);
+        final int playerCount = InputView.inputPlayerCount();
+        final List<String> names = Stream.generate(InputView::inputName)
+                .limit(playerCount)
+                .collect(Collectors.toList());
 
-        while (!scoreBoard.isEnded()) {
-            int shot = InputView.inputShotResult(scoreBoard.current().toInt());
+        ScoreBoards scoreBoards = BowlingScoreBoards.of(names);
+
+        OutputView.printScoreBoards(scoreBoards);
+
+        ScoreBoard scoreBoard = scoreBoards.first();
+        while (!scoreBoards.isEnded()) {
+            scoreBoard = scoreBoards.next(scoreBoard);
+            int shot = InputView.inputShotResult(scoreBoard.name());
 
             scoreBoard.nextShot(ShotResult.of(shot));
-            OutputView.printScoreBoard(scoreBoard);
+            OutputView.printScoreBoards(scoreBoards);
             System.out.println();
         }
     }
