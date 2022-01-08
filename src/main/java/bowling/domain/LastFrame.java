@@ -36,7 +36,10 @@ public class LastFrame implements Frame {
         if (isFirstPitch()) {
             return firstScore.convert();
         }
-        if (isSecondPitch()) {
+        if (isSecondPitch() && isSpare()) {
+            return firstScore.convert() + "|" + "/";
+        }
+        if (isSecondPitch() && !isSpare()) {
             return firstScore.convert() + "|" + secondScore.convert();
         }
         return firstScore.convert() + "|" + secondScore.convert() + "|" + thirdScore.convert();

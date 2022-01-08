@@ -11,4 +11,11 @@ public class Board {
     public List<Frame> getFrames() {
         return frames;
     }
+
+    public boolean isRecorded(int index) {
+        if (frames.size() > index) {
+            return true;
+        }
+        return false;
+    }
 }
