@@ -1,9 +1,6 @@
 package bowling.controller;
 
-import bowling.domain.Board;
-import bowling.domain.Frame;
-import bowling.domain.Player;
-import bowling.domain.Score;
+import bowling.domain.*;
 import bowling.view.Input;
 import bowling.view.Output;
 
@@ -13,15 +10,26 @@ public class Controller {
         Player player = new Player(Input.inputPlayerName());
         Output.outputBoard(board,player);
 
-        for (int railNumber = 1; railNumber < 11; railNumber++) {
-            Score firstScore = new Score(Input.inputScore(railNumber));
-            Frame frame = new Frame(firstScore);
-
-            if (!firstScore.isStrike()) {
-                frame.setSecondScore(new Score(Input.inputScore(railNumber)));
-            }
+        for (int index = 1; index < 10; index++) {
+            Score firstScore = new Score(Input.inputScore(index));
+            Frame frame = new NormalFrame(firstScore);
             board.add(frame);
             Output.outputBoard(board,player);
+            if (!firstScore.isStrike()) {
+                frame.setSecondScore(new Score(Input.inputScore(index)));
+                Output.outputBoard(board,player);
+            }
         }
+
+        Score firstScore = new Score(Input.inputScore(10));
+        Frame frame = new LastFrame(firstScore);
+        board.add(frame);
+        Output.outputBoard(board, player);
+        frame.setSecondScore(new Score(Input.inputScore(10)));
+        Output.outputBoard(board, player);
+        if (frame.isStrike()) {
+            frame.setThirdScore(new Score(Input.inputScore(10)));
+        }
+        Output.outputBoard(board, player);
     }
 }
