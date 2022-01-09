@@ -49,7 +49,7 @@ class NormalFrameTest {
         // given
         Frame first = NormalFrame.first();
 
-        // when가
+        // when
         Frame next = first.bowl(new Pins(3));
 
         // then
@@ -76,33 +76,20 @@ class NormalFrameTest {
         assertThat(next).isInstanceOf(LastFrame.class);
     }
 
-//    @Test
-//    void 미스_점수_계산() {
-//        // given
-//        Frame missFrame = NormalFrame.first();
-//        missFrame.bowl(new Pins(1));
-//        missFrame.bowl(new Pins(3));
-//
-//        // when
-//        int score = missFrame.calculateScore();
-//
-//        // then
-//        assertThat(score).isEqualTo(4);
-//    }
-//
-//    @Test
-//    void 스페어_점수_계산() {
-//        // given
-////        Frame spareFrame = NormalFrame.first();
-////        spareFrame.bowl(new Pins(1));
-////        Frame nextFirstFrame = spareFrame.bowl(new Pins(9));
-////
-////        nextFirstFrame.bowl(new Pins(3));
-////
-////        // when
-////        int score = spareFrame.calculateScore();
-////
-////        // then
-////        assertThat(score).isEqualTo(13);
-//    }
+    @DisplayName("점수 계산이 불가한 상태일 경우 -1 반환")
+    @Test
+    void 점수_계산_불가() {
+        Frame frame = NormalFrame.first();
+        frame.bowl(new Pins(10));
+
+        assertThat(frame.score()).isEqualTo(Score.UN_SCORE_STATE);
+    }
+
+    @Test
+    void 점수_계산() {
+        Frame frame = NormalFrame.first();
+        frame.bowl(new Pins(2)).bowl(new Pins(1));
+
+        assertThat(frame.score()).isEqualTo(3);
+    }
 }

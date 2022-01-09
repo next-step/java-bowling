@@ -61,4 +61,45 @@ class LastFrameTest {
         assertThat(strike.isEnd()).isTrue();
         assertThat(strike.symbol()).isEqualTo("X|X|3");
     }
+
+    @DisplayName("점수 계산이 불가한 상태일 경우 -1 반환")
+    @Test
+    void 점수_계산_불가() {
+        Frame frame = LastFrame.first();
+        frame.bowl(new Pins(10));
+
+        assertThat(frame.score()).isEqualTo(Score.UN_SCORE_STATE);
+    }
+
+    @Test
+    void 점수_계산_올_스트라이크() {
+        Frame frame = LastFrame.first();
+        frame.bowl(new Pins(10)).bowl(new Pins(10)).bowl(new Pins(10));
+
+        assertThat(frame.score()).isEqualTo(30);
+    }
+
+    @Test
+    void 점수_계산_스페어() {
+        Frame frame = LastFrame.first();
+        frame.bowl(new Pins(9)).bowl(new Pins(1)).bowl(new Pins(9));
+
+        assertThat(frame.score()).isEqualTo(19);
+    }
+
+    @Test
+    void 점수_계산_올_스트라이크_후_스페어() {
+        Frame frame = LastFrame.first();
+        frame.bowl(new Pins(10)).bowl(new Pins(1)).bowl(new Pins(9));
+
+        assertThat(frame.score()).isEqualTo(20);
+    }
+
+    @Test
+    void 점수_계산_올_스트라이크_2번() {
+        Frame frame = LastFrame.first();
+        frame.bowl(new Pins(10)).bowl(new Pins(10)).bowl(new Pins(9));
+
+        assertThat(frame.score()).isEqualTo(29);
+    }
 }

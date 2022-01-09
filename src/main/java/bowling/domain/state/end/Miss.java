@@ -41,15 +41,25 @@ public class Miss extends EndedState {
     }
 
     @Override
+    public Score getScore() {
+        return Score.ofMiss(pins.totalPinsCount(secondPins));
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score beforeScore) {
+        beforeScore = pins.sumScore(beforeScore);
+        if (beforeScore.isCalculatorScore()) {
+            return beforeScore;
+        }
+        return secondPins.sumScore(beforeScore);
+    }
+
+    @Override
     public boolean isMiss() {
         return true;
     }
 
-    private int sumScore() {
-        return Arrays.stream(symbol().split("\\|"))
-                .mapToInt(Integer::parseInt)
-                .sum();
-    }
+
 
     private static void validate(Pins pins, Pins secondPins) {
         if (!pins.isMiss(secondPins)) {

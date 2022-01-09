@@ -1,6 +1,8 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import bowling.domain.frame.Score;
+import bowling.exception.CannotScoreCalculateException;
 
 public interface ThrowingState {
 
@@ -11,4 +13,8 @@ public interface ThrowingState {
     boolean isMiss();
 
     boolean isEnd();
+
+    Score getScore();
+
+    Score calculateAdditionalScore(Score score) throws CannotScoreCalculateException;
 }

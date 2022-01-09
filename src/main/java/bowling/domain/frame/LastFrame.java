@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.Pins;
 import bowling.domain.state.ThrowingState;
 import bowling.domain.state.running.Ready;
+import bowling.exception.CannotScoreCalculateException;
 
 import java.util.LinkedList;
 import java.util.Objects;
@@ -75,6 +76,42 @@ public class LastFrame implements Frame {
     }
 
     @Override
+    public int score() {
+        try {
+            return getScore().getScore();
+        } catch (CannotScoreCalculateException e) {
+            return Score.UN_SCORE_STATE;
+        }
+    }
+
+    private Score getScore() {
+        Score score = firstScore();
+        for (int i = 1; i < states.size(); i++) {
+            ThrowingState state = states.get(i);
+            System.out.println();
+            score = state.calculateAdditionalScore(score);
+            System.out.println();
+        }
+        return score;
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score beforeScore) {
+        return null;
+    }
+
+    private void validate() {
+        ThrowingState recent = states.getLast();
+        if (recent.isMiss()) {
+            throw new UnsupportedOperationException("프레임이 끝난 상태는 투구할 수 없습니다.");
+        }
+    }
+
+    private Score firstScore() {
+        return states.get(0).getScore();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -93,12 +130,5 @@ public class LastFrame implements Frame {
                 "states=" + states +
                 ", bowlCount=" + bowlCount +
                 '}';
-    }
-
-    private void validate() {
-        ThrowingState recent = states.getLast();
-        if (recent.isMiss()) {
-            throw new UnsupportedOperationException("프레임이 끝난 상태는 투구할 수 없습니다.");
-        }
     }
 }

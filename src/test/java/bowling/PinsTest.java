@@ -38,4 +38,25 @@ class PinsTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(String.format("쓰러질 수 있는 핀의 개수는 %d개 이상 %d개 이하 입니다. 현재 쓰러트린 개수는 %d개 입니다.", Pins.MIN_RANGE, Pins.MAX_RANGE, pinCount));
     }
+
+    @Test
+    void 스페어_점수_계산() {
+        Score spareScore = Score.ofSpare();
+        Pins pins = new Pins(8);
+
+        assertThat(pins.sumScore(spareScore)).isEqualTo(spareScore.bowl(8));
+    }
+
+    @Test
+    void 스트라이크_점수_계산() {
+        Score strikeScore = Score.ofStrike();
+        Pins pins1 = new Pins(8);
+        Pins pins2 = new Pins(1);
+
+        Score sumScore1 = pins1.sumScore(strikeScore);
+        Score sumScore2 = pins2.sumScore(sumScore1);
+
+
+        assertThat(sumScore2).isEqualTo(sumScore1.bowl(1));
+    }
 }

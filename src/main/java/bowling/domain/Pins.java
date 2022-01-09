@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.frame.Score;
+
 import java.util.Objects;
 
 public class Pins {
@@ -42,6 +44,10 @@ public class Pins {
 
     public int getPinCount() {
         return pinCount;
+    }
+
+    public Score sumScore(Score beforeScore) {
+        return beforeScore.bowl(this.pinCount);
     }
 
     @Override

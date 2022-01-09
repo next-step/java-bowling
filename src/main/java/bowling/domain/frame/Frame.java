@@ -11,4 +11,8 @@ public interface Frame {
     boolean isEnd();
 
     String symbol();
+
+    int score();
+
+    Score calculateAdditionalScore(Score beforeScore);
 }
