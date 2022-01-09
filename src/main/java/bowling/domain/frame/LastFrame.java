@@ -97,7 +97,7 @@ public class LastFrame implements Frame {
 
     @Override
     public Score calculateAdditionalScore(Score beforeScore) {
-        return null;
+        throw new UnsupportedOperationException("사용하지 않는 메서드입니다.");
     }
 
     private void validate() {
