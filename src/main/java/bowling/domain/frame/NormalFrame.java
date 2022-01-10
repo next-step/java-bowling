@@ -3,8 +3,11 @@ package bowling.domain.frame;
 import bowling.domain.Score;
 
 public class NormalFrame implements Frame {
-    private final Score firstScore;
+    private Score firstScore;
     private Score secondScore;
+
+    private NormalFrame() {
+    }
 
     public NormalFrame(Score firstScore) {
         this.firstScore = firstScore;
