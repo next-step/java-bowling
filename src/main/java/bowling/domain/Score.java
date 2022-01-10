@@ -1,32 +1,23 @@
 package bowling.domain;
 
 public class Score {
-    private int score;
+    private final int score;
 
     public Score(int score) {
+        validationCheck(score);
         this.score = score;
-    }
-
-    public boolean isStrike() {
-        if (score == 10) {
-            return true;
-        }
-        return false;
     }
 
     public Score add(Score score) {
         return new Score(this.score + score.getScore());
     }
 
-    public int getScore() {
-        return score;
+    public boolean isZero() {
+        return score == 0;
     }
 
-    public boolean isZero() {
-        if (score == 0) {
-            return true;
-        }
-        return false;
+    public boolean isStrike() {
+        return score == 10;
     }
 
     public String convert() {
@@ -39,6 +30,16 @@ public class Score {
         return Integer.toString(score);
     }
 
+    public int getScore() {
+        return score;
+    }
+
+
+    public void validationCheck(int score) {
+        if (score > 10 || score < 0) {
+            throw new IllegalArgumentException("score must be between 0 and 10");
+        }
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
