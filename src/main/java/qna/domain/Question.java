@@ -78,11 +78,6 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public Answers getAnswers() {
         return answers;
     }
@@ -97,6 +92,6 @@ public class Question extends AbstractEntity {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
         answers.delete(loginUser);
-        setDeleted(true);
+        this.deleted = true;
     }
 }
