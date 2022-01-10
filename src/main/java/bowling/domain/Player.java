@@ -1,7 +1,7 @@
 package bowling.domain;
 
 public class Player {
-    private String name;
+    private final String name;
 
     public Player(String name) {
         checkNameLength(name);
