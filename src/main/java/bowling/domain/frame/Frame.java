@@ -2,31 +2,15 @@ package bowling.domain.frame;
 
 import bowling.domain.Score;
 
-public abstract class Frame {
-    public static final int thirdScoreKey = 3;
-    public static int firstScoreKey = 1;
-    public static int secondScoreKey = 2;
-    public Score thirdScore;
-    public Score firstScore;
-    public Score secondScore;
+public interface Frame {
 
-    public abstract void makeScore(Score firstScore, int index);
+    void setSecondScore(Score secondScore);
 
-    public abstract String convert();
+    String convert();
 
-    public abstract boolean isSpare(Score scoreA, Score scoreB);
+    boolean isSpare(Score scoreA, Score scoreB);
 
-    public abstract boolean isLastFrame();
+    void setThirdScore(Score thirdScore);
 
-    public abstract boolean hasDoneFirstPitch();
-
-    public abstract boolean hasDoneSecondPitch();
-
-    public boolean isEmpty() {
-        return firstScore == null;
-    }
-
-    public boolean isStrike() {
-        return firstScore.equals(new Score(10));
-    }
+    boolean isLastFrame();
 }

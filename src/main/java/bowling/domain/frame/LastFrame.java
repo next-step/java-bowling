@@ -2,65 +2,41 @@ package bowling.domain.frame;
 
 import bowling.domain.Score;
 
-public class LastFrame extends Frame {
+public class LastFrame implements Frame {
+    private Score firstScore;
+    private Score secondScore;
+    private Score thirdScore;
 
-
-    public LastFrame() {
+    private LastFrame() {
     }
 
     public LastFrame(Score firstScore) {
         this.firstScore = firstScore;
     }
 
-    public LastFrame(Score firstScore, Score secondScore) {
-        this.firstScore = firstScore;
-        this.secondScore = secondScore;
-    }
-
-    public LastFrame(Score firstScore, Score secondScore, Score thirdScore) {
-        this.firstScore = firstScore;
-        this.secondScore = secondScore;
-        this.thirdScore = thirdScore;
-    }
-
     @Override
-    public void makeScore(Score score, int index) {
-        if (index == firstScoreKey) {
-            this.firstScore = score;
-        }
-        if (index == secondScoreKey) {
-            this.secondScore = score;
-        }
-        if (index == thirdScoreKey) {
-            this.thirdScore = score;
-        }
+    public void setSecondScore(Score secondScore) {
+        this.secondScore = secondScore;
     }
 
-    public boolean hasDoneFirstPitch() {
-        return this.firstScore != null;
+    public boolean isFirstPitch() {
+        return secondScore == null;
     }
 
-    public boolean hasDoneSecondPitch() {
-        return thirdScore == null && firstScore != null && secondScore != null;
+    public boolean isSecondPitch() {
+        return thirdScore == null && !isFirstPitch();
     }
 
     @Override
     public String convert() {
-        if (isEmpty()) {
-            return "";
-        }
-        if (hasDoneFirstPitch() && secondScore == null && thirdScore == null) {
+        if (isFirstPitch()) {
             return firstScore.convert() + "|";
         }
-
-        if (hasDoneSecondPitch() && isSpare(firstScore, secondScore) && thirdScore == null) {
+        if (isSecondPitch() && isSpare(firstScore, secondScore)) {
             return firstScore.convert() + "|" + "/|";
         }
-        if (hasDoneSecondPitch() && !isSpare(firstScore, secondScore)) {
+        if (isSecondPitch() && !isSpare(firstScore, secondScore)) {
             return firstScore.convert() + "|" + secondScore.convert();
-        }
-        if (hasDoneSecondPitch() && isSpare(firstScore, secondScore) && thirdScore != null) {
-            return firstScore.convert() + "|" + "/|" + "|" + thirdScore.convert();
         }
         if (!secondScore.isStrike() && isSpare(secondScore, thirdScore)) {
             return firstScore.convert() + "|" + secondScore.convert() + "|/";
@@ -77,7 +53,13 @@ public class LastFrame extends Frame {
     }
 
     @Override
+    public void setThirdScore(Score thirdScore) {
+        this.thirdScore = thirdScore;
+    }
+
+    @Override
     public boolean isLastFrame() {
         return true;
     }
+
 }
