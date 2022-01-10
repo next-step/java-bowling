@@ -16,7 +16,9 @@ public class LastFrameTest {
     void isFirstPitch() {
         LastFrame lastFrameA = new LastFrame(new Score(10));
         LastFrame lastFrameB = new LastFrame(new Score(7));
+
         lastFrameB.setSecondScore(new Score(3));
+
         assertThat(lastFrameA.isFirstPitch()).isEqualTo(true);
         assertThat(lastFrameB.isFirstPitch()).isEqualTo(false);
 
@@ -27,9 +29,11 @@ public class LastFrameTest {
         LastFrame lastFrameA = new LastFrame(new Score(10));
         LastFrame lastFrameB = new LastFrame(new Score(7));
         LastFrame lastFrameC = new LastFrame(new Score(10));
+
         lastFrameB.setSecondScore(new Score(3));
         lastFrameC.setSecondScore(new Score(10));
         lastFrameC.setThirdScore(new Score(10));
+
         assertThat(lastFrameA.isSecondPitch()).isEqualTo(false);
         assertThat(lastFrameB.isSecondPitch()).isEqualTo(true);
         assertThat(lastFrameC.isSecondPitch()).isEqualTo(false);

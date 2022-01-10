@@ -17,7 +17,6 @@ public class Controller {
         Player player = new Player(Input.inputPlayerName());
         Output.outputBoard(board, player);
 
-
         IntStream.range(1, 10).forEach(i -> {
             Score firstScore = new Score(Input.inputScore(i));
             Frame frame = new NormalFrame(firstScore);
@@ -37,7 +36,7 @@ public class Controller {
         Score secondScore = new Score(Input.inputScore(10));
         frame.setSecondScore(secondScore);
         Output.outputBoard(board, player);
-        
+
         if (firstScore.isStrike()) {
             frame.setThirdScore(new Score(Input.inputScore(10)));
         }
