@@ -1,6 +1,11 @@
 package bowling.controller;
 
-import bowling.domain.*;
+import bowling.domain.Board;
+import bowling.domain.Player;
+import bowling.domain.Score;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.LastFrame;
+import bowling.domain.frame.NormalFrame;
 import bowling.view.Input;
 import bowling.view.Output;
 
@@ -28,12 +33,15 @@ public class Controller {
         Frame frame = new LastFrame(firstScore);
         board.add(frame);
         Output.outputBoard(board, player);
-        frame.setSecondScore(new Score(Input.inputScore(10)));
+
+        Score secondScore = new Score(Input.inputScore(10));
+        frame.setSecondScore(secondScore);
         Output.outputBoard(board, player);
-        if (frame.isStrike()) {
+        
+        if (firstScore.isStrike()) {
             frame.setThirdScore(new Score(Input.inputScore(10)));
         }
-        if (frame.isSpare()) {
+        if (frame.isSpare(firstScore, secondScore)) {
             frame.setThirdScore(new Score(Input.inputScore(10)));
         }
         Output.outputBoard(board, player);

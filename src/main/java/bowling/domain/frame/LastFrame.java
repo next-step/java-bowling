@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.Score;
 
 public class LastFrame implements Frame {
     private Score firstScore;
@@ -18,41 +20,36 @@ public class LastFrame implements Frame {
     }
 
     public boolean isFirstPitch() {
-        if (secondScore == null) {
-            return true;
-        }
-        return false;
+        return secondScore == null;
     }
 
     public boolean isSecondPitch() {
-        if (thirdScore == null && !isFirstPitch()) {
-            return true;
-        }
-        return false;
+        return thirdScore == null && !isFirstPitch();
     }
 
     @Override
     public String convert() {
         if (isFirstPitch()) {
-            return firstScore.convert();
+            return firstScore.convert() + "|";
         }
-        if (isSecondPitch() && isSpare()) {
-            return firstScore.convert() + "|" + "/";
+        if (isSecondPitch() && isSpare(firstScore, secondScore)) {
+            return firstScore.convert() + "|" + "/|";
         }
-        if (isSecondPitch() && !isSpare()) {
+        if (isSecondPitch() && !isSpare(firstScore, secondScore)) {
             return firstScore.convert() + "|" + secondScore.convert();
+        }
+        if (!secondScore.isStrike() && isSpare(secondScore, thirdScore)) {
+            return firstScore.convert() + "|" + secondScore.convert() + "|/";
         }
         return firstScore.convert() + "|" + secondScore.convert() + "|" + thirdScore.convert();
     }
 
     @Override
-    public boolean isStrike() {
-        return firstScore.isStrike();
-    }
-
-    @Override
-    public boolean isSpare() {
-        return firstScore.add(secondScore).equals(new Score(10));
+    public boolean isSpare(Score scoreA, Score scoreB) {
+        if (scoreA.isStrike() || scoreB.isStrike()) {
+            return false;
+        }
+        return scoreA.add(scoreB).equals(new Score(10));
     }
 
     @Override

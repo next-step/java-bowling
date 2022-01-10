@@ -1,9 +1,10 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.Score;
 
 public class NormalFrame implements Frame {
-    private Score firstScore;
+    private final Score firstScore;
     private Score secondScore;
-    private int frameNumber;
 
     public NormalFrame(Score firstScore) {
         this.firstScore = firstScore;
@@ -13,20 +14,13 @@ public class NormalFrame implements Frame {
         this.secondScore = secondScore;
     }
 
-    @Override
-    public boolean isStrike() {
-        if (firstScore.equals(new Score(10))) {
-            return true;
-        }
-        return false;
+    private boolean isStrike() {
+        return firstScore.equals(new Score(10));
     }
 
     @Override
-    public boolean isSpare() {
-        if (firstScore.add(secondScore).equals(new Score(10))) {
-            return true;
-        }
-        return false;
+    public boolean isSpare(Score scoreA, Score scoreB) {
+        return scoreA.add(scoreB).equals(new Score(10));
     }
 
     @Override
@@ -39,11 +33,9 @@ public class NormalFrame implements Frame {
     }
 
     public boolean isFirstPitch() {
-        if (secondScore == null) {
-            return true;
-        }
-        return false;
+        return secondScore == null;
     }
+
     public String convert() {
         if (isStrike()) {
             return "X";
@@ -51,7 +43,7 @@ public class NormalFrame implements Frame {
         if (isFirstPitch() && !isStrike()) {
             return firstScore.convert() + "|";
         }
-        if (isSpare()) {
+        if (isSpare(firstScore, secondScore)) {
             return firstScore.convert() + "|" + "/";
         }
         return firstScore.convert() + "|" + secondScore.convert();

@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.Score;
 
 public interface Frame {
 
@@ -6,9 +8,7 @@ public interface Frame {
 
     String convert();
 
-    boolean isStrike();
-
-    boolean isSpare();
+    boolean isSpare(Score scoreA, Score scoreB);
 
     void setThirdScore(Score thirdScore);
 
