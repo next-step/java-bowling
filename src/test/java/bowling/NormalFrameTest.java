@@ -17,7 +17,7 @@ public class NormalFrameTest {
     void isSpare() {
         Score firstScore = new Score(3);
         Frame normalFrame = new NormalFrame(firstScore);
-        Score secondScore = new Score(3);
+        Score secondScore = new Score(7);
         normalFrame.setSecondScore(secondScore);
         assertThat(normalFrame.isSpare(firstScore,secondScore)).isEqualTo(true);
     }
