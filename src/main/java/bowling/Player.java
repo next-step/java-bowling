@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -15,7 +15,7 @@ public class Player {
     public Player(String name) {
         validateNameLength(name);
         validateEnglishName(name);
-        this.name = name.trim().toUpperCase();
+        this.name = toUpperCase(name);
     }
 
     private void validateNameLength(String name) {
@@ -34,8 +34,8 @@ public class Player {
         }
     }
 
-    public String getName() {
-        return name;
+    private String toUpperCase(String name) {
+        return name.trim().toUpperCase();
     }
 
     @Override
