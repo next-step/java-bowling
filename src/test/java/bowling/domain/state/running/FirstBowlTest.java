@@ -23,8 +23,8 @@ class FirstBowlTest {
         int firstPinCount = 5;
         int secondPinCount = 6;
 
-        ThrowingState state = FirstBowl.create(Pins.create(firstPinCount));
-        assertThatThrownBy(() -> state.bowl(Pins.create(secondPinCount)))
+        ThrowingState state = FirstBowl.create(new Pins(firstPinCount));
+        assertThatThrownBy(() -> state.bowl(new Pins(secondPinCount)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(String.format("넘어트린 핀의 총 합은 %d개보다 클 수 없습니다. 현재 %d개 입니다.", Pins.MAX_RANGE, firstPinCount + secondPinCount));
     }
@@ -33,15 +33,15 @@ class FirstBowlTest {
     Stream<DynamicTest> 투구_결과_상태_확인() {
         return Stream.of(
                 dynamicTest("스페어", () -> {
-                    Pins firstPins = Pins.create(1);
-                    Pins secondPins = Pins.create(9);
+                    Pins firstPins = new Pins(1);
+                    Pins secondPins = new Pins(9);
                     ThrowingState firstBowl = FirstBowl.create(firstPins);
 
                     assertThat(firstBowl.bowl(secondPins)).isEqualTo(Spare.create(firstPins, secondPins));
                 }),
                 dynamicTest("미스", () -> {
-                    Pins firstPins = Pins.create(1);
-                    Pins secondPins = Pins.create(2);
+                    Pins firstPins = new Pins(1);
+                    Pins secondPins = new Pins(2);
                     ThrowingState firstBowl = FirstBowl.create(firstPins);
 
                     assertThat(firstBowl.bowl(secondPins)).isEqualTo(Miss.create(firstPins, secondPins));

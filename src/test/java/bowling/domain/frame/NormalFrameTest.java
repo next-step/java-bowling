@@ -25,7 +25,7 @@ class NormalFrameTest {
         Frame first = NormalFrame.first();
 
         // when
-        Frame next = first.bowl(Pins.create(1)).bowl(Pins.create(3));
+        Frame next = first.bowl(new Pins(1)).bowl(new Pins(3));
 
         // then
         assertThat(next.getIndex()).isEqualTo(2);
@@ -37,7 +37,7 @@ class NormalFrameTest {
         Frame first = NormalFrame.first();
 
         // when
-        Frame next = first.bowl(Pins.create(Pins.MAX_RANGE));
+        Frame next = first.bowl(new Pins(Pins.MAX_RANGE));
 
         // then
         assertThat(next.getIndex()).isEqualTo(2);
@@ -49,8 +49,8 @@ class NormalFrameTest {
         // given
         Frame first = NormalFrame.first();
 
-        // when가
-        Frame next = first.bowl(Pins.create(3));
+        // when
+        Frame next = first.bowl(new Pins(3));
 
         // then
         assertThat(next).isEqualTo(first);
@@ -62,17 +62,34 @@ class NormalFrameTest {
         // given
         Frame first = NormalFrame.first();
         // when
-        Frame next = first.bowl(Pins.create(10))
-                .bowl(Pins.create(10))
-                .bowl(Pins.create(10))
-                .bowl(Pins.create(10))
-                .bowl(Pins.create(10))
-                .bowl(Pins.create(10))
-                .bowl(Pins.create(10))
-                .bowl(Pins.create(10))
-                .bowl(Pins.create(10)); // 10프레임
+        Frame next = first.bowl(new Pins(10))
+                .bowl(new Pins(10))
+                .bowl(new Pins(10))
+                .bowl(new Pins(10))
+                .bowl(new Pins(10))
+                .bowl(new Pins(10))
+                .bowl(new Pins(10))
+                .bowl(new Pins(10))
+                .bowl(new Pins(10)); // 10프레임
 
         // then
         assertThat(next).isInstanceOf(LastFrame.class);
+    }
+
+    @DisplayName("점수 계산이 불가한 상태일 경우 -1 반환")
+    @Test
+    void 점수_계산_불가() {
+        Frame frame = NormalFrame.first();
+        frame.bowl(new Pins(10));
+
+        assertThat(frame.score()).isEqualTo(Score.UN_SCORE_STATE);
+    }
+
+    @Test
+    void 점수_계산() {
+        Frame frame = NormalFrame.first();
+        frame.bowl(new Pins(2)).bowl(new Pins(1));
+
+        assertThat(frame.score()).isEqualTo(3);
     }
 }

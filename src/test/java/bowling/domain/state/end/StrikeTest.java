@@ -15,7 +15,7 @@ class StrikeTest {
         ThrowingState state = new Strike();
 
         // when
-        assertThatThrownBy(() -> state.bowl(Pins.create(1)))
+        assertThatThrownBy(() -> state.bowl(new Pins(1)))
                 // then
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("프레임이 끝난 상태는 투구할 수 없습니다.");

@@ -10,7 +10,7 @@ class BowlingGameTest {
 
     @Test
     void 게임_생성() {
-        assertThat(BowlingGame.create(new Player("dugi"))).isNotNull();
+        assertThat(new BowlingGame(new Player("dugi"))).isNotNull();
     }
 
 }

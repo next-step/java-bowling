@@ -1,6 +1,7 @@
 package bowling.domain.state.end;
 
 import bowling.domain.Pins;
+import bowling.domain.frame.Score;
 import bowling.domain.state.ThrowingState;
 
 import java.util.Objects;
@@ -30,6 +31,19 @@ public class Spare extends EndedState {
         return false;
     }
 
+    @Override
+    public Score getScore() {
+        return Score.ofSpare();
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score beforeScore) {
+        beforeScore = pins.sumScore(beforeScore);
+        if (beforeScore.isCalculatorScore()) {
+            return beforeScore;
+        }
+        return secondPins.sumScore(beforeScore);
+    }
 
     private static void validate(Pins pins, Pins secondPins) {
         if (!pins.isSpare(secondPins)) {

@@ -5,9 +5,9 @@ import bowling.domain.Pins;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Frames {
-
 
     private final List<Frame> frames = new ArrayList<>();
 
@@ -45,5 +45,18 @@ public class Frames {
 
     private boolean isPossibleToCreate(Frame recentFrame, Frame resultFrame) {
         return recentFrame.isEnd() && !resultFrame.isEnd();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Frames frames1 = (Frames) o;
+        return Objects.equals(getFrames(), frames1.getFrames());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getFrames());
     }
 }
