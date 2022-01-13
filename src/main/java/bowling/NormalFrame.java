@@ -1,13 +1,13 @@
 package bowling;
 
+import bowling.state.Throwing;
 import bowling.state.running.Ready;
-import bowling.state.running.Running;
 
 public class NormalFrame {
 
-    private final Running state;
+    private final Throwing state;
 
-    private NormalFrame(Running state) {
+    private NormalFrame(Throwing state) {
         this.state = state;
     }
 

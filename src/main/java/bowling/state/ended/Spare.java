@@ -1,17 +1,17 @@
 package bowling.state.ended;
 
 import bowling.Pins;
-import bowling.state.Throwing;
 
 public class Spare extends Ended {
 
-    @Override
-    public Throwing bowl(Pins fallenPins) {
-        return null;
+    private final Pins fallenPins;
+
+    public Spare(Pins fallenPins) {
+        this.fallenPins = fallenPins;
     }
 
     @Override
     public String symbol() {
-        return null;
+        return fallenPins.getFallenPins() + "|/";
     }
 }

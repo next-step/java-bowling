@@ -1,17 +1,19 @@
 package bowling.state.ended;
 
 import bowling.Pins;
-import bowling.state.Throwing;
 
 public class Miss extends Ended {
 
-    @Override
-    public Throwing bowl(Pins fallenPins) {
-        return null;
+    private final Pins beforePins;
+    private final Pins afterPins;
+
+    public Miss(Pins beforePins, Pins afterPins) {
+        this.beforePins = beforePins;
+        this.afterPins = afterPins;
     }
 
     @Override
     public String symbol() {
-        return null;
+        return beforePins.getFallenPins() + "|" + afterPins.getFallenPins();
     }
 }

@@ -16,9 +16,9 @@ public class FirstBowl extends Running {
     @Override
     public Throwing bowl(Pins afterPins) {
         if (fallenPins.isSpare(afterPins)) {
-            return new Spare();
+            return new Spare(fallenPins);
         }
-        return new Miss();
+        return new Miss(fallenPins, afterPins);
     }
 
     @Override
