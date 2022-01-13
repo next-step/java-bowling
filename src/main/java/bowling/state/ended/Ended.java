@@ -9,4 +9,9 @@ public abstract class Ended implements Throwing {
     public Throwing bowl(Pins fallenPins) {
         throw new UnsupportedOperationException("종료된 프레임 입니다.");
     }
+
+    @Override
+    public boolean isEnd() {
+        return true;
+    }
 }

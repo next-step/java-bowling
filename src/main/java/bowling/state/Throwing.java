@@ -7,4 +7,5 @@ public interface Throwing {
     Throwing bowl(Pins fallenPins);
 
     String symbol();
+    boolean isEnd();
 }
