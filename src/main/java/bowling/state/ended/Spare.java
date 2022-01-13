@@ -12,6 +12,6 @@ public class Spare extends Ended {
 
     @Override
     public String symbol() {
-        return fallenPins.getFallenPins() + "|/";
+        return fallenPins.symbol() + "|/";
     }
 }

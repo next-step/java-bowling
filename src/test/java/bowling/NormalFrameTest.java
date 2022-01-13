@@ -51,4 +51,44 @@ class NormalFrameTest {
         assertThat(lastFrame).isInstanceOf(LastFrame.class);
         assertThat(lastFrame.getFrameNo()).isEqualTo(10);
     }
+
+    @Test
+    void 스트라이크_심볼() {
+        Frame frame = NormalFrame.first();
+        frame.bowl(new Pins(10));
+
+        assertThat(frame.symbol()).isEqualTo("X");
+    }
+
+    @Test
+    void 스페어_심볼() {
+        Frame frame = NormalFrame.first();
+        frame.bowl(new Pins(1)).bowl(new Pins(9));
+
+        assertThat(frame.symbol()).isEqualTo("1|/");
+    }
+
+    @Test
+    void 미스_심볼() {
+        Frame frame = NormalFrame.first();
+        frame.bowl(new Pins(1)).bowl(new Pins(2));
+
+        assertThat(frame.symbol()).isEqualTo("1|2");
+    }
+
+    @Test
+    void 미스_거터_심볼() {
+        Frame frame = NormalFrame.first();
+        frame.bowl(new Pins(1)).bowl(new Pins(0));
+
+        assertThat(frame.symbol()).isEqualTo("1|-");
+    }
+
+    @Test
+    void 스페어_거터_심볼() {
+        Frame frame = NormalFrame.first();
+        frame.bowl(new Pins(0)).bowl(new Pins(10));
+
+        assertThat(frame.symbol()).isEqualTo("-|/");
+    }
 }

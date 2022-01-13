@@ -29,6 +29,17 @@ public class Pins {
         return fallenPins;
     }
 
+    public String symbol() {
+        if (isGutter()) {
+            return "-";
+        }
+        return String.valueOf(fallenPins);
+    }
+
+    private boolean isGutter() {
+        return fallenPins == MIN_PINS_COUNT;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
