@@ -8,4 +8,5 @@ public interface Throwing {
 
     String symbol();
     boolean isEnd();
+    boolean isMiss();
 }

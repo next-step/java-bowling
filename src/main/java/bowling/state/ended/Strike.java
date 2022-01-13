@@ -6,4 +6,9 @@ public class Strike extends Ended {
     public String symbol() {
         return "X";
     }
+
+    @Override
+    public boolean isMiss() {
+        return false;
+    }
 }

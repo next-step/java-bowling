@@ -39,9 +39,14 @@ public class NormalFrame implements Frame {
         return frameNo;
     }
 
+    @Override
+    public boolean isEndGame() {
+        return false;
+    }
+
     private Frame nextFrame() {
         if (this.frameNo == Frame.MAX_FRAME_NO - 1) {
-            return new LastFrame();
+            return LastFrame.first();
         }
         return new NormalFrame(this.frameNo + 1);
     }

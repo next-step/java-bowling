@@ -14,4 +14,9 @@ public class Spare extends Ended {
     public String symbol() {
         return fallenPins.symbol() + "|/";
     }
+
+    @Override
+    public boolean isMiss() {
+        return false;
+    }
 }

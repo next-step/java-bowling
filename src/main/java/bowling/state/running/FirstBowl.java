@@ -25,4 +25,9 @@ public class FirstBowl extends Running {
     public String symbol() {
         return String.valueOf(fallenPins.getFallenPins());
     }
+
+    @Override
+    public boolean isMiss() {
+        return false;
+    }
 }

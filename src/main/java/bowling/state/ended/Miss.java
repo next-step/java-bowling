@@ -16,4 +16,9 @@ public class Miss extends Ended {
     public String symbol() {
         return beforePins.symbol() + "|" + afterPins.symbol();
     }
+
+    @Override
+    public boolean isMiss() {
+        return true;
+    }
 }

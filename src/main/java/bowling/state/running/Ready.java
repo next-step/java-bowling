@@ -18,4 +18,9 @@ public class Ready extends Running {
     public String symbol() {
         return "";
     }
+
+    @Override
+    public boolean isMiss() {
+        return false;
+    }
 }

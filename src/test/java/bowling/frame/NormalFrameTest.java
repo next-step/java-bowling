@@ -1,8 +1,6 @@
-package bowling;
+package bowling.frame;
 
-import bowling.frame.Frame;
-import bowling.frame.LastFrame;
-import bowling.frame.NormalFrame;
+import bowling.Pins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
