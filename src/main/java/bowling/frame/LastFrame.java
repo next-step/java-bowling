@@ -57,7 +57,7 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public boolean isEndGame() {
+    public boolean isEnd() {
         return gameOver.isEndGame(recentState());
     }
 
@@ -66,7 +66,7 @@ public class LastFrame implements Frame {
     }
 
     private void validateEndGame() {
-        if (isEndGame()) {
+        if (isEnd()) {
             throw new UnsupportedOperationException("게임이 끝났습니다.");
         }
     }

@@ -13,7 +13,7 @@ class LastFrameTest {
         Frame frame = LastFrame.first();
         frame.bowl(new Pins(1)).bowl(new Pins(3));
 
-        assertThat(frame.isEndGame()).isTrue();
+        assertThat(frame.isEnd()).isTrue();
         assertThat(frame.symbol()).isEqualTo("1|3");
     }
 
@@ -22,7 +22,7 @@ class LastFrameTest {
         Frame frame = LastFrame.first();
         frame.bowl(new Pins(8)).bowl(new Pins(2)).bowl(new Pins(3));
 
-        assertThat(frame.isEndGame()).isTrue();
+        assertThat(frame.isEnd()).isTrue();
         assertThat(frame.symbol()).isEqualTo("8|/|3");
     }
 
@@ -31,7 +31,7 @@ class LastFrameTest {
         Frame frame = LastFrame.first();
         frame.bowl(new Pins(10)).bowl(new Pins(2)).bowl(new Pins(3));
 
-        assertThat(frame.isEndGame()).isTrue();
+        assertThat(frame.isEnd()).isTrue();
         assertThat(frame.symbol()).isEqualTo("X|2|3");
     }
 
@@ -40,7 +40,7 @@ class LastFrameTest {
         Frame frame = LastFrame.first();
         frame.bowl(new Pins(10)).bowl(new Pins(1)).bowl(new Pins(9));
 
-        assertThat(frame.isEndGame()).isTrue();
+        assertThat(frame.isEnd()).isTrue();
         assertThat(frame.symbol()).isEqualTo("X|1|/");
     }
 

@@ -40,8 +40,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public boolean isEndGame() {
-        return false;
+    public boolean isEnd() {
+        return state.isEnd();
     }
 
     private Frame nextFrame() {
