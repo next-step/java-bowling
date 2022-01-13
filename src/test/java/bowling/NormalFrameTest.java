@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.frame.Frame;
+import bowling.frame.LastFrame;
 import bowling.frame.NormalFrame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,5 +32,23 @@ class NormalFrameTest {
         Frame currentFrame = frame.bowl(new Pins(1));
 
         assertThat(currentFrame.getFrameNo()).isEqualTo(1);
+    }
+
+    @DisplayName("마지막 이전 프레임이면 마지막 프레임을 생성한다.")
+    @Test
+    void 다음_마지막_프레임_생성() {
+        Frame frame = NormalFrame.first();
+        Frame lastFrame = frame.bowl(new Pins(10))
+                .bowl(new Pins(10))
+                .bowl(new Pins(10))
+                .bowl(new Pins(10))
+                .bowl(new Pins(10))
+                .bowl(new Pins(10))
+                .bowl(new Pins(10))
+                .bowl(new Pins(10))
+                .bowl(new Pins(10));
+
+        assertThat(lastFrame).isInstanceOf(LastFrame.class);
+        assertThat(lastFrame.getFrameNo()).isEqualTo(10);
     }
 }

@@ -15,7 +15,7 @@ public class NormalFrame implements Frame {
     }
 
     public static NormalFrame first() {
-        return new NormalFrame(1);
+        return new NormalFrame(Frame.MIN_FRAME_NO);
     }
 
 
@@ -23,7 +23,7 @@ public class NormalFrame implements Frame {
     public Frame bowl(Pins fallenPins) {
         this.state = this.state.bowl(fallenPins);
         if (this.state.isEnd()) {
-            return new NormalFrame(this.frameNo + 1);
+            return nextFrame();
         }
 
         return this;
@@ -37,5 +37,12 @@ public class NormalFrame implements Frame {
     @Override
     public int getFrameNo() {
         return frameNo;
+    }
+
+    private Frame nextFrame() {
+        if (this.frameNo == Frame.MAX_FRAME_NO - 1) {
+            return new LastFrame();
+        }
+        return new NormalFrame(this.frameNo + 1);
     }
 }
