@@ -18,6 +18,10 @@ public class Player {
         this.name = toUpperCase(name);
     }
 
+    public String getName() {
+        return name;
+    }
+
     private void validateNameLength(String name) {
         Optional.ofNullable(name)
                 .map(String::trim)
@@ -49,5 +53,12 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }
