@@ -1,6 +1,7 @@
 package bowling.frame;
 
 import bowling.Pins;
+import bowling.exception.CannotScoreCalculateException;
 import bowling.state.Throwing;
 import bowling.state.running.Ready;
 
@@ -59,6 +60,37 @@ public class LastFrame implements Frame {
     @Override
     public boolean isEnd() {
         return gameOver.isEndGame(recentState());
+    }
+
+    @Override
+    public int calculateScore() {
+        try {
+            return getScore().getScore();
+        } catch (CannotScoreCalculateException e) {
+            return Score.UN_SCORE_STATE;
+        }
+    }
+
+    private Score getScore() {
+        Score score = firstScore();
+        for (int i = 1; i < states.size(); i++) {
+            Throwing state = states.get(i);
+            score = state.calculateAdditionalScore(score);
+        }
+        return score;
+    }
+
+    private Score firstScore() {
+        return states.get(0).getScore();
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score beforeScore) {
+        Score score = beforeScore;
+        for (Throwing state : states) {
+            score = state.calculateAdditionalScore(score);
+        }
+        return score;
     }
 
     private Throwing recentState() {

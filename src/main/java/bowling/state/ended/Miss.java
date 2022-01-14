@@ -1,6 +1,7 @@
 package bowling.state.ended;
 
 import bowling.Pins;
+import bowling.frame.Score;
 
 public class Miss extends Ended {
 
@@ -20,5 +21,19 @@ public class Miss extends Ended {
     @Override
     public boolean isMiss() {
         return true;
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.ofMiss(beforePins.totalPinCount(afterPins));
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score beforeScore) {
+        beforeScore = this.beforePins.sumScore(beforeScore);
+        if (beforeScore.isCalculatorScore()) {
+            return beforeScore;
+        }
+        return afterPins.sumScore(beforeScore);
     }
 }

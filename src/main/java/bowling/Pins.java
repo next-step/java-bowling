@@ -1,5 +1,7 @@
 package bowling;
 
+import bowling.frame.Score;
+
 import java.util.Objects;
 
 public class Pins {
@@ -58,5 +60,13 @@ public class Pins {
         return "Pins{" +
                 "fallenPins=" + fallenPins +
                 '}';
+    }
+
+    public Score sumScore(Score beforeScore) {
+        return beforeScore.bowl(this.fallenPins);
+    }
+
+    public int totalPinCount(Pins afterPins) {
+        return fallenPins + afterPins.fallenPins;
     }
 }

@@ -1,10 +1,12 @@
 package bowling.frame;
 
 import bowling.Pins;
+import bowling.exception.CannotScoreCalculateException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class NormalFrameTest {
 
@@ -88,5 +90,38 @@ class NormalFrameTest {
         frame.bowl(new Pins(0)).bowl(new Pins(10));
 
         assertThat(frame.symbol()).isEqualTo("-|/");
+    }
+
+    @Test
+    void 스트라이크_점수_계산() {
+        Frame frame = NormalFrame.first();
+        frame.bowl(new Pins(10)).bowl(new Pins(10)).bowl(new Pins(10));
+
+        assertThat(frame.calculateScore()).isEqualTo(30);
+    }
+
+    @Test
+    void 스트라이크_미스_점수_계산() {
+        Frame frame = NormalFrame.first();
+        frame.bowl(new Pins(10)).bowl(new Pins(2)).bowl(new Pins(2));
+
+        assertThat(frame.calculateScore()).isEqualTo(14);
+    }
+
+    @Test
+    void 예외_스트라이크_FirstBowl_점수_계산() {
+        Frame frame = NormalFrame.first();
+        frame.bowl(new Pins(10)).bowl(new Pins(1));
+
+        assertThat(frame.calculateScore()).isEqualTo(-1);
+    }
+
+    @DisplayName("화면에서 사용할 코드")
+    @Test
+    void 예외_기회가_있을_때_점수_계산() {
+        Frame frame = NormalFrame.first();
+        frame.bowl(new Pins(10));
+
+        assertThat(frame.calculateScore()).isEqualTo(-1);
     }
 }

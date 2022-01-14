@@ -1,6 +1,7 @@
 package bowling.frame;
 
 import bowling.Pins;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -51,5 +52,14 @@ class LastFrameTest {
         assertThatThrownBy(() -> frame.bowl(new Pins(1)))
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("게임이 끝났습니다.");
+    }
+
+    @DisplayName("화면에서 사용할 코드")
+    @Test
+    void 예외_기회가_있을_때_점수_계산() {
+        Frame frame = LastFrame.first();
+        frame.bowl(new Pins(10)).bowl(new Pins(10));
+
+        assertThat(frame.calculateScore()).isEqualTo(-1);
     }
 }
