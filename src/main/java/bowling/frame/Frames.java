@@ -5,6 +5,7 @@ import bowling.Pins;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Frames {
 
@@ -42,7 +43,31 @@ public class Frames {
         return Collections.unmodifiableList(frames);
     }
 
+    public boolean isEnd() {
+        return recentFrame().isEnd();
+    }
+
     public int size() {
         return frames.size();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Frames frames1 = (Frames) o;
+        return Objects.equals(getFrames(), frames1.getFrames());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getFrames());
+    }
+
+    @Override
+    public String toString() {
+        return "Frames{" +
+                "frames=" + frames +
+                '}';
     }
 }

@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.BowlingGame;
+import bowling.BowlingGames;
 import bowling.frame.Frame;
 import bowling.frame.Score;
 
@@ -22,8 +23,10 @@ public class OutputView {
 
     private OutputView() {}
 
-    public static void printCurrentStatus(BowlingGame bowlingGame) {
-        System.out.print(currentStatus(bowlingGame));
+    public static void printCurrentStatus(BowlingGames bowlingGames) {
+        for (BowlingGame bowlingGame : bowlingGames.getBowlingGames()) {
+            System.out.print(currentStatus(bowlingGame));
+        }
     }
 
     private static String currentStatus(BowlingGame bowlingGame) {

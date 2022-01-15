@@ -3,6 +3,8 @@ package bowling.state.ended;
 import bowling.Pins;
 import bowling.frame.Score;
 
+import java.util.Objects;
+
 public class Spare extends Ended {
 
     private final Pins beforePins;
@@ -38,5 +40,26 @@ public class Spare extends Ended {
             return beforeScore;
         }
         return afterPins.sumScore(beforeScore);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Spare spare = (Spare) o;
+        return Objects.equals(beforePins, spare.beforePins) && Objects.equals(afterPins, spare.afterPins);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(beforePins, afterPins);
+    }
+
+    @Override
+    public String toString() {
+        return "Spare{" +
+                "beforePins=" + beforePins +
+                ", afterPins=" + afterPins +
+                '}';
     }
 }

@@ -38,6 +38,15 @@ public class Pins {
         return String.valueOf(fallenPins);
     }
 
+
+    public Score sumScore(Score beforeScore) {
+        return beforeScore.bowl(this.fallenPins);
+    }
+
+    public int totalPinCount(Pins afterPins) {
+        return fallenPins + afterPins.fallenPins;
+    }
+
     private boolean isGutter() {
         return fallenPins == MIN_PINS_COUNT;
     }
@@ -60,13 +69,5 @@ public class Pins {
         return "Pins{" +
                 "fallenPins=" + fallenPins +
                 '}';
-    }
-
-    public Score sumScore(Score beforeScore) {
-        return beforeScore.bowl(this.fallenPins);
-    }
-
-    public int totalPinCount(Pins afterPins) {
-        return fallenPins + afterPins.fallenPins;
     }
 }

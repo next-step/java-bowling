@@ -5,6 +5,8 @@ import bowling.exception.CannotScoreCalculateException;
 import bowling.state.Throwing;
 import bowling.state.running.Ready;
 
+import java.util.Objects;
+
 public class NormalFrame implements Frame {
 
     private final int frameNo;
@@ -82,5 +84,27 @@ public class NormalFrame implements Frame {
 
     private boolean isLastBeforeFrame() {
         return this.frameNo == Frame.MAX_FRAME_NO - 1;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NormalFrame that = (NormalFrame) o;
+        return getFrameNo() == that.getFrameNo() && Objects.equals(state, that.state) && Objects.equals(nextFrame, that.nextFrame);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getFrameNo(), state, nextFrame);
+    }
+
+    @Override
+    public String toString() {
+        return "NormalFrame{" +
+                "frameNo=" + frameNo +
+                ", state=" + state +
+                ", nextFrame=" + nextFrame +
+                '}';
     }
 }

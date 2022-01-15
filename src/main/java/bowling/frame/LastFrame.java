@@ -6,6 +6,7 @@ import bowling.state.Throwing;
 import bowling.state.running.Ready;
 
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class LastFrame implements Frame {
@@ -105,5 +106,26 @@ public class LastFrame implements Frame {
 
     private boolean isStrikeOrSpare(Throwing recent) {
         return !recent.isMiss() && recent.isEnd();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LastFrame lastFrame = (LastFrame) o;
+        return Objects.equals(states, lastFrame.states) && Objects.equals(gameOver, lastFrame.gameOver);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(states, gameOver);
+    }
+
+    @Override
+    public String toString() {
+        return "LastFrame{" +
+                "states=" + states +
+                ", gameOver=" + gameOver +
+                '}';
     }
 }

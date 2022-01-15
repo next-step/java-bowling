@@ -1,18 +1,22 @@
 package bowling.view;
 
-import bowling.BowlingGame;
+import bowling.BowlingGames;
 
 public class Controller {
 
     private Controller() {}
 
     public static void play() {
-        BowlingGame bowlingGame = new BowlingGame(InputView.inputPlayerName());
-        OutputView.printCurrentStatus(bowlingGame);
+        int numberOfPlayer = InputView.inputNumberOfPlayer();
+        BowlingGames bowlingGames = new BowlingGames();
+        for (int i = 0; i < numberOfPlayer; i++) {
+            bowlingGames.enter(InputView.inputPlayerName());
+        }
+        OutputView.printCurrentStatus(bowlingGames);
 
-        while (bowlingGame.hasNextBowl()) {
-            bowlingGame.bowl(InputView.inputFallenPins(bowlingGame.recentFrameNo()));
-            OutputView.printCurrentStatus(bowlingGame);
+        while (bowlingGames.hasNextGame()) {
+            bowlingGames.bowl(InputView.inputFallenPins(bowlingGames.getTurnPlayerName()));
+            OutputView.printCurrentStatus(bowlingGames);
         }
     }
 }

@@ -4,6 +4,7 @@ import bowling.frame.Frame;
 import bowling.frame.Frames;
 
 import java.util.List;
+import java.util.Objects;
 
 public class BowlingGame {
 
@@ -33,5 +34,31 @@ public class BowlingGame {
 
     public String getPlayerName() {
         return player.getName();
+    }
+
+    public boolean isEnd() {
+        return frames.isEnd();
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BowlingGame that = (BowlingGame) o;
+        return Objects.equals(getFrames(), that.getFrames()) && Objects.equals(player, that.player);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getFrames(), player);
+    }
+
+    @Override
+    public String toString() {
+        return "BowlingGame{" +
+                "frames=" + frames +
+                ", player=" + player +
+                '}';
     }
 }
