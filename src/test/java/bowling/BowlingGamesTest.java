@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BowlingGamesTest {
 
@@ -11,7 +12,8 @@ class BowlingGamesTest {
     @Test
     void 볼링_게임_생성() {
         // given
-        BowlingGames bowlingGames = new BowlingGames();
+        int numberOfPlayer = 2;
+        BowlingGames bowlingGames = new BowlingGames(numberOfPlayer);
 
         // when
         bowlingGames.enter(new Player("dugi"));
@@ -25,7 +27,8 @@ class BowlingGamesTest {
     @Test
     void 첫_번째_플레이어_턴_확인() {
         // given
-        BowlingGames bowlingGames = new BowlingGames();
+        int numberOfPlayer = 2;
+        BowlingGames bowlingGames = new BowlingGames(numberOfPlayer);
         bowlingGames.enter(new Player("dugi"));
         bowlingGames.enter(new Player("manse"));
 
@@ -41,7 +44,8 @@ class BowlingGamesTest {
     @Test
     void 다음_참가자_차례_확인() {
         // given
-        BowlingGames bowlingGames = new BowlingGames();
+        int numberOfPlayer = 2;
+        BowlingGames bowlingGames = new BowlingGames(numberOfPlayer);
         bowlingGames.enter(new Player("dugi"));
         bowlingGames.enter(new Player("manse"));
 
@@ -58,7 +62,8 @@ class BowlingGamesTest {
 
     @Test
     void 한_사람이라도_게임_진행_중이면_게임_진행() {
-        BowlingGames bowlingGames = new BowlingGames();
+        int numberOfPlayer = 2;
+        BowlingGames bowlingGames = new BowlingGames(numberOfPlayer);
         bowlingGames.enter(new Player("dugi"));
         bowlingGames.enter(new Player("manse"));
 
@@ -74,7 +79,8 @@ class BowlingGamesTest {
 
     @Test
     void 모든_참가자_게임_종료() {
-        BowlingGames bowlingGames = new BowlingGames();
+        int numberOfPlayer = 2;
+        BowlingGames bowlingGames = new BowlingGames(numberOfPlayer);
         bowlingGames.enter(new Player("dugi"));
         bowlingGames.enter(new Player("manse"));
 
@@ -94,7 +100,8 @@ class BowlingGamesTest {
     @Test
     void 턴인_참가자_이름() {
         // given
-        BowlingGames bowlingGames = new BowlingGames();
+        int numberOfPlayer = 2;
+        BowlingGames bowlingGames = new BowlingGames(numberOfPlayer);
         bowlingGames.enter(new Player("dugi"));
         bowlingGames.enter(new Player("manse"));
 
@@ -111,7 +118,8 @@ class BowlingGamesTest {
     @Test
     void 굴리기_스트라이크_시_다음_턴_확인() {
         // given
-        BowlingGames bowlingGames = new BowlingGames();
+        int numberOfPlayer = 2;
+        BowlingGames bowlingGames = new BowlingGames(numberOfPlayer);
         bowlingGames.enter(new Player("dugi"));
         bowlingGames.enter(new Player("manse"));
 
@@ -130,7 +138,8 @@ class BowlingGamesTest {
     @Test
     void 세명_일_경우_턴_확인() {
         // given
-        BowlingGames bowlingGames = new BowlingGames();
+        int numberOfPlayer = 3;
+        BowlingGames bowlingGames = new BowlingGames(numberOfPlayer);
         bowlingGames.enter(new Player("dugi"));
         bowlingGames.enter(new Player("manse"));
         bowlingGames.enter(new Player("aaa"));
@@ -144,6 +153,37 @@ class BowlingGamesTest {
         // then
         assertThat(bowlingGameTurn.recentFrameNo()).isEqualTo(1);
         assertThat(bowlingGameTurn.getPlayerName()).isEqualTo("AAA");
+    }
+
+    @DisplayName("참가자가 모두 입장하지 않으면 경기를 진행할 수 없다.")
+    @Test
+    void 예외_참가자_입장() {
+        // given
+        int numberOfPlayer = 2;
+        BowlingGames bowlingGames = new BowlingGames(numberOfPlayer);
+        bowlingGames.enter(new Player("dugi"));
+
+        // when
+        assertThatThrownBy(() -> bowlingGames.bowl(new Pins(10)))
+                // when
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("참가자가 모두 입장하지 않았습니다. 입장 후 시작할 수 있습니다.");
+    }
+
+    @DisplayName("참가자가 초과 입장할 수 없다.")
+    @Test
+    void 예외_참가자_초과() {
+        // given
+        int numberOfPlayer = 2;
+        BowlingGames bowlingGames = new BowlingGames(numberOfPlayer);
+        bowlingGames.enter(new Player("dugi"));
+        bowlingGames.enter(new Player("maa"));
+
+        // when
+        assertThatThrownBy(() -> bowlingGames.enter(new Player("BBB")))
+                // then
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("참가자 수가 초과하였습니다. 명단에 없는 분은 참가하실 수 없습니다.");
     }
 
     private void gameOverBowl(BowlingGame bowlingGameTurn1) {

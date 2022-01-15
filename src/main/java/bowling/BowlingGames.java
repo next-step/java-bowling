@@ -10,9 +10,16 @@ import java.util.Objects;
 public class BowlingGames {
 
     private final List<BowlingGame> bowlingGames = new ArrayList<>();
+    private final int numberOfPlayer;
 
+    public BowlingGames(int numberOfPlayer) {
+        this.numberOfPlayer = numberOfPlayer;
+    }
 
     public void enter(Player player) {
+        if (bowlingGames.size() == numberOfPlayer) {
+            throw new UnsupportedOperationException("참가자 수가 초과하였습니다. 명단에 없는 분은 참가하실 수 없습니다.");
+        }
         this.bowlingGames.add(new BowlingGame(player));
     }
 
@@ -21,6 +28,9 @@ public class BowlingGames {
     }
 
     public void bowl(Pins fallenPins) {
+        if (bowlingGames.size() < numberOfPlayer) {
+            throw new UnsupportedOperationException("참가자가 모두 입장하지 않았습니다. 입장 후 시작할 수 있습니다.");
+        }
         currentTurn().bowl(fallenPins);
     }
 
@@ -39,6 +49,10 @@ public class BowlingGames {
 
     public List<BowlingGame> getBowlingGames() {
         return Collections.unmodifiableList(bowlingGames);
+    }
+
+    public int getNumberOfPlayer() {
+        return numberOfPlayer;
     }
 
     BowlingGame currentTurn() {

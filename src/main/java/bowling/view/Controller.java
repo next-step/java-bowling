@@ -7,16 +7,20 @@ public class Controller {
     private Controller() {}
 
     public static void play() {
-        int numberOfPlayer = InputView.inputNumberOfPlayer();
-        BowlingGames bowlingGames = new BowlingGames();
-        for (int i = 0; i < numberOfPlayer; i++) {
-            bowlingGames.enter(InputView.inputPlayerName());
-        }
+        BowlingGames bowlingGames = enterPlayer();
         OutputView.printCurrentStatus(bowlingGames);
 
         while (bowlingGames.hasNextGame()) {
             bowlingGames.bowl(InputView.inputFallenPins(bowlingGames.getTurnPlayerName()));
             OutputView.printCurrentStatus(bowlingGames);
         }
+    }
+
+    private static BowlingGames enterPlayer() {
+        BowlingGames bowlingGames = new BowlingGames(InputView.inputNumberOfPlayer());
+        for (int i = 0; i < bowlingGames.getNumberOfPlayer(); i++) {
+            bowlingGames.enter(InputView.inputPlayerName());
+        }
+        return bowlingGames;
     }
 }
