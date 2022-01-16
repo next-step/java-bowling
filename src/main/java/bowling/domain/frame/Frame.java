@@ -13,4 +13,8 @@ public interface Frame {
     void setThirdScore(Score thirdScore);
 
     boolean isLastFrame();
+
+    boolean isGameOver();
+
+    boolean hasDoneFirstPitch();
 }
