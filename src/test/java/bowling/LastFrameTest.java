@@ -5,57 +5,38 @@ import bowling.domain.frame.LastFrame;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 public class LastFrameTest {
     @Test
-    void isLastFrameTest() {
+    void convertFirstPitch() {
+        LastFrame lastFrame = new LastFrame(new Score(5));
+        assertThat(lastFrame.convert()).isEqualTo("5|");
+    }
+    @Test
+    void convertStrikeFirstPitch() {
         LastFrame lastFrame = new LastFrame(new Score(10));
-        assertThat(lastFrame.isLastFrame()).isEqualTo(true);
+        assertThat(lastFrame.convert()).isEqualTo("X|");
     }
 
     @Test
-    void isFirstPitch() {
-        LastFrame lastFrameA = new LastFrame(new Score(10));
-        LastFrame lastFrameB = new LastFrame(new Score(7));
-
-        lastFrameB.setSecondScore(new Score(3));
-
-        assertThat(lastFrameA.isFirstPitch()).isEqualTo(true);
-        assertThat(lastFrameB.isFirstPitch()).isEqualTo(false);
-
+    void convertStrikeSecondPitch() {
+        LastFrame lastFrame = new LastFrame(new Score(10),new Score(10));
+        assertThat(lastFrame.convert()).isEqualTo("X|X");
     }
 
     @Test
-    void isSecondPitch() {
-        LastFrame lastFrameA = new LastFrame(new Score(10));
-        LastFrame lastFrameB = new LastFrame(new Score(7));
-        LastFrame lastFrameC = new LastFrame(new Score(10));
-
-        lastFrameB.setSecondScore(new Score(3));
-        lastFrameC.setSecondScore(new Score(10));
-        lastFrameC.setThirdScore(new Score(10));
-
-        assertThat(lastFrameA.isSecondPitch()).isEqualTo(false);
-        assertThat(lastFrameB.isSecondPitch()).isEqualTo(true);
-        assertThat(lastFrameC.isSecondPitch()).isEqualTo(false);
+    void convertSpareSecondPitch() {
+        LastFrame lastFrame = new LastFrame(new Score(3),new Score(7));
+        assertThat(lastFrame.convert()).isEqualTo("3|/|");
     }
-
     @Test
-    void convert() {
-        LastFrame lastFrameA = new LastFrame(new Score(10));
-        LastFrame lastFrameB = new LastFrame(new Score(7));
-        LastFrame lastFrameC = new LastFrame(new Score(10));
-        LastFrame lastFrameD = new LastFrame(new Score(10));
-
-        lastFrameB.setSecondScore(new Score(3));
-        lastFrameC.setSecondScore(new Score(10));
-        lastFrameD.setSecondScore(new Score(3));
-        lastFrameC.setThirdScore(new Score(10));
-        lastFrameD.setThirdScore(new Score(7));
-
-        assertThat(lastFrameA.convert()).isEqualTo("X|");
-        assertThat(lastFrameB.convert()).isEqualTo("7|/|");
-        assertThat(lastFrameC.convert()).isEqualTo("X|X|X");
-        assertThat(lastFrameD.convert()).isEqualTo("X|3|/");
-
+    void convertSecondPitch() {
+        LastFrame lastFrame = new LastFrame(new Score(3),new Score(4));
+        assertThat(lastFrame.convert()).isEqualTo("3|4");
+    }
+    @Test
+    void convertStrikeThirdPitch() {
+        LastFrame lastFrame = new LastFrame(new Score(10),new Score(10),new Score(10));
+        assertThat(lastFrame.convert()).isEqualTo("X|X|X");
     }
 }
