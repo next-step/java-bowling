@@ -55,10 +55,6 @@ public class Game {
 
         if (recentFrame.hasDoneFirstPitch() && !recentFrame.hasDoneSecondPitch()) {
             recentFrame.makeScore(score, 2);
-            if (!recentFrame.isSpare(recentFrame.firstScore, recentFrame.secondScore) && !recentFrame.isStrike()) {
-                frameNum++;
-                return;
-            }
             return;
         }
         if (recentFrame.hasDoneFirstPitch() && recentFrame.hasDoneSecondPitch()) {

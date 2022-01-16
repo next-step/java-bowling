@@ -1,5 +1,7 @@
 package bowling.view;
 
+import bowling.domain.Game;
+
 import java.util.Scanner;
 
 public class Input {
@@ -10,9 +12,9 @@ public class Input {
         return SCANNER.nextLine();
     }
 
-    public static int inputScore(int index) {
+    public static int inputScore(Game game) {
         System.out.println();
-        System.out.print(index + " 프레임 투구 : ");
+        System.out.print(game.getFrameNum() + " 프레임 투구 : ");
         return SCANNER.nextInt();
     }
 }
