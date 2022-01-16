@@ -10,7 +10,7 @@ import bowling.view.Output;
 
 public class Controller {
     public static void main(String[] args) {
-        Game game= new Game(new Board());
+        Game game = new Game(new Board());
         game.init();
         Player player = new Player(Input.inputPlayerName());
         Output.outputBoard(game, player);

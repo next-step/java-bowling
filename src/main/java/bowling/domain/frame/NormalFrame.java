@@ -12,7 +12,7 @@ public class NormalFrame extends Frame {
         this.firstScore = firstScore;
     }
 
-    public NormalFrame(Score firstScore,Score secondScore) {
+    public NormalFrame(Score firstScore, Score secondScore) {
         this.firstScore = firstScore;
         this.secondScore = secondScore;
     }
