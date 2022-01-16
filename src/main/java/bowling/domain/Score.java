@@ -8,6 +8,12 @@ public class Score {
         this.score = score;
     }
 
+    public void validationCheck(int score) {
+        if (score > 10 || score < 0) {
+            throw new IllegalArgumentException("score must be between 0 and 10");
+        }
+    }
+
     public Score add(Score score) {
         return new Score(this.score + score.getScore());
     }
@@ -34,12 +40,6 @@ public class Score {
         return score;
     }
 
-
-    public void validationCheck(int score) {
-        if (score > 10 || score < 0) {
-            throw new IllegalArgumentException("score must be between 0 and 10");
-        }
-    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
