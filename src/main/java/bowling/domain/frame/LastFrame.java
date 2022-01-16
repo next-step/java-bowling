@@ -9,7 +9,7 @@ public class LastFrame implements Frame {
 
     private LastFrame() {
     }
-    
+
     public LastFrame(Score firstScore) {
         this.firstScore = firstScore;
     }
