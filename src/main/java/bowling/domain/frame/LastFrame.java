@@ -12,6 +12,17 @@ public class LastFrame extends Frame {
         this.firstScore = firstScore;
     }
 
+    public LastFrame(Score firstScore, Score secondScore) {
+        this.firstScore = firstScore;
+        this.secondScore = secondScore;
+    }
+
+    public LastFrame(Score firstScore, Score secondScore, Score thirdScore) {
+        this.firstScore = firstScore;
+        this.secondScore = secondScore;
+        this.thirdScore = thirdScore;
+    }
+
     @Override
     public void makeScore(Score score, int index) {
         if (index == firstScoreKey) {
