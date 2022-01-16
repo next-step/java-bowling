@@ -2,22 +2,32 @@ package bowling.domain.frame;
 
 import bowling.domain.Score;
 
-public class NormalFrame implements Frame {
+public class NormalFrame extends Frame {
+    public static int firstScoreKey = 1;
+    public static int secondScoreKey = 2;
+
+
     private Score firstScore;
     private Score secondScore;
 
-    private NormalFrame() {
+    public NormalFrame() {
     }
 
     public NormalFrame(Score firstScore) {
         this.firstScore = firstScore;
     }
 
-    public void setSecondScore(Score secondScore) {
-        this.secondScore = secondScore;
+    @Override
+    public void makeScore(Score score, int index) {
+        if (index == firstScoreKey) {
+            this.firstScore = score;
+        }
+        if (index == secondScoreKey) {
+            this.secondScore = score;
+        }
     }
 
-    private boolean isStrike() {
+    public boolean isStrike() {
         return firstScore.equals(new Score(10));
     }
 
@@ -27,23 +37,32 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public void setThirdScore(Score thirdScore) {
-    }
-
-    @Override
     public boolean isLastFrame() {
         return false;
     }
 
-    public boolean isFirstPitch() {
-        return secondScore == null;
+    public boolean hasDoneFirstPitch() {
+        return firstScore != null && secondScore == null;
+    }
+
+    @Override
+    public boolean hasDoneSecondPitch() {
+        return false;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return firstScore == null;
     }
 
     public String convert() {
+        if (isEmpty()) {
+            return "";
+        }
         if (isStrike()) {
             return "X";
         }
-        if (isFirstPitch() && !isStrike()) {
+        if (hasDoneFirstPitch() && !isStrike()) {
             return firstScore.convert() + "|";
         }
         if (isSpare(firstScore, secondScore)) {
