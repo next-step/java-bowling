@@ -14,17 +14,16 @@ public class Output {
         System.out.print("|  " + player.getName() + " |");
         board.getFrames().stream().forEach(frame -> {
             if (!frame.isLastFrame()) {
-                sb.append("  "+frame.convert());
-                IntStream.rangeClosed(frame.convert().length()+2,5).forEach(i->sb.append(" "));
+                sb.append("  " + frame.convert());
+                IntStream.rangeClosed(frame.convert().length() + 2, 5).forEach(i -> sb.append(" "));
                 sb.append("|");
             }
             if (frame.isLastFrame()) {
-                sb.append(" "+frame.convert());
-                IntStream.rangeClosed(frame.convert().length()+1,5).forEach(i->sb.append(" "));
+                sb.append(" " + frame.convert());
+                IntStream.rangeClosed(frame.convert().length() + 1, 5).forEach(i -> sb.append(" "));
                 sb.append("|");
             }
         });
-
 
 
 //        IntStream.rangeClosed(0, 9).forEach(index -> {
