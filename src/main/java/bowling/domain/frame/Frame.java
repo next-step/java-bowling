@@ -3,6 +3,13 @@ package bowling.domain.frame;
 import bowling.domain.Score;
 
 public abstract class Frame {
+    public static int firstScoreKey = 1;
+    public static int secondScoreKey = 2;
+    public static final int thirdScoreKey = 3;
+
+    public Score thirdScore;
+    public Score firstScore;
+    public Score secondScore;
 
     public abstract void makeScore(Score firstScore, int index);
 
@@ -16,7 +23,10 @@ public abstract class Frame {
 
     public abstract boolean hasDoneSecondPitch();
 
-    public abstract boolean isEmpty();
-
-    public abstract boolean isStrike();
+    public boolean isEmpty() {
+        return firstScore == null;
+    }
+    public boolean isStrike() {
+        return firstScore.equals(new Score(10));
+    }
 }

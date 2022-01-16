@@ -3,12 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.Score;
 
 public class NormalFrame extends Frame {
-    public static int firstScoreKey = 1;
-    public static int secondScoreKey = 2;
 
-
-    private Score firstScore;
-    private Score secondScore;
 
     public NormalFrame() {
     }
@@ -48,11 +43,6 @@ public class NormalFrame extends Frame {
     @Override
     public boolean hasDoneSecondPitch() {
         return false;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return firstScore == null;
     }
 
     public String convert() {

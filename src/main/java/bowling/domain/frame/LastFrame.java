@@ -2,14 +2,8 @@ package bowling.domain.frame;
 
 import bowling.domain.Score;
 
-import static bowling.domain.frame.NormalFrame.firstScoreKey;
-import static bowling.domain.frame.NormalFrame.secondScoreKey;
-
 public class LastFrame extends Frame {
-    private static final int thirdScoreKey = 3;
-    private Score firstScore;
-    private Score secondScore;
-    private Score thirdScore;
+
 
     public LastFrame() {
     }
@@ -37,16 +31,6 @@ public class LastFrame extends Frame {
 
     public boolean hasDoneSecondPitch() {
         return thirdScore == null && firstScore != null && secondScore != null;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return firstScore == null;
-    }
-
-    @Override
-    public boolean isStrike() {
-        return false;
     }
 
     @Override
