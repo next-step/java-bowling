@@ -4,7 +4,6 @@ import bowling.domain.Score;
 
 public class NormalFrame extends Frame {
 
-
     public NormalFrame() {
     }
 

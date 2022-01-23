@@ -3,7 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.Score;
 
 public class LastFrame extends Frame {
-
+    private Score thirdScore;
 
     public LastFrame() {
     }

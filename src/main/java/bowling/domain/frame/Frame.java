@@ -6,9 +6,15 @@ public abstract class Frame {
     public static final int thirdScoreKey = 3;
     public static int firstScoreKey = 1;
     public static int secondScoreKey = 2;
-    public Score thirdScore;
-    public Score firstScore;
-    public Score secondScore;
+    protected Score firstScore;
+    protected Score secondScore;
+
+    public Score getFirstScore() {
+        return firstScore;
+    }
+    public Score getSecondScore() {
+        return secondScore;
+    }
 
     public abstract void makeScore(Score firstScore, int index);
 
