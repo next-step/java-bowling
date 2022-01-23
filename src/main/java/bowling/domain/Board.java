@@ -1,8 +1,8 @@
 package bowling.domain;
 
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.LastFrame;
-import bowling.domain.frame.NormalFrame;
+import bowling.domain.frame.DefaultFrame;
+import bowling.domain.frame.LastDefaultFrame;
+import bowling.domain.frame.NormalDefaultFrame;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,21 +11,21 @@ import java.util.List;
 public class Board {
     public static int BOARD_MAX_SIZE = 10;
 
-    private final List<Frame> frames = new ArrayList<>();
+    private final List<DefaultFrame> defaultFrames = new ArrayList<>();
 
     public void init() {
         for (int index = 0; index < 9; index++) {
-            frames.add(new NormalFrame());
+            defaultFrames.add(new NormalDefaultFrame());
         }
-        frames.add(new LastFrame());
+        defaultFrames.add(new LastDefaultFrame());
     }
 
-    public List<Frame> getFrames() {
-        return Collections.unmodifiableList(frames);
+    public List<DefaultFrame> getFrames() {
+        return Collections.unmodifiableList(defaultFrames);
     }
 
-    public Frame getRecentFrame(int index) {
-        return frames.get(index);
+    public DefaultFrame getRecentFrame(int index) {
+        return defaultFrames.get(index);
     }
 }
 

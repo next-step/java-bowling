@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.frame.Frame;
+import bowling.domain.frame.DefaultFrame;
 
 import static bowling.domain.Board.BOARD_MAX_SIZE;
 
@@ -26,47 +26,47 @@ public class Game {
     }
 
     public void playGame(Score score) {
-        Frame recentFrame = board.getRecentFrame(frameNum - 1);
+        DefaultFrame recentDefaultFrame = board.getRecentFrame(frameNum - 1);
 
-        if (!recentFrame.isLastFrame()) {
-            playNormalGame(recentFrame, score);
+        if (!recentDefaultFrame.isLastFrame()) {
+            playNormalGame(recentDefaultFrame, score);
         }
-        if (recentFrame.isLastFrame()) {
+        if (recentDefaultFrame.isLastFrame()) {
 
-            playLastGame(recentFrame, score);
+            playLastGame(recentDefaultFrame, score);
         }
     }
 
-    private void playNormalGame(Frame recentFrame, Score score) {
-        if (!recentFrame.hasDoneFirstPitch()) {
-            recentFrame.makeScore(score, 1);
+    private void playNormalGame(DefaultFrame recentDefaultFrame, Score score) {
+        if (!recentDefaultFrame.hasDoneFirstPitch()) {
+            recentDefaultFrame.makeScore(score, 1);
             if (score.isStrike()) {
                 frameNum++;
             }
             return;
         }
-        if (recentFrame.hasDoneFirstPitch()) {
-            recentFrame.makeScore(score, 2);
+        if (recentDefaultFrame.hasDoneFirstPitch()) {
+            recentDefaultFrame.makeScore(score, 2);
             frameNum++;
         }
     }
 
-    private void playLastGame(Frame recentFrame, Score score) {
+    private void playLastGame(DefaultFrame recentDefaultFrame, Score score) {
 
-        if (recentFrame.hasDoneFirstPitch() && !recentFrame.hasDoneSecondPitch()) {
-            recentFrame.makeScore(score, 2);
-            if (!recentFrame.isSpare(recentFrame.getFirstScore(), recentFrame.getSecondScore()) && !recentFrame.isStrike()) {
+        if (recentDefaultFrame.hasDoneFirstPitch() && !recentDefaultFrame.hasDoneSecondPitch()) {
+            recentDefaultFrame.makeScore(score, 2);
+            if (!recentDefaultFrame.isSpare(recentDefaultFrame.getFirstScore(), recentDefaultFrame.getSecondScore()) && !recentDefaultFrame.isStrike()) {
                 frameNum++;
                 return;
             }
             return;
         }
-        if (recentFrame.hasDoneFirstPitch() && recentFrame.hasDoneSecondPitch()) {
-            recentFrame.makeScore(score, 3);
+        if (recentDefaultFrame.hasDoneFirstPitch() && recentDefaultFrame.hasDoneSecondPitch()) {
+            recentDefaultFrame.makeScore(score, 3);
             frameNum++;
         }
-        if (recentFrame.isEmpty()) {
-            recentFrame.makeScore(score, 1);
+        if (recentDefaultFrame.isEmpty()) {
+            recentDefaultFrame.makeScore(score, 1);
             return;
         }
     }
