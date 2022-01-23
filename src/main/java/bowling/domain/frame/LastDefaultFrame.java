@@ -2,22 +2,22 @@ package bowling.domain.frame;
 
 import bowling.domain.Score;
 
-public class LastFrame extends Frame {
+public class LastDefaultFrame extends DefaultFrame {
     private Score thirdScore;
 
-    public LastFrame() {
+    public LastDefaultFrame() {
     }
 
-    public LastFrame(Score firstScore) {
+    public LastDefaultFrame(Score firstScore) {
         this.firstScore = firstScore;
     }
 
-    public LastFrame(Score firstScore, Score secondScore) {
+    public LastDefaultFrame(Score firstScore, Score secondScore) {
         this.firstScore = firstScore;
         this.secondScore = secondScore;
     }
 
-    public LastFrame(Score firstScore, Score secondScore, Score thirdScore) {
+    public LastDefaultFrame(Score firstScore, Score secondScore, Score thirdScore) {
         this.firstScore = firstScore;
         this.secondScore = secondScore;
         this.thirdScore = thirdScore;
@@ -46,7 +46,7 @@ public class LastFrame extends Frame {
 
     @Override
     public String convert() {
-        if (isEmpty()) {
+        if (isEmpty(firstScore)) {
             return "";
         }
         if (hasDoneFirstPitch() && secondScore == null && thirdScore == null) {

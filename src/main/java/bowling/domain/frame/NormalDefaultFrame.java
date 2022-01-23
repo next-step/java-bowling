@@ -2,16 +2,16 @@ package bowling.domain.frame;
 
 import bowling.domain.Score;
 
-public class NormalFrame extends Frame {
+public class NormalDefaultFrame extends DefaultFrame {
 
-    public NormalFrame() {
+    public NormalDefaultFrame() {
     }
 
-    public NormalFrame(Score firstScore) {
+    public NormalDefaultFrame(Score firstScore) {
         this.firstScore = firstScore;
     }
 
-    public NormalFrame(Score firstScore, Score secondScore) {
+    public NormalDefaultFrame(Score firstScore, Score secondScore) {
         this.firstScore = firstScore;
         this.secondScore = secondScore;
     }
@@ -50,7 +50,7 @@ public class NormalFrame extends Frame {
     }
 
     public String convert() {
-        if (isEmpty()) {
+        if (isEmpty(firstScore)) {
             return "";
         }
         if (isStrike()) {
