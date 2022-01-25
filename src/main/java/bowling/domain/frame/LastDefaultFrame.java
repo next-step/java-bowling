@@ -1,79 +1,79 @@
 package bowling.domain.frame;
 
-import bowling.domain.Score;
+import bowling.domain.KnockedPins;
 
 public class LastDefaultFrame extends DefaultFrame {
-    private Score thirdScore;
+    private KnockedPins thirdKnockedPins;
 
     public LastDefaultFrame() {
     }
 
-    public LastDefaultFrame(Score firstScore) {
-        this.firstScore = firstScore;
+    public LastDefaultFrame(KnockedPins firstKnockedPins) {
+        this.firstKnockedPins = firstKnockedPins;
     }
 
-    public LastDefaultFrame(Score firstScore, Score secondScore) {
-        this.firstScore = firstScore;
-        this.secondScore = secondScore;
+    public LastDefaultFrame(KnockedPins firstKnockedPins, KnockedPins secondKnockedPins) {
+        this.firstKnockedPins = firstKnockedPins;
+        this.secondKnockedPins = secondKnockedPins;
     }
 
-    public LastDefaultFrame(Score firstScore, Score secondScore, Score thirdScore) {
-        this.firstScore = firstScore;
-        this.secondScore = secondScore;
-        this.thirdScore = thirdScore;
+    public LastDefaultFrame(KnockedPins firstKnockedPins, KnockedPins secondKnockedPins, KnockedPins thirdKnockedPins) {
+        this.firstKnockedPins = firstKnockedPins;
+        this.secondKnockedPins = secondKnockedPins;
+        this.thirdKnockedPins = thirdKnockedPins;
     }
 
     @Override
-    public void makeScore(Score score, int index) {
+    public void makeScore(KnockedPins knockedPins, int index) {
         if (index == firstScoreKey) {
-            this.firstScore = score;
+            this.firstKnockedPins = knockedPins;
         }
         if (index == secondScoreKey) {
-            this.secondScore = score;
+            this.secondKnockedPins = knockedPins;
         }
         if (index == thirdScoreKey) {
-            this.thirdScore = score;
+            this.thirdKnockedPins = knockedPins;
         }
     }
 
     public boolean hasDoneFirstPitch() {
-        return this.firstScore != null;
+        return this.firstKnockedPins != null;
     }
 
     public boolean hasDoneSecondPitch() {
-        return thirdScore == null && firstScore != null && secondScore != null;
+        return thirdKnockedPins == null && firstKnockedPins != null && secondKnockedPins != null;
     }
 
     @Override
     public String convert() {
-        if (isEmpty(firstScore)) {
+        if (isEmpty(firstKnockedPins)) {
             return "";
         }
-        if (hasDoneFirstPitch() && secondScore == null && thirdScore == null) {
-            return firstScore.convert() + "|";
+        if (hasDoneFirstPitch() && secondKnockedPins == null && thirdKnockedPins == null) {
+            return firstKnockedPins.convert() + "|";
         }
 
-        if (hasDoneSecondPitch() && isSpare(firstScore, secondScore) && thirdScore == null) {
-            return firstScore.convert() + "|" + "/|";
+        if (hasDoneSecondPitch() && isSpare(firstKnockedPins, secondKnockedPins) && thirdKnockedPins == null) {
+            return firstKnockedPins.convert() + "|" + "/|";
         }
-        if (hasDoneSecondPitch() && !isSpare(firstScore, secondScore)) {
-            return firstScore.convert() + "|" + secondScore.convert();
+        if (hasDoneSecondPitch() && !isSpare(firstKnockedPins, secondKnockedPins)) {
+            return firstKnockedPins.convert() + "|" + secondKnockedPins.convert();
         }
-        if (hasDoneSecondPitch() && isSpare(firstScore, secondScore) && thirdScore != null) {
-            return firstScore.convert() + "|" + "/|" + "|" + thirdScore.convert();
+        if (hasDoneSecondPitch() && isSpare(firstKnockedPins, secondKnockedPins) && thirdKnockedPins != null) {
+            return firstKnockedPins.convert() + "|" + "/|" + "|" + thirdKnockedPins.convert();
         }
-        if (!secondScore.isStrike() && isSpare(secondScore, thirdScore)) {
-            return firstScore.convert() + "|" + secondScore.convert() + "|/";
+        if (!secondKnockedPins.isStrike() && isSpare(secondKnockedPins, thirdKnockedPins)) {
+            return firstKnockedPins.convert() + "|" + secondKnockedPins.convert() + "|/";
         }
-        return firstScore.convert() + "|" + secondScore.convert() + "|" + thirdScore.convert();
+        return firstKnockedPins.convert() + "|" + secondKnockedPins.convert() + "|" + thirdKnockedPins.convert();
     }
 
     @Override
-    public boolean isSpare(Score scoreA, Score scoreB) {
-        if (scoreA.isStrike() || scoreB.isStrike()) {
+    public boolean isSpare(KnockedPins knockedPinsA, KnockedPins knockedPinsB) {
+        if (knockedPinsA.isStrike() || knockedPinsB.isStrike()) {
             return false;
         }
-        return scoreA.add(scoreB).equals(new Score(10));
+        return knockedPinsA.add(knockedPinsB).equals(new KnockedPins(10));
     }
 
     @Override

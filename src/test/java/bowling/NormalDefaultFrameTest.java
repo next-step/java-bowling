@@ -1,6 +1,6 @@
 package bowling;
 
-import bowling.domain.Score;
+import bowling.domain.KnockedPins;
 import bowling.domain.frame.DefaultFrame;
 import bowling.domain.frame.NormalDefaultFrame;
 import org.junit.jupiter.api.Test;
@@ -13,35 +13,35 @@ public class NormalDefaultFrameTest {
 
     @Test
     void isSpare() {
-        Score firstScore = new Score(3);
-        Score secondScore = new Score(7);
-        NormalDefaultFrame normalFrame = new NormalDefaultFrame(firstScore, secondScore);
-        assertTrue(normalFrame.isSpare(firstScore, secondScore));
+        KnockedPins firstKnockedPins = new KnockedPins(3);
+        KnockedPins secondKnockedPins = new KnockedPins(7);
+        NormalDefaultFrame normalFrame = new NormalDefaultFrame(firstKnockedPins, secondKnockedPins);
+        assertTrue(normalFrame.isSpare(firstKnockedPins, secondKnockedPins));
     }
 
     @Test
     void convertSpare() {
-        DefaultFrame normalDefaultFrame = new NormalDefaultFrame(new Score(3));
-        normalDefaultFrame.makeScore(new Score(7), 2);
+        DefaultFrame normalDefaultFrame = new NormalDefaultFrame(new KnockedPins(3));
+        normalDefaultFrame.makeScore(new KnockedPins(7), 2);
         assertThat(normalDefaultFrame.convert()).isEqualTo("3|/");
     }
 
     @Test
     void convertStrike() {
-        DefaultFrame normalDefaultFrame = new NormalDefaultFrame(new Score(10));
+        DefaultFrame normalDefaultFrame = new NormalDefaultFrame(new KnockedPins(10));
         assertThat(normalDefaultFrame.convert()).isEqualTo("X");
     }
 
     @Test
     void convertFirstPitch() {
-        DefaultFrame normalDefaultFrame = new NormalDefaultFrame(new Score(3));
+        DefaultFrame normalDefaultFrame = new NormalDefaultFrame(new KnockedPins(3));
         assertThat(normalDefaultFrame.convert()).isEqualTo("3|");
     }
 
     @Test
     void convert() {
-        DefaultFrame normalDefaultFrame = new NormalDefaultFrame(new Score(4));
-        normalDefaultFrame.makeScore(new Score(5), 2);
+        DefaultFrame normalDefaultFrame = new NormalDefaultFrame(new KnockedPins(4));
+        normalDefaultFrame.makeScore(new KnockedPins(5), 2);
         assertThat(normalDefaultFrame.convert()).isEqualTo("4|5");
     }
 
