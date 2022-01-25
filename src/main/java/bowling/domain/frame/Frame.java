@@ -3,17 +3,10 @@ package bowling.domain.frame;
 import bowling.domain.KnockedPins;
 
 public interface Frame {
-    default boolean isEmpty(KnockedPins firstKnockedPins) {
-        return firstKnockedPins == null;
-    }
-
-    default boolean isStrike(KnockedPins firstKnockedPins) {
-        return firstKnockedPins.equals(new KnockedPins(10));
-    }
 
     String convert();
 
-    void bowl(KnockedPins firstKnockedPins, int index);
+    void bowl(KnockedPins knockedPins, int index);
 
     boolean isSpare(KnockedPins knockedPinsA, KnockedPins knockedPinsB);
 
