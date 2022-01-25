@@ -1,21 +1,21 @@
 package bowling.domain.frame;
 
-import bowling.domain.Score;
+import bowling.domain.KnockedPins;
 
 public interface Frame {
-    default boolean isEmpty(Score firstScore) {
-        return firstScore == null;
+    default boolean isEmpty(KnockedPins firstKnockedPins) {
+        return firstKnockedPins == null;
     }
 
-    default boolean isStrike(Score firstScore) {
-        return firstScore.equals(new Score(10));
+    default boolean isStrike(KnockedPins firstKnockedPins) {
+        return firstKnockedPins.equals(new KnockedPins(10));
     }
 
     String convert();
 
-    void makeScore(Score firstScore, int index);
+    void makeScore(KnockedPins firstKnockedPins, int index);
 
-    boolean isSpare(Score scoreA, Score scoreB);
+    boolean isSpare(KnockedPins knockedPinsA, KnockedPins knockedPinsB);
 
     boolean isLastFrame();
 

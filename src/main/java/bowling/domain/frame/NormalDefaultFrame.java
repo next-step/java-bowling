@@ -1,38 +1,38 @@
 package bowling.domain.frame;
 
-import bowling.domain.Score;
+import bowling.domain.KnockedPins;
 
 public class NormalDefaultFrame extends DefaultFrame {
 
     public NormalDefaultFrame() {
     }
 
-    public NormalDefaultFrame(Score firstScore) {
-        this.firstScore = firstScore;
+    public NormalDefaultFrame(KnockedPins firstKnockedPins) {
+        this.firstKnockedPins = firstKnockedPins;
     }
 
-    public NormalDefaultFrame(Score firstScore, Score secondScore) {
-        this.firstScore = firstScore;
-        this.secondScore = secondScore;
+    public NormalDefaultFrame(KnockedPins firstKnockedPins, KnockedPins secondKnockedPins) {
+        this.firstKnockedPins = firstKnockedPins;
+        this.secondKnockedPins = secondKnockedPins;
     }
 
     @Override
-    public void makeScore(Score score, int index) {
+    public void makeScore(KnockedPins knockedPins, int index) {
         if (index == firstScoreKey) {
-            this.firstScore = score;
+            this.firstKnockedPins = knockedPins;
         }
         if (index == secondScoreKey) {
-            this.secondScore = score;
+            this.secondKnockedPins = knockedPins;
         }
     }
 
     public boolean isStrike() {
-        return firstScore.equals(new Score(10));
+        return firstKnockedPins.equals(new KnockedPins(10));
     }
 
     @Override
-    public boolean isSpare(Score scoreA, Score scoreB) {
-        return scoreA.add(scoreB).equals(new Score(10));
+    public boolean isSpare(KnockedPins knockedPinsA, KnockedPins knockedPinsB) {
+        return knockedPinsA.add(knockedPinsB).equals(new KnockedPins(10));
     }
 
     @Override
@@ -41,7 +41,7 @@ public class NormalDefaultFrame extends DefaultFrame {
     }
 
     public boolean hasDoneFirstPitch() {
-        return firstScore != null && secondScore == null;
+        return firstKnockedPins != null && secondKnockedPins == null;
     }
 
     @Override
@@ -50,18 +50,18 @@ public class NormalDefaultFrame extends DefaultFrame {
     }
 
     public String convert() {
-        if (isEmpty(firstScore)) {
+        if (isEmpty(firstKnockedPins)) {
             return "";
         }
         if (isStrike()) {
             return "X";
         }
         if (hasDoneFirstPitch() && !isStrike()) {
-            return firstScore.convert() + "|";
+            return firstKnockedPins.convert() + "|";
         }
-        if (isSpare(firstScore, secondScore)) {
-            return firstScore.convert() + "|" + "/";
+        if (isSpare(firstKnockedPins, secondKnockedPins)) {
+            return firstKnockedPins.convert() + "|" + "/";
         }
-        return firstScore.convert() + "|" + secondScore.convert();
+        return firstKnockedPins.convert() + "|" + secondKnockedPins.convert();
     }
 }

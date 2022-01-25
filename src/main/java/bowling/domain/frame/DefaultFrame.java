@@ -1,26 +1,26 @@
 package bowling.domain.frame;
 
-import bowling.domain.Score;
+import bowling.domain.KnockedPins;
 
 public abstract class DefaultFrame implements Frame {
     public static final int thirdScoreKey = 3;
     public static final int firstScoreKey = 1;
     public static final int secondScoreKey = 2;
-    protected Score firstScore;
-    protected Score secondScore;
+    protected KnockedPins firstKnockedPins;
+    protected KnockedPins secondKnockedPins;
 
-    public Score getFirstScore() {
-        return firstScore;
+    public KnockedPins getFirstScore() {
+        return firstKnockedPins;
     }
-    public Score getSecondScore() {
-        return secondScore;
+    public KnockedPins getSecondScore() {
+        return secondKnockedPins;
     }
 
     public boolean isEmpty() {
-        return firstScore == null;
+        return firstKnockedPins == null;
     }
 
     public boolean isStrike() {
-        return firstScore.equals(new Score(10));
+        return firstKnockedPins.equals(new KnockedPins(10));
     }
 }

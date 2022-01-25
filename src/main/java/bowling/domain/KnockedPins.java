@@ -1,9 +1,9 @@
 package bowling.domain;
 
-public class Score {
+public class KnockedPins {
     private final int score;
 
-    public Score(int score) {
+    public KnockedPins(int score) {
         validationCheck(score);
         this.score = score;
     }
@@ -14,8 +14,8 @@ public class Score {
         }
     }
 
-    public Score add(Score score) {
-        return new Score(this.score + score.getScore());
+    public KnockedPins add(KnockedPins knockedPins) {
+        return new KnockedPins(this.score + knockedPins.getScore());
     }
 
     public boolean isZero() {
@@ -45,9 +45,9 @@ public class Score {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Score score1 = (Score) o;
+        KnockedPins knockedPins1 = (KnockedPins) o;
 
-        return score == score1.score;
+        return score == knockedPins1.score;
     }
 
     @Override
