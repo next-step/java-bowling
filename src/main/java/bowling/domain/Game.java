@@ -1,32 +1,33 @@
 package bowling.domain;
 
 import bowling.domain.frame.DefaultFrame;
+import bowling.domain.frame.Frames;
 
-import static bowling.domain.Board.BOARD_MAX_SIZE;
+import static bowling.domain.frame.Frames.BOARD_MAX_SIZE;
 
 public class Game {
-    private final Board board;
+    private final Frames frames;
 
     private int frameNum = 1;
 
-    public Game(Board board) {
-        this.board = board;
+    public Game(Frames frames) {
+        this.frames = frames;
     }
 
     public void init() {
-        board.init();
+        frames.init();
     }
 
     public boolean isGameOver() {
         return frameNum > BOARD_MAX_SIZE;
     }
 
-    public Board getBoard() {
-        return board;
+    public Frames getBoard() {
+        return frames;
     }
 
     public void playGame(KnockedPins knockedPins) {
-        DefaultFrame recentDefaultFrame = board.getRecentFrame(frameNum - 1);
+        DefaultFrame recentDefaultFrame = frames.getRecentFrame(frameNum - 1);
 
         if (!recentDefaultFrame.isLastFrame()) {
             playNormalGame(recentDefaultFrame, knockedPins);
