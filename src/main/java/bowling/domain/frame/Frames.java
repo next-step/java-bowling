@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.KnockedPins;
 import bowling.domain.frame.DefaultFrame;
 import bowling.domain.frame.LastDefaultFrame;
 import bowling.domain.frame.NormalDefaultFrame;
@@ -14,18 +15,19 @@ public class Frames {
     private final List<Frame> frames = new ArrayList<>();
 
     public void init() {
-        for (int index = 0; index < 9; index++) {
-            frames.add(new NormalDefaultFrame());
+        for (int frameNumber = 1; frameNumber < 10; frameNumber++) {
+            frames.add(new NormalDefaultFrame(frameNumber));
         }
         frames.add(new LastDefaultFrame());
     }
 
+    public void play(KnockedPins knockedPins) {
+
+    }
     public List<Frame> getFrames() {
         return Collections.unmodifiableList(frames);
     }
 
-    public Frame getRecentFrame(int index) {
-        return frames.get(index);
-    }
+
 }
 
