@@ -13,7 +13,7 @@ public interface Frame {
 
     String convert();
 
-    void makeScore(KnockedPins firstKnockedPins, int index);
+    void bowl(KnockedPins firstKnockedPins, int index);
 
     boolean isSpare(KnockedPins knockedPinsA, KnockedPins knockedPinsB);
 

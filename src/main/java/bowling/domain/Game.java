@@ -39,14 +39,14 @@ public class Game {
 
     private void playNormalGame(DefaultFrame recentDefaultFrame, KnockedPins knockedPins) {
         if (!recentDefaultFrame.hasDoneFirstPitch()) {
-            recentDefaultFrame.makeScore(knockedPins, 1);
+            recentDefaultFrame.bowl(knockedPins, 1);
             if (knockedPins.isStrike()) {
                 frameNum++;
             }
             return;
         }
         if (recentDefaultFrame.hasDoneFirstPitch()) {
-            recentDefaultFrame.makeScore(knockedPins, 2);
+            recentDefaultFrame.bowl(knockedPins, 2);
             frameNum++;
         }
     }
@@ -54,7 +54,7 @@ public class Game {
     private void playLastGame(DefaultFrame recentDefaultFrame, KnockedPins knockedPins) {
 
         if (recentDefaultFrame.hasDoneFirstPitch() && !recentDefaultFrame.hasDoneSecondPitch()) {
-            recentDefaultFrame.makeScore(knockedPins, 2);
+            recentDefaultFrame.bowl(knockedPins, 2);
             if (!recentDefaultFrame.isSpare(recentDefaultFrame.getFirstScore(), recentDefaultFrame.getSecondScore()) && !recentDefaultFrame.isStrike()) {
                 frameNum++;
                 return;
@@ -62,11 +62,11 @@ public class Game {
             return;
         }
         if (recentDefaultFrame.hasDoneFirstPitch() && recentDefaultFrame.hasDoneSecondPitch()) {
-            recentDefaultFrame.makeScore(knockedPins, 3);
+            recentDefaultFrame.bowl(knockedPins, 3);
             frameNum++;
         }
         if (recentDefaultFrame.isEmpty()) {
-            recentDefaultFrame.makeScore(knockedPins, 1);
+            recentDefaultFrame.bowl(knockedPins, 1);
             return;
         }
     }

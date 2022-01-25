@@ -22,7 +22,7 @@ public class NormalDefaultFrameTest {
     @Test
     void convertSpare() {
         DefaultFrame normalDefaultFrame = new NormalDefaultFrame(new KnockedPins(3));
-        normalDefaultFrame.makeScore(new KnockedPins(7), 2);
+        normalDefaultFrame.bowl(new KnockedPins(7), 2);
         assertThat(normalDefaultFrame.convert()).isEqualTo("3|/");
     }
 
@@ -41,7 +41,7 @@ public class NormalDefaultFrameTest {
     @Test
     void convert() {
         DefaultFrame normalDefaultFrame = new NormalDefaultFrame(new KnockedPins(4));
-        normalDefaultFrame.makeScore(new KnockedPins(5), 2);
+        normalDefaultFrame.bowl(new KnockedPins(5), 2);
         assertThat(normalDefaultFrame.convert()).isEqualTo("4|5");
     }
 

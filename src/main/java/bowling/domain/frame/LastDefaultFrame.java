@@ -24,7 +24,7 @@ public class LastDefaultFrame extends DefaultFrame {
     }
 
     @Override
-    public void makeScore(KnockedPins knockedPins, int index) {
+    public void bowl(KnockedPins knockedPins, int index) {
         if (index == firstScoreKey) {
             this.firstKnockedPins = knockedPins;
         }
