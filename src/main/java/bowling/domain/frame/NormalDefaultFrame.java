@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.KnockedPins;
 import bowling.domain.Score;
 import bowling.domain.pitch.Normal;
+import bowling.domain.pitch.Spare;
 
 public class NormalDefaultFrame extends DefaultFrame {
 
@@ -15,28 +16,36 @@ public class NormalDefaultFrame extends DefaultFrame {
     }
 
     private boolean isSecondPitch() {
-        return !pitchs.isEmpty() && pitchs.get(0);
+        return !pitchs.isEmpty() && pitchs.size() == 1;
     }
 
     @Override
     public void bowl(KnockedPins knockedPins, int index) {
-        pitchs.add(new Normal(knockedPins));
+        if (isFirstPitch()) {
+            pitchs.add(new Normal(knockedPins));
+            return;
+        }
+        if (isSecondPitch()) {
+            if (pitchs.get(0).isSpare(knockedPins)) {
+                pitchs.add(new Spare(knockedPins));
+            }
+        }
     }
 
     private int calculateScore(Frames frames) {
         if (score.canCalucateScore()) {
             return score.getScore();
         }
-        return nextFrame(frames).cacluateAdditionalScore(score,frames);
+        return nextFrame(frames).cacluateAdditionalScore(score, frames);
     }
 
-    private int cacluateAdditionalScore(Score beforeScore,Frames frames) {
+    private int cacluateAdditionalScore(Score beforeScore, Frames frames) {
         beforeScore.bowl(firstKnockedPins.getKnockedPins());
         if (beforeScore.canCalucateScore()) {
             return beforeScore.getScore();
         }
         if (isStrike()) {
-            nextFrame(frames).cacluateAdditionalScore(beforeScore,frames);
+            nextFrame(frames).cacluateAdditionalScore(beforeScore, frames);
         }
         return nextFrame(frames).cacluateAdditionalScore(beforeScore, frames);
     }

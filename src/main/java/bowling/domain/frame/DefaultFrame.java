@@ -14,19 +14,4 @@ public abstract class DefaultFrame implements Frame {
     protected DefaultFrame(int frameNumber) {
         this.frameNumber = frameNumber;
     }
-    public KnockedPins getFirstScore() {
-
-        return firstKnockedPins;
-    }
-    public KnockedPins getSecondScore() {
-        return secondKnockedPins;
-    }
-
-    public boolean isEmpty() {
-        return firstKnockedPins == null;
-    }
-
-    public boolean isStrike() {
-        return firstKnockedPins.equals(new KnockedPins(10));
-    }
 }
