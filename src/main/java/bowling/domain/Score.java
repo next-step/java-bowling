@@ -24,4 +24,8 @@ public class Score {
         return left == 0;
     }
 
+    public int getLeft() {
+        return left;
+    }
+
 }
