@@ -36,7 +36,7 @@ public class Output {
 
         IntStream.rangeClosed(0, 9).forEach(index -> {
 
-            if (frames.size() > index) {
+            if (frames.size() > index && frames.get(index).calculateScore(game).canCalucateScore()) {
                 String result = Integer.toString(IntStream.rangeClosed(0, index)
                         .filter(i->frames.get(i).calculateScore(game).canCalucateScore())
                         .map(i->frames.get(i).calculateScore(game).getScore()).reduce(0,Integer::sum));
