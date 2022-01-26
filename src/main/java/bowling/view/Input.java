@@ -12,9 +12,9 @@ public class Input {
         return SCANNER.nextLine();
     }
 
-    public static int inputScore(Game game) {
+    public static int inputScore(int frameNumber) {
         System.out.println();
-        System.out.print(game.getFrameNum() + " 프레임 투구 : ");
+        System.out.print(frameNumber + " 프레임 투구 : ");
         return SCANNER.nextInt();
     }
 }

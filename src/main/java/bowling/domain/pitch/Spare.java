@@ -9,7 +9,11 @@ public class Spare implements Pitch {
     }
 
     @Override
-    public boolean isSpare(KnockedPins knockedPins) {
-        return false;
+    public Pitch play(KnockedPins knockedPins) {
+        return null;
+    }
+    @Override
+    public KnockedPins getKnockedPins() {
+        return knockedPins;
     }
 }
