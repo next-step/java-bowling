@@ -9,7 +9,7 @@ public class Score {
         this.left = left;
     }
 
-    public Score bowl(int countOfPins) {
+    public Score play(int countOfPins) {
         return new Score(score += countOfPins, left - 1);
     }
 

@@ -4,11 +4,28 @@ import bowling.domain.KnockedPins;
 
 public class Normal implements Pitch{
     private KnockedPins knockedPins;
+
+    private Normal() {
+    }
+
     public Normal(KnockedPins knockedPins) {
         this.knockedPins = knockedPins;
     }
 
-    public boolean isSpare(KnockedPins knockedPins) {
-        return this.knockedPins.getKnockedPins() + knockedPins.getKnockedPins() == 10;
+    public Pitch play(KnockedPins knockedPins) {
+        if (knockedPins.isStrike()) {
+            return new Strike(knockedPins);
+        }
+
+        if (this.knockedPins.getKnockedPins() + knockedPins.getKnockedPins() == 10) {
+            return new Spare(knockedPins);
+        }
+
+        return new Normal(knockedPins);
+    }
+
+    @Override
+    public KnockedPins getKnockedPins() {
+        return knockedPins;
     }
 }
