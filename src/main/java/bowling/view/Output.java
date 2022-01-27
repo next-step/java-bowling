@@ -21,7 +21,7 @@ public class Output {
             }
             if (frames.size() > index && index == 9) {
                 sb.append(" " + frames.get(index).convert());
-                IntStream.rangeClosed(0, frames.get(index).convert().length() - 2).forEach(i -> sb.append(" "));
+                IntStream.rangeClosed(frames.get(index).convert().length(), 4).forEach(i -> sb.append(" "));
                 sb.append("|");
             }
             if (frames.size() <= index) {
@@ -35,17 +35,19 @@ public class Output {
         System.out.print("|      |");
 
         IntStream.rangeClosed(0, 9).forEach(index -> {
-
             if (frames.size() > index && frames.get(index).calculateScore(game).canCalucateScore()) {
+
                 String result = Integer.toString(IntStream.rangeClosed(0, index)
                         .filter(i->frames.get(i).calculateScore(game).canCalucateScore())
                         .map(i->frames.get(i).calculateScore(game).getScore()).reduce(0,Integer::sum));
+
                 sb.append("  ");
                 sb.append(result);
                 IntStream.rangeClosed(result.length(),3).forEach((i)->sb.append(" "));
                 sb.append("|");
             }
             if (frames.size() <= index || !frames.get(index).calculateScore(game).canCalucateScore() ) {
+
                 sb.append("      |");
             }
         });

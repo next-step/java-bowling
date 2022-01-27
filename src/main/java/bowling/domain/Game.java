@@ -20,25 +20,29 @@ public class Game {
     public Game play(final KnockedPins knockedPins) {
         final List<Frame> frames = new ArrayList<>(this.frames);
         final Frame lastFrame = frames.get(frames.size() - 1);
+        System.out.println("11111111111111111111111111111111111");
 
         if (lastFrame.isPlaying()) {
             frames.remove(lastFrame);
         }
+        System.out.println("2222222222222222222222222222222222");
 
         final Frame playedFrame = nextFrame(frames, lastFrame).play(knockedPins);
+        System.out.println("33333333333333333333333333333333");
         frames.add(playedFrame);
-        System.out.println("===================");
         if (frames.size() == 10) {
-            System.out.println(frames.get(frames.size()-2));
+            System.out.println("=====================");
+            System.out.println(playedFrame.getPitches().size());
+            if (playedFrame.getPitches().size() == 2) {
+                System.out.println(playedFrame.getPitches().get(1));
+            }
+            System.out.println("=====================");
         }
-        System.out.println(lastFrame.createFinalFrame(this));
-        System.out.println(playedFrame);
-        System.out.println("===================");
         return new Game(frames);
     }
 
     public boolean isGameOver() {
-        return frames.size() == 10;
+        return frames.size() == 10 && !frames.get(frames.size() - 1).isPlaying();
     }
 
     private Frame nextFrame(final List<Frame> frames, final Frame frame) {
@@ -48,7 +52,7 @@ public class Game {
         if (frames.size() < FINAL_FRAME_INDEX) {
             return frame.createNextFrame();
         }
-        return frame.createFinalFrame(this);
+        return frame.createFinalFrame();
     }
 
     public List<Frame> getFrames() {

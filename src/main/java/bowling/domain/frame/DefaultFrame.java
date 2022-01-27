@@ -13,9 +13,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public abstract class DefaultFrame implements Frame {
-    protected List<Pitch> pitches;
+    protected final List<Pitch> pitches;
 
-    protected DefaultFrame(List<Pitch> pitches) {
+    protected DefaultFrame(final List<Pitch> pitches) {
         this.pitches = pitches;
     }
 
@@ -42,6 +42,8 @@ public abstract class DefaultFrame implements Frame {
     }
 
     protected Pitch otherPitch(final KnockedPins knockedPins) {
+        System.out.println("otherPitch");
+        System.out.println("pitches.get(pitches.size() - 1).play(knockedPins) = "+pitches.get(pitches.size() - 1).play(knockedPins));
         return pitches.get(pitches.size() - 1).play(knockedPins);
     }
 
@@ -49,35 +51,12 @@ public abstract class DefaultFrame implements Frame {
         return NormalFrame.init();
     }
 
-    public DefaultFrame createFinalFrame(Game game) {
+    public DefaultFrame createFinalFrame() {
         return FinalFrame.init();
     }
 
-    public String convert() {
-        if (pitches.size() == 0) {
-            return "";
-        }
-        if (pitches.get(0).getKnockedPins().isStrike()) {
-            return "X";
-        }
-        if (pitches.size() == 1) {
-            return pitches.get(0).getKnockedPins().convert() + "|";
-        }
-        if (isSpare(pitches.get(0).getKnockedPins(), pitches.get(1).getKnockedPins())) {
-            return pitches.get(0).getKnockedPins().convert() + "|" + "/";
-        }
-        return pitches.get(0).getKnockedPins().convert() + "|" + pitches.get(1).getKnockedPins().convert();
-    }
+    public abstract String convert();
 
-    protected Score playingScore() {
-        return new Score(
-                getPitches().stream()
-                        .map(Pitch::getKnockedPins)
-                        .map(KnockedPins::getKnockedPins)
-                        .reduce(0, Integer::sum),
-                1
-        );
-    }
 
     protected abstract int maxPitchesCount();
 

@@ -19,18 +19,24 @@ public class NormalFrame extends DefaultFrame {
         return new NormalFrame(playedPitches(knockedPins));
     }
 
+    private Score playingScore() {
+        return new Score(
+                pitches.stream()
+                        .map(Pitch::getKnockedPins)
+                        .map(KnockedPins::getKnockedPins)
+                        .reduce(0, Integer::sum),
+                maxPitchesCount() - pitches.size()
+        );
+    }
     @Override
     public Score calculateScore(Game game) {
         if (isPlaying()) {
             return playingScore();
         }
-
         Score score = createScore();
-
         if (score.canCalucateScore()) {
             return score;
         }
-
         return cacluateAdditionalScore(score, game.getFrames());
     }
 
@@ -58,6 +64,10 @@ public class NormalFrame extends DefaultFrame {
         }
 
         return cacluateAdditionalScore(beforeScore, frames);
+    }
+
+    public DefaultFrame createFinalFrame() {
+        return FinalFrame.init();
     }
 
     private Score createScore() {
@@ -100,7 +110,21 @@ public class NormalFrame extends DefaultFrame {
             return null;
         }
     }
-
+    public String convert() {
+        if (pitches.size() == 0) {
+            return "";
+        }
+        if (pitches.get(0).getKnockedPins().isStrike()) {
+            return "X";
+        }
+        if (pitches.size() == 1) {
+            return pitches.get(0).getKnockedPins().convert() + "|";
+        }
+        if (isSpare(pitches.get(0).getKnockedPins(), pitches.get(1).getKnockedPins())) {
+            return pitches.get(0).getKnockedPins().convert() + "|" + "/";
+        }
+        return pitches.get(0).getKnockedPins().convert() + "|" + pitches.get(1).getKnockedPins().convert();
+    }
     @Override
     public int maxPitchesCount() {
         return 2;
