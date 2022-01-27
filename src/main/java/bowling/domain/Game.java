@@ -27,6 +27,13 @@ public class Game {
 
         final Frame playedFrame = nextFrame(frames, lastFrame).play(knockedPins);
         frames.add(playedFrame);
+        System.out.println("===================");
+        if (frames.size() == 10) {
+            System.out.println(frames.get(frames.size()-2));
+        }
+        System.out.println(lastFrame.createFinalFrame(this));
+        System.out.println(playedFrame);
+        System.out.println("===================");
         return new Game(frames);
     }
 
@@ -41,7 +48,7 @@ public class Game {
         if (frames.size() < FINAL_FRAME_INDEX) {
             return frame.createNextFrame();
         }
-        return frame.createLastFrame();
+        return frame.createFinalFrame(this);
     }
 
     public List<Frame> getFrames() {

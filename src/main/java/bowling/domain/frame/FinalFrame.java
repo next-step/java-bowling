@@ -5,10 +5,11 @@ import bowling.domain.KnockedPins;
 import bowling.domain.Score;
 import bowling.domain.pitch.Pitch;
 
+import java.util.Collections;
 import java.util.List;
 
-public class LastFrame extends DefaultFrame {
-    protected LastFrame(List<Pitch> pitches) {
+public class FinalFrame extends DefaultFrame {
+    public FinalFrame(List<Pitch> pitches) {
         super(pitches);
     }
 
@@ -37,7 +38,26 @@ public class LastFrame extends DefaultFrame {
 
     @Override
     public boolean isPlaying() {
+        if (isFirstPitch()) {
+            return true;
+        }
+
+        if (isSecondPitch()) {
+            return true;
+        }
+
+        if (isThirdPitch()) {
+            return true;
+        }
+
         return isFirstPitch() || isSecondPitch() || isThirdPitch();
+    }
+
+    private boolean isSecondPitch() {
+        if (pitches.size() == 1) {
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -47,11 +67,23 @@ public class LastFrame extends DefaultFrame {
 
     @Override
     public Score calculateScore(Game game) {
-        return null;
+        if (isPlaying()) {
+            return playingScore();
+        }
+        Score score = createScore();
+        return score;
     }
 
     @Override
     public Score additionalScore(Score beforeScore, List<Frame> frames) {
         return null;
+    }
+
+    private Score createScore() {
+        return new Score(pitches.stream().map(pitch -> pitch.getKnockedPins().getKnockedPins()).reduce(0, Integer::sum), 2);
+    }
+
+    public static DefaultFrame init() {
+        return new FinalFrame(Collections.emptyList());
     }
 }

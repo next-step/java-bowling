@@ -19,7 +19,7 @@ public interface Frame {
 
     DefaultFrame createNextFrame();
 
-    DefaultFrame createLastFrame();
+    DefaultFrame createFinalFrame(Game game);
 
     Score cacluateAdditionalScore(Score beforeScore, List<Frame> frames);
 

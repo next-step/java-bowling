@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class NormalFrame extends DefaultFrame {
-
     public NormalFrame(List<Pitch> pitches) {
         super(pitches);
     }
@@ -65,13 +64,11 @@ public class NormalFrame extends DefaultFrame {
         if (isStrike()) {
             return new Score(10, 2);
         }
-
         if (isSpare(pitches.get(0).getKnockedPins(), pitches.get(1).getKnockedPins())) {
             return new Score(10, 1);
         }
         return new Score(pitches.get(0).getKnockedPins().getKnockedPins() + pitches.get(1).getKnockedPins().getKnockedPins(), 0);
     }
-
 
     public boolean isStrike() {
         return pitches.get(0).getKnockedPins().equals(new KnockedPins(10));
@@ -88,6 +85,9 @@ public class NormalFrame extends DefaultFrame {
         return isFirstPitch() || isSecondPitch();
     }
 
+    private boolean isSecondPitch() {
+        return !pitches.isEmpty() && pitches.size() == 1 && !pitches.get(0).getKnockedPins().isStrike();
+    }
 
     public static DefaultFrame init() {
         return new NormalFrame(Collections.emptyList());
