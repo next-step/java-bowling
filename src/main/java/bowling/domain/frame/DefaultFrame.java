@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.Game;
 import bowling.domain.KnockedPins;
 import bowling.domain.Score;
 import bowling.domain.pitch.Normal;
@@ -20,10 +21,6 @@ public abstract class DefaultFrame implements Frame {
 
     protected boolean isFirstPitch() {
         return pitches.isEmpty();
-    }
-
-    protected boolean isSecondPitch() {
-        return !pitches.isEmpty() && pitches.size() == 1 && !pitches.get(0).getKnockedPins().isStrike();
     }
 
     protected List<Pitch> playedPitches(final KnockedPins knockedPins) {
@@ -52,8 +49,8 @@ public abstract class DefaultFrame implements Frame {
         return NormalFrame.init();
     }
 
-    public DefaultFrame createLastFrame() {
-        return new LastFrame(Collections.emptyList());
+    public DefaultFrame createFinalFrame(Game game) {
+        return FinalFrame.init();
     }
 
     public String convert() {
@@ -71,13 +68,14 @@ public abstract class DefaultFrame implements Frame {
         }
         return pitches.get(0).getKnockedPins().convert() + "|" + pitches.get(1).getKnockedPins().convert();
     }
+
     protected Score playingScore() {
         return new Score(
                 getPitches().stream()
                         .map(Pitch::getKnockedPins)
                         .map(KnockedPins::getKnockedPins)
                         .reduce(0, Integer::sum),
-                maxPitchesCount() - getPitches().size()
+                1
         );
     }
 

@@ -45,7 +45,7 @@ public class Output {
                 IntStream.rangeClosed(result.length(),3).forEach((i)->sb.append(" "));
                 sb.append("|");
             }
-            if (frames.size() <= index) {
+            if (frames.size() <= index || !frames.get(index).calculateScore(game).canCalucateScore() ) {
                 sb.append("      |");
             }
         });
