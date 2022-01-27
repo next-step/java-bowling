@@ -13,7 +13,7 @@ public class Strike implements Pitch{
 
     @Override
     public Pitch play(KnockedPins knockedPins) {
-        return null;
+        return new Strike(knockedPins);
     }
     @Override
     public KnockedPins getKnockedPins() {

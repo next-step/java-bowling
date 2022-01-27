@@ -13,6 +13,7 @@ public class Normal implements Pitch{
     }
 
     public Pitch play(KnockedPins knockedPins) {
+        System.out.println("Normal Pitch play enter");
         if (knockedPins.isStrike()) {
             return new Strike(knockedPins);
         }
