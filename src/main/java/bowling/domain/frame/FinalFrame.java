@@ -23,7 +23,7 @@ public class FinalFrame extends DefaultFrame {
     }
 
     private boolean isBonus() {
-        return pitches.get(0).getKnockedPins().getCount() == 10 || isSpare(pitches.get(0).getKnockedPins(), pitches.get(1).getKnockedPins());
+        return getFirstKnockedPins().getCount() == 10 || isSpare(getFirstKnockedPins(), getSecondKnockedPins());
     }
 
     @Override
@@ -76,7 +76,6 @@ public class FinalFrame extends DefaultFrame {
         }
         return beforeScore;
     }
-
 
     @Override
     public DefaultFrame createFinalFrame() {

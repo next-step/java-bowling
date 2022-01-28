@@ -11,7 +11,10 @@ public class Spare implements Pitch {
 
     @Override
     public Pitch play(final KnockedPins knockedPins) {
-        return null;
+        if (knockedPins.isStrike()) {
+            return new Strike(knockedPins);
+        }
+        return new Normal(knockedPins);
     }
 
     @Override

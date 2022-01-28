@@ -33,10 +33,13 @@ public class Output {
         sb.setLength(0);
         System.out.println();
         System.out.print("|      |");
-
         IntStream.rangeClosed(0, 9).forEach(index -> {
             if (frames.size() > index && frames.get(index).calculateScore(game).canCalucateScore()) {
-
+                if (index == 9 && frames.size()==3) {
+                    System.out.println("================================");
+                    System.out.println(frames.get(index).getPitches().get(2));
+                    System.out.println("================================");
+                }
                 String result = Integer.toString(IntStream.rangeClosed(0, index)
                         .filter(i -> frames.get(i).calculateScore(game).canCalucateScore())
                         .map(i -> frames.get(i).calculateScore(game).getScore()).reduce(0, Integer::sum));

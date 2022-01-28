@@ -17,8 +17,9 @@ public class NormalFrameTest {
     void play() {
         Frame normalFrame = new NormalFrame(Arrays.asList(new Normal(5)));
         normalFrame = normalFrame.play(new KnockedPins(3));
-        assertThat(normalFrame.getFirstKnockedPins()).isEqualTo(5);
-        assertThat(normalFrame.getSecondKnockedPins()).isEqualTo(3);
+
+        assertThat(normalFrame.getFirstKnockedPins().getCount()).isEqualTo(5);
+        assertThat(normalFrame.getSecondKnockedPins().getCount()).isEqualTo(3);
     }
 
     @Test
@@ -28,6 +29,7 @@ public class NormalFrameTest {
         normalFrame = normalFrame.play(new KnockedPins(5));
         Game game = new Game(Arrays.asList(normalFrame));
         Score score = normalFrame.calculateScore(game);
+
         assertThat(score.canCalucateScore()).isEqualTo(true);
         assertThat(score.getScore()).isEqualTo(8);
     }
@@ -40,6 +42,7 @@ public class NormalFrameTest {
         Frame nextFrame = normalFrame.createNextFrame().play(new KnockedPins(7));
         Game game = new Game(Arrays.asList(normalFrame,nextFrame));
         Score score = normalFrame.calculateScore(game);
+
         assertThat(score.canCalucateScore()).isEqualTo(true);
         assertThat(score.getScore()).isEqualTo(17);
     }
@@ -48,11 +51,13 @@ public class NormalFrameTest {
     @DisplayName("strike pitch 의 calculateScore test")
     void calculateStrikeScore() {
         Frame normalFrame = new NormalFrame(Arrays.asList(new Normal(10)));
-        normalFrame = normalFrame.play(new KnockedPins(7));
-        Frame nextFrame = normalFrame.createNextFrame().play(new KnockedPins(7));
+        Frame nextFrame = normalFrame.createNextFrame().play(new KnockedPins(3));
+        nextFrame = nextFrame.play(new KnockedPins(7));
+
         Game game = new Game(Arrays.asList(normalFrame,nextFrame));
         Score score = normalFrame.calculateScore(game);
+
         assertThat(score.canCalucateScore()).isEqualTo(true);
-        assertThat(score.getScore()).isEqualTo(17);
+        assertThat(score.getScore()).isEqualTo(20);
     }
 }
