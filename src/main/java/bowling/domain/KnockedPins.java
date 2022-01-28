@@ -1,11 +1,11 @@
 package bowling.domain;
 
 public class KnockedPins {
-    private final int knockedPins;
+    private final int count;
 
-    public KnockedPins(int knockedPins) {
-        validationCheck(knockedPins);
-        this.knockedPins = knockedPins;
+    public KnockedPins(int count) {
+        validationCheck(count);
+        this.count = count;
     }
 
     public void validationCheck(int score) {
@@ -15,15 +15,15 @@ public class KnockedPins {
     }
 
     public KnockedPins add(KnockedPins knockedPins) {
-        return new KnockedPins(this.knockedPins + knockedPins.getKnockedPins());
+        return new KnockedPins(this.count + knockedPins.getCount());
     }
 
     public boolean isZero() {
-        return knockedPins == 0;
+        return count == 0;
     }
 
     public boolean isStrike() {
-        return knockedPins == 10;
+        return count == 10;
     }
 
     public String convert() {
@@ -33,11 +33,11 @@ public class KnockedPins {
         if (isStrike()) {
             return "X";
         }
-        return Integer.toString(knockedPins);
+        return Integer.toString(count);
     }
 
-    public int getKnockedPins() {
-        return knockedPins;
+    public int getCount() {
+        return count;
     }
 
     @Override
@@ -47,11 +47,11 @@ public class KnockedPins {
 
         KnockedPins knockedPins1 = (KnockedPins) o;
 
-        return knockedPins == knockedPins1.knockedPins;
+        return count == knockedPins1.count;
     }
 
     @Override
     public int hashCode() {
-        return knockedPins;
+        return count;
     }
 }

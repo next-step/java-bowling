@@ -33,7 +33,7 @@ public abstract class DefaultFrame implements Frame {
     }
 
     protected Pitch firstPitch(final KnockedPins knockedPins) {
-        if (knockedPins.getKnockedPins() == 10) {
+        if (knockedPins.getCount() == 10) {
             return new Strike(knockedPins);
         }
         return new Normal(knockedPins);
@@ -43,16 +43,16 @@ public abstract class DefaultFrame implements Frame {
         return pitches.get(pitches.size() - 1).play(knockedPins);
     }
 
-    public int getFirstCount() {
+    public KnockedPins getFirstKnockedPins() {
         if (pitches.size() >= 1) {
-            return pitches.get(0).getKnockedPins().getKnockedPins();
+            return pitches.get(0).getKnockedPins();
         }
         throw new IllegalArgumentException("no first count");
     }
 
-    public int getSecondCount() {
+    public KnockedPins getSecondKnockedPins() {
         if (pitches.size() >= 2) {
-            return pitches.get(1).getKnockedPins().getKnockedPins();
+            return pitches.get(1).getKnockedPins();
         }
         throw new IllegalArgumentException("no second count");
     }

@@ -21,7 +21,7 @@ public class Normal implements Pitch {
             return new Strike(knockedPins);
         }
 
-        if (this.knockedPins.getKnockedPins() + knockedPins.getKnockedPins() == 10) {
+        if (this.knockedPins.getCount() + knockedPins.getCount() == 10) {
             return new Spare(knockedPins);
         }
 

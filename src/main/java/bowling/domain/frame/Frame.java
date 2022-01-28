@@ -29,7 +29,7 @@ public interface Frame {
 
     Score additionalScore(Score beforeScore, List<Frame> frames);
 
-    int getFirstCount();
+    KnockedPins getFirstKnockedPins();
 
-    int getSecondCount();
+    KnockedPins getSecondKnockedPins();
 }

@@ -27,7 +27,7 @@ public class NormalFrame extends DefaultFrame {
         return new Score(
                 pitches.stream()
                         .map(Pitch::getKnockedPins)
-                        .map(KnockedPins::getKnockedPins)
+                        .map(KnockedPins::getCount)
                         .reduce(0, Integer::sum),
                 1
         );
@@ -62,7 +62,7 @@ public class NormalFrame extends DefaultFrame {
                 .collect(Collectors.toList());
 
         for (final Pitch pitch : limitedPitches) {
-            beforeScore = beforeScore.play(pitch.getKnockedPins().getKnockedPins());
+            beforeScore = beforeScore.play(pitch.getKnockedPins().getCount());
         }
 
         if (beforeScore.canCalucateScore()) {
@@ -83,7 +83,7 @@ public class NormalFrame extends DefaultFrame {
         if (isSpare(pitches.get(0).getKnockedPins(), pitches.get(1).getKnockedPins())) {
             return new Score(10, 1);
         }
-        return new Score(pitches.get(0).getKnockedPins().getKnockedPins() + pitches.get(1).getKnockedPins().getKnockedPins(), 0);
+        return new Score(pitches.get(0).getKnockedPins().getCount() + pitches.get(1).getKnockedPins().getCount(), 0);
     }
 
     public boolean isStrike() {

@@ -23,7 +23,7 @@ public class FinalFrame extends DefaultFrame {
     }
 
     private boolean isBonus() {
-        return pitches.get(0).getKnockedPins().getKnockedPins() == 10 || isSpare(pitches.get(0).getKnockedPins(), pitches.get(1).getKnockedPins());
+        return pitches.get(0).getKnockedPins().getCount() == 10 || isSpare(pitches.get(0).getKnockedPins(), pitches.get(1).getKnockedPins());
     }
 
     @Override
@@ -33,7 +33,7 @@ public class FinalFrame extends DefaultFrame {
 
     @Override
     public boolean isSpare(KnockedPins knockedPinsA, KnockedPins knockedPinsB) {
-        return knockedPinsA.getKnockedPins() + knockedPinsB.getKnockedPins() == 10;
+        return knockedPinsA.getCount() + knockedPinsB.getCount() == 10 && !knockedPinsA.isStrike();
     }
 
     @Override
@@ -51,42 +51,6 @@ public class FinalFrame extends DefaultFrame {
     }
 
     @Override
-    public DefaultFrame createFinalFrame() {
-        throw new IllegalArgumentException();
-    }
-
-    @Override
-    public String convert() {
-        if (isFirstPitch()) {
-            return "";
-        }
-        if (isSecondPitch()) {
-
-            return pitches.get(0).getKnockedPins().convert() + "|";
-        }
-        if (isSecondPitch()) {
-            return pitches.get(0).getKnockedPins().convert() + "|";
-        }
-        if (isThirdPitch()) {
-            if (isSpare(pitches.get(0).getKnockedPins(), pitches.get(1).getKnockedPins())) {
-                return pitches.get(0).getKnockedPins().convert() + "|" + "/";
-            }
-            return pitches.get(0).getKnockedPins().convert() + "|" + pitches.get(1).getKnockedPins().convert();
-        }
-        if (isSpare(pitches.get(0).getKnockedPins(), pitches.get(1).getKnockedPins())) {
-            return pitches.get(0).getKnockedPins().convert() + "|" + "/" + pitches.get(2).getKnockedPins().convert();
-        }
-        if (isSpare(pitches.get(1).getKnockedPins(), pitches.get(2).getKnockedPins())) {
-            return pitches.get(0).getKnockedPins().convert() + "|" + pitches.get(1).getKnockedPins().convert() + "/";
-        }
-        return pitches.get(0).getKnockedPins().convert() + "|" + pitches.get(1).getKnockedPins().convert() + "|" + pitches.get(2).getKnockedPins().convert();
-    }
-
-    private boolean isSecondPitch() {
-        return pitches.size() == 1;
-    }
-
-    @Override
     public Score cacluateAdditionalScore(Score beforeScore, List<Frame> frames) {
         return null;
     }
@@ -96,7 +60,7 @@ public class FinalFrame extends DefaultFrame {
         return new Score(
                 pitches.stream()
                         .map(Pitch::getKnockedPins)
-                        .map(KnockedPins::getKnockedPins)
+                        .map(KnockedPins::getCount)
                         .reduce(0, Integer::sum),
                 isPlaying() ? 1 : 0
         );
@@ -108,8 +72,54 @@ public class FinalFrame extends DefaultFrame {
                 .limit(beforeScore.getLeft())
                 .collect(Collectors.toList());
         for (final Pitch pitch : limitedPitches) {
-            beforeScore = beforeScore.play(pitch.getKnockedPins().getKnockedPins());
+            beforeScore = beforeScore.play(pitch.getKnockedPins().getCount());
         }
         return beforeScore;
     }
+
+
+    @Override
+    public DefaultFrame createFinalFrame() {
+        throw new IllegalArgumentException();
+    }
+
+    @Override
+    public String convert() {
+        if (isFirstPitch()) {
+            return "";
+        }
+        if (isSecondPitch()) {
+            return getFirstKnockedPins().convert() + "|";
+        }
+        if (isThirdPitch()) {
+            return convertThirdPitch();
+        }
+        return convertFinishedPitch();
+    }
+
+    private String convertThirdPitch() {
+        if (isSpare(getFirstKnockedPins(), getSecondKnockedPins())) {
+            return getFirstKnockedPins().convert() + "|" + "/";
+        }
+        return getFirstKnockedPins().convert() + "|" + getSecondKnockedPins().convert();
+    }
+
+    private String convertFinishedPitch() {
+        if (isSpare(getFirstKnockedPins(), getSecondKnockedPins())) {
+            return getFirstKnockedPins().convert() + "|" + "/" + "|" + getSecondKnockedPins().convert();
+        }
+        if (isSpare(getSecondKnockedPins(), getThirdKnockedPins())) {
+            return getFirstKnockedPins().convert() + "|" + getSecondKnockedPins().convert() + "|" + "/";
+        }
+        return getFirstKnockedPins().convert() + "|" + getSecondKnockedPins().convert() + "|" + getThirdKnockedPins().convert();
+    }
+
+    private boolean isSecondPitch() {
+        return pitches.size() == 1;
+    }
+
+    private KnockedPins getThirdKnockedPins() {
+        return pitches.get(2).getKnockedPins();
+    }
+
 }

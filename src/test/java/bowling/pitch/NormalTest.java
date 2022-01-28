@@ -14,7 +14,7 @@ public class NormalTest {
     void playSpare() {
         Normal normal = new Normal(new KnockedPins(4));
         Pitch spare = normal.play(new KnockedPins(6));
-        assertThat(spare.getKnockedPins().getKnockedPins()).isEqualTo(new KnockedPins(6).getKnockedPins());
+        assertThat(spare.getKnockedPins().getCount()).isEqualTo(new KnockedPins(6).getCount());
         assertThat(spare.getClass()).isEqualTo(Spare.class);
     }
 
@@ -23,7 +23,7 @@ public class NormalTest {
     void playNormal() {
         Normal normal = new Normal(new KnockedPins(4));
         Pitch normalPitch = normal.play(new KnockedPins(3));
-        assertThat(normalPitch.getKnockedPins().getKnockedPins()).isEqualTo(new KnockedPins(3).getKnockedPins());
+        assertThat(normalPitch.getKnockedPins().getCount()).isEqualTo(new KnockedPins(3).getCount());
         assertThat(normalPitch.getClass()).isEqualTo(Normal.class);
     }
 
@@ -32,7 +32,7 @@ public class NormalTest {
     void playStrike() {
         Normal normal = new Normal();
         Pitch strike = normal.play(new KnockedPins(10));
-        assertThat(strike.getKnockedPins().getKnockedPins()).isEqualTo(new KnockedPins(10).getKnockedPins());
+        assertThat(strike.getKnockedPins().getCount()).isEqualTo(new KnockedPins(10).getCount());
         assertThat(strike.getClass()).isEqualTo(Strike.class);
     }
 }

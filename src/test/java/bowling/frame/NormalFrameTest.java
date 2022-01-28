@@ -3,7 +3,6 @@ package bowling.frame;
 import bowling.domain.Game;
 import bowling.domain.KnockedPins;
 import bowling.domain.Score;
-import bowling.domain.frame.DefaultFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.pitch.Normal;
@@ -18,8 +17,8 @@ public class NormalFrameTest {
     void play() {
         Frame normalFrame = new NormalFrame(Arrays.asList(new Normal(5)));
         normalFrame = normalFrame.play(new KnockedPins(3));
-        assertThat(normalFrame.getFirstCount()).isEqualTo(5);
-        assertThat(normalFrame.getSecondCount()).isEqualTo(3);
+        assertThat(normalFrame.getFirstKnockedPins()).isEqualTo(5);
+        assertThat(normalFrame.getSecondKnockedPins()).isEqualTo(3);
     }
 
     @Test
