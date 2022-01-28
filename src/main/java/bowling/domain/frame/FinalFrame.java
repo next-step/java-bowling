@@ -14,8 +14,12 @@ public class FinalFrame extends DefaultFrame {
         super(pitches);
     }
 
+    public static DefaultFrame init() {
+        return new FinalFrame(Collections.emptyList());
+    }
 
     @Override
+
     protected int maxPitchesCount() {
         return 3;
     }
@@ -43,15 +47,12 @@ public class FinalFrame extends DefaultFrame {
         if (isFirstPitch()) {
             return true;
         }
-
         if (isSecondPitch()) {
             return true;
         }
-
         if (isThirdPitch()) {
             return true;
         }
-
         return isFirstPitch() || isSecondPitch() || isThirdPitch();
     }
 
@@ -88,10 +89,7 @@ public class FinalFrame extends DefaultFrame {
     }
 
     private boolean isSecondPitch() {
-        if (pitches.size() == 1) {
-            return true;
-        }
-        return false;
+        return pitches.size() == 1;
     }
 
     @Override
@@ -115,15 +113,9 @@ public class FinalFrame extends DefaultFrame {
         final List<Pitch> limitedPitches = getPitches().stream()
                 .limit(beforeScore.getLeft())
                 .collect(Collectors.toList());
-
         for (final Pitch pitch : limitedPitches) {
             beforeScore = beforeScore.play(pitch.getKnockedPins().getKnockedPins());
         }
-
         return beforeScore;
-    }
-
-    public static DefaultFrame init() {
-        return new FinalFrame(Collections.emptyList());
     }
 }

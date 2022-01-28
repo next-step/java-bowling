@@ -1,7 +1,5 @@
 package bowling.view;
 
-import bowling.domain.Game;
-
 import java.util.Scanner;
 
 public class Input {

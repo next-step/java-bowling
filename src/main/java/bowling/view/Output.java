@@ -38,15 +38,15 @@ public class Output {
             if (frames.size() > index && frames.get(index).calculateScore(game).canCalucateScore()) {
 
                 String result = Integer.toString(IntStream.rangeClosed(0, index)
-                        .filter(i->frames.get(i).calculateScore(game).canCalucateScore())
-                        .map(i->frames.get(i).calculateScore(game).getScore()).reduce(0,Integer::sum));
+                        .filter(i -> frames.get(i).calculateScore(game).canCalucateScore())
+                        .map(i -> frames.get(i).calculateScore(game).getScore()).reduce(0, Integer::sum));
 
                 sb.append("  ");
                 sb.append(result);
-                IntStream.rangeClosed(result.length(),3).forEach((i)->sb.append(" "));
+                IntStream.rangeClosed(result.length(), 3).forEach((i) -> sb.append(" "));
                 sb.append("|");
             }
-            if (frames.size() <= index || !frames.get(index).calculateScore(game).canCalucateScore() ) {
+            if (frames.size() <= index || !frames.get(index).calculateScore(game).canCalucateScore()) {
 
                 sb.append("      |");
             }

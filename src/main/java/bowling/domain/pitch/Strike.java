@@ -2,7 +2,7 @@ package bowling.domain.pitch;
 
 import bowling.domain.KnockedPins;
 
-public class Strike implements Pitch{
+public class Strike implements Pitch {
 
     private final KnockedPins knockedPins;
 
@@ -10,11 +10,11 @@ public class Strike implements Pitch{
         this.knockedPins = knockedPins;
     }
 
-
     @Override
     public Pitch play(KnockedPins knockedPins) {
         return new Strike(knockedPins);
     }
+
     @Override
     public KnockedPins getKnockedPins() {
         return knockedPins;

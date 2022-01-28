@@ -1,8 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.Game;
 import bowling.domain.KnockedPins;
-import bowling.domain.Score;
 import bowling.domain.pitch.Normal;
 import bowling.domain.pitch.Pitch;
 import bowling.domain.pitch.Strike;
@@ -42,8 +40,6 @@ public abstract class DefaultFrame implements Frame {
     }
 
     protected Pitch otherPitch(final KnockedPins knockedPins) {
-        System.out.println("otherPitch");
-        System.out.println("pitches.get(pitches.size() - 1).play(knockedPins) = "+pitches.get(pitches.size() - 1).play(knockedPins));
         return pitches.get(pitches.size() - 1).play(knockedPins);
     }
 
@@ -55,8 +51,19 @@ public abstract class DefaultFrame implements Frame {
         return FinalFrame.init();
     }
 
-    public abstract String convert();
+    public int getFirstCount() {
+        if (pitches.size() >= 1) {
+            return pitches.get(0).getKnockedPins().getKnockedPins();
+        }
+        throw new IllegalArgumentException("no first count");
+    }
 
+    public int getSecondCount() {
+        if (pitches.size() >= 2) {
+            return pitches.get(1).getKnockedPins().getKnockedPins();
+        }
+        throw new IllegalArgumentException("no second count");
+    }
 
     protected abstract int maxPitchesCount();
 

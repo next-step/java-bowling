@@ -14,6 +14,10 @@ public class NormalFrame extends DefaultFrame {
         super(pitches);
     }
 
+    public static DefaultFrame init() {
+        return new NormalFrame(Collections.emptyList());
+    }
+
     @Override
     public Frame play(KnockedPins knockedPins) {
         return new NormalFrame(playedPitches(knockedPins));
@@ -28,12 +32,14 @@ public class NormalFrame extends DefaultFrame {
                 maxPitchesCount() - pitches.size()
         );
     }
+
     @Override
     public Score calculateScore(Game game) {
         if (isPlaying()) {
             return playingScore();
         }
         Score score = createScore();
+
         if (score.canCalucateScore()) {
             return score;
         }
@@ -89,7 +95,6 @@ public class NormalFrame extends DefaultFrame {
         return knockedPinsA.add(knockedPinsB).equals(new KnockedPins(10));
     }
 
-
     @Override
     public boolean isPlaying() {
         return isFirstPitch() || isSecondPitch();
@@ -99,10 +104,6 @@ public class NormalFrame extends DefaultFrame {
         return !pitches.isEmpty() && pitches.size() == 1 && !pitches.get(0).getKnockedPins().isStrike();
     }
 
-    public static DefaultFrame init() {
-        return new NormalFrame(Collections.emptyList());
-    }
-
     private Frame nextFrame(List<Frame> frames) {
         try {
             return frames.get(frames.indexOf(this) + 1);
@@ -110,6 +111,7 @@ public class NormalFrame extends DefaultFrame {
             return null;
         }
     }
+
     public String convert() {
         if (pitches.size() == 0) {
             return "";
@@ -125,6 +127,7 @@ public class NormalFrame extends DefaultFrame {
         }
         return pitches.get(0).getKnockedPins().convert() + "|" + pitches.get(1).getKnockedPins().convert();
     }
+
     @Override
     public int maxPitchesCount() {
         return 2;
