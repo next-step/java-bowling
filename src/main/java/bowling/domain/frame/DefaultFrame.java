@@ -21,7 +21,7 @@ public abstract class DefaultFrame implements Frame {
         return pitches.isEmpty();
     }
 
-    protected List<Pitch> playedPitches(final KnockedPins knockedPins) {
+    protected List<Pitch> playPitches(final KnockedPins knockedPins) {
         final Pitch playedPitch = pitches.isEmpty() ?
                 firstPitch(knockedPins) :
                 otherPitch(knockedPins);
@@ -43,14 +43,6 @@ public abstract class DefaultFrame implements Frame {
         return pitches.get(pitches.size() - 1).play(knockedPins);
     }
 
-    public DefaultFrame createNextFrame() {
-        return NormalFrame.init();
-    }
-
-    public DefaultFrame createFinalFrame() {
-        return FinalFrame.init();
-    }
-
     public int getFirstCount() {
         if (pitches.size() >= 1) {
             return pitches.get(0).getKnockedPins().getKnockedPins();
@@ -65,7 +57,13 @@ public abstract class DefaultFrame implements Frame {
         throw new IllegalArgumentException("no second count");
     }
 
-    protected abstract int maxPitchesCount();
+    public DefaultFrame createNextFrame() {
+        return NormalFrame.init();
+    }
+
+    public DefaultFrame createFinalFrame() {
+        return FinalFrame.init();
+    }
 
     @Override
     public List<Pitch> getPitches() {

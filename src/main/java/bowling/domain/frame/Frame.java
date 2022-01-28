@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface Frame {
 
-//    String convert();
-
     Frame play(KnockedPins knockedPins);
 
     boolean isSpare(KnockedPins knockedPinsA, KnockedPins knockedPinsB);

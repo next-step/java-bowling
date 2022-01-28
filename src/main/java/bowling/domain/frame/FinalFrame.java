@@ -18,12 +18,6 @@ public class FinalFrame extends DefaultFrame {
         return new FinalFrame(Collections.emptyList());
     }
 
-    @Override
-
-    protected int maxPitchesCount() {
-        return 3;
-    }
-
     private boolean isThirdPitch() {
         return isBonus() && pitches.size() == 2;
     }
@@ -34,7 +28,7 @@ public class FinalFrame extends DefaultFrame {
 
     @Override
     public Frame play(KnockedPins knockedPins) {
-        return new FinalFrame(playedPitches(knockedPins));
+        return new FinalFrame(playPitches(knockedPins));
     }
 
     @Override
@@ -104,7 +98,7 @@ public class FinalFrame extends DefaultFrame {
                         .map(Pitch::getKnockedPins)
                         .map(KnockedPins::getKnockedPins)
                         .reduce(0, Integer::sum),
-                isPlaying() ? maxPitchesCount() - pitches.size() : 0
+                isPlaying() ? 1 : 0
         );
     }
 
