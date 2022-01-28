@@ -4,6 +4,7 @@ import bowling.domain.KnockedPins;
 import bowling.domain.pitch.Normal;
 import bowling.domain.pitch.Pitch;
 import bowling.domain.pitch.Spare;
+import bowling.domain.pitch.Strike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,5 +25,14 @@ public class NormalTest {
         Pitch normalPitch = normal.play(new KnockedPins(3));
         assertThat(normalPitch.getKnockedPins().getKnockedPins()).isEqualTo(new KnockedPins(3).getKnockedPins());
         assertThat(normalPitch.getClass()).isEqualTo(Normal.class);
+    }
+
+    @Test
+    @DisplayName("normal pitch 에서 strike 플레이 경우 strike 반환")
+    void playStrike() {
+        Normal normal = new Normal();
+        Pitch strike = normal.play(new KnockedPins(10));
+        assertThat(strike.getKnockedPins().getKnockedPins()).isEqualTo(new KnockedPins(10).getKnockedPins());
+        assertThat(strike.getClass()).isEqualTo(Strike.class);
     }
 }
