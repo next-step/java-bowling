@@ -31,4 +31,7 @@ public interface Frame {
 
     Score additionalScore(Score beforeScore, List<Frame> frames);
 
+    int getFirstCount();
+
+    int getSecondCount();
 }

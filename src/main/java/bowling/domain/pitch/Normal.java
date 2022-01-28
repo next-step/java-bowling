@@ -2,18 +2,21 @@ package bowling.domain.pitch;
 
 import bowling.domain.KnockedPins;
 
-public class Normal implements Pitch{
+public class Normal implements Pitch {
     private KnockedPins knockedPins;
 
-    private Normal() {
+    public Normal() {
     }
 
     public Normal(KnockedPins knockedPins) {
         this.knockedPins = knockedPins;
     }
 
+    public Normal(int count) {
+        this(new KnockedPins(count));
+    }
+
     public Pitch play(KnockedPins knockedPins) {
-        System.out.println("Normal Pitch play enter");
         if (knockedPins.isStrike()) {
             return new Strike(knockedPins);
         }

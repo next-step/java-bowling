@@ -2,7 +2,7 @@ package bowling.domain;
 
 public class Score {
     private int score; // 현재까지 점수
-    private int left; // 남은 시도 횟수
+    private final int left; // 남은 시도 횟수
 
     public Score(int score, int left) {
         this.score = score;
@@ -15,7 +15,7 @@ public class Score {
 
     public int getScore() {
         if (!canCalucateScore()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("cant calculate score");
         }
         return this.score;
     }
