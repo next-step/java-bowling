@@ -20,7 +20,7 @@ public class NormalFrame extends DefaultFrame {
 
     @Override
     public Frame play(KnockedPins knockedPins) {
-        return new NormalFrame(playedPitches(knockedPins));
+        return new NormalFrame(playPitches(knockedPins));
     }
 
     private Score playingScore() {
@@ -29,7 +29,7 @@ public class NormalFrame extends DefaultFrame {
                         .map(Pitch::getKnockedPins)
                         .map(KnockedPins::getKnockedPins)
                         .reduce(0, Integer::sum),
-                maxPitchesCount() - pitches.size()
+                1
         );
     }
 
@@ -126,10 +126,5 @@ public class NormalFrame extends DefaultFrame {
             return pitches.get(0).getKnockedPins().convert() + "|" + "/";
         }
         return pitches.get(0).getKnockedPins().convert() + "|" + pitches.get(1).getKnockedPins().convert();
-    }
-
-    @Override
-    public int maxPitchesCount() {
-        return 2;
     }
 }
