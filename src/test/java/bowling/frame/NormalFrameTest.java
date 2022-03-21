@@ -1,33 +1,33 @@
 package bowling.frame;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class NormalFrameTest {
     @Test
     public void bowlWhenStrike() throws Exception {
         NormalFrame normalFrame = new NormalFrame(1);
         Frame next = normalFrame.bowl(10);
-        assertEquals(2, next.getNo());
+        assertThat(next.getNo()).isEqualTo(2);
     }
 
     @Test
     public void bowlWhenSpare() throws Exception {
         NormalFrame normalFrame = new NormalFrame(1);
         Frame next = normalFrame.bowl(8);
-        assertEquals(1, next.getNo());
+        assertThat(next.getNo()).isEqualTo(1);
         next = normalFrame.bowl(2);
-        assertEquals(2, next.getNo());
+        assertThat(next.getNo()).isEqualTo(2);
     }
 
     @Test
     public void bowlWhenMiss() throws Exception {
         NormalFrame normalFrame = new NormalFrame(1);
         Frame next = normalFrame.bowl(8);
-        assertEquals(1, next.getNo());
+        assertThat(next.getNo()).isEqualTo(1);
         next = normalFrame.bowl(1);
-        assertEquals(2, next.getNo());
+        assertThat(next.getNo()).isEqualTo(2);
     }
 
     @Test

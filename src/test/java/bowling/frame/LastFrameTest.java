@@ -1,14 +1,14 @@
 package bowling.frame;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 public class LastFrameTest {
     private LastFrame lastFrame;
 
-    @Before
+    @BeforeEach
     public void setup() {
         lastFrame = new LastFrame();
     }
@@ -31,9 +31,11 @@ public class LastFrameTest {
         assertThat(lastFrame.isGameEnd()).isTrue();
     }
 
-    @Test (expected = GameOverException.class)
+    @Test
     public void game_over() {
-        lastFrame.bowl(8).bowl(2).bowl(7).bowl(3);
+        assertThatThrownBy(() -> {
+            lastFrame.bowl(8).bowl(2).bowl(7).bowl(3);
+        }).isInstanceOf(GameOverException.class);
     }
 
     @Test
@@ -42,10 +44,12 @@ public class LastFrameTest {
         assertThat(lastFrame.getScore()).isEqualTo(new Score(9));
     }
 
-    @Test(expected = CannotCalculateException.class)
+    @Test
     public void getScore_cannot_calculate() {
-        lastFrame.bowl(8);
-        lastFrame.getScore();
+        assertThatThrownBy(() -> {
+            lastFrame.bowl(8);
+            lastFrame.getScore();
+        }).isInstanceOf(CannotCalculateException.class);
     }
 
     @Test
@@ -80,11 +84,13 @@ public class LastFrameTest {
         assertThat(lastFrame.calculateAdditionalScore(score)).isEqualTo(new Score(19));
     }
 
-    @Test (expected = CannotCalculateException.class)
+    @Test
     public void getScore_9프레임_Strike_notReady() {
-        Score score = Score.strike();
-        lastFrame.bowl(10);
-        lastFrame.calculateAdditionalScore(score).getScore();
+        assertThatThrownBy(() -> {
+            Score score = Score.strike();
+            lastFrame.bowl(10);
+            lastFrame.calculateAdditionalScore(score).getScore();
+        }).isInstanceOf(CannotCalculateException.class);
     }
 
     @Test

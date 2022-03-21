@@ -1,63 +1,70 @@
 package bowling.frame.state;
 
-import static org.junit.Assert.*;
-
 import bowling.frame.Score;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PinsTest {
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void createWhenOverMaxPins() throws Exception {
-        Pins.bowl(11);
+        assertThatThrownBy(() -> {
+            Pins.bowl(11);
+        }).isInstanceOf(IllegalArgumentException.class);
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void createWhenUnderMinPins() throws Exception {
-        Pins.bowl(-1);
+        assertThatThrownBy(() -> {
+            Pins.bowl(-1);
+        }).isInstanceOf(IllegalArgumentException.class);
     }
     
     @Test
     public void strike() throws Exception {
         Pins pins = Pins.bowl(10);
-        assertTrue(pins.isStrike());
+        assertThat(pins.isStrike()).isTrue();
     }
     
     @Test
     public void spare() throws Exception {
         Pins pins = Pins.bowl(8);
-        assertTrue(pins.isSpare(Pins.bowl(2)));
+        assertThat(pins.isSpare(Pins.bowl(2))).isTrue();
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void spareWhenOverMaxPins() throws Exception {
-        Pins pins = Pins.bowl(8);
-        pins.isSpare(Pins.bowl(3));
+        assertThatThrownBy(() -> {
+            Pins pins = Pins.bowl(8);
+            pins.isSpare(Pins.bowl(3));
+        }).isInstanceOf(IllegalArgumentException.class);
     }
     
     @Test
     public void miss() throws Exception {
         Pins pins = Pins.bowl(8);
-        assertTrue(pins.isMiss(Pins.bowl(1)));
+        assertThat(pins.isMiss(Pins.bowl(1))).isTrue();
     }
     
     @Test
     public void totalPins() throws Exception {
         Pins pins = Pins.bowl(8);
-        assertEquals(9, pins.totalPins(Pins.bowl(1)));
+        assertThat(pins.totalPins(Pins.bowl(1))).isEqualTo(9);
     }
     
     @Test
     public void sumScore() throws Exception {
         Score score = new Score(10, 1);
         Pins pins = Pins.bowl(8);
-        assertEquals(new Score(18, 0), pins.sumScore(score));
+        assertThat(pins.sumScore(score)).isEqualTo(new Score(18, 0));
     }
     
     @Test
     public void getDesc() throws Exception {
-        assertEquals("X", Pins.bowl(10).getDesc());
-        assertEquals("9 | /", Pins.bowl(9).getDesc(Pins.bowl(1)));
-        assertEquals("9 | ", Pins.bowl(9).getDesc());
-        assertEquals("8 | 1", Pins.bowl(8).getDesc(Pins.bowl(1)));
+        assertThat(Pins.bowl(10).getDesc()).isEqualTo("X");
+        assertThat(Pins.bowl(9).getDesc(Pins.bowl(1))).isEqualTo("9 | /");
+        assertThat(Pins.bowl(9).getDesc()).isEqualTo("9 | ");
+        assertThat(Pins.bowl(8).getDesc(Pins.bowl(1))).isEqualTo("8 | 1");
     }
 }

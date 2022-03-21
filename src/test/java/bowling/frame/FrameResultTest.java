@@ -1,20 +1,20 @@
 package bowling.frame;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class FrameResultTest {
     @Test
     public void addTotalScore() throws Exception {
         FrameResult result = new FrameResult("8 | 1", 9);
-        assertEquals(19, result.addTotalScore(10));
+        assertThat(result.addTotalScore(10)).isEqualTo(19);
     }
 
     @Test
     public void addTotalScoreWhenUnScore() throws Exception {
         FrameResult result = new FrameResult("8 | ", NormalFrame.UN_SCORE_STATE);
-        assertEquals(NormalFrame.UN_SCORE_STATE, result.addTotalScore(10));
+        assertThat(result.addTotalScore(10)).isEqualTo(NormalFrame.UN_SCORE_STATE);
     }
 
     @Test
@@ -22,7 +22,7 @@ public class FrameResultTest {
         NormalFrame normalFrame = new NormalFrame(1);
         normalFrame.bowl(8).bowl(1);
         FrameResult result = normalFrame.getFrameResult();
-        assertEquals(new FrameResult("8 | 1", 9), result);
+        assertThat(result).isEqualTo(new FrameResult("8 | 1", 9));
     }
 
     @Test
@@ -30,7 +30,7 @@ public class FrameResultTest {
         NormalFrame normalFrame = new NormalFrame(1);
         normalFrame.bowl(8);
         FrameResult result = normalFrame.getFrameResult();
-        assertEquals(new FrameResult("8 | ", NormalFrame.UN_SCORE_STATE), result);
+        assertThat(result).isEqualTo(new FrameResult("8 | ", NormalFrame.UN_SCORE_STATE));
     }
 
     @Test
@@ -38,7 +38,7 @@ public class FrameResultTest {
         NormalFrame normalFrame = new NormalFrame(1);
         normalFrame.bowl(8).bowl(2).bowl(9);
         FrameResult result = normalFrame.getFrameResult();
-        assertEquals(new FrameResult("8 | /", 19), result);
+        assertThat(result).isEqualTo(new FrameResult("8 | /", 19));
     }
 
     @Test
@@ -46,7 +46,7 @@ public class FrameResultTest {
         NormalFrame normalFrame = new NormalFrame(1);
         normalFrame.bowl(8).bowl(2);
         FrameResult result = normalFrame.getFrameResult();
-        assertEquals(new FrameResult("8 | /", NormalFrame.UN_SCORE_STATE), result);
+        assertThat(result).isEqualTo(new FrameResult("8 | /", NormalFrame.UN_SCORE_STATE));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class FrameResultTest {
         NormalFrame normalFrame = new NormalFrame(1);
         normalFrame.bowl(10).bowl(10).bowl(8);
         FrameResult result = normalFrame.getFrameResult();
-        assertEquals(new FrameResult("X", 28), result);
+        assertThat(result).isEqualTo(new FrameResult("X", 28));
     }
 
     @Test
@@ -62,6 +62,6 @@ public class FrameResultTest {
         NormalFrame normalFrame = new NormalFrame(1);
         normalFrame.bowl(10).bowl(10);
         FrameResult result = normalFrame.getFrameResult();
-        assertEquals(new FrameResult("X", NormalFrame.UN_SCORE_STATE), result);
+        assertThat(result).isEqualTo(new FrameResult("X", NormalFrame.UN_SCORE_STATE));
     }
 }

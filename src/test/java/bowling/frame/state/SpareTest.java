@@ -1,26 +1,30 @@
 package bowling.frame.state;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
 import bowling.frame.Score;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class SpareTest {
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void createWhenillegal() throws Exception {
-        new Spare(Pins.bowl(7), Pins.bowl(2));
+        assertThatThrownBy(() -> {
+            new Spare(Pins.bowl(7), Pins.bowl(2));
+        }).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void bowl() {
-        new Spare(Pins.bowl(8), Pins.bowl(2)).bowl(8);
+        assertThatThrownBy(() -> {
+            new Spare(Pins.bowl(8), Pins.bowl(2)).bowl(8);
+        }).isInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test
     public void cacluateAdditionalScore() throws Exception {
         Score score = new Score(10, 2);
         Spare spare = new Spare(Pins.bowl(8), Pins.bowl(2));
-        assertEquals(new Score(20, 0), spare.calculateAdditionalScore(score));
+        assertThat(spare.calculateAdditionalScore(score)).isEqualTo(new Score(20, 0));
     }
 }

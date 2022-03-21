@@ -1,33 +1,33 @@
 package bowling.frame;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
-
-import bowling.frame.CannotCalculateException;
-import bowling.frame.Score;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ScoreTest {
-    @Test(expected = CannotCalculateException.class)
+    @Test
     public void getScoreWhenUnReady() throws Exception {
-        new Score(10, 2).getScore();
+        assertThatThrownBy(() -> {
+            new Score(10, 2).getScore();
+        }).isInstanceOf(CannotCalculateException.class);
     }
 
     @Test
     public void getScoreWhenXX9() {
         Score score = new Score(10, 2);
-        assertEquals(29, score.bowl(10).bowl(9).getScore());
+        assertThat(score.bowl(10).bowl(9).getScore()).isEqualTo(29);
     }
 
     @Test
     public void getScoreWhenX81() {
         Score score = new Score(10, 2);
-        assertEquals(19, score.bowl(8).bowl(1).getScore());
+        assertThat(score.bowl(8).bowl(1).getScore()).isEqualTo(19);
     }
 
     @Test
     public void getScoreWhenSpare8() throws Exception {
         Score score = new Score(10, 1);
-        assertEquals(18, score.bowl(8).getScore());
+        assertThat(score.bowl(8).getScore()).isEqualTo(18);
     }
 }

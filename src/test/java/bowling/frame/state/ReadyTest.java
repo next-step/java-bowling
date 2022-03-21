@@ -1,21 +1,21 @@
 package bowling.frame.state;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ReadyTest {
     @Test
     public void bowlWhenStrike() throws Exception {
         Ready ready = new Ready();
         State state = ready.bowl(10);
-        assertTrue(state instanceof Strike);
+        assertThat(state instanceof Strike).isTrue();
     }
 
     @Test
     public void bowlWhenFirst() throws Exception {
         Ready ready = new Ready();
         State state = ready.bowl(9);
-        assertTrue(state instanceof FirstBowl);
+        assertThat(state instanceof FirstBowl).isTrue();
     }
 }

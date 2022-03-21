@@ -1,15 +1,17 @@
 package bowling.frame.state;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
 import bowling.frame.Score;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class StrikeTest {
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void bowl() {
-        new Strike().bowl(8);
+        assertThatThrownBy(() -> {
+            new Strike().bowl(8);
+        }).isInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test
@@ -17,10 +19,10 @@ public class StrikeTest {
         Score score = new Score(10, 2);
         Strike strike = new Strike();
         score = strike.calculateAdditionalScore(score);
-        assertEquals(new Score(20, 1), score);
+        assertThat(score).isEqualTo(new Score(20, 1));
 
         strike = new Strike();
         score = strike.calculateAdditionalScore(score);
-        assertEquals(new Score(30, 0), score);
+        assertThat(score).isEqualTo(new Score(30, 0));
     }
 }
