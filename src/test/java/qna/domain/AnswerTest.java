@@ -1,6 +1,6 @@
 package qna.domain;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
 import static org.assertj.core.api.Assertions.assertThat;
