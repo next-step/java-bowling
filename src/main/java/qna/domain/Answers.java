@@ -10,8 +10,12 @@ public class Answers {
 
     private final List<Answer> answers;
 
-    public Answers(List<Answer> answers) {
+    private Answers(List<Answer> answers) {
         this.answers = Collections.unmodifiableList(answers);
+    }
+
+    public static Answers create(List<Answer> answers) {
+        return new Answers(answers);
     }
 
     public List<DeleteHistory> deleteAnswerSoftly(User writer) throws CannotDeleteException {

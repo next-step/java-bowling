@@ -55,7 +55,7 @@ public class Question extends AbstractEntity {
     }
 
     public List<DeleteHistory> deleteAnswerSoftly() throws CannotDeleteException {
-        Answers answers = new Answers(this.answers);
+        Answers answers = Answers.create(this.answers);
         return answers.deleteAnswerSoftly(this.writer);
     }
 
