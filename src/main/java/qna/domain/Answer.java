@@ -3,10 +3,15 @@ package qna.domain;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Answer extends AbstractEntity {
+
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
@@ -29,43 +34,37 @@ public class Answer extends AbstractEntity {
 
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
-
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
-
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
-
         this.writer = writer;
         this.question = question;
         this.contents = contents;
-    }
-
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
     }
 
     public boolean isDeleted() {
         return deleted;
     }
 
-    public boolean isOwner(User writer) {
-        return this.writer.equals(writer);
-    }
-
     public User getWriter() {
         return writer;
     }
 
-    public String getContents() {
-        return contents;
-    }
-
     public void toQuestion(Question question) {
         this.question = question;
+    }
+
+    DeleteHistory delete() {
+        DeleteHistory history = DeleteHistory.answerOf(getId(), writer);
+        deleted = true;
+        return history;
+    }
+
+    boolean isNotOwner(User loginUser) {
+        return !writer.equals(loginUser);
     }
 
     @Override
