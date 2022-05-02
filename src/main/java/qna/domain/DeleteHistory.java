@@ -31,19 +31,18 @@ public class DeleteHistory {
     public DeleteHistory() {
     }
 
-    public DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
+    private DeleteHistory(ContentType contentType, Long contentId, User deletedBy) {
         this.contentType = contentType;
         this.contentId = contentId;
         this.deletedBy = deletedBy;
-        this.createDate = createDate;
     }
 
     public static DeleteHistory answerOf(Long contentId, User deletedBy) {
-        return new DeleteHistory(ContentType.ANSWER, contentId, deletedBy, LocalDateTime.now());
+        return new DeleteHistory(ContentType.ANSWER, contentId, deletedBy);
     }
 
     public static DeleteHistory questionOf(Long contentId, User deletedBy) {
-        return new DeleteHistory(ContentType.QUESTION, contentId, deletedBy, LocalDateTime.now());
+        return new DeleteHistory(ContentType.QUESTION, contentId, deletedBy);
     }
 
     @Override
