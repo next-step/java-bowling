@@ -41,17 +41,13 @@ public class Question extends AbstractEntity {
     }
 
     public DeleteHistory deleteQuestionSoftly(User loginUser) throws CannotDeleteException {
-        if (writer.isOtherUser(loginUser) || containAnswers()) {
+        if (writer.isOtherUser(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
 
         this.deleted = true;
         return DeleteHistory.createQuestionHistory(this);
 
-    }
-
-    private boolean containAnswers() {
-        return !answers.isEmpty();
     }
 
     public List<DeleteHistory> deleteAnswerSoftly() throws CannotDeleteException {
