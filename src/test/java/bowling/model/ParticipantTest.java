@@ -1,12 +1,12 @@
 package bowling.model;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.assertj.core.api.Assertions.*;
 
 @DisplayName("참가자")
 class ParticipantTest {
@@ -30,5 +30,14 @@ class ParticipantTest {
     @ValueSource(strings = {"한글로", "123", "ab", "abcd"})
     void instance_invalidPattern_thrownIllegalArgumentException(String name) {
         assertThatIllegalArgumentException().isThrownBy(() -> Participant.from(name));
+    }
+
+    @Test
+    @DisplayName("주어진 이름 그대로 반환")
+    void name() {
+        //given
+        String name = "abc";
+        //when, then
+        assertThat(Participant.from(name).name()).isEqualTo(name);
     }
 }

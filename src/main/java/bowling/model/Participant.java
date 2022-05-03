@@ -20,7 +20,7 @@ public final class Participant {
         return new Participant(name);
     }
 
-    public String value() {
+    public String name() {
         return name;
     }
 
