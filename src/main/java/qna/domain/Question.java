@@ -40,17 +40,22 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public DeleteHistory deleteQuestionSoftly(User loginUser) throws CannotDeleteException {
-        if (writer.isOtherUser(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
-
-        this.deleted = true;
-        return DeleteHistory.createQuestionHistory(this);
-
+    public List<DeleteHistory> deleteQuestionAndAnswerSoftly(User loginUser) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(deleteQuestionSoftly(loginUser));
+        deleteHistories.addAll(deleteAnswerSoftly());
+        return deleteHistories;
     }
 
-    public List<DeleteHistory> deleteAnswerSoftly() throws CannotDeleteException {
+    private DeleteHistory deleteQuestionSoftly(User loginUser) throws CannotDeleteException {
+        if (writer.isOtherUser(loginUser)) {
+            throw new CannotDeleteException("질문을 작성한 사용자에 한해서 질문을 삭제할 수 있습니다.");
+        }
+        this.deleted = true;
+        return DeleteHistory.createDeleteHistoryForQuestion(this);
+    }
+
+    private List<DeleteHistory> deleteAnswerSoftly() throws CannotDeleteException {
         Answers answers = Answers.create(this.answers);
         return answers.deleteAnswerSoftly(this.writer);
     }

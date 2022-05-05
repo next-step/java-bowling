@@ -12,7 +12,6 @@ import qna.domain.QuestionRepository;
 import qna.domain.User;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service("qnaService")
@@ -33,15 +32,8 @@ public class QnAService {
 
     @Transactional
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-
         Question question = findQuestionById(questionId);
-        DeleteHistory deletedQuestionHistory = question.deleteQuestionSoftly(loginUser);
-        deleteHistories.add(deletedQuestionHistory);
-
-        List<DeleteHistory> deleteAnswerHistories = question.deleteAnswerSoftly();
-        deleteHistories.addAll(deleteAnswerHistories);
-
+        List<DeleteHistory> deleteHistories = question.deleteQuestionAndAnswerSoftly(loginUser);
         deleteHistoryService.saveAll(deleteHistories);
     }
 }
