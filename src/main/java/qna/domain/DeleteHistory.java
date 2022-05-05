@@ -32,16 +32,14 @@ public class DeleteHistory {
     }
 
     private DeleteHistory(ContentType contentType, Long contentId, User deletedBy) {
-        this.contentType = contentType;
-        this.contentId = contentId;
-        this.deletedBy = deletedBy;
+        this(contentType, contentId, deletedBy, LocalDateTime.now());
     }
 
-    public static DeleteHistory createQuestionHistory(Question question) {
+    public static DeleteHistory createDeleteHistoryForQuestion(Question question) {
         return new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter());
     }
 
-    public static DeleteHistory createAnswerHistory(Answer answer) {
+    public static DeleteHistory createDeleteHistoryForAnswer(Answer answer) {
         return new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter());
     }
 
