@@ -4,7 +4,11 @@ import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -51,10 +55,10 @@ public class Answer extends AbstractEntity {
 
     public DeleteHistory deleteAnswerSoftly(User questionUser) throws CannotDeleteException {
         if (writer.isOtherUser(questionUser)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+            throw new CannotDeleteException("답변자가 아닌 사용자는 답변을 삭제할 수 없습니다.");
         }
         this.deleted = true;
-        return DeleteHistory.createAnswerHistory(this);
+        return DeleteHistory.createDeleteHistoryForAnswer(this);
     }
 
     public boolean isDeleted() {
