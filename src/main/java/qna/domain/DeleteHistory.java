@@ -31,6 +31,18 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
+    private DeleteHistory(ContentType contentType, Long contentId, User deletedBy) {
+        this(contentType, contentId, deletedBy, LocalDateTime.now());
+    }
+
+    public static DeleteHistory createDeleteHistoryForQuestion(Question question) {
+        return new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter());
+    }
+
+    public static DeleteHistory createDeleteHistoryForAnswer(Answer answer) {
+        return new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -41,7 +53,6 @@ public class DeleteHistory {
                 Objects.equals(contentId, that.contentId) &&
                 Objects.equals(deletedBy, that.deletedBy);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(id, contentType, contentId, deletedBy);

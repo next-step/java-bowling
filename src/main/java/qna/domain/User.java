@@ -36,6 +36,10 @@ public class User extends AbstractEntity {
         this.email = email;
     }
 
+    public boolean isOtherUser(User user) {
+        return !equalsNameAndEmail(user);
+    }
+
     public String getUserId() {
         return userId;
     }
