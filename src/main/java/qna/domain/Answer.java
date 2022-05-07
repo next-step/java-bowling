@@ -55,7 +55,7 @@ public class Answer extends AbstractEntity {
 
     public DeleteHistory deleteAnswerSoftly(User questionUser) throws CannotDeleteException {
         if (writer.isOtherUser(questionUser)) {
-            throw new CannotDeleteException("답변자가 아닌 사용자는 답변을 삭제할 수 없습니다.");
+            throw new CannotDeleteException("답변자가 아닌 사용자는 답변을 삭제할 수 없습니다.", questionUser);
         }
         this.deleted = true;
         return DeleteHistory.createDeleteHistoryForAnswer(this);
