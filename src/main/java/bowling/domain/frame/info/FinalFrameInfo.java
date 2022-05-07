@@ -50,6 +50,11 @@ public class FinalFrameInfo extends FrameInfo {
     }
 
     @Override
+    public boolean isEndFrame() {
+        return !hasNextRound();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -68,4 +73,5 @@ public class FinalFrameInfo extends FrameInfo {
     public int hashCode() {
         return Objects.hash(super.hashCode(), bonusRound);
     }
+
 }

@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class FinalFrame implements Frame {
 
-    private FinalFrameInfo frameInfo;
+    private final FinalFrameInfo frameInfo;
     private final Pins pins;
 
     public FinalFrame(Pins pins, FinalFrameInfo frameInfo) {

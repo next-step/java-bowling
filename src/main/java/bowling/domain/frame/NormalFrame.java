@@ -4,15 +4,19 @@ import bowling.domain.frame.info.FrameInfo;
 import bowling.domain.frame.info.NormalFrameInfo;
 import bowling.domain.pins.Pins;
 import bowling.domain.pins.Status;
+import bowling.domain.rule.NormalRule;
+import bowling.domain.rule.Rule;
 import bowling.domain.score.Score;
 import java.util.Optional;
 
 public class NormalFrame implements Frame {
 
-    private final NormalFrameInfo frameInfo;
+    private final Rule rule;
+    private final FrameInfo frameInfo;
     private final Pins pins;
 
-    private NormalFrame(NormalFrameInfo normalFrameInfo, Pins pins) {
+    private NormalFrame(Rule rule, FrameInfo normalFrameInfo, Pins pins) {
+        this.rule = rule;
         this.frameInfo = normalFrameInfo;
         this.pins = pins;
     }
@@ -21,10 +25,9 @@ public class NormalFrame implements Frame {
         return of(NormalFrameInfo.create(), Pins.create());
     }
 
-    public static NormalFrame of(NormalFrameInfo normalFrameInfo, Pins pins) {
-        return new NormalFrame(normalFrameInfo, pins);
+    public static NormalFrame of(FrameInfo normalFrameInfo, Pins pins) {
+        return new NormalFrame(new NormalRule(normalFrameInfo, pins), normalFrameInfo, pins);
     }
-
 
     @Override
     public void roll(int downPins) {
@@ -33,11 +36,15 @@ public class NormalFrame implements Frame {
 
     @Override
     public Optional<Frame> nextRound() {
-        if (isLastFrame()) {
+        if (rule.isEnd()) {
             return Optional.of(FinalFrame.create());
         }
 
-        if (isCurrentRoundEnd()) {
+        return next();
+    }
+
+    private Optional<Frame> next() {
+        if (rule.isCurrentRoundEnd()) {
             return Optional.of(of(frameInfo.nextFrame(), Pins.create()));
         }
 
@@ -46,20 +53,12 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean hasNextRound() {
-        return !frameInfo.isLastRound() || pins.isReady();
-    }
-
-    private boolean isLastFrame() {
-        return frameInfo.isEndFrame() && isCurrentRoundEnd();
-    }
-
-    private boolean isCurrentRoundEnd() {
-        return pins.isAllDown() || frameInfo.isLastRound();
+        return rule.hasNextRound();
     }
 
     @Override
     public boolean isFrameEnd(int givenFrame) {
-        return frameInfo.isAfterFrame(givenFrame);
+        return rule.isAfterFrame(givenFrame);
     }
 
     @Override

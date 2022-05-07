@@ -31,7 +31,7 @@ public class NormalFrameInfo extends FrameInfo {
     public boolean isLastRound() {
         return this.round() == SECOND_ROUND;
     }
-
+    @Override
     public boolean isEndFrame() {
         return this.frameNumber() == MAX_NORMAL_FRAME;
     }

@@ -59,4 +59,5 @@ public abstract class FrameInfo implements Comparable<FrameInfo> {
         return Objects.hash(frameNumber, round);
     }
 
+    public abstract boolean isEndFrame();
 }
