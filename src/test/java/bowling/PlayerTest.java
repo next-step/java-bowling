@@ -5,6 +5,8 @@ import bowling.model.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static bowling.exception.ExceptionConstants.INVALID_USERNAME_ALPHABETIC_FORMAT;
+import static bowling.exception.ExceptionConstants.INVALID_USERNAME_LENGTH_FORMAT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -21,7 +23,7 @@ class PlayerTest {
     void throwExceptionAboutNameLength() {
         String username = "sample";
         assertThatThrownBy(() -> Player.create(username)).isInstanceOf(InvalidUsernameException.class)
-                .hasMessageContaining("사용자 이름은 빈칸 또는 %d 글자는 불가능 합니다. (length : %d)", 3, username.length());
+                .hasMessageContaining(INVALID_USERNAME_LENGTH_FORMAT, 3, username.length());
     }
 
     @Test
@@ -29,7 +31,7 @@ class PlayerTest {
     void throwExceptionAboutUsernameAlphabetic() {
         String username = "한글";
         assertThatThrownBy(() -> Player.create(username)).isInstanceOf(InvalidUsernameException.class)
-                .hasMessageContaining("사용자의 이름은 영문만 가능합니다. (username : %s)", username);
+                .hasMessageContaining(INVALID_USERNAME_ALPHABETIC_FORMAT, username);
     }
 
 }
