@@ -8,8 +8,9 @@
 - [X] 볼링장에서 게임을 할 수 있다. #BowlingGame#main()
     - [x] 프레임마다 공을 굴려 핀을 쓰러뜨릴 수 있다. #Frame#roll()
         - [x] 1~9 프레임에 공을 굴릴 수 있다. #NormalFrame#roll() --> Frame
+            - [ ] NormalRule에 따라 스트라이크면 처리  
         - [x] 10 프레임에 공을 굴릴 수 있다. #FinalFrame#roll()  --> Frame
-            - [x] 10 프레임은 스트라이크이거나 스페어이면 한 번을 더 투구할 수 있다.
+            - [x] 10 프레임은 스트라이크이거나 스페어이면 한 번을 더 투구할 수 있다. - #FinalRule#isSatified
         - [x] 프레임마다 핀들이 생성된다. #Pins#of()
     - [ ] 볼링 심판은 현재 플레이어들의 라운드가 끝났는지 알 수가 있다. #Referee##isEndFrame  
 - [x] 쓰러뜨릴 핀의 개수를 입력 받을 수 있다. #InputView#downPinsCount()
