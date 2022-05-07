@@ -50,4 +50,9 @@ public class Player {
         return (username == null || username.isBlank());
     }
 
+    @Override
+    public String toString() {
+        return username;
+    }
+
 }
