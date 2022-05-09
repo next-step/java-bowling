@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public abstract class FrameInfo implements Comparable<FrameInfo> {
 
-    public static final int SECOND_ROUND = 1;
-    public static final int START_ROUND = 0;
+    protected static final int SECOND_ROUND = 1;
+    protected static final int START_ROUND = 0;
 
     private final int frameNumber;
     private final int round;
