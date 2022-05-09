@@ -6,7 +6,7 @@ import bowling.utility.Assert;
 
 import java.util.Objects;
 
-final class BonusThrown implements BallState {
+public final class BonusThrown implements BallState {
 
     private static final int MINIMUM_COUNT = 0;
     private static final int MINUS_COUNT_STEP = 1;
@@ -33,7 +33,11 @@ final class BonusThrown implements BallState {
     @Override
     public BallState state(Pins countOfHit) {
         validateState();
-        return of(BonusHit.of(this, countOfHit), restCount - MINUS_COUNT_STEP);
+        return of(bonusHit.addedCount(countOfHit), restCount - MINUS_COUNT_STEP);
+    }
+
+    public BonusHit bonusHit() {
+        return bonusHit;
     }
 
     private void validateState() {

@@ -4,27 +4,49 @@ import bowling.model.Pins;
 import bowling.model.frame.BallState;
 import bowling.utility.Assert;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
-final class BonusHit {
+public final class BonusHit {
 
     private final BallState fromState;
-    private final Pins count;
+    private final List<Pins> counts;
 
-    private BonusHit(BallState fromState, Pins count) {
+    private BonusHit(BallState fromState, List<Pins> counts) {
         Assert.notNull(fromState, "fromState must not be null");
-        Assert.notNull(count, "count must not be null");
+        Assert.notEmpty(counts, "counts must not be null");
         this.fromState = fromState;
-        this.count = count;
+        this.counts = counts;
     }
 
     static BonusHit of(BallState fromState, Pins count) {
-        return new BonusHit(fromState, count);
+        Assert.notNull(count, "counts must not be null");
+        return of(fromState, Collections.singletonList(count));
+    }
+
+    static BonusHit of(BallState fromState, List<Pins> counts) {
+        return new BonusHit(fromState, counts);
+    }
+
+    BonusHit addedCount(Pins count) {
+        List<Pins> addedCount = new ArrayList<>(this.counts);
+        addedCount.add(count);
+        return of(this.fromState, addedCount);
+    }
+
+    public BallState fromState() {
+        return fromState;
+    }
+
+    public List<Pins> counts() {
+        return Collections.unmodifiableList(this.counts);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fromState, count);
+        return Objects.hash(fromState, counts);
     }
 
     @Override
@@ -36,14 +58,14 @@ final class BonusHit {
             return false;
         }
         BonusHit bonusHit = (BonusHit) o;
-        return Objects.equals(fromState, bonusHit.fromState) && Objects.equals(count, bonusHit.count);
+        return Objects.equals(fromState, bonusHit.fromState) && Objects.equals(counts, bonusHit.counts);
     }
 
     @Override
     public String toString() {
         return "BonusHit{" +
                 "fromState=" + fromState +
-                ", count=" + count +
+                ", counts=" + counts +
                 '}';
     }
 }

@@ -53,6 +53,10 @@ public final class FinalFrame implements Frame {
         return NUMBER;
     }
 
+    public BallState state() {
+        return state;
+    }
+
     private void validateState() {
         if (isEnd()) {
             throw new IllegalStateException(String.format("final frame(%s) is already end", this));
@@ -61,6 +65,11 @@ public final class FinalFrame implements Frame {
 
     private boolean hasBonusCount() {
         return state.bonusCount() > 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(state);
     }
 
     @Override
@@ -73,11 +82,6 @@ public final class FinalFrame implements Frame {
         }
         FinalFrame that = (FinalFrame) o;
         return Objects.equals(state, that.state);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(state);
     }
 
     @Override
