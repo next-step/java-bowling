@@ -7,7 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +21,12 @@ public class Answers {
     public Answers() {
     }
 
-    public void delete(User loginUser, DeleteHistories deleteHistories, LocalDateTime createDate) throws CannotDeleteException {
+    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
+        DeleteHistories deleteHistories = new DeleteHistories();
         for (Answer answer : answers) {
-            answer.delete(loginUser, deleteHistories, createDate);
+            deleteHistories.add(answer.delete(loginUser));
         }
+        return deleteHistories;
     }
 
     public void add(Answer answer) {
