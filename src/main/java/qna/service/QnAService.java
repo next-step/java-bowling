@@ -10,8 +10,6 @@ import qna.domain.*;
 
 import javax.annotation.Resource;
 
-import static java.time.LocalDateTime.now;
-
 @Service("qnaService")
 public class QnAService {
     private static final Logger log = LoggerFactory.getLogger(QnAService.class);
@@ -28,8 +26,7 @@ public class QnAService {
     @Transactional
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
         Question question = findQuestionById(questionId);
-        DeleteHistories deleteHistories = new DeleteHistories();
-        question.delete(loginUser, deleteHistories, now());
+        DeleteHistories deleteHistories = question.delete(loginUser);
         deleteHistoryService.saveAll(deleteHistories.getDeleteHistories());
     }
 
