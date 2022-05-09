@@ -9,24 +9,18 @@ import bowling.domain.rule.Rule;
 import bowling.domain.score.Score;
 import java.util.Optional;
 
-public class FinalFrame implements Frame {
+public class FinalFrame extends Frame {
 
-    private final FinalFrameInfo frameInfo;
-    private final Pins pins;
-    private final Rule rule;
-
-    public FinalFrame(Pins pins, FinalFrameInfo frameInfo, Rule rule) {
-        this.frameInfo = frameInfo;
-        this.pins = pins;
-        this.rule = rule;
+    protected FinalFrame(Rule rule, FrameInfo frameInfo, Pins pins) {
+        super(rule, frameInfo, pins);
     }
 
     public static Frame create() {
         return of(Pins.create(), FinalFrameInfo.create());
     }
 
-    public static Frame of(Pins pins, FinalFrameInfo frameInfo) {
-        return new FinalFrame(pins, frameInfo, new FinalRule(frameInfo, pins));
+    public static Frame of(Pins pins, FrameInfo frameInfo) {
+        return new FinalFrame(new FinalRule(frameInfo, pins), frameInfo, pins);
     }
 
     @Override
@@ -45,7 +39,7 @@ public class FinalFrame implements Frame {
 
     private Optional<Frame> next() {
         if (rule.isNewPins()) {
-            return Optional.of(of(Pins.create(), frameInfo.nextRoundWithBonusRound()));
+            return Optional.of(of(Pins.create(), FinalFrameInfo.ofBonusFinalFrame(frameInfo)));
         }
 
         return Optional.of(of(Pins.of(pins, Status.READY), frameInfo.nextRound()));
@@ -70,19 +64,5 @@ public class FinalFrame implements Frame {
         return Optional.of(numberOfDownedPins());
     }
 
-    @Override
-    public Pins pins() {
-        return pins;
-    }
-
-    @Override
-    public Score numberOfDownedPins() {
-        return pins.numberOfPinDowns();
-    }
-
-    @Override
-    public FrameInfo frameInfo() {
-        return frameInfo;
-    }
 
 }

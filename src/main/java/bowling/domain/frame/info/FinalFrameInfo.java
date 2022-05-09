@@ -15,25 +15,25 @@ public class FinalFrameInfo extends FrameInfo {
         this.bonusRound = bonusRound;
     }
 
-    public static FinalFrameInfo of(int frameNumber, int round, boolean bonusRound) {
-        return new FinalFrameInfo(frameNumber, round, bonusRound);
-    }
-
-    public static FinalFrameInfo create() {
+    public static FrameInfo create() {
         return of(LAST_FRAME_NUMBER, START_ROUND, false);
     }
 
-    public FinalFrameInfo nextRoundWithBonusRound() {
-        return of(this.frameNumber(), this.round() + NEXT_ROUND, true);
+    public static FrameInfo of(int frameNumber, int round, boolean bonusRound) {
+        return new FinalFrameInfo(frameNumber, round, bonusRound);
+    }
+
+    public static FrameInfo ofBonusFinalFrame(FrameInfo other) {
+        return of(other.frameNumber(), other.round() + NEXT_ROUND, true);
     }
 
     @Override
-    public FinalFrameInfo nextFrame() {
+    public FrameInfo nextFrame() {
         throw new IllegalArgumentException("Final Frame의 Next Frame은 없습니다.");
     }
 
     @Override
-    public FinalFrameInfo nextRound() {
+    public FrameInfo nextRound() {
         return of(this.frameNumber(), this.round() + SECOND_ROUND, bonusRound);
     }
 

@@ -9,16 +9,10 @@ import bowling.domain.rule.Rule;
 import bowling.domain.score.Score;
 import java.util.Optional;
 
-public class NormalFrame implements Frame {
+public class NormalFrame extends Frame {
 
-    private final Rule rule;
-    private final FrameInfo frameInfo;
-    private final Pins pins;
-
-    private NormalFrame(Rule rule, FrameInfo normalFrameInfo, Pins pins) {
-        this.rule = rule;
-        this.frameInfo = normalFrameInfo;
-        this.pins = pins;
+    protected NormalFrame(Rule rule, FrameInfo frameInfo, Pins pins) {
+        super(rule, frameInfo, pins);
     }
 
     public static NormalFrame create() {
@@ -31,7 +25,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public void roll(int downPins) {
-        pins.roll(Score.from(downPins), frameInfo);
+        pins().roll(Score.from(downPins), frameInfo());
     }
 
     @Override
@@ -78,19 +72,5 @@ public class NormalFrame implements Frame {
         return Optional.empty();
     }
 
-    @Override
-    public Score numberOfDownedPins() {
-        return pins.numberOfPinDowns();
-    }
-
-    @Override
-    public FrameInfo frameInfo() {
-        return frameInfo;
-    }
-
-    @Override
-    public Pins pins() {
-        return pins;
-    }
 
 }
