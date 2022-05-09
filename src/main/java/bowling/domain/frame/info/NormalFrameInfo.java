@@ -3,7 +3,7 @@ package bowling.domain.frame.info;
 public class NormalFrameInfo extends FrameInfo {
 
     private static final int MAX_NORMAL_FRAME = 8;
-    public static final int NEXT_ROUND = 1;
+    private static final int NEXT_ROUND = 1;
 
     private NormalFrameInfo(int frameNumber, int round) {
         super(frameNumber, round);

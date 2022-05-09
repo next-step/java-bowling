@@ -7,6 +7,7 @@ import java.util.Objects;
 public class Score implements Comparable<Score> {
 
     private static final int MAX_SCORE = 300;
+
     private final int score;
     private final boolean endFrame;
 
