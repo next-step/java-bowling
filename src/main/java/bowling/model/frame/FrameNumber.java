@@ -1,5 +1,7 @@
 package bowling.model.frame;
 
+import bowling.utility.Assert;
+
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -19,7 +21,7 @@ public final class FrameNumber {
     private final int number;
 
     private FrameNumber(int number) {
-        validate(number);
+        Assert.isFalse(isLessThanMin(number) || isGreaterThanMax(number), String.format("number(%d) must be between %d and %d", number, MINIMUM, MAXIMUM));
         this.number = number;
     }
 
@@ -38,10 +40,8 @@ public final class FrameNumber {
         return number == MAXIMUM;
     }
 
-    private void validate(int number) {
-        if (isLessThanMin(number) || isGreaterThanMax(number)) {
-            throw new IllegalArgumentException(String.format("number(%d) must be between %d and %d", number, MINIMUM, MAXIMUM));
-        }
+    public int toInt() {
+        return number;
     }
 
     private boolean isGreaterThanMax(int number) {
@@ -50,10 +50,6 @@ public final class FrameNumber {
 
     private boolean isLessThanMin(int number) {
         return number < MINIMUM;
-    }
-
-    public int toInt() {
-        return number;
     }
 
     @Override

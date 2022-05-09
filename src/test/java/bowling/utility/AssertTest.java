@@ -41,6 +41,27 @@ class AssertTest {
                 .withMessage(message);
     }
 
+    @Test
+    @DisplayName("참 조건 검증")
+    void isTrue() {
+        //given
+        String message = "message";
+        //when, then
+        assertThatIllegalArgumentException().isThrownBy(() -> Assert.isTrue(false, message))
+                .withMessage(message);
+    }
+
+
+    @Test
+    @DisplayName("거짓 조건 검증")
+    void isFalse() {
+        //given
+        String message = "message";
+        //when, then
+        assertThatIllegalArgumentException().isThrownBy(() -> Assert.isFalse(true, message))
+                .withMessage(message);
+    }
+
     @ParameterizedTest
     @DisplayName("텍스트 존재 검증")
     @NullAndEmptySource

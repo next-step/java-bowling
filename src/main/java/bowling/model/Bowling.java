@@ -27,7 +27,7 @@ public final class Bowling {
     }
 
     public boolean isNotFinished() {
-        return !frames.isFinished();
+        return !isFinished();
     }
 
     public Bowling pitch(Pins countOfHit) {
@@ -54,7 +54,7 @@ public final class Bowling {
     }
 
     private boolean isFinished() {
-        return !isNotFinished();
+        return frames.isFinished();
     }
 
     @Override

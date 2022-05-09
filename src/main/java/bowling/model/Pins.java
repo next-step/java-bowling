@@ -1,5 +1,7 @@
 package bowling.model;
 
+import bowling.utility.Assert;
+
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -18,7 +20,7 @@ public final class Pins {
     private final int count;
 
     private Pins(int count) {
-        validate(count);
+        Assert.isFalse(isLessThanMin(count) || isGreaterThanMax(count), String.format("count(%d) must be between %d and %d", count, MINIMUM_COUNT, MAXIMUM_COUNT));
         this.count = count;
     }
 
@@ -27,27 +29,12 @@ public final class Pins {
     }
 
     public Pins sum(Pins pins) {
-        if (isGreaterThanMax(this.count + pins.count)) {
-            throw new IllegalArgumentException(String.format("pins(%s) cannot be added to pins(%s)", this, pins));
-        }
+        Assert.isFalse(isGreaterThanMax(this.count + pins.count), String.format("pins(%s) cannot be added to pins(%s)", this, pins));
         return from(this.count + pins.count);
-    }
-
-    public Pins minus(Pins pins) {
-        if (isLessThanMin(this.count - pins.count)) {
-            throw new IllegalArgumentException(String.format("pins(%s) cannot be minus to pins(%s)", this, pins));
-        }
-        return from(this.count - pins.count);
     }
 
     public int count() {
         return count;
-    }
-
-    private void validate(int count) {
-        if (isLessThanMin(count) || isGreaterThanMax(count)) {
-            throw new IllegalArgumentException(String.format("count(%d) must be between %d and %d", count, MINIMUM_COUNT, MAXIMUM_COUNT));
-        }
     }
 
     private boolean isGreaterThanMax(int count) {

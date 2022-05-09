@@ -14,7 +14,7 @@ public final class SecondThrown implements BallState {
     private SecondThrown(Pins firstHit, Pins secondHit) {
         Assert.notNull(firstHit, "firstHit must not be null");
         Assert.notNull(secondHit, "secondHit must not be null");
-        validateSum(firstHit, secondHit);
+        Assert.isFalse(Pins.MAX.equals(firstHit.sum(secondHit)), String.format("first pins(%s) and second pins(%s) must be thrown", firstHit, secondHit));
         this.firstHit = firstHit;
         this.secondHit = secondHit;
     }
@@ -39,12 +39,6 @@ public final class SecondThrown implements BallState {
 
     public Pins firstHit() {
         return firstHit;
-    }
-
-    private void validateSum(Pins firstHit, Pins secondHit) {
-        if (Pins.MAX.equals(firstHit.sum(secondHit))) {
-            throw new IllegalArgumentException(String.format("first pins(%s) and second pins(%s) must be thrown", firstHit, secondHit));
-        }
     }
 
     @Override

@@ -16,7 +16,7 @@ public final class BonusThrown implements BallState {
 
     private BonusThrown(BonusHit bonusHit, int restCount) {
         Assert.notNull(bonusHit, "bonusHit must not be null");
-        validateCount(restCount);
+        Assert.isFalse(isLessThanMinimum(restCount), String.format("rest count(%d) must be greater than %d", restCount, MINIMUM_COUNT));
         this.bonusHit = bonusHit;
         this.restCount = restCount;
     }
@@ -43,12 +43,6 @@ public final class BonusThrown implements BallState {
     private void validateState() {
         if (isLessThanMinimum(restCount - MINUS_COUNT_STEP)) {
             throw new IllegalStateException(String.format("rest count(%d) must be greater than or equal %d to create a state.", restCount, MINIMUM_COUNT));
-        }
-    }
-
-    private void validateCount(int restCount) {
-        if (isLessThanMinimum(restCount)) {
-            throw new IllegalArgumentException(String.format("rest count(%d) must be greater than %d", restCount, MINIMUM_COUNT));
         }
     }
 

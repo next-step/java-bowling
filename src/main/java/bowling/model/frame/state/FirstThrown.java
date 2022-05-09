@@ -12,7 +12,7 @@ public final class FirstThrown implements BallState {
 
     public FirstThrown(Pins countOfHit) {
         Assert.notNull(countOfHit, "countOfHit must not be null");
-        validate(countOfHit);
+        Assert.isFalse(countOfHit.equals(Pins.MAX), String.format("countOfHit(%s) must be less than max pins(%s)", countOfHit, Pins.MAX));
         this.countOfHit = countOfHit;
     }
 
@@ -35,12 +35,6 @@ public final class FirstThrown implements BallState {
 
     public Pins countOfHit() {
         return countOfHit;
-    }
-
-    private void validate(Pins countOfHit) {
-        if (countOfHit.equals(Pins.MAX)) {
-            throw new IllegalArgumentException(String.format("countOfHit(%s) must be less than max pins(%s)", countOfHit, Pins.MAX));
-        }
     }
 
     @Override

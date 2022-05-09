@@ -12,7 +12,7 @@ public final class Participant {
 
     private Participant(String name) {
         Assert.hasText(name, "name must not be blank");
-        validatePattern(name);
+        Assert.isTrue(NAME_PATTERN.matcher(name).matches(), String.format("name(%s) must be 3 english letters", name));
         this.name = name;
     }
 
@@ -24,9 +24,4 @@ public final class Participant {
         return name;
     }
 
-    private void validatePattern(String value) {
-        if (!NAME_PATTERN.matcher(value).matches()) {
-            throw new IllegalArgumentException(String.format("name(%s) must be 3 english letters", value));
-        }
-    }
 }

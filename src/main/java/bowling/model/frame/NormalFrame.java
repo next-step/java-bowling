@@ -15,7 +15,7 @@ public final class NormalFrame implements Frame {
     private NormalFrame(FrameNumber number, BallState state) {
         Assert.notNull(number, "number must not be null");
         Assert.notNull(state, "state must not be null");
-        validateNumber(number);
+        Assert.isFalse(number.isLast(), String.format("number(%s) must not be last", number));
         this.number = number;
         this.state = state;
     }
@@ -52,12 +52,6 @@ public final class NormalFrame implements Frame {
 
     public BallState state() {
         return state;
-    }
-
-    private void validateNumber(FrameNumber number) {
-        if (number.isLast()) {
-            throw new IllegalArgumentException(String.format("number(%s) must not be last", number));
-        }
     }
 
     private Frame nextFrame(Pins countOfHit) {
