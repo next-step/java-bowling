@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("볼링")
 class BowlingTest {
@@ -20,16 +21,20 @@ class BowlingTest {
     @Test
     @DisplayName("참가자와 프레임들로 생성")
     void instance() {
-        assertThatNoException().isThrownBy(() -> Bowling.from(PARTICIPANT));
-        assertThatNoException().isThrownBy(() -> Bowling.of(PARTICIPANT, Frames.init()));
+        assertAll(
+                () -> assertThatNoException().isThrownBy(() -> Bowling.from(PARTICIPANT)),
+                () -> assertThatNoException().isThrownBy(() -> Bowling.of(PARTICIPANT, Frames.init()))
+        );
     }
 
     @Test
     @DisplayName("참가자와 프레임들은 필수")
     void instance_nullArguments_thrownIllegalArgumentException() {
-        assertThatIllegalArgumentException().isThrownBy(() -> Bowling.from(null));
-        assertThatIllegalArgumentException().isThrownBy(() -> Bowling.of(PARTICIPANT, null));
-        assertThatIllegalArgumentException().isThrownBy(() -> Bowling.of(null, Frames.init()));
+        assertAll(
+                () -> assertThatIllegalArgumentException().isThrownBy(() -> Bowling.from(null)),
+                () -> assertThatIllegalArgumentException().isThrownBy(() -> Bowling.of(PARTICIPANT, null)),
+                () -> assertThatIllegalArgumentException().isThrownBy(() -> Bowling.of(null, Frames.init()))
+        );
     }
 
     @ParameterizedTest(name = "[{index}] 1점 점수 {0} 번 공을 던지면 종료되지 않음")

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("보너스 맞춘 정보")
 class BonusHitTest {
@@ -21,9 +22,11 @@ class BonusHitTest {
     @Test
     @DisplayName("이전 상태와 핀들은 필수")
     void instance_nullArguments_throwIllegalArgumentException() {
-        assertThatIllegalArgumentException().isThrownBy(() -> BonusHit.of(Strike.instance(), (Pins) null));
-        assertThatIllegalArgumentException().isThrownBy(() -> BonusHit.of(null, Pins.MAX));
-        assertThatIllegalArgumentException().isThrownBy(() -> BonusHit.of(Strike.instance(), Collections.emptyList()));
+        assertAll(
+                () -> assertThatIllegalArgumentException().isThrownBy(() -> BonusHit.of(Strike.instance(), (Pins) null)),
+                () -> assertThatIllegalArgumentException().isThrownBy(() -> BonusHit.of(null, Pins.MAX)),
+                () -> assertThatIllegalArgumentException().isThrownBy(() -> BonusHit.of(Strike.instance(), Collections.emptyList()))
+        );
     }
 
     @Test

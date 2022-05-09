@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("일반 프레임")
 class NormalFrameTest {
@@ -37,9 +38,11 @@ class NormalFrameTest {
     @Test
     @DisplayName("프레임 번호와 상태는 필수")
     void instance_nullNumber_thrownIllegalArgumentException() {
-        assertThatIllegalArgumentException().isThrownBy(() -> NormalFrame.init(null));
-        assertThatIllegalArgumentException().isThrownBy(() -> NormalFrame.of(FrameNumber.FIRST, null));
-        assertThatIllegalArgumentException().isThrownBy(() -> NormalFrame.of(null, Strike.instance()));
+        assertAll(
+                () -> assertThatIllegalArgumentException().isThrownBy(() -> NormalFrame.init(null)),
+                () -> assertThatIllegalArgumentException().isThrownBy(() -> NormalFrame.of(FrameNumber.FIRST, null)),
+                () -> assertThatIllegalArgumentException().isThrownBy(() -> NormalFrame.of(null, Strike.instance()))
+        );
     }
 
     @Test
@@ -62,8 +65,10 @@ class NormalFrameTest {
     @Test
     @DisplayName("상태에 따른 종료 여부")
     void isEnd() {
-        assertThat(NormalFrame.of(FrameNumber.FIRST, Strike.instance()).isEnd()).isTrue();
-        assertThat(NormalFrame.of(FrameNumber.FIRST, FirstThrown.from(Pins.ZERO)).isEnd()).isFalse();
+        assertAll(
+                () -> assertThat(NormalFrame.of(FrameNumber.FIRST, Strike.instance()).isEnd()).isTrue(),
+                () -> assertThat(NormalFrame.of(FrameNumber.FIRST, FirstThrown.from(Pins.ZERO)).isEnd()).isFalse()
+        );
     }
 
     @Test

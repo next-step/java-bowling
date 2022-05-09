@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("두번째 던진 상태")
 class SecondThrownTest {
@@ -18,8 +19,10 @@ class SecondThrownTest {
     @Test
     @DisplayName("첫번재, 두번째 핀들은 필수")
     void instance_nullArguments_thrownIllegalArgumentException() {
-        assertThatIllegalArgumentException().isThrownBy(() -> SecondThrown.of(Pins.ZERO, null));
-        assertThatIllegalArgumentException().isThrownBy(() -> SecondThrown.of(null, Pins.ZERO));
+        assertAll(
+                () -> assertThatIllegalArgumentException().isThrownBy(() -> SecondThrown.of(Pins.ZERO, null)),
+                () -> assertThatIllegalArgumentException().isThrownBy(() -> SecondThrown.of(null, Pins.ZERO))
+        );
     }
 
     @Test

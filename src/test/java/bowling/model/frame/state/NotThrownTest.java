@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.ReflectionUtils;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("안던진 상태")
 class NotThrownTest {
@@ -34,7 +35,9 @@ class NotThrownTest {
         //given
         NotThrown notThrown = NotThrown.instance();
         //when, then
-        assertThat(notThrown.state(Pins.MAX)).isEqualTo(Strike.instance());
-        assertThat(notThrown.state(Pins.ZERO)).isEqualTo(FirstThrown.from(Pins.ZERO));
+        assertAll(
+                () -> assertThat(notThrown.state(Pins.MAX)).isEqualTo(Strike.instance()),
+                () -> assertThat(notThrown.state(Pins.ZERO)).isEqualTo(FirstThrown.from(Pins.ZERO))
+        );
     }
 }
