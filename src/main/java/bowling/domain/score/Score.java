@@ -31,6 +31,10 @@ public class Score implements Comparable<Score> {
         return new Score(givenLastScore, end);
     }
 
+    public static Score sumWithScores(Score other, Score other2) {
+        return from(other.score + other2.score);
+    }
+
     public Score sumWithScores(Score... other) {
         return from(score + Arrays.stream(other)
             .mapToInt(value -> value.score)
