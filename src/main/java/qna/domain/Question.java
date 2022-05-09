@@ -67,10 +67,15 @@ public class Question extends AbstractEntity {
 
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         validateOwner(loginUser);
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(DeleteHistory.questionOf(getId(), writer));
+        List<DeleteHistory> deleteHistories = createDeleteHistories();
         deleteHistories.addAll(answers.delete(loginUser));
         this.deleted = true;
+        return deleteHistories;
+    }
+
+    private List<DeleteHistory> createDeleteHistories() {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(DeleteHistory.questionOf(getId(), writer));
         return deleteHistories;
     }
 

@@ -59,7 +59,7 @@ public class Answer extends AbstractEntity {
 
     DeleteHistory delete() {
         DeleteHistory history = DeleteHistory.answerOf(getId(), writer);
-        deleted = true;
+        this.deleted = true;
         return history;
     }
 
