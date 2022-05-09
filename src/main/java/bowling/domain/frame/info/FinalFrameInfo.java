@@ -4,8 +4,9 @@ import java.util.Objects;
 
 public class FinalFrameInfo extends FrameInfo {
 
-    public static final int NEXT_ROUND = 1;
+    private static final int NEXT_ROUND = 1;
     private static final int LAST_FRAME_NUMBER = 9;
+    private static final int LAST_ROUND = 2;
 
     private final boolean bonusRound;
 
@@ -26,14 +27,6 @@ public class FinalFrameInfo extends FrameInfo {
         return of(this.frameNumber(), this.round() + NEXT_ROUND, true);
     }
 
-    public boolean hasBonusRound() {
-        return bonusRound;
-    }
-
-    public boolean hasNextRound() {
-        return this.round() == SECOND_ROUND && bonusRound || this.round() == START_ROUND;
-    }
-
     @Override
     public FinalFrameInfo nextFrame() {
         throw new IllegalArgumentException("Final Frame의 Next Frame은 없습니다.");
@@ -45,13 +38,18 @@ public class FinalFrameInfo extends FrameInfo {
     }
 
     @Override
-    public boolean isLastRound() {
-        return !hasNextRound();
+    public boolean isSecondRound() {
+        return this.round() == SECOND_ROUND;
     }
 
     @Override
-    public boolean isEndFrame() {
-        return !hasNextRound();
+    public boolean hasNextRound() {
+        return this.bonusRound;
+    }
+
+    @Override
+    public boolean isFrameEnd() {
+        return this.round() >= LAST_ROUND;
     }
 
     @Override

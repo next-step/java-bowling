@@ -4,28 +4,37 @@ import bowling.domain.frame.info.FrameInfo;
 import bowling.domain.pins.Pins;
 
 public class FinalRule extends Rule {
-    
-    protected FinalRule(FrameInfo frameInfo, Pins pins) {
+
+    private final FrameInfo frameInfo;
+    private final Pins pins;
+
+    public FinalRule(FrameInfo frameInfo, Pins pins) {
         super(frameInfo, pins);
+        this.frameInfo = frameInfo;
+        this.pins = pins;
     }
 
     @Override
     public boolean isEnd() {
-        return false;
+        return !pins.isReady() && (validateSecondRound() || (frameInfo.isFrameEnd()));
+    }
+
+    private boolean validateSecondRound() {
+        return frameInfo.isSecondRound() && !pins.isAllDown() && !frameInfo.hasNextRound();
     }
 
     @Override
-    public boolean isCurrentRoundEnd() {
-        return false;
+    public boolean isNewPins() {
+        return pins.isAllDown();
     }
 
     @Override
     public boolean hasNextRound() {
-        return false;
+        return !frameInfo.isSecondRound() || pins.isReady();
     }
 
     @Override
-    public boolean isAfterFrame(int givenFrame) {
-        return false;
+    public boolean isFrameEnd(int givenFrame) {
+        return isEnd() || frameInfo.isFrameEnd(givenFrame);
     }
 }

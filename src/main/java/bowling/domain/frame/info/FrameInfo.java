@@ -19,7 +19,11 @@ public abstract class FrameInfo implements Comparable<FrameInfo> {
 
     public abstract FrameInfo nextRound();
 
-    public abstract boolean isLastRound();
+    public abstract boolean isSecondRound();
+
+    public abstract boolean hasNextRound();
+
+    public abstract boolean isFrameEnd();
 
     public int round() {
         return round;
@@ -29,7 +33,7 @@ public abstract class FrameInfo implements Comparable<FrameInfo> {
         return frameNumber;
     }
 
-    public boolean isAfterFrame(int currentFrame) {
+    public boolean isFrameEnd(int currentFrame) {
         return frameNumber > currentFrame;
     }
 
@@ -59,5 +63,4 @@ public abstract class FrameInfo implements Comparable<FrameInfo> {
         return Objects.hash(frameNumber, round);
     }
 
-    public abstract boolean isEndFrame();
 }

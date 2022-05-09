@@ -4,6 +4,8 @@ import bowling.domain.frame.info.FinalFrameInfo;
 import bowling.domain.frame.info.FrameInfo;
 import bowling.domain.pins.Pins;
 import bowling.domain.pins.Status;
+import bowling.domain.rule.FinalRule;
+import bowling.domain.rule.Rule;
 import bowling.domain.score.Score;
 import java.util.Optional;
 
@@ -11,18 +13,20 @@ public class FinalFrame implements Frame {
 
     private final FinalFrameInfo frameInfo;
     private final Pins pins;
+    private final Rule rule;
 
-    public FinalFrame(Pins pins, FinalFrameInfo frameInfo) {
+    public FinalFrame(Pins pins, FinalFrameInfo frameInfo, Rule rule) {
         this.frameInfo = frameInfo;
         this.pins = pins;
+        this.rule = rule;
     }
 
     public static Frame create() {
-        return new FinalFrame(Pins.create(), FinalFrameInfo.create());
+        return of(Pins.create(), FinalFrameInfo.create());
     }
 
     public static Frame of(Pins pins, FinalFrameInfo frameInfo) {
-        return new FinalFrame(pins, frameInfo);
+        return new FinalFrame(pins, frameInfo, new FinalRule(frameInfo, pins));
     }
 
     @Override
@@ -32,34 +36,34 @@ public class FinalFrame implements Frame {
 
     @Override
     public Optional<Frame> nextRound() {
-        if (!frameInfo.isLastRound() && isCurrentRoundEnd() || pins.isSpare()) {
-            return Optional.of(new FinalFrame(Pins.create(), frameInfo.nextRoundWithBonusRound()));
+        if (rule.isEnd()) {
+            return Optional.empty();
         }
 
-        if (!frameInfo.isLastRound()) {
-            return Optional.of(new FinalFrame(Pins.of(pins, Status.READY), frameInfo.nextRound()));
-        }
-
-        return Optional.empty();
+        return next();
     }
 
-    private boolean isCurrentRoundEnd() {
-        return pins.isAllDown() || frameInfo.hasBonusRound();
+    private Optional<Frame> next() {
+        if (rule.isNewPins()) {
+            return Optional.of(of(Pins.create(), frameInfo.nextRoundWithBonusRound()));
+        }
+
+        return Optional.of(of(Pins.of(pins, Status.READY), frameInfo.nextRound()));
     }
 
     @Override
-    public boolean hasNextRound() {
-        return frameInfo.hasNextRound() || pins.isReady();
+    public boolean canRoll() {
+        return !rule.isEnd();
     }
 
     @Override
     public boolean isFrameEnd(int currentFrame) {
-        return !hasNextRound() || frameInfo.isAfterFrame(currentFrame);
+        return rule.isFrameEnd(currentFrame);
     }
 
     @Override
     public Optional<Score> calcScore(Frames playerFrames) {
-        if (!hasNextRound()) {
+        if (!canRoll()) {
             return Optional.of(Score.of(numberOfDownedPins().score(), true));
         }
 

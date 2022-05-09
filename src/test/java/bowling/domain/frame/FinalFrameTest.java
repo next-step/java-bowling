@@ -26,7 +26,7 @@ class FinalFrameTest {
         frames.add(round2);
 
         Frame nextRound3 = round2.nextRound().orElseThrow(IllegalArgumentException::new);
-        nextRound3.roll(10);
+        nextRound3.roll(8);
         frames.add(nextRound3);
 
         // When & Then
@@ -42,7 +42,7 @@ class FinalFrameTest {
         Frame frame = FinalFrame.create();
         frames.add(frame);
 
-        while (frame.hasNextRound()) {
+        while (frame.canRoll()) {
             frame.roll(10);
             frame = frame.nextRound().orElse(frame);
             frames.add(frame);

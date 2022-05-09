@@ -15,10 +15,10 @@ public abstract class Rule {
 
     public abstract boolean isEnd();
 
-    public abstract boolean isCurrentRoundEnd();
+    public abstract boolean isNewPins();
 
     public abstract boolean hasNextRound();
 
-    public abstract boolean isAfterFrame(int givenFrame);
+    public abstract boolean isFrameEnd(int givenFrame);
 
 }
