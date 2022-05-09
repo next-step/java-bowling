@@ -16,21 +16,21 @@ public class NormalRule extends Rule {
 
     @Override
     public boolean isEnd() {
-        return frameInfo.isEndFrame() && isCurrentRoundEnd();
+        return frameInfo.isFrameEnd() && (pins.isAllDown() || (frameInfo.isSecondRound() && !pins.isReady()));
     }
 
     @Override
-    public boolean isCurrentRoundEnd() {
-        return pins.isAllDown() || frameInfo.isLastRound();
+    public boolean isNewPins() {
+        return pins.isAllDown() || (frameInfo.isSecondRound() && !pins.isReady());
     }
 
     @Override
-    public boolean isAfterFrame(int givenFrame) {
-        return frameInfo.isAfterFrame(givenFrame);
+    public boolean isFrameEnd(int givenFrame) {
+        return frameInfo.isFrameEnd(givenFrame);
     }
 
     @Override
     public boolean hasNextRound() {
-        return !frameInfo.isLastRound() || pins.isReady();
+        return !frameInfo.isSecondRound() || pins.isReady();
     }
 }

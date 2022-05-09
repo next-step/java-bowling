@@ -17,7 +17,7 @@ public interface Frame {
 
     Score numberOfDownedPins();
 
-    boolean hasNextRound();
+    boolean canRoll();
 
     boolean isFrameEnd(int currentFrame);
 

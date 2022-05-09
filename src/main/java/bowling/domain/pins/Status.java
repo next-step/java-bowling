@@ -31,7 +31,7 @@ public enum Status {
         return bowlingStatus;
     }
 
-    public static boolean isEnd(Status status) {
+    public static boolean isAllDown(Status status) {
         return status == STRIKE || status == SPARE;
     }
 

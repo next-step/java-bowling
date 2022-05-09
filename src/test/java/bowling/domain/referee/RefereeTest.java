@@ -31,7 +31,7 @@ class RefereeTest {
             referee.persons().forEach(player -> {
                 Frames frames = referee.framesOfPerson(player);
                 Frame frame = frames.latestFrame();
-                if (frame.hasNextRound()) {
+                if (frame.canRoll()) {
                     frame.roll(downPins);
                     frame.nextRound().ifPresent(frame1 -> referee.write(player, frame1));
                 }

@@ -44,7 +44,7 @@ public class NormalFrame implements Frame {
     }
 
     private Optional<Frame> next() {
-        if (rule.isCurrentRoundEnd()) {
+        if (rule.isNewPins()) {
             return Optional.of(of(frameInfo.nextFrame(), Pins.create()));
         }
 
@@ -52,13 +52,13 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public boolean hasNextRound() {
+    public boolean canRoll() {
         return rule.hasNextRound();
     }
 
     @Override
     public boolean isFrameEnd(int givenFrame) {
-        return rule.isAfterFrame(givenFrame);
+        return rule.isFrameEnd(givenFrame);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class NormalFrame implements Frame {
             return Optional.of(playerFrames.calcSpare(this));
         }
 
-        if (!hasNextRound()) {
+        if (!canRoll()) {
             return Optional.of(playerFrames.calcMiss(this));
         }
 

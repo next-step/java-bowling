@@ -46,7 +46,7 @@ public class BowlingGame {
     }
 
     private static void next(Referee referee, Player player, Frame frame) {
-        if (frame.hasNextRound()) {
+        if (frame.canRoll()) {
             int downPinsCount = InputView.downPinsCount();
             ResultView.showHead();
             frame.roll(downPinsCount);

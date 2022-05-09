@@ -30,7 +30,7 @@ class ScoresTest {
         do {
             Frame frame = givenFrames.latestFrame();
 
-            if (frame.hasNextRound()) {
+            if (frame.canRoll()) {
                 frame.roll(countPinsDown);
                 frame.nextRound().ifPresent(frame1 -> referee.write(givenPlayer, frame1));
             }

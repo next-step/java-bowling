@@ -28,11 +28,17 @@ public class NormalFrameInfo extends FrameInfo {
     }
 
     @Override
-    public boolean isLastRound() {
+    public boolean isSecondRound() {
         return this.round() == SECOND_ROUND;
     }
+
     @Override
-    public boolean isEndFrame() {
+    public boolean hasNextRound() {
+        return isSecondRound();
+    }
+
+    @Override
+    public boolean isFrameEnd() {
         return this.frameNumber() == MAX_NORMAL_FRAME;
     }
 

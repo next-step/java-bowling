@@ -34,7 +34,7 @@ public class Pins {
     }
 
     public boolean isAllDown() {
-        return Status.isEnd(status);
+        return Status.isAllDown(status);
     }
 
     public Pins roll(Score givenDown, FrameInfo frameInfo) {
@@ -69,9 +69,8 @@ public class Pins {
     }
 
     private boolean isSpare(Score standPinsCount, Score givenDown, FrameInfo frameInfo) {
-        Score score = Score.create();
-        Score sum = score.sumWithScores(givenDown, standPinsCount);
-        return frameInfo.isLastRound() && sum.equals(MAX_DOWNED_PIN_SCORE);
+        Score sum = Score.sumWithScores(givenDown, standPinsCount);
+        return frameInfo.isSecondRound() && sum.equals(MAX_DOWNED_PIN_SCORE);
     }
 
     public Status status() {
