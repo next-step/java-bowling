@@ -36,8 +36,16 @@ public final class Frames {
         return from(newFrames);
     }
 
-    public FrameNumber lastFrameNumber() {
-        return this.frames.getLast().number();
+    public FrameNumber nextFrameNumber() {
+        Frame last = this.frames.getLast();
+        if (last.isEnd()) {
+            return last.number().increase();
+        }
+        return last.number();
+    }
+
+    public List<Frame> list() {
+        return Collections.unmodifiableList(this.frames);
     }
 
     private LinkedList<Frame> newFramesWithoutNotEndedFrame() {

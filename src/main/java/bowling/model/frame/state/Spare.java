@@ -11,18 +11,14 @@ public final class Spare implements BallState {
     private static final int BONUS_COUNT = 1;
 
     private final Pins firstHit;
-    private final Pins secondHit;
 
-    private Spare(Pins firstHit, Pins secondHit) {
+    private Spare(Pins firstHit) {
         Assert.notNull(firstHit, "firstHit must not be null");
-        Assert.notNull(secondHit, "secondHit must not be null");
-        validate(firstHit, secondHit);
         this.firstHit = firstHit;
-        this.secondHit = secondHit;
     }
 
-    public static Spare of(Pins firstHit, Pins secondHit) {
-        return new Spare(firstHit, secondHit);
+    public static Spare from(Pins firstHit) {
+        return new Spare(firstHit);
     }
 
     @Override
@@ -40,18 +36,13 @@ public final class Spare implements BallState {
         return BONUS_COUNT;
     }
 
-    private void validate(Pins firstHit, Pins secondHit) {
-        if (Pins.MAX.equals(firstHit)) {
-            throw new IllegalArgumentException(String.format("first pins(%s) must not be max pins", firstHit));
-        }
-        if (!Pins.MAX.equals(firstHit.sum(secondHit))) {
-            throw new IllegalArgumentException(String.format("sum of first pins(%s) and second pins(%s) must be max pins", firstHit, secondHit));
-        }
+    public Pins firstHit() {
+        return firstHit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstHit, secondHit);
+        return Objects.hash(firstHit);
     }
 
     @Override
@@ -63,14 +54,13 @@ public final class Spare implements BallState {
             return false;
         }
         Spare spare = (Spare) o;
-        return Objects.equals(firstHit, spare.firstHit) && Objects.equals(secondHit, spare.secondHit);
+        return Objects.equals(firstHit, spare.firstHit);
     }
 
     @Override
     public String toString() {
         return "Spare{" +
                 "firstHit=" + firstHit +
-                ", secondHit=" + secondHit +
                 '}';
     }
 }

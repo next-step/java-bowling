@@ -23,7 +23,7 @@ public final class FirstThrown implements BallState {
     @Override
     public BallState state(Pins countOfHit) {
         if (Pins.MAX.equals(this.countOfHit.sum(countOfHit))) {
-            return Spare.of(this.countOfHit, countOfHit);
+            return Spare.from(this.countOfHit);
         }
         return SecondThrown.of(this.countOfHit, countOfHit);
     }
@@ -31,6 +31,10 @@ public final class FirstThrown implements BallState {
     @Override
     public boolean isEnd() {
         return false;
+    }
+
+    public Pins countOfHit() {
+        return countOfHit;
     }
 
     private void validate(Pins countOfHit) {

@@ -50,6 +50,10 @@ public final class NormalFrame implements Frame {
         return this.number;
     }
 
+    public BallState state() {
+        return state;
+    }
+
     private void validateNumber(FrameNumber number) {
         if (number.isLast()) {
             throw new IllegalArgumentException(String.format("number(%s) must not be last", number));

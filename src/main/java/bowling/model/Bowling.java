@@ -27,7 +27,7 @@ public final class Bowling {
     }
 
     public boolean isNotFinished() {
-        return frames.isFinished();
+        return !frames.isFinished();
     }
 
     public Bowling pitch(Pins countOfHit) {
@@ -43,14 +43,18 @@ public final class Bowling {
         return frames;
     }
 
-    public FrameNumber currentFrameNumber() {
-        return frames.lastFrameNumber();
+    public FrameNumber nextFrameNumber() {
+        return frames.nextFrameNumber();
     }
 
     private void validateState() {
-        if (isNotFinished()) {
+        if (isFinished()) {
             throw new IllegalStateException(String.format("bowling(%s) is already finished", this));
         }
+    }
+
+    private boolean isFinished() {
+        return !isNotFinished();
     }
 
     @Override

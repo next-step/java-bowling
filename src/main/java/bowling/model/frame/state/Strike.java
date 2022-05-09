@@ -8,8 +8,6 @@ public final class Strike implements BallState {
     private static final Strike INSTANCE = new Strike();
     private static final int BONUS_COUNT = 2;
 
-    private static final Pins COUNT = Pins.MAX;
-
     private Strike() {
         if (INSTANCE != null) {
             throw new AssertionError();

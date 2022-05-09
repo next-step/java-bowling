@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.*;
 
 @DisplayName("보너스 던진 상태")
@@ -45,12 +47,21 @@ class BonusThrownTest {
         //given
         BonusThrown bonusThrown = BonusThrown.of(MAX_BONUS_HIT_FROM_STRIKE, 1);
         //when, then
-        assertThat(bonusThrown.state(Pins.MAX)).isEqualTo(BonusThrown.of(BonusHit.of(bonusThrown, Pins.MAX), 0));
+        assertThat(bonusThrown.state(Pins.MAX)).isEqualTo(BonusThrown.of(BonusHit.of(Strike.instance(), Arrays.asList(Pins.MAX, Pins.MAX)), 0));
     }
 
     @Test
     @DisplayName("남은 갯수가 0인 상태에서 다음 상태 생성 불가")
     void state_zeroCount_thrownIllegalStateArgument() {
         assertThatIllegalStateException().isThrownBy(() -> BonusThrown.of(MAX_BONUS_HIT_FROM_STRIKE, 0).state(Pins.MAX));
+    }
+
+    @Test
+    @DisplayName("주어진 보너스 맞춘 정보 그대로 반환")
+    void bonusHit() {
+        //given
+        BonusHit bonusHit = BonusHit.of(Strike.instance(), Pins.MAX);
+        //when, then
+        assertThat(BonusThrown.of(bonusHit, 1).bonusHit()).isEqualTo(bonusHit);
     }
 }

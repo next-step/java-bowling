@@ -33,6 +33,14 @@ public final class SecondThrown implements BallState {
         throw new IllegalStateException(String.format("spare(%s) can not throw ball", this));
     }
 
+    public Pins secondHit() {
+        return secondHit;
+    }
+
+    public Pins firstHit() {
+        return firstHit;
+    }
+
     private void validateSum(Pins firstHit, Pins secondHit) {
         if (Pins.MAX.equals(firstHit.sum(secondHit))) {
             throw new IllegalArgumentException(String.format("first pins(%s) and second pins(%s) must be thrown", firstHit, secondHit));

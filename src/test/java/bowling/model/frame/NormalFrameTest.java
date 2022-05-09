@@ -3,6 +3,7 @@ package bowling.model.frame;
 import bowling.model.Pins;
 import bowling.model.frame.finalization.FinalFrame;
 import bowling.model.frame.state.FirstThrown;
+import bowling.model.frame.state.NotThrown;
 import bowling.model.frame.state.SecondThrown;
 import bowling.model.frame.state.Strike;
 import org.junit.jupiter.api.DisplayName;
@@ -78,6 +79,12 @@ class NormalFrameTest {
         FrameNumber number = FrameNumber.FIRST;
         //when, then
         assertThat(NormalFrame.init(number).number()).isEqualTo(number);
+    }
+
+    @Test
+    @DisplayName("현재 상태 그대로 반환")
+    void state() {
+        assertThat(FinalFrame.init().state()).isEqualTo(NotThrown.instance());
     }
 
     private static Stream<Arguments> next() {

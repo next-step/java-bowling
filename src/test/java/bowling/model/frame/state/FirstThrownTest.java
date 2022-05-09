@@ -39,7 +39,13 @@ class FirstThrownTest {
         //given
         FirstThrown zeroThrown = FirstThrown.from(Pins.ZERO);
         //when, then
-        assertThat(zeroThrown.state(Pins.MAX)).isEqualTo(Spare.of(Pins.ZERO, Pins.MAX));
+        assertThat(zeroThrown.state(Pins.MAX)).isEqualTo(Spare.from(Pins.ZERO));
         assertThat(zeroThrown.state(Pins.ZERO)).isEqualTo(SecondThrown.of(Pins.ZERO, Pins.ZERO));
+    }
+
+    @Test
+    @DisplayName("주어진 핀들 그대로 반환")
+    void countOfHit() {
+        assertThat(FirstThrown.from(Pins.ZERO).countOfHit()).isEqualTo(Pins.ZERO);
     }
 }

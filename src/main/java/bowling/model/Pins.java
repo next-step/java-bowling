@@ -28,9 +28,20 @@ public final class Pins {
 
     public Pins sum(Pins pins) {
         if (isGreaterThanMax(this.count + pins.count)) {
-            throw new IllegalArgumentException(String.format("pins(%s) cannot be added to pins(%s)", pins, this));
+            throw new IllegalArgumentException(String.format("pins(%s) cannot be added to pins(%s)", this, pins));
         }
         return from(this.count + pins.count);
+    }
+
+    public Pins minus(Pins pins) {
+        if (isLessThanMin(this.count - pins.count)) {
+            throw new IllegalArgumentException(String.format("pins(%s) cannot be minus to pins(%s)", this, pins));
+        }
+        return from(this.count - pins.count);
+    }
+
+    public int count() {
+        return count;
     }
 
     private void validate(int count) {

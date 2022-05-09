@@ -35,4 +35,22 @@ class PinsTest {
     void sum_overMax_thrownIllegalArgumentException() {
         assertThatIllegalArgumentException().isThrownBy(() -> Pins.MAX.sum(Pins.from(1)));
     }
+
+    @Test
+    @DisplayName("빼기")
+    void minus() {
+        assertThat(Pins.from(2).minus(Pins.from(1))).isEqualTo(Pins.from(1));
+    }
+
+    @Test
+    @DisplayName("더 큰 값을 뺄 수 없음")
+    void minus_greaterThan_thrownIllegalArgumentException() {
+        assertThatIllegalArgumentException().isThrownBy(() -> Pins.ZERO.minus(Pins.MAX));
+    }
+
+    @Test
+    @DisplayName("주어진 갯수 그대로 반환")
+    void count() {
+        assertThat(Pins.ZERO.count()).isZero();
+    }
 }

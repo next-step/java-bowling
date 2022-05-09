@@ -39,4 +39,16 @@ class SecondThrownTest {
     void state_thrownIllegalStateException() {
         assertThatIllegalStateException().isThrownBy(() -> SecondThrown.of(Pins.ZERO, Pins.ZERO).state(Pins.ZERO));
     }
+
+    @Test
+    @DisplayName("주어진 첫번째 핀들 그대로 반환")
+    void firstHit() {
+        assertThat(SecondThrown.of(Pins.ZERO, Pins.from(1)).firstHit()).isEqualTo(Pins.ZERO);
+    }
+
+    @Test
+    @DisplayName("주어진 두번째 핀들 그대로 반환")
+    void secondHit() {
+        assertThat(SecondThrown.of(Pins.from(1), Pins.ZERO).secondHit()).isEqualTo(Pins.ZERO);
+    }
 }

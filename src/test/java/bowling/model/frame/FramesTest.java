@@ -20,21 +20,6 @@ import static org.assertj.core.api.Assertions.*;
 @DisplayName("프레임들")
 class FramesTest {
 
-    private static Stream<Arguments> addedFrames() {
-        return Stream.of(
-                Arguments.of(Collections.singletonList(Pins.MAX), Frames.from(Collections.singletonList(NormalFrame.of(FrameNumber.FIRST, Strike.instance())))),
-                Arguments.of(Arrays.asList(Pins.MAX, Pins.MAX), Frames.from(Arrays.asList(NormalFrame.of(FrameNumber.FIRST, Strike.instance()), NormalFrame.of(FrameNumber.from(2), Strike.instance()))))
-        );
-    }
-
-    private static Stream<Arguments> isFinished() {
-        return Stream.of(
-                Arguments.of(Collections.emptyList(), false),
-                Arguments.of(Collections.singletonList(Pins.MAX), false),
-                Arguments.of(IntStream.range(0, 20).mapToObj(i -> Pins.ZERO).collect(Collectors.toList()), true)
-        );
-    }
-
     @Test
     @DisplayName("초기 상태로 생성")
     void instance() {
@@ -89,8 +74,42 @@ class FramesTest {
     }
 
     @Test
-    @DisplayName("초기 상태의 마지막 프레임 번호는 1")
-    void lastFrameNumber() {
-        assertThat(Frames.init().lastFrameNumber()).isEqualTo(FrameNumber.FIRST);
+    @DisplayName("초기 상태의 다음 프레임 번호는 1")
+    void nextFrameNumber() {
+        assertThat(Frames.init().nextFrameNumber()).isEqualTo(FrameNumber.FIRST);
+    }
+
+    @Test
+    @DisplayName("마지막 프레임이 끝나면 다음 프레임 번호는 +1")
+    void nextFrameNumber_endedFrame() {
+        //given
+        FrameNumber frameNumber = FrameNumber.FIRST;
+        //when, then
+        assertThat(Frames.from(Collections.singletonList(NormalFrame.of(frameNumber, Strike.instance()))).nextFrameNumber())
+                .isEqualTo(frameNumber.increase());
+    }
+
+    @Test
+    @DisplayName("주어진 리스트 그대로 반환")
+    void list() {
+        //given
+        List<Frame> firstFrames = Collections.singletonList(NormalFrame.init(FrameNumber.FIRST));
+        //when, then
+        assertThat(Frames.from(firstFrames).list()).isEqualTo(firstFrames);
+    }
+
+    private static Stream<Arguments> addedFrames() {
+        return Stream.of(
+                Arguments.of(Collections.singletonList(Pins.MAX), Frames.from(Collections.singletonList(NormalFrame.of(FrameNumber.FIRST, Strike.instance())))),
+                Arguments.of(Arrays.asList(Pins.MAX, Pins.MAX), Frames.from(Arrays.asList(NormalFrame.of(FrameNumber.FIRST, Strike.instance()), NormalFrame.of(FrameNumber.from(2), Strike.instance()))))
+        );
+    }
+
+    private static Stream<Arguments> isFinished() {
+        return Stream.of(
+                Arguments.of(Collections.emptyList(), false),
+                Arguments.of(Collections.singletonList(Pins.MAX), false),
+                Arguments.of(IntStream.range(0, 20).mapToObj(i -> Pins.ZERO).collect(Collectors.toList()), true)
+        );
     }
 }

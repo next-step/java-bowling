@@ -4,6 +4,7 @@ import bowling.model.Pins;
 import bowling.model.frame.Frame;
 import bowling.model.frame.FrameNumber;
 import bowling.model.frame.state.FirstThrown;
+import bowling.model.frame.state.NotThrown;
 import bowling.model.frame.state.Spare;
 import bowling.model.frame.state.Strike;
 import org.junit.jupiter.api.DisplayName;
@@ -83,6 +84,12 @@ class FinalFrameTest {
         assertThat(FinalFrame.init().number()).isEqualTo(FrameNumber.LAST);
     }
 
+    @Test
+    @DisplayName("현재 상태 그대로 반환")
+    void state() {
+        assertThat(FinalFrame.init().state()).isEqualTo(NotThrown.instance());
+    }
+
     private static Stream<Arguments> isEnd() {
         return Stream.of(
                 Arguments.of(Collections.singletonList(Pins.MAX), false),
@@ -97,7 +104,7 @@ class FinalFrameTest {
                 Arguments.of(Collections.singletonList(Pins.MAX), FinalFrame.from(Strike.instance())),
                 Arguments.of(Collections.singletonList(Pins.ZERO), FinalFrame.from(FirstThrown.from(Pins.ZERO))),
                 Arguments.of(Arrays.asList(Pins.MAX, Pins.from(5)), FinalFrame.from(BonusThrown.of(BonusHit.of(Strike.instance(), Pins.from(5)), 1))),
-                Arguments.of(Arrays.asList(Pins.from(1), Pins.from(9)), FinalFrame.from(Spare.of(Pins.from(1), Pins.from(9))))
+                Arguments.of(Arrays.asList(Pins.from(1), Pins.from(9)), FinalFrame.from(Spare.from(Pins.from(1))))
         );
     }
 }
