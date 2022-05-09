@@ -15,18 +15,20 @@ import static org.assertj.core.api.Assertions.*;
 @DisplayName("볼링")
 class BowlingTest {
 
+    private static final Participant PARTICIPANT = Participant.from("hyh");
+
     @Test
     @DisplayName("참가자와 프레임들로 생성")
     void instance() {
-        assertThatNoException().isThrownBy(() -> Bowling.from(Participant.from("hyh")));
-        assertThatNoException().isThrownBy(() -> Bowling.of(Participant.from("hyh"), Frames.init()));
+        assertThatNoException().isThrownBy(() -> Bowling.from(PARTICIPANT));
+        assertThatNoException().isThrownBy(() -> Bowling.of(PARTICIPANT, Frames.init()));
     }
 
     @Test
     @DisplayName("참가자와 프레임들은 필수")
     void instance_nullArguments_thrownIllegalArgumentException() {
         assertThatIllegalArgumentException().isThrownBy(() -> Bowling.from(null));
-        assertThatIllegalArgumentException().isThrownBy(() -> Bowling.of(Participant.from("hyh"), null));
+        assertThatIllegalArgumentException().isThrownBy(() -> Bowling.of(PARTICIPANT, null));
         assertThatIllegalArgumentException().isThrownBy(() -> Bowling.of(null, Frames.init()));
     }
 
@@ -35,7 +37,7 @@ class BowlingTest {
     @ValueSource(ints = {0, 5, 10})
     void isFinished_framesNotEnd(int pitchCount) {
         //given
-        Bowling hyhBowling = Bowling.from(Participant.from("hyh"));
+        Bowling hyhBowling = Bowling.from(PARTICIPANT);
         IntStream.range(0, pitchCount)
                 .mapToObj(i -> Pins.from(1))
                 .forEach(hyhBowling::pitch);
@@ -50,7 +52,7 @@ class BowlingTest {
         //given
         Bowling hyhBowling = IntStream.range(0, pitchCount)
                 .mapToObj(i -> Pins.from(hitCount))
-                .reduce(Bowling.from(Participant.from("hyh")), Bowling::pitch, (bowling1, bowling2) -> bowling2);
+                .reduce(Bowling.from(PARTICIPANT), Bowling::pitch, (bowling1, bowling2) -> bowling2);
         //when, then
         assertThat(hyhBowling.isNotFinished()).isFalse();
     }
@@ -58,20 +60,19 @@ class BowlingTest {
     @Test
     @DisplayName("한번 던지면 프레임들에 추가된 상태")
     void pitch() {
-        Participant hyh = Participant.from("hyh");
-        Bowling hyhBowling = Bowling.from(hyh);
+        Bowling hyhBowling = Bowling.from(PARTICIPANT);
         Frames thrownMaxFrames = Frames.init().addedFrames(Pins.MAX);
         //when
         hyhBowling.pitch(Pins.MAX);
         //then
-        assertThat(hyhBowling).isEqualTo(Bowling.of(hyh, thrownMaxFrames));
+        assertThat(hyhBowling).isEqualTo(Bowling.of(PARTICIPANT, thrownMaxFrames));
     }
 
     @Test
     @DisplayName("모든 프레임이 종료된 상태에서 더이상 던질 수 없음")
     void pitch_tooManyPitch_thrownIllegalStateException() {
         //given
-        Bowling hyhBowling = Bowling.from(Participant.from("hyh"));
+        Bowling hyhBowling = Bowling.from(PARTICIPANT);
         //when, then
         assertThatIllegalStateException().isThrownBy(() -> IntStream.range(0, Integer.MAX_VALUE)
                 .mapToObj(i -> Pins.from(1))
@@ -81,21 +82,18 @@ class BowlingTest {
     @Test
     @DisplayName("초기 상태의 다음 프레임 번호는 1")
     void nextFrameNumber() {
-        assertThat(Bowling.from(Participant.from("hyh")).nextFrameNumber()).isEqualTo(FrameNumber.FIRST);
+        assertThat(Bowling.from(PARTICIPANT).nextFrameNumber()).isEqualTo(FrameNumber.FIRST);
     }
 
     @Test
     @DisplayName("주어진 참가자 그대로 반환")
     void participant() {
-        //given
-        Participant hyh = Participant.from("hyh");
-        //when, then
-        assertThat(Bowling.from(hyh).participant()).isEqualTo(hyh);
+        assertThat(Bowling.from(PARTICIPANT).participant()).isEqualTo(PARTICIPANT);
     }
 
     @Test
     @DisplayName("초기 프레임은 그대로 반환")
     void frames() {
-        assertThat(Bowling.from(Participant.from("hyh")).frames()).isEqualTo(Frames.init());
+        assertThat(Bowling.from(PARTICIPANT).frames()).isEqualTo(Frames.init());
     }
 }
