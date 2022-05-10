@@ -21,7 +21,7 @@ public final class NormalFrame implements Frame {
     }
 
     static NormalFrame init(FrameNumber number) {
-        return of(number, NotThrown.instance());
+        return of(number, NotThrown.INSTANCE);
     }
 
     static NormalFrame of(FrameNumber number, BallState state) {

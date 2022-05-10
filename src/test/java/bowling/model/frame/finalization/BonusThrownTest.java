@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.*;
 @DisplayName("보너스 던진 상태")
 class BonusThrownTest {
 
-    private static final BonusHit MAX_BONUS_HIT_FROM_STRIKE = BonusHit.of(Strike.instance(), Pins.MAX);
+    private static final BonusHit MAX_BONUS_HIT_FROM_STRIKE = BonusHit.of(Strike.INSTANCE, Pins.MAX);
 
     @Test
     @DisplayName("보너스 점수와 남은 개수로 생성")
@@ -47,7 +47,7 @@ class BonusThrownTest {
         //given
         BonusThrown bonusThrown = BonusThrown.of(MAX_BONUS_HIT_FROM_STRIKE, 1);
         //when, then
-        assertThat(bonusThrown.state(Pins.MAX)).isEqualTo(BonusThrown.of(BonusHit.of(Strike.instance(), Arrays.asList(Pins.MAX, Pins.MAX)), 0));
+        assertThat(bonusThrown.state(Pins.MAX)).isEqualTo(BonusThrown.of(BonusHit.of(Strike.INSTANCE, Arrays.asList(Pins.MAX, Pins.MAX)), 0));
     }
 
     @Test
@@ -60,7 +60,7 @@ class BonusThrownTest {
     @DisplayName("주어진 보너스 맞춘 정보 그대로 반환")
     void bonusHit() {
         //given
-        BonusHit bonusHit = BonusHit.of(Strike.instance(), Pins.MAX);
+        BonusHit bonusHit = BonusHit.of(Strike.INSTANCE, Pins.MAX);
         //when, then
         assertThat(BonusThrown.of(bonusHit, 1).bonusHit()).isEqualTo(bonusHit);
     }

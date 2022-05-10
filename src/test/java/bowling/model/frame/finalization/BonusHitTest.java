@@ -16,28 +16,28 @@ class BonusHitTest {
     @Test
     @DisplayName("이전 상태와 핀들로 생성")
     void instance() {
-        assertThatNoException().isThrownBy(() -> BonusHit.of(Strike.instance(), Pins.MAX));
+        assertThatNoException().isThrownBy(() -> BonusHit.of(Strike.INSTANCE, Pins.MAX));
     }
 
     @Test
     @DisplayName("이전 상태와 핀들은 필수")
     void instance_nullArguments_throwIllegalArgumentException() {
         assertAll(
-                () -> assertThatIllegalArgumentException().isThrownBy(() -> BonusHit.of(Strike.instance(), (Pins) null)),
+                () -> assertThatIllegalArgumentException().isThrownBy(() -> BonusHit.of(Strike.INSTANCE, (Pins) null)),
                 () -> assertThatIllegalArgumentException().isThrownBy(() -> BonusHit.of(null, Pins.MAX)),
-                () -> assertThatIllegalArgumentException().isThrownBy(() -> BonusHit.of(Strike.instance(), Collections.emptyList()))
+                () -> assertThatIllegalArgumentException().isThrownBy(() -> BonusHit.of(Strike.INSTANCE, Collections.emptyList()))
         );
     }
 
     @Test
     @DisplayName("주어진 이전 상태 그대로 반환")
     void fromState() {
-        assertThat(BonusHit.of(Strike.instance(), Pins.MAX).fromState()).isEqualTo(Strike.instance());
+        assertThat(BonusHit.of(Strike.INSTANCE, Pins.MAX).fromState()).isEqualTo(Strike.INSTANCE);
     }
 
     @Test
     @DisplayName("주어진 갯수 그대로 반환")
     void counts() {
-        assertThat(BonusHit.of(Strike.instance(), Pins.MAX).counts()).isEqualTo(Collections.singletonList(Pins.MAX));
+        assertThat(BonusHit.of(Strike.INSTANCE, Pins.MAX).counts()).isEqualTo(Collections.singletonList(Pins.MAX));
     }
 }

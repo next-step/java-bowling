@@ -85,7 +85,7 @@ class FramesTest {
         //given
         FrameNumber frameNumber = FrameNumber.FIRST;
         //when, then
-        assertThat(Frames.from(Collections.singletonList(NormalFrame.of(frameNumber, Strike.instance()))).nextFrameNumber())
+        assertThat(Frames.from(Collections.singletonList(NormalFrame.of(frameNumber, Strike.INSTANCE))).nextFrameNumber())
                 .isEqualTo(frameNumber.increase());
     }
 
@@ -100,8 +100,8 @@ class FramesTest {
 
     private static Stream<Arguments> addedFrames() {
         return Stream.of(
-                Arguments.of(Collections.singletonList(Pins.MAX), Frames.from(Collections.singletonList(NormalFrame.of(FrameNumber.FIRST, Strike.instance())))),
-                Arguments.of(Arrays.asList(Pins.MAX, Pins.MAX), Frames.from(Arrays.asList(NormalFrame.of(FrameNumber.FIRST, Strike.instance()), NormalFrame.of(FrameNumber.from(2), Strike.instance()))))
+                Arguments.of(Collections.singletonList(Pins.MAX), Frames.from(Collections.singletonList(NormalFrame.of(FrameNumber.FIRST, Strike.INSTANCE)))),
+                Arguments.of(Arrays.asList(Pins.MAX, Pins.MAX), Frames.from(Arrays.asList(NormalFrame.of(FrameNumber.FIRST, Strike.INSTANCE), NormalFrame.of(FrameNumber.from(2), Strike.INSTANCE))))
         );
     }
 

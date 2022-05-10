@@ -3,20 +3,11 @@ package bowling.model.frame.state;
 import bowling.model.Pins;
 import bowling.model.frame.BallState;
 
-public final class Strike implements BallState {
+public enum Strike implements BallState {
 
-    private static final Strike INSTANCE = new Strike();
+    INSTANCE;
+
     private static final int BONUS_COUNT = 2;
-
-    private Strike() {
-        if (INSTANCE != null) {
-            throw new AssertionError();
-        }
-    }
-
-    public static BallState instance() {
-        return INSTANCE;
-    }
 
     @Override
     public boolean isEnd() {

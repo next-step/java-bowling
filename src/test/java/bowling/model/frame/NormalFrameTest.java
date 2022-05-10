@@ -32,7 +32,7 @@ class NormalFrameTest {
     @Test
     @DisplayName("프레임 번호와 상태로 생성")
     void instance_numberAndState() {
-        assertThatNoException().isThrownBy(() -> NormalFrame.of(FrameNumber.FIRST, Strike.instance()));
+        assertThatNoException().isThrownBy(() -> NormalFrame.of(FrameNumber.FIRST, Strike.INSTANCE));
     }
 
     @Test
@@ -41,7 +41,7 @@ class NormalFrameTest {
         assertAll(
                 () -> assertThatIllegalArgumentException().isThrownBy(() -> NormalFrame.init(null)),
                 () -> assertThatIllegalArgumentException().isThrownBy(() -> NormalFrame.of(FrameNumber.FIRST, null)),
-                () -> assertThatIllegalArgumentException().isThrownBy(() -> NormalFrame.of(null, Strike.instance()))
+                () -> assertThatIllegalArgumentException().isThrownBy(() -> NormalFrame.of(null, Strike.INSTANCE))
         );
     }
 
@@ -66,7 +66,7 @@ class NormalFrameTest {
     @DisplayName("상태에 따른 종료 여부")
     void isEnd() {
         assertAll(
-                () -> assertThat(NormalFrame.of(FrameNumber.FIRST, Strike.instance()).isEnd()).isTrue(),
+                () -> assertThat(NormalFrame.of(FrameNumber.FIRST, Strike.INSTANCE).isEnd()).isTrue(),
                 () -> assertThat(NormalFrame.of(FrameNumber.FIRST, FirstThrown.from(Pins.ZERO)).isEnd()).isFalse()
         );
     }
@@ -89,7 +89,7 @@ class NormalFrameTest {
     @Test
     @DisplayName("현재 상태 그대로 반환")
     void state() {
-        assertThat(FinalFrame.init().state()).isEqualTo(NotThrown.instance());
+        assertThat(FinalFrame.init().state()).isEqualTo(NotThrown.INSTANCE);
     }
 
     private static Stream<Arguments> next() {

@@ -32,7 +32,7 @@ class FinalFrameTest {
     @Test
     @DisplayName("상태로 생성")
     void instance_state() {
-        assertThatNoException().isThrownBy(() -> FinalFrame.from(Strike.instance()));
+        assertThatNoException().isThrownBy(() -> FinalFrame.from(Strike.INSTANCE));
     }
 
     @Test
@@ -87,7 +87,7 @@ class FinalFrameTest {
     @Test
     @DisplayName("현재 상태 그대로 반환")
     void state() {
-        assertThat(FinalFrame.init().state()).isEqualTo(NotThrown.instance());
+        assertThat(FinalFrame.init().state()).isEqualTo(NotThrown.INSTANCE);
     }
 
     private static Stream<Arguments> isEnd() {
@@ -101,9 +101,9 @@ class FinalFrameTest {
 
     private static Stream<Arguments> next() {
         return Stream.of(
-                Arguments.of(Collections.singletonList(Pins.MAX), FinalFrame.from(Strike.instance())),
+                Arguments.of(Collections.singletonList(Pins.MAX), FinalFrame.from(Strike.INSTANCE)),
                 Arguments.of(Collections.singletonList(Pins.ZERO), FinalFrame.from(FirstThrown.from(Pins.ZERO))),
-                Arguments.of(Arrays.asList(Pins.MAX, Pins.from(5)), FinalFrame.from(BonusThrown.of(BonusHit.of(Strike.instance(), Pins.from(5)), 1))),
+                Arguments.of(Arrays.asList(Pins.MAX, Pins.from(5)), FinalFrame.from(BonusThrown.of(BonusHit.of(Strike.INSTANCE, Pins.from(5)), 1))),
                 Arguments.of(Arrays.asList(Pins.from(1), Pins.from(9)), FinalFrame.from(Spare.from(Pins.from(1))))
         );
     }

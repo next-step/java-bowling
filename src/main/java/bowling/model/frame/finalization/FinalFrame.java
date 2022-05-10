@@ -22,7 +22,7 @@ public final class FinalFrame implements Frame {
     }
 
     public static FinalFrame init() {
-        return from(NotThrown.instance());
+        return from(NotThrown.INSTANCE);
     }
 
     public static FinalFrame from(BallState state) {

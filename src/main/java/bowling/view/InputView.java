@@ -26,7 +26,7 @@ public final class InputView {
     }
 
     public String participant() {
-        guidePrinter.println(PARTICIPANT_INPUT_MESSAGE);
+        guidePrinter.print(PARTICIPANT_INPUT_MESSAGE);
         return scanner.next();
     }
 
