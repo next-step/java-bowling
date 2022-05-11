@@ -21,7 +21,7 @@ public class BowlingGameController {
 
     public void start() {
         Player player = inputView.inputPlayerName();
-        System.out.println(player);
+        resultView.printHead();
     }
 
 }
