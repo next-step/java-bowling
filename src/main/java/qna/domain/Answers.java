@@ -22,10 +22,6 @@ public class Answers {
 
     public Answers() { }
 
-    public Answers(List<Answer> answers) {
-        this.answers = answers;
-    }
-
     public void add(Answer answer) {
         answers.add(answer);
     }
