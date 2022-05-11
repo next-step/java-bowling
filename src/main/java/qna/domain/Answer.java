@@ -18,7 +18,8 @@ public class Answer extends AbstractEntity {
     @Lob
     private String contents;
 
-    private boolean deleted = false;
+    @Embedded
+    private DeletedStatus deletedStatus = new DeletedStatus();
 
     public Answer() {
     }
@@ -43,13 +44,12 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public void changeStatusToDeleted() {
+        deletedStatus.changeStatusToDeleted();
     }
 
     public boolean isDeleted() {
-        return deleted;
+        return deletedStatus.isDeleted();
     }
 
     public boolean isOwner(User writer) {
