@@ -26,3 +26,12 @@
 4. Question 의 boolean deleted 를 분리하고 포장해서 클래스로 빼내보자.
 5. Question 의 List<Answer> 를 @Embeddable 을 사용하여 일급 콜렉션을 사용해보자.
 6. List<DeleteHistory> 일급 콜렉션을 사용해보자
+
+#### step 1-1. 질문 삭제하기 기능 리팩토링 (피드백 반영)
+1. Answers 에 테스트만을 위한 프로덕션 코드가 존재한다
+2. 생성자로 값을 받아서 생성 후에 바로 getDeleteHistories 를 호출하고 있다
+   1. getter 이외에 별다른 행위를 하고 있지 않은데 꼭 필요한 녀석일까?
+3. DeleteHistories 에는 전부 getter 로 값을 꺼내와서 처리하고 있는데, 메시지를 보내서 DeleteHistory 를 전달 받도록 해보자
+4. Answer 클래스에서 메시지를 보내 권한 검증 및 삭제 처리를 해보자
+5. 현재 question 과 하위의 각 answer 에게 메시지를 보내서 DeleteHistory 를 받아오도록 해보자
+6. 삭제 처리시에 user 검증을 Answer 가 처리하도록 해보자
