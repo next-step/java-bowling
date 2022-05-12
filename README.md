@@ -7,3 +7,31 @@
 
 ## 온라인 코드 리뷰 과정
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
+
+### step 1. 질문 삭제하기 기능 리팩터링
+1. 질문 삭제하기 요구사항
+   1. 질문 데이터를 완전히 삭제하는 것이 아니라 데이터의 상태를 삭제 상태(boolean type)로 변경한다.
+      1. 데이터의 상태는 원시 값이니깐.. 분리하고 포장해야 하나?
+   2. 로그인 사용자와 질문한 사람이 같은 경우 삭제 가능
+   3. 답변이 없는 경우(메서드 추출) 삭제가 가능
+   4. 질문자와 답변 글의 모든 답변자가 같은 경우 삭제가 가능(메서드 추출)
+   5. 질문을 삭제할 때 답변 또한 삭제해야 하며, 답변의 삭제 또한 삭제 상태(delete)를 변경
+   6. 질문자와 답변자가 다를 경우 답변을 삭제할 수 없다.
+   7. 질문과 답변 삭제 이력에 대한 정보를 DeleteHistory 를 활용해 남긴다.
+2. 프로그래밍 요구사항
+   1. qna.service.QnaService 의 deleteQuestion() 메서드는 단위 테스트하기 어려운 코드와 단위 테스트가 가능한 코드로 섞여 있다.
+   2. 단위 테스트하기 어려운 코드와 단위 테스트 가능한 코드를 분리하고
+   3. 테스트 가능한 코드에 대해 단위 테스트를 구현한다.
+3. Question, Answer, DeleteHistory 클래스가 맡고 있는 역할과 책임을 최대한 분리하자
+4. Question 의 boolean deleted 를 분리하고 포장해서 클래스로 빼내보자.
+5. Question 의 List<Answer> 를 @Embeddable 을 사용하여 일급 콜렉션을 사용해보자.
+6. List<DeleteHistory> 일급 콜렉션을 사용해보자
+
+#### step 1-1. 질문 삭제하기 기능 리팩토링 (피드백 반영)
+1. Answers 에 테스트만을 위한 프로덕션 코드가 존재한다
+2. 생성자로 값을 받아서 생성 후에 바로 getDeleteHistories 를 호출하고 있다
+   1. getter 이외에 별다른 행위를 하고 있지 않은데 꼭 필요한 녀석일까?
+3. DeleteHistories 에는 전부 getter 로 값을 꺼내와서 처리하고 있는데, 메시지를 보내서 DeleteHistory 를 전달 받도록 해보자
+4. Answer 클래스에서 메시지를 보내 권한 검증 및 삭제 처리를 해보자
+5. 현재 question 과 하위의 각 answer 에게 메시지를 보내서 DeleteHistory 를 받아오도록 해보자
+6. 삭제 처리시에 user 검증을 Answer 가 처리하도록 해보자
