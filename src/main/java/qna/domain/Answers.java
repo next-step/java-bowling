@@ -15,6 +15,11 @@ public class Answers {
                 .forEach(answer -> answer.delete(loginUser));
     }
 
+    public void record(DeleteHistories deleteHistories) {
+        answers.stream()
+                .forEach(answer -> deleteHistories.add(answer.createRecord()));
+    }
+
     public List<Answer> getAnswers() {
         return Collections.unmodifiableList(answers);
     }
