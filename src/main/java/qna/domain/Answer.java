@@ -51,7 +51,7 @@ public class Answer extends AbstractEntity {
         }
         deletedStatus.changeStatusToDeleted();
 
-        return createAnswerDeleteHistory(loginUser);
+        return DeleteHistory.createAnswerDeleteHistory(getId(), loginUser);
     }
 
     private boolean isOwner(User writer) {

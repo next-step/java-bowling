@@ -28,14 +28,6 @@ public class AbstractEntity {
         this.id = id;
     }
 
-    public DeleteHistory createAnswerDeleteHistory(User loginUser) {
-        return new DeleteHistory(ContentType.ANSWER, id, loginUser, LocalDateTime.now());
-    }
-
-    public DeleteHistory createQuestionDeleteHistory(User loginUser) {
-        return new DeleteHistory(ContentType.QUESTION, id, loginUser, LocalDateTime.now());
-    }
-
     public Long getId() {
         return id;
     }
