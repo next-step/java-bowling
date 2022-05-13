@@ -61,6 +61,10 @@ public final class NormalFrame implements Frame {
         return of(number, state.addScore(countOfHit));
     }
 
+    public FrameState state() {
+        return state;
+    }
+
     private Frame nextFrame() {
         FrameNumber nextNumber = this.number.increase();
         if (nextNumber.isLast()) {

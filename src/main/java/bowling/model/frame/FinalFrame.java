@@ -73,6 +73,10 @@ public final class FinalFrame implements Frame {
         return newPins;
     }
 
+    public List<Pins> additionHitPinsGroup() {
+        return Collections.unmodifiableList(additionHitPinsGroup);
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(state, additionHitPinsGroup);

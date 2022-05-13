@@ -98,6 +98,12 @@ class FinalFrameTest {
         assertThat(FinalFrame.init().state()).isEqualTo(FrameState.init());
     }
 
+    @Test
+    @DisplayName("현재 추가 핀 그대로 반환")
+    void additionHitPinsGroup() {
+        assertThat(FinalFrame.init().additionHitPinsGroup()).isEqualTo(Collections.emptyList());
+    }
+
     private static Stream<Arguments> isEnd() {
         return Stream.of(
                 Arguments.of(Collections.singletonList(Pins.MAX), false),

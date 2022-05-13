@@ -56,4 +56,10 @@ class ScoreTest {
     void changedRestCount() {
         assertThat(Score.of(10, 0).changeRestCount(10)).isEqualTo(Score.of(10, 10));
     }
+
+    @Test
+    @DisplayName("주어진 값 그대로 반환")
+    void value() {
+        assertThat(Score.of(10, 0).value()).isEqualTo(10);
+    }
 }

@@ -51,6 +51,14 @@ public final class FrameState {
         return of(state, score.addValue(pins.count()));
     }
 
+    public Score score() {
+        return score;
+    }
+
+    public BallState state() {
+        return state;
+    }
+
     private void validateState() {
         if (isEndState()) {
             throw new IllegalStateException(String.format("frame state(%s) is already end state", state));

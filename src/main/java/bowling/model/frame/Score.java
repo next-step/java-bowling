@@ -41,6 +41,10 @@ public final class Score {
         return of(value, restCount);
     }
 
+    public int value() {
+        return value;
+    }
+
     private void validateRestCount() {
         if (restCount <= MINIMUM_VALUE) {
             throw new IllegalStateException(String.format("restCount(%d) must be greater than zero to add value", restCount));

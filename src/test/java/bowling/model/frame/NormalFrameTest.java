@@ -98,6 +98,15 @@ class NormalFrameTest {
                 .isEqualTo(NormalFrame.of(FrameNumber.FIRST, FrameState.of(Strike.INSTANCE, Score.of(10, 0))));
     }
 
+    @Test
+    @DisplayName("주어진 상태 그대로 반환")
+    void state() {
+        //given
+        FrameState state = FrameState.of(Strike.INSTANCE, Score.of(0, 1));
+        //when, then
+        assertThat(NormalFrame.of(FrameNumber.FIRST, state).state()).isEqualTo(state);
+    }
+
     private static Stream<Arguments> next() {
         return Stream.of(
                 Arguments.of(Collections.singletonList(Pins.from(1)), NormalFrame.of(FrameNumber.from(8), FrameState.from(FirstThrown.from(Pins.from(1))))),
