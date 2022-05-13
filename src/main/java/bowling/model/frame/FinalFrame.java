@@ -22,11 +22,11 @@ public final class FinalFrame implements Frame {
         this.additionHitPinsGroup = new ArrayList<>(additionHitPinsGroup);
     }
 
-    public static FinalFrame init() {
+    static FinalFrame init() {
         return of(FrameState.init(), Collections.emptyList());
     }
 
-    public static FinalFrame of(FrameState state, List<Pins> additionHitPinsGroup) {
+    static FinalFrame of(FrameState state, List<Pins> additionHitPinsGroup) {
         return new FinalFrame(state, additionHitPinsGroup);
     }
 
@@ -67,14 +67,14 @@ public final class FinalFrame implements Frame {
         return state;
     }
 
+    public List<Pins> additionHitPinsGroup() {
+        return Collections.unmodifiableList(additionHitPinsGroup);
+    }
+
     private List<Pins> addHitPins(Pins pins) {
         List<Pins> newPins = new ArrayList<>(additionHitPinsGroup);
         newPins.add(pins);
         return newPins;
-    }
-
-    public List<Pins> additionHitPinsGroup() {
-        return Collections.unmodifiableList(additionHitPinsGroup);
     }
 
     @Override

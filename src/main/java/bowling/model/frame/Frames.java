@@ -32,7 +32,7 @@ public final class Frames {
 
     public Frames bowling(Pins pins) {
         validateStateToAdd();
-        LinkedList<Frame> newFrames = framesAddedScoreWithoutLast(pins);
+        List<Frame> newFrames = framesAddedScoreWithoutLast(pins);
         Frame last = this.frames.getLast();
         Frame frame = addScoreIfHasRestCount(last, pins);
         if (frame.isEnd() && !last.isFinal()) {

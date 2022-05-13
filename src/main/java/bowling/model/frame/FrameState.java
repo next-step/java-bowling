@@ -20,34 +20,34 @@ public final class FrameState {
         this.score = score;
     }
 
-    public static FrameState init() {
+    static FrameState init() {
         return from(DEFAULT_STATE);
     }
 
-    public static FrameState from(BallState state) {
+    static FrameState from(BallState state) {
         Assert.notNull(state, "state must not be null");
         return of(state, Score.init(state.restCount()));
     }
 
-    public static FrameState of(BallState state, Score score) {
+    static FrameState of(BallState state, Score score) {
         return new FrameState(state, score);
     }
 
-    public boolean isEndState() {
+    boolean isEndState() {
         return state.isEnd();
     }
 
-    public FrameState nextState(Pins pins) {
+    FrameState nextState(Pins pins) {
         validateState();
         BallState nextState = this.state.state(pins);
         return of(nextState, score.changeRestCount(nextState.restCount()));
     }
 
-    public boolean hasRestCount() {
+    boolean hasRestCount() {
         return score.hasRestCount();
     }
 
-    public FrameState addScore(Pins pins) {
+    FrameState addScore(Pins pins) {
         return of(state, score.addValue(pins.count()));
     }
 

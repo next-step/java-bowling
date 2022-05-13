@@ -25,7 +25,7 @@ public final class FrameNumber {
         this.number = number;
     }
 
-    public static FrameNumber from(int number) {
+    static FrameNumber from(int number) {
         return CACHE.getOrDefault(number, new FrameNumber(number));
     }
 
