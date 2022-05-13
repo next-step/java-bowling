@@ -35,6 +35,12 @@ class PinNoTest {
     }
 
     @Test
+    void canPlus() {
+        assertThat(PinNo.of(8).canPlus(2)).isTrue();
+        assertThat(PinNo.of(8).canPlus(3)).isFalse();
+    }
+
+    @Test
     void plus() {
         assertThat(PinNo.of(2).plus(PinNo.of(3))).isSameAs(PinNo.of(5));
     }

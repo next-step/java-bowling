@@ -36,8 +36,12 @@ public class PinNo {
         return no == MIN_PIN_NO;
     }
 
-    public PinNo plus(PinNo anotherNo) {
-        return PinNo.of(this.no + anotherNo.no);
+    public boolean canPlus(int no) {
+        return this.no + no <= MAX_PIN_NO;
+    }
+
+    public PinNo plus(PinNo pinNo) {
+        return PinNo.of(this.no + pinNo.no);
     }
 
     public int getNo() {
