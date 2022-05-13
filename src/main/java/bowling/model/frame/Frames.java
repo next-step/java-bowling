@@ -35,7 +35,7 @@ public final class Frames {
         LinkedList<Frame> newFrames = framesAddedScoreWithoutLast(pins);
         Frame last = this.frames.getLast();
         Frame frame = addScoreIfHasRestCount(last, pins);
-        if (frame.isEnd()) {
+        if (frame.isEnd() && !last.isFinal()) {
             newFrames.add(frame);
         }
         newFrames.add(frame.next(pins));

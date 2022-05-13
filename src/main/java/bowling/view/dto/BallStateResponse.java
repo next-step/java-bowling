@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public enum BallStateResponse {
+enum BallStateResponse {
 
     STRIKE(Strike.class, "x"),
     FIRST_THROWN(FirstThrown.class, "%s"),
@@ -33,7 +33,7 @@ public enum BallStateResponse {
         this.format = format;
     }
 
-    public static String toString(BallState state, Collection<Integer> counts) {
+    static String toString(BallState state, Collection<Integer> counts) {
         return Arrays.stream(values())
                 .filter(response -> response.stateClass.isInstance(state))
                 .map(response -> String.format(response.format, convertCounts(counts).toArray()))
@@ -41,7 +41,14 @@ public enum BallStateResponse {
                 .orElseGet(() -> defaultMessage(counts));
     }
 
-    private static String defaultMessage(Collection<Integer> counts) {
+    public static String toString(BallState state, List<Integer> counts, List<Integer> additionHitPinsGroup) {
+        if (additionHitPinsGroup.isEmpty()) {
+            return toString(state, counts);
+        }
+        return String.join(PINS_DELIMITER, toString(state, counts), defaultMessage(additionHitPinsGroup));
+    }
+
+    static String defaultMessage(Collection<Integer> counts) {
         return String.join(PINS_DELIMITER, convertCounts(counts));
     }
 

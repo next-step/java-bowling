@@ -13,6 +13,7 @@ import bowling.model.frame.state.SecondThrown;
 import bowling.model.frame.state.Spare;
 import bowling.model.frame.state.Strike;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -63,12 +64,12 @@ public final class FrameResponse {
 
     private static FrameResponse finalFrameResponse(FinalFrame frame) {
         FrameState state = frame.state();
-        List<Pins> pins = extractPins(state.state());
+        List<Pins> pins = new ArrayList<>(extractPins(state.state()));
         pins.addAll(frame.additionHitPinsGroup());
         if (frame.hasRestCount()) {
-            return new FrameResponse(BallStateResponse.toString(state.state(), mapCount(pins)));
+            return new FrameResponse(BallStateResponse.toString(state.state(), mapCount(pins), mapCount(frame.additionHitPinsGroup())));
         }
-        return new FrameResponse(BallStateResponse.toString(state.state(), mapCount(pins)), state.score().value());
+        return new FrameResponse(BallStateResponse.toString(state.state(), mapCount(pins), mapCount(frame.additionHitPinsGroup())), state.score().value());
     }
 
     private static List<Pins> extractPins(BallState state) {
