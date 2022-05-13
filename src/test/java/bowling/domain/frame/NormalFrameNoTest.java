@@ -5,9 +5,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-public class NormalFrameNoTest {
+class NormalFrameNoTest {
 
     @ParameterizedTest(name = "일반 프레임 번호는 1부터 9다.")
     @ValueSource(ints = {0, 10})
@@ -33,3 +33,4 @@ public class NormalFrameNoTest {
                 .isInstanceOf(IllegalStateException.class);
     }
 }
+

@@ -6,7 +6,7 @@ import java.util.Map;
 public class NormalFrameNo {
 
     public static final int MIN_NORMAL_FRAME_NO = 1;
-    public static final int MAX_NORMAL_FRAME_NO = 9;
+    private static final int MAX_NORMAL_FRAME_NO = 9;
     private static final Map<Integer, NormalFrameNo> cache = new HashMap<>();
 
     static {
