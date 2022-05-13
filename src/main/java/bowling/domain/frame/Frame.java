@@ -1,37 +1,12 @@
 package bowling.domain.frame;
 
-import bowling.domain.pin.PinNumbers;
-import bowling.domain.pin.PinStatus;
+public interface Frame {
 
-import static bowling.domain.pin.PinStatus.*;
+    boolean isFull();
 
-public abstract class Frame {
+    void addPin(int pinNo);
 
-    protected PinNumbers pinNumbers;
+    Frame nextFrame(int pinNo);
 
-    protected Frame(int firstNo, int secondNo) {
-        this.pinNumbers = new PinNumbers(firstNo, secondNo);
-    }
-
-    public abstract Frame next(int firstNo, int secondNo);
-
-    public boolean isStrike() {
-        return getStatus() == STRIKE;
-    }
-
-    public boolean isSpare() {
-        return getStatus() == SPARE;
-    }
-
-    public PinStatus getStatus() {
-        return pinNumbers.getStatus();
-    }
-
-    public int getFirstNo() {
-        return pinNumbers.getFirstNo();
-    }
-
-    public int getSecondNo() {
-        return pinNumbers.getSecondNo();
-    }
+    String toExpression();
 }
