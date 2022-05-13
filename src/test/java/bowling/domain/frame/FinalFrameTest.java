@@ -1,35 +1,45 @@
 package bowling.domain.frame;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FinalFrameTest {
 
-    @ParameterizedTest(name = "FinalFrame은 스트라이크/스페어일 때 보너스 투구 가능")
-    @CsvSource({"7,3", "10,0", "10,10"})
-    void addExtra(int firstNo, int secondNo) {
-        assertThatNoException()
-                .isThrownBy(() -> new FinalFrame(firstNo, secondNo).addExtra(10));
+    @ParameterizedTest(name = "스트라이크/스페어 일 때 추가 투구 안 하면 isFull false")
+    @CsvSource({"10,10", "10,0", "9,1", "8,2"})
+    void isFull_WhenExtraMissing_ReturnsFalse(int firstNo, int secondNo) {
+        Frame finalFrame = new FinalFrame(firstNo);
+        finalFrame.addPin(secondNo);
+
+        assertThat(finalFrame.isFull()).isFalse();
     }
 
-    @ParameterizedTest(name = "FinalFrame이 스트라이크/스페어 아닐 때 보너스 투구하면 예외")
-    @CsvSource({"6,3", "7,2", "0,0"})
-    void addExtra_WhenNotAvailable_ThrowsIllegalStateException(int firstNo, int secondNo) {
-        assertThatThrownBy(() -> new FinalFrame(firstNo, secondNo).addExtra(10))
+    @ParameterizedTest(name = "스트라이크/스페어 일 때 추가 투구하면 isFull true")
+    @CsvSource({"10,10,10", "10,0,3", "9,1,2", "8,2,1"})
+    void isFull_WhenExtraAdded_ReturnsTrue(int firstNo, int secondNo, int extraNo) {
+        Frame finalFrame = new FinalFrame(firstNo);
+        finalFrame.addPin(secondNo);
+        finalFrame.addPin(extraNo);
+
+        assertThat(finalFrame.isFull()).isTrue();
+    }
+
+    @ParameterizedTest(name = "미스면 isFull true")
+    @CsvSource({"8,1", "0,0", "0,9", "4,5"})
+    void isFull_WhenMiss_ReturnsTrue(int firstNo, int secondNo) {
+        Frame finalFrame = new FinalFrame(firstNo);
+        finalFrame.addPin(secondNo);
+
+        assertThat(finalFrame.isFull()).isTrue();
+    }
+
+    @ParameterizedTest(name = "첫 번째 투구가 스트라이크가 아니면 두 투구의 합은 10이하")
+    @CsvSource({"7,4", "9,3", "2,9"})
+    void addPin_WhenValidationFailed_ThrowsIllegalStateException(int firstNo, int secondNo) {
+        assertThatThrownBy(() -> new FinalFrame(firstNo).addPin(secondNo))
                 .isInstanceOf(IllegalStateException.class);
-    }
-
-    @DisplayName("FinalFrame은 첫 번째 투구 + 두 번째 투구 + 보너스 투구 세 가지가 같아야 동등")
-    @Test
-    void equals() {
-        assertThat(new FinalFrame(5, 5).addExtra(5))
-                .isEqualTo(new FinalFrame(5, 5).addExtra(5));
-
-        assertThat(new FinalFrame(5, 5).addExtra(5))
-                .isNotEqualTo(new FinalFrame(5, 5).addExtra(4));
     }
 }

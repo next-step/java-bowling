@@ -1,52 +1,64 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.PinNo;
-import bowling.domain.pin.PinStatus;
+import bowling.domain.util.PinNoPrinter;
 
-import java.util.EnumSet;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
-import static bowling.domain.pin.PinStatus.*;
+import static bowling.domain.pin.PinStatus.plus;
 
-public class FinalFrame extends Frame {
+public class FinalFrame implements Frame {
 
-    private static final EnumSet<PinStatus> EXTRA_AVAILABLE = EnumSet.of(STRIKE, SPARE);
+    private static final int INIT_SIZE = 1;
+    private static final int MIN_SIZE = 2;
+    private static final int EXTRA_SIZE = 3;
 
-    private PinNo extraNo;
+    private final List<PinNo> pinNos = new ArrayList<>();
 
-    FinalFrame(int firstNo, int secondNo) {
-        super(firstNo, secondNo);
+    public FinalFrame(int pinNo) {
+        pinNos.add(PinNo.of(pinNo));
     }
 
     @Override
-    public Frame next(int firstNo, int secondNo) {
-        throw new IllegalStateException();
-    }
-
-    public Optional<Integer> getExtraNo() {
-        return Optional.ofNullable(extraNo)
-                .map(PinNo::getNo);
-    }
-
-    public Frame addExtra(int extraNo) {
-        if (!EXTRA_AVAILABLE.contains(pinNumbers.getStatus())) {
-            throw new IllegalStateException("can't add extra number when not strike/spare");
+    public boolean isFull() {
+        if (size() < MIN_SIZE) {
+            return false;
         }
-        this.extraNo = PinNo.of(extraNo);
-        return this;
+        PinNo firstPin = pinNos.get(0);
+        PinNo secondPin = pinNos.get(1);
+        return plus(firstPin, secondPin).isMiss() || size() == EXTRA_SIZE;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FinalFrame that = (FinalFrame) o;
-        return Objects.equals(extraNo, that.extraNo) && Objects.equals(pinNumbers, that.pinNumbers);
+    public void addPin(int pinNo) {
+        if (size() == INIT_SIZE) {
+            validateSecondPin(pinNo);
+        }
+        pinNos.add(PinNo.of(pinNo));
+    }
+
+    private void validateSecondPin(int pinNo) {
+        PinNo firstPin = pinNos.get(0);
+        if (firstPin.isMaxNo()) {
+            return;
+        }
+        if (!firstPin.canPlus(pinNo)) {
+            throw new IllegalStateException("can't add pin");
+        }
+    }
+
+    private int size() {
+        return pinNos.size();
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(extraNo, pinNumbers);
+    public Frame nextFrame(int pinNo) {
+        throw new IllegalStateException("current frame is final frame");
+    }
+
+    @Override
+    public String toExpression() {
+        return PinNoPrinter.print(pinNos);
     }
 }
