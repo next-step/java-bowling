@@ -1,43 +1,45 @@
 package bowling.domain.frame;
 
-import java.util.Objects;
+import bowling.domain.pin.PinNumbers;
+import bowling.domain.util.PinNoPrinter;
 
-public class NormalFrame extends Frame {
+import static bowling.domain.frame.NormalFrameNo.MIN_NORMAL_FRAME_NO;
 
-    private static final int MAX_SUM = 10;
+public class NormalFrame implements Frame {
 
     private final NormalFrameNo frameNo;
 
-    public NormalFrame(int frameNo, int firstNo, int secondNo) {
-        super(firstNo, secondNo);
-        validateNumbers(firstNo, secondNo);
+    private final PinNumbers pinNumbers;
+
+    NormalFrame(int frameNo, int pinNo) {
         this.frameNo = NormalFrameNo.of(frameNo);
+        this.pinNumbers = new PinNumbers(pinNo);
     }
 
-    private void validateNumbers(int firstNo, int secondNo) {
-        if (firstNo + secondNo > MAX_SUM) {
-            throw new IllegalArgumentException("invalid normal frame numbers: " + firstNo + ", " + secondNo);
-        }
+    public static NormalFrame init(int pinNo) {
+        return new NormalFrame(MIN_NORMAL_FRAME_NO, pinNo);
     }
 
     @Override
-    public Frame next(int firstNo, int secondNo) {
+    public boolean isFull() {
+        return pinNumbers.isFull();
+    }
+
+    @Override
+    public void addPin(int pinNo) {
+        pinNumbers.addPin(pinNo);
+    }
+
+    @Override
+    public Frame nextFrame(int pinNo) {
         if (frameNo.isMax()) {
-            return new FinalFrame(firstNo, secondNo);
+            return new FinalFrame(pinNo);
         }
-        return new NormalFrame(frameNo.next(), firstNo, secondNo);
+        return new NormalFrame(frameNo.next(), pinNo);
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        NormalFrame that = (NormalFrame) o;
-        return Objects.equals(frameNo, that.frameNo) && Objects.equals(pinNumbers, that.pinNumbers);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(frameNo, pinNumbers);
+    public String toExpression() {
+        return PinNoPrinter.print(pinNumbers.getFirstNo(), pinNumbers.getSecondNo());
     }
 }

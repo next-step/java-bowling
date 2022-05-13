@@ -1,50 +1,27 @@
 package bowling.domain.frame;
 
-import bowling.domain.pin.PinStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class NormalFrameTest {
 
-    @DisplayName("firstNo와 secondNo의 합은 10이하")
+    @DisplayName("9번 프레임에서 nextFrame 호출하면 FinalFrame 반환")
     @Test
-    void validation() {
-        assertThatThrownBy(() -> new NormalFrame(1, 7, 4))
-                .isInstanceOf(IllegalArgumentException.class);
+    void nextFrame_WhenCalledAtMaxFrameNo_ReturnsFinalFrame() {
+        NormalFrame frame = new NormalFrame(9, 0);
+
+        assertThat(frame.nextFrame(10)).isInstanceOf(FinalFrame.class);
     }
 
-    @Test
-    void getStatus() {
-        assertThat(new NormalFrame(1, 10, 0).getStatus())
-                .isSameAs(PinStatus.STRIKE);
+    @ParameterizedTest(name = "1~8번 프레임에서 nextFrame 호출하면 NormalFrame 반환")
+    @ValueSource(ints = {1, 8})
+    void nextFrame_WhenCalledNonMaxFrameNo_ReturnsNormalFrame(int frameNo) {
+        NormalFrame frame = new NormalFrame(frameNo, 0);
+
+        assertThat(frame.nextFrame(0)).isInstanceOf(NormalFrame.class);
     }
-
-    @Test
-    void next() {
-        assertThat(new NormalFrame(1, 0, 0).next(0, 0))
-                .isEqualTo(new NormalFrame(2, 0, 0));
-    }
-
-    @Test
-    void next_WhenLastFrame_ReturnsFinalFrame() {
-        assertThat(new NormalFrame(9, 0, 0).next(0, 0))
-                .isEqualTo(new FinalFrame(0, 0));
-    }
-
-    @DisplayName("NormalFrame은 프레임 번호와 첫 번째+두 번째 투구가 모두 같아야 동등")
-    @Test
-    void equals() {
-        assertThat(new NormalFrame(5, 5, 5))
-                .isEqualTo(new NormalFrame(5, 5, 5));
-
-        assertThat(new NormalFrame(5, 5, 5))
-                .isNotEqualTo(new NormalFrame(5, 5, 4));
-
-        assertThat(new NormalFrame(5, 5, 5))
-                .isNotEqualTo(new NormalFrame(4, 5, 5));
-    }
-
 }
