@@ -1,10 +1,6 @@
 package bowling.domain.game;
 
-import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
-
-import java.util.List;
-import java.util.Optional;
 
 public class Bowling {
 
@@ -16,27 +12,15 @@ public class Bowling {
         this.frames = frames;
     }
 
-    public void addNormalFrame(int firstNo, int secondNo) {
-        frames.addNormalFrame(firstNo, secondNo);
+    public boolean isFinished() {
+        return frames.isFinished();
     }
 
-    public void addFinalFrame(int firstNo, int secondNo) {
-        frames.addFinalFrame(firstNo, secondNo);
+    public int currentFrame() {
+        return frames.currentFrame();
     }
 
-    public void addExtra(int extraNo) {
-        frames.addExtra(extraNo);
-    }
-
-    public String getPlayerName() {
-        return player.getName();
-    }
-
-    public List<Frame> getNormalFrames() {
-        return frames.getNormalFrames();
-    }
-
-    public Optional<Frame> getFinalFrame() {
-        return frames.getFinalFrame();
+    public void addPin(int pinNo) {
+        frames.addPin(pinNo);
     }
 }
