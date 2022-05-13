@@ -95,7 +95,11 @@ public class Question extends AbstractEntity {
     }
 
     public void record(DeleteHistories deleteHistories) {
-        deleteHistories.add(createRecord());
+        record(deleteHistories, createRecord());
+    }
+
+    void record(DeleteHistories deleteHistories, DeleteHistory deleteHistory) {
+        deleteHistories.add(deleteHistory);
     }
 
     private DeleteHistory createRecord() {
