@@ -32,7 +32,7 @@ public final class Bowling {
 
     public Bowling pitch(Pins countOfHit) {
         validateState();
-        return of(participant, frames.addedFrames(countOfHit));
+        return of(participant, frames.bowling(countOfHit));
     }
 
     public Participant participant() {

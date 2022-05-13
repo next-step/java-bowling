@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public final class Frames {
 
@@ -29,10 +30,15 @@ public final class Frames {
         return frames.getLast().isFinal() && frames.getLast().isEnd();
     }
 
-    public Frames addedFrames(Pins countOfHit) {
+    public Frames bowling(Pins pins) {
         validateStateToAdd();
-        LinkedList<Frame> newFrames = newFramesWithoutNotEndedFrame();
-        newFrames.add(this.frames.getLast().next(countOfHit));
+        LinkedList<Frame> newFrames = framesAddedScoreWithoutLast(pins);
+        Frame last = this.frames.getLast();
+        Frame frame = addScoreIfHasRestCount(last, pins);
+        if (frame.isEnd()) {
+            newFrames.add(frame);
+        }
+        newFrames.add(frame.next(pins));
         return from(newFrames);
     }
 
@@ -48,13 +54,19 @@ public final class Frames {
         return Collections.unmodifiableList(this.frames);
     }
 
-    private LinkedList<Frame> newFramesWithoutNotEndedFrame() {
-        LinkedList<Frame> newFrames = new LinkedList<>(this.frames);
-        Frame last = newFrames.getLast();
-        if (!last.isEnd()) {
-            newFrames.removeLast();
-        }
+    private LinkedList<Frame> framesAddedScoreWithoutLast(Pins countOfHit) {
+        LinkedList<Frame> newFrames = this.frames.stream()
+                .map(frame -> addScoreIfHasRestCount(frame, countOfHit))
+                .collect(Collectors.toCollection(LinkedList::new));
+        newFrames.removeLast();
         return newFrames;
+    }
+
+    private Frame addScoreIfHasRestCount(Frame frame, Pins countOfHit) {
+        if (frame.hasRestCount()) {
+            return frame.addScore(countOfHit);
+        }
+        return frame;
     }
 
     private void validateStateToAdd() {
