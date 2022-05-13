@@ -5,7 +5,7 @@ public enum PinStatus {
     SPARE,
     MISS;
 
-    public static PinStatus getStatus(PinNo firstNo, PinNo secondNo) {
+    public static PinStatus plus(PinNo firstNo, PinNo secondNo) {
         if (firstNo.isMaxNo()) {
             return STRIKE;
         }
@@ -13,5 +13,13 @@ public enum PinStatus {
             return SPARE;
         }
         return MISS;
+    }
+
+    public boolean isMiss() {
+        return this == MISS;
+    }
+
+    public boolean isSpare() {
+        return this == SPARE;
     }
 }
