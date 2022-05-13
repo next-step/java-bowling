@@ -27,4 +27,10 @@ class NotThrownTest {
                 () -> assertThat(notThrown.state(Pins.ZERO)).isEqualTo(FirstThrown.from(Pins.ZERO))
         );
     }
+
+    @Test
+    @DisplayName("남은 투구는 2")
+    void restCount() {
+        assertThat(NotThrown.INSTANCE.restCount()).isEqualTo(2);
+    }
 }

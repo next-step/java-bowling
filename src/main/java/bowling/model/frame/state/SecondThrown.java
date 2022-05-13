@@ -8,6 +8,8 @@ import java.util.Objects;
 
 public final class SecondThrown implements BallState {
 
+    private static final int REST_COUNT = 0;
+
     private final Pins firstHit;
     private final Pins secondHit;
 
@@ -31,6 +33,11 @@ public final class SecondThrown implements BallState {
     @Override
     public BallState state(Pins countOfHit) {
         throw new IllegalStateException(String.format("spare(%s) can not throw ball", this));
+    }
+
+    @Override
+    public int restCount() {
+        return REST_COUNT;
     }
 
     public Pins secondHit() {

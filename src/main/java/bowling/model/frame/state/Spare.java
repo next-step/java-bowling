@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public final class Spare implements BallState {
 
-    private static final int BONUS_COUNT = 1;
+    private static final int REST_COUNT = 1;
 
     private final Pins firstHit;
 
@@ -32,8 +32,8 @@ public final class Spare implements BallState {
     }
 
     @Override
-    public int bonusCount() {
-        return BONUS_COUNT;
+    public int restCount() {
+        return REST_COUNT;
     }
 
     public Pins firstHit() {

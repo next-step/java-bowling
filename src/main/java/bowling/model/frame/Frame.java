@@ -4,11 +4,15 @@ import bowling.model.Pins;
 
 public interface Frame {
 
-    Frame next(Pins countOfHit);
-
-    boolean isEnd();
+    FrameNumber number();
 
     boolean isFinal();
 
-    FrameNumber number();
+    boolean isEnd();
+
+    Frame next(Pins countOfHit);
+
+    boolean hasRestCount();
+
+    Frame addScore(Pins countOfHit);
 }

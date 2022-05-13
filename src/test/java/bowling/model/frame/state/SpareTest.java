@@ -34,9 +34,9 @@ class SpareTest {
     }
 
     @Test
-    @DisplayName("보너스 투구는 1")
-    void bonusCount() {
-        assertThat(Spare.from(Pins.ZERO).bonusCount()).isEqualTo(1);
+    @DisplayName("남은 투구는 1")
+    void restCount() {
+        assertThat(Spare.from(Pins.ZERO).restCount()).isOne();
     }
 
     @Test

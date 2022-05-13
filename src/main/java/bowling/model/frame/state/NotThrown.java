@@ -7,6 +7,8 @@ public enum NotThrown implements BallState {
 
     INSTANCE;
 
+    private static final int REST_COUNT = 2;
+
     @Override
     public boolean isEnd() {
         return false;
@@ -18,5 +20,10 @@ public enum NotThrown implements BallState {
             return Strike.INSTANCE;
         }
         return FirstThrown.from(countOfHit);
+    }
+
+    @Override
+    public int restCount() {
+        return REST_COUNT;
     }
 }
