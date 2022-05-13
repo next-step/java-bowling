@@ -1,5 +1,6 @@
 package bowling.view;
 
+import bowling.model.Pins;
 import bowling.model.Player;
 
 import java.util.Scanner;
@@ -7,6 +8,7 @@ import java.util.Scanner;
 public final class InputView {
 
     private static final String INPUT_PLAYER_NAME_MESSAGE = "플레이어 이름은(3 english letters)?: ";
+    private static final String INPUT_FRAME_PIN_COUNT = "%d 프레임 투구 : ";
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -17,6 +19,15 @@ public final class InputView {
 
     private String readLine() {
         return scanner.nextLine();
+    }
+
+    public Pins inputPins(int currentRound) {
+        System.out.printf(INPUT_FRAME_PIN_COUNT, currentRound);
+        return Pins.create(readNumber());
+    }
+
+    private int readNumber() {
+        return Integer.parseInt(readLine());
     }
 
 }
