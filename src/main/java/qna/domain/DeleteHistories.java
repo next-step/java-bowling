@@ -15,14 +15,6 @@ public class DeleteHistories {
         deleteHistories.add(deleteHistory);
     }
 
-    public void add(Question question) {
-        question.record(this);
-    }
-
-    public void add(Answers answers) {
-        answers.record(this);
-    }
-
     public List<DeleteHistory> getDeleteHistories() {
         return Collections.unmodifiableList(deleteHistories);
     }
