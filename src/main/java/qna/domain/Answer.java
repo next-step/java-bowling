@@ -1,5 +1,6 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
@@ -43,33 +44,21 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public boolean isWrittenBy(User user) {
+        return this.writer.matchUserId(user);
+    }
+
+    public DeleteHistory delete(User user, LocalDateTime at) {
+        this.deleted = true;
+        return new DeleteHistory(ContentType.ANSWER, id, user, at);
     }
 
     public boolean isDeleted() {
-        return deleted;
-    }
-
-    public boolean isOwner(User writer) {
-        return this.writer.equals(writer);
-    }
-
-    public User getWriter() {
-        return writer;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public void toQuestion(Question question) {
-        this.question = question;
+        return this.deleted;
     }
 
     @Override
     public String toString() {
-        return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
+        return "Answer [id=" + id + ", writer=" + writer + ", contents=" + contents + "]";
     }
 }
