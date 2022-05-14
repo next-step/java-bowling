@@ -37,12 +37,16 @@ public final class Score {
         return remainCount > MINIMUM_VALUE;
     }
 
-    public Score changeRemainCount(int remainCount) {
+    Score changeRemainCount(int remainCount) {
         return of(value, remainCount);
     }
 
     public int value() {
         return value;
+    }
+
+    int sumValue(int value) {
+        return this.value + value;
     }
 
     private void validateRemainCount() {

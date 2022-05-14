@@ -19,32 +19,26 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public final class FrameResponse {
+public final class FramesResponse {
 
-    private final String state;
-    private final String score;
+    private final List<String> states;
+    private final List<Integer> scores;
 
-    private FrameResponse(String state, String score) {
-        this.state = state;
-        this.score = score;
+    private FramesResponse(List<String> states, List<Integer> scores) {
+        this.states = states;
+        this.scores = scores;
     }
 
-    private FrameResponse(String state, int score) {
-        this(state, String.valueOf(score));
-    }
-
-    private FrameResponse(String state) {
-        this(state, "");
-    }
-
-    public static List<FrameResponse> listFrom(Frames frames) {
-        return frames.list()
+    public static FramesResponse from(Frames frames) {
+        return new FramesResponse(frames.list()
                 .stream()
-                .map(FrameResponse::from)
-                .collect(Collectors.toList());
+                .map(FramesResponse::stateMarks)
+                .collect(Collectors.toList()),
+                frames.accumulatedScores()
+        );
     }
 
-    private static FrameResponse from(Frame frame) {
+    static String stateMarks(Frame frame) {
         if (frame instanceof NormalFrame) {
             return normalFrameResponse((NormalFrame) frame);
         }
@@ -54,22 +48,16 @@ public final class FrameResponse {
         throw new IllegalArgumentException(String.format("frame type(%s) is not supported", frame.getClass()));
     }
 
-    private static FrameResponse normalFrameResponse(NormalFrame frame) {
+    private static String normalFrameResponse(NormalFrame frame) {
         FrameState state = frame.state();
-        if (frame.hasRemainCount()) {
-            return new FrameResponse(BallStateResponse.toString(state.state(), mapCount(extractPins(state.state()))));
-        }
-        return new FrameResponse(BallStateResponse.toString(state.state(), mapCount(extractPins(state.state()))), state.score().value());
+        return BallStateMarkConverter.toString(state.state(), mapCount(extractPins(state.state())));
     }
 
-    private static FrameResponse finalFrameResponse(FinalFrame frame) {
+    private static String finalFrameResponse(FinalFrame frame) {
         FrameState state = frame.state();
         List<Pins> pins = new ArrayList<>(extractPins(state.state()));
         pins.addAll(frame.additionHitPinsGroup());
-        if (frame.hasRemainCount()) {
-            return new FrameResponse(BallStateResponse.toString(state.state(), mapCount(pins), mapCount(frame.additionHitPinsGroup())));
-        }
-        return new FrameResponse(BallStateResponse.toString(state.state(), mapCount(pins), mapCount(frame.additionHitPinsGroup())), state.score().value());
+        return BallStateMarkConverter.toString(state.state(), mapCount(pins), mapCount(frame.additionHitPinsGroup()));
     }
 
     private static List<Pins> extractPins(BallState state) {
@@ -98,11 +86,11 @@ public final class FrameResponse {
                 .collect(Collectors.toList());
     }
 
-    public String getState() {
-        return state;
+    public List<String> getStates() {
+        return states;
     }
 
-    public String getScore() {
-        return score;
+    public List<Integer> getScores() {
+        return scores;
     }
 }

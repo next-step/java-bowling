@@ -61,6 +61,11 @@ public final class NormalFrame implements Frame {
         return of(number, state.addScore(countOfHit));
     }
 
+    @Override
+    public int sumScoreValue(int score) {
+        return state.sumScoreValue(score);
+    }
+
     public FrameState state() {
         return state;
     }

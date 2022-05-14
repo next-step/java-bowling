@@ -62,4 +62,10 @@ class ScoreTest {
     void value() {
         assertThat(Score.of(10, 0).value()).isEqualTo(10);
     }
+
+    @Test
+    @DisplayName("합한 값")
+    void sumValue() {
+        assertThat(Score.of(10, 0).sumValue(10)).isEqualTo(20);
+    }
 }

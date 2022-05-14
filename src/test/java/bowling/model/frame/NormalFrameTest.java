@@ -107,6 +107,12 @@ class NormalFrameTest {
         assertThat(NormalFrame.of(FrameNumber.FIRST, state).state()).isEqualTo(state);
     }
 
+    @Test
+    @DisplayName("스코어 점수가 더해진 값")
+    void sumScoreValue() {
+        assertThat(NormalFrame.init(FrameNumber.FIRST).sumScoreValue(10)).isEqualTo(10);
+    }
+
     private static Stream<Arguments> next() {
         return Stream.of(
                 Arguments.of(Collections.singletonList(Pins.from(1)), NormalFrame.of(FrameNumber.from(8), FrameState.from(FirstThrown.from(Pins.from(1))))),

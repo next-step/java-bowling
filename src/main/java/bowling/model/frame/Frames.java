@@ -3,13 +3,17 @@ package bowling.model.frame;
 import bowling.model.Pins;
 import bowling.utility.Assert;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public final class Frames {
+
+    private static final int START_SCORE_VALUE = 0;
 
     private final LinkedList<Frame> frames;
 
@@ -48,6 +52,22 @@ public final class Frames {
             return last.number().increase();
         }
         return last.number();
+    }
+
+    public List<Integer> accumulatedScores() {
+        List<Integer> scores = new ArrayList<>();
+        Iterator<Frame> iterator = this.frames.iterator();
+        Frame frame;
+        int score = START_SCORE_VALUE;
+        do {
+            frame = iterator.next();
+            if (frame.hasRemainCount()) {
+                break;
+            }
+            score = frame.sumScoreValue(score);
+            scores.add(score);
+        } while (iterator.hasNext());
+        return scores;
     }
 
     public List<Frame> list() {

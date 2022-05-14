@@ -15,4 +15,6 @@ public interface Frame {
     boolean hasRemainCount();
 
     Frame addScore(Pins countOfHit);
+
+    int sumScoreValue(int score);
 }

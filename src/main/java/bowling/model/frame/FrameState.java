@@ -59,6 +59,10 @@ public final class FrameState {
         return state;
     }
 
+    public int sumScoreValue(int scoreValue) {
+        return score.sumValue(scoreValue);
+    }
+
     private void validateState() {
         if (isEndState()) {
             throw new IllegalStateException(String.format("frame state(%s) is already end state", state));

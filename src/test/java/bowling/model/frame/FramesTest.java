@@ -98,6 +98,16 @@ class FramesTest {
         assertThat(Frames.from(firstFrames).list()).isEqualTo(firstFrames);
     }
 
+    @ParameterizedTest(name = "[{index}] {0} 만큼 핀이 추가되면 누적된 스코어는 {1}")
+    @DisplayName("누적된 스코어들")
+    @MethodSource
+    void accumulatedScores(List<Pins> pinsGroup, List<Integer> expected) {
+        Frames frames = pinsGroup.stream()
+                .reduce(Frames.init(), Frames::bowling, (frames1, frames2) -> frames2);
+        //when, then
+        assertThat(frames.accumulatedScores()).containsExactlyElementsOf(expected);
+    }
+
     private static Stream<Arguments> bowling() {
         return Stream.of(
                 Arguments.of(
@@ -119,6 +129,16 @@ class FramesTest {
                 Arguments.of(Collections.emptyList(), false),
                 Arguments.of(Collections.singletonList(Pins.MAX), false),
                 Arguments.of(IntStream.range(0, 20).mapToObj(i -> Pins.ZERO).collect(Collectors.toList()), true)
+        );
+    }
+
+    private static Stream<Arguments> accumulatedScores() {
+        return Stream.of(
+                Arguments.of(Collections.singletonList(Pins.MAX), Collections.emptyList()),
+                Arguments.of(Arrays.asList(Pins.MAX, Pins.MAX), Collections.emptyList()),
+                Arguments.of(Arrays.asList(Pins.MAX, Pins.MAX, Pins.MAX), Collections.singletonList(30)),
+                Arguments.of(Arrays.asList(Pins.MAX, Pins.ZERO, Pins.ZERO), Arrays.asList(10, 10)),
+                Arguments.of(Arrays.asList(Pins.ZERO, Pins.ZERO, Pins.MAX, Pins.MAX, Pins.ZERO, Pins.ZERO), Arrays.asList(0, 20, 30, 30))
         );
     }
 }

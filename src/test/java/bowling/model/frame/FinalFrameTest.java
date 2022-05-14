@@ -104,6 +104,12 @@ class FinalFrameTest {
         assertThat(FinalFrame.init().additionHitPinsGroup()).isEqualTo(Collections.emptyList());
     }
 
+    @Test
+    @DisplayName("스코어 점수가 더해진 값")
+    void sumScoreValue() {
+        assertThat(FinalFrame.init().sumScoreValue(10)).isEqualTo(10);
+    }
+
     private static Stream<Arguments> isEnd() {
         return Stream.of(
                 Arguments.of(Collections.singletonList(Pins.MAX), false),

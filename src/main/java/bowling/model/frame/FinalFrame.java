@@ -63,6 +63,11 @@ public final class FinalFrame implements Frame {
         return of(state.addScore(countOfHit), additionHitPinsGroup);
     }
 
+    @Override
+    public int sumScoreValue(int score) {
+        return state.sumScoreValue(score);
+    }
+
     public FrameState state() {
         return state;
     }

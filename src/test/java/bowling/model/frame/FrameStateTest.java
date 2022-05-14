@@ -63,6 +63,12 @@ class FrameStateTest {
     }
 
     @Test
+    @DisplayName("스코어 점수가 더해진 값")
+    void sumScoreValue() {
+        assertThat(FrameState.init().sumScoreValue(10)).isEqualTo(10);
+    }
+
+    @Test
     @DisplayName("남은 갯수 소유 여부")
     void hasRemainCount() {
         assertAll(

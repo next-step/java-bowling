@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-enum BallStateResponse {
+enum BallStateMarkConverter {
 
     STRIKE(Strike.class, "x"),
     FIRST_THROWN(FirstThrown.class, "%s"),
@@ -28,7 +28,7 @@ enum BallStateResponse {
     private final Class<? extends BallState> stateClass;
     private final String format;
 
-    BallStateResponse(Class<? extends BallState> stateClass, String format) {
+    BallStateMarkConverter(Class<? extends BallState> stateClass, String format) {
         this.stateClass = stateClass;
         this.format = format;
     }
@@ -54,7 +54,7 @@ enum BallStateResponse {
 
     private static List<String> convertCounts(Collection<Integer> counts) {
         return counts.stream()
-                .map(BallStateResponse::convertMessage)
+                .map(BallStateMarkConverter::convertMessage)
                 .collect(Collectors.toList());
     }
 
