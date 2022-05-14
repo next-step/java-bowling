@@ -34,7 +34,7 @@ public final class Frames {
         validateStateToAdd();
         List<Frame> newFrames = framesAddedScoreWithoutLast(pins);
         Frame last = this.frames.getLast();
-        Frame frame = addScoreIfHasRestCount(last, pins);
+        Frame frame = addScoreIfHasRemainCount(last, pins);
         if (frame.isEnd() && !last.isFinal()) {
             newFrames.add(frame);
         }
@@ -56,14 +56,14 @@ public final class Frames {
 
     private LinkedList<Frame> framesAddedScoreWithoutLast(Pins countOfHit) {
         LinkedList<Frame> newFrames = this.frames.stream()
-                .map(frame -> addScoreIfHasRestCount(frame, countOfHit))
+                .map(frame -> addScoreIfHasRemainCount(frame, countOfHit))
                 .collect(Collectors.toCollection(LinkedList::new));
         newFrames.removeLast();
         return newFrames;
     }
 
-    private Frame addScoreIfHasRestCount(Frame frame, Pins countOfHit) {
-        if (frame.hasRestCount()) {
+    private Frame addScoreIfHasRemainCount(Frame frame, Pins countOfHit) {
+        if (frame.hasRemainCount()) {
             return frame.addScore(countOfHit);
         }
         return frame;

@@ -56,7 +56,7 @@ public final class FrameResponse {
 
     private static FrameResponse normalFrameResponse(NormalFrame frame) {
         FrameState state = frame.state();
-        if (frame.hasRestCount()) {
+        if (frame.hasRemainCount()) {
             return new FrameResponse(BallStateResponse.toString(state.state(), mapCount(extractPins(state.state()))));
         }
         return new FrameResponse(BallStateResponse.toString(state.state(), mapCount(extractPins(state.state()))), state.score().value());
@@ -66,7 +66,7 @@ public final class FrameResponse {
         FrameState state = frame.state();
         List<Pins> pins = new ArrayList<>(extractPins(state.state()));
         pins.addAll(frame.additionHitPinsGroup());
-        if (frame.hasRestCount()) {
+        if (frame.hasRemainCount()) {
             return new FrameResponse(BallStateResponse.toString(state.state(), mapCount(pins), mapCount(frame.additionHitPinsGroup())));
         }
         return new FrameResponse(BallStateResponse.toString(state.state(), mapCount(pins), mapCount(frame.additionHitPinsGroup())), state.score().value());

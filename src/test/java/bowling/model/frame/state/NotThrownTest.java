@@ -30,7 +30,7 @@ class NotThrownTest {
 
     @Test
     @DisplayName("남은 투구는 2")
-    void restCount() {
-        assertThat(NotThrown.INSTANCE.restCount()).isEqualTo(2);
+    void remainCount() {
+        assertThat(NotThrown.INSTANCE.remainCount()).isEqualTo(2);
     }
 }

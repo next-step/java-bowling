@@ -64,10 +64,10 @@ class FrameStateTest {
 
     @Test
     @DisplayName("남은 갯수 소유 여부")
-    void hasRestCount() {
+    void hasRemainCount() {
         assertAll(
-                () -> assertThat(FrameState.init().hasRestCount()).isTrue(),
-                () -> assertThat(FrameState.of(NotThrown.INSTANCE, Score.of(0, 0)).hasRestCount()).isFalse()
+                () -> assertThat(FrameState.init().hasRemainCount()).isTrue(),
+                () -> assertThat(FrameState.of(NotThrown.INSTANCE, Score.of(0, 0)).hasRemainCount()).isFalse()
         );
     }
 

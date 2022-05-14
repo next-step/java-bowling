@@ -8,46 +8,46 @@ public final class Score {
 
     private static final int MINIMUM_VALUE = 0;
     private static final int DEFAULT_VALUE = MINIMUM_VALUE;
-    private static final int DECREASE_REST_COUNT_STEP = 1;
+    private static final int DECREASE_REMAIN_COUNT_STEP = 1;
 
     private final int value;
-    private final int restCount;
+    private final int remainCount;
 
-    private Score(int value, int restCount) {
+    private Score(int value, int remainCount) {
         Assert.isTrue(isEqualOrGreaterThanMin(value), String.format("score value(%d) must be equal or greater than %d", value, MINIMUM_VALUE));
-        Assert.isTrue(isEqualOrGreaterThanMin(restCount), String.format("restCount(%d) must be equal or greater than %d", restCount, MINIMUM_VALUE));
+        Assert.isTrue(isEqualOrGreaterThanMin(remainCount), String.format("remainCount(%d) must be equal or greater than %d", remainCount, MINIMUM_VALUE));
         this.value = value;
-        this.restCount = restCount;
+        this.remainCount = remainCount;
     }
 
-    static Score of(int value, int restCount) {
-        return new Score(value, restCount);
+    static Score of(int value, int remainCount) {
+        return new Score(value, remainCount);
     }
 
-    static Score init(int restCount) {
-        return of(DEFAULT_VALUE, restCount);
+    static Score init(int remainCount) {
+        return of(DEFAULT_VALUE, remainCount);
     }
 
     Score addValue(int value) {
-        validateRestCount();
-        return of(this.value + value, restCount - DECREASE_REST_COUNT_STEP);
+        validateRemainCount();
+        return of(this.value + value, remainCount - DECREASE_REMAIN_COUNT_STEP);
     }
 
-    boolean hasRestCount() {
-        return restCount > MINIMUM_VALUE;
+    boolean hasRemainCount() {
+        return remainCount > MINIMUM_VALUE;
     }
 
-    public Score changeRestCount(int restCount) {
-        return of(value, restCount);
+    public Score changeRemainCount(int remainCount) {
+        return of(value, remainCount);
     }
 
     public int value() {
         return value;
     }
 
-    private void validateRestCount() {
-        if (restCount <= MINIMUM_VALUE) {
-            throw new IllegalStateException(String.format("restCount(%d) must be greater than zero to add value", restCount));
+    private void validateRemainCount() {
+        if (remainCount <= MINIMUM_VALUE) {
+            throw new IllegalStateException(String.format("remainCount(%d) must be greater than zero to add value", remainCount));
         }
     }
 
@@ -57,7 +57,7 @@ public final class Score {
 
     @Override
     public int hashCode() {
-        return Objects.hash(value, restCount);
+        return Objects.hash(value, remainCount);
     }
 
     @Override
@@ -69,14 +69,14 @@ public final class Score {
             return false;
         }
         Score score = (Score) o;
-        return value == score.value && restCount == score.restCount;
+        return value == score.value && remainCount == score.remainCount;
     }
 
     @Override
     public String toString() {
         return "Score{" +
                 "value=" + value +
-                ", restCount=" + restCount +
+                ", remainCount=" + remainCount +
                 '}';
     }
 }

@@ -7,7 +7,7 @@ public enum Strike implements BallState {
 
     INSTANCE;
 
-    private static final int REST_COUNT = 2;
+    private static final int REMAIN_COUNT = 2;
 
     @Override
     public boolean isEnd() {
@@ -20,7 +20,7 @@ public enum Strike implements BallState {
     }
 
     @Override
-    public int restCount() {
-        return REST_COUNT;
+    public int remainCount() {
+        return REMAIN_COUNT;
     }
 }

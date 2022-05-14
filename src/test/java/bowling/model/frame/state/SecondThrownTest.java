@@ -45,8 +45,8 @@ class SecondThrownTest {
 
     @Test
     @DisplayName("남은 투구는 0")
-    void restCount() {
-        assertThat(SecondThrown.of(Pins.ZERO, Pins.ZERO).restCount()).isZero();
+    void remainCount() {
+        assertThat(SecondThrown.of(Pins.ZERO, Pins.ZERO).remainCount()).isZero();
     }
 
     @Test

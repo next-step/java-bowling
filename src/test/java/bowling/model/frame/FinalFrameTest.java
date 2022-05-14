@@ -68,8 +68,8 @@ class FinalFrameTest {
     @ParameterizedTest
     @DisplayName("남은 개수 소유 여부")
     @CsvSource({"0,false", "1,true"})
-    void hasRestCount(int restCount, boolean expected) {
-        assertThat(FinalFrame.of(FrameState.of(Strike.INSTANCE, Score.of(0, restCount)), Collections.emptyList()).hasRestCount())
+    void hasRemainCount(int remainCount, boolean expected) {
+        assertThat(FinalFrame.of(FrameState.of(Strike.INSTANCE, Score.of(0, remainCount)), Collections.emptyList()).hasRemainCount())
                 .isEqualTo(expected);
     }
 

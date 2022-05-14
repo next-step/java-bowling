@@ -12,7 +12,7 @@ public interface Frame {
 
     Frame next(Pins countOfHit);
 
-    boolean hasRestCount();
+    boolean hasRemainCount();
 
     Frame addScore(Pins countOfHit);
 }

@@ -8,5 +8,5 @@ public interface BallState {
 
     BallState state(Pins countOfHit);
 
-    int restCount();
+    int remainCount();
 }

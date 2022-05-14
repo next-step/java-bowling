@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public final class FirstThrown implements BallState {
 
-    private static final int REST_COUNT = 1;
+    private static final int REMAIN_COUNT = 1;
 
     private final Pins countOfHit;
 
@@ -31,8 +31,8 @@ public final class FirstThrown implements BallState {
     }
 
     @Override
-    public int restCount() {
-        return REST_COUNT;
+    public int remainCount() {
+        return REMAIN_COUNT;
     }
 
     @Override

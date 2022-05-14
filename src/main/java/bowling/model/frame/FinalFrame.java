@@ -42,7 +42,7 @@ public final class FinalFrame implements Frame {
 
     @Override
     public boolean isEnd() {
-        return !hasRestCount() && state.isEndState();
+        return !hasRemainCount() && state.isEndState();
     }
 
     @Override
@@ -54,8 +54,8 @@ public final class FinalFrame implements Frame {
     }
 
     @Override
-    public boolean hasRestCount() {
-        return state.hasRestCount();
+    public boolean hasRemainCount() {
+        return state.hasRemainCount();
     }
 
     @Override

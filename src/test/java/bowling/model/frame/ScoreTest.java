@@ -19,7 +19,7 @@ class ScoreTest {
 
     @Test
     @DisplayName("남은 갯수만으로 생성")
-    void instance_restCount() {
+    void instance_remainCount() {
         assertThatNoException().isThrownBy(() -> Score.init(1));
     }
 
@@ -35,8 +35,8 @@ class ScoreTest {
     @ParameterizedTest
     @DisplayName("남은 갯수 잔여 여부")
     @CsvSource({"1,true", "0,false"})
-    void hasRestCount(int restCount, boolean expected) {
-        assertThat(Score.init(restCount).hasRestCount()).isEqualTo(expected);
+    void hasRemainCount(int remainCount, boolean expected) {
+        assertThat(Score.init(remainCount).hasRemainCount()).isEqualTo(expected);
     }
 
     @Test
@@ -47,14 +47,14 @@ class ScoreTest {
 
     @Test
     @DisplayName("남은 갯수가 없는 상태에서 값을 더할 수 없음")
-    void addedValue_zeroRestCount_thrownIllegalStateException() {
+    void addedValue_zeroRemainCount_thrownIllegalStateException() {
         assertThatIllegalStateException().isThrownBy(() -> Score.of(10, 0).addValue(10));
     }
 
     @Test
     @DisplayName("남은 갯수 변경")
-    void changedRestCount() {
-        assertThat(Score.of(10, 0).changeRestCount(10)).isEqualTo(Score.of(10, 10));
+    void changedRemainCount() {
+        assertThat(Score.of(10, 0).changeRemainCount(10)).isEqualTo(Score.of(10, 10));
     }
 
     @Test

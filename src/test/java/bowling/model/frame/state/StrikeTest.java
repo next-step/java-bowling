@@ -24,7 +24,7 @@ class StrikeTest {
 
     @Test
     @DisplayName("남은 투구는 2")
-    void restCount() {
-        assertThat(Strike.INSTANCE.restCount()).isEqualTo(2);
+    void remainCount() {
+        assertThat(Strike.INSTANCE.remainCount()).isEqualTo(2);
     }
 }

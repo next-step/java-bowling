@@ -35,8 +35,8 @@ class SpareTest {
 
     @Test
     @DisplayName("남은 투구는 1")
-    void restCount() {
-        assertThat(Spare.from(Pins.ZERO).restCount()).isOne();
+    void remainCount() {
+        assertThat(Spare.from(Pins.ZERO).remainCount()).isOne();
     }
 
     @Test

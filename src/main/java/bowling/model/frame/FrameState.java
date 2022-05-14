@@ -26,7 +26,7 @@ public final class FrameState {
 
     static FrameState from(BallState state) {
         Assert.notNull(state, "state must not be null");
-        return of(state, Score.init(state.restCount()));
+        return of(state, Score.init(state.remainCount()));
     }
 
     static FrameState of(BallState state, Score score) {
@@ -40,11 +40,11 @@ public final class FrameState {
     FrameState nextState(Pins pins) {
         validateState();
         BallState nextState = this.state.state(pins);
-        return of(nextState, score.changeRestCount(nextState.restCount()));
+        return of(nextState, score.changeRemainCount(nextState.remainCount()));
     }
 
-    boolean hasRestCount() {
-        return score.hasRestCount();
+    boolean hasRemainCount() {
+        return score.hasRemainCount();
     }
 
     FrameState addScore(Pins pins) {

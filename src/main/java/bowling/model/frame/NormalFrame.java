@@ -52,8 +52,8 @@ public final class NormalFrame implements Frame {
     }
 
     @Override
-    public boolean hasRestCount() {
-        return state.hasRestCount();
+    public boolean hasRemainCount() {
+        return state.hasRemainCount();
     }
 
     @Override

@@ -87,8 +87,8 @@ class NormalFrameTest {
     @ParameterizedTest
     @MethodSource
     @DisplayName("상태에 따른 남은 갯수 소유 여부")
-    void hasRestCount(FrameState state, boolean expected) {
-        assertThat(NormalFrame.of(FrameNumber.FIRST, state).hasRestCount()).isEqualTo(expected);
+    void hasRemainCount(FrameState state, boolean expected) {
+        assertThat(NormalFrame.of(FrameNumber.FIRST, state).hasRemainCount()).isEqualTo(expected);
     }
 
     @Test
@@ -116,7 +116,7 @@ class NormalFrameTest {
         );
     }
 
-    private static Stream<Arguments> hasRestCount() {
+    private static Stream<Arguments> hasRemainCount() {
         return Stream.of(
                 Arguments.of(FrameState.of(Strike.INSTANCE, Score.of(0, 1)), true),
                 Arguments.of(FrameState.of(Strike.INSTANCE, Score.of(0, 0)), false)
