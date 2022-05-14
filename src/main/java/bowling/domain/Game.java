@@ -18,4 +18,8 @@ public class Game {
     public int play(final int round, final int numberOfFallenPins) {
         return CACHE.get(round - MAP_ROUND_TO_INDEX_CONSTANT).play(round, numberOfFallenPins);
     }
+
+    public void record(final int round, Record record) {
+        CACHE.get(round - MAP_ROUND_TO_INDEX_CONSTANT).record(record);
+    }
 }

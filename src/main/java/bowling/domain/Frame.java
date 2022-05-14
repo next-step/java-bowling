@@ -13,7 +13,7 @@ public class Frame {
     Frame() {
     }
 
-    public int play(final int round, final int numberOfFallenPins) {
+    int play(final int round, final int numberOfFallenPins) {
         validate(round, numberOfFallenPins);
         numberOfPinsRemaining -= numberOfFallenPins;
         numberOfAttemptsRemaining--;
@@ -29,5 +29,9 @@ public class Frame {
         if (numberOfFallenPins < NO_PINS_LEFT || numberOfFallenPins > MAX_NUMBER_OF_PIN) {
             throw new InvalidNumberOfFallenPinsException(numberOfFallenPins);
         }
+    }
+
+    void record(Record record) {
+        record.record(MAX_NUMBER_OF_PIN - numberOfPinsRemaining);
     }
 }
