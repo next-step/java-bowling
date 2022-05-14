@@ -7,6 +7,8 @@ public class Spare implements State {
 
     private static final String CROSS_BAR = "|";
 
+    private static final String GUTTER_SYMBOL = "-";
+
     private static final String SPARE_SYMBOL = "/";
 
     private final Pins firstPins;
@@ -32,7 +34,11 @@ public class Spare implements State {
 
     @Override
     public String getSymbol() {
-        return firstPins + CROSS_BAR + SPARE_SYMBOL;
+        return getFirstSymbol() + CROSS_BAR + SPARE_SYMBOL;
+    }
+
+    private String getFirstSymbol() {
+        return firstPins.isGutter() ? GUTTER_SYMBOL : String.valueOf(firstPins);
     }
 
 }
