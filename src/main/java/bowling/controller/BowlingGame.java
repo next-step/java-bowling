@@ -6,7 +6,7 @@ import bowling.model.Pins;
 import bowling.utility.Assert;
 import bowling.view.InputView;
 import bowling.view.ResultView;
-import bowling.view.dto.FrameResponse;
+import bowling.view.dto.FramesResponse;
 
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -32,7 +32,7 @@ public class BowlingGame {
         Bowling bowling = Bowling.from(Participant.from(inputView.participant()));
         while (bowling.isNotFinished()) {
             bowling = bowling.pitch(nextPins(bowling));
-            resultView.print(bowling.participant().name(), FrameResponse.listFrom(bowling.frames()));
+            resultView.print(bowling.participant().name(), FramesResponse.from(bowling.frames()));
         }
     }
 

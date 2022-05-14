@@ -1,8 +1,6 @@
 package bowling.model.frame;
 
 import bowling.model.Pins;
-import bowling.model.frame.finalization.FinalFrame;
-import bowling.model.frame.state.NotThrown;
 import bowling.utility.Assert;
 
 import java.util.Objects;
@@ -10,34 +8,27 @@ import java.util.Objects;
 public final class NormalFrame implements Frame {
 
     private final FrameNumber number;
-    private final BallState state;
+    private final FrameState state;
 
-    private NormalFrame(FrameNumber number, BallState state) {
+    private NormalFrame(FrameNumber number, FrameState state) {
         Assert.notNull(number, "number must not be null");
-        Assert.notNull(state, "state must not be null");
         Assert.isFalse(number.isLast(), String.format("number(%s) must not be last", number));
+        Assert.notNull(state, "state must not be null");
         this.number = number;
         this.state = state;
     }
 
     static NormalFrame init(FrameNumber number) {
-        return of(number, NotThrown.instance());
+        return of(number, FrameState.init());
     }
 
-    static NormalFrame of(FrameNumber number, BallState state) {
+    static NormalFrame of(FrameNumber number, FrameState state) {
         return new NormalFrame(number, state);
     }
 
-    public Frame next(Pins countOfHit) {
-        if (this.state.isEnd()) {
-            return nextFrame(countOfHit);
-        }
-        return of(this.number, this.state.state(countOfHit));
-    }
-
     @Override
-    public boolean isEnd() {
-        return this.state.isEnd();
+    public FrameNumber number() {
+        return this.number;
     }
 
     @Override
@@ -46,25 +37,50 @@ public final class NormalFrame implements Frame {
     }
 
     @Override
-    public FrameNumber number() {
-        return this.number;
+    public boolean isEnd() {
+        return state.isEndState();
     }
 
-    public BallState state() {
+    @Override
+    public Frame next(Pins countOfHit) {
+        if (isEnd()) {
+            return nextFrame()
+                    .addScore(countOfHit)
+                    .next(countOfHit);
+        }
+        return of(number, state.nextState(countOfHit));
+    }
+
+    @Override
+    public boolean hasRemainCount() {
+        return state.hasRemainCount();
+    }
+
+    @Override
+    public Frame addScore(Pins countOfHit) {
+        return of(number, state.addScore(countOfHit));
+    }
+
+    @Override
+    public int sumScoreValue(int score) {
+        return state.sumScoreValue(score);
+    }
+
+    public FrameState state() {
         return state;
     }
 
-    private Frame nextFrame(Pins countOfHit) {
+    private Frame nextFrame() {
         FrameNumber nextNumber = this.number.increase();
         if (nextNumber.isLast()) {
-            return FinalFrame.init().next(countOfHit);
+            return FinalFrame.init();
         }
-        return init(nextNumber).next(countOfHit);
+        return init(nextNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number);
+        return Objects.hash(number, state);
     }
 
     @Override
@@ -76,14 +92,14 @@ public final class NormalFrame implements Frame {
             return false;
         }
         NormalFrame that = (NormalFrame) o;
-        return Objects.equals(number, that.number);
+        return Objects.equals(number, that.number) && Objects.equals(state, that.state);
     }
 
     @Override
     public String toString() {
         return "NormalFrame{" +
                 "number=" + number +
-                ", state=" + state +
+                ", thrownBall=" + state +
                 '}';
     }
 }

@@ -3,19 +3,11 @@ package bowling.model.frame.state;
 import bowling.model.Pins;
 import bowling.model.frame.BallState;
 
-public final class NotThrown implements BallState {
+public enum NotThrown implements BallState {
 
-    private static final NotThrown INSTANCE = new NotThrown();
+    INSTANCE;
 
-    private NotThrown() {
-        if (INSTANCE != null) {
-            throw new AssertionError();
-        }
-    }
-
-    public static NotThrown instance() {
-        return INSTANCE;
-    }
+    private static final int REMAIN_COUNT = 2;
 
     @Override
     public boolean isEnd() {
@@ -25,8 +17,13 @@ public final class NotThrown implements BallState {
     @Override
     public BallState state(Pins countOfHit) {
         if (Pins.MAX.equals(countOfHit)) {
-            return Strike.instance();
+            return Strike.INSTANCE;
         }
         return FirstThrown.from(countOfHit);
+    }
+
+    @Override
+    public int remainCount() {
+        return REMAIN_COUNT;
     }
 }

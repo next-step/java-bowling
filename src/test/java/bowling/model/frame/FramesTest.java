@@ -41,25 +41,25 @@ class FramesTest {
     @ParameterizedTest(name = "[{index}] {0} 만큼 추가되면 {1}")
     @MethodSource
     @DisplayName("넘어진 핀이 추가된 프레임들")
-    void addedFrames(List<Pins> pinsGroup, Frames expected) {
+    void bowling(List<Pins> pinsGroup, Frames expected) {
         //when
         Frames thrownFrames = pinsGroup.stream()
-                .reduce(Frames.init(), Frames::addedFrames, (frames1, frames2) -> frames2);
+                .reduce(Frames.init(), Frames::bowling, (frames1, frames2) -> frames2);
         //then
         assertThat(thrownFrames).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("종료된 프레임들에 핀 추가 불가")
-    void addedFrames_endedFrames_thrownIllegalStateArgument() {
+    void bowling_endedFrames_thrownIllegalStateArgument() {
         //given
         List<Pins> pinsGroup = IntStream.range(0, 20)
                 .mapToObj(i -> Pins.ZERO)
                 .collect(Collectors.toList());
         Frames endedFrames = pinsGroup.stream()
-                .reduce(Frames.init(), Frames::addedFrames, (frames1, frames2) -> frames2);
+                .reduce(Frames.init(), Frames::bowling, (frames1, frames2) -> frames2);
         //when, then
-        assertThatIllegalStateException().isThrownBy(() -> endedFrames.addedFrames(Pins.MAX));
+        assertThatIllegalStateException().isThrownBy(() -> endedFrames.bowling(Pins.MAX));
     }
 
     @ParameterizedTest(name = "[{index}] {0} 만큼 추가되면 종료 여부는 {1}")
@@ -68,7 +68,7 @@ class FramesTest {
     void isFinished(List<Pins> pinsGroup, boolean expected) {
         //when
         Frames thrownFrames = pinsGroup.stream()
-                .reduce(Frames.init(), Frames::addedFrames, (frames1, frames2) -> frames2);
+                .reduce(Frames.init(), Frames::bowling, (frames1, frames2) -> frames2);
         //then
         assertThat(thrownFrames.isFinished()).isEqualTo(expected);
     }
@@ -85,7 +85,7 @@ class FramesTest {
         //given
         FrameNumber frameNumber = FrameNumber.FIRST;
         //when, then
-        assertThat(Frames.from(Collections.singletonList(NormalFrame.of(frameNumber, Strike.instance()))).nextFrameNumber())
+        assertThat(Frames.from(Collections.singletonList(NormalFrame.of(frameNumber, FrameState.from(Strike.INSTANCE)))).nextFrameNumber())
                 .isEqualTo(frameNumber.increase());
     }
 
@@ -98,10 +98,29 @@ class FramesTest {
         assertThat(Frames.from(firstFrames).list()).isEqualTo(firstFrames);
     }
 
-    private static Stream<Arguments> addedFrames() {
+    @ParameterizedTest(name = "[{index}] {0} 만큼 핀이 추가되면 누적된 스코어는 {1}")
+    @DisplayName("누적된 스코어들")
+    @MethodSource
+    void accumulatedScores(List<Pins> pinsGroup, List<Integer> expected) {
+        Frames frames = pinsGroup.stream()
+                .reduce(Frames.init(), Frames::bowling, (frames1, frames2) -> frames2);
+        //when, then
+        assertThat(frames.accumulatedScores()).containsExactlyElementsOf(expected);
+    }
+
+    private static Stream<Arguments> bowling() {
         return Stream.of(
-                Arguments.of(Collections.singletonList(Pins.MAX), Frames.from(Collections.singletonList(NormalFrame.of(FrameNumber.FIRST, Strike.instance())))),
-                Arguments.of(Arrays.asList(Pins.MAX, Pins.MAX), Frames.from(Arrays.asList(NormalFrame.of(FrameNumber.FIRST, Strike.instance()), NormalFrame.of(FrameNumber.from(2), Strike.instance()))))
+                Arguments.of(
+                        Collections.singletonList(Pins.MAX),
+                        Frames.from(Collections.singletonList(NormalFrame.of(FrameNumber.FIRST, FrameState.of(Strike.INSTANCE, Score.of(10, 2)))))
+                ),
+                Arguments.of(
+                        Arrays.asList(Pins.MAX, Pins.MAX),
+                        Frames.from(Arrays.asList(
+                                NormalFrame.of(FrameNumber.FIRST, FrameState.of(Strike.INSTANCE, Score.of(20, 1))),
+                                NormalFrame.of(FrameNumber.from(2), FrameState.of(Strike.INSTANCE, Score.of(10, 2)))
+                        ))
+                )
         );
     }
 
@@ -110,6 +129,16 @@ class FramesTest {
                 Arguments.of(Collections.emptyList(), false),
                 Arguments.of(Collections.singletonList(Pins.MAX), false),
                 Arguments.of(IntStream.range(0, 20).mapToObj(i -> Pins.ZERO).collect(Collectors.toList()), true)
+        );
+    }
+
+    private static Stream<Arguments> accumulatedScores() {
+        return Stream.of(
+                Arguments.of(Collections.singletonList(Pins.MAX), Collections.emptyList()),
+                Arguments.of(Arrays.asList(Pins.MAX, Pins.MAX), Collections.emptyList()),
+                Arguments.of(Arrays.asList(Pins.MAX, Pins.MAX, Pins.MAX), Collections.singletonList(30)),
+                Arguments.of(Arrays.asList(Pins.MAX, Pins.ZERO, Pins.ZERO), Arrays.asList(10, 10)),
+                Arguments.of(Arrays.asList(Pins.ZERO, Pins.ZERO, Pins.MAX, Pins.MAX, Pins.ZERO, Pins.ZERO), Arrays.asList(0, 20, 30, 30))
         );
     }
 }

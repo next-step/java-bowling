@@ -44,6 +44,12 @@ class SecondThrownTest {
     }
 
     @Test
+    @DisplayName("남은 투구는 0")
+    void remainCount() {
+        assertThat(SecondThrown.of(Pins.ZERO, Pins.ZERO).remainCount()).isZero();
+    }
+
+    @Test
     @DisplayName("주어진 첫번째 핀들 그대로 반환")
     void firstHit() {
         assertThat(SecondThrown.of(Pins.ZERO, Pins.from(1)).firstHit()).isEqualTo(Pins.ZERO);
