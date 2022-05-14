@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.PinNumbers;
-import bowling.domain.util.PinNoPrinter;
 
 import static bowling.domain.frame.NormalFrameNo.MIN_NORMAL_FRAME_NO;
 
@@ -40,6 +39,6 @@ public class NormalFrame implements Frame {
 
     @Override
     public String toExpression() {
-        return PinNoPrinter.print(pinNumbers.getFirstNo(), pinNumbers.getSecondNo());
+        return pinNumbers.toExpression();
     }
 }

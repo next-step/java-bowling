@@ -1,5 +1,7 @@
 package bowling.domain.pin;
 
+import bowling.domain.util.PinNoPrinter;
+
 public class PinNumbers {
 
     private final PinNo firstNo;
@@ -23,11 +25,7 @@ public class PinNumbers {
         this.secondNo = PinNo.of(pinNo);
     }
 
-    public PinNo getFirstNo() {
-        return firstNo;
-    }
-
-    public PinNo getSecondNo() {
-        return secondNo;
+    public String toExpression() {
+        return PinNoPrinter.print(firstNo, secondNo);
     }
 }
