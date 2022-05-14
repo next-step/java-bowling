@@ -6,9 +6,9 @@ import java.util.stream.IntStream;
 
 public class FrameFactory {
 
-    private static final int START_FRAME_NUMBER = 1;
+    private static final int START_FRAME_ROUND = 1;
 
-    private static final int LAST_FRAME_NUMBER = 10;
+    private static final int LAST_FRAME_ROUND = 10;
 
     public List<Frame> create() {
         List<Frame> frames = createNormalFrames();
@@ -17,7 +17,7 @@ public class FrameFactory {
     }
 
     private List<Frame> createNormalFrames() {
-        return IntStream.range(START_FRAME_NUMBER, LAST_FRAME_NUMBER)
+        return IntStream.range(START_FRAME_ROUND, LAST_FRAME_ROUND)
                 .mapToObj(frameNumber -> NormalFrame.create())
                 .collect(Collectors.toList());
     }
