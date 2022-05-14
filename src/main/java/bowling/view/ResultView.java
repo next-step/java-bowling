@@ -1,30 +1,66 @@
 package bowling.view;
 
+import bowling.model.BowlingGame;
+import bowling.model.Player;
+import bowling.model.frame.Frame;
+
+import java.util.List;
+
 public final class ResultView {
 
     private static final int START_FRAME_NUMBER = 1;
     private static final int LAST_FRAME_NUMBER = 10;
 
     private static final String PLAYER_NAME = "NAME";
+    private static final String BODY_FORMAT = "%7s";
     private static final String VERTICAL_BAR = "|";
+    private static final String NEXT_LINE = "\n";
 
     private static final StringBuilder stringBuilder = new StringBuilder();
-    public void printHead() {
-        appendName(PLAYER_NAME);
+
+    public void printBowlingGameResult(BowlingGame bowlingGame) {
+        appendHead();
+        appendPlayerAndSymbols(bowlingGame);
+        printContents();
+    }
+
+    private void appendHead() {
+        appendName();
 
         for (int frameNumber = START_FRAME_NUMBER; frameNumber <= LAST_FRAME_NUMBER; frameNumber++) {
             appendFrameNumber(frameNumber);
         }
 
-        printContents();
+        appendNewLine();
     }
 
     private void appendFrameNumber(int frameNumber) {
-        stringBuilder.append(String.format("%7s", frameNumber)).append(VERTICAL_BAR);
+        stringBuilder.append(String.format(BODY_FORMAT, frameNumber)).append(VERTICAL_BAR);
     }
 
-    private void appendName(String playerName) {
-        stringBuilder.append(VERTICAL_BAR).append(String.format("%7s", playerName)).append(VERTICAL_BAR);
+    private void appendName() {
+        stringBuilder.append(VERTICAL_BAR).append(String.format(BODY_FORMAT, PLAYER_NAME)).append(VERTICAL_BAR);
+    }
+
+    private void appendNewLine() {
+        stringBuilder.append(NEXT_LINE);
+    }
+
+    private void appendPlayerAndSymbols(BowlingGame bowlingGame) {
+        appendPlayer(bowlingGame.getPlayer());
+        appendSymbols(bowlingGame);
+    }
+
+    private void appendPlayer(Player player) {
+        stringBuilder.append(VERTICAL_BAR).append(String.format(BODY_FORMAT, player)).append(VERTICAL_BAR);
+    }
+
+    private void appendSymbols(BowlingGame bowlingGame) {
+        List<Frame> frames = bowlingGame.getFrames();
+        for (Frame frame : frames) {
+            String bodyFormat = String.format(BODY_FORMAT, frame.getSymbol());
+            stringBuilder.append(bodyFormat).append(VERTICAL_BAR);
+        }
     }
 
     private void printContents() {
@@ -35,5 +71,4 @@ public final class ResultView {
     private void clear() {
         stringBuilder.setLength(0);
     }
-
 }
