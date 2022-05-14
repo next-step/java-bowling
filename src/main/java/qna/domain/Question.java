@@ -97,9 +97,7 @@ public class Question extends AbstractEntity {
 
         List<Answer> answers = getAnswers();
         for (Answer answer : answers) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
+            validateAnswerAuthor(answer, loginUser);
         }
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
@@ -110,6 +108,12 @@ public class Question extends AbstractEntity {
             deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         }
         return deleteHistories;
+    }
+
+    private void validateAnswerAuthor(Answer answer, User loginUser) throws CannotDeleteException {
+        if(!answer.isOwner(loginUser)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
     }
 
     @Override
