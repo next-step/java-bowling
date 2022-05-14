@@ -1,10 +1,9 @@
 package bowling.domain.util;
 
 import bowling.domain.pin.PinNo;
+import bowling.domain.frameresult.Spare;
 
 import java.util.List;
-
-import static bowling.domain.pin.PinStatus.plus;
 
 public class PinNoPrinter {
 
@@ -29,7 +28,7 @@ public class PinNoPrinter {
         if (secondNo == null) {
             return toExpression(firstNo);
         }
-        if (plus(firstNo, secondNo).isSpare()) {
+        if (firstNo.plus(secondNo) instanceof Spare) {
             return toExpression(firstNo) + "|/";
         }
         return toExpression(firstNo) + "|" + toExpression(secondNo);

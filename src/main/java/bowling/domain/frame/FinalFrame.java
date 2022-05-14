@@ -1,12 +1,11 @@
 package bowling.domain.frame;
 
+import bowling.domain.frameresult.Miss;
 import bowling.domain.pin.PinNo;
 import bowling.domain.util.PinNoPrinter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static bowling.domain.pin.PinStatus.plus;
 
 public class FinalFrame implements Frame {
 
@@ -27,7 +26,7 @@ public class FinalFrame implements Frame {
         }
         PinNo firstPin = pinNos.get(0);
         PinNo secondPin = pinNos.get(1);
-        return plus(firstPin, secondPin).isMiss() || size() == EXTRA_SIZE;
+        return firstPin.plus(secondPin) instanceof Miss || size() == EXTRA_SIZE;
     }
 
     @Override

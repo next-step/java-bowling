@@ -1,5 +1,10 @@
 package bowling.domain.pin;
 
+import bowling.domain.frameresult.FrameResult;
+import bowling.domain.frameresult.Miss;
+import bowling.domain.frameresult.Spare;
+import bowling.domain.frameresult.Strike;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,8 +45,14 @@ public class PinNo {
         return this.no + no <= MAX_PIN_NO;
     }
 
-    public PinNo plus(PinNo pinNo) {
-        return PinNo.of(this.no + pinNo.no);
+    public FrameResult plus(PinNo pinNo) {
+        if (isMaxNo()) {
+            return new Strike();
+        }
+        if (this.no + pinNo.no == MAX_PIN_NO) {
+            return new Spare();
+        }
+        return new Miss();
     }
 
     public int getNo() {

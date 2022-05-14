@@ -1,5 +1,8 @@
 package bowling.domain.pin;
 
+import bowling.domain.frameresult.Miss;
+import bowling.domain.frameresult.Spare;
+import bowling.domain.frameresult.Strike;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -42,6 +45,8 @@ class PinNoTest {
 
     @Test
     void plus() {
-        assertThat(PinNo.of(2).plus(PinNo.of(3))).isSameAs(PinNo.of(5));
+        assertThat(PinNo.of(10).plus(PinNo.of(10))).isInstanceOf(Strike.class);
+        assertThat(PinNo.of(9).plus(PinNo.of(1))).isInstanceOf(Spare.class);
+        assertThat(PinNo.of(9).plus(PinNo.of(0))).isInstanceOf(Miss.class);
     }
 }
