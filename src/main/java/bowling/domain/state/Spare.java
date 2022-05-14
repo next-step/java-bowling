@@ -1,7 +1,7 @@
-package bowling.model.state;
+package bowling.domain.state;
 
 import bowling.exception.ImpossiblePitchException;
-import bowling.model.Pins;
+import bowling.domain.Pins;
 
 public class Spare implements State {
 

@@ -1,6 +1,6 @@
-package bowling.model.state;
+package bowling.domain.state;
 
-import bowling.model.Pins;
+import bowling.domain.Pins;
 
 public class Ready implements State {
 

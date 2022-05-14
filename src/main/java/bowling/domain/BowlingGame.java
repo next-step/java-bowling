@@ -1,7 +1,7 @@
-package bowling.model;
+package bowling.domain;
 
-import bowling.model.frame.Frame;
-import bowling.model.frame.Frames;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
 
 import java.util.List;
 

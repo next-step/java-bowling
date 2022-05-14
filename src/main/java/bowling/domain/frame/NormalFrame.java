@@ -1,8 +1,8 @@
-package bowling.model.frame;
+package bowling.domain.frame;
 
-import bowling.model.Pins;
-import bowling.model.state.State;
-import bowling.model.state.Ready;
+import bowling.domain.Pins;
+import bowling.domain.state.State;
+import bowling.domain.state.Ready;
 
 public class NormalFrame implements Frame {
 

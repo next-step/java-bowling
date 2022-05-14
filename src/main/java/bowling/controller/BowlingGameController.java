@@ -1,10 +1,10 @@
 package bowling.controller;
 
-import bowling.model.BowlingGame;
-import bowling.model.Pins;
-import bowling.model.Player;
-import bowling.model.frame.FrameFactory;
-import bowling.model.frame.Frames;
+import bowling.domain.BowlingGame;
+import bowling.domain.Pins;
+import bowling.domain.Player;
+import bowling.domain.frame.FrameFactory;
+import bowling.domain.frame.Frames;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 

@@ -1,7 +1,7 @@
-package bowling;
+package bowling.domain;
 
 import bowling.exception.InvalidUsernameException;
-import bowling.model.Player;
+import bowling.domain.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

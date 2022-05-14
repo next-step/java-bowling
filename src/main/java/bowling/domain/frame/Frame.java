@@ -1,6 +1,6 @@
-package bowling.model.frame;
+package bowling.domain.frame;
 
-import bowling.model.Pins;
+import bowling.domain.Pins;
 
 public interface Frame {
 

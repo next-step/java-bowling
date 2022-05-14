@@ -1,9 +1,9 @@
-package bowling.model.frame;
+package bowling.domain.frame;
 
-import bowling.model.Pins;
-import bowling.model.state.Miss;
-import bowling.model.state.Ready;
-import bowling.model.state.State;
+import bowling.domain.Pins;
+import bowling.domain.state.Miss;
+import bowling.domain.state.Ready;
+import bowling.domain.state.State;
 
 import java.util.LinkedList;
 import java.util.List;

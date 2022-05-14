@@ -1,7 +1,7 @@
-package bowling.model.frame;
+package bowling.domain.frame;
 
 import bowling.exception.OutOfIndexException;
-import bowling.model.Pins;
+import bowling.domain.Pins;
 
 import java.util.List;
 

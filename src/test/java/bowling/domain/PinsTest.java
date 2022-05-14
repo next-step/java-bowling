@@ -1,4 +1,4 @@
-package bowling.model;
+package bowling.domain;
 
 import bowling.exception.InvalidPinsException;
 import org.junit.jupiter.api.Assertions;
