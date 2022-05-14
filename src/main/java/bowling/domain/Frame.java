@@ -10,6 +10,9 @@ public class Frame {
     private int numberOfPinsRemaining = 10;
     private int numberOfAttemptsRemaining = 2;
 
+    Frame() {
+    }
+
     public int play(final int round, final int numberOfFallenPins) {
         validate(round, numberOfFallenPins);
         numberOfPinsRemaining -= numberOfFallenPins;
