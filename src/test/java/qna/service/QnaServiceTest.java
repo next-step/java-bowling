@@ -23,6 +23,8 @@ import static org.mockito.Mockito.when;
 public class QnaServiceTest {
     @Mock
     private QuestionRepository questionRepository;
+    @Mock
+    private AnswerRepository answerRepository;
 
     @Mock
     private DeleteHistoryService deleteHistoryService;
@@ -32,58 +34,54 @@ public class QnaServiceTest {
 
     private Question question;
     private Answer answer;
+    private Long questionId;
+    private Long answerId;
 
     @BeforeEach
     public void setUp() throws Exception {
-        question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+        questionId = 1L;
+        question = new Question(questionId, "title1", "contents1", UserTest.JAVAJIGI);
+        answerId = 11L;
+        answer = new Answer(answerId, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
         question.addAnswer(answer);
     }
 
     @Test
     public void delete_성공() throws Exception {
-        when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
+        when(questionRepository.findByIdAndDeletedFalse(questionId))
+            .thenReturn(Optional.of(question));
 
-        assertThat(question.isDeleted()).isFalse();
-        qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
+        qnAService.deleteQuestion(UserTest.JAVAJIGI, questionId);
 
         assertThat(question.isDeleted()).isTrue();
-        verifyDeleteHistories();
     }
 
     @Test
-    public void delete_다른_사람이_쓴_글() throws Exception {
-        when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
+    public void delete_실패_다른_사람이_쓴_글() throws Exception {
+        when(questionRepository.findByIdAndDeletedFalse(questionId))
+            .thenReturn(Optional.of(question));
 
-        assertThatThrownBy(() -> {
-            qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
-        }).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> qnAService.deleteQuestion(UserTest.SANJIGI, questionId))
+            .isInstanceOf(CannotDeleteException.class);
     }
 
     @Test
     public void delete_성공_질문자_답변자_같음() throws Exception {
-        when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
+        when(questionRepository.findByIdAndDeletedFalse(questionId))
+            .thenReturn(Optional.of(question));
 
-        qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
+        qnAService.deleteQuestion(UserTest.JAVAJIGI, questionId);
 
         assertThat(question.isDeleted()).isTrue();
         assertThat(answer.isDeleted()).isTrue();
-        verifyDeleteHistories();
     }
 
     @Test
     public void delete_답변_중_다른_사람이_쓴_글() throws Exception {
-        when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
+        when(questionRepository.findByIdAndDeletedFalse(questionId)).thenReturn(Optional.of(question));
 
         assertThatThrownBy(() -> {
-            qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
+            qnAService.deleteQuestion(UserTest.SANJIGI, questionId);
         }).isInstanceOf(CannotDeleteException.class);
-    }
-
-    private void verifyDeleteHistories() {
-        List<DeleteHistory> deleteHistories = Arrays.asList(
-                new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()),
-                new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        verify(deleteHistoryService).saveAll(deleteHistories);
     }
 }
