@@ -7,8 +7,8 @@ import java.util.List;
 
 public class Frames {
 
-    public static final int START_INDEX = 0;
-    public static final int FINISH_INDEX = 10;
+    public static final int START_FRAME_INDEX = 0;
+    public static final int FINISH_FRAME_INDEX = 10;
 
     private int currentIndex;
 
@@ -16,7 +16,7 @@ public class Frames {
 
     private Frames(List<Frame> frames) {
         this.frames = frames;
-        this.currentIndex = START_INDEX;
+        this.currentIndex = START_FRAME_INDEX;
     }
 
     public static Frames create(List<Frame> frames) {
@@ -24,7 +24,7 @@ public class Frames {
     }
 
     public boolean isRunning() {
-        return currentIndex < FINISH_INDEX;
+        return currentIndex < FINISH_FRAME_INDEX;
     }
 
     public void pitch(Pins pins) {
@@ -38,7 +38,7 @@ public class Frames {
 
     private void nextIndex() {
         int nextIndex = currentIndex + 1;
-        if (nextIndex > FINISH_INDEX) {
+        if (nextIndex > FINISH_FRAME_INDEX) {
             throw new OutOfIndexException(nextIndex);
         }
         this.currentIndex += 1;

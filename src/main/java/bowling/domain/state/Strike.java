@@ -5,7 +5,7 @@ import bowling.domain.Pins;
 
 public class Strike implements State {
 
-    private static final String STRIKE_SYMBOL = "X";
+    private static final String STRIKE = "X";
 
     private Strike() {
     }
@@ -26,7 +26,7 @@ public class Strike implements State {
 
     @Override
     public String getSymbol() {
-        return STRIKE_SYMBOL;
+        return STRIKE;
     }
 
 }

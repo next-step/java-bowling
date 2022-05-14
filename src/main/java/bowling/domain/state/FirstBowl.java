@@ -4,7 +4,8 @@ import bowling.domain.Pins;
 
 public class FirstBowl implements State {
 
-    private static final String GUTTER_SYMBOL = "-";
+    private static final String GUTTER = "-";
+
     private final Pins firstPins;
 
     public FirstBowl(Pins firstPins) {
@@ -31,7 +32,7 @@ public class FirstBowl implements State {
 
     @Override
     public String getSymbol() {
-        return firstPins.isGutter() ? GUTTER_SYMBOL : String.valueOf(firstPins);
+        return firstPins.isGutter() ? GUTTER : String.valueOf(firstPins);
     }
 
 }

@@ -8,7 +8,7 @@ import java.util.Scanner;
 public final class InputView {
 
     private static final String INPUT_PLAYER_NAME_MESSAGE = "플레이어 이름은(3 english letters)?: ";
-    private static final String INPUT_FRAME_PIN_COUNT = "%d 프레임 투구 : ";
+    private static final String INPUT_FRAME_PIN_COUNT_FORMAT = "%d 프레임 투구 : ";
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -22,7 +22,7 @@ public final class InputView {
     }
 
     public Pins inputPins(int currentRound) {
-        System.out.printf(INPUT_FRAME_PIN_COUNT, currentRound);
+        System.out.printf(INPUT_FRAME_PIN_COUNT_FORMAT, currentRound);
         return Pins.create(readNumber());
     }
 

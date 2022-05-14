@@ -5,14 +5,11 @@ import bowling.domain.Pins;
 
 public class Spare implements State {
 
-    private static final String CROSS_BAR = "|";
-
-    private static final String GUTTER_SYMBOL = "-";
-
-    private static final String SPARE_SYMBOL = "/";
+    private static final String VERTICAL_BAR = "|";
+    private static final String GUTTER = "-";
+    private static final String SPARE = "/";
 
     private final Pins firstPins;
-
 
     private Spare(Pins firstPins) {
         this.firstPins = firstPins;
@@ -34,11 +31,11 @@ public class Spare implements State {
 
     @Override
     public String getSymbol() {
-        return getFirstSymbol() + CROSS_BAR + SPARE_SYMBOL;
+        return getFirstSymbol() + VERTICAL_BAR + SPARE;
     }
 
     private String getFirstSymbol() {
-        return firstPins.isGutter() ? GUTTER_SYMBOL : String.valueOf(firstPins);
+        return firstPins.isGutter() ? GUTTER : String.valueOf(firstPins);
     }
 
 }

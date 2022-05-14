@@ -16,9 +16,9 @@ public class LastFrame implements Frame {
     private static final int MIN_OF_PITCH = 2;
     private static final int MAX_OF_PITCH = 3;
 
-    private int pitchCount = 0;
-
     private final LinkedList<State> states;
+
+    private int pitchCount = 0;
 
     private LastFrame() {
         this.states = new LinkedList<>(List.of(Ready.create()));

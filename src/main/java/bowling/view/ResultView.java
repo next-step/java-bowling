@@ -8,8 +8,8 @@ import java.util.List;
 
 public final class ResultView {
 
-    private static final int START_FRAME_NUMBER = 1;
-    private static final int LAST_FRAME_NUMBER = 10;
+    private static final int START_FRAME_ROUND = 1;
+    private static final int LAST_FRAME_ROUND = 10;
 
     private static final String PLAYER_NAME = "NAME";
     private static final String BODY_FORMAT = "%7s";
@@ -27,7 +27,7 @@ public final class ResultView {
     private void appendHead() {
         appendName();
 
-        for (int frameNumber = START_FRAME_NUMBER; frameNumber <= LAST_FRAME_NUMBER; frameNumber++) {
+        for (int frameNumber = START_FRAME_ROUND; frameNumber <= LAST_FRAME_ROUND; frameNumber++) {
             appendFrameNumber(frameNumber);
         }
 

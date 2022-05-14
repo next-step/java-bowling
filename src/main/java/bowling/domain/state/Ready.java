@@ -4,15 +4,14 @@ import bowling.domain.Pins;
 
 public class Ready implements State {
 
-    private static final State READY = new Ready();
+    private static final String EMPTY = "";
 
-    private static final String EMPTY_SYMBOL = "";
 
     private Ready() {
     }
 
     public static State create() {
-        return READY;
+        return new Ready();
     }
 
     @Override
@@ -30,7 +29,7 @@ public class Ready implements State {
 
     @Override
     public String getSymbol() {
-        return EMPTY_SYMBOL;
+        return EMPTY;
     }
 
 }
