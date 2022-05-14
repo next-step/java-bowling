@@ -25,4 +25,26 @@ public class Pins {
         return new Pins(number);
     }
 
+    public boolean isStrike() {
+        return number == MAX_OF_PINS;
+    }
+
+    public boolean isSpare(Pins nextPins) {
+        int sumOfPins = this.number + nextPins.number;
+        return sumOfPins == MAX_OF_PINS;
+    }
+
+    public boolean isGutter() {
+        return this.number == MIN_OF_PINS;
+    }
+
+    public int add(Pins nextPins) {
+        return this.number + nextPins.number;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(number);
+    }
+
 }
