@@ -29,4 +29,11 @@ public class Answers {
       answer.checkDeletePermissions(loginUser);
     }
   }
+
+  public DeleteHistories deleteAndAddHistory(DeleteHistories deleteHistories) {
+    for (Answer answer : answers) {
+      answer.deleteAndAddHistory(deleteHistories);
+    }
+    return deleteHistories;
+  }
 }

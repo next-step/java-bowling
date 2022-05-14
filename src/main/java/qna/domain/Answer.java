@@ -10,7 +10,7 @@ import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 @Entity
-public class Answer extends AbstractEntity {
+public class Answer extends AbstractEntity implements PostEntity {
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
@@ -68,6 +68,10 @@ public class Answer extends AbstractEntity {
         return contents;
     }
 
+    public ContentType getContentType() {
+        return ContentType.ANSWER;
+    }
+
     public void toQuestion(Question question) {
         this.question = question;
     }
@@ -81,5 +85,15 @@ public class Answer extends AbstractEntity {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
+    }
+
+    public void delete() {
+        this.deleted = true;
+    }
+
+    public DeleteHistories deleteAndAddHistory(DeleteHistories deleteHistories) {
+        delete();
+        DeleteHistory deleteHistory = DeleteHistory.of(this);
+        return deleteHistories.add(deleteHistory);
     }
 }

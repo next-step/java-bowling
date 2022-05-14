@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import qna.CannotDeleteException;
 
 @Entity
-public class Question extends AbstractEntity {
+public class Question extends AbstractEntity implements PostEntity {
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -89,6 +89,10 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
+    public ContentType getContentType() {
+        return ContentType.QUESTION;
+    }
+
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
@@ -99,5 +103,15 @@ public class Question extends AbstractEntity {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
         answers.checkDeletePermissions(loginUser);
+    }
+
+    public void delete() {
+        this.deleted = true;
+    }
+
+    public DeleteHistories deleteAndAddHistory(DeleteHistories deleteHistories) {
+        delete();
+        deleteHistories = deleteHistories.add(DeleteHistory.of(this));
+        return answers.deleteAndAddHistory(deleteHistories);
     }
 }
