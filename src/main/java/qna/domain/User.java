@@ -85,6 +85,10 @@ public class User extends AbstractEntity {
         this.email = target.email;
     }
 
+    public boolean matchUserId(User other) {
+        return Objects.equals(this.userId, other.userId);
+    }
+
     private boolean matchUserId(String userId) {
         return this.userId.equals(userId);
     }
