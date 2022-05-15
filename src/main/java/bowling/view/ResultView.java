@@ -20,19 +20,22 @@ public class ResultView {
 
     public static void printScore(String name, List<Frame> records) {
         System.out.print("|  " + name + " |");
-        if (records.size() == 0) {
-            printScoreDefault();
-            return;
-        }
-//        records.stream()
-//                .filter(frame -> frame.getFirst() != -1)
-//                .forEach(frame -> System.out.print(" " + frame.getFirst() + "│")
-//                .forEach(frame -> System.out.print(" " + frame.getFirst() + "│" + frame.getSecond() + " |"));
+        records.stream()
+                .forEach(frame -> System.out.print(" " + toFrameScore(frame) + " |"));
+        System.out.println();
     }
 
-    private static void printScoreDefault() {
-        FRAMES.stream()
-                .forEach(frame -> System.out.print("    |"));
-        System.out.println();
+    private static String toFrameScore(Frame frame) {
+        int first = frame.getFirst();
+        int second = frame.getSecond();
+        StringBuilder stringBuilder = new StringBuilder();
+        if (first != -1) {
+            stringBuilder.append(first);
+        }
+        if (second != -1) {
+            stringBuilder.append("│");
+            stringBuilder.append(second);
+        }
+        return stringBuilder.toString();
     }
 }

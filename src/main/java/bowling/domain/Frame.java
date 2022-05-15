@@ -15,7 +15,7 @@ public class Frame {
 
     int play(final int round, final int numberOfFallenPins) {
         validate(round, numberOfFallenPins);
-        if (first == -1) {
+        if (first == BEFORE_BOWLING) {
             first = numberOfFallenPins;
             return first;
         }
@@ -24,7 +24,7 @@ public class Frame {
     }
 
     private void validate(final int round, final int numberOfFallenPins) {
-        if (first == MAX_NUMBER_OF_PIN || second != -1) {
+        if (first == MAX_NUMBER_OF_PIN || second != BEFORE_BOWLING) {
             throw new EndedFrameException(round);
         }
 
