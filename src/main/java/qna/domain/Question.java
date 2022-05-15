@@ -110,4 +110,8 @@ public class Question extends AbstractEntity {
         }
         return deleteHistories;
     }
+
+    public DeleteHistory createDeleteHistory(ContentType question, long questionId, LocalDateTime now) {
+        return new DeleteHistory(ContentType.QUESTION, questionId, this.getWriter(), LocalDateTime.now());
+    }
 }

@@ -13,4 +13,4 @@
 
 ## refactor todo
 - [x] modify question.getAnswers to question.checkPrivilegeOnAnswer
-- 
+- [x] modify question.getWriter to question.createDeleteHistory   
