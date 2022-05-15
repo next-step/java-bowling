@@ -9,4 +9,8 @@ public interface BallState {
     BallState state(Pins countOfHit);
 
     int remainCount();
+
+    String mark();
+
+    int sumPinsCount();
 }

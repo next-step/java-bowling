@@ -36,12 +36,18 @@ public final class FirstThrown implements BallState {
     }
 
     @Override
-    public boolean isEnd() {
-        return false;
+    public String mark() {
+        return CountToMarkConverter.convert(countOfHit.count());
     }
 
-    public Pins countOfHit() {
-        return countOfHit;
+    @Override
+    public int sumPinsCount() {
+        return this.countOfHit.count();
+    }
+
+    @Override
+    public boolean isEnd() {
+        return false;
     }
 
     @Override

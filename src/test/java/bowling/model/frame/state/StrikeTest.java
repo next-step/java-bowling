@@ -27,4 +27,16 @@ class StrikeTest {
     void remainCount() {
         assertThat(Strike.INSTANCE.remainCount()).isEqualTo(2);
     }
+
+    @Test
+    @DisplayName("마크는 x")
+    void mark() {
+        assertThat(Strike.INSTANCE.mark()).isEqualTo("x");
+    }
+
+    @Test
+    @DisplayName("핀들 더한 값은 10")
+    void sumPinsCount() {
+        assertThat(Strike.INSTANCE.sumPinsCount()).isEqualTo(10);
+    }
 }

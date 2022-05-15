@@ -3,6 +3,9 @@ package bowling.model.frame.state;
 import bowling.model.Pins;
 import bowling.model.frame.BallState;
 
+import java.util.Collections;
+import java.util.List;
+
 public enum NotThrown implements BallState {
 
     INSTANCE;
@@ -25,5 +28,15 @@ public enum NotThrown implements BallState {
     @Override
     public int remainCount() {
         return REMAIN_COUNT;
+    }
+
+    @Override
+    public String mark() {
+        return "";
+    }
+
+    @Override
+    public int sumPinsCount() {
+        return 0;
     }
 }
