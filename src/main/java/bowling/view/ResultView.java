@@ -31,11 +31,14 @@ public final class ResultView {
         return new ResultView(output);
     }
 
-    public void print(BowlingResponse bowlings) {
+    public void print(List<BowlingResponse> bowlings) {
         printer.print(COLUMN_HEADER);
+        bowlings.forEach(this::printResult);
+    }
 
-//        printer.printf(ROW_FORMAT, name, framesMessage(frames.getStates()));
-//        printer.printf(ROW_FORMAT, "", framesMessage(frames.getScores()));
+    private void printResult(BowlingResponse bowling) {
+        printer.printf(ROW_FORMAT, bowling.getName(), framesMessage(bowling.getFrames().getStates()));
+        printer.printf(ROW_FORMAT, "", framesMessage(bowling.getFrames().getScores()));
     }
 
     private String framesMessage(List<?> messages) {

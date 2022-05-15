@@ -31,7 +31,7 @@ public class BowlingGame {
         Bowlings bowlings = Bowlings.fromNames(inputView.participants());
         while (bowlings.isNotFinished()) {
             bowlings.pitch(nextPins(bowlings));
-            resultView.print(BowlingResponse.from(bowlings));
+            resultView.print(BowlingResponse.listFrom(bowlings));
         }
     }
 

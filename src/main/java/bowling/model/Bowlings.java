@@ -3,6 +3,7 @@ package bowling.model;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -41,6 +42,10 @@ public final class Bowlings {
         int index = this.bowlings.indexOf(bowling);
         this.bowlings.remove(bowling);
         this.bowlings.add(index, bowling.pitch(pins));
+    }
+
+    public List<Bowling> list() {
+        return Collections.unmodifiableList(bowlings);
     }
 
     private void validateFinished() {
