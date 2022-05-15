@@ -48,4 +48,21 @@ public class AnswersTest {
                 () -> assertThat(answer1.isDeleted()).isTrue()
         );
     }
+
+    @Test
+    @DisplayName("삭제된 답변들에 대한 히스토리가 리스트에 저장된다.")
+    void saveDeletedAnswerAtDeleteHistory() {
+        // given
+        User loginUser = JAVAJIGI;
+        Answer answer1 = new Answer(JAVAJIGI, Q1, "Answers Contents1");
+        Answer answer2 = new Answer(JAVAJIGI, Q2, "Answers Contents2");
+        List<Answer> values = Arrays.asList(answer1, answer2);
+        Answers answers = new Answers(values);
+
+        // when
+        List<DeleteHistory> deleteHistories = answers.delete(loginUser);
+
+        // then
+        assertThat(deleteHistories).hasSize(2);
+    }
 }
