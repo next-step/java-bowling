@@ -1,5 +1,7 @@
 package qna.domain;
 
+import static qna.domain.ContentType.*;
+
 import java.time.LocalDateTime;
 import org.hibernate.annotations.Where;
 
@@ -20,10 +22,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -87,33 +87,18 @@ public class Question extends AbstractEntity {
     }
 
     public List<Answer> getAnswers() {
-        return answers;
+        return answers.getAnswers();
     }
 
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-
-        List<Answer> answers = getAnswers();
-        for (Answer answer : answers) {
-            validateAnswerAuthor(answer, loginUser);
-        }
-
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
         setDeleted(true);
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
-        for (Answer answer : answers) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(new DeleteHistory(QUESTION, getId(), getWriter(), LocalDateTime.now()));
+        deleteHistories.addAll(answers.delete(loginUser));
         return deleteHistories;
-    }
-
-    private void validateAnswerAuthor(Answer answer, User loginUser) throws CannotDeleteException {
-        if(!answer.isOwner(loginUser)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-        }
     }
 
     @Override

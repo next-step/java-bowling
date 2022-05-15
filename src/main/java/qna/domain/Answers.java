@@ -22,13 +22,17 @@ public class Answers {
         this.answers = answers;
     }
 
-    public void delete(User loginUser) {
-        List<DeleteHistory> deleteHistories = answers.stream()
+    public List<DeleteHistory> delete(User loginUser) {
+        return answers.stream()
                 .map(answer -> answer.delete(loginUser))
                 .collect(Collectors.toList());
     }
 
     public List<Answer> getAnswers() {
         return answers;
+    }
+
+    public void add(Answer answer) {
+        answers.add(answer);
     }
 }
