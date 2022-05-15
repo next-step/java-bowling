@@ -1,6 +1,5 @@
 package bowling.model;
 
-import bowling.model.frame.FrameNumber;
 import bowling.model.frame.Frames;
 import bowling.utility.Assert;
 
@@ -18,15 +17,15 @@ public final class Bowling {
         this.frames = frames;
     }
 
-    public static Bowling from(Participant participant) {
+    static Bowling from(Participant participant) {
         return new Bowling(participant, Frames.init());
     }
 
-    public static Bowling of(Participant participant, Frames frames) {
+    static Bowling of(Participant participant, Frames frames) {
         return new Bowling(participant, frames);
     }
 
-    public Bowling pitch(Pins countOfHit) {
+    Bowling pitch(Pins countOfHit) {
         validateState();
         return of(participant, frames.bowling(countOfHit));
     }
@@ -43,7 +42,7 @@ public final class Bowling {
         return frames;
     }
 
-    public boolean isNextFrameNumberGreaterThan(Bowling bowling) {
+    boolean isNextFrameNumberGreaterThan(Bowling bowling) {
         return frames.nextNumberGreaterThan(bowling.frames);
     }
 

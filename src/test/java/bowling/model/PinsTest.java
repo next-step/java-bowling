@@ -37,19 +37,6 @@ class PinsTest {
     }
 
     @Test
-    @DisplayName("빼기")
-    void minus() {
-        assertThat(Pins.MAX.minus(Pins.from(5))).isEqualTo(Pins.from(5));
-    }
-
-    @Test
-    @DisplayName("빼는 값이 더 클 수 없음")
-    void minus_greaterThan_thrownIllegalArgumentException() {
-        assertThatIllegalArgumentException().isThrownBy(() -> Pins.ZERO.minus(Pins.MAX));
-    }
-
-
-    @Test
     @DisplayName("주어진 갯수 그대로 반환")
     void count() {
         assertThat(Pins.ZERO.count()).isZero();

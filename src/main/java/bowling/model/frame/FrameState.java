@@ -62,11 +62,11 @@ public final class FrameState {
                 .reduce(0, Integer::sum);
     }
 
-    public String mark() {
+    String mark() {
         return state.mark();
     }
 
-    public String markWithBonus() {
+    String markWithBonus() {
         List<String> marks = new ArrayList<>(Collections.singletonList(mark()));
         marks.addAll(bonusStates.stream()
                 .map(BallState::mark)

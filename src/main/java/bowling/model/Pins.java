@@ -37,11 +37,6 @@ public final class Pins {
         return count;
     }
 
-    public Pins minus(Pins pins) {
-        Assert.isTrue(this.count > pins.count, String.format("pins(%s) to minus must be greater than pins(%s)", this, pins));
-        return from(this.count - pins.count);
-    }
-
     private boolean isGreaterThanMax(int count) {
         return MAXIMUM_COUNT < count;
     }
