@@ -1,5 +1,7 @@
 package bowling.view;
 
+import bowling.exception.InvalidNameOfPlayerException;
+
 import java.util.Scanner;
 
 public class InputView {
@@ -10,7 +12,20 @@ public class InputView {
     }
 
     public static String inputNameOfPlayer() {
-        System.out.print(INPUT_NAME_OF_PLAYER);
-        return SCANNER.nextLine();
+        try {
+            System.out.print(INPUT_NAME_OF_PLAYER);
+            String name = SCANNER.nextLine();
+            validateNameOfPlayer(name);
+            return name;
+        } catch (InvalidNameOfPlayerException e) {
+            System.out.println(e.getMessage());
+            return inputNameOfPlayer();
+        }
+    }
+
+    private static void validateNameOfPlayer(String name) {
+        if (name == null || name.length() != 3) {
+            throw new InvalidNameOfPlayerException(name);
+        }
     }
 }
