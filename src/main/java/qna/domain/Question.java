@@ -1,13 +1,17 @@
 package qna.domain;
 
-import static qna.domain.ContentType.*;
+import static qna.domain.ContentType.QUESTION;
 
 import java.time.LocalDateTime;
-import org.hibernate.annotations.Where;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import qna.CannotDeleteException;
 
 @Entity
