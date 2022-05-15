@@ -7,22 +7,24 @@ public class Frame {
     public static final int NO_PINS_LEFT = 0;
     public static final int MAX_NUMBER_OF_PIN = 10;
 
-    private int numberOfPinsRemaining = 10;
-    private int numberOfAttemptsRemaining = 2;
+    private int first = -1;
+    private int second = -1;
 
     Frame() {
     }
 
     int play(final int round, final int numberOfFallenPins) {
         validate(round, numberOfFallenPins);
-        numberOfPinsRemaining -= numberOfFallenPins;
-        numberOfAttemptsRemaining--;
-
-        return numberOfPinsRemaining;
+        if (first == -1) {
+            first = numberOfFallenPins;
+            return first;
+        }
+        second = numberOfFallenPins;
+        return second;
     }
 
     private void validate(final int round, final int numberOfFallenPins) {
-        if (numberOfPinsRemaining == NO_PINS_LEFT || numberOfAttemptsRemaining == NO_PINS_LEFT) {
+        if (first == 10 || second != -1) {
             throw new EndedFrameException(round);
         }
 
@@ -31,7 +33,11 @@ public class Frame {
         }
     }
 
-    void record(Record record) {
-        record.record(MAX_NUMBER_OF_PIN - numberOfPinsRemaining);
+    public int getFirst() {
+        return first;
+    }
+
+    public int getSecond() {
+        return second;
     }
 }

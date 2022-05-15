@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Game {
@@ -19,7 +20,7 @@ public class Game {
         return CACHE.get(round - MAP_ROUND_TO_INDEX_CONSTANT).play(round, numberOfFallenPins);
     }
 
-    public void record(final int round, Record record) {
-        CACHE.get(round - MAP_ROUND_TO_INDEX_CONSTANT).record(record);
+    public List<Frame> getGameRecords() {
+        return Collections.unmodifiableList(CACHE);
     }
 }
