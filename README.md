@@ -12,5 +12,7 @@
 - [ ] 질문과 답변 삭제 이력에 대한 정보를 DeleteHistory를 활용해 남긴다.
 
 ## refactor todo
+
 - [x] modify question.getAnswers to question.checkPrivilegeOnAnswer
-- [x] modify question.getWriter to question.createDeleteHistory   
+- [x] modify question.getWriter to question.createDeleteHistory
+- [x] create first class collection with Answers

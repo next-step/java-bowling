@@ -5,7 +5,6 @@ import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,7 +22,7 @@ public class Question extends AbstractEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -86,29 +85,17 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-//    public List<Answer> getAnswers() {
-//        return answers;
-//    }
-
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
     public void checkPrivilegeOnAnswer(User loginUser) throws CannotDeleteException {
-        for (Answer answer : this.answers) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
-        }
+        answers.checkPrivilegeOnAnswer(loginUser);
     }
 
     public List<DeleteHistory> deleteHistory(List<DeleteHistory> deleteHistories) {
-        for (Answer answer : this.answers) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }
-        return deleteHistories;
+        return answers.deleteHistory(deleteHistories);
     }
 
     public DeleteHistory createDeleteHistory(ContentType question, long questionId, LocalDateTime now) {
