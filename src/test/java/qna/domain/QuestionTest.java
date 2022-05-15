@@ -6,7 +6,7 @@ import qna.CannotDeleteException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class QuestionTest {
+public class QuestionTest {
     public static final Question JAVAJIGI_QUESTION = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
     public static final Question SANJIGI_QUESTION = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
 
