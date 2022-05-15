@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.*;
@@ -56,6 +57,18 @@ class BowlingsTest {
                 )));
     }
 
+    @Test
+    @DisplayName("모든 프레임이 끝나면 더이상 던질 수 없음")
+    void pitch_finished_thrownIllegalStateException() {
+        //given
+        Bowlings bowlings = Bowlings.fromNames(Arrays.asList("aaa", "bbb"));
+        IntStream.range(0, 40)
+                .mapToObj(i -> Pins.ZERO)
+                .forEach(bowlings::pitch);
+        //when, then
+        assertThatIllegalStateException().isThrownBy(() -> bowlings.pitch(Pins.MAX));
+    }
+
     @ParameterizedTest(name = "[{index}] 10점짜리 {0}만큼 던지면 다음 순서는 {1}")
     @DisplayName("한 프레임이 끝나면 다음 참가자 순서")
     @CsvSource({"0,aaa", "1,bbb"})
@@ -67,5 +80,14 @@ class BowlingsTest {
                 .forEach(bowlings::pitch);
         //when, then
         assertThat(bowlings.nextParticipant()).isEqualTo(Participant.from(expected));
+    }
+
+    @Test
+    @DisplayName("주어진 리스트 그대로 반환")
+    void list() {
+        //given
+        List<Bowling> bowlings = Collections.singletonList(Bowling.from(Participant.from("abc")));
+        //when, then
+        assertThat(Bowlings.from(bowlings).list()).containsExactlyElementsOf(bowlings);
     }
 }

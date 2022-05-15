@@ -36,13 +36,12 @@ public final class Frames {
 
     public Frames bowling(Pins pins) {
         validateStateToAdd();
-        List<Frame> newFrames = framesAddedScoreWithoutLast(pins);
-        Frame last = this.frames.getLast();
-        Frame frame = addScoreIfHasRemainCount(last, pins);
-        if (frame.isEnd() && !last.isFinal()) {
-            newFrames.add(frame);
+        LinkedList<Frame> newFrames = addedBonusPinsFrames(pins);
+        Frame last = newFrames.removeLast();
+        if (last.isEnd()) {
+            newFrames.add(last);
         }
-        newFrames.add(frame.next(pins));
+        newFrames.add(last.next(pins));
         return from(newFrames);
     }
 
@@ -56,7 +55,7 @@ public final class Frames {
             if (frame.hasRemainCount()) {
                 break;
             }
-            score = frame.sumScoreValue(score);
+            score += frame.sumPinsCount();
             scores.add(score);
         } while (iterator.hasNext());
         return scores;
@@ -70,27 +69,22 @@ public final class Frames {
         return nextFrameNumber().isGreaterThan(frames.nextFrameNumber());
     }
 
+    private LinkedList<Frame> addedBonusPinsFrames(Pins pins) {
+        return frames.stream()
+                .map(frame -> {
+                    if (frame.isEnd() && frame.hasRemainCount()) {
+                        return frame.addBonusPins(pins);
+                    }
+                    return frame;
+                }).collect(Collectors.toCollection(LinkedList::new));
+    }
+
     private FrameNumber nextFrameNumber() {
         Frame last = this.frames.getLast();
         if (last.isEnd()) {
             return last.number().increase();
         }
         return last.number();
-    }
-
-    private LinkedList<Frame> framesAddedScoreWithoutLast(Pins countOfHit) {
-        LinkedList<Frame> newFrames = this.frames.stream()
-                .map(frame -> addScoreIfHasRemainCount(frame, countOfHit))
-                .collect(Collectors.toCollection(LinkedList::new));
-        newFrames.removeLast();
-        return newFrames;
-    }
-
-    private Frame addScoreIfHasRemainCount(Frame frame, Pins countOfHit) {
-        if (frame.hasRemainCount()) {
-            return frame.addScore(countOfHit);
-        }
-        return frame;
     }
 
     private void validateStateToAdd() {

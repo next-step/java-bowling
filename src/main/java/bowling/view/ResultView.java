@@ -37,7 +37,7 @@ public final class ResultView {
     }
 
     private void printResult(BowlingResponse bowling) {
-        printer.printf(ROW_FORMAT, bowling.getName(), framesMessage(bowling.getFrames().getStates()));
+        printer.printf(ROW_FORMAT, bowling.getName(), framesMessage(bowling.getFrames().getMarks()));
         printer.printf(ROW_FORMAT, "", framesMessage(bowling.getFrames().getScores()));
     }
 

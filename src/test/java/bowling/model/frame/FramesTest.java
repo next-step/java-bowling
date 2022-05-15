@@ -96,13 +96,13 @@ class FramesTest {
         return Stream.of(
                 Arguments.of(
                         Collections.singletonList(Pins.MAX),
-                        Frames.from(Collections.singletonList(NormalFrame.of(FrameNumber.FIRST, FrameState.of(Strike.INSTANCE, Score.of(10, 2)))))
+                        Frames.from(Collections.singletonList(NormalFrame.of(FrameNumber.FIRST, FrameState.from(Strike.INSTANCE))))
                 ),
                 Arguments.of(
                         Arrays.asList(Pins.MAX, Pins.MAX),
                         Frames.from(Arrays.asList(
-                                NormalFrame.of(FrameNumber.FIRST, FrameState.of(Strike.INSTANCE, Score.of(20, 1))),
-                                NormalFrame.of(FrameNumber.from(2), FrameState.of(Strike.INSTANCE, Score.of(10, 2)))
+                                NormalFrame.of(FrameNumber.FIRST, FrameState.of(Strike.INSTANCE, Collections.singletonList(Strike.INSTANCE))),
+                                NormalFrame.of(FrameNumber.from(2), FrameState.from(Strike.INSTANCE))
                         ))
                 )
         );

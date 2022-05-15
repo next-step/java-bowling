@@ -44,9 +44,7 @@ public final class NormalFrame implements Frame {
     @Override
     public Frame next(Pins countOfHit) {
         if (isEnd()) {
-            return nextFrame()
-                    .addScore(countOfHit)
-                    .next(countOfHit);
+            return nextFrame().next(countOfHit);
         }
         return of(number, state.nextState(countOfHit));
     }
@@ -57,17 +55,18 @@ public final class NormalFrame implements Frame {
     }
 
     @Override
-    public Frame addScore(Pins countOfHit) {
-        return of(number, state.addScore(countOfHit));
+    public Frame addBonusPins(Pins countOfHit) {
+        return of(number, state.addBonusPins(countOfHit));
     }
 
     @Override
-    public int sumScoreValue(int score) {
-        return state.sumScoreValue(score);
+    public int sumPinsCount() {
+        return state.sumPinsCount();
     }
 
-    public FrameState state() {
-        return state;
+    @Override
+    public String mark() {
+        return state.mark();
     }
 
     private Frame nextFrame() {

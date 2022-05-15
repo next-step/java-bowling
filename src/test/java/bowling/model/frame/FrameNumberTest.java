@@ -51,4 +51,10 @@ class FrameNumberTest {
         assertThat(FrameNumber.from(2).isGreaterThan(FrameNumber.from(number)))
                 .isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("주어진 값 그대로 반환")
+    void toInt() {
+        assertThat(FrameNumber.from(1).toInt()).isOne();
+    }
 }
