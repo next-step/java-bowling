@@ -2,10 +2,13 @@ package qna.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static qna.domain.ContentType.*;
 import static qna.domain.QuestionTest.*;
 import static qna.domain.UserTest.JAVAJIGI;
 import static qna.domain.UserTest.SANJIGI;
 
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
@@ -32,14 +35,18 @@ public class AnswerTest {
     }
 
     @Test
-    @DisplayName("접근하는 로그인 유저와 답변 유저가 다른 경우, 예외처리를 한다.")
+    @DisplayName("접근하는 로그인 유저와 답변 유저가 다른 경우, 예외처리되며 삭제 상태는 False를 한다.")
     void exceptionLoginUserDifferentAnswerUser() {
         // given
+        Answer answer = new Answer(JAVAJIGI, Q1, "Answers Contents3");
         User loginUser = SANJIGI;
 
         // when & then
-        assertThatThrownBy(() -> A1.delete(loginUser))
-                .isInstanceOf(CannotDeleteException.class);
+        assertAll(
+                () -> assertThatThrownBy(() -> answer.delete(loginUser))
+                        .isInstanceOf(CannotDeleteException.class),
+                () -> assertThat(answer.isDeleted()).isFalse()
+        );
     }
 
     @Test
