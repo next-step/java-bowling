@@ -1,6 +1,5 @@
 package bowling.model;
 
-import bowling.model.frame.FrameNumber;
 import bowling.model.frame.Frames;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,7 +46,7 @@ class BowlingTest {
                 .mapToObj(i -> Pins.from(1))
                 .forEach(hyhBowling::pitch);
         //when, then
-        assertThat(hyhBowling.isNotFinished()).isTrue();
+        assertThat(hyhBowling.isFinished()).isFalse();
     }
 
     @ParameterizedTest(name = "[{index}] {0}점 점수 {1} 번 공을 던지면 종료")
@@ -59,7 +58,7 @@ class BowlingTest {
                 .mapToObj(i -> Pins.from(hitCount))
                 .reduce(Bowling.from(PARTICIPANT), Bowling::pitch, (bowling1, bowling2) -> bowling2);
         //when, then
-        assertThat(hyhBowling.isNotFinished()).isFalse();
+        assertThat(hyhBowling.isFinished()).isTrue();
     }
 
     @Test
@@ -81,12 +80,6 @@ class BowlingTest {
         assertThatIllegalStateException().isThrownBy(() -> IntStream.range(0, Integer.MAX_VALUE)
                 .mapToObj(i -> Pins.from(1))
                 .reduce(hyhBowling, Bowling::pitch, (bowling1, bowling2) -> bowling2));
-    }
-
-    @Test
-    @DisplayName("초기 상태의 다음 프레임 번호는 1")
-    void nextFrameNumber() {
-        assertThat(Bowling.from(PARTICIPANT).nextFrameNumber()).isEqualTo(FrameNumber.FIRST);
     }
 
     @Test

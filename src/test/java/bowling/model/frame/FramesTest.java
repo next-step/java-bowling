@@ -74,22 +74,6 @@ class FramesTest {
     }
 
     @Test
-    @DisplayName("초기 상태의 다음 프레임 번호는 1")
-    void nextFrameNumber() {
-        assertThat(Frames.init().nextFrameNumber()).isEqualTo(FrameNumber.FIRST);
-    }
-
-    @Test
-    @DisplayName("마지막 프레임이 끝나면 다음 프레임 번호는 +1")
-    void nextFrameNumber_endedFrame() {
-        //given
-        FrameNumber frameNumber = FrameNumber.FIRST;
-        //when, then
-        assertThat(Frames.from(Collections.singletonList(NormalFrame.of(frameNumber, FrameState.from(Strike.INSTANCE)))).nextFrameNumber())
-                .isEqualTo(frameNumber.increase());
-    }
-
-    @Test
     @DisplayName("주어진 리스트 그대로 반환")
     void list() {
         //given

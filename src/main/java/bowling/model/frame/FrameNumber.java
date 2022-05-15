@@ -40,6 +40,10 @@ public final class FrameNumber {
         return number == MAXIMUM;
     }
 
+    boolean isGreaterThan(FrameNumber number) {
+        return this.number > number.number;
+    }
+
     public int toInt() {
         return number;
     }

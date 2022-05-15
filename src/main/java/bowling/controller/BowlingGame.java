@@ -1,12 +1,11 @@
 package bowling.controller;
 
-import bowling.model.Bowling;
-import bowling.model.Participant;
+import bowling.model.Bowlings;
 import bowling.model.Pins;
 import bowling.utility.Assert;
 import bowling.view.InputView;
 import bowling.view.ResultView;
-import bowling.view.dto.FramesResponse;
+import bowling.view.dto.BowlingResponse;
 
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -29,14 +28,14 @@ public class BowlingGame {
     }
 
     public void start() {
-        Bowling bowling = Bowling.from(Participant.from(inputView.participant()));
-        while (bowling.isNotFinished()) {
-            bowling = bowling.pitch(nextPins(bowling));
-            resultView.print(bowling.participant().name(), FramesResponse.from(bowling.frames()));
+        Bowlings bowlings = Bowlings.fromNames(inputView.participants());
+        while (bowlings.isNotFinished()) {
+            bowlings.pitch(nextPins(bowlings));
+            resultView.print(BowlingResponse.from(bowlings));
         }
     }
 
-    private Pins nextPins(Bowling bowling) {
-        return Pins.from(inputView.nextPitch(bowling.nextFrameNumber().toInt()));
+    private Pins nextPins(Bowlings bowlings) {
+        return Pins.from(inputView.nextPitch(bowlings.nextParticipant().name()));
     }
 }

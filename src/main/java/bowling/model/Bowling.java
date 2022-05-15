@@ -26,10 +26,6 @@ public final class Bowling {
         return new Bowling(participant, frames);
     }
 
-    public boolean isNotFinished() {
-        return !isFinished();
-    }
-
     public Bowling pitch(Pins countOfHit) {
         validateState();
         return of(participant, frames.bowling(countOfHit));
@@ -39,22 +35,22 @@ public final class Bowling {
         return participant;
     }
 
+    boolean isFinished() {
+        return frames.isFinished();
+    }
+
     public Frames frames() {
         return frames;
     }
 
-    public FrameNumber nextFrameNumber() {
-        return frames.nextFrameNumber();
+    public boolean isNextFrameNumberGreaterThan(Bowling bowling) {
+        return frames.nextNumberGreaterThan(bowling.frames);
     }
 
     private void validateState() {
         if (isFinished()) {
             throw new IllegalStateException(String.format("bowling(%s) is already finished", this));
         }
-    }
-
-    private boolean isFinished() {
-        return frames.isFinished();
     }
 
     @Override

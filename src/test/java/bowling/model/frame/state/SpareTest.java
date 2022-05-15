@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.*;
 class SpareTest {
 
     @Test
-    @DisplayName("첫번째 0, 두번째 10으로 생성")
+    @DisplayName("첫번째 핀으로 생성")
     void instance() {
         assertThatNoException().isThrownBy(() -> Spare.from(Pins.ZERO));
     }
@@ -19,6 +19,12 @@ class SpareTest {
     @DisplayName("첫번째 핀들은 필수")
     void instance_nullArgument_thrownIllegalArgumentException() {
         assertThatIllegalArgumentException().isThrownBy(() -> Spare.from(null));
+    }
+
+    @Test
+    @DisplayName("첫번째 핀이 두번째와 합친 핀이 될 수 없음")
+    void instance_maxPins_thrownIllegalArgumentException() {
+        assertThatIllegalArgumentException().isThrownBy(() -> Spare.from(Pins.MAX));
     }
 
     @Test

@@ -9,11 +9,13 @@ import java.util.Objects;
 public final class Spare implements BallState {
 
     private static final int REMAIN_COUNT = 1;
+    private static final Pins FIRST_AND_SECOND_SUM_PINS = Pins.MAX;
 
     private final Pins firstHit;
 
     private Spare(Pins firstHit) {
         Assert.notNull(firstHit, "firstHit must not be null");
+        Assert.isFalse(firstHit.equals(FIRST_AND_SECOND_SUM_PINS), String.format("firstHit(%s) must not equal sum pins(%s)", firstHit, FIRST_AND_SECOND_SUM_PINS));
         this.firstHit = firstHit;
     }
 

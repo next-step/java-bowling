@@ -46,14 +46,6 @@ public final class Frames {
         return from(newFrames);
     }
 
-    public FrameNumber nextFrameNumber() {
-        Frame last = this.frames.getLast();
-        if (last.isEnd()) {
-            return last.number().increase();
-        }
-        return last.number();
-    }
-
     public List<Integer> accumulatedScores() {
         List<Integer> scores = new ArrayList<>();
         Iterator<Frame> iterator = this.frames.iterator();
@@ -72,6 +64,18 @@ public final class Frames {
 
     public List<Frame> list() {
         return Collections.unmodifiableList(this.frames);
+    }
+
+    public boolean nextNumberGreaterThan(Frames frames) {
+        return nextFrameNumber().isGreaterThan(frames.nextFrameNumber());
+    }
+
+    private FrameNumber nextFrameNumber() {
+        Frame last = this.frames.getLast();
+        if (last.isEnd()) {
+            return last.number().increase();
+        }
+        return last.number();
     }
 
     private LinkedList<Frame> framesAddedScoreWithoutLast(Pins countOfHit) {
