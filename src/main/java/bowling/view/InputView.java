@@ -13,7 +13,7 @@ public class InputView {
 
     public static String inputNameOfPlayer() {
         try {
-            System.out.print(INPUT_NAME_OF_PLAYER);
+            System.out.println(INPUT_NAME_OF_PLAYER);
             String name = SCANNER.nextLine();
             validateNameOfPlayer(name);
             return name;
