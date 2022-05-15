@@ -65,12 +65,11 @@ class BowlingTest {
     @Test
     @DisplayName("한번 던지면 프레임들에 추가된 상태")
     void pitch() {
+        //given
         Bowling hyhBowling = Bowling.from(PARTICIPANT);
-        Frames thrownMaxFrames = Frames.init().addedFrames(Pins.MAX);
-        //when
-        hyhBowling.pitch(Pins.MAX);
-        //then
-        assertThat(hyhBowling).isEqualTo(Bowling.of(PARTICIPANT, thrownMaxFrames));
+        Frames thrownMaxFrames = Frames.init().bowling(Pins.MAX);
+        //when, then
+        assertThat(hyhBowling.pitch(Pins.MAX)).isEqualTo(Bowling.of(PARTICIPANT, thrownMaxFrames));
     }
 
     @Test

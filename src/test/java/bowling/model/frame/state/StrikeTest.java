@@ -23,8 +23,8 @@ class StrikeTest {
     }
 
     @Test
-    @DisplayName("보너스 투구는 2")
-    void bonusCount() {
-        assertThat(Strike.INSTANCE.bonusCount()).isEqualTo(2);
+    @DisplayName("남은 투구는 2")
+    void remainCount() {
+        assertThat(Strike.INSTANCE.remainCount()).isEqualTo(2);
     }
 }

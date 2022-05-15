@@ -24,4 +24,11 @@ public final class Participant {
         return name;
     }
 
+    @Override
+    public String toString() {
+        return "Participant{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+
 }

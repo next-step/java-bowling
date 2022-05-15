@@ -1,9 +1,7 @@
 package bowling.model.frame;
 
 import bowling.model.Pins;
-import bowling.model.frame.finalization.FinalFrame;
 import bowling.model.frame.state.FirstThrown;
-import bowling.model.frame.state.NotThrown;
 import bowling.model.frame.state.SecondThrown;
 import bowling.model.frame.state.Strike;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +30,7 @@ class NormalFrameTest {
     @Test
     @DisplayName("프레임 번호와 상태로 생성")
     void instance_numberAndState() {
-        assertThatNoException().isThrownBy(() -> NormalFrame.of(FrameNumber.FIRST, Strike.INSTANCE));
+        assertThatNoException().isThrownBy(() -> NormalFrame.of(FrameNumber.FIRST, FrameState.init()));
     }
 
     @Test
@@ -41,7 +39,7 @@ class NormalFrameTest {
         assertAll(
                 () -> assertThatIllegalArgumentException().isThrownBy(() -> NormalFrame.init(null)),
                 () -> assertThatIllegalArgumentException().isThrownBy(() -> NormalFrame.of(FrameNumber.FIRST, null)),
-                () -> assertThatIllegalArgumentException().isThrownBy(() -> NormalFrame.of(null, Strike.INSTANCE))
+                () -> assertThatIllegalArgumentException().isThrownBy(() -> NormalFrame.of(null, FrameState.init()))
         );
     }
 
@@ -66,8 +64,8 @@ class NormalFrameTest {
     @DisplayName("상태에 따른 종료 여부")
     void isEnd() {
         assertAll(
-                () -> assertThat(NormalFrame.of(FrameNumber.FIRST, Strike.INSTANCE).isEnd()).isTrue(),
-                () -> assertThat(NormalFrame.of(FrameNumber.FIRST, FirstThrown.from(Pins.ZERO)).isEnd()).isFalse()
+                () -> assertThat(NormalFrame.of(FrameNumber.FIRST, FrameState.init()).isEnd()).isFalse(),
+                () -> assertThat(NormalFrame.of(FrameNumber.FIRST, FrameState.from(Strike.INSTANCE)).isEnd()).isTrue()
         );
     }
 
@@ -86,18 +84,48 @@ class NormalFrameTest {
         assertThat(NormalFrame.init(number).number()).isEqualTo(number);
     }
 
+    @ParameterizedTest
+    @MethodSource
+    @DisplayName("상태에 따른 남은 갯수 소유 여부")
+    void hasRemainCount(FrameState state, boolean expected) {
+        assertThat(NormalFrame.of(FrameNumber.FIRST, state).hasRemainCount()).isEqualTo(expected);
+    }
+
     @Test
-    @DisplayName("현재 상태 그대로 반환")
+    @DisplayName("기본 점수에 10점 추가하면 10점 스코어의 프레임")
+    void addScore() {
+        assertThat(NormalFrame.of(FrameNumber.FIRST, FrameState.of(Strike.INSTANCE, Score.of(0, 1))).addScore(Pins.MAX))
+                .isEqualTo(NormalFrame.of(FrameNumber.FIRST, FrameState.of(Strike.INSTANCE, Score.of(10, 0))));
+    }
+
+    @Test
+    @DisplayName("주어진 상태 그대로 반환")
     void state() {
-        assertThat(FinalFrame.init().state()).isEqualTo(NotThrown.INSTANCE);
+        //given
+        FrameState state = FrameState.of(Strike.INSTANCE, Score.of(0, 1));
+        //when, then
+        assertThat(NormalFrame.of(FrameNumber.FIRST, state).state()).isEqualTo(state);
+    }
+
+    @Test
+    @DisplayName("스코어 점수가 더해진 값")
+    void sumScoreValue() {
+        assertThat(NormalFrame.init(FrameNumber.FIRST).sumScoreValue(10)).isEqualTo(10);
     }
 
     private static Stream<Arguments> next() {
         return Stream.of(
-                Arguments.of(Collections.singletonList(Pins.from(1)), NormalFrame.of(FrameNumber.from(8), FirstThrown.from(Pins.from(1)))),
-                Arguments.of(Arrays.asList(Pins.ZERO, Pins.ZERO), NormalFrame.of(FrameNumber.from(8), SecondThrown.of(Pins.ZERO, Pins.ZERO))),
-                Arguments.of(Arrays.asList(Pins.MAX, Pins.ZERO), NormalFrame.of(FrameNumber.from(9), FirstThrown.from(Pins.ZERO))),
-                Arguments.of(Arrays.asList(Pins.MAX, Pins.MAX, Pins.ZERO), FinalFrame.from(FirstThrown.from(Pins.ZERO)))
+                Arguments.of(Collections.singletonList(Pins.from(1)), NormalFrame.of(FrameNumber.from(8), FrameState.from(FirstThrown.from(Pins.from(1))))),
+                Arguments.of(Arrays.asList(Pins.ZERO, Pins.ZERO), NormalFrame.of(FrameNumber.from(8), FrameState.from(SecondThrown.of(Pins.ZERO, Pins.ZERO)))),
+                Arguments.of(Arrays.asList(Pins.MAX, Pins.ZERO), NormalFrame.of(FrameNumber.from(9), FrameState.from(FirstThrown.from(Pins.ZERO)))),
+                Arguments.of(Arrays.asList(Pins.MAX, Pins.MAX, Pins.ZERO), FinalFrame.of(FrameState.from(FirstThrown.from(Pins.ZERO)), Collections.emptyList()))
+        );
+    }
+
+    private static Stream<Arguments> hasRemainCount() {
+        return Stream.of(
+                Arguments.of(FrameState.of(Strike.INSTANCE, Score.of(0, 1)), true),
+                Arguments.of(FrameState.of(Strike.INSTANCE, Score.of(0, 0)), false)
         );
     }
 }

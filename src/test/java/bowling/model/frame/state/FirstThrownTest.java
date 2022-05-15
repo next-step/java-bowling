@@ -48,4 +48,10 @@ class FirstThrownTest {
     void countOfHit() {
         assertThat(FirstThrown.from(Pins.ZERO).countOfHit()).isEqualTo(Pins.ZERO);
     }
+
+    @Test
+    @DisplayName("남은 투구는 1")
+    void remainCount() {
+        assertThat(FirstThrown.from(Pins.ZERO).remainCount()).isEqualTo(1);
+    }
 }

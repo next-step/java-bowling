@@ -8,7 +8,5 @@ public interface BallState {
 
     BallState state(Pins countOfHit);
 
-    default int bonusCount() {
-        return 0;
-    }
+    int remainCount();
 }
