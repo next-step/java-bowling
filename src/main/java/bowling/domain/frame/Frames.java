@@ -11,7 +11,7 @@ public class Frames {
 
     public static final int START_FRAME_INDEX = 0;
     public static final int FINISH_FRAME_INDEX = 10;
-    private static final int NORMAL_FRAME_SIZE = 8;
+    private static final int NORMAL_FRAME_LAST_SIZE = 8;
     private static final int LAST_FRAME_INDEX = 9;
 
     private int currentIndex;
@@ -40,7 +40,7 @@ public class Frames {
     }
 
     private void validateFrameInstance(List<Frame> frames) {
-        IntStream.range(START_FRAME_INDEX, NORMAL_FRAME_SIZE)
+        IntStream.range(START_FRAME_INDEX, NORMAL_FRAME_LAST_SIZE)
                 .forEach(index -> validateNormalFrame(frames, index));
         validateLastFrame(frames);
     }
