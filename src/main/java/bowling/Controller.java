@@ -33,6 +33,9 @@ public class Controller {
         try {
             int numberOfFallenPins = Integer.parseInt(InputView.inputNumberOfFallenPinsInFrame(frame));
             game.play(frame, numberOfFallenPins);
+            if (numberOfFallenPins == 10) {
+                return 2;
+            }
             return 1;
         } catch (InvalidNumberOfFallenPinsException e) {
             System.out.println(e.getMessage());
