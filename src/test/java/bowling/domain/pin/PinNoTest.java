@@ -1,11 +1,16 @@
 package bowling.domain.pin;
 
+import bowling.domain.frameresult.FrameResult;
 import bowling.domain.frameresult.Miss;
 import bowling.domain.frameresult.Spare;
 import bowling.domain.frameresult.Strike;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -43,10 +48,16 @@ class PinNoTest {
         assertThat(PinNo.of(8).canPlus(3)).isFalse();
     }
 
-    @Test
-    void plus() {
-        assertThat(PinNo.of(10).plus(PinNo.of(10))).isInstanceOf(Strike.class);
-        assertThat(PinNo.of(9).plus(PinNo.of(1))).isInstanceOf(Spare.class);
-        assertThat(PinNo.of(9).plus(PinNo.of(0))).isInstanceOf(Miss.class);
+    @ParameterizedTest
+    @MethodSource("provideArgumentsForPlus")
+    void plus(int firstNo, int secondNo, Class<? extends FrameResult> result) {
+        assertThat(PinNo.of(firstNo).plus(PinNo.of(secondNo))).isInstanceOf(result);
+    }
+
+    private static Stream<Arguments> provideArgumentsForPlus() {
+        return Stream.of(
+                Arguments.of(10, 0, Strike.class),
+                Arguments.of(9, 1, Spare.class),
+                Arguments.of(9, 0, Miss.class));
     }
 }

@@ -52,7 +52,7 @@ public class PinNo {
         if (this.no + pinNo.no == MAX_PIN_NO) {
             return new Spare();
         }
-        return new Miss();
+        return new Miss(this.no, pinNo.no);
     }
 
     public int getNo() {
