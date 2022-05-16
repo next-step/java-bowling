@@ -47,6 +47,6 @@ public class QnAService {
         DeleteHistory deleteHistory = question.createDeleteHistory(ContentType.QUESTION, questionId, LocalDateTime.now());
         deleteHistories.add(deleteHistory);
         deleteHistories = question.deleteHistory(deleteHistories);
-        deleteHistories.saveAll(deleteHistoryService);
+        deleteHistoryService.saveAll(deleteHistories);
     }
 }
