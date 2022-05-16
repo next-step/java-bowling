@@ -38,7 +38,7 @@ public class QnAService {
         question.checkDeletePermissions(loginUser);
 
         DeleteHistories deleteHistories = new DeleteHistories();
-        deleteHistories = question.deleteAndAddHistory(deleteHistories);
+        deleteHistories = question.deleteAndAddHistories(deleteHistories);
         deleteHistoryService.saveAll(deleteHistories.getDeleteHistories());
     }
 }

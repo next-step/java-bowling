@@ -109,9 +109,9 @@ public class Question extends AbstractEntity implements PostEntity {
         this.deleted = true;
     }
 
-    public DeleteHistories deleteAndAddHistory(DeleteHistories deleteHistories) {
+    public DeleteHistories deleteAndAddHistories(DeleteHistories deleteHistories) {
         delete();
         deleteHistories = deleteHistories.add(DeleteHistory.of(this));
-        return answers.deleteAndAddHistory(deleteHistories);
+        return answers.deleteAndAddHistories(deleteHistories);
     }
 }

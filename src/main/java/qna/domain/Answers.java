@@ -30,7 +30,7 @@ public class Answers {
     }
   }
 
-  public DeleteHistories deleteAndAddHistory(DeleteHistories deleteHistories) {
+  public DeleteHistories deleteAndAddHistories(DeleteHistories deleteHistories) {
     for (Answer answer : answers) {
       answer.deleteAndAddHistory(deleteHistories);
     }
