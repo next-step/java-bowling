@@ -19,13 +19,11 @@ class PinsTest {
         assertThat(Pins.create(number)).isInstanceOf(Pins.class);
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(ints = {-1, 11})
     @DisplayName("올바르지 않은 핀을 입력할 경우 예외를 발생시킨다")
-    void validate() {
-        Assertions.assertAll(
-                () -> assertThatThrownBy(() -> Pins.create(-1)).isInstanceOf(InvalidPinsException.class),
-                () -> assertThatThrownBy(() -> Pins.create(11)).isInstanceOf(InvalidPinsException.class)
-        );
+    void validate(int number) {
+        assertThatThrownBy(() -> Pins.create(number)).isInstanceOf(InvalidPinsException.class);
     }
 
 }
