@@ -3,6 +3,7 @@ package bowling.view;
 import bowling.domain.BowlingGame;
 import bowling.domain.Player;
 import bowling.domain.frame.Frame;
+import bowling.exception.InvalidPinsException;
 
 import java.util.List;
 
@@ -71,4 +72,9 @@ public final class ResultView {
     private void clear() {
         stringBuilder.setLength(0);
     }
+
+    public void printExceptionMessage(InvalidPinsException invalidPinsException) {
+        System.out.println(invalidPinsException.getMessage());
+    }
+
 }

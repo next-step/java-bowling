@@ -5,6 +5,7 @@ import bowling.domain.Pins;
 import bowling.domain.Player;
 import bowling.domain.frame.FrameFactory;
 import bowling.domain.frame.Frames;
+import bowling.exception.InvalidPinsException;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -34,9 +35,17 @@ public class BowlingGameController {
 
         while (bowlingGame.isRunning()) {
             int currentRound = bowlingGame.getCurrentRound();
+            pitch(bowlingGame, currentRound);
+            resultView.printBowlingGameResult(bowlingGame);
+        }
+    }
+
+    private void pitch(BowlingGame bowlingGame, int currentRound) {
+        try {
             Pins pins = inputView.inputPins(currentRound);
             bowlingGame.pitch(pins);
-            resultView.printBowlingGameResult(bowlingGame);
+        } catch (InvalidPinsException invalidPinsException) {
+            resultView.printExceptionMessage(invalidPinsException);
         }
     }
 
