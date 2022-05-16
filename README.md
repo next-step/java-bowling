@@ -21,3 +21,4 @@
 - [x] wrap with Answers
 - [x] create first class collection: Questions 
 - [x] add AnswersTest
+- [x] add DeleteHistoriesTest
