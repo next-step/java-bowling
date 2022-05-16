@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.exception.EndedFrameException;
 import bowling.exception.InvalidNumberOfFallenPinsException;
+import bowling.exception.MaximumSumExceededException;
 
 public class Frame {
     public static final int BEFORE_BOWLING = -1;
@@ -30,6 +31,10 @@ public class Frame {
 
         if (numberOfFallenPins <= BEFORE_BOWLING || numberOfFallenPins > MAX_NUMBER_OF_PIN) {
             throw new InvalidNumberOfFallenPinsException(numberOfFallenPins);
+        }
+
+        if ((first != BEFORE_BOWLING) && ((first + numberOfFallenPins) > MAX_NUMBER_OF_PIN)) {
+            throw new MaximumSumExceededException(first, numberOfFallenPins);
         }
     }
 
