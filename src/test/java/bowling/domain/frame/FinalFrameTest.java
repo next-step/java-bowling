@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -41,5 +42,31 @@ class FinalFrameTest {
     void addPin_WhenValidationFailed_ThrowsIllegalStateException(int firstNo, int secondNo) {
         assertThatThrownBy(() -> new FinalFrame(firstNo).addPin(secondNo))
                 .isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
+    void getScore_Miss() {
+        FinalFrame finalFrame = new FinalFrame(5);
+        finalFrame.addPin(4);
+
+        assertThat(finalFrame.getScore()).isEqualTo(9);
+    }
+
+    @Test
+    void getScore_Spare() {
+        FinalFrame finalFrame = new FinalFrame(5);
+        finalFrame.addPin(5);
+        finalFrame.addPin(5);
+
+        assertThat(finalFrame.getScore()).isEqualTo(15);
+    }
+
+    @Test
+    void getScore_Strike() {
+        FinalFrame finalFrame = new FinalFrame(10);
+        finalFrame.addPin(5);
+        finalFrame.addPin(5);
+
+        assertThat(finalFrame.getScore()).isEqualTo(20);
     }
 }

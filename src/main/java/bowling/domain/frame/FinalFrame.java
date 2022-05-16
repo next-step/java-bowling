@@ -1,63 +1,62 @@
 package bowling.domain.frame;
 
+import bowling.domain.frameresult.FrameResult;
 import bowling.domain.frameresult.Miss;
-import bowling.domain.pin.PinNo;
-import bowling.domain.util.PinNoPrinter;
-
-import java.util.ArrayList;
-import java.util.List;
+import bowling.domain.frameresult.Spare;
+import bowling.domain.pin.FinalPinNumbers;
 
 public class FinalFrame implements Frame {
 
-    private static final int INIT_SIZE = 1;
-    private static final int MIN_SIZE = 2;
-    private static final int EXTRA_SIZE = 3;
+    private final FinalPinNumbers pinNumbers;
 
-    private final List<PinNo> pinNos = new ArrayList<>();
-
-    public FinalFrame(int pinNo) {
-        pinNos.add(PinNo.of(pinNo));
+    FinalFrame(int pinNo) {
+        pinNumbers = new FinalPinNumbers(pinNo);
     }
 
     @Override
     public boolean isFull() {
-        if (size() < MIN_SIZE) {
-            return false;
-        }
-        PinNo firstPin = pinNos.get(0);
-        PinNo secondPin = pinNos.get(1);
-        return firstPin.plus(secondPin) instanceof Miss || size() == EXTRA_SIZE;
+        return pinNumbers.isFull();
     }
 
     @Override
     public void addPin(int pinNo) {
-        if (size() == INIT_SIZE) {
-            validateSecondPin(pinNo);
-        }
-        pinNos.add(PinNo.of(pinNo));
-    }
-
-    private void validateSecondPin(int pinNo) {
-        PinNo firstPin = pinNos.get(0);
-        if (firstPin.isMaxNo()) {
-            return;
-        }
-        if (!firstPin.canPlus(pinNo)) {
-            throw new IllegalStateException("can't add pin");
-        }
-    }
-
-    private int size() {
-        return pinNos.size();
+        pinNumbers.addPin(pinNo);
     }
 
     @Override
-    public Frame nextFrame(int pinNo) {
+    public Frame getNextFrame(int pinNo) {
         throw new IllegalStateException("current frame is final frame");
     }
 
     @Override
     public String toExpression() {
-        return PinNoPrinter.print(pinNos);
+        return pinNumbers.toExpression();
+    }
+
+    @Override
+    public boolean canGetScore() {
+        return isFull();
+    }
+
+    @Override
+    public int getScore() {
+        FrameResult result = pinNumbers.getResult();
+        if (result instanceof Miss) {
+            return result.getScoreWithBonus(0);
+        }
+        if (result instanceof Spare) {
+            return result.getScoreWithBonus(pinNumbers.getOwnSpareBonus());
+        }
+        return result.getScoreWithBonus(pinNumbers.getOwnStrikeBonus());
+    }
+
+    @Override
+    public int spareBonusForPreviousFrame() {
+        return pinNumbers.spareBonus();
+    }
+
+    @Override
+    public int strikeBonusForPreviousFrame() {
+        return pinNumbers.strikeBonus();
     }
 }
