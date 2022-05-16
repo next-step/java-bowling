@@ -77,6 +77,10 @@ public class Frames {
         if (nextIndex > FINISH_FRAME_INDEX) {
             throw new OutOfIndexException(nextIndex);
         }
+        increaseIndex();
+    }
+
+    private void increaseIndex() {
         this.currentIndex += 1;
     }
 
