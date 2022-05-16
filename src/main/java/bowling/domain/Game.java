@@ -16,11 +16,21 @@ public class Game {
         }
     }
 
+    private final String player;
+
+    public Game(String player) {
+        this.player = player;
+    }
+
     public int play(final int round, final int numberOfFallenPins) {
         return CACHE.get(round - MAP_ROUND_TO_INDEX_CONSTANT).play(round, numberOfFallenPins);
     }
 
     public List<Frame> getGameRecords() {
         return Collections.unmodifiableList(CACHE);
+    }
+
+    public String getPlayer() {
+        return player;
     }
 }

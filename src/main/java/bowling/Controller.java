@@ -13,24 +13,23 @@ public class Controller {
     public static final int ONE_COUNT_OF_ATTEMPTS = 1;
 
     public static void main(String[] args) {
-        String player = InputView.inputNameOfPlayer();
-        Game game = new Game();
+        Game game = new Game(InputView.inputNameOfPlayer());
 
         ResultView.printLabel();
-        ResultView.printScore(player, game.getGameRecords());
+        ResultView.printScore(game.getPlayer(), game.getGameRecords());
 
         for (int frame = 1; frame <= 10; frame++) {
-            playSecondAttemptsInFrame(game, frame, player);
+            playSecondAttemptsInFrame(game, frame);
         }
     }
 
-    private static void playSecondAttemptsInFrame(final Game game, final int frame, final String player) {
+    private static void playSecondAttemptsInFrame(final Game game, final int frame) {
         int countOfAttempts = TOTAL_COUNT_OF_ATTEMPTS;
         while (countOfAttempts > NO_COUNT_OF_ATTEMPTS_LEFT) {
             countOfAttempts -= playOneOfSecondAttemptsInFrame(game, frame);
 
             ResultView.printLabel();
-            ResultView.printScore(player, game.getGameRecords());
+            ResultView.printScore(game.getPlayer(), game.getGameRecords());
         }
     }
 
