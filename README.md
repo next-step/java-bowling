@@ -21,6 +21,7 @@
     * 출력
         * [x] 시작 전 출력
         * [x] 총 10번의 프레임 각각에 대해 2번씩 결과 출력하기
+        * [x] 요구사항에 맞게 출력
 
 ## 온라인 코드 리뷰 과정
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
