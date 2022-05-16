@@ -7,6 +7,7 @@ import bowling.exception.MaximumSumExceededException;
 public class Frame {
     public static final int BEFORE_BOWLING = -1;
     public static final int MAX_NUMBER_OF_PIN = 10;
+    public static final int ZERO = 0;
 
     private int first = BEFORE_BOWLING;
     private int second = BEFORE_BOWLING;
