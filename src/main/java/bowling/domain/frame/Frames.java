@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Frames {
 
@@ -21,11 +22,12 @@ public class Frames {
 
         Frame lastFrame = getLastFrame();
         if (lastFrame.isFull()) {
-            frames.add(lastFrame.nextFrame(pinNo));
+            frames.add(lastFrame.getNextFrame(pinNo));
             return;
         }
+
         lastFrame.addPin(pinNo);
-    }
+     }
 
     public boolean isFinished() {
         return frames.size() == MAX_FRAMES_SIZE && getLastFrame().isFull();
@@ -43,5 +45,12 @@ public class Frames {
 
     public List<Frame> getFrames() {
         return Collections.unmodifiableList(frames);
+    }
+
+    public List<Integer> getScores() {
+        return frames.stream()
+                .filter(Frame::canGetScore)
+                .map(Frame::getScore)
+                .collect(Collectors.toList());
     }
 }

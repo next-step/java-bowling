@@ -53,4 +53,18 @@ class FramesTest {
         frames.addPin(2);
         assertThat(frames.currentFrame()).isEqualTo(2);
     }
+
+    @Test
+    void getScores() {
+        Frames frames = new Frames(1);
+
+        assertThat(frames.getScores()).isEmpty();
+        frames.addPin(1); // 1frame: 1 + 1 = 2
+
+        frames.addPin(9);
+        frames.addPin(1);
+        frames.addPin(2); // 2frame: 9 + 1 + 2 = 12
+        frames.addPin(7); // 3frame: 2 + 7 = 9
+        assertThat(frames.getScores()).containsExactly(2, 12, 9);
+    }
 }
