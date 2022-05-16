@@ -11,6 +11,10 @@ public class DeleteHistories {
   public DeleteHistories() {
   }
 
+  public int size() {
+    return deleteHistories.size();
+  }
+
   public DeleteHistories add(DeleteHistory deleteHistory) {
     deleteHistories.add(deleteHistory);
     return this;
