@@ -1,10 +1,12 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import bowling.domain.exception.InvalidPitchException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FirstBowlTest {
 
@@ -20,6 +22,12 @@ class FirstBowlTest {
     @DisplayName("첫 번째 볼은 프레임을 진행하고 있는 상태이다")
     void isFrameEndFalse() {
         assertThat(firstBowl.isFrameEnd()).isFalse();
+    }
+
+    @Test
+    @DisplayName("모든 핀들을 초과할 경우 예외를 반환한다")
+    void exceedAllPins() {
+        assertThatThrownBy(() -> firstBowl.pitch(Pins.create(6))).isInstanceOf(InvalidPitchException.class);
     }
 
     @Test

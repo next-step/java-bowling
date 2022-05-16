@@ -41,9 +41,12 @@ public class Pins {
         return this.number + nextPins.number;
     }
 
+    public boolean exceedAllPins(Pins secondPins) {
+        return this.number + secondPins.number > MAX_OF_PINS;
+    }
+
     @Override
     public String toString() {
         return String.valueOf(number);
     }
-
 }

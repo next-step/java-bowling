@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import bowling.domain.exception.InvalidPitchException;
 
 public class FirstBowl implements State {
 
@@ -18,6 +19,10 @@ public class FirstBowl implements State {
 
     @Override
     public State pitch(Pins secondPins) {
+        if(firstPins.exceedAllPins(secondPins)) {
+            throw new InvalidPitchException(secondPins);
+        }
+
         if (firstPins.isSpare(secondPins)) {
             return Spare.create(firstPins);
         }
