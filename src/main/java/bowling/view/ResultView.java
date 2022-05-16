@@ -17,6 +17,7 @@ public final class ResultView {
     private static final String NEXT_LINE = "\n";
 
     private static final StringBuilder stringBuilder = new StringBuilder();
+    private static final String EXCEPTION_NOTIFICATION = "[exception]";
 
     public void printBowlingGameResult(BowlingGame bowlingGame) {
         appendHead();
@@ -73,7 +74,7 @@ public final class ResultView {
     }
 
     public void printExceptionMessage(RuntimeException runtimeException) {
-        System.out.println(runtimeException.getMessage());
+        System.out.println(EXCEPTION_NOTIFICATION + runtimeException.getMessage());
     }
 
 }
