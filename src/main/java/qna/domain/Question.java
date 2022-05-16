@@ -3,8 +3,12 @@ package qna.domain;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import qna.CannotDeleteException;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -39,24 +43,6 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
-
     public User getWriter() {
         return writer;
     }
@@ -75,21 +61,49 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
+    public Question delete(User loginUser) throws CannotDeleteException {
+        validateQuestionOwner(loginUser);
+        validateAnswersOwner(loginUser);
+
+        deleteAnswers(loginUser);
+        this.deleted = true;
         return this;
     }
 
-    public boolean isDeleted() {
-        return deleted;
+    public void deleteAnswers(User loginUser) throws CannotDeleteException {
+        validateAnswersOwner(loginUser);
+        for (Answer answer : answers) {
+            answer.delete(loginUser);
+        }
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public boolean isDeleted() {
+        return this.deleted && answers.stream().allMatch(Answer::isDeleted);
+    }
+
+    private void validateQuestionOwner(User loginUser) throws CannotDeleteException {
+        if (!this.isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
+    private void validateAnswersOwner(User loginUser) throws CannotDeleteException {
+        if (answers.stream().anyMatch(answer -> !answer.isOwner(loginUser))) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
     }
 
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    public List<DeleteHistory> createDeleteHistories() {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+        answers.forEach(answer -> deleteHistories.add(answer.createDeleteHistories()));
+
+        return deleteHistories;
     }
 }
