@@ -16,3 +16,4 @@
 - [x] modify question.getAnswers to question.checkPrivilegeOnAnswer
 - [x] modify question.getWriter to question.createDeleteHistory
 - [x] create first class collection with Answers
+- [x] create first class collection: DeleteHistories

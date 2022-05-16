@@ -94,7 +94,7 @@ public class Question extends AbstractEntity {
         answers.checkPrivilegeOnAnswer(loginUser);
     }
 
-    public List<DeleteHistory> deleteHistory(List<DeleteHistory> deleteHistories) {
+    public DeleteHistories deleteHistory(DeleteHistories deleteHistories) {
         return answers.deleteHistory(deleteHistories);
     }
 

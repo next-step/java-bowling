@@ -41,11 +41,12 @@ public class QnAService {
 
         question.checkPrivilegeOnAnswer(loginUser);
 
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        DeleteHistories deleteHistories = new DeleteHistories();
         question.setDeleted(true);
 
-        deleteHistories.add(question.createDeleteHistory(ContentType.QUESTION, questionId, LocalDateTime.now()));
+        DeleteHistory deleteHistory = question.createDeleteHistory(ContentType.QUESTION, questionId, LocalDateTime.now());
+        deleteHistories.add(deleteHistory);
         deleteHistories = question.deleteHistory(deleteHistories);
-        deleteHistoryService.saveAll(deleteHistories);
+        deleteHistories.saveAll(deleteHistoryService);
     }
 }

@@ -21,7 +21,7 @@ public class Answers {
         }
     }
 
-    public List<DeleteHistory> deleteHistory(List<DeleteHistory> deleteHistories) {
+    public DeleteHistories deleteHistory(DeleteHistories deleteHistories) {
         for (Answer answer : this.answers) {
             answer.setDeleted(true);
             deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
