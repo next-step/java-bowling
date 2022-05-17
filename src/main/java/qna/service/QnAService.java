@@ -41,6 +41,6 @@ public class QnAService {
         deleteHistories.add(question.delete());
         deleteHistories.addAll(new Answers(question.exitsAnswerUser(loginUser)).delete());
 
-        deleteHistoryService.saveAll(deleteHistories.getDeleteHistories());
+        deleteHistoryService.saveAll(deleteHistories);
     }
 }
