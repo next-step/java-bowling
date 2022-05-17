@@ -1,6 +1,6 @@
 package bowling.model;
 
-import org.springframework.util.Assert;
+import bowling.utility.Assert;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,7 +50,7 @@ public final class Bowlings {
 
     private void validateFinished() {
         if (isFinished()) {
-            throw new IllegalStateException("bowlings(%s) is already finished");
+            throw new IllegalStateException(String.format("bowlings(%s) is already finished", this));
         }
     }
 

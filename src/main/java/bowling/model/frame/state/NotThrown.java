@@ -3,9 +3,6 @@ package bowling.model.frame.state;
 import bowling.model.Pins;
 import bowling.model.frame.BallState;
 
-import java.util.Collections;
-import java.util.List;
-
 public enum NotThrown implements BallState {
 
     INSTANCE;
