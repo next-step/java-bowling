@@ -18,6 +18,7 @@ public class DeleteHistoryService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void saveAll(DeleteHistories deleteHistories) {
         deleteHistories.saveAll(deleteHistoryRepository);
+//        deleteHistoryRepository.saveAll(deleteHistories.deleteHistories); // 'deleteHistories' has private access in 'qna.domain.DeleteHistories'
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)

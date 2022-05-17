@@ -27,15 +27,13 @@ public class AnswersTest {
 
     @Test
     void deleteHistory() {
-        Answer actualAnswer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1", false);
-        Answer expectedAnswer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1", true);
+        Answer actualAnswer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+//        Answer expectedAnswer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1", true);
         Answers answers = new Answers(Arrays.asList(actualAnswer));
         DeleteHistories actualDeleteHistories = new DeleteHistories();
-        DeleteHistories expectedDeleteHistories = new DeleteHistories(
-                Arrays.asList(
-                new DeleteHistory(ContentType.ANSWER, actualAnswer.getId(), actualAnswer.getWriter(), LocalDateTime.now())));
+        DeleteHistories expectedDeleteHistories = new DeleteHistories(Arrays.asList(new DeleteHistory(ContentType.ANSWER, actualAnswer.getId(), actualAnswer.getWriter(), LocalDateTime.now())));
         answers.deleteHistory(actualDeleteHistories);
-        assertThat(actualAnswer).isEqualTo(expectedAnswer);
+        assertThat(actualAnswer.isDeleted()).isTrue();
         assertThat(actualDeleteHistories).isEqualTo(expectedDeleteHistories);
     }
 }

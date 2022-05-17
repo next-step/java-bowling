@@ -11,7 +11,7 @@ public class DeleteHistoriesTest {
     @Test
     void add() {
         DeleteHistories actualDeleteHistories = new DeleteHistories();
-        Answer actualAnswer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1", false);
+        Answer actualAnswer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
         DeleteHistory deleteHistory = new DeleteHistory(ContentType.ANSWER, actualAnswer.getId(), actualAnswer.getWriter(), LocalDateTime.now());
         DeleteHistories expectedDeleteHistories = new DeleteHistories(Arrays.asList(deleteHistory));
         actualDeleteHistories.add(deleteHistory);

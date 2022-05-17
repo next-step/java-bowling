@@ -23,11 +23,6 @@ public class Answer extends AbstractEntity {
     public Answer() {
     }
 
-    public Answer(User writer, Question question, String contents, boolean deleted) {
-        this(null, writer, question, contents);
-        this.deleted = deleted;
-    }
-
     public Answer(User writer, Question question, String contents) {
         this(null, writer, question, contents);
     }
