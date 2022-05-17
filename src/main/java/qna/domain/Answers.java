@@ -8,6 +8,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 @Embeddable
 public class Answers {
@@ -21,6 +22,12 @@ public class Answers {
         return answers;
     }
 
+    public Answers() {}
+
+    public Answers(List<Answer> answers) {
+        this.answers = answers;
+    }
+
     public void add(Answer answer) {
         answers.add(answer);
     }
@@ -30,7 +37,11 @@ public class Answers {
             .anyMatch(answer -> !answer.isOwner(writer));
     }
 
-    public List<DeleteHistory> deleteAll() {
+    public List<DeleteHistory> deleteAllByUser(final User user) throws CannotDeleteException {
+        if (hasDifferentOwner(user)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+
         answers.forEach(Answer::delete);
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
@@ -39,5 +50,9 @@ public class Answers {
         }
 
         return deleteHistories;
+    }
+
+    public int size() {
+        return answers.size();
     }
 }

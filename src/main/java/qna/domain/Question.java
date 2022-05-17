@@ -3,6 +3,7 @@ package qna.domain;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -99,29 +100,19 @@ public class Question extends AbstractEntity {
 
     public List<DeleteHistory> delete(User user) throws CannotDeleteException {
         checkQuestionOwnerOrThrow(user);
-        checkAnswersHasDifferentOwnerOrThrow();
 
-        return delete();
-    }
-
-    protected List<DeleteHistory> delete() {
         this.deleted = true;
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(DeleteHistory.of(ContentType.QUESTION, this.getId(), this.getWriter(), LocalDateTime.now()));
-        deleteHistories.addAll(answers.deleteAll());
+        deleteHistories.addAll(answers.deleteAllByUser(user));
+
         return deleteHistories;
     }
 
     private void checkQuestionOwnerOrThrow(User user) throws CannotDeleteException {
-        if (!writer.equals(user)) {
+        if (!Objects.isNull(writer) && !isOwner(user)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
-    }
-
-    private void checkAnswersHasDifferentOwnerOrThrow() throws CannotDeleteException {
-        if (answers.hasDifferentOwner(this.writer)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
     }
 
