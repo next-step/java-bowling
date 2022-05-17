@@ -54,7 +54,7 @@ public class Question extends AbstractEntity {
 
     public List<Answer> exitsAnswerUser(User loginUser) {
         for (Answer answer : answers) {
-            answer.isOwner(loginUser);
+            answer.validateConfirmWriter(loginUser);
         }
         return answers;
     }
