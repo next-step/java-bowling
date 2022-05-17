@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.frameresult.FrameResult;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +23,7 @@ public class Frames {
         }
 
         Frame lastFrame = getLastFrame();
-        if (lastFrame.isFull()) {
+        if (lastFrame.canGetResult()) {
             frames.add(lastFrame.getNextFrame(pinNo));
             return;
         }
@@ -30,7 +32,7 @@ public class Frames {
      }
 
     public boolean isFinished() {
-        return frames.size() == MAX_FRAMES_SIZE && getLastFrame().isFull();
+        return frames.size() == MAX_FRAMES_SIZE && getLastFrame().canGetResult();
     }
 
     private Frame getLastFrame() {
@@ -38,7 +40,7 @@ public class Frames {
     }
 
     public int currentFrame() {
-        return getLastFrame().isFull()
+        return getLastFrame().canGetResult()
                 ? frames.size() + 1
                 : frames.size();
     }
@@ -49,8 +51,10 @@ public class Frames {
 
     public List<Integer> getScores() {
         return frames.stream()
-                .filter(Frame::canGetScore)
-                .map(Frame::getScore)
+                .filter(Frame::canGetResult)
+                .map(Frame::getResult)
+                .filter(FrameResult::isCalculated)
+                .map(FrameResult::calculateScore)
                 .collect(Collectors.toList());
     }
 }
