@@ -1,5 +1,9 @@
 package bowling.domain.frame;
 
+import bowling.domain.frameresult.FrameResult;
+import bowling.domain.frameresult.Miss;
+import bowling.domain.frameresult.Spare;
+import bowling.domain.frameresult.Strike;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -15,7 +19,7 @@ class FinalFrameTest {
         Frame finalFrame = new FinalFrame(firstNo);
         finalFrame.addPin(secondNo);
 
-        assertThat(finalFrame.isFull()).isFalse();
+        assertThat(finalFrame.canGetResult()).isFalse();
     }
 
     @ParameterizedTest(name = "스트라이크/스페어 일 때 추가 투구하면 isFull true")
@@ -25,7 +29,7 @@ class FinalFrameTest {
         finalFrame.addPin(secondNo);
         finalFrame.addPin(extraNo);
 
-        assertThat(finalFrame.isFull()).isTrue();
+        assertThat(finalFrame.canGetResult()).isTrue();
     }
 
     @ParameterizedTest(name = "미스면 isFull true")
@@ -34,7 +38,7 @@ class FinalFrameTest {
         Frame finalFrame = new FinalFrame(firstNo);
         finalFrame.addPin(secondNo);
 
-        assertThat(finalFrame.isFull()).isTrue();
+        assertThat(finalFrame.canGetResult()).isTrue();
     }
 
     @ParameterizedTest(name = "첫 번째 투구가 스트라이크가 아니면 두 투구의 합은 10이하")
@@ -45,28 +49,45 @@ class FinalFrameTest {
     }
 
     @Test
-    void getScore_Miss() {
+    void getResult_Miss() {
         FinalFrame finalFrame = new FinalFrame(5);
         finalFrame.addPin(4);
 
-        assertThat(finalFrame.getScore()).isEqualTo(9);
+        FrameResult result = finalFrame.getResult();
+
+        assertThat(result).isInstanceOf(Miss.class);
+        assertThat(result.calculateScore()).isEqualTo(9);
     }
 
     @Test
-    void getScore_Spare() {
+    void getResult_Spare() {
         FinalFrame finalFrame = new FinalFrame(5);
         finalFrame.addPin(5);
         finalFrame.addPin(5);
 
-        assertThat(finalFrame.getScore()).isEqualTo(15);
+        FrameResult result = finalFrame.getResult();
+        assertThat(result).isInstanceOf(Spare.class);
+        assertThat(result.calculateScore()).isEqualTo(15);
     }
 
     @Test
-    void getScore_Strike() {
+    void getResult_Strike() {
         FinalFrame finalFrame = new FinalFrame(10);
         finalFrame.addPin(5);
         finalFrame.addPin(5);
 
-        assertThat(finalFrame.getScore()).isEqualTo(20);
+        FrameResult result = finalFrame.getResult();
+
+        assertThat(result).isInstanceOf(Strike.class);
+        assertThat(result.calculateScore()).isEqualTo(20);
+    }
+
+    @Test
+    void strikeBonusForPreviousFrame() {
+        FinalFrame finalFrame = new FinalFrame(10);
+
+        assertThat(finalFrame.strikeBonusForPreviousFrame()).isEmpty();
+        finalFrame.addPin(10);
+        assertThat(finalFrame.strikeBonusForPreviousFrame()).hasValue(20);
     }
 }

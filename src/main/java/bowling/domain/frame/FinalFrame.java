@@ -1,9 +1,11 @@
 package bowling.domain.frame;
 
 import bowling.domain.frameresult.FrameResult;
-import bowling.domain.frameresult.Miss;
 import bowling.domain.frameresult.Spare;
+import bowling.domain.frameresult.Strike;
 import bowling.domain.pin.FinalPinNumbers;
+
+import java.util.Optional;
 
 public class FinalFrame implements Frame {
 
@@ -14,7 +16,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public boolean isFull() {
+    public boolean canGetResult() {
         return pinNumbers.isFull();
     }
 
@@ -34,20 +36,15 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public boolean canGetScore() {
-        return isFull();
-    }
-
-    @Override
-    public int getScore() {
+    public FrameResult getResult() {
         FrameResult result = pinNumbers.getResult();
-        if (result instanceof Miss) {
-            return result.getScoreWithBonus(0);
-        }
         if (result instanceof Spare) {
-            return result.getScoreWithBonus(pinNumbers.getOwnSpareBonus());
+            result.addBonus(pinNumbers.getOwnSpareBonus());
         }
-        return result.getScoreWithBonus(pinNumbers.getOwnStrikeBonus());
+        if (result instanceof Strike) {
+            result.addBonus(pinNumbers.getOwnStrikeBonus());
+        }
+        return result;
     }
 
     @Override
@@ -56,7 +53,10 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public int strikeBonusForPreviousFrame() {
-        return pinNumbers.strikeBonus();
+    public Optional<Integer> strikeBonusForPreviousFrame() {
+        if (pinNumbers.size() < FinalPinNumbers.MIN_SIZE) {
+            return Optional.empty();
+        }
+        return Optional.of(pinNumbers.strikeBonus());
     }
 }
