@@ -5,7 +5,6 @@ import bowling.utility.Assert;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -47,17 +46,11 @@ public final class Frames {
 
     public List<Integer> accumulatedScores() {
         List<Integer> scores = new ArrayList<>();
-        Iterator<Frame> iterator = this.frames.iterator();
-        Frame frame;
         int score = START_SCORE_VALUE;
-        do {
-            frame = iterator.next();
-            if (frame.hasRemainCount()) {
-                break;
-            }
+        for (Frame frame : framesWithNoRemainCount()) {
             score += frame.sumPinsCount();
             scores.add(score);
-        } while (iterator.hasNext());
+        }
         return scores;
     }
 
@@ -67,6 +60,12 @@ public final class Frames {
 
     public boolean nextNumberGreaterThan(Frames frames) {
         return nextFrameNumber().isGreaterThan(frames.nextFrameNumber());
+    }
+
+    private List<Frame> framesWithNoRemainCount() {
+        return this.frames.stream()
+                .filter(frame -> !frame.hasRemainCount())
+                .collect(Collectors.toList());
     }
 
     private LinkedList<Frame> addedBonusPinsFrames(Pins pins) {
