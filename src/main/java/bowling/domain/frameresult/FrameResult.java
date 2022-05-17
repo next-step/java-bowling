@@ -2,5 +2,9 @@ package bowling.domain.frameresult;
 
 public interface FrameResult {
 
-    int getScoreWithBonus(int bonus);
+    int calculateScore();
+
+    boolean isCalculated();
+
+    void addBonus(int bonus);
 }
