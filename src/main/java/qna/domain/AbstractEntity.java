@@ -6,6 +6,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
@@ -54,9 +55,7 @@ public abstract class AbstractEntity {
         if (getClass() != obj.getClass())
             return false;
         AbstractEntity other = (AbstractEntity) obj;
-        if (id != other.id)
-            return false;
-        return true;
+        return Objects.equals(id, other.id);
     }
 
     @Override
