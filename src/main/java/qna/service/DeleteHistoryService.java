@@ -5,10 +5,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import qna.domain.DeleteHistories;
 import qna.domain.DeleteHistory;
-import qna.domain.DeleteHistoryRepository;
+import qna.repository.DeleteHistoryRepository;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @Service("deleteHistoryService")
 public class DeleteHistoryService {
