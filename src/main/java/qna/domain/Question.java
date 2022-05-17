@@ -5,7 +5,6 @@ import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -76,11 +75,6 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
     }
@@ -91,14 +85,26 @@ public class Question extends AbstractEntity {
     }
 
     public void checkPrivilegeOnAnswer(User loginUser) throws CannotDeleteException {
+        if (!this.isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
         answers.checkPrivilegeOnAnswer(loginUser);
-    }
-
-    public DeleteHistories deleteHistory(DeleteHistories deleteHistories) {
-        return answers.deleteHistory(deleteHistories);
     }
 
     public DeleteHistory createDeleteHistory(long questionId) {
         return new DeleteHistory(ContentType.QUESTION, questionId, this.getWriter(), LocalDateTime.now());
+    }
+
+    public DeleteHistories deleteQuestion(User loginUser) throws CannotDeleteException {
+        this.checkPrivilegeOnAnswer(loginUser);
+        this.deleted = true;
+        return addDeleteHistories();
+    }
+
+    private DeleteHistories addDeleteHistories() {
+        DeleteHistories deleteHistories = new DeleteHistories();
+        DeleteHistory deleteHistory = this.createDeleteHistory(this.getId());
+        deleteHistories.add(deleteHistory);
+        return this.answers.deleteHistory(deleteHistories);
     }
 }
