@@ -1,52 +1,45 @@
 package bowling.frame;
 
-import bowling.status.Miss;
 import bowling.status.Ready;
 import bowling.status.Status;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LastFrame implements Frame {
 
     private static final int ZERO_SCORE = 0;
+    private static final int FIRST_SHOOT_COUNT = 1;
+    private static final int SECOND_SHOOT_COUNT = 2;
+    private static final int THIRD_SHOOT_COUNT = 3;
 
-    private Status status;
-    private ShootScore thirdShoot;
+    private int shootCount = 0;
 
-    private LastFrame() {
-        status = Ready.create();
-        thirdShoot = ShootScore.from(ZERO_SCORE);
-    }
+    List<ShootScore> shootScores = new ArrayList<>();
+
+    private LastFrame() { }
 
     public static LastFrame create() {
         return new LastFrame();
     }
 
-    public void bonusShoot(ShootScore shootScore) {
-        thirdShoot = shootScore;
-    }
-
-    public ShootScore getThirdShoot() {
-        return thirdShoot;
-    }
-
     @Override
     public void shoot(ShootScore shootScore) {
+        shootCount++;
         if (isEnd()) {
-            throw new IllegalArgumentException("종료된 프레임에서는 더 투구할 수 없습니다.");
+            shootScores.add(ShootScore.from(ZERO_SCORE));
+            return;
         }
-        status = status.shoot(shootScore);
+        shootScores.add(shootScore);
     }
 
     @Override
     public boolean isEnd() {
-        return notBonusStatus();
-    }
-
-    private boolean notBonusStatus() {
-        return status instanceof Miss;
+        return shootCount == THIRD_SHOOT_COUNT;
     }
 
     @Override
     public Status findMyStatus() {
-        return status;
+        return Ready.create();
     }
 }

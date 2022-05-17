@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Frames {
 
-    private static final int FIRST_ROUND = 1;
-    private static final int LAST_ROUND = 10;
+    private static final int FIRST_ROUND = 0;
+    private static final int LAST_ROUND = 9;
 
     private final List<Frame> frames = new ArrayList<>();
 
@@ -14,7 +14,7 @@ public class Frames {
         for (int round = FIRST_ROUND; round < LAST_ROUND; round++) {
             frames.add(NormalFrame.create());
         }
-        frames.add(NormalFrame.create());
+        frames.add(LastFrame.create());
     }
 
     public static Frames create() {

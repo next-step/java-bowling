@@ -1,17 +1,14 @@
 package bowling;
 
 import bowling.domain.PlayerName;
-import bowling.frame.Frames;
-import bowling.frame.Round;
-import bowling.frame.ShootScore;
+import bowling.frame.*;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
 public class BowlingApplication {
 
     private static final int MIN_ROUND = 0;
-    private static final int MAX_ROUND = 10;
-    private static final int PREVIOUS = -1;
+    private static final int MAX_ROUND = 9;
 
     public static void main(String[] args) {
         InputView inputView = new InputView();
@@ -28,10 +25,11 @@ public class BowlingApplication {
 
     private static void startBowlingGame(PlayerName playerName, Frames frames, InputView inputView, ResultView resultView) {
         oneToNineFrame(playerName, frames, inputView, resultView);
+        lastFrame(playerName, frames, inputView, resultView);
     }
 
     private static void oneToNineFrame(PlayerName playerName, Frames frames, InputView inputView, ResultView resultView) {
-        for (int round = MIN_ROUND; round < MAX_ROUND + PREVIOUS; round++) {
+        for (int round = MIN_ROUND; round < MAX_ROUND; round++) {
             Round currentRound = Round.from(round);
 
             int firstShoot = inputView.inputShootScore(currentRound);
@@ -44,6 +42,25 @@ public class BowlingApplication {
 
             int secondShoot = inputView.inputShootScore(currentRound);
             frames.shoot(currentRound, ShootScore.from(secondShoot));
+            resultView.printFrameBoard(playerName, frames);
+        }
+    }
+
+    private static void lastFrame(PlayerName playerName, Frames frames, InputView inputView, ResultView resultView) {
+        Round lastRound = Round.from(MAX_ROUND);
+        LastFrame lastFrame = (LastFrame) frames.findFrameByRound(lastRound);
+
+        int firstShoot = inputView.inputShootScore(lastRound);
+        lastFrame.shoot(ShootScore.from(firstShoot));
+        resultView.printFrameBoard(playerName, frames);
+
+        int secondShoot = inputView.inputShootScore(lastRound);
+        lastFrame.shoot(ShootScore.from(secondShoot));
+        resultView.printFrameBoard(playerName, frames);
+
+        if (!lastFrame.isEnd()) {
+            int bonusShoot = inputView.inputShootScore(lastRound);
+//            lastFrame.bonusShoot(ShootScore.from(bonusShoot));
             resultView.printFrameBoard(playerName, frames);
         }
     }

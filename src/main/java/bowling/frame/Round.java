@@ -5,7 +5,7 @@ import java.util.List;
 public class Round {
 
     private static final int MIN_ROUND = 0;
-    private static final int MAX_ROUND = 9;
+    private static final int MAX_ROUND = 10;
 
     private final int round;
 
