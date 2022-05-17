@@ -1,7 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
-import bowling.domain.exception.InvalidPitchException;
+import bowling.exception.InvalidPitchException;
 
 public class FirstBowl implements State {
 

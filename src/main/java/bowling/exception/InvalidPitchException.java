@@ -1,4 +1,4 @@
-package bowling.domain.exception;
+package bowling.exception;
 
 import bowling.domain.Pins;
 

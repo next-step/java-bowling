@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.exception.InvalidFramesException;
+import bowling.exception.InvalidFramesException;
 import bowling.exception.OutOfIndexException;
 import bowling.domain.Pins;
 
