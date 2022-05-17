@@ -83,7 +83,7 @@ class LastFrameTest {
 
     public static Stream<Arguments> strikeProvider() {
         return Stream.of(
-                arguments(10, 5, 9, "X|5|9"),
+                arguments(10, 5, 4, "X|5|4"),
                 arguments(10, 10, 10, "X|X|X"),
                 arguments(10, 0, 10, "X|-|/")
         );
