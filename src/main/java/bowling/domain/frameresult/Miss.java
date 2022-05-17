@@ -11,7 +11,17 @@ public class Miss implements FrameResult {
     }
 
     @Override
-    public int getScoreWithBonus(int bonus) {
+    public int calculateScore() {
         return firstNo + secondNo;
+    }
+
+    @Override
+    public boolean isCalculated() {
+        return true;
+    }
+
+    @Override
+    public void addBonus(int bonus) {
+        throw new IllegalStateException();
     }
 }

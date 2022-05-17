@@ -7,7 +7,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 class StrikeTest {
 
     @Test
-    void getScoreWithBonus() {
-        assertThat(new Strike().getScoreWithBonus(9)).isEqualTo(19);
+    void strikeTest() {
+        Strike strike = new Strike();
+
+        assertThat(strike.isCalculated()).isFalse();
+        strike.addBonus(5);
+        assertThat(strike.isCalculated()).isTrue();
+        assertThat(strike.calculateScore()).isEqualTo(15);
     }
 }
