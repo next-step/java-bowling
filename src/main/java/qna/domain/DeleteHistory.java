@@ -31,6 +31,16 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
+    public DeleteHistory(ContentType contentType, Long contentId, User deletedBy) {
+        this.contentType = contentType;
+        this.contentId = contentId;
+        this.deletedBy = deletedBy;
+    }
+
+    public static DeleteHistory of(PostEntity entity) {
+        return new DeleteHistory(entity.getContentType(), entity.getId(), entity.getWriter());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
