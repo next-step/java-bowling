@@ -31,6 +31,7 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
+
     public Long getId() {
         return id;
     }
