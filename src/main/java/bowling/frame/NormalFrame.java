@@ -27,4 +27,9 @@ public class NormalFrame implements Frame {
     public boolean isEnd() {
         return status.isEnd();
     }
+
+    @Override
+    public Status findMyStatus() {
+        return status;
+    }
 }

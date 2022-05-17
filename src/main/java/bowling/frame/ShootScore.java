@@ -32,6 +32,14 @@ public class ShootScore {
         return this.shootScore + secondShoot.shootScore == STRIKE;
     }
 
+    public boolean isGutter() {
+        return this.shootScore == GUTTER;
+    }
+
+    public int getShootScore() {
+        return shootScore;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -19,6 +19,10 @@ public class Spare implements Status {
         return new Spare(firstShoot);
     }
 
+    public ShootScore findFirstShoot() {
+        return firstShoot;
+    }
+
     @Override
     public Status shoot(ShootScore shootScore) {
         throw new IllegalArgumentException("마지막 프레임을 제외한 일반 프레임에서 스페어는 더 투구하지 않습니다");

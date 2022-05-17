@@ -25,6 +25,14 @@ public class Miss implements Status {
         return new Miss(firstShoot, secondShoot);
     }
 
+    public ShootScore findFirstShoot() {
+        return firstShoot;
+    }
+
+    public ShootScore findSecondShoot(){
+        return secondShoot;
+    }
+
     @Override
     public Status shoot(ShootScore shootScore) {
         throw new IllegalArgumentException("2번의 투구를 모두 하셨습니다");

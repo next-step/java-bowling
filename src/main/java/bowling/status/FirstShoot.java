@@ -19,6 +19,10 @@ public class FirstShoot implements Status {
         return new FirstShoot(firstShoot);
     }
 
+    public ShootScore findFirstShoot() {
+        return firstShoot;
+    }
+
     @Override
     public Status shoot(ShootScore secondShoot) {
         if (firstShoot.isSpare(secondShoot)) {
