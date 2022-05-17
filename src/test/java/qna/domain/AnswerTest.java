@@ -6,6 +6,7 @@ import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class AnswerTest {
@@ -36,5 +37,13 @@ public class AnswerTest {
             answer.validateConfirmWriter(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
+
+    @Test
+    @DisplayName("답변을 제거합니다.")
+    void delete() {
+        A1.delete();
+        assertThat(A1.isDeleted()).isTrue();
+    }
+
 
 }
