@@ -1,8 +1,12 @@
 package bowling.domain.frame;
 
+import bowling.domain.frameresult.FrameResult;
+
+import java.util.Optional;
+
 public interface Frame {
 
-    boolean isFull();
+    boolean canGetResult();
 
     void addPin(int pinNo);
 
@@ -10,11 +14,9 @@ public interface Frame {
 
     String toExpression();
 
-    boolean canGetScore();
-
-    int getScore();
+    FrameResult getResult();
 
     int spareBonusForPreviousFrame();
 
-    int strikeBonusForPreviousFrame();
+    Optional<Integer> strikeBonusForPreviousFrame();
 }
