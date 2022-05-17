@@ -28,5 +28,5 @@
 - [ ] DeleteHistories.saveAll 제거
   - [ ] DeleteHistoryService.saveAll 에서 바로 save
 - [x] Answer 의 별도 생성자 제거, 다른방법 테스트?
-- [ ] Question.createDeleteHistory 불필요 파라미터 question, new 제거
+- [x] Question.createDeleteHistory 불필요 파라미터 question, new 제거
 - [ ] QnAService.deleteQuestion 을 Question 클래스로 이동

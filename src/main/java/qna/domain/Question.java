@@ -98,7 +98,7 @@ public class Question extends AbstractEntity {
         return answers.deleteHistory(deleteHistories);
     }
 
-    public DeleteHistory createDeleteHistory(ContentType question, long questionId, LocalDateTime now) {
+    public DeleteHistory createDeleteHistory(long questionId) {
         return new DeleteHistory(ContentType.QUESTION, questionId, this.getWriter(), LocalDateTime.now());
     }
 }
