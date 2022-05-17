@@ -49,7 +49,7 @@ public class Answer extends AbstractEntity {
         return deleted;
     }
 
-    public void validateConfirmWriter(User writer) {
+    void validateConfirmWriter(User writer) {
         if (!this.writer.equals(writer)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
