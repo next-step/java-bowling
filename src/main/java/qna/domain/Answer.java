@@ -55,9 +55,6 @@ public class Answer extends AbstractEntity {
         }
     }
 
-    public void delete() {
-        this.deleted = true;
-    }
 
     public User getWriter() {
         return writer;

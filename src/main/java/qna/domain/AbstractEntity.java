@@ -22,6 +22,8 @@ public abstract class AbstractEntity {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
+    protected boolean deleted;
+
     public AbstractEntity() {
     }
 
@@ -30,11 +32,10 @@ public abstract class AbstractEntity {
     }
 
 
-    public AbstractEntity setId(Long id) {
-        this.id = id;
-        return this;
-    }
 
+    public void delete() {
+        this.deleted = true;
+    }
     @Override
     public int hashCode() {
         final int prime = 31;
