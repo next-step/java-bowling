@@ -15,7 +15,7 @@ public final class Answers {
         DeleteHistories deleteHistories = new DeleteHistories();
         for (Answer answer : answers) {
             answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.id, answer.getWriter(), LocalDateTime.now()));
         }
         return deleteHistories;
     }
