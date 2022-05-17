@@ -49,7 +49,7 @@ public class Question extends AbstractEntity {
 
     private DeleteHistory deleteQuestionSoftly(User loginUser) throws CannotDeleteException {
         if (writer.isOtherUser(loginUser)) {
-            throw new CannotDeleteException("질문을 작성한 사용자에 한해서 질문을 삭제할 수 있습니다.");
+            throw new CannotDeleteException("질문을 작성한 사용자에 한해서 질문을 삭제할 수 있습니다.", loginUser);
         }
         this.deleted = true;
         return DeleteHistory.createDeleteHistoryForQuestion(this);
