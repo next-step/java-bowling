@@ -32,13 +32,19 @@ public final class ResultView {
     }
 
     public void print(List<BowlingResponse> bowlings) {
-        printer.print(COLUMN_HEADER);
-        bowlings.forEach(this::printResult);
+        StringBuilder builder = new StringBuilder();
+        builder.append(COLUMN_HEADER);
+        builder.append(bowlings.stream()
+                .map(this::bowlingMessage)
+                .collect(Collectors.joining()));
+        printer.println(builder);
     }
 
-    private void printResult(BowlingResponse bowling) {
-        printer.printf(ROW_FORMAT, bowling.getName(), framesMessage(bowling.getFrames().getMarks()));
-        printer.printf(ROW_FORMAT, "", framesMessage(bowling.getFrames().getScores()));
+    private String bowlingMessage(BowlingResponse bowling) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(String.format(ROW_FORMAT, bowling.getName(), framesMessage(bowling.getFrames().getMarks())));
+        builder.append(String.format(ROW_FORMAT, "", framesMessage(bowling.getFrames().getScores())));
+        return builder.toString();
     }
 
     private String framesMessage(List<?> messages) {
