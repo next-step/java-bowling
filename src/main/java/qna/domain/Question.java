@@ -1,10 +1,10 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -21,7 +21,7 @@ public class Question extends AbstractEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -75,21 +75,36 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
     }
 
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    public void checkPrivilegeOnAnswer(User loginUser) throws CannotDeleteException {
+        if (!this.isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+        answers.checkPrivilegeOnAnswer(loginUser);
+    }
+
+    public DeleteHistory createDeleteHistory(long questionId) {
+        return new DeleteHistory(ContentType.QUESTION, questionId, this.getWriter(), LocalDateTime.now());
+    }
+
+    public DeleteHistories deleteQuestion(User loginUser) throws CannotDeleteException {
+        this.checkPrivilegeOnAnswer(loginUser);
+        this.deleted = true;
+        return addDeleteHistories();
+    }
+
+    private DeleteHistories addDeleteHistories() {
+        DeleteHistories deleteHistories = new DeleteHistories();
+        DeleteHistory deleteHistory = this.createDeleteHistory(this.getId());
+        deleteHistories.add(deleteHistory);
+        return this.answers.deleteHistory(deleteHistories);
     }
 }
