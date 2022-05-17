@@ -41,9 +41,6 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public User getWriter() {
-        return writer;
-    }
 
     public Question writeBy(User loginUser) {
         this.writer = loginUser;
