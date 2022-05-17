@@ -44,7 +44,7 @@ class NormalPinNumbersTest {
                 .isInstanceOf(IllegalStateException.class);
     }
 
-    @ParameterizedTest()
+    @ParameterizedTest
     @MethodSource("provideArgumentsForGetResult")
     void getResult(int firstNo, int secondNo, Class<? extends FrameResult> result) {
         NormalPinNumbers pinNumbers = new NormalPinNumbers(firstNo);
@@ -64,16 +64,8 @@ class NormalPinNumbersTest {
     }
 
     @Test
-    void strikeBonus_WhenFirstNoIsMax_Returns20() {
-        NormalPinNumbers pinNumbers = new NormalPinNumbers(10);
-
-        assertThat(pinNumbers.strikeBonus()).isEqualTo(20);
-    }
-
-    @Test
-    void strikeBonus_WhenFirstNoIsNotMax_AddsTwoNumbers() {
+    void strikeBonus() {
         NormalPinNumbers pinNumbers = new NormalPinNumbers(5);
-
         pinNumbers.addPin(4);
 
         assertThat(pinNumbers.strikeBonus()).isEqualTo(9);

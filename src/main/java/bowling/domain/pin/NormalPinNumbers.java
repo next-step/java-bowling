@@ -3,8 +3,6 @@ package bowling.domain.pin;
 import bowling.domain.frameresult.FrameResult;
 import bowling.domain.util.PinNoPrinter;
 
-import static bowling.domain.pin.PinNo.MAX_PIN_NO;
-
 public class NormalPinNumbers implements PinNumbers {
 
     private final PinNo firstNo;
@@ -47,9 +45,6 @@ public class NormalPinNumbers implements PinNumbers {
 
     @Override
     public int strikeBonus() {
-        if (firstNo.isMaxNo()) {
-            return MAX_PIN_NO * 2;
-        }
-        return spareBonus() + secondNo.getNo();
+        return firstNo.getNo() + secondNo.getNo();
     }
 }

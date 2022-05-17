@@ -10,7 +10,7 @@ import java.util.List;
 public class FinalPinNumbers implements PinNumbers {
 
     private static final int INIT_SIZE = 1;
-    private static final int MIN_SIZE = 2;
+    public static final int MIN_SIZE = 2;
     private static final int EXTRA_SIZE = 3;
 
     private final List<PinNo> pinNos = new ArrayList<>();
@@ -47,7 +47,7 @@ public class FinalPinNumbers implements PinNumbers {
         }
     }
 
-    private int size() {
+    public int size() {
         return pinNos.size();
     }
 
@@ -84,4 +84,5 @@ public class FinalPinNumbers implements PinNumbers {
     private int getNo(int index) {
         return pinNos.get(index).getNo();
     }
+
 }
