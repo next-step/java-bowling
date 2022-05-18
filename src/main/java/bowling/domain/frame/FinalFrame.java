@@ -1,8 +1,8 @@
 package bowling.domain.frame;
 
+import bowling.domain.frameresult.Bonus;
 import bowling.domain.frameresult.FrameResult;
-import bowling.domain.frameresult.Spare;
-import bowling.domain.frameresult.Strike;
+import bowling.domain.frameresult.Miss;
 import bowling.domain.pin.FinalPinNumbers;
 
 import java.util.Optional;
@@ -16,11 +16,6 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public boolean canGetResult() {
-        return pinNumbers.isFull();
-    }
-
-    @Override
     public void addPin(int pinNo) {
         pinNumbers.addPin(pinNo);
     }
@@ -31,20 +26,23 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public String toExpression() {
-        return pinNumbers.toExpression();
+    public boolean canGetResult() {
+        return pinNumbers.isFull();
     }
 
     @Override
-    public FrameResult getResult() {
+    public Optional<Integer> getResult() {
         FrameResult result = pinNumbers.getResult();
-        if (result instanceof Spare) {
-            result.addBonus(pinNumbers.getOwnSpareBonus());
+        Bonus bonus = new Bonus();
+        if (!isMiss()) {
+            bonus.setSpareBonus(pinNumbers.getOwnSpareBonus());
+            bonus.setStrikeBonus(pinNumbers.getOwnStrikeBonus());
         }
-        if (result instanceof Strike) {
-            result.addBonus(pinNumbers.getOwnStrikeBonus());
-        }
-        return result;
+        return result.calculateScore(bonus);
+    }
+
+    private boolean isMiss() {
+        return pinNumbers.getResult() instanceof Miss;
     }
 
     @Override
@@ -58,5 +56,10 @@ public class FinalFrame implements Frame {
             return Optional.empty();
         }
         return Optional.of(pinNumbers.strikeBonus());
+    }
+
+    @Override
+    public String toExpression() {
+        return pinNumbers.toExpression();
     }
 }
