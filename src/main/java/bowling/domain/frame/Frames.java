@@ -1,10 +1,9 @@
 package bowling.domain.frame;
 
-import bowling.domain.frameresult.FrameResult;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Frames {
@@ -53,8 +52,9 @@ public class Frames {
         return frames.stream()
                 .filter(Frame::canGetResult)
                 .map(Frame::getResult)
-                .filter(FrameResult::isCalculated)
-                .map(FrameResult::calculateScore)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .collect(Collectors.toList());
     }
+
 }
