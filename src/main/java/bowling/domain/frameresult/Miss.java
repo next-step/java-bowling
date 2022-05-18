@@ -1,5 +1,7 @@
 package bowling.domain.frameresult;
 
+import java.util.Optional;
+
 public class Miss implements FrameResult {
 
     private final int firstNo;
@@ -11,17 +13,7 @@ public class Miss implements FrameResult {
     }
 
     @Override
-    public int calculateScore() {
-        return firstNo + secondNo;
-    }
-
-    @Override
-    public boolean isCalculated() {
-        return true;
-    }
-
-    @Override
-    public void addBonus(int bonus) {
-        throw new IllegalStateException();
+    public Optional<Integer> calculateScore(Bonus bonus) {
+        return Optional.of(firstNo + secondNo);
     }
 }

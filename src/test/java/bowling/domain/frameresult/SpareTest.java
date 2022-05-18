@@ -7,12 +7,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SpareTest {
 
     @Test
-    void spareTest() {
+    void calculateScore() {
         Spare spare = new Spare();
+        Bonus bonus = new Bonus();
 
-        assertThat(spare.isCalculated()).isFalse();
-        spare.addBonus(5);
-        assertThat(spare.isCalculated()).isTrue();
-        assertThat(spare.calculateScore()).isEqualTo(15);
+        assertThat(spare.calculateScore(bonus)).isEmpty();
+        bonus.setSpareBonus(7);
+        assertThat(spare.calculateScore(bonus)).contains(17);
     }
 }

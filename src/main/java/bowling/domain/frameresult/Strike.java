@@ -1,26 +1,16 @@
 package bowling.domain.frameresult;
 
+import java.util.Optional;
+
 import static bowling.domain.pin.PinNo.MAX_PIN_NO;
 
 public class Strike implements FrameResult {
 
-    private Integer bonus;
-
     @Override
-    public int calculateScore() {
-        return MAX_PIN_NO + bonus;
-    }
-
-    @Override
-    public boolean isCalculated() {
-        return bonus != null;
-    }
-
-    @Override
-    public void addBonus(int bonus) {
-        if (this.bonus == null) {
-            this.bonus = 0;
+    public Optional<Integer> calculateScore(Bonus bonus) {
+        if (bonus.getStrikeBonus().isEmpty()) {
+            return Optional.empty();
         }
-        this.bonus += bonus;
+        return Optional.of(MAX_PIN_NO + bonus.getStrikeBonus().get());
     }
 }

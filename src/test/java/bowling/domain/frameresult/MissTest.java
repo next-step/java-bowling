@@ -7,8 +7,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 class MissTest {
 
     @Test
-    void missTest() {
-        assertThat(new Miss(5, 4).calculateScore()).isEqualTo(9);
-        assertThat(new Miss(5, 4).isCalculated()).isTrue();
+    void calculateScore() {
+        Miss miss = new Miss(5, 4);
+        Bonus bonus = new Bonus();
+
+        assertThat(miss.calculateScore(bonus)).contains(9);
     }
 }
