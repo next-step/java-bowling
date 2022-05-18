@@ -60,7 +60,7 @@ public class BowlingApplication {
 
         if (!lastFrame.isEnd()) {
             int bonusShoot = inputView.inputShootScore(lastRound);
-//            lastFrame.bonusShoot(ShootScore.from(bonusShoot));
+            lastFrame.shoot(ShootScore.from(bonusShoot));
             resultView.printFrameBoard(playerName, frames);
         }
     }

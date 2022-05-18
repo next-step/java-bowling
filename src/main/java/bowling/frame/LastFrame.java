@@ -1,23 +1,23 @@
 package bowling.frame;
 
-import bowling.status.Ready;
-import bowling.status.Status;
+import bowling.status.*;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+
+import static java.util.Collections.*;
 
 public class LastFrame implements Frame {
 
-    private static final int ZERO_SCORE = 0;
-    private static final int FIRST_SHOOT_COUNT = 1;
     private static final int SECOND_SHOOT_COUNT = 2;
-    private static final int THIRD_SHOOT_COUNT = 3;
 
     private int shootCount = 0;
 
-    List<ShootScore> shootScores = new ArrayList<>();
+    private LinkedList<Status> statuses = new LinkedList<>();
 
-    private LastFrame() { }
+    private LastFrame() {
+        statuses.add(Ready.create());
+    }
 
     public static LastFrame create() {
         return new LastFrame();
@@ -26,20 +26,39 @@ public class LastFrame implements Frame {
     @Override
     public void shoot(ShootScore shootScore) {
         shootCount++;
-        if (isEnd()) {
-            shootScores.add(ShootScore.from(ZERO_SCORE));
+
+        if (shootScore.isStrike()) {
+            createStrikeStatus();
             return;
         }
-        shootScores.add(shootScore);
+
+        Status currentStatus = statuses.getLast();
+
+        if (currentStatus instanceof Spare) {
+            statuses.add(Ready.create().shoot(shootScore));
+            return ;
+        }
+
+        statuses.removeLast();
+        statuses.add(currentStatus.shoot(shootScore));
+    }
+
+    private void createStrikeStatus() {
+        statuses.add(Strike.create());
+        statuses.add(Ready.create());
     }
 
     @Override
     public boolean isEnd() {
-        return shootCount == THIRD_SHOOT_COUNT;
+        return shootCount == SECOND_SHOOT_COUNT && statuses.getLast() instanceof Miss;
     }
 
     @Override
     public Status findMyStatus() {
-        return Ready.create();
+        return statuses.getLast();
+    }
+
+    public List<Status> findMyAllStatus() {
+        return unmodifiableList(statuses);
     }
 }

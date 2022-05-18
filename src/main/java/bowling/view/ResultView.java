@@ -86,7 +86,12 @@ public class ResultView {
         lastBuilder
                 .append(TWO_BLANK);
 
+        for (Status myAllStatus : lastFrame.findMyAllStatus()) {
+            lastBuilder.append(drawScoreByStatus(myAllStatus));
+        }
 
+        lastBuilder.append(TWO_BLANK);
+        lastBuilder.append(DIVIDER);
 
         return lastBuilder.toString();
     }
