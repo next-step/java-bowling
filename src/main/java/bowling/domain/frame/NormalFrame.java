@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.frameresult.Bonus;
 import bowling.domain.frameresult.FrameResult;
-import bowling.domain.frameresult.Spare;
 import bowling.domain.frameresult.Strike;
 import bowling.domain.pin.NormalPinNumbers;
 
@@ -28,11 +28,6 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public boolean canGetResult() {
-        return pinNumbers.isFull();
-    }
-
-    @Override
     public void addPin(int pinNo) {
         pinNumbers.addPin(pinNo);
     }
@@ -48,21 +43,20 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public String toExpression() {
-        return pinNumbers.toExpression();
+    public boolean canGetResult() {
+        return pinNumbers.isFull();
     }
 
     @Override
-    public FrameResult getResult() {
+    public Optional<Integer> getResult() {
         FrameResult result = pinNumbers.getResult();
-        if (result instanceof Spare && nextFrame != null) {
-            result.addBonus(nextFrame.spareBonusForPreviousFrame());
-        }
-        if (result instanceof Strike && nextFrame != null) {
+        Bonus bonus = new Bonus();
+        if (nextFrame != null) {
+            bonus.setSpareBonus(nextFrame.spareBonusForPreviousFrame());
             nextFrame.strikeBonusForPreviousFrame()
-                            .ifPresent(result::addBonus);
+                    .ifPresent(bonus::setStrikeBonus);
         }
-        return result;
+        return result.calculateScore(bonus);
     }
 
     @Override
@@ -75,11 +69,21 @@ public class NormalFrame implements Frame {
         if (!pinNumbers.isFull())  {
             return Optional.empty();
         }
-        if (pinNumbers.getResult() instanceof Strike) {
-            return nextFrame == null
-                    ? Optional.empty()
-                    : Optional.of(MAX_PIN_NO + nextFrame.spareBonusForPreviousFrame());
+        if (!isStrike()) {
+            return Optional.of(pinNumbers.strikeBonus());
         }
-        return Optional.of(pinNumbers.strikeBonus());
+        if (nextFrame == null) {
+            return Optional.empty();
+        }
+        return Optional.of(MAX_PIN_NO + nextFrame.spareBonusForPreviousFrame());
+    }
+
+    private boolean isStrike() {
+        return pinNumbers.getResult() instanceof Strike;
+    }
+
+    @Override
+    public String toExpression() {
+        return pinNumbers.toExpression();
     }
 }
