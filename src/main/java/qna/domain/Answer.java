@@ -44,6 +44,9 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
+    public void delete() {
+        this.deleted = true;
+    }
 
     public boolean isDeleted() {
         return deleted;

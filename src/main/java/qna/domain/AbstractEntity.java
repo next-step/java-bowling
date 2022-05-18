@@ -33,9 +33,6 @@ public abstract class AbstractEntity {
 
 
 
-    public void delete() {
-        this.deleted = true;
-    }
     @Override
     public int hashCode() {
         final int prime = 31;

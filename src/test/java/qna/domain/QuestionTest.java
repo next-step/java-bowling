@@ -16,7 +16,7 @@ public class QuestionTest {
     @DisplayName("다른 사람의 답변이 존재하는 경우 삭제할 수 없습니다.")
     void exitsAnswerUser() {
         assertThatThrownBy(() -> {
-            Q1.addAnswer(AnswerTest.A1);
+            Q1.delete(UserTest.SANJIGI);
             List<Answer> answers = Q1.exitsAnswerUser(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }

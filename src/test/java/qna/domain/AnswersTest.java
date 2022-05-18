@@ -16,10 +16,10 @@ public class AnswersTest {
     void delete() {
         Answers answers = new Answers(List.of(AnswerTest.A1, AnswerTest.A2));
         assertThat(answers.delete()).isEqualTo(
-                new DeleteHistories(List.of(
+                List.of(
                         new DeleteHistory(ContentType.ANSWER, AnswerTest.A1.id,  AnswerTest.A1.getWriter(), LocalDateTime.now()),
                         new DeleteHistory(ContentType.ANSWER, AnswerTest.A2.id,  AnswerTest.A2.getWriter(), LocalDateTime.now()
                      ))
-                ));
+                );
     }
 }

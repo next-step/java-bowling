@@ -47,10 +47,6 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    public void addAnswer(Answer answer) {
-        answer.toQuestion(this);
-        answers.add(answer);
-    }
 
     public List<Answer> exitsAnswerUser(User loginUser) {
         for (Answer answer : answers) {
@@ -65,10 +61,15 @@ public class Question extends AbstractEntity {
         }
     }
 
-    public DeleteHistory addDeleteHistory() {
+    private DeleteHistory addDeleteHistory() {
         return new DeleteHistory(ContentType.QUESTION, id, writer, LocalDateTime.now());
     }
 
+    public List<DeleteHistory> delete(User loginUser) {
+        validateIsOwner(loginUser);
+        this.deleted = true;
+        return List.of(addDeleteHistory());
+    }
     public boolean isDeleted() {
         return deleted;
     }
