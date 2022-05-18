@@ -93,13 +93,16 @@ public class User extends AbstractEntity {
         return password.equals(targetPassword);
     }
 
-    public boolean equalsNameAndEmail(User target) {
+    public boolean isSameUser(User otherUser) {
+        return this.equalsNameAndEmail(otherUser);
+    }
+
+    private boolean equalsNameAndEmail(User target) {
         if (Objects.isNull(target)) {
             return false;
         }
 
-        return name.equals(target.name) &&
-                email.equals(target.email);
+        return name.equals(target.name) && email.equals(target.email);
     }
 
     public boolean isGuestUser() {
