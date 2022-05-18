@@ -1,8 +1,10 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,24 +41,6 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
-
     public User getWriter() {
         return writer;
     }
@@ -75,17 +59,50 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
+    public boolean canDeletedAnswerCondition(User loginUser) {
+        return answers.stream().anyMatch(answer-> !answer.isOwner(loginUser));
+    }
+
+    public void changeAnswersDeleteState(){
+        answers.stream().forEach(answer -> {
+            try {
+                answer.changeDeleteState(this.writer);
+            } catch (CannotDeleteException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public void addAllDeleteHistory(List<DeleteHistory> deleteHistories){
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now()));
+        addAnswersDeleteHistory(deleteHistories);
+    }
+
+    public void addAnswersDeleteHistory(List<DeleteHistory> deleteHistories){
+        answers.stream().forEach(answer -> answer.addDeleteHistory(deleteHistories));
+    }
+
+    public void delete(User loginUser) throws CannotDeleteException {
+        if(!isOwner(loginUser)){
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+
+        if(canDeletedAnswerCondition(loginUser)){
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+        changeDeleteState();
+        changeAnswersDeleteState();
+
+    }
+
+    private Question changeDeleteState(){
+        this.deleted = true;
         return this;
+
     }
 
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
     }
 
     @Override
