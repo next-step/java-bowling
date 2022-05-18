@@ -48,11 +48,11 @@ public class Question extends AbstractEntity {
     }
 
 
-    public List<Answer> exitsAnswerUser(User loginUser) {
+    public Answers exitsAnswerUser() {
         for (Answer answer : answers) {
-            answer.validateConfirmWriter(loginUser);
+            answer.validateConfirmWriter(writer);
         }
-        return answers;
+        return new Answers(answers);
     }
 
     public void validateIsOwner(User loginUser) {
@@ -68,7 +68,7 @@ public class Question extends AbstractEntity {
     public List<DeleteHistory> delete(User loginUser) {
         validateIsOwner(loginUser);
         this.deleted = true;
-        List<DeleteHistory> deleteHistories = new Answers(exitsAnswerUser(loginUser)).delete();
+        List<DeleteHistory> deleteHistories = exitsAnswerUser().delete(loginUser);
         deleteHistories.add(addDeleteHistory());
         return deleteHistories;
     }

@@ -17,7 +17,8 @@ public class AnswerTest {
     @DisplayName("작성자가 존재하지 않는 경우")
     void writerNull() {
         assertThatThrownBy(() -> {
-            Answer answer = new Answer(1L, null, new Question("title", "contents"), "test");
+            Answer answer = new Answer(1L, null, QuestionTest.Q1, "test");
+            answer.delete(UserTest.SANJIGI);
         }).isInstanceOf(UnAuthorizedException.class);
     }
 
@@ -26,6 +27,7 @@ public class AnswerTest {
     void questionNull() {
         assertThatThrownBy(() -> {
             Answer answer = new Answer(1L, UserTest.JAVAJIGI, null, "test");
+            answer.delete(UserTest.JAVAJIGI);
         }).isInstanceOf(NotFoundException.class);
     }
 
@@ -34,14 +36,14 @@ public class AnswerTest {
     void validateConfirmWriter() {
         assertThatThrownBy(() -> {
             Answer answer = new Answer(1L, UserTest.JAVAJIGI, new Question("title", "contents"), "test");
-            answer.validateConfirmWriter(UserTest.SANJIGI);
+            answer.delete(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
 
     @Test
     @DisplayName("답변을 제거합니다.")
     void delete() {
-        A1.delete();
+        A1.delete(UserTest.JAVAJIGI);
         assertThat(A1.isDeleted()).isTrue();
     }
 

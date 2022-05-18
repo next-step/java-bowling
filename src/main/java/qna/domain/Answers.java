@@ -12,14 +12,16 @@ public final class Answers {
         this.answers = answers;
     }
 
-    public List<DeleteHistory> delete() {
+    public List<DeleteHistory> delete(User loginUser) {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         for (Answer answer : answers) {
-            answer.delete();
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.id, answer.getWriter(), LocalDateTime.now()));
+            answer.validateConfirmWriter(loginUser);
+            deleteHistories.add(answer.delete(loginUser));
         }
         return deleteHistories;
     }
+
+
 
     @Override
     public boolean equals(Object o) {
