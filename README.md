@@ -7,3 +7,22 @@
 
 ## 온라인 코드 리뷰 과정
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
+
+## 1단계 - 질문 삭제하기 기능 리팩토링
+* 요구사항
+  * qna.service.QnaService의 deleteQuestion() 메소드 코드를 단위 테스트 가능한 코드로 분리해 단위 테스트 코드를 작성한다.
+
+
+* 구현목록
+  * Answers.java 일급객체 분리
+    * answer 객체 delete 호출 
+    * answer 객체들 삭제 히스토리 반환
+  * Answer.java
+    * 내부적으로 deleted 상태가 바뀌도록 수정
+    * answer 삭제 히스토리 반환
+  * Question.java
+    * 내부적으로 deleted 상태가 바뀌도록 수정
+    * answers.delete 호출
+    * question 및 answers 삭제 히스토리 반환
+  * QuestionBody.java
+    * Question.java 의 title 과 contents를 객체로 포장
