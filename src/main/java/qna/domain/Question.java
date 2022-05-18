@@ -68,7 +68,9 @@ public class Question extends AbstractEntity {
     public List<DeleteHistory> delete(User loginUser) {
         validateIsOwner(loginUser);
         this.deleted = true;
-        return List.of(addDeleteHistory());
+        List<DeleteHistory> deleteHistories = new Answers(exitsAnswerUser(loginUser)).delete();
+        deleteHistories.add(addDeleteHistory());
+        return deleteHistories;
     }
     public boolean isDeleted() {
         return deleted;

@@ -4,8 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class QuestionTest {
@@ -17,7 +15,6 @@ public class QuestionTest {
     void exitsAnswerUser() {
         assertThatThrownBy(() -> {
             Q1.delete(UserTest.SANJIGI);
-            List<Answer> answers = Q1.exitsAnswerUser(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
 
