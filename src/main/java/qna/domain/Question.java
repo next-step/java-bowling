@@ -1,11 +1,9 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,11 +18,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
-
+    @Embedded
+    private Answers answers = new Answers();
     private boolean deleted = false;
 
     public Question() {
@@ -48,12 +43,7 @@ public class Question extends AbstractEntity {
     }
 
 
-    public Answers exitsAnswerUser() {
-        for (Answer answer : answers) {
-            answer.validateConfirmWriter(writer);
-        }
-        return new Answers(answers);
-    }
+
 
     public void validateIsOwner(User loginUser) {
         if (!writer.equals(loginUser)) {
@@ -68,7 +58,7 @@ public class Question extends AbstractEntity {
     public List<DeleteHistory> delete(User loginUser) {
         validateIsOwner(loginUser);
         this.deleted = true;
-        List<DeleteHistory> deleteHistories = exitsAnswerUser().delete(loginUser);
+        List<DeleteHistory> deleteHistories = answers.delete(loginUser);
         deleteHistories.add(addDeleteHistory());
         return deleteHistories;
     }
