@@ -2,20 +2,24 @@ package bowling.model.frame;
 
 import bowling.model.Pins;
 import bowling.model.frame.state.NotThrown;
+import bowling.model.frame.state.SecondThrown;
 import bowling.model.frame.state.Strike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-@DisplayName("던져진 공")
+@DisplayName("프레임 상태")
 class FrameStateTest {
 
     @Test
-    @DisplayName("상태와 점수로 생성")
+    @DisplayName("상태와 보너스 상태들로 생성")
     void instance() {
-        assertThatNoException().isThrownBy(() -> FrameState.of(Strike.INSTANCE, Score.init(1)));
+        assertThatNoException().isThrownBy(() -> FrameState.of(Strike.INSTANCE, Collections.singletonList(Strike.INSTANCE)));
     }
 
     @Test
@@ -31,12 +35,12 @@ class FrameStateTest {
     }
 
     @Test
-    @DisplayName("상태와 점수는 필수")
+    @DisplayName("상태와 보너스 상태들은 필수")
     void instance_nullArguments_thrownIllegalArgumentException() {
         assertAll(
                 () -> assertThatIllegalArgumentException().isThrownBy(() -> FrameState.from(null)),
                 () -> assertThatIllegalArgumentException().isThrownBy(() -> FrameState.of(Strike.INSTANCE, null)),
-                () -> assertThatIllegalArgumentException().isThrownBy(() -> FrameState.of(null, Score.init(1)))
+                () -> assertThatIllegalArgumentException().isThrownBy(() -> FrameState.of(null, Collections.singletonList(Strike.INSTANCE)))
         );
     }
 
@@ -53,19 +57,13 @@ class FrameStateTest {
     @DisplayName("안던진 상태에서 10개 던진 상태는 스트라이크 상태")
     void nextState() {
         assertThat(FrameState.from(NotThrown.INSTANCE).nextState(Pins.MAX))
-                .isEqualTo(FrameState.of(Strike.INSTANCE, Score.of(0, 2)));
+                .isEqualTo(FrameState.from(Strike.INSTANCE));
     }
 
     @Test
     @DisplayName("끝난 상태에서 다음 상태를 가져올 수 없음")
     void nextState_endedState_thrownIllegalStateException() {
-        assertThatIllegalStateException().isThrownBy(() -> FrameState.from(Strike.INSTANCE).nextState(Pins.MAX));
-    }
-
-    @Test
-    @DisplayName("스코어 점수가 더해진 값")
-    void sumScoreValue() {
-        assertThat(FrameState.init().sumScoreValue(10)).isEqualTo(10);
+        assertThatIllegalStateException().isThrownBy(() -> FrameState.from(SecondThrown.of(Pins.ZERO, Pins.ZERO)).nextState(Pins.MAX));
     }
 
     @Test
@@ -73,28 +71,33 @@ class FrameStateTest {
     void hasRemainCount() {
         assertAll(
                 () -> assertThat(FrameState.init().hasRemainCount()).isTrue(),
-                () -> assertThat(FrameState.of(NotThrown.INSTANCE, Score.of(0, 0)).hasRemainCount()).isFalse()
+                () -> assertThat(FrameState.of(Strike.INSTANCE, Arrays.asList(Strike.INSTANCE, Strike.INSTANCE)).hasRemainCount()).isFalse()
         );
     }
 
     @Test
-    @DisplayName("점수 추가")
-    void addScore() {
-        assertThat(FrameState.init().addScore(Pins.MAX))
-                .isEqualTo(FrameState.of(NotThrown.INSTANCE, Score.of(10, 1)));
+    @DisplayName("보너스 핀 추가")
+    void addBonusPins() {
+        assertThat(FrameState.from(Strike.INSTANCE).addBonusPins(Pins.MAX))
+                .isEqualTo(FrameState.of(Strike.INSTANCE, Collections.singletonList(Strike.INSTANCE)));
     }
 
     @Test
-    @DisplayName("주어진 점수 그대로 반환")
-    void score() {
-        assertThat(FrameState.init().score())
-                .isEqualTo(Score.of(0, 2));
+    @DisplayName("핀들을 합친 갯수")
+    void sumPinsCount() {
+        assertThat(FrameState.of(Strike.INSTANCE, Collections.singletonList(Strike.INSTANCE)).sumPinsCount()).isEqualTo(20);
     }
 
     @Test
-    @DisplayName("주어진 상태 그대로 반환")
-    void state() {
-        assertThat(FrameState.init().state())
-                .isEqualTo(NotThrown.INSTANCE);
+    @DisplayName("마크")
+    void mark() {
+        assertThat(FrameState.from(Strike.INSTANCE).mark()).isEqualTo("x");
+    }
+
+    @Test
+    @DisplayName("보너스가 포함된 마크")
+    void markWithBonus() {
+        assertThat(FrameState.of(Strike.INSTANCE, Collections.singletonList(Strike.INSTANCE)).markWithBonus())
+                .isEqualTo("x|x");
     }
 }

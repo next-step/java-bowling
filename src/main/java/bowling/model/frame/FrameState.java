@@ -4,20 +4,25 @@ import bowling.model.Pins;
 import bowling.model.frame.state.NotThrown;
 import bowling.utility.Assert;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public final class FrameState {
 
     private static final NotThrown DEFAULT_STATE = NotThrown.INSTANCE;
+    private static final String MARK_DELIMITER = "|";
 
     private final BallState state;
-    private final Score score;
+    private final List<BallState> bonusStates;
 
-    private FrameState(BallState state, Score score) {
+    private FrameState(BallState state, List<BallState> bonusStates) {
         Assert.notNull(state, "state must not be null");
-        Assert.notNull(score, "score must not be null");
+        Assert.notNull(bonusStates, "bonusStates must not be null");
         this.state = state;
-        this.score = score;
+        this.bonusStates = bonusStates;
     }
 
     static FrameState init() {
@@ -25,12 +30,11 @@ public final class FrameState {
     }
 
     static FrameState from(BallState state) {
-        Assert.notNull(state, "state must not be null");
-        return of(state, Score.init(state.remainCount()));
+        return new FrameState(state, Collections.emptyList());
     }
 
-    static FrameState of(BallState state, Score score) {
-        return new FrameState(state, score);
+    static FrameState of(BallState state, List<BallState> bonusStates) {
+        return new FrameState(state, bonusStates);
     }
 
     boolean isEndState() {
@@ -39,28 +43,35 @@ public final class FrameState {
 
     FrameState nextState(Pins pins) {
         validateState();
-        BallState nextState = this.state.state(pins);
-        return of(nextState, score.changeRemainCount(nextState.remainCount()));
+        return of(this.state.state(pins), bonusStates);
     }
 
     boolean hasRemainCount() {
-        return score.hasRemainCount();
+        return 0 < (state.remainCount() - bonusStates.size());
     }
 
-    FrameState addScore(Pins pins) {
-        return of(state, score.addValue(pins.count()));
+    FrameState addBonusPins(Pins pins) {
+        List<BallState> ballStates = new ArrayList<>(bonusStates);
+        ballStates.add(NotThrown.INSTANCE.state(pins));
+        return of(state, ballStates);
     }
 
-    public Score score() {
-        return score;
+    int sumPinsCount() {
+        return state.sumPinsCount() + this.bonusStates.stream()
+                .map(BallState::sumPinsCount)
+                .reduce(0, Integer::sum);
     }
 
-    public BallState state() {
-        return state;
+    String mark() {
+        return state.mark();
     }
 
-    public int sumScoreValue(int scoreValue) {
-        return score.sumValue(scoreValue);
+    String markWithBonus() {
+        List<String> marks = new ArrayList<>(Collections.singletonList(mark()));
+        marks.addAll(bonusStates.stream()
+                .map(BallState::mark)
+                .collect(Collectors.toList()));
+        return String.join(MARK_DELIMITER, marks);
     }
 
     private void validateState() {
@@ -71,7 +82,7 @@ public final class FrameState {
 
     @Override
     public int hashCode() {
-        return Objects.hash(state, score);
+        return Objects.hash(state, bonusStates);
     }
 
     @Override
@@ -83,14 +94,14 @@ public final class FrameState {
             return false;
         }
         FrameState that = (FrameState) o;
-        return Objects.equals(state, that.state) && Objects.equals(score, that.score);
+        return Objects.equals(state, that.state) && Objects.equals(bonusStates, that.bonusStates);
     }
 
     @Override
     public String toString() {
         return "FrameState{" +
                 "state=" + state +
-                ", score=" + score +
+                ", bonusStates=" + bonusStates +
                 '}';
     }
 }

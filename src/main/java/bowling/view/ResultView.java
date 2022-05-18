@@ -2,7 +2,7 @@ package bowling.view;
 
 import bowling.model.frame.FrameNumber;
 import bowling.utility.Assert;
-import bowling.view.dto.FramesResponse;
+import bowling.view.dto.BowlingResponse;
 
 import java.io.PrintStream;
 import java.util.Iterator;
@@ -31,10 +31,20 @@ public final class ResultView {
         return new ResultView(output);
     }
 
-    public void print(String name, FramesResponse frames) {
-        printer.print(COLUMN_HEADER);
-        printer.printf(ROW_FORMAT, name, framesMessage(frames.getStates()));
-        printer.printf(ROW_FORMAT, "", framesMessage(frames.getScores()));
+    public void print(List<BowlingResponse> bowlings) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(COLUMN_HEADER);
+        builder.append(bowlings.stream()
+                .map(this::bowlingMessage)
+                .collect(Collectors.joining()));
+        printer.println(builder);
+    }
+
+    private String bowlingMessage(BowlingResponse bowling) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(String.format(ROW_FORMAT, bowling.getName(), framesMessage(bowling.getFrames().getMarks())));
+        builder.append(String.format(ROW_FORMAT, "", framesMessage(bowling.getFrames().getScores())));
+        return builder.toString();
     }
 
     private String framesMessage(List<?> messages) {

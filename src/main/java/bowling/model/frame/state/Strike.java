@@ -7,6 +7,7 @@ public enum Strike implements BallState {
 
     INSTANCE;
 
+    private static final Pins HIT_PINS = Pins.MAX;
     private static final int REMAIN_COUNT = 2;
 
     @Override
@@ -22,5 +23,15 @@ public enum Strike implements BallState {
     @Override
     public int remainCount() {
         return REMAIN_COUNT;
+    }
+
+    @Override
+    public int sumPinsCount() {
+        return HIT_PINS.count();
+    }
+
+    @Override
+    public String mark() {
+        return CountToMarkConverter.convert(HIT_PINS.count());
     }
 }

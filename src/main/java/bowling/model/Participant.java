@@ -2,6 +2,7 @@ package bowling.model;
 
 import bowling.utility.Assert;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public final class Participant {
@@ -25,10 +26,26 @@ public final class Participant {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Participant that = (Participant) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
     public String toString() {
         return "Participant{" +
                 "name='" + name + '\'' +
                 '}';
     }
-
 }

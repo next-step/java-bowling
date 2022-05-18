@@ -14,7 +14,9 @@ public interface Frame {
 
     boolean hasRemainCount();
 
-    Frame addScore(Pins countOfHit);
+    Frame addBonusPins(Pins countOfHit);
 
-    int sumScoreValue(int score);
+    int sumPinsCount();
+
+    String mark();
 }

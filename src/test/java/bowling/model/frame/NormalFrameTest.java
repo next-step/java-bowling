@@ -92,25 +92,23 @@ class NormalFrameTest {
     }
 
     @Test
-    @DisplayName("기본 점수에 10점 추가하면 10점 스코어의 프레임")
-    void addScore() {
-        assertThat(NormalFrame.of(FrameNumber.FIRST, FrameState.of(Strike.INSTANCE, Score.of(0, 1))).addScore(Pins.MAX))
-                .isEqualTo(NormalFrame.of(FrameNumber.FIRST, FrameState.of(Strike.INSTANCE, Score.of(10, 0))));
+    @DisplayName("보너스 핀 추가")
+    void addBonusPins() {
+        assertThat(NormalFrame.of(FrameNumber.FIRST, FrameState.from(Strike.INSTANCE)).addBonusPins(Pins.MAX))
+                .isEqualTo(NormalFrame.of(FrameNumber.FIRST, FrameState.of(Strike.INSTANCE, Collections.singletonList(Strike.INSTANCE))));
     }
 
     @Test
-    @DisplayName("주어진 상태 그대로 반환")
-    void state() {
-        //given
-        FrameState state = FrameState.of(Strike.INSTANCE, Score.of(0, 1));
-        //when, then
-        assertThat(NormalFrame.of(FrameNumber.FIRST, state).state()).isEqualTo(state);
+    @DisplayName("핀들 더한 값")
+    void sumPinsCount() {
+        assertThat(NormalFrame.init(FrameNumber.FIRST).sumPinsCount()).isZero();
     }
 
     @Test
-    @DisplayName("스코어 점수가 더해진 값")
-    void sumScoreValue() {
-        assertThat(NormalFrame.init(FrameNumber.FIRST).sumScoreValue(10)).isEqualTo(10);
+    @DisplayName("0점, 10점 던지면 -|/ 마크")
+    void mark() {
+        assertThat(NormalFrame.init(FrameNumber.FIRST).next(Pins.ZERO).next(Pins.MAX).mark())
+                .isEqualTo("-|/");
     }
 
     private static Stream<Arguments> next() {
@@ -118,14 +116,14 @@ class NormalFrameTest {
                 Arguments.of(Collections.singletonList(Pins.from(1)), NormalFrame.of(FrameNumber.from(8), FrameState.from(FirstThrown.from(Pins.from(1))))),
                 Arguments.of(Arrays.asList(Pins.ZERO, Pins.ZERO), NormalFrame.of(FrameNumber.from(8), FrameState.from(SecondThrown.of(Pins.ZERO, Pins.ZERO)))),
                 Arguments.of(Arrays.asList(Pins.MAX, Pins.ZERO), NormalFrame.of(FrameNumber.from(9), FrameState.from(FirstThrown.from(Pins.ZERO)))),
-                Arguments.of(Arrays.asList(Pins.MAX, Pins.MAX, Pins.ZERO), FinalFrame.of(FrameState.from(FirstThrown.from(Pins.ZERO)), Collections.emptyList()))
+                Arguments.of(Arrays.asList(Pins.MAX, Pins.MAX, Pins.ZERO), FinalFrame.from(FrameState.from(FirstThrown.from(Pins.ZERO))))
         );
     }
 
     private static Stream<Arguments> hasRemainCount() {
         return Stream.of(
-                Arguments.of(FrameState.of(Strike.INSTANCE, Score.of(0, 1)), true),
-                Arguments.of(FrameState.of(Strike.INSTANCE, Score.of(0, 0)), false)
+                Arguments.of(FrameState.of(Strike.INSTANCE, Collections.singletonList(Strike.INSTANCE)), true),
+                Arguments.of(FrameState.of(Strike.INSTANCE, Arrays.asList(Strike.INSTANCE, Strike.INSTANCE)), false)
         );
     }
 }

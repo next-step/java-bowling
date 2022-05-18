@@ -9,6 +9,7 @@ import java.util.Objects;
 public final class SecondThrown implements BallState {
 
     private static final int REMAIN_COUNT = 0;
+    private static final String MARK_DELIMITER = "|";
 
     private final Pins firstHit;
     private final Pins secondHit;
@@ -40,12 +41,16 @@ public final class SecondThrown implements BallState {
         return REMAIN_COUNT;
     }
 
-    public Pins secondHit() {
-        return secondHit;
+    @Override
+    public String mark() {
+        return String.join(MARK_DELIMITER,
+                CountToMarkConverter.convert(firstHit.count()),
+                CountToMarkConverter.convert(secondHit.count()));
     }
 
-    public Pins firstHit() {
-        return firstHit;
+    @Override
+    public int sumPinsCount() {
+        return firstHit.count() + secondHit.count();
     }
 
     @Override

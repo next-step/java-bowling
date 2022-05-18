@@ -4,7 +4,6 @@ import bowling.model.Pins;
 import bowling.model.frame.state.FirstThrown;
 import bowling.model.frame.state.Spare;
 import bowling.model.frame.state.Strike;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,6 +14,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
@@ -29,18 +30,15 @@ class FinalFrameTest {
     }
 
     @Test
-    @DisplayName("상태와 추가 핀들로 생성")
+    @DisplayName("상태로 생성")
     void instance_state() {
-        assertThatNoException().isThrownBy(() -> FinalFrame.of(FrameState.from(Strike.INSTANCE), Collections.singletonList(Pins.ZERO)));
+        assertThatNoException().isThrownBy(() -> FinalFrame.from(FrameState.from(Strike.INSTANCE)));
     }
 
     @Test
-    @DisplayName("상태와 추가 핀들은 필수")
+    @DisplayName("상태는 필수")
     void instance_nullArguments_thrownIllegalArgumentException() {
-        Assertions.assertAll(
-                () -> assertThatIllegalArgumentException().isThrownBy(() -> FinalFrame.of(null, Collections.singletonList(Pins.ZERO))),
-                () -> assertThatIllegalArgumentException().isThrownBy(() -> FinalFrame.of(FrameState.from(Strike.INSTANCE), null))
-        );
+        assertThatIllegalArgumentException().isThrownBy(() -> FinalFrame.from(null));
     }
 
     @ParameterizedTest(name = "[{index}] {0} 만큼 던지면 종료 여부는 {1}")
@@ -49,7 +47,7 @@ class FinalFrameTest {
     void isEnd(List<Pins> pinsGroup, boolean expected) {
         //when
         Frame finalFrame = pinsGroup.stream()
-                .reduce((Frame) FinalFrame.init(), (frame, pins) -> frame.addScore(pins).next(pins), (frame1, frame2) -> frame2);
+                .reduce((Frame) FinalFrame.init(), (frame, pins) -> frame.next(pins), (frame1, frame2) -> frame2);
         //then
         assertThat(finalFrame.isEnd()).isEqualTo(expected);
     }
@@ -67,17 +65,21 @@ class FinalFrameTest {
 
     @ParameterizedTest
     @DisplayName("남은 개수 소유 여부")
-    @CsvSource({"0,false", "1,true"})
-    void hasRemainCount(int remainCount, boolean expected) {
-        assertThat(FinalFrame.of(FrameState.of(Strike.INSTANCE, Score.of(0, remainCount)), Collections.emptyList()).hasRemainCount())
+    @CsvSource({"1,true", "2,false"})
+    void hasRemainCount(int additionPins, boolean expected) {
+        //given
+        List<BallState> states = IntStream.range(0, additionPins)
+                .mapToObj(i -> FirstThrown.from(Pins.ZERO)).collect(Collectors.toList());
+        //when, then
+        assertThat(FinalFrame.from(FrameState.of(Strike.INSTANCE, states)).hasRemainCount())
                 .isEqualTo(expected);
     }
 
     @Test
-    @DisplayName("점수 추가")
-    void addScore() {
-        assertThat(FinalFrame.of(FrameState.of(Strike.INSTANCE, Score.of(0, 1)), Collections.emptyList()).addScore(Pins.MAX))
-                .isEqualTo(FinalFrame.of(FrameState.of(Strike.INSTANCE, Score.of(10, 0)), Collections.emptyList()));
+    @DisplayName("핀들 추가")
+    void addBonusPins() {
+        assertThat(FinalFrame.from(FrameState.from(Strike.INSTANCE)).addBonusPins(Pins.MAX))
+                .isEqualTo(FinalFrame.from(FrameState.of(Strike.INSTANCE, Collections.singletonList(Strike.INSTANCE))));
     }
 
     @Test
@@ -93,21 +95,16 @@ class FinalFrameTest {
     }
 
     @Test
-    @DisplayName("현재 상태 그대로 반환")
-    void state() {
-        assertThat(FinalFrame.init().state()).isEqualTo(FrameState.init());
+    @DisplayName("합한 핀들 그대로 반환")
+    void sumPins() {
+        assertThat(FinalFrame.init().sumPinsCount()).isZero();
     }
 
     @Test
-    @DisplayName("현재 추가 핀 그대로 반환")
-    void additionHitPinsGroup() {
-        assertThat(FinalFrame.init().additionHitPinsGroup()).isEqualTo(Collections.emptyList());
-    }
-
-    @Test
-    @DisplayName("스코어 점수가 더해진 값")
-    void sumScoreValue() {
-        assertThat(FinalFrame.init().sumScoreValue(10)).isEqualTo(10);
+    @DisplayName("10점 3번 던지면 x|x|x 마크")
+    void mark() {
+        assertThat(FinalFrame.init().next(Pins.MAX).next(Pins.MAX).next(Pins.MAX).mark())
+                .isEqualTo("x|x|x");
     }
 
     private static Stream<Arguments> isEnd() {
@@ -123,10 +120,10 @@ class FinalFrameTest {
 
     private static Stream<Arguments> next() {
         return Stream.of(
-                Arguments.of(Collections.singletonList(Pins.MAX), FinalFrame.of(FrameState.from(Strike.INSTANCE), Collections.emptyList())),
-                Arguments.of(Collections.singletonList(Pins.ZERO), FinalFrame.of(FrameState.from(FirstThrown.from(Pins.ZERO)), Collections.emptyList())),
-                Arguments.of(Arrays.asList(Pins.MAX, Pins.from(5)), FinalFrame.of(FrameState.of(Strike.INSTANCE, Score.of(0, 2)), Collections.singletonList(Pins.from(5)))),
-                Arguments.of(Arrays.asList(Pins.from(1), Pins.from(9)), FinalFrame.of(FrameState.from(Spare.from(Pins.from(1))), Collections.emptyList()))
+                Arguments.of(Collections.singletonList(Pins.MAX), FinalFrame.from(FrameState.from(Strike.INSTANCE))),
+                Arguments.of(Collections.singletonList(Pins.ZERO), FinalFrame.from(FrameState.from(FirstThrown.from(Pins.ZERO)))),
+                Arguments.of(Arrays.asList(Pins.MAX, Pins.from(5)), FinalFrame.from(FrameState.of(Strike.INSTANCE, Collections.singletonList(FirstThrown.from(Pins.from(5)))))),
+                Arguments.of(Arrays.asList(Pins.from(1), Pins.from(9)), FinalFrame.from(FrameState.from(Spare.from(Pins.from(1)))))
         );
     }
 }

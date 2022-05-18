@@ -43,4 +43,18 @@ class FrameNumberTest {
     void isLast(int number, boolean expected) {
         assertThat(FrameNumber.from(number).isLast()).isEqualTo(expected);
     }
+
+    @ParameterizedTest(name = "[{index}] 2는 {0} 보다 더 큰 여부는 {1}")
+    @DisplayName("2보다 더 큰 번호 여부")
+    @CsvSource({"1,true", "2,false", "3,false"})
+    void isGreaterThan(int number, boolean expected) {
+        assertThat(FrameNumber.from(2).isGreaterThan(FrameNumber.from(number)))
+                .isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("주어진 값 그대로 반환")
+    void toInt() {
+        assertThat(FrameNumber.from(1).toInt()).isOne();
+    }
 }

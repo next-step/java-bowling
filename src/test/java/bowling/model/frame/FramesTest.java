@@ -74,22 +74,6 @@ class FramesTest {
     }
 
     @Test
-    @DisplayName("초기 상태의 다음 프레임 번호는 1")
-    void nextFrameNumber() {
-        assertThat(Frames.init().nextFrameNumber()).isEqualTo(FrameNumber.FIRST);
-    }
-
-    @Test
-    @DisplayName("마지막 프레임이 끝나면 다음 프레임 번호는 +1")
-    void nextFrameNumber_endedFrame() {
-        //given
-        FrameNumber frameNumber = FrameNumber.FIRST;
-        //when, then
-        assertThat(Frames.from(Collections.singletonList(NormalFrame.of(frameNumber, FrameState.from(Strike.INSTANCE)))).nextFrameNumber())
-                .isEqualTo(frameNumber.increase());
-    }
-
-    @Test
     @DisplayName("주어진 리스트 그대로 반환")
     void list() {
         //given
@@ -112,13 +96,13 @@ class FramesTest {
         return Stream.of(
                 Arguments.of(
                         Collections.singletonList(Pins.MAX),
-                        Frames.from(Collections.singletonList(NormalFrame.of(FrameNumber.FIRST, FrameState.of(Strike.INSTANCE, Score.of(10, 2)))))
+                        Frames.from(Collections.singletonList(NormalFrame.of(FrameNumber.FIRST, FrameState.from(Strike.INSTANCE))))
                 ),
                 Arguments.of(
                         Arrays.asList(Pins.MAX, Pins.MAX),
                         Frames.from(Arrays.asList(
-                                NormalFrame.of(FrameNumber.FIRST, FrameState.of(Strike.INSTANCE, Score.of(20, 1))),
-                                NormalFrame.of(FrameNumber.from(2), FrameState.of(Strike.INSTANCE, Score.of(10, 2)))
+                                NormalFrame.of(FrameNumber.FIRST, FrameState.of(Strike.INSTANCE, Collections.singletonList(Strike.INSTANCE))),
+                                NormalFrame.of(FrameNumber.from(2), FrameState.from(Strike.INSTANCE))
                         ))
                 )
         );

@@ -10,15 +10,21 @@ import static org.assertj.core.api.Assertions.*;
 class SpareTest {
 
     @Test
-    @DisplayName("첫번째 0, 두번째 10으로 생성")
+    @DisplayName("첫번째 핀으로 생성")
     void instance() {
         assertThatNoException().isThrownBy(() -> Spare.from(Pins.ZERO));
     }
 
     @Test
-    @DisplayName("첫번째 핀들은 필수")
+    @DisplayName("첫번째 핀은 필수")
     void instance_nullArgument_thrownIllegalArgumentException() {
         assertThatIllegalArgumentException().isThrownBy(() -> Spare.from(null));
+    }
+
+    @Test
+    @DisplayName("첫번째 핀이 10이 될 수 없음")
+    void instance_maxPins_thrownIllegalArgumentException() {
+        assertThatIllegalArgumentException().isThrownBy(() -> Spare.from(Pins.MAX));
     }
 
     @Test
@@ -40,8 +46,14 @@ class SpareTest {
     }
 
     @Test
-    @DisplayName("주어진 첫번째 핀들 그대로 반환")
-    void firstHit() {
-        assertThat(Spare.from(Pins.ZERO).firstHit()).isEqualTo(Pins.ZERO);
+    @DisplayName("첫번째 핀이 1의 마크는 1|/")
+    void mark() {
+        assertThat(Spare.from(Pins.from(1)).mark()).isEqualTo("1|/");
+    }
+
+    @Test
+    @DisplayName("핀들 더한 값은 항상 10")
+    void sumPinsCount() {
+        assertThat(Spare.from(Pins.from(1)).sumPinsCount()).isEqualTo(10);
     }
 }

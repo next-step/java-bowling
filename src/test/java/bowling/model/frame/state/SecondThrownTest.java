@@ -50,14 +50,14 @@ class SecondThrownTest {
     }
 
     @Test
-    @DisplayName("주어진 첫번째 핀들 그대로 반환")
-    void firstHit() {
-        assertThat(SecondThrown.of(Pins.ZERO, Pins.from(1)).firstHit()).isEqualTo(Pins.ZERO);
+    @DisplayName("마크")
+    void mark() {
+        assertThat(SecondThrown.of(Pins.ZERO, Pins.ZERO).mark()).isEqualTo("-|-");
     }
 
     @Test
-    @DisplayName("주어진 두번째 핀들 그대로 반환")
-    void secondHit() {
-        assertThat(SecondThrown.of(Pins.from(1), Pins.ZERO).secondHit()).isEqualTo(Pins.ZERO);
+    @DisplayName("주어진 핀들 더한 값")
+    void sumPinsCount() {
+        assertThat(SecondThrown.of(Pins.from(1), Pins.from(2)).sumPinsCount()).isEqualTo(3);
     }
 }

@@ -5,7 +5,6 @@ import bowling.utility.Assert;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -36,37 +35,22 @@ public final class Frames {
 
     public Frames bowling(Pins pins) {
         validateStateToAdd();
-        List<Frame> newFrames = framesAddedScoreWithoutLast(pins);
-        Frame last = this.frames.getLast();
-        Frame frame = addScoreIfHasRemainCount(last, pins);
-        if (frame.isEnd() && !last.isFinal()) {
-            newFrames.add(frame);
-        }
-        newFrames.add(frame.next(pins));
-        return from(newFrames);
-    }
-
-    public FrameNumber nextFrameNumber() {
-        Frame last = this.frames.getLast();
+        LinkedList<Frame> newFrames = addedBonusPinsFrames(pins);
+        Frame last = newFrames.removeLast();
         if (last.isEnd()) {
-            return last.number().increase();
+            newFrames.add(last);
         }
-        return last.number();
+        newFrames.add(last.next(pins));
+        return from(newFrames);
     }
 
     public List<Integer> accumulatedScores() {
         List<Integer> scores = new ArrayList<>();
-        Iterator<Frame> iterator = this.frames.iterator();
-        Frame frame;
         int score = START_SCORE_VALUE;
-        do {
-            frame = iterator.next();
-            if (frame.hasRemainCount()) {
-                break;
-            }
-            score = frame.sumScoreValue(score);
+        for (Frame frame : framesWithNoRemainCount()) {
+            score += frame.sumPinsCount();
             scores.add(score);
-        } while (iterator.hasNext());
+        }
         return scores;
     }
 
@@ -74,19 +58,32 @@ public final class Frames {
         return Collections.unmodifiableList(this.frames);
     }
 
-    private LinkedList<Frame> framesAddedScoreWithoutLast(Pins countOfHit) {
-        LinkedList<Frame> newFrames = this.frames.stream()
-                .map(frame -> addScoreIfHasRemainCount(frame, countOfHit))
-                .collect(Collectors.toCollection(LinkedList::new));
-        newFrames.removeLast();
-        return newFrames;
+    public boolean nextNumberGreaterThan(Frames frames) {
+        return nextFrameNumber().isGreaterThan(frames.nextFrameNumber());
     }
 
-    private Frame addScoreIfHasRemainCount(Frame frame, Pins countOfHit) {
-        if (frame.hasRemainCount()) {
-            return frame.addScore(countOfHit);
+    private List<Frame> framesWithNoRemainCount() {
+        return this.frames.stream()
+                .filter(frame -> !frame.hasRemainCount())
+                .collect(Collectors.toList());
+    }
+
+    private LinkedList<Frame> addedBonusPinsFrames(Pins pins) {
+        return frames.stream()
+                .map(frame -> {
+                    if (frame.isEnd() && frame.hasRemainCount()) {
+                        return frame.addBonusPins(pins);
+                    }
+                    return frame;
+                }).collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    private FrameNumber nextFrameNumber() {
+        Frame last = this.frames.getLast();
+        if (last.isEnd()) {
+            return last.number().increase();
         }
-        return frame;
+        return last.number();
     }
 
     private void validateStateToAdd() {

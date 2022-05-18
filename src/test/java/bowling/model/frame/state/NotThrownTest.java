@@ -33,4 +33,16 @@ class NotThrownTest {
     void remainCount() {
         assertThat(NotThrown.INSTANCE.remainCount()).isEqualTo(2);
     }
+
+    @Test
+    @DisplayName("마크 빈값")
+    void mark() {
+        assertThat(NotThrown.INSTANCE.mark()).isEmpty();
+    }
+
+    @Test
+    @DisplayName("핀들 갯수 더한 값은 0")
+    void sumPinsCount() {
+        assertThat(NotThrown.INSTANCE.sumPinsCount()).isZero();
+    }
 }

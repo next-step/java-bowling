@@ -26,4 +26,14 @@ public enum NotThrown implements BallState {
     public int remainCount() {
         return REMAIN_COUNT;
     }
+
+    @Override
+    public String mark() {
+        return "";
+    }
+
+    @Override
+    public int sumPinsCount() {
+        return 0;
+    }
 }

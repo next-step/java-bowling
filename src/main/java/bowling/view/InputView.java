@@ -3,14 +3,16 @@ package bowling.view;
 import bowling.utility.Assert;
 
 import java.io.PrintStream;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public final class InputView {
 
-    private static final String PARTICIPANT_INPUT_MESSAGE = "플레이어 이름은(3 english letters)?: ";
-
-    private static final String NEXT_FRAME_MESSAGE_FORMAT = "%s프레임 투구 : ";
-
+    private static final String PARTICIPANT_COUNT_INPUT_MESSAGE = "How many people?";
+    private static final String PARTICIPANT_INPUT_MESSAGE_FORMAT = "플레이어 %d의 이름은?(3 english letters): ";
+    private static final String NEXT_FRAME_MESSAGE_FORMAT = "%s's turn : ";
     private final PrintStream guidePrinter;
     private final Scanner scanner;
 
@@ -25,13 +27,17 @@ public final class InputView {
         return new InputView(scanner, output);
     }
 
-    public String participant() {
-        guidePrinter.print(PARTICIPANT_INPUT_MESSAGE);
-        return scanner.next();
+    public List<String> participants() {
+        guidePrinter.print(PARTICIPANT_COUNT_INPUT_MESSAGE);
+        return IntStream.rangeClosed(1, scanner.nextInt())
+                .mapToObj(i -> {
+                    guidePrinter.printf(PARTICIPANT_INPUT_MESSAGE_FORMAT, i);
+                    return scanner.next();
+                }).collect(Collectors.toList());
     }
 
-    public int nextPitch(int frameNumber) {
-        guidePrinter.printf(NEXT_FRAME_MESSAGE_FORMAT, frameNumber);
+    public int nextPitch(String participant) {
+        guidePrinter.printf(NEXT_FRAME_MESSAGE_FORMAT, participant);
         return scanner.nextInt();
     }
 }
