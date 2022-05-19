@@ -1,24 +1,20 @@
 package bowling.status;
 
-import bowling.frame.ShootScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static bowling.frame.ConstShootScore.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class MissTest {
 
-    private static final int STRIKE = 10;
-    private static final int FIVE = 5;
-    private static final int FOUR = 4;
-
     @Test
     @DisplayName("두 개의 투구를 진행했을 때 10개 미만의 점수를 얻었을 경우 발생하는 상태")
     void create() {
-        Miss miss = Miss.of(ShootScore.from(FIVE), ShootScore.from(FOUR));
+        Miss miss = Miss.of(FIVE_SCORE, FOUR_SCORE);
 
-        assertThat(miss).isEqualTo(Miss.of(ShootScore.from(FIVE), ShootScore.from(FOUR)));
+        assertThat(miss).isEqualTo(Miss.of(FIVE_SCORE, FOUR_SCORE));
         assertThat(miss.isEnd()).isTrue();
     }
 
@@ -27,9 +23,9 @@ class MissTest {
     void invalidMissCondition() {
         assertAll(
                 () -> {
-                    assertThatThrownBy(() -> Miss.of(ShootScore.from(STRIKE), ShootScore.from(STRIKE)))
+                    assertThatThrownBy(() -> Miss.of(STRIKE, STRIKE))
                             .isInstanceOf(IllegalArgumentException.class);
-                    assertThatThrownBy(() -> Miss.of(ShootScore.from(FIVE), ShootScore.from(FIVE)))
+                    assertThatThrownBy(() -> Miss.of(FIVE_SCORE, FIVE_SCORE))
                             .isInstanceOf(IllegalArgumentException.class);
                 }
         );

@@ -3,8 +3,8 @@ package bowling.frame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static bowling.frame.ShootScoreTest.FIVE_SCORE;
-import static bowling.frame.ShootScoreTest.STRIKE;
+import static bowling.frame.ConstShootScore.FIVE_SCORE;
+import static bowling.frame.ConstShootScore.STRIKE;
 import static org.assertj.core.api.Assertions.*;
 
 class NormalFrameTest {

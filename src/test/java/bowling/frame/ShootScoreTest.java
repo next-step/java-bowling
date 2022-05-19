@@ -3,13 +3,12 @@ package bowling.frame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static bowling.frame.ConstShootScore.FIVE_SCORE;
+import static bowling.frame.ConstShootScore.STRIKE;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ShootScoreTest {
-
-    public static final ShootScore FIVE_SCORE = ShootScore.from(5);
-    public static final ShootScore STRIKE = ShootScore.from(10);
 
     @Test
     @DisplayName("사용자의 투구를 담당할 ShootScore 생성")
