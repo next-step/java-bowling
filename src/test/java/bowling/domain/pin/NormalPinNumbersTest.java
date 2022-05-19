@@ -45,18 +45,18 @@ class NormalPinNumbersTest {
     }
 
     @ParameterizedTest
-    @MethodSource("provideArgumentsForGetResult")
-    void getResult(int firstNo, int secondNo, Class<? extends FrameResult> result) {
+    @MethodSource("provideArgumentsForResult")
+    void result(int firstNo, int secondNo, Class<? extends FrameResult> result) {
         NormalPinNumbers pinNumbers = new NormalPinNumbers(firstNo);
 
         if (firstNo != MAX_PIN_NO) {
             pinNumbers.addPin(secondNo);
         }
 
-        assertThat(pinNumbers.getResult()).isInstanceOf(result);
+        assertThat(pinNumbers.result()).isInstanceOf(result);
     }
 
-    private static Stream<Arguments> provideArgumentsForGetResult() {
+    private static Stream<Arguments> provideArgumentsForResult() {
         return Stream.of(
                 Arguments.of(9, 0, Miss.class),
                 Arguments.of(9, 1, Spare.class),

@@ -35,7 +35,7 @@ public class OutputView {
     }
 
     private static void printFrames(List<Frame> frames) {
-        frames.forEach(frame -> System.out.printf(FRAME_FORMAT, frame.toExpression()));
+        frames.forEach(frame -> System.out.printf(FRAME_FORMAT, frame.expression()));
 
         int emptyFrameCount = MAX_FRAMES_SIZE - frames.size();
         for (int i = 0; i < emptyFrameCount; i++) {

@@ -1,7 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.frameresult.Bonus;
-import bowling.domain.frameresult.FrameResult;
 import bowling.domain.frameresult.Strike;
 import bowling.domain.pin.NormalPinNumbers;
 
@@ -33,7 +31,7 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Frame getNextFrame(int pinNo) {
+    public Frame nextFrame(int pinNo) {
         if (frameNo.isMax()) {
             this.nextFrame = new FinalFrame(pinNo);
             return nextFrame;
@@ -43,20 +41,16 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public boolean canGetResult() {
+    public boolean canGetScore() {
         return pinNumbers.isFull();
     }
 
     @Override
-    public Optional<Integer> getResult() {
-        FrameResult result = pinNumbers.getResult();
-        Bonus bonus = new Bonus();
-        if (nextFrame != null) {
-            bonus.setSpareBonus(nextFrame.spareBonusForPreviousFrame());
-            nextFrame.strikeBonusForPreviousFrame()
-                    .ifPresent(bonus::setStrikeBonus);
+    public Optional<Integer> score() {
+        if (!canGetScore()) {
+            return Optional.empty();
         }
-        return result.calculateScore(bonus);
+        return pinNumbers.result().score(nextFrame);
     }
 
     @Override
@@ -79,11 +73,11 @@ public class NormalFrame implements Frame {
     }
 
     private boolean isStrike() {
-        return pinNumbers.getResult() instanceof Strike;
+        return pinNumbers.result() instanceof Strike;
     }
 
     @Override
-    public String toExpression() {
-        return pinNumbers.toExpression();
+    public String expression() {
+        return pinNumbers.expression();
     }
 }

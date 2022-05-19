@@ -29,12 +29,12 @@ public class NormalPinNumbers implements PinNumbers {
     }
 
     @Override
-    public String toExpression() {
+    public String expression() {
         return PinNoPrinter.print(firstNo, secondNo);
     }
 
     @Override
-    public FrameResult getResult() {
+    public FrameResult result() {
         return firstNo.plus(secondNo);
     }
 

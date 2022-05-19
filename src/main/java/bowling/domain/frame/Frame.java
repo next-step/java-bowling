@@ -6,15 +6,15 @@ public interface Frame {
 
     void addPin(int pinNo);
 
-    Frame getNextFrame(int pinNo);
+    Frame nextFrame(int pinNo);
 
-    boolean canGetResult();
+    boolean canGetScore();
 
-
-    Optional<Integer> getResult();
+    Optional<Integer> score();
 
     int spareBonusForPreviousFrame();
 
     Optional<Integer> strikeBonusForPreviousFrame();
-    String toExpression();
+
+    String expression();
 }

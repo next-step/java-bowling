@@ -1,5 +1,7 @@
 package bowling.domain.frameresult;
 
+import bowling.domain.frame.Frame;
+
 import java.util.Optional;
 
 public class Miss implements FrameResult {
@@ -13,7 +15,7 @@ public class Miss implements FrameResult {
     }
 
     @Override
-    public Optional<Integer> calculateScore(Bonus bonus) {
+    public Optional<Integer> score(Frame nextFrame) {
         return Optional.of(firstNo + secondNo);
     }
 }

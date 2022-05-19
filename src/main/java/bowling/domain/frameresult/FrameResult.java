@@ -1,8 +1,10 @@
 package bowling.domain.frameresult;
 
+import bowling.domain.frame.Frame;
+
 import java.util.Optional;
 
 public interface FrameResult {
 
-    Optional<Integer> calculateScore(Bonus bonus);
+    Optional<Integer> score(Frame nextFrame);
 }

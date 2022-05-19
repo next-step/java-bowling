@@ -8,9 +8,9 @@ public interface PinNumbers {
 
      void addPin(int pinNo);
 
-     String toExpression();
+     String expression();
 
-     FrameResult getResult();
+     FrameResult result();
 
      int spareBonus();
 

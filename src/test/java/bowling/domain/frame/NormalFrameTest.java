@@ -9,59 +9,59 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class NormalFrameTest {
 
-    @DisplayName("9번 프레임에서 getNextFrame 호출하면 FinalFrame 반환")
+    @DisplayName("9번 프레임에서 nextFrame 호출하면 FinalFrame 반환")
     @Test
-    void getNextFrame_WhenCalledAtMaxFrameNo_ReturnsFinalFrame() {
+    void nextFrame_WhenCalledAtMaxFrameNo_ReturnsFinalFrame() {
         NormalFrame frame = new NormalFrame(9, 0);
 
-        assertThat(frame.getNextFrame(10)).isInstanceOf(FinalFrame.class);
+        assertThat(frame.nextFrame(10)).isInstanceOf(FinalFrame.class);
     }
 
-    @ParameterizedTest(name = "1~8번 프레임에서 getNextFrame 호출하면 NormalFrame 반환")
+    @ParameterizedTest(name = "1~8번 프레임에서 nextFrame 호출하면 NormalFrame 반환")
     @ValueSource(ints = {1, 8})
-    void getNextFrame_WhenCalledNonMaxFrameNo_ReturnsNormalFrame(int frameNo) {
+    void nextFrame_WhenCalledNonMaxFrameNo_ReturnsNormalFrame(int frameNo) {
         NormalFrame frame = new NormalFrame(frameNo, 0);
 
-        assertThat(frame.getNextFrame(0)).isInstanceOf(NormalFrame.class);
+        assertThat(frame.nextFrame(0)).isInstanceOf(NormalFrame.class);
     }
 
     @Test
-    void canGetResult_WhenPinsAreFull_ReturnsTrue() {
+    void catGetScore_WhenPinsAreFull_ReturnsTrue() {
         NormalFrame frame = new NormalFrame(9, 0);
 
-        assertThat(frame.canGetResult()).isFalse();
+        assertThat(frame.canGetScore()).isFalse();
         frame.addPin(7);
-        assertThat(frame.canGetResult()).isTrue();
+        assertThat(frame.canGetScore()).isTrue();
     }
 
     @Test
-    void getResult_Miss() {
+    void score_Miss() {
         NormalFrame frame = new NormalFrame(9, 5);
         frame.addPin(4);
 
-        assertThat(frame.getResult()).isPresent();
-        assertThat(frame.getResult()).contains(9);
+        assertThat(frame.score()).isPresent();
+        assertThat(frame.score()).contains(9);
     }
 
     @Test
-    void getResult_Spare() {
+    void score_Spare() {
         NormalFrame frame = new NormalFrame(9, 5);
         frame.addPin(5);
 
-        assertThat(frame.getResult()).isEmpty();
-        frame.getNextFrame(5);
-        assertThat(frame.getResult()).isPresent();
-        assertThat(frame.getResult()).contains(15);
+        assertThat(frame.score()).isEmpty();
+        frame.nextFrame(5);
+        assertThat(frame.score()).isPresent();
+        assertThat(frame.score()).contains(15);
     }
 
     @Test
-    void getResult_Strike() {
+    void score_Strike() {
         NormalFrame frame = new NormalFrame(9, 10);
 
-        assertThat(frame.getResult()).isEmpty();
-        frame.getNextFrame(5).addPin(5);
-        assertThat(frame.getResult()).isPresent();
-        assertThat(frame.getResult()).contains(20);
+        assertThat(frame.score()).isEmpty();
+        frame.nextFrame(5).addPin(5);
+        assertThat(frame.score()).isPresent();
+        assertThat(frame.score()).contains(20);
     }
 
     @Test
@@ -78,7 +78,7 @@ class NormalFrameTest {
         NormalFrame frame = new NormalFrame(9, 10);
 
         assertThat(frame.strikeBonusForPreviousFrame()).isEmpty();
-        frame.getNextFrame(5);
+        frame.nextFrame(5);
         assertThat(frame.strikeBonusForPreviousFrame()).contains(15);
     }
 }

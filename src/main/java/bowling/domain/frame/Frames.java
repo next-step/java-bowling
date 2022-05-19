@@ -22,8 +22,8 @@ public class Frames {
         }
 
         Frame lastFrame = getLastFrame();
-        if (lastFrame.canGetResult()) {
-            frames.add(lastFrame.getNextFrame(pinNo));
+        if (lastFrame.canGetScore()) {
+            frames.add(lastFrame.nextFrame(pinNo));
             return;
         }
 
@@ -31,7 +31,7 @@ public class Frames {
      }
 
     public boolean isFinished() {
-        return frames.size() == MAX_FRAMES_SIZE && getLastFrame().canGetResult();
+        return frames.size() == MAX_FRAMES_SIZE && getLastFrame().canGetScore();
     }
 
     private Frame getLastFrame() {
@@ -39,7 +39,7 @@ public class Frames {
     }
 
     public int currentFrame() {
-        return getLastFrame().canGetResult()
+        return getLastFrame().canGetScore()
                 ? frames.size() + 1
                 : frames.size();
     }
@@ -50,8 +50,7 @@ public class Frames {
 
     public List<Integer> getScores() {
         return frames.stream()
-                .filter(Frame::canGetResult)
-                .map(Frame::getResult)
+                .map(Frame::score)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toList());

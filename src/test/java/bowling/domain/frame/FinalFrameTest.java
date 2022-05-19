@@ -16,61 +16,61 @@ class FinalFrameTest {
                 .isInstanceOf(IllegalStateException.class);
     }
 
-    @ParameterizedTest(name = "스트라이크/스페어 일 때 추가 투구 안 하면 canGetResult false")
+    @ParameterizedTest(name = "스트라이크/스페어 일 때 추가 투구 안 하면 canGetScore false")
     @CsvSource({"10,10", "10,0", "9,1", "8,2"})
-    void canGetResult_WhenExtraMissing_ReturnsFalse(int firstNo, int secondNo) {
+    void canGetScore_WhenExtraMissing_ReturnsFalse(int firstNo, int secondNo) {
         Frame finalFrame = new FinalFrame(firstNo);
         finalFrame.addPin(secondNo);
 
-        assertThat(finalFrame.canGetResult()).isFalse();
+        assertThat(finalFrame.canGetScore()).isFalse();
     }
 
-    @ParameterizedTest(name = "스트라이크/스페어 일 때 추가 투구하면 canGetResult true")
+    @ParameterizedTest(name = "스트라이크/스페어 일 때 추가 투구하면 canGetScore true")
     @CsvSource({"10,10,10", "10,0,3", "9,1,2", "8,2,1"})
-    void canGetResult_WhenExtraAdded_ReturnsTrue(int firstNo, int secondNo, int extraNo) {
+    void canGetScore_WhenExtraAdded_ReturnsTrue(int firstNo, int secondNo, int extraNo) {
         Frame finalFrame = new FinalFrame(firstNo);
         finalFrame.addPin(secondNo);
         finalFrame.addPin(extraNo);
 
-        assertThat(finalFrame.canGetResult()).isTrue();
+        assertThat(finalFrame.canGetScore()).isTrue();
     }
 
-    @ParameterizedTest(name = "미스면 canGetResult true")
+    @ParameterizedTest(name = "미스면 canGetScore true")
     @CsvSource({"8,1", "0,0", "0,9", "4,5"})
-    void canGetResult_WhenMiss_ReturnsTrue(int firstNo, int secondNo) {
+    void canGetScore_WhenMiss_ReturnsTrue(int firstNo, int secondNo) {
         Frame finalFrame = new FinalFrame(firstNo);
         finalFrame.addPin(secondNo);
 
-        assertThat(finalFrame.canGetResult()).isTrue();
+        assertThat(finalFrame.canGetScore()).isTrue();
     }
 
     @Test
-    void getResult_Miss() {
+    void score_Miss() {
         FinalFrame finalFrame = new FinalFrame(5);
         finalFrame.addPin(4);
 
-        assertThat(finalFrame.getResult()).isPresent();
-        assertThat(finalFrame.getResult()).contains(9);
+        assertThat(finalFrame.score()).isPresent();
+        assertThat(finalFrame.score()).contains(9);
     }
 
     @Test
-    void getResult_Spare() {
+    void score_Spare() {
         FinalFrame finalFrame = new FinalFrame(5);
         finalFrame.addPin(5);
         finalFrame.addPin(5);
 
-        assertThat(finalFrame.getResult()).isPresent();
-        assertThat(finalFrame.getResult()).contains(15);
+        assertThat(finalFrame.score()).isPresent();
+        assertThat(finalFrame.score()).contains(15);
     }
 
     @Test
-    void getResult_Strike() {
+    void score_Strike() {
         FinalFrame finalFrame = new FinalFrame(10);
         finalFrame.addPin(5);
         finalFrame.addPin(5);
 
-        assertThat(finalFrame.getResult()).isPresent();
-        assertThat(finalFrame.getResult()).contains(20);
+        assertThat(finalFrame.score()).isPresent();
+        assertThat(finalFrame.score()).contains(20);
     }
 
     @Test

@@ -52,12 +52,12 @@ public class FinalPinNumbers implements PinNumbers {
     }
 
     @Override
-    public String toExpression() {
+    public String expression() {
         return PinNoPrinter.print(pinNos);
     }
 
     @Override
-    public FrameResult getResult() {
+    public FrameResult result() {
         PinNo firstPin = pinNos.get(0);
         PinNo secondPin = pinNos.get(1);
         return firstPin.plus(secondPin);
