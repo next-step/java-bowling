@@ -70,10 +70,11 @@ public class ResultView {
         StringBuilder normalFrameBuilder = new StringBuilder();
         for (int round = MIN_ROUND; round < MAX_ROUND; round++) {
             Frame frameByRound = frames.findFrameByRound(Round.from(round));
+            Status myStatus = frameByRound.findMyStatus();
 
             normalFrameBuilder
                     .append(TWO_BLANK)
-                    .append(drawScoreByStatus(frameByRound.findMyStatus()))
+                    .append(myStatus.board())
                     .append(TWO_BLANK)
                     .append(DIVIDER);
         }
@@ -86,57 +87,14 @@ public class ResultView {
         lastBuilder
                 .append(TWO_BLANK);
 
-        for (Status myAllStatus : lastFrame.findMyAllStatus()) {
-            lastBuilder.append(drawScoreByStatus(myAllStatus));
+        for (Status lastFrameStatus : lastFrame.findMyAllStatus()) {
+            lastBuilder.append(lastFrameStatus.board());
         }
 
         lastBuilder.append(TWO_BLANK);
         lastBuilder.append(DIVIDER);
 
         return lastBuilder.toString();
-    }
-
-    private String drawScoreByStatus(Status myStatus) {
-        if (myStatus instanceof FirstShoot) {
-            return drawFirstShootStatus((FirstShoot) myStatus);
-        }
-
-        if (myStatus instanceof Miss) {
-            return drawMissStatus((Miss) myStatus);
-        }
-
-        if (myStatus instanceof Strike) {
-            return STRIKE_SIGNATURE;
-        }
-
-        if (myStatus instanceof Spare) {
-            return drawSpareStatus((Spare) myStatus);
-        }
-
-        return ONE_BLANK;
-    }
-
-    private String drawMissStatus(Miss myStatus) {
-        String firstShootSignature = drawGutterOrScore(myStatus.findFirstShoot());
-        String secondShootSignature = drawGutterOrScore(myStatus.findSecondShoot());
-
-        return firstShootSignature + DIVIDER + secondShootSignature;
-    }
-
-    private String drawGutterOrScore(ShootScore shootScore) {
-        if (shootScore.isGutter()) {
-            return GUTTER_SIGNATURE;
-        }
-        return Integer.toString(shootScore.getShootScore());
-    }
-
-
-    private String drawFirstShootStatus(FirstShoot myStatus) {
-        return drawGutterOrScore(myStatus.findFirstShoot());
-    }
-
-    private String drawSpareStatus(Spare myStatus) {
-        return drawGutterOrScore(myStatus.findFirstShoot()) + DIVIDER + SPARE_SIGNATURE;
     }
 
 }

@@ -48,7 +48,7 @@ public class BowlingApplication {
 
     private static void lastFrame(PlayerName playerName, Frames frames, InputView inputView, ResultView resultView) {
         Round lastRound = Round.from(MAX_ROUND);
-        LastFrame lastFrame = (LastFrame) frames.findFrameByRound(lastRound);
+        Frame lastFrame = frames.findFrameByRound(lastRound);
 
         int firstShoot = inputView.inputShootScore(lastRound);
         lastFrame.shoot(ShootScore.from(firstShoot));
