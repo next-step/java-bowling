@@ -15,6 +15,8 @@ import qna.CannotDeleteException;
 
 @Entity
 public class Question extends AbstractEntity {
+    private static final String NO_AUTHORITY_FOR_DELETE = "질문을 삭제할 권한이 없습니다.";
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -98,10 +100,13 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
+    private void delete() {
+        deleted = true;
+    }
     public List<DeleteHistory> delete(User user) throws CannotDeleteException {
         checkQuestionOwnerOrThrow(user);
 
-        this.deleted = true;
+        delete();
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(DeleteHistory.of(ContentType.QUESTION, this.getId(), this.getWriter(), LocalDateTime.now()));
@@ -112,7 +117,7 @@ public class Question extends AbstractEntity {
 
     private void checkQuestionOwnerOrThrow(User user) throws CannotDeleteException {
         if (!Objects.isNull(writer) && !isOwner(user)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+            throw new CannotDeleteException(NO_AUTHORITY_FOR_DELETE);
         }
     }
 

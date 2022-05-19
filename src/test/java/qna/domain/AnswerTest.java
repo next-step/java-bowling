@@ -23,15 +23,6 @@ public class AnswerTest {
         assertThat(answer).isNotNull();
     }
 
-    @Test
-    void deleteTest() {
-        assertThat(answer.isDeleted()).isFalse();
-
-        answer.delete();
-
-        assertThat(answer.isDeleted()).isTrue();
-    }
-
     @DisplayName("답변 작성자와 현재 로그인 사용자가 일치하는 경우 삭제 성공한다.")
     @Test
     void deleteByUser() throws CannotDeleteException {
