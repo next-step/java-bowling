@@ -14,8 +14,12 @@ class MissTest {
     void create() {
         Miss miss = Miss.of(FIVE_SCORE, FOUR_SCORE);
 
-        assertThat(miss).isEqualTo(Miss.of(FIVE_SCORE, FOUR_SCORE));
-        assertThat(miss.isEnd()).isTrue();
+        assertAll(
+                () -> {
+                    assertThat(miss).isEqualTo(Miss.of(FIVE_SCORE, FOUR_SCORE));
+                    assertThat(miss.isEnd()).isTrue();
+                }
+        );
     }
 
     @Test

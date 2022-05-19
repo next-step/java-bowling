@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import static bowling.frame.ConstShootScore.FIVE_SCORE;
 import static bowling.frame.ConstShootScore.STRIKE;
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ReadyTest {
 
@@ -21,8 +22,12 @@ class ReadyTest {
     void firstShootNotStrikeStatus() {
         Ready ready = Ready.create();
         Status firstShootStatus = ready.shoot(FIVE_SCORE);
-        assertThat(firstShootStatus.getClass()).hasSameClassAs(FirstShoot.class);
-        assertThat(firstShootStatus.isEnd()).isFalse();
+        assertAll(
+                () -> {
+                    assertThat(firstShootStatus.getClass()).hasSameClassAs(FirstShoot.class);
+                    assertThat(firstShootStatus.isEnd()).isFalse();
+                }
+        );
     }
 
     @Test
@@ -30,7 +35,11 @@ class ReadyTest {
     void firstShootIsStrike() {
         Ready ready = Ready.create();
         Status strikeStatus = ready.shoot(STRIKE);
-        assertThat(strikeStatus.getClass()).hasSameClassAs(Strike.class);
-        assertThat(strikeStatus.isEnd()).isTrue();
+        assertAll(
+                () -> {
+                    assertThat(strikeStatus.getClass()).hasSameClassAs(Strike.class);
+                    assertThat(strikeStatus.isEnd()).isTrue();
+                }
+        );
     }
 }
