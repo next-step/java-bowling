@@ -31,4 +31,11 @@ class SpareTest {
         assertThatThrownBy(() -> Spare.from(STRIKE))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("Spare 는 더 투구할 수 없습니다")
+    void spareCantShoot() {
+        assertThatThrownBy(() -> Spare.from(FIVE_SCORE).shoot(FIVE_SCORE))
+                .isInstanceOf(UnsupportedOperationException.class);
+    }
 }
