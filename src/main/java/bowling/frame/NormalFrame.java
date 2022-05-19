@@ -16,11 +16,13 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public void shoot(ShootScore shootScore) {
+    public Frame shoot(ShootScore shootScore) {
         if (isEnd()) {
             throw new IllegalArgumentException("종료된 프레임에서는 더 투구할 수 없습니다.");
         }
         status = status.shoot(shootScore);
+
+        return this;
     }
 
     @Override
