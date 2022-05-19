@@ -12,7 +12,7 @@ public class Strike implements Status {
 
     @Override
     public Status shoot(ShootScore shootScore) {
-        throw new IllegalArgumentException("마지막 프레임을 제외한 일반 프레임에서 스트라이크는 더 투구하지 않습니다");
+        throw new UnsupportedOperationException("마지막 프레임을 제외한 일반 프레임에서 스트라이크는 더 투구하지 않습니다");
     }
 
     @Override
