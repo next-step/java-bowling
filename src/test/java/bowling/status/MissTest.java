@@ -12,7 +12,7 @@ class MissTest {
     @Test
     @DisplayName("두 개의 투구를 진행했을 때 10개 미만의 점수를 얻었을 경우 발생하는 상태")
     void create() {
-        Miss miss = Miss.of(FIVE_SCORE, FOUR_SCORE);
+        Status miss = Miss.of(FIVE_SCORE, FOUR_SCORE);
 
         assertAll(
                 () -> {

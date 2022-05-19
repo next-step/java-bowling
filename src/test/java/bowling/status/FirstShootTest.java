@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class FirstShootTest {
 
-    private FirstShoot firstFiveShoot;
+    private Status firstFiveShoot;
 
     @BeforeEach
     void setUp() {

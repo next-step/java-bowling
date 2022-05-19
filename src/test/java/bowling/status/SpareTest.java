@@ -13,10 +13,10 @@ class SpareTest {
     @Test
     @DisplayName("Spare 의 정적 팩토리 메서드로 생성한 Spare 와 FirstShoot 에서 Spare 처리를 통해 생성된 Spare 는 같아야함")
     void create() {
-        FirstShoot firstShoot = FirstShoot.from(FIVE_SCORE);
+        Status firstShoot = FirstShoot.from(FIVE_SCORE);
         Status spareStatus = firstShoot.shoot(FIVE_SCORE);
 
-        Spare spare = Spare.from(FIVE_SCORE);
+        Status spare = Spare.from(FIVE_SCORE);
         assertAll(
                 () -> {
                     assertThat(spare).isEqualTo(spareStatus);

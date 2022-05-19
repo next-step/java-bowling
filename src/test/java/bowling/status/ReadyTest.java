@@ -13,14 +13,14 @@ class ReadyTest {
     @Test
     @DisplayName("투구 되지 않은 Frame 의 준비 상태를 나타내는 Ready 클래스 생성")
     void create() {
-        Ready ready = Ready.create();
+        Status ready = Ready.create();
         assertThat(ready.isEnd()).isFalse();
     }
 
     @Test
     @DisplayName("Ready 상태의 프레임에서 Strike 가 아닌 첫 투구를 진행하면 FirstShoot 상태를 반환해줌")
     void firstShootNotStrikeStatus() {
-        Ready ready = Ready.create();
+        Status ready = Ready.create();
         Status firstShootStatus = ready.shoot(FIVE_SCORE);
         assertAll(
                 () -> {
@@ -33,7 +33,7 @@ class ReadyTest {
     @Test
     @DisplayName("Ready 상태의 프레임에서 Strike 를 입력하면 Strike 상태를 반환해줌")
     void firstShootIsStrike() {
-        Ready ready = Ready.create();
+        Status ready = Ready.create();
         Status strikeStatus = ready.shoot(STRIKE);
         assertAll(
                 () -> {
