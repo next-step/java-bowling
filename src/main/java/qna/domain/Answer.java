@@ -55,7 +55,7 @@ public class Answer extends AbstractEntity {
         }
         validateConfirmWriter(user);
         this.deleted = true;
-        return new DeleteHistory(ContentType.ANSWER, id, writer, LocalDateTime.now());
+        return DeleteHistory.from(ContentType.ANSWER, id, writer);
     }
 
     public boolean isDeleted() {

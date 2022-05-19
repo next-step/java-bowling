@@ -57,7 +57,7 @@ public class Question extends AbstractEntity {
     }
 
     private DeleteHistory addDeleteHistory() {
-        return new DeleteHistory(ContentType.QUESTION, id, writer, LocalDateTime.now());
+        return DeleteHistory.from(ContentType.QUESTION, id, writer);
     }
 
     public List<DeleteHistory> delete(User user) {
