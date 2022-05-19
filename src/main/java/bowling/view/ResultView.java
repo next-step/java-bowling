@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.PlayerName;
+import bowling.domain.BowlingGame;
 import bowling.frame.*;
 import bowling.status.*;
 
@@ -17,9 +17,9 @@ public class ResultView {
     private static final String NAME = "NAME";
     private static final String DIVIDER = "|";
 
-    public void printFrameBoard(PlayerName playerName, Frames frames) {
+    public void printFrameBoard(BowlingGame bowlingGame) {
         printRoundBoard();
-        printScoreBoard(playerName, frames);
+        printScoreBoard(bowlingGame);
     }
 
     private void printRoundBoard() {
@@ -37,28 +37,27 @@ public class ResultView {
                     .append(TWO_BLANK)
                     .append(boardFormat(round + ONE_INDEX))
                     .append(DIVIDER);
-
         }
 
         System.out.println(roundBuilder);
     }
 
-    private void printScoreBoard(PlayerName playerName, Frames frames) {
+    private void printScoreBoard(BowlingGame bowlingGame) {
         StringBuilder scoreBuilder = new StringBuilder();
 
-        scoreBuilder.append(buildPlayerName(playerName));
-        scoreBuilder.append(buildNormalFrame(frames));
-        scoreBuilder.append(buildLastFrame((LastFrame) frames.findFrameByRound(Round.from(MAX_ROUND))));
+        scoreBuilder.append(buildPlayerName(bowlingGame.playerName()));
+        scoreBuilder.append(buildNormalFrame(bowlingGame.frames()));
+        scoreBuilder.append(buildLastFrame((LastFrame) bowlingGame.frames().findFrameByRound(Round.from(MAX_ROUND))));
 
         System.out.println(scoreBuilder);
     }
 
-    private String buildPlayerName(PlayerName playerName) {
+    private String buildPlayerName(String playerName) {
         StringBuilder playerNameBuilder = new StringBuilder();
         playerNameBuilder
                 .append(DIVIDER)
                 .append(TWO_BLANK)
-                .append(boardFormat(playerName.getPlayerName()))
+                .append(boardFormat(playerName))
                 .append(TWO_BLANK)
                 .append(DIVIDER);
 

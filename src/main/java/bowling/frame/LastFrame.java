@@ -10,10 +10,11 @@ import static java.util.Collections.*;
 public class LastFrame implements Frame {
 
     private static final int SECOND_SHOOT_COUNT = 2;
+    private static final int MAX_SHOOT_COUNT = 3;
 
     private int shootCount = 0;
 
-    private LinkedList<Status> statuses = new LinkedList<>();
+    private final LinkedList<Status> statuses = new LinkedList<>();
 
     private LastFrame() {
         statuses.add(Ready.create());
@@ -52,7 +53,8 @@ public class LastFrame implements Frame {
 
     @Override
     public boolean isEnd() {
-        return shootCount == SECOND_SHOOT_COUNT && statuses.getLast() instanceof Miss;
+        return shootCount == MAX_SHOOT_COUNT ||
+                shootCount == SECOND_SHOOT_COUNT && statuses.getLast() instanceof Miss;
     }
 
     @Override
