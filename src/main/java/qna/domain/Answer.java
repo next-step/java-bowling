@@ -47,16 +47,12 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer changeDeleteState(User writer) throws CannotDeleteException {
+    public DeleteHistory delete(User writer) throws CannotDeleteException {
         if(!isOwner(writer)){
-            throw new CannotDeleteException("답변을 삭제할 권한이 없습니다.");
+            throw new CannotDeleteException(writer + "는 답변 작성자가 아니기 때문에 삭제할 권한이 없습니다.");
         }
         this.deleted = true;
-        return this;
-    }
-
-    public void addDeleteHistory(List<DeleteHistory> deleteHistories){
-        deleteHistories.add(new DeleteHistory(ContentType.ANSWER, this.getId(), this.writer, LocalDateTime.now()));
+        return new DeleteHistory(ContentType.ANSWER, this.getId(), this.writer, LocalDateTime.now());
     }
 
     public boolean isDeleted() {

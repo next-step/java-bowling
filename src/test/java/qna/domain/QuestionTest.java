@@ -17,24 +17,12 @@ public class QuestionTest {
     }
 
     @Test
-    void 삭제에대한답변조건() {
-        assertThat(Q1.canDeletedAnswerCondition(UserTest.JAVAJIGI)).isFalse();
-    }
-    @Test
-    void 답변이없을경우(){
-        Question noAnswerQ = new Question("title3","content3").writeBy(UserTest.JAVAJIGI);
-
-        assertThat(noAnswerQ.canDeletedAnswerCondition(UserTest.JAVAJIGI)).isFalse();
-    }
-
-    @Test
     void 질문삭제상태변경() throws CannotDeleteException {
         Q1.delete(UserTest.JAVAJIGI);
-
         assertThat(Q1.isDeleted()).isTrue();
     }
     @Test
-    void 다른사용자삭제() throws CannotDeleteException {
+    void 다른사용자삭제(){
         assertThatThrownBy(()->{
             Q1.delete(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);

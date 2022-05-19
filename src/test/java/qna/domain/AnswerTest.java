@@ -12,7 +12,8 @@ public class AnswerTest {
 
     @Test
     void 삭제() throws CannotDeleteException {
-        Answer temporaryA = A1.changeDeleteState(UserTest.JAVAJIGI);
-        assertThat(temporaryA.isDeleted()).isTrue();
+        A1.delete(UserTest.JAVAJIGI);
+        assertThat(A1.isDeleted()).isTrue();
     }
+
 }
