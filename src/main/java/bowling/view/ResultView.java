@@ -4,6 +4,8 @@ import bowling.domain.PlayerName;
 import bowling.frame.*;
 import bowling.status.*;
 
+import java.util.List;
+
 public class ResultView {
 
     private static final int MIN_ROUND = 0;
@@ -14,9 +16,6 @@ public class ResultView {
     private static final String TWO_BLANK = "  ";
     private static final String NAME = "NAME";
     private static final String DIVIDER = "|";
-    private static final String STRIKE_SIGNATURE = "X";
-    private static final String SPARE_SIGNATURE = "/";
-    private static final String GUTTER_SIGNATURE = "-";
 
     public void printFrameBoard(PlayerName playerName, Frames frames) {
         printRoundBoard();
@@ -29,16 +28,16 @@ public class ResultView {
         roundBuilder
                 .append(DIVIDER)
                 .append(TWO_BLANK)
-                .append(NAME)
-                .append(TWO_BLANK)
+                .append(boardFormat(NAME))
+                .append(ONE_BLANK)
                 .append(DIVIDER);
 
         for (int round = MIN_ROUND; round < MAX_ROUND + ONE_INDEX; round++) {
             roundBuilder
                     .append(TWO_BLANK)
-                    .append(round + ONE_INDEX)
-                    .append(TWO_BLANK)
+                    .append(boardFormat(round + ONE_INDEX))
                     .append(DIVIDER);
+
         }
 
         System.out.println(roundBuilder);
@@ -59,7 +58,7 @@ public class ResultView {
         playerNameBuilder
                 .append(DIVIDER)
                 .append(TWO_BLANK)
-                .append(playerName.getPlayerName())
+                .append(boardFormat(playerName.getPlayerName()))
                 .append(TWO_BLANK)
                 .append(DIVIDER);
 
@@ -74,8 +73,7 @@ public class ResultView {
 
             normalFrameBuilder
                     .append(TWO_BLANK)
-                    .append(myStatus.board())
-                    .append(TWO_BLANK)
+                    .append(boardFormat(myStatus.board()))
                     .append(DIVIDER);
         }
         return normalFrameBuilder.toString();
@@ -83,18 +81,31 @@ public class ResultView {
 
     private String buildLastFrame(LastFrame lastFrame) {
         StringBuilder lastBuilder = new StringBuilder();
+        String lastFrameStatus = lastFrameBoard(lastFrame.findMyAllStatus());
 
         lastBuilder
-                .append(TWO_BLANK);
-
-        for (Status lastFrameStatus : lastFrame.findMyAllStatus()) {
-            lastBuilder.append(lastFrameStatus.board());
-        }
-
-        lastBuilder.append(TWO_BLANK);
-        lastBuilder.append(DIVIDER);
+                .append(TWO_BLANK)
+                .append(boardFormat(lastFrameStatus))
+                .append(DIVIDER);
 
         return lastBuilder.toString();
     }
 
+    private String lastFrameBoard(List<Status> myAllStatus) {
+        StringBuilder lastFrameBoardBuilder = new StringBuilder();
+
+        for (Status myStatus : myAllStatus) {
+            lastFrameBoardBuilder.append(myStatus.board());
+        }
+
+        return lastFrameBoardBuilder.toString();
+    }
+
+    private String boardFormat(String board) {
+        return String.format("%-3s", board);
+    }
+
+    private String boardFormat(int board) {
+        return String.format("%-3s", board);
+    }
 }
