@@ -34,6 +34,9 @@ public final class Answers {
     }
 
 
+    public void add(Answer answer) {
+        answers.add(answer);
+    }
 
     @Override
     public boolean equals(Object o) {

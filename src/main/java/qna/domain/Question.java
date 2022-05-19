@@ -37,6 +37,11 @@ public class Question extends AbstractEntity {
     }
 
 
+    public void addAnswer(Answer answer) {
+        answer.toQuestion(this);
+        answers.add(answer);
+    }
+
     public Question writeBy(User loginUser) {
         this.writer = loginUser;
         return this;

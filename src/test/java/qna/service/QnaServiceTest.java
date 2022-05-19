@@ -38,6 +38,7 @@ public class QnaServiceTest {
         answerId = 11L;
         question = new Question(questionId, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
         answer = new Answer(answerId, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+        question.addAnswer(answer);
     }
 
     @Test
