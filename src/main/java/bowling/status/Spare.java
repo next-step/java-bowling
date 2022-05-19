@@ -4,7 +4,12 @@ import bowling.frame.ShootScore;
 
 import java.util.Objects;
 
+import static bowling.status.StatusBoardFactory.drawGutterOrScore;
+
 public class Spare implements Status {
+
+    private static final String DIVIDER = "|";
+    private static final String SPARE_SIGNATURE = "/";
 
     private final ShootScore firstShoot;
 
@@ -31,6 +36,11 @@ public class Spare implements Status {
     @Override
     public boolean isEnd() {
         return true;
+    }
+
+    @Override
+    public String board() {
+        return drawGutterOrScore(firstShoot) + DIVIDER + SPARE_SIGNATURE;
     }
 
     @Override

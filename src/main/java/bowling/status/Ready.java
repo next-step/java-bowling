@@ -4,6 +4,8 @@ import bowling.frame.ShootScore;
 
 public class Ready implements Status {
 
+    private static final String BLANK = " ";
+
     private Ready() { }
 
     public static Ready create() {
@@ -21,5 +23,10 @@ public class Ready implements Status {
     @Override
     public boolean isEnd() {
         return false;
+    }
+
+    @Override
+    public String board() {
+        return BLANK;
     }
 }

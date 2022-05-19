@@ -4,7 +4,11 @@ import bowling.frame.ShootScore;
 
 import java.util.Objects;
 
+import static bowling.status.StatusBoardFactory.drawGutterOrScore;
+
 public class Miss implements Status {
+
+    private static final String DIVIDER = "|";
 
     private final ShootScore firstShoot;
     private final ShootScore secondShoot;
@@ -41,6 +45,11 @@ public class Miss implements Status {
     @Override
     public boolean isEnd() {
         return true;
+    }
+
+    @Override
+    public String board() {
+        return drawGutterOrScore(firstShoot) + DIVIDER + drawGutterOrScore(secondShoot);
     }
 
     @Override

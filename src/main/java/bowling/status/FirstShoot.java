@@ -4,6 +4,8 @@ import bowling.frame.ShootScore;
 
 import java.util.Objects;
 
+import static bowling.status.StatusBoardFactory.drawGutterOrScore;
+
 public class FirstShoot implements Status {
 
     private final ShootScore firstShoot;
@@ -35,6 +37,11 @@ public class FirstShoot implements Status {
     @Override
     public boolean isEnd() {
         return false;
+    }
+
+    @Override
+    public String board() {
+        return drawGutterOrScore(firstShoot);
     }
 
     @Override

@@ -7,4 +7,6 @@ public interface Status {
     Status shoot(ShootScore shootScore);
 
     boolean isEnd();
+
+    String board();
 }

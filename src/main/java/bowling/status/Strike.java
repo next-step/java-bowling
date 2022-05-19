@@ -4,6 +4,8 @@ import bowling.frame.ShootScore;
 
 public class Strike implements Status {
 
+    private static final String STRIKE_SIGNATURE = "X";
+
     private Strike() { }
 
     public static Strike create() {
@@ -18,5 +20,10 @@ public class Strike implements Status {
     @Override
     public boolean isEnd() {
         return true;
+    }
+
+    @Override
+    public String board() {
+        return STRIKE_SIGNATURE;
     }
 }
