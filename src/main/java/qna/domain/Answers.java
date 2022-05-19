@@ -24,11 +24,10 @@ public final class Answers {
         this.answers = answers;
     }
 
-    public List<DeleteHistory> delete(User loginUser) {
+    public List<DeleteHistory> delete(User user) {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         for (Answer answer : answers) {
-            answer.validateConfirmWriter(loginUser);
-            deleteHistories.add(answer.delete(loginUser));
+            deleteHistories.add(answer.delete(user));
         }
         return deleteHistories;
     }

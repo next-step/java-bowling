@@ -42,16 +42,16 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public Question writeBy(User loginUser) {
-        this.writer = loginUser;
+    public Question writeBy(User user) {
+        this.writer = user;
         return this;
     }
 
 
 
 
-    public void validateIsOwner(User loginUser) {
-        if (!writer.equals(loginUser)) {
+    public void validateIsOwner(User user) {
+        if (!writer.equals(user)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
     }
@@ -60,10 +60,10 @@ public class Question extends AbstractEntity {
         return new DeleteHistory(ContentType.QUESTION, id, writer, LocalDateTime.now());
     }
 
-    public List<DeleteHistory> delete(User loginUser) {
-        validateIsOwner(loginUser);
+    public List<DeleteHistory> delete(User user) {
+        validateIsOwner(user);
         this.deleted = true;
-        List<DeleteHistory> deleteHistories = answers.delete(loginUser);
+        List<DeleteHistory> deleteHistories = answers.delete(user);
         deleteHistories.add(addDeleteHistory());
         return deleteHistories;
     }

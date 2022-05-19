@@ -45,7 +45,7 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public DeleteHistory delete(User loginUser) {
+    public DeleteHistory delete(User user) {
         if (writer == null) {
             throw new UnAuthorizedException();
         }
@@ -53,7 +53,7 @@ public class Answer extends AbstractEntity {
         if (question == null) {
             throw new NotFoundException();
         }
-        validateConfirmWriter(loginUser);
+        validateConfirmWriter(user);
         this.deleted = true;
         return new DeleteHistory(ContentType.ANSWER, id, writer, LocalDateTime.now());
     }
