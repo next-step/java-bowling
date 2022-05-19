@@ -56,16 +56,13 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-
     public List<DeleteHistory> addAllDeleteHistory(User loginUser){
         changeDeleteState(true);
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now()));
         answers.answersDelete(loginUser, deleteHistories);
-
         return deleteHistories;
     }
-
 
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         if(!isOwner(loginUser)){
@@ -81,7 +78,6 @@ public class Question extends AbstractEntity {
 
     private void changeDeleteState(boolean state){
         this.deleted = state;
-
     }
 
     public boolean isDeleted() {
