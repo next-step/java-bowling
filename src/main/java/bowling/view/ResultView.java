@@ -19,6 +19,7 @@ public class ResultView {
 
     public void printFrameBoard(BowlingGame bowlingGame) {
         printRoundBoard();
+        printBoard(bowlingGame);
         printScoreBoard(bowlingGame);
     }
 
@@ -42,7 +43,7 @@ public class ResultView {
         System.out.println(roundBuilder);
     }
 
-    private void printScoreBoard(BowlingGame bowlingGame) {
+    private void printBoard(BowlingGame bowlingGame) {
         StringBuilder scoreBuilder = new StringBuilder();
 
         scoreBuilder.append(buildPlayerName(bowlingGame.playerName()));
@@ -50,6 +51,35 @@ public class ResultView {
         scoreBuilder.append(buildLastFrame((LastFrame) bowlingGame.frames().findFrameByRound(Round.from(MAX_ROUND))));
 
         System.out.println(scoreBuilder);
+    }
+
+    private void printScoreBoard(BowlingGame bowlingGame) {
+        StringBuilder scoreBuilder = new StringBuilder();
+
+        scoreBuilder
+                .append(DIVIDER)
+                .append(TWO_BLANK)
+                .append(boardFormat(ONE_BLANK))
+                .append(TWO_BLANK)
+                .append(DIVIDER)
+                .append(buildScoreFrame(bowlingGame.frames()));
+
+        System.out.println(scoreBuilder);
+    }
+
+    private String buildScoreFrame(Frames frames) {
+        StringBuilder scoreFrameBuilder = new StringBuilder();
+        for (int round = MIN_ROUND; round < MAX_ROUND; round++) {
+            Frame findFrame = frames.findFrameByRound(Round.from(round));
+            Status myStatus = findFrame.findMyStatus();
+
+            scoreFrameBuilder
+                    .append(TWO_BLANK)
+                    .append(boardFormat(ONE_BLANK))
+                    .append(DIVIDER);
+        }
+
+        return scoreFrameBuilder.toString();
     }
 
     private String buildPlayerName(String playerName) {
