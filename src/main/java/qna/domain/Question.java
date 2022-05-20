@@ -17,21 +17,17 @@ import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
-    @Column(length = 100, nullable = false)
-    private String title;
-
-    @Lob
-    private String contents;
-
-    @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
-    private User writer;
-
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
     private final List<Answer> answers = new ArrayList<>();
-
+    @Column(length = 100, nullable = false)
+    private String title;
+    @Lob
+    private String contents;
+    @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
+    private User writer;
     private boolean deleted = false;
 
     public Question() {
@@ -104,6 +100,10 @@ public class Question extends AbstractEntity {
         );
 
         new Answers(this.answers).delete(deleteHistories);
+    }
+
+    public boolean answerHasWrittenByOthers(User loginUser) {
+        return new Answers(this.answers).hasWrittenByOthers(loginUser);
     }
 
     @Override

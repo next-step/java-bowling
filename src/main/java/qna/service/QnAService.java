@@ -6,17 +6,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import qna.CannotDeleteException;
 import qna.NotFoundException;
-import qna.domain.Answer;
 import qna.domain.AnswerRepository;
-import qna.domain.Answers;
-import qna.domain.ContentType;
 import qna.domain.DeleteHistory;
 import qna.domain.Question;
 import qna.domain.QuestionRepository;
 import qna.domain.User;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,10 +42,7 @@ public class QnAService {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
 
-        List<Answer> answerList = question.getAnswers();
-
-        Answers answers = new Answers(answerList);
-        if (answers.hasWrittenByOthers(loginUser)) {
+        if (question.answerHasWrittenByOthers(loginUser)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
 
