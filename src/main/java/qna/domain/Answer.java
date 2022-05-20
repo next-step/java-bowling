@@ -34,11 +34,11 @@ public class Answer extends AbstractEntity {
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
 
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
 
@@ -48,8 +48,8 @@ public class Answer extends AbstractEntity {
     }
 
     public DeleteHistory delete(User writer) throws CannotDeleteException {
-        if(!isOwner(writer)){
-            throw new CannotDeleteException(writer + "는 답변 작성자가 아니기 때문에 삭제할 권한이 없습니다.");
+        if (!isOwner(writer)) {
+            throw new CannotDeleteException(writer + "님은 답변 작성자가 아니기 때문에 삭제할 권한이 없습니다.");
         }
         this.deleted = true;
         return new DeleteHistory(ContentType.ANSWER, this.getId(), this.writer, LocalDateTime.now());

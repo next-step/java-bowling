@@ -17,29 +17,29 @@ public class Answers {
     @OrderBy("id ASC")
     private List<Answer> answers = new ArrayList<>();
 
-    public void addAnswer(Answer answer){
+    public void addAnswer(Answer answer) {
         answers.add(answer);
     }
 
-    public void changeAnswersDeleteState(User loginUser, List<DeleteHistory> deleteHistories){
-        answers.stream().forEach(answer -> {
+    private List<DeleteHistory> changeAnswersDeleteState(User loginUser) {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        answers.forEach(answer -> {
             try {
-                 deleteHistories.add(answer.delete(loginUser));
+                deleteHistories.add(answer.delete(loginUser));
             } catch (CannotDeleteException e) {
                 e.printStackTrace();
+                throw new RuntimeException(loginUser + "님 의 삭제가 거부되었습니다. 전체 비지니스 로직을 종료합니다.");
             }
         });
-    }
-
-
-    public List<DeleteHistory> answersDelete(User loginUser, List<DeleteHistory> deleteHistories){
-        canDeletedAnswerCondition(loginUser);
-        changeAnswersDeleteState(loginUser, deleteHistories);
-
         return deleteHistories;
     }
 
+    public List<DeleteHistory> answersDelete(User loginUser) {
+        canDeletedAnswerCondition(loginUser);
+        return changeAnswersDeleteState(loginUser);
+    }
+
     public boolean canDeletedAnswerCondition(User loginUser) {
-        return answers.stream().anyMatch(answer-> !answer.isOwner(loginUser));
+        return answers.stream().anyMatch(answer -> !answer.isOwner(loginUser));
     }
 }

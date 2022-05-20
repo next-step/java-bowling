@@ -4,11 +4,12 @@ import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
+    public static final int INITIAL_INDEX = 0;
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -56,27 +57,24 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public List<DeleteHistory> addAllDeleteHistory(User loginUser){
+    private List<DeleteHistory> addAllDeleteHistory(User loginUser) {
         changeDeleteState(true);
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now()));
-        answers.answersDelete(loginUser, deleteHistories);
+        List<DeleteHistory> deleteHistories = answers.answersDelete(loginUser);
+        deleteHistories.add(INITIAL_INDEX, new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now()));
         return deleteHistories;
     }
 
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
-        if(!isOwner(loginUser)){
-            throw new CannotDeleteException(loginUser + "는 질문 작성자가 아니기 때문에 삭제할 권한이 없습니다.");
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(loginUser + "님은 질문 작성자가 아니기 때문에 삭제할 권한이 없습니다.");
         }
-
-        if(answers.canDeletedAnswerCondition(loginUser)){
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        if (answers.canDeletedAnswerCondition(loginUser)) {
+            throw new CannotDeleteException(loginUser + "님 말고 다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
         return addAllDeleteHistory(loginUser);
-
     }
 
-    private void changeDeleteState(boolean state){
+    private void changeDeleteState(boolean state) {
         this.deleted = state;
     }
 
