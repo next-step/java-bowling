@@ -1,9 +1,17 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
-import qna.CannotDeleteException;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +30,7 @@ public class Question extends AbstractEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    private final List<Answer> answers = new ArrayList<>();
 
     private boolean deleted = false;
 
@@ -76,24 +84,26 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
+    public boolean isDeleted() {
+        return deleted;
+    }
+
     public Question setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
     }
 
     public List<Answer> getAnswers() {
         return answers;
     }
 
-    public void delete() throws CannotDeleteException {
-        Answers answers = new Answers(this.answers);
-        if (answers.hasWrittenByOthers(this.writer)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-        }
+    public void delete(List<DeleteHistory> deleteHistories, long questionId) {
+        this.deleted = true;
+        deleteHistories.add(
+                new DeleteHistory(ContentType.QUESTION, questionId, this.writer, LocalDateTime.now())
+        );
+
+        new Answers(this.answers).delete(deleteHistories);
     }
 
     @Override
