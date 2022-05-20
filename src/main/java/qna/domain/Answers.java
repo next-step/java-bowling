@@ -1,7 +1,7 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 public class Answers {
     private final List<Answer> answers;
@@ -19,5 +19,12 @@ public class Answers {
     public boolean hasWrittenByOthers(User user) {
         return answers.stream()
                 .anyMatch(answer -> !answer.isOwner(user));
+    }
+
+    public void delete(List<DeleteHistory> deleteHistories) {
+        answers.forEach(answer -> {
+            answer.setDeleted(true);
+            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+        });
     }
 }
