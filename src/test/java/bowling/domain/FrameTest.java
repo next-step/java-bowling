@@ -1,37 +1,85 @@
 package bowling.domain;
 
+import bowling.domain.state.*;
 import bowling.exception.EndedFrameException;
-import bowling.exception.InvalidNumberOfFallenPinsException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class FrameTest {
-    private final Frame given_frame_2 = new Frame();
-    private final Frame given_frame_3 = new Frame();
+class Frame1Test {
+    private Frame frame;
 
-    @Test
-    void 게임_실행_정상() {
-        assertThat(given_frame_2.play(2, 3)).isEqualTo(3);
-        assertThat(given_frame_2.play(2, 6)).isEqualTo(6);
-
-        assertThat(given_frame_3.play(3, 9)).isEqualTo(9);
-        assertThat(given_frame_3.play(3, 0)).isEqualTo(0);
+    @BeforeEach
+    void setUp() {
+        frame = new Frame();
     }
 
     @Test
-    void 게임_실행_비정상_핀갯수_초과() {
-        assertThatThrownBy(() -> given_frame_2.play(2, 11))
-                .isInstanceOf(InvalidNumberOfFallenPinsException.class);
+    void 프레임_시작시_준비상태() {
+        assertTrue(new Frame().frameState() instanceof Ready);
     }
 
     @Test
-    void 게임_실행_비정상_게임_종료() {
-        assertThatThrownBy(() -> {
-            given_frame_2.play(2, 9);
-            given_frame_2.play(2, 0);
-            given_frame_2.play(2, 1);
-        }).isInstanceOf(EndedFrameException.class);
+    void 첫_프레임_거터() {
+        frame.play(1, 0);
+        assertTrue(frame.frameState() instanceof Gutter);
+    }
+
+    @Test
+    void 첫_프레임_스트라이크() {
+        frame.play(1, 10);
+        assertTrue(frame.frameState() instanceof Strike);
+    }
+
+    @Test
+    void 첫_프레임_보통() {
+        frame.play(1, 5);
+        assertTrue(frame.frameState() instanceof FirstBowl);
+    }
+
+    @Test
+    void 두번째_프레임_스페어() {
+        frame.play(1, 5);
+        frame.play(1, 5);
+        assertTrue(frame.frameState() instanceof Spare);
+    }
+
+    @Test
+    void 두번째_프레임_미스() {
+        frame.play(1, 0);
+        frame.play(1, 0);
+        assertTrue(frame.frameState() instanceof Miss);
+    }
+
+    @Test
+    void 두번째_프레임_보통() {
+        frame.play(1, 5);
+        frame.play(1, 0);
+        assertTrue(frame.frameState() instanceof SecondBowl);
+    }
+
+    @Test
+    void 이미_종료_프레임_플레이_스트라이크() {
+        frame.play(1, 10);
+        assertThatThrownBy(() -> frame.play(1, 2))
+                .isInstanceOf(EndedFrameException.class);
+    }
+
+    @Test
+    void 이미_종료_프레임_플레이_스페어() {
+        frame.play(1, 2);
+        frame.play(1, 8);
+        assertThatThrownBy(() -> frame.play(1, 2))
+                .isInstanceOf(EndedFrameException.class);
+    }
+
+    @Test
+    void 이미_종료_프레임_플레이_미스() {
+        frame.play(1, 2);
+        frame.play(1, 5);
+        assertThatThrownBy(() -> frame.play(1, 2))
+                .isInstanceOf(EndedFrameException.class);
     }
 }
