@@ -22,7 +22,26 @@ public class Game {
         this.player = player;
     }
 
-    public int play(final int round, final int numberOfFallenPins) {
+    //    public void playGame(final int numberOfFallenPins) {
+//        for (int round = 1; round < 11; round++) {
+//            playFrame(round, numberOfFallenPins);
+//        }
+//    }
+//
+//    public void playFrame(final int round, final int numberOfFallenPins) {
+//        ThrowingState frameState = null;
+//        while (!(frameState instanceof EndedState)) {
+//            Frame frame = play(round, numberOfFallenPins);
+//            frameState = frame.frameState();
+//        }
+//    }
+
+    public boolean playFrame(final int round, final int numberOfFallenPins) {
+        Frame frame = play(round, numberOfFallenPins);
+        return frame.isEnd();
+    }
+
+    private Frame play(final int round, final int numberOfFallenPins) {
         return CACHE.get(round - MAP_ROUND_TO_INDEX_CONSTANT).play(round, numberOfFallenPins);
     }
 

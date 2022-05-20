@@ -26,36 +26,6 @@ public class ResultView {
     }
 
     private static String toFrameScore(Frame frame) {
-        int first = frame.getFirst();
-        int second = frame.getSecond();
-
-        StringBuilder stringBuilder = new StringBuilder();
-        if (first != Frame.BEFORE_BOWLING) {
-            stringBuilder.append(convertFirstScore(first));
-        }
-        if (second != Frame.BEFORE_BOWLING) {
-            stringBuilder.append(convertSecondScore(first, second));
-        }
-        return stringBuilder.toString();
-    }
-
-    private static String convertFirstScore(int first) {
-        if (first == Frame.MAX_NUMBER_OF_PIN) {
-            return "X";
-        }
-        if (first == Frame.ZERO) {
-            return  "-";
-        }
-        return String.valueOf(first);
-    }
-
-    private static String convertSecondScore(int first, int second) {
-        if (second == Frame.ZERO) {
-            return "│-";
-        }
-        if (second == Frame.MAX_NUMBER_OF_PIN || (first + second) == Frame.MAX_NUMBER_OF_PIN) {
-            return "│/";
-        }
-        return "│" + String.valueOf(second);
+        return frame.frameState().symbol();
     }
 }

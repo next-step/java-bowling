@@ -1,52 +1,49 @@
 package bowling;
 
-import bowling.domain.Frame;
 import bowling.domain.Game;
+import bowling.exception.EndedFrameException;
 import bowling.exception.InvalidNumberOfFallenPinsException;
 import bowling.exception.MaximumSumExceededException;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
 public class Controller {
-    public static final int TOTAL_COUNT_OF_ATTEMPTS = 2;
-    public static final int NO_COUNT_OF_ATTEMPTS_LEFT = 0;
-    public static final int ONE_COUNT_OF_ATTEMPTS = 1;
-
     public static void main(String[] args) {
-        Game game = new Game(InputView.inputNameOfPlayer());
-
+        Game Game = new Game(InputView.inputNameOfPlayer());
         ResultView.printLabel();
-        ResultView.printScore(game.getPlayer(), game.getGameRecords());
+        ResultView.printScore(Game.getPlayer(), Game.getGameRecords());
 
-        for (int frame = 1; frame <= 10; frame++) {
-            playSecondAttemptsInFrame(game, frame);
+        playGame(Game);
+    }
+
+    private static void playGame(final Game Game) {
+        for (int frame = 1; frame < 11; frame++) {
+            playFrame(Game, frame);
         }
     }
 
-    private static void playSecondAttemptsInFrame(final Game game, final int frame) {
-        int countOfAttempts = TOTAL_COUNT_OF_ATTEMPTS;
-        while (countOfAttempts > NO_COUNT_OF_ATTEMPTS_LEFT) {
-            countOfAttempts -= playOneOfSecondAttemptsInFrame(game, frame);
-
-            ResultView.printLabel();
-            ResultView.printScore(game.getPlayer(), game.getGameRecords());
+    private static void playFrame(final Game Game, final int frame) {
+        boolean flag = false;
+        while (!flag) {
+            flag = play(Game, frame);
         }
     }
 
-    private static int playOneOfSecondAttemptsInFrame(final Game game, final int frame) {
+    private static boolean play(final Game Game, final int frame) {
         try {
             int numberOfFallenPins = Integer.parseInt(InputView.inputNumberOfFallenPinsInFrame(frame));
-            game.play(frame, numberOfFallenPins);
-            if (numberOfFallenPins == Frame.MAX_NUMBER_OF_PIN) {
-                return TOTAL_COUNT_OF_ATTEMPTS;
-            }
-            return ONE_COUNT_OF_ATTEMPTS;
+            boolean flag = Game.playFrame(frame, numberOfFallenPins);
+            ResultView.printLabel();
+            ResultView.printScore(Game.getPlayer(), Game.getGameRecords());
+            return flag;
         } catch (InvalidNumberOfFallenPinsException e) {
             System.out.println(e.getMessage());
-            return playOneOfSecondAttemptsInFrame(game, frame);
+            return play(Game, frame);
         } catch (MaximumSumExceededException e) {
             System.out.println(e.getMessage());
-            return playOneOfSecondAttemptsInFrame(game, frame);
+            return play(Game, frame);
+        } catch (EndedFrameException e) {
+            return true;
         }
     }
 }
