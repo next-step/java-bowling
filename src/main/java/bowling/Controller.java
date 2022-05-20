@@ -9,39 +9,39 @@ import bowling.view.ResultView;
 
 public class Controller {
     public static void main(String[] args) {
-        Game Game = new Game(InputView.inputNameOfPlayer());
+        Game game = new Game(InputView.inputNameOfPlayer());
         ResultView.printLabel();
-        ResultView.printScore(Game.getPlayer(), Game.getGameRecords());
+        ResultView.printScore(game.getPlayer(), game.getGameRecords());
 
-        playGame(Game);
+        playGame(game);
     }
 
-    private static void playGame(final Game Game) {
+    private static void playGame(final Game game) {
         for (int frame = 1; frame < 11; frame++) {
-            playFrame(Game, frame);
+            playFrame(game, frame);
         }
     }
 
-    private static void playFrame(final Game Game, final int frame) {
+    private static void playFrame(final Game game, final int frame) {
         boolean flag = false;
         while (!flag) {
-            flag = play(Game, frame);
+            flag = play(game, frame);
         }
     }
 
-    private static boolean play(final Game Game, final int frame) {
+    private static boolean play(final Game game, final int frame) {
         try {
             int numberOfFallenPins = Integer.parseInt(InputView.inputNumberOfFallenPinsInFrame(frame));
-            boolean flag = Game.playFrame(frame, numberOfFallenPins);
+            boolean flag = game.playFrame(frame, numberOfFallenPins);
             ResultView.printLabel();
-            ResultView.printScore(Game.getPlayer(), Game.getGameRecords());
+            ResultView.printScore(game.getPlayer(), game.getGameRecords());
             return flag;
         } catch (InvalidNumberOfFallenPinsException e) {
             System.out.println(e.getMessage());
-            return play(Game, frame);
+            return play(game, frame);
         } catch (MaximumSumExceededException e) {
             System.out.println(e.getMessage());
-            return play(Game, frame);
+            return play(game, frame);
         } catch (EndedFrameException e) {
             return true;
         }
