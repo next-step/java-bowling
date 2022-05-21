@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.score.Score;
 import bowling.exception.ImpossiblePitchException;
 import bowling.domain.Pins;
 
@@ -27,6 +28,19 @@ public class Strike implements State {
     @Override
     public String getSymbol() {
         return STRIKE;
+    }
+
+    @Override
+    public Score score() {
+        return Score.strike();
+    }
+
+    @Override
+    public Score calculateScore(Score beforeScore) {
+        if (beforeScore.finishCalculation()) {
+            return beforeScore;
+        }
+        return beforeScore.addBonusScore(score().score());
     }
 
 }
