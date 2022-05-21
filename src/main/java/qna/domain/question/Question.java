@@ -1,7 +1,7 @@
 package qna.domain.question;
 
-import qna.domain.AbstractEntity;
 import qna.domain.ContentType;
+import qna.domain.QnA;
 import qna.domain.answer.Answer;
 import qna.domain.answer.Answers;
 import qna.domain.deleteHistory.DeleteHistories;
@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 import java.util.List;
 
 @Entity
-public class Question extends AbstractEntity {
+public class Question extends QnA {
     @Embedded
     private final Answers answers = new Answers();
 
@@ -26,7 +26,6 @@ public class Question extends AbstractEntity {
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
-    private boolean deleted = false;
 
     public Question() {
         this(QuestionBody.DEFAULT_TITLE, QuestionBody.DEFAULT_CONTENTS);
@@ -59,12 +58,8 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public boolean isDeleted() {
-        return deleted;
-    }
-
     public DeleteHistories delete() {
-        this.deleted = true;
+        super.setDelete();
 
         DeleteHistory questionDeleteHistory = createDeleteHistory(ContentType.QUESTION, this.writer);
         List<DeleteHistory> answerDeleteHistories = this.answers.delete();
@@ -86,7 +81,6 @@ public class Question extends AbstractEntity {
                 "answers=" + answers +
                 ", questionBody=" + questionBody +
                 ", writer=" + writer +
-                ", deleted=" + deleted +
                 '}';
     }
 }

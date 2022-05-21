@@ -2,8 +2,8 @@ package qna.domain.answer;
 
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
-import qna.domain.AbstractEntity;
 import qna.domain.ContentType;
+import qna.domain.QnA;
 import qna.domain.deleteHistory.DeleteHistory;
 import qna.domain.question.Question;
 import qna.domain.user.User;
@@ -15,15 +15,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Answer extends AbstractEntity {
+public class Answer extends QnA {
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
 
     @Embedded
     private AnswerBody answerBody;
-
-    private boolean deleted = false;
 
     protected Answer() {
     }
@@ -47,10 +45,6 @@ public class Answer extends AbstractEntity {
         this.answerBody = new AnswerBody(question, contents);
     }
 
-    public boolean isDeleted() {
-        return deleted;
-    }
-
     public boolean isOwner(User writer) {
         return this.writer.equals(writer);
     }
@@ -64,13 +58,9 @@ public class Answer extends AbstractEntity {
     }
 
     public DeleteHistory delete() {
-        this.deleted();
+        super.setDelete();
 
         return createDeleteHistory(ContentType.ANSWER, this.writer);
-    }
-
-    private void deleted() {
-        this.deleted = true;
     }
 
     @Override
@@ -78,7 +68,6 @@ public class Answer extends AbstractEntity {
         return "Answer{" +
                 "writer=" + writer +
                 ", answerBody=" + answerBody +
-                ", deleted=" + deleted +
                 '}';
     }
 }
