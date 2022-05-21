@@ -28,9 +28,11 @@ public class AnswerTest {
 
         @Test
         void 삭제처리후_삭제기록을_리턴한다() {
-            DeleteHistory deleteHistory = A1.delete();
+            Answer answer = createAnswer(UserTest.JAVAJIGI, QuestionTest.Q1);
 
-            assertThat(A1.isDeleted()).isTrue();
+            DeleteHistory deleteHistory = answer.delete();
+
+            assertThat(answer.isDeleted()).isTrue();
             assertThat(deleteHistory).isEqualTo(
                     new DeleteHistory(ContentType.ANSWER, null, UserTest.JAVAJIGI, LocalDateTime.now())
             );
