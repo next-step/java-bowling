@@ -13,7 +13,6 @@ import qna.domain.QuestionRepository;
 import qna.domain.User;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service("qnaService")
@@ -46,8 +45,7 @@ public class QnAService {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
 
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        question.delete(deleteHistories);
+        List<DeleteHistory> deleteHistories = question.delete();
         deleteHistoryService.saveAll(deleteHistories);
     }
 }

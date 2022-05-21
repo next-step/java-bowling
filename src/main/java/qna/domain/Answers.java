@@ -9,6 +9,7 @@ import javax.persistence.OrderBy;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Embeddable
 public class Answers {
@@ -40,6 +41,19 @@ public class Answers {
             answer.setDeleted(true);
             deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         });
+    }
+
+    public List<DeleteHistory> delete() {
+        return this.answers.stream()
+                .peek(answer -> answer.setDeleted(true))
+                .map(this::toDeleteHistory)
+                .collect(Collectors.toList());
+    }
+
+    private DeleteHistory toDeleteHistory(Answer answer) {
+        return new DeleteHistory(
+                ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()
+        );
     }
 
     public void add(Answer answer) {

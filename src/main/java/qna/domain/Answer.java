@@ -11,8 +11,6 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Answer extends AbstractEntity {
-    private static final String DEFAULT_CONTENTS = "contents";
-
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
