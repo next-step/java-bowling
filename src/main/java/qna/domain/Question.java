@@ -92,10 +92,6 @@ public class Question extends AbstractEntity {
         answers.checkPrivilegeOnAnswer(loginUser);
     }
 
-    public DeleteHistory createDeleteHistory(long questionId) {
-        return new DeleteHistory(ContentType.QUESTION, questionId, this.getWriter(), LocalDateTime.now());
-    }
-
     public DeleteHistories deleteQuestion(User loginUser) throws CannotDeleteException {
         this.checkPrivilegeOnAnswer(loginUser);
         this.deleted = true;
@@ -103,7 +99,7 @@ public class Question extends AbstractEntity {
     }
 
     private DeleteHistories addDeleteHistories() {
-        DeleteHistory deleteHistory = this.createDeleteHistory(this.getId());
+        DeleteHistory deleteHistory = DeleteHistory.createDeleteHistory(this);
         DeleteHistories deleteHistories = this.answers.deleteHistory();
         deleteHistories.add(Optional.ofNullable(0), deleteHistory);
         return deleteHistories;
