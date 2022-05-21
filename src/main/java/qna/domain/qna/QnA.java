@@ -1,4 +1,6 @@
-package qna.domain;
+package qna.domain.qna;
+
+import qna.domain.AbstractEntity;
 
 import javax.persistence.Embeddable;
 

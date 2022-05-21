@@ -1,4 +1,4 @@
-package qna.domain.question;
+package qna.domain.qna.question;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

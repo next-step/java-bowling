@@ -1,11 +1,11 @@
-package qna.domain.question;
+package qna.domain.qna.question;
 
 import qna.domain.ContentType;
-import qna.domain.QnA;
-import qna.domain.answer.Answer;
-import qna.domain.answer.Answers;
 import qna.domain.deleteHistory.DeleteHistories;
 import qna.domain.deleteHistory.DeleteHistory;
+import qna.domain.qna.QnA;
+import qna.domain.qna.answer.Answer;
+import qna.domain.qna.answer.Answers;
 import qna.domain.user.User;
 
 import javax.persistence.Embedded;

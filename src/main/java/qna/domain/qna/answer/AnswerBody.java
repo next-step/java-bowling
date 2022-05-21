@@ -1,6 +1,6 @@
-package qna.domain.answer;
+package qna.domain.qna.answer;
 
-import qna.domain.question.Question;
+import qna.domain.qna.question.Question;
 
 import javax.persistence.Embeddable;
 import javax.persistence.ForeignKey;

@@ -1,11 +1,11 @@
-package qna.domain.question;
+package qna.domain.qna.question;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import qna.domain.ContentType;
-import qna.domain.answer.AnswerTest;
 import qna.domain.deleteHistory.DeleteHistories;
 import qna.domain.deleteHistory.DeleteHistory;
+import qna.domain.qna.answer.AnswerTest;
 import qna.domain.user.User;
 import qna.domain.user.UserTest;
 

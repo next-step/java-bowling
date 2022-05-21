@@ -1,8 +1,8 @@
-package qna.domain.answer;
+package qna.domain.qna.answer;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import qna.domain.question.QuestionTest;
+import qna.domain.qna.question.QuestionTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
