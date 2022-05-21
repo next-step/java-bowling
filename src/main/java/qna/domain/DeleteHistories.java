@@ -7,12 +7,12 @@ import java.util.Objects;
 public class DeleteHistories {
     private final List<DeleteHistory> deleteHistories;
 
-    public DeleteHistories(DeleteHistory deleteHistory, List<DeleteHistory> deleteHistories) {
-        this(map(deleteHistory, deleteHistories));
-    }
-
     public DeleteHistories(DeleteHistory deleteHistory) {
         this(List.of(deleteHistory));
+    }
+
+    public DeleteHistories(DeleteHistory deleteHistory, List<DeleteHistory> deleteHistories) {
+        this(map(deleteHistory, deleteHistories));
     }
 
     public DeleteHistories(List<DeleteHistory> deleteHistories) {
