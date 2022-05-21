@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pins;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -105,6 +106,45 @@ class LastFrameTest {
                 () -> assertThat(lastFrame.isFrameEnd()).isTrue(),
                 () -> assertThat(lastFrame.getSymbol()).isEqualTo("6|3")
         );
+    }
+
+    @Test
+    @DisplayName("이전 스코어가 miss 일 경우 연산 결과를 확인한다")
+    void calculateAdditionalScoreWhenBeforeScoreIsMiss() {
+        Score miss = Score.miss(Pins.create(9));
+
+        Frame lastFrame = LastFrame.create();
+        lastFrame.pitch(Pins.create(9));
+        lastFrame.pitch(Pins.create(1));
+        lastFrame.pitch(Pins.create(10));
+
+        assertThat(lastFrame.calculateAdditionalScore(miss).score()).isEqualTo(9);
+    }
+
+    @Test
+    @DisplayName("이전 스코어가 spare 일 경우 연산 결과를 확인한다")
+    void calculateAdditionalScoreWhenBeforeScoreIsSpare() {
+        Score spare = Score.spare();
+
+        Frame lastFrame = LastFrame.create();
+        lastFrame.pitch(Pins.create(9));
+        lastFrame.pitch(Pins.create(1));
+        lastFrame.pitch(Pins.create(10));
+
+        assertThat(lastFrame.calculateAdditionalScore(spare).score()).isEqualTo(19);
+    }
+
+    @Test
+    @DisplayName("이전 스코어가 strike 일 경우 연산 결과를 확인한다")
+    void calculateAdditionalScoreWhenBeforeScoreIsStrike() {
+        Score strike = Score.strike();
+
+        Frame lastFrame = LastFrame.create();
+        lastFrame.pitch(Pins.create(9));
+        lastFrame.pitch(Pins.create(1));
+        lastFrame.pitch(Pins.create(10));
+
+        assertThat(lastFrame.calculateAdditionalScore(strike).score()).isEqualTo(20);
     }
 
 }
