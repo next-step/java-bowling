@@ -30,3 +30,11 @@
 - [x] Answer 의 별도 생성자 제거, 다른방법 테스트?
 - [x] Question.createDeleteHistory 불필요 파라미터 question, new 제거
 - [x] QnAService.deleteQuestion 을 Question 클래스로 이동
+
+### Requested changes phase2
+- [x] Answers.deleteHistory 에서 DeleteHistories 받지 말고 로컬 변수로 구현
+- [ ] Questions.java 제거
+- [ ] Questions.createDeleteHistory => DeleteHistory 로 이동
+- [ ] DeleteHistoryService.saveAll 에서 getter 로 바로 저장 하도록 수정
+
+## Step2 - bowling scoreboard drawing

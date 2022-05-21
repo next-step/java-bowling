@@ -5,6 +5,7 @@ import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -102,9 +103,9 @@ public class Question extends AbstractEntity {
     }
 
     private DeleteHistories addDeleteHistories() {
-        DeleteHistories deleteHistories = new DeleteHistories();
         DeleteHistory deleteHistory = this.createDeleteHistory(this.getId());
-        deleteHistories.add(deleteHistory);
-        return this.answers.deleteHistory(deleteHistories);
+        DeleteHistories deleteHistories = this.answers.deleteHistory();
+        deleteHistories.add(Optional.ofNullable(0), deleteHistory);
+        return deleteHistories;
     }
 }
