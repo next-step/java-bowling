@@ -3,7 +3,12 @@ package qna.domain;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -18,6 +23,7 @@ public class Answer extends AbstractEntity {
     @Lob
     private String contents;
 
+    @Column
     private boolean deleted = false;
 
     public Answer() {
