@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.score.Score;
 import bowling.exception.ImpossiblePitchException;
 import bowling.domain.Pins;
 
@@ -32,6 +33,26 @@ public class Spare implements State {
     @Override
     public String getSymbol() {
         return getFirstSymbol() + VERTICAL_BAR + SPARE;
+    }
+
+    @Override
+    public Score score() {
+        return Score.spare();
+    }
+
+    @Override
+    public Score calculateScore(Score beforeScore) {
+        if (beforeScore.finishCalculation()) {
+            return beforeScore;
+        }
+
+        Score addedScore = beforeScore.addBonusScore(firstPins.count());
+        if (addedScore.finishCalculation()) {
+            return addedScore;
+        }
+
+        Pins secondPins = Pins.spareSecondPins(firstPins);
+        return addedScore.addBonusScore(secondPins.count());
     }
 
     private String getFirstSymbol() {
