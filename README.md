@@ -51,3 +51,4 @@
 ### Todos
 - [ ] scan Player name
   - [ ] name should be 3 chars
+- [x] print initial score board
