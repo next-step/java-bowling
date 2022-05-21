@@ -1,72 +1,82 @@
 package bowling.domain.frame;
 
-import bowling.domain.frameresult.FrameResult;
-import bowling.domain.frameresult.Miss;
-import bowling.domain.frameresult.Spare;
-import bowling.domain.pin.FinalPinNumbers;
-
-import java.util.Optional;
-
-import static bowling.domain.pin.PinNo.MAX_PIN_NO;
+import bowling.domain.pin.FinalExtraPins;
+import bowling.domain.pin.Pin;
+import bowling.domain.Score;
+import bowling.domain.state.Ready;
+import bowling.domain.state.Spare;
+import bowling.domain.state.State;
+import bowling.domain.state.Strike;
 
 public class FinalFrame implements Frame {
 
-    private final FinalPinNumbers pinNumbers;
+    private static final int FINAL_FRAME_NO = 10;
 
-    FinalFrame(int pinNo) {
-        pinNumbers = new FinalPinNumbers(pinNo);
+    private State state;
+
+    private final FinalExtraPins extraPins;
+
+    public FinalFrame() {
+        this(new Ready());
+    }
+
+    public FinalFrame(State state) {
+        this.state = state;
+        this.extraPins = new FinalExtraPins();
     }
 
     @Override
-    public void addPin(int pinNo) {
-        pinNumbers.addPin(pinNo);
+    public int number() {
+        return FINAL_FRAME_NO;
     }
 
     @Override
-    public Frame nextFrame(int pinNo) {
-        throw new IllegalStateException("current frame is final frame");
-    }
-
-    @Override
-    public boolean canGetScore() {
-        return pinNumbers.isFull();
-    }
-
-    @Override
-    public Optional<Integer> score() {
-        if (!canGetScore()) {
-            return Optional.empty();
+    public Frame bowl(Pin no) {
+        if (state.finished()) {
+            addExtraPin(no);
+            return this;
         }
-
-        FrameResult result = pinNumbers.result();
-        if (result instanceof Miss) {
-            return result.score(null);
-        }
-        if (result instanceof Spare) {
-            return Optional.of(MAX_PIN_NO + pinNumbers.getOwnSpareBonus());
-        }
-        return Optional.of(MAX_PIN_NO + pinNumbers.getOwnStrikeBonus());
+        state = state.bowl(no);
+        return this;
     }
 
-    private boolean isMiss() {
-        return pinNumbers.result() instanceof Miss;
-    }
-
-    @Override
-    public int spareBonusForPreviousFrame() {
-        return pinNumbers.spareBonus();
+    private void addExtraPin(Pin no) {
+        if (state instanceof Spare) {
+            extraPins.addSpareExtra(no);
+        }
+        if (state instanceof Strike) {
+            extraPins.addStrikeExtra(no);
+        }
     }
 
     @Override
-    public Optional<Integer> strikeBonusForPreviousFrame() {
-        if (pinNumbers.size() < FinalPinNumbers.MIN_SIZE) {
-            return Optional.empty();
+    public Score score() {
+        Score score = state.score();
+        if (score.canGetScore()) {
+            return score;
         }
-        return Optional.of(pinNumbers.strikeBonus());
+        if (state instanceof Spare) {
+            return extraPins.spareScore(score);
+        }
+        return extraPins.strikeScore(score);
+    }
+
+    @Override
+    public boolean finished() {
+        return state.finished() && score().canGetScore();
+    }
+
+    @Override
+    public Score additionalScore(Score beforeScore) {
+        Score afterScore = state.additionalScore(beforeScore);
+        if (afterScore.canGetScore()) {
+            return afterScore;
+        }
+        return extraPins.spareScore(afterScore);
     }
 
     @Override
     public String expression() {
-        return pinNumbers.expression();
+        return extraPins.expression(state);
     }
 }
