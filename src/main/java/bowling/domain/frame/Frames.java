@@ -1,10 +1,12 @@
 package bowling.domain.frame;
 
+import bowling.domain.Pins;
+import bowling.domain.score.Score;
 import bowling.exception.InvalidFramesException;
 import bowling.exception.OutOfIndexException;
-import bowling.domain.Pins;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Frames {
@@ -66,21 +68,21 @@ public class Frames {
     public void pitch(Pins pins) {
         Frame currentFrame = frames.get(currentIndex);
         currentFrame.pitch(pins);
+    }
 
+    public void nextIndex() {
+        Frame currentFrame = frames.get(currentIndex);
         if (currentFrame.isFrameEnd()) {
-            nextIndex();
+            increaseIndex();
         }
     }
 
-    private void nextIndex() {
+    private void increaseIndex() {
         int nextIndex = currentIndex + 1;
         if (nextIndex > FINISH_FRAME_INDEX) {
             throw new OutOfIndexException(nextIndex);
         }
-        increaseIndex();
-    }
 
-    private void increaseIndex() {
         this.currentIndex += 1;
     }
 
@@ -90,6 +92,35 @@ public class Frames {
 
     public int getCurrentRound() {
         return currentIndex + 1;
+    }
+
+    public List<Score> scores() {
+        return frames.stream()
+                .filter(Frame::isFrameEnd)
+                .map(this::calculateScore)
+                .collect(Collectors.toList());
+    }
+
+    private Score calculateScore(Frame frame) {
+        Frame nowFrame = frame;
+        int nowIndex = frames.indexOf(nowFrame);
+        Score score = nowFrame.score();
+
+        while (!score.finishCalculation()) {
+            nowIndex = nextFrameIndex(nowIndex);
+            nowFrame = frames.get(nowIndex);
+            score = nowFrame.calculateAdditionalScore(score);
+        }
+
+        return score;
+    }
+
+    private int nextFrameIndex(int currentIndex) {
+        int nextIndex = currentIndex + 1;
+        if (nextIndex == FINISH_FRAME_INDEX) {
+            return LAST_FRAME_INDEX;
+        }
+        return nextIndex;
     }
 
 }
