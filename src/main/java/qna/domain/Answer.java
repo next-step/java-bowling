@@ -8,6 +8,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import java.time.LocalDateTime;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -70,6 +71,18 @@ public class Answer extends AbstractEntity {
 
     public void toQuestion(Question question) {
         this.question = question;
+    }
+
+    public DeleteHistory delete() {
+        this.deleted();
+
+        return new DeleteHistory(
+                ContentType.ANSWER, this.getId(), this.writer, LocalDateTime.now()
+        );
+    }
+
+    private void deleted() {
+        this.deleted = true;
     }
 
     @Override
