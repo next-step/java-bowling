@@ -1,5 +1,6 @@
 package qna.domain.qna.question;
 
+import qna.CannotDeleteException;
 import qna.domain.ContentType;
 import qna.domain.deleteHistory.DeleteHistories;
 import qna.domain.deleteHistory.DeleteHistory;
@@ -17,6 +18,9 @@ import java.util.List;
 
 @Entity
 public class Question extends QnA {
+    private static final String DELETE_QUESTION_PERMISSION_MESSAGE = "질문을 삭제할 권한이 없습니다.";
+    private static final String ANSWER_OTHER_WRITTEN_MESSAGE = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
+
     @Embedded
     private final Answers answers = new Answers();
 
@@ -54,20 +58,34 @@ public class Question extends QnA {
         answers.add(answer);
     }
 
-    public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
-    }
+    /**
+     * 질문을 삭제합니다.
+     *
+     * @param loginUser 로그인한 유저
+     * @return 생성된 삭제 기록
+     * @throws CannotDeleteException 권한이 없거나 다른 사람이 쓴 답변이 있을 경우
+     */
+    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(DELETE_QUESTION_PERMISSION_MESSAGE);
+        }
 
-    public DeleteHistories delete() {
+        if (answerHasWrittenByOthers(loginUser)) {
+            throw new CannotDeleteException(ANSWER_OTHER_WRITTEN_MESSAGE);
+        }
+
         super.setDelete();
-
-        DeleteHistory questionDeleteHistory = createDeleteHistory(ContentType.QUESTION, this.writer);
+        DeleteHistory questionDeleteHistory = super.createDeleteHistory(ContentType.QUESTION, this.writer);
         List<DeleteHistory> answerDeleteHistories = this.answers.delete();
 
         return new DeleteHistories(questionDeleteHistory, answerDeleteHistories);
     }
 
-    public boolean answerHasWrittenByOthers(User loginUser) {
+    private boolean isOwner(User loginUser) {
+        return writer.equals(loginUser);
+    }
+
+    private boolean answerHasWrittenByOthers(User loginUser) {
         return this.answers.hasWrittenByOthers(loginUser);
     }
 
@@ -81,7 +99,7 @@ public class Question extends QnA {
                 "answers=" + answers +
                 ", questionBody=" + questionBody +
                 ", writer=" + writer +
-                ", deleted=" + deleted +
+                ", deleted=" + super.deleted +
                 '}';
     }
 }
