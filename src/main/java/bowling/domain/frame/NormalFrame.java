@@ -1,83 +1,83 @@
 package bowling.domain.frame;
 
-import bowling.domain.frameresult.Strike;
-import bowling.domain.pin.NormalPinNumbers;
-
-import java.util.Optional;
-
-import static bowling.domain.frame.NormalFrameNo.MIN_NORMAL_FRAME_NO;
-import static bowling.domain.pin.PinNo.MAX_PIN_NO;
+import bowling.domain.pin.Pin;
+import bowling.domain.state.Ready;
+import bowling.domain.Score;
+import bowling.domain.state.State;
 
 public class NormalFrame implements Frame {
 
-    private final NormalFrameNo frameNo;
+    private static final int INIT_FRAME_NO = 1;
 
-    private final NormalPinNumbers pinNumbers;
+    private final FrameNo frameNumber;
 
-    private Frame nextFrame;
+    private State state;
 
-    NormalFrame(int frameNo, int pinNo) {
-        this.frameNo = NormalFrameNo.of(frameNo);
-        this.pinNumbers = new NormalPinNumbers(pinNo);
+    private Frame next;
+
+    NormalFrame(int frameNo, State state) {
+        this(frameNo, state, null);
     }
 
-    public static NormalFrame init(int pinNo) {
-        return new NormalFrame(MIN_NORMAL_FRAME_NO, pinNo);
+    NormalFrame(int frameNo, State state, Frame next) {
+        this.frameNumber = FrameNo.of(frameNo);
+        this.state = state;
+        this.next = next;
+    }
+
+    static Frame init() {
+        return new NormalFrame(INIT_FRAME_NO, new Ready());
     }
 
     @Override
-    public void addPin(int pinNo) {
-        pinNumbers.addPin(pinNo);
+    public int number() {
+        return frameNumber.no();
     }
 
     @Override
-    public Frame nextFrame(int pinNo) {
-        if (frameNo.isMax()) {
-            this.nextFrame = new FinalFrame(pinNo);
-            return nextFrame;
+    public Frame bowl(Pin pin) {
+        state = state.bowl(pin);
+        if (state.finished()) {
+            return generateNextFrame();
         }
-        this.nextFrame =  new NormalFrame(frameNo.next(), pinNo);
-        return nextFrame;
+        return this;
+    }
+
+    private Frame generateNextFrame() {
+        FrameNo nextFrameNo = FrameNo.of(frameNumber.next());
+        if (nextFrameNo.isMax()) {
+            this.next = new FinalFrame();
+            return this.next;
+        }
+        this.next = new NormalFrame(frameNumber.next(), new Ready());
+        return this.next;
     }
 
     @Override
-    public boolean canGetScore() {
-        return pinNumbers.isFull();
+    public Score score() {
+        Score score = state.score();
+        if (score.canGetScore() || next == null) {
+            return score;
+        }
+        return next.additionalScore(score);
     }
 
     @Override
-    public Optional<Integer> score() {
-        if (!canGetScore()) {
-            return Optional.empty();
-        }
-        return pinNumbers.result().score(nextFrame);
+    public boolean finished() {
+        return state.finished();
     }
 
     @Override
-    public int spareBonusForPreviousFrame() {
-        return pinNumbers.spareBonus();
-    }
-
-    @Override
-    public Optional<Integer> strikeBonusForPreviousFrame() {
-        if (!pinNumbers.isFull())  {
-            return Optional.empty();
+    public Score additionalScore(Score beforeScore) {
+        Score afterScore = state.additionalScore(beforeScore);
+        if (afterScore.canGetScore() || next == null) {
+            return afterScore;
         }
-        if (!isStrike()) {
-            return Optional.of(pinNumbers.strikeBonus());
-        }
-        if (nextFrame == null) {
-            return Optional.empty();
-        }
-        return Optional.of(MAX_PIN_NO + nextFrame.spareBonusForPreviousFrame());
-    }
-
-    private boolean isStrike() {
-        return pinNumbers.result() instanceof Strike;
+        return next.additionalScore(afterScore);
     }
 
     @Override
     public String expression() {
-        return pinNumbers.expression();
+        return state.expression();
     }
 }
