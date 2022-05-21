@@ -11,6 +11,12 @@ public class QuestionTest {
     public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
     public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
 
+    public static Question createQuestion(User user) {
+        return new Question(
+                "title1", "contents1"
+        ).writeBy(user);
+    }
+
     @Nested
     class delete_메서드는 {
 
@@ -23,5 +29,41 @@ public class QuestionTest {
                     new DeleteHistory(ContentType.QUESTION, null, UserTest.JAVAJIGI, LocalDateTime.now())
             ));
         }
+
+    }
+
+    @Nested
+    class answerHasWrittenByOthers_메서드는 {
+
+        @Nested
+        class 내가쓴_답변만_존재할경우 {
+
+            @Test
+            void false를_리턴한다() {
+                Question question = createQuestion(UserTest.JAVAJIGI);
+                question.addAnswer(AnswerTest.createAnswer(UserTest.JAVAJIGI, Q1));
+
+                boolean actual = question.answerHasWrittenByOthers(UserTest.JAVAJIGI);
+
+                assertThat(actual).isFalse();
+            }
+
+        }
+
+        @Nested
+        class 다른사람이_쓴_답변이_존재할경우 {
+
+            @Test
+            void true를_리턴한다() {
+                Question question = createQuestion(UserTest.JAVAJIGI);
+                question.addAnswer(AnswerTest.createAnswer(UserTest.SANJIGI, question));
+
+                boolean actual = question.answerHasWrittenByOthers(UserTest.JAVAJIGI);
+
+                assertThat(actual).isTrue();
+            }
+
+        }
+
     }
 }

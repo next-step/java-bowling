@@ -1,6 +1,5 @@
 package qna.domain;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -10,31 +9,23 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AnswersTest {
-    private Answers createAnswers(User user) {
+    public static Answers createAnswers(User user) {
         return new Answers(List.of(
-                new Answer(user, new Question(), "contents")
+                AnswerTest.createAnswer(user, new Question())
         ));
     }
 
     @Nested
     class hasWrittenByOthers_메서드는 {
-        private User me;
-        private User answerUser;
 
         @Nested
         class 다른사람이_쓴_답변이_주어질경우 {
 
-            @BeforeEach
-            void setUp() {
-                me = UserTest.JAVAJIGI;
-                answerUser = UserTest.SANJIGI;
-            }
-
             @Test
             void true를_리턴한다() {
-                Answers answers = createAnswers(answerUser);
+                Answers answers = createAnswers(UserTest.SANJIGI);
 
-                boolean actual = answers.hasWrittenByOthers(me);
+                boolean actual = answers.hasWrittenByOthers(UserTest.JAVAJIGI);
 
                 assertThat(actual).isTrue();
             }
@@ -44,17 +35,11 @@ public class AnswersTest {
         @Nested
         class 내가쓴_답변이_주어질경우 {
 
-            @BeforeEach
-            void setUp() {
-                me = UserTest.JAVAJIGI;
-                answerUser = UserTest.JAVAJIGI;
-            }
-
             @Test
             void false를_리턴한다() {
-                Answers answers = createAnswers(answerUser);
+                Answers answers = createAnswers(UserTest.JAVAJIGI);
 
-                boolean actual = answers.hasWrittenByOthers(me);
+                boolean actual = answers.hasWrittenByOthers(UserTest.JAVAJIGI);
 
                 assertThat(actual).isFalse();
             }
