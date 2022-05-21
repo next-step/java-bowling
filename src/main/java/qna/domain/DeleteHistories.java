@@ -11,6 +11,7 @@ public class DeleteHistories {
     public DeleteHistories(List<DeleteHistory> deleteHistories) {
         this.deleteHistories = deleteHistories;
     }
+
     public DeleteHistories() {
         this.deleteHistories = new ArrayList();
     }
@@ -22,10 +23,6 @@ public class DeleteHistories {
         }
         this.deleteHistories.add(deleteHistory);
         return;
-    }
-
-    public void saveAll(DeleteHistoryRepository deleteHistoryRepository) {
-        deleteHistoryRepository.saveAll(this.deleteHistories);
     }
 
     @Override
@@ -46,5 +43,9 @@ public class DeleteHistories {
     @Override
     public int hashCode() {
         return Objects.hash(deleteHistories);
+    }
+
+    public List<DeleteHistory> deleteHistories() {
+        return this.deleteHistories;
     }
 }

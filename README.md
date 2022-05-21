@@ -35,6 +35,6 @@
 - [x] Answers.deleteHistory 에서 DeleteHistories 받지 말고 로컬 변수로 구현
 - [x] Questions.java 제거
 - [x] Question.createDeleteHistory => DeleteHistory 로 이동
-- [ ] DeleteHistoryService.saveAll 에서 getter 로 바로 저장 하도록 수정
+- [x] DeleteHistoryService.saveAll 에서 getter 로 바로 저장 하도록 수정
 
 ## Step2 - bowling scoreboard drawing
