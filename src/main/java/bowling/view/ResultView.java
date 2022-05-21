@@ -3,6 +3,7 @@ package bowling.view;
 import bowling.domain.BowlingGame;
 import bowling.domain.Player;
 import bowling.domain.frame.Frame;
+import bowling.domain.score.Score;
 
 import java.util.List;
 
@@ -15,14 +16,31 @@ public final class ResultView {
     private static final String BODY_FORMAT = "%7s";
     private static final String VERTICAL_BAR = "|";
     private static final String NEXT_LINE = "\n";
+    private static final String EXCEPTION_NOTIFICATION = "[exception]";
+    private static final String BLANK = "";
 
     private static final StringBuilder stringBuilder = new StringBuilder();
-    private static final String EXCEPTION_NOTIFICATION = "[exception]";
 
     public void printBowlingGameResult(BowlingGame bowlingGame) {
         appendHead();
         appendPlayerAndSymbols(bowlingGame);
+        appendScores(bowlingGame);
         printContents();
+    }
+
+    private void appendScores(BowlingGame bowlingGame) {
+        stringBuilder.append(VERTICAL_BAR)
+                .append(String.format(BODY_FORMAT, BLANK))
+                .append(VERTICAL_BAR);
+
+        List<Score> scores = bowlingGame.scores();
+        scores.forEach(score -> stringBuilder.append(String.format(BODY_FORMAT, getScoreInGame(score)))
+                .append(VERTICAL_BAR));
+        appendNewLine();
+    }
+
+    private String getScoreInGame(Score score) {
+        return score.isUnavailable() ? BLANK : score.toString();
     }
 
     private void appendHead() {
@@ -36,11 +54,14 @@ public final class ResultView {
     }
 
     private void appendFrameNumber(int frameNumber) {
-        stringBuilder.append(String.format(BODY_FORMAT, frameNumber)).append(VERTICAL_BAR);
+        stringBuilder.append(String.format(BODY_FORMAT, frameNumber))
+                .append(VERTICAL_BAR);
     }
 
     private void appendName() {
-        stringBuilder.append(VERTICAL_BAR).append(String.format(BODY_FORMAT, PLAYER_NAME)).append(VERTICAL_BAR);
+        stringBuilder.append(VERTICAL_BAR)
+                .append(String.format(BODY_FORMAT, PLAYER_NAME))
+                .append(VERTICAL_BAR);
     }
 
     private void appendNewLine() {
@@ -50,6 +71,7 @@ public final class ResultView {
     private void appendPlayerAndSymbols(BowlingGame bowlingGame) {
         appendPlayer(bowlingGame.getPlayer());
         appendSymbols(bowlingGame);
+        appendNewLine();
     }
 
     private void appendPlayer(Player player) {

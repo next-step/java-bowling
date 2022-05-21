@@ -38,6 +38,7 @@ public class BowlingGameController {
             int currentRound = bowlingGame.getCurrentRound();
             pitch(bowlingGame, currentRound);
             resultView.printBowlingGameResult(bowlingGame);
+            bowlingGame.nextRound();
         }
     }
 
