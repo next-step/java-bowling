@@ -24,6 +24,10 @@ public class Pins {
         return new Pins(number);
     }
 
+    public static Pins spareSecondPins(Pins firstPins) {
+        return new Pins(MAX_OF_PINS - firstPins.number);
+    }
+
     public boolean isStrike() {
         return number == MAX_OF_PINS;
     }
@@ -31,6 +35,10 @@ public class Pins {
     public boolean isSpare(Pins nextPins) {
         int sumOfPins = this.number + nextPins.number;
         return sumOfPins == MAX_OF_PINS;
+    }
+
+    public boolean isMiss() {
+        return (number > MIN_OF_PINS) && (number < MAX_OF_PINS);
     }
 
     public boolean isGutter() {
@@ -49,4 +57,9 @@ public class Pins {
     public String toString() {
         return String.valueOf(number);
     }
+
+    public int count() {
+        return number;
+    }
+
 }
