@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import bowling.domain.score.Score;
 import bowling.exception.InvalidPitchException;
 
 public class FirstBowl implements State {
@@ -38,6 +39,19 @@ public class FirstBowl implements State {
     @Override
     public String getSymbol() {
         return firstPins.isGutter() ? GUTTER : String.valueOf(firstPins);
+    }
+
+    @Override
+    public Score score() {
+        return null;
+    }
+
+    @Override
+    public Score calculateScore(Score beforeScore) {
+        if (beforeScore.finishCalculation()) {
+            return beforeScore;
+        }
+        return beforeScore.addBonusScore(firstPins.count());
     }
 
 }
