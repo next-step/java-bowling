@@ -44,22 +44,11 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
-    public Answer delete(User loginUser)  {
+    public void delete(User loginUser) throws CannotDeleteException {
         if(!isOwner(loginUser)) {
-            try {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            } catch (CannotDeleteException e) {
-                e.printStackTrace();
-            }
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
         this.deleted = true;
-
-        return this;
     }
 
     public boolean isDeleted() {

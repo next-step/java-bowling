@@ -1,6 +1,7 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
@@ -23,9 +24,11 @@ public class Answers {
         this.answers.add(answer);
     }
 
-    public List<DeleteHistory> deleteAnswers(User loginUser) {
+    public List<DeleteHistory> deleteAnswers(User loginUser) throws CannotDeleteException {
+        for(Answer answer : answers) {
+            answer.delete(loginUser);
+        }
         return answers.stream()
-                .map(a -> a.delete(loginUser))
                 .map(answer -> new DeleteHistory(ContentType.ANSWER, answer.getId()
                         , answer.getWriter(), LocalDateTime.now()))
                 .collect(Collectors.toList());

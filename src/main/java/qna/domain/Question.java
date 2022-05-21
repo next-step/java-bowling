@@ -76,11 +76,6 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public Answers getAnswers() {
         return answers;
     }
