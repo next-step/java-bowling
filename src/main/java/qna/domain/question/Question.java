@@ -1,4 +1,12 @@
-package qna.domain;
+package qna.domain.question;
+
+import qna.domain.AbstractEntity;
+import qna.domain.ContentType;
+import qna.domain.answer.Answer;
+import qna.domain.answer.Answers;
+import qna.domain.deleteHistory.DeleteHistories;
+import qna.domain.deleteHistory.DeleteHistory;
+import qna.domain.user.User;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -20,7 +28,7 @@ public class Question extends AbstractEntity {
     private User writer;
     private boolean deleted = false;
 
-    protected Question() {
+    public Question() {
         this(QuestionBody.DEFAULT_TITLE, QuestionBody.DEFAULT_CONTENTS);
     }
 

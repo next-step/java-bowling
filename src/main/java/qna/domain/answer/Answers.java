@@ -1,6 +1,8 @@
-package qna.domain;
+package qna.domain.answer;
 
 import org.hibernate.annotations.Where;
+import qna.domain.deleteHistory.DeleteHistory;
+import qna.domain.user.User;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;

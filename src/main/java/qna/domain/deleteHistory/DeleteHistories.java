@@ -1,4 +1,4 @@
-package qna.domain;
+package qna.domain.deleteHistory;
 
 import java.util.ArrayList;
 import java.util.List;

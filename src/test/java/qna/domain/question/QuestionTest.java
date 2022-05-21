@@ -1,7 +1,13 @@
-package qna.domain;
+package qna.domain.question;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import qna.domain.ContentType;
+import qna.domain.answer.AnswerTest;
+import qna.domain.deleteHistory.DeleteHistories;
+import qna.domain.deleteHistory.DeleteHistory;
+import qna.domain.user.User;
+import qna.domain.user.UserTest;
 
 import java.time.LocalDateTime;
 
