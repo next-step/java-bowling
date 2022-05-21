@@ -8,10 +8,10 @@ import qna.domain.deleteHistory.DeleteHistory;
 import qna.domain.question.Question;
 import qna.domain.user.User;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -20,16 +20,12 @@ public class Answer extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
-    private Question question;
-
-    @Lob
-    private String contents;
+    @Embedded
+    private AnswerBody answerBody;
 
     private boolean deleted = false;
 
-    public Answer() {
+    protected Answer() {
     }
 
     public Answer(User writer, Question question, String contents) {
@@ -48,8 +44,7 @@ public class Answer extends AbstractEntity {
         }
 
         this.writer = writer;
-        this.question = question;
-        this.contents = contents;
+        this.answerBody = new AnswerBody(question, contents);
     }
 
     public boolean isDeleted() {
@@ -69,12 +64,8 @@ public class Answer extends AbstractEntity {
         return writer;
     }
 
-    public String getContents() {
-        return contents;
-    }
-
     public void toQuestion(Question question) {
-        this.question = question;
+        answerBody.toQuestion(question);
     }
 
     public DeleteHistory delete() {
@@ -89,6 +80,10 @@ public class Answer extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
+        return "Answer{" +
+                "writer=" + writer +
+                ", answerBody=" + answerBody +
+                ", deleted=" + deleted +
+                '}';
     }
 }
