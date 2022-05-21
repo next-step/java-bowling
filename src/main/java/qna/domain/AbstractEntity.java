@@ -6,13 +6,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class AbstractEntity {
+public abstract class AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
     @Column(nullable = false, updatable = false)
     @CreatedDate
@@ -21,6 +22,8 @@ public class AbstractEntity {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
+    protected boolean deleted;
+
     public AbstractEntity() {
     }
 
@@ -28,14 +31,7 @@ public class AbstractEntity {
         this.id = id;
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public AbstractEntity setId(Long id) {
-        this.id = id;
-        return this;
-    }
 
     @Override
     public int hashCode() {
@@ -54,9 +50,7 @@ public class AbstractEntity {
         if (getClass() != obj.getClass())
             return false;
         AbstractEntity other = (AbstractEntity) obj;
-        if (id != other.id)
-            return false;
-        return true;
+        return Objects.equals(id, other.id);
     }
 
     @Override
