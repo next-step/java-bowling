@@ -1,59 +1,36 @@
 package qna.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
-
     @Embedded
     private final Answers answers = new Answers();
 
-    @Column(length = 100, nullable = false)
-    private String title;
-    @Lob
-    private String contents;
+    @Embedded
+    private final QuestionBody questionBody;
+
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
     private boolean deleted = false;
 
-    public Question() {
+    protected Question() {
+        this(QuestionBody.DEFAULT_TITLE, QuestionBody.DEFAULT_CONTENTS);
     }
 
     public Question(String title, String contents) {
-        this.title = title;
-        this.contents = contents;
+        this.questionBody = createQuestionBody(title, contents);
     }
 
     public Question(long id, String title, String contents) {
         super(id);
-        this.title = title;
-        this.contents = contents;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
+        this.questionBody = createQuestionBody(title, contents);
     }
 
     public User getWriter() {
@@ -78,15 +55,6 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
-    public Answers getAnswers() {
-        return answers;
-    }
-
     public DeleteHistories delete() {
         this.deleted = true;
 
@@ -100,8 +68,17 @@ public class Question extends AbstractEntity {
         return this.answers.hasWrittenByOthers(loginUser);
     }
 
+    private QuestionBody createQuestionBody(String title, String contents) {
+        return new QuestionBody(title, contents);
+    }
+
     @Override
     public String toString() {
-        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+        return "Question{" +
+                "answers=" + answers +
+                ", questionBody=" + questionBody +
+                ", writer=" + writer +
+                ", deleted=" + deleted +
+                '}';
     }
 }
