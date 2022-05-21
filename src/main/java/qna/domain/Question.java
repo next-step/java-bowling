@@ -1,13 +1,15 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
+    public static final int INITIAL_INDEX = 0;
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -18,10 +20,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -39,24 +39,6 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
-
     public User getWriter() {
         return writer;
     }
@@ -68,24 +50,36 @@ public class Question extends AbstractEntity {
 
     public void addAnswer(Answer answer) {
         answer.toQuestion(this);
-        answers.add(answer);
+        answers.addAnswer(answer);
     }
 
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    private List<DeleteHistory> addAllDeleteHistory(User loginUser) {
+        changeDeleteState(true);
+        List<DeleteHistory> deleteHistories = answers.answersDelete(loginUser);
+        deleteHistories.add(INITIAL_INDEX, new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now()));
+        return deleteHistories;
+    }
+
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(loginUser + "님은 질문 작성자가 아니기 때문에 삭제할 권한이 없습니다.");
+        }
+        if (answers.canDeletedAnswerCondition(loginUser)) {
+            throw new CannotDeleteException(loginUser + "님 말고 다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+        return addAllDeleteHistory(loginUser);
+    }
+
+    private void changeDeleteState(boolean state) {
+        this.deleted = state;
     }
 
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
     }
 
     @Override
