@@ -7,13 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.domain.AnswerRepository;
-import qna.domain.DeleteHistory;
+import qna.domain.DeleteHistories;
 import qna.domain.Question;
 import qna.domain.QuestionRepository;
 import qna.domain.User;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @Service("qnaService")
 public class QnAService {
@@ -45,7 +44,7 @@ public class QnAService {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
 
-        List<DeleteHistory> deleteHistories = question.delete();
+        DeleteHistories deleteHistories = question.delete();
         deleteHistoryService.saveAll(deleteHistories);
     }
 }

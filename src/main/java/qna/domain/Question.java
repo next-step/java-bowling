@@ -8,7 +8,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -89,16 +88,13 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
-    public List<DeleteHistory> delete() {
+    public DeleteHistories delete() {
         this.deleted = true;
 
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        DeleteHistory questionDeleteHistory = new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now());
+        List<DeleteHistory> answerDeleteHistories = this.answers.delete();
 
-        DeleteHistory deleteHistory = new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now());
-        deleteHistories.add(deleteHistory);
-        deleteHistories.addAll(this.answers.delete());
-
-        return deleteHistories;
+        return new DeleteHistories(questionDeleteHistory, answerDeleteHistories);
     }
 
     public boolean answerHasWrittenByOthers(User loginUser) {

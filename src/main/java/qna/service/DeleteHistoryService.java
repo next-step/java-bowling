@@ -3,11 +3,10 @@ package qna.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import qna.domain.DeleteHistory;
+import qna.domain.DeleteHistories;
 import qna.domain.DeleteHistoryRepository;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @Service("deleteHistoryService")
 public class DeleteHistoryService {
@@ -15,12 +14,7 @@ public class DeleteHistoryService {
     private DeleteHistoryRepository deleteHistoryRepository;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void saveAll(List<DeleteHistory> deleteHistories) {
-        deleteHistoryRepository.saveAll(deleteHistories);
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void save(DeleteHistory deleteHistory) {
-        deleteHistoryRepository.save(deleteHistory);
+    public void saveAll(DeleteHistories deleteHistories) {
+        deleteHistoryRepository.saveAll(deleteHistories.deleteHistories());
     }
 }

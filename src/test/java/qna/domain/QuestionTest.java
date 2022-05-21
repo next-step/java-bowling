@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,12 +16,12 @@ public class QuestionTest {
 
         @Test
         void 삭제처리후_삭제기록을_리턴한다() {
-            List<DeleteHistory> deleteHistories = Q1.delete();
+            DeleteHistories deleteHistories = Q1.delete();
 
             assertThat(Q1.isDeleted()).isTrue();
-            assertThat(deleteHistories).containsExactly(
+            assertThat(deleteHistories).isEqualTo(new DeleteHistories(
                     new DeleteHistory(ContentType.QUESTION, null, UserTest.JAVAJIGI, LocalDateTime.now())
-            );
+            ));
         }
     }
 }
