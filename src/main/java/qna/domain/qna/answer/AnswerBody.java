@@ -48,4 +48,12 @@ public class AnswerBody {
     public int hashCode() {
         return Objects.hash(question, contents);
     }
+
+    @Override
+    public String toString() {
+        return "AnswerBody{" +
+                "question=" + question +
+                ", contents='" + contents + '\'' +
+                '}';
+    }
 }

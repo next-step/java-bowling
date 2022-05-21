@@ -68,6 +68,7 @@ public class Answer extends QnA {
         return "Answer{" +
                 "writer=" + writer +
                 ", answerBody=" + answerBody +
+                ", deleted=" + deleted +
                 '}';
     }
 }

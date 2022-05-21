@@ -81,6 +81,7 @@ public class Question extends QnA {
                 "answers=" + answers +
                 ", questionBody=" + questionBody +
                 ", writer=" + writer +
+                ", deleted=" + deleted +
                 '}';
     }
 }

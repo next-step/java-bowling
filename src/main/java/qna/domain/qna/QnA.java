@@ -6,7 +6,7 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class QnA extends AbstractEntity {
-    private boolean deleted = false;
+    protected boolean deleted = false;
 
     protected QnA() {
     }
@@ -25,5 +25,12 @@ public class QnA extends AbstractEntity {
 
     public boolean isDeleted() {
         return this.deleted;
+    }
+
+    @Override
+    public String toString() {
+        return "QnA{" +
+                "deleted=" + deleted +
+                '}';
     }
 }
