@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pins;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -94,5 +95,42 @@ class NormalFrameTest {
                 () -> assertThat(normalFrame.getSymbol()).isEqualTo("6|3")
         );
     }
+
+    @Test
+    @DisplayName("이전 스코어가 miss 일 경우 연산 결과를 확인한다")
+    void calculateAdditionalScoreWhenBeforeScoreIsMiss() {
+        Score miss = Score.miss(Pins.create(9));
+
+        Frame normalFrame = NormalFrame.create();
+        normalFrame.pitch(Pins.create(9));
+        normalFrame.pitch(Pins.create(1));
+
+        assertThat(normalFrame.calculateAdditionalScore(miss).score()).isEqualTo(9);
+    }
+
+    @Test
+    @DisplayName("이전 스코어가 spare 일 경우 연산 결과를 확인한다")
+    void calculateAdditionalScoreWhenBeforeScoreIsSpare() {
+        Score spare = Score.spare();
+
+        Frame normalFrame = NormalFrame.create();
+        normalFrame.pitch(Pins.create(9));
+        normalFrame.pitch(Pins.create(1));
+
+        assertThat(normalFrame.calculateAdditionalScore(spare).score()).isEqualTo(19);
+    }
+
+    @Test
+    @DisplayName("이전 스코어가 strike 일 경우 연산 결과를 확인한다")
+    void calculateAdditionalScoreWhenBeforeScoreIsStrike() {
+        Score strike = Score.strike();
+
+        Frame normalFrame = NormalFrame.create();
+        normalFrame.pitch(Pins.create(9));
+        normalFrame.pitch(Pins.create(1));
+
+        assertThat(normalFrame.calculateAdditionalScore(strike).score()).isEqualTo(20);
+    }
+
 
 }
