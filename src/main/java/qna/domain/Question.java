@@ -1,26 +1,21 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private final List<Answer> answers = new ArrayList<>();
+
+    @Embedded
+    private final Answers answers = new Answers();
+
     @Column(length = 100, nullable = false)
     private String title;
     @Lob
@@ -89,21 +84,21 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
     }
 
     public void delete(List<DeleteHistory> deleteHistories, long questionId) {
         this.deleted = true;
-        deleteHistories.add(
-                new DeleteHistory(ContentType.QUESTION, questionId, this.writer, LocalDateTime.now())
-        );
 
-        new Answers(this.answers).delete(deleteHistories);
+        DeleteHistory deleteHistory = new DeleteHistory(ContentType.QUESTION, questionId, this.writer, LocalDateTime.now());
+        deleteHistories.add(deleteHistory);
+
+        this.answers.delete(deleteHistories);
     }
 
     public boolean answerHasWrittenByOthers(User loginUser) {
-        return new Answers(this.answers).hasWrittenByOthers(loginUser);
+        return this.answers.hasWrittenByOthers(loginUser);
     }
 
     @Override

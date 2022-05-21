@@ -1,10 +1,24 @@
 package qna.domain;
 
+import org.hibernate.annotations.Where;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Embeddable;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
+@Embeddable
 public class Answers {
-    private final List<Answer> answers;
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    @Where(clause = "deleted = false")
+    @OrderBy("id ASC")
+    private List<Answer> answers = new ArrayList<>();
+
+    public Answers() {
+    }
 
     public Answers(List<Answer> answers) {
         this.answers = answers;
@@ -17,14 +31,18 @@ public class Answers {
      * @return 다른 회원이 쓴 답변이 있다면 true, 그렇지 않다면 false
      */
     public boolean hasWrittenByOthers(User user) {
-        return answers.stream()
+        return this.answers.stream()
                 .anyMatch(answer -> !answer.isOwner(user));
     }
 
     public void delete(List<DeleteHistory> deleteHistories) {
-        answers.forEach(answer -> {
+        this.answers.forEach(answer -> {
             answer.setDeleted(true);
             deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         });
+    }
+
+    public void add(Answer answer) {
+        this.answers.add(answer);
     }
 }
