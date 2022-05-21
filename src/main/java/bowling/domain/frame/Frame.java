@@ -1,20 +1,19 @@
 package bowling.domain.frame;
 
-import java.util.Optional;
+import bowling.domain.pin.Pin;
+import bowling.domain.Score;
 
 public interface Frame {
 
-    void addPin(int pinNo);
+    int number();
 
-    Frame nextFrame(int pinNo);
+    Frame bowl(Pin no);
 
-    boolean canGetScore();
+    Score score();
 
-    Optional<Integer> score();
+    boolean finished();
 
-    int spareBonusForPreviousFrame();
-
-    Optional<Integer> strikeBonusForPreviousFrame();
+    Score additionalScore(Score beforeScore);
 
     String expression();
 }
