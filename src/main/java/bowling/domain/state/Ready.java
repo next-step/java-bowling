@@ -1,11 +1,11 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import bowling.domain.score.Score;
 
 public class Ready implements State {
 
     private static final String EMPTY = "";
-
 
     private Ready() {
     }
@@ -30,6 +30,16 @@ public class Ready implements State {
     @Override
     public String getSymbol() {
         return EMPTY;
+    }
+
+    @Override
+    public Score score() {
+        return null;
+    }
+
+    @Override
+    public Score calculateScore(Score beforeScore) {
+        return Score.unavailable();
     }
 
 }
