@@ -53,8 +53,8 @@
   - [ ] name should be 3 chars
 - [x] print initial score board
 - [x] rename Score -> Player, add Score enum, Player.scores = List<Score>
-- [ ] Pitch => random hit
-- [ ] evaluate hit => score payload
+- [x] Player.pitch => random hit
+- [x] evaluate hit with ScoreType enum, Score.payload to show current score.
 - [ ] renew score, print score
 - [ ] if strike, iterate to next frame
   - [ ] else, try same frame one more

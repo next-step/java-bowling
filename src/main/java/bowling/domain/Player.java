@@ -23,6 +23,10 @@ public class Player {
     }
 
     public int pitch() {
-        return new Random().nextInt(10);
+        return new Random().nextInt(11);
+    }
+
+    public void save(int i, Score score) {
+        this.scores.set(i, score);
     }
 }
