@@ -55,6 +55,7 @@
 - [x] rename Score -> Player, add Score enum, Player.scores = List<Score>
 - [x] Player.pitch => random hit
 - [x] evaluate hit with ScoreType enum, Score.payload to show current score.
+- [x] Player.plays => prevScore exists, Score.play once, else twice
 - [ ] renew score, print score
 - [ ] if strike, iterate to next frame
   - [ ] else, try same frame one more

@@ -11,10 +11,8 @@ public class BowlingApp {
         Player player = new Player(name);
         Output.print("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
         Output.print(player.payload());
-        int hit = player.pitch();
-        Score score = new Score(hit);
-        player.save(0, score);
-        Output.print("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
-        Output.print(player.payload());
+        player.plays();
     }
+
+
 }
