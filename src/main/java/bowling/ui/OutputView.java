@@ -1,28 +1,26 @@
 package bowling.ui;
 
-import bowling.domain.frame.Frame;
+import bowling.domain.Player;
 import bowling.domain.frame.Frames;
-import bowling.domain.game.Player;
 
 import java.util.List;
 
-import static bowling.domain.frame.Frames.MAX_FRAMES_SIZE;
-
 public class OutputView {
 
+    private static final int MAX_FRAMES_SIZE = 10;
     private static final String NAME_FORMAT = "| %s  ";
-    private static final String FRAME_FORMAT = "|  %-3s ";
+    private static final String FRAME_EXPRESSION_FORMAT = "|  %-3s ";
     private static final String SCORE_FORMAT = "|  %-3d ";
     private static final String EMPTY_PADDING = "|      ";
 
     private OutputView() {
     }
 
-    public static void printBowling(Player player, Frames frames) {
+    public static void printBowling(Player player, Frames frame) {
         printHeader();
         printName(player.getName());
-        printFrames(frames.getFrames());
-        printScores(frames.getScores());
+        printExpressions(frame.expressions());
+        printScores(frame.scores());
         System.out.println();
     }
 
@@ -34,32 +32,34 @@ public class OutputView {
         System.out.printf(NAME_FORMAT, name);
     }
 
-    private static void printFrames(List<Frame> frames) {
-        frames.forEach(frame -> System.out.printf(FRAME_FORMAT, frame.expression()));
-
-        int emptyFrameCount = MAX_FRAMES_SIZE - frames.size();
-        for (int i = 0; i < emptyFrameCount; i++) {
+    private static void printExpressions(List<String> expressions) {
+        expressions.forEach(OutputView::printExpression);
+        for (int i = 0; i < MAX_FRAMES_SIZE - expressions.size(); i++) {
             printEmptyPadding();
         }
-
         System.out.println();
     }
 
+
     private static void printScores(List<Integer> scores) {
-        System.out.print(EMPTY_PADDING);
-
-        int total = 0;
+        printEmptyPadding();
+        int totalScore = 0;
         for (int score : scores) {
-            total = total + score;
-            System.out.printf(SCORE_FORMAT, total);
+            totalScore += score;
+            printScore(totalScore);
         }
-
-        int emptyScoreCount = MAX_FRAMES_SIZE - scores.size();
-        for (int i = 0; i < emptyScoreCount; i++) {
+        for (int i = 0; i < MAX_FRAMES_SIZE - scores.size(); i++) {
             printEmptyPadding();
         }
-
         System.out.println();
+    }
+
+    private static void printExpression(String expression) {
+        System.out.printf(FRAME_EXPRESSION_FORMAT, expression);
+    }
+
+    private static void printScore(int score) {
+        System.out.printf(SCORE_FORMAT, score);
     }
 
     private static void printEmptyPadding() {

@@ -1,6 +1,6 @@
 package bowling.ui;
 
-import bowling.domain.game.Player;
+import bowling.domain.Player;
 
 import java.util.Scanner;
 
