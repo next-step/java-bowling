@@ -1,5 +1,8 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pin;
+import bowling.domain.Score;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -8,38 +11,56 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FinalFrameTest {
 
-    @ParameterizedTest(name = "스트라이크/스페어 일 때 추가 투구 안 하면 isFull false")
-    @CsvSource({"10,10", "10,0", "9,1", "8,2"})
-    void isFull_WhenExtraMissing_ReturnsFalse(int firstNo, int secondNo) {
-        Frame finalFrame = new FinalFrame(firstNo);
-        finalFrame.addPin(secondNo);
-
-        assertThat(finalFrame.isFull()).isFalse();
+    @Test
+    void number() {
+        assertThat(new FinalFrame().number()).isEqualTo(10);
     }
 
-    @ParameterizedTest(name = "스트라이크/스페어 일 때 추가 투구하면 isFull true")
-    @CsvSource({"10,10,10", "10,0,3", "9,1,2", "8,2,1"})
-    void isFull_WhenExtraAdded_ReturnsTrue(int firstNo, int secondNo, int extraNo) {
-        Frame finalFrame = new FinalFrame(firstNo);
-        finalFrame.addPin(secondNo);
-        finalFrame.addPin(extraNo);
+    @ParameterizedTest
+    @CsvSource({"5,5,5", "10,3,5"})
+    void bowl_WhenExtraPinIsFull_ThrowsIllegalStateException(int firstPin, int secondPin, int thirdPin) {
+        Frame finalFrame = new FinalFrame()
+                .bowl(Pin.of(firstPin))
+                .bowl(Pin.of(secondPin))
+                .bowl(Pin.of(thirdPin));
 
-        assertThat(finalFrame.isFull()).isTrue();
-    }
-
-    @ParameterizedTest(name = "미스면 isFull true")
-    @CsvSource({"8,1", "0,0", "0,9", "4,5"})
-    void isFull_WhenMiss_ReturnsTrue(int firstNo, int secondNo) {
-        Frame finalFrame = new FinalFrame(firstNo);
-        finalFrame.addPin(secondNo);
-
-        assertThat(finalFrame.isFull()).isTrue();
-    }
-
-    @ParameterizedTest(name = "첫 번째 투구가 스트라이크가 아니면 두 투구의 합은 10이하")
-    @CsvSource({"7,4", "9,3", "2,9"})
-    void addPin_WhenValidationFailed_ThrowsIllegalStateException(int firstNo, int secondNo) {
-        assertThatThrownBy(() -> new FinalFrame(firstNo).addPin(secondNo))
+        assertThatThrownBy(() -> finalFrame.bowl(Pin.of(5)))
                 .isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
+    void score_Miss() {
+        Frame finalFrame = new FinalFrame()
+                .bowl(Pin.of(4))
+                .bowl(Pin.of(5));
+
+        Score score = finalFrame.score();
+
+        assertThat(score.getScore()).isEqualTo(9);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"6,4,9,19", "10,5,3,18"})
+    void score_SpareOrStrike(int firstPin, int secondPin, int thirdPin, int result) {
+        Frame finalFrame = new FinalFrame()
+                .bowl(Pin.of(firstPin))
+                .bowl(Pin.of(secondPin))
+                .bowl(Pin.of(thirdPin));
+
+        Score score = finalFrame.score();
+
+        assertThat(score.getScore()).isEqualTo(result);
+    }
+
+    @Test
+    void additionalScore() {
+        Frame finalFrame = new FinalFrame()
+                .bowl(Pin.of(10))
+                .bowl(Pin.of(3))
+                .bowl(Pin.of(5));
+
+        Score score = finalFrame.additionalScore(Score.ofStrike());
+
+        assertThat(score.getScore()).isEqualTo(23);
     }
 }

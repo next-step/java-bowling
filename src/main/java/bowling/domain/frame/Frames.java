@@ -1,46 +1,54 @@
 package bowling.domain.frame;
 
+import bowling.domain.Score;
+import bowling.domain.pin.Pin;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Frames {
 
-    public static final int MAX_FRAMES_SIZE = 10;
-
     private final List<Frame> frames = new ArrayList<>();
 
-    public Frames(int pinNo) {
-        frames.add(NormalFrame.init(pinNo));
+    public Frames() {
+        frames.add(NormalFrame.init());
     }
 
-    public void addPin(int pinNo) {
-        if (isFinished()) {
-            throw new IllegalStateException("can't add more pins");
+    public void bowl(Pin no) {
+        if (finished()) {
+            throw new IllegalStateException();
         }
-
-        Frame lastFrame = getLastFrame();
-        if (lastFrame.isFull()) {
-            frames.add(lastFrame.nextFrame(pinNo));
-            return;
+        Frame frame = last().bowl(no);
+        if (frame != last()) {
+            frames.add(frame);
         }
-        lastFrame.addPin(pinNo);
     }
 
-    public boolean isFinished() {
-        return frames.size() == MAX_FRAMES_SIZE && getLastFrame().isFull();
-    }
-
-    private Frame getLastFrame() {
-        return frames.get(frames.size() - 1);
+    public boolean finished() {
+        return last() instanceof FinalFrame && last().finished();
     }
 
     public int currentFrame() {
-        return getLastFrame().isFull()
-                ? frames.size() + 1
-                : frames.size();
+        return last().number();
     }
 
-    public List<Frame> getFrames() {
-        return new ArrayList<>(frames);
+    private Frame last() {
+        return frames.get(frames.size() - 1);
+    }
+
+    public List<Integer> scores() {
+        return frames.stream()
+                .filter(Frame::finished)
+                .map(Frame::score)
+                .filter(Score::canGetScore)
+                .map(Score::getScore)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> expressions() {
+        return frames.stream()
+                .map(Frame::expression)
+                .collect(Collectors.toList());
     }
 }
