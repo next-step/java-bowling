@@ -1,11 +1,11 @@
 package bowling.controller;
 
-import bowling.domain.Frames;
+import bowling.domain.Game;
 
 public class BowlingGameController {
 
-    public Frames createFrames(String name) {
-        return new Frames(name);
+    public Game createFrames(String name) {
+        return new Game(name);
     }
 
 }

@@ -3,34 +3,32 @@ package bowling.ui;
 import static java.lang.System.out;
 
 import bowling.domain.Frame;
-import bowling.domain.Frames;
+import bowling.domain.Game;
 import bowling.domain.Score;
-import java.util.List;
 import java.util.Objects;
 
 public class OutputCui {
 
-    public void drawFrames(Frames frames) {
-        String name = frames.getName();
-        Frame current = frames.getHead();
-        List<Frame> frameList = frames.get();
+    public void drawStatus(Game game) {
+        String name = game.name();
+        Frame current = game.frames().head();
 
-        drawUpperLine(frameList.size());
+        drawUpperLine(current);
         out.printf(fixedLengthString("|  %s |", 7), name);
 
-        while (current.next() != null) {
+        while (current != null) {
             drawFrame(current);
             current = current.next();
         }
-        drawFrame(current);
         out.println();
-
     }
 
-    private void drawUpperLine(int size) {
+    private void drawUpperLine(Frame frame) {
         out.print("| NAME |");
-        for (int i = 1; i <= size; ++i) {
-            out.printf(fixedLengthString("  %s  |", 7), String.format("%02d", i));
+        int number = 1;
+        while (frame != null) {
+            out.printf(fixedLengthString("  %s  |", 7), String.format("%02d", number++));
+            frame = frame.next();
         }
         out.println();
     }

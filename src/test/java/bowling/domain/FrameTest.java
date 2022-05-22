@@ -14,19 +14,19 @@ class FrameTest {
 
     @BeforeEach
     void setUp() {
-        frame = Frame.of();
+        frame = new Frame();
     }
 
     @Test
     void createTest() {
-        Frame frame = Frame.of();
+        Frame frame = new Frame();
         assertThat(frame.remainedPins()).isEqualTo(DEFAULT_PIN);
     }
 
     @DisplayName("현재 프레임과 연결된 다음 프레임을 만들어서 연결한다.")
     @Test
     void createTest2() {
-        Frame currentFrame = Frame.of();
+        Frame currentFrame = new Frame();
         Frame nextFrame = currentFrame.createNext();
         Frame beforeFrame = currentFrame.createBefore();
 

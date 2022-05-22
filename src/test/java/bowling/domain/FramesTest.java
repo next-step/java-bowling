@@ -22,15 +22,14 @@ class FramesTest {
         Frames frames = new Frames();
 
         assertThat(frames).isNotNull();
-        assertThat(frames.get()).hasSize(BOWLING_FRAMES_DEFAULT);
     }
 
-    @DisplayName("프레임들 객체에서 볼링게임 프레임 12개를 생성한다.")
+    @DisplayName("프레임들 객체에서 볼링게임 기본프레임 10개를 생성한다.")
     @Test
     void createTest2() {
         Frames frames = new Frames();
 
-        assertThat(frames.get()).hasSize(BOWLING_FRAMES_DEFAULT);
+        assertThat(frames.size()).isEqualTo(BOWLING_FRAMES_DEFAULT);
     }
 
     @DisplayName("프레임들 생성 후 현재프레임은 가장 앞 프레임이다.")
@@ -38,8 +37,7 @@ class FramesTest {
     void createTest3() {
         Frames frames = new Frames();
 
-        assertThat(frames.getCurrent()).isSameAs(frames.get().get(0));
-        assertThat(frames.getCurrent()).isNotSameAs(frames.get().get(BOWLING_FRAMES_DEFAULT -1));
+        assertThat(frames.current()).isSameAs(frames.head());
     }
 
     @Test
@@ -47,8 +45,8 @@ class FramesTest {
         frames.throwBall(4);
         frames.throwBall(3);
 
-        assertThat(frames.get().get(0).getFirstScore().get()).isEqualTo(4);
-        assertThat(frames.get().get(0).getSecondScore().get()).isEqualTo(3);
+        assertThat(frames.head().getFirstScore().get()).isEqualTo(4);
+        assertThat(frames.head().getSecondScore().get()).isEqualTo(3);
     }
 
     @DisplayName("유효하지 않은 맞춘개수 입력 시 예외 발생한다.")
@@ -71,24 +69,62 @@ class FramesTest {
         frames.throwBall(8);    // 3
         frames.throwBall(1);    // 3
 
-        assertThat(frames.get().get(0).getFirstScore().get()).isEqualTo(9);
-        assertThat(frames.get().get(0).getSecondScore().get()).isEqualTo(1);
-        assertThat(frames.get().get(1).getFirstScore().get()).isEqualTo(10);
-        assertThat(frames.get().get(1).getSecondScore()).isNull();
-        assertThat(frames.get().get(2).getFirstScore().get()).isEqualTo(8);
-        assertThat(frames.get().get(2).getSecondScore().get()).isEqualTo(1);
+        assertThat(frames.head().getFirstScore().get()).isEqualTo(9);
+        assertThat(frames.head().getSecondScore().get()).isEqualTo(1);
+        assertThat(frames.head().next().getFirstScore().get()).isEqualTo(10);
+        assertThat(frames.head().next().getSecondScore()).isNull();
+        assertThat(frames.current().before().getFirstScore().get()).isEqualTo(8);
+        assertThat(frames.current().before().getSecondScore().get()).isEqualTo(1);
     }
 
-    @DisplayName("10프레임에 스트라이크를 치면 2프레임 추가한다.")
+    @DisplayName("10프레임에 스트라이크를 치면 2프레임 추가 진행 가능하다.")
     @Test
     void throwBallTest4() {
+        throwBallNineTimes();
 
+        frames.throwBall(10);   // 10
+        frames.throwBall(10);   // 11
+        frames.throwBall(10);   // 12
+
+        assertThat(frames.isEndGame()).isTrue();
     }
 
-    @DisplayName("10프레임에 스패어를 치면 1프레임 추가한다.")
+    @DisplayName("10프레임에 스패어를 치면 1프레임 추가 진행 가능하다.")
     @Test
     void throwBallTest5() {
+        throwBallNineTimes();
 
+        frames.throwBall(4);    // 10
+        frames.throwBall(6);    // 10
+        frames.throwBall(10);   // 11
+
+        assertThat(frames.isEndGame()).isTrue();
+    }
+
+    @DisplayName("최대 12프레임을 넘는 게임 진행은 불가하다.")
+    @Test
+    void throwBallTest6() {
+        throwBallNineTimes();
+
+        frames.throwBall(10);   // 10
+        frames.throwBall(10);   // 11
+        frames.throwBall(10);   // 12
+
+        assertThatThrownBy(() -> {
+            frames.throwBall(10);
+        }).isInstanceOf(IllegalStateException.class);
+    }
+
+    private void throwBallNineTimes() {
+        frames.throwBall(10);
+        frames.throwBall(10);
+        frames.throwBall(10);
+        frames.throwBall(10);
+        frames.throwBall(10);
+        frames.throwBall(10);
+        frames.throwBall(10);
+        frames.throwBall(10);
+        frames.throwBall(10);
     }
 
 }

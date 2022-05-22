@@ -2,6 +2,7 @@ package bowling;
 
 import bowling.controller.BowlingGameController;
 import bowling.domain.Frames;
+import bowling.domain.Game;
 import bowling.ui.InputCui;
 import bowling.ui.OutputCui;
 
@@ -13,30 +14,23 @@ public class MainApp {
         BowlingGameController bowlingGame = new BowlingGameController();
 
         final String name = inputCui.inputPlayerNames();
-        Frames frames = bowlingGame.createFrames(name);
-        outputCui.drawFrames(frames);
+        Game game = bowlingGame.createFrames(name);
+        outputCui.drawStatus(game);
 
-        play(inputCui, outputCui, frames);
+        play(inputCui, outputCui, game);
     }
 
-    private static void play(InputCui inputCui, OutputCui outputCui, Frames frames) {
+    private static void play(InputCui inputCui, OutputCui outputCui, Game game) {
         int hitCount;
+        Frames frames = game.frames();
         int frameNumber = 1;
         while (!frames.isEndGame()) {
             hitCount = inputCui.inputHitCount(frameNumber);
 
             frameNumber += frames.throwBall(hitCount);
 
-            outputCui.drawFrames(frames);
+            outputCui.drawStatus(game);
         }
-    }
-
-    private static void shot(Frames frames, int hitCount, int frameNumber) {
-        if (frameNumber == 10) {
-
-        }
-
-        frames.throwBall(hitCount);
     }
 
 }
