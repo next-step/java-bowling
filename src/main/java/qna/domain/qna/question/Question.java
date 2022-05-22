@@ -66,13 +66,8 @@ public class Question extends QnA {
      * @throws CannotDeleteException 권한이 없거나 다른 사람이 쓴 답변이 있을 경우
      */
     public DeleteHistories delete(User user) throws CannotDeleteException {
-        if (!isOwner(user)) {
-            throw new CannotDeleteException(DELETE_QUESTION_PERMISSION_MESSAGE);
-        }
-
-        if (answerHasWrittenByOthers(user)) {
-            throw new CannotDeleteException(ANSWER_OTHER_WRITTEN_MESSAGE);
-        }
+        checkIsNotOwner(user);
+        checkAnswerHasWrittenByOthers(user);
 
         super.setDelete();
         DeleteHistory questionDeleteHistory = super.createDeleteHistory(ContentType.QUESTION, this.writer);
@@ -81,12 +76,24 @@ public class Question extends QnA {
         return new DeleteHistories(questionDeleteHistory, answerDeleteHistories);
     }
 
-    private boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
+    private void checkIsNotOwner(User user) throws CannotDeleteException {
+        if (!isOwner(user)) {
+            throw new CannotDeleteException(DELETE_QUESTION_PERMISSION_MESSAGE);
+        }
     }
 
-    private boolean answerHasWrittenByOthers(User loginUser) {
-        return this.answers.hasWrittenByOthers(loginUser);
+    private void checkAnswerHasWrittenByOthers(User user) throws CannotDeleteException {
+        if (answerHasWrittenByOthers(user)) {
+            throw new CannotDeleteException(ANSWER_OTHER_WRITTEN_MESSAGE);
+        }
+    }
+
+    private boolean answerHasWrittenByOthers(User user) {
+        return this.answers.hasWrittenByOthers(user);
+    }
+
+    private boolean isOwner(User loginUser) {
+        return writer.equals(loginUser);
     }
 
     private QuestionBody createQuestionBody(String title, String contents) {
