@@ -1,4 +1,5 @@
 package bowling.domain;
+
 import java.util.Optional;
 
 public class Score {
@@ -6,8 +7,12 @@ public class Score {
     private final int hit;
 
     public Score(int hit, Optional<Integer> prevHit) {
-        this.hit = hit;
         this.scoreType = ScoreType.of(hit, prevHit);
+        if (prevHit.isPresent()) {
+            this.hit = prevHit.get();
+            return;
+        }
+        this.hit = hit;
     }
 
     public static Score play(Optional<Score> prevScore) {
@@ -19,7 +24,7 @@ public class Score {
         return new Score(hit, Optional.empty());
     }
 
-     int remainingPin() {
+    int remainingPin() {
         return 10 - this.hit;
     }
 
@@ -34,13 +39,13 @@ public class Score {
             return String.format("%-4s", score.get().hit);
         }
         if (score.get().scoreType == ScoreType.GUTTER) {
-            return String.format("%-4s", score.get().hit);
+            return String.format("%-4s", "-");
         }
         if (score.get().scoreType == ScoreType.MISS) {
-            return String.format("%-4s", score.get().hit);
+            return String.format("%-4s", score.get().hit + "|" + score.get().remainingPin());
         }
         if (score.get().scoreType == ScoreType.SPARE) {
-            return String.format("%-4s", score.get().hit);
+            return String.format("%-4s", score.get().hit + "|/");
         }
         throw new RuntimeException("unreachable " + score.get());
     }

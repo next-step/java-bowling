@@ -61,4 +61,7 @@
   - [x] else, try same frame one more
 - [x] test: add ScoreTypeTest
 - [x] fix: play should hit only remainingPin
-- [ ] Should save Second score correctly.
+- [ ] Should save, print Second score correctly.
+  - [x] save only prevScore
+  - [x] add gutter testcase
+  - [ ] save tuple(first, second)

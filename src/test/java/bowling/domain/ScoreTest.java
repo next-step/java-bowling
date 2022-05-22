@@ -24,4 +24,11 @@ public class ScoreTest {
         Score score = new Score(1, Optional.empty());
         assertThat(score.remainingPin()).isEqualTo(9);
     }
+
+    @Test
+    void printGutterWithDash() {
+        assertThat(Score.payload(Optional.of(new Score(0,Optional.of(0))))).isEqualTo(String.format("%-4s", "-|-"));
+        assertThat(Score.payload(Optional.of(new Score(1,Optional.of(0))))).isEqualTo(String.format("%-4s", "1|-"));
+        assertThat(Score.payload(Optional.of(new Score(0,Optional.of(1))))).isEqualTo(String.format("%-4s", "-|1"));
+    }
 }
