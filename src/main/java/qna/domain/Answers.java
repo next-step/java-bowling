@@ -25,7 +25,7 @@ public class Answers {
         }
 
         answers.stream()
-                .filter(a -> a.equalsQuestion(answer))
+                .filter(a -> !a.equalsQuestion(answer))
                 .findAny()
                 .ifPresent(a -> {
                     throw new IllegalArgumentException("Answers에 다른 Question 대한 Answer을 추가할 수 없습니다. "+a);
