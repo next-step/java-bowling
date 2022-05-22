@@ -4,7 +4,9 @@ import static java.lang.System.out;
 
 import bowling.domain.Frame;
 import bowling.domain.Frames;
+import bowling.domain.Score;
 import java.util.List;
+import java.util.Objects;
 
 public class OutputCui {
 
@@ -27,13 +29,42 @@ public class OutputCui {
     private void drawUpperLine(int size) {
         out.print("| NAME |");
         for (int i = 1; i <= size; ++i) {
-            out.printf(fixedLengthString("  %d  |", 7), i);
+            out.printf(fixedLengthString("  %s  |", 7), String.format("%02d", i));
         }
         out.println();
     }
 
     private void drawFrame(Frame frame) {
-        out.print("  " + frame.getFirstScore().get() + "|" + frame.getSecondScore().get() + " |");
+        out.printf(fixedLengthString("  %s", 3), drawFirstScore(frame.getFirstScore()));
+        out.print(fixedLengthString(drawSecondScore(frame.getFirstScore(), frame.getSecondScore()), 2));
+        out.print(" |");
+    }
+
+    private String drawFirstScore(Score score) {
+        if (Objects.isNull(score)) {
+            return " ";
+        }
+
+        if (score.get() == 10) {
+            return "X";
+        }
+        return Integer.toString(score.get());
+    }
+
+    private String drawSecondScore(Score firstScore, Score secondScore) {
+        if (Objects.isNull(secondScore)) {
+            return " ";
+        }
+
+        if (firstScore.get() != 10 && firstScore.get() + secondScore.get() == 10) {
+            return "|/";
+        }
+
+        if (firstScore.get() != 10 && secondScore.get() == 0) {
+            return "|-";
+        }
+
+        return Integer.toString(secondScore.get());
     }
 
     private static String fixedLengthString(String string, int length) {

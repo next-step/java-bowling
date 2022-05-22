@@ -56,13 +56,11 @@ public class Frame {
     }
 
     public Score getFirstScore() {
-        return Optional.ofNullable(firstScore)
-            .orElse(new Score());
+        return firstScore;
     }
 
     public Score getSecondScore() {
-        return Optional.ofNullable(secondScore)
-            .orElse(new Score());
+        return secondScore;
     }
 
     public Frame next() {
