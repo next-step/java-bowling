@@ -40,8 +40,8 @@ public class BowlingGame {
         return player;
     }
 
-    public List<Score> scores() {
-        return frames.scores();
+    public List<Integer> sumScores() {
+        return frames.sumScores();
     }
 
     public void nextRound() {

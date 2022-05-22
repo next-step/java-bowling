@@ -5,6 +5,7 @@ import bowling.domain.score.Score;
 import bowling.exception.InvalidFramesException;
 import bowling.exception.OutOfIndexException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -94,7 +95,24 @@ public class Frames {
         return currentIndex + 1;
     }
 
-    public List<Score> scores() {
+    public List<Integer> sumScores() {
+        List<Integer> sumScores = new ArrayList<>();
+        int sum = 0;
+
+        for (Score score : scores()) {
+            if(score.isUnavailable()) {
+                sumScores.add(score.score());
+                continue;
+            }
+
+            sum += score.score();
+            sumScores.add(sum);
+        }
+
+        return sumScores;
+    }
+
+    private List<Score> scores() {
         return frames.stream()
                 .filter(Frame::isFrameEnd)
                 .map(this::calculateScore)

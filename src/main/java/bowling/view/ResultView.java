@@ -3,7 +3,6 @@ package bowling.view;
 import bowling.domain.BowlingGame;
 import bowling.domain.Player;
 import bowling.domain.frame.Frame;
-import bowling.domain.score.Score;
 
 import java.util.List;
 
@@ -20,6 +19,7 @@ public final class ResultView {
     private static final String BLANK = "";
 
     private static final StringBuilder stringBuilder = new StringBuilder();
+    private static final int UN_AVAILABLE = -1;
 
     public void printBowlingGameResult(BowlingGame bowlingGame) {
         appendHead();
@@ -33,14 +33,14 @@ public final class ResultView {
                 .append(String.format(BODY_FORMAT, BLANK))
                 .append(VERTICAL_BAR);
 
-        List<Score> scores = bowlingGame.scores();
-        scores.forEach(score -> stringBuilder.append(String.format(BODY_FORMAT, getScoreInGame(score)))
+        bowlingGame.sumScores()
+                .forEach(score -> stringBuilder.append(String.format(BODY_FORMAT, getScoreInGame(score)))
                 .append(VERTICAL_BAR));
         appendNewLine();
     }
 
-    private String getScoreInGame(Score score) {
-        return score.isUnavailable() ? BLANK : score.toString();
+    private String getScoreInGame(int score) {
+        return score == UN_AVAILABLE ? BLANK : String.valueOf(score);
     }
 
     private void appendHead() {
