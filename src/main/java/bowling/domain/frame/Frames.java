@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.Pins;
 import bowling.domain.score.Score;
+import bowling.domain.score.Scores;
 import bowling.exception.InvalidFramesException;
 import bowling.exception.OutOfIndexException;
 
@@ -96,27 +97,15 @@ public class Frames {
     }
 
     public List<Integer> sumScores() {
-        List<Integer> sumScores = new ArrayList<>();
-        int sum = 0;
-
-        for (Score score : scores()) {
-            if(score.isUnavailable()) {
-                sumScores.add(score.score());
-                continue;
-            }
-
-            sum += score.score();
-            sumScores.add(sum);
-        }
-
-        return sumScores;
+        return scores().accumulateScore();
     }
 
-    private List<Score> scores() {
-        return frames.stream()
+    private Scores scores() {
+        List<Score> scores = frames.stream()
                 .filter(Frame::isFrameEnd)
                 .map(this::calculateScore)
                 .collect(Collectors.toList());
+        return Scores.create(scores);
     }
 
     private Score calculateScore(Frame frame) {
