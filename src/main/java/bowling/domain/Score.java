@@ -9,34 +9,11 @@ import java.util.Optional;
 public class Score {
     private final ScoreType scoreType;
     private final int hit;
-//
-//    public Score() {
-//        this.scoreType = ScoreType.INIT;
-//        this.hit = 0;
-//    }
 
     public Score(int hit, Optional<Integer> prevHit) {
         this.hit = hit;
         this.scoreType = ScoreType.of(hit, prevHit);
     }
-
-//    public static void plays(List<Optional<Score>> scores) {
-//        ListIterator<Optional<Score>> iterator = scores.listIterator();
-//        while(iterator.hasNext()) {
-////            int index = iterator.nextIndex();
-//            Optional<Score> score = iterator.next();
-//            if (score.isPresent()) {
-//                //
-//
-//            }
-//            score.play();
-////            Score score = this.play(index, Optional.ofNullable(this.scores.get(index).hit));
-//            if (score.hasNext()) {
-//                continue;
-//            }
-//            iterator.next();
-//        }
-//    }
 
     public static Score play(Optional<Score> prevScore) {
         int hit = Player.pitch();
@@ -44,10 +21,6 @@ public class Score {
             return new Score(hit, Optional.of(prevScore.get().hit));
         }
         return new Score(hit, Optional.empty());
-//        this.save(index, score);
-//        Output.print("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
-//        Output.print(Score.payload(Optional.ofNullable(this)));
-//        return score;
     }
 
     public static String payload(Optional<Score> score) {
@@ -72,8 +45,8 @@ public class Score {
         throw new RuntimeException("unreachable " + score.get());
     }
 
-    public boolean hasNext() {
-        return !(this.scoreType == ScoreType.STRIKE || this.scoreType == ScoreType.SECOND);
+    public boolean done() {
+        return this.scoreType != ScoreType.SECOND;
     }
 
     @Override
@@ -82,5 +55,9 @@ public class Score {
                 "scoreType=" + scoreType +
                 ", hit=" + hit +
                 '}';
+    }
+
+    public boolean isStrike() {
+        return this.scoreType == ScoreType.STRIKE;
     }
 }

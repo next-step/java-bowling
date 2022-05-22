@@ -56,6 +56,7 @@
 - [x] Player.pitch => random hit
 - [x] evaluate hit with ScoreType enum, Score.payload to show current score.
 - [x] Player.plays => prevScore exists, Score.play once, else twice
-- [ ] renew score, print score
-- [ ] if strike, iterate to next frame
-  - [ ] else, try same frame one more
+- [x] renew score, print score
+- [x] if second of strike, iterate to next frame
+  - [x] else, try same frame one more
+- [ ] Should save Second score correctly.

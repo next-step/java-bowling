@@ -2,7 +2,6 @@ package bowling.domain;
 
 import bowling.view.Output;
 
-import javax.swing.text.html.Option;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -30,23 +29,18 @@ public class Player {
         return new Random().nextInt(11);
     }
 
-    public void save(int index, Score score) {
-        this.scores.set(index, Optional.of(score));
-    }
-
     public void plays() {
         ListIterator<Optional<Score>> iterator = this.scores.listIterator();
-        Optional<Score> score = iterator.next();
         while (iterator.hasNext()) {
-            boolean present = score.isPresent();
+            int i = iterator.nextIndex();
+            Optional<Score> score = this.scores.get(i);
             Score newScore = Score.play(score);
-            iterator.set(Optional.of(newScore));
-            score = Optional.of(newScore);
-            System.out.println("Frame " + iterator.nextIndex());
+            this.scores.set(i, Optional.of(newScore));
+            System.out.println("Frame " + (i + 1));
             Output.print("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
             Output.print(this.payload());
-            if (present) {
-                score = iterator.next();
+            if (newScore.done()) {
+                iterator.next();
             }
         }
     }
