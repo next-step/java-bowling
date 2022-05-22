@@ -61,16 +61,16 @@ public class Question extends QnA {
     /**
      * 질문을 삭제합니다.
      *
-     * @param loginUser 로그인한 유저
+     * @param user 확인할 유저
      * @return 생성된 삭제 기록
      * @throws CannotDeleteException 권한이 없거나 다른 사람이 쓴 답변이 있을 경우
      */
-    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
-        if (!isOwner(loginUser)) {
+    public DeleteHistories delete(User user) throws CannotDeleteException {
+        if (!isOwner(user)) {
             throw new CannotDeleteException(DELETE_QUESTION_PERMISSION_MESSAGE);
         }
 
-        if (answerHasWrittenByOthers(loginUser)) {
+        if (answerHasWrittenByOthers(user)) {
             throw new CannotDeleteException(ANSWER_OTHER_WRITTEN_MESSAGE);
         }
 
