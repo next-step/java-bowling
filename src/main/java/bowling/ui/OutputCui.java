@@ -22,6 +22,7 @@ public class OutputCui {
             drawFrame(current);
             current = current.next();
         }
+        drawFrame(current);
         out.println();
 
     }
@@ -64,7 +65,7 @@ public class OutputCui {
             return "|-";
         }
 
-        return Integer.toString(secondScore.get());
+        return "|" + secondScore.get();
     }
 
     private static String fixedLengthString(String string, int length) {

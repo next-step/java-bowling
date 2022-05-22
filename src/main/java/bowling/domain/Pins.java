@@ -13,8 +13,8 @@ public class Pins {
     }
 
     public void hit(int hitCount) {
-        if (pins < hitCount) {
-            throw new IllegalArgumentException("남아있는 핀보다 더 큰 수는 칠 수 없음.");
+        if (pins < hitCount || hitCount < 0) {
+            throw new IllegalArgumentException("남아있는 핀보다 더 큰 수 또는 음수는 칠 수 없음.");
         }
 
         pins -= hitCount;

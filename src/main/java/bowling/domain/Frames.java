@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Frames {
 
-    protected static final int BOWLING_FRAMES_TOTAL = 12;
+    protected static final int BOWLING_FRAMES_DEFAULT = 10;
     private Frame head;
     private Frame current;
     private List<Frame> frames;
@@ -16,16 +16,21 @@ public class Frames {
     }
 
     public Frames(String name) {
-        frames = new ArrayList<>(BOWLING_FRAMES_TOTAL);
+        frames = new ArrayList<>();
         this.name = name;
 
         create();
     }
 
-    public int play(int hitCount) {
-        int remainedPin = 10;
+    public int throwBall(int hitCount) {
+        current.shot(hitCount);
 
-        return remainedPin;
+        if (current.isDone()) {
+            current = current.next();
+            return 1;
+        }
+
+        return 0;
     }
 
     public Frame getCurrent() {
@@ -40,13 +45,13 @@ public class Frames {
         return this.frames;
     }
 
-    protected void create() {
+    private void create() {
         Frame frame = Frame.of();
 
         head = frame;
         current = frame;
         frames.add(frame);
-        for (int i = 1; i < BOWLING_FRAMES_TOTAL; ++i) {
+        for (int i = 1; i < BOWLING_FRAMES_DEFAULT; ++i) {
             frame = frame.createNext();
             frames.add(frame);
         }
@@ -54,5 +59,9 @@ public class Frames {
 
     public Frame getHead() {
         return head;
+    }
+
+    public boolean isEndGame() {
+        return current == null;
     }
 }

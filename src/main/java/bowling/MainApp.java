@@ -7,8 +7,6 @@ import bowling.ui.OutputCui;
 
 public class MainApp {
 
-    private static final int BASIC_FRAME_COUNT = 10;
-
     public static void main(String[] args) {
         InputCui inputCui = new InputCui();
         OutputCui outputCui = new OutputCui();
@@ -18,18 +16,27 @@ public class MainApp {
         Frames frames = bowlingGame.createFrames(name);
         outputCui.drawFrames(frames);
 
+        play(inputCui, outputCui, frames);
+    }
+
+    private static void play(InputCui inputCui, OutputCui outputCui, Frames frames) {
         int hitCount;
-        int remainedPins;
-        for (int frameNumber = 1; frameNumber <= BASIC_FRAME_COUNT; ++frameNumber) {
+        int frameNumber = 1;
+        while (!frames.isEndGame()) {
             hitCount = inputCui.inputHitCount(frameNumber);
 
-//            remainedPins = frames.play(frameNumber, hitCount);
+            frameNumber += frames.throwBall(hitCount);
 
             outputCui.drawFrames(frames);
         }
-
     }
 
+    private static void shot(Frames frames, int hitCount, int frameNumber) {
+        if (frameNumber == 10) {
 
+        }
+
+        frames.throwBall(hitCount);
+    }
 
 }

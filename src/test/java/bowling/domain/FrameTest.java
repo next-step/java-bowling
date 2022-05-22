@@ -41,22 +41,43 @@ class FrameTest {
     @DisplayName("프레임에서 첫번째샷, 두번째샷 넘어뜨린 점수를 기록 성공한다.")
     @Test
     void scoreTest1() {
-        frame.doFirstShot(4);
+        frame.shot(4);
         assertThat(frame.getFirstScore().get()).isEqualTo(4);
 
-        frame.doSecondShot(6);
+        frame.shot(6);
         assertThat(frame.getSecondScore().get()).isEqualTo(6);
     }
 
     @DisplayName("프레임에서 첫번째샷 후 남은 핀보다 큰 수를 두번째샷 넘어뜨린 수로 넣으면 예외 발생한다.")
     @Test
     void scoreTest2() {
-        frame.doFirstShot(4);
+        frame.shot(4);
         assertThat(frame.getFirstScore().get()).isEqualTo(4);
 
         assertThatThrownBy(() -> {
-            frame.doSecondShot(7);
+            frame.shot(7);
         }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("해당 프레임의 핀을 다 넘어뜨렸으면 턴 종료한다.")
+    @Test
+    void isDoneTest1() {
+        assertThat(frame.isDone()).isFalse();
+
+        frame.shot(10);
+
+        assertThat(frame.isDone()).isTrue();
+    }
+
+    @DisplayName("2번 던졌으면 다 못넘어뜨렸어도 턴이 끝났다.")
+    @Test
+    void isDoneTest2() {
+        assertThat(frame.isDone()).isFalse();
+
+        frame.shot(3);
+        frame.shot(5);
+
+        assertThat(frame.isDone()).isTrue();
     }
 
 }

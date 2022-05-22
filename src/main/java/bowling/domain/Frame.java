@@ -1,14 +1,12 @@
 package bowling.domain;
 
 import java.util.Objects;
-import java.util.Optional;
 
 public class Frame {
 
     private Frame nextFrame;
     private Frame beforeFrame;
     private Pins pins = new Pins();
-    private HitState hitState = HitState.START;
     private Score firstScore;
     private Score secondScore;
 
@@ -33,12 +31,37 @@ public class Frame {
         return beforeFrame;
     }
 
-    public void doFirstShot(int hitCount) {
+    public void shot(int hitCount) {
+        if (firstScore == null) {
+            shotFirst(hitCount);
+            return;
+        }
+
+        shotSecond(hitCount);
+    }
+
+    public void finalShot(int hitCount) {
+        shot(hitCount);
+
+        if (isStrike() || isSpare()) {
+            createNext();
+        }
+    }
+
+    private boolean isStrike() {
+        return firstScore != null && firstScore.get() == 0;
+    }
+
+    private boolean isSpare() {
+        return firstScore != null && secondScore != null && firstScore.get() + secondScore.get() == 10;
+    }
+
+    private void shotFirst(int hitCount) {
         hitPins(hitCount);
         firstScore = new Score(hitCount);
     }
 
-    public void doSecondShot(int hitCount) {
+    private void shotSecond(int hitCount) {
         hitPins(hitCount);
         secondScore = new Score(hitCount);
     }
@@ -47,8 +70,8 @@ public class Frame {
         pins.hit(hitCount);
     }
 
-    public boolean isHitAll() {
-        return pins.isHitAll();
+    public boolean isDone() {
+        return pins.isHitAll() || (firstScore != null && secondScore != null);
     }
 
     public int remainedPins() {
@@ -80,17 +103,18 @@ public class Frame {
             return false;
         }
         Frame frame = (Frame) o;
-        return Objects.equals(nextFrame, frame.nextFrame) && Objects.equals(beforeFrame, frame.beforeFrame) && Objects.equals(pins, frame.pins) && hitState == frame.hitState
+        return Objects.equals(nextFrame, frame.nextFrame) && Objects.equals(beforeFrame, frame.beforeFrame) && Objects.equals(pins, frame.pins)
             && Objects.equals(firstScore, frame.firstScore) && Objects.equals(secondScore, frame.secondScore);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pins, hitState, firstScore, secondScore);
+        return Objects.hash(pins, firstScore, secondScore);
     }
 
     @Override
     public String toString() {
         return "{" + firstScore + ", " + secondScore + "}";
     }
+
 }
