@@ -1,16 +1,42 @@
 package bowling.domain;
 
+import bowling.domain.state.FirstBowl;
+import bowling.domain.state.Ready;
+import bowling.domain.state.State;
+
 public class NormalFrame implements Frame {
-    private static final int INIT_REMAIN_NUMBER = 2;
-    private final Score score = new Score(0, INIT_REMAIN_NUMBER);
+    private State state;
     private Frame nextFrame;
 
-    @Override
-    public int bowl(int score) {
-        return 0;
+    public NormalFrame() {
+        this.state = new Ready();
     }
 
-    public void nextFrame(Frame frame) {
-        this.nextFrame = frame;
+    @Override
+    public State bowl(int countOfPins) {
+        this.state = this.state.bowl(countOfPins);
+        if(frameCount() != 9 && !(this.state instanceof FirstBowl)) {
+            this.nextFrame = new NormalFrame();
+        }
+        if(frameCount() == 9 && !(this.state instanceof FirstBowl)) {
+            this.nextFrame = new FinalFrame();
+        }
+        return this.state;
     }
+
+    @Override
+    public Frame nextFrame() {
+        return this.nextFrame;
+    }
+
+    public int frameCount() {
+        int count = 1;
+        Frame frame = this.nextFrame;
+        while(frame != null) {
+            frame = frame.nextFrame();
+            count++;
+        }
+        return count;
+    }
+
 }

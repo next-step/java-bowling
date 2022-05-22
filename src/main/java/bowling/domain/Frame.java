@@ -1,5 +1,8 @@
 package bowling.domain;
 
+import bowling.domain.state.State;
+
 public interface Frame {
-    int bowl(int score);
+    State bowl(int countOfPins);
+    Frame nextFrame();
 }

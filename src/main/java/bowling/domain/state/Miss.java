@@ -1,7 +1,8 @@
 package bowling.domain.state;
 
-public class Miss implements State{
+import bowling.domain.Score;
 
+public class Miss implements State{
     private final int firstCountOfPins;
     private final int secondCountOfPins;
 
@@ -13,6 +14,11 @@ public class Miss implements State{
     @Override
     public State bowl(int countOfPins) {
         return null;
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(this.firstCountOfPins+this.secondCountOfPins, 0);
     }
 
     public int getFirstCountOfPins() {
