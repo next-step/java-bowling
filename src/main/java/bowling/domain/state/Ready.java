@@ -17,4 +17,9 @@ public class Ready implements State {
     public Score getScore() {
         return null;
     }
+
+    @Override
+    public String expression() {
+        return null;
+    }
 }

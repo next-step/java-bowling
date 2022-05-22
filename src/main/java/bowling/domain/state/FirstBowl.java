@@ -26,4 +26,9 @@ public class FirstBowl implements State {
     public Score getScore() {
         return this.score;
     }
+
+    @Override
+    public String expression() {
+        return null;
+    }
 }

@@ -16,4 +16,9 @@ public class Gutter implements State{
     public Score getScore() {
         return this.score;
     }
+
+    @Override
+    public String expression() {
+        return "-|-";
+    }
 }

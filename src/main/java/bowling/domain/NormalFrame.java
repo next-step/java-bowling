@@ -29,6 +29,11 @@ public class NormalFrame implements Frame {
         return this.nextFrame;
     }
 
+    @Override
+    public State getState() {
+        return this.state;
+    }
+
     public int frameCount() {
         int count = 1;
         Frame frame = this.nextFrame;

@@ -19,4 +19,9 @@ public class Strike implements State {
         return this.score;
     }
 
+    @Override
+    public String expression() {
+        return "X";
+    }
+
 }

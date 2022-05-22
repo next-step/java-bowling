@@ -21,6 +21,14 @@ public class Miss implements State{
         return new Score(this.firstCountOfPins+this.secondCountOfPins, 0);
     }
 
+    @Override
+    public String expression() {
+        if(secondCountOfPins == 0) {
+            return firstCountOfPins + "|-";
+        }
+        return firstCountOfPins + "|" +secondCountOfPins;
+    }
+
     public int getFirstCountOfPins() {
         return firstCountOfPins;
     }
