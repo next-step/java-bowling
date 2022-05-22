@@ -54,6 +54,7 @@ public class FirstBowl extends Running {
         if (beforeScore.finishCalculation()) {
             return beforeScore;
         }
+
         return beforeScore.addBonusScore(firstPins.count());
     }
 

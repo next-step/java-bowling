@@ -10,9 +10,7 @@ import java.util.Objects;
 public class Score {
 
     private static final int UN_AVAILABLE_SCORE = -1;
-
     private static final int ALL_PIN_COUNT = 10;
-
     private static final int MAX_SCORE = 30;
 
     private final int score;
@@ -81,4 +79,5 @@ public class Score {
     public String toString() {
         return isUnavailable() ? "" : String.valueOf(score);
     }
+
 }

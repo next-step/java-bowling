@@ -14,4 +14,5 @@ public interface Frame {
     Score score();
 
     Score calculateAdditionalScore(Score beforeScore);
+
 }

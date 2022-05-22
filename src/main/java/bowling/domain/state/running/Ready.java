@@ -21,6 +21,7 @@ public class Ready extends Running {
         if (pins.isStrike()) {
             return Strike.create();
         }
+
         return FirstBowl.create(pins);
     }
 
@@ -32,11 +33,6 @@ public class Ready extends Running {
     @Override
     public String getSymbol() {
         return EMPTY;
-    }
-
-    @Override
-    public Score score() {
-        return null;
     }
 
     @Override

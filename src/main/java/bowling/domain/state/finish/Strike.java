@@ -29,6 +29,7 @@ public class Strike extends Finish {
         if (beforeScore.finishCalculation()) {
             return beforeScore;
         }
+
         return beforeScore.addBonusScore(score().score());
     }
 

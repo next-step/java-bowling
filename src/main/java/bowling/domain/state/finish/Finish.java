@@ -15,4 +15,5 @@ public abstract class Finish implements State {
     public State pitch(Pins pins) {
         throw new ImpossiblePitchException(Finish.class.getName());
     }
+
 }
