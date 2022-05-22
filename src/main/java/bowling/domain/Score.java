@@ -1,9 +1,4 @@
 package bowling.domain;
-
-import bowling.view.Output;
-
-import java.util.List;
-import java.util.ListIterator;
 import java.util.Optional;
 
 public class Score {
@@ -55,9 +50,5 @@ public class Score {
                 "scoreType=" + scoreType +
                 ", hit=" + hit +
                 '}';
-    }
-
-    public boolean isStrike() {
-        return this.scoreType == ScoreType.STRIKE;
     }
 }
