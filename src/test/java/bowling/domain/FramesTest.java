@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import static bowling.domain.Frames.BOWLING_FRAMES_DEFAULT;
+import static bowling.domain.Frames.BOWLING_NORMAL_FRAMES;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -29,7 +29,7 @@ class FramesTest {
     void createTest2() {
         Frames frames = new Frames();
 
-        assertThat(frames.size()).isEqualTo(BOWLING_FRAMES_DEFAULT);
+        assertThat(frames.size()).isEqualTo(BOWLING_NORMAL_FRAMES);
     }
 
     @DisplayName("프레임들 생성 후 현재프레임은 가장 앞 프레임이다.")
@@ -112,7 +112,7 @@ class FramesTest {
 
         assertThatThrownBy(() -> {
             frames.throwBall(10);
-        }).isInstanceOf(IllegalStateException.class);
+        }).isInstanceOf(NullPointerException.class);
     }
 
     private void throwBallNineTimes() {

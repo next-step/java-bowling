@@ -1,7 +1,6 @@
 package bowling;
 
 import bowling.controller.BowlingGameController;
-import bowling.domain.Frames;
 import bowling.domain.Game;
 import bowling.ui.InputCui;
 import bowling.ui.OutputCui;
@@ -22,12 +21,10 @@ public class MainApp {
 
     private static void play(InputCui inputCui, OutputCui outputCui, Game game) {
         int hitCount;
-        Frames frames = game.frames();
-        int frameNumber = 1;
-        while (!frames.isEndGame()) {
-            hitCount = inputCui.inputHitCount(frameNumber);
+        while (!game.isEndGame()) {
+            hitCount = inputCui.inputHitCount(game.frameNumber());
 
-            frameNumber += frames.throwBall(hitCount);
+            game.throwBall(hitCount);
 
             outputCui.drawStatus(game);
         }

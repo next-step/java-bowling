@@ -7,13 +7,13 @@ public class Frame {
     private Frame nextFrame;
     private Frame beforeFrame;
     private Pins pins = new Pins();
-    private Scores scores = new Scores();
+    protected Scores scores = new Scores();
 
     public Frame() {
         this(null, null);
     }
 
-    private Frame(Frame beforeFrame, Frame nextFrame) {
+    protected Frame(Frame beforeFrame, Frame nextFrame) {
         this.beforeFrame = beforeFrame;
         this.nextFrame = nextFrame;
     }
@@ -21,6 +21,10 @@ public class Frame {
     public Frame createNext() {
         this.nextFrame = new Frame(this, null);
         return nextFrame;
+    }
+
+    public void createFinal() {
+        this.nextFrame = new FinalFrame(this, null);
     }
 
     public Frame createBefore() {

@@ -8,14 +8,6 @@ public class Scores {
 
     public Scores() { }
 
-//    public void hitFirst(int hitCount) {
-//        firstScore = new Score(hitCount);
-//    }
-
-//    public void hitSecond(int hitCount) {
-//        secondScore = new Score(hitCount);
-//    }
-
     public Score first() {
         return firstScore;
     }
@@ -56,5 +48,16 @@ public class Scores {
         }
 
         secondScore = new Score(hitCount);
+    }
+
+    public boolean isStrike() {
+        return firstScore.get() == 10;
+    }
+
+    public boolean isSpare() {
+        if (firstScore == null || secondScore == null)
+            return false;
+
+        return firstScore.get() + secondScore.get() == 10;
     }
 }

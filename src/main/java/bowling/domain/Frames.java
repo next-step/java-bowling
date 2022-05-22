@@ -2,7 +2,7 @@ package bowling.domain;
 
 public class Frames {
 
-    protected static final int BOWLING_FRAMES_DEFAULT = 10;
+    protected static final int BOWLING_NORMAL_FRAMES = 9;
     private Frame head;
     private Frame current;
     private Integer size = 1;
@@ -11,15 +11,12 @@ public class Frames {
         create();
     }
 
-    public int throwBall(int hitCount) {
+    public void throwBall(int hitCount) {
         current.shot(hitCount);
 
         if (current.isDone()) {
             current = current.next();
-            return 1;
         }
-
-        return 0;
     }
 
     public Frame current() {
@@ -31,10 +28,12 @@ public class Frames {
 
         head = frame;
         current = frame;
-        for (int i = 1; i < BOWLING_FRAMES_DEFAULT; ++i) {
+        for (int i = 1; i < BOWLING_NORMAL_FRAMES; ++i) {
             frame = frame.createNext();
             ++size;
         }
+
+        frame.createFinal();
     }
 
     public Frame head() {
