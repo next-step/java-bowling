@@ -25,8 +25,8 @@ public class Player {
         return payload;
     }
 
-    public static int pitch() {
-        return new Random().nextInt(11);
+    public static int pitch(int max) {
+        return new Random().nextInt(max + 1);
     }
 
     public void plays() {

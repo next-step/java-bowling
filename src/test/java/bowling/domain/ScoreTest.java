@@ -18,4 +18,10 @@ public class ScoreTest {
         Score score = new Score(1, Optional.empty());
         assertThat(score.done()).isFalse();
     }
+
+    @Test
+    void returnRemainingPin() {
+        Score score = new Score(1, Optional.empty());
+        assertThat(score.remainingPin()).isEqualTo(9);
+    }
 }

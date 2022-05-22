@@ -11,11 +11,16 @@ public class Score {
     }
 
     public static Score play(Optional<Score> prevScore) {
-        int hit = Player.pitch();
         if (prevScore.isPresent()) {
+            int hit = Player.pitch(prevScore.get().remainingPin());
             return new Score(hit, Optional.of(prevScore.get().hit));
         }
+        int hit = Player.pitch(10);
         return new Score(hit, Optional.empty());
+    }
+
+     int remainingPin() {
+        return 10 - this.hit;
     }
 
     public static String payload(Optional<Score> score) {

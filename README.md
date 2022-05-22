@@ -60,4 +60,5 @@
 - [x] if second of strike, iterate to next frame
   - [x] else, try same frame one more
 - [x] test: add ScoreTypeTest
+- [x] fix: play should hit only remainingPin
 - [ ] Should save Second score correctly.
