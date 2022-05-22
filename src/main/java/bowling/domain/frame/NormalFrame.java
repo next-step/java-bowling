@@ -3,7 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.Pins;
 import bowling.domain.score.Score;
 import bowling.domain.state.State;
-import bowling.domain.state.Ready;
+import bowling.domain.state.running.Ready;
 
 public class NormalFrame implements Frame {
 

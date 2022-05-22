@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.score.Score;
+import bowling.domain.state.finish.Miss;
 import bowling.exception.ImpossiblePitchException;
 import bowling.domain.Pins;
 import org.junit.jupiter.api.DisplayName;

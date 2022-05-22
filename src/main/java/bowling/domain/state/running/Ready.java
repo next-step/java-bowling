@@ -1,9 +1,11 @@
-package bowling.domain.state;
+package bowling.domain.state.running;
 
 import bowling.domain.Pins;
 import bowling.domain.score.Score;
+import bowling.domain.state.State;
+import bowling.domain.state.finish.Strike;
 
-public class Ready implements State {
+public class Ready extends Running {
 
     private static final String EMPTY = "";
 

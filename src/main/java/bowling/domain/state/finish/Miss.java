@@ -1,10 +1,10 @@
-package bowling.domain.state;
+package bowling.domain.state.finish;
 
 import bowling.domain.score.Score;
-import bowling.exception.ImpossiblePitchException;
+import bowling.domain.state.State;
 import bowling.domain.Pins;
 
-public class Miss implements State {
+public class Miss extends Finish {
 
     private static final String GUTTER = "-";
     private static final String VERTICAL_BAR = "|";
@@ -19,16 +19,6 @@ public class Miss implements State {
 
     public static State of(Pins firstPins, Pins secondPins) {
         return new Miss(firstPins, secondPins);
-    }
-
-    @Override
-    public State pitch(Pins pins) {
-        throw new ImpossiblePitchException(Miss.class.getName());
-    }
-
-    @Override
-    public boolean isFrameEnd() {
-        return true;
     }
 
     @Override

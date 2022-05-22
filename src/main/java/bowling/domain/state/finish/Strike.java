@@ -1,10 +1,9 @@
-package bowling.domain.state;
+package bowling.domain.state.finish;
 
 import bowling.domain.score.Score;
-import bowling.exception.ImpossiblePitchException;
-import bowling.domain.Pins;
+import bowling.domain.state.State;
 
-public class Strike implements State {
+public class Strike extends Finish {
 
     private static final String STRIKE = "X";
 
@@ -13,16 +12,6 @@ public class Strike implements State {
 
     public static State create() {
         return new Strike();
-    }
-
-    @Override
-    public State pitch(Pins pins) {
-        throw new ImpossiblePitchException(Strike.class.getName());
-    }
-
-    @Override
-    public boolean isFrameEnd() {
-        return true;
     }
 
     @Override
