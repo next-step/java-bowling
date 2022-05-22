@@ -4,29 +4,27 @@ import java.util.Optional;
 
 public class Score {
     private final ScoreType scoreType;
-    private final int hit;
+    private final Hit hit;
 
-    public Score(int hit, Optional<Integer> prevHit) {
-        this.scoreType = ScoreType.of(hit, prevHit);
-        if (prevHit.isPresent()) {
-            this.hit = prevHit.get();
-            return;
-        }
-        this.hit = hit;
+    public Score(int first) {
+        this.hit = new Hit(first);
+        this.scoreType = ScoreType.of(first);
+    }
+
+    public Score(int first, int second) {
+        this.hit = new Hit(first, second);
+        this.scoreType = ScoreType.of(first, second);
     }
 
     public static Score play(Optional<Score> prevScore) {
         if (prevScore.isPresent()) {
-            int hit = Player.pitch(prevScore.get().remainingPin());
-            return new Score(hit, Optional.of(prevScore.get().hit));
+            int hit = Player.pitch(prevScore.get().hit.remainingPin());
+            return new Score(prevScore.get().hit.first(), hit);
         }
         int hit = Player.pitch(10);
-        return new Score(hit, Optional.empty());
+        return new Score(hit);
     }
 
-    int remainingPin() {
-        return 10 - this.hit;
-    }
 
     public static String payload(Optional<Score> score) {
         if (score.isEmpty()) {
@@ -36,19 +34,21 @@ public class Score {
             return String.format("%-4s", "X");
         }
         if (score.get().scoreType == ScoreType.SECOND) {
-            return String.format("%-4s", score.get().hit);
+            return String.format("%-4s", score.get().hit.firstStr());
         }
         if (score.get().scoreType == ScoreType.GUTTER) {
-            return String.format("%-4s", "-");
+            return String.format("%-4s", "-|-");
         }
         if (score.get().scoreType == ScoreType.MISS) {
-            return String.format("%-4s", score.get().hit + "|" + score.get().remainingPin());
+            return String.format("%-4s", score.get().hit.firstStr() + "|" + score.get().hit.secondStr());
         }
         if (score.get().scoreType == ScoreType.SPARE) {
-            return String.format("%-4s", score.get().hit + "|/");
+            return String.format("%-4s", score.get().hit.first() + "|/");
         }
         throw new RuntimeException("unreachable " + score.get());
     }
+
+
 
     public boolean done() {
         return this.scoreType != ScoreType.SECOND;

@@ -64,4 +64,4 @@
 - [ ] Should save, print Second score correctly.
   - [x] save only prevScore
   - [x] add gutter testcase
-  - [ ] save tuple(first, second)
+  - [x] save score with Hit(first, second)
