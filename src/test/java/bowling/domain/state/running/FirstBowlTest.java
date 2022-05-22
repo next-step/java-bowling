@@ -1,7 +1,8 @@
-package bowling.domain.state;
+package bowling.domain.state.running;
 
 import bowling.domain.Pins;
 import bowling.domain.score.Score;
+import bowling.domain.state.State;
 import bowling.domain.state.finish.Miss;
 import bowling.domain.state.finish.Spare;
 import bowling.domain.state.running.FirstBowl;
