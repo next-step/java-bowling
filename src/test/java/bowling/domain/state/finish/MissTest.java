@@ -36,7 +36,7 @@ class MissTest {
 
     @Test
     @DisplayName("더이상 투구를 할 수 없다")
-    void dfa() {
+    void doNotPitch() {
         assertThatThrownBy(() -> miss.pitch(Pins.create(3))).isInstanceOf(ImpossiblePitchException.class);
     }
 
