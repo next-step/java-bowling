@@ -25,8 +25,8 @@
 - [x] add DeleteHistoriesTest
 
 ### Requested changes
-- [ ] DeleteHistories.saveAll 제거
-  - [ ] DeleteHistoryService.saveAll 에서 바로 save
+- [x] DeleteHistories.saveAll 제거
+  - [x] DeleteHistoryService.saveAll 에서 바로 save
 - [x] Answer 의 별도 생성자 제거, 다른방법 테스트?
 - [x] Question.createDeleteHistory 불필요 파라미터 question, new 제거
 - [x] QnAService.deleteQuestion 을 Question 클래스로 이동
@@ -49,8 +49,8 @@
 - 10 프레임은 스트라이크이거나 스페어이면 한 번을 더 투구할 수 있다.
 
 ### Todos
-- [ ] scan Player name
-  - [ ] name should be 3 chars
+- [x] scan Player name
+  - [x] name should be 3 chars
 - [x] print initial score board
 - [x] rename Score -> Player, add Score enum, Player.scores = List<Score>
 - [x] Player.pitch => random hit

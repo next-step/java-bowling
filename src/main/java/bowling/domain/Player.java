@@ -7,17 +7,17 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Player {
-    private final String name;
+    private final PlayerName playerName;
     private final List<Optional<Score>> scores;
 
     public Player(String name) {
-        this.name = name;
+        this.playerName = new PlayerName(name);
         Optional<Score> empty = Optional.empty();
         this.scores = IntStream.rangeClosed(1, 10).mapToObj(v -> empty).collect(Collectors.toList());
     }
 
     public String payload() {
-        String payload = "| " + this.name + "  |  "; // name should be formatted
+        String payload = "| " + this.playerName + "  |  "; // name should be formatted
         payload += this.scores
                 .stream()
                 .map(v -> Score.payload(v))
