@@ -1,8 +1,9 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pins;
-import bowling.domain.state.Miss;
-import bowling.domain.state.Ready;
+import bowling.domain.score.Score;
+import bowling.domain.state.finish.Miss;
+import bowling.domain.state.running.Ready;
 import bowling.domain.state.State;
 
 import java.util.LinkedList;
@@ -64,6 +65,34 @@ public class LastFrame implements Frame {
         return states.stream()
                 .map(State::getSymbol)
                 .collect(Collectors.joining(VERTICAL_BAR));
+    }
+
+    @Override
+    public Score score() {
+        int firstTrialIndex = 0;
+        Score score = states.get(firstTrialIndex).score();
+
+        int secondTrialIndex = 1;
+        for (int index = secondTrialIndex; index < states.size(); index++) {
+            State state = states.get(index);
+            score = state.calculateScore(score);
+        }
+
+        return score;
+    }
+
+    @Override
+    public final Score calculateAdditionalScore(final Score beforeScore) {
+        if (beforeScore.finishCalculation()) {
+            return beforeScore;
+        }
+
+        Score score = beforeScore;
+        for (State state : states) {
+            score = state.calculateScore(score);
+        }
+
+        return score;
     }
 
 }

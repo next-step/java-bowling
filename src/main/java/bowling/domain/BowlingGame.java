@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
+import bowling.domain.score.Score;
 
 import java.util.List;
 
@@ -37,6 +38,14 @@ public class BowlingGame {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public List<Integer> sumScores() {
+        return frames.sumScores();
+    }
+
+    public void nextRound() {
+        frames.nextIndex();
     }
 
 }

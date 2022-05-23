@@ -1,8 +1,9 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pins;
+import bowling.domain.score.Score;
 import bowling.domain.state.State;
-import bowling.domain.state.Ready;
+import bowling.domain.state.running.Ready;
 
 public class NormalFrame implements Frame {
 
@@ -29,6 +30,19 @@ public class NormalFrame implements Frame {
     @Override
     public String getSymbol() {
         return state.getSymbol();
+    }
+
+    @Override
+    public Score score() {
+        return state.score();
+    }
+
+    @Override
+    public final Score calculateAdditionalScore(final Score beforeScore) {
+        if (beforeScore.finishCalculation()) {
+            return beforeScore;
+        }
+        return state.calculateScore(beforeScore);
     }
 
 }

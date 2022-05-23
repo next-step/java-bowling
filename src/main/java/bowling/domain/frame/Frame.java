@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pins;
+import bowling.domain.score.Score;
 
 public interface Frame {
 
@@ -9,5 +10,9 @@ public interface Frame {
     void pitch(Pins pins);
 
     String getSymbol();
+
+    Score score();
+
+    Score calculateAdditionalScore(Score beforeScore);
 
 }

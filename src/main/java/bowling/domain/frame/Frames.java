@@ -1,15 +1,19 @@
 package bowling.domain.frame;
 
-import bowling.domain.exception.InvalidFramesException;
-import bowling.exception.OutOfIndexException;
 import bowling.domain.Pins;
+import bowling.domain.score.Score;
+import bowling.domain.score.Scores;
+import bowling.exception.InvalidFramesException;
+import bowling.exception.OutOfIndexException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Frames {
 
     public static final int START_FRAME_INDEX = 0;
+    private static final int INCREASE_INDEX_NUMBER = 1;
     public static final int FINISH_FRAME_INDEX = 10;
     private static final int NORMAL_FRAME_LAST_SIZE = 8;
     private static final int LAST_FRAME_INDEX = 9;
@@ -66,21 +70,21 @@ public class Frames {
     public void pitch(Pins pins) {
         Frame currentFrame = frames.get(currentIndex);
         currentFrame.pitch(pins);
-
-        if (currentFrame.isFrameEnd()) {
-            nextIndex();
-        }
     }
 
-    private void nextIndex() {
-        int nextIndex = currentIndex + 1;
-        if (nextIndex > FINISH_FRAME_INDEX) {
-            throw new OutOfIndexException(nextIndex);
+    public void nextIndex() {
+        Frame currentFrame = frames.get(currentIndex);
+        if (currentFrame.isFrameEnd()) {
+            increaseIndex();
         }
-        increaseIndex();
     }
 
     private void increaseIndex() {
+        int nextIndex = increaseIndex(currentIndex);
+        if (nextIndex > FINISH_FRAME_INDEX) {
+            throw new OutOfIndexException(nextIndex);
+        }
+
         this.currentIndex += 1;
     }
 
@@ -89,7 +93,45 @@ public class Frames {
     }
 
     public int getCurrentRound() {
-        return currentIndex + 1;
+        return increaseIndex(currentIndex);
+    }
+
+    public List<Integer> sumScores() {
+        return scores().accumulateScore();
+    }
+
+    private Scores scores() {
+        List<Score> scores = frames.stream()
+                .filter(Frame::isFrameEnd)
+                .map(this::calculateScore)
+                .collect(Collectors.toList());
+        return Scores.create(scores);
+    }
+
+    private Score calculateScore(Frame frame) {
+        Frame nowFrame = frame;
+        int nowIndex = frames.indexOf(nowFrame);
+        Score score = nowFrame.score();
+
+        while (!score.finishCalculation()) {
+            nowIndex = nextFrameIndex(nowIndex);
+            nowFrame = frames.get(nowIndex);
+            score = nowFrame.calculateAdditionalScore(score);
+        }
+
+        return score;
+    }
+
+    private int nextFrameIndex(int currentIndex) {
+        int nextIndex = increaseIndex(currentIndex);
+        if (nextIndex == FINISH_FRAME_INDEX) {
+            return LAST_FRAME_INDEX;
+        }
+        return nextIndex;
+    }
+
+    private int increaseIndex(int currentIndex) {
+        return currentIndex + INCREASE_INDEX_NUMBER;
     }
 
 }

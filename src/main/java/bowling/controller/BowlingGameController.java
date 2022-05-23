@@ -3,7 +3,7 @@ package bowling.controller;
 import bowling.domain.BowlingGame;
 import bowling.domain.Pins;
 import bowling.domain.Player;
-import bowling.domain.exception.InvalidPitchException;
+import bowling.exception.InvalidPitchException;
 import bowling.domain.frame.FrameFactory;
 import bowling.domain.frame.Frames;
 import bowling.exception.InvalidPinsException;
@@ -38,6 +38,7 @@ public class BowlingGameController {
             int currentRound = bowlingGame.getCurrentRound();
             pitch(bowlingGame, currentRound);
             resultView.printBowlingGameResult(bowlingGame);
+            bowlingGame.nextRound();
         }
     }
 

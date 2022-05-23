@@ -1,9 +1,13 @@
-package bowling.domain.state;
+package bowling.domain.state.running;
 
 import bowling.domain.Pins;
-import bowling.domain.exception.InvalidPitchException;
+import bowling.domain.score.Score;
+import bowling.domain.state.finish.Miss;
+import bowling.domain.state.finish.Spare;
+import bowling.domain.state.State;
+import bowling.exception.InvalidPitchException;
 
-public class FirstBowl implements State {
+public class FirstBowl extends Running {
 
     private static final String GUTTER = "-";
 
@@ -38,6 +42,20 @@ public class FirstBowl implements State {
     @Override
     public String getSymbol() {
         return firstPins.isGutter() ? GUTTER : String.valueOf(firstPins);
+    }
+
+    @Override
+    public Score score() {
+        return null;
+    }
+
+    @Override
+    public Score calculateScore(Score beforeScore) {
+        if (beforeScore.finishCalculation()) {
+            return beforeScore;
+        }
+
+        return beforeScore.addBonusScore(firstPins.count());
     }
 
 }
