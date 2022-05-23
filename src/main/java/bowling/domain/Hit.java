@@ -42,7 +42,7 @@ public class Hit {
         throw new NullPointerException("second is empty");
     }
 
-    private static String gutterHandler(int number) {
+    static String gutterHandler(int number) {
         if (number == 0) {
             return "-";
         }

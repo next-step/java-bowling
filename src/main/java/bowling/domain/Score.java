@@ -28,37 +28,31 @@ public class Score {
 
     public static String payload(Optional<Score> score) {
         if (score.isEmpty()) {
-            return String.format("%-4s", " ");
+            return format(" ");
         }
         if (score.get().scoreType == ScoreType.STRIKE) {
-            return String.format("%-4s", "X");
+            return format("X");
         }
         if (score.get().scoreType == ScoreType.SECOND) {
-            return String.format("%-4s", score.get().hit.firstStr());
+            return format(score.get().hit.firstStr());
         }
         if (score.get().scoreType == ScoreType.GUTTER) {
-            return String.format("%-4s", "-|-");
+            return format("-|-");
         }
         if (score.get().scoreType == ScoreType.MISS) {
-            return String.format("%-4s", score.get().hit.firstStr() + "|" + score.get().hit.secondStr());
+            return format(score.get().hit.firstStr() + "|" + score.get().hit.secondStr());
         }
         if (score.get().scoreType == ScoreType.SPARE) {
-            return String.format("%-4s", score.get().hit.first() + "|/");
+            return format(score.get().hit.first() + "|/");
         }
         throw new RuntimeException("unreachable " + score.get());
     }
 
-
+    public static String format(String string) {
+        return String.format("%-4s", string);
+    }
 
     public boolean done() {
         return this.scoreType != ScoreType.SECOND;
-    }
-
-    @Override
-    public String toString() {
-        return "Score{" +
-                "scoreType=" + scoreType +
-                ", hit=" + hit +
-                '}';
     }
 }

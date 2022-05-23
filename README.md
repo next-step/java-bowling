@@ -61,7 +61,8 @@
   - [x] else, try same frame one more
 - [x] test: add ScoreTypeTest
 - [x] fix: play should hit only remainingPin
-- [ ] Should save, print Second score correctly.
+- [x] Should save, print Second score correctly.
   - [x] save only prevScore
   - [x] add gutter testcase
   - [x] save score with Hit(first, second)
+- [x] add testcase for Score, Hit
