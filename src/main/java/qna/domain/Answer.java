@@ -88,6 +88,6 @@ public class Answer extends AbstractEntity {
 
         delete();
 
-        return DeleteHistory.of(this);
+        return DeleteHistory.ofAnswer(this);
     }
 }

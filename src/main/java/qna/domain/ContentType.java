@@ -3,7 +3,7 @@ package qna.domain;
 public enum ContentType {
     QUESTION, ANSWER;
 
-    ContentType valueOf(Object object) {
+    static ContentType valueOf(Object object) {
         if (object instanceof Answer) {
             return ANSWER;
         }

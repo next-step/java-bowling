@@ -42,6 +42,10 @@ public class DeleteHistory {
         return new DeleteHistory(contentType, id, user, localDateTime);
     }
 
+    public static DeleteHistory ofAnswer(Answer answer) {
+        return new DeleteHistory(ContentType.valueOf(answer), answer.getId(), answer.getWriter(), LocalDateTime.now());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
