@@ -16,7 +16,10 @@ class ScoreTest {
     @Test
     @DisplayName("스트라이크 생성을 확인한다")
     void strike() {
+        //given, when
         Score strike = Score.strike();
+
+        //then
         assertAll(
                 () -> assertThat(strike).isNotNull(),
                 () -> assertThat(strike.score()).isEqualTo(10),
@@ -27,7 +30,10 @@ class ScoreTest {
     @Test
     @DisplayName("스페어 생성을 확인한다")
     void spare() {
+        //given, when
         Score spare = Score.spare();
+
+        //then
         assertAll(
                 () -> assertThat(spare).isNotNull(),
                 () -> assertThat(spare.score()).isEqualTo(10),
@@ -39,7 +45,10 @@ class ScoreTest {
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
     @DisplayName("올바른 핀이 입력될 경우 미스 점수 생성을 확인한다")
     void miss(int pinCount) {
+        //given, when
         Score miss = Score.miss(Pins.create(pinCount));
+
+        //then
         assertAll(
                 () -> assertThat(miss).isInstanceOf(Score.class),
                 () -> assertThat(miss).isNotNull(),
@@ -84,7 +93,10 @@ class ScoreTest {
     @Test
     @DisplayName("연산이 불가능한 상태임을 반환한다")
     void isUnavailable() {
+        //given, when
         Score unavailableScore = Score.unavailable();
+
+        //then
         assertThat(unavailableScore.isUnavailable()).isTrue();
     }
 

@@ -12,8 +12,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.params.provider.Arguments.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class LastFrameTest {
     private Frame lastFrame;
@@ -111,39 +111,48 @@ class LastFrameTest {
     @Test
     @DisplayName("이전 스코어가 miss 일 경우 연산 결과를 확인한다")
     void calculateAdditionalScoreWhenBeforeScoreIsMiss() {
+        //given
         Score miss = Score.miss(Pins.create(9));
 
+        //when
         Frame lastFrame = LastFrame.create();
         lastFrame.pitch(Pins.create(9));
         lastFrame.pitch(Pins.create(1));
         lastFrame.pitch(Pins.create(10));
 
+        //then
         assertThat(lastFrame.calculateAdditionalScore(miss).score()).isEqualTo(9);
     }
 
     @Test
     @DisplayName("이전 스코어가 spare 일 경우 연산 결과를 확인한다")
     void calculateAdditionalScoreWhenBeforeScoreIsSpare() {
+        //given
         Score spare = Score.spare();
 
+        //when
         Frame lastFrame = LastFrame.create();
         lastFrame.pitch(Pins.create(9));
         lastFrame.pitch(Pins.create(1));
         lastFrame.pitch(Pins.create(10));
 
+        //then
         assertThat(lastFrame.calculateAdditionalScore(spare).score()).isEqualTo(19);
     }
 
     @Test
     @DisplayName("이전 스코어가 strike 일 경우 연산 결과를 확인한다")
     void calculateAdditionalScoreWhenBeforeScoreIsStrike() {
+        //given
         Score strike = Score.strike();
 
+        //when
         Frame lastFrame = LastFrame.create();
         lastFrame.pitch(Pins.create(9));
         lastFrame.pitch(Pins.create(1));
         lastFrame.pitch(Pins.create(10));
 
+        //then
         assertThat(lastFrame.calculateAdditionalScore(strike).score()).isEqualTo(20);
     }
 

@@ -99,24 +99,30 @@ class NormalFrameTest {
     @Test
     @DisplayName("이전 스코어가 miss 일 경우 연산 결과를 확인한다")
     void calculateAdditionalScoreWhenBeforeScoreIsMiss() {
+        //given
         Score miss = Score.miss(Pins.create(9));
 
+        //when
         Frame normalFrame = NormalFrame.create();
         normalFrame.pitch(Pins.create(9));
         normalFrame.pitch(Pins.create(1));
 
+        //then
         assertThat(normalFrame.calculateAdditionalScore(miss).score()).isEqualTo(9);
     }
 
     @Test
     @DisplayName("이전 스코어가 spare 일 경우 연산 결과를 확인한다")
     void calculateAdditionalScoreWhenBeforeScoreIsSpare() {
+        //given
         Score spare = Score.spare();
 
+        //when
         Frame normalFrame = NormalFrame.create();
         normalFrame.pitch(Pins.create(9));
         normalFrame.pitch(Pins.create(1));
 
+        //then
         assertThat(normalFrame.calculateAdditionalScore(spare).score()).isEqualTo(19);
     }
 

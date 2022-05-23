@@ -5,7 +5,6 @@ import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.finish.Miss;
 import bowling.domain.state.finish.Spare;
-import bowling.domain.state.running.FirstBowl;
 import bowling.exception.InvalidPitchException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -57,11 +56,14 @@ class FirstBowlTest {
     @Test
     @DisplayName("이전 결과가 Miss 이면 이전 스코어를 반환한다")
     void calculateScoreWhenBeforeStateIsMiss() {
+        //given
         Score beforeScore = Score.miss(Pins.create(1));
         int expectedScore = beforeScore.score();
 
+        //when
         Score score = firstBowl.calculateScore(beforeScore);
 
+        //then
         assertAll(
                 () -> assertThat(score.finishCalculation()).isTrue(),
                 () -> assertThat(score.score()).isEqualTo(expectedScore)
@@ -71,11 +73,14 @@ class FirstBowlTest {
     @Test
     @DisplayName("이전 결과가 Spare 이면 이전 스코어와 합산을 확인한다")
     void calculateScoreWhenBeforeStateIsSpare() {
+        //given
         Score beforeScore = Score.spare();
         int expectedScore = beforeScore.score() + Pins.create(5).count();
 
+        //when
         Score score = firstBowl.calculateScore(beforeScore);
 
+        //then
         assertAll(
                 () -> assertThat(score.finishCalculation()).isTrue(),
                 () -> assertThat(score.score()).isEqualTo(expectedScore)
@@ -85,16 +90,18 @@ class FirstBowlTest {
     @Test
     @DisplayName("이전 결과가 Strike 이면 이전 스코어와 합산을 확인한다")
     void calculateScoreWhenBeforeStateIsStrike() {
+        //given
         Score beforeScore = Score.strike();
         int expectedScore = beforeScore.score() + Pins.create(5).count();
 
+        //when
         Score score = firstBowl.calculateScore(beforeScore);
 
+        //then
         assertAll(
                 () -> assertThat(score.finishCalculation()).isFalse(),
                 () -> assertThat(score.score()).isEqualTo(expectedScore)
         );
     }
-
 
 }

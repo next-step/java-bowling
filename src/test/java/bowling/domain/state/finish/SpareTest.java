@@ -1,10 +1,9 @@
 package bowling.domain.state.finish;
 
+import bowling.domain.Pins;
 import bowling.domain.score.Score;
 import bowling.domain.state.State;
-import bowling.domain.state.finish.Spare;
 import bowling.exception.ImpossiblePitchException;
-import bowling.domain.Pins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
