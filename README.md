@@ -8,6 +8,55 @@
 ## 온라인 코드 리뷰 과정
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
 
+## 기능
+---
+
+- `Input`
+    - 플레이어의 이름을 입력받는다.
+    - 한 투구에서 쓰러트린 핀의 개수를 입력받는다.
+
+- `Output`
+    - 하나의 투구가 끝날때마다 결과를 출력한다.
+
+- `Player`
+    - 이름은 영어 3글자만 허용한다.
+
+- `Pins`
+    - 이름은 영어 3글자만 허용한다.
+
+- `Frame`
+    - 1~9 프레임은 NormalFrame, 10프레임은 FinalFrame이다.
+
+    - `NormalFrame`
+        - 최대 2개의 투구를 할 수 있는 프레임이다.
+        - 1~8 프레임은 투구후 NormalFrame프레임을 반환한다.
+        - 9프레임은 투구후 FinalFrame을 반환한다.
+
+    - `FinalFrame`
+        - 스트라이크 또는 스페어시 추가적으로 한 번더 투구할 수 있다.
+
+- `Frames`
+    - 10개의 프레임을 관리하기 위한 일급컬렉션
+
+- `Bowl`
+    - Running, Ended의 인터페이스다.
+    - `Ended`
+        - 진행이 끝난 bowl의 추상 클래스다.
+        - Gutter, Miss, Spare, Strike는 Ended를 상속한다.
+        - Gutter는 모든 핀을 맞추지 못한 상태다.
+        - Spares는 두번째 투구때 모든 핀을 맞춘상태다.
+        - Strike는 첫 번째 투구때 모든 핀을 맞춘상태다.
+        - Miss는 두 번째 투구 후에도 맞추지 못한 핀이 있는 상태다.
+
+    - `Running`
+        - 진행 중인 bowl의 추상 클래스다.
+        - First, Second는 Running을 상속한다.
+        - First는 투구를 던지기 위한 준비 상태다.
+        - Second는 첫 번째 투구를 던진후 상태다.
+        
+--- 
+
+
 ## 질문 삭제하기 요구사항
 
 ### 질문
