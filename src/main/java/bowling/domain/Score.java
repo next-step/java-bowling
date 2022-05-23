@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Score {
     private static final int STRIKE_OR_SPARE = 10;
-    private int score;
-    private int remainingNumber;
+    private final int score;
+    private final int remainingNumber;
 
     public Score(int score, int remainingNumber) {
         this.score = score;

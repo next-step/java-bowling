@@ -3,7 +3,7 @@ package bowling.domain;
 public class Pin {
     private static final int MIN_PINS = 0;
     private static final int MAX_PINS = 10;
-    private int pins;
+    private final int pins;
 
     public Pin(int countOfPins) {
         validate(countOfPins);

@@ -6,4 +6,5 @@ public interface State {
     State bowl(int countOfPins);
     Score getScore();
     String expression();
+    boolean isFinish();
 }

@@ -2,6 +2,8 @@ package bowling.view;
 
 import bowling.domain.Frame;
 import bowling.domain.User;
+import bowling.domain.state.State;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +14,6 @@ public class ResultView {
     private static final String EMPTY = "   ";
     private static final String BLANK = "   ";
     private static final String PIPELINE = "|";
-
     private final User user;
     private final Frame frame;
     private final List<String> resultState;
@@ -37,7 +38,7 @@ public class ResultView {
         printState();
         Frame result = this.frame;
         int i = 1;
-        while(i<=10) {
+        while(i<10) {
             int pin = InputView.inputBowl(i).getPins();
             String state = result.bowl(pin).expression();
             if(state !=null) {
@@ -49,6 +50,20 @@ public class ResultView {
             }
             printState();
         }
+
+        String finalResult = "";
+
+        while(true) {
+            int pin = InputView.inputBowl(10).getPins();
+            State state = result.bowl(pin);
+            finalResult += state.expression() + PIPELINE;
+            resultState.set(resultState.size() -1, finalResult);
+            printState();
+            if (state.isFinish()) {
+                break;
+            }
+        }
+
     }
 
 }

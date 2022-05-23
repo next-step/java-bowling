@@ -2,7 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.Score;
 
-public class Spare implements State{
+public class Spare extends Finished{
     private static final int SPARE_TOTAL = 10;
     private final int firstCountOfPins;
     private final int secondCountOfPins;
@@ -16,8 +16,8 @@ public class Spare implements State{
     }
 
     @Override
-    public State bowl(int countOfPins) {
-        return null;
+    public boolean isFinish() {
+        return true;
     }
 
     @Override

@@ -2,7 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.Score;
 
-public class Ready implements State {
+public class Ready extends Running {
     private static final int STRIKE = 10;
 
     @Override
@@ -14,12 +14,18 @@ public class Ready implements State {
     }
 
     @Override
+    public boolean isFinish() {
+        return false;
+    }
+
+    @Override
     public Score getScore() {
         return null;
     }
 
     @Override
     public String expression() {
-        return null;
+        return "X";
     }
+
 }

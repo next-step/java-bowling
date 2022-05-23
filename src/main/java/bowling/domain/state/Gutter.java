@@ -2,14 +2,15 @@ package bowling.domain.state;
 
 import bowling.domain.Score;
 
-public class Gutter implements State{
+public class Gutter extends Finished{
     private Score score;
     public Gutter() {
         this.score = Score.ofGutter();
     }
+
     @Override
-    public State bowl(int countOfPins) {
-        return null;
+    public boolean isFinish() {
+        return true;
     }
 
     @Override

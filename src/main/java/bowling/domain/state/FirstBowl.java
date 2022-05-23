@@ -2,10 +2,10 @@ package bowling.domain.state;
 
 import bowling.domain.Score;
 
-public class FirstBowl implements State {
+public class FirstBowl extends Running {
     private static final int SPARE = 10 ;
     private static final int GUTTER = 0;
-    private Score score;
+    private final Score score;
 
     public FirstBowl(int countOfPins) {
         this.score = new Score(countOfPins, 1);
@@ -23,12 +23,17 @@ public class FirstBowl implements State {
     }
 
     @Override
+    public boolean isFinish() {
+        return false;
+    }
+
+    @Override
     public Score getScore() {
         return this.score;
     }
 
     @Override
     public String expression() {
-        return null;
+        return "";
     }
 }
