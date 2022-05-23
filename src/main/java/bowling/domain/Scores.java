@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import static bowling.domain.Pins.START_PIN_COUNT;
+
 import java.util.Objects;
 
 public class Scores {
@@ -51,13 +53,13 @@ public class Scores {
     }
 
     public boolean isStrike() {
-        return firstScore.get() == 10;
+        return firstScore.get() == START_PIN_COUNT;
     }
 
     public boolean isSpare() {
         if (firstScore == null || secondScore == null)
             return false;
 
-        return firstScore.get() + secondScore.get() == 10;
+        return firstScore.get() + secondScore.get() == START_PIN_COUNT;
     }
 }

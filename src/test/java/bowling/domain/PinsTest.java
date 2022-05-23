@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import static bowling.domain.Pins.DEFAULT_PIN;
+import static bowling.domain.Pins.START_PIN_COUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -13,13 +13,13 @@ class PinsTest {
         // given
         final int hitCount = 4;
         Pins pins = new Pins();
-        assertThat(pins.standing()).isEqualTo(DEFAULT_PIN);
+        assertThat(pins.standing()).isEqualTo(START_PIN_COUNT);
 
         // when
         pins.hit(hitCount);
 
         // then
-        assertThat(pins.standing()).isEqualTo(DEFAULT_PIN - hitCount);
+        assertThat(pins.standing()).isEqualTo(START_PIN_COUNT - hitCount);
     }
 
     @Test
@@ -27,7 +27,19 @@ class PinsTest {
         // given
         final int hitCount = 11;
         Pins pins = new Pins();
-        assertThat(pins.standing()).isEqualTo(DEFAULT_PIN);
+        assertThat(pins.standing()).isEqualTo(START_PIN_COUNT);
+
+        assertThatThrownBy(() -> {
+            pins.hit(hitCount);
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 음수의_핀을_쳤다고_들어오면_예외발생한다() {
+        // given
+        final int hitCount = -1;
+        Pins pins = new Pins();
+        assertThat(pins.standing()).isEqualTo(START_PIN_COUNT);
 
         assertThatThrownBy(() -> {
             pins.hit(hitCount);

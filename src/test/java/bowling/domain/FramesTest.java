@@ -77,45 +77,45 @@ class FramesTest {
         assertThat(frames.current().before().getSecondScore().get()).isEqualTo(1);
     }
 
-    @DisplayName("10프레임에 스트라이크를 치면 2프레임 추가 진행 가능하다.")
+    @DisplayName("10프레임에 스트라이크를 치면 2번 볼 던지기 추가 진행 가능하다.")
     @Test
     void throwBallTest4() {
-        throwBallNineTimes();
+        throwBallNineFrames();
 
         frames.throwBall(10);   // 10
-        frames.throwBall(10);   // 11
-        frames.throwBall(10);   // 12
+        frames.throwBall(10);   // 10 + 추가시기 1번째
+        frames.throwBall(10);   // 10 + 추가시기 2번째
 
         assertThat(frames.isEndGame()).isTrue();
     }
 
-    @DisplayName("10프레임에 스패어를 치면 1프레임 추가 진행 가능하다.")
+    @DisplayName("10프레임에 스패어를 치면 1번 볼 던지기 추가 진행 가능하다.")
     @Test
     void throwBallTest5() {
-        throwBallNineTimes();
+        throwBallNineFrames();
 
         frames.throwBall(4);    // 10
         frames.throwBall(6);    // 10
-        frames.throwBall(10);   // 11
+        frames.throwBall(10);   // 10 + 추가시기 1번째
 
         assertThat(frames.isEndGame()).isTrue();
     }
 
-    @DisplayName("최대 12프레임을 넘는 게임 진행은 불가하다.")
+    @DisplayName("10프레임에서 최대 3번 넘는 볼 던지기는 불가하다.")
     @Test
     void throwBallTest6() {
-        throwBallNineTimes();
+        throwBallNineFrames();
 
         frames.throwBall(10);   // 10
-        frames.throwBall(10);   // 11
-        frames.throwBall(10);   // 12
+        frames.throwBall(10);   // 10 + 추가시기 1번째
+        frames.throwBall(10);   // 10 + 추가시기 2번째
 
         assertThatThrownBy(() -> {
             frames.throwBall(10);
         }).isInstanceOf(NullPointerException.class);
     }
 
-    private void throwBallNineTimes() {
+    private void throwBallNineFrames() {
         frames.throwBall(10);
         frames.throwBall(10);
         frames.throwBall(10);

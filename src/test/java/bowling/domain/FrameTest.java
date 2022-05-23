@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import static bowling.domain.Pins.DEFAULT_PIN;
+import static bowling.domain.Pins.START_PIN_COUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -20,7 +20,7 @@ class FrameTest {
     @Test
     void createTest() {
         Frame frame = new Frame();
-        assertThat(frame.remainedPins()).isEqualTo(DEFAULT_PIN);
+        assertThat(frame.remainedPins()).isEqualTo(START_PIN_COUNT);
     }
 
     @DisplayName("현재 프레임과 연결된 다음 프레임을 만들어서 연결한다.")

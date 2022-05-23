@@ -4,12 +4,12 @@ import java.util.Objects;
 
 public class Pins {
 
-    public static final int DEFAULT_PIN = 10;
+    public static final int START_PIN_COUNT = 10;
 
-    public int pins;
+    private int pins;
 
     public Pins() {
-        this.pins = DEFAULT_PIN;
+        this.pins = START_PIN_COUNT;
     }
 
     public void hit(int hitCount) {

@@ -1,32 +1,31 @@
 package bowling;
 
+import static bowling.ui.InputCui.inputHitCount;
+import static bowling.ui.InputCui.inputParticipants;
+import static bowling.ui.OutputCui.drawStatus;
+
 import bowling.controller.BowlingGameController;
 import bowling.domain.Game;
-import bowling.ui.InputCui;
-import bowling.ui.OutputCui;
 
 public class MainApp {
 
     public static void main(String[] args) {
-        InputCui inputCui = new InputCui();
-        OutputCui outputCui = new OutputCui();
         BowlingGameController bowlingGame = new BowlingGameController();
 
-        final String name = inputCui.inputPlayerNames();
+        final String name = inputParticipants();
         Game game = bowlingGame.createFrames(name);
-        outputCui.drawStatus(game);
+        drawStatus(game);
 
-        play(inputCui, outputCui, game);
+        play(game);
     }
 
-    private static void play(InputCui inputCui, OutputCui outputCui, Game game) {
-        int hitCount;
+    private static void play(Game game) {
         while (!game.isEndGame()) {
-            hitCount = inputCui.inputHitCount(game.frameNumber());
+            int hitCount = inputHitCount(game.frameNumber());
 
             game.throwBall(hitCount);
 
-            outputCui.drawStatus(game);
+            drawStatus(game);
         }
     }
 

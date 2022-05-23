@@ -6,7 +6,7 @@ public class Frame {
 
     private Frame nextFrame;
     private Frame beforeFrame;
-    private Pins pins = new Pins();
+    protected Pins pins = new Pins();
     protected Scores scores = new Scores();
 
     public Frame() {
@@ -78,5 +78,4 @@ public class Frame {
     public int hashCode() {
         return Objects.hash(nextFrame, beforeFrame, pins, scores);
     }
-
 }
