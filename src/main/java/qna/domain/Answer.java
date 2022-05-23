@@ -36,7 +36,14 @@ public class Answer extends AbstractEntity {
 
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
+        validate(writer, question);
 
+        this.writer = writer;
+        this.question = question;
+        this.contents = contents;
+    }
+
+    private void validate(User writer, Question question) {
         if (writer == null) {
             throw new UnAuthorizedException();
         }
@@ -44,10 +51,6 @@ public class Answer extends AbstractEntity {
         if (question == null) {
             throw new NotFoundException();
         }
-
-        this.writer = writer;
-        this.question = question;
-        this.contents = contents;
     }
 
     public void delete(User loginUser) {
@@ -56,7 +59,7 @@ public class Answer extends AbstractEntity {
     }
 
     private void validateWriter(User loginUser) {
-        if (!isOwner(loginUser)) {
+        if (!isWriter(loginUser)) {
             throw new CannotDeleteException("답변을 삭제할 권한이 없습니다.");
         }
     }
@@ -69,20 +72,16 @@ public class Answer extends AbstractEntity {
         return deleted;
     }
 
-    public boolean isOwner(User loginUser) {
+    public boolean isWriter(User loginUser) {
         return writer.equals(loginUser);
     }
 
-    public User getWriter() {
-        return writer;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public void toQuestion(Question question) {
+    public void relateQuestion(Question question) {
         this.question = question;
+    }
+
+    public DeleteHistory toDeleteHistory() {
+        return DeleteHistory.of(ContentType.ANSWER, getId(), writer);
     }
 
     @Override

@@ -9,6 +9,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -47,46 +48,18 @@ public class Question extends AbstractEntity {
         this.deleted = deleted;
     }
 
-
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
-
-    public User getWriter() {
-        return writer;
-    }
-
     public Question writeBy(User loginUser) {
         this.writer = loginUser;
         return this;
     }
 
     public void addAnswer(Answer answer) {
-        answer.toQuestion(this);
+        answer.relateQuestion(this);
         answers.add(answer);
     }
 
-    public boolean isOwner(User loginUser) {
+    public boolean isWriter(User loginUser) {
         return writer.equals(loginUser);
-    }
-
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
     }
 
     public void delete(User loginUser) {
@@ -96,7 +69,7 @@ public class Question extends AbstractEntity {
     }
 
     private void validateWriter(User loginUser) {
-        if (!isOwner(loginUser)) {
+        if (!isWriter(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
     }
@@ -109,8 +82,14 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public Answers getAnswers() {
-        return answers;
+    public List<DeleteHistory> toDeleteHistories() {
+        List<DeleteHistory> deleteHistories = answers.toDeleteHistories();
+        deleteHistories.add(toDeleteHistory());
+        return deleteHistories;
+    }
+
+    private DeleteHistory toDeleteHistory() {
+        return DeleteHistory.of(ContentType.QUESTION, getId(), writer);
     }
 
     @Override
