@@ -1,6 +1,6 @@
 package qna.domain;
 
-import qna.UnAuthorizedException;
+import qna.CannotDeleteException;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -32,15 +32,21 @@ public class Question extends AbstractEntity {
     }
 
     public Question(String title, String contents) {
-        this.title = title;
-        this.contents = contents;
+        this(null, title, contents, new Answers(), false);
     }
 
-    public Question(long id, String title, String contents) {
+    public Question(Long id, String title, String contents) {
+        this(id, title, contents, new Answers(), false);
+    }
+
+    public Question(Long id, String title, String contents, Answers answers, boolean deleted) {
         super(id);
         this.title = title;
         this.contents = contents;
+        this.answers = answers;
+        this.deleted = deleted;
     }
+
 
     public String getTitle() {
         return title;
@@ -81,6 +87,22 @@ public class Question extends AbstractEntity {
     public Question setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
+    }
+
+    public void delete(User loginUser) {
+        validateWriter(loginUser);
+        answers.delete(loginUser);
+        delete();
+    }
+
+    private void validateWriter(User loginUser) {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
+    private void delete() {
+        this.deleted = true;
     }
 
     public boolean isDeleted() {
