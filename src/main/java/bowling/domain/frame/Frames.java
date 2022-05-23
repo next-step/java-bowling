@@ -6,7 +6,6 @@ import bowling.domain.score.Scores;
 import bowling.exception.InvalidFramesException;
 import bowling.exception.OutOfIndexException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -14,6 +13,7 @@ import java.util.stream.IntStream;
 public class Frames {
 
     public static final int START_FRAME_INDEX = 0;
+    private static final int INCREASE_INDEX_NUMBER = 1;
     public static final int FINISH_FRAME_INDEX = 10;
     private static final int NORMAL_FRAME_LAST_SIZE = 8;
     private static final int LAST_FRAME_INDEX = 9;
@@ -80,7 +80,7 @@ public class Frames {
     }
 
     private void increaseIndex() {
-        int nextIndex = currentIndex + 1;
+        int nextIndex = increaseIndex(currentIndex);
         if (nextIndex > FINISH_FRAME_INDEX) {
             throw new OutOfIndexException(nextIndex);
         }
@@ -93,7 +93,7 @@ public class Frames {
     }
 
     public int getCurrentRound() {
-        return currentIndex + 1;
+        return increaseIndex(currentIndex);
     }
 
     public List<Integer> sumScores() {
@@ -123,11 +123,15 @@ public class Frames {
     }
 
     private int nextFrameIndex(int currentIndex) {
-        int nextIndex = currentIndex + 1;
+        int nextIndex = increaseIndex(currentIndex);
         if (nextIndex == FINISH_FRAME_INDEX) {
             return LAST_FRAME_INDEX;
         }
         return nextIndex;
+    }
+
+    private int increaseIndex(int currentIndex) {
+        return currentIndex + INCREASE_INDEX_NUMBER;
     }
 
 }
