@@ -52,10 +52,6 @@ public class Answer extends AbstractEntity {
         return this.writer.equals(writer);
     }
 
-    public void toQuestion(Question question) {
-        this.question = question;
-    }
-
     public DeleteHistory deleteHistory() {
         return new DeleteHistory(ContentType.ANSWER, id(), writer, LocalDateTime.now());
     }
