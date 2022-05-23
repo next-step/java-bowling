@@ -1,13 +1,17 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
+
+    public static final String NOT_DELETABLE_USER = "질문을 삭제할 권한이 없습니다.";
+    public static final String ANOTHER_USER_ANSWER_EXIST = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -18,11 +22,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
-
+    @Embedded
+    private Answers answers;
     private boolean deleted = false;
 
     public Question() {
@@ -31,12 +32,14 @@ public class Question extends AbstractEntity {
     public Question(String title, String contents) {
         this.title = title;
         this.contents = contents;
+        this.answers = new Answers();
     }
 
     public Question(long id, String title, String contents) {
         super(id);
         this.title = title;
         this.contents = contents;
+        this.answers = new Answers();
     }
 
     public String getTitle() {
@@ -84,12 +87,30 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
     }
 
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    public void validateDeletable(User loginUser) throws CannotDeleteException {
+        if (!loginUser.equals(writer)) {
+            throw new CannotDeleteException(NOT_DELETABLE_USER);
+        }
+
+        if (!answers.isAllOwner(writer)) {
+            throw new CannotDeleteException(ANOTHER_USER_ANSWER_EXIST);
+        }
+    }
+
+    public List<DeleteHistory> delete() {
+        deleted = true;
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+        deleteHistories.addAll(answers.delete());
+        return deleteHistories;
     }
 }
