@@ -41,14 +41,6 @@ public class Answers extends AbstractEntity {
         }
     }
 
-    public void add(Answer answer) {
-        values.add(answer);
-    }
-
-    public List<Answer> values() {
-        return values;
-    }
-
     public List<DeleteHistory> deletedAnswerHistories() {
         for (Answer answer : values) {
             validateDeleteStatus(answer);
