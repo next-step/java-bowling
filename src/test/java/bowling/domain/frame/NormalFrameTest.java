@@ -82,26 +82,23 @@ class NormalFrameTest {
     }
 
     @Test
-    void additionalScore_ForSpareFromMissFrame() {
+    void additionalScore_ForSpareFromMissFrame54() {
         Frame frame = new NormalFrame(2, new Miss(5, 4));
 
         Score beforeScore = Score.ofSpare();
         Score afterScore = frame.additionalScore(beforeScore);
 
-        // Spare 10 + Miss 5
         assertThat(afterScore.getScore()).isEqualTo(15);
     }
 
     @Test
-    void additionalScore_ForStrikeFromStrikeFrame() {
-        //  X  |  X  |  5|4
+    void additionalScore_ForStrikeFromStrikeFrameAndMissFrame54() {
         Frame nextFrame = new NormalFrame(3, new Miss(5, 4));
         Frame frame = new NormalFrame(2, new Strike(), nextFrame);
 
         Score beforeScore = Score.ofStrike();
         Score afterScore = frame.additionalScore(beforeScore);
 
-        // Strike 10 + Strike 10 + Miss 5
         assertThat(afterScore.getScore()).isEqualTo(25);
     }
 }
