@@ -9,10 +9,6 @@ public class PlayerName {
         }
             this.playerName = playerName;
     }
-//
-//    String playerName() {
-//        return this.playerName;
-//    }
 
     @Override
     public String toString() {
