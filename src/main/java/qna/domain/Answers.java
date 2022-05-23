@@ -28,12 +28,6 @@ public class Answers {
         answers.add(answer);
     }
 
-    public boolean isOwner(User loginUser) {
-        return answers.stream()
-                .map(answer -> answer.isOwner(loginUser))
-                .anyMatch(bool -> !bool);
-    }
-
     public void delete(User loginUser) {
         answers.forEach(answer -> answer.delete(loginUser));
     }
