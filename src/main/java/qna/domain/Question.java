@@ -33,11 +33,6 @@ public class Question extends AbstractEntity {
     public Question() {
     }
 
-    public Question(String title, String contents) {
-        this.title = title;
-        this.contents = contents;
-    }
-
     public Question(long id, String title, String contents) {
         this(id, title, contents, new Answers(new ArrayList<>()));
     }
@@ -49,53 +44,17 @@ public class Question extends AbstractEntity {
         this.answers = answers;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
-
-    public User getWriter() {
-        return writer;
-    }
-
     public Question writeBy(User loginUser) {
         this.writer = loginUser;
         return this;
-    }
-
-    public void addAnswer(Answer answer) {
-        answer.toQuestion(this);
-        answers.add(answer);
     }
 
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean deleted() {
         return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers.values();
     }
 
     public void delete(User loginUser) throws CannotDeleteException {

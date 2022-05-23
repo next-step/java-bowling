@@ -24,10 +24,6 @@ public class Answer extends AbstractEntity {
     public Answer() {
     }
 
-    public Answer(User writer, Question question, String contents) {
-        this(null, writer, question, contents);
-    }
-
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
@@ -44,11 +40,6 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public void delete() {
         deleted = true;
     }
@@ -59,10 +50,6 @@ public class Answer extends AbstractEntity {
 
     public boolean isOwner(User writer) {
         return this.writer.equals(writer);
-    }
-
-    public User getWriter() {
-        return writer;
     }
 
     public void toQuestion(Question question) {
