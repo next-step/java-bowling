@@ -13,14 +13,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class QuestionTest {
-    public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-    public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
 
     private Question question;
     private Question questionWithAnswer;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
 
         Answer answer = new Answer(11L, UserTest.JAVAJIGI, question, "Answers Contents1");
@@ -29,7 +27,7 @@ public class QuestionTest {
 
     @Test
     @DisplayName("다른 사람이 쓴 글일 경우 CannotDeleteException 반환한다.")
-    public void invalidWriter() throws Exception {
+    public void invalidWriter() {
         assertThatThrownBy(() -> question.delete(UserTest.SANJIGI)).isInstanceOf(CannotDeleteException.class);
     }
 
