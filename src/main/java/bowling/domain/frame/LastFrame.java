@@ -69,9 +69,11 @@ public class LastFrame implements Frame {
 
     @Override
     public Score score() {
-        Score score = states.get(0).score();
+        int firstTrialIndex = 0;
+        Score score = states.get(firstTrialIndex).score();
 
-        for (int index = 1; index < states.size(); index++) {
+        int secondTrialIndex = 1;
+        for (int index = secondTrialIndex; index < states.size(); index++) {
             State state = states.get(index);
             score = state.calculateScore(score);
         }
