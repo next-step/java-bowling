@@ -25,7 +25,7 @@ public class QuestionTest {
     @Test
     @DisplayName("질문을 삭제하면 question의 deleted 상태는 true가 된다.")
     void 질문자와_로그인사용자_같다(){
-        List<DeleteHistory> deleteHistory = Q1.delete(UserTest.JAVAJIGI);
+        DeleteHistories deleteHistory = Q1.delete(UserTest.JAVAJIGI);
         assertThat(Q1.isDeleted()).isTrue();
     }
 
@@ -36,9 +36,9 @@ public class QuestionTest {
         question.addAnswer(new Answer(1L, UserTest.JAVAJIGI, question, "answer1"));
         question.addAnswer(new Answer(2L, UserTest.JAVAJIGI, question, "answer2"));
 
-        List<DeleteHistory> deleteHistory = question.delete(UserTest.JAVAJIGI);
+        DeleteHistories deleteHistories = question.delete(UserTest.JAVAJIGI);
 
-        assertThat(deleteHistory).containsExactly(
+        assertThat(deleteHistories.getDeleteHistories()).containsExactly(
                 new DeleteHistory(ContentType.QUESTION, 1L, UserTest.JAVAJIGI),
                 new DeleteHistory(ContentType.ANSWER, 1L, UserTest.JAVAJIGI),
                 new DeleteHistory(ContentType.ANSWER, 2L, UserTest.JAVAJIGI)
