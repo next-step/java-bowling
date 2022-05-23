@@ -1,10 +1,15 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
+import qna.NotFoundDeleteHistoryException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -18,10 +23,11 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    private List<Answer> answers;
+
 
     private boolean deleted = false;
 
@@ -34,9 +40,14 @@ public class Question extends AbstractEntity {
     }
 
     public Question(long id, String title, String contents) {
+        this(id, title, contents, new ArrayList<>());
+    }
+
+    public Question(long id, String title, String contents, List<Answer> answers) {
         super(id);
         this.title = title;
         this.contents = contents;
+        this.answers = answers;
     }
 
     public String getTitle() {
@@ -80,7 +91,7 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    public boolean isDeleted() {
+    public boolean deleted() {
         return deleted;
     }
 
@@ -88,8 +99,59 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
+    public void delete(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+        deleteQuestion();
+
+        for (Answer answer : answers) {
+            if (!answer.isOwner(loginUser)) {
+                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+            }
+        }
+
+        for (Answer answer : answers) {
+            answer.delete();
+        }
+    }
+
+    private void deleteQuestion() {
+        deleted = true;
+    }
+
+    public List<DeleteHistory> deleteHistories() {
+        if (answers == null) {
+            return deletedQuestionHistories();
+        }
+        return Stream.concat(deletedQuestionHistories().stream(), deletedAnswerHistories().stream())
+                .collect(Collectors.toList());
+    }
+
+    private List<DeleteHistory> deletedQuestionHistories() {
+        if (!deleted()) {
+            throw new NotFoundDeleteHistoryException();
+        }
+        return List.of(new DeleteHistory(ContentType.QUESTION, id(), writer, LocalDateTime.now()));
+    }
+
+    private List<DeleteHistory> deletedAnswerHistories() {
+        for (Answer answer : answers) {
+            validateDeleteAnswerStatus(answer);
+        }
+        return answers.stream()
+                .map(Answer::deleteHistory)
+                .collect(Collectors.toList());
+    }
+
+    private void validateDeleteAnswerStatus(Answer answer) {
+        if (!answer.deleted()) {
+            throw new NotFoundDeleteHistoryException();
+        }
+    }
+
     @Override
     public String toString() {
-        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+        return "Question [id=" + id() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 }
