@@ -17,7 +17,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -50,7 +49,7 @@ public class QnaServiceTest {
         qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
 
         assertThat(question.isDeleted()).isTrue();
-        verifyDeleteHistories();
+        verifyDeleteHistories(question);
     }
 
     @Test
@@ -70,7 +69,7 @@ public class QnaServiceTest {
 
         assertThat(question.isDeleted()).isTrue();
         assertThat(answer.isDeleted()).isTrue();
-        verifyDeleteHistories();
+        verifyDeleteHistories(question);
     }
 
     @Test
@@ -82,7 +81,7 @@ public class QnaServiceTest {
         }).isInstanceOf(CannotDeleteException.class);
     }
 
-    private void verifyDeleteHistories() {
-        verify(deleteHistoryService).saveAll(anyList());
+    private void verifyDeleteHistories(Question question) {
+        verify(deleteHistoryService).saveAll(question.toDeleteHistories());
     }
 }
