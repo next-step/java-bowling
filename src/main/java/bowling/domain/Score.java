@@ -24,6 +24,10 @@ public class Score {
         return new Score(10, 2);
     }
 
+    public static Score ofExtra(int score) {
+        return new Score(score, 0);
+    }
+
     public int getScore() {
         if (!canGetScore()) {
             throw new IllegalStateException("can't get score");

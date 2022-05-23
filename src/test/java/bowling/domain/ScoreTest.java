@@ -2,6 +2,8 @@ package bowling.domain;
 
 import bowling.domain.pin.Pin;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,13 +25,17 @@ class ScoreTest {
         assertThat(addedScore.getScore()).isEqualTo(15);
     }
 
-    @Test
-    void addedScore_ForStrike() {
+    @ParameterizedTest
+    @CsvSource({
+            "5,5,20",
+            "10,9,29",
+            "10,10,30"})
+    void addedScore_ForStrike(int firstPin, int secondPin, int result) {
         Score strike = Score.ofStrike();
 
-        Score addedScore = strike.addedScore(Pin.of(5))
-                .addedScore(Pin.of(5));
+        Score addedScore = strike.addedScore(Pin.of(firstPin))
+                .addedScore(Pin.of(secondPin));
 
-        assertThat(addedScore.getScore()).isEqualTo(20);
+        assertThat(addedScore.getScore()).isEqualTo(result);
     }
 }
