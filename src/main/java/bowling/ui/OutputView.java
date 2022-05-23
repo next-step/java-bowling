@@ -1,7 +1,6 @@
 package bowling.ui;
 
-import bowling.domain.Player;
-import bowling.domain.frame.Frames;
+import bowling.domain.Players;
 
 import java.util.List;
 
@@ -16,16 +15,25 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printBowling(Player player, Frames frame) {
+    public static void printPlayers(Players players) {
         printHeader();
-        printName(player.getName());
-        printExpressions(frame.expressions());
-        printScores(frame.scores());
+        printBody(players);
         System.out.println();
     }
 
     private static void printHeader() {
         System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10");
+    }
+
+    private static void printBody(Players players) {
+        List<String> names = players.names();
+        List<List<String>> expressions = players.expressions();
+        List<List<Integer>> scores = players.scores();
+        for (int i = 0; i < players.size(); i++) {
+            printName(names.get(i));
+            printExpressions(expressions.get(i));
+            printScores(scores.get(i));
+        }
     }
 
     private static void printName(String name) {
