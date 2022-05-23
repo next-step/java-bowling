@@ -24,7 +24,7 @@ public class QuestionTest {
         question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
 
         Answer answer = new Answer(11L, UserTest.JAVAJIGI, question, "Answers Contents1");
-        questionWithAnswer = new Question(1L, "title1", "contents1", List.of(answer)).writeBy(UserTest.JAVAJIGI);
+        questionWithAnswer = new Question(1L, "title1", "contents1", new Answers(List.of(answer))).writeBy(UserTest.JAVAJIGI);
     }
 
     @Test

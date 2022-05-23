@@ -25,9 +25,8 @@ public class Question extends AbstractEntity {
 
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    private List<Answer> answers;
-
+    @Embedded
+    private Answers answers;
 
     private boolean deleted = false;
 
@@ -40,10 +39,10 @@ public class Question extends AbstractEntity {
     }
 
     public Question(long id, String title, String contents) {
-        this(id, title, contents, new ArrayList<>());
+        this(id, title, contents, new Answers(new ArrayList<>()));
     }
 
-    public Question(long id, String title, String contents, List<Answer> answers) {
+    public Question(long id, String title, String contents, Answers answers) {
         super(id);
         this.title = title;
         this.contents = contents;
@@ -96,7 +95,7 @@ public class Question extends AbstractEntity {
     }
 
     public List<Answer> getAnswers() {
-        return answers;
+        return answers.values();
     }
 
     public void delete(User loginUser) throws CannotDeleteException {
@@ -105,14 +104,8 @@ public class Question extends AbstractEntity {
         }
         deleteQuestion();
 
-        for (Answer answer : answers) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
-        }
-
-        for (Answer answer : answers) {
-            answer.delete();
+        if (answers != null) {
+            answers.deleteAll(loginUser);
         }
     }
 
@@ -124,7 +117,7 @@ public class Question extends AbstractEntity {
         if (answers == null) {
             return deletedQuestionHistories();
         }
-        return Stream.concat(deletedQuestionHistories().stream(), deletedAnswerHistories().stream())
+        return Stream.concat(deletedQuestionHistories().stream(), answers.deletedAnswerHistories().stream())
                 .collect(Collectors.toList());
     }
 
@@ -133,21 +126,6 @@ public class Question extends AbstractEntity {
             throw new NotFoundDeleteHistoryException();
         }
         return List.of(new DeleteHistory(ContentType.QUESTION, id(), writer, LocalDateTime.now()));
-    }
-
-    private List<DeleteHistory> deletedAnswerHistories() {
-        for (Answer answer : answers) {
-            validateDeleteAnswerStatus(answer);
-        }
-        return answers.stream()
-                .map(Answer::deleteHistory)
-                .collect(Collectors.toList());
-    }
-
-    private void validateDeleteAnswerStatus(Answer answer) {
-        if (!answer.deleted()) {
-            throw new NotFoundDeleteHistoryException();
-        }
     }
 
     @Override
