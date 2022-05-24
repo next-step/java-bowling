@@ -12,11 +12,6 @@ public class Miss extends Finished{
     }
 
     @Override
-    public boolean isFinish() {
-        return true;
-    }
-
-    @Override
     public Score getScore() {
         return new Score(this.firstCountOfPins+this.secondCountOfPins, 0);
     }

@@ -9,11 +9,6 @@ public class Gutter extends Finished{
     }
 
     @Override
-    public boolean isFinish() {
-        return true;
-    }
-
-    @Override
     public Score getScore() {
         return this.score;
     }

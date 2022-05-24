@@ -23,17 +23,12 @@ public class FirstBowl extends Running {
     }
 
     @Override
-    public boolean isFinish() {
-        return false;
-    }
-
-    @Override
     public Score getScore() {
         return this.score;
     }
 
     @Override
     public String expression() {
-        return "";
+        return String.valueOf(this.score.getScore());
     }
 }

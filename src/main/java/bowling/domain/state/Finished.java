@@ -8,6 +8,6 @@ public abstract class Finished implements State {
 
     @Override
     public boolean isFinish() {
-        return false;
+        return true;
     }
 }

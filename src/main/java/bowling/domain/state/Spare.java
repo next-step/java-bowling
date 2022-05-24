@@ -16,11 +16,6 @@ public class Spare extends Finished{
     }
 
     @Override
-    public boolean isFinish() {
-        return true;
-    }
-
-    @Override
     public Score getScore() {
         return Score.ofSpare();
     }

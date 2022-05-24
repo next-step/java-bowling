@@ -14,11 +14,6 @@ public class Ready extends Running {
     }
 
     @Override
-    public boolean isFinish() {
-        return false;
-    }
-
-    @Override
     public Score getScore() {
         return null;
     }

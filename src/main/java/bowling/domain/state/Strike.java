@@ -10,11 +10,6 @@ public class Strike extends Finished {
     }
 
     @Override
-    public boolean isFinish() {
-        return true;
-    }
-
-    @Override
     public State bowl(int countOfPins) {
         return null;
     }

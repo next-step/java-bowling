@@ -2,28 +2,31 @@ package bowling.domain;
 
 import bowling.domain.state.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class FinalFrame implements Frame{
-    private State state;
-    private int finalRound;
+    private final List<State> states = new ArrayList<>();
 
     public FinalFrame() {
-        this.state = new Ready();
-        this.finalRound = 2;
+        this.states.add(new Ready());
     }
 
     @Override
-    public State bowl(int countOfPins) {
-        this.state = this.state.bowl(countOfPins);
-        if(this.finalRound > 0 && this.state instanceof Strike) {
-            this.state = new Ready();
-            this.finalRound--;
+    public Frame bowl(int countOfPins) {
+        State state = states.get(states.size() -1);
+        if(state.isFinish() && !(state instanceof Miss)) {
+            states.add(new Ready().bowl(countOfPins));
+            return this;
         }
-        if(this.finalRound > 0 && this.state instanceof Spare) {
-            this.state = new Ready();
-            this.finalRound -= 2;
+
+        if(state.isFinish() && state instanceof Miss) {
+            return this;
         }
-        finalRound--;
-        return this.state;
+        states.remove(statesSize() -1);
+        states.add(state.bowl(countOfPins));
+        return this;
     }
 
     @Override
@@ -33,6 +36,19 @@ public class FinalFrame implements Frame{
 
     @Override
     public State getState() {
-        return this.state;
+        return states.get(statesSize() -1);
     }
+
+    @Override
+    public String expression() {
+        return states.stream()
+                .map(State::expression)
+                .collect(Collectors.joining(" | "));
+    }
+
+
+    private int statesSize() {
+        return this.states.size();
+    }
+
 }

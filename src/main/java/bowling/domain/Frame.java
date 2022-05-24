@@ -3,7 +3,8 @@ package bowling.domain;
 import bowling.domain.state.State;
 
 public interface Frame {
-    State bowl(int countOfPins);
+    Frame bowl(int countOfPins);
     Frame nextFrame();
     State getState();
+    String expression();
 }
