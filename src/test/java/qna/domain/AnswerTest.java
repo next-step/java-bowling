@@ -23,6 +23,6 @@ public class AnswerTest {
     @ParameterizedTest(name = "답변 여부에 따른 삭제 예외 처리")
     @MethodSource("answerAndUser")
     void isOwner(Answer answer, User user) {
-        assertThatThrownBy(() -> answer.checkAnotherUserAnswer(user)).isExactlyInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> answer.isAnotherUserAnswer(user)).isExactlyInstanceOf(CannotDeleteException.class);
     }
 }

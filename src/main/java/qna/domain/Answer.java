@@ -5,11 +5,12 @@ import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @Entity
 public class Answer extends AbstractEntity {
 
-    private static final String HAS_ANOTHER_USER_ANSWER = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
+    private static final String NOT_DELETED_ACCESS = "해당 답변을 삭제할 권한이 존재하지 않습니다.";
 
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
@@ -56,10 +57,10 @@ public class Answer extends AbstractEntity {
         return deleted;
     }
 
-    public void checkAnotherUserAnswer(User writer) throws CannotDeleteException {
-        if (!this.isOwner(writer)) {
-            throw new CannotDeleteException(HAS_ANOTHER_USER_ANSWER);
-        }
+    public void isAnotherUserAnswer(User writer) {
+        Optional.ofNullable(writer)
+                .filter(this::isOwner)
+                .orElseThrow(() -> new CannotDeleteException(NOT_DELETED_ACCESS));
     }
 
     public boolean isOwner(User writer) {

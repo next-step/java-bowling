@@ -23,6 +23,6 @@ public class QuestionTest {
     @ParameterizedTest(name = "삭제 권한이 없는 유저 예외 처리 - {index}")
     @MethodSource("questionAndUser")
     void test(Question question, User user) {
-        assertThatThrownBy(() -> question.checkDeleteAccess(user)).isExactlyInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> question.hasDeleteAccess(user)).isExactlyInstanceOf(CannotDeleteException.class);
     }
 }
