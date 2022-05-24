@@ -152,7 +152,7 @@ Frame 10
 - [x] payload -> 세부 이름으로 변경
 - [x] DeleteHistories 에 Optional 제거
   - overload 으로 두 개의 add를 구현
-- [ ] 각 테스트별 @DisplayName 추가
+- [x] 각 테스트별 @DisplayName 추가
 - [ ] 점수판 출력에 대한 중복 부분 const화
     - [ ] 점수판 헤더
     - [ ] '|' 와 같은 foramt
