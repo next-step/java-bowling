@@ -7,3 +7,8 @@
 
 ## 온라인 코드 리뷰 과정
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
+
+## ToDo - step1 리뷰 요청 이후
+- [ ] question과 answer qna 대신 AbstractEntity 상속 
+- [ ] AbstractEntity에서 DeleteHistory 의존성 제거
+- [ ] 질문 삭제 예외 상황 커스텀 예외 추가
