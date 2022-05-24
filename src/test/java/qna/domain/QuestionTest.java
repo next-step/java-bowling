@@ -35,7 +35,6 @@ public class QuestionTest {
     @Test
     @DisplayName("질문이 삭제되면 삭제 상태 값이 true 된다.")
     public void delete() throws Exception {
-        assertThat(question.deleted()).isFalse();
         question.delete(UserTest.JAVAJIGI);
         assertThat(question.deleted()).isTrue();
     }

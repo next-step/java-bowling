@@ -21,7 +21,6 @@ public class AnswerTest {
     @Test
     @DisplayName("답변이 삭제되면 삭제 상태 값이 true 된다.")
     public void delete() {
-        assertThat(answer.deleted()).isFalse();
         answer.delete();
         assertThat(answer.deleted()).isTrue();
     }
