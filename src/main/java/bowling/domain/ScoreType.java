@@ -6,9 +6,11 @@ import static bowling.util.Const.MAX_PIN;
 public enum ScoreType {
     STRIKE("X"), SPARE("|/"), MISS("|"), GUTTER("-|-"), SECOND("|"), NULL(" ");
     private final String symbol;
+
     ScoreType(String symbol) {
         this.symbol = symbol;
     }
+
     public static ScoreType of(int first) {
         if (first == MAX_PIN) {
             return STRIKE;
@@ -33,23 +35,4 @@ public enum ScoreType {
     public String toSymbol() {
         return this.symbol;
     }
-//        if (!score.isPresent()) {
-//            return format(" ");
-//        }
-//        if (score.scoreType == ScoreType.STRIKE) {
-//            return format("X");
-//        }
-//        if (score.scoreType == ScoreType.SECOND) {
-//            return format(score.hit.firstStr());
-//        }
-//        if (score.scoreType == ScoreType.GUTTER) {
-//            return format("-|-");
-//        }
-//        if (score.scoreType == ScoreType.MISS) {
-//            return format(score.hit.firstStr() + "|" + score.hit.secondStr());
-//        }
-//        if (score.scoreType == ScoreType.SPARE) {
-//            return format(score.hit.first() + "|/");
-//        }
-//        throw new RuntimeException("unreachable " + score);
-    }
+}
