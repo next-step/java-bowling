@@ -10,8 +10,7 @@ class QuestionInfoTest {
 
     @Test
     void equalsWriter() {
-        QuestionInfo questionInfo = new QuestionInfo("title", "contents");
-        questionInfo.writeBy(UserTest.JAVAJIGI);
+        QuestionInfo questionInfo = new QuestionInfo(UserTest.JAVAJIGI);
 
         boolean actual = questionInfo.equalsWriter(UserTest.JAVAJIGI);
 

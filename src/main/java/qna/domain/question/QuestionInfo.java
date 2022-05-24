@@ -29,6 +29,10 @@ public class QuestionInfo {
         this(questionBody, null);
     }
 
+    QuestionInfo(User writer) {
+        this(null, writer);
+    }
+
     QuestionInfo(QuestionBody questionBody, User writer) {
         this.questionBody = questionBody;
         this.writer = writer;
