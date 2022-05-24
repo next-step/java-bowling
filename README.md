@@ -170,6 +170,9 @@ Frame 10
     - PlayFrame
 
 ### Requested changes phase 2
-- [x] create factory method of Scores for Player
 
+- [x] create factory method of Scores for Player
+- [ ] Const 의 변수들 필요한 위치로 분리
+  - class 당 2개 변수 제한 때문에 옮기기 어렵다 -> static 변수는 괜찮은가?
+- [x] 컬렉션을 리턴해줄때는 불변으로 리턴 (PlayFrames)
 ## Step3
