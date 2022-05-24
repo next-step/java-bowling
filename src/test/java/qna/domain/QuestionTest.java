@@ -2,7 +2,8 @@ package qna.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import qna.IsNotDeletedException;
+import qna.exception.IsNotDeletedException;
+import qna.domain.question.Question;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

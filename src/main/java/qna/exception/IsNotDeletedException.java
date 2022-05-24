@@ -1,4 +1,4 @@
-package qna;
+package qna.exception;
 
 public class IsNotDeletedException extends RuntimeException {
     private static final long serialVersionUID = 1L;

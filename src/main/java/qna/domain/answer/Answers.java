@@ -1,6 +1,9 @@
-package qna.domain;
+package qna.domain.answer;
 
 import org.hibernate.annotations.Where;
+import qna.domain.deleteHistory.DeleteHistories;
+import qna.domain.deleteHistory.DeleteHistory;
+import qna.domain.user.User;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
@@ -38,11 +41,12 @@ public class Answers {
         answers.forEach(answer -> answer.delete(writer));
     }
 
-    public List<DeleteHistory> deleteHistories() {
-        return this.answers
+    public DeleteHistories deleteHistories() {
+        List<DeleteHistory> deleteHistories = this.answers
                 .stream()
                 .filter(Answer::isDeleted)
                 .map(Answer::deleteHistory)
                 .collect(Collectors.toList());
+        return new DeleteHistories(deleteHistories);
     }
 }

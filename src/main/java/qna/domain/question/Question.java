@@ -1,10 +1,16 @@
-package qna.domain;
+package qna.domain.question;
 
-import qna.CannotDeleteException;
-import qna.IsNotDeletedException;
+import qna.domain.AbstractEntity;
+import qna.domain.answer.Answer;
+import qna.domain.answer.Answers;
+import qna.domain.deleteHistory.DeleteHistories;
+import qna.domain.deleteHistory.DeleteHistory;
+import qna.domain.user.User;
+import qna.exception.CannotDeleteException;
+import qna.exception.IsNotDeletedException;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import java.util.Optional;
 
 @Entity
@@ -13,15 +19,8 @@ public class Question extends AbstractEntity {
     private static final String NO_DELETE_ACCESS = "질문을 삭제할 권한이 없습니다.";
     private static final String IS_NOT_DELETED = "해당 질문은 삭제되지 않았습니다.";
 
-    @Column(length = 100, nullable = false)
-    private String title;
-
-    @Lob
-    private String contents;
-
-    @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
-    private User writer;
+    @Embedded
+    private final QuestionInfo questionInfo;
 
     @Embedded
     private final Answers answers = new Answers();
@@ -29,25 +28,24 @@ public class Question extends AbstractEntity {
     private boolean deleted = false;
 
     public Question() {
+        this.questionInfo = new QuestionInfo();
     }
 
     public Question(String title, String contents) {
-        this.title = title;
-        this.contents = contents;
+        this.questionInfo = new QuestionInfo(title, contents);
     }
 
     public Question(long id, String title, String contents) {
         super(id);
-        this.title = title;
-        this.contents = contents;
+        this.questionInfo = new QuestionInfo(title, contents);
     }
 
     public User getWriter() {
-        return writer;
+        return this.questionInfo.writer();
     }
 
     public Question writeBy(User loginUser) {
-        this.writer = loginUser;
+        this.questionInfo.writeBy(loginUser);
         return this;
     }
 
@@ -70,8 +68,8 @@ public class Question extends AbstractEntity {
                 .orElseThrow(() -> new IsNotDeletedException(IS_NOT_DELETED));
     }
 
-    public List<DeleteHistory> deleteHistories() {
-        List<DeleteHistory> deleteHistories = this.answers.deleteHistories();
+    public DeleteHistories deleteHistories() {
+        DeleteHistories deleteHistories = this.answers.deleteHistories();
         deleteHistories.add(this.deleteHistory());
 
         return deleteHistories;
@@ -83,7 +81,7 @@ public class Question extends AbstractEntity {
     }
 
     public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
+        return this.questionInfo.writer().equals(loginUser);
     }
 
     public boolean isDeleted() {
@@ -92,6 +90,10 @@ public class Question extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+        return "Question{" +
+                "questionInfo=" + questionInfo +
+                ", answers=" + answers +
+                ", deleted=" + deleted +
+                '}';
     }
 }

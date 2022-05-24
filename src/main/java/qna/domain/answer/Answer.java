@@ -1,11 +1,16 @@
-package qna.domain;
+package qna.domain.answer;
 
-import qna.CannotDeleteException;
-import qna.IsNotDeletedException;
-import qna.NotFoundException;
-import qna.UnAuthorizedException;
+import qna.domain.AbstractEntity;
+import qna.domain.deleteHistory.DeleteHistory;
+import qna.domain.question.Question;
+import qna.domain.user.User;
+import qna.exception.CannotDeleteException;
+import qna.exception.IsNotDeletedException;
+import qna.exception.NotFoundException;
+import qna.exception.UnAuthorizedException;
 
-import javax.persistence.*;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import java.util.Optional;
 
 @Entity
@@ -14,16 +19,8 @@ public class Answer extends AbstractEntity {
     private static final String NOT_DELETED_ACCESS = "해당 답변을 삭제할 권한이 존재하지 않습니다.";
     private static final String IS_NOT_DELETED = "해당 답변은 삭제되지 않았습니다.";
 
-    @ManyToOne(optional = false)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
-    private User writer;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
-    private Question question;
-
-    @Lob
-    private String contents;
+    @Embedded
+    private AnswerInfo answerInfo;
 
     private boolean deleted = false;
 
@@ -45,9 +42,7 @@ public class Answer extends AbstractEntity {
             throw new NotFoundException();
         }
 
-        this.writer = writer;
-        this.question = question;
-        this.contents = contents;
+        this.answerInfo = new AnswerInfo(writer, question, contents);
     }
 
     private void isValidatedWriter(User writer) {
@@ -73,23 +68,26 @@ public class Answer extends AbstractEntity {
     }
 
     public boolean isOwner(User writer) {
-        return this.writer.equals(writer);
+        return this.answerInfo.writer().equals(writer);
     }
 
     public User getWriter() {
-        return writer;
+        return this.answerInfo.writer();
     }
 
     public String getContents() {
-        return contents;
+        return this.answerInfo.contents();
     }
 
     public void toQuestion(Question question) {
-        this.question = question;
+        this.answerInfo.toQuestion(question);
     }
 
     @Override
     public String toString() {
-        return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
+        return "Answer{" +
+                "answerBody=" + answerInfo +
+                ", deleted=" + deleted +
+                '}';
     }
 }
