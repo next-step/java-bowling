@@ -6,6 +6,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static bowling.util.Const.RANDOM;
+
 public class Player {
     private final PlayerName playerName;
     private final List<Score> scores;
@@ -25,7 +27,7 @@ public class Player {
     }
 
     public static int pitch(int max) {
-        return new Random().nextInt(max + 1);
+        return RANDOM.nextInt(max + 1);
     }
 
     public void plays() {
