@@ -28,8 +28,8 @@ public class DeleteHistories {
         return deleteHistoryList;
     }
 
-    public List<DeleteHistory> deleteHistories() {
-        return this.deleteHistories;
+    public void saveTo(DeleteHistoryRepository deleteHistoryRepository) {
+        deleteHistoryRepository.saveAll(this.deleteHistories);
     }
 
     @Override
