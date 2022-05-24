@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class PinsTest {
 
@@ -22,27 +24,15 @@ class PinsTest {
         assertThat(pins.standing()).isEqualTo(START_PIN_COUNT - hitCount);
     }
 
-    @Test
-    void 남아있는_핀_이상의_숫자를_쳤다고_들어오면_예외발생한다() {
+    @ParameterizedTest
+    @ValueSource(ints = {-1, 11})
+    void 유효하지_않은_숫자를_쳤다고_들어오면_예외발생한다(int invalidHitCount) {
         // given
-        final int hitCount = 11;
         Pins pins = new Pins();
         assertThat(pins.standing()).isEqualTo(START_PIN_COUNT);
 
         assertThatThrownBy(() -> {
-            pins.hit(hitCount);
-        }).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    void 음수의_핀을_쳤다고_들어오면_예외발생한다() {
-        // given
-        final int hitCount = -1;
-        Pins pins = new Pins();
-        assertThat(pins.standing()).isEqualTo(START_PIN_COUNT);
-
-        assertThatThrownBy(() -> {
-            pins.hit(hitCount);
+            pins.hit(invalidHitCount);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 

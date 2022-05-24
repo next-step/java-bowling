@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import static bowling.domain.Frames.BOWLING_FINAL_FRAMES;
 import static bowling.domain.Frames.BOWLING_NORMAL_FRAMES;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -24,12 +25,12 @@ class FramesTest {
         assertThat(frames).isNotNull();
     }
 
-    @DisplayName("프레임들 객체에서 볼링게임 기본프레임 10개를 생성한다.")
+    @DisplayName("프레임들 객체에서 볼링게임 기본프레임 9개와 최종프레임 1개를 생성한다.")
     @Test
     void createTest2() {
         Frames frames = new Frames();
 
-        assertThat(frames.size()).isEqualTo(BOWLING_NORMAL_FRAMES);
+        assertThat(frames.size()).isEqualTo(BOWLING_NORMAL_FRAMES + BOWLING_FINAL_FRAMES);
     }
 
     @DisplayName("프레임들 생성 후 현재프레임은 가장 앞 프레임이다.")

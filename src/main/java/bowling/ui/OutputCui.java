@@ -13,6 +13,7 @@ public final class OutputCui {
     private static final String STRIKE_SYMBOL = "X";
     private static final String SPARE_SYMBOL = "/";
     private static final String MISS_SYMBOL = "-";
+    private static final String GUTTER_SYMBOL = "-";
     private static final String GAP = " ";
 
     private OutputCui() { }
@@ -60,6 +61,10 @@ public final class OutputCui {
             return GAP;
         }
 
+        if (score.get() == 0) {
+            return GUTTER_SYMBOL;
+        }
+        
         if (score.get() == 10) {
             return STRIKE_SYMBOL;
         }
