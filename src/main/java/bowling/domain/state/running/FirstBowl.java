@@ -7,7 +7,7 @@ import bowling.domain.state.finish.Spare;
 import bowling.domain.state.State;
 import bowling.exception.InvalidPitchException;
 
-public class FirstBowl extends Running {
+public class FirstBowl implements State {
 
     private static final String GUTTER = "-";
 
@@ -46,7 +46,7 @@ public class FirstBowl extends Running {
 
     @Override
     public Score score() {
-        return null;
+        return Score.unavailable();
     }
 
     @Override

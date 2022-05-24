@@ -5,7 +5,7 @@ import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.finish.Strike;
 
-public class Ready extends Running {
+public class Ready implements State {
 
     private static final String EMPTY = "";
 
@@ -37,6 +37,11 @@ public class Ready extends Running {
 
     @Override
     public Score calculateScore(Score beforeScore) {
+        return Score.unavailable();
+    }
+
+    @Override
+    public Score score() {
         return Score.unavailable();
     }
 
