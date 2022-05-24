@@ -1,11 +1,11 @@
-package qna.domain.qna.answer;
+package qna.domain.answer;
 
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 import qna.domain.AbstractEntity;
 import qna.domain.ContentType;
 import qna.domain.deleteHistory.DeleteHistory;
-import qna.domain.qna.question.Question;
+import qna.domain.question.Question;
 import qna.domain.user.User;
 
 import javax.persistence.Embedded;

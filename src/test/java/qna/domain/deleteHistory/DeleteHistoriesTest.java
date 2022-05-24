@@ -1,4 +1,4 @@
-package qna.domain.qna.deleteHistory;
+package qna.domain.deleteHistory;
 
 import qna.domain.ContentType;
 import qna.domain.deleteHistory.DeleteHistories;

@@ -1,11 +1,12 @@
-package qna.domain.qna.question;
+package qna.domain.question;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 import qna.domain.deleteHistory.DeleteHistories;
-import qna.domain.qna.answer.AnswerTest;
-import qna.domain.qna.deleteHistory.DeleteHistoriesTest;
+import qna.domain.answer.AnswerTest;
+import qna.domain.deleteHistory.DeleteHistoriesTest;
+import qna.domain.question.Question;
 import qna.domain.user.User;
 import qna.domain.user.UserTest;
 

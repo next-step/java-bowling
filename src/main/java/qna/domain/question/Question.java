@@ -1,12 +1,12 @@
-package qna.domain.qna.question;
+package qna.domain.question;
 
 import qna.CannotDeleteException;
 import qna.domain.AbstractEntity;
 import qna.domain.ContentType;
 import qna.domain.deleteHistory.DeleteHistories;
 import qna.domain.deleteHistory.DeleteHistory;
-import qna.domain.qna.answer.Answer;
-import qna.domain.qna.answer.Answers;
+import qna.domain.answer.Answer;
+import qna.domain.answer.Answers;
 import qna.domain.user.User;
 
 import javax.persistence.Embedded;

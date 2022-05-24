@@ -10,10 +10,10 @@ import qna.CannotDeleteException;
 import qna.domain.ContentType;
 import qna.domain.deleteHistory.DeleteHistories;
 import qna.domain.deleteHistory.DeleteHistory;
-import qna.domain.qna.answer.Answer;
-import qna.domain.qna.question.Question;
-import qna.domain.qna.question.QuestionRepository;
-import qna.domain.qna.question.QuestionTest;
+import qna.domain.answer.Answer;
+import qna.domain.question.Question;
+import qna.domain.question.QuestionRepository;
+import qna.domain.question.QuestionTest;
 import qna.domain.user.UserTest;
 
 import java.time.LocalDateTime;

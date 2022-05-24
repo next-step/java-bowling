@@ -1,4 +1,4 @@
-package qna.domain.qna.answer;
+package qna.domain.answer;
 
 import org.hibernate.annotations.Where;
 import qna.domain.deleteHistory.DeleteHistory;
