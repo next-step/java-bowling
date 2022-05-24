@@ -73,7 +73,7 @@ public class Question extends AbstractEntity {
 
         setDelete();
         DeleteHistory questionDeleteHistory = new DeleteHistory(
-                ContentType.QUESTION, this.getId(), this.writer
+                ContentType.QUESTION, this.id, this.writer
         );
         List<DeleteHistory> answerDeleteHistories = this.answers.delete();
 

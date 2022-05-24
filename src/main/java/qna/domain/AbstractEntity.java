@@ -13,7 +13,7 @@ import javax.persistence.MappedSuperclass;
 public class AbstractEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
     public AbstractEntity() {
     }
