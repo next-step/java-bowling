@@ -11,9 +11,6 @@ import qna.domain.user.User;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.util.List;
 
 @Entity
@@ -23,11 +20,7 @@ public class Question extends AbstractEntity {
     private final Answers answers = new Answers();
 
     @Embedded
-    private final QuestionBody questionBody;
-
-    @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
-    private User writer;
+    private final QuestionInfo questionInfo;
 
     public Question() {
         this(QuestionBody.DEFAULT_TITLE, QuestionBody.DEFAULT_CONTENTS);
@@ -39,15 +32,15 @@ public class Question extends AbstractEntity {
 
     public Question(Long id, String title, String contents) {
         super(id);
-        this.questionBody = new QuestionBody(title, contents);
+        this.questionInfo = new QuestionInfo(title, contents);
     }
 
-    public User getWriter() {
-        return writer;
+    public User writer() {
+        return this.questionInfo.writer();
     }
 
     public Question writeBy(User loginUser) {
-        this.writer = loginUser;
+        questionInfo.writeBy(loginUser);
         return this;
     }
 
@@ -69,7 +62,7 @@ public class Question extends AbstractEntity {
         checkAnswerHasWrittenByOthers(user);
 
         setDelete();
-        DeleteHistory questionDeleteHistory = DeleteHistory.ofQuestion(this.id, this.writer);
+        DeleteHistory questionDeleteHistory = DeleteHistory.ofQuestion(this.id, this.writer());
         List<DeleteHistory> answerDeleteHistories = this.answers.delete();
 
         return new DeleteHistories(questionDeleteHistory, answerDeleteHistories);
@@ -79,8 +72,6 @@ public class Question extends AbstractEntity {
     public String toString() {
         return "Question{" +
                 "answers=" + answers +
-                ", questionBody=" + questionBody +
-                ", writer=" + writer +
                 ", deleted=" + deleted +
                 '}';
     }
@@ -102,7 +93,7 @@ public class Question extends AbstractEntity {
     }
 
     private boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
+        return this.questionInfo.equalsWriter(loginUser);
     }
 
 }
