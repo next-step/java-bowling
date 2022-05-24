@@ -6,11 +6,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import qna.CannotDeleteException;
+import qna.DeleteQuestionPermissionException;
 import qna.domain.ContentType;
+import qna.domain.answer.Answer;
 import qna.domain.deleteHistory.DeleteHistories;
 import qna.domain.deleteHistory.DeleteHistory;
-import qna.domain.answer.Answer;
 import qna.domain.question.Question;
 import qna.domain.question.QuestionRepository;
 import qna.domain.question.QuestionTest;
@@ -66,7 +66,7 @@ public class QnaServiceTest {
 
         assertThatThrownBy(() -> {
             qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
-        }).isInstanceOf(CannotDeleteException.class);
+        }).isInstanceOf(DeleteQuestionPermissionException.class);
     }
 
     @Test
@@ -88,7 +88,7 @@ public class QnaServiceTest {
 
         assertThatThrownBy(() -> {
             qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
-        }).isInstanceOf(CannotDeleteException.class);
+        }).isInstanceOf(DeleteQuestionPermissionException.class);
     }
 
     private void verifyDeleteHistories() {

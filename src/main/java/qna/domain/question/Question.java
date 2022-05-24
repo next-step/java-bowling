@@ -1,6 +1,7 @@
 package qna.domain.question;
 
-import qna.CannotDeleteException;
+import qna.AnswerOtherWrittenException;
+import qna.DeleteQuestionPermissionException;
 import qna.domain.AbstractEntity;
 import qna.domain.answer.Answer;
 import qna.domain.answer.Answers;
@@ -17,8 +18,6 @@ import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
-    private static final String DELETE_QUESTION_PERMISSION_MESSAGE = "질문을 삭제할 권한이 없습니다.";
-    private static final String ANSWER_OTHER_WRITTEN_MESSAGE = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
 
     @Embedded
     private final Answers answers = new Answers();
@@ -64,9 +63,10 @@ public class Question extends AbstractEntity {
      *
      * @param user 확인할 유저
      * @return 생성된 삭제 기록
-     * @throws CannotDeleteException 권한이 없거나 다른 사람이 쓴 답변이 있을 경우
+     * @throws DeleteQuestionPermissionException 질문을 삭제할 권한이 없을 경우
+     * @throws AnswerOtherWrittenException       다른사람이 쓴 답변이 있을 경우
      */
-    public DeleteHistories delete(User user) throws CannotDeleteException {
+    public DeleteHistories delete(User user) throws DeleteQuestionPermissionException, AnswerOtherWrittenException {
         checkIsNotOwner(user);
         checkAnswerHasWrittenByOthers(user);
 
@@ -95,15 +95,15 @@ public class Question extends AbstractEntity {
                 '}';
     }
 
-    private void checkIsNotOwner(User user) throws CannotDeleteException {
+    private void checkIsNotOwner(User user) throws DeleteQuestionPermissionException {
         if (!isOwner(user)) {
-            throw new CannotDeleteException(DELETE_QUESTION_PERMISSION_MESSAGE);
+            throw new DeleteQuestionPermissionException();
         }
     }
 
-    private void checkAnswerHasWrittenByOthers(User user) throws CannotDeleteException {
+    private void checkAnswerHasWrittenByOthers(User user) throws AnswerOtherWrittenException {
         if (answerHasWrittenByOthers(user)) {
-            throw new CannotDeleteException(ANSWER_OTHER_WRITTEN_MESSAGE);
+            throw new AnswerOtherWrittenException();
         }
     }
 

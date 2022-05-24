@@ -2,11 +2,12 @@ package qna.domain.question;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import qna.AnswerOtherWrittenException;
 import qna.CannotDeleteException;
-import qna.domain.deleteHistory.DeleteHistories;
+import qna.DeleteQuestionPermissionException;
 import qna.domain.answer.AnswerTest;
+import qna.domain.deleteHistory.DeleteHistories;
 import qna.domain.deleteHistory.DeleteHistoriesTest;
-import qna.domain.question.Question;
 import qna.domain.user.User;
 import qna.domain.user.UserTest;
 
@@ -30,11 +31,11 @@ public class QuestionTest {
         class 다른사람의_삭제요청이_주어질경우 {
 
             @Test
-            void CannotDeleteException을_던진다() {
+            void DeleteQuestionPermissionException을_던진다() {
                 Question question = createQuestion(UserTest.JAVAJIGI);
 
                 assertThatThrownBy(() -> question.delete(UserTest.SANJIGI))
-                        .isInstanceOf(CannotDeleteException.class)
+                        .isInstanceOf(DeleteQuestionPermissionException.class)
                         .hasMessage("질문을 삭제할 권한이 없습니다.");
             }
 
@@ -59,12 +60,12 @@ public class QuestionTest {
         class 다른사람이_쓴_답변이_존재할경우 {
 
             @Test
-            void CannotDeleteException을_던진다() {
+            void AnswerOtherWrittenException을_던진다() {
                 Question question = createQuestion(UserTest.JAVAJIGI);
                 question.addAnswer(AnswerTest.createAnswer(UserTest.SANJIGI, question));
 
                 assertThatThrownBy(() -> question.delete(UserTest.JAVAJIGI))
-                        .isInstanceOf(CannotDeleteException.class)
+                        .isInstanceOf(AnswerOtherWrittenException.class)
                         .hasMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
             }
 

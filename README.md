@@ -11,4 +11,4 @@
 ## ToDo - step1 리뷰 요청 이후
 - [x] question과 answer qna 대신 AbstractEntity 상속
 - [x] AbstractEntity에서 DeleteHistory 의존성 제거
-- [ ] 질문 삭제 예외 상황 커스텀 예외 추가
+- [x] 질문 삭제 예외 상황 커스텀 예외 추가
