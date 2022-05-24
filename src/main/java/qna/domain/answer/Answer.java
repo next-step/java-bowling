@@ -22,8 +22,6 @@ public class Answer extends AbstractEntity {
     @Embedded
     private AnswerBody answerBody;
 
-    private boolean deleted = false;
-
     protected Answer() {
     }
 
@@ -64,13 +62,6 @@ public class Answer extends AbstractEntity {
         return DeleteHistory.ofAnswer(this.id, this.writer);
     }
 
-    public void setDelete() {
-        this.deleted = true;
-    }
-
-    public boolean isDeleted() {
-        return this.deleted;
-    }
 
     @Override
     public String toString() {

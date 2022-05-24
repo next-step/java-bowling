@@ -25,8 +25,6 @@ public class Question extends AbstractEntity {
     @Embedded
     private final QuestionBody questionBody;
 
-    private boolean deleted = false;
-
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
@@ -75,14 +73,6 @@ public class Question extends AbstractEntity {
         List<DeleteHistory> answerDeleteHistories = this.answers.delete();
 
         return new DeleteHistories(questionDeleteHistory, answerDeleteHistories);
-    }
-
-    public void setDelete() {
-        this.deleted = true;
-    }
-
-    public boolean isDeleted() {
-        return this.deleted;
     }
 
     @Override

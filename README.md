@@ -6,9 +6,16 @@
 * 모든 피드백을 완료하면 다음 단계를 도전하고 앞의 과정을 반복한다.
 
 ## 온라인 코드 리뷰 과정
+
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
 
 ## ToDo - step1 리뷰 요청 이후
+
 - [x] question과 answer qna 대신 AbstractEntity 상속
 - [x] AbstractEntity에서 DeleteHistory 의존성 제거
 - [x] 질문 삭제 예외 상황 커스텀 예외 추가
+
+- [ ] question
+    - answers, title, content, deleted
+- [ ] answers 인스턴스 분해
+    - answers, title,  

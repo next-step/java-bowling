@@ -15,6 +15,8 @@ public class AbstractEntity extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
+    protected boolean deleted = false;
+
     public AbstractEntity() {
     }
 
@@ -29,6 +31,14 @@ public class AbstractEntity extends BaseTimeEntity {
     public AbstractEntity setId(Long id) {
         this.id = id;
         return this;
+    }
+
+    public void setDelete() {
+        this.deleted = true;
+    }
+
+    public boolean isDeleted() {
+        return this.deleted;
     }
 
     @Override
