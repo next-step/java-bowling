@@ -1,7 +1,6 @@
 package bowling.domain;
 
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.List;
 
 import static bowling.util.Const.*;
 
@@ -18,11 +17,15 @@ public class Player {
         return RANDOM.nextInt(max + 1);
     }
 
-    public PlayFrames plays() {
-        return this.scores.plays(this.playerName);
+    public void plays() {
+        this.scores.plays(this);
     }
 
-    public String getPlayFrame() {
-        return this.scores.playFrame(this.playerName);
+    public List<Score> scores() {
+        return this.scores.scores();
+    }
+
+    public PlayerName name() {
+        return this.playerName;
     }
 }

@@ -1,21 +1,27 @@
 package bowling.view;
 
-import bowling.domain.PlayFrames;
+import bowling.domain.Player;
+import bowling.domain.Score;
 
-import static bowling.util.Const.HEADER_STR;
+import static bowling.util.Const.*;
+import static bowling.util.Const.END_STR;
 
 public class Output {
-    public static void print(String payload) {
-        System.out.println(payload);
+    public static void printFrame(Player player) {
+       printContent(player);
     }
 
-    public static void printFrames(PlayFrames playFrames) {
-        playFrames.playFrames()
+    public static void printFrame(int i, Player player) {
+        System.out.println("Frame: " + i);
+        printContent(player);
+    }
+
+    private static void printContent(Player player) {
+        String frame = HEADER_STR + "\n" + BEGIN_STR + player.name() + DELIMITER_STR;
+        frame += player.scores()
                 .stream()
-                .forEach(playFrame -> {
-                    System.out.println("Frame: " + playFrame.number());
-                    System.out.println(HEADER_STR);
-                    System.out.println(playFrame.value());
-                });
+                .map(v -> Score.scoreBoard(v))
+                .reduce("", (acc, cur) -> acc + cur + END_STR);
+        System.out.println(frame);
     }
 }

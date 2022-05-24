@@ -1,42 +1,35 @@
 package bowling.domain;
+
+import bowling.view.Output;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static bowling.util.Const.*;
-
 public class Scores {
     private List<Score> scores;
-    public Scores(List<Score> scores){
-        this.scores = scores;
-    }
+
     public Scores() {
         this.scores = IntStream.rangeClosed(1, 10).mapToObj(v -> new Score()).collect(Collectors.toList());
     }
 
-    public String playFrame(PlayerName playerName) {
-        String scoreBoard = BEGIN_STR + playerName + DELIMITER_STR;
-        scoreBoard += this.scores
-                .stream()
-                .map(v -> Score.scoreBoard(v))
-                .reduce("", (acc, cur) -> acc + cur + END_STR);
-        return scoreBoard;
+    public List<Score> scores() {
+        return Collections.unmodifiableList(this.scores);
     }
 
-    public PlayFrames plays(PlayerName playerName) {
+    public void plays(Player player) {
         ListIterator<Score> iterator = this.scores.listIterator();
-        PlayFrames playFrames = new PlayFrames();
         while (iterator.hasNext()) {
             int i = iterator.nextIndex();
             Score score = this.scores.get(i);
             Score newScore = Score.play(score);
             this.scores.set(i, newScore);
-            playFrames.add(new PlayFrame(i + 1, this.playFrame(playerName)));
+            Output.printFrame(i + 1, player);
             if (newScore.done()) {
                 iterator.next();
             }
         }
-        return playFrames;
     }
 }
