@@ -9,7 +9,7 @@ public class BowlingApp {
         String name = Input.scan("put your nick name(3 characters): ");
         Player player = new Player(name);
         Output.print("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
-        Output.print(player.payload());
+        Output.print(player.scoreBoard());
         player.plays();
     }
 

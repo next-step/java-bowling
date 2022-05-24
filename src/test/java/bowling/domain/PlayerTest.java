@@ -8,6 +8,6 @@ public class PlayerTest {
     @Test
     void playerHas10EmptyScore() {
         Player player = new Player("tst");
-        assertThat(player.payload()).isEqualTo("| tst  |      |      |      |      |      |      |      |      |      |      |  ");
+        assertThat(player.scoreBoard()).isEqualTo("| tst  |      |      |      |      |      |      |      |      |      |      |  ");
     }
 }

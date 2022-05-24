@@ -36,7 +36,7 @@ public class Score {
     }
 
 
-    public static String payload(Score score) {
+    public static String scoreBoard(Score score) {
         if (!score.isPresent()) {
             return format(" ");
         }

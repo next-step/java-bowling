@@ -17,13 +17,13 @@ public class Player {
         this.scores = IntStream.rangeClosed(1, 10).mapToObj(v -> new Score()).collect(Collectors.toList());
     }
 
-    public String payload() {
-        String payload = "| " + this.playerName + "  |  "; // name should be formatted
-        payload += this.scores
+    public String scoreBoard() {
+        String scoreBoard = "| " + this.playerName + "  |  "; // name should be formatted
+        scoreBoard += this.scores
                 .stream()
-                .map(v -> Score.payload(v))
+                .map(v -> Score.scoreBoard(v))
                 .reduce("", (acc, cur) -> acc + cur + "|  ");
-        return payload;
+        return scoreBoard;
     }
 
     public static int pitch(int max) {
@@ -39,7 +39,7 @@ public class Player {
             this.scores.set(i, newScore);
             System.out.println("Frame " + (i + 1));
             Output.print("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
-            Output.print(this.payload());
+            Output.print(this.scoreBoard());
             if (newScore.done()) {
                 iterator.next();
             }

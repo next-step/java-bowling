@@ -149,7 +149,7 @@ Frame 10
 - [x] Player.pitch 내 Random 인스턴스 static으로 변경
 - [x] PlayerName indent 수정
 - [x] 인스턴스화 하지 않는 Input등의 유틸은 생성자를 private으로 써서 불필요한 인스턴스 생성을 막는다
-- [ ] payload -> 세부 이름으로 변경
+- [x] payload -> 세부 이름으로 변경
 - [ ] DeleteHistories 에 Optional을 꼭 사용해야할까?
 - [ ] 각 테스트별 @DisplayName 추가
 - [ ] 점수판 출력에 대한 중복 부분 const화
