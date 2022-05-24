@@ -25,7 +25,8 @@ class AnswersTest {
     @Test
     @DisplayName("다른 사람이 쓴 글일 경우 CannotDeleteException 반환한다.")
     public void invalidWriter() {
-        assertThatThrownBy(() -> answers.deleteAll(UserTest.SANJIGI)).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> answers.deleteAll(UserTest.SANJIGI)).isInstanceOf(CannotDeleteException.class)
+                .hasMessage("contentType=ANSWER, contentId=11, userId=sanjigi");
     }
 
     @Test

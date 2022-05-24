@@ -36,7 +36,7 @@ public class User extends AbstractEntity {
         this.email = email;
     }
 
-    public String getUserId() {
+    public String userId() {
         return userId;
     }
 
@@ -73,7 +73,7 @@ public class User extends AbstractEntity {
     }
 
     public void update(User loginUser, User target) {
-        if (!matchUserId(loginUser.getUserId())) {
+        if (!matchUserId(loginUser.userId())) {
             throw new UnAuthorizedException();
         }
 
