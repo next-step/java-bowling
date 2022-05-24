@@ -6,6 +6,7 @@ import bowling.pin.Pins;
 public interface Frame {
     Frame pitch(Pins pins);
     int getIndex();
-    Bowl getBowl();
+    Bowl getBowls();
     boolean hasNext();
+    String getSymbol();
 }

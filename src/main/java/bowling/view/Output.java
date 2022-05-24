@@ -5,7 +5,6 @@ import bowling.Frame.Frame;
 import bowling.Frame.Frames;
 import bowling.bowl.Bowl;
 import bowling.player.Player;
-import org.apache.logging.log4j.util.Strings;
 
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -27,15 +26,13 @@ public class Output {
         return String.format(PLAYER_NAME, player.getName());
     }
 
-    private static String getResultBody(Frames frames) {
+    public static String getResultBody(Frames frames) {
         String res =  frames.getFrames().stream()
-                .map(Frame::getBowl)
-                .filter(bowl -> !bowl.isFirst())
-                .map(Bowl::getSymbol)
+                .map(Frame::getSymbol)
                 .map(symbol -> String.format(RESULT_FRAME, symbol))
                 .collect(Collectors.joining());
 
-        String append = IntStream.range(0, MAX_FRAME_INDEX - frames.getFrameIndex())
+        String append = IntStream.range(0, MAX_FRAME_INDEX - frames.getFrames().size())
                 .mapToObj(i->EMPTY_RESULT_FRAME)
                 .collect(Collectors.joining());
 

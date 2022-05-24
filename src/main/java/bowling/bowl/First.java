@@ -13,7 +13,7 @@ public class First extends Running{
 
     @Override
     public String getSymbol() {
-        return "first";
+        return "";
     }
 
     @Override

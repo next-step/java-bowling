@@ -3,13 +3,11 @@ package bowling.Frame;
 import bowling.pin.Pins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class FinalFrameTest {
     @Test
-    @DisplayName("마지막 프레임에서 스트라이크 한 번을 더 투구할 수 있다.")
+    @DisplayName("마지막 프레임에서 스트라이크면 한 번을 더 투구할 수 있다.")
     void 마지막_프레임_투구_한번더_스트라이크(){
         Frame finalFrame = new FinalFrame(10);
         finalFrame.pitch(new Pins(10));
@@ -39,7 +37,7 @@ class FinalFrameTest {
         finalFrame.pitch(new Pins(4));
         finalFrame.pitch(new Pins(6));
 
-        finalFrame.pitch(new Pins(4));
+        finalFrame.pitch(new Pins(5));
     }
 
     @Test

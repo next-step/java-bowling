@@ -11,13 +11,13 @@ public class FinalFrame implements Frame{
 
     public static final int MAX_PITCH_CNT = 3;
     private final int index;
-    private List<Bowl> bowl;
+    private List<Bowl> bowls;
     private int count;
 
     private FinalFrame(int index, Bowl bowl, int count) {
         this.index = index;
-        this.bowl = new ArrayList<>();
-        this.bowl.add(bowl);
+        this.bowls = new ArrayList<>();
+        this.bowls.add(bowl);
         this.count = count;
     }
 
@@ -60,16 +60,16 @@ public class FinalFrame implements Frame{
     }
 
     private void addBall(Bowl resultBowl) {
-        bowl.add(resultBowl);
+        bowls.add(resultBowl);
     }
 
     private void changeBowl(Bowl resultBowl) {
-        bowl.remove(bowl.size()-1);
-        bowl.add(resultBowl);
+        bowls.remove(bowls.size()-1);
+        bowls.add(resultBowl);
     }
 
     private Bowl getCurBowl() {
-        return bowl.get(bowl.size()-1);
+        return bowls.get(bowls.size()-1);
     }
 
     @Override
@@ -78,8 +78,8 @@ public class FinalFrame implements Frame{
     }
 
     @Override
-    public Bowl getBowl() {
-        return bowl.get(0);
+    public Bowl getBowls() {
+        return bowls.get(0);
     }
 
     @Override
@@ -87,12 +87,19 @@ public class FinalFrame implements Frame{
         return canPitch();
     }
 
+    @Override
+    public String getSymbol() {
+        return bowls.stream()
+                .map(Bowl::getSymbol)
+                .collect(Collectors.joining("|"));
+    }
+
 
     @Override
     public String toString(){
         return "[final frame]" +
                 "\nindex: "+index
-                +"\nbowls: "+bowl
+                +"\nbowls: "+ bowls
                 +"\ncount: "+count;
     }
 }

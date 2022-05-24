@@ -35,12 +35,4 @@ public class Frames {
         return Collections.unmodifiableList(frames);
     }
 
-    public int getFrameIndex(){
-        Frame frame = getCurFrame();
-        int frameIndex = getCurFrame().getIndex();
-        if(frame.getBowl().isFirst()){
-            return frameIndex - 1;
-        }
-        return frameIndex;
-    }
 }

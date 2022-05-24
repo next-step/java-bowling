@@ -2,7 +2,6 @@ package bowling.Frame;
 
 import bowling.bowl.Bowl;
 import bowling.bowl.First;
-import bowling.bowl.Second;
 import bowling.pin.Pins;
 
 public class NormalFrame implements Frame{
@@ -42,13 +41,18 @@ public class NormalFrame implements Frame{
     }
 
     @Override
-    public Bowl getBowl() {
+    public Bowl getBowls() {
         return bowl;
     }
 
     @Override
     public boolean hasNext() {
         return true;
+    }
+
+    @Override
+    public String getSymbol() {
+        return getBowls().getSymbol();
     }
 
     @Override

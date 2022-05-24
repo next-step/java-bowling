@@ -14,9 +14,9 @@ class NormalFrameTest {
         NormalFrame frame = new NormalFrame(1);
         Frame next = frame.pitch(new Pins(10));
 
-        assertThat(frame.getBowl()).isExactlyInstanceOf(Strike.class);
+        assertThat(frame.getBowls()).isExactlyInstanceOf(Strike.class);
         assertThat(next.getIndex()).isEqualTo(2);
-        assertThat(next.getBowl()).isExactlyInstanceOf(First.class);
+        assertThat(next.getBowls()).isExactlyInstanceOf(First.class);
     }
 
     @Test
@@ -25,9 +25,9 @@ class NormalFrameTest {
         NormalFrame frame = new NormalFrame(1);
         Frame next = frame.pitch(new Pins(8));
 
-        assertThat(frame.getBowl()).isExactlyInstanceOf(Second.class);
+        assertThat(frame.getBowls()).isExactlyInstanceOf(Second.class);
         assertThat(next.getIndex()).isEqualTo(1);
-        assertThat(next.getBowl()).isExactlyInstanceOf(Second.class);
+        assertThat(next.getBowls()).isExactlyInstanceOf(Second.class);
     }
 
     @Test
@@ -37,8 +37,8 @@ class NormalFrameTest {
         Frame second = first.pitch(new Pins(8));
         Frame next = second.pitch(new Pins(2));
 
-        assertThat(second.getBowl()).isExactlyInstanceOf(Spare.class);
-        assertThat(next.getBowl()).isExactlyInstanceOf(First.class);
+        assertThat(second.getBowls()).isExactlyInstanceOf(Spare.class);
+        assertThat(next.getBowls()).isExactlyInstanceOf(First.class);
     }
 
     @Test
@@ -48,8 +48,8 @@ class NormalFrameTest {
         Frame second = first.pitch(new Pins(8));
         Frame next = second.pitch(new Pins(1));
 
-        assertThat(second.getBowl()).isExactlyInstanceOf(Miss.class);
-        assertThat(next.getBowl()).isExactlyInstanceOf(First.class);
+        assertThat(second.getBowls()).isExactlyInstanceOf(Miss.class);
+        assertThat(next.getBowls()).isExactlyInstanceOf(First.class);
     }
 
     @Test
@@ -59,7 +59,7 @@ class NormalFrameTest {
         Frame second = first.pitch(new Pins(0));
         Frame next = second.pitch(new Pins(0));
 
-        assertThat(second.getBowl()).isExactlyInstanceOf(Gutter.class);
-        assertThat(next.getBowl()).isExactlyInstanceOf(First.class);
+        assertThat(second.getBowls()).isExactlyInstanceOf(Gutter.class);
+        assertThat(next.getBowls()).isExactlyInstanceOf(First.class);
     }
 }
