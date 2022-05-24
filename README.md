@@ -148,8 +148,7 @@ Frame 10
     - PlayerName
 - [x] Player.pitch 내 Random 인스턴스 static으로 변경
 - [x] PlayerName indent 수정
-- [ ] Score 에 대한 format 을 enum 혹은 class로 포장
-- [ ] 인스턴스화 하지 않는 Input, Output등의 유틸은 생성자를 private으로 써서 불필요한 인스턴스 생성을 막는다
+- [x] 인스턴스화 하지 않는 Input등의 유틸은 생성자를 private으로 써서 불필요한 인스턴스 생성을 막는다
 - [ ] payload -> 세부 이름으로 변경
 - [ ] DeleteHistories 에 Optional을 꼭 사용해야할까?
 - [ ] 각 테스트별 @DisplayName 추가
@@ -158,6 +157,7 @@ Frame 10
     - [ ] '|' 와 같은 foramt
 - [ ] Player가 Output에 의존하지 않도록 출력?
 - [ ] 입, 출력은 Input, Output으로 분리
+- [ ] Score 에 대한 format 을 enum 혹은 class로 포장
 - [ ] 플레이어가 스코어를 관리하던 역할을 분리
     - 플레이를 할때마다 Score 인스턴스 스스로 점수를 받아서 더한다
     - 1 ~ 9 프레임을 NormalFrame, 10 프레임을 FinalFrame과 같은 구조로 구현한 후 Frame을 추가해 중복을 제거해 본다.
