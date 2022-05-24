@@ -1,10 +1,10 @@
 package qna.domain.qna.question;
 
 import qna.CannotDeleteException;
+import qna.domain.AbstractEntity;
 import qna.domain.ContentType;
 import qna.domain.deleteHistory.DeleteHistories;
 import qna.domain.deleteHistory.DeleteHistory;
-import qna.domain.qna.QnA;
 import qna.domain.qna.answer.Answer;
 import qna.domain.qna.answer.Answers;
 import qna.domain.user.User;
@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
 import java.util.List;
 
 @Entity
-public class Question extends QnA {
+public class Question extends AbstractEntity {
     private static final String DELETE_QUESTION_PERMISSION_MESSAGE = "질문을 삭제할 권한이 없습니다.";
     private static final String ANSWER_OTHER_WRITTEN_MESSAGE = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
 
@@ -26,6 +26,8 @@ public class Question extends QnA {
 
     @Embedded
     private final QuestionBody questionBody;
+
+    private boolean deleted = false;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
@@ -69,11 +71,29 @@ public class Question extends QnA {
         checkIsNotOwner(user);
         checkAnswerHasWrittenByOthers(user);
 
-        super.setDelete();
+        setDelete();
         DeleteHistory questionDeleteHistory = super.createDeleteHistory(ContentType.QUESTION, this.writer);
         List<DeleteHistory> answerDeleteHistories = this.answers.delete();
 
         return new DeleteHistories(questionDeleteHistory, answerDeleteHistories);
+    }
+
+    public void setDelete() {
+        this.deleted = true;
+    }
+
+    public boolean isDeleted() {
+        return this.deleted;
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "answers=" + answers +
+                ", questionBody=" + questionBody +
+                ", writer=" + writer +
+                ", deleted=" + deleted +
+                '}';
     }
 
     private void checkIsNotOwner(User user) throws CannotDeleteException {
@@ -98,15 +118,5 @@ public class Question extends QnA {
 
     private QuestionBody createQuestionBody(String title, String contents) {
         return new QuestionBody(title, contents);
-    }
-
-    @Override
-    public String toString() {
-        return "Question{" +
-                "answers=" + answers +
-                ", questionBody=" + questionBody +
-                ", writer=" + writer +
-                ", deleted=" + super.deleted +
-                '}';
     }
 }
