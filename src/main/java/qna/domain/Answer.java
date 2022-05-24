@@ -77,15 +77,17 @@ public class Answer extends AbstractEntity {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
 
-    public void delete() {
+    private void delete() {
         this.deleted = true;
     }
 
-    public void deleteByUser(User user) throws CannotDeleteException {
+    public DeleteHistory deleteByUser(User user) {
         if (!isOwner(user)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변은 삭제할 수 없습니다.");
         }
 
         delete();
+
+        return DeleteHistory.ofAnswer(this);
     }
 }
