@@ -153,10 +153,11 @@ Frame 10
 - [x] DeleteHistories 에 Optional 제거
   - overload 으로 두 개의 add를 구현
 - [x] 각 테스트별 @DisplayName 추가
-- [ ] 점수판 출력에 대한 중복 부분 const화
-    - [ ] 점수판 헤더
-    - [ ] '|' 와 같은 foramt
-- [ ] Player가 Output에 의존하지 않도록 출력?
+- [x] 점수판 출력에 대한 중복 부분 const화
+    - [x] 점수판 헤더
+    - [x] print 를 Output 으로 보내기
+    - [x] '|' 와 같은 foramt
+    - [x] Player가 Output에 의존하지 않도록 출력
 - [ ] 입, 출력은 Input, Output으로 분리
 - [ ] Score 에 대한 format 을 enum 혹은 class로 포장
 - [ ] 플레이어가 스코어를 관리하던 역할을 분리
