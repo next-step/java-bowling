@@ -5,17 +5,19 @@ import bowling.domain.Player;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public final class InputView {
 
-    private static final String INPUT_PLAYER_NAME_MESSAGE = "플레이어 이름은(3 english letters)?: ";
+    private static final String INPUT_PLAYER_NAME_MESSAGE_FORMAT = "플레이어 %d 이름은(3 english letters)?: ";
     private static final String INPUT_FRAME_PIN_COUNT_FORMAT = "%d 프레임 투구 : ";
     private static final String INPUT_PLAYERS_COUNT_MESSAGE = "How many people? ";
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public Player inputPlayerName() {
-        System.out.print(INPUT_PLAYER_NAME_MESSAGE);
+    public Player inputPlayerName(int count) {
+        System.out.printf(INPUT_PLAYER_NAME_MESSAGE_FORMAT, count);
         return Player.create(readLine());
     }
 
@@ -35,6 +37,13 @@ public final class InputView {
     public int inputPlayerCount() {
         System.out.print(INPUT_PLAYERS_COUNT_MESSAGE);
         return Integer.parseInt(readLine());
+    }
+
+    public List<Player> inputPlayers(int playersCount) {
+        int initPlayerCount = 1;
+        return IntStream.rangeClosed(initPlayerCount, playersCount)
+                .mapToObj(this::inputPlayerName)
+                .collect(Collectors.toList());
     }
 
 }

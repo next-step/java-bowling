@@ -10,6 +10,8 @@ import bowling.exception.InvalidPinsException;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
+import java.util.List;
+
 public class BowlingGameController {
 
     private final InputView inputView;
@@ -29,7 +31,7 @@ public class BowlingGameController {
     }
 
     public void start() {
-        Player player = inputView.inputPlayerName();
+        Player player = inputView.inputPlayerName(1);
         BowlingGame bowlingGame = BowlingGame.of(Frames.create(frameFactory.create()), player);
 
         resultView.printBowlingGameResult(bowlingGame);
