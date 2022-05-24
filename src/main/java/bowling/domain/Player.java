@@ -11,7 +11,7 @@ public class Player {
 
     public Player(String name) {
         this.playerName = new PlayerName(name);
-        this.scores = new Scores(IntStream.rangeClosed(1, 10).mapToObj(v -> new Score()).collect(Collectors.toList()));
+        this.scores = new Scores();
     }
 
     public static int pitch(int max) {

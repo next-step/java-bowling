@@ -1,6 +1,8 @@
 package bowling.domain;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static bowling.util.Const.*;
 
@@ -8,6 +10,9 @@ public class Scores {
     private List<Score> scores;
     public Scores(List<Score> scores){
         this.scores = scores;
+    }
+    public Scores() {
+        this.scores = IntStream.rangeClosed(1, 10).mapToObj(v -> new Score()).collect(Collectors.toList());
     }
 
     public String playFrame(PlayerName playerName) {

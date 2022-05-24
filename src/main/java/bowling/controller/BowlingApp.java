@@ -16,6 +16,4 @@ public class BowlingApp {
         PlayFrames playFrames = player.plays();
         Output.printFrames(playFrames);
     }
-
-
 }

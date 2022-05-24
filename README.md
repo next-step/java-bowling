@@ -151,7 +151,7 @@ Frame 10
 - [x] 인스턴스화 하지 않는 Input등의 유틸은 생성자를 private으로 써서 불필요한 인스턴스 생성을 막는다
 - [x] payload -> 세부 이름으로 변경
 - [x] DeleteHistories 에 Optional 제거
-  - overload 으로 두 개의 add를 구현
+    - overload 으로 두 개의 add를 구현
 - [x] 각 테스트별 @DisplayName 추가
 - [x] 점수판 출력에 대한 중복 부분 const화
     - [x] 점수판 헤더
@@ -163,8 +163,13 @@ Frame 10
     - 플레이를 할때마다 Score 인스턴스 스스로 점수를 받아서 더한다
     - 1 ~ 9 프레임을 NormalFrame, 10 프레임을 FinalFrame과 같은 구조로 구현한 후 Frame을 추가해 중복을 제거해 본다.
     - 다음 Frame을 현재 Frame 외부에서 생성하기 보다 현재 Frame에서 다음 Frame을 생성하는 방식으로 구현해 보고, 어느 구현이 더 좋은지 검토해 본다.
-- [x] Score 에 대한 format 을 ScoreType enum 내에 포장 
+- [x] Score 에 대한 format 을 ScoreType enum 내에 포장
 - [x] 누락 테스트 추가
-  - Scores
-  - PlayFrames
-  - PlayFrame
+    - Scores
+    - PlayFrames
+    - PlayFrame
+
+### Requested changes phase 2
+- [x] create factory method of Scores for Player
+
+## Step3
