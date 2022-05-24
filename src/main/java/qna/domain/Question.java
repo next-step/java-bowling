@@ -101,7 +101,7 @@ public class Question extends AbstractEntity {
     private DeleteHistories addDeleteHistories() {
         DeleteHistory deleteHistory = DeleteHistory.createDeleteHistory(this);
         DeleteHistories deleteHistories = this.answers.deleteHistory();
-        deleteHistories.add(Optional.ofNullable(0), deleteHistory);
+        deleteHistories.add(0, deleteHistory);
         return deleteHistories;
     }
 }

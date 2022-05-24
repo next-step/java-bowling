@@ -15,7 +15,7 @@ public class DeleteHistoriesTest {
         Answer actualAnswer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
         DeleteHistory deleteHistory = new DeleteHistory(ContentType.ANSWER, actualAnswer.getId(), actualAnswer.getWriter(), LocalDateTime.now());
         DeleteHistories expectedDeleteHistories = new DeleteHistories(Arrays.asList(deleteHistory));
-        actualDeleteHistories.add(Optional.ofNullable(null), deleteHistory);
+        actualDeleteHistories.add(deleteHistory);
         assertThat(actualDeleteHistories).isEqualTo(expectedDeleteHistories);
     }
 }

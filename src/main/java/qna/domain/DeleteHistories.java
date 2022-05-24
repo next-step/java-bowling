@@ -16,13 +16,12 @@ public class DeleteHistories {
         this.deleteHistories = new ArrayList();
     }
 
-    public void add(Optional<Integer> idx, DeleteHistory deleteHistory) {
-        if (idx.isPresent()) {
-            this.deleteHistories.add(idx.get(), deleteHistory);
-            return;
-        }
+    public void add(int idx, DeleteHistory deleteHistory) {
+            this.deleteHistories.add(idx, deleteHistory);
+    }
+
+    public void add(DeleteHistory deleteHistory) {
         this.deleteHistories.add(deleteHistory);
-        return;
     }
 
     @Override

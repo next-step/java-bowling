@@ -150,7 +150,8 @@ Frame 10
 - [x] PlayerName indent 수정
 - [x] 인스턴스화 하지 않는 Input등의 유틸은 생성자를 private으로 써서 불필요한 인스턴스 생성을 막는다
 - [x] payload -> 세부 이름으로 변경
-- [ ] DeleteHistories 에 Optional을 꼭 사용해야할까?
+- [x] DeleteHistories 에 Optional 제거
+  - overload 으로 두 개의 add를 구현
 - [ ] 각 테스트별 @DisplayName 추가
 - [ ] 점수판 출력에 대한 중복 부분 const화
     - [ ] 점수판 헤더

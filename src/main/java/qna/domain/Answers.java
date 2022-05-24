@@ -34,7 +34,7 @@ public class Answers {
     public DeleteHistories deleteHistory() {
         DeleteHistories deleteHistories = new DeleteHistories();
         for (Answer answer : this.answers) {
-            deleteHistories.add(Optional.ofNullable(null), answer.deleteHistory());
+            deleteHistories.add(answer.deleteHistory());
         }
         return deleteHistories;
     }
