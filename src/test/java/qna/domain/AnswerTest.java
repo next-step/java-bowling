@@ -1,28 +1,33 @@
 package qna.domain;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
+import qna.IsNotDeletedException;
 
-import java.util.stream.Stream;
-
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class AnswerTest {
     public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
     public static final Answer A2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
 
-    private static Stream<Arguments> answerAndUser() {
-        return Stream.of(
-                Arguments.of(A1, UserTest.SANJIGI),
-                Arguments.of(A2, UserTest.JAVAJIGI)
-        );
+    @Test
+    @DisplayName("질문과 답변 작성자가 동일한 경우 삭제 가능")
+    void delete() {
+        A1.delete(UserTest.JAVAJIGI);
+        assertThat(A1.isDeleted()).isTrue();
     }
 
-    @ParameterizedTest(name = "답변 여부에 따른 삭제 예외 처리")
-    @MethodSource("answerAndUser")
-    void isOwner(Answer answer, User user) {
-        assertThatThrownBy(() -> answer.isAnotherUserAnswer(user)).isExactlyInstanceOf(CannotDeleteException.class);
+    @Test
+    @DisplayName("질문과 답변 작성자가 동일하지 않은 경우 삭제 불가능")
+    void answerIsNotEqualQuestion() {
+        assertThatThrownBy(() -> A2.delete(UserTest.JAVAJIGI)).isExactlyInstanceOf(CannotDeleteException.class);
+    }
+
+    @Test
+    @DisplayName("삭제되지 않은 질문의 삭제 기록 조회 시 예외 처리")
+    void deleteHistoryException() {
+        assertThatThrownBy(A2::deleteHistory).isExactlyInstanceOf(IsNotDeletedException.class);
     }
 }

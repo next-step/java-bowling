@@ -1,14 +1,17 @@
 package qna.domain;
 
 import qna.CannotDeleteException;
+import qna.IsNotDeletedException;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Optional;
 
 @Entity
 public class Question extends AbstractEntity {
 
     private static final String NO_DELETE_ACCESS = "질문을 삭제할 권한이 없습니다.";
+    private static final String IS_NOT_DELETED = "해당 질문은 삭제되지 않았습니다.";
 
     @Column(length = 100, nullable = false)
     private String title;
@@ -21,7 +24,7 @@ public class Question extends AbstractEntity {
     private User writer;
 
     @Embedded
-    private Answers answers = new Answers();
+    private final Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -39,24 +42,6 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
-
     public User getWriter() {
         return writer;
     }
@@ -66,32 +51,43 @@ public class Question extends AbstractEntity {
         return this;
     }
 
+    private void isValidatedWriter(User writer) {
+        Optional.ofNullable(writer)
+                .filter(this::isOwner)
+                .orElseThrow(() -> new CannotDeleteException(NO_DELETE_ACCESS));
+    }
+
+    public void delete(User writer) {
+        this.isValidatedWriter(writer);
+        this.answers.delete(writer);
+        this.deleted = true;
+    }
+
+    public DeleteHistory deleteHistory() {
+        return Optional.of(this)
+                .filter(Question::isDeleted)
+                .map(DeleteHistory::of)
+                .orElseThrow(() -> new IsNotDeletedException(IS_NOT_DELETED));
+    }
+
+    public List<DeleteHistory> deleteHistories() {
+        List<DeleteHistory> deleteHistories = this.answers.deleteHistories();
+        deleteHistories.add(this.deleteHistory());
+
+        return deleteHistories;
+    }
+
     public void addAnswer(Answer answer) {
         answer.toQuestion(this);
         answers.add(answer);
-    }
-
-    public void hasDeleteAccess(User loginUser) throws CannotDeleteException {
-        Optional.ofNullable(loginUser)
-                .filter(this::isOwner)
-                .orElseThrow(() -> new CannotDeleteException(NO_DELETE_ACCESS));
     }
 
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public Answers getAnswers() {
-        return answers;
     }
 
     @Override

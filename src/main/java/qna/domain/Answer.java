@@ -1,6 +1,7 @@
 package qna.domain;
 
 import qna.CannotDeleteException;
+import qna.IsNotDeletedException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
@@ -11,6 +12,7 @@ import java.util.Optional;
 public class Answer extends AbstractEntity {
 
     private static final String NOT_DELETED_ACCESS = "해당 답변을 삭제할 권한이 존재하지 않습니다.";
+    private static final String IS_NOT_DELETED = "해당 답변은 삭제되지 않았습니다.";
 
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
@@ -48,19 +50,26 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    private void isValidatedWriter(User writer) {
+        Optional.of(writer)
+                .filter(this::isOwner)
+                .orElseThrow(() -> new CannotDeleteException(NOT_DELETED_ACCESS));
+    }
+
+    public void delete(User writer) {
+        isValidatedWriter(writer);
+        this.deleted = true;
+    }
+
+    public DeleteHistory deleteHistory() {
+        return Optional.of(this)
+                .filter(Answer::isDeleted)
+                .map(DeleteHistory::of)
+                .orElseThrow(() -> new IsNotDeletedException(IS_NOT_DELETED));
     }
 
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public void isAnotherUserAnswer(User writer) {
-        Optional.ofNullable(writer)
-                .filter(this::isOwner)
-                .orElseThrow(() -> new CannotDeleteException(NOT_DELETED_ACCESS));
     }
 
     public boolean isOwner(User writer) {

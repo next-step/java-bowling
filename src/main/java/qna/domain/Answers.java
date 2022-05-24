@@ -6,9 +6,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Embeddable
 public class Answers {
@@ -26,18 +26,23 @@ public class Answers {
         this.answers = answers;
     }
 
-    public void isAnotherUserAnswers(User writer) {
-        this.answers.forEach(answer -> answer.isAnotherUserAnswer(writer));
-    }
-
-    public void addDeleteHistories(List<DeleteHistory> deleteHistories) {
-        this.answers.stream()
-                .peek(answer -> answer.setDeleted(true))
-                .map(answer -> new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()))
-                .forEach(deleteHistories::add);
-    }
-
     public void add(Answer answer) {
         this.answers.add(answer);
+    }
+
+    public void delete(User writer) {
+        if (this.answers.isEmpty()) {
+            return;
+        }
+
+        answers.forEach(answer -> answer.delete(writer));
+    }
+
+    public List<DeleteHistory> deleteHistories() {
+        return this.answers
+                .stream()
+                .filter(Answer::isDeleted)
+                .map(Answer::deleteHistory)
+                .collect(Collectors.toList());
     }
 }
