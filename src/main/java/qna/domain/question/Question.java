@@ -2,7 +2,6 @@ package qna.domain.question;
 
 import qna.CannotDeleteException;
 import qna.domain.AbstractEntity;
-import qna.domain.ContentType;
 import qna.domain.answer.Answer;
 import qna.domain.answer.Answers;
 import qna.domain.deleteHistory.DeleteHistories;
@@ -72,9 +71,7 @@ public class Question extends AbstractEntity {
         checkAnswerHasWrittenByOthers(user);
 
         setDelete();
-        DeleteHistory questionDeleteHistory = new DeleteHistory(
-                ContentType.QUESTION, this.id, this.writer
-        );
+        DeleteHistory questionDeleteHistory = DeleteHistory.ofQuestion(this.id, this.writer);
         List<DeleteHistory> answerDeleteHistories = this.answers.delete();
 
         return new DeleteHistories(questionDeleteHistory, answerDeleteHistories);

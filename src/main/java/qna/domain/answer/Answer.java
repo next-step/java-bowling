@@ -3,7 +3,6 @@ package qna.domain.answer;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 import qna.domain.AbstractEntity;
-import qna.domain.ContentType;
 import qna.domain.deleteHistory.DeleteHistory;
 import qna.domain.question.Question;
 import qna.domain.user.User;
@@ -62,9 +61,7 @@ public class Answer extends AbstractEntity {
     public DeleteHistory delete() {
         setDelete();
 
-        return new DeleteHistory(
-                ContentType.ANSWER, this.id, this.writer
-        );
+        return DeleteHistory.ofAnswer(this.id, this.writer);
     }
 
     public void setDelete() {
