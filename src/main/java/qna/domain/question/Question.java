@@ -72,7 +72,9 @@ public class Question extends AbstractEntity {
         checkAnswerHasWrittenByOthers(user);
 
         setDelete();
-        DeleteHistory questionDeleteHistory = super.createDeleteHistory(ContentType.QUESTION, this.writer);
+        DeleteHistory questionDeleteHistory = new DeleteHistory(
+                ContentType.QUESTION, this.getId(), this.writer
+        );
         List<DeleteHistory> answerDeleteHistories = this.answers.delete();
 
         return new DeleteHistories(questionDeleteHistory, answerDeleteHistories);
