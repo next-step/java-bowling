@@ -9,7 +9,7 @@ public class PlayerName {
         if (playerName.length() != MAX_NAME_LENGTH) {
             throw new IllegalArgumentException("Player name should be 3 letter but, : " + playerName);
         }
-            this.playerName = playerName;
+        this.playerName = playerName;
     }
 
     @Override
