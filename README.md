@@ -137,3 +137,28 @@ Frame 10
 | NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |
 | GON  |  8|1 |  9|/ |  3|/ |  1|3 |  1|5 |  X   |  2|5 |  2|3 |  1|/ |  7|2 |  
 ```
+
+### Requested changes
+
+- [x] Optional 사용 최소화
+    - Optional은 argument로 사용해서는 안된다
+    - [x] ScoreType.NULL, Const.NULL = -1 을 만들어 구현
+- [ ] 매직넘버 const 로 변경
+    - Hit
+    - PlayerName
+- [ ] Player.pitch 내 Random 인스턴스 static으로 변경
+- [ ] PlayerName indent 수
+- [ ] Score 에 대한 format 을 enum 혹은 class로 포장
+- [ ] 인스턴스화 하지 않는 Input, Output등의 유틸은 생성자를 private으로 써서 불필요한 인스턴스 생성을 막는다
+- [ ] payload -> 세부 이름으로 변경
+- [ ] DeleteHistories 에 Optional을 꼭 사용해야할까?
+- [ ] 각 테스트별 @DisplayName 추가
+- [ ] 점수판 출력에 대한 중복 부분 const화
+    - [ ] 점수판 헤더
+    - [ ] '|' 와 같은 foramt
+- [ ] Player가 Output에 의존하지 않도록 출력?
+- [ ] 입, 출력은 Input, Output으로 분리
+- [ ] 플레이어가 스코어를 관리하던 역할을 분리
+    - 플레이를 할때마다 Score 인스턴스 스스로 점수를 받아서 더한다
+    - 1 ~ 9 프레임을 NormalFrame, 10 프레임을 FinalFrame과 같은 구조로 구현한 후 Frame을 추가해 중복을 제거해 본다.
+    - 다음 Frame을 현재 Frame 외부에서 생성하기 보다 현재 Frame에서 다음 Frame을 생성하는 방식으로 구현해 보고, 어느 구현이 더 좋은지 검토해 본다.

@@ -1,10 +1,15 @@
 package bowling.domain;
 
-import java.util.Optional;
+import static bowling.util.Const.NULL;
 
 public class Score {
     private final ScoreType scoreType;
     private final Hit hit;
+
+    public Score() {
+        this.hit =  new Hit(NULL,NULL);
+        this.scoreType = ScoreType.NULL;
+    }
 
     public Score(int first) {
         this.hit = new Hit(first);
@@ -16,36 +21,40 @@ public class Score {
         this.scoreType = ScoreType.of(first, second);
     }
 
-    public static Score play(Optional<Score> prevScore) {
+    public static Score play(Score prevScore) {
         if (prevScore.isPresent()) {
-            int hit = Player.pitch(prevScore.get().hit.remainingPin());
-            return new Score(prevScore.get().hit.first(), hit);
+            int hit = Player.pitch(prevScore.hit.remainingPin());
+            return new Score(prevScore.hit.first(), hit);
         }
         int hit = Player.pitch(10);
         return new Score(hit);
     }
 
+    private boolean isPresent() {
+        return this.scoreType != ScoreType.NULL;
+    }
 
-    public static String payload(Optional<Score> score) {
-        if (score.isEmpty()) {
+
+    public static String payload(Score score) {
+        if (!score.isPresent()) {
             return format(" ");
         }
-        if (score.get().scoreType == ScoreType.STRIKE) {
+        if (score.scoreType == ScoreType.STRIKE) {
             return format("X");
         }
-        if (score.get().scoreType == ScoreType.SECOND) {
-            return format(score.get().hit.firstStr());
+        if (score.scoreType == ScoreType.SECOND) {
+            return format(score.hit.firstStr());
         }
-        if (score.get().scoreType == ScoreType.GUTTER) {
+        if (score.scoreType == ScoreType.GUTTER) {
             return format("-|-");
         }
-        if (score.get().scoreType == ScoreType.MISS) {
-            return format(score.get().hit.firstStr() + "|" + score.get().hit.secondStr());
+        if (score.scoreType == ScoreType.MISS) {
+            return format(score.hit.firstStr() + "|" + score.hit.secondStr());
         }
-        if (score.get().scoreType == ScoreType.SPARE) {
-            return format(score.get().hit.first() + "|/");
+        if (score.scoreType == ScoreType.SPARE) {
+            return format(score.hit.first() + "|/");
         }
-        throw new RuntimeException("unreachable " + score.get());
+        throw new RuntimeException("unreachable " + score);
     }
 
     public static String format(String string) {

@@ -1,19 +1,18 @@
 package bowling.domain;
-
-import java.util.Optional;
+import static bowling.util.Const.NULL;
 
 public class Hit {
     private final int first;
-    private final Optional<Integer> second;
+    private final int second;
 
     public Hit(int first) {
         this.first = first;
-        this.second = Optional.empty();
+        this.second = NULL;
     }
 
     public Hit(int first, int second) {
         this.first = first;
-        this.second = Optional.of(second);
+        this.second = second;
     }
 
     int remainingPin() {
@@ -25,10 +24,14 @@ public class Hit {
     }
 
     int second() {
-        if (this.second.isPresent()) {
-            return this.second.get();
+        if (hasSecond()) {
+            return this.second;
         }
         throw new NullPointerException("second is empty");
+    }
+
+    private boolean hasSecond() {
+        return this.second > -1;
     }
 
     String firstStr() {
@@ -36,8 +39,8 @@ public class Hit {
     }
 
     String secondStr() {
-        if (this.second.isPresent()) {
-            return gutterHandler(this.second.get());
+        if (hasSecond()) {
+            return gutterHandler(this.second);
         }
         throw new NullPointerException("second is empty");
     }

@@ -1,7 +1,6 @@
 package bowling.controller;
 
 import bowling.domain.Player;
-import bowling.domain.Score;
 import bowling.view.Input;
 import bowling.view.Output;
 

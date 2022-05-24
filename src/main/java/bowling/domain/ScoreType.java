@@ -1,7 +1,7 @@
 package bowling.domain;
 
 public enum ScoreType {
-    STRIKE, SPARE, MISS, GUTTER, SECOND;
+    STRIKE, SPARE, MISS, GUTTER, SECOND, NULL;
 
     public static ScoreType of(int first) {
         if (first == 10) {
