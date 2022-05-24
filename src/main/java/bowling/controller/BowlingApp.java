@@ -12,7 +12,7 @@ public class BowlingApp {
         String name = Input.scan();
         Player player = new Player(name);
         Output.print(HEADER_STR);
-        Output.print(player.playFrame());
+        Output.print(player.getPlayFrame());
         PlayFrames playFrames = player.plays();
         Output.printFrames(playFrames);
     }

@@ -10,6 +10,6 @@ public class PlayerTest {
     @DisplayName("초기 점수판을 출력")
     void playerHas10EmptyScore() {
         Player player = new Player("tst");
-        assertThat(player.playFrame()).isEqualTo("| tst  |      |      |      |      |      |      |      |      |      |      |  ");
+        assertThat(player.getPlayFrame()).isEqualTo("| tst  |      |      |      |      |      |      |      |      |      |      |  ");
     }
 }
