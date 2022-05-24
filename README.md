@@ -143,7 +143,7 @@ Frame 10
 - [x] Optional 사용 최소화
     - Optional은 argument로 사용해서는 안된다
     - [x] ScoreType.NULL, Const.NULL = -1 을 만들어 구현
-- [ ] 매직넘버 const 로 변경
+- [x] 매직넘버 const 로 변경
     - Hit
     - PlayerName
 - [ ] Player.pitch 내 Random 인스턴스 static으로 변경

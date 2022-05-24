@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import static bowling.util.Const.MAX_PIN;
 import static bowling.util.Const.NULL;
 
 public class Score {
@@ -26,7 +27,7 @@ public class Score {
             int hit = Player.pitch(prevScore.hit.remainingPin());
             return new Score(prevScore.hit.first(), hit);
         }
-        int hit = Player.pitch(10);
+        int hit = Player.pitch(MAX_PIN);
         return new Score(hit);
     }
 

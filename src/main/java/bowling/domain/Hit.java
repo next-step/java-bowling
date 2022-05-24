@@ -1,5 +1,6 @@
 package bowling.domain;
-import static bowling.util.Const.NULL;
+
+import static bowling.util.Const.*;
 
 public class Hit {
     private final int first;
@@ -16,7 +17,7 @@ public class Hit {
     }
 
     int remainingPin() {
-        return 10 - this.first;
+        return MAX_PIN - this.first;
     }
 
     int first() {
@@ -46,7 +47,7 @@ public class Hit {
     }
 
     static String gutterHandler(int number) {
-        if (number == 0) {
+        if (number == GUTTER_NUMBER) {
             return "-";
         }
         return number + "";
