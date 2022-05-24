@@ -1,5 +1,6 @@
 package bowling.view;
 
+import bowling.domain.BowlingGames;
 import bowling.domain.Pins;
 import bowling.domain.Player;
 
@@ -11,8 +12,10 @@ import java.util.stream.IntStream;
 public final class InputView {
 
     private static final String INPUT_PLAYER_NAME_MESSAGE_FORMAT = "플레이어 %d 이름은(3 english letters)?: ";
+
     private static final String INPUT_FRAME_PIN_COUNT_FORMAT = "%d 프레임 투구 : ";
     private static final String INPUT_PLAYERS_COUNT_MESSAGE = "How many people? ";
+    private static final String INPUT_CURRENT_PLAYER_PIN_COUNT_FORMAT = "%s turn: ";
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -25,8 +28,8 @@ public final class InputView {
         return scanner.nextLine();
     }
 
-    public Pins inputPins(int currentRound) {
-        System.out.printf(INPUT_FRAME_PIN_COUNT_FORMAT, currentRound);
+    public Pins inputPins(BowlingGames bowlingGames) {
+        System.out.printf(INPUT_CURRENT_PLAYER_PIN_COUNT_FORMAT, bowlingGames.currentPlayer());
         return Pins.create(readNumber());
     }
 

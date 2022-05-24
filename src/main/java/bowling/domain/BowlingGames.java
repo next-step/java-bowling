@@ -24,9 +24,15 @@ public class BowlingGames {
         return new BowlingGames(bowlingGames);
     }
 
+    public Player currentPlayer() {
+        BowlingGame bowlingGame = bowlingGames.get(playerTurnIndex);
+        return bowlingGame.player();
+    }
+
     public void play(Pins pins) {
         BowlingGame bowlingGame = bowlingGames.get(playerTurnIndex);
         bowlingGame.pitch(pins);
+        bowlingGame.nextRound();
         changeNextPlayerTurn();
     }
 
@@ -38,4 +44,16 @@ public class BowlingGames {
         playerTurnIndex = nextPlayerTurnIndex;
     }
 
+    public boolean isRunning() {
+        for (BowlingGame bowlingGame : bowlingGames) {
+            if(bowlingGame.isRunning()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public List<BowlingGame> bowlingGames() {
+        return bowlingGames;
+    }
 }

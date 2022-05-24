@@ -1,15 +1,21 @@
 package bowling.view;
 
 import bowling.domain.BowlingGame;
+import bowling.domain.BowlingGames;
 import bowling.domain.Player;
 import bowling.domain.frame.Frame;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 public final class ResultView {
 
+    private static final int START_FRAME_INDEX = 0;
+    private static final int END_FRAME_INDEX = 9;
     private static final int START_FRAME_ROUND = 1;
     private static final int LAST_FRAME_ROUND = 10;
+
+    private static final int UN_AVAILABLE = -1;
 
     private static final String PLAYER_NAME = "NAME";
     private static final String BODY_FORMAT = "%7s";
@@ -19,28 +25,29 @@ public final class ResultView {
     private static final String BLANK = "";
 
     private static final StringBuilder stringBuilder = new StringBuilder();
-    private static final int UN_AVAILABLE = -1;
-
-    public void printBowlingGameResult(BowlingGame bowlingGame) {
-        appendHead();
-        appendPlayerAndSymbols(bowlingGame);
-        appendScores(bowlingGame);
-        printContents();
-    }
 
     private void appendScores(BowlingGame bowlingGame) {
         stringBuilder.append(VERTICAL_BAR)
                 .append(String.format(BODY_FORMAT, BLANK))
                 .append(VERTICAL_BAR);
 
-        bowlingGame.sumScores()
-                .forEach(score -> stringBuilder.append(String.format(BODY_FORMAT, getScoreInGame(score)))
-                .append(VERTICAL_BAR));
+        IntStream.rangeClosed(START_FRAME_INDEX, END_FRAME_INDEX)
+                .forEach(index -> appendSumScore(bowlingGame, index));
         appendNewLine();
     }
 
-    private String getScoreInGame(int score) {
-        return score == UN_AVAILABLE ? BLANK : String.valueOf(score);
+    private void appendSumScore(BowlingGame bowlingGame, int index) {
+        stringBuilder.append(String.format(BODY_FORMAT, getScoreInGame(bowlingGame.sumScores(), index)))
+                .append(VERTICAL_BAR);
+    }
+
+    private String getScoreInGame(List<Integer> sumScores, int index) {
+        if (index >= sumScores.size()) {
+            return BLANK;
+        }
+
+        Integer sumScore = sumScores.get(index);
+        return sumScore == UN_AVAILABLE ? BLANK : String.valueOf(sumScore);
     }
 
     private void appendHead() {
@@ -69,7 +76,7 @@ public final class ResultView {
     }
 
     private void appendPlayerAndSymbols(BowlingGame bowlingGame) {
-        appendPlayer(bowlingGame.getPlayer());
+        appendPlayer(bowlingGame.player());
         appendSymbols(bowlingGame);
         appendNewLine();
     }
@@ -97,6 +104,21 @@ public final class ResultView {
 
     public void printExceptionMessage(RuntimeException runtimeException) {
         System.out.println(EXCEPTION_NOTIFICATION + runtimeException.getMessage());
+    }
+
+    public void printBowlingGameResult(BowlingGames bowlingGames) {
+        appendHead();
+
+        for (BowlingGame bowlingGame : bowlingGames.bowlingGames()) {
+            appendBowlingGameResult(bowlingGame);
+        }
+
+        printContents();
+    }
+
+    private void appendBowlingGameResult(BowlingGame bowlingGame) {
+        appendPlayerAndSymbols(bowlingGame);
+        appendScores(bowlingGame);
     }
 
 }

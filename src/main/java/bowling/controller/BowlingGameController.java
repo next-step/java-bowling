@@ -1,15 +1,17 @@
 package bowling.controller;
 
 import bowling.domain.BowlingGame;
+import bowling.domain.BowlingGames;
 import bowling.domain.Pins;
 import bowling.domain.Player;
+import bowling.domain.frame.Frames;
 import bowling.exception.InvalidPitchException;
 import bowling.domain.frame.FrameFactory;
-import bowling.domain.frame.Frames;
 import bowling.exception.InvalidPinsException;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BowlingGameController {
@@ -31,23 +33,32 @@ public class BowlingGameController {
     }
 
     public void start() {
-        Player player = inputView.inputPlayerName(1);
-        BowlingGame bowlingGame = BowlingGame.of(Frames.create(frameFactory.create()), player);
+        BowlingGames bowlingGames = initBowlingGames();
+        resultView.printBowlingGameResult(bowlingGames);
 
-        resultView.printBowlingGameResult(bowlingGame);
-
-        while (bowlingGame.isRunning()) {
-            int currentRound = bowlingGame.getCurrentRound();
-            pitch(bowlingGame, currentRound);
-            resultView.printBowlingGameResult(bowlingGame);
-            bowlingGame.nextRound();
+        while (bowlingGames.isRunning()) {
+            pitch(bowlingGames);
+            resultView.printBowlingGameResult(bowlingGames);
         }
     }
 
-    private void pitch(BowlingGame bowlingGame, int currentRound) {
+    private BowlingGames initBowlingGames() {
+        List<BowlingGame> bowlingGames = new ArrayList<>();
+        int playerCount = inputView.inputPlayerCount();
+        List<Player> players = inputView.inputPlayers(playerCount);
+
+        for (Player player : players) {
+            Frames frames = Frames.create(frameFactory.create());
+            bowlingGames.add(BowlingGame.of(frames, player));
+        }
+
+        return BowlingGames.create(bowlingGames);
+    }
+
+    private void pitch(BowlingGames bowlingGames) {
         try {
-            Pins pins = inputView.inputPins(currentRound);
-            bowlingGame.pitch(pins);
+            Pins pins = inputView.inputPins(bowlingGames);
+            bowlingGames.play(pins);
         } catch (InvalidPinsException | InvalidPitchException exception) {
             resultView.printExceptionMessage(exception);
         }
