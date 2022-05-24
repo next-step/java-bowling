@@ -2,10 +2,12 @@ package qna.domain;
 
 import qna.CannotDeleteException;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Answers {
     private final List<Answer> answers ;
@@ -29,10 +31,10 @@ public class Answers {
         }
     }
 
-    public DeleteHistories deleteHistory(DeleteHistories deleteHistories) {
+    public DeleteHistories deleteHistory() {
+        DeleteHistories deleteHistories = new DeleteHistories();
         for (Answer answer : this.answers) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+            deleteHistories.add(answer.deleteHistory());
         }
         return deleteHistories;
     }

@@ -52,4 +52,8 @@ public class DeleteHistory {
         return "DeleteHistory [id=" + id + ", contentType=" + contentType + ", contentId=" + contentId + ", deletedBy="
                 + deletedBy + ", createDate=" + createDate + "]";
     }
+
+    public static DeleteHistory createDeleteHistory(Question question) {
+        return new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now());
+    }
 }
