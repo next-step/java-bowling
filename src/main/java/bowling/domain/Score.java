@@ -37,25 +37,16 @@ public class Score {
 
 
     public static String scoreBoard(Score score) {
-        if (!score.isPresent()) {
-            return format(" ");
+        if (score.scoreType == ScoreType.MISS) {
+            return format(score.hit.firstStr() + score.scoreType.toSymbol() + score.hit.secondStr());
         }
-        if (score.scoreType == ScoreType.STRIKE) {
-            return format("X");
+        if (score.scoreType == ScoreType.SPARE) {
+            return format(score.hit.first() + score.scoreType.toSymbol());
         }
         if (score.scoreType == ScoreType.SECOND) {
             return format(score.hit.firstStr());
         }
-        if (score.scoreType == ScoreType.GUTTER) {
-            return format("-|-");
-        }
-        if (score.scoreType == ScoreType.MISS) {
-            return format(score.hit.firstStr() + "|" + score.hit.secondStr());
-        }
-        if (score.scoreType == ScoreType.SPARE) {
-            return format(score.hit.first() + "|/");
-        }
-        throw new RuntimeException("unreachable " + score);
+        return format(score.scoreType.toSymbol());
     }
 
     public static String format(String string) {

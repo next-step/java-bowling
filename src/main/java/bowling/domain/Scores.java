@@ -10,7 +10,7 @@ public class Scores {
         this.scores = scores;
     }
 
-    public String getPlayFrame(PlayerName playerName) {
+    public String playFrame(PlayerName playerName) {
         String scoreBoard = BEGIN_STR + playerName + DELIMITER_STR;
         scoreBoard += this.scores
                 .stream()
@@ -27,7 +27,7 @@ public class Scores {
             Score score = this.scores.get(i);
             Score newScore = Score.play(score);
             this.scores.set(i, newScore);
-            playFrames.add(new PlayFrame(i + 1, this.getPlayFrame(playerName)));
+            playFrames.add(new PlayFrame(i + 1, this.playFrame(playerName)));
             if (newScore.done()) {
                 iterator.next();
             }

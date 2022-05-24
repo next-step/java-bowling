@@ -23,6 +23,6 @@ public class Player {
     }
 
     public String getPlayFrame() {
-        return this.scores.getPlayFrame(this.playerName);
+        return this.scores.playFrame(this.playerName);
     }
 }

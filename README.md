@@ -159,8 +159,12 @@ Frame 10
     - [x] '|' 와 같은 foramt
     - [x] Player가 Output에 의존하지 않도록 출력
 - [x] 입, 출력은 Input, Output으로 분리
-- [ ] Score 에 대한 format 을 enum 혹은 class로 포장
 - [x] 플레이어가 스코어를 관리하던 역할을 분리 => Scores 일급 콜렉션으로 분리
     - 플레이를 할때마다 Score 인스턴스 스스로 점수를 받아서 더한다
     - 1 ~ 9 프레임을 NormalFrame, 10 프레임을 FinalFrame과 같은 구조로 구현한 후 Frame을 추가해 중복을 제거해 본다.
     - 다음 Frame을 현재 Frame 외부에서 생성하기 보다 현재 Frame에서 다음 Frame을 생성하는 방식으로 구현해 보고, 어느 구현이 더 좋은지 검토해 본다.
+- [x] Score 에 대한 format 을 ScoreType enum 내에 포장 
+- [x] 누락 테스트 추가
+  - Scores
+  - PlayFrames
+  - PlayFrame
