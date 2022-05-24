@@ -3,10 +3,10 @@ package qna.domain.question;
 import qna.CannotDeleteException;
 import qna.domain.AbstractEntity;
 import qna.domain.ContentType;
-import qna.domain.deleteHistory.DeleteHistories;
-import qna.domain.deleteHistory.DeleteHistory;
 import qna.domain.answer.Answer;
 import qna.domain.answer.Answers;
+import qna.domain.deleteHistory.DeleteHistories;
+import qna.domain.deleteHistory.DeleteHistory;
 import qna.domain.user.User;
 
 import javax.persistence.Embedded;
@@ -38,12 +38,12 @@ public class Question extends AbstractEntity {
     }
 
     public Question(String title, String contents) {
-        this.questionBody = createQuestionBody(title, contents);
+        this(null, title, contents);
     }
 
-    public Question(long id, String title, String contents) {
+    public Question(Long id, String title, String contents) {
         super(id);
-        this.questionBody = createQuestionBody(title, contents);
+        this.questionBody = new QuestionBody(title, contents);
     }
 
     public User getWriter() {
@@ -116,7 +116,4 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    private QuestionBody createQuestionBody(String title, String contents) {
-        return new QuestionBody(title, contents);
-    }
 }
