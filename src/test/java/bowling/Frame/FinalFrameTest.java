@@ -3,6 +3,9 @@ package bowling.Frame;
 import bowling.pin.Pins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FinalFrameTest {
@@ -40,13 +43,21 @@ class FinalFrameTest {
         finalFrame.pitch(new Pins(5));
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("마지막 프레임에서 스페어시 두번더 투구하면 예외가 생긴다.")
-    void 마지막_프레임_투구_두번더_스페어(){
+    @CsvSource(value = {
+            "0, 10",
+            "1, 9",
+            "2, 8",
+            "3, 7",
+            "4, 6",
+            "5, 5"
+    })
+    void 마지막_프레임_투구_두번더_스페어(int first, int second){
         Frame finalFrame = new FinalFrame(10);
 
-        finalFrame.pitch(new Pins(4));
-        finalFrame.pitch(new Pins(6));
+        finalFrame.pitch(new Pins(first));
+        finalFrame.pitch(new Pins(second));
 
         finalFrame.pitch(new Pins(1));
         assertThatThrownBy(()->{
