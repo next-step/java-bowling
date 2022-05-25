@@ -29,7 +29,8 @@ public class DeleteHistories {
     }
 
     public void saveTo(DeleteHistoryRepository deleteHistoryRepository) {
-        deleteHistoryRepository.saveAll(this.deleteHistories);
+        this.deleteHistories
+                .forEach(deleteHistory -> deleteHistory.saveTo(deleteHistoryRepository));
     }
 
     @Override

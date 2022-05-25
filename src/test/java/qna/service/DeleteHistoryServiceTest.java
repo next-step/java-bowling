@@ -9,8 +9,6 @@ import qna.domain.deleteHistory.DeleteHistoriesTest;
 import qna.domain.deleteHistory.DeleteHistoryRepository;
 import qna.domain.deleteHistory.DeleteHistoryTest;
 
-import java.util.List;
-
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,6 +23,7 @@ class DeleteHistoryServiceTest {
     void saveAll() {
         deleteHistoryService.saveAll(DeleteHistoriesTest.SAME_USER);
 
-        verify(deleteHistoryRepository).saveAll(List.of(DeleteHistoryTest.DH1, DeleteHistoryTest.DH2));
+        verify(deleteHistoryRepository).save(DeleteHistoryTest.DH1);
+        verify(deleteHistoryRepository).save(DeleteHistoryTest.DH2);
     }
 }

@@ -26,8 +26,7 @@ public class DeleteHistoriesTest {
     void saveTo() {
         SAME_USER.saveTo(deleteHistoryRepository);
 
-        verify(deleteHistoryRepository).saveAll(List.of(
-                DeleteHistoryTest.DH1, DeleteHistoryTest.DH2
-        ));
+        verify(deleteHistoryRepository).save(DeleteHistoryTest.DH1);
+        verify(deleteHistoryRepository).save(DeleteHistoryTest.DH2);
     }
 }
