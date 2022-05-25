@@ -56,7 +56,7 @@ public class Answer extends AbstractEntity {
                 .orElseThrow(() -> new CannotDeleteException(NOT_DELETED_ACCESS));
     }
 
-    public DeleteHistory deleteHistory() {
+    protected DeleteHistory deleteHistory() {
         return Optional.of(this)
                 .filter(Answer::isDeleted)
                 .map(DeleteHistory::of)

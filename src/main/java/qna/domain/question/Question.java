@@ -68,7 +68,7 @@ public class Question extends AbstractEntity {
         return deleteHistories;
     }
 
-    private DeleteHistory deleteHistory() {
+    protected DeleteHistory deleteHistory() {
         return Optional.of(this)
                 .filter(Question::isDeleted)
                 .map(DeleteHistory::of)
