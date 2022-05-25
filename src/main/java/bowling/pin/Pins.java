@@ -4,6 +4,7 @@ public class Pins {
 
     private static final int MAX_PIN_CNT = 10;
     private static final int MIN_PIN_CNT = 0;
+    private static final String PIN_CNT_MESSAGE = "핀의 개수는 0~10만 가능합니다.";
     private final int cnt;
 
     public Pins(int cnt) {
@@ -13,7 +14,7 @@ public class Pins {
 
     void validate(int cnt){
         if(cnt < MIN_PIN_CNT || cnt > MAX_PIN_CNT){
-            throw new IllegalArgumentException("핀의 개수는 0~10만 가능합니다.");
+            throw new IllegalArgumentException(PIN_CNT_MESSAGE);
         }
     }
 

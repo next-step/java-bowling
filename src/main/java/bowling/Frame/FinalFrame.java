@@ -1,14 +1,16 @@
 package bowling.Frame;
 
-import bowling.bowl.*;
-import bowling.pin.Pins;
 
+import bowling.bowl.Bowl;
+import bowling.bowl.First;
+import bowling.pin.Pins;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame{
 
+    private static final String CAN_NOT_PITCH_MESSAGE = "더 이상 투구할 수 없습니다.";
     public static final int MAX_PITCH_CNT = 3;
     private final int index;
     private List<Bowl> bowls;
@@ -29,7 +31,7 @@ public class FinalFrame implements Frame{
     @Override
     public Frame pitch(Pins pins) {
         if(!canPitch()){
-            throw new IllegalArgumentException("더 이상 투구할 수 없습니다.");
+            throw new IllegalArgumentException(CAN_NOT_PITCH_MESSAGE);
         }
 
         count += 1;
@@ -93,7 +95,6 @@ public class FinalFrame implements Frame{
                 .map(Bowl::getSymbol)
                 .collect(Collectors.joining("|"));
     }
-
 
     @Override
     public String toString(){
