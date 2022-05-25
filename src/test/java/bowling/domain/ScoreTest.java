@@ -3,6 +3,7 @@ package bowling.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static bowling.view.Output.format;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ScoreTest {
@@ -23,39 +24,39 @@ public class ScoreTest {
     @Test
     @DisplayName("빈 score는 공백")
     void payloadForEmpty() {
-        assertThat(Score.scoreBoard(new Score())).isEqualTo(Score.format(" "));
+        assertThat(Score.scoreBoard(new Score())).isEqualTo(format(" "));
     }
 
     @Test
     @DisplayName("strike는 X출력")
     void payloadForStrike() {
-        assertThat(Score.scoreBoard(new Score(10))).isEqualTo(Score.format("X"));
+        assertThat(Score.scoreBoard(new Score(10))).isEqualTo(format("X"));
     }
 
     @Test
     @DisplayName("두번째 시도인 경우 점수 출력")
     void payloadForSecond() {
-        assertThat(Score.scoreBoard(new Score(2))).isEqualTo(Score.format("2"));
+        assertThat(Score.scoreBoard(new Score(2))).isEqualTo(format("2"));
     }
 
     @Test
     @DisplayName("0 인경우 - 출력")
     void payloadForGutter() {
-        assertThat(Score.scoreBoard(new Score(0, 0))).isEqualTo(Score.format("-|-"));
-        assertThat(Score.scoreBoard(new Score(1, 0))).isEqualTo(Score.format("1|-"));
-        assertThat(Score.scoreBoard(new Score(0, 1))).isEqualTo(Score.format("-|1"));
+        assertThat(Score.scoreBoard(new Score(0, 0))).isEqualTo(format("-|-"));
+        assertThat(Score.scoreBoard(new Score(1, 0))).isEqualTo(format("1|-"));
+        assertThat(Score.scoreBoard(new Score(0, 1))).isEqualTo(format("-|1"));
     }
 
     @Test
     @DisplayName("Miss 인 경우 first|second 형식으로 출력")
     void payloadForMiss() {
-        assertThat(Score.scoreBoard(new Score(1, 2))).isEqualTo(Score.format("1|2"));
+        assertThat(Score.scoreBoard(new Score(1, 2))).isEqualTo(format("1|2"));
     }
 
     @Test
     @DisplayName("Spare 경우 first|/ 형식으로 출력")
     void payloadForSpare() {
-        assertThat(Score.scoreBoard(new Score(1, 9))).isEqualTo(Score.format("1|/"));
+        assertThat(Score.scoreBoard(new Score(1, 9))).isEqualTo(format("1|/"));
     }
 
     @Test

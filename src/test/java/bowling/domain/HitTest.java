@@ -50,6 +50,6 @@ public class HitTest {
     @Test
     @DisplayName("0를 - 로 변환")
     void convertZeroToDash() {
-        assertThat(Hit.gutterHandler(0)).isEqualTo("-");
+        assertThat(Hit.charHandler(0)).isEqualTo("-");
     }
 }

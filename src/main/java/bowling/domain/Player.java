@@ -6,11 +6,11 @@ import static bowling.util.Const.*;
 
 public class Player {
     private final PlayerName playerName;
-    private final Scores scores;
+    private final Frames frames;
 
     public Player(String name) {
         this.playerName = new PlayerName(name);
-        this.scores = new Scores();
+        this.frames = new Frames();
     }
 
     public static int pitch(int max) {
@@ -18,14 +18,20 @@ public class Player {
     }
 
     public void plays() {
-        this.scores.plays(this);
+        this.frames.plays(this);
     }
 
     public List<Score> scores() {
-        return this.scores.scores();
+        return this.frames.scores();
+    }
+
+    public List<Subtotal> subtotals(){
+        return this.frames.subtotals();
     }
 
     public PlayerName name() {
         return this.playerName;
     }
+
+
 }
