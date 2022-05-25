@@ -21,9 +21,4 @@ public class First extends Running{
         return "[First]";
     }
 
-
-    @Override
-    public boolean isFirst(){
-        return true;
-    }
 }

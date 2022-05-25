@@ -32,8 +32,4 @@ public class Second extends Running{
         return "[Second] pins: "+prePins;
     }
 
-    @Override
-    public boolean isSecond(){
-        return true;
-    }
 }

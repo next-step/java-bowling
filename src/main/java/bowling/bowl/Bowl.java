@@ -8,17 +8,5 @@ public interface Bowl {
 
     Bowl pitch(Pins pins);
 
-    boolean isStrike();
-
-    boolean isSpare();
-
-    boolean isMiss();
-
-    boolean isGutter();
-
-    boolean isFirst();
-
-    boolean isSecond();
-
     String getSymbol();
 }

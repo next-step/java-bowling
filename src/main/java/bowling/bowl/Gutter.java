@@ -7,12 +7,6 @@ public class Gutter extends Ended{
         return "[Gutter]";
     }
 
-
-    @Override
-    public boolean isGutter(){
-        return true;
-    }
-
     @Override
     public String getSymbol() {
         return "-|-";

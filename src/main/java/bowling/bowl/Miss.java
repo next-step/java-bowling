@@ -19,11 +19,6 @@ public class Miss extends Ended{
     }
 
     @Override
-    public boolean isMiss(){
-        return true;
-    }
-
-    @Override
     public String getSymbol() {
         return firstPin.getSymbol()+"|"+secondPin.getSymbol();
     }

@@ -21,11 +21,6 @@ public class Spare extends Ended{
     }
 
     @Override
-    public boolean isSpare(){
-        return true;
-    }
-
-    @Override
     public String getSymbol() {
         return firstPin.getSymbol()+"|/";
     }
