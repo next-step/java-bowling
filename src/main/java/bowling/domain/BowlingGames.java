@@ -32,8 +32,12 @@ public class BowlingGames {
     public void play(Pins pins) {
         BowlingGame bowlingGame = bowlingGames.get(playerTurnIndex);
         bowlingGame.pitch(pins);
-        bowlingGame.nextRound();
-        changeNextPlayerTurn();
+
+        if (bowlingGame.isCurrentFrameEnd()) {
+            bowlingGame.nextRound();
+            changeNextPlayerTurn();
+        }
+
     }
 
     private void changeNextPlayerTurn() {
@@ -47,10 +51,10 @@ public class BowlingGames {
     public boolean isRunning() {
         for (BowlingGame bowlingGame : bowlingGames) {
             if(bowlingGame.isRunning()) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public List<BowlingGame> bowlingGames() {

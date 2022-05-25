@@ -27,6 +27,10 @@ public class BowlingGame {
         return frames.isRunning();
     }
 
+    public boolean isFinish() {
+        return !isRunning();
+    }
+
     public List<Frame> getFrames() {
         return frames.getFrames();
     }
@@ -42,4 +46,9 @@ public class BowlingGame {
     public void nextRound() {
         frames.nextIndex();
     }
+
+    public boolean isCurrentFrameEnd() {
+        return frames.isCurrentFrameEnd();
+    }
+
 }

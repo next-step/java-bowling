@@ -74,14 +74,12 @@ public class Frames {
         currentFrame.pitch(pins);
     }
 
-    public void nextIndex() {
+    public boolean isCurrentFrameEnd() {
         Frame currentFrame = frames.get(currentIndex);
-        if (currentFrame.isFrameEnd()) {
-            increaseIndex();
-        }
+        return currentFrame.isFrameEnd();
     }
 
-    private void increaseIndex() {
+    public void nextIndex() {
         int nextIndex = increaseIndex(currentIndex);
         if (nextIndex > FINISH_FRAME_INDEX) {
             throw new OutOfIndexException(nextIndex);
