@@ -49,16 +49,16 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    private void isValidatedWriter(User writer) {
-        Optional.ofNullable(writer)
-                .filter(this::isOwner)
-                .orElseThrow(() -> new CannotDeleteException(NO_DELETE_ACCESS));
-    }
-
     public void delete(User writer) {
         this.isValidatedWriter(writer);
         this.answers.delete(writer);
         this.deleted = true;
+    }
+
+    private void isValidatedWriter(User writer) {
+        Optional.ofNullable(writer)
+                .filter(this::isOwner)
+                .orElseThrow(() -> new CannotDeleteException(NO_DELETE_ACCESS));
     }
 
     public DeleteHistory deleteHistory() {

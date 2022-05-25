@@ -45,15 +45,15 @@ public class Answer extends AbstractEntity {
         this.answerInfo = new AnswerInfo(writer, question, contents);
     }
 
+    public void delete(User writer) {
+        isValidatedWriter(writer);
+        this.deleted = true;
+    }
+
     private void isValidatedWriter(User writer) {
         Optional.of(writer)
                 .filter(this::isOwner)
                 .orElseThrow(() -> new CannotDeleteException(NOT_DELETED_ACCESS));
-    }
-
-    public void delete(User writer) {
-        isValidatedWriter(writer);
-        this.deleted = true;
     }
 
     public DeleteHistory deleteHistory() {
