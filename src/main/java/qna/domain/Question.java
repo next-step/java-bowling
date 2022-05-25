@@ -9,6 +9,9 @@ import java.util.Objects;
 
 @Entity
 public class Question extends AbstractEntity {
+
+    private final static String CANNOT_DELETE_QUESTION = "질문을 삭제할 권한이 없습니다.";
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -93,11 +96,11 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public List<DeleteHistory> delete(User loginUser) {
+    public DeleteHistories delete(User loginUser) {
         checkAuthority(loginUser);
         setDeleted(true);
 
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        DeleteHistories deleteHistories = new DeleteHistories();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), loginUser));
         deleteHistories.addAll(answers.delete(loginUser));
 
@@ -106,14 +109,18 @@ public class Question extends AbstractEntity {
 
     private void checkAuthority(User loginUser) {
         if(!isOwner(loginUser)){
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+            throw new CannotDeleteException(CANNOT_DELETE_QUESTION);
         }
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()){
+            return false;
+        }
         Question that = (Question) o;
         return Objects.equals(title, that.title) &&
                 Objects.equals(contents, that.contents) &&

@@ -8,6 +8,9 @@ import javax.persistence.*;
 
 @Entity
 public class Answer extends AbstractEntity {
+
+    private final static String CANNOT_DELETE_ANSWER = "답변을 삭제할 권한이 없습니다.";
+
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
@@ -83,7 +86,7 @@ public class Answer extends AbstractEntity {
 
     private void checkAuthority(User user) {
         if(!user.equalsNameAndEmail(this.writer)){
-            throw new CannotDeleteException("답변을 삭제할 권한이 없습니다.");
+            throw new CannotDeleteException(CANNOT_DELETE_ANSWER);
         }
     }
 
