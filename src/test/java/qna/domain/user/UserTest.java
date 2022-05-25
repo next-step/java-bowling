@@ -1,4 +1,4 @@
-package qna.domain;
+package qna.domain.user;
 
 import qna.domain.user.User;
 

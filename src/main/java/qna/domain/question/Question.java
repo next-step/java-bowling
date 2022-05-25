@@ -61,18 +61,18 @@ public class Question extends AbstractEntity {
                 .orElseThrow(() -> new CannotDeleteException(NO_DELETE_ACCESS));
     }
 
-    public DeleteHistory deleteHistory() {
-        return Optional.of(this)
-                .filter(Question::isDeleted)
-                .map(DeleteHistory::of)
-                .orElseThrow(() -> new IsNotDeletedException(IS_NOT_DELETED));
-    }
-
     public DeleteHistories deleteHistories() {
         DeleteHistories deleteHistories = this.answers.deleteHistories();
         deleteHistories.add(this.deleteHistory());
 
         return deleteHistories;
+    }
+
+    private DeleteHistory deleteHistory() {
+        return Optional.of(this)
+                .filter(Question::isDeleted)
+                .map(DeleteHistory::of)
+                .orElseThrow(() -> new IsNotDeletedException(IS_NOT_DELETED));
     }
 
     public void addAnswer(Answer answer) {
