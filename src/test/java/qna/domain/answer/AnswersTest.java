@@ -2,6 +2,7 @@ package qna.domain.answer;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import qna.AnswerOtherWrittenException;
 import qna.domain.ContentType;
 import qna.domain.deleteHistory.DeleteHistory;
 import qna.domain.question.Question;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class AnswersTest {
     public static Answers createAnswers(User user) {
@@ -21,49 +23,33 @@ public class AnswersTest {
     }
 
     @Nested
-    class hasWrittenByOthers_메서드는 {
-
-        @Nested
-        class 다른사람이_쓴_답변이_주어질경우 {
-
-            @Test
-            void true를_리턴한다() {
-                Answers answers = createAnswers(UserTest.SANJIGI);
-
-                boolean actual = answers.hasWrittenByOthers(UserTest.JAVAJIGI);
-
-                assertThat(actual).isTrue();
-            }
-
-        }
+    class delete_메서드는 {
 
         @Nested
         class 내가쓴_답변이_주어질경우 {
 
             @Test
-            void false를_리턴한다() {
+            void 삭제기록을_리턴한다() {
                 Answers answers = createAnswers(UserTest.JAVAJIGI);
 
-                boolean actual = answers.hasWrittenByOthers(UserTest.JAVAJIGI);
+                List<DeleteHistory> actual = answers.delete(UserTest.JAVAJIGI);
 
-                assertThat(actual).isFalse();
+                assertThat(actual).containsExactly(
+                        new DeleteHistory(ContentType.ANSWER, null, UserTest.JAVAJIGI, LocalDateTime.now())
+                );
             }
-
         }
-    }
 
-    @Nested
-    class delete_메서드는 {
+        @Nested
+        class 다른사람이_쓴_답변이_주어질경우 {
 
-        @Test
-        void 삭제기록을_리턴한다() {
-            Answers answers = createAnswers(UserTest.JAVAJIGI);
+            @Test
+            void AnswerOtherWrittenException을_던진다() {
+                Answers answers = createAnswers(UserTest.JAVAJIGI);
 
-            List<DeleteHistory> delete = answers.delete();
-
-            assertThat(delete).containsExactly(
-                    new DeleteHistory(ContentType.ANSWER, null, UserTest.JAVAJIGI, LocalDateTime.now())
-            );
+                assertThatThrownBy(() -> answers.delete(UserTest.SANJIGI))
+                        .isInstanceOf(AnswerOtherWrittenException.class);
+            }
         }
     }
 }

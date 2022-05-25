@@ -1,5 +1,6 @@
 package qna.domain.answer;
 
+import qna.AnswerOtherWrittenException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 import qna.domain.AbstractEntity;
@@ -44,10 +45,6 @@ public class Answer extends AbstractEntity {
         this.answerBody = new AnswerBody(question, contents);
     }
 
-    public boolean isOwner(User writer) {
-        return this.writer.equals(writer);
-    }
-
     public User getWriter() {
         return writer;
     }
@@ -56,12 +53,29 @@ public class Answer extends AbstractEntity {
         answerBody.toQuestion(question);
     }
 
-    public DeleteHistory delete() {
+    public DeleteHistory delete(User user) {
+        checkAnswerWrittenByOthers(user);
+
         setDelete();
 
-        return DeleteHistory.ofAnswer(this.id, this.writer);
+        return DeleteHistory.ofAnswer(this.id, user);
     }
 
+    /**
+     * 다른사람이 쓴 답변인지 확인합니다.
+     *
+     * @param user 확인할 유저
+     * @throws AnswerOtherWrittenException 다른사람이 쓴 답변일경우
+     */
+    private void checkAnswerWrittenByOthers(User user) {
+        if (!isOwner(user)) {
+            throw new AnswerOtherWrittenException();
+        }
+    }
+
+    private boolean isOwner(User writer) {
+        return this.writer.equals(writer);
+    }
 
     @Override
     public String toString() {

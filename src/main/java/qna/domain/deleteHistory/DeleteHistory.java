@@ -45,15 +45,15 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
-    public static DeleteHistory ofQuestion(Long id, User writer) {
+    public static DeleteHistory ofQuestion(Long id, User user) {
         return new DeleteHistory(
-                ContentType.QUESTION, id, writer
+                ContentType.QUESTION, id, user
         );
     }
 
-    public static DeleteHistory ofAnswer(Long id, User writer) {
+    public static DeleteHistory ofAnswer(Long id, User user) {
         return new DeleteHistory(
-                ContentType.ANSWER, id, writer
+                ContentType.ANSWER, id, user
         );
     }
 

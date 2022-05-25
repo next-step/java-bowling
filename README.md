@@ -21,4 +21,4 @@
   - answers, title,
 
 - [x] 유효성 검증 메서드 이름 변경 (check -> validate)
-- [ ] Answer가 삭제 기능에 User를 매개변수로 전달
+- [x] Answer가 삭제 기능에 User를 매개변수로 전달

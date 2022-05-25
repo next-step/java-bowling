@@ -59,11 +59,10 @@ public class Question extends AbstractEntity {
      */
     public DeleteHistories delete(User user) throws DeleteQuestionPermissionException, AnswerOtherWrittenException {
         validateIsNotOwner(user);
-        validateAnswerHasWrittenByOthers(user);
 
         setDelete();
         DeleteHistory questionDeleteHistory = DeleteHistory.ofQuestion(this.id, this.writer());
-        List<DeleteHistory> answerDeleteHistories = this.answers.delete();
+        List<DeleteHistory> answerDeleteHistories = this.answers.delete(user);
 
         return new DeleteHistories(questionDeleteHistory, answerDeleteHistories);
     }
@@ -80,16 +79,6 @@ public class Question extends AbstractEntity {
         if (!isOwner(user)) {
             throw new DeleteQuestionPermissionException();
         }
-    }
-
-    private void validateAnswerHasWrittenByOthers(User user) throws AnswerOtherWrittenException {
-        if (answerHasWrittenByOthers(user)) {
-            throw new AnswerOtherWrittenException();
-        }
-    }
-
-    private boolean answerHasWrittenByOthers(User user) {
-        return this.answers.hasWrittenByOthers(user);
     }
 
     private boolean isOwner(User loginUser) {
