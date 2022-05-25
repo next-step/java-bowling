@@ -7,6 +7,7 @@ public class NormalFrame implements Frame {
     private State state;
     private Frame nextFrame;
     private static final int FINAL_NORMAL_FRAME = 9;
+    private static final String BLANK = "    ";
     private final int round;
 
     public NormalFrame(int round) {
@@ -39,7 +40,8 @@ public class NormalFrame implements Frame {
 
     @Override
     public String expression() {
-        return null;
+        String stateExpression = this.state.expression();
+        return stateExpression + BLANK.substring(stateExpression.length());
     }
 
 }

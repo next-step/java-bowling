@@ -20,7 +20,7 @@ public class Ready extends Running {
 
     @Override
     public String expression() {
-        return "X";
+        return "";
     }
 
 }
