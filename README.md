@@ -15,7 +15,7 @@
 - [x] AbstractEntity에서 DeleteHistory 의존성 제거
 - [x] 질문 삭제 예외 상황 커스텀 예외 추가
 
-- [ ] question
-    - answers, title, content, deleted
-- [ ] answers 인스턴스 분해
-    - answers, title,  
+- [x] question
+  - answers, title, content, deleted
+- [x] answers 인스턴스 분해
+  - answers, title,  
