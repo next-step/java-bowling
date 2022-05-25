@@ -11,28 +11,28 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FrameNumberTest {
-    static final FrameNumber MIN = FrameNumber.min();
-    static final FrameNumber MAX = new FrameNumber(FrameNumber.MAX);
+    static final FrameNumber MIN_FRAME_NUMBER = FrameNumber.min();
+    static final FrameNumber MAX_FRAME_NUMBER = new FrameNumber(FrameNumber.MAX);
 
     @ParameterizedTest
     @ValueSource(ints = {FrameNumber.MIN - 1, FrameNumber.MAX + 1})
-    void FrameNumber는_범위_밖_값으로_생성_될_경우_예외를_발생_시킨다() {
+    void FrameNumber는_범위_밖_값으로_생성_될_경우_예외를_발생_시킨다(int frameNumber) {
         assertThatThrownBy(() -> {
-            new FrameNumber(FrameNumber.MIN - 1);
+            new FrameNumber(frameNumber);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void isLast는_마지막_여부를_반환한다() {
         assertAll(
-                () -> assertFalse(MIN.isLast()),
-                () -> assertTrue(MAX.isLast())
+                () -> assertFalse(MIN_FRAME_NUMBER.isLast()),
+                () -> assertTrue(MAX_FRAME_NUMBER.isLast())
         );
     }
 
     @Test
     void next는_다음_FrameNumber를_반환한다() {
-        FrameNumber next = MIN.next();
+        FrameNumber next = MIN_FRAME_NUMBER.next();
 
         assertThat(next).isInstanceOf(FrameNumber.class);
     }
