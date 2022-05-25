@@ -1,77 +1,32 @@
 package bowling.Frame;
 
-
 import bowling.bowl.Bowl;
-import bowling.bowl.First;
 import bowling.pin.Pins;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame{
 
     private static final String CAN_NOT_PITCH_MESSAGE = "더 이상 투구할 수 없습니다.";
-    public static final int MAX_PITCH_CNT = 3;
-    private final int index;
-    private List<Bowl> bowls;
-    private int count;
 
-    private FinalFrame(int index, Bowl bowl, int count) {
+    private final int index;
+    private FinalBowls bowls;
+
+    private FinalFrame(int index, FinalBowls bowls) {
         this.index = index;
-        this.bowls = new ArrayList<>();
-        this.bowls.add(bowl);
-        this.count = count;
+        this.bowls = bowls;
     }
 
     public FinalFrame(int index) {
-        this(index, new First(), 0);
+        this(index, new FinalBowls());
     }
-
 
     @Override
     public Frame pitch(Pins pins) {
-        if(!canPitch()){
+        if(!bowls.canPitch()){
             throw new IllegalArgumentException(CAN_NOT_PITCH_MESSAGE);
         }
-
-        count += 1;
-        Bowl curBowl = getCurBowl();
-        Bowl resultBowl = curBowl.pitch(pins);
-        changeBowl(resultBowl);
-
-        if(resultBowl.isStrike() || resultBowl.isSpare()){
-            addBall(new First());
-            return this;
-        }
-
+        bowls.pitch(pins);
         return this;
-    }
-
-    private boolean canPitch(){
-        Bowl curBowl = getCurBowl();
-        if(curBowl.isGutter() || curBowl.isMiss()){
-            return false;
-        }
-        if(count == MAX_PITCH_CNT){
-            return false;
-        }
-        if(count == 2 && getCurBowl().isSecond()){
-            return false;
-        }
-        return true;
-    }
-
-    private void addBall(Bowl resultBowl) {
-        bowls.add(resultBowl);
-    }
-
-    private void changeBowl(Bowl resultBowl) {
-        bowls.remove(bowls.size()-1);
-        bowls.add(resultBowl);
-    }
-
-    private Bowl getCurBowl() {
-        return bowls.get(bowls.size()-1);
     }
 
     @Override
@@ -81,17 +36,17 @@ public class FinalFrame implements Frame{
 
     @Override
     public Bowl getBowls() {
-        return bowls.get(0);
+        return bowls.getBowls().get(0);
     }
 
     @Override
     public boolean hasNext() {
-        return canPitch();
+        return bowls.canPitch();
     }
 
     @Override
     public String getSymbol() {
-        return bowls.stream()
+        return bowls.getBowls().stream()
                 .map(Bowl::getSymbol)
                 .collect(Collectors.joining("|"));
     }
@@ -100,7 +55,6 @@ public class FinalFrame implements Frame{
     public String toString(){
         return "[final frame]" +
                 "\nindex: "+index
-                +"\nbowls: "+ bowls
-                +"\ncount: "+count;
+                +"\nbowls: "+ bowls;
     }
 }
