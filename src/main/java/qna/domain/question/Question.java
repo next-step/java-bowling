@@ -58,8 +58,8 @@ public class Question extends AbstractEntity {
      * @throws AnswerOtherWrittenException       다른사람이 쓴 답변이 있을 경우
      */
     public DeleteHistories delete(User user) throws DeleteQuestionPermissionException, AnswerOtherWrittenException {
-        checkIsNotOwner(user);
-        checkAnswerHasWrittenByOthers(user);
+        validateIsNotOwner(user);
+        validateAnswerHasWrittenByOthers(user);
 
         setDelete();
         DeleteHistory questionDeleteHistory = DeleteHistory.ofQuestion(this.id, this.writer());
@@ -76,13 +76,13 @@ public class Question extends AbstractEntity {
                 '}';
     }
 
-    private void checkIsNotOwner(User user) throws DeleteQuestionPermissionException {
+    private void validateIsNotOwner(User user) throws DeleteQuestionPermissionException {
         if (!isOwner(user)) {
             throw new DeleteQuestionPermissionException();
         }
     }
 
-    private void checkAnswerHasWrittenByOthers(User user) throws AnswerOtherWrittenException {
+    private void validateAnswerHasWrittenByOthers(User user) throws AnswerOtherWrittenException {
         if (answerHasWrittenByOthers(user)) {
             throw new AnswerOtherWrittenException();
         }
