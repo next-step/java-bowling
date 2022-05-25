@@ -11,17 +11,25 @@ import java.util.stream.IntStream;
 public final class ResultView {
 
     private static final int START_FRAME_INDEX = 0;
+
     private static final int END_FRAME_INDEX = 9;
+
     private static final int START_FRAME_ROUND = 1;
+
     private static final int LAST_FRAME_ROUND = 10;
 
     private static final int UN_AVAILABLE = -1;
 
     private static final String PLAYER_NAME = "NAME";
+
     private static final String BODY_FORMAT = "%7s";
+
     private static final String VERTICAL_BAR = "|";
+
     private static final String NEXT_LINE = "\n";
+
     private static final String EXCEPTION_NOTIFICATION = "[exception]";
+
     private static final String BLANK = "";
 
     private static final StringBuilder stringBuilder = new StringBuilder();
@@ -45,18 +53,15 @@ public final class ResultView {
         if (index >= sumScores.size()) {
             return BLANK;
         }
-
         Integer sumScore = sumScores.get(index);
         return sumScore == UN_AVAILABLE ? BLANK : String.valueOf(sumScore);
     }
 
     private void appendHead() {
         appendName();
-
         for (int frameNumber = START_FRAME_ROUND; frameNumber <= LAST_FRAME_ROUND; frameNumber++) {
             appendFrameNumber(frameNumber);
         }
-
         appendNewLine();
     }
 
@@ -108,11 +113,9 @@ public final class ResultView {
 
     public void printBowlingGameResult(BowlingGames bowlingGames) {
         appendHead();
-
         for (BowlingGame bowlingGame : bowlingGames.bowlingGames()) {
             appendBowlingGameResult(bowlingGame);
         }
-
         printContents();
     }
 

@@ -8,7 +8,9 @@ import bowling.exception.ImpossiblePitchException;
 public class Spare implements State {
 
     private static final String VERTICAL_BAR = "|";
+
     private static final String GUTTER = "-";
+
     private static final String SPARE = "/";
 
     private final Pins firstPins;

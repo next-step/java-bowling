@@ -7,6 +7,7 @@ import java.util.stream.IntStream;
 public class FrameFactory {
 
     private static final int START_FRAME_ROUND = 1;
+
     private static final int LAST_FRAME_ROUND = 10;
 
     public List<Frame> create() {

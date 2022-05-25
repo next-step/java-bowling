@@ -8,6 +8,7 @@ import java.util.List;
 public class BowlingGame {
 
     private final Frames frames;
+
     private final Player player;
 
     private BowlingGame(Frames frames, Player player) {

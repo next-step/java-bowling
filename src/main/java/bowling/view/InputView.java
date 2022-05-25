@@ -11,11 +11,11 @@ import java.util.stream.IntStream;
 
 public final class InputView {
 
-    private static final String INPUT_PLAYER_NAME_MESSAGE_FORMAT = "플레이어 %d 이름은(3 english letters)?: ";
+    private static final String INPUT_PLAYER_NAME_MESSAGE_FORMAT = "플레이어 %d 이름은(3 english letters): ";
 
-    private static final String INPUT_FRAME_PIN_COUNT_FORMAT = "%d 프레임 투구 : ";
     private static final String INPUT_PLAYERS_COUNT_MESSAGE = "How many people? ";
-    private static final String INPUT_CURRENT_PLAYER_PIN_COUNT_FORMAT = "%s turn: ";
+
+    private static final String INPUT_CURRENT_PLAYER_PIN_COUNT_FORMAT = "%s's turn: ";
 
     private final Scanner scanner = new Scanner(System.in);
 

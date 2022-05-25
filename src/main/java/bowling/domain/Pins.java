@@ -5,6 +5,7 @@ import bowling.exception.InvalidPinsException;
 public class Pins {
 
     private static final int MIN_OF_PINS = 0;
+
     private static final int MAX_OF_PINS = 10;
 
     private final int number;

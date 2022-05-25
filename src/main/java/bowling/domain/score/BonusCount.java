@@ -8,7 +8,9 @@ import java.util.Map;
 public class BonusCount {
 
     private static final int MIN_BONUS_COUNT = 0;
+
     private static final int ONE = 1;
+
     private static final int MAX_BONUS_COUNT = 2;
 
     private static final Map<Integer, BonusCount> BONUS_COUNTS;

@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 public class Player {
 
     private static final String ALPHABETIC_REGEX = "^[a-zA-Z]*$";
+
     private static final Pattern ALPHABETIC_PATTERN = Pattern.compile(ALPHABETIC_REGEX);
 
     private static final int MAX_USERNAME_LENGTH = 3;

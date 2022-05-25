@@ -8,9 +8,11 @@ import bowling.exception.ImpossiblePitchException;
 public class Miss implements State {
 
     private static final String GUTTER = "-";
+
     private static final String VERTICAL_BAR = "|";
 
     private final Pins firstPins;
+
     private final Pins secondPins;
 
     private Miss(Pins firstPins, Pins secondPins) {
