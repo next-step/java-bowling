@@ -48,4 +48,14 @@ public class FirstBowl implements Running {
         return beforeScore.addBonusScore(firstPins.count());
     }
 
+    @Override
+    public boolean isFrameEnd() {
+        return false;
+    }
+
+    @Override
+    public Score score() {
+        return Score.unavailable();
+    }
+
 }

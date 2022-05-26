@@ -35,4 +35,14 @@ public class Ready implements Running {
         return Score.unavailable();
     }
 
+    @Override
+    public boolean isFrameEnd() {
+        return false;
+    }
+
+    @Override
+    public Score score() {
+        return Score.unavailable();
+    }
+
 }

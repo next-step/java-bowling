@@ -3,6 +3,7 @@ package bowling.domain.state.finish;
 import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.Pins;
+import bowling.exception.ImpossiblePitchException;
 
 public class Miss implements Finish {
 
@@ -50,6 +51,16 @@ public class Miss implements Finish {
 
     private String convertIfGutter(Pins pins) {
         return pins.isGutter() ? GUTTER : pins.toString();
+    }
+
+    @Override
+    public boolean isFrameEnd() {
+        return true;
+    }
+
+    @Override
+    public State pitch(Pins pins) {
+        throw new ImpossiblePitchException(State.class.getName());
     }
 
 }

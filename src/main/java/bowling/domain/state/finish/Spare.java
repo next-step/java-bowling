@@ -3,6 +3,7 @@ package bowling.domain.state.finish;
 import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.Pins;
+import bowling.exception.ImpossiblePitchException;
 
 public class Spare implements Finish {
 
@@ -49,6 +50,16 @@ public class Spare implements Finish {
 
     private String getFirstSymbol() {
         return firstPins.isGutter() ? GUTTER : String.valueOf(firstPins);
+    }
+
+    @Override
+    public boolean isFrameEnd() {
+        return true;
+    }
+
+    @Override
+    public State pitch(Pins pins) {
+        throw new ImpossiblePitchException(State.class.getName());
     }
 
 }
