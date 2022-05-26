@@ -12,6 +12,8 @@ public class Spare implements Status {
     private static final String DIVIDER = "|";
     private static final String SPARE_SIGNATURE = "/";
 
+    private static final int MAX_SCORE = 10;
+
     private final ShootScore firstShoot;
 
     private Spare(ShootScore firstShoot) {
@@ -47,6 +49,11 @@ public class Spare implements Status {
     @Override
     public Score createScore() {
         return Score.toSpare();
+    }
+
+    @Override
+    public int ownScore() {
+        return MAX_SCORE;
     }
 
     @Override

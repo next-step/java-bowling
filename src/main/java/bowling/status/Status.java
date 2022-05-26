@@ -12,4 +12,6 @@ public interface Status {
     String board();
 
     Score createScore();
+
+    int ownScore();
 }

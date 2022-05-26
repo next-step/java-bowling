@@ -24,6 +24,10 @@ public class FirstShoot implements Status {
 
     @Override
     public Status shoot(ShootScore secondShoot) {
+        if (firstShoot.overMaxShoot(secondShoot)) {
+            throw new IllegalArgumentException("첫 번째 슈팅과 두 번째 슈팅의 합은 10을 초과할 수 없습니다.");
+        }
+
         if (firstShoot.isSpare(secondShoot)) {
             return Spare.from(firstShoot);
         }
@@ -44,6 +48,11 @@ public class FirstShoot implements Status {
     @Override
     public Score createScore() {
         throw new UnsupportedOperationException("첫 번째 슛 상태에서는 점수를 산정할 수 없습니다.");
+    }
+
+    @Override
+    public int ownScore() {
+        return firstShoot.getShootScore();
     }
 
     @Override

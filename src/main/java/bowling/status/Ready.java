@@ -35,4 +35,9 @@ public class Ready implements Status {
     public Score createScore() {
         throw new UnsupportedOperationException("준비 상태에서는 점수를 산정할 수 없습니다.");
     }
+
+    @Override
+    public int ownScore() {
+        return 0;
+    }
 }

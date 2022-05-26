@@ -6,6 +6,7 @@ import bowling.score.Score;
 public class Strike implements Status {
 
     private static final String STRIKE_SIGNATURE = "X";
+    private static final int MAX_SCORE = 10;
 
     private Strike() { }
 
@@ -31,5 +32,10 @@ public class Strike implements Status {
     @Override
     public Score createScore() {
         return Score.toStrike();
+    }
+
+    @Override
+    public int ownScore() {
+        return MAX_SCORE;
     }
 }

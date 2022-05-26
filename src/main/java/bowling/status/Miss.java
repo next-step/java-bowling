@@ -30,6 +30,10 @@ public class Miss implements Status {
         return new Miss(firstShoot, secondShoot);
     }
 
+    private int totalScore() {
+        return firstShoot.getShootScore() + secondShoot.getShootScore();
+    }
+
     @Override
     public Status shoot(ShootScore shootScore) {
         throw new UnsupportedOperationException("2번의 투구를 모두 하셨습니다");
@@ -47,7 +51,12 @@ public class Miss implements Status {
 
     @Override
     public Score createScore() {
-        return Score.toMiss(firstShoot.getShootScore() + secondShoot.getShootScore());
+        return Score.toMiss(totalScore());
+    }
+
+    @Override
+    public int ownScore() {
+        return totalScore();
     }
 
     @Override
