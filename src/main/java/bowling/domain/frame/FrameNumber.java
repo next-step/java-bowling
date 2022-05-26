@@ -3,6 +3,7 @@ package bowling.domain.frame;
 public class FrameNumber {
     static final int MIN = 1;
     static final int MAX = 10;
+    static final int MAX_IN_NORMAL_FRAME = 9;
 
     private final int number;
 
@@ -24,11 +25,19 @@ public class FrameNumber {
         return new FrameNumber(MIN);
     }
 
-    public boolean isLast() {
+    public FrameNumber next() {
+        return new FrameNumber(number + 1);
+    }
+
+    public boolean isNormal() {
+        return MIN <= number && number <= MAX_IN_NORMAL_FRAME;
+    }
+
+    public boolean isFinal() {
         return number == MAX;
     }
 
-    public FrameNumber next() {
-        return new FrameNumber(number + 1);
+    public boolean isMaxInNormal() {
+        return number == MAX_IN_NORMAL_FRAME;
     }
 }

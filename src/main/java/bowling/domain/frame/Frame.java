@@ -2,9 +2,9 @@ package bowling.domain.frame;
 
 import bowling.domain.bowl.Bowls;
 
-public class Frame {
-    private final FrameNumber frameNumber;
-    private final Bowls bowls;
+public abstract class Frame {
+    protected final FrameNumber frameNumber;
+    protected final Bowls bowls;
 
     public Frame(FrameNumber frameNumber, Bowls bowls) {
         validate(frameNumber, bowls);
@@ -21,15 +21,16 @@ public class Frame {
         }
     }
 
-    public static Frame initialize() {
-        return new Frame(FrameNumber.min(), Bowls.initialize());
+    public static NormalFrame initialize() {
+        return new NormalFrame(FrameNumber.min(), Bowls.initialize());
     }
 
-    public Frame next() {
-        return new Frame(frameNumber.next(), Bowls.initialize());
-    }
+    public abstract Frame next();
 
-    public boolean isLast() {
-        return frameNumber.isLast();
+    public abstract boolean isFinal();
+
+    @Override
+    public String toString() {
+        return bowls.toString();
     }
 }

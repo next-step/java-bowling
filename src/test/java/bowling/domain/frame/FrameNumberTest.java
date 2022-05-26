@@ -23,10 +23,28 @@ class FrameNumberTest {
     }
 
     @Test
-    void isLast는_마지막_여부를_반환한다() {
+    void isFinal은_마지막_여부를_반환한다() {
         assertAll(
-                () -> assertFalse(MIN_FRAME_NUMBER.isLast()),
-                () -> assertTrue(MAX_FRAME_NUMBER.isLast())
+                () -> assertFalse(MIN_FRAME_NUMBER.isFinal()),
+                () -> assertTrue(MAX_FRAME_NUMBER.isFinal())
+        );
+    }
+
+    @Test
+    void isNormal은_일반_frameNumber_여부를_반환한다() {
+        assertAll(
+                () -> assertFalse(new FrameNumber(FrameNumber.MAX_IN_NORMAL_FRAME + 1).isNormal()),
+                () -> assertTrue(new FrameNumber(FrameNumber.MAX_IN_NORMAL_FRAME).isNormal()),
+                () -> assertTrue(new FrameNumber(FrameNumber.MIN).isNormal())
+        );
+    }
+
+    @Test
+    void isMaxInNormal은_마지막_일반_franeNumber_여부를_반환한다() {
+        assertAll(
+                () -> assertFalse(new FrameNumber(FrameNumber.MAX_IN_NORMAL_FRAME + 1).isMaxInNormal()),
+                () -> assertTrue(new FrameNumber(FrameNumber.MAX_IN_NORMAL_FRAME).isMaxInNormal()),
+                () -> assertFalse(new FrameNumber(FrameNumber.MAX_IN_NORMAL_FRAME - 1).isMaxInNormal())
         );
     }
 
