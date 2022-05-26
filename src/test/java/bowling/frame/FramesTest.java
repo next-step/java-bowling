@@ -15,7 +15,7 @@ class FramesTest {
     void frameShootAndEndTest() {
         Frames frames = Frames.create();
 
-        frames.shoot(Round.from(ZERO), FIVE_SCORE);
+        frames.shoot(FIVE_SCORE);
         assertThat(frames.isRoundEnd(Round.from(ZERO))).isFalse();
     }
 
@@ -24,10 +24,10 @@ class FramesTest {
     void invalidFrame() {
         Frames frames = Frames.create();
 
-        frames.shoot(Round.from(ZERO), FIVE_SCORE);
-        frames.shoot(Round.from(ZERO), FIVE_SCORE);
+        frames.shoot(FIVE_SCORE);
+        frames.shoot(FIVE_SCORE);
 
-        assertThatThrownBy(() -> frames.shoot(Round.from(ZERO), FIVE_SCORE))
+        assertThatThrownBy(() -> frames.shoot(FIVE_SCORE))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

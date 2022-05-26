@@ -34,16 +34,6 @@ public class Frames {
         return currentFrame.shoot(shootScore);
     }
 
-    public void shoot(Round round, ShootScore shootScore) {
-        Frame specificRoundFrame = findFrameByRound(round);
-
-        if (specificRoundFrame.isEnd()) {
-            throw new IllegalArgumentException("투구가 끝난 Frame 에는 더 투구할 수 없습니다.");
-        }
-
-        specificRoundFrame.shoot(shootScore);
-    }
-
     public Frame findFrameByRound(Round round) {
         return frames.get(round.getRound());
     }
