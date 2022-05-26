@@ -5,15 +5,17 @@ import java.util.List;
 
 public class BowlingGames {
 
-    private final int LAST_PLAYER_TURN_INDEX;
+    private static final int FIRST_PLAYER_TURN = 0;
 
     private final List<BowlingGame> bowlingGames;
+
+    private final int lastPlayerTurnIndex;
 
     private int playerTurnIndex = 0;
 
     private BowlingGames(List<BowlingGame> bowlingGames) {
         this.bowlingGames = Collections.unmodifiableList(bowlingGames);
-        LAST_PLAYER_TURN_INDEX = initLastPlayerTurnIndex(bowlingGames);
+        lastPlayerTurnIndex = initLastPlayerTurnIndex(bowlingGames);
     }
 
     private int initLastPlayerTurnIndex(List<BowlingGame> bowlingGames) {
@@ -42,8 +44,8 @@ public class BowlingGames {
 
     private void changeNextPlayerTurn() {
         int nextPlayerTurnIndex = playerTurnIndex + 1;
-        if(nextPlayerTurnIndex > LAST_PLAYER_TURN_INDEX) {
-            nextPlayerTurnIndex = 0;
+        if(nextPlayerTurnIndex > lastPlayerTurnIndex) {
+            nextPlayerTurnIndex = FIRST_PLAYER_TURN;
         }
         playerTurnIndex = nextPlayerTurnIndex;
     }
