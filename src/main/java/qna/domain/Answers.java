@@ -9,6 +9,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Embeddable
@@ -33,8 +34,10 @@ public class Answers {
 
     public List<DeleteHistory> getDeleteHistories() {
         return answers.stream()
-                .filter(answer -> answer.getDeleteHistory() != null)
-                .map(Answer::getDeleteHistory).collect(Collectors.toList());
+                .map(Answer::getDeleteHistory)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
     }
 
     public void add(Answer answer) {
