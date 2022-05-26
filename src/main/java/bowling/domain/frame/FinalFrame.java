@@ -6,36 +6,38 @@ import bowling.exception.UnableCreateFrameException;
 
 public class FinalFrame implements Frame {
 
-    private final boolean isBonusFrame;
+    private static final int MIN_PITCHES_SIZE = 2;
+    private static final int MAX_PITCHES_SIZE = 3;
+
+    private boolean isBonus = false;
     private final Pitches pitches;
 
-    private FinalFrame(boolean isBonusFrame, int count) {
-        this.isBonusFrame = isBonusFrame;
+    private FinalFrame(int count) {
         this.pitches = Pitches.first(count);
     }
 
     protected static FinalFrame lastBowling(int count) {
-        return new FinalFrame(false, count);
-    }
-
-    private static FinalFrame bonusBowling(int count) {
-        return new FinalFrame(true, count);
+        return new FinalFrame(count);
     }
 
     @Override
     public Frame bowling(int count) {
-        if (this.isBonusFrame) {
+        if (this.isFinishBowling()) {
             throw new UnableBowlingException();
         }
         this.pitches.next(count);
+        if (this.pitches.isStrikeOrSpare()) {
+            this.isBonus = true;
+        }
         return this;
     }
 
     @Override
     public Frame next(int count) {
-        if (!this.isBonusFrame && this.pitches.isBonus()) {
-            return bonusBowling(count);
+        if (this.isFinishBowling()) {
+            return this.bowling(count);
         }
+
         throw new UnableCreateFrameException();
     }
 
@@ -45,14 +47,22 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public boolean isFinal() {
-        return this.isBonusFrame;
+    public boolean isFinalFrame() {
+        return true;
+    }
+
+    @Override
+    public boolean isFinishBowling() {
+        if (this.isBonus) {
+            return this.pitches.size() == MAX_PITCHES_SIZE;
+        }
+        return this.pitches.size() == MIN_PITCHES_SIZE;
     }
 
     @Override
     public String toString() {
         return "FinalFrame{" +
-                "isBonusFrame=" + isBonusFrame +
+                "isBonusFrame=" + isBonus +
                 ", pitches=" + pitches +
                 '}';
     }

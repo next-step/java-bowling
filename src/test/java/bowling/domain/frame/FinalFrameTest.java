@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.exception.UnableBowlingException;
 import bowling.exception.UnableCreateFrameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,10 +21,9 @@ public class FinalFrameTest {
         int secondCount = Integer.parseInt(second);
 
         Frame finalFrame = FinalFrame.lastBowling(firstCount).bowling(secondCount);
-        Frame bonusFrame = finalFrame.next(this.bonusCount);
-
-        assertAll(() -> assertThat(finalFrame.isFinal()).isFalse(),
-                () -> assertThat(bonusFrame.isFinal()).isTrue());
+        Frame bonusFrame = finalFrame.bowling(this.bonusCount);
+        assertAll(() -> assertThat(bonusFrame.totalCount()).isEqualTo(firstCount + secondCount + this.bonusCount),
+                () -> assertThat(bonusFrame.isFinishBowling()).isTrue());
 
     }
 
@@ -36,9 +34,7 @@ public class FinalFrameTest {
         int secondCount = 0;
 
         Frame finalFrame = FinalFrame.lastBowling(firstCount).bowling(secondCount);
-        Frame bonusFrame = finalFrame.next(this.bonusCount);
 
-        assertAll(() -> assertThatThrownBy(() -> bonusFrame.next(this.bonusCount)).isExactlyInstanceOf(UnableCreateFrameException.class),
-                () -> assertThatThrownBy(() -> bonusFrame.bowling(this.bonusCount)).isExactlyInstanceOf(UnableBowlingException.class));
+        assertThatThrownBy(() -> finalFrame.next(this.bonusCount)).isExactlyInstanceOf(UnableCreateFrameException.class);
     }
 }

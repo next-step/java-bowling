@@ -13,8 +13,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PitchTest {
 
-    @ParameterizedTest(name = "쓰러트린 볼링 핀이 10개 초과, 0개 미만인 경우 예외 처리 - {0}개, {1}개")
-    @CsvSource(delimiter = '|', value = {"11|0", "0|11", "-1|9", "9|-1"})
+    @ParameterizedTest(name = "쓰러트린 볼링 핀이 0개 미만인 경우 예외 처리 - {0}개, {1}개")
+    @CsvSource(delimiter = '|', value = {"-1|0", "0|-11", "-1|9", "9|-1"})
     void exception(int firstCount, int secondCount) {
         assertThatThrownBy(() -> Pitch.of(firstCount).next(secondCount)).isExactlyInstanceOf(IllegalArgumentException.class);
     }

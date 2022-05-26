@@ -8,5 +8,7 @@ public interface Frame {
 
     int totalCount();
 
-    boolean isFinal();
+    boolean isFinalFrame();
+
+    boolean isFinishBowling();
 }

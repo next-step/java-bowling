@@ -6,6 +6,7 @@ public class NormalFrame implements Frame {
 
     private static final int ONE = 1;
     private static final int SEMI_FINAL_INDEX = 8;
+    private static final int MAX_PITCHES_SIZE = 2;
 
     private final int round;
     private final Pitches pitches;
@@ -40,8 +41,17 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public boolean isFinal() {
+    public boolean isFinalFrame() {
         return false;
+    }
+
+    @Override
+    public boolean isFinishBowling() {
+        if (this.pitches.isStrikeOrSpare()) {
+            return true;
+        }
+
+        return this.pitches.size() == MAX_PITCHES_SIZE;
     }
 
     private boolean isSemiFinal() {
