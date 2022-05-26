@@ -1,5 +1,6 @@
 package bowling.Frame;
 
+import bowling.exception.CannotPitchException;
 import bowling.pin.Pins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,14 +23,13 @@ class FinalFrameTest {
     @DisplayName("마지막 프레임에서 스트라이크시 두번더 투구하면 예외가 생긴다.")
     void 마지막_프레임_투구_두번더_스트라이크(){
         Frame finalFrame = new FinalFrame(10);
-
         finalFrame.pitch(new Pins(10));
 
         finalFrame.pitch(new Pins(1));
 
         assertThatThrownBy(()->{
             finalFrame.pitch(new Pins(2));
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(CannotPitchException.class);
     }
 
     @Test
@@ -62,7 +62,7 @@ class FinalFrameTest {
         finalFrame.pitch(new Pins(1));
         assertThatThrownBy(()->{
             finalFrame.pitch(new Pins(2));
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(CannotPitchException.class);
     }
 
 
@@ -76,7 +76,7 @@ class FinalFrameTest {
 
         assertThatThrownBy(()->{
             finalFrame.pitch(new Pins(5));
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(CannotPitchException.class);
     }
 
     @Test
@@ -89,6 +89,6 @@ class FinalFrameTest {
 
         assertThatThrownBy(()->{
             finalFrame.pitch(new Pins(5));
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(CannotPitchException.class);
     }
 }

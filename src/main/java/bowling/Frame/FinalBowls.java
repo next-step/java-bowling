@@ -3,7 +3,10 @@ package bowling.Frame;
 import bowling.bowl.Bowl;
 import bowling.bowl.First;
 import bowling.bowl.Gutter;
+import bowling.bowl.Strike;
 import bowling.bowl.Miss;
+import bowling.bowl.Spare;
+import bowling.exception.CannotPitchException;
 import bowling.pin.Pins;
 
 import java.util.ArrayList;
@@ -11,14 +14,13 @@ import java.util.List;
 
 public class FinalBowls {
 
-    public static final int MAX_PITCH_CNT = 3;
-
     private final List<Bowl> bowls;
-    private int count;
+    private final PitchCount pitchCount;
 
     public FinalBowls(){
         bowls = new ArrayList<>();
         bowls.add(new First());
+        pitchCount = new PitchCount();
     }
 
     public List<Bowl> getBowls() {
@@ -26,12 +28,17 @@ public class FinalBowls {
     }
 
     public void pitch(Pins pins) {
-        count += 1;
+        if(!canPitch()){
+            throw new CannotPitchException();
+        }
+
         Bowl curBowl = getCurBowl();
+
         Bowl resultBowl = curBowl.pitch(pins);
+        pitchCount.proceed();
         changeBowl(resultBowl);
 
-        if (resultBowl.isStrike() || resultBowl.isSpare()) {
+        if (resultBowl instanceof Strike || resultBowl instanceof Spare) {
             addBall(new First());
         }
     }
@@ -41,10 +48,7 @@ public class FinalBowls {
         if(curBowl instanceof Gutter || curBowl instanceof Miss){
             return false;
         }
-        if(count == MAX_PITCH_CNT){
-            return false;
-        }
-        if(count == 2 && getCurBowl().isSecond()){
+        if(!pitchCount.canProceed(curBowl)){
             return false;
         }
         return true;
