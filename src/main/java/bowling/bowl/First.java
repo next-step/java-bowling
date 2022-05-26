@@ -1,24 +1,50 @@
 package bowling.bowl;
 
+import bowling.score.Score;
 import bowling.pin.Pins;
 
-public class First extends Running{
+public class First implements Bowl{
+
+    private final Pins prePins;
+
+    public First(Pins prePins) {
+        this.prePins = prePins;
+    }
+
+
     @Override
     public Bowl pitch(Pins pins) {
-        if(pins.isStrike()){
-            return new Strike();
+        if(Pins.isSpare(prePins, pins)){
+            return new Spare(prePins, pins);
         }
-        return new Second(pins);
+        if(Pins.isGutter(prePins, pins)){
+            return new Gutter();
+        }
+        return new Miss(prePins, pins);
     }
 
     @Override
     public String getSymbol() {
-        return "";
+        return prePins.getSymbol();
     }
 
     @Override
     public String toString(){
-        return "[First]";
+        return "[First first: "+prePins+"]";
     }
 
+    @Override
+    public Score calculateScore(Score before) {
+        return before.addValue(prePins.getCount());
+    }
+
+    @Override
+    public Score score() {
+        return new Score(prePins.getCount(), 1);
+    }
+
+    @Override
+    public boolean isEnd() {
+        return false;
+    }
 }
