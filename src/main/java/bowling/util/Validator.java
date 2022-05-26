@@ -24,4 +24,16 @@ public class Validator {
 		}
 	}
 
+	public static void min(int threshold, int operand, String message) {
+		if (operand < threshold) {
+			throw new IllegalArgumentException(message);
+		}
+	}
+
+	public static void max(int threshold, int operand, String message) {
+		if (operand > threshold) {
+			throw new IllegalArgumentException(message);
+		}
+	}
+
 }

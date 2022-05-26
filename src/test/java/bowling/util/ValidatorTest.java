@@ -43,4 +43,18 @@ class ValidatorTest {
 			() -> Validator.equivalent(10, 100, "")
 		);
 	}
+
+	@Test
+	void 최솟값_체크() {
+		assertThatIllegalArgumentException().isThrownBy(
+			() -> Validator.min(10, 9, "")
+		);
+	}
+
+	@Test
+	void 최댓값_체크() {
+		assertThatIllegalArgumentException().isThrownBy(
+			() -> Validator.max(10, 11, "")
+		);
+	}
 }
