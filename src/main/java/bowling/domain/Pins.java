@@ -1,11 +1,11 @@
 package bowling.domain;
 
-public class Pin {
+public class Pins {
     private static final int MIN_PINS = 0;
     private static final int MAX_PINS = 10;
     private final int pins;
 
-    public Pin(int countOfPins) {
+    public Pins(int countOfPins) {
         validate(countOfPins);
         this.pins = countOfPins;
     }

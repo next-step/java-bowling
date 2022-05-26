@@ -25,8 +25,11 @@ public class Miss extends Finished{
 
     @Override
     public String expression() {
-        if(secondCountOfPins == 0) {
+        if(firstCountOfPins != 0 && secondCountOfPins == 0) {
             return firstCountOfPins + "|-";
+        }
+        if(firstCountOfPins ==0 && secondCountOfPins != 0) {
+            return "-|" + secondCountOfPins;
         }
         return firstCountOfPins + "|" +secondCountOfPins;
     }

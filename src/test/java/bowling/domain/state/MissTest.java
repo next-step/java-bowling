@@ -1,10 +1,8 @@
 package bowling.domain.state;
 
-import bowling.domain.Pin;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class MissTest {
     @Test

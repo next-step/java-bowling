@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.Pin;
+import bowling.domain.Pins;
 import bowling.domain.User;
 
 import java.util.Scanner;
@@ -13,9 +13,9 @@ public class InputView {
         return new User(SCANNER.nextLine());
     }
 
-    public static Pin inputBowl(int n) {
+    public static Pins inputBowl(int n) {
         System.out.print(n + "프레임 투구 : ");
-        return new Pin(SCANNER.nextInt());
+        return new Pins(SCANNER.nextInt());
     }
 
 }

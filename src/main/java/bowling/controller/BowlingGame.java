@@ -21,12 +21,13 @@ public class BowlingGame {
         while (i < FINAL_ROUND) {
             int pin = InputView.inputBowl(i).getPins();
             frame.bowl(pin);
-
             if (frame.getState().isFinish()) {
                 ResultView.printState(user, frame.expression(), i);
                 frame = frame.nextFrame();
                 i++;
+                continue;
             }
+            ResultView.printState(user, frame.expression(), i);
         }
 
         int count = 1;
@@ -37,6 +38,7 @@ public class BowlingGame {
                 ResultView.printState(user, frame.expression(), FINAL_ROUND);
                 break;
             }
+            ResultView.printState(user, frame.expression(), FINAL_ROUND);
             count++;
         }
     }
