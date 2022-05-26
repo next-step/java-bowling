@@ -3,6 +3,7 @@ package bowling;
 import bowling.domain.BowlingGame;
 import bowling.domain.PlayerName;
 import bowling.frame.*;
+import bowling.score.Scores;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -13,8 +14,9 @@ public class BowlingApplication {
         ResultView resultView = new ResultView();
 
         Frames frames = Frames.create();
+        Scores scores = Scores.create();
         PlayerName playerName = PlayerName.from(inputView.inputPlayerName());
-        BowlingGame bowlingGame = BowlingGame.from(playerName, frames);
+        BowlingGame bowlingGame = BowlingGame.from(playerName, frames, scores);
 
         startBowlingGame(bowlingGame, inputView, resultView);
     }

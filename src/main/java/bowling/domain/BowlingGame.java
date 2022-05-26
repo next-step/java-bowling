@@ -3,6 +3,7 @@ package bowling.domain;
 import bowling.frame.Frame;
 import bowling.frame.Frames;
 import bowling.frame.ShootScore;
+import bowling.score.Scores;
 
 public class BowlingGame {
 
@@ -10,14 +11,16 @@ public class BowlingGame {
 
     private final PlayerName playerName;
     private final Frames frames;
+    private final Scores scores;
 
-    private BowlingGame(PlayerName playerName, Frames frames) {
+    public BowlingGame(PlayerName playerName, Frames frames, Scores scores) {
         this.playerName = playerName;
         this.frames = frames;
+        this.scores = scores;
     }
 
-    public static BowlingGame from(PlayerName playerName, Frames frames) {
-        return new BowlingGame(playerName, frames);
+    public static BowlingGame from(PlayerName playerName, Frames frames, Scores scores) {
+        return new BowlingGame(playerName, frames, scores);
     }
 
     public boolean isEnd() {
@@ -31,7 +34,10 @@ public class BowlingGame {
     public void shoot(ShootScore shootScore) {
         Frame nextFrame = frames.shoot(shootScore);
 
+        scores.calculateBonusScore(shootScore);
+
         if (nextFrame.isEnd()) {
+            scores.addScore(nextFrame.findMyStatus());
             frames.goNextRound();
         }
     }
