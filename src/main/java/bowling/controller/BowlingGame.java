@@ -16,11 +16,12 @@ public class BowlingGame {
         User user = InputView.inputLetters();
         Frame frame = new NormalFrame(FIRST_ROUND);
 
-        ResultView.printEmptyRound(user);
+        ResultView.printFirstRoundFrame(user);
         int i = 1;
         while (i < FINAL_ROUND) {
             int pin = InputView.inputBowl(i).getPins();
             frame.bowl(pin);
+            System.out.println(frame.getState().getScore().getScore());
             if (frame.getState().isFinish()) {
                 ResultView.printState(user, frame.expression(), i);
                 frame = frame.nextFrame();
@@ -34,11 +35,11 @@ public class BowlingGame {
         while (true) {
             int pin = InputView.inputBowl(FINAL_ROUND).getPins();
             frame.bowl(pin);
+            ResultView.printState(user, frame.expression(), i);
             if(count == FINAL_MAX_ROUND || frame.getState() instanceof Miss) {
-                ResultView.printState(user, frame.expression(), FINAL_ROUND);
                 break;
             }
-            ResultView.printState(user, frame.expression(), FINAL_ROUND);
+            i++;
             count++;
         }
     }

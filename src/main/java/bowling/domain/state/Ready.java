@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Score;
+import bowling.exception.BowlingGameException;
 
 public class Ready extends Running {
     private static final int STRIKE = 10;
@@ -15,7 +16,7 @@ public class Ready extends Running {
 
     @Override
     public Score getScore() {
-        return null;
+        throw new BowlingGameException("레디 중인 상태에서 스코어를 조회할 수 없습니다.");
     }
 
     @Override

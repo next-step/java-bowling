@@ -24,10 +24,6 @@ public class Score {
         return new Score(STRIKE_OR_SPARE, 1);
     }
 
-    public static Score ofMiss(int countOfPins) {
-        return new Score(countOfPins , 0);
-    }
-
     public static Score ofGutter() {
         return new Score(0, 0);
     }

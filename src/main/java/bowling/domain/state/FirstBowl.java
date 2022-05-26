@@ -29,6 +29,9 @@ public class FirstBowl extends Running {
 
     @Override
     public String expression() {
+        if(this.score.getScore() == 0) {
+            return "-";
+        }
         return String.valueOf(this.score.getScore());
     }
 }
