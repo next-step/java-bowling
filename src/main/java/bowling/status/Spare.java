@@ -1,6 +1,7 @@
 package bowling.status;
 
 import bowling.frame.ShootScore;
+import bowling.score.Score;
 
 import java.util.Objects;
 
@@ -41,6 +42,11 @@ public class Spare implements Status {
     @Override
     public String board() {
         return drawGutterOrScore(firstShoot) + DIVIDER + SPARE_SIGNATURE;
+    }
+
+    @Override
+    public Score createScore() {
+        return Score.toSpare();
     }
 
     @Override

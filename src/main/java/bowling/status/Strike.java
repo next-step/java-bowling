@@ -1,6 +1,7 @@
 package bowling.status;
 
 import bowling.frame.ShootScore;
+import bowling.score.Score;
 
 public class Strike implements Status {
 
@@ -25,5 +26,10 @@ public class Strike implements Status {
     @Override
     public String board() {
         return STRIKE_SIGNATURE;
+    }
+
+    @Override
+    public Score createScore() {
+        return Score.toStrike();
     }
 }

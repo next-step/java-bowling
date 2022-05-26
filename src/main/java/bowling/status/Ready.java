@@ -1,6 +1,7 @@
 package bowling.status;
 
 import bowling.frame.ShootScore;
+import bowling.score.Score;
 
 public class Ready implements Status {
 
@@ -28,5 +29,10 @@ public class Ready implements Status {
     @Override
     public String board() {
         return BLANK;
+    }
+
+    @Override
+    public Score createScore() {
+        throw new UnsupportedOperationException("준비 상태에서는 점수를 산정할 수 없습니다.");
     }
 }

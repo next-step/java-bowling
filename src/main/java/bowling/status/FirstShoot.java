@@ -1,6 +1,7 @@
 package bowling.status;
 
 import bowling.frame.ShootScore;
+import bowling.score.Score;
 
 import java.util.Objects;
 
@@ -38,6 +39,11 @@ public class FirstShoot implements Status {
     @Override
     public String board() {
         return drawGutterOrScore(firstShoot);
+    }
+
+    @Override
+    public Score createScore() {
+        throw new UnsupportedOperationException("첫 번째 슛 상태에서는 점수를 산정할 수 없습니다.");
     }
 
     @Override

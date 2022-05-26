@@ -1,6 +1,7 @@
 package bowling.status;
 
 import bowling.frame.ShootScore;
+import bowling.score.Score;
 
 public interface Status {
 
@@ -9,4 +10,6 @@ public interface Status {
     boolean isEnd();
 
     String board();
+
+    Score createScore();
 }
