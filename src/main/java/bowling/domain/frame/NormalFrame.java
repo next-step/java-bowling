@@ -1,0 +1,62 @@
+package bowling.domain.frame;
+
+import bowling.domain.pitch.Pitches;
+
+public class NormalFrame implements Frame {
+
+    private static final int ONE = 1;
+    private static final int SEMI_FINAL_INDEX = 8;
+
+    private final int round;
+    private final Pitches pitches;
+
+    private NormalFrame(int round, int count) {
+        this.round = round;
+        this.pitches = Pitches.first(count);
+    }
+
+    public static NormalFrame bowling(int round, int count) {
+        return new NormalFrame(round, count);
+    }
+
+    @Override
+    public Frame bowling(int count) {
+        this.pitches.next(count);
+        return this;
+    }
+
+    @Override
+    public Frame next(int count) {
+        int nextIndex = this.increment();
+        if (isSemiFinal()) {
+            return FinalFrame.lastBowling(count);
+        }
+        return bowling(nextIndex, count);
+    }
+
+    @Override
+    public int totalCount() {
+        return pitches.totalCount();
+    }
+
+    @Override
+    public boolean isFinal() {
+        return false;
+    }
+
+    private boolean isSemiFinal() {
+        return this.round == SEMI_FINAL_INDEX;
+    }
+
+    private int increment() {
+        return Math.addExact(this.round, ONE);
+    }
+
+    @Override
+    public String toString() {
+        return "NormalFrame{" +
+                "round=" + round +
+                ", pitches=" + pitches +
+                '}';
+    }
+}

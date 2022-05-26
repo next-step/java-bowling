@@ -1,5 +1,6 @@
 package bowling.domain.pitch;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ public class Pitches {
     private static final int ZERO = 0;
     private static final int FIRST = 1;
     private static final int SECOND = 2;
+    private static final int MAX_COUNT = 10;
 
     private final List<Pitch> pitches;
 
@@ -16,15 +18,16 @@ public class Pitches {
     }
 
     public static Pitches first(int count) {
+        List<Pitch> pitches = new ArrayList<>();
         Pitch first = Pitch.of(count);
-        Pitch second = Pitch.zero();
+        pitches.add(first);
 
-        return new Pitches(List.of(first, second));
+        return new Pitches(pitches);
     }
 
     public Pitches next(int count) {
         Pitch second = this.firstPitch().next(count);
-        this.pitches.set(FIRST, second);
+        this.pitches.add(second);
 
         return this;
     }
@@ -44,10 +47,21 @@ public class Pitches {
         return this.pitches.size();
     }
 
-    protected int totalCount() {
+    public boolean isBonus() {
+        return this.totalCount() == MAX_COUNT;
+    }
+
+    public int totalCount() {
         int firstCount = this.firstPitch().count();
         int secondCount = this.secondPitch().count();
 
         return Math.addExact(firstCount, secondCount);
+    }
+
+    @Override
+    public String toString() {
+        return "Pitches{" +
+                "pitches=" + pitches +
+                '}';
     }
 }

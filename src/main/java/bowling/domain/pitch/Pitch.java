@@ -56,4 +56,11 @@ public class Pitch {
     public int hashCode() {
         return Objects.hash(count);
     }
+
+    @Override
+    public String toString() {
+        return "Pitch{" +
+                "count=" + count +
+                '}';
+    }
 }
