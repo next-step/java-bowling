@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.frame.Frames;
 import bowling.player.Player;
 import bowling.view.InputView;
 import bowling.view.OutputView;
@@ -11,8 +12,13 @@ public class BowlingApplication {
 
 	public static void main(String[] args) {
 		Player player = new Player(INPUT_VIEW.askPlayerName());
+		Frames frames = Frames.start();
 
-		OUTPUT_VIEW.showInitialized();
-
+		OUTPUT_VIEW.showResult(player, frames);
+		while (!frames.isEnd()) {
+			int frameNumber = frames.frameNumber();
+			frames.throwBowl(INPUT_VIEW.askThrowCount(frameNumber));
+			OUTPUT_VIEW.showResult(player, frames);
+		}
 	}
 }
