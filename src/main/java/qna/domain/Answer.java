@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @Entity
 public class Answer extends AbstractEntity {
     private static final String ANSWER_NOT_OWNER = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
-    private static final boolean DELETE_TRUE = true;
 
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
@@ -80,7 +79,7 @@ public class Answer extends AbstractEntity {
 
     public DeleteHistory toDeleteHistory(User loginUser) {
         validDelete(loginUser);
-        this.deleted = DELETE_TRUE;
+        this.deleted = true;
         return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
     }
 

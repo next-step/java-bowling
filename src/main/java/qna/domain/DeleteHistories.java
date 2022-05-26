@@ -1,6 +1,5 @@
 package qna.domain;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,11 +11,7 @@ public class DeleteHistories {
     }
 
     public static DeleteHistories of(User loginUser, Question question) {
-        List<DeleteHistory> result = new ArrayList<>();
-        result.add(question.questionToDeleteHistory(loginUser));
-        result.addAll(question.answersToDeleteHistories(loginUser));
-
-        return new DeleteHistories(result);
+        return new DeleteHistories(question.addDeleteHistroy(loginUser));
     }
 
     public List<DeleteHistory> getDeleteHistories() {
