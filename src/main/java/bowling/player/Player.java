@@ -1,4 +1,4 @@
-package bowling;
+package bowling.player;
 
 import java.util.Objects;
 

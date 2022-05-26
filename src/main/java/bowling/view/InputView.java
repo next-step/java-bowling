@@ -1,4 +1,4 @@
-package bowling;
+package bowling.view;
 
 import static java.lang.System.*;
 

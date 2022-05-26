@@ -1,4 +1,4 @@
-package bowling;
+package bowling.player;
 
 import static org.assertj.core.api.Assertions.*;
 

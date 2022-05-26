@@ -1,5 +1,9 @@
 package bowling;
 
+import bowling.player.Player;
+import bowling.view.InputView;
+import bowling.view.OutputView;
+
 public class BowlingApplication {
 
 	private static final InputView INPUT_VIEW = new InputView();
