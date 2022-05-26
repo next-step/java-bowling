@@ -3,9 +3,8 @@ package bowling.domain.state.finish;
 import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.Pins;
-import bowling.exception.ImpossiblePitchException;
 
-public class Miss implements State {
+public class Miss implements Finish {
 
     private static final String GUTTER = "-";
 
@@ -48,18 +47,9 @@ public class Miss implements State {
 
         return addedScore.addBonusScore(secondPins.count());
     }
+
     private String convertIfGutter(Pins pins) {
         return pins.isGutter() ? GUTTER : pins.toString();
-    }
-
-    @Override
-    public boolean isFrameEnd() {
-        return true;
-    }
-
-    @Override
-    public State pitch(Pins pins) {
-        throw new ImpossiblePitchException(State.class.getName());
     }
 
 }

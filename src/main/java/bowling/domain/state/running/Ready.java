@@ -5,7 +5,7 @@ import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.finish.Strike;
 
-public class Ready implements State {
+public class Ready implements Running {
 
     private static final String EMPTY = "";
 
@@ -26,22 +26,12 @@ public class Ready implements State {
     }
 
     @Override
-    public boolean isFrameEnd() {
-        return false;
-    }
-
-    @Override
     public String getSymbol() {
         return EMPTY;
     }
 
     @Override
     public Score calculateScore(Score beforeScore) {
-        return Score.unavailable();
-    }
-
-    @Override
-    public Score score() {
         return Score.unavailable();
     }
 
