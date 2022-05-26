@@ -1,11 +1,9 @@
-package bowling;
+package bowling.bowl;
 
 import bowling.Frame.Frame;
 import bowling.Frame.Frames;
 import bowling.pin.Pins;
 import bowling.player.Player;
-
-import java.util.List;
 
 public class BowlingGame {
 
@@ -34,8 +32,7 @@ public class BowlingGame {
     }
 
     public Frame getCurFrame(){
-        List<Frame> frameList = frames.getFrames();
-        return frames.getFrames().get(frameList.size()-1);
+        return frames.getCurFrame();
     }
 
     public Player getPlayer() {
