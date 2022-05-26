@@ -47,6 +47,7 @@ public class LastFrame implements Frame {
     }
 
     private void createStrikeStatus() {
+        statuses.removeLast();
         statuses.add(Strike.create());
         statuses.add(Ready.create());
     }
