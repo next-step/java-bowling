@@ -1,7 +1,7 @@
-package bowling.Frame;
+package bowling.frame;
 
 import bowling.bowl.Bowl;
-import bowling.bowl.Second;
+import bowling.bowl.First;
 
 public class PitchCount {
 
@@ -18,7 +18,7 @@ public class PitchCount {
             return false;
         }
 
-        if(count == 2 && bowl instanceof Second){
+        if(count == 2 && bowl instanceof First){
             return false;
         }
         return true;
