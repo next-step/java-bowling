@@ -1,7 +1,7 @@
 package bowling.bowl;
 
-import bowling.Frame.Frame;
-import bowling.Frame.Frames;
+import bowling.frame.Frame;
+import bowling.frame.Frames;
 import bowling.pin.Pins;
 import bowling.player.Player;
 

@@ -22,11 +22,6 @@ public class FinalFrame implements Frame{
     }
 
     @Override
-    public Bowl getBowl() {
-        return bowls.getBowls().get(0);
-    }
-
-    @Override
     public Frame pitch(Pins pins) {
         bowls.pitch(pins);
         return this;
