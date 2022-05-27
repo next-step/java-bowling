@@ -5,6 +5,7 @@ import static bowling.domain.Frames.BOWLING_NORMAL_FRAMES;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -125,6 +126,58 @@ class FramesTest {
         frames.throwBall(10);
         frames.throwBall(10);
         frames.throwBall(10);
+    }
+
+    @DisplayName("일반적인 점수는 해당 프레임이 끝나면 곧바로 계산된다.")
+    @Test
+    void calculateScoreTest1() {
+        frames.throwBall(9);    // 1
+        frames.throwBall(0);    // 1
+        frames.throwBall(2);    // 2
+        frames.throwBall(4);    // 2
+
+        Frame firstFrame = frames.head();
+        Frame secondFrame = firstFrame.next();
+
+        assertThat(firstFrame.scoreCalculated()).contains(9);
+        assertThat(secondFrame.scoreCalculated()).contains(6);
+    }
+
+    @DisplayName("스페어 추가 점수는 해당 프레임이 끝나고 다음 투구 1개의 점수가 계산된 후 계산된다.")
+    @Test
+    void calculateScoreTest2() {
+        frames.throwBall(9);    // 1
+        frames.throwBall(0);    // 1
+        frames.throwBall(2);    // 2
+        frames.throwBall(8);    // 2
+
+        Frame firstFrame = frames.head();
+        Frame secondFrame = firstFrame.next();
+
+        assertThat(firstFrame.scoreCalculated()).contains(9);
+        assertThat(secondFrame.scoreCalculated()).isEmpty();
+
+        frames.throwBall(10);
+        assertThat(secondFrame.scoreCalculated()).contains(20);
+    }
+
+    @DisplayName("마지막 프레임의 점수는 그냥 있는 점수 다 더한다.")
+    @Test
+    void calculateScoreTest3() {
+        throwBallNineFrames();
+        Frame finalFrame = frames.current();
+
+        frames.throwBall(9);
+
+        assertThat(finalFrame.scoreCalculated()).contains(9);
+
+        frames.throwBall(1);
+
+        assertThat(finalFrame.scoreCalculated()).contains(10);
+
+        frames.throwBall(10);
+
+        assertThat(finalFrame.scoreCalculated()).contains(20);
     }
 
 }

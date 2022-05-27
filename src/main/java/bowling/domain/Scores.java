@@ -82,7 +82,7 @@ public class Scores {
         }
 
         if (isPlayOnlyFirst()) {
-            return firstScore.isAll();
+            return firstScore.isHitAll();
         }
 
         return isSpare();

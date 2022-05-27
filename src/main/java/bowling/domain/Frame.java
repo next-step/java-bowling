@@ -13,7 +13,6 @@ public class Frame {
     private Frame beforeFrame;
     protected Pins pins = new Pins();
     protected Scores scores = new Scores();
-    private Score accumulatedScore;
 
     public Frame() {
         this(null, null);
@@ -24,23 +23,32 @@ public class Frame {
         this.nextFrame = nextFrame;
     }
 
-    public void calculateScore() {
+    protected boolean hasAllCalculatedFrontFrame() {
+        if (this.before() == null) {
+            return true;
+        }
+
+        return this.before().scoreCalculated().isPresent();
+    }
+
+    public Optional<Integer> scoreCalculated() {
+        if (!hasAllCalculatedFrontFrame()) {
+            return Optional.empty();
+        }
+
         if (scores.isStrike()) {
-            STRIKE.scoreOf(this)
-                .ifPresent(integer -> accumulatedScore = new Score(integer));
-            return;
+            return STRIKE.scoreOf(this);
         }
 
         if (scores.isSpare()) {
-            SPARE.scoreOf(this)
-                .ifPresent(integer -> accumulatedScore = new Score(integer));
-            return;
+            return SPARE.scoreOf(this);
         }
 
         if (scores.isPlayTwice()) {
-            NORMAL.scoreOf(this)
-                .ifPresent(integer -> accumulatedScore = new Score(integer));
+            return NORMAL.scoreOf(this);
         }
+
+        return Optional.empty();
     }
 
     public Frame createNext() {
@@ -102,10 +110,6 @@ public class Frame {
     @Override
     public int hashCode() {
         return Objects.hash(nextFrame, beforeFrame, pins, scores);
-    }
-
-    public Optional<Score> getFrameScoreAsOptional() {
-        return Optional.ofNullable(accumulatedScore);
     }
 
     public boolean hasNext() {

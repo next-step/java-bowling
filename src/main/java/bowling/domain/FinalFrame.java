@@ -1,12 +1,32 @@
 package bowling.domain;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class FinalFrame extends Frame {
     private Score extraScore;
 
     public FinalFrame(Frame beforeFrame, Frame nextFrame) {
         super(beforeFrame, nextFrame);
+    }
+
+    @Override
+    public Optional<Integer> scoreCalculated() {
+        Integer score = 0;
+
+        if (getFirstScoreAsOptional().isPresent()) {
+            score += firstScore();
+        }
+
+        if (getSecondScoreAsOptional().isPresent()) {
+            score += secondScore();
+        }
+
+        if (extraScore != null) {
+            score += extraScore.get();
+        }
+
+        return Optional.of(score);
     }
 
     @Override
@@ -40,4 +60,5 @@ public class FinalFrame extends Frame {
     public Score getExtraScore() {
         return extraScore;
     }
+
 }

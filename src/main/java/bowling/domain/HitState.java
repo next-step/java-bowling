@@ -3,52 +3,77 @@ package bowling.domain;
 import java.util.Optional;
 
 public enum HitState {
-    NORMAL(0, (frame) -> {
-        return Optional.empty();
-//        frame.getFirstScoreAsOptional()
-//            .orElse()
-//        return frame.getFirstScoreAsOptional().get() + frame.getSecondScoreAsOptional().get();
+    NORMAL((frame) -> {
+        return Optional.of(frame.firstScore() + frame.secondScore());
     }),
 
-    SPARE(1, (frame) -> {
-        return Optional.empty();
-//        final int spare = 10;
-//
-//        if (!frame.hasNext()) {
-//            return 0; // or throw
-//        }
-//
-//        Frame next = frame.next();
-//        Optional<Score> optionalScore = next.getFirstScoreAsOptional();
-//
-//        return optionalScore.map(score -> spare + score.get())
-//            .orElse(0); // or throw?
-    }),
-    STRIKE(2, (frame) -> {
-        return Optional.empty();
-//        final int strike = 10;
-//
-//        if (!frame.hasNext()) {
-//            return 0; // or throw?
-//        }
-//
-//        Frame next = frame.next();
-//        Optional<Score> optionalScore = next.getFirstScoreAsOptional();
-//
-//        return optionalScore.map(score -> strike + score.get())
-//            .orElse(0); // or throw?
-    });
+    SPARE((frame) -> {
+        if (!frame.hasNext()) {
+            return Optional.empty();
+        }
 
-    private final int nextAddScore;
+        Frame next = frame.next();
+        Optional<Integer> firstScoreOptional = next.getFirstScoreAsOptional()
+            .map(Score::get);
+
+        if (firstScoreOptional.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(firstScoreOptional.get() + 10);
+    }),
+    STRIKE((frame) -> {
+        int totalScore = 10;
+        int additionalCount = 2;
+        Frame current = frame.next();
+
+        if (current == null || current.getFirstScoreAsOptional().isEmpty()) {
+            return Optional.empty();
+        }
+
+        while (current != null && additionalCount > 0) {
+            if (current.getFirstScoreAsOptional().isPresent()) {
+                totalScore += current.firstScore();
+                --additionalCount;
+            }
+
+            if (current.getSecondScoreAsOptional().isPresent()) {
+                totalScore += current.secondScore();
+                --additionalCount;
+            }
+
+            current = current.next();
+        }
+
+        if (additionalCount == 0) {
+            return Optional.of(totalScore);
+        }
+
+        return Optional.empty();
+    }),
+    FINAL_STRIKE((frame -> {
+        return Optional.empty();
+    })),
+    FINAL_SPARE((frame -> {
+        return Optional.empty();
+    }));
+
     private final ScoreCalculator calculator;
 
     public Optional<Integer> scoreOf(Frame frame) {
+        if (frame instanceof FinalFrame) {
+
+        }
+
         return calculator.calculate(frame);
     }
 
-    HitState(int nextAddScore, ScoreCalculator calculator) {
-        this.nextAddScore = nextAddScore;
+    HitState(ScoreCalculator calculator) {
         this.calculator = calculator;
+    }
+
+    public Optional<Integer> scoreOfFinal(FinalFrame finalFrame) {
+        return calculator.calculate(finalFrame);
     }
 
 }

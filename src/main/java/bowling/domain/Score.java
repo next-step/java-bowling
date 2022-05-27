@@ -38,11 +38,11 @@ public class Score {
         return Objects.hash(score);
     }
 
-    public boolean isAll() {
+    public boolean isHitAll() {
         return score == START_PIN_COUNT;
     }
 
-    public boolean isHit(int hitScore) {
+    public boolean isHitBy(int hitScore) {
         return this.score == hitScore;
     }
 }

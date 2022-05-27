@@ -21,7 +21,7 @@ class ScoreTest {
 
         Score score = new Score(hitScore);
 
-        assertThat(score.isHit(hitScore)).isTrue();
+        assertThat(score.isHitBy(hitScore)).isTrue();
     }
 
     @DisplayName("넘어뜨린 점수가 맞는지 확인해서 틀린 경우")
@@ -31,7 +31,7 @@ class ScoreTest {
 
         Score score = new Score(hitScore);
 
-        assertThat(score.isHit(hitScore-1)).isFalse();
+        assertThat(score.isHitBy(hitScore-1)).isFalse();
     }
 
 }

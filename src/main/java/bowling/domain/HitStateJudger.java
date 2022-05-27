@@ -8,7 +8,7 @@ public final class HitStateJudger {
         Score firstScore = frame.getFirstScoreAsOptional()
             .orElse(new Score());
 
-        if (firstScore.isAll()) {
+        if (firstScore.isHitAll()) {
             return HitState.STRIKE;
         }
 
@@ -21,7 +21,7 @@ public final class HitStateJudger {
         Score secondScore = frame.getSecondScoreAsOptional()
             .orElse(new Score());
 
-        if (firstScore.isAll()) {
+        if (firstScore.isHitAll()) {
             return HitState.STRIKE;
         }
 
