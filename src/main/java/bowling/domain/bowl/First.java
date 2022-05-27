@@ -1,7 +1,7 @@
-package bowling.bowl;
+package bowling.domain.bowl;
 
-import bowling.score.Score;
-import bowling.pin.Pins;
+import bowling.domain.score.Score;
+import bowling.domain.pin.Pins;
 
 public class First implements Bowl{
 

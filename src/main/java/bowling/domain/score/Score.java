@@ -1,4 +1,4 @@
-package bowling.score;
+package bowling.domain.score;
 
 public class Score {
 

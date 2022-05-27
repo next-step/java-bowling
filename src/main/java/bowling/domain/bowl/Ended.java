@@ -1,6 +1,6 @@
-package bowling.bowl;
+package bowling.domain.bowl;
 
-import bowling.pin.Pins;
+import bowling.domain.pin.Pins;
 
 public abstract class Ended implements Bowl{
     @Override

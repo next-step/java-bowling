@@ -1,6 +1,6 @@
-package bowling.bowl;
+package bowling.domain.bowl;
 
-import bowling.score.Score;
+import bowling.domain.score.Score;
 
 public class Gutter extends Ended{
 

@@ -1,11 +1,12 @@
 package bowling.frame;
 
-import bowling.bowl.*;
-import bowling.pin.Pins;
+import bowling.domain.bowl.Bowl;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
+import bowling.domain.pin.Pins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class NormalFrameTest {
 

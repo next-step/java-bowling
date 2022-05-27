@@ -1,32 +1,34 @@
-package bowling.bowl;
+package bowling.domain.bowl;
 
-import bowling.score.Score;
-import bowling.pin.Pins;
+import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 
-public class Miss extends Ended{
+public class Spare extends Ended{
+
     private final Pins firstPin;
     private final Pins secondPin;
 
 
-    public Miss(Pins firstPin, Pins secondPin) {
+    public Spare(Pins firstPin, Pins secondPin) {
         this.firstPin = firstPin;
         this.secondPin = secondPin;
     }
 
+
     @Override
     public String toString(){
-        return "[Miss first: "+firstPin
+        return "[Spare first: "+firstPin
                 +" second: "+secondPin+"]";
     }
 
     @Override
     public String getSymbol() {
-        return firstPin.getSymbol()+"|"+secondPin.getSymbol();
+        return firstPin.getSymbol()+"|/";
     }
 
     @Override
     public Score score() {
-        return Score.miss(firstPin.getCount(), secondPin.getCount());
+        return Score.spare(firstPin.getCount(), secondPin.getCount());
     }
 
     @Override

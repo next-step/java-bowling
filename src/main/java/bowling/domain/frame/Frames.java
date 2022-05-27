@@ -1,10 +1,9 @@
-package bowling.frame;
+package bowling.domain.frame;
 
-import bowling.pin.Pins;
+import bowling.domain.pin.Pins;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Frames {
 

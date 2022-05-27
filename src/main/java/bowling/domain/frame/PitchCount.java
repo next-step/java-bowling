@@ -1,7 +1,4 @@
-package bowling.frame;
-
-import bowling.bowl.Bowl;
-import bowling.bowl.First;
+package bowling.domain.frame;
 
 public class PitchCount {
 

@@ -1,9 +1,9 @@
-package bowling.bowl;
+package bowling.domain;
 
-import bowling.frame.Frame;
-import bowling.frame.Frames;
-import bowling.pin.Pins;
-import bowling.player.Player;
+import bowling.domain.pin.Pins;
+import bowling.domain.player.Player;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
 
 public class BowlingGame {
 

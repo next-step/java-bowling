@@ -1,8 +1,7 @@
-package bowling.frame;
+package bowling.domain.frame;
 
-import bowling.bowl.Bowl;
-import bowling.pin.Pins;
-import bowling.score.Score;
+import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 
 public interface Frame {
     Frame pitch(Pins pins);

@@ -1,6 +1,11 @@
 package bowling.bowl;
 
-import bowling.pin.Pins;
+import bowling.domain.bowl.Miss;
+import bowling.domain.bowl.Bowl;
+import bowling.domain.bowl.Ready;
+import bowling.domain.bowl.Spare;
+import bowling.domain.bowl.Strike;
+import bowling.domain.pin.Pins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

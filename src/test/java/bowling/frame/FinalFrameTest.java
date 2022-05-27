@@ -1,8 +1,10 @@
 package bowling.frame;
 
-import bowling.exception.CannotPitchException;
-import bowling.pin.Pins;
-import bowling.score.Score;
+import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.Frame;
+import bowling.domain.exception.CannotPitchException;
+import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

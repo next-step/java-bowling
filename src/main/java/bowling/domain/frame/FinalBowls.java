@@ -1,9 +1,13 @@
-package bowling.frame;
+package bowling.domain.frame;
 
-import bowling.bowl.*;
-import bowling.bowl.Ready;
-import bowling.exception.CannotPitchException;
-import bowling.pin.Pins;
+import bowling.domain.bowl.Ready;
+import bowling.domain.bowl.Miss;
+import bowling.domain.bowl.Bowl;
+import bowling.domain.bowl.Gutter;
+import bowling.domain.bowl.Spare;
+import bowling.domain.bowl.Strike;
+import bowling.domain.pin.Pins;
+import bowling.domain.exception.CannotPitchException;
 
 import java.util.ArrayList;
 import java.util.List;

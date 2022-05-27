@@ -1,8 +1,8 @@
 package bowling.view;
 
-import bowling.bowl.BowlingGame;
-import bowling.pin.Pins;
-import bowling.player.Player;
+import bowling.domain.BowlingGame;
+import bowling.domain.pin.Pins;
+import bowling.domain.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

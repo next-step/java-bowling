@@ -1,9 +1,9 @@
-package bowling.frame;
+package bowling.domain.frame;
 
-import bowling.bowl.Bowl;
-import bowling.bowl.Ready;
-import bowling.pin.Pins;
-import bowling.score.Score;
+import bowling.domain.bowl.Bowl;
+import bowling.domain.bowl.Ready;
+import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 
 public class NormalFrame implements Frame{
     private static final int LAST_NORMAL_FRAME_INDEX = 9;

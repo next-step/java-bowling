@@ -1,9 +1,10 @@
-package bowling.frame;
+package bowling.domain.frame;
 
-import bowling.bowl.Bowl;
-import bowling.bowl.Ready;
-import bowling.pin.Pins;
-import bowling.score.Score;
+import bowling.domain.bowl.Bowl;
+import bowling.domain.bowl.Ready;
+import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
+
 import java.util.Objects;
 import java.util.stream.Collectors;
 
