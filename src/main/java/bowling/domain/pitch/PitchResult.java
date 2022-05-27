@@ -1,4 +1,4 @@
-package bowling.domain.frame;
+package bowling.domain.pitch;
 
 public class PitchResult {
 
