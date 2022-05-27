@@ -33,13 +33,14 @@
         - 9프레임은 투구후 FinalFrame을 반환한다.
 
     - `FinalFrame`
-        - 스트라이크 또는 스페어시 추가적으로 한 번더 투구할 수 있다.
+        - 스트라이크 또는 스페어시 추가적으로 한 번더 투구할 수 있다. (총 3번을 투구할 수 있다.)
+        - Gutter, Miss 시 총 2번 투구할 수 있다.
 
 - `Frames`
     - 10개의 프레임을 관리하기 위한 일급컬렉션
 
 - `Bowl`
-    - Running, Ended의 인터페이스다.
+    - Ready, First, 추상클래스 Ended 의 인터페이스다.
     - `Ended`
         - 진행이 끝난 bowl의 추상 클래스다.
         - Gutter, Miss, Spare, Strike는 Ended를 상속한다.
@@ -48,11 +49,14 @@
         - Strike는 첫 번째 투구때 모든 핀을 맞춘상태다.
         - Miss는 두 번째 투구 후에도 맞추지 못한 핀이 있는 상태다.
 
-    - `Running`
-        - 진행 중인 bowl의 추상 클래스다.
-        - First, Second는 Running을 상속한다.
-        - First는 투구를 던지기 위한 준비 상태다.
-        - Second는 첫 번째 투구를 던진후 상태다.
+    - `Ready`
+        - bowl인터페이스 구현체다.
+        - Ready는 투구를 던지기 위한 준비 상태다.
+      
+    - `First`
+        - bowl인터페이스 구현체다.
+        - First 첫 번째 투구를 던진후 상태다.
+      
         
 --- 
 
