@@ -40,13 +40,11 @@ public class QnAService {
         AnswerList answerList = new AnswerList(question.getAnswers());
         answerList.checkLoginUserEqualWithAnswersOwners(loginUser);
 
-        DeleteHistoryList deleteHistoryList = new DeleteHistoryList();
         question.setDeleted(true);
-        deleteHistoryList.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
-        for (Answer answer : answerList.value()) {
-            answer.setDeleted(true);
-            deleteHistoryList.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }
+
+        DeleteHistoryList deleteHistoryList = new DeleteHistoryList();
+        deleteHistoryList.addQuestionDeleteHistory(question);
+        deleteHistoryList.addAnswerListDeleteHistory(answerList);
         deleteHistoryService.saveAll(deleteHistoryList);
     }
 }

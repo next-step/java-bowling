@@ -1,12 +1,13 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class DeleteHistoryList {
 
-    private List<DeleteHistory> deleteHistoryList;
+    private final List<DeleteHistory> deleteHistoryList;
 
     public DeleteHistoryList() {
         deleteHistoryList = new ArrayList<>();
@@ -16,8 +17,15 @@ public class DeleteHistoryList {
         this.deleteHistoryList = deleteHistoryList;
     }
 
-    public void add(DeleteHistory deleteHistory) {
-        this.deleteHistoryList.add(deleteHistory);
+    public void addQuestionDeleteHistory(Question question) {
+        deleteHistoryList.add(new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()));
+    }
+
+    public void addAnswerListDeleteHistory(AnswerList answerList) {
+        for (Answer answer : answerList.value()) {
+            answer.setDeleted(true);
+            deleteHistoryList.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+        }
     }
 
     public List<DeleteHistory> value() {
