@@ -3,11 +3,14 @@ package bowling.domain.state.finish;
 import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.Pins;
+import bowling.exception.ImpossiblePitchException;
 
-public class Spare extends Finish {
+public class Spare implements Finish {
 
     private static final String VERTICAL_BAR = "|";
+
     private static final String GUTTER = "-";
+
     private static final String SPARE = "/";
 
     private final Pins firstPins;
@@ -47,6 +50,16 @@ public class Spare extends Finish {
 
     private String getFirstSymbol() {
         return firstPins.isGutter() ? GUTTER : String.valueOf(firstPins);
+    }
+
+    @Override
+    public boolean isFrameEnd() {
+        return true;
+    }
+
+    @Override
+    public State pitch(Pins pins) {
+        throw new ImpossiblePitchException(State.class.getName());
     }
 
 }

@@ -7,7 +7,7 @@ import bowling.domain.state.finish.Spare;
 import bowling.domain.state.State;
 import bowling.exception.InvalidPitchException;
 
-public class FirstBowl extends Running {
+public class FirstBowl implements Running {
 
     private static final String GUTTER = "-";
 
@@ -35,18 +35,8 @@ public class FirstBowl extends Running {
     }
 
     @Override
-    public boolean isFrameEnd() {
-        return false;
-    }
-
-    @Override
     public String getSymbol() {
         return firstPins.isGutter() ? GUTTER : String.valueOf(firstPins);
-    }
-
-    @Override
-    public Score score() {
-        return null;
     }
 
     @Override
@@ -56,6 +46,16 @@ public class FirstBowl extends Running {
         }
 
         return beforeScore.addBonusScore(firstPins.count());
+    }
+
+    @Override
+    public boolean isFrameEnd() {
+        return false;
+    }
+
+    @Override
+    public Score score() {
+        return Score.unavailable();
     }
 
 }

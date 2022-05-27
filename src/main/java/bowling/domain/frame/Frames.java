@@ -13,10 +13,14 @@ import java.util.stream.IntStream;
 public class Frames {
 
     public static final int START_FRAME_INDEX = 0;
-    private static final int INCREASE_INDEX_NUMBER = 1;
-    public static final int FINISH_FRAME_INDEX = 10;
-    private static final int NORMAL_FRAME_LAST_SIZE = 8;
+
     private static final int LAST_FRAME_INDEX = 9;
+
+    private static final int NORMAL_FRAME_LAST_SIZE = 8;
+
+    private static final int INCREASE_INDEX_NUMBER = 1;
+
+    public static final int FINISH_FRAME_INDEX = 10;
 
     private int currentIndex;
 
@@ -72,14 +76,12 @@ public class Frames {
         currentFrame.pitch(pins);
     }
 
-    public void nextIndex() {
+    public boolean isCurrentFrameEnd() {
         Frame currentFrame = frames.get(currentIndex);
-        if (currentFrame.isFrameEnd()) {
-            increaseIndex();
-        }
+        return currentFrame.isFrameEnd();
     }
 
-    private void increaseIndex() {
+    public void nextIndex() {
         int nextIndex = increaseIndex(currentIndex);
         if (nextIndex > FINISH_FRAME_INDEX) {
             throw new OutOfIndexException(nextIndex);
@@ -90,10 +92,6 @@ public class Frames {
 
     public List<Frame> getFrames() {
         return frames;
-    }
-
-    public int getCurrentRound() {
-        return increaseIndex(currentIndex);
     }
 
     public List<Integer> sumScores() {
