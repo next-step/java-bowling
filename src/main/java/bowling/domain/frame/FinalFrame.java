@@ -11,16 +11,20 @@ import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame{
 
-    private final int index;
+    private final FrameIndex index;
     private FinalBowls bowls;
 
-    private FinalFrame(int index, FinalBowls bowls) {
+    private FinalFrame(FrameIndex index, FinalBowls bowls) {
         this.index = index;
         this.bowls = bowls;
     }
 
-    public FinalFrame(int index) {
+    public FinalFrame(FrameIndex index) {
         this(index, new FinalBowls());
+    }
+
+    public FinalFrame(int index) {
+        this(FrameIndex.of(index), new FinalBowls());
     }
 
     @Override
@@ -31,7 +35,7 @@ public class FinalFrame implements Frame{
 
     @Override
     public int getIndex() {
-        return index;
+        return index.getIndex();
     }
 
     @Override

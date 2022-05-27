@@ -9,17 +9,21 @@ import java.util.List;
 public class NormalFrame implements Frame{
     private static final int LAST_NORMAL_FRAME_INDEX = 9;
 
-    private final int index;
+    private final FrameIndex index;
     private Frame nextFrame;
     private Bowl bowl;
 
-    private NormalFrame(int index, Bowl bowl) {
+    private NormalFrame(FrameIndex index, Bowl bowl) {
         this.index = index;
         this.bowl = bowl;
     }
 
-    public NormalFrame(int index) {
+    public NormalFrame(FrameIndex index) {
         this(index, new Ready());
+    }
+
+    public NormalFrame(int index) {
+        this(FrameIndex.of(index), new Ready());
     }
 
     @Override
@@ -33,10 +37,10 @@ public class NormalFrame implements Frame{
     }
 
     private Frame createNextFrame(){
-        if(index == LAST_NORMAL_FRAME_INDEX){
-            return new FinalFrame(index+1);
+        if(index.isLastNormalIndex()){
+            return new FinalFrame(index.nextIndex());
         }
-        return new NormalFrame(index+1, new Ready());
+        return new NormalFrame(index.nextIndex(), new Ready());
     }
 
     @Override
@@ -73,7 +77,7 @@ public class NormalFrame implements Frame{
 
     @Override
     public int getIndex() {
-        return index;
+        return index.getIndex();
     }
 
     @Override

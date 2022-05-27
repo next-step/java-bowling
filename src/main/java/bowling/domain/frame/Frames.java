@@ -7,13 +7,13 @@ import java.util.List;
 
 public class Frames {
 
-    private static final int MIN_FRAME_COUNT = 1;
+    private static final int MIN_FRAME_INDEX = 1;
 
     private List<Frame> frames;
 
     public Frames(){
         frames = new ArrayList<>();
-        frames.add(new NormalFrame(MIN_FRAME_COUNT));
+        frames.add(new NormalFrame(MIN_FRAME_INDEX));
     }
 
     public void pitch(Pins pins){
