@@ -1,9 +1,8 @@
 package bowling.view;
 
-import bowling.BowlingGame;
-import bowling.Frame.Frame;
-import bowling.Frame.Frames;
-import bowling.bowl.Bowl;
+import bowling.bowl.BowlingGame;
+import bowling.frame.Frame;
+import bowling.frame.Frames;
 import bowling.player.Player;
 
 import java.util.stream.Collectors;

@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.BowlingGame;
+import bowling.bowl.BowlingGame;
 import bowling.pin.Pins;
 import bowling.player.Player;
 
