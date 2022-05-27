@@ -18,11 +18,19 @@ public class Scores {
         return secondScore;
     }
 
-    private boolean isHitFirst() {
-        return firstScore == null;
+    private boolean isPlayFirst() {
+        return firstScore != null;
     }
 
-    public boolean isHitTwice() {
+    private boolean isPlayOnlyFirst() {
+        return isPlayFirst() && !isPlaySecond();
+    }
+
+    private boolean isPlaySecond() {
+        return secondScore != null;
+    }
+
+    public boolean isPlayTwice() {
         return firstScore != null && secondScore != null;
     }
 
@@ -44,7 +52,7 @@ public class Scores {
     }
 
     public void hit(int hitCount) {
-        if (isHitFirst()) {
+        if (!isPlayFirst()) {
             firstScore = new Score(hitCount);
             return;
         }
@@ -53,13 +61,31 @@ public class Scores {
     }
 
     public boolean isStrike() {
-        return firstScore.get() == START_PIN_COUNT;
+        return isPlayFirst() && firstScore.equals(new Score(START_PIN_COUNT));
     }
 
     public boolean isSpare() {
-        if (firstScore == null || secondScore == null)
+        if (isNeverPlayYet() || !isPlayTwice()) {
             return false;
+        }
 
         return firstScore.get() + secondScore.get() == START_PIN_COUNT;
     }
+
+    private boolean isNeverPlayYet() {
+        return !isPlayFirst() || !isPlaySecond();
+    }
+
+    private boolean isHitAllPins() {
+        if (isNeverPlayYet()) {
+            return false;
+        }
+
+        if (isPlayOnlyFirst()) {
+            return firstScore.isAll();
+        }
+
+        return isSpare();
+    }
+
 }

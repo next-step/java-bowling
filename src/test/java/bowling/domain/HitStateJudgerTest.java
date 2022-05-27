@@ -1,9 +1,8 @@
 package bowling.domain;
 
-import static bowling.domain.HitStateJudger.judgeScore;
+import static bowling.domain.HitStateJudger.judgeHitState;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +15,7 @@ class HitStateJudgerTest {
         frame.shot(4);
         frame.shot(3);
 
-        assertThat(judgeScore(frame)).isEqualTo(HitState.NORMAL);
+        assertThat(judgeHitState(frame)).isEqualTo(HitState.NORMAL);
     }
 
     @DisplayName("투구가 스트라이크로 끝난 프레임을 넣으면 스트라이크를 반환한다.")
@@ -25,7 +24,7 @@ class HitStateJudgerTest {
         Frame frame = new Frame();
         frame.shot(10);
 
-        assertThat(judgeScore(frame)).isEqualTo(HitState.STRIKE);
+        assertThat(judgeHitState(frame)).isEqualTo(HitState.STRIKE);
     }
 
     @DisplayName("투구가 스페어로 끝난 프레임을 넣으면 스페어를 반환한다.")
@@ -35,7 +34,7 @@ class HitStateJudgerTest {
         frame.shot(7);
         frame.shot(3);
 
-        assertThat(judgeScore(frame)).isEqualTo(HitState.SPARE);
+        assertThat(judgeHitState(frame)).isEqualTo(HitState.SPARE);
     }
 
 }

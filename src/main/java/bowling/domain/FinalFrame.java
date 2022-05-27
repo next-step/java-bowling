@@ -24,7 +24,7 @@ public class FinalFrame extends Frame {
     }
 
     private boolean isEndOfNormalTry() {
-        return scores.isHitTwice();
+        return scores.isPlayTwice();
     }
 
     private boolean checkExtraShot() {

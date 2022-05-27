@@ -44,15 +44,20 @@ public final class OutputCui {
     }
 
     private static void drawFrame(Frame frame) {
-        out.printf(fixedLengthString("  %s", 3), drawFirstScore(frame.getFirstScore()));
-        out.print(fixedLengthString(drawSecondScore(frame.getFirstScore(), frame.getSecondScore()), 2));
+        out.printf(fixedLengthString("  %s", 3),
+            drawFirstScore(frame.getFirstScoreAsOptional().get()));
+        out.print(fixedLengthString(drawSecondScore(frame.getFirstScoreAsOptional().get(),
+            frame.getSecondScoreAsOptional().get()), 2));
         out.print(GAP + SCORE_SEPARATOR);
     }
 
     private static void drawFinalFrame(Frame finalFrame) {
-        out.printf(fixedLengthString("  %s", 3), drawFirstScore(finalFrame.getFirstScore()));
-        out.print(fixedLengthString(drawSecondScore(finalFrame.getFirstScore(), finalFrame.getSecondScore()), 1));
-        out.print(fixedLengthString(drawExtraScore(finalFrame.getSecondScore(), ((FinalFrame)finalFrame).getExtraScore()), 1));
+        out.printf(fixedLengthString("  %s", 3),
+            drawFirstScore(finalFrame.getFirstScoreAsOptional().get()));
+        out.print(fixedLengthString(drawSecondScore(finalFrame.getFirstScoreAsOptional().get(),
+            finalFrame.getSecondScoreAsOptional().get()), 1));
+        out.print(fixedLengthString(drawExtraScore(finalFrame.getSecondScoreAsOptional().get(),
+            ((FinalFrame)finalFrame).getExtraScore()), 1));
         out.print(GAP + SCORE_SEPARATOR);
     }
 

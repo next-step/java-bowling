@@ -1,22 +1,53 @@
 package bowling.domain;
 
+import java.util.Optional;
+
 public enum HitState {
-    NORMAL((frame) -> {
-
-        return 0;
+    NORMAL(0, (frame) -> {
+        return Optional.empty();
+//        frame.getFirstScoreAsOptional()
+//            .orElse()
+//        return frame.getFirstScoreAsOptional().get() + frame.getSecondScoreAsOptional().get();
     }),
-    STRIKE((frame) -> {
 
-        return 0;
+    SPARE(1, (frame) -> {
+        return Optional.empty();
+//        final int spare = 10;
+//
+//        if (!frame.hasNext()) {
+//            return 0; // or throw
+//        }
+//
+//        Frame next = frame.next();
+//        Optional<Score> optionalScore = next.getFirstScoreAsOptional();
+//
+//        return optionalScore.map(score -> spare + score.get())
+//            .orElse(0); // or throw?
     }),
-    SPARE((frame) -> {
-
-        return 0;
+    STRIKE(2, (frame) -> {
+        return Optional.empty();
+//        final int strike = 10;
+//
+//        if (!frame.hasNext()) {
+//            return 0; // or throw?
+//        }
+//
+//        Frame next = frame.next();
+//        Optional<Score> optionalScore = next.getFirstScoreAsOptional();
+//
+//        return optionalScore.map(score -> strike + score.get())
+//            .orElse(0); // or throw?
     });
 
+    private final int nextAddScore;
     private final ScoreCalculator calculator;
 
-    HitState(ScoreCalculator calculator) {
+    public Optional<Integer> scoreOf(Frame frame) {
+        return calculator.calculate(frame);
+    }
+
+    HitState(int nextAddScore, ScoreCalculator calculator) {
+        this.nextAddScore = nextAddScore;
         this.calculator = calculator;
     }
 

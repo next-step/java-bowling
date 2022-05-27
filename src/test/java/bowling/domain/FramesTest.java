@@ -46,8 +46,8 @@ class FramesTest {
         frames.throwBall(4);
         frames.throwBall(3);
 
-        assertThat(frames.head().getFirstScore().get()).isEqualTo(4);
-        assertThat(frames.head().getSecondScore().get()).isEqualTo(3);
+        assertThat(frames.head().firstScore()).isEqualTo(4);
+        assertThat(frames.head().secondScore()).isEqualTo(3);
     }
 
     @DisplayName("유효하지 않은 맞춘개수 입력 시 예외 발생한다.")
@@ -70,12 +70,11 @@ class FramesTest {
         frames.throwBall(8);    // 3
         frames.throwBall(1);    // 3
 
-        assertThat(frames.head().getFirstScore().get()).isEqualTo(9);
-        assertThat(frames.head().getSecondScore().get()).isEqualTo(1);
-        assertThat(frames.head().next().getFirstScore().get()).isEqualTo(10);
-        assertThat(frames.head().next().getSecondScore()).isNull();
-        assertThat(frames.current().before().getFirstScore().get()).isEqualTo(8);
-        assertThat(frames.current().before().getSecondScore().get()).isEqualTo(1);
+        assertThat(frames.head().firstScore()).isEqualTo(9);
+        assertThat(frames.head().secondScore()).isEqualTo(1);
+        assertThat(frames.head().next().firstScore()).isEqualTo(10);
+        assertThat(frames.current().before().firstScore()).isEqualTo(8);
+        assertThat(frames.current().before().secondScore()).isEqualTo(1);
     }
 
     @DisplayName("10프레임에 스트라이크를 치면 2번 볼 던지기 추가 진행 가능하다.")
