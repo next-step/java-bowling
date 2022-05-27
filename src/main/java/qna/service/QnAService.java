@@ -10,8 +10,6 @@ import qna.domain.*;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service("qnaService")
 public class QnAService {
@@ -39,20 +37,16 @@ public class QnAService {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
 
-        List<Answer> answers = question.getAnswers();
-        for (Answer answer : answers) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
-        }
+        AnswerList answerList = new AnswerList(question.getAnswers());
+        answerList.checkLoginUserEqualWithAnswersOwners(loginUser);
 
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        DeleteHistoryList deleteHistoryList = new DeleteHistoryList();
         question.setDeleted(true);
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
-        for (Answer answer : answers) {
+        deleteHistoryList.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
+        for (Answer answer : answerList.value()) {
             answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+            deleteHistoryList.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         }
-        deleteHistoryService.saveAll(deleteHistories);
+        deleteHistoryService.saveAll(deleteHistoryList);
     }
 }
