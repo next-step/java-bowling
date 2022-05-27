@@ -1,11 +1,13 @@
 package bowling.view;
 
 import bowling.domain.BowlingGame;
+import bowling.domain.bowl.Bowl;
+import bowling.domain.frame.PitchResult;
 import bowling.domain.player.Player;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
-
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -16,6 +18,10 @@ public class Output {
     private static final String SCORE_RESULT_FRAME = "  %-3d |";
     private static final String SCORE_EMPTY_RESULT_FRAME = "|      |";
     private static final String EMPTY_RESULT_FRAME = "      |";
+    private static final String SYMBOL_DELIMITER = "|";
+    private static final String SPARE_SYMBOL = "/";
+    private static final String STRIKE_SYMBOL = "X";
+    private static final String GUTTER_SYMBOL = "-|-";
     private static final int MAX_FRAME_COUNT = 10;
 
     public static void printBoard(BowlingGame bowlingGame){
@@ -32,14 +38,35 @@ public class Output {
     }
 
     public static String getSymbolBody(Frames frames) {
-        String symbolBody =  frames.getFrames().stream()
-                .map(Frame::getSymbol)
-                .map(symbol -> String.format(SYMBOL_RESULT_FRAME, symbol))
-                .collect(Collectors.joining());
+        StringBuilder res = new StringBuilder();
+        for(Frame frame: frames.getFrames()){
 
-        symbolBody += getEmptyFrameResults(MAX_FRAME_COUNT - frames.size());
+            String symbol = frame.getBowls()
+                    .stream()
+                    .map(Bowl::getPitchResult)
+                    .filter(Objects::nonNull)
+                    .map(Output::getSymbol)
+                    .collect(Collectors.joining(SYMBOL_DELIMITER));
 
-        return symbolBody;
+            res.append(String.format(SYMBOL_RESULT_FRAME, symbol));
+        }
+        return res.toString();
+    }
+
+    private static String getSymbol(PitchResult pitchResult) {
+        if(pitchResult.isSpare()){
+            return pitchResult.getFirstHitCount()+SPARE_SYMBOL;
+        }
+        if(pitchResult.isGutter()){
+            return GUTTER_SYMBOL;
+        }
+        if(pitchResult.isStrike()){
+            return STRIKE_SYMBOL;
+        }
+        if(pitchResult.isMiss()){
+            return pitchResult.getFirstHitCount() +SYMBOL_DELIMITER+ pitchResult.getSecondHitCount();
+        }
+        return String.valueOf(pitchResult.getFirstHitCount());
     }
 
     public static String getScoreBody(List<Integer> scores){

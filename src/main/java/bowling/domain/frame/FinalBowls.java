@@ -10,6 +10,7 @@ import bowling.domain.pin.Pins;
 import bowling.domain.exception.CannotPitchException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class FinalBowls {
@@ -24,7 +25,7 @@ public class FinalBowls {
     }
 
     public List<Bowl> getBowls() {
-        return bowls;
+        return Collections.unmodifiableList(bowls);
     }
 
     public void pitch(Pins pins) {

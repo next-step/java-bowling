@@ -5,6 +5,7 @@ import bowling.domain.bowl.Ready;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -39,13 +40,6 @@ public class FinalFrame implements Frame{
     }
 
     @Override
-    public String getSymbol() {
-        return bowls.getBowls().stream()
-                .map(Bowl::getSymbol)
-                .collect(Collectors.joining("|"));
-    }
-
-    @Override
     public int score() {
         if(bowls.canProceed()){
             return Score.CANNOT_CALCULATE_SCORE;
@@ -60,7 +54,7 @@ public class FinalFrame implements Frame{
     @Override
     public int calculateAdditionalScore(Score beforeScore) {
         Score score = new Score(beforeScore.getValue(), beforeScore.getLeft());
-        for (Bowl curBowl : bowls.getBowls()) {
+        for (Bowl curBowl : getBowls()) {
             if(curBowl instanceof Ready){
                 return Score.CANNOT_CALCULATE_SCORE;
             }
@@ -70,6 +64,12 @@ public class FinalFrame implements Frame{
             }
         }
         return Score.CANNOT_CALCULATE_SCORE;
+    }
+
+
+    @Override
+    public List<Bowl> getBowls() {
+        return bowls.getBowls();
     }
 
     @Override

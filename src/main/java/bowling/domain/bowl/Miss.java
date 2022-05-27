@@ -1,5 +1,6 @@
 package bowling.domain.bowl;
 
+import bowling.domain.frame.PitchResult;
 import bowling.domain.score.Score;
 import bowling.domain.pin.Pins;
 
@@ -20,11 +21,6 @@ public class Miss extends Ended{
     }
 
     @Override
-    public String getSymbol() {
-        return firstPin.getSymbol()+"|"+secondPin.getSymbol();
-    }
-
-    @Override
     public Score score() {
         return Score.miss(firstPin.getCount(), secondPin.getCount());
     }
@@ -36,6 +32,11 @@ public class Miss extends Ended{
             return after;
         }
         return after.addValue(secondPin.getCount());
+    }
+
+    @Override
+    public PitchResult getPitchResult() {
+        return PitchResult.miss(firstPin.getCount(), secondPin.getCount());
     }
 
 }

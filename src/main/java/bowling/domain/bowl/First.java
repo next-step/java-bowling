@@ -1,5 +1,6 @@
 package bowling.domain.bowl;
 
+import bowling.domain.frame.PitchResult;
 import bowling.domain.score.Score;
 import bowling.domain.pin.Pins;
 
@@ -24,11 +25,6 @@ public class First implements Bowl{
     }
 
     @Override
-    public String getSymbol() {
-        return prePins.getSymbol();
-    }
-
-    @Override
     public String toString(){
         return "[First first: "+prePins+"]";
     }
@@ -36,6 +32,11 @@ public class First implements Bowl{
     @Override
     public Score calculateScore(Score before) {
         return before.addValue(prePins.getCount());
+    }
+
+    @Override
+    public PitchResult getPitchResult() {
+        return PitchResult.first(prePins.getCount());
     }
 
     @Override

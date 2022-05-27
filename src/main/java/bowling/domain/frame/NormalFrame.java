@@ -4,6 +4,7 @@ import bowling.domain.bowl.Bowl;
 import bowling.domain.bowl.Ready;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
+import java.util.List;
 
 public class NormalFrame implements Frame{
     private static final int LAST_NORMAL_FRAME_INDEX = 9;
@@ -65,8 +66,9 @@ public class NormalFrame implements Frame{
         return nextFrame.calculateAdditionalScore(after);
     }
 
-    public Bowl getBowl() {
-        return bowl;
+    @Override
+    public List<Bowl> getBowls() {
+        return List.of(bowl);
     }
 
     @Override
@@ -77,11 +79,6 @@ public class NormalFrame implements Frame{
     @Override
     public boolean hasNext() {
         return true;
-    }
-
-    @Override
-    public String getSymbol() {
-        return bowl.getSymbol();
     }
 
     @Override

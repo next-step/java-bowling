@@ -1,5 +1,6 @@
 package bowling.domain.bowl;
 
+import bowling.domain.frame.PitchResult;
 import bowling.domain.score.Score;
 
 public class Strike extends Ended{
@@ -12,11 +13,6 @@ public class Strike extends Ended{
     }
 
     @Override
-    public String getSymbol() {
-        return "X";
-    }
-
-    @Override
     public Score score() {
         return Score.strike();
     }
@@ -26,5 +22,9 @@ public class Strike extends Ended{
         return before.addValue(STRIKE_VALUE);
     }
 
+    @Override
+    public PitchResult getPitchResult() {
+        return PitchResult.strike();
+    }
 
 }

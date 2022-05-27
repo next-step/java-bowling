@@ -1,5 +1,6 @@
 package bowling.domain.bowl;
 
+import bowling.domain.frame.PitchResult;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.domain.exception.CannotCalculateException;
@@ -15,11 +16,6 @@ public class Ready implements Bowl{
     }
 
     @Override
-    public String getSymbol() {
-        return "";
-    }
-
-    @Override
     public String toString(){
         return "[Ready]";
     }
@@ -27,6 +23,11 @@ public class Ready implements Bowl{
     @Override
     public Score calculateScore(Score before) {
         throw new CannotCalculateException();
+    }
+
+    @Override
+    public PitchResult getPitchResult() {
+        return null;
     }
 
     @Override

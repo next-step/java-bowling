@@ -1,5 +1,6 @@
 package bowling.domain.bowl;
 
+import bowling.domain.frame.PitchResult;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 
@@ -22,11 +23,6 @@ public class Spare extends Ended{
     }
 
     @Override
-    public String getSymbol() {
-        return firstPin.getSymbol()+"|/";
-    }
-
-    @Override
     public Score score() {
         return Score.spare(firstPin.getCount(), secondPin.getCount());
     }
@@ -38,6 +34,11 @@ public class Spare extends Ended{
             return after;
         }
         return after.addValue(secondPin.getCount());
+    }
+
+    @Override
+    public PitchResult getPitchResult() {
+        return PitchResult.spare(firstPin.getCount(), secondPin.getCount());
     }
 
 }
