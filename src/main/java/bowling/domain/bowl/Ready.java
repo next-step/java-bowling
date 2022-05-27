@@ -1,6 +1,6 @@
 package bowling.domain.bowl;
 
-import bowling.domain.frame.PitchResult;
+import bowling.domain.pitch.PitchResult;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.domain.exception.CannotCalculateException;

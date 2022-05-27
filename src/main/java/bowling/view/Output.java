@@ -2,7 +2,7 @@ package bowling.view;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.bowl.Bowl;
-import bowling.domain.frame.PitchResult;
+import bowling.domain.pitch.PitchResult;
 import bowling.domain.player.Player;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;

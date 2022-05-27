@@ -8,6 +8,7 @@ import bowling.domain.bowl.Spare;
 import bowling.domain.bowl.Strike;
 import bowling.domain.pin.Pins;
 import bowling.domain.exception.CannotPitchException;
+import bowling.domain.pitch.PitchCount;
 
 import java.util.ArrayList;
 import java.util.Collections;
