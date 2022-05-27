@@ -1,5 +1,6 @@
 package bowling.domain.bowl;
 
+import bowling.domain.frame.PitchResult;
 import bowling.domain.score.Score;
 
 public class Gutter extends Ended{
@@ -12,17 +13,21 @@ public class Gutter extends Ended{
     }
 
     @Override
-    public String getSymbol() {
-        return "-|-";
-    }
-
-    @Override
     public Score score() {
         return Score.gutter();
     }
 
     @Override
     public Score calculateScore(Score before) {
-        return before.addValue(GUTTER_VALUE);
+        Score after = before.addValue(GUTTER_VALUE);
+        if(after.isFinished()){
+            return after;
+        }
+        return after.addValue(GUTTER_VALUE);
+    }
+
+    @Override
+    public PitchResult getPitchResult() {
+        return PitchResult.gutter();
     }
 }

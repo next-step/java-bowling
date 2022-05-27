@@ -19,24 +19,62 @@ class FinalFrameTest {
      * calculateAdditionalScore 테스트
      * */
     @Test
-    @DisplayName("9번째 프레임이 스트라이크일 때 보너스 점수 계산요청하면 2번의 보너스 투구 점수를 더해야한다.")
+    @DisplayName("스트라이크에서 보너스 점수 계산요청")
     void 스트라이크_프레임에서_보너스점수_계산(){
         Frame finalFrame = new FinalFrame(10);
 
         finalFrame.pitch(new Pins(10));
         finalFrame.pitch(new Pins(2));
 
+        assertThat(finalFrame.calculateAdditionalScore(Score.spare(9,1))).isEqualTo(20);
         assertThat(finalFrame.calculateAdditionalScore(Score.strike())).isEqualTo(22);
     }
 
     @Test
-    @DisplayName("9번째 프레임에서 스페어일 때  보너스 점수 계산요청하면 1번의 투구 점수를 더해야한다.")
+    @DisplayName("스페어일때 보너스 점수 계산요청")
     void 마지막프레임이_스페어_보너스점수_계산(){
         Frame finalFrame = new FinalFrame(10);
 
-        finalFrame.pitch(new Pins(10));
+        finalFrame.pitch(new Pins(2));
+        finalFrame.pitch(new Pins(8));
 
-        assertThat(finalFrame.calculateAdditionalScore(Score.spare(1, 9))).isEqualTo(20);
+        assertThat(finalFrame.calculateAdditionalScore(Score.spare(1, 9))).isEqualTo(12);
+        assertThat(finalFrame.calculateAdditionalScore(Score.strike())).isEqualTo(20);
+    }
+
+    @Test
+    @DisplayName("거터일 때  보너스 점수 계산요청")
+    void 마지막프레임이_거터_보너스점수_계산(){
+        Frame finalFrame = new FinalFrame(10);
+
+        finalFrame.pitch(new Pins(0));
+        finalFrame.pitch(new Pins(0));
+
+        assertThat(finalFrame.calculateAdditionalScore(Score.spare(1, 9))).isEqualTo(10);
+        assertThat(finalFrame.calculateAdditionalScore(Score.strike())).isEqualTo(10);
+    }
+
+    @Test
+    @DisplayName("미스일 때  보너스 점수 계산요청")
+    void 마지막프레임이_미스_보너스점수_계산(){
+        Frame finalFrame = new FinalFrame(10);
+
+        finalFrame.pitch(new Pins(2));
+        finalFrame.pitch(new Pins(5));
+
+        assertThat(finalFrame.calculateAdditionalScore(Score.spare(1, 9))).isEqualTo(12);
+        assertThat(finalFrame.calculateAdditionalScore(Score.strike())).isEqualTo(17);
+    }
+
+    @Test
+    @DisplayName("First일 때  보너스 점수 계산요청")
+    void 마지막프레임이_First_보너스점수_계산(){
+        Frame finalFrame = new FinalFrame(10);
+
+        finalFrame.pitch(new Pins(2));
+
+        assertThat(finalFrame.calculateAdditionalScore(Score.spare(1, 9))).isEqualTo(12);
+        assertThat(finalFrame.calculateAdditionalScore(Score.strike())).isEqualTo(-1);
     }
 
     @Test
