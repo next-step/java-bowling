@@ -1,5 +1,6 @@
 package bowling.bowl;
 
+import bowling.score.Score;
 import bowling.pin.Pins;
 
 public class Miss extends Ended{
@@ -22,4 +23,19 @@ public class Miss extends Ended{
     public String getSymbol() {
         return firstPin.getSymbol()+"|"+secondPin.getSymbol();
     }
+
+    @Override
+    public Score score() {
+        return Score.miss(firstPin.getCount(), secondPin.getCount());
+    }
+
+    @Override
+    public Score calculateScore(Score before) {
+        Score after = before.addValue(firstPin.getCount());
+        if(after.isFinished()){
+            return after;
+        }
+        return after.addValue(secondPin.getCount());
+    }
+
 }
