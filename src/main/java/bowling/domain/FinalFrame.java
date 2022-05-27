@@ -57,8 +57,8 @@ public class FinalFrame extends Frame {
             || Objects.nonNull(extraScore);
     }
 
-    public Score getExtraScore() {
-        return extraScore;
+    public Optional<Score> getExtraScore() {
+        return Optional.ofNullable(extraScore);
     }
 
 }
