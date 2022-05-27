@@ -1,10 +1,11 @@
-package bowling.Frame;
+package bowling.frame;
 
 import bowling.bowl.*;
 import bowling.pin.Pins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static org.assertj.core.api.Assertions.assertThat;
+
+import static org.assertj.core.api.Assertions.*;
 
 class NormalFrameTest {
 
@@ -14,9 +15,6 @@ class NormalFrameTest {
         NormalFrame frame = new NormalFrame(1);
         Frame next = frame.pitch(new Pins(10));
 
-        assertThat(frame.getBowls()).isExactlyInstanceOf(Strike.class);
-        assertThat(next.getIndex()).isEqualTo(2);
-        assertThat(next.getBowls()).isExactlyInstanceOf(First.class);
     }
 
     @Test
@@ -25,9 +23,6 @@ class NormalFrameTest {
         NormalFrame frame = new NormalFrame(1);
         Frame next = frame.pitch(new Pins(8));
 
-        assertThat(frame.getBowls()).isExactlyInstanceOf(Second.class);
-        assertThat(next.getIndex()).isEqualTo(1);
-        assertThat(next.getBowls()).isExactlyInstanceOf(Second.class);
     }
 
     @Test
@@ -37,8 +32,6 @@ class NormalFrameTest {
         Frame second = first.pitch(new Pins(8));
         Frame next = second.pitch(new Pins(2));
 
-        assertThat(second.getBowls()).isExactlyInstanceOf(Spare.class);
-        assertThat(next.getBowls()).isExactlyInstanceOf(First.class);
     }
 
     @Test
@@ -48,8 +41,6 @@ class NormalFrameTest {
         Frame second = first.pitch(new Pins(8));
         Frame next = second.pitch(new Pins(1));
 
-        assertThat(second.getBowls()).isExactlyInstanceOf(Miss.class);
-        assertThat(next.getBowls()).isExactlyInstanceOf(First.class);
     }
 
     @Test
@@ -59,7 +50,47 @@ class NormalFrameTest {
         Frame second = first.pitch(new Pins(0));
         Frame next = second.pitch(new Pins(0));
 
-        assertThat(second.getBowls()).isExactlyInstanceOf(Gutter.class);
-        assertThat(next.getBowls()).isExactlyInstanceOf(First.class);
+
+    }
+
+    @Test
+    @DisplayName("프레임이 끝나지 않았을 때 점수를 구하면 -1을 반환한다.")
+    void unfinished_score_exception(){
+        NormalFrame frame = new NormalFrame(1);
+        frame.pitch(new Pins(3));
+
+        assertThat(frame.score()).isEqualTo(-1);
+    }
+
+    @Test
+    @DisplayName("miss일때 점수 구하기")
+    void miss_score(){
+        NormalFrame frame = new NormalFrame(1);
+        frame.pitch(new Pins(3));
+        frame.pitch(new Pins(3));
+        assertThat(frame.score()).isEqualTo(6);
+    }
+
+    @Test
+    @DisplayName("gutter 점수 구하기")
+    void gutter_score(){
+        NormalFrame frame = new NormalFrame(1);
+        frame.pitch(new Pins(0));
+        frame.pitch(new Pins(0));
+        assertThat(frame.score()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("spare 프레임에서 전 프레임의 bowl점수에 보너스 점수 더해준다.")
+    void next_score(){
+        NormalFrame pre = new NormalFrame(1);
+        pre.pitch(new Pins(10));
+
+        NormalFrame cur = new NormalFrame(2);
+        cur.pitch(new Pins(1));
+        cur.pitch(new Pins(2));
+
+        Bowl preBowl = pre.getBowl();
+        assertThat(cur.calculateAdditionalScore(preBowl.score())).isEqualTo(13);
     }
 }
