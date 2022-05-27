@@ -1,11 +1,7 @@
-package bowling.Frame;
+package bowling.frame;
 
-import bowling.bowl.Bowl;
-import bowling.bowl.First;
-import bowling.bowl.Gutter;
-import bowling.bowl.Strike;
-import bowling.bowl.Miss;
-import bowling.bowl.Spare;
+import bowling.bowl.*;
+import bowling.bowl.Ready;
 import bowling.exception.CannotPitchException;
 import bowling.pin.Pins;
 
@@ -19,7 +15,7 @@ public class FinalBowls {
 
     public FinalBowls(){
         bowls = new ArrayList<>();
-        bowls.add(new First());
+        bowls.add(new Ready());
         pitchCount = new PitchCount();
     }
 
@@ -28,7 +24,7 @@ public class FinalBowls {
     }
 
     public void pitch(Pins pins) {
-        if(!canPitch()){
+        if(!canProceed()){
             throw new CannotPitchException();
         }
 
@@ -36,14 +32,15 @@ public class FinalBowls {
 
         Bowl resultBowl = curBowl.pitch(pins);
         pitchCount.proceed();
+
         changeBowl(resultBowl);
 
-        if (resultBowl instanceof Strike || resultBowl instanceof Spare) {
-            addBall(new First());
+        if (canProceed() && (resultBowl instanceof Strike || resultBowl instanceof Spare)) {
+            addBall(new Ready());
         }
     }
 
-    public boolean canPitch(){
+    public boolean canProceed(){
         Bowl curBowl = getCurBowl();
         if(curBowl instanceof Gutter || curBowl instanceof Miss){
             return false;
