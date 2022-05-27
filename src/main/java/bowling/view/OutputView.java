@@ -29,7 +29,7 @@ public class OutputView {
 
     private static void printBowlingScoreStatus(List<Frame> frames) {
         STRING_BUILDER.append(frames.stream()
-                .map(frame -> String.format(BOWLING_SCORE_BOARD_STATUS, frame.symbol()))
+                .map(frame -> String.format(BOWLING_SCORE_BOARD_STATUS, frame.toString()))
                 .collect(joining()));
 
         STRING_BUILDER.append(IntStream.rangeClosed(1, FrameNumber.MAX_FRAME_NUMBER - frames.size())

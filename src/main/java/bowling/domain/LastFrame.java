@@ -60,7 +60,7 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public String symbol() {
+    public String toString() {
         return states.stream()
                 .map(State::symbol)
                 .collect(joining(DELIMITER_OF_SCORE));

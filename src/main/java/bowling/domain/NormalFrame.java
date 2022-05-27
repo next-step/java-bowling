@@ -34,11 +34,6 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public String symbol() {
-        return state.symbol();
-    }
-
-    @Override
     public Frame bowl(Pitching pitching) {
         this.state = state.bowl(pitching);
 
@@ -72,5 +67,10 @@ public class NormalFrame implements Frame {
     @Override
     public int hashCode() {
         return Objects.hash(frameNumber);
+    }
+
+    @Override
+    public String toString() {
+        return state.symbol();
     }
 }
