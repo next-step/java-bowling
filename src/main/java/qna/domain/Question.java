@@ -1,9 +1,9 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -18,52 +18,23 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
     public Question() {
     }
 
-    public Question(String title, String contents) {
-        this.title = title;
-        this.contents = contents;
-    }
-
-    public Question(long id, String title, String contents) {
+    public Question(long id, String title, String contents, User writer) {
         super(id);
         this.title = title;
         this.contents = contents;
+        this.writer = writer;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
-
-    public User getWriter() {
+    protected User getWriter() {
         return writer;
-    }
-
-    public Question writeBy(User loginUser) {
-        this.writer = loginUser;
-        return this;
     }
 
     public void addAnswer(Answer answer) {
@@ -71,21 +42,29 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public boolean isOwner(User loginUser) {
+    private boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public void delete(User loginUser, List<DeleteHistory> deleteHistories) throws CannotDeleteException {
+        deletableValid(loginUser);
+        deleted = true;
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+        answers.delete(loginUser, deleteHistories);
     }
 
-    public boolean isDeleted() {
+    private void deletableValid(User loginUser) throws CannotDeleteException {
+        if(deleted) {
+            throw new CannotDeleteException("이미 삭제된 질문입니다.");
+        }
+
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
+    protected boolean isDeleted() {
         return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
     }
 
     @Override
