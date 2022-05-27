@@ -1,4 +1,4 @@
-package bowling.Frame;
+package bowling.frame;
 
 import bowling.pin.Pins;
 import java.util.ArrayList;
