@@ -18,10 +18,6 @@ public class NormalFrame implements Frame{
         this.bowl = bowl;
     }
 
-    public NormalFrame(FrameIndex index) {
-        this(index, new Ready());
-    }
-
     public NormalFrame(int index) {
         this(FrameIndex.of(index), new Ready());
     }
