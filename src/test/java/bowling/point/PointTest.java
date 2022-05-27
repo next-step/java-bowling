@@ -1,4 +1,4 @@
-package bowling.record;
+package bowling.point;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -14,16 +14,16 @@ import org.junit.jupiter.params.provider.ValueSource;
 class PointTest {
 
 	@Test
-	void 투구_기록을_Wrappinp_하는_객체를_생성() {
-		Point actual = new Point(1);
-		Point expected = new Point(1);
+	void 투구_기록을_캐싱해서_Wrappinp_하는_객체를_생성() {
+		Point actual = Point.of(1);
+		Point expected = Point.of(1);
 
-		assertThat(actual).isEqualTo(expected);
+		assertThat(actual).isSameAs(expected);
 	}
 
 	@ParameterizedTest(name = "{displayName} : {arguments}")
 	@ValueSource(ints = {-1, 11})
 	void 투구_기록이_범위_안에_있지_않으면_예외(int throwCount) {
-		assertThatIllegalArgumentException().isThrownBy(() -> new Point(throwCount));
+		assertThatIllegalArgumentException().isThrownBy(() -> Point.of(throwCount));
 	}
 }
