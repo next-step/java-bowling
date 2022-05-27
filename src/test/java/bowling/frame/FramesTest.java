@@ -19,7 +19,7 @@ class FramesTest {
         frames.getFrames().stream()
                 .forEach(System.out::println);
 
-        System.out.println(Output.getResultBody(frames));
+        System.out.println(Output.getSymbolBody(frames));
     }
 
     @Test
@@ -114,5 +114,33 @@ class FramesTest {
 
         Frame spare = frames.getFrames().get(0);
         assertThat(spare.score()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("점수 리스트를 반환한다.")
+    void 점수_리스트(){
+        Frames frames = new Frames();
+        // 1
+        frames.pitch(new Pins(10));
+
+        assertThat(frames.getScores())
+                .containsExactly();
+        // 2
+        frames.pitch(new Pins(8));
+        frames.pitch(new Pins(2));
+
+        assertThat(frames.getScores())
+                .containsExactly(20);
+
+        // 3
+        frames.pitch(new Pins(8));
+        assertThat(frames.getScores())
+                .containsExactly(20, 38);
+
+        frames.pitch(new Pins(1));
+        assertThat(frames.getScores())
+                .containsExactly(20, 38, 47);
+
+        System.out.println(Output.getScoreBody(frames.getScores()));
     }
 }

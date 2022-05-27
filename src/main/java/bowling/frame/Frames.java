@@ -4,17 +4,17 @@ import bowling.pin.Pins;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Frames {
 
-    private static final int MIN_FRAME_INDEX = 1;
-    private static final int MAX_FRAME_INDEX = 10;
+    private static final int MIN_FRAME_COUNT = 1;
 
     private List<Frame> frames;
 
     public Frames(){
         frames = new ArrayList<>();
-        frames.add(new NormalFrame(MIN_FRAME_INDEX));
+        frames.add(new NormalFrame(MIN_FRAME_COUNT));
     }
 
     public void pitch(Pins pins){
@@ -23,6 +23,20 @@ public class Frames {
         if(nextFrame != getCurFrame()){
             frames.add(nextFrame);
         }
+    }
+
+    public List<Integer> getScores(){
+        List<Integer> scores = new ArrayList<>();
+        int accumulatedScore = 0;
+        for(Frame frame: frames){
+            int score = frame.score();
+            if(score == -1){
+                return scores;
+            }
+            accumulatedScore += score;
+            scores.add(accumulatedScore);
+        }
+        return scores;
     }
 
     public int size(){
