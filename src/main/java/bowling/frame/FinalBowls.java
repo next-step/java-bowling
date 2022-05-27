@@ -45,7 +45,7 @@ public class FinalBowls {
         if(curBowl instanceof Gutter || curBowl instanceof Miss){
             return false;
         }
-        if(!pitchCount.canProceed(curBowl)){
+        if(!pitchCount.canProceed()){
             return false;
         }
         return true;

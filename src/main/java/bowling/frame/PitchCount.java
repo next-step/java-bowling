@@ -13,12 +13,8 @@ public class PitchCount {
         count += 1;
     }
 
-    public boolean canProceed(Bowl bowl){
+    public boolean canProceed(){
         if(count == MAX_PITCH_CNT){
-            return false;
-        }
-
-        if(count == 2 && bowl instanceof First){
             return false;
         }
         return true;
