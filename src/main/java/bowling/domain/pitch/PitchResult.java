@@ -7,34 +7,32 @@ public class PitchResult {
 
     private final int first;
     private final int second;
-    private final boolean isSpare;
-    private final boolean isFirst;
+    private final boolean firstBowl;
 
-    private PitchResult(int first, int second, boolean isSpare, boolean isFirst){
+    private PitchResult(int first, int second, boolean firstBowl){
         this.first = first;
         this.second = second;
-        this.isSpare = isSpare;
-        this.isFirst = isFirst;
+        this.firstBowl = firstBowl;
     }
 
     public static PitchResult spare(int first, int second){
-        return new PitchResult(first, second,true, false);
+        return new PitchResult(first, second, false);
     }
 
     public static PitchResult first(int first){
-        return new PitchResult(first, MIN_HIT_COUNT, false, true);
+        return new PitchResult(first, MIN_HIT_COUNT, true);
     }
 
     public static PitchResult strike(){
-        return new PitchResult(MAX_HIT_COUNT, 0,false, false);
+        return new PitchResult(MAX_HIT_COUNT, 0, false);
     }
 
     public static PitchResult gutter() {
-        return new PitchResult(MIN_HIT_COUNT, MIN_HIT_COUNT, false, false);
+        return new PitchResult(MIN_HIT_COUNT, MIN_HIT_COUNT, false);
     }
 
     public static PitchResult miss(int first, int second) {
-        return new PitchResult(first, second, false, false);
+        return new PitchResult(first, second, false);
     }
 
     public int getHitCount() {
@@ -49,38 +47,34 @@ public class PitchResult {
         return second;
     }
 
-    public boolean isFirst(){
-        return isFirst;
-    }
-
     public boolean isSpare(){
-        return isSpare;
+        if(getHitCount() != MAX_HIT_COUNT){
+            return false;
+        }
+        return first != MAX_HIT_COUNT;
     }
 
     public boolean isStrike(){
         if(getHitCount() != MAX_HIT_COUNT){
             return false;
         }
-        return !isSpare;
+        return first == MAX_HIT_COUNT;
     }
 
     public boolean isMiss(){
-        if(isFirst){
+        if(firstBowl){
             return false;
         }
         return MIN_HIT_COUNT < getHitCount() || getHitCount() < MAX_HIT_COUNT;
     }
 
     public boolean isGutter(){
-        if(getHitCount() == MIN_HIT_COUNT){
-            return true;
-        }
-        return false;
+        return getHitCount() == MIN_HIT_COUNT;
     }
 
     @Override
     public String toString(){
         return "hit count: "+first
-                +" isSpare: "+ isSpare;
+                +" firstBowl: "+ firstBowl;
     }
 }
