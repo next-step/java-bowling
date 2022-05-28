@@ -2,19 +2,22 @@ package bowling.domain.bowl;
 
 import bowling.domain.bowl.type.BowlTypeDto;
 import bowling.domain.bowl.type.BowlType;
+import bowling.domain.exception.OutOfPinCountException;
 import bowling.domain.pitch.PitchResult;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.domain.exception.CannotCalculateException;
-import bowling.domain.exception.RunningBowlException;
 import java.util.List;
 
 public class Ready implements Bowl{
 
     private static final int PITCH_COUNT = 0;
+    private static final int MAX_PIN_HIT_COUNT = 10;
 
     @Override
     public Bowl pitch(Pins pins) {
+        validate(pins);
+
         BowlTypeDto dto = new BowlTypeDto(List.of(pins.getCount()));
         BowlType type = BowlType.getType(dto);
 
@@ -23,6 +26,12 @@ public class Ready implements Bowl{
         }
 
         return new First(pins);
+    }
+
+    private void validate(Pins pins) {
+        if(pins.getCount()  > MAX_PIN_HIT_COUNT){
+            throw new OutOfPinCountException();
+        }
     }
 
     public static boolean checkType(BowlTypeDto bowlTypeDto){
@@ -47,7 +56,7 @@ public class Ready implements Bowl{
 
     @Override
     public Score score() {
-        throw new RunningBowlException();
+        return Score.ready();
     }
 
     @Override
