@@ -1,10 +1,10 @@
 package bowling.domain.frame;
 
-import bowling.domain.bowl.Bowls;
+import bowling.domain.State.State;
 
 public class NormalFrame extends Frame {
-    public NormalFrame(FrameNumber frameNumber, Bowls bowls) {
-        super(frameNumber, bowls);
+    public NormalFrame(FrameNumber frameNumber, State state) {
+        super(frameNumber, state);
 
         if (!frameNumber.isNormal()) {
             throw new IllegalArgumentException(
@@ -16,13 +16,18 @@ public class NormalFrame extends Frame {
     @Override
     public Frame next() {
         if (frameNumber.isMaxInNormal()) {
-            return new FinalFrame(frameNumber.next(), Bowls.initialize());
+            return new FinalFrame(frameNumber.next(), State.ready());
         }
-        return new NormalFrame(frameNumber.next(), Bowls.initialize());
+        return new NormalFrame(frameNumber.next(), State.ready());
     }
 
     @Override
     public boolean isFinal() {
         return false;
+    }
+
+    @Override
+    public boolean isDone() {
+        return state.isDone();
     }
 }

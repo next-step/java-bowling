@@ -11,7 +11,7 @@ public class PlayerTest {
     @Test
     void Player는_PlayerName없이_생성_될_경우_예외를_발생_시킨다() {
         assertThatThrownBy(() -> {
-            new Player(null);
+            new Player((PlayerName) null);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 }

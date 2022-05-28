@@ -1,10 +1,10 @@
 package bowling.domain.frame;
 
-import bowling.domain.bowl.Bowls;
+import bowling.domain.State.State;
 
 public class FinalFrame extends Frame {
-    public FinalFrame(FrameNumber frameNumber, Bowls bowls) {
-        super(frameNumber, bowls);
+    public FinalFrame(FrameNumber frameNumber, State state) {
+        super(frameNumber, state);
 
         if (!frameNumber.isFinal()) {
             throw new IllegalArgumentException(
@@ -20,5 +20,10 @@ public class FinalFrame extends Frame {
     @Override
     public boolean isFinal() {
         return true;
+    }
+
+    @Override
+    public boolean isDone() {
+        return state.isDone();
     }
 }

@@ -1,12 +1,12 @@
-package bowling.domain.bowl;
+package bowling.domain.State;
 
-public class PinCount {
+public class Pin {
     public static final int MIN = 0;
     public static final int MAX = 10;
 
     private final int pinCount;
 
-    public PinCount(int pinCount) {
+    public Pin(int pinCount) {
         validate(pinCount);
         this.pinCount = pinCount;
     }
@@ -20,4 +20,20 @@ public class PinCount {
         }
     }
 
+    public Pin add(Pin pin) {
+        return new Pin(pin.pinCount + this.pinCount);
+    }
+
+    public boolean isZero() {
+        return pinCount == MIN;
+    }
+
+    public boolean isTen() {
+        return pinCount == MAX;
+    }
+
+    @Override
+    public String toString() {
+        return Integer.toString(pinCount);
+    }
 }

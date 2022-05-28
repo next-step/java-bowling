@@ -40,4 +40,9 @@ public class FrameNumber {
     public boolean isMaxInNormal() {
         return number == MAX_IN_NORMAL_FRAME;
     }
+
+    @Override
+    public String toString() {
+        return Integer.toString(number);
+    }
 }
