@@ -17,6 +17,7 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     testImplementation 'org.assertj:assertj-core:3.22.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 }
 
 tasks.named('test') {
