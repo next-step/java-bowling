@@ -25,10 +25,12 @@ public class Miss extends Finished {
         }
 
         beforeScore.bowl(secondPins);
-        if (beforeScore.canCalculate()) {
-            return true;
-        }
-        return false;
+        return beforeScore.canCalculate();
+    }
+
+    @Override
+    public String mark() {
+        return String.format(SCORE_FORMAT, firstPins, secondPins);
     }
 
     @Override
@@ -43,11 +45,6 @@ public class Miss extends Finished {
             return beforeScore;
         }
         return beforeScore.bowl(secondPins);
-    }
-
-    @Override
-    public String toString() {
-        return String.format(SCORE_FORMAT, firstPins, secondPins);
     }
 
     @Override
