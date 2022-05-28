@@ -6,6 +6,11 @@ import bowling.domain.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/*
+| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |
+|  avx |  X   |  8|/ |  8|1 |  X   |  X   |  X   |  -|- |  X   |  X   |  X|2|/ |
+|      |  20  |  38  |  47  |  77  |  97  |  107 |  107 |  137 |  159 |  179 |
+*/
 
 class OutputTest {
     BowlingGame bowlingGame;
@@ -38,7 +43,8 @@ class OutputTest {
         bowlingGame.pitch(new Pins(10));
 
         // 7
-        bowlingGame.pitch(new Pins(10));
+        bowlingGame.pitch(new Pins(0));
+        bowlingGame.pitch(new Pins(0));
 
         //8
         bowlingGame.pitch(new Pins(10));

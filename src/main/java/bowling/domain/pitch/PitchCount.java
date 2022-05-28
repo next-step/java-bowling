@@ -11,9 +11,6 @@ public class PitchCount {
     }
 
     public boolean canProceed(){
-        if(count == MAX_PITCH_CNT){
-            return false;
-        }
-        return true;
+        return count != MAX_PITCH_CNT;
     }
 }

@@ -16,11 +16,10 @@ import java.util.List;
 
 public class FinalBowls {
 
-    private final List<Bowl> bowls;
+    private final List<Bowl> bowls = new ArrayList<>();;
     private final PitchCount pitchCount;
 
     public FinalBowls(){
-        bowls = new ArrayList<>();
         bowls.add(new Ready());
         pitchCount = new PitchCount();
     }
