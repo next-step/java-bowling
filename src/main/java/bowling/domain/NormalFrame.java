@@ -5,7 +5,6 @@ import bowling.domain.state.State;
 
 public class NormalFrame implements Frame {
     private State state;
-    private Frame nextFrame;
     private static final int FINAL_NORMAL_FRAME = 9;
     private static final String BLANK = "    ";
     private final int round;
@@ -19,12 +18,10 @@ public class NormalFrame implements Frame {
     public Frame bowl(int countOfPins) {
         this.state = this.state.bowl(countOfPins);
         if(round == FINAL_NORMAL_FRAME && this.state.isFinish()) {
-            this.nextFrame = new FinalFrame();
-            return this.nextFrame;
+            return new FinalFrame();
         }
         if(this.state.isFinish()) {
-            this.nextFrame = new NormalFrame(this.round + 1);
-            return this.nextFrame;
+            return new NormalFrame(this.round + 1);
         }
         return this;
     }
