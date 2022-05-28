@@ -1,10 +1,12 @@
 package bowling.domain.frame;
 
 import bowling.domain.State.State;
+import bowling.domain.State.Strike;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static bowling.domain.State.PinTest.TEN;
 import static bowling.domain.State.StateTest.FIRST;
 import static bowling.domain.State.StateTest.GUTTER;
 import static bowling.domain.State.StateTest.MISS;
@@ -22,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class FrameTest {
     static final Frame INITIAL_FRAME = Frame.initialize();
     static final Frame LAST_FRAME = new FinalFrame(new FrameNumber(FrameNumber.MAX), State.ready());
+    static final Frame LAST_DONE_FRAME = new FinalFrame(new FrameNumber(FrameNumber.MAX), new Strike(TEN));
 
     @Test
     void Frame은_FrameNumber없이_생성_될_경우_예외를_발생_시킨다() {
@@ -80,15 +83,19 @@ class FrameTest {
                 () -> assertTrue(new NormalFrame(FrameNumber.min(), SECOND).isDone()),
                 () -> assertTrue(new NormalFrame(FrameNumber.min(), SPARE).isDone()),
                 () -> assertTrue(new NormalFrame(FrameNumber.min(), STRIKE).isDone())
-//                () -> assertTrue(new NormalFrame(FrameNumber.min(), new Bowls(List.of(STRIKE))).isDone()),
-//                () -> assertTrue(new NormalFrame(FrameNumber.min(), new Bowls(List.of(GUTTER, GUTTER))).isDone()),
-//                () -> assertFalse(new FinalFrame(new FrameNumber(FrameNumber.MAX), State.ready()).isDone()),
-//                () -> assertFalse(new FinalFrame(new FrameNumber(FrameNumber.MAX), new Bowls(List.of(GUTTER))).isDone()),
-//                () -> assertFalse(new FinalFrame(new FrameNumber(FrameNumber.MAX), new Bowls(List.of(STRIKE, GUTTER))).isDone()),
-//                () -> assertFalse(new FinalFrame(new FrameNumber(FrameNumber.MAX), new Bowls(List.of(GUTTER, STRIKE))).isDone()),
-//                () -> assertTrue(new FinalFrame(new FrameNumber(FrameNumber.MAX), new Bowls(List.of(GUTTER, GUTTER))).isDone()),
-//                () -> assertTrue(new FinalFrame(new FrameNumber(FrameNumber.MAX), new Bowls(List.of(GUTTER, STRIKE, STRIKE))).isDone()),
-//                () -> assertTrue(new FinalFrame(new FrameNumber(FrameNumber.MAX), new Bowls(List.of(STRIKE, STRIKE, STRIKE))).isDone())
+                // todo final Frame
+        );
+    }
+
+    @Test
+    void bowl은_상태를_변경시키고_다음_프레임을_반환한다() {
+        Frame frame = INITIAL_FRAME;
+
+        Frame nextFrame = frame.bowl(TEN);
+
+        assertAll(
+                () -> assertTrue(frame.isDone()),
+                () -> assertThat(nextFrame).isInstanceOf(Frame.class)
         );
     }
 }

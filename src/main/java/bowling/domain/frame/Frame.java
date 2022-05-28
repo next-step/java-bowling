@@ -32,6 +32,8 @@ public abstract class Frame {
         return new NormalFrame(FrameNumber.min(), State.ready());
     }
 
+    public abstract Frame bowl(Pin pin);
+
     public abstract Frame next();
 
     public abstract boolean isFinal();

@@ -1,5 +1,7 @@
 package bowling.domain.State;
 
+import static bowling.view.OutputView.COLUMN;
+
 public class Miss extends State {
     private static final String SYMBOL = "-";
 
@@ -21,6 +23,6 @@ public class Miss extends State {
 
     @Override
     public String toString() {
-        return SYMBOL;
+        return previous + COLUMN + SYMBOL;
     }
 }

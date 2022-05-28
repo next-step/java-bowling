@@ -1,5 +1,6 @@
 package bowling.domain.game;
 
+import bowling.domain.State.Pin;
 import bowling.domain.frame.FrameNumber;
 import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
@@ -35,6 +36,14 @@ public class Game {
 
     public static Game enter(Player player) {
         return new Game(player, Frames.initialize());
+    }
+
+    public void bowl(Pin pin) {
+        if (isDone()) {
+            throw new IllegalArgumentException("종료된 게임은 더이상 볼을 굴릴 수 없습니다.");
+        }
+
+        frames.bowl(pin);
     }
 
     @Override

@@ -2,10 +2,13 @@ package bowling.domain.State;
 
 import org.junit.jupiter.api.Test;
 
+import static bowling.domain.State.PinTest.NINE;
 import static bowling.domain.State.PinTest.ONE;
 import static bowling.domain.State.PinTest.TEN;
+import static bowling.domain.State.PinTest.ZERO;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StateTest {
@@ -27,6 +30,18 @@ public class StateTest {
                 () -> assertTrue(SECOND.isDone()),
                 () -> assertTrue(SPARE.isDone()),
                 () -> assertTrue(STRIKE.isDone())
+        );
+    }
+
+    @Test
+    void bowl은_다음_상태를_반환한다() {
+        assertAll(
+                () -> assertInstanceOf(Gutter.class, READY.bowl(ZERO)),
+                () -> assertInstanceOf(First.class, READY.bowl(ONE)),
+                () -> assertInstanceOf(Strike.class, READY.bowl(TEN)),
+                () -> assertInstanceOf(Second.class, FIRST.bowl(ONE)),
+                () -> assertInstanceOf(Miss.class, FIRST.bowl(ZERO)),
+                () -> assertInstanceOf(Spare.class, FIRST.bowl(NINE))
         );
     }
 }

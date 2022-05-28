@@ -14,6 +14,12 @@ public class NormalFrame extends Frame {
     }
 
     @Override
+    public Frame bowl(Pin pin) {
+        state = state.bowl(pin);
+        return next();
+    }
+
+    @Override
     public Frame next() {
         if (frameNumber.isMaxInNormal()) {
             return new FinalFrame(frameNumber.next(), State.ready());

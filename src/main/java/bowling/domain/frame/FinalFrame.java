@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.State.Pin;
 import bowling.domain.State.State;
 
 public class FinalFrame extends Frame {
@@ -8,8 +9,14 @@ public class FinalFrame extends Frame {
 
         if (!frameNumber.isFinal()) {
             throw new IllegalArgumentException(
-                    String.format("frameNumber(%s)는 마지막 FramenNumber(%s)가 아닙니다.", frameNumber, FrameNumber.MAX));
+                    String.format("frameNumber(%s)는 마지막 FrameNumber(%s)가 아닙니다.", frameNumber, FrameNumber.MAX));
         }
+    }
+
+    @Override
+    public Frame bowl(Pin pin) {
+        state = state.bowl(pin);
+        return null;
     }
 
     @Override

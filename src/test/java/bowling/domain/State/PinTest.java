@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class PinTest {
     public static final Pin ZERO = new Pin(0);
     public static final Pin ONE = new Pin(1);
+    public static final Pin NINE = new Pin(9);
     public static final Pin TEN = new Pin(10);
 
     @ParameterizedTest

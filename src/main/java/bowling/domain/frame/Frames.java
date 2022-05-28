@@ -1,7 +1,9 @@
 package bowling.domain.frame;
 
+import bowling.domain.State.Pin;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -13,7 +15,7 @@ public class Frames {
 
     public Frames(List<Frame> frames) {
         validate(frames);
-        this.frames = frames;
+        this.frames = new ArrayList<>(frames);
     }
 
     private void validate(List<Frame> frames) {
@@ -44,6 +46,15 @@ public class Frames {
         return lastFrame.isDone();
     }
 
+    public void bowl(Pin pin) {
+        Frame lastFrame = lastFrame();
+        Frame nextFrame = lastFrame().bowl(pin);
+
+        if (lastFrame.isDone()) {
+            frames.add(nextFrame);
+        }
+    }
+
     @Override
     public String toString() {
         return IntStream.range(FrameNumber.MIN - 1, FrameNumber.MAX)
@@ -51,8 +62,6 @@ public class Frames {
                     try {
                         Frame frame = frames.get(index);
                         return frame.toString();
-//                        return frame.toString() + COLUMN;
-
                     } catch (Exception e) {
                         return BLANK;
                     }

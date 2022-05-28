@@ -9,11 +9,11 @@ public class First extends State {
 
     @Override
     public State bowl(Pin pin) {
+        Pin addedPin = this.pin.add(pin);
+
         if (pin.isZero()) {
             return new Miss(this);
         }
-
-        Pin addedPin = this.pin.add(pin);
 
         if (addedPin.isTen()) {
             return new Spare(addedPin, this);
