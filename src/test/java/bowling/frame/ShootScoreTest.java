@@ -20,12 +20,8 @@ class ShootScoreTest {
     @DisplayName("한 투구는 0점 이상, 10점 이하의 숫자가 유효함")
     void invalidShootScore() {
         assertAll(
-                () -> {
-                    assertThatThrownBy(() -> ShootScore.from(-1))
-                            .isInstanceOf(IllegalArgumentException.class);
-                    assertThatThrownBy(() -> ShootScore.from(11))
-                            .isInstanceOf(IllegalArgumentException.class);
-                }
+                () -> assertThatThrownBy(() -> ShootScore.from(-1)).isInstanceOf(IllegalArgumentException.class),
+                () -> assertThatThrownBy(() -> ShootScore.from(11)).isInstanceOf(IllegalArgumentException.class)
         );
     }
 

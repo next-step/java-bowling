@@ -14,12 +14,10 @@ class ScoreTest {
         Score missScore = Score.toMiss(5);
 
         assertAll(
-                () -> {
-                    assertThatThrownBy(() -> missScore.bonusScore(5))
-                            .isInstanceOf(IllegalStateException.class);
-                    assertThat(missScore.canCalculate()).isFalse();
-                    assertThat(missScore.score()).isEqualTo(5);
-                }
+                () -> assertThatThrownBy(
+                        () -> missScore.bonusScore(5)).isInstanceOf(IllegalStateException.class),
+                () -> assertThat(missScore.canCalculate()).isFalse(),
+                () -> assertThat(missScore.score()).isEqualTo(5)
         );
     }
 
@@ -29,13 +27,11 @@ class ScoreTest {
         Score spareScore = Score.toSpare();
 
         assertAll(
-                () -> {
-                    assertThat(spareScore.canCalculate()).isTrue();
-                    assertThat(spareScore.score()).isEqualTo(10);
-                    spareScore.bonusScore(5);
-                    assertThat(spareScore.canCalculate()).isFalse();
-                    assertThat(spareScore.score()).isEqualTo(15);
-                }
+                () -> assertThat(spareScore.canCalculate()).isTrue(),
+                () -> assertThat(spareScore.score()).isEqualTo(10),
+                () -> spareScore.bonusScore(5),
+                () -> assertThat(spareScore.canCalculate()).isFalse(),
+                () -> assertThat(spareScore.score()).isEqualTo(15)
         );
     }
 
@@ -45,16 +41,14 @@ class ScoreTest {
         Score strikeScore = Score.toStrike();
 
         assertAll(
-                () -> {
-                    assertThat(strikeScore.canCalculate()).isTrue();
-                    assertThat(strikeScore.score()).isEqualTo(10);
-                    strikeScore.bonusScore(5);
-                    assertThat(strikeScore.canCalculate()).isTrue();
-                    assertThat(strikeScore.score()).isEqualTo(15);
-                    strikeScore.bonusScore(5);
-                    assertThat(strikeScore.canCalculate()).isFalse();
-                    assertThat(strikeScore.score()).isEqualTo(20);
-                }
+                () -> assertThat(strikeScore.canCalculate()).isTrue(),
+                () -> assertThat(strikeScore.score()).isEqualTo(10),
+                () -> strikeScore.bonusScore(5),
+                () -> assertThat(strikeScore.canCalculate()).isTrue(),
+                () -> assertThat(strikeScore.score()).isEqualTo(15),
+                () -> strikeScore.bonusScore(5),
+                () -> assertThat(strikeScore.canCalculate()).isFalse(),
+                () -> assertThat(strikeScore.score()).isEqualTo(20)
         );
     }
 }

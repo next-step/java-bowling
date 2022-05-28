@@ -24,12 +24,8 @@ class PlayerNameTest {
     @Test
     void invalidPlayerName() {
         assertAll(
-                () -> {
-                    assertThatThrownBy(() -> PlayerName.from("PS"))
-                            .isInstanceOf(IllegalArgumentException.class);
-                    assertThatThrownBy(() -> PlayerName.from("BOWLING"))
-                            .isInstanceOf(IllegalArgumentException.class);
-                }
+                () -> assertThatThrownBy(() -> PlayerName.from("PS")).isInstanceOf(IllegalArgumentException.class),
+                () -> assertThatThrownBy(() -> PlayerName.from("BOWLING")).isInstanceOf(IllegalArgumentException.class)
         );
     }
 }
