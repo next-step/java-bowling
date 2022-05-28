@@ -2,6 +2,7 @@ package bowling.view;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.bowl.Bowl;
+import bowling.domain.bowl.type.BowlType;
 import bowling.domain.pitch.PitchResult;
 import bowling.domain.player.Player;
 import bowling.domain.frame.Frame;
@@ -54,16 +55,17 @@ public class Output {
     }
 
     private static String getSymbol(PitchResult pitchResult) {
-        if(pitchResult.isSpare()){
-            return pitchResult.getFirstHitCount()+SPARE_SYMBOL;
+        BowlType type = pitchResult.getBowlType();
+        if(type.equals(BowlType.SPARE)){
+            return pitchResult.getFirstHitCount()+SYMBOL_DELIMITER+SPARE_SYMBOL;
         }
-        if(pitchResult.isGutter()){
+        if(type.equals(BowlType.GUTTER)){
             return GUTTER_SYMBOL;
         }
-        if(pitchResult.isStrike()){
+        if(type.equals(BowlType.STRIKE)){
             return STRIKE_SYMBOL;
         }
-        if(pitchResult.isMiss()){
+        if(type.equals(BowlType.MISS)){
             return pitchResult.getFirstHitCount() +SYMBOL_DELIMITER+ pitchResult.getSecondHitCount();
         }
         return String.valueOf(pitchResult.getFirstHitCount());
@@ -86,5 +88,4 @@ public class Output {
                 .mapToObj(i->EMPTY_RESULT_FRAME)
                 .collect(Collectors.joining());
     }
-
 }
