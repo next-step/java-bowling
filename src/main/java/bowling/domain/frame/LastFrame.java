@@ -4,14 +4,9 @@ import bowling.domain.Score;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class LastFrame implements Frame {
-    private static final String EXCLUDE_STRING = "[|, \\s]";
-    private static final String SPACE = " ";
     private static final int LAST_FRAME_NUMBER = 10;
 
     private final LinkedList<State> states = new LinkedList<>();
@@ -140,20 +135,13 @@ public class LastFrame implements Frame {
         return additionalScore(beforeScore, stateIndex + 1);
     }
 
+    public List<State> states() {
+        return Collections.unmodifiableList(states);
+    }
+
     @Override
     public String mark() {
-        StringBuilder scores = new StringBuilder(SPACE);
-        String score = states.stream()
-                .map(State::mark)
-                .map(s -> s.replaceAll(EXCLUDE_STRING, ""))
-                .map(s -> s.split(""))
-                .flatMap(Arrays::stream)
-                .collect(Collectors.joining("|"));
-
-        scores.append(score);
-        scores.append(SPACE.repeat(Math.max(0, 6 - scores.toString().length())));
-        scores.append("|");
-        return scores.toString();
+        throw new IllegalArgumentException("지원하지 않는 기능입니다.");
     }
 
     @Override
