@@ -18,15 +18,11 @@ public class Scores {
         return secondScore;
     }
 
-    private boolean isPlayFirst() {
+    public boolean isPlayFirst() {
         return firstScore != null;
     }
 
-    private boolean isPlayOnlyFirst() {
-        return isPlayFirst() && !isPlaySecond();
-    }
-
-    private boolean isPlaySecond() {
+    public boolean isPlaySecond() {
         return secondScore != null;
     }
 
@@ -74,18 +70,6 @@ public class Scores {
 
     private boolean isNeverPlayYet() {
         return !isPlayFirst() || !isPlaySecond();
-    }
-
-    private boolean isHitAllPins() {
-        if (isNeverPlayYet()) {
-            return false;
-        }
-
-        if (isPlayOnlyFirst()) {
-            return firstScore.isHitAll();
-        }
-
-        return isSpare();
     }
 
 }

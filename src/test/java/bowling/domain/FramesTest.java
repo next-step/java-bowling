@@ -71,11 +71,11 @@ class FramesTest {
         frames.throwBall(8);    // 3
         frames.throwBall(1);    // 3
 
-        assertThat(frames.head().firstScore()).isEqualTo(9);
-        assertThat(frames.head().secondScore()).isEqualTo(1);
-        assertThat(frames.head().next().firstScore()).isEqualTo(10);
-        assertThat(frames.current().before().firstScore()).isEqualTo(8);
-        assertThat(frames.current().before().secondScore()).isEqualTo(1);
+        assertThat(frames.head().firstScore()).isEqualTo(9);                // 1-1
+        assertThat(frames.head().secondScore()).isEqualTo(1);               // 1-2
+        assertThat(frames.head().next().firstScore()).isEqualTo(10);        // 2-1
+        assertThat(frames.current().before().firstScore()).isEqualTo(8);    // 3-1
+        assertThat(frames.current().before().secondScore()).isEqualTo(1);   // 3-2
     }
 
     @DisplayName("10프레임에 스트라이크를 치면 2번 볼 던지기 추가 진행 가능하다.")
@@ -161,22 +161,32 @@ class FramesTest {
         assertThat(secondFrame.scoreCalculated()).contains(20);
     }
 
-    @DisplayName("마지막 프레임의 점수는 그냥 있는 점수 다 더한다.")
+    @DisplayName("마지막 프레임의 점수는 종료되는 시점에 그냥 있는 점수 다 더한다.")
     @Test
     void calculateScoreTest3() {
         throwBallNineFrames();
         Frame finalFrame = frames.current();
 
         frames.throwBall(9);
+        assertThat(finalFrame.scoreCalculated()).isEmpty();
 
+        frames.throwBall(0);
         assertThat(finalFrame.scoreCalculated()).contains(9);
+    }
+
+    @DisplayName("마지막 프레임의 점수는 종료되는 시점에 그냥 있는 점수 다 더한다. with 추가 투구")
+    @Test
+    void calculateScoreTest4() {
+        throwBallNineFrames();
+        Frame finalFrame = frames.current();
+
+        frames.throwBall(9);
+        assertThat(finalFrame.scoreCalculated()).isEmpty();
 
         frames.throwBall(1);
-
-        assertThat(finalFrame.scoreCalculated()).contains(10);
+        assertThat(finalFrame.scoreCalculated()).isEmpty();
 
         frames.throwBall(10);
-
         assertThat(finalFrame.scoreCalculated()).contains(20);
     }
 

@@ -23,19 +23,7 @@ public class Frame {
         this.nextFrame = nextFrame;
     }
 
-    protected boolean hasAllCalculatedFrontFrame() {
-        if (this.before() == null) {
-            return true;
-        }
-
-        return this.before().scoreCalculated().isPresent();
-    }
-
     public Optional<Integer> scoreCalculated() {
-        if (!hasAllCalculatedFrontFrame()) {
-            return Optional.empty();
-        }
-
         if (scores.isStrike()) {
             return STRIKE.scoreOf(this);
         }
@@ -80,6 +68,18 @@ public class Frame {
 
     public Optional<Score> getFirstScoreAsOptional() {
         return Optional.ofNullable(scores.first());
+    }
+
+    public boolean isNotThrowFirstYet() {
+        return !scores.isPlayFirst();
+    }
+
+    public boolean isThrowFirst() {
+        return scores.isPlayFirst();
+    }
+
+    public boolean isThrowSecond() {
+        return scores.isPlaySecond();
     }
 
     public Optional<Score> getSecondScoreAsOptional() {
@@ -127,4 +127,5 @@ public class Frame {
             .orElseThrow(() -> new IllegalStateException("아직 두번째 투구를 하지 않았음"))
             .get();
     }
+
 }

@@ -6,7 +6,6 @@ import bowling.domain.FinalFrame;
 import bowling.domain.Frame;
 import bowling.domain.Game;
 import bowling.domain.Score;
-import java.util.Objects;
 import java.util.Optional;
 
 public final class OutputCui {
@@ -16,6 +15,7 @@ public final class OutputCui {
     private static final String MISS_SYMBOL = "-";
     private static final String GUTTER_SYMBOL = "-";
     private static final String GAP = " ";
+    private static final int FRAME_WIDTH = 7;
 
     private OutputCui() { }
 
@@ -24,7 +24,7 @@ public final class OutputCui {
         Frame current = game.frames().head();
 
         drawUpperLine(current);
-        out.printf(fixedLengthString("|  %s |", 7), name);
+        out.printf(fixedLengthString("|  %s |", FRAME_WIDTH), name);
 
         while (current.next() != null) {
             drawFrame(current);
@@ -39,7 +39,7 @@ public final class OutputCui {
         out.print("| NAME |");
         int number = 1;
         while (frame != null) {
-            out.printf(fixedLengthString("  %s  |", 7), String.format("%02d", number++));
+            out.printf(fixedLengthString("  %s  |", FRAME_WIDTH), String.format("%02d", number++));
             frame = frame.next();
         }
         out.println();
@@ -64,33 +64,44 @@ public final class OutputCui {
     }
 
     private static void drawScoreLine(Frame frame) {
-        out.println();
-        out.printf("|      |");
+        out.print("\n|      |");
+        int accumulatedScore = 0;
         while (frame != null) {
-            out.printf(fixedLengthString("  %s  |", 8), getScoreString(frame));
+            accumulatedScore = drawEachScore(accumulatedScore, frame);
             frame = frame.next();
         }
     }
 
-    private static String getScoreString(Frame frame) {
-        Optional<Integer> score = frame.scoreCalculated();
-        return score.map(Object::toString)
-            .orElse(GAP);
+    private static int drawEachScore(int accumulatedScore, Frame frame) {
+        Optional<Integer> score = getScore(frame);
+        if (score.isPresent()) {
+            accumulatedScore += score.get();
+            out.print(String.format("%4d", accumulatedScore) + "  |");
+            return accumulatedScore;
+        }
+        out.print("      |");
+        return accumulatedScore;
     }
 
-    private static String drawFirstScore(Optional<Score> score) {
-        if (score.isEmpty()) {
+    private static Optional<Integer> getScore(Frame frame) {
+        return frame.scoreCalculated();
+    }
+
+    private static String drawFirstScore(Optional<Score> firstScore) {
+        if (firstScore.isEmpty()) {
             return GAP;
         }
 
-        if (score.get().get() == 0) {
+        Score first = firstScore.orElseThrow();
+
+        if (first.get() == 0) {
             return GUTTER_SYMBOL;
         }
         
-        if (score.get().get() == 10) {
+        if (first.get() == 10) {
             return STRIKE_SYMBOL;
         }
-        return Integer.toString(score.get().get());
+        return Integer.toString(first.get());
     }
 
     private static String drawSecondScore(Optional<Score> firstScore, Optional<Score> secondScore) {
@@ -98,19 +109,22 @@ public final class OutputCui {
             return GAP;
         }
 
-        if (firstScore.get().get() == 10 && secondScore.get().get() == 10) {
+        Score first = firstScore.orElseThrow();
+        Score second = secondScore.orElseThrow();
+
+        if (first.get() == 10 && second.get() == 10) {
             return SCORE_SEPARATOR + STRIKE_SYMBOL;
         }
 
-        if (firstScore.get().get() != 10 && firstScore.get().get() + secondScore.get().get() == 10) {
+        if (first.get() != 10 && first.get() + second.get() == 10) {
             return SCORE_SEPARATOR + SPARE_SYMBOL;
         }
 
-        if (firstScore.get().get() != 10 && secondScore.get().get() == 0) {
+        if (first.get() != 10 && second.get() == 0) {
             return SCORE_SEPARATOR + MISS_SYMBOL;
         }
 
-        return SCORE_SEPARATOR + secondScore.get().get();
+        return SCORE_SEPARATOR + second.get();
     }
 
     private static String drawExtraScore(Optional<Score> secondScore, Optional<Score> extraScore) {
@@ -118,15 +132,18 @@ public final class OutputCui {
             return GAP;
         }
 
-        if (extraScore.get().get() == 10) {
+        Score second = secondScore.orElseThrow();
+        Score extra = extraScore.orElseThrow();
+
+        if (extra.get() == 10) {
             return STRIKE_SYMBOL;
         }
 
-        if (secondScore.get().get() + extraScore.get().get() == 10) {
+        if (second.get() + extra.get() == 10) {
             return SPARE_SYMBOL;
         }
 
-        return Integer.toString(extraScore.get().get());
+        return Integer.toString(extra.get());
     }
 
     private static String fixedLengthString(String string, int length) {
