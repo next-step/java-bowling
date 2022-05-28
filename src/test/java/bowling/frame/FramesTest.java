@@ -12,19 +12,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class FramesTest {
 
     @Test
-    void test(){
-        Frames frames = new Frames();
-        frames.pitch(new Pins(6));
-        frames.pitch(new Pins(2));
-        frames.pitch(new Pins(4));
-
-        frames.getFrames().stream()
-                .forEach(System.out::println);
-
-        System.out.println(Output.getSymbolBody(frames));
-    }
-
-    @Test
     @DisplayName("프레임이 끝나지 않았을 때 점수를 구하면 -1을 반환한다.")
     void 끝나지않은프레임_점수생성예외(){
         Frames frames = new Frames();
@@ -142,7 +129,5 @@ class FramesTest {
         frames.pitch(new Pins(1));
         assertThat(frames.getScores())
                 .containsExactly(20, 38, 47);
-
-        System.out.println(Output.getScoreBody(frames.getScores()));
     }
 }

@@ -1,6 +1,8 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,17 +28,20 @@ public class Frames {
 
     public List<Integer> getScores(){
         List<Integer> scores = new ArrayList<>();
-        int accumulatedScore = 0;
-        for(Frame frame: frames){
-            int score = frame.score();
-            if(score == -1){
-                return scores;
-            }
-            accumulatedScore += score;
-            scores.add(accumulatedScore);
-        }
-        return scores;
+        return getScores(0, scores, 0);
     }
+
+    private List<Integer> getScores(int accumulatedScore, List<Integer> scores, int index){
+        Frame frame = getFrames().get(index);
+        int score = frame.score();
+        if(score == Score.CANNOT_CALCULATE_SCORE){
+            return scores;
+        }
+        accumulatedScore += score;
+        scores.add(accumulatedScore);
+        return getScores(accumulatedScore, scores, index+1);
+    }
+
 
     public int size(){
         return frames.size();

@@ -57,17 +57,25 @@ public class FinalFrame implements Frame{
 
     @Override
     public int calculateAdditionalScore(Score beforeScore) {
-        Score score = new Score(beforeScore.getValue(), beforeScore.getLeft());
-        for (Bowl curBowl : getBowls()) {
-            if(curBowl instanceof Ready){
-                return Score.CANNOT_CALCULATE_SCORE;
-            }
-            score = curBowl.calculateScore(score);
-            if (score.isFinished()) {
-                return score.getValue();
-            }
+        return calculateAdditionalScore(beforeScore, 0);
+    }
+
+    public int calculateAdditionalScore(Score score, int index){
+        if(index >= getBowls().size()){
+            return Score.CANNOT_CALCULATE_SCORE;
         }
-        return Score.CANNOT_CALCULATE_SCORE;
+
+        Bowl bowl = getBowls().get(index);
+        if(bowl instanceof  Ready){
+            return Score.CANNOT_CALCULATE_SCORE;
+        }
+
+        Score after = bowl.calculateScore(score);
+        if(after.isFinished()){
+            return after.getValue();
+        }
+
+        return calculateAdditionalScore(after, index+1);
     }
 
 

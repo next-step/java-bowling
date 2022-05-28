@@ -35,4 +35,9 @@ public class FrameIndex {
     public int getIndex() {
         return index;
     }
+
+    @Override
+    public String toString(){
+        return "frame index: "+index;
+    }
 }
