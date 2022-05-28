@@ -12,13 +12,12 @@ public class User {
     }
 
     private void validateName(String name) {
-        if (name.length() != NAME_LENGTH) {
+        if (name == null || name.length() != NAME_LENGTH) {
             throw new IllegalArgumentException("[ERROR] 사용자의 이름은 " + NAME_LENGTH + "글자여야 합니다.");
         }
     }
 
-    @Override
-    public String toString() {
+    public String mark() {
         return String.format(NAME_FORMAT, name);
     }
 }
