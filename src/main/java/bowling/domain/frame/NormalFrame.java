@@ -32,26 +32,6 @@ public class NormalFrame implements Frame {
         return new NormalFrame(new BeforeProgress(), new FrameNumber(START_FRAME_NUMBER));
     }
 
-    boolean isBeforeProgressState() {
-        return frameState instanceof BeforeProgress;
-    }
-
-    boolean isFirstBowlState() {
-        return frameState instanceof FirstBowl;
-    }
-
-    boolean isStrikeState() {
-        return frameState instanceof Strike;
-    }
-
-    boolean isSpareState() {
-        return frameState instanceof Spare;
-    }
-
-    boolean isMatchFrameNumber(FrameNumber frameNumber) {
-        return this.frameNumber.equals(frameNumber);
-    }
-
     @Override
     public Frame bowl(Pins hitPins) {
         this.frameState = frameState.bowl(hitPins);
