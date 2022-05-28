@@ -41,6 +41,16 @@ public class FinalFrame implements Frame{
                 .collect(Collectors.joining(" | "));
     }
 
+    @Override
+    public Score calculateAddScore(Score beforeScore) {
+        return null;
+    }
+
+    @Override
+    public int getScore() {
+        return 0;
+    }
+
 
     private int statesSize() {
         return this.states.size();

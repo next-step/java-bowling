@@ -24,4 +24,9 @@ public class Spare extends Finished{
     public String expression() {
         return firstCountOfPins + "|/";
     }
+
+    @Override
+    public Score calculateAddScore(Score beforeScore) {
+        return null;
+    }
 }

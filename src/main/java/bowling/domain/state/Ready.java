@@ -24,4 +24,9 @@ public class Ready extends Running {
         return "";
     }
 
+    @Override
+    public Score calculateAddScore(Score beforeScore) {
+        return null;
+    }
+
 }

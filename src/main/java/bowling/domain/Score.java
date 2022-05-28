@@ -20,6 +20,14 @@ public class Score {
         return new Score(STRIKE_OR_SPARE, 2);
     }
 
+    public boolean isCalculateScore() {
+        return remainingNumber == 0;
+    }
+
+    public static Score ofRelay() {
+        return new Score(-1,0);
+    }
+
     public static Score ofSpare() {
         return new Score(STRIKE_OR_SPARE, 1);
     }

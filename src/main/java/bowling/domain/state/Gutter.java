@@ -17,4 +17,9 @@ public class Gutter extends Finished{
     public String expression() {
         return "-|-";
     }
+
+    @Override
+    public Score calculateAddScore(Score beforeScore) {
+        return null;
+    }
 }

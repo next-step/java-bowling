@@ -34,6 +34,11 @@ public class Miss extends Finished {
         return firstCountOfPins + "|" + secondCountOfPins;
     }
 
+    @Override
+    public Score calculateAddScore(Score beforeScore) {
+        return null;
+    }
+
     public int getFirstCountOfPins() {
         return firstCountOfPins;
     }

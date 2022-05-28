@@ -24,4 +24,9 @@ public class Strike extends Finished {
         return "X";
     }
 
+    @Override
+    public Score calculateAddScore(Score beforeScore) {
+        return null;
+    }
+
 }

@@ -6,4 +6,6 @@ public interface Frame {
     Frame bowl(int countOfPins);
     State getState();
     String expression();
+    Score calculateAddScore(Score beforeScore);
+    int getScore();
 }

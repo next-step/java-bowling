@@ -34,4 +34,9 @@ public class FirstBowl extends Running {
         }
         return String.valueOf(this.score.getScore());
     }
+
+    @Override
+    public Score calculateAddScore(Score beforeScore) {
+        return null;
+    }
 }

@@ -21,7 +21,9 @@ public class BowlingGame {
         while (i < FINAL_ROUND) {
             int pin = InputView.inputBowl(i).getPins();
             Frame currentFrame = frame.bowl(pin);
+
             if(frame.getState().isFinish()) {
+                System.out.println(frame.getScore());
                 ResultView.printState(user, frame.expression(), i);
                 frame = currentFrame;
                 i++;
