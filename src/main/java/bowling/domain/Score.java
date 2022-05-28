@@ -46,6 +46,10 @@ public class Score {
         return leftCount == 0;
     }
 
+    public String mark() {
+        return Integer.toString(score);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,10 +61,5 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(score, leftCount);
-    }
-
-    @Override
-    public String toString() {
-        return Integer.toString(score);
     }
 }

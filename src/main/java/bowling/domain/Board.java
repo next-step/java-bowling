@@ -1,6 +1,9 @@
 package bowling.domain;
 
+import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
+
+import java.util.List;
 
 public class Board {
     private final Frames frames;
@@ -19,11 +22,11 @@ public class Board {
         return frames.isGameEnd();
     }
 
-    public String mark() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(user.mark())
-                .append(frames.mark())
-                .append("\n");
-        return stringBuilder.toString();
+    public List<Frame> frames() {
+        return frames.frames();
+    }
+
+    public User user() {
+        return user;
     }
 }
