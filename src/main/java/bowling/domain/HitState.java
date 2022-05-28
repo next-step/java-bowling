@@ -37,7 +37,7 @@ public enum HitState {
                 --additionalCount;
             }
 
-            if (current.getSecondScoreAsOptional().isPresent()) {
+            if (current.getSecondScoreAsOptional().isPresent() && additionalCount > 0) {
                 totalScore += current.secondScore();
                 --additionalCount;
             }
