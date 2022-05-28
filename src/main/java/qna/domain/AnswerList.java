@@ -29,19 +29,7 @@ public class AnswerList {
     }
 
     public void deleteAll(final User loginUser) {
-        this.findAnyAnswerByOtherWriter(loginUser)
-            .ifPresent(
-                    answer -> {
-                        throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-                    });
-
-        answers.forEach(answer -> answer.delete());
-    }
-
-    private Optional<Answer> findAnyAnswerByOtherWriter(final User loginUser) {
-        return answers.stream()
-                      .filter(answer -> !answer.isOwner(loginUser))
-                      .findAny();
+        answers.forEach(answer -> answer.delete(loginUser));
     }
 
     public List<Answer> getAnswers() {
