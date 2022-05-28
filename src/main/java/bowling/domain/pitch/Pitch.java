@@ -5,7 +5,8 @@ import java.util.Optional;
 
 public class Pitch {
     private static final int MIN_COUNT = 0;
-    private static final String OVER_COUNT_MESSAGE = "볼링 핀이 음수일 수 없습니다. 다시 확인해주세요.";
+    private static final int MAX_COUNT = 10;
+    private static final String OVER_COUNT_MESSAGE = "현재 남은 볼링 핀은 %s 개 입니다. 다시 확인해주세요.";
 
     private final int count;
 
@@ -18,22 +19,25 @@ public class Pitch {
     }
 
     public static Pitch of(int count) {
-        isOverCount(count);
+        isOverCount(MIN_COUNT, count);
 
         return new Pitch(count);
     }
 
     public Pitch next(int count) {
         int totalCount = Math.addExact(this.count, count);
-        isOverCount(totalCount);
+        isOverCount(this.count, totalCount);
 
         return of(count);
     }
 
-    private static void isOverCount(int count) {
-        Optional.of(count)
-                .filter(c -> MIN_COUNT <= c)
-                .orElseThrow(() -> new IllegalArgumentException(OVER_COUNT_MESSAGE));
+    private static void isOverCount(int currentCount, int nextCount) {
+        int remainingCount = Math.subtractExact(MAX_COUNT, currentCount);
+        String message = String.format(OVER_COUNT_MESSAGE, remainingCount);
+        Optional.of(nextCount)
+                .filter(count -> MIN_COUNT <= count)
+                .filter(count -> count <= MAX_COUNT)
+                .orElseThrow(() -> new IllegalArgumentException(message));
     }
 
     @Override

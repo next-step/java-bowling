@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.exception.UnableBowlingException;
 import bowling.exception.UnableCreateFrameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,10 @@ public class FinalFrameTest {
         int firstCount = Integer.parseInt(first);
         int secondCount = Integer.parseInt(second);
 
-        Frame finalFrame = FinalFrame.lastBowling(firstCount).bowling(secondCount);
+        Frame finalFrame = FinalFrame.lastBowling(firstCount);
+        if (secondCount > 0) {
+            finalFrame = finalFrame.bowling(secondCount);
+        }
         Frame bonusFrame = finalFrame.bowling(this.bonusCount);
         assertAll(() -> assertThat(bonusFrame.totalCount()).isEqualTo(firstCount + secondCount + this.bonusCount),
                 () -> assertThat(bonusFrame.isFinishBowling()).isTrue());
@@ -28,13 +32,16 @@ public class FinalFrameTest {
     }
 
     @Test
-    @DisplayName("보너스 게임일 때 다음 프레임 생성 혹은 투구하는 경우 예외 처리")
-    void isFinalException() {
-        int firstCount = 10;
-        int secondCount = 0;
+    @DisplayName("보너스 게임일 때 다음 프레임 생성하는 경우 예외 처리")
+    void createException() {
+        Frame bonusGame = FinalFrame.lastBowling(10).next(this.bonusCount);
+        assertThatThrownBy(() -> bonusGame.next(this.bonusCount)).isExactlyInstanceOf(UnableCreateFrameException.class);
+    }
 
-        Frame finalFrame = FinalFrame.lastBowling(firstCount).bowling(secondCount);
-
-        assertThatThrownBy(() -> finalFrame.next(this.bonusCount)).isExactlyInstanceOf(UnableCreateFrameException.class);
+    @Test
+    @DisplayName("보너스 게임일 때 투구하는 경우 예외 처리")
+    void bowlingException() {
+        Frame bonusGame = FinalFrame.lastBowling(5).bowling(5).next(this.bonusCount);
+        assertThatThrownBy(() -> bonusGame.bowling(this.bonusCount)).isExactlyInstanceOf(UnableBowlingException.class);
     }
 }

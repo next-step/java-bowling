@@ -6,6 +6,8 @@ public interface Frame {
 
     Frame next(int count);
 
+    int round();
+
     int totalCount();
 
     boolean isFinalFrame();

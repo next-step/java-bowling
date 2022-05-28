@@ -5,7 +5,7 @@ import bowling.domain.pitch.Pitches;
 public class NormalFrame implements Frame {
 
     private static final int ONE = 1;
-    private static final int SEMI_FINAL_INDEX = 8;
+    private static final int SEMI_FINAL_INDEX = 9;
     private static final int MAX_PITCHES_SIZE = 2;
 
     private final int round;
@@ -33,6 +33,11 @@ public class NormalFrame implements Frame {
             return FinalFrame.lastBowling(count);
         }
         return bowling(nextIndex, count);
+    }
+
+    @Override
+    public int round() {
+        return this.round;
     }
 
     @Override

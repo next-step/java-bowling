@@ -33,14 +33,4 @@ public class FramesTest {
 
         assertThat(frames.isNext()).isFalse();
     }
-
-    @Test
-    @DisplayName("보너스 게임 여부")
-    void bowling() {
-        IntStream.range(0, 10)
-                .peek(i -> this.frames.bowling(5))
-                .forEach(i -> this.frames.bowling(5));
-
-        assertThat(this.frames.isBonus()).isTrue();
-    }
 }

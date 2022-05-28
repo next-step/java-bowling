@@ -8,6 +8,7 @@ public class FinalFrame implements Frame {
 
     private static final int MIN_PITCHES_SIZE = 2;
     private static final int MAX_PITCHES_SIZE = 3;
+    private static final int FINAL_ROUND = 9;
 
     private boolean isBonus = false;
     private final Pitches pitches;
@@ -25,20 +26,30 @@ public class FinalFrame implements Frame {
         if (this.isFinishBowling()) {
             throw new UnableBowlingException();
         }
-        this.pitches.next(count);
+
         if (this.pitches.isStrikeOrSpare()) {
+            this.pitches.bonus(count);
             this.isBonus = true;
+            return this;
         }
+
+        this.pitches.next(count);
+
         return this;
     }
 
     @Override
     public Frame next(int count) {
-        if (this.isFinishBowling()) {
+        if (!this.isFinishBowling()) {
             return this.bowling(count);
         }
 
         throw new UnableCreateFrameException();
+    }
+
+    @Override
+    public int round() {
+        return FINAL_ROUND;
     }
 
     @Override
@@ -53,9 +64,14 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isFinishBowling() {
-        if (this.isBonus) {
-            return this.pitches.size() == MAX_PITCHES_SIZE;
+        if (pitches.isSpare()) {
+            return isBonus && this.pitches.size() == MAX_PITCHES_SIZE;
         }
+
+        if (pitches.isStrike()) {
+            return isBonus && this.pitches.size() == MIN_PITCHES_SIZE;
+        }
+
         return this.pitches.size() == MIN_PITCHES_SIZE;
     }
 
