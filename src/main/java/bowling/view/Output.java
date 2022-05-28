@@ -45,10 +45,9 @@ public class Output {
             String symbol = frame.getBowls()
                     .stream()
                     .map(Bowl::getPitchResult)
-                    .filter(Objects::nonNull)
+                    .filter(pitchResult -> !pitchResult.getBowlType().equals(BowlType.READY))
                     .map(Output::getSymbol)
                     .collect(Collectors.joining(SYMBOL_DELIMITER));
-
             res.append(String.format(SYMBOL_RESULT_FRAME, symbol));
         }
         return res.toString();
