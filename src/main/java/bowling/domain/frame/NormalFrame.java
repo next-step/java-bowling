@@ -41,11 +41,6 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public int totalCount() {
-        return pitches.totalCount();
-    }
-
-    @Override
     public boolean isFinalFrame() {
         return false;
     }
@@ -59,19 +54,16 @@ public class NormalFrame implements Frame {
         return this.pitches.size() == MAX_PITCHES_SIZE;
     }
 
+    @Override
+    public String partitionCount() {
+        return this.pitches.toString();
+    }
+
     private boolean isSemiFinal() {
         return this.round == SEMI_FINAL_INDEX;
     }
 
     private int increment() {
         return Math.addExact(this.round, ONE);
-    }
-
-    @Override
-    public String toString() {
-        return "NormalFrame{" +
-                "round=" + round +
-                ", pitches=" + pitches +
-                '}';
     }
 }

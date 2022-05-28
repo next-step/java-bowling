@@ -2,6 +2,7 @@ package bowling.domain.pitch;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Pitches {
 
@@ -74,8 +75,22 @@ public class Pitches {
 
     @Override
     public String toString() {
-        return "Pitches{" +
-                "pitches=" + pitches +
-                '}';
+        if (this.isStrike()) {
+            return "X";
+        }
+
+        if (this.isSpare()) {
+            return this.firstPitch().count() + "|/";
+        }
+
+        return this.pitches
+                .stream()
+                .map(pitch -> {
+                    if (pitch.count() == ZERO) {
+                        return "-";
+                    }
+                    return String.valueOf(pitch.count());
+                })
+                .collect(Collectors.joining("|"));
     }
 }

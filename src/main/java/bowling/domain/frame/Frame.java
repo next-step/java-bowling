@@ -8,9 +8,9 @@ public interface Frame {
 
     int round();
 
-    int totalCount();
-
     boolean isFinalFrame();
 
     boolean isFinishBowling();
+
+    String partitionCount();
 }

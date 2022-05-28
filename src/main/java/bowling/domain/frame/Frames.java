@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Frames {
 
-    private static final int STRIKE_OR_SPARE = 10;
     private static final int ZERO = 0;
     private static final int ONE = 1;
 
@@ -49,29 +48,29 @@ public class Frames {
 
     public int currentRound() {
         if (this.frames.isEmpty()) {
-            return 1;
+            return ONE;
         }
 
         Frame currentFrame = this.currentFrame();
 
         if (currentFrame.isFinishBowling() || currentFrame.isFinalFrame()) {
-            return currentFrame.round() + 1;
+            return currentFrame.round() + ONE;
         }
 
         return currentFrame.round();
     }
 
-    private Frame currentFrame() {
-        return this.frames.get(this.lastRound());
+    public Frame getFrame(int index) {
+        return this.frames.get(index);
     }
 
-    private int lastRound() {
+    public int lastRound() {
         int lastRound = Math.subtractExact(this.frames.size(), ONE);
 
         return Math.max(lastRound, ZERO);
     }
 
-    public void print() {
-        this.frames.forEach(System.out::println);
+    private Frame currentFrame() {
+        return this.getFrame(this.lastRound());
     }
 }

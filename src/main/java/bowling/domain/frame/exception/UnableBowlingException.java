@@ -1,4 +1,4 @@
-package bowling.exception;
+package bowling.domain.frame.exception;
 
 public class UnableBowlingException extends RuntimeException {
 

@@ -1,12 +1,13 @@
 package bowling.domain.pitch;
 
+import bowling.domain.pitch.exception.OverCountException;
+
 import java.util.Objects;
 import java.util.Optional;
 
 public class Pitch {
     private static final int MIN_COUNT = 0;
     private static final int MAX_COUNT = 10;
-    private static final String OVER_COUNT_MESSAGE = "현재 남은 볼링 핀은 %s 개 입니다. 다시 확인해주세요.";
 
     private final int count;
 
@@ -33,11 +34,11 @@ public class Pitch {
 
     private static void isOverCount(int currentCount, int nextCount) {
         int remainingCount = Math.subtractExact(MAX_COUNT, currentCount);
-        String message = String.format(OVER_COUNT_MESSAGE, remainingCount);
+
         Optional.of(nextCount)
                 .filter(count -> MIN_COUNT <= count)
                 .filter(count -> count <= MAX_COUNT)
-                .orElseThrow(() -> new IllegalArgumentException(message));
+                .orElseThrow(() -> new OverCountException(remainingCount));
     }
 
     @Override
@@ -51,12 +52,5 @@ public class Pitch {
     @Override
     public int hashCode() {
         return Objects.hash(count);
-    }
-
-    @Override
-    public String toString() {
-        return "Pitch{" +
-                "count=" + count +
-                '}';
     }
 }

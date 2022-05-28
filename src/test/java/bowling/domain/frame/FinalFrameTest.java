@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.exception.UnableBowlingException;
-import bowling.exception.UnableCreateFrameException;
+import bowling.domain.frame.exception.UnableBowlingException;
+import bowling.domain.frame.exception.UnableCreateFrameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,7 +9,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class FinalFrameTest {
 
@@ -26,8 +25,7 @@ public class FinalFrameTest {
             finalFrame = finalFrame.bowling(secondCount);
         }
         Frame bonusFrame = finalFrame.bowling(this.bonusCount);
-        assertAll(() -> assertThat(bonusFrame.totalCount()).isEqualTo(firstCount + secondCount + this.bonusCount),
-                () -> assertThat(bonusFrame.isFinishBowling()).isTrue());
+        assertThat(bonusFrame.isFinishBowling()).isTrue();
 
     }
 

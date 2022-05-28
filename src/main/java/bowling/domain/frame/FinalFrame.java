@@ -1,8 +1,8 @@
 package bowling.domain.frame;
 
+import bowling.domain.frame.exception.UnableBowlingException;
+import bowling.domain.frame.exception.UnableCreateFrameException;
 import bowling.domain.pitch.Pitches;
-import bowling.exception.UnableBowlingException;
-import bowling.exception.UnableCreateFrameException;
 
 public class FinalFrame implements Frame {
 
@@ -53,11 +53,6 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public int totalCount() {
-        return this.pitches.totalCount();
-    }
-
-    @Override
     public boolean isFinalFrame() {
         return true;
     }
@@ -76,10 +71,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public String toString() {
-        return "FinalFrame{" +
-                "isBonusFrame=" + isBonus +
-                ", pitches=" + pitches +
-                '}';
+    public String partitionCount() {
+        return this.pitches.toString();
     }
 }

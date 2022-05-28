@@ -1,5 +1,6 @@
 package bowling.domain.pitch;
 
+import bowling.domain.pitch.exception.OverCountException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -16,7 +17,7 @@ public class PitchTest {
     @ParameterizedTest(name = "쓰러트린 볼링 핀이 0개 미만인 경우 예외 처리 - {0}개, {1}개")
     @CsvSource(delimiter = '|', value = {"-1|0", "0|-11", "-1|9", "9|-1"})
     void exception(int firstCount, int secondCount) {
-        assertThatThrownBy(() -> Pitch.of(firstCount).next(secondCount)).isExactlyInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Pitch.of(firstCount).next(secondCount)).isExactlyInstanceOf(OverCountException.class);
     }
 
     @ParameterizedTest(name = "첫 번째 투구 결과 - {0}개 쓰러짐")
