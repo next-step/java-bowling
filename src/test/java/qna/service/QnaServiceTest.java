@@ -1,6 +1,7 @@
 package qna.service;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -52,6 +54,23 @@ public class QnaServiceTest {
         verifyDeleteHistories();
     }
 
+    @DisplayName("질문이 삭제되면 답변도 모두 삭제된다.")
+    @Test
+    public void delete_success_all_answer_deleted() {
+        final Answer answer01 = new Answer(UserTest.JAVAJIGI, question, "answer contents1");
+        final Answer answer02 = new Answer(UserTest.JAVAJIGI, question, "answer contents2");
+        question.addAnswer(answer01);
+        question.addAnswer(answer02);
+        when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
+
+        qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
+
+        assertAll(
+                () -> assertThat(question.isDeleted()).isTrue(),
+                () -> assertThat(answer01.isDeleted()).isTrue(),
+                () -> assertThat(answer02.isDeleted()).isTrue()
+        );
+    }
     @Test
     public void delete_실패_다른_사람이_쓴_글() {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));

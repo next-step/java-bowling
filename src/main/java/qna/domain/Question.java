@@ -1,19 +1,12 @@
 package qna.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-
-import org.hibernate.annotations.Where;
 
 import qna.CannotDeleteException;
 
@@ -29,10 +22,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private final AnswerList answers = new AnswerList();
 
     private boolean deleted = false;
 
@@ -101,12 +92,7 @@ public class Question extends AbstractEntity {
             return;
         }
 
-        answers.stream()
-               .filter(answer -> !answer.isOwner(loginUser))
-               .findAny()
-               .ifPresent(answer -> {
-                   throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-               });
+        answers.deleteAll(loginUser);
 
         this.deleted = true;
     }
@@ -115,7 +101,7 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public AnswerList getAnswers() {
         return answers;
     }
 

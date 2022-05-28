@@ -2,6 +2,7 @@ package qna.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,6 +46,23 @@ public class QuestionTest {
         assertThatThrownBy(() -> Q1.delete(UserTest.JAVAJIGI))
                 .isInstanceOf(CannotDeleteException.class)
                 .hasMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+    }
+
+    @DisplayName("질문이 삭제되면 답변도 모두 삭제된다.")
+    @Test
+    public void delete_success_all_answer_deleted() {
+        final Answer answer01 = new Answer(UserTest.JAVAJIGI, Q1, "answer contents1");
+        final Answer answer02 = new Answer(UserTest.JAVAJIGI, Q1, "answer contents2");
+        Q1.addAnswer(answer01);
+        Q1.addAnswer(answer02);
+
+        Q1.delete(UserTest.JAVAJIGI);
+
+        assertAll(
+                () -> assertThat(Q1.isDeleted()).isTrue(),
+                () -> assertThat(answer01.isDeleted()).isTrue(),
+                () -> assertThat(answer02.isDeleted()).isTrue()
+        );
     }
 
 }
