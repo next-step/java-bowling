@@ -8,4 +8,5 @@ public interface State {
     Score sumBeforeScore(Score beforeScore);
     boolean finish();
     boolean canCalculate(Score beforeScore);
+    String mark();
 }

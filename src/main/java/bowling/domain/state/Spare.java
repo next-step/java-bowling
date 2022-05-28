@@ -39,6 +39,11 @@ public class Spare extends Finished {
     }
 
     @Override
+    public String mark() {
+        return String.format(SCORE_FORMAT, firstPins);
+    }
+
+    @Override
     public Score sumBeforeScore(Score beforeScore) {
         beforeScore.bowl(firstPins);
         if (beforeScore.canCalculate()) {
@@ -50,11 +55,6 @@ public class Spare extends Finished {
     @Override
     public Score score() {
         return new Score(firstPins.totalScore(secondPins), 1);
-    }
-
-    @Override
-    public String toString() {
-        return String.format(SCORE_FORMAT, firstPins);
     }
 
     @Override
