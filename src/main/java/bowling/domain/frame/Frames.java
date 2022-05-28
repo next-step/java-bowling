@@ -9,6 +9,8 @@ import java.util.List;
 
 public class Frames {
 
+    private static final int FRAME_LIST_START_INDEX = 0;
+    private static final int INITIAL_SCORE = 0;
     private static final int MIN_FRAME_INDEX = 1;
 
     private List<Frame> frames;
@@ -28,10 +30,13 @@ public class Frames {
 
     public List<Integer> getScores(){
         List<Integer> scores = new ArrayList<>();
-        return getScores(0, scores, 0);
+        return getScores(INITIAL_SCORE, scores, FRAME_LIST_START_INDEX);
     }
 
     private List<Integer> getScores(int accumulatedScore, List<Integer> scores, int index){
+        if(index >= getFrames().size()){
+            return scores;
+        }
         Frame frame = getFrames().get(index);
         int score = frame.score();
         if(score == Score.CANNOT_CALCULATE_SCORE){
@@ -39,6 +44,7 @@ public class Frames {
         }
         accumulatedScore += score;
         scores.add(accumulatedScore);
+
         return getScores(accumulatedScore, scores, index+1);
     }
 
