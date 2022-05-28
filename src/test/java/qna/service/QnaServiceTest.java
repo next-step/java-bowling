@@ -1,5 +1,15 @@
 package qna.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -7,31 +17,27 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
 
 import qna.CannotDeleteException;
-import qna.domain.*;
-
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import qna.domain.Answer;
+import qna.domain.AnswerTest;
+import qna.domain.DeleteQuestionEvent;
+import qna.domain.Question;
+import qna.domain.QuestionRepository;
+import qna.domain.QuestionTest;
+import qna.domain.UserTest;
 
 @ExtendWith(MockitoExtension.class)
 public class QnaServiceTest {
     @Mock
     private QuestionRepository questionRepository;
 
-    @Mock
-    private DeleteHistoryService deleteHistoryService;
-
     @InjectMocks
     private QnAService qnAService;
+
+    @Mock
+    private ApplicationEventPublisher applicationEventPublisher;
 
     private Question question;
     private Answer answer;
@@ -51,7 +57,7 @@ public class QnaServiceTest {
         qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
 
         assertThat(question.isDeleted()).isTrue();
-        verifyDeleteHistories();
+        verify(applicationEventPublisher, times(1)).publishEvent(any(DeleteQuestionEvent.class));
     }
 
     @DisplayName("질문이 삭제되면 답변도 모두 삭제된다.")
@@ -89,7 +95,7 @@ public class QnaServiceTest {
 
         assertThat(question.isDeleted()).isTrue();
         assertThat(answer.isDeleted()).isTrue();
-        verifyDeleteHistories();
+        verify(applicationEventPublisher, times(1)).publishEvent(any(DeleteQuestionEvent.class));
     }
 
     @Test
@@ -101,12 +107,5 @@ public class QnaServiceTest {
             qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
         }).isInstanceOf(CannotDeleteException.class)
           .hasMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-    }
-
-    private void verifyDeleteHistories() {
-        List<DeleteHistory> deleteHistories = Arrays.asList(
-                new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()),
-                new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        verify(deleteHistoryService).saveAll(deleteHistories);
     }
 }
