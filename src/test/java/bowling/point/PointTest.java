@@ -26,4 +26,16 @@ class PointTest {
 	void 투구_기록이_범위_안에_있지_않으면_예외(int throwCount) {
 		assertThatIllegalArgumentException().isThrownBy(() -> Point.of(throwCount));
 	}
+
+	@Test
+	void 투구기록_최댓값() {
+		assertThat(Point.max()).isEqualTo(Point.of(10));
+	}
+
+	@Test
+	void 투구기록_더하기() {
+		Point first = Point.of(2);
+		Point second = Point.of(3);
+		assertThat(first.add(second)).isSameAs(Point.of(5));
+	}
 }

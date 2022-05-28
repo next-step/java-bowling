@@ -30,4 +30,12 @@ public class Point {
 			String.format("투구 기록이 최댓값(%d) 보다 큽니다. 입력 : %d", MAX_THROW_COUNT, throwCount));
 		return CACHE.get(throwCount);
 	}
+
+	public static Point max() {
+		return Point.of(MAX_THROW_COUNT);
+	}
+
+	public Point add(Point operand) {
+		return Point.of(value + operand.value);
+	}
 }
