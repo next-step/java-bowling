@@ -1,8 +1,10 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +20,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers;
 
     private boolean deleted = false;
 
@@ -29,32 +29,18 @@ public class Question extends AbstractEntity {
     }
 
     public Question(String title, String contents) {
-        this.title = title;
-        this.contents = contents;
+        this(null, title, contents, new Answers());
     }
 
-    public Question(long id, String title, String contents) {
+    public Question(Long id, String title, String contents) {
+        this(id, title, contents, new Answers());
+    }
+
+    public Question(Long id, String title, String contents, Answers answers) {
         super(id);
         this.title = title;
         this.contents = contents;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
+        this.answers = answers;
     }
 
     public User getWriter() {
@@ -75,21 +61,36 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
     }
 
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    public void delete(User loginUser) {
+        validateUser(loginUser);
+        answers.delete(loginUser);
+        delete();
+    }
+
+    private void validateUser(User loginUser) {
+        if (!this.isOwner(loginUser))
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+    }
+
+    private void delete() {
+        this.deleted = true;
+    }
+
+    public List<DeleteHistory> deleteHistories() {
+        List<DeleteHistory> deleteHistories = answers.deleteHistories();
+        deleteHistories.add(DeleteHistory.of(
+                ContentType.QUESTION,
+                getId(),
+                writer));
+        return deleteHistories;
     }
 }
