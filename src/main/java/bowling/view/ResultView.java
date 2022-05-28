@@ -42,11 +42,11 @@ public class ResultView {
         System.out.println(MENU);
         System.out.print(user.getName());
         String frameResult = "";
-        if(i <= 10) {
+        if(i < FINAL_ROUND) {
             frameResult = "  " + stateExpression + EMPTY.substring(stateExpression.length());
             RESULT_STATES.set(i -1, frameResult + PIPELINE);
         }
-        if(i > 10) {
+        if(i >= FINAL_ROUND) {
             frameResult = "  "+stateExpression + FINAL_ROUND_EMPTY.substring(stateExpression.length());
             RESULT_STATES.set(RESULT_STATES.size() - 1, frameResult + PIPELINE);
         }

@@ -29,11 +29,6 @@ public class NormalFrame implements Frame {
         return this;
     }
 
-    @Override
-    public Frame nextFrame() {
-        return this.nextFrame;
-    }
-
     public State getState() {
         return this.state;
     }

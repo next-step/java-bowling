@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import bowling.domain.state.*;
-import bowling.exception.BowlingGameException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +27,6 @@ public class FinalFrame implements Frame{
         states.remove(statesSize() -1);
         states.add(state.bowl(countOfPins));
         return this;
-    }
-
-    @Override
-    public Frame nextFrame() {
-        throw new BowlingGameException("마지막 프레임의 다음 프레임은 존재하지 않습니다.");
     }
 
     @Override

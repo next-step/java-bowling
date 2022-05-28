@@ -20,11 +20,10 @@ public class BowlingGame {
         int i = 1;
         while (i < FINAL_ROUND) {
             int pin = InputView.inputBowl(i).getPins();
-            frame.bowl(pin);
-            System.out.println(frame.getState().getScore().getScore());
-            if (frame.getState().isFinish()) {
+            Frame currentFrame = frame.bowl(pin);
+            if(frame.getState().isFinish()) {
                 ResultView.printState(user, frame.expression(), i);
-                frame = frame.nextFrame();
+                frame = currentFrame;
                 i++;
                 continue;
             }
