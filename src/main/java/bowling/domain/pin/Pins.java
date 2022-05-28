@@ -22,31 +22,10 @@ public class Pins {
         return count;
     }
 
-    public boolean isStrike(){
-        return count == MAX_PIN_CNT;
-    }
-
-    public static boolean isSpare(Pins first, Pins second){
-        return first.count + second.count == MAX_PIN_CNT;
-    }
-
-    public static boolean isMiss(Pins first, Pins second){
-        return first.count + second.count < MAX_PIN_CNT;
-    }
-
-    public static boolean isGutter(Pins first, Pins second){
-        return first.count == MIN_PIN_CNT && second.count == MIN_PIN_CNT;
-    }
 
     @Override
     public String toString(){
         return count+"개";
     }
 
-    public String getSymbol() {
-        if(count == 0){
-            return "-";
-        }
-        return count+"";
-    }
 }
