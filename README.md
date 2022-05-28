@@ -43,7 +43,9 @@
 
 - [ ] 프레임
     - 가능한 상태
-        - [ ] Initialized
+        - [x] Initialized
+            - 투구한 점수가 10 보다 작으면 Remain
+            - 투구한 점수가 10 이면 Strike
         - [ ] Remain
         - [ ] Open
         - [ ] Spare
