@@ -92,3 +92,12 @@
 6. 투구가 끝났을 경우(Miss, Spare, Strike) 해당 프레임의 Score 클래스를 만든다.
 7. 그 이후에 그 다음 프레임에서 shoot 메서드를 호출 할 때마다, 이전 프레임의 Score 클래스를 확인해야 된다.
 8. Score 클래스는 이전 프레임의 Score 가 가지고 있던 점수 필드와 Miss, Spare, Strike 에 따른 다음 프레임에서 참조해야 하는 필드 값으로 구성한다.
+
+#### step 3-1. 볼링 점수판(점수 계산) 피드백 반영
+1. assertAll 을 사용할 땐 각 assert 구문을 Executable 로 감싸야 함!
+2. 현재 BowlingGame 에는 3개의 인스턴스를 가지고 있는데 객체지향 생활 체조 규칙에 맞춰 줄여보는 방식을 생각해보자
+3. BowlingGame 에 대한 테스트 코드 작성!
+4. Frame 의 구현체들은 shoot 이후에 this 를 반환하는데 nextFrame 이 맞는걸까??
+5. 힌트를 참고하여 각 프레임이 점수를 계산해보도록
+6. Frame 에서 Score 를 계산해보도록 해보면 ScoreBoard 클래스를 제거할 수 있을 거 같음!
+7. (코멘트) Frame 의 Status 로 부터 Score 를 계산하게 하는걸 고민해보자.
