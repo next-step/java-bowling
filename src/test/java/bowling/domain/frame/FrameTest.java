@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.State.State;
-import bowling.domain.State.Strike;
+import bowling.domain.State.StatesTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -14,6 +14,7 @@ import static bowling.domain.State.StateTest.READY;
 import static bowling.domain.State.StateTest.SECOND;
 import static bowling.domain.State.StateTest.SPARE;
 import static bowling.domain.State.StateTest.STRIKE;
+import static bowling.domain.frame.FrameNumberTest.MAX_FRAME_NUMBER;
 import static bowling.domain.frame.FrameNumberTest.MIN_FRAME_NUMBER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -23,8 +24,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FrameTest {
     static final Frame INITIAL_FRAME = Frame.initialize();
-    static final Frame LAST_FRAME = new FinalFrame(new FrameNumber(FrameNumber.MAX), State.ready());
-    static final Frame LAST_DONE_FRAME = new FinalFrame(new FrameNumber(FrameNumber.MAX), new Strike(TEN));
+    static final Frame LAST_FRAME = new FinalFrame(new FrameNumber(FrameNumber.MAX));
+    static final Frame LAST_DONE_FRAME = new FinalFrame(new FrameNumber(FrameNumber.MAX), StatesTest.DONE);
 
     @Test
     void Frame은_FrameNumber없이_생성_될_경우_예외를_발생_시킨다() {
@@ -52,7 +53,7 @@ class FrameTest {
     @ValueSource(ints = {FrameNumber.MAX + 1, FrameNumber.MAX - 1})
     void FinalFrame은_범위_밖_frameNumber로_생성_될_경우_예외를_발생_시킨다(int frameNumber) {
         assertThatThrownBy(() -> {
-            new FinalFrame(new FrameNumber(frameNumber), State.ready());
+            new FinalFrame(new FrameNumber(frameNumber));
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -76,14 +77,15 @@ class FrameTest {
     @Test
     void isDone은_프레임_종료_여부를_반환한다() {
         assertAll(
-                () -> assertFalse(new NormalFrame(FrameNumber.min(), READY).isDone()),
-                () -> assertFalse(new NormalFrame(FrameNumber.min(), FIRST).isDone()),
-                () -> assertFalse(new NormalFrame(FrameNumber.min(), GUTTER).isDone()),
-                () -> assertTrue(new NormalFrame(FrameNumber.min(), MISS).isDone()),
-                () -> assertTrue(new NormalFrame(FrameNumber.min(), SECOND).isDone()),
-                () -> assertTrue(new NormalFrame(FrameNumber.min(), SPARE).isDone()),
-                () -> assertTrue(new NormalFrame(FrameNumber.min(), STRIKE).isDone())
-                // todo final Frame
+                () -> assertFalse(new NormalFrame(MIN_FRAME_NUMBER, READY).isDone()),
+                () -> assertFalse(new NormalFrame(MIN_FRAME_NUMBER, FIRST).isDone()),
+                () -> assertFalse(new NormalFrame(MIN_FRAME_NUMBER, GUTTER).isDone()),
+                () -> assertTrue(new NormalFrame(MIN_FRAME_NUMBER, MISS).isDone()),
+                () -> assertTrue(new NormalFrame(MIN_FRAME_NUMBER, SECOND).isDone()),
+                () -> assertTrue(new NormalFrame(MIN_FRAME_NUMBER, SPARE).isDone()),
+                () -> assertTrue(new NormalFrame(MIN_FRAME_NUMBER, STRIKE).isDone()),
+                () -> assertTrue(new FinalFrame(MAX_FRAME_NUMBER, StatesTest.DONE).isDone()),
+                () -> assertFalse(new FinalFrame(MAX_FRAME_NUMBER, StatesTest.DOING).isDone())
         );
     }
 

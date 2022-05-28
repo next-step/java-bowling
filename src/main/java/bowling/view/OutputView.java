@@ -5,8 +5,9 @@ import bowling.domain.game.Game;
 public class OutputView {
     private static final String BOARD_HEAD = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     public static final String COLUMN = "|";
-    public static final String PLAYER_FORMAT = "|  %s |";
-    public static final String STATE_FORMAT = "  %-4s|";
+    public static final String PLAYER_FORMAT = "|  %-4s|";
+    public static final String NORMAL_STATE_FORMAT = "  %-4s|";
+    public static final String FINAL_STATE_FORMAT = " %-5s|";
     public static final String BLANK = "      |";
 
     private OutputView() {

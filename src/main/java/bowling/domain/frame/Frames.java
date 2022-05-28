@@ -50,7 +50,7 @@ public class Frames {
         Frame lastFrame = lastFrame();
         Frame nextFrame = lastFrame().bowl(pin);
 
-        if (lastFrame.isDone()) {
+        if (lastFrame.isDone() && !lastFrame.isFinal()) {
             frames.add(nextFrame);
         }
     }

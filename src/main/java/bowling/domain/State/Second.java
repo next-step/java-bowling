@@ -13,7 +13,17 @@ public class Second extends State {
 
     @Override
     public State bowl(Pin pin) {
-        return null;
+        Pin addedPin = this.pin.add(pin);
+
+        if (pin.isZero()) {
+            return new Miss(this);
+        }
+
+        if (addedPin.isTen()) {
+            return new Spare(addedPin, this);
+        }
+
+        return new Second(addedPin, this);
     }
 
     @Override
@@ -21,8 +31,17 @@ public class Second extends State {
         return true;
     }
 
+    public boolean isSecond() {
+        return true;
+    }
+
     @Override
     public String toString() {
         return previous + COLUMN + pin;
+    }
+
+    @Override
+    public String toSimpleString() {
+        return pin.toString();
     }
 }

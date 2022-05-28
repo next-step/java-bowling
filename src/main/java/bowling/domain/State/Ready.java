@@ -23,4 +23,9 @@ public class Ready extends State {
     public String toString() {
         return "";
     }
+
+    @Override
+    public String toSimpleString() {
+        return toString();
+    }
 }

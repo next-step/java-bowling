@@ -19,7 +19,7 @@ public class First extends State {
             return new Spare(addedPin, this);
         }
 
-        return new Second(addedPin, this);
+        return new Second(pin, this);
     }
 
     @Override
@@ -30,5 +30,10 @@ public class First extends State {
     @Override
     public String toString() {
         return pin.toString();
+    }
+
+    @Override
+    public String toSimpleString() {
+        return toString();
     }
 }

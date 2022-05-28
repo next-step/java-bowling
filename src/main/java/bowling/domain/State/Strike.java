@@ -11,7 +11,15 @@ public class Strike extends State {
 
     @Override
     public State bowl(Pin pin) {
-        return null;
+        if (pin.isTen()) {
+            return new Strike(pin);
+        }
+
+        if (pin.isZero()) {
+            return new Gutter();
+        }
+
+        return new First(pin);
     }
 
     @Override
@@ -22,5 +30,10 @@ public class Strike extends State {
     @Override
     public String toString() {
         return SYMBOL;
+    }
+
+    @Override
+    public String toSimpleString() {
+        return toString();
     }
 }

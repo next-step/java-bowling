@@ -25,4 +25,9 @@ public class Miss extends State {
     public String toString() {
         return previous + COLUMN + SYMBOL;
     }
+
+    @Override
+    public String toSimpleString() {
+        return SYMBOL;
+    }
 }

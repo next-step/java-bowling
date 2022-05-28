@@ -1,30 +1,19 @@
 package bowling.domain.frame;
 
+import bowling.domain.State.Pin;
 import bowling.domain.State.State;
-
-import static bowling.view.OutputView.STATE_FORMAT;
 
 public abstract class Frame {
     protected final FrameNumber frameNumber;
-    protected final State state;
 
     public Frame(FrameNumber frameNumber) {
-        this(frameNumber, State.ready());
-    }
-
-    public Frame(FrameNumber frameNumber, State state) {
-        validate(frameNumber, state);
+        validate(frameNumber);
         this.frameNumber = frameNumber;
-        this.state = state;
     }
 
-    private void validate(FrameNumber frameNumber, State state) {
+    private void validate(FrameNumber frameNumber) {
         if (frameNumber == null) {
             throw new IllegalArgumentException("frameNumber는 null 일 수 없습니다.");
-        }
-
-        if (state == null) {
-            throw new IllegalArgumentException("state는 null 일 수 없습니다.");
         }
     }
 
@@ -42,10 +31,5 @@ public abstract class Frame {
 
     public FrameNumber number() {
         return frameNumber;
-    }
-
-    @Override
-    public String toString() {
-        return String.format(STATE_FORMAT, state.toString());
     }
 }

@@ -10,4 +10,14 @@ public abstract class State {
     public abstract boolean isDone();
 
     public abstract String toString();
+
+    public abstract String toSimpleString();
+
+    public boolean isMiss() {
+        return false;
+    }
+
+    public boolean isSecond() {
+        return false;
+    }
 }

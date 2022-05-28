@@ -1,21 +1,37 @@
 package bowling.domain.frame;
 
 import bowling.domain.State.Pin;
-import bowling.domain.State.State;
+import bowling.domain.State.States;
+
+import static bowling.view.OutputView.FINAL_STATE_FORMAT;
 
 public class FinalFrame extends Frame {
-    public FinalFrame(FrameNumber frameNumber, State state) {
-        super(frameNumber, state);
+    private final States states;
 
+    public FinalFrame(FrameNumber frameNumber) {
+        this(frameNumber, States.initialize());
+    }
+
+    public FinalFrame(FrameNumber frameNumber, States states) {
+        super(frameNumber);
+        validate(frameNumber, states);
+        this.states = states;
+    }
+
+    private void validate(FrameNumber frameNumber, States states) {
         if (!frameNumber.isFinal()) {
             throw new IllegalArgumentException(
                     String.format("frameNumber(%s)는 마지막 FrameNumber(%s)가 아닙니다.", frameNumber, FrameNumber.MAX));
+        }
+
+        if (states == null) {
+            throw new IllegalArgumentException("states는 null 일 수 없습니다.");
         }
     }
 
     @Override
     public Frame bowl(Pin pin) {
-        state = state.bowl(pin);
+        states.bowl(pin);
         return null;
     }
 
@@ -31,6 +47,11 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isDone() {
-        return state.isDone();
+        return states.isDone();
+    }
+
+    @Override
+    public String toString() {
+        return String.format(FINAL_STATE_FORMAT, states.toString());
     }
 }

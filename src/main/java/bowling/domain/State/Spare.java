@@ -15,7 +15,15 @@ public class Spare extends State {
 
     @Override
     public State bowl(Pin pin) {
-        return null;
+        if (pin.isTen()) {
+            return new Strike(pin);
+        }
+
+        if (pin.isZero()) {
+            return new Gutter();
+        }
+
+        return new First(pin);
     }
 
     @Override
@@ -26,5 +34,9 @@ public class Spare extends State {
     @Override
     public String toString() {
         return previous + COLUMN + SYMBOL;
+    }
+
+    public String toSimpleString() {
+        return SYMBOL;
     }
 }

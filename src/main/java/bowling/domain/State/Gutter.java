@@ -25,4 +25,9 @@ public class Gutter extends State {
     public String toString() {
         return SYMBOL;
     }
+
+    @Override
+    public String toSimpleString() {
+        return toString();
+    }
 }
