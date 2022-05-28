@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 
 class FirstBowlTest {
 
@@ -14,8 +15,10 @@ class FirstBowlTest {
     @Test
     void bowlTest() {
         FirstBowl firstBowl = new FirstBowl(new Pins(3));
-        assertThat(firstBowl.bowl(7)).isEqualTo(new Spare(new Pins(3), new Pins(7)));
-        assertThat(firstBowl.bowl(2)).isEqualTo(new Miss(new Pins(3), new Pins(2)));
+        assertAll(
+                () -> assertEquals(firstBowl.bowl(7), new Spare(new Pins(3), new Pins(7))),
+                () -> assertEquals(firstBowl.bowl(2), new Miss(new Pins(3), new Pins(2)))
+        );
     }
 
     @DisplayName("이전 점수와 더한 점수를 반환한다.")
@@ -38,7 +41,9 @@ class FirstBowlTest {
     @Test
     void canCalculateTest() {
         FirstBowl firstBowl = new FirstBowl(new Pins(3));
-        assertThat(firstBowl.canCalculate(new Strike().score())).isFalse();
-        assertThat(firstBowl.canCalculate(new Spare(new Pins(3), new Pins(7)).score())).isTrue();
+        assertAll(
+                () -> assertFalse(firstBowl.canCalculate(new Strike().score())),
+                () -> assertTrue(firstBowl.canCalculate(new Spare(new Pins(3), new Pins(7)).score()))
+        );
     }
 }
