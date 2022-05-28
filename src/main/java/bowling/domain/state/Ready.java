@@ -4,6 +4,9 @@ import bowling.domain.Pins;
 import bowling.domain.Score;
 
 public class Ready extends Running {
+    private static final String CANNOT_CALCULATE_SCORE = "공을 굴리지 않았기 때문에 점수를 구할 수 없습니다.";
+    private static final String CANNOT_SUM_BEFORE_SCORE = "공을 굴리지 않았기 때문에 이전 점수와 더할 수 없습니다.";
+
     @Override
     public State bowl(int fallPins) {
         Pins pins = new Pins(fallPins);
@@ -19,18 +22,18 @@ public class Ready extends Running {
     }
 
     @Override
+    public String mark() {
+        return "      |";
+    }
+
+    @Override
     public Score score() {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(CANNOT_CALCULATE_SCORE);
     }
 
     @Override
     public Score sumBeforeScore(Score beforeScore) {
-        throw new IllegalArgumentException();
-    }
-
-    @Override
-    public String toString() {
-        return "      |";
+        throw new IllegalArgumentException(CANNOT_SUM_BEFORE_SCORE);
     }
 
     @Override

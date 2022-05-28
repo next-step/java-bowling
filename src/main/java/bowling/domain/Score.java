@@ -3,6 +3,9 @@ package bowling.domain;
 import java.util.Objects;
 
 public class Score {
+    private static final String LEFT_COUNT_EXCEPTION = "[ERROR] 남은 횟수는 %d ~ %d사이여야 합니다.";
+    private static final String NOT_ENOUGH_COUNT_EXCEPTION = "[ERROR] 남은 횟수가 %d이므로 볼링골을 굴릴 수 없습니다.";
+
     private static final int MIN_SCORE = 0;
     private static final int MAX_COUNT = 2;
     private static final int MIN_COUNT = 0;
@@ -22,13 +25,13 @@ public class Score {
         }
 
         if (leftCount > MAX_COUNT || leftCount < MIN_COUNT) {
-            throw new IllegalArgumentException("[ERROR] 남은 횟수는 " + MIN_COUNT + "~" + MAX_COUNT + "사이여야 합니다.");
+            throw new IllegalArgumentException(String.format(LEFT_COUNT_EXCEPTION, MIN_SCORE, MAX_COUNT));
         }
     }
 
     public Score bowl(Pins pins) {
         if (leftCount == MIN_COUNT) {
-            throw new IllegalArgumentException("[ERROR] 남은 횟수가 " + MIN_COUNT + "이므로 볼링골을 굴릴 수 없습니다.");
+            throw new IllegalArgumentException(String.format(NOT_ENOUGH_COUNT_EXCEPTION, MIN_COUNT));
         }
         score = pins.sumScore(score);
         leftCount--;
