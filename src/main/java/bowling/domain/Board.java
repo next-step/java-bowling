@@ -15,12 +15,14 @@ public class Board {
         return frames.bowl(pins);
     }
 
-    @Override
-    public String toString() {
+    public boolean isGameEnd() {
+        return frames.isGameEnd();
+    }
+
+    public String mark() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(user)
-                .append(frames)
-                .append(frames.scores())
+        stringBuilder.append(user.mark())
+                .append(frames.mark())
                 .append("\n");
         return stringBuilder.toString();
     }

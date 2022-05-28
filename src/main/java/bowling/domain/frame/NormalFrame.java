@@ -50,6 +50,11 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public boolean isGameEnd() {
+        return false;
+    }
+
+    @Override
     public boolean canCalculateCurrentScore() {
         if (!state.finish()) {
             return false;
@@ -93,8 +98,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public String toString() {
-        return state.toString();
+    public String mark() {
+        return state.mark();
     }
 
     @Override

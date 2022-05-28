@@ -24,28 +24,31 @@ public class Frames {
     }
 
     private List<Frame> createFrames() {
-        List<Frame> frames = new LinkedList<>();
+        List<Frame> newFrames = new LinkedList<>();
         NormalFrame frame = NormalFrame.first();
-        frames.add(frame);
+        newFrames.add(frame);
 
         for (int index = 1; index <= 8; index++) {
             frame = frame.next();
-            frames.add(frame);
+            newFrames.add(frame);
         }
-        frames.add(frame.last());
+        newFrames.add(frame.last());
 
-        current = frames.get(0);
-        return frames;
+        current = newFrames.get(0);
+        return newFrames;
     }
 
-    @Override
-    public String toString() {
+    public boolean isGameEnd() {
+        return current.isGameEnd();
+    }
+
+    public String mark() {
         return frames.stream()
-                .map(Frame::toString)
-                .collect(Collectors.joining()) + "\n";
+                .map(Frame::mark)
+                .collect(Collectors.joining()) + "\n" + scores();
     }
 
-    public String scores() {
+    private String scores() {
         return score(new StringBuilder(FIRST_SPACE), 0, 0);
     }
 

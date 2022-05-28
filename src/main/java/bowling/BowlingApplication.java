@@ -1,7 +1,6 @@
 package bowling;
 
 import bowling.domain.Board;
-import bowling.exception.GameOverException;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -18,19 +17,17 @@ public class BowlingApplication {
         Board board = new Board(playerName);
         int frameNumber = 1;
 
-        while (true) {
+        while (!board.isGameEnd()) {
             try {
                 int pins = InputView.inputPins(frameNumber);
                 frameNumber = board.bowl(pins);
                 ResultView.printResult(board);
-            } catch (GameOverException e) {
-                System.out.println(e.getMessage());
-                break;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
                 System.out.println(RESTART_GAME_MESSAGE);
                 playGame();
             }
         }
+        ResultView.printGameEndMessage();
     }
 }

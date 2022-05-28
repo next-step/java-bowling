@@ -3,7 +3,6 @@ package bowling.domain.frame;
 import bowling.domain.Score;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
-import bowling.exception.GameOverException;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -13,8 +12,10 @@ import java.util.stream.Collectors;
 public class LastFrame implements Frame {
     private static final String EXCLUDE_STRING = "[|, \\s]";
     private static final String SPACE = " ";
+    private static final int LAST_FRAME_NUMBER = 10;
 
     private final LinkedList<State> states = new LinkedList<>();
+    private boolean gameEnd = false;
 
     public LastFrame() {
         this(new Ready());
@@ -24,11 +25,10 @@ public class LastFrame implements Frame {
         this.states.add(state);
     }
 
-    private boolean isGameOver() {
+    private void checkGameEnd() {
         if (canCalculateCurrentScore()) {
-            return true;
+            gameEnd = true;
         }
-        return false;
     }
 
     private State firstState() {
@@ -41,24 +41,27 @@ public class LastFrame implements Frame {
 
     @Override
     public int number() {
-        return 10;
+        return LAST_FRAME_NUMBER;
     }
 
     @Override
     public Frame bowl(int pins) {
-        if (isGameOver()) {
-            throw new GameOverException("[INFO] 게임 종료");
-        }
-
         State last = lastState();
         if (last.finish()) {
             states.add(new Ready().bowl(pins));
+            checkGameEnd();
             return this;
         }
 
         states.removeLast();
         states.add(last.bowl(pins));
+        checkGameEnd();
         return this;
+    }
+
+    @Override
+    public boolean isGameEnd() {
+        return gameEnd;
     }
 
     @Override
@@ -138,10 +141,10 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public String toString() {
+    public String mark() {
         StringBuilder scores = new StringBuilder(SPACE);
         String score = states.stream()
-                .map(State::toString)
+                .map(State::mark)
                 .map(s -> s.replaceAll(EXCLUDE_STRING, ""))
                 .map(s -> s.split(""))
                 .flatMap(Arrays::stream)
