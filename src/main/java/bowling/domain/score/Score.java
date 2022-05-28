@@ -52,16 +52,16 @@ public class Score {
         return new Score(GUTTER_SCORE_VALUE, DEFAULT_BONUS_PITCH_COUNT);
     }
 
+    public static Score ready() {
+        return new Score(CANNOT_CALCULATE_SCORE, CANNOT_CALCULATE_SCORE);
+    }
+
     public boolean isFinished(){
         return left == FINISHED_REMAIN_COUNT;
     }
 
     public int getValue() {
         return value;
-    }
-
-    public int getLeft() {
-        return left;
     }
 
     @Override
