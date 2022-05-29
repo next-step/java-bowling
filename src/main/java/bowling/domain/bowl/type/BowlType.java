@@ -1,6 +1,12 @@
 package bowling.domain.bowl.type;
 
-import bowling.domain.bowl.*;
+import bowling.domain.bowl.Gutter;
+import bowling.domain.bowl.Miss;
+import bowling.domain.bowl.Spare;
+import bowling.domain.bowl.Strike;
+import bowling.domain.bowl.First;
+import bowling.domain.bowl.Ready;
+
 
 import java.util.Arrays;
 

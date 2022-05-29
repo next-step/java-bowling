@@ -27,11 +27,6 @@ public class Spare extends Ended{
     }
 
     @Override
-    public Score score() {
-        return Score.spare(firstPin.getCount(), secondPin.getCount());
-    }
-
-    @Override
     public Score calculateScore(Score before) {
         Score after = before.addValue(firstPin.getCount());
         if(after.isFinished()){

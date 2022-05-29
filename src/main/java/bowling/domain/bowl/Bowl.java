@@ -10,8 +10,6 @@ public interface Bowl {
 
     Bowl pitch(Pins pins);
 
-    Score score();
-
     Score calculateScore(Score before);
 
     PitchResult getPitchResult();

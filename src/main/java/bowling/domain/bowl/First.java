@@ -66,11 +66,6 @@ public class First implements Bowl{
     }
 
     @Override
-    public Score score() {
-        return new Score(prePins.getCount(), 1);
-    }
-
-    @Override
     public boolean isEnd() {
         return false;
     }

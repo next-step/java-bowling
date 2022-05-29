@@ -55,11 +55,6 @@ public class Ready implements Bowl{
     }
 
     @Override
-    public Score score() {
-        return Score.ready();
-    }
-
-    @Override
     public boolean isEnd() {
         return false;
     }

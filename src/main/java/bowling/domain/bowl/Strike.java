@@ -16,11 +16,6 @@ public class Strike extends Ended{
     }
 
     @Override
-    public Score score() {
-        return Score.strike();
-    }
-
-    @Override
     public Score calculateScore(Score before) {
         return before.addValue(STRIKE_VALUE);
     }

@@ -30,11 +30,6 @@ public class Miss extends Ended{
     }
 
     @Override
-    public Score score() {
-        return Score.miss(firstPin.getCount(), secondPin.getCount());
-    }
-
-    @Override
     public Score calculateScore(Score before) {
         Score after = before.addValue(firstPin.getCount());
         if(after.isFinished()){

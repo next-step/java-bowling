@@ -17,11 +17,6 @@ public class Gutter extends Ended{
     }
 
     @Override
-    public Score score() {
-        return Score.gutter();
-    }
-
-    @Override
     public Score calculateScore(Score before) {
         Score after = before.addValue(GUTTER_VALUE);
         if(after.isFinished()){
