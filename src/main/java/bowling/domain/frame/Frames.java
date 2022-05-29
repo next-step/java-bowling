@@ -17,6 +17,10 @@ public class Frames {
         return current.number();
     }
 
+    public int currentFrameNumber() {
+        return current.number();
+    }
+
     private List<Frame> createFrames() {
         List<Frame> newFrames = new LinkedList<>();
         NormalFrame frame = NormalFrame.first();

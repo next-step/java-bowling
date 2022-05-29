@@ -4,6 +4,7 @@ import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Board {
     private final Frames frames;
@@ -18,6 +19,10 @@ public class Board {
         return frames.bowl(pins);
     }
 
+    public int currentFrameNumber() {
+        return frames.currentFrameNumber();
+    }
+
     public boolean isGameEnd() {
         return frames.isGameEnd();
     }
@@ -26,7 +31,24 @@ public class Board {
         return frames.frames();
     }
 
+    public String name() {
+        return user.name();
+    }
+
     public User user() {
         return user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Board board = (Board) o;
+        return Objects.equals(user, board.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(user);
     }
 }
