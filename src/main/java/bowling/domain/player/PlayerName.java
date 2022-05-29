@@ -1,8 +1,6 @@
 package bowling.domain.player;
 
 
-import org.apache.commons.lang3.StringUtils;
-
 public class PlayerName {
     static final int NAME_LENGTH = 3;
 
@@ -15,7 +13,7 @@ public class PlayerName {
     }
 
     private void validate(String name) {
-        if (StringUtils.isBlank(name)) {
+        if (name == null || name.equals("")) {
             throw new IllegalArgumentException("PlayerName은 빈 값일 수 없습니다.");
         }
 
