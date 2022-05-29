@@ -55,17 +55,24 @@ public class Frames {
         }
     }
 
+    private Frame getFrameOrNull(int index) {
+        if (frames.size() - 1 >= index) {
+            return frames.get(index);
+        }
+        return null;
+    }
+
+    private String toString(Frame frame) {
+        if (frame == null) {
+            return BLANK;
+        }
+        return frame.toString();
+    }
+
     @Override
     public String toString() {
         return IntStream.range(FrameNumber.MIN - 1, FrameNumber.MAX)
-                .mapToObj(index -> {
-                    try {
-                        Frame frame = frames.get(index);
-                        return frame.toString();
-                    } catch (Exception e) {
-                        return BLANK;
-                    }
-                })
+                .mapToObj(index -> toString(getFrameOrNull(index)))
                 .collect(Collectors.joining());
     }
 }
