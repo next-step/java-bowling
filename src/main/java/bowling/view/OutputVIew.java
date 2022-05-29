@@ -16,7 +16,6 @@ public class OutputVIew {
     private static final String BLANK = "";
     private static final int ONE = 1;
     private static final int START_ROUND = 0;
-    private static final int LAST_ROUND = 9;
     private static final int LIMITED_ROUND = 10;
 
     private OutputVIew() {
