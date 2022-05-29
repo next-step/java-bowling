@@ -4,7 +4,7 @@ public class Score {
     private static final int NO_REMAINING_PITCHES = 0;
     private static final int MIN_SCORE = 0;
     private static final int MAX_SCORE = 30;
-    private static final int MAX_REMAINING_PITCHES = 2;
+    public static final int MAX_REMAINING_PITCHES = 2;
     private static final int MIN_REMAINING_PITCHES = 0;
     public static final int INCALCULABLE_SCORE = -1;
     public static final int INCALCULABLE_PITCHES = -1;

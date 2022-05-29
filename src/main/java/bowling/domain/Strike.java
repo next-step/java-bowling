@@ -10,7 +10,7 @@ public class Strike extends EndedState {
 
     @Override
     public Score score() {
-        return new Score(Pitching.MAX_PITCHING, 2);
+        return new Score(Pitching.MAX_PITCHING, Score.MAX_REMAINING_PITCHES);
     }
 
     @Override
