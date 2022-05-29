@@ -3,7 +3,6 @@ package bowling.domain;
 import java.util.Objects;
 
 public class User {
-    private static final String NAME_FORMAT = "|  %s |";
     private static final int NAME_LENGTH = 3;
 
     private final String name;
@@ -17,10 +16,6 @@ public class User {
         if (name == null || name.length() != NAME_LENGTH) {
             throw new IllegalArgumentException("[ERROR] 사용자의 이름은 " + NAME_LENGTH + "글자여야 합니다.");
         }
-    }
-
-    public String mark() {
-        return String.format(NAME_FORMAT, name);
     }
 
     public String name() {
