@@ -34,7 +34,7 @@ class ScoreTest {
         Score score = new Score(10, 1);
 
         // when
-        Score result = score.bowl(new Score(5, 0));
+        Score result = score.bowl(new Score(5));
 
         // then
         assertThat(result.getValue()).isEqualTo(15);
