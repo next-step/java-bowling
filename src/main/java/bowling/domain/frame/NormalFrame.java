@@ -56,7 +56,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public String partitionPins() {
-        return this.pitches.toString();
+        return this.pitches.currentScore();
     }
 
     private boolean isSemiFinal() {

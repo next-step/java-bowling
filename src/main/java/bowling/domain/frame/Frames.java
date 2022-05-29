@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Frames {
 
-    private static final int ZERO = 0;
-    private static final int ONE = 1;
+    private static final int MINIMUM_ROUND = 0;
+    private static final int FIRST_ROUND = 1;
 
     private final List<Frame> frames;
 
@@ -18,15 +18,19 @@ public class Frames {
         return new Frames(new ArrayList<>());
     }
 
+    public boolean isEmpty() {
+        return this.frames.isEmpty();
+    }
+
     public boolean isNext() {
-        return this.frames.isEmpty()
+        return this.isEmpty()
                 || !this.currentFrame().isFinalFrame()
                 || (this.currentFrame().isFinalFrame() && !this.currentFrame().isFinishBowling());
     }
 
     public void bowling(int pins) {
-        if (this.frames.isEmpty()) {
-            Frame newFrame = NormalFrame.bowling(ONE, pins);
+        if (this.isEmpty()) {
+            Frame newFrame = NormalFrame.bowling(FIRST_ROUND, pins);
             this.frames.add(newFrame);
             return;
         }
@@ -46,31 +50,17 @@ public class Frames {
         currentFrame.bowling(pins);
     }
 
-    public int currentRound() {
-        if (this.frames.isEmpty()) {
-            return ONE;
-        }
-
-        Frame currentFrame = this.currentFrame();
-
-        if (currentFrame.isFinishBowling() || currentFrame.isFinalFrame()) {
-            return currentFrame.round() + ONE;
-        }
-
-        return currentFrame.round();
-    }
-
     public Frame getFrame(int index) {
         return this.frames.get(index);
     }
 
     public int lastRound() {
-        int lastRound = Math.subtractExact(this.frames.size(), ONE);
+        int lastRound = Math.subtractExact(this.frames.size(), FIRST_ROUND);
 
-        return Math.max(lastRound, ZERO);
+        return Math.max(lastRound, MINIMUM_ROUND);
     }
 
-    private Frame currentFrame() {
+    public Frame currentFrame() {
         return this.getFrame(this.lastRound());
     }
 }

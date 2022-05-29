@@ -2,6 +2,7 @@ package bowling.controller;
 
 import bowling.domain.game.Game;
 import bowling.view.InputView;
+import bowling.view.OutputVIew;
 
 public class BowlingController {
 
@@ -12,9 +13,13 @@ public class BowlingController {
 
         String name = InputView.inputName();
         Game game = Game.init(name);
+//        OutputVIew.printGameInfo(name);
+        OutputVIew.printGame(game);
 
         while (game.isNext()) {
-            game.playing();
+            int pins = InputView.inputPins(game.currentRound());
+            game.bowling(pins);
+            OutputVIew.printGame(game);
         }
     }
 }

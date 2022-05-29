@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.domain.frame.Frames;
+import bowling.domain.game.Game;
 import bowling.domain.player.Player;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -9,8 +10,8 @@ import java.util.stream.IntStream;
 
 public class OutputVIew {
 
-    private static final String FIRST_COLUMN = "| %s |";
-    private static final String OTHER_COLUMN = " %s |";
+    private static final String FIRST_COLUMN = "| %7s |";
+    private static final String OTHER_COLUMN = " %7s |";
     private static final String BLANK = "";
     private static final String SPACE_BLANK = " ";
     private static final String ZERO_STRING = "0";
@@ -23,25 +24,20 @@ public class OutputVIew {
         System.out.print(message);
     }
 
-    public static void printGameInfo(Player player) {
+    public static void printGame(Game game) {
         printIndex();
 
+        Player player = game.player();
+        Frames frames = game.frames();
         AtomicReference<String> message = new AtomicReference<>(String.format(FIRST_COLUMN, player.name()));
-        IntFunction<String> columnFunc = i -> SPACE_BLANK;
 
-        System.out.println(createTable(message, columnFunc));
-    }
-
-    public static void printGameResult(Player player, Frames frames) {
-        printIndex();
-
-        AtomicReference<String> message = new AtomicReference<>(String.format(FIRST_COLUMN, player.name()));
         IntFunction<String> func = i -> {
             int lastRound = frames.lastRound();
-            if (lastRound < i || lastRound <= -1) {
-                return BLANK;
+            if (i <= lastRound && !frames.isEmpty()) {
+                return frames.getFrame(i).partitionPins();
             }
-            return frames.getFrame(i).partitionPins();
+
+            return BLANK;
         };
 
         System.out.println(createTable(message, func) + System.lineSeparator());

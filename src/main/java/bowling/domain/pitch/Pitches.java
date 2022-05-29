@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 public class Pitches {
 
     private static final int MAX_PINS = 10;
-    private static final int ZERO = 0;
-    private static final int FIRST = 1;
-    private static final int SECOND = 2;
+    private static final int FIRST_INDEX = 0;
+    private static final int SECOND_INDEX = 1;
+    private static final int MINIMUM_FINAL_SIZE = 2;
 
     private final List<Pitch> pitches;
 
@@ -52,11 +52,11 @@ public class Pitches {
 
     public boolean isSpare() {
         int firstPins = this.firstPitch().pins();
-        int secondPins = 0;
-        if (this.size() >= SECOND) {
+        int secondPins = FIRST_INDEX;
+        if (this.size() >= MINIMUM_FINAL_SIZE) {
             secondPins = this.secondPitch().pins();
         }
-        return this.size() >= SECOND && Math.addExact(firstPins, secondPins) == MAX_PINS;
+        return this.size() >= MINIMUM_FINAL_SIZE && Math.addExact(firstPins, secondPins) == MAX_PINS;
     }
 
     public int totalPins() {
@@ -65,16 +65,24 @@ public class Pitches {
                 .sum();
     }
 
+    public Pitch bonusPitch() {
+        int lastIndex = this.size() - SECOND_INDEX;
+        return this.pitch(lastIndex);
+    }
+
+    private Pitch pitch(int index) {
+        return this.pitches.get(index);
+    }
+
     private Pitch firstPitch() {
-        return this.pitches.get(ZERO);
+        return this.pitch(FIRST_INDEX);
     }
 
     private Pitch secondPitch() {
-        return this.pitches.get(FIRST);
+        return this.pitch(SECOND_INDEX);
     }
 
-    @Override
-    public String toString() {
+    public String currentScore() {
         if (this.isStrike()) {
             return "X";
         }
@@ -85,12 +93,8 @@ public class Pitches {
 
         return this.pitches
                 .stream()
-                .map(pitch -> {
-                    if (pitch.pins() == ZERO) {
-                        return "-";
-                    }
-                    return String.valueOf(pitch.pins());
-                })
-                .collect(Collectors.joining("|"));
+                .map(pitch -> String.valueOf(pitch.pins()))
+                .collect(Collectors.joining("|"))
+                .replace("0|0", "-");
     }
 }

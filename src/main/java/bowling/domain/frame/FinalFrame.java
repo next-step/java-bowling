@@ -72,6 +72,10 @@ public class FinalFrame implements Frame {
 
     @Override
     public String partitionPins() {
-        return this.pitches.toString();
+        String currentScore = this.pitches.currentScore();
+        if (this.isBonus) {
+            currentScore += ("|" + this.pitches.bonusPitch().pins());
+        }
+        return currentScore;
     }
 }
