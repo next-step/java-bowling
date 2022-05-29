@@ -1,5 +1,7 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,11 +19,14 @@ public class DeleteHistories {
         this.deleteHistories = deleteHistories;
     }
 
-    public void addQuestionDeleteHistory(Question question) {
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()));
+    public void add(Question question, User loginUser) throws CannotDeleteException {
+        question.checkLoginUserEqualWithQuestionOwner(loginUser);
+        question.setDeleted(true);
+        deleteHistories.add(new DeleteHistory(question));
     }
 
-    public void addAnswerListDeleteHistory(Answers answers) {
+    public void add(Answers answers, User loginUser) throws CannotDeleteException {
+        answers.checkLoginUserEqualWithAnswersOwners(loginUser);
         for (Answer answer : answers.value()) {
             answer.setDeleted(true);
             deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));

@@ -1,5 +1,7 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -29,6 +31,13 @@ public class DeleteHistory {
         this.contentId = contentId;
         this.deletedBy = deletedBy;
         this.createDate = createDate;
+    }
+
+    public DeleteHistory(Question question) {
+        this.contentType = ContentType.QUESTION;
+        this.contentId = question.getId();
+        this.deletedBy = question.getWriter();
+        this.createDate = LocalDateTime.now();
     }
 
     @Override
