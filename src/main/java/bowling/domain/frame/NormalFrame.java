@@ -7,6 +7,7 @@ import static bowling.view.OutputView.NORMAL_STATE_FORMAT;
 
 public class NormalFrame extends Frame {
     private State state;
+    private Frame next;
 
     public NormalFrame(FrameNumber frameNumber) {
         this(frameNumber, State.ready());
@@ -39,9 +40,11 @@ public class NormalFrame extends Frame {
     @Override
     public Frame next() {
         if (frameNumber.isMaxInNormal()) {
-            return new FinalFrame(frameNumber.next());
+            next = new FinalFrame(frameNumber.next());
+            return next;
         }
-        return new NormalFrame(frameNumber.next());
+        next = new NormalFrame(frameNumber.next());
+        return next;
     }
 
     @Override
@@ -52,6 +55,11 @@ public class NormalFrame extends Frame {
     @Override
     public boolean isDone() {
         return state.isDone();
+    }
+
+    @Override
+    public boolean hasNext() {
+        return next != null;
     }
 
     @Override

@@ -32,4 +32,6 @@ public abstract class Frame {
     public FrameNumber number() {
         return frameNumber;
     }
+
+    public abstract boolean hasNext();
 }
