@@ -49,10 +49,7 @@ public class OutputVIew {
         AtomicReference<String> message = new AtomicReference<>(String.format(FIRST_COLUMN, NAME));
         IntFunction<String> indexFunc = i -> {
             int index = i + ONE;
-            if (i == LAST_ROUND) {
-                return String.valueOf(index);
-            }
-            return "" + START_ROUND + index;
+            return String.format("%02d", index);
         };
         System.out.println(createTable(message, indexFunc));
     }
