@@ -1,8 +1,17 @@
 package bowling.domain.State;
 
-public class Gutter extends State {
+import bowling.domain.score.Score;
+
 public class Gutter extends RunningState {
     private static final String SYMBOL = "-";
+
+    public Gutter() {
+        this(Pin.zero());
+    }
+
+    public Gutter(Pin pin) {
+        super(pin);
+    }
 
     @Override
     public State bowl(Pin pin) {
@@ -15,6 +24,16 @@ public class Gutter extends RunningState {
         }
 
         return new Second(pin, this);
+    }
+
+    @Override
+    public Score score() {
+        return Score.unScorable(pin);
+    }
+
+    @Override
+    public Score score(Score score) {
+        return score.bowl(pin);
     }
 
     @Override

@@ -1,7 +1,9 @@
 package bowling.domain.frame;
 
+import bowling.domain.State.Pin;
 import bowling.domain.State.State;
 import bowling.domain.State.StatesTest;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -16,14 +18,18 @@ import static bowling.domain.State.StateTest.SPARE;
 import static bowling.domain.State.StateTest.STRIKE;
 import static bowling.domain.frame.FrameNumberTest.MAX_FRAME_NUMBER;
 import static bowling.domain.frame.FrameNumberTest.MIN_FRAME_NUMBER;
+import static bowling.domain.score.ScoreTest.SCORABLE;
+import static bowling.domain.score.ScoreTest.UNSCORABLE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FrameTest {
     static final Frame INITIAL_FRAME = Frame.initialize();
+    static final Frame NORMAL_DONE_FRAME = new NormalFrame(new FrameNumber(FrameNumber.MIN), SECOND);
     static final Frame LAST_FRAME = new FinalFrame(new FrameNumber(FrameNumber.MAX));
     static final Frame LAST_DONE_FRAME = new FinalFrame(new FrameNumber(FrameNumber.MAX), StatesTest.DONE);
 
@@ -98,6 +104,29 @@ class FrameTest {
         assertAll(
                 () -> assertTrue(frame.isDone()),
                 () -> assertThat(nextFrame).isInstanceOf(Frame.class)
+        );
+    }
+
+    @Test
+    void score는_Score를_반환한다() {
+        assertAll(
+                () -> assertInstanceOf(Score.class, NORMAL_DONE_FRAME.score()),
+                () -> assertInstanceOf(Score.class, LAST_DONE_FRAME.score()),
+                () -> assertTrue(NORMAL_DONE_FRAME.score().canScore()),
+                () -> assertTrue(LAST_DONE_FRAME.score().canScore()),
+                () -> assertFalse(INITIAL_FRAME.score().canScore()),
+                () -> assertFalse(LAST_FRAME.score().canScore())
+        );
+    }
+
+    @Test
+    void score는_증가된_Score를_반환한다() {
+        assertAll(
+                () -> assertInstanceOf(Score.class, NORMAL_DONE_FRAME.score(SCORABLE)),
+                () -> assertInstanceOf(Score.class, LAST_DONE_FRAME.score(SCORABLE)),
+                () -> assertTrue(NORMAL_DONE_FRAME.score(SCORABLE).canScore()),
+                () -> assertTrue(LAST_DONE_FRAME.score(UNSCORABLE).canScore()),
+                () -> assertFalse(INITIAL_FRAME.score(Score.strike(new Pin(0))).canScore())
         );
     }
 }

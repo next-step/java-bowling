@@ -1,11 +1,10 @@
 package bowling.domain.State;
 
-public class First extends State {
-    private final Pin pin;
+import bowling.domain.score.Score;
 
 public class First extends RunningState {
     public First(Pin pin) {
-        this.pin = pin;
+        super(pin);
     }
 
     @Override
@@ -21,6 +20,16 @@ public class First extends RunningState {
         }
 
         return new Second(pin, this);
+    }
+
+    @Override
+    public Score score() {
+        return Score.unScorable(pin);
+    }
+
+    @Override
+    public Score score(Score score) {
+        return score.bowl(pin);
     }
 
     @Override

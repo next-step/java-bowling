@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.State.Pin;
+import bowling.domain.score.Scores;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -53,6 +54,12 @@ public class Frames {
         if (lastFrame.isDone() && lastFrame.isNormal()) {
             frames.add(nextFrame);
         }
+    }
+
+    public Scores score() {
+        return new Scores(frames.stream()
+                .map(Frame::score)
+                .collect(Collectors.toList()));
     }
 
     private Frame getFrameOrNull(int index) {

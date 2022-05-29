@@ -4,6 +4,7 @@ import bowling.domain.State.Pin;
 import bowling.domain.frame.FrameNumber;
 import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
+import bowling.domain.score.Scores;
 
 import static bowling.view.OutputView.PLAYER_FORMAT;
 
@@ -44,6 +45,10 @@ public class Game {
         }
 
         frames.bowl(pin);
+    }
+
+    public Scores score() {
+        return frames.score();
     }
 
     @Override

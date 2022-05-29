@@ -1,5 +1,7 @@
 package bowling.domain.State;
 
+import bowling.domain.score.Score;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,7 +27,7 @@ public class States {
     }
 
     public void bowl(Pin pin) {
-        if (states.isEmpty()) {
+        if (isEmpty()) {
             states.add(State.ready().bowl(pin));
             return;
         }
@@ -33,7 +35,7 @@ public class States {
     }
 
     public boolean isDone() {
-        if (states.isEmpty()) {
+        if (isEmpty()) {
             return false;
         }
 
@@ -60,6 +62,13 @@ public class States {
         return states.get(0);
     }
 
+    private State second() {
+        if (states.size() > INITIAL_BOWLS) {
+            return states.get(1);
+        }
+        return null;
+    }
+
 
     public static States initialize() {
         return new States(Collections.emptyList());
@@ -70,5 +79,44 @@ public class States {
         return states.stream()
                 .map(State::toSimpleString)
                 .collect(Collectors.joining(COLUMN));
+    }
+
+    public Score score() {
+        if (!isDone()) {
+            return Score.unScorable();
+        }
+
+        Score score = Score.scorable();
+
+        for (State state : states) {
+            score = score.add(state.simpleScore());
+        }
+
+        return score;
+    }
+
+
+    public Score score(Score score) {
+        if (isEmpty()) {
+            return score;
+        }
+
+        Score nextScore = first().score(score);
+
+        if (nextScore.canScore()) {
+            return nextScore;
+        }
+
+        State second = second();
+
+        if (second == null) {
+            return nextScore;
+        }
+
+        return second.score(nextScore);
+    }
+
+    private boolean isEmpty() {
+        return states.isEmpty();
     }
 }

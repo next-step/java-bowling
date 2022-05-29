@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.State.Pin;
 import bowling.domain.State.States;
+import bowling.domain.score.Score;
 
 import static bowling.view.OutputView.FINAL_STATE_FORMAT;
 
@@ -48,6 +49,16 @@ public class FinalFrame extends Frame {
     @Override
     public boolean isDone() {
         return states.isDone();
+    }
+
+    @Override
+    public Score score() {
+        return states.score();
+    }
+
+    @Override
+    public Score score(Score score) {
+        return states.score(score);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package bowling.domain.State;
 
+import bowling.domain.score.Score;
+
 import static bowling.view.OutputView.COLUMN;
 
 public class Miss extends EndedState {
@@ -8,12 +10,33 @@ public class Miss extends EndedState {
     private final State previous;
 
     public Miss(State previous) {
+        this(Pin.zero(), previous);
+    }
+
+    public Miss(Pin pin, State previous) {
+        super(pin);
         this.previous = previous;
     }
 
     @Override
     public State bowl(Pin pin) {
         return null;
+    }
+
+    @Override
+    public Score score() {
+        return previous.score().bowl(pin);
+    }
+
+    @Override
+    public Score score(Score score) {
+        Score nextScore = score.bowl(previous.pin);
+
+        if (nextScore.canScore()) {
+            return nextScore;
+        }
+
+        return nextScore.bowl(pin);
     }
 
     @Override
