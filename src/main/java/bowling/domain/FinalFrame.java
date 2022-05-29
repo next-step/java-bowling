@@ -2,6 +2,7 @@ package bowling.domain;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 public class FinalFrame extends Frame {
     private Score extraScore;
@@ -11,9 +12,9 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public Optional<Integer> scoreCalculated() {
+    public OptionalInt scoreCalculated() {
         if (!isDone()) {
-            return Optional.empty();
+            return OptionalInt.empty();
         }
 
         int score = 0;
@@ -30,7 +31,7 @@ public class FinalFrame extends Frame {
             score += extraScore.get();
         }
 
-        return Optional.ofNullable(score);
+        return OptionalInt.of(score);
     }
 
     @Override

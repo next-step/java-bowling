@@ -6,6 +6,7 @@ import static bowling.domain.HitState.STRIKE;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 public class Frame {
 
@@ -23,7 +24,7 @@ public class Frame {
         this.nextFrame = nextFrame;
     }
 
-    public Optional<Integer> scoreCalculated() {
+    public OptionalInt scoreCalculated() {
         if (scores.isStrike()) {
             return STRIKE.scoreOf(this);
         }
@@ -36,7 +37,7 @@ public class Frame {
             return NORMAL.scoreOf(this);
         }
 
-        return Optional.empty();
+        return OptionalInt.empty();
     }
 
     public Frame createNext() {

@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Optional;
+import java.util.OptionalInt;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -139,8 +140,8 @@ class FramesTest {
         Frame firstFrame = frames.head();
         Frame secondFrame = firstFrame.next();
 
-        assertThat(firstFrame.scoreCalculated()).contains(9);
-        assertThat(secondFrame.scoreCalculated()).contains(6);
+        assertThat(firstFrame.scoreCalculated()).isEqualTo(OptionalInt.of(9));
+        assertThat(secondFrame.scoreCalculated()).isEqualTo(OptionalInt.of(6));
     }
 
     @DisplayName("스페어 추가 점수는 해당 프레임이 끝나고 다음 투구 1개의 점수가 계산된 후 계산된다.")
@@ -154,11 +155,11 @@ class FramesTest {
         Frame firstFrame = frames.head();
         Frame secondFrame = firstFrame.next();
 
-        assertThat(firstFrame.scoreCalculated()).contains(9);
+        assertThat(firstFrame.scoreCalculated()).isEqualTo(OptionalInt.of(9));
         assertThat(secondFrame.scoreCalculated()).isEmpty();
 
         frames.throwBall(10);
-        assertThat(secondFrame.scoreCalculated()).contains(20);
+        assertThat(secondFrame.scoreCalculated()).isEqualTo(OptionalInt.of(20));
     }
 
     @DisplayName("마지막 프레임의 점수는 종료되는 시점에 그냥 있는 점수 다 더한다.")
@@ -171,7 +172,7 @@ class FramesTest {
         assertThat(finalFrame.scoreCalculated()).isEmpty();
 
         frames.throwBall(0);
-        assertThat(finalFrame.scoreCalculated()).contains(9);
+        assertThat(finalFrame.scoreCalculated()).isEqualTo(OptionalInt.of(9));
     }
 
     @DisplayName("마지막 프레임의 점수는 종료되는 시점에 그냥 있는 점수 다 더한다. with 추가 투구")
@@ -187,7 +188,7 @@ class FramesTest {
         assertThat(finalFrame.scoreCalculated()).isEmpty();
 
         frames.throwBall(10);
-        assertThat(finalFrame.scoreCalculated()).contains(20);
+        assertThat(finalFrame.scoreCalculated()).isEqualTo(OptionalInt.of(20));
     }
 
 }

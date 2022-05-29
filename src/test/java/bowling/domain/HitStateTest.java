@@ -2,10 +2,11 @@ package bowling.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import bowling.domain.HitState.BonusShotCount;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class BonusShotCountTest {
+class HitStateTest {
 
     private BonusShotCount count;
 

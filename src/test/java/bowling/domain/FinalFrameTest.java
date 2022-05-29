@@ -2,6 +2,7 @@ package bowling.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.OptionalInt;
 import org.junit.jupiter.api.Test;
 
 class FinalFrameTest {
@@ -14,7 +15,7 @@ class FinalFrameTest {
         finalFrame.shot(10);
         finalFrame.shot(3);
 
-        assertThat(finalFrame.scoreCalculated()).contains(23);
+        assertThat(finalFrame.scoreCalculated()).isEqualTo(OptionalInt.of(23));
     }
 
 }

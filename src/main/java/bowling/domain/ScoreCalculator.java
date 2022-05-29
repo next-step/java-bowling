@@ -1,9 +1,9 @@
 package bowling.domain;
 
-import java.util.Optional;
+import java.util.OptionalInt;
 
 interface ScoreCalculator {
 
-    Optional<Integer> calculate(Frame frame);
+    OptionalInt calculate(Frame frame);
 
 }

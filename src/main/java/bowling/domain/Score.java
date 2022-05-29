@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import static bowling.domain.Pins.START_PIN_COUNT;
-
 import java.util.Objects;
 
 public class Score {
@@ -38,11 +36,4 @@ public class Score {
         return Objects.hash(score);
     }
 
-    public boolean isHitAll() {
-        return score == START_PIN_COUNT;
-    }
-
-    public boolean isHitBy(int hitScore) {
-        return this.score == hitScore;
-    }
 }
