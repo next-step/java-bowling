@@ -5,8 +5,6 @@ import java.util.List;
 
 public class Frames {
 
-	private static final int MAX_FRAME_NUMBER = 10;
-
 	private final List<Frame> values = new ArrayList<>();
 
 	private Frames(List<Frame> frames) {
@@ -14,7 +12,8 @@ public class Frames {
 	}
 
 	public static Frames start() {
-		return new Frames(List.of(new GeneralFrame()));
+		Frame initialFrame = GeneralFrame.of(Frame.MIN_FRAME_NUMBER);
+		return new Frames(List.of(initialFrame));
 	}
 
 	public boolean isEnd() {
@@ -23,26 +22,18 @@ public class Frames {
 	}
 
 	public void throwBowl(int throwCount) {
-		Frame lastFrame = lastFrame();
-		lastFrame.throwBowl(throwCount);
-		if (lastFrame.isEnd() && frameNumber() < MAX_FRAME_NUMBER) {
-			values.add(nextFrame());
-		}
-	}
-
-	private Frame nextFrame() {
-		if (frameNumber() == MAX_FRAME_NUMBER) {
-			return new EndFrame();
-		}
-		return new GeneralFrame();
+		Frame latestFrame = lastFrame();
+		latestFrame.throwBowl(throwCount);
+		latestFrame.nextFrame()
+			.ifPresent(values::add);
 	}
 
 	private Frame lastFrame() {
-		return values.get(frameNumber() - 1);
+		return values.get(values.size() - 1);
 	}
 
 	public int frameNumber() {
-		return values.size();
+		return lastFrame().number();
 	}
 
 }
