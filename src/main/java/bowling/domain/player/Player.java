@@ -1,7 +1,7 @@
 package bowling.domain.player;
 
-import bowling.domain.player.exception.NameLengthException;
 import bowling.domain.player.exception.NameEngException;
+import bowling.domain.player.exception.NameLengthException;
 
 import java.util.Optional;
 
@@ -10,13 +10,13 @@ public class Player {
     private final String name;
 
     private Player(String name) {
+        checkNameLength(name);
+        checkLowerCase(name);
+
         this.name = name;
     }
 
     public static Player of(String name) {
-        checkNameLength(name);
-        checkLowerCase(name);
-
         return new Player(name);
     }
 

@@ -12,6 +12,7 @@ public class Pitch {
     private final int pins;
 
     private Pitch(int pins) {
+        isOverPins(MIN_PINS, pins);
         this.pins = pins;
     }
 
@@ -20,8 +21,6 @@ public class Pitch {
     }
 
     public static Pitch of(int pins) {
-        isOverPins(MIN_PINS, pins);
-
         return new Pitch(pins);
     }
 
