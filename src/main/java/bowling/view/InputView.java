@@ -22,7 +22,7 @@ public class InputView {
     public static List<String> inputPlayerNames(int count) {
         List<String> names = new ArrayList<>();
         for (int playerNumber = 1; playerNumber <= count; playerNumber++) {
-            System.out.printf((PLAYER_NAMES_INPUT) + "%n", playerNumber);
+            System.out.printf((PLAYER_NAMES_INPUT), playerNumber);
             names.add(scanner.nextLine());
         }
         return names;
