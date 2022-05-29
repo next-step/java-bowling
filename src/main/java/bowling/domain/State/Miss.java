@@ -22,6 +22,11 @@ public class Miss extends State {
     }
 
     @Override
+    public boolean isMiss() {
+        return true;
+    }
+
+    @Override
     public String toString() {
         return previous + COLUMN + SYMBOL;
     }
