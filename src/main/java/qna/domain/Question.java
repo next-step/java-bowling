@@ -77,10 +77,6 @@ public class Question extends AbstractEntity {
         return this.writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
 
     public boolean isDeleted() {
         return deleted;
@@ -90,12 +86,11 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
-    // TODO Question 삭제
     public List<DeleteHistory> deleted(User loginUser) throws CannotDeleteException {
         validateWriter(loginUser);
         this.deleted = true;
 
-        return deletedHistories(this.getId(), answers);
+        return deletedHistories(this.getId());
     }
 
     private void validateWriter(User loginUser) throws CannotDeleteException {
@@ -104,17 +99,19 @@ public class Question extends AbstractEntity {
         }
     }
 
-    private List<DeleteHistory> deletedHistories(long questionId, List<Answer> answers) throws CannotDeleteException {
+    private List<DeleteHistory> deletedHistories(long questionId) throws CannotDeleteException {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(DeleteHistory.of(ContentType.QUESTION, questionId, this.writer));
-        for (Answer answer : answers) {
-            if (!answer.isOwner(this.writer)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
-            answer.setDeleted(true);
-            deleteHistories.add(DeleteHistory.of(ContentType.ANSWER, answer.getId(), answer.getWriter()));
-        }
+
+        deleteAnswers(deleteHistories);
+
         return deleteHistories;
+    }
+
+    private void deleteAnswers(List<DeleteHistory> deleteHistories) throws CannotDeleteException {
+        for (Answer answer : this.answers) {
+            deleteHistories.add(answer.deleted(this.writer));
+        }
     }
 
     @Override
