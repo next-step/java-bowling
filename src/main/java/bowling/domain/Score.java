@@ -6,6 +6,8 @@ public class Score {
     private static final int MAX_SCORE = 30;
     private static final int MAX_REMAINING_PITCHES = 2;
     private static final int MIN_REMAINING_PITCHES = 0;
+    public static final int INCALCULABLE_SCORE = -1;
+    public static final int INCALCULABLE_PITCHES = -1;
 
     private final int value;
     private final int remainingPitches;
@@ -53,7 +55,7 @@ public class Score {
         return this.value;
     }
 
-    private boolean isCalculatorScore() {
+    public boolean isCalculatorScore() {
         return remainingPitches == NO_REMAINING_PITCHES;
     }
 }
