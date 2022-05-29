@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -37,5 +38,21 @@ class PointTest {
 		Point first = Point.of(2);
 		Point second = Point.of(3);
 		assertThat(first.add(second)).isSameAs(Point.of(5));
+	}
+
+	@ParameterizedTest(name = "{displayName} : {arguments}")
+	@CsvSource(
+		delimiter = ':',
+		value = {
+			"1:1:false",
+			"2:3:true",
+			"3:2:false"
+		}
+	)
+	void 투구기록_비교_테스트(int first, int second, boolean result) {
+		Point point1 = Point.of(first);
+		Point point2 = Point.of(second);
+
+		assertThat(point1.isLessThan(point2)).isEqualTo(result);
 	}
 }

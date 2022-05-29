@@ -38,4 +38,8 @@ public class Point {
 	public Point add(Point operand) {
 		return Point.of(value + operand.value);
 	}
+
+	public boolean isLessThan(Point operand) {
+		return this.value < operand.value;
+	}
 }
