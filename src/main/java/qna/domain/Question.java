@@ -1,12 +1,12 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -20,10 +20,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private final List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private final Answers answers = Answers.getInstance();
 
     private boolean deleted = false;
 
@@ -86,35 +84,30 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
     }
 
     public List<DeleteHistory> deleted(User loginUser) throws CannotDeleteException {
         validateWriter(loginUser);
-        this.deleted = true;
 
-        return deletedHistories(this.getId());
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+
+        this.deleted = true;
+        deleteHistories.add(deleted());
+
+        List<DeleteHistory> answersDeleteHistories = this.answers.deleted(this.writer);
+
+        return Stream.concat(deleteHistories.stream(), answersDeleteHistories.stream()).collect(Collectors.toList());
+    }
+
+    public DeleteHistory deleted() {
+        return DeleteHistory.of(ContentType.QUESTION, getId(), this.writer);
     }
 
     private void validateWriter(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
-    }
-
-    private List<DeleteHistory> deletedHistories(long questionId) throws CannotDeleteException {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(DeleteHistory.of(ContentType.QUESTION, questionId, this.writer));
-
-        deleteAnswers(deleteHistories);
-
-        return deleteHistories;
-    }
-
-    private void deleteAnswers(List<DeleteHistory> deleteHistories) throws CannotDeleteException {
-        for (Answer answer : this.answers) {
-            deleteHistories.add(answer.deleted(this.writer));
         }
     }
 

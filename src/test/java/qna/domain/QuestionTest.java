@@ -23,7 +23,7 @@ public class QuestionTest {
     public void delete_성공() throws Exception {
         assertThat(Q1.isDeleted()).isFalse();
         List<DeleteHistory> deleteHistories = Q1.deleted(UserTest.JAVAJIGI);
-
+        deleteHistories.forEach(System.out::println);
         assertThat(Q1.isDeleted()).isTrue();
         assertThat(deleteHistories).hasSize(2);
     }
