@@ -25,8 +25,8 @@ class FrameNumberTest {
     @Test
     void isFinal은_마지막_여부를_반환한다() {
         assertAll(
-                () -> assertFalse(MIN_FRAME_NUMBER.isFinal()),
-                () -> assertTrue(MAX_FRAME_NUMBER.isFinal())
+                () -> assertTrue(MIN_FRAME_NUMBER.isNormal()),
+                () -> assertFalse(MAX_FRAME_NUMBER.isNormal())
         );
     }
 

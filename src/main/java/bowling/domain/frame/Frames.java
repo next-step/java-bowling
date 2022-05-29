@@ -39,7 +39,7 @@ public class Frames {
     public boolean isDone() {
         Frame lastFrame = lastFrame();
 
-        if (!lastFrame.isFinal()) {
+        if (lastFrame.isNormal()) {
             return false;
         }
 
@@ -50,7 +50,7 @@ public class Frames {
         Frame lastFrame = lastFrame();
         Frame nextFrame = lastFrame().bowl(pin);
 
-        if (lastFrame.isDone() && !lastFrame.isFinal()) {
+        if (lastFrame.isDone() && lastFrame.isNormal()) {
             frames.add(nextFrame);
         }
     }

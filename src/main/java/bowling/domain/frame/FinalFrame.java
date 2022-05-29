@@ -19,7 +19,7 @@ public class FinalFrame extends Frame {
     }
 
     private void validate(FrameNumber frameNumber, States states) {
-        if (!frameNumber.isFinal()) {
+        if (frameNumber.isNormal()) {
             throw new IllegalArgumentException(
                     String.format("frameNumber(%s)는 마지막 FrameNumber(%s)가 아닙니다.", frameNumber, FrameNumber.MAX));
         }
@@ -41,8 +41,8 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public boolean isFinal() {
-        return true;
+    public boolean isNormal() {
+        return false;
     }
 
     @Override

@@ -25,7 +25,7 @@ public abstract class Frame {
 
     public abstract Frame next();
 
-    public abstract boolean isFinal();
+    public abstract boolean isNormal();
 
     public abstract boolean isDone();
 

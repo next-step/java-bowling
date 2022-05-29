@@ -45,8 +45,8 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public boolean isFinal() {
-        return false;
+    public boolean isNormal() {
+        return true;
     }
 
     @Override

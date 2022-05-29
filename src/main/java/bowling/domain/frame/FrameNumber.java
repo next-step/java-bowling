@@ -30,11 +30,7 @@ public class FrameNumber {
     }
 
     public boolean isNormal() {
-        return MIN <= number && number <= MAX_IN_NORMAL_FRAME;
-    }
-
-    public boolean isFinal() {
-        return number == MAX;
+        return number <= MAX_IN_NORMAL_FRAME;
     }
 
     public boolean isMaxInNormal() {

@@ -69,8 +69,8 @@ class FrameTest {
     @Test
     void isFinal은_마지막_프레임_여부를_반환한다() {
         assertAll(
-                () -> assertFalse(INITIAL_FRAME.isFinal()),
-                () -> assertTrue(LAST_FRAME.isFinal())
+                () -> assertTrue(INITIAL_FRAME.isNormal()),
+                () -> assertFalse(LAST_FRAME.isNormal())
         );
     }
 
