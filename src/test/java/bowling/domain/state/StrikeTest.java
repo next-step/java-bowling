@@ -26,7 +26,7 @@ class StrikeTest {
     @Test
     void isFrameEnd_종료_상태_체크() {
         Strike strike = new Strike();
-        assertThat(strike.isFrameEnd()).isTrue();
+        assertThat(strike.isEnd()).isTrue();
     }
 
     @DisplayName("Spare 상태는 쓰러트린 핀이 0일 경우 '-' 기호를 반환하고, 1 ~ 9개를 쓰러트릴 경우 쓰러트린 숫자를 기호로 반환한다.")

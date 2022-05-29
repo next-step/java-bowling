@@ -50,7 +50,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isFrameEnd() {
-        return frameState.isFrameEnd();
+        return frameState.isEnd();
     }
 
     @Override

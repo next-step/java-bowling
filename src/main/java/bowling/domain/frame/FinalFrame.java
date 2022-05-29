@@ -54,7 +54,7 @@ public class FinalFrame implements Frame {
     public Frame bowl(Pins hitPins) {
         this.bowlCount++;
         FrameState lastFrameState = frameStates.getLast();
-        if (lastFrameState.isFrameEnd() && !isMiss(lastFrameState)) {
+        if (lastFrameState.isEnd() && !isMiss(lastFrameState)) {
             frameStates.add(new BeforeProgress().bowl(hitPins));
             return this;
         }

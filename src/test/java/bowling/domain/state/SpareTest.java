@@ -35,7 +35,7 @@ class SpareTest {
     @Test
     void isFrameEnd_종료_상태_체크() {
         Spare spare = new Spare(new Pins(3));
-        assertThat(spare.isFrameEnd()).isTrue();
+        assertThat(spare.isEnd()).isTrue();
     }
 
     @DisplayName("Spare 상태는 쓰러트린 핀이 0일 경우 '-' 기호를 반환하고, 1 ~ 9개를 쓰러트릴 경우 쓰러트린 숫자를 기호로 반환한다. 2번째 투구 기호는 '/' 기호를 반환한다.")

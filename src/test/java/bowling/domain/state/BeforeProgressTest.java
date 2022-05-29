@@ -28,7 +28,7 @@ class BeforeProgressTest {
     @DisplayName("BeforeProgress 상태는 프레임 종료가 아니므로 false 를 반환한다.")
     @Test
     void isFrameEnd_종료_상태_체크() {
-        assertThat(new BeforeProgress().isFrameEnd()).isFalse();
+        assertThat(new BeforeProgress().isEnd()).isFalse();
     }
 
     @DisplayName("BeforeProgress 상태는 기호를 빈값으로 반환한다.")

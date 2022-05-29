@@ -2,7 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.Pins;
 
-public class Spare implements FrameState {
+public class Spare extends EndState {
     private static final String SYMBOL_FORMAT = "%s|%s";
     private static final String GUTTER_SYMBOL = "-";
     private static final String SPARE_SYMBOL = "/";
@@ -18,16 +18,6 @@ public class Spare implements FrameState {
         if (firstPins.isStrike()) {
             throw new IllegalArgumentException(String.format("Spare 상태는 첫번쨰 투구로 쓰러트린 핀이 10개 일 수 없습니다. 전달 받은 쓰러뜨린 Pins 갯수 %s", firstPins));
         }
-    }
-
-    @Override
-    public FrameState bowl(Pins hitPins) {
-        throw new IllegalArgumentException("프레임의 투구가 완료된 상태에서 볼을 굴릴 수 없습니다.");
-    }
-
-    @Override
-    public boolean isFrameEnd() {
-        return true;
     }
 
     @Override

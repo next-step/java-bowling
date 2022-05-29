@@ -2,7 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.Pins;
 
-public class FirstBowl implements FrameState {
+public class FirstBowl extends ProgressState {
     private static final String GUTTER_SYMBOL = "-";
 
     private final Pins firstPins;
@@ -32,11 +32,6 @@ public class FirstBowl implements FrameState {
         if (firstPins.isOverMaxHitPins(hitPins)) {
             throw new IllegalArgumentException(String.format("첫번쨰 투구로 쓰러뜨린 핀의 갯수 (%s)와 두번쨰 투구로 쓰러뜨린 핀의 갯수 (%s)의 합이 10을 넘을 수 없습니다.", firstPins, hitPins));
         }
-    }
-
-    @Override
-    public boolean isFrameEnd() {
-        return false;
     }
 
     @Override

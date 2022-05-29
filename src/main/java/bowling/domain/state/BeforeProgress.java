@@ -2,7 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.Pins;
 
-public class BeforeProgress implements FrameState {
+public class BeforeProgress extends ProgressState {
     private static final String NONE = "";
 
     @Override
@@ -11,11 +11,6 @@ public class BeforeProgress implements FrameState {
             return new Strike();
         }
         return new FirstBowl(hitPins);
-    }
-
-    @Override
-    public boolean isFrameEnd() {
-        return false;
     }
 
     @Override
