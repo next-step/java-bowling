@@ -2,6 +2,7 @@ package bowling.frame;
 
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.pin.Pins;
+import bowling.domain.pitch.PitchResult;
 import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,6 +44,6 @@ class NormalFrameTest {
         cur.pitch(new Pins(2));
         cur.pitch(new Pins(3));
 
-        assertThat(cur.calculateAdditionalScore(Score.strike())).isEqualTo(15);
+        assertThat(cur.calculateAdditionalScore(Score.createScore(PitchResult.strike()))).isEqualTo(15);
     }
 }

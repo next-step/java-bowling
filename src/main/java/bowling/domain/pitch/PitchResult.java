@@ -56,7 +56,8 @@ public class PitchResult {
 
     @Override
     public String toString(){
-        return "hit count: "+first
+        return "first: "+first
+                +" second "+second
                 +" bowlType: "+bowlType ;
     }
 }

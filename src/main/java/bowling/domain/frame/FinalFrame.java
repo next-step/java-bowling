@@ -50,7 +50,7 @@ public class FinalFrame implements Frame{
         }
         return bowls.getBowls()
                 .stream()
-                .map(Bowl::score)
+                .map(bowl -> Score.createScore(bowl.getPitchResult()))
                 .mapToInt(Score::getValue)
                 .sum();
     }

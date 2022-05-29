@@ -3,11 +3,11 @@ package bowling.domain.frame;
 import bowling.domain.bowl.Bowl;
 import bowling.domain.bowl.Ready;
 import bowling.domain.pin.Pins;
+import bowling.domain.pitch.PitchResult;
 import bowling.domain.score.Score;
 import java.util.List;
 
 public class NormalFrame implements Frame{
-    private static final int LAST_NORMAL_FRAME_INDEX = 9;
 
     private final FrameIndex index;
     private Frame nextFrame;
@@ -44,7 +44,8 @@ public class NormalFrame implements Frame{
         if(!bowl.isEnd()){
             return Score.CANNOT_CALCULATE_SCORE;
         }
-        Score curScore = bowl.score();
+        PitchResult pitchResult = bowl.getPitchResult();
+        Score curScore = Score.createScore(pitchResult);
         if(curScore.isFinished()){
             return curScore.getValue();
         }

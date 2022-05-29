@@ -3,7 +3,6 @@ package bowling.frame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.pin.Pins;
-import bowling.view.Output;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
