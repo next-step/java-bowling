@@ -13,18 +13,18 @@ public class PitchesTest {
 
     @ParameterizedTest(name = "현재 프레임의 첫 번째 투구 결과")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
-    void first(int count) {
-        assertThat(Pitches.first(count).totalCount()).isEqualTo(count);
+    void first(int pins) {
+        assertThat(Pitches.first(pins).totalPins()).isEqualTo(pins);
     }
 
     @ParameterizedTest(name = "현재 프레임의 모든 투구 결과")
-    @MethodSource("totalCountCondition")
-    void totalCount(int firstCount, int secondCount) {
-        int expected = Math.addExact(firstCount, secondCount);
-        assertThat(Pitches.first(firstCount).next(secondCount).totalCount()).isEqualTo(expected);
+    @MethodSource("totalPinsCondition")
+    void totalPins(int firstPins, int secondPins) {
+        int expected = Math.addExact(firstPins, secondPins);
+        assertThat(Pitches.first(firstPins).next(secondPins).totalPins()).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> totalCountCondition() {
+    private static Stream<Arguments> totalPinsCondition() {
         return Stream.of(
                 Arguments.of(0, 10),
                 Arguments.of(1, 9),

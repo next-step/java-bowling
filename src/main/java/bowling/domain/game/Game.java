@@ -35,8 +35,8 @@ public class Game {
 
     private void bowling() {
         if (isNext()) {
-            int count = InputView.inputCount(this.frames.currentRound());
-            this.frames.bowling(count);
+            int pins = InputView.inputPins(this.frames.currentRound());
+            this.frames.bowling(pins);
             OutputVIew.printGameResult(this.player, this.frames);
         }
     }

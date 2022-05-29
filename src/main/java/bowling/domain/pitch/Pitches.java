@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public class Pitches {
 
-    private static final int MAX_COUNT = 10;
+    private static final int MAX_PINS = 10;
     private static final int ZERO = 0;
     private static final int FIRST = 1;
     private static final int SECOND = 2;
@@ -17,23 +17,23 @@ public class Pitches {
         this.pitches = pitches;
     }
 
-    public static Pitches first(int count) {
+    public static Pitches first(int pins) {
         List<Pitch> pitches = new ArrayList<>();
-        Pitch first = Pitch.of(count);
+        Pitch first = Pitch.of(pins);
         pitches.add(first);
 
         return new Pitches(pitches);
     }
 
-    public Pitches next(int count) {
-        Pitch second = this.firstPitch().next(count);
+    public Pitches next(int pins) {
+        Pitch second = this.firstPitch().next(pins);
         this.pitches.add(second);
 
         return this;
     }
 
-    public void bonus(int count) {
-        Pitch bonus = Pitch.of(count);
+    public void bonus(int pins) {
+        Pitch bonus = Pitch.of(pins);
 
         pitches.add(bonus);
     }
@@ -47,21 +47,21 @@ public class Pitches {
     }
 
     public boolean isStrike() {
-        return this.firstPitch().count() == MAX_COUNT;
+        return this.firstPitch().pins() == MAX_PINS;
     }
 
     public boolean isSpare() {
-        int firstCount = this.firstPitch().count();
-        int secondCount = 0;
+        int firstPins = this.firstPitch().pins();
+        int secondPins = 0;
         if (this.size() >= SECOND) {
-            secondCount = this.secondPitch().count();
+            secondPins = this.secondPitch().pins();
         }
-        return this.size() >= SECOND && Math.addExact(firstCount, secondCount) == MAX_COUNT;
+        return this.size() >= SECOND && Math.addExact(firstPins, secondPins) == MAX_PINS;
     }
 
-    public int totalCount() {
+    public int totalPins() {
         return this.pitches.stream()
-                .mapToInt(Pitch::count)
+                .mapToInt(Pitch::pins)
                 .sum();
     }
 
@@ -80,16 +80,16 @@ public class Pitches {
         }
 
         if (this.isSpare()) {
-            return this.firstPitch().count() + "|/";
+            return this.firstPitch().pins() + "|/";
         }
 
         return this.pitches
                 .stream()
                 .map(pitch -> {
-                    if (pitch.count() == ZERO) {
+                    if (pitch.pins() == ZERO) {
                         return "-";
                     }
-                    return String.valueOf(pitch.count());
+                    return String.valueOf(pitch.pins());
                 })
                 .collect(Collectors.joining("|"));
     }

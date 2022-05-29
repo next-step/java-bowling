@@ -12,19 +12,19 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class FinalFrameTest {
 
-    private final int bonusCount = 10;
+    private final int bonusPins = 10;
 
     @ParameterizedTest(name = "보너스 게임 - 1차 : {0}, 2차 : {1}")
     @CsvSource(delimiter = '|', value = {"5|5", "10|0", "0|10"})
     void bonusFrame(String first, String second) {
-        int firstCount = Integer.parseInt(first);
-        int secondCount = Integer.parseInt(second);
+        int firstPins = Integer.parseInt(first);
+        int secondPins = Integer.parseInt(second);
 
-        Frame finalFrame = FinalFrame.lastBowling(firstCount);
-        if (secondCount > 0) {
-            finalFrame = finalFrame.bowling(secondCount);
+        Frame finalFrame = FinalFrame.lastBowling(firstPins);
+        if (secondPins > 0) {
+            finalFrame = finalFrame.bowling(secondPins);
         }
-        Frame bonusFrame = finalFrame.bowling(this.bonusCount);
+        Frame bonusFrame = finalFrame.bowling(this.bonusPins);
         assertThat(bonusFrame.isFinishBowling()).isTrue();
 
     }
@@ -32,14 +32,14 @@ public class FinalFrameTest {
     @Test
     @DisplayName("보너스 게임일 때 다음 프레임 생성하는 경우 예외 처리")
     void createException() {
-        Frame bonusGame = FinalFrame.lastBowling(10).next(this.bonusCount);
-        assertThatThrownBy(() -> bonusGame.next(this.bonusCount)).isExactlyInstanceOf(UnableCreateFrameException.class);
+        Frame bonusGame = FinalFrame.lastBowling(10).next(this.bonusPins);
+        assertThatThrownBy(() -> bonusGame.next(this.bonusPins)).isExactlyInstanceOf(UnableCreateFrameException.class);
     }
 
     @Test
     @DisplayName("보너스 게임일 때 투구하는 경우 예외 처리")
     void bowlingException() {
-        Frame bonusGame = FinalFrame.lastBowling(5).bowling(5).next(this.bonusCount);
-        assertThatThrownBy(() -> bonusGame.bowling(this.bonusCount)).isExactlyInstanceOf(UnableBowlingException.class);
+        Frame bonusGame = FinalFrame.lastBowling(5).bowling(5).next(this.bonusPins);
+        assertThatThrownBy(() -> bonusGame.bowling(this.bonusPins)).isExactlyInstanceOf(UnableBowlingException.class);
     }
 }

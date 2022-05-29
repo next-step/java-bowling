@@ -24,26 +24,26 @@ public class Frames {
                 || (this.currentFrame().isFinalFrame() && !this.currentFrame().isFinishBowling());
     }
 
-    public void bowling(int count) {
+    public void bowling(int pins) {
         if (this.frames.isEmpty()) {
-            Frame newFrame = NormalFrame.bowling(ONE, count);
+            Frame newFrame = NormalFrame.bowling(ONE, pins);
             this.frames.add(newFrame);
             return;
         }
 
-        this.nextBowling(count);
+        this.nextBowling(pins);
     }
 
-    private void nextBowling(int count) {
+    private void nextBowling(int pins) {
         Frame currentFrame = this.currentFrame();
 
         if (!currentFrame.isFinalFrame() && currentFrame.isFinishBowling()) {
-            Frame nextFrame = currentFrame.next(count);
+            Frame nextFrame = currentFrame.next(pins);
             this.frames.add(nextFrame);
             return;
         }
 
-        currentFrame.bowling(count);
+        currentFrame.bowling(pins);
     }
 
     public int currentRound() {

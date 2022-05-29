@@ -13,35 +13,35 @@ public class FinalFrame implements Frame {
     private boolean isBonus = false;
     private final Pitches pitches;
 
-    private FinalFrame(int count) {
-        this.pitches = Pitches.first(count);
+    private FinalFrame(int pins) {
+        this.pitches = Pitches.first(pins);
     }
 
-    protected static FinalFrame lastBowling(int count) {
-        return new FinalFrame(count);
+    protected static FinalFrame lastBowling(int pins) {
+        return new FinalFrame(pins);
     }
 
     @Override
-    public Frame bowling(int count) {
+    public Frame bowling(int pins) {
         if (this.isFinishBowling()) {
             throw new UnableBowlingException();
         }
 
         if (this.pitches.isStrikeOrSpare()) {
-            this.pitches.bonus(count);
+            this.pitches.bonus(pins);
             this.isBonus = true;
             return this;
         }
 
-        this.pitches.next(count);
+        this.pitches.next(pins);
 
         return this;
     }
 
     @Override
-    public Frame next(int count) {
+    public Frame next(int pins) {
         if (!this.isFinishBowling()) {
-            return this.bowling(count);
+            return this.bowling(pins);
         }
 
         throw new UnableCreateFrameException();
@@ -71,7 +71,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public String partitionCount() {
+    public String partitionPins() {
         return this.pitches.toString();
     }
 }

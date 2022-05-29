@@ -11,28 +11,28 @@ public class NormalFrame implements Frame {
     private final int round;
     private final Pitches pitches;
 
-    private NormalFrame(int round, int count) {
+    private NormalFrame(int round, int pins) {
         this.round = round;
-        this.pitches = Pitches.first(count);
+        this.pitches = Pitches.first(pins);
     }
 
-    public static NormalFrame bowling(int round, int count) {
-        return new NormalFrame(round, count);
+    public static NormalFrame bowling(int round, int pins) {
+        return new NormalFrame(round, pins);
     }
 
     @Override
-    public Frame bowling(int count) {
-        this.pitches.next(count);
+    public Frame bowling(int pins) {
+        this.pitches.next(pins);
         return this;
     }
 
     @Override
-    public Frame next(int count) {
+    public Frame next(int pins) {
         int nextIndex = this.increment();
         if (isSemiFinal()) {
-            return FinalFrame.lastBowling(count);
+            return FinalFrame.lastBowling(pins);
         }
-        return bowling(nextIndex, count);
+        return bowling(nextIndex, pins);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public String partitionCount() {
+    public String partitionPins() {
         return this.pitches.toString();
     }
 

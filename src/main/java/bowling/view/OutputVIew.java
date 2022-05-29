@@ -41,7 +41,7 @@ public class OutputVIew {
             if (lastRound < i || lastRound <= -1) {
                 return BLANK;
             }
-            return frames.getFrame(i).partitionCount();
+            return frames.getFrame(i).partitionPins();
         };
 
         System.out.println(createTable(message, func) + System.lineSeparator());

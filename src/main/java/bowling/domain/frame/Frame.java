@@ -2,9 +2,9 @@ package bowling.domain.frame;
 
 public interface Frame {
 
-    Frame bowling(int count);
+    Frame bowling(int pins);
 
-    Frame next(int count);
+    Frame next(int pins);
 
     int round();
 
@@ -12,5 +12,5 @@ public interface Frame {
 
     boolean isFinishBowling();
 
-    String partitionCount();
+    String partitionPins();
 }
