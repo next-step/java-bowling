@@ -12,7 +12,7 @@ public class Frames {
 	}
 
 	public static Frames start() {
-		Frame initialFrame = GeneralFrame.of(Frame.MIN_FRAME_NUMBER);
+		Frame initialFrame = new GeneralFrame(Frame.MIN_FRAME_NUMBER);
 		return new Frames(List.of(initialFrame));
 	}
 
