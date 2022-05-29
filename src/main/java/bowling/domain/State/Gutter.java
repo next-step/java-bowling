@@ -1,6 +1,7 @@
 package bowling.domain.State;
 
 public class Gutter extends State {
+public class Gutter extends RunningState {
     private static final String SYMBOL = "-";
 
     @Override

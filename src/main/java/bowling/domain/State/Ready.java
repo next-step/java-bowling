@@ -1,6 +1,7 @@
 package bowling.domain.State;
 
 public class Ready extends State {
+public class Ready extends RunningState {
     @Override
     public State bowl(Pin pin) {
         if (pin.isTen()) {

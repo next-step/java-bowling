@@ -2,7 +2,7 @@ package bowling.domain.State;
 
 import static bowling.view.OutputView.COLUMN;
 
-public class Miss extends State {
+public class Miss extends EndedState {
     private static final String SYMBOL = "-";
 
     private final State previous;

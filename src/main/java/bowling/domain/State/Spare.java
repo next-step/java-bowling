@@ -2,7 +2,7 @@ package bowling.domain.State;
 
 import static bowling.view.OutputView.COLUMN;
 
-public class Spare extends State {
+public class Spare extends EndedState {
     private static final String SYMBOL = "/";
 
     private final Pin pin;

@@ -3,6 +3,7 @@ package bowling.domain.State;
 public class First extends State {
     private final Pin pin;
 
+public class First extends RunningState {
     public First(Pin pin) {
         this.pin = pin;
     }

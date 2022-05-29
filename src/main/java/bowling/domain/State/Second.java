@@ -2,7 +2,7 @@ package bowling.domain.State;
 
 import static bowling.view.OutputView.COLUMN;
 
-public class Second extends State {
+public class Second extends EndedState {
     private final Pin pin;
     private final State previous;
 
