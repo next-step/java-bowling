@@ -9,43 +9,43 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class DeleteHistoryListTest {
+class DeleteHistoriesTest {
 
     @Test
     @DisplayName("Question 삭제 이력 추가")
     void questionDeleteHistory() {
         Question question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
 
-        DeleteHistoryList deleteHistoryList = new DeleteHistoryList();
-        deleteHistoryList.addQuestionDeleteHistory(question);
+        DeleteHistories deleteHistories = new DeleteHistories();
+        deleteHistories.addQuestionDeleteHistory(question);
 
-        assertThat(deleteHistoryList.value().get(0))
+        assertThat(deleteHistories.value().get(0))
                 .isEqualTo(new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()));
     }
 
     @Test
     @DisplayName("AnswerList 삭제 이력 추가")
     void answerListDeleteHistory() {
-        AnswerList answerList = new AnswerList(Arrays.asList(
+        Answers answers = new Answers(Arrays.asList(
                 new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1"),
                 new Answer(12L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents2"))
         );
 
-        DeleteHistoryList deleteHistoryList = new DeleteHistoryList();
-        deleteHistoryList.addAnswerListDeleteHistory(answerList);
+        DeleteHistories deleteHistories = new DeleteHistories();
+        deleteHistories.addAnswerListDeleteHistory(answers);
 
         assertAll("AnswerList 삭제 이력 확인",
-                () -> assertThat(deleteHistoryList.value().get(0))
+                () -> assertThat(deleteHistories.value().get(0))
                         .isEqualTo(new DeleteHistory(
                                 ContentType.ANSWER,
-                                answerList.value().get(0).getId(),
-                                answerList.value().get(0).getWriter(),
+                                answers.value().get(0).getId(),
+                                answers.value().get(0).getWriter(),
                                 LocalDateTime.now())),
-                () -> assertThat(deleteHistoryList.value().get(1))
+                () -> assertThat(deleteHistories.value().get(1))
                         .isEqualTo(new DeleteHistory(
                                 ContentType.ANSWER,
-                                answerList.value().get(1).getId(),
-                                answerList.value().get(1).getWriter(),
+                                answers.value().get(1).getId(),
+                                answers.value().get(1).getWriter(),
                                 LocalDateTime.now()))
                 );
             }

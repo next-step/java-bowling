@@ -5,16 +5,16 @@ import qna.CannotDeleteException;
 import java.util.Collections;
 import java.util.List;
 
-public class AnswerList {
+public class Answers {
 
-    private final List<Answer> answerList;
+    private final List<Answer> answers;
 
-    public AnswerList(List<Answer> answerList) {
-        this.answerList = answerList;
+    public Answers(List<Answer> answers) {
+        this.answers = answers;
     }
 
     public void checkLoginUserEqualWithAnswersOwners(User loginUser) throws CannotDeleteException {
-        for (Answer answer : this.answerList) {
+        for (Answer answer : this.answers) {
             throwIfOwnerAndLoginUserNotEqual(loginUser, answer);
         }
     }
@@ -26,6 +26,6 @@ public class AnswerList {
     }
 
     public List<Answer> value() {
-        return Collections.unmodifiableList(this.answerList);
+        return Collections.unmodifiableList(this.answers);
     }
 }
