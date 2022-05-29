@@ -8,8 +8,15 @@ public class Remain implements State {
 
 	private final Point first;
 
-	public Remain(int first) {
-		this.first = Point.of(first);
+	public Remain(int value) {
+		this(Point.of(value));
+	}
+
+	public Remain(Point first) {
+		if (first == Point.max()) {
+			throw new IllegalArgumentException("핀이_남은_상태는 최댓값의 점수를 가질 수 없습니다.");
+		}
+		this.first = first;
 	}
 
 	@Override
@@ -19,7 +26,11 @@ public class Remain implements State {
 
 	@Override
 	public State throwBowl(int throwCount) {
-		return null;
+		Point operand = Point.of(throwCount);
+		if (Spare.isConstructible(first, operand)) {
+			return new Spare(first, operand);
+		}
+		return new Open(this.first, operand);
 	}
 
 	@Override
