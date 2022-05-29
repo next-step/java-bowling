@@ -16,8 +16,7 @@ class NormalFrameTest {
         // when & then
         assertAll(
                 () -> assertThat(normalFrame.getFrameNumber()).isEqualTo(FrameNumber.MIN_FRAME_NUMBER),
-                () -> assertThat(normalFrame.isEnd()).isFalse(),
-                () -> assertThat(normalFrame.symbol()).isBlank()
+                () -> assertThat(normalFrame.isEnd()).isFalse()
         );
     }
 
