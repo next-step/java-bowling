@@ -25,6 +25,22 @@ public class Miss extends EndedState {
         return String.format(FRAME_STATE_FORMAT, formatValue(first), formatValue(second));
     }
 
+    @Override
+    public Score score() {
+        return first.score(second);
+    }
+
+    @Override
+    public Score calculatorScore(Score before) {
+        before = before.bowl(first.score());
+
+        if(before.isCalculatorScore()) {
+            return before;
+        }
+
+        return before.bowl(second.score());
+    }
+
     private String formatValue(Pitching pitching) {
         if (pitching.isGutter()) {
             return GUTTER_SYMBOL;
