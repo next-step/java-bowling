@@ -5,6 +5,9 @@ import bowling.view.InputView;
 
 public class BowlingController {
 
+    private BowlingController() {
+    }
+
     public static void game() {
 
         String name = InputView.inputName();
