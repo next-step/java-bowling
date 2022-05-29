@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Boards {
+    private static final int LAST_FRAME_NUMBER = 10;
+
     private final List<Board> boards;
     private Board current;
 
@@ -19,7 +21,7 @@ public class Boards {
         int beforeFrameNumber = current.currentFrameNumber();
         int afterFrameNumber = current.bowl(pins);
 
-        if (beforeFrameNumber == 10 && current.isGameEnd()) {
+        if (beforeFrameNumber == LAST_FRAME_NUMBER && current.isGameEnd()) {
             changeCurrentBoard();
         }
 
