@@ -5,8 +5,6 @@ import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -26,11 +24,11 @@ public class Answer extends AbstractEntity {
     public Answer() {
     }
 
-    public Answer(User writer, Question question, String contents) {
+    private Answer(User writer, Question question, String contents) {
         this(null, writer, question, contents);
     }
 
-    public Answer(Long id, User writer, Question question, String contents) {
+    private Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
         if(writer == null) {
@@ -44,6 +42,10 @@ public class Answer extends AbstractEntity {
         this.writer = writer;
         this.question = question;
         this.contents = contents;
+    }
+
+    public static Answer of(Long id, User writer, Question question, String contents) {
+        return new Answer(id, writer, question, contents);
     }
 
     public boolean isDeleted() {

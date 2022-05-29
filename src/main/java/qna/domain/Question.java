@@ -30,15 +30,19 @@ public class Question extends AbstractEntity {
     public Question() {
     }
 
-    public Question(String title, String contents) {
+    private Question(String title, String contents) {
         this.title = title;
         this.contents = contents;
     }
 
-    public Question(long id, String title, String contents) {
+    private Question(long id, String title, String contents) {
         super(id);
         this.title = title;
         this.contents = contents;
+    }
+
+    public static Question of(long id, String title, String contents) {
+        return new Question(id, title, contents);
     }
 
     public String getTitle() {
