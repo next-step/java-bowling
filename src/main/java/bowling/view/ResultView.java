@@ -26,9 +26,15 @@ public class ResultView {
     private ResultView() {
     }
 
-    public static void printResult(Board board) {
+    public static void printResults(List<Board> boards) {
         System.out.println(RESULT_HEADER);
-        System.out.println(board(board));
+        System.out.println(boards(boards));
+    }
+
+    private static String boards(List<Board> boards) {
+        return boards.stream()
+                .map(ResultView::board)
+                .collect(Collectors.joining());
     }
 
     private static String board(Board board) {
