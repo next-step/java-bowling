@@ -1,8 +1,10 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class Question extends AbstractEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    private final List<Answer> answers = new ArrayList<>();
 
     private boolean deleted = false;
 
@@ -72,7 +74,7 @@ public class Question extends AbstractEntity {
     }
 
     public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
+        return this.writer.equals(loginUser);
     }
 
     public Question setDeleted(boolean deleted) {
@@ -86,6 +88,33 @@ public class Question extends AbstractEntity {
 
     public List<Answer> getAnswers() {
         return answers;
+    }
+
+    // TODO Question 삭제
+    public List<DeleteHistory> deleted(User loginUser) throws CannotDeleteException {
+        validateWriter(loginUser);
+        this.deleted = true;
+
+        return deletedHistories(this.getId(), answers);
+    }
+
+    private void validateWriter(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
+    private List<DeleteHistory> deletedHistories(long questionId, List<Answer> answers) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(DeleteHistory.of(ContentType.QUESTION, questionId, this.writer));
+        for (Answer answer : answers) {
+            if (!answer.isOwner(this.writer)) {
+                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+            }
+            answer.setDeleted(true);
+            deleteHistories.add(DeleteHistory.of(ContentType.ANSWER, answer.getId(), answer.getWriter()));
+        }
+        return deleteHistories;
     }
 
     @Override
