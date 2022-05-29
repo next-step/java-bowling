@@ -36,4 +36,7 @@ public class Frames {
 		return lastFrame().number();
 	}
 
+	public List<Frame> values() {
+		return values;
+	}
 }

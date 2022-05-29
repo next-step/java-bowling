@@ -58,6 +58,11 @@ public class GeneralFrame implements Frame {
 	}
 
 	@Override
+	public String symbol() {
+		return state.symbol();
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;

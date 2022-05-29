@@ -27,4 +27,9 @@ public class Strike implements State {
 	public State throwBowl(int throwCount) {
 		throw new UnsupportedOperationException("투구를 할 수 없는 상태입니다.");
 	}
+
+	@Override
+	public String symbol() {
+		return "X";
+	}
 }

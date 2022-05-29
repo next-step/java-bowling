@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import bowling.state.Initialized;
 import bowling.state.Open;
@@ -63,6 +64,13 @@ public class EndFrame implements Frame {
 	@Override
 	public int number() {
 		return MAX_FRAME_NUMBER;
+	}
+
+	@Override
+	public String symbol() {
+		return states.stream()
+			.map(State::symbol)
+			.collect(Collectors.joining("|"));
 	}
 
 	@Override

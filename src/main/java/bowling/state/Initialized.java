@@ -26,4 +26,9 @@ public class Initialized implements State {
 		}
 		return new Remain(throwCount);
 	}
+
+	@Override
+	public String symbol() {
+		return "";
+	}
 }

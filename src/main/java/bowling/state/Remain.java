@@ -34,6 +34,11 @@ public class Remain implements State {
 	}
 
 	@Override
+	public String symbol() {
+		return first.symbol();
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;

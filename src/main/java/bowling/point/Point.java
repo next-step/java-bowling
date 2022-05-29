@@ -42,4 +42,11 @@ public class Point {
 	public boolean isLessThan(Point operand) {
 		return this.value < operand.value;
 	}
+
+	public String symbol() {
+		if (value == 0) {
+			return "-";
+		}
+		return String.valueOf(value);
+	}
 }

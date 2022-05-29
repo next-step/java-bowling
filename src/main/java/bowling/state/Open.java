@@ -37,6 +37,11 @@ public class Open implements State {
 	}
 
 	@Override
+	public String symbol() {
+		return first.symbol() + " | " + second.symbol();
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;

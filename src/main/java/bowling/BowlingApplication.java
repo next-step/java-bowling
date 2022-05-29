@@ -15,6 +15,7 @@ public class BowlingApplication {
 		Frames frames = Frames.start();
 
 		OUTPUT_VIEW.showResult(player, frames);
+
 		while (!frames.isEnd()) {
 			int frameNumber = frames.frameNumber();
 			frames.throwBowl(INPUT_VIEW.askThrowCount(frameNumber));

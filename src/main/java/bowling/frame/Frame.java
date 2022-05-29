@@ -14,4 +14,6 @@ public interface Frame {
 	Optional<Frame> nextFrame();
 
 	int number();
+
+	String symbol();
 }
