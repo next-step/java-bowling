@@ -5,7 +5,7 @@ import bowling.domain.Score;
 
 public class Strike extends Finished {
 
-    private static final String SCORE_MESSAGE = "  X   |";
+    private static final String SCORE_MESSAGE = "X";
     private static final int MAX_PINS_COUNT = 10;
     private static final int MAX_LEFT_COUNT = 2;
 

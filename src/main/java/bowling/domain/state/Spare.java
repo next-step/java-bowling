@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Spare extends Finished {
 
-    private static final String SCORE_FORMAT = "  %s|/ |";
+    private static final String SCORE_FORMAT = "%s|/";
 
     private final Pins firstPins;
     private final Pins secondPins;
@@ -40,7 +40,7 @@ public class Spare extends Finished {
 
     @Override
     public String mark() {
-        return String.format(SCORE_FORMAT, firstPins);
+        return String.format(SCORE_FORMAT, firstPins.pins());
     }
 
     @Override

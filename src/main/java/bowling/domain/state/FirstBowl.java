@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class FirstBowl extends Running {
     private static final String CANNOT_SUM_BEFORE_SCORE = "공을 한 번만 굴렸기 때문에 이전 점수와 더할 수 없습니다.";
-    private static final String SCORE_FORMAT = "   %s  |";
+    private static final String SCORE_FORMAT = "%d";
 
     private final Pins firstPins;
 
@@ -41,7 +41,7 @@ public class FirstBowl extends Running {
 
     @Override
     public String mark() {
-        return String.format(SCORE_FORMAT, firstPins);
+        return String.format(SCORE_FORMAT, firstPins.pins());
     }
 
     @Override
