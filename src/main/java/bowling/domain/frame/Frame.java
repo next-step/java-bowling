@@ -6,7 +6,7 @@ import bowling.domain.State.State;
 public abstract class Frame {
     protected final FrameNumber frameNumber;
 
-    public Frame(FrameNumber frameNumber) {
+    protected Frame(FrameNumber frameNumber) {
         validate(frameNumber);
         this.frameNumber = frameNumber;
     }
