@@ -1,12 +1,14 @@
 package bowling.domain;
 
 import bowling.domain.state.*;
+import bowling.exception.BowlingGameException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame{
+    private static final int NOT_SCORE_STATE = -1;
     private final List<State> states = new ArrayList<>();
 
     public FinalFrame() {
@@ -50,6 +52,18 @@ public class FinalFrame implements Frame{
     }
 
     @Override
+    public FrameScore getFrameScore() {
+        if(!this.states.get(0).isFinish()) {
+            return new FrameScore(NOT_SCORE_STATE);
+        }
+        try {
+            return new FrameScore(getScore());
+        }catch(BowlingGameException b) {
+            return new FrameScore(NOT_SCORE_STATE);
+        }
+    }
+
+
     public int getScore() {
         Score score = states.get(0).getScore();
         for(int i = 1; i<statesSize(); i++) {

@@ -8,36 +8,29 @@ public class FirstBowl extends Running {
     private static final String GUTTER_EXPRESSION = "-";
     private static final int SPARE = 10 ;
     private static final int GUTTER = 0;
-    private final Score score;
     private final Pins pins;
 
     public FirstBowl(int countOfPins) {
-        this.score = new Score(countOfPins, 1);
         this.pins = new Pins(countOfPins);
     }
 
     @Override
     public State bowl(int countOfPins) {
-        if(this.score.getScore() + countOfPins == SPARE) {
-            return new Spare(this.score.getScore(), countOfPins);
+        if(this.pins.getPins() + countOfPins == SPARE) {
+            return new Spare(this.pins.getPins(), countOfPins);
         }
-        if(this.score.getScore() == GUTTER && countOfPins == GUTTER) {
+        if(this.pins.getPins() == GUTTER && countOfPins == GUTTER) {
             return new Gutter();
         }
-        return new Miss(this.score.getScore(), countOfPins);
-    }
-
-    @Override
-    public Score getScore() {
-        return this.score;
+        return new Miss(this.pins.getPins(), countOfPins);
     }
 
     @Override
     public String expression() {
-        if(this.score.getScore() == 0) {
+        if(this.pins.getPins() == 0) {
             return GUTTER_EXPRESSION;
         }
-        return String.valueOf(this.score.getScore());
+        return String.valueOf(this.pins.getPins());
     }
 
     @Override

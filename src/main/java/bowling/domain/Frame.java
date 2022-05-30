@@ -7,5 +7,6 @@ public interface Frame {
     State getState();
     String expression();
     Score calculateAddScore(Score beforeScore);
+    FrameScore getFrameScore();
     int getScore();
 }

@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.BowlingGameException;
+
 import java.util.Objects;
 
 public class Score {
@@ -24,10 +26,6 @@ public class Score {
         return remainingNumber == 0;
     }
 
-    public static Score ofNotScore() {
-        return new Score(-1,0);
-    }
-
     public static Score ofSpare() {
         return new Score(STRIKE_OR_SPARE, 1);
     }
@@ -37,6 +35,9 @@ public class Score {
     }
 
     public int getScore() {
+//        if(!isCalculateScore()) {
+//            throw new BowlingGameException("아직 스코어를 계산할 수 없습니다");
+//        }
         return score;
     }
 

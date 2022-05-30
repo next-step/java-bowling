@@ -47,19 +47,25 @@ public class NormalFrame implements Frame {
 
     @Override
     public Score calculateAddScore(Score beforeScore) {
-        try {
-            Score score = this.state.calculateAddScore(beforeScore);
-            if(score.isCalculateScore()) {
-                return score;
-            }
-        }catch (BowlingGameException b) {
-            return Score.ofNotScore();
+        Score score = this.state.calculateAddScore(beforeScore);
+        if(score.isCalculateScore()) {
+            return score;
         }
-
         return this.nextFrame.calculateAddScore(beforeScore);
     }
 
     @Override
+    public FrameScore getFrameScore() {
+        if(!this.state.isFinish()) {
+            return new FrameScore(NOT_SCORE);
+        }
+        try {
+            return new FrameScore(getScore());
+        }catch(BowlingGameException b) {
+            return new FrameScore(NOT_SCORE);
+        }
+    }
+
     public int getScore() {
         Score score = this.state.getScore();
         if(score.isCalculateScore()) {
