@@ -8,11 +8,10 @@ public class Strike extends Ended{
 
     private static final int PITCH_COUNT = 1;
     private static final int STRIKE_VALUE = 10;
+    private static final int STRIKE_REMAIN_PITCH_COUNT = 2;
+    private static final int MAX_PIN_HIT_COUNT = 10;
 
-    @Override
-    public String toString(){
-        return "[Strike]";
-    }
+    public Strike(Scores scores) {}
 
     @Override
     public Score calculateScore(Score before) {
@@ -24,10 +23,20 @@ public class Strike extends Ended{
         return PitchResult.strike();
     }
 
+    @Override
+    public Score score() {
+        return new Score(MAX_PIN_HIT_COUNT, STRIKE_REMAIN_PITCH_COUNT);
+    }
+
     public static boolean checkType(Scores scores){
         if(!scores.checkSize(PITCH_COUNT)){
             return false;
         }
         return scores.getFistScore() == STRIKE_VALUE;
+    }
+
+    @Override
+    public String toString(){
+        return "[Strike]";
     }
 }

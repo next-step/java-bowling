@@ -26,4 +26,8 @@ public class Scores {
     public int getFistScore() {
         return scores.get(0);
     }
+
+    public int getSecondScore() {
+        return scores.get(1);
+    }
 }

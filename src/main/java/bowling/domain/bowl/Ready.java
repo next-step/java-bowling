@@ -10,22 +10,22 @@ import bowling.domain.score.Scores;
 
 import java.util.List;
 
-public class Ready implements Bowl{
+public class Ready extends Running{
 
     private static final int PITCH_COUNT = 0;
     private static final int MAX_PIN_HIT_COUNT = 10;
+
+    public Ready() {}
+    public Ready(Scores scores) {}
 
     @Override
     public Bowl pitch(Pins pins) {
         validate(pins);
 
-        BowlType type = BowlType.getType(List.of(pins.getCount()));
+        Scores scores = new Scores(List.of(pins.getCount()));
+        BowlType type = BowlType.getType(scores);
 
-        if(type.equals(BowlType.STRIKE)){
-            return new Strike();
-        }
-
-        return new First(pins);
+        return type.create(scores);
     }
 
     private void validate(Pins pins) {
@@ -36,11 +36,6 @@ public class Ready implements Bowl{
 
     public static boolean checkType(Scores scores){
         return scores.checkSize(PITCH_COUNT);
-    }
-
-    @Override
-    public String toString(){
-        return "[Ready]";
     }
 
     @Override
@@ -56,5 +51,10 @@ public class Ready implements Bowl{
     @Override
     public boolean isEnd() {
         return false;
+    }
+
+    @Override
+    public String toString(){
+        return "[Ready]";
     }
 }
