@@ -44,7 +44,7 @@ public class Point {
 	}
 
 	public String symbol() {
-		if (value == 0) {
+		if (value == MIN_THROW_COUNT) {
 			return "-";
 		}
 		return String.valueOf(value);

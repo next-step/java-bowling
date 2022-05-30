@@ -12,6 +12,9 @@ import bowling.state.State;
 
 public class EndFrame implements Frame {
 
+	private static final int MIN_TRY_COUNT = 2;
+	private static final int MAX_TRY_COUNT = 3;
+
 	private final List<State> states = new ArrayList<>();
 	private int tryCount;
 
@@ -22,10 +25,10 @@ public class EndFrame implements Frame {
 
 	@Override
 	public boolean isEnd() {
-		if (tryCount == 3) {
+		if (tryCount == MAX_TRY_COUNT) {
 			return true;
 		}
-		return tryCount == 2 && lastState() instanceof Open;
+		return tryCount == MIN_TRY_COUNT && lastState() instanceof Open;
 	}
 
 	@Override
