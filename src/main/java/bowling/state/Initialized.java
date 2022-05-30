@@ -9,7 +9,7 @@ public class Initialized implements State {
 	private Initialized() {
 	}
 
-	public static Initialized of() {
+	public static Initialized getInstance() {
 		return CACHE;
 	}
 
@@ -22,7 +22,7 @@ public class Initialized implements State {
 	public State throwBowl(int throwCount) {
 		Point point = Point.of(throwCount);
 		if (Strike.isConstructible(point)) {
-			return Strike.of();
+			return Strike.getInstance();
 		}
 		return new Remain(throwCount);
 	}

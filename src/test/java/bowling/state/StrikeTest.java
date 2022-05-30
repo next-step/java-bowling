@@ -17,7 +17,7 @@ class StrikeTest {
 
 	@Test
 	void 스트라이크_동일성_테스트() {
-		assertThat(Strike.of()).isSameAs(Strike.of());
+		assertThat(Strike.getInstance()).isSameAs(Strike.getInstance());
 	}
 
 	@ParameterizedTest(name = "{displayName} : {arguments}")
@@ -36,12 +36,12 @@ class StrikeTest {
 
 	@Test
 	void 스트라이크는_종료_상태() {
-		assertThat(Strike.of().isEnd()).isTrue();
+		assertThat(Strike.getInstance().isEnd()).isTrue();
 	}
 
 	@Test
 	void 스트라이크_상태에서_투구할_수_없음() {
-		Strike strike = Strike.of();
+		Strike strike = Strike.getInstance();
 		assertThatThrownBy(
 			() -> strike.throwBowl(1)
 		).isExactlyInstanceOf(UnsupportedOperationException.class);

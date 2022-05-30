@@ -10,7 +10,7 @@ public class Strike implements State {
 	private Strike() {
 	}
 
-	public static Strike of() {
+	public static Strike getInstance() {
 		return CACHE;
 	}
 

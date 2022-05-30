@@ -24,7 +24,7 @@ public class GeneralFrame implements Frame {
 	}
 
 	public static GeneralFrame initialized(int number) {
-		return new GeneralFrame(number, Initialized.of());
+		return new GeneralFrame(number, Initialized.getInstance());
 	}
 
 	@Override

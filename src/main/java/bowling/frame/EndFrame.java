@@ -16,7 +16,7 @@ public class EndFrame implements Frame {
 	private int tryCount;
 
 	public EndFrame() {
-		this.states.add(Initialized.of());
+		this.states.add(Initialized.getInstance());
 		this.tryCount = 0;
 	}
 
@@ -43,7 +43,7 @@ public class EndFrame implements Frame {
 	}
 
 	private void addState(int throwCount) {
-		states.add(Initialized.of().throwBowl(throwCount));
+		states.add(Initialized.getInstance().throwBowl(throwCount));
 	}
 
 	private void updateCurrentState(int throwCount) {
