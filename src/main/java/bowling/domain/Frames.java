@@ -3,6 +3,7 @@ package bowling.domain;
 public class Frames {
 
     protected static final int BOWLING_NORMAL_FRAMES = 9;
+    protected static final int BOWLING_FINAL_FRAMES = 1;
 
     private Frame head;
     private Frame current;
@@ -35,6 +36,7 @@ public class Frames {
         }
 
         frame.createFinal();
+        ++size;
     }
 
     public Frame head() {

@@ -1,20 +1,38 @@
 package bowling.domain;
 
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import bowling.domain.HitState.BonusShotCount;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class HitStateTest {
 
+    private BonusShotCount count;
+
+    @BeforeEach
+    void setUp() {
+        count = BonusShotCount.ofStrike();
+    }
+
     @Test
-    void createTest() {
-        assertEquals(HitState.STRIKE.hasOneMoreChance(), TRUE);
-        assertEquals(HitState.SPARE.hasOneMoreChance(), TRUE);
-        assertEquals(HitState.MISS.hasOneMoreChance(), FALSE);
-        assertEquals(HitState.GUTTER.hasOneMoreChance(), FALSE);
-        assertEquals(HitState.SPLIT.hasOneMoreChance(), FALSE);
+    void createStrikeBonusCountTest() {
+        assertThat(count).isNotNull();
+    }
+
+    @Test
+    void minusTest() {
+        count.minus();
+
+        assertThat(count.get()).isEqualTo(1);
+    }
+
+    @Test
+    void isRemainedTest() {
+        count.minus();
+        assertThat(count.isRemained()).isTrue();
+        count.minus();
+        assertThat(count.isRemained()).isFalse();
     }
 
 }

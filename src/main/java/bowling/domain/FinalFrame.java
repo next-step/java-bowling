@@ -1,6 +1,8 @@
 package bowling.domain;
 
 import java.util.Objects;
+import java.util.Optional;
+import java.util.OptionalInt;
 
 public class FinalFrame extends Frame {
     private Score extraScore;
@@ -10,8 +12,31 @@ public class FinalFrame extends Frame {
     }
 
     @Override
+    public OptionalInt scoreCalculated() {
+        if (!isDone()) {
+            return OptionalInt.empty();
+        }
+
+        int score = 0;
+
+        if (getFirstScoreAsOptional().isPresent()) {
+            score += firstScore();
+        }
+
+        if (getSecondScoreAsOptional().isPresent()) {
+            score += secondScore();
+        }
+
+        if (extraScore != null) {
+            score += extraScore.get();
+        }
+
+        return OptionalInt.of(score);
+    }
+
+    @Override
     public void shot(int hitCount) {
-        if (isEndOfNormalTry() && checkExtraShot()) {
+        if (isPlayedTwice() && checkExtraShot()) {
             extraScore = new Score(hitCount);
             return;
         }
@@ -23,8 +48,8 @@ public class FinalFrame extends Frame {
         }
     }
 
-    private boolean isEndOfNormalTry() {
-        return scores.isHitTwice();
+    private boolean isPlayedTwice() {
+        return scores.isPlayTwice();
     }
 
     private boolean checkExtraShot() {
@@ -33,11 +58,31 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isDone() {
-        return (!checkExtraShot() && isEndOfNormalTry())
+        return (!checkExtraShot() && isPlayedTwice())
             || Objects.nonNull(extraScore);
     }
 
-    public Score getExtraScore() {
-        return extraScore;
+    public Optional<Score> getExtraScore() {
+        return Optional.ofNullable(extraScore);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        FinalFrame that = (FinalFrame) o;
+        return Objects.equals(extraScore, that.extraScore);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), extraScore);
     }
 }

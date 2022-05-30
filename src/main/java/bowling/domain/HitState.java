@@ -1,24 +1,113 @@
 package bowling.domain;
 
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
+import java.util.OptionalInt;
 
 public enum HitState {
-    START(FALSE),   // 프레임 투구 시작 전 상태
-    STRIKE(TRUE),   // 첫번째 투구에 전부 쓰러뜨림
-    SPARE(TRUE),    // 첫번째 투구에 몇개 쓰러뜨리고, 두번째에 나머지 다 쓰러뜨림
-    MISS(FALSE),    // 첫번째 투구에 몇개 쓰러뜨리고, 두번째에 한개도 쓰러뜨리지 못함
-    GUTTER(FALSE),  // 첫번째 투구 결과 아무것도 안닿고 레인 홈통에 빠짐
-    SPLIT(FALSE);   // 첫번째 투구 결과 1번 핀 비롯해 몇개 쓰러지고 나머지 핀 몇개 서있는 상태
+    NORMAL(frame -> OptionalInt.of(frame.firstScore() + frame.secondScore())),
+    SPARE(frame -> {
+        if (!frame.hasNext()) {
+            return OptionalInt.empty();
+        }
 
-    private final boolean oneMore;
+        Frame next = frame.next();
 
-    HitState(boolean oneMore) {
-        this.oneMore = oneMore;
+        if (next.isNotThrowFirstYet()) {
+            return OptionalInt.empty();
+        }
+        return OptionalInt.of(next.firstScore() + 10);
+    }),
+    STRIKE(frame -> {
+        Frame currentFrame = frame.next();
+        if (currentFrame == null || currentFrame.isNotThrowFirstYet()) {
+            return OptionalInt.empty();
+        }
+
+        TotalScore totalScore = TotalScore.ofInitialStrike();
+        BonusShotCount bonusCount = BonusShotCount.ofStrike();
+        while (currentFrame != null && bonusCount.isRemained()) {
+            totalScore.appendScoreOf(bonusCount, currentFrame);
+            currentFrame = currentFrame.next();
+        }
+
+        return resultScoreAsOptional(totalScore, bonusCount);
+    });
+
+    private static OptionalInt resultScoreAsOptional(TotalScore totalScore, BonusShotCount count) {
+        if (count.isRemained()) {
+            return OptionalInt.empty();
+        }
+        return totalScore.getAsOptional();
     }
 
-    public boolean hasOneMoreChance() {
-        return oneMore;
+    private final ScoreCalculator calculator;
+
+    public OptionalInt scoreOf(Frame frame) {
+        return calculator.calculate(frame);
     }
 
+    HitState(ScoreCalculator calculator) {
+        this.calculator = calculator;
+    }
+
+    protected static class BonusShotCount {
+
+        private static final int STRIKE_BONUS_COUNT = 2;
+
+        private int count;
+
+        private BonusShotCount(int count) {
+            this.count = count;
+        }
+
+        public static BonusShotCount ofStrike() {
+            return new BonusShotCount(STRIKE_BONUS_COUNT);
+        }
+
+        public void minus() {
+            if (count > 0) {
+                --count;
+            }
+        }
+
+        public int get() {
+            return count;
+        }
+
+        public boolean isRemained() {
+            return count > 0;
+        }
+    }
+
+    protected static class TotalScore {
+
+        private int totalScore;
+
+        public TotalScore(int totalScore) {
+            this.totalScore = totalScore;
+        }
+
+        public static TotalScore ofInitialStrike() {
+            return new TotalScore(10);
+        }
+
+        public int get() {
+            return totalScore;
+        }
+
+        public void appendScoreOf(BonusShotCount bonusCount, Frame frame) {
+            if (frame.isThrowFirst()) {
+                totalScore += frame.firstScore();
+                bonusCount.minus();
+            }
+
+            if (frame.isThrowSecond() && bonusCount.isRemained()) {
+                totalScore += frame.secondScore();
+                bonusCount.minus();
+            }
+        }
+
+        public OptionalInt getAsOptional() {
+            return OptionalInt.of(totalScore);
+        }
+    }
 }

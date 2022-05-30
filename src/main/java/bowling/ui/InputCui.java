@@ -16,7 +16,7 @@ public final class InputCui {
         String nameInitial = scanner.nextLine();
 
         if (!isValidNames(nameInitial)) {
-            out.printf("플레이어의 이름 길이는 %d 의 문자열만 가능합니다.", NAME_LENGTH);
+            out.printf("플레이어의 이름 길이는 %d 의 문자열만 가능합니다." + System.lineSeparator(), NAME_LENGTH);
             return inputParticipants();
         }
 

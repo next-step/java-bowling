@@ -1,9 +1,12 @@
 package bowling.domain;
 
+import static bowling.domain.Frames.BOWLING_FINAL_FRAMES;
 import static bowling.domain.Frames.BOWLING_NORMAL_FRAMES;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.Optional;
+import java.util.OptionalInt;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,12 +27,12 @@ class FramesTest {
         assertThat(frames).isNotNull();
     }
 
-    @DisplayName("프레임들 객체에서 볼링게임 기본프레임 10개를 생성한다.")
+    @DisplayName("프레임들 객체에서 볼링게임 기본프레임 9개와 최종프레임 1개를 생성한다.")
     @Test
     void createTest2() {
         Frames frames = new Frames();
 
-        assertThat(frames.size()).isEqualTo(BOWLING_NORMAL_FRAMES);
+        assertThat(frames.size()).isEqualTo(BOWLING_NORMAL_FRAMES + BOWLING_FINAL_FRAMES);
     }
 
     @DisplayName("프레임들 생성 후 현재프레임은 가장 앞 프레임이다.")
@@ -45,8 +48,8 @@ class FramesTest {
         frames.throwBall(4);
         frames.throwBall(3);
 
-        assertThat(frames.head().getFirstScore().get()).isEqualTo(4);
-        assertThat(frames.head().getSecondScore().get()).isEqualTo(3);
+        assertThat(frames.head().firstScore()).isEqualTo(4);
+        assertThat(frames.head().secondScore()).isEqualTo(3);
     }
 
     @DisplayName("유효하지 않은 맞춘개수 입력 시 예외 발생한다.")
@@ -69,12 +72,11 @@ class FramesTest {
         frames.throwBall(8);    // 3
         frames.throwBall(1);    // 3
 
-        assertThat(frames.head().getFirstScore().get()).isEqualTo(9);
-        assertThat(frames.head().getSecondScore().get()).isEqualTo(1);
-        assertThat(frames.head().next().getFirstScore().get()).isEqualTo(10);
-        assertThat(frames.head().next().getSecondScore()).isNull();
-        assertThat(frames.current().before().getFirstScore().get()).isEqualTo(8);
-        assertThat(frames.current().before().getSecondScore().get()).isEqualTo(1);
+        assertThat(frames.head().firstScore()).isEqualTo(9);                // 1-1
+        assertThat(frames.head().secondScore()).isEqualTo(1);               // 1-2
+        assertThat(frames.head().next().firstScore()).isEqualTo(10);        // 2-1
+        assertThat(frames.current().before().firstScore()).isEqualTo(8);    // 3-1
+        assertThat(frames.current().before().secondScore()).isEqualTo(1);   // 3-2
     }
 
     @DisplayName("10프레임에 스트라이크를 치면 2번 볼 던지기 추가 진행 가능하다.")
@@ -125,6 +127,68 @@ class FramesTest {
         frames.throwBall(10);
         frames.throwBall(10);
         frames.throwBall(10);
+    }
+
+    @DisplayName("일반적인 점수는 해당 프레임이 끝나면 곧바로 계산된다.")
+    @Test
+    void calculateScoreTest1() {
+        frames.throwBall(9);    // 1
+        frames.throwBall(0);    // 1
+        frames.throwBall(2);    // 2
+        frames.throwBall(4);    // 2
+
+        Frame firstFrame = frames.head();
+        Frame secondFrame = firstFrame.next();
+
+        assertThat(firstFrame.scoreCalculated()).isEqualTo(OptionalInt.of(9));
+        assertThat(secondFrame.scoreCalculated()).isEqualTo(OptionalInt.of(6));
+    }
+
+    @DisplayName("스페어 추가 점수는 해당 프레임이 끝나고 다음 투구 1개의 점수가 계산된 후 계산된다.")
+    @Test
+    void calculateScoreTest2() {
+        frames.throwBall(9);    // 1
+        frames.throwBall(0);    // 1
+        frames.throwBall(2);    // 2
+        frames.throwBall(8);    // 2
+
+        Frame firstFrame = frames.head();
+        Frame secondFrame = firstFrame.next();
+
+        assertThat(firstFrame.scoreCalculated()).isEqualTo(OptionalInt.of(9));
+        assertThat(secondFrame.scoreCalculated()).isEmpty();
+
+        frames.throwBall(10);
+        assertThat(secondFrame.scoreCalculated()).isEqualTo(OptionalInt.of(20));
+    }
+
+    @DisplayName("마지막 프레임의 점수는 종료되는 시점에 그냥 있는 점수 다 더한다.")
+    @Test
+    void calculateScoreTest3() {
+        throwBallNineFrames();
+        Frame finalFrame = frames.current();
+
+        frames.throwBall(9);
+        assertThat(finalFrame.scoreCalculated()).isEmpty();
+
+        frames.throwBall(0);
+        assertThat(finalFrame.scoreCalculated()).isEqualTo(OptionalInt.of(9));
+    }
+
+    @DisplayName("마지막 프레임의 점수는 종료되는 시점에 그냥 있는 점수 다 더한다. with 추가 투구")
+    @Test
+    void calculateScoreTest4() {
+        throwBallNineFrames();
+        Frame finalFrame = frames.current();
+
+        frames.throwBall(9);
+        assertThat(finalFrame.scoreCalculated()).isEmpty();
+
+        frames.throwBall(1);
+        assertThat(finalFrame.scoreCalculated()).isEmpty();
+
+        frames.throwBall(10);
+        assertThat(finalFrame.scoreCalculated()).isEqualTo(OptionalInt.of(20));
     }
 
 }
