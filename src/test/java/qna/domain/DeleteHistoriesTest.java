@@ -33,7 +33,9 @@ class DeleteHistoriesTest {
         );
 
         DeleteHistories deleteHistories = new DeleteHistories();
-        deleteHistories.add(answers, UserTest.JAVAJIGI);
+        deleteHistories.add(answers.value().get(0), UserTest.JAVAJIGI);
+        deleteHistories.add(answers.value().get(1), UserTest.JAVAJIGI);
+
 
         assertAll("AnswerList 삭제 이력 확인",
                 () -> assertThat(deleteHistories.value().get(0))

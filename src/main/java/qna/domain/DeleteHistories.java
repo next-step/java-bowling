@@ -23,10 +23,8 @@ public class DeleteHistories {
         deleteHistories.add(new DeleteHistory(question, loginUser));
     }
 
-    public void add(Answers answers, User loginUser) throws CannotDeleteException {
-        for (Answer answer : answers.value()) {
-            deleteHistories.add(new DeleteHistory(answer, loginUser));
-        }
+    public void add(Answer answer, User loginUser) throws CannotDeleteException {
+        deleteHistories.add(new DeleteHistory(answer, loginUser));
     }
 
     public void add(DeleteHistories deleteHistories) {

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class AnswerTest {
@@ -17,5 +18,12 @@ public class AnswerTest {
         assertThatExceptionOfType(CannotDeleteException.class)
                 .isThrownBy(() -> A1.throwIfOwnerAndLoginUserNotEqual(UserTest.SANJIGI))
                 .withMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("삭제 완료 여부 확인")
+    void delete() throws CannotDeleteException {
+        A1.delete(UserTest.JAVAJIGI);
+        assertThat(A1.isDeleted()).isTrue();
     }
 }
