@@ -14,20 +14,20 @@ class GeneralFrameTest {
 
 	@Test
 	void 일반_프레임_동등성_테스트() {
-		assertThat(new GeneralFrame(1)).isEqualTo(new GeneralFrame(1));
+		assertThat(GeneralFrame.initialized(1)).isEqualTo(GeneralFrame.initialized(1));
 	}
 
 	@Test
 	void 일반_프레임은_최소_번호가_1_부터_생성_가능() {
 		assertThatIllegalArgumentException().isThrownBy(
-			() -> new GeneralFrame(0)
+			() -> GeneralFrame.initialized(0)
 		);
 	}
 
 	@Test
 	void 일반_프레임은_최대_마지막_직전_프레임까지만_생성_가능() {
 		assertThatIllegalArgumentException().isThrownBy(
-			() -> new GeneralFrame(10)
+			() -> GeneralFrame.initialized(10)
 		);
 	}
 
