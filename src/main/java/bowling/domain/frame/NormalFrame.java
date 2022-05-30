@@ -61,23 +61,20 @@ public class NormalFrame extends Frame {
     @Override
     public Score score() {
         Score score = state.score();
-
-        if (score.isNotAbleToScore() && hasNext()) {
-            return next.score(score);
-        }
-
-        return score;
+        return nextScore(score);
     }
 
     @Override
-    public Score score(Score score) {
-        Score nextScore = state.score(score);
+    public Score score(Score previousScore) {
+        Score score = state.score(previousScore);
+        return nextScore(score);
+    }
 
-        if (nextScore.isNotAbleToScore() && hasNext()) {
-            return next.score(nextScore);
+    private Score nextScore(Score score) {
+        if (score.isNotAbleToScore() && hasNext()) {
+            return next.score(score);
         }
-
-        return nextScore;
+        return score;
     }
 
     @Override
