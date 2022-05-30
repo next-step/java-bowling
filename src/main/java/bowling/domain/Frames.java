@@ -7,32 +7,42 @@ import java.util.List;
 public class Frames {
     public static final int MAP_ROUND_TO_INDEX_CONSTANT = 1;
 
-    private static final List<Frame> CACHE;
-
-    static {
-        CACHE = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            CACHE.add(new Frame());
-        }
-    }
-
+    private final List<Frame> frames = new ArrayList<>();
     private final String player;
 
     public Frames(String player) {
         this.player = player;
     }
 
-    public boolean playFrame(final int round, final int numberOfFallenPins) {
-        Frame frame = play(round, numberOfFallenPins);
-        return frame.isEnd();
+    public boolean playFrame(final int numberOfFallenPins) {
+        addFrame(new Frame()); // Issue: Is it correct to inject from outside?
+        Frame frame = play(numberOfFallenPins);
+        return frame.endFrame();
     }
 
-    private Frame play(final int round, final int numberOfFallenPins) {
-        return CACHE.get(round - MAP_ROUND_TO_INDEX_CONSTANT).play(round, numberOfFallenPins);
+    private void addFrame(final Frame frame) {
+        if (frames.size() == 0) {
+            frames.add(frame);
+        }
+        if (lastFrame().endFrame()) {
+            frames.add(frame);
+        }
+    }
+
+    private Frame play(final int numberOfFallenPins) {
+        return lastFrame().play(lastIndex(), numberOfFallenPins);
+    }
+
+    public Frame lastFrame() {
+        return frames.get(lastIndex());
+    }
+
+    private int lastIndex() {
+        return frames.size() - MAP_ROUND_TO_INDEX_CONSTANT;
     }
 
     public List<Frame> getGameRecords() {
-        return Collections.unmodifiableList(CACHE);
+        return Collections.unmodifiableList(frames);
     }
 
     public String getPlayer() {

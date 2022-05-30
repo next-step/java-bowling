@@ -2,7 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.Frame;
 
-public class Gutter implements RunningState {
+public class Gutter implements ThrowingState {
     private Frame frame;
 
     public Gutter(Frame frame) {
@@ -10,26 +10,18 @@ public class Gutter implements RunningState {
     }
 
     @Override
-    public ThrowingState bowl() {
-        int second = frame.second();
-        if (second == 10) {
-            return new Spare(this);
+    public ThrowingState bowl(int pins) {
+        if (pins == 10) {
+            return new Spare(frame);
         }
-
-        if (second == 0) {
-            return new Miss(this);
+        if (pins == 0) {
+            return new Miss(frame);
         }
-
-        return new SecondBowl(this);
+        return new SecondBowl(frame);
     }
 
     @Override
     public String symbol() {
         return "-";
-    }
-
-    @Override
-    public Frame frame() {
-        return this.frame;
     }
 }

@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
 public interface ThrowingState {
-    ThrowingState bowl();
+    ThrowingState bowl(int pins);
     String symbol();
 }

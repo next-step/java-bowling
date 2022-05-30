@@ -10,8 +10,7 @@ import bowling.view.ResultView;
 public class Controller {
     public static void main(String[] args) {
         Frames frames = new Frames(InputView.inputNameOfPlayer());
-        ResultView.printLabel();
-        ResultView.printScore(frames.getPlayer(), frames.getGameRecords());
+        ResultView.printBeforeGame(frames.getPlayer());
 
         playGame(frames);
     }
@@ -32,9 +31,8 @@ public class Controller {
     private static boolean play(final Frames frames, final int frame) {
         try {
             int numberOfFallenPins = Integer.parseInt(InputView.inputNumberOfFallenPinsInFrame(frame));
-            boolean flag = frames.playFrame(frame, numberOfFallenPins);
-            ResultView.printLabel();
-            ResultView.printScore(frames.getPlayer(), frames.getGameRecords());
+            boolean flag = frames.playFrame(numberOfFallenPins);
+            ResultView.printGameInProgress(frames.getPlayer(), frames.getGameRecords());
             return flag;
         } catch (InvalidNumberOfFallenPinsException e) {
             System.out.println(e.getMessage());

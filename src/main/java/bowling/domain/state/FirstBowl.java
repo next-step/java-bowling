@@ -2,7 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.Frame;
 
-public class FirstBowl implements RunningState {
+public class FirstBowl implements ThrowingState {
     private Frame frame;
 
     public FirstBowl(Frame frame) {
@@ -10,27 +10,19 @@ public class FirstBowl implements RunningState {
     }
 
     @Override
-    public ThrowingState bowl() {
-        int first = frame.first();
-        int second = frame.second();
-        if (first + second == 10) {
-            return new Spare(this);
+    public ThrowingState bowl(int pins) {
+        int previous = frame.first();
+        if (previous + pins == 10) {
+            return new Spare(frame);
         }
-
-        if (first + second == 0) {
-            return new Miss(this);
+        if (previous + pins == 0) {
+            return new Miss(frame);
         }
-
-        return new SecondBowl(this);
+        return new SecondBowl(frame);
     }
 
     @Override
     public String symbol() {
         return String.valueOf(frame.first());
-    }
-
-    @Override
-    public Frame frame() {
-        return this.frame;
     }
 }

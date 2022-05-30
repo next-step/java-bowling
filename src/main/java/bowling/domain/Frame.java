@@ -1,69 +1,59 @@
 package bowling.domain;
 
-import bowling.domain.state.*;
+import bowling.domain.state.ThrowingState;
 import bowling.exception.EndedFrameException;
-import bowling.exception.InvalidNumberOfFallenPinsException;
 import bowling.exception.MaximumSumExceededException;
 
 public class Frame {
-    public static final int READY = -1;
-    public static final int MAX_NUMBER_OF_PIN = 10;
-
-    private ThrowingState currentFrameState;
-    private int first = READY;
-    private int second = READY;
+    private Bowl first;
+    private Bowl second;
 
     public Frame() {
-        currentFrameState = new Ready(this);
+        this.first = new Bowl(this);
+        this.second = new Bowl(this);
     }
 
     Frame play(final int round, final int numberOfFallenPins) {
+        if (!first.complete()) {
+            first.bowl(numberOfFallenPins);
+            return this;
+        }
         validate(round, numberOfFallenPins);
-        if (currentFrameState instanceof Ready) {
-            first = numberOfFallenPins;
-            changeState(currentFrameState);
-            return this;
-        }
-        if (currentFrameState instanceof RunningState) {
-            second = numberOfFallenPins;
-            changeState(currentFrameState);
-            return this;
-        }
-
-        throw new EndedFrameException(round);
+        second = new Bowl(first.state()); // 2nd initiate
+        second.bowl(numberOfFallenPins);
+        return this;
     }
 
     private void validate(final int round, final int numberOfFallenPins) {
-        if (currentFrameState instanceof EndedState) {
+        if (endFrame()) {
             throw new EndedFrameException(round);
         }
-
-        if (numberOfFallenPins <= READY || numberOfFallenPins > MAX_NUMBER_OF_PIN) {
-            throw new InvalidNumberOfFallenPinsException(numberOfFallenPins);
+        if (first.pins() + numberOfFallenPins > Bowl.MAX_NUMBER_OF_PIN) {
+            throw new MaximumSumExceededException(first.pins(), numberOfFallenPins);
         }
-
-        if (!(currentFrameState instanceof Ready) && (currentFrameState instanceof RunningState) && (first + numberOfFallenPins > MAX_NUMBER_OF_PIN)) {
-            throw new MaximumSumExceededException(first, numberOfFallenPins);
-        }
-    }
-
-    private void changeState(ThrowingState throwingState) {
-        this.currentFrameState = throwingState.bowl();
     }
 
     public int first() {
-        return first;
+        return first.pins();
     }
 
     public int second() {
-        return second;
+        return second.pins();
     }
 
-    public ThrowingState frameState() {
-        return currentFrameState;
+    public ThrowingState intermediateState() {
+        return first.state();
     }
 
-    public boolean isEnd() {
-        return currentFrameState instanceof EndedState;
+    public ThrowingState finalState() {
+        return second.state();
+    }
+
+    public boolean endFrame() {
+        return (first.pins() == Bowl.MAX_NUMBER_OF_PIN) || second.complete();
+    }
+
+    public boolean halfOfFrame() {
+        return (first.pins() != Bowl.READY) && !second.complete();
     }
 }
