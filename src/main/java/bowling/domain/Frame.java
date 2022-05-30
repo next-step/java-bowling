@@ -9,28 +9,12 @@ public class Frame {
     public static final int READY = -1;
     public static final int MAX_NUMBER_OF_PIN = 10;
 
-    private final ThrowingState ready;
-    private final ThrowingState firstBowl;
-    private final ThrowingState gutter;
-    private final ThrowingState strike;
-    private final ThrowingState secondBowl;
-    private final ThrowingState spare;
-    private final ThrowingState miss;
-
     private ThrowingState currentFrameState;
     private int first = READY;
     private int second = READY;
 
     public Frame() {
-        this.ready = new Ready(this);
-        this.firstBowl = new FirstBowl(this);
-        this.gutter = new Gutter(this);
-        this.strike = new Strike();
-        this.secondBowl = new SecondBowl(new Ready(this));
-        this.spare = new Spare(new Ready(this));
-        this.miss = new Miss(new Ready(this));
-
-        currentFrameState = this.ready;
+        currentFrameState = new Ready(this);
     }
 
     Frame play(final int round, final int numberOfFallenPins) {
