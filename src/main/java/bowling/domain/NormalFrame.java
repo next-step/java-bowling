@@ -5,6 +5,7 @@ import java.util.Objects;
 public class NormalFrame implements Frame {
     private final FrameNumber frameNumber;
     private State state;
+    private Frame next;
 
     private NormalFrame(FrameNumber frameNumber, State state) {
         this.frameNumber = frameNumber;
@@ -29,6 +30,44 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public int score() {
+        if(!isEnd()) {
+            return Score.INCALCULABLE_SCORE;
+        }
+
+        Score score = state.score();
+
+        if(score.isCalculatorScore()) {
+            return score.getValue();
+        }
+
+        return next.calculationScore(score);
+    }
+
+    @Override
+    public int calculationScore(Score before) {
+        try {
+            return calculationFinalScore(before);
+        } catch (IllegalStateException e) {
+            return Score.INCALCULABLE_SCORE;
+        }
+    }
+
+    private int calculationFinalScore(Score before) {
+        Score score = state.calculatorScore(before);
+
+        if(score.isCalculatorScore()) {
+            return score.getValue();
+        }
+
+        if(Objects.isNull(next)) {
+            throw new IllegalStateException("다음 프레임이 존재하지 않습니다.");
+        }
+
+        return next.calculationScore(score);
+    }
+
+    @Override
     public int getFrameNumber() {
         return frameNumber.getValue();
     }
@@ -46,10 +85,12 @@ public class NormalFrame implements Frame {
 
     private Frame createNextFrame() {
         if (frameNumber.next().isMax()) {
-            return new LastFrame();
+            this.next = new LastFrame();
+            return this.next;
         }
 
-        return create(frameNumber.next());
+        this.next = create(frameNumber.next());
+        return this.next;
     }
 
     @Override

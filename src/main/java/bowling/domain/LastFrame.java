@@ -50,6 +50,36 @@ public class LastFrame implements Frame {
         return count == MIN_BOWL && recentState() instanceof Miss;
     }
 
+    @Override
+    public int score() {
+        if(!isEnd()) {
+            return Score.INCALCULABLE_SCORE;
+        }
+
+        return states.stream()
+                .map(State::score)
+                .mapToInt(Score::getValue)
+                .sum();
+    }
+
+    @Override
+    public int calculationScore(Score before) {
+        try {
+            return calculationScore(before, 0);
+        } catch (IllegalStateException | IndexOutOfBoundsException e) {
+            return Score.INCALCULABLE_SCORE;
+        }
+    }
+
+    private int calculationScore(Score before, int index) {
+        State state = states.get(index);
+        Score score = state.calculatorScore(before);
+        if (score.isCalculatorScore()) {
+            return score.getValue();
+        }
+        return calculationScore(score, index + 1);
+    }
+
     private State recentState() {
         return states.getLast();
     }

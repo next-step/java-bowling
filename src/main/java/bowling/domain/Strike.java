@@ -7,4 +7,14 @@ public class Strike extends EndedState {
     public String symbol() {
         return STRIKE_SYMBOL;
     }
+
+    @Override
+    public Score score() {
+        return new Score(Pitching.MAX_PITCHING, Score.MAX_REMAINING_PITCHES);
+    }
+
+    @Override
+    public Score calculatorScore(Score before) {
+        return before.bowl(new Score(Pitching.MAX_PITCHING));
+    }
 }

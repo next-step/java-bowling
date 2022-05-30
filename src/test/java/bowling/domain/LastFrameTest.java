@@ -16,8 +16,7 @@ class LastFrameTest {
         // when & then
         assertAll(
                 () -> assertThat(lastFrame.getFrameNumber()).isEqualTo(FrameNumber.MAX_FRAME_NUMBER),
-                () -> assertThat(lastFrame.isEnd()).isFalse(),
-                () -> assertThat(lastFrame.symbol()).isBlank()
+                () -> assertThat(lastFrame.isEnd()).isFalse()
         );
     }
 }

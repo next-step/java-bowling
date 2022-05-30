@@ -35,6 +35,16 @@ public class FirstPitching extends RunningState {
         return String.valueOf(first.getValue());
     }
 
+    @Override
+    public Score score() {
+        return first.score();
+    }
+
+    @Override
+    public Score calculatorScore(Score before) {
+        return before.bowl(first.score());
+    }
+
     public Pitching getFirst() {
         return first;
     }

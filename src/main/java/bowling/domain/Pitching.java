@@ -42,4 +42,12 @@ public class Pitching {
     public boolean isSum(Pitching otherPitching) {
         return Math.addExact(value, otherPitching.value) <= MAX_PITCHING;
     }
+
+    public Score score() {
+        return new Score(value);
+    }
+
+    public Score score(Pitching other) {
+        return new Score(Math.addExact(value, other.value));
+    }
 }

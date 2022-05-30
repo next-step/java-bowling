@@ -23,4 +23,20 @@ public class Spare extends EndedState {
     public String symbol() {
         return String.format("%s|%s", first.getValue(), SPARE_SYMBOL);
     }
+
+    @Override
+    public Score score() {
+        return new Score(Pitching.MAX_PITCHING, 1);
+    }
+
+    @Override
+    public Score calculatorScore(Score before) {
+        before = before.bowl(first.score());
+
+        if(before.isCalculatorScore()) {
+            return before;
+        }
+
+        return before.bowl(second.score());
+    }
 }
