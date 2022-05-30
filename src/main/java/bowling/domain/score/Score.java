@@ -1,6 +1,6 @@
 package bowling.domain.score;
 
-import bowling.domain.State.Pin;
+import bowling.domain.state.Pin;
 
 import static bowling.view.OutputView.BLANK;
 import static bowling.view.OutputView.NORMAL_STATE_FORMAT;

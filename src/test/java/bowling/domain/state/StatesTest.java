@@ -1,14 +1,14 @@
-package bowling.domain.State;
+package bowling.domain.state;
 
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static bowling.domain.State.StateTest.FIRST;
-import static bowling.domain.State.StateTest.MISS;
-import static bowling.domain.State.StateTest.SECOND;
-import static bowling.domain.State.StateTest.SPARE;
-import static bowling.domain.State.StateTest.STRIKE;
+import static bowling.domain.state.StateTest.FIRST;
+import static bowling.domain.state.StateTest.MISS;
+import static bowling.domain.state.StateTest.SECOND;
+import static bowling.domain.state.StateTest.SPARE;
+import static bowling.domain.state.StateTest.STRIKE;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

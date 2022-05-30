@@ -1,8 +1,8 @@
 package bowling.domain.frame;
 
-import bowling.domain.State.Pin;
-import bowling.domain.State.State;
 import bowling.domain.score.Score;
+import bowling.domain.state.Pin;
+import bowling.domain.state.State;
 
 import static bowling.view.OutputView.NORMAL_STATE_FORMAT;
 

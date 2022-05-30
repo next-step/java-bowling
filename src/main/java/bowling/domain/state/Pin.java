@@ -1,4 +1,4 @@
-package bowling.domain.State;
+package bowling.domain.state;
 
 public class Pin {
     public static final int MIN = 0;
@@ -39,7 +39,7 @@ public class Pin {
     public static Pin zero() {
         return new Pin(MIN);
     }
-    
+
     @Override
     public String toString() {
         return Integer.toString(pinCount);

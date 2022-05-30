@@ -2,7 +2,7 @@ package bowling.domain.score;
 
 import org.junit.jupiter.api.Test;
 
-import static bowling.domain.State.PinTest.ZERO;
+import static bowling.domain.state.PinTest.ZERO;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ScoreTest {

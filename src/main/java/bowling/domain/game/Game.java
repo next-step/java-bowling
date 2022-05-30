@@ -1,10 +1,10 @@
 package bowling.domain.game;
 
-import bowling.domain.State.Pin;
 import bowling.domain.frame.FrameNumber;
 import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
 import bowling.domain.score.Scores;
+import bowling.domain.state.Pin;
 
 import static bowling.view.OutputView.PLAYER_FORMAT;
 

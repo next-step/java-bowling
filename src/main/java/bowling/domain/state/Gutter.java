@@ -1,22 +1,26 @@
-package bowling.domain.State;
+package bowling.domain.state;
 
 import bowling.domain.score.Score;
 
-public class First extends RunningState {
-    public First(Pin pin) {
+public class Gutter extends RunningState {
+    private static final String SYMBOL = "-";
+
+    public Gutter() {
+        this(Pin.zero());
+    }
+
+    public Gutter(Pin pin) {
         super(pin);
     }
 
     @Override
     public State bowl(Pin pin) {
-        Pin addedPin = this.pin.add(pin);
+        if (pin.isTen()) {
+            return new Spare(pin, this);
+        }
 
         if (pin.isZero()) {
             return new Miss(this);
-        }
-
-        if (addedPin.isTen()) {
-            return new Spare(addedPin, this);
         }
 
         return new Second(pin, this);
@@ -39,7 +43,7 @@ public class First extends RunningState {
 
     @Override
     public String toString() {
-        return pin.toString();
+        return SYMBOL;
     }
 
     @Override

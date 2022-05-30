@@ -1,9 +1,9 @@
 package bowling;
 
-import bowling.domain.State.Pin;
 import bowling.domain.frame.FrameNumber;
 import bowling.domain.game.Game;
 import bowling.domain.player.Player;
+import bowling.domain.state.Pin;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 

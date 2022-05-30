@@ -1,4 +1,4 @@
-package bowling.domain.State;
+package bowling.domain.state;
 
 public abstract class EndedState extends State {
     public EndedState(Pin pin) {

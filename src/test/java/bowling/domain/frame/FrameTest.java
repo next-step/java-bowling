@@ -1,25 +1,25 @@
 package bowling.domain.frame;
 
-import bowling.domain.State.Pin;
-import bowling.domain.State.State;
-import bowling.domain.State.StatesTest;
 import bowling.domain.score.Score;
+import bowling.domain.state.Pin;
+import bowling.domain.state.State;
+import bowling.domain.state.StatesTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static bowling.domain.State.PinTest.TEN;
-import static bowling.domain.State.StateTest.FIRST;
-import static bowling.domain.State.StateTest.GUTTER;
-import static bowling.domain.State.StateTest.MISS;
-import static bowling.domain.State.StateTest.READY;
-import static bowling.domain.State.StateTest.SECOND;
-import static bowling.domain.State.StateTest.SPARE;
-import static bowling.domain.State.StateTest.STRIKE;
 import static bowling.domain.frame.FrameNumberTest.MAX_FRAME_NUMBER;
 import static bowling.domain.frame.FrameNumberTest.MIN_FRAME_NUMBER;
 import static bowling.domain.score.ScoreTest.SCORABLE;
 import static bowling.domain.score.ScoreTest.UNSCORABLE;
+import static bowling.domain.state.PinTest.TEN;
+import static bowling.domain.state.StateTest.FIRST;
+import static bowling.domain.state.StateTest.GUTTER;
+import static bowling.domain.state.StateTest.MISS;
+import static bowling.domain.state.StateTest.READY;
+import static bowling.domain.state.StateTest.SECOND;
+import static bowling.domain.state.StateTest.SPARE;
+import static bowling.domain.state.StateTest.STRIKE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;

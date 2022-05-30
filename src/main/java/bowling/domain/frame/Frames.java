@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.domain.State.Pin;
 import bowling.domain.score.Scores;
+import bowling.domain.state.Pin;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
