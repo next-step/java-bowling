@@ -5,6 +5,10 @@ import bowling.domain.score.Score;
 
 public class FirstPitch extends State {
 
+    private static final int MAX_PINS = 10;
+
+    private static final int GUTTER = 0;
+
     private final Pitch firstPitch;
 
     public FirstPitch(int pins) {
@@ -14,11 +18,11 @@ public class FirstPitch extends State {
     @Override
     public State bowling(int pins) {
         int totalPins = Math.addExact(firstPitch.pins(), pins);
-        if (totalPins == 10) {
+        if (totalPins == MAX_PINS) {
             return new Spare(this.firstPitch, pins);
         }
 
-        if (totalPins == 0) {
+        if (totalPins == GUTTER) {
             return new Gutter();
         }
 

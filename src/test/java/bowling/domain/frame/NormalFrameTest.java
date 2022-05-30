@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class NormalFrameTest {
-    ;
+
     private final int firstPins = 7;
     private final int secondPins = 3;
     private final int nextPins = 10;

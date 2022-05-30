@@ -20,11 +20,9 @@ public class FinalFrameTest {
         int firstPins = Integer.parseInt(first);
         int secondPins = Integer.parseInt(second);
 
-        Frame finalFrame = FinalFrame.lastBowling(firstPins);
-        if (secondPins > 0) {
-            finalFrame = finalFrame.bowling(secondPins);
-        }
+        Frame finalFrame = FinalFrame.lastBowling(firstPins).bowling(secondPins);
         Frame bonusFrame = finalFrame.bowling(this.bonusPins);
+
         assertThat(bonusFrame.isFinishBowling()).isTrue();
 
     }
@@ -32,7 +30,7 @@ public class FinalFrameTest {
     @Test
     @DisplayName("보너스 게임일 때 다음 프레임 생성하는 경우 예외 처리")
     void createException() {
-        Frame bonusGame = FinalFrame.lastBowling(10).next(this.bonusPins);
+        Frame bonusGame = FinalFrame.lastBowling(10).next(this.bonusPins).next(this.bonusPins);
         assertThatThrownBy(() -> bonusGame.next(this.bonusPins)).isExactlyInstanceOf(UnableCreateFrameException.class);
     }
 

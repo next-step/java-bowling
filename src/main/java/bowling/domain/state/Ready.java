@@ -4,6 +4,8 @@ import bowling.domain.score.Score;
 
 public class Ready extends State {
 
+    private static final int MAX_PINS = 10;
+
     private Ready() {
     }
 
@@ -13,7 +15,7 @@ public class Ready extends State {
 
     @Override
     public State bowling(int pins) {
-        if (pins == 10) {
+        if (pins == MAX_PINS) {
             return new Strike(pins);
         }
 
