@@ -26,7 +26,7 @@ public class InputView {
     }
 
     private static List<Player> inputNamesForNumberOfPlayers(int playerNumber) {
-        return IntStream.range(1, playerNumber)
+        return IntStream.rangeClosed(1, playerNumber)
                 .mapToObj(index -> InputView.inputPlayerName())
                 .collect(Collectors.toList());
     }
