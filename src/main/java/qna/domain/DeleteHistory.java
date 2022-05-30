@@ -1,5 +1,7 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -29,6 +31,24 @@ public class DeleteHistory {
         this.contentId = contentId;
         this.deletedBy = deletedBy;
         this.createDate = createDate;
+    }
+
+    public DeleteHistory(Question question, User loginUser) throws CannotDeleteException {
+        question.throwIfOwnerAndLoginUserNotEqual(loginUser);
+
+        this.contentType = ContentType.QUESTION;
+        this.contentId = question.getId();
+        this.deletedBy = question.getWriter();
+        this.createDate = LocalDateTime.now();
+    }
+
+    public DeleteHistory(Answer answer, User loginUser) throws CannotDeleteException {
+        answer.throwIfOwnerAndLoginUserNotEqual(loginUser);
+
+        this.contentType = ContentType.ANSWER;
+        this.contentId = answer.getId();
+        this.deletedBy = answer.getWriter();
+        this.createDate = LocalDateTime.now();
     }
 
     @Override
