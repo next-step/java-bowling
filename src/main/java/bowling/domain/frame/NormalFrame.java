@@ -1,19 +1,21 @@
 package bowling.domain.frame;
 
-import bowling.domain.pitch.Pitches;
+import bowling.domain.state.Ready;
+import bowling.domain.state.Spare;
+import bowling.domain.state.State;
+import bowling.domain.state.Strike;
 
 public class NormalFrame implements Frame {
 
     private static final int ONE = 1;
     private static final int SEMI_FINAL_INDEX = 9;
-    private static final int MAX_PITCHES_SIZE = 2;
 
     private final int round;
-    private final Pitches pitches;
+    private State state;
 
     private NormalFrame(int round, int pins) {
         this.round = round;
-        this.pitches = Pitches.first(pins);
+        this.state = Ready.of(pins);
     }
 
     public static NormalFrame bowling(int round, int pins) {
@@ -22,16 +24,17 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame bowling(int pins) {
-        this.pitches.next(pins);
+        this.state = this.state.bowling(pins);
         return this;
     }
 
     @Override
     public Frame next(int pins) {
-        int nextIndex = this.increment();
-        if (isSemiFinal()) {
+        int nextIndex = Math.addExact(this.round, ONE);
+        if (this.round == SEMI_FINAL_INDEX) {
             return FinalFrame.lastBowling(pins);
         }
+
         return bowling(nextIndex, pins);
     }
 
@@ -47,23 +50,16 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isFinishBowling() {
-        if (this.pitches.isStrikeOrSpare()) {
-            return true;
-        }
-
-        return this.pitches.size() == MAX_PITCHES_SIZE;
+        return this.state.is(Strike.class) || this.state.is(Spare.class);
     }
 
     @Override
-    public String partitionPins() {
-        return this.pitches.currentScore();
+    public String currentResult() {
+        return this.state.symbol();
     }
 
-    private boolean isSemiFinal() {
-        return this.round == SEMI_FINAL_INDEX;
-    }
-
-    private int increment() {
-        return Math.addExact(this.round, ONE);
+    @Override
+    public State state() {
+        return this.state;
     }
 }

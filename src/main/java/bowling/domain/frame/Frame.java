@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.state.State;
+
 public interface Frame {
 
     Frame bowling(int pins);
@@ -12,5 +14,7 @@ public interface Frame {
 
     boolean isFinishBowling();
 
-    String partitionPins();
+    String currentResult();
+
+    State state();
 }

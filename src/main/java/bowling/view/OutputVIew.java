@@ -35,7 +35,7 @@ public class OutputVIew {
         IntFunction<String> func = i -> {
             int lastRound = frames.lastRound();
             if (i <= lastRound && !frames.isEmpty()) {
-                return frames.getFrame(i).partitionPins();
+                return frames.getFrame(i).currentResult();
             }
 
             return BLANK;

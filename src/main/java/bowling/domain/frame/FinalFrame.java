@@ -2,19 +2,21 @@ package bowling.domain.frame;
 
 import bowling.domain.frame.exception.UnableBowlingException;
 import bowling.domain.frame.exception.UnableCreateFrameException;
-import bowling.domain.pitch.Pitches;
+import bowling.domain.state.*;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class FinalFrame implements Frame {
 
-    private static final int MIN_PITCHES_SIZE = 2;
-    private static final int MAX_PITCHES_SIZE = 3;
     private static final int FINAL_ROUND = 9;
+    private static final int LIMIT_COUNT = 2;
 
-    private boolean isBonus = false;
-    private final Pitches pitches;
+    private final AtomicInteger count;
+    private State state;
 
     private FinalFrame(int pins) {
-        this.pitches = Pitches.first(pins);
+        this.state = Ready.of(pins);
+        this.count = new AtomicInteger();
     }
 
     protected static FinalFrame lastBowling(int pins) {
@@ -27,13 +29,13 @@ public class FinalFrame implements Frame {
             throw new UnableBowlingException();
         }
 
-        if (this.pitches.isStrikeOrSpare()) {
-            this.pitches.bonus(pins);
-            this.isBonus = true;
+        count.incrementAndGet();
+        if (this.state.is(Strike.class) || this.state.is(Spare.class) || this.state.is(Bonus.class)) {
+            this.state = this.state.bonusBowling(pins);
             return this;
         }
 
-        this.pitches.next(pins);
+        this.state = this.state.bowling(pins);
 
         return this;
     }
@@ -59,23 +61,18 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isFinishBowling() {
-        if (pitches.isSpare()) {
-            return isBonus && this.pitches.size() == MAX_PITCHES_SIZE;
-        }
-
-        if (pitches.isStrike()) {
-            return isBonus && this.pitches.size() == MIN_PITCHES_SIZE;
-        }
-
-        return this.pitches.size() == MIN_PITCHES_SIZE;
+        return this.state.is(Miss.class)
+                || this.state.is(Gutter.class)
+                || (this.count.get() == LIMIT_COUNT && this.state.is(Bonus.class));
     }
 
     @Override
-    public String partitionPins() {
-        String currentScore = this.pitches.currentScore();
-        if (this.isBonus) {
-            currentScore += ("|" + this.pitches.bonusPitch().pins());
-        }
-        return currentScore;
+    public String currentResult() {
+        return this.state.symbol();
+    }
+
+    @Override
+    public State state() {
+        return this.state;
     }
 }
