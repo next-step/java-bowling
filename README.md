@@ -279,3 +279,9 @@ Frame: bonus
     - [x] plays 내에서 subtotal 생성하고 evaluateBonus 로직 추가
     - [x] 10 프레임 이후에는 handleLast 에서 strike, spare 인 경우 한번 더 투구: playBonus
       - 이외의 경우에는 subtotal.setLast 로 기다리지 않아도 됌을 명시하고 최종 점수 출력
+- [x] domain test 추가
+  - Player
+  - Frames
+  - Scores
+  - Subtotal
+- [ ] Refactoring 가능 class 확인

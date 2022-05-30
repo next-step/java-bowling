@@ -4,7 +4,6 @@ import bowling.domain.Player;
 import bowling.domain.Score;
 
 import static bowling.util.Const.*;
-import static bowling.util.Const.END_STR;
 
 public class Output {
     public static void printFrame(Player player) {

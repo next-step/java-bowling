@@ -32,6 +32,4 @@ public class Player {
     public PlayerName name() {
         return this.playerName;
     }
-
-
 }
