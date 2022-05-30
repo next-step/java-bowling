@@ -1,6 +1,4 @@
-package qna.domain;
-
-import qna.domain.user.User;
+package qna.domain.user;
 
 public class UserTest {
     public static final User JAVAJIGI = new User(1L, "javajigi", "password", "name", "javajigi@slipp.net");

@@ -49,23 +49,16 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    private void isValidatedWriter(User writer) {
-        Optional.ofNullable(writer)
-                .filter(this::isOwner)
-                .orElseThrow(() -> new CannotDeleteException(NO_DELETE_ACCESS));
-    }
-
     public void delete(User writer) {
         this.isValidatedWriter(writer);
         this.answers.delete(writer);
         this.deleted = true;
     }
 
-    public DeleteHistory deleteHistory() {
-        return Optional.of(this)
-                .filter(Question::isDeleted)
-                .map(DeleteHistory::of)
-                .orElseThrow(() -> new IsNotDeletedException(IS_NOT_DELETED));
+    private void isValidatedWriter(User writer) {
+        Optional.ofNullable(writer)
+                .filter(this::isOwner)
+                .orElseThrow(() -> new CannotDeleteException(NO_DELETE_ACCESS));
     }
 
     public DeleteHistories deleteHistories() {
@@ -73,6 +66,13 @@ public class Question extends AbstractEntity {
         deleteHistories.add(this.deleteHistory());
 
         return deleteHistories;
+    }
+
+    protected DeleteHistory deleteHistory() {
+        return Optional.of(this)
+                .filter(Question::isDeleted)
+                .map(DeleteHistory::of)
+                .orElseThrow(() -> new IsNotDeletedException(IS_NOT_DELETED));
     }
 
     public void addAnswer(Answer answer) {

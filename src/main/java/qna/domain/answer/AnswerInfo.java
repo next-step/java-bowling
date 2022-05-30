@@ -42,6 +42,10 @@ public class AnswerInfo {
         this.question = question;
     }
 
+    protected boolean isWriter(User writer) {
+        return this.writer.equals(writer);
+    }
+
     @Override
     public String toString() {
         return "AnswerBody{" +
