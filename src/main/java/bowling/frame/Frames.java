@@ -37,6 +37,6 @@ public class Frames {
 	}
 
 	public List<Frame> values() {
-		return List.copyOf(new ArrayList<>(values));
+		return List.copyOf(values);
 	}
 }
