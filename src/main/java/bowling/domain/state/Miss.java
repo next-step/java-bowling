@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Miss extends Finished {
 
-    private static final String SCORE_FORMAT = "  %s|%s |";
+    private static final String SCORE_FORMAT = "%d|%d";
 
     private final Pins firstPins;
     private final Pins secondPins;
@@ -30,7 +30,7 @@ public class Miss extends Finished {
 
     @Override
     public String mark() {
-        return String.format(SCORE_FORMAT, firstPins, secondPins);
+        return String.format(SCORE_FORMAT, firstPins.pins(), secondPins.pins());
     }
 
     @Override

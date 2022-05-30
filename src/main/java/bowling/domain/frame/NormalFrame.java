@@ -36,6 +36,11 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public State state() {
+        return state;
+    }
+
+    @Override
     public int number() {
         return number;
     }

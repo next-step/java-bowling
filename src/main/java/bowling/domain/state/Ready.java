@@ -6,6 +6,7 @@ import bowling.domain.Score;
 public class Ready extends Running {
     private static final String CANNOT_CALCULATE_SCORE = "공을 굴리지 않았기 때문에 점수를 구할 수 없습니다.";
     private static final String CANNOT_SUM_BEFORE_SCORE = "공을 굴리지 않았기 때문에 이전 점수와 더할 수 없습니다.";
+    private static final String EMPTY = "";
 
     @Override
     public State bowl(int fallPins) {
@@ -23,7 +24,7 @@ public class Ready extends Running {
 
     @Override
     public String mark() {
-        return "      |";
+        return EMPTY;
     }
 
     @Override

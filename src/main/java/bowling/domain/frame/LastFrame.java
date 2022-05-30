@@ -55,6 +55,11 @@ public class LastFrame implements Frame {
     }
 
     @Override
+    public State state() {
+        throw new IllegalArgumentException("지원하지 않는 기능입니다.");
+    }
+
+    @Override
     public boolean isGameEnd() {
         return gameEnd;
     }

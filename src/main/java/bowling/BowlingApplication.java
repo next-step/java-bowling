@@ -1,8 +1,10 @@
 package bowling;
 
-import bowling.domain.Board;
+import bowling.domain.Boards;
 import bowling.view.InputView;
 import bowling.view.ResultView;
+
+import java.util.List;
 
 public class BowlingApplication {
 
@@ -13,15 +15,16 @@ public class BowlingApplication {
     }
 
     private static void playGame() {
-        String playerName = InputView.inputPlayerName();
-        Board board = new Board(playerName);
-        int frameNumber = 1;
+        int playerCount = InputView.inputPlayerCount();
+        List<String> playerNames = InputView.inputPlayerNames(playerCount);
+        Boards boards = new Boards(playerNames);
 
-        while (!board.isGameEnd()) {
+        while (!boards.isGameEnd()) {
             try {
-                int pins = InputView.inputPins(frameNumber);
-                frameNumber = board.bowl(pins);
-                ResultView.printResult(board);
+                String name = boards.name();
+                int pins = InputView.inputPins(name);
+                boards.bowl(pins);
+                ResultView.printResults(boards.boards());
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
                 System.out.println(RESTART_GAME_MESSAGE);
