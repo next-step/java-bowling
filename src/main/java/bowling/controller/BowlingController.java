@@ -11,19 +11,19 @@ public class BowlingController {
     public void run() {
         List<Player> players = InputView.inputPlayer();
         BowlingGames bowlingGames = BowlingGames.create(players);
-        OutputView.printBowlingScoreBoard(bowlingGames.getBowlingGames());
+        OutputView.printBowlingScoreBoard(bowlingGames.getValues());
 
         while (bowlingGames.isNextPitching()) {
             bowlingGames.increaseFrameNumber();
-            bowlingGames.getBowlingGames()
-                            .forEach(bowlingGame -> matchByPlayer(bowlingGames, bowlingGame));
+            bowlingGames.getValues()
+                    .forEach(bowlingGame -> matchByPlayer(bowlingGames, bowlingGame));
         }
     }
 
     private void matchByPlayer(BowlingGames bowlingGames, BowlingGame bowlingGame) {
         while (bowlingGame.isFrameProgress(bowlingGames.getFrameNumber())) {
             bowlingGame.bowl(InputView.inputFallenPins(bowlingGame.getPlayerName()));
-            OutputView.printBowlingScoreBoard(bowlingGames.getBowlingGames());
+            OutputView.printBowlingScoreBoard(bowlingGames.getValues());
         }
     }
 }
