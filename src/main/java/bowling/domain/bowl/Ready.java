@@ -1,12 +1,13 @@
 package bowling.domain.bowl;
 
-import bowling.domain.bowl.type.BowlTypeDto;
 import bowling.domain.bowl.type.BowlType;
 import bowling.domain.exception.OutOfPinCountException;
 import bowling.domain.pitch.PitchResult;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.domain.exception.CannotCalculateException;
+import bowling.domain.score.Scores;
+
 import java.util.List;
 
 public class Ready implements Bowl{
@@ -18,8 +19,7 @@ public class Ready implements Bowl{
     public Bowl pitch(Pins pins) {
         validate(pins);
 
-        BowlTypeDto dto = new BowlTypeDto(List.of(pins.getCount()));
-        BowlType type = BowlType.getType(dto);
+        BowlType type = BowlType.getType(List.of(pins.getCount()));
 
         if(type.equals(BowlType.STRIKE)){
             return new Strike();
@@ -34,9 +34,8 @@ public class Ready implements Bowl{
         }
     }
 
-    public static boolean checkType(BowlTypeDto bowlTypeDto){
-        List<Integer> scores = bowlTypeDto.getScores();
-        return scores.size() == PITCH_COUNT;
+    public static boolean checkType(Scores scores){
+        return scores.checkSize(PITCH_COUNT);
     }
 
     @Override

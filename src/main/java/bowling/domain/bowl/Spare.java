@@ -1,10 +1,9 @@
 package bowling.domain.bowl;
 
-import bowling.domain.bowl.type.BowlTypeDto;
 import bowling.domain.pitch.PitchResult;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
-import java.util.List;
+import bowling.domain.score.Scores;
 
 public class Spare extends Ended{
 
@@ -40,14 +39,11 @@ public class Spare extends Ended{
         return PitchResult.spare(firstPin.getCount(), secondPin.getCount());
     }
 
-    public static boolean checkType(BowlTypeDto bowlTypeDto){
-        List<Integer> scores = bowlTypeDto.getScores();
-        if(scores.size() != PITCH_COUNT){
+    public static boolean checkType(Scores scores){
+        if(!scores.checkSize(PITCH_COUNT)){
             return false;
         }
-        int first = scores.get(0);
-        int second = scores.get(1);
-        return first + second == MAX_PIN_HIT_COUNT;
+        return scores.getScoreSum() == MAX_PIN_HIT_COUNT;
     }
 
 }

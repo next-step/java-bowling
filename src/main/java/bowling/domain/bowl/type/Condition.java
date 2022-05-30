@@ -1,7 +1,8 @@
 package bowling.domain.bowl.type;
 
+import bowling.domain.score.Scores;
 
 @FunctionalInterface
 public interface Condition {
-    boolean check(BowlTypeDto bowlTypeDto);
+    boolean check(Scores scores);
 }

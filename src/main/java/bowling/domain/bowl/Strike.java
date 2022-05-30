@@ -1,9 +1,8 @@
 package bowling.domain.bowl;
 
-import bowling.domain.bowl.type.BowlTypeDto;
 import bowling.domain.pitch.PitchResult;
 import bowling.domain.score.Score;
-import java.util.List;
+import bowling.domain.score.Scores;
 
 public class Strike extends Ended{
 
@@ -25,12 +24,10 @@ public class Strike extends Ended{
         return PitchResult.strike();
     }
 
-    public static boolean checkType(BowlTypeDto bowlTypeDto){
-        List<Integer> scores = bowlTypeDto.getScores();
-        if(scores.size() != PITCH_COUNT){
+    public static boolean checkType(Scores scores){
+        if(!scores.checkSize(PITCH_COUNT)){
             return false;
         }
-        int first = scores.get(0);
-        return first == STRIKE_VALUE;
+        return scores.getFistScore() == STRIKE_VALUE;
     }
 }

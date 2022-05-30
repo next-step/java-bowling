@@ -15,15 +15,13 @@ class BowlTypeTest {
             "1", "2", "3", "4", "5", "6", "7", "8", "9"
     })
     void first(int first){
-        BowlTypeDto dto = new BowlTypeDto(List.of(first));
-        BowlType bowlType = BowlType.getType(dto);
+        BowlType bowlType = BowlType.getType(List.of(first));
         assertThat(bowlType).isEqualTo(BowlType.FIRST);
     }
 
     @Test
     void ready(){
-        BowlTypeDto dto = new BowlTypeDto(List.of());
-        BowlType bowlType = BowlType.getType(dto);
+        BowlType bowlType = BowlType.getType(List.of());
         assertThat(bowlType).isEqualTo(BowlType.READY);
     }
 
@@ -34,8 +32,7 @@ class BowlTypeTest {
             "4, 1",
     })
     void miss(int first, int second){
-        BowlTypeDto dto = new BowlTypeDto(List.of(first, second));
-        BowlType bowlType = BowlType.getType(dto);
+        BowlType bowlType = BowlType.getType(List.of(first, second));
         assertThat(bowlType).isEqualTo(BowlType.MISS);
     }
 
@@ -49,22 +46,19 @@ class BowlTypeTest {
             "5, 5"
     })
     void spare(int first, int second){
-        BowlTypeDto dto = new BowlTypeDto(List.of(first, second));
-        BowlType bowlType = BowlType.getType(dto);
+        BowlType bowlType = BowlType.getType(List.of(first, second));
         assertThat(bowlType).isEqualTo(BowlType.SPARE);
     }
 
     @Test
     void strike(){
-        BowlTypeDto dto = new BowlTypeDto(List.of(10));
-        BowlType bowlType = BowlType.getType(dto);
+        BowlType bowlType = BowlType.getType(List.of(10));
         assertThat(bowlType).isEqualTo(BowlType.STRIKE);
     }
 
     @Test
     void gutter(){
-        BowlTypeDto dto = new BowlTypeDto(List.of(0, 0));
-        BowlType bowlType = BowlType.getType(dto);
+        BowlType bowlType = BowlType.getType(List.of(0, 0));
         assertThat(bowlType).isEqualTo(BowlType.GUTTER);
     }
 

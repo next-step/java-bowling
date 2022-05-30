@@ -1,10 +1,8 @@
 package bowling.domain.bowl;
 
-import bowling.domain.bowl.type.BowlTypeDto;
 import bowling.domain.pitch.PitchResult;
 import bowling.domain.score.Score;
-
-import java.util.List;
+import bowling.domain.score.Scores;
 
 public class Gutter extends Ended{
 
@@ -30,14 +28,10 @@ public class Gutter extends Ended{
         return PitchResult.gutter();
     }
 
-    public static boolean checkType(BowlTypeDto bowlTypeDto){
-        List<Integer> scores = bowlTypeDto.getScores();
-        if(scores.size() != PITCH_COUNT){
+    public static boolean checkType(Scores scores){
+        if(!scores.checkSize(PITCH_COUNT)){
             return false;
         }
-        int first = scores.get(0);
-        int second = scores.get(1);
-        int sum = first + second;
-        return sum == GUTTER_VALUE;
+        return scores.getScoreSum() == GUTTER_VALUE;
     }
 }
