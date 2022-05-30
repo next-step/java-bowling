@@ -5,6 +5,7 @@ import bowling.domain.LastFrame;
 import bowling.domain.NormalFrame;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class ResultView {
@@ -16,11 +17,13 @@ public class ResultView {
     public static void printBeforeGame(String name) {
         printLabel();
         printSymbol(name, new ArrayList<Frame>());
+        printScore(accumulateScore(new ArrayList<String>()));
     }
 
-    public static void printGameInProgress(String name, List<Frame> records) {
+    public static void printGameInProgress(String name, List<Frame> records, List<String> scores) {
         printLabel();
         printSymbol(name, records);
+        printScore(accumulateScore(scores));
     }
 
     private static void printLabel() {
@@ -56,17 +59,46 @@ public class ResultView {
         if (frame.firstOfFrame()) {
             return frame.firstState().symbol();
         }
-        if (frame.endFrame()) {
-            return frame.firstState().symbol() + frame.secondState().symbol() + ((LastFrame) frame).thirdState().symbol();
+        if (frame.secondOfFrame()) {
+            return frame.firstState().symbol() + frame.secondState().symbol();
         }
-        return frame.firstState().symbol() + frame.secondState().symbol();
+        return frame.firstState().symbol() + frame.secondState().symbol() + ((LastFrame) frame).thirdState().symbol();
     }
 
-    private static void printBlank(List<Frame> records) {
-        int remains = FRAMES.size() - records.size();
+    private static <E> void printBlank(List<E> list) {
+        int remains = FRAMES.size() - list.size();
         if (remains != 0) {
             IntStream.range(0, remains)
                     .forEach((remain -> System.out.print("\t\t|")));
         }
+    }
+
+    public static void printScore(List<String> scores) {
+        System.out.print("|      |");
+        scores.stream()
+                .forEach(score -> System.out.print("\t" + score + "\t|"));
+        printBlank(scores);
+        System.out.println();
+    }
+
+    private static List<String> accumulateScore(List<String> scores) {
+        List<Integer> cumulativeScores = new ArrayList<>();
+        List<Integer> _scores = new ArrayList<>();
+        for (int i = 0; i < scores.size(); i++) {
+            String score = scores.get(i);
+            if (score == "") {
+                break;
+            }
+            _scores.add(i, Integer.parseInt(scores.get(i)));
+            cumulativeScores.add(i, accumulate(_scores));
+        }
+        return cumulativeScores.stream()
+                .map(Object::toString)
+                .collect(Collectors.toList());
+    }
+
+    private static int accumulate(List<Integer> numbers) {
+        return numbers.stream()
+                .reduce(0, Integer::sum);
     }
 }

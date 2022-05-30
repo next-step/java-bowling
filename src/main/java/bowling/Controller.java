@@ -36,7 +36,7 @@ public class Controller {
         try {
             int numberOfFallenPins = Integer.parseInt(InputView.inputNumberOfFallenPinsInFrame(frame));
             boolean flag = playFrame(frames, frame, numberOfFallenPins);
-            ResultView.printGameInProgress(frames.getPlayer(), frames.getGameRecords());
+            ResultView.printGameInProgress(frames.getPlayer(), frames.getGameRecords(), frames.score());
             return flag;
         } catch (InvalidNumberOfFallenPinsException e) {
             System.out.println(e.getMessage());
