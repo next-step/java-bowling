@@ -32,16 +32,6 @@ public class Gutter extends RunningState {
     }
 
     @Override
-    public Score score(Score score) {
-        return score.bowl(pin);
-    }
-
-    @Override
-    public boolean isDone() {
-        return false;
-    }
-
-    @Override
     public String toString() {
         return SYMBOL;
     }

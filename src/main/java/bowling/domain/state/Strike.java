@@ -15,16 +15,6 @@ public class Strike extends EndedState {
     }
 
     @Override
-    public Score score(Score score) {
-        return score.bowl(pin);
-    }
-
-    @Override
-    public boolean isDone() {
-        return true;
-    }
-
-    @Override
     public String toString() {
         return SYMBOL;
     }

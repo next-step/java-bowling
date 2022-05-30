@@ -11,29 +11,28 @@ public abstract class State {
 
     public abstract State bowl(Pin pin);
 
-    public static Ready ready() {
-        return new Ready();
-    }
 
     public abstract boolean isDone();
 
-    public abstract String toString();
-
-    public abstract String toSimpleString();
-
-    public boolean isMiss() {
-        return false;
-    }
-
-    public boolean isSecond() {
-        return false;
+    public boolean isNotTen() {
+        return !pin.isTen();
     }
 
     public abstract Score score();
 
-    public abstract Score score(Score score);
+    public Score score(Score score) {
+        return score.bowl(pin);
+    }
 
     public Score simpleScore() {
         return new Score(pin, 0);
     }
+
+    public static Ready ready() {
+        return new Ready();
+    }
+
+    public abstract String toString();
+
+    public abstract String toSimpleString();
 }

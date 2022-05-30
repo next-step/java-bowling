@@ -4,35 +4,16 @@ import bowling.domain.score.Score;
 
 import static bowling.view.OutputView.COLUMN;
 
-public class Spare extends EndedState {
+public class Spare extends SecondaryState {
     private static final String SYMBOL = "/";
 
-    private final State previous;
-
     public Spare(Pin pin, State previous) {
-        super(pin);
-        this.previous = previous;
+        super(pin, previous);
     }
 
     @Override
     public Score score() {
         return Score.spare(pin);
-    }
-
-    @Override
-    public Score score(Score score) {
-        Score nextScore = score.bowl(previous.pin);
-
-        if (nextScore.canScore()) {
-            return nextScore;
-        }
-
-        return nextScore.bowl(pin);
-    }
-
-    @Override
-    public boolean isDone() {
-        return true;
     }
 
     @Override

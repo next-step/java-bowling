@@ -4,12 +4,9 @@ import bowling.domain.score.Score;
 
 import static bowling.view.OutputView.COLUMN;
 
-public class Second extends EndedState {
-    private final State previous;
-
+public class Second extends SecondaryState {
     public Second(Pin pin, State previous) {
-        super(pin);
-        this.previous = previous;
+        super(pin, previous);
     }
 
     @Override
@@ -30,26 +27,6 @@ public class Second extends EndedState {
     @Override
     public Score score() {
         return previous.score().bowl(pin);
-    }
-
-    @Override
-    public Score score(Score score) {
-        Score nextScore = score.bowl(previous.pin);
-
-        if (nextScore.canScore()) {
-            return nextScore;
-        }
-
-        return nextScore.bowl(pin);
-    }
-
-    @Override
-    public boolean isDone() {
-        return true;
-    }
-
-    public boolean isSecond() {
-        return true;
     }
 
     @Override

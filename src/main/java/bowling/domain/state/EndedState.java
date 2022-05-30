@@ -17,4 +17,9 @@ public abstract class EndedState extends State {
 
         return new First(pin);
     }
+
+    @Override
+    public boolean isDone() {
+        return true;
+    }
 }

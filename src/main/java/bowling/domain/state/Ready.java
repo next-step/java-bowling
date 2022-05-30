@@ -35,11 +35,6 @@ public class Ready extends RunningState {
     }
 
     @Override
-    public boolean isDone() {
-        return false;
-    }
-
-    @Override
     public String toString() {
         return "";
     }
