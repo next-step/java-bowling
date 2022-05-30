@@ -14,8 +14,8 @@ public class Frames {
         this.player = player;
     }
 
-    public boolean playFrame(final int numberOfFallenPins) {
-        addFrame(new Frame()); // Issue: Is it correct to inject from outside?
+    public boolean playFrame(final int numberOfFallenPins, final Frame newFrame) {
+        addFrame(newFrame);
         Frame frame = play(numberOfFallenPins);
         return frame.endFrame();
     }

@@ -1,12 +1,14 @@
-package bowling.domain.state;
+package bowling.domain.state.last;
 
 import bowling.domain.Frame;
+import bowling.domain.LastFrame;
+import bowling.domain.state.ThrowingState;
 import bowling.exception.EndedFrameException;
 
-public class Miss implements ThrowingState {
+public class ThirdBowl implements ThrowingState {
     private Frame frame;
 
-    public Miss(Frame frame) {
+    public ThirdBowl(Frame frame) {
         this.frame = frame;
     }
 
@@ -17,6 +19,6 @@ public class Miss implements ThrowingState {
 
     @Override
     public String symbol() {
-        return "│-";
+        return "│" + String.valueOf(((LastFrame) frame).third());
     }
 }

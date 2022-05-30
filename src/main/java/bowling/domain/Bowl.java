@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.state.Ready;
+import bowling.domain.state.normal.Ready;
 import bowling.domain.state.ThrowingState;
 import bowling.exception.InvalidNumberOfFallenPinsException;
 

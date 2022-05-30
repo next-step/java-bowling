@@ -1,6 +1,7 @@
-package bowling.domain.state;
+package bowling.domain.state.normal;
 
 import bowling.domain.Frame;
+import bowling.domain.state.ThrowingState;
 import bowling.exception.EndedFrameException;
 
 public class Strike implements ThrowingState {

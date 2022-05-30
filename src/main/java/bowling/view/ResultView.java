@@ -1,6 +1,8 @@
 package bowling.view;
 
 import bowling.domain.Frame;
+import bowling.domain.LastFrame;
+import bowling.domain.NormalFrame;
 
 import java.util.*;
 import java.util.stream.IntStream;
@@ -37,10 +39,27 @@ public class ResultView {
     }
 
     private static String symbol(Frame frame) {
-        if (frame.halfOfFrame()) {
-            return frame.intermediateState().symbol();
+        if (frame instanceof LastFrame) {
+            return symbolIfLastFrame((LastFrame) frame);
         }
-        return frame.intermediateState().symbol() + frame.finalState().symbol();
+        return symbolIfNormalFrame((NormalFrame) frame);
+    }
+
+    private static String symbolIfNormalFrame(NormalFrame frame) {
+        if (frame.firstOfFrame()) {
+            return frame.firstState().symbol();
+        }
+        return frame.firstState().symbol() + frame.secondState().symbol();
+    }
+
+    private static String symbolIfLastFrame(LastFrame frame) {
+        if (frame.firstOfFrame()) {
+            return frame.firstState().symbol();
+        }
+        if (frame.endFrame()) {
+            return frame.firstState().symbol() + frame.secondState().symbol() + ((LastFrame) frame).thirdState().symbol();
+        }
+        return frame.firstState().symbol() + frame.secondState().symbol();
     }
 
     private static void printBlank(List<Frame> records) {

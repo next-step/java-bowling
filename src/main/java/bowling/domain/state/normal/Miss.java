@@ -1,12 +1,13 @@
-package bowling.domain.state;
+package bowling.domain.state.normal;
 
 import bowling.domain.Frame;
+import bowling.domain.state.ThrowingState;
 import bowling.exception.EndedFrameException;
 
-public class Spare implements ThrowingState {
+public class Miss implements ThrowingState {
     private Frame frame;
 
-    public Spare(Frame frame) {
+    public Miss(Frame frame) {
         this.frame = frame;
     }
 
@@ -17,6 +18,6 @@ public class Spare implements ThrowingState {
 
     @Override
     public String symbol() {
-        return "│/";
+        return "│-";
     }
 }
