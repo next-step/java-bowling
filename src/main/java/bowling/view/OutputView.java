@@ -2,6 +2,7 @@ package bowling.view;
 
 import static java.util.stream.Collectors.joining;
 
+import bowling.domain.BowlingGame;
 import bowling.domain.Frame;
 import bowling.domain.FrameNumber;
 import bowling.domain.Score;
@@ -20,17 +21,21 @@ public class OutputView {
 
     private static final StringBuilder STRING_BUILDER = new StringBuilder();
 
-    public static void printBowlingScoreBoard(String playerName, List<Frame> frames) {
+    public static void printBowlingScoreBoard(List<BowlingGame> bowlingGames) {
+        bowlingGames.forEach(OutputView::printBowlingScoreBoard);
+    }
+
+    private static void printBowlingScoreBoard(BowlingGame bowlingGame) {
         initialStringBuilder();
         STRING_BUILDER.append(BOWLING_SCORE_BOARD_FRAME);
         STRING_BUILDER.append(LINE_BREAK);
 
-        printBowlingPlayerName(playerName);
-        printBowlingFrameStatus(frames);
+        printBowlingPlayerName(bowlingGame.getPlayerName());
+        printBowlingFrameStatus(bowlingGame.getFrames());
 
         STRING_BUILDER.append(LINE_BREAK);
 
-        printBowlingScoreStatus(frames);
+        printBowlingScoreStatus(bowlingGame.getFrames());
 
         System.out.println(STRING_BUILDER);
     }

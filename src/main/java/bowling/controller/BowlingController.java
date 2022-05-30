@@ -1,19 +1,29 @@
 package bowling.controller;
 
 import bowling.domain.BowlingGame;
+import bowling.domain.BowlingGames;
 import bowling.domain.Player;
 import bowling.view.InputView;
 import bowling.view.OutputView;
+import java.util.List;
 
 public class BowlingController {
     public void run() {
-        Player player = new Player(InputView.inputPlayerName());
-        BowlingGame bowlingGame = new BowlingGame(player);
-        OutputView.printBowlingScoreBoard(bowlingGame.getPlayerName().toString(), bowlingGame.getFrames());
+        List<Player> players = InputView.inputPlayer();
+        BowlingGames bowlingGames = BowlingGames.create(players);
+        OutputView.printBowlingScoreBoard(bowlingGames.getBowlingGames());
 
-        while (bowlingGame.isNextPitching()) {
+        while (bowlingGames.isNextPitching()) {
+            bowlingGames.increaseFrameNumber();
+            bowlingGames.getBowlingGames()
+                            .forEach(bowlingGame -> matchByPlayer(bowlingGames, bowlingGame));
+        }
+    }
+
+    private void matchByPlayer(BowlingGames bowlingGames, BowlingGame bowlingGame) {
+        while (bowlingGame.isFrameProgress(bowlingGames.getFrameNumber())) {
             bowlingGame.bowl(InputView.inputFallenPins(bowlingGame.getCurrentFrameNumber()));
-            OutputView.printBowlingScoreBoard(bowlingGame.getPlayerName().toString(), bowlingGame.getFrames());
+            OutputView.printBowlingScoreBoard(bowlingGames.getBowlingGames());
         }
     }
 }
