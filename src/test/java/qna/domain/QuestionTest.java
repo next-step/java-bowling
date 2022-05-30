@@ -15,7 +15,7 @@ public class QuestionTest {
     void throwCannotDeleteException() {
 
         assertThatExceptionOfType(CannotDeleteException.class)
-                .isThrownBy(() -> Q2.checkLoginUserEqualWithQuestionOwner(UserTest.JAVAJIGI))
+                .isThrownBy(() -> Q2.throwIfOwnerAndLoginUserNotEqual(UserTest.JAVAJIGI))
                 .withMessage("질문을 삭제할 권한이 없습니다.");
     }
 }
