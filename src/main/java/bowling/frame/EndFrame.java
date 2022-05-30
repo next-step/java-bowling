@@ -34,6 +34,10 @@ public class EndFrame implements Frame {
 	@Override
 	public void throwBowl(int throwCount) {
 
+		if (isEnd()) {
+			throw new IllegalStateException("마지막 프레임은 종료되고 투구될 수 없습니다.");
+		}
+
 		tryCount++;
 
 		State lastState = lastState();

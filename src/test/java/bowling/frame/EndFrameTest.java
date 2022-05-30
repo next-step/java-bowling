@@ -27,7 +27,7 @@ class EndFrameTest {
 		assertThat(endFrame.isEnd()).isTrue();
 	}
 
-	@ParameterizedTest(name = " {displayName} : {0}-{1}-{2} =>> {3}")
+	@ParameterizedTest(name = "{0}-{1}-{2} =>> {3}")
 	@CsvSource(
 		delimiter = ':',
 		value = {
@@ -46,6 +46,42 @@ class EndFrameTest {
 		endFrame.throwBowl(third);
 
 		assertThat(endFrame.isEnd()).isTrue();
+	}
+
+	@Test
+	void 두_번의_시도로_오픈으로_종료_후_투구하는_경우_예외() {
+		EndFrame endFrame = new EndFrame();
+		endFrame.throwBowl(1);
+		endFrame.throwBowl(1);
+
+		assertThatIllegalStateException().isThrownBy(
+			() -> endFrame.throwBowl(1)
+		);
+	}
+
+	@ParameterizedTest(name = "{0}-{1}-{2} =>> {3}")
+	@CsvSource(
+		delimiter = ':',
+		value = {
+			"1:9:1:스페어와 일반점수",
+			"1:9:10:스페어와 스트라이크",
+			"10:1:1:스트라이크와 오픈",
+			"10:1:9:스트라이크와 스페어",
+			"10:10:1:스트라이크와 스트라이크와 모든 점수1",
+			"10:10:10:스트라이크와 스트라이크와 모든 점수2"
+		}
+	)
+	void 세_번_시도로_종료하고_투구하는_경우_예외(int first, int second, int third, String desc) {
+
+		EndFrame endFrame = new EndFrame();
+
+		endFrame.throwBowl(first);
+		endFrame.throwBowl(second);
+		endFrame.throwBowl(third);
+
+		assertThatIllegalStateException().isThrownBy(
+			() -> endFrame.throwBowl(1)
+		);
 	}
 
 	@Test
