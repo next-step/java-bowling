@@ -11,6 +11,10 @@ public class NormalFrame implements Frame {
         status = Ready.create();
     }
 
+    private NormalFrame(Status status) {
+        this.status = status;
+    }
+
     public static NormalFrame create() {
         return new NormalFrame();
     }
@@ -22,7 +26,7 @@ public class NormalFrame implements Frame {
         }
         status = status.shoot(shootScore);
 
-        return this;
+        return new NormalFrame(status);
     }
 
     @Override
