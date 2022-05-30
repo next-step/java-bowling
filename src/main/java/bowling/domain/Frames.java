@@ -73,4 +73,13 @@ public class Frames {
     private boolean isPossibleToCreate(Frame currentFrame, Frame resultFrame) {
         return currentFrame.isEnd() && !resultFrame.isEnd();
     }
+
+    public boolean isFrameProgress(FrameNumber frameNumber) {
+        try {
+            Frame frame = values.get(frameNumber.getValue() - 1);
+            return !frame.isEnd();
+        } catch (IndexOutOfBoundsException e) {
+            throw new IndexOutOfBoundsException("존재하지 않는 프레임입니다.");
+        }
+    }
 }
