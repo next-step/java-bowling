@@ -75,4 +75,10 @@ public class Answer extends AbstractEntity {
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
+
+    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
+        DeleteHistories deleteHistories = new DeleteHistories();
+        deleteHistories.add(this, loginUser);
+        return deleteHistories;
+    }
 }
