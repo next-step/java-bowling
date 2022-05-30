@@ -9,8 +9,8 @@ import java.util.stream.IntStream;
 
 public class InputView {
     private static final String PLAYER_NUMBER_PROMPT = "How many people? ";
-    private static final String PLAYER_NAME_PROMPT = "플레이어 이름은(3 english letters)?: ";
-    private static final String INPUT_FALLEN_PINS_MESSAGE = "%d 프레임 투구 : ";
+    private static final String PLAYER_NAME_PROMPT = "플레이어 %d의 이름은(3 english letters)?: ";
+    private static final String INPUT_FALLEN_PINS_MESSAGE = "%s's turn : ";
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
@@ -27,17 +27,17 @@ public class InputView {
 
     private static List<Player> inputNamesForNumberOfPlayers(int playerNumber) {
         return IntStream.rangeClosed(1, playerNumber)
-                .mapToObj(index -> InputView.inputPlayerName())
+                .mapToObj(InputView::inputPlayerName)
                 .collect(Collectors.toList());
     }
 
-    private static Player inputPlayerName() {
-        System.out.println(PLAYER_NAME_PROMPT);
+    private static Player inputPlayerName(int index) {
+        System.out.println(String.format(PLAYER_NAME_PROMPT, index));
         return new Player(SCANNER.nextLine());
     }
 
-    public static Pitching inputFallenPins(int currentFrameNumber) {
-        System.out.printf(INPUT_FALLEN_PINS_MESSAGE, currentFrameNumber);
+    public static Pitching inputFallenPins(String currentPlayerName) {
+        System.out.printf(INPUT_FALLEN_PINS_MESSAGE, currentPlayerName);
         return new Pitching(toInt(SCANNER.nextLine()));
     }
 

@@ -22,7 +22,7 @@ public class BowlingController {
 
     private void matchByPlayer(BowlingGames bowlingGames, BowlingGame bowlingGame) {
         while (bowlingGame.isFrameProgress(bowlingGames.getFrameNumber())) {
-            bowlingGame.bowl(InputView.inputFallenPins(bowlingGame.getCurrentFrameNumber()));
+            bowlingGame.bowl(InputView.inputFallenPins(bowlingGame.getPlayerName()));
             OutputView.printBowlingScoreBoard(bowlingGames.getBowlingGames());
         }
     }
