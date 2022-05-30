@@ -50,9 +50,4 @@ public class First extends Running{
     public PitchResult getPitchResult() {
         return PitchResult.first(prePins.getCount());
     }
-
-    @Override
-    public boolean isEnd() {
-        return false;
-    }
 }

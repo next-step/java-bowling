@@ -49,11 +49,6 @@ public class Ready extends Running{
     }
 
     @Override
-    public boolean isEnd() {
-        return false;
-    }
-
-    @Override
     public String toString(){
         return "[Ready]";
     }
