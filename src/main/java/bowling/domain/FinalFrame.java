@@ -36,29 +36,37 @@ public class FinalFrame extends Frame {
 
     @Override
     public void shot(int hitCount) {
-        if (isPlayedTwice() && checkExtraShot()) {
-            extraScore = new Score(hitCount);
+        if (isPlayedTwice()) {
+            checkValidShot(hitCount);
             return;
         }
 
         super.shot(hitCount);
 
-        if (checkExtraShot()) {
+        if (isSpareOrStrike()) {
             pins = new Pins();
         }
+    }
+
+    private void checkValidShot(int hitCount) {
+        if (!isSpareOrStrike()) {
+            throw new IllegalStateException("마지막 프레임에서 보너스투구 기회를 얻지 못하고 세번의 투구는 불가.");
+        }
+
+        extraScore = new Score(hitCount);
     }
 
     private boolean isPlayedTwice() {
         return scores.isPlayTwice();
     }
 
-    private boolean checkExtraShot() {
+    private boolean isSpareOrStrike() {
         return scores.isSpare() || scores.isStrike();
     }
 
     @Override
     public boolean isDone() {
-        return (!checkExtraShot() && isPlayedTwice())
+        return (!isSpareOrStrike() && isPlayedTwice())
             || Objects.nonNull(extraScore);
     }
 
