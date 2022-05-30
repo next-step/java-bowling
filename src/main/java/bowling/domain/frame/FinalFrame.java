@@ -62,11 +62,6 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public boolean hasNext() {
-        return false;
-    }
-
-    @Override
     public String toString() {
         return String.format(FINAL_STATE_FORMAT, states.toString());
     }

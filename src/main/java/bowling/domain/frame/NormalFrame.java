@@ -77,8 +77,7 @@ public class NormalFrame extends Frame {
         return score;
     }
 
-    @Override
-    public boolean hasNext() {
+    private boolean hasNext() {
         return next != null;
     }
 

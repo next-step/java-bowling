@@ -37,6 +37,4 @@ public abstract class Frame {
     public abstract Score score();
 
     public abstract Score score(Score score);
-
-    public abstract boolean hasNext();
 }
