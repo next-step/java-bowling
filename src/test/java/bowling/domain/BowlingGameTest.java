@@ -78,4 +78,14 @@ class BowlingGameTest {
         // then
         assertThat(bowlingGame.getFrames()).hasSize(1);
     }
+
+    @Test
+    @DisplayName("현재 프레임이 진행이 가능한 프레임인지 확인한다")
+    void checkedFrameProgress() {
+        // given
+        BowlingGame bowlingGame = new BowlingGame(new Player("AAA"));
+
+        // when & then
+        assertThat(bowlingGame.isFrameProgress(FrameNumber.first())).isTrue();
+    }
 }
