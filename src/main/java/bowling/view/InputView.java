@@ -1,7 +1,11 @@
 package bowling.view;
 
 import bowling.domain.Pitching;
+import bowling.domain.Player;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class InputView {
     private static final String PLAYER_NUMBER_PROMPT = "How many people? ";
@@ -10,14 +14,26 @@ public class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public static int inputPlayerNumber() {
+    public static List<Player> inputPlayer() {
+        int playerNumber = inputPlayerNumber();
+
+        return inputNamesForNumberOfPlayers(playerNumber);
+    }
+
+    private static int inputPlayerNumber() {
         System.out.println(PLAYER_NUMBER_PROMPT);
         return toInt(SCANNER.nextLine());
     }
 
-    public static String inputPlayerName() {
+    private static List<Player> inputNamesForNumberOfPlayers(int playerNumber) {
+        return IntStream.range(1, playerNumber)
+                .mapToObj(index -> InputView.inputPlayerName())
+                .collect(Collectors.toList());
+    }
+
+    private static Player inputPlayerName() {
         System.out.println(PLAYER_NAME_PROMPT);
-        return SCANNER.nextLine();
+        return new Player(SCANNER.nextLine());
     }
 
     public static Pitching inputFallenPins(int currentFrameNumber) {
