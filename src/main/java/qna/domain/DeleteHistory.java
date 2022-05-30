@@ -33,10 +33,21 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
-    public DeleteHistory(Question question) {
+    public DeleteHistory(Question question, User loginUser) throws CannotDeleteException {
+        question.throwIfOwnerAndLoginUserNotEqual(loginUser);
+
         this.contentType = ContentType.QUESTION;
         this.contentId = question.getId();
         this.deletedBy = question.getWriter();
+        this.createDate = LocalDateTime.now();
+    }
+
+    public DeleteHistory(Answer answer, User loginUser) throws CannotDeleteException {
+        answer.throwIfOwnerAndLoginUserNotEqual(loginUser);
+
+        this.contentType = ContentType.ANSWER;
+        this.contentId = answer.getId();
+        this.deletedBy = answer.getWriter();
         this.createDate = LocalDateTime.now();
     }
 

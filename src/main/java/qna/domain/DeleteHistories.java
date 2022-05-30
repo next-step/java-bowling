@@ -20,17 +20,17 @@ public class DeleteHistories {
     }
 
     public void add(Question question, User loginUser) throws CannotDeleteException {
-        question.checkLoginUserEqualWithQuestionOwner(loginUser);
-        question.setDeleted(true);
-        deleteHistories.add(new DeleteHistory(question));
+        deleteHistories.add(new DeleteHistory(question, loginUser));
     }
 
     public void add(Answers answers, User loginUser) throws CannotDeleteException {
-        answers.checkLoginUserEqualWithAnswersOwners(loginUser);
         for (Answer answer : answers.value()) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+            deleteHistories.add(new DeleteHistory(answer, loginUser));
         }
+    }
+
+    public void add(DeleteHistories deleteHistories) {
+        this.deleteHistories.addAll(deleteHistories.value());
     }
 
     public List<DeleteHistory> value() {
