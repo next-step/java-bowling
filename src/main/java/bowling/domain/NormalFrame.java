@@ -2,10 +2,12 @@ package bowling.domain;
 
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
+import bowling.exception.BowlingGameException;
 
 public class NormalFrame implements Frame {
     private static final int FINAL_NORMAL_FRAME = 9;
     private static final String BLANK = "    ";
+    private static final int NOT_SCORE = -1;
     private Frame nextFrame;
     private State state;
     private final int round;
@@ -45,15 +47,16 @@ public class NormalFrame implements Frame {
 
     @Override
     public Score calculateAddScore(Score beforeScore) {
-        Score score = this.state.calculateAddScore(beforeScore);
-        if(score.isCalculateScore()) {
-            return score;
-        }
         try {
-            return this.nextFrame.calculateAddScore(beforeScore);
-        }catch(NullPointerException e) {
-            return Score.ofRelay();
+            Score score = this.state.calculateAddScore(beforeScore);
+            if(score.isCalculateScore()) {
+                return score;
+            }
+        }catch (BowlingGameException b) {
+            return Score.ofNotScore();
         }
+
+        return this.nextFrame.calculateAddScore(beforeScore);
     }
 
     @Override

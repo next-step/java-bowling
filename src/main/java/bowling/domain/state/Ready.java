@@ -26,7 +26,7 @@ public class Ready extends Running {
 
     @Override
     public Score calculateAddScore(Score beforeScore) {
-        return null;
+        throw new BowlingGameException("레디상태에선 점수를 더할 수 없습니다.");
     }
 
 }

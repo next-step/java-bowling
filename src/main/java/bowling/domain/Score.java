@@ -24,7 +24,7 @@ public class Score {
         return remainingNumber == 0;
     }
 
-    public static Score ofRelay() {
+    public static Score ofNotScore() {
         return new Score(-1,0);
     }
 

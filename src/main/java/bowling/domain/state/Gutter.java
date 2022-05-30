@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Score;
+import bowling.exception.BowlingGameException;
 
 public class Gutter extends Finished{
     private Score score;
@@ -20,6 +21,6 @@ public class Gutter extends Finished{
 
     @Override
     public Score calculateAddScore(Score beforeScore) {
-        return null;
+        throw new BowlingGameException("");
     }
 }

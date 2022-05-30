@@ -43,12 +43,19 @@ public class FinalFrame implements Frame{
 
     @Override
     public Score calculateAddScore(Score beforeScore) {
-        return null;
+        for(State state : states) {
+            beforeScore = state.calculateAddScore(beforeScore);
+        }
+        return beforeScore;
     }
 
     @Override
     public int getScore() {
-        return 0;
+        Score score = states.get(0).getScore();
+        for(int i = 1; i<statesSize(); i++) {
+            score = states.get(i).calculateAddScore(score);
+        }
+        return score.getScore();
     }
 
 

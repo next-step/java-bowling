@@ -36,14 +36,12 @@ public class Miss extends Finished {
 
     @Override
     public Score calculateAddScore(Score beforeScore) {
-        return null;
+        beforeScore = beforeScore.bowl(firstCountOfPins);
+        if(beforeScore.isCalculateScore()) {
+            return beforeScore;
+        }
+        beforeScore = beforeScore.bowl(secondCountOfPins);
+        return beforeScore;
     }
 
-    public int getFirstCountOfPins() {
-        return firstCountOfPins;
-    }
-
-    public int getSecondCountOfPins() {
-        return secondCountOfPins;
-    }
 }
