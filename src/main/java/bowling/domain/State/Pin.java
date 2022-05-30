@@ -32,6 +32,14 @@ public class Pin {
         return pinCount == MAX;
     }
 
+    public int score() {
+        return pinCount;
+    }
+
+    public static Pin zero() {
+        return new Pin(MIN);
+    }
+    
     @Override
     public String toString() {
         return Integer.toString(pinCount);

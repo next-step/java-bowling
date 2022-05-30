@@ -2,11 +2,13 @@ package bowling.domain.frame;
 
 import bowling.domain.State.Pin;
 import bowling.domain.State.State;
+import bowling.domain.score.Score;
 
 import static bowling.view.OutputView.NORMAL_STATE_FORMAT;
 
 public class NormalFrame extends Frame {
     private State state;
+    private Frame next;
 
     public NormalFrame(FrameNumber frameNumber) {
         this(frameNumber, State.ready());
@@ -39,19 +41,48 @@ public class NormalFrame extends Frame {
     @Override
     public Frame next() {
         if (frameNumber.isMaxInNormal()) {
-            return new FinalFrame(frameNumber.next());
+            next = new FinalFrame(frameNumber.next());
+            return next;
         }
-        return new NormalFrame(frameNumber.next());
+        next = new NormalFrame(frameNumber.next());
+        return next;
     }
 
     @Override
-    public boolean isFinal() {
-        return false;
+    public boolean isNormal() {
+        return true;
     }
 
     @Override
     public boolean isDone() {
         return state.isDone();
+    }
+
+    @Override
+    public Score score() {
+        Score score = state.score();
+
+        if (score.isNotAbleToScore() && hasNext()) {
+            return next.score(score);
+        }
+
+        return score;
+    }
+
+    @Override
+    public Score score(Score score) {
+        Score nextScore = state.score(score);
+
+        if (nextScore.isNotAbleToScore() && hasNext()) {
+            return next.score(nextScore);
+        }
+
+        return nextScore;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return next != null;
     }
 
     @Override

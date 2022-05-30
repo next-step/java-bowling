@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.State.Pin;
 import bowling.domain.State.States;
+import bowling.domain.score.Score;
 
 import static bowling.view.OutputView.FINAL_STATE_FORMAT;
 
@@ -19,7 +20,7 @@ public class FinalFrame extends Frame {
     }
 
     private void validate(FrameNumber frameNumber, States states) {
-        if (!frameNumber.isFinal()) {
+        if (frameNumber.isNormal()) {
             throw new IllegalArgumentException(
                     String.format("frameNumber(%s)는 마지막 FrameNumber(%s)가 아닙니다.", frameNumber, FrameNumber.MAX));
         }
@@ -41,13 +42,28 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public boolean isFinal() {
-        return true;
+    public boolean isNormal() {
+        return false;
     }
 
     @Override
     public boolean isDone() {
         return states.isDone();
+    }
+
+    @Override
+    public Score score() {
+        return states.score();
+    }
+
+    @Override
+    public Score score(Score score) {
+        return states.score(score);
+    }
+
+    @Override
+    public boolean hasNext() {
+        return false;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package bowling.domain.State;
 
+import bowling.domain.score.ScoreTest;
 import org.junit.jupiter.api.Test;
 
 import static bowling.domain.State.PinTest.NINE;
@@ -43,5 +44,23 @@ public class StateTest {
                 () -> assertInstanceOf(Miss.class, FIRST.bowl(ZERO)),
                 () -> assertInstanceOf(Spare.class, FIRST.bowl(NINE))
         );
+    }
+
+    @Test
+    void score는_score를_반환한다() {
+        assertAll(
+                () -> assertTrue(SECOND.score().canScore()),
+                () -> assertTrue(MISS.score().canScore()),
+                () -> assertFalse(READY.score().canScore()),
+                () -> assertFalse(GUTTER.score().canScore()),
+                () -> assertFalse(FIRST.score().canScore()),
+                () -> assertFalse(SPARE.score().canScore()),
+                () -> assertFalse(STRIKE.score().canScore())
+        );
+    }
+
+    @Test
+    void score는_bowl된_score를_반환한다() {
+        assertTrue(FIRST.score(ScoreTest.UNSCORABLE).canScore());
     }
 }

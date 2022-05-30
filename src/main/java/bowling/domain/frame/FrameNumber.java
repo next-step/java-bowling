@@ -1,8 +1,8 @@
 package bowling.domain.frame;
 
 public class FrameNumber {
-    static final int MIN = 1;
-    static final int MAX = 10;
+    public static final int MIN = 1;
+    public static final int MAX = 10;
     static final int MAX_IN_NORMAL_FRAME = 9;
 
     private final int number;
@@ -30,11 +30,7 @@ public class FrameNumber {
     }
 
     public boolean isNormal() {
-        return MIN <= number && number <= MAX_IN_NORMAL_FRAME;
-    }
-
-    public boolean isFinal() {
-        return number == MAX;
+        return number <= MAX_IN_NORMAL_FRAME;
     }
 
     public boolean isMaxInNormal() {

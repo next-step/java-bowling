@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.State.Pin;
+import bowling.domain.score.Scores;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class Frames {
     public boolean isDone() {
         Frame lastFrame = lastFrame();
 
-        if (!lastFrame.isFinal()) {
+        if (lastFrame.isNormal()) {
             return false;
         }
 
@@ -50,22 +51,35 @@ public class Frames {
         Frame lastFrame = lastFrame();
         Frame nextFrame = lastFrame().bowl(pin);
 
-        if (lastFrame.isDone() && !lastFrame.isFinal()) {
+        if (lastFrame.isDone() && lastFrame.isNormal()) {
             frames.add(nextFrame);
         }
+    }
+
+    public Scores score() {
+        return new Scores(frames.stream()
+                .map(Frame::score)
+                .collect(Collectors.toList()));
+    }
+
+    private Frame getFrameOrNull(int index) {
+        if (frames.size() - 1 >= index) {
+            return frames.get(index);
+        }
+        return null;
+    }
+
+    private String toString(Frame frame) {
+        if (frame == null) {
+            return BLANK;
+        }
+        return frame.toString();
     }
 
     @Override
     public String toString() {
         return IntStream.range(FrameNumber.MIN - 1, FrameNumber.MAX)
-                .mapToObj(index -> {
-                    try {
-                        Frame frame = frames.get(index);
-                        return frame.toString();
-                    } catch (Exception e) {
-                        return BLANK;
-                    }
-                })
+                .mapToObj(index -> toString(getFrameOrNull(index)))
                 .collect(Collectors.joining());
     }
 }

@@ -1,25 +1,22 @@
 package bowling.domain.State;
 
-public class Strike extends State {
+import bowling.domain.score.Score;
+
+public class Strike extends EndedState {
     private static final String SYMBOL = "X";
 
-    private final Pin pin;
-
     public Strike(Pin pin) {
-        this.pin = pin;
+        super(pin);
     }
 
     @Override
-    public State bowl(Pin pin) {
-        if (pin.isTen()) {
-            return new Strike(pin);
-        }
+    public Score score() {
+        return Score.strike(pin);
+    }
 
-        if (pin.isZero()) {
-            return new Gutter();
-        }
-
-        return new First(pin);
+    @Override
+    public Score score(Score score) {
+        return score.bowl(pin);
     }
 
     @Override

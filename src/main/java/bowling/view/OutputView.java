@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.domain.game.Game;
+import bowling.domain.score.Scores;
 
 public class OutputView {
     private static final String BOARD_HEAD = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
@@ -16,6 +17,7 @@ public class OutputView {
     public static void printBoard(Game game) {
         printBoardHead();
         printGame(game);
+        printScore(game.score());
     }
 
     private static void printBoardHead() {
@@ -24,7 +26,10 @@ public class OutputView {
 
     private static void printGame(Game game) {
         System.out.println(game);
-        System.out.println();
+    }
+
+    private static void printScore(Scores scores) {
+        System.out.println(scores);
     }
 
     public static void printGameIsDone() {
