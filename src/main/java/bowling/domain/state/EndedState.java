@@ -1,7 +1,7 @@
 package bowling.domain.state;
 
 public abstract class EndedState extends State {
-    public EndedState(Pin pin) {
+    protected EndedState(Pin pin) {
         super(pin);
     }
 
