@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import bowling.domain.Score;
+
 public class Strike implements State {
 
     @Override
@@ -8,8 +10,13 @@ public class Strike implements State {
     }
 
     @Override
-    public boolean isDone() {
-        return true;
+    public Score addBonus(Score previousScore) {
+        return Score.of(this.score(), previousScore);
+    }
+
+    @Override
+    public Score score() {
+        return Score.ofStrike();
     }
 
 }

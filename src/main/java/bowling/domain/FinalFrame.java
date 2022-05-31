@@ -1,10 +1,15 @@
 package bowling.domain;
 
+import bowling.domain.state.Miss;
+import bowling.domain.state.Spare;
+import bowling.domain.state.Strike;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 
 public class FinalFrame extends Frame {
+    private Score firstScore;
+    private Score secondScore;
     private Score extraScore;
 
     public FinalFrame(Frame beforeFrame, Frame nextFrame) {
@@ -17,15 +22,7 @@ public class FinalFrame extends Frame {
             return OptionalInt.empty();
         }
 
-        int score = 0;
-
-        if (getFirstScoreAsOptional().isPresent()) {
-            score += firstScore();
-        }
-
-        if (getSecondScoreAsOptional().isPresent()) {
-            score += secondScore();
-        }
+        int score = firstScore.get() + secondScore.get();
 
         if (extraScore != null) {
             score += extraScore.get();
@@ -36,15 +33,15 @@ public class FinalFrame extends Frame {
 
     @Override
     public void shot(int hitCount) {
-        if (isPlayedTwice()) {
+        if (isDone()) {
             checkValidShot(hitCount);
             return;
         }
 
         super.shot(hitCount);
 
-        if (isSpareOrStrike()) {
-            pins = new Pins();
+        if (firstScore == null) {
+//            firstScore = new Score(hitCount);
         }
     }
 
@@ -53,15 +50,16 @@ public class FinalFrame extends Frame {
             throw new IllegalStateException("마지막 프레임에서 보너스투구 기회를 얻지 못하고 세번의 투구는 불가.");
         }
 
-        extraScore = new Score(hitCount);
-    }
-
-    private boolean isPlayedTwice() {
-        return scores.isPlayTwice();
+//        extraScore = new Score(hitCount);
     }
 
     private boolean isSpareOrStrike() {
-        return scores.isSpare() || scores.isStrike();
+        return state() instanceof Strike
+            || state() instanceof Spare;
+    }
+
+    private boolean isPlayedTwice() {
+        return firstScore != null && secondScore != null;
     }
 
     @Override
@@ -74,23 +72,4 @@ public class FinalFrame extends Frame {
         return Optional.ofNullable(extraScore);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-        FinalFrame that = (FinalFrame) o;
-        return Objects.equals(extraScore, that.extraScore);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), extraScore);
-    }
 }

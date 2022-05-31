@@ -5,7 +5,6 @@ import static bowling.domain.Frames.BOWLING_NORMAL_FRAMES;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.Optional;
 import java.util.OptionalInt;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -48,8 +47,7 @@ class FramesTest {
         frames.throwBall(4);
         frames.throwBall(3);
 
-        assertThat(frames.head().firstScore()).isEqualTo(4);
-        assertThat(frames.head().secondScore()).isEqualTo(3);
+        assertThat(frames.head().scoreCalculated().getAsInt()).isEqualTo(7);
     }
 
     @DisplayName("유효하지 않은 맞춘개수 입력 시 예외 발생한다.")
@@ -72,11 +70,9 @@ class FramesTest {
         frames.throwBall(8);    // 3
         frames.throwBall(1);    // 3
 
-        assertThat(frames.head().firstScore()).isEqualTo(9);                // 1-1
-        assertThat(frames.head().secondScore()).isEqualTo(1);               // 1-2
-        assertThat(frames.head().next().firstScore()).isEqualTo(10);        // 2-1
-        assertThat(frames.current().before().firstScore()).isEqualTo(8);    // 3-1
-        assertThat(frames.current().before().secondScore()).isEqualTo(1);   // 3-2
+        assertThat(frames.head().scoreCalculated().getAsInt()).isEqualTo(20);              // 1-1
+        assertThat(frames.head().next().scoreCalculated().getAsInt()).isEqualTo(19);       // 2-1
+        assertThat(frames.current().before().scoreCalculated().getAsInt()).isEqualTo(9);        // 3-1
     }
 
     @DisplayName("10프레임에 스트라이크를 치면 2번 볼 던지기 추가 진행 가능하다.")

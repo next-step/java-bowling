@@ -5,15 +5,10 @@ public class Ready implements State {
     @Override
     public State bowl(int countOfPin) {
         if (countOfPin == 10) {
-            return new Strike();
+            return State.ofStrike();
         }
 
-        return new FirstBowl(countOfPin);
-    }
-
-    @Override
-    public boolean isDone() {
-        return false;
+        return State.ofFirstBowl(countOfPin);
     }
 
 }
