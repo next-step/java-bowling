@@ -9,15 +9,14 @@ public class Frames {
     private static final int LAST_ROUND = 9;
 
     private final List<Frame> frames = new ArrayList<>();
-
-    private int currentRound;
+    private final Round currentRound;
 
     private Frames() {
         for (int round = FIRST_ROUND; round < LAST_ROUND; round++) {
             frames.add(NormalFrame.create());
         }
         frames.add(LastFrame.create());
-        this.currentRound = FIRST_ROUND;
+        this.currentRound = Round.from(FIRST_ROUND);
     }
 
     public static Frames create() {
@@ -25,7 +24,7 @@ public class Frames {
     }
 
     public Frame shoot(ShootScore shootScore) {
-        Frame currentFrame = frames.get(currentRound);
+        Frame currentFrame = this.currentRound.currentRound(frames);
 
         if (currentFrame.isEnd()) {
             throw new IllegalArgumentException("투구가 끝난 Frame 에는 더 투구할 수 없습니다.");
@@ -45,10 +44,10 @@ public class Frames {
     }
 
     public int currentRound() {
-        return currentRound;
+        return currentRound.getRound();
     }
 
     public void goNextRound() {
-        currentRound++;
+        currentRound.goNextRound();
     }
 }

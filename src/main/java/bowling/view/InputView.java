@@ -10,8 +10,6 @@ import java.util.stream.IntStream;
 
 public class InputView {
 
-    public static final int ONE_INDEX = 1;
-
     private final Scanner scanner;
 
     public InputView() {

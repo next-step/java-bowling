@@ -7,7 +7,7 @@ public class Round {
     private static final int MIN_ROUND = 0;
     private static final int MAX_ROUND = 10;
 
-    private final int round;
+    private int round;
 
     private Round(int round) {
         if (isInvalidRound(round)) {
@@ -30,5 +30,13 @@ public class Round {
 
     public int getRound() {
         return round;
+    }
+
+    public Frame currentRound(List<Frame> frames) {
+        return frames.get(round);
+    }
+
+    public void goNextRound() {
+        round++;
     }
 }
