@@ -16,11 +16,11 @@ public class BowlingController {
         while (bowlingGames.isNextPitching()) {
             bowlingGames.increaseFrameNumber();
             bowlingGames.getValues()
-                    .forEach(bowlingGame -> matchByPlayer(bowlingGames, bowlingGame));
+                    .forEach(bowlingGame -> play(bowlingGames, bowlingGame));
         }
     }
 
-    private void matchByPlayer(BowlingGames bowlingGames, BowlingGame bowlingGame) {
+    private void play(BowlingGames bowlingGames, BowlingGame bowlingGame) {
         while (bowlingGame.isFrameProgress(bowlingGames.getFrameNumber())) {
             bowlingGame.bowl(InputView.inputFallenPins(bowlingGame.getPlayerName()));
             OutputView.printBowlingScoreBoard(bowlingGames.getValues());
