@@ -25,25 +25,23 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public Frame shoot(ShootScore shootScore) {
+    public void shoot(ShootScore shootScore) {
         shootCount++;
 
         if (shootScore.isStrike()) {
             createStrikeStatus();
-            return this;
+            return;
         }
 
         Status currentStatus = statuses.getLast();
 
         if (currentStatus instanceof Spare) {
             statuses.add(Ready.create().shoot(shootScore));
-            return this;
+            return;
         }
 
         statuses.removeLast();
         statuses.add(currentStatus.shoot(shootScore));
-
-        return this;
     }
 
     private void createStrikeStatus() {

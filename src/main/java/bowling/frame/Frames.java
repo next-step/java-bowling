@@ -31,7 +31,9 @@ public class Frames {
             throw new IllegalArgumentException("투구가 끝난 Frame 에는 더 투구할 수 없습니다.");
         }
 
-        return currentFrame.shoot(shootScore);
+        currentFrame.shoot(shootScore);
+
+        return currentFrame;
     }
 
     public Frame findFrameByRound(Round round) {
