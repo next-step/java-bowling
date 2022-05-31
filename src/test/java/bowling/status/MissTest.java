@@ -15,10 +15,8 @@ class MissTest {
         Status miss = Miss.of(FIVE_SCORE, FOUR_SCORE);
 
         assertAll(
-                () -> {
-                    assertThat(miss).isEqualTo(Miss.of(FIVE_SCORE, FOUR_SCORE));
-                    assertThat(miss.isEnd()).isTrue();
-                }
+                () -> assertThat(miss).isEqualTo(Miss.of(FIVE_SCORE, FOUR_SCORE)),
+                () -> assertThat(miss.isEnd()).isTrue()
         );
     }
 
@@ -26,12 +24,10 @@ class MissTest {
     @DisplayName("두 개의 투구는 스트라이크 이거나 스페어의 조건을 충족할 수 없습니다")
     void invalidMissCondition() {
         assertAll(
-                () -> {
-                    assertThatThrownBy(() -> Miss.of(STRIKE, STRIKE))
-                            .isInstanceOf(IllegalArgumentException.class);
-                    assertThatThrownBy(() -> Miss.of(FIVE_SCORE, FIVE_SCORE))
-                            .isInstanceOf(IllegalArgumentException.class);
-                }
+                () -> assertThatThrownBy(() -> Miss.of(STRIKE, STRIKE))
+                        .isInstanceOf(IllegalArgumentException.class),
+                () -> assertThatThrownBy(() -> Miss.of(FIVE_SCORE, FIVE_SCORE))
+                        .isInstanceOf(IllegalArgumentException.class)
         );
     }
 

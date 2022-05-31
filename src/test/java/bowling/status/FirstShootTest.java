@@ -21,10 +21,8 @@ class FirstShootTest {
     @DisplayName("첫 투구 이후 두 번째 투구를 앞두고 있는 상태를 생성")
     void create() {
         assertAll(
-                () -> {
-                    assertThat(firstFiveShoot).isEqualTo(FirstShoot.from(FIVE_SCORE));
-                    assertThat(firstFiveShoot.isEnd()).isFalse();
-                }
+                () -> assertThat(firstFiveShoot).isEqualTo(FirstShoot.from(FIVE_SCORE)),
+                () -> assertThat(firstFiveShoot.isEnd()).isFalse()
         );
     }
 
@@ -40,10 +38,8 @@ class FirstShootTest {
     void firstShootToSpareStatus() {
         Status spareStatus = firstFiveShoot.shoot(FIVE_SCORE);
         assertAll(
-                () -> {
-                    assertThat(spareStatus.getClass()).hasSameClassAs(Spare.class);
-                    assertThat(spareStatus.isEnd()).isTrue();
-                }
+                () -> assertThat(spareStatus.getClass()).hasSameClassAs(Spare.class),
+                () -> assertThat(spareStatus.isEnd()).isTrue()
         );
     }
 
@@ -52,10 +48,8 @@ class FirstShootTest {
     void firstShootToMissStatus() {
         Status missStatus = firstFiveShoot.shoot(ZERO_SCORE);
         assertAll(
-                () -> {
-                    assertThat(missStatus.getClass()).hasSameClassAs(Miss.class);
-                    assertThat(missStatus.isEnd()).isTrue();
-                }
+                () -> assertThat(missStatus.getClass()).hasSameClassAs(Miss.class),
+                () -> assertThat(missStatus.isEnd()).isTrue()
         );
     }
 }

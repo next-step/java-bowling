@@ -23,10 +23,8 @@ class ReadyTest {
         Status ready = Ready.create();
         Status firstShootStatus = ready.shoot(FIVE_SCORE);
         assertAll(
-                () -> {
-                    assertThat(firstShootStatus.getClass()).hasSameClassAs(FirstShoot.class);
-                    assertThat(firstShootStatus.isEnd()).isFalse();
-                }
+                () -> assertThat(firstShootStatus.getClass()).hasSameClassAs(FirstShoot.class),
+                () -> assertThat(firstShootStatus.isEnd()).isFalse()
         );
     }
 
@@ -36,10 +34,8 @@ class ReadyTest {
         Status ready = Ready.create();
         Status strikeStatus = ready.shoot(STRIKE);
         assertAll(
-                () -> {
-                    assertThat(strikeStatus.getClass()).hasSameClassAs(Strike.class);
-                    assertThat(strikeStatus.isEnd()).isTrue();
-                }
+                () -> assertThat(strikeStatus.getClass()).hasSameClassAs(Strike.class),
+                () -> assertThat(strikeStatus.isEnd()).isTrue()
         );
     }
 }

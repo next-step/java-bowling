@@ -18,10 +18,8 @@ class SpareTest {
 
         Status spare = Spare.from(FIVE_SCORE);
         assertAll(
-                () -> {
-                    assertThat(spare).isEqualTo(spareStatus);
-                    assertThat(spare.isEnd()).isTrue();
-                }
+                () -> assertThat(spare).isEqualTo(spareStatus),
+                () -> assertThat(spare.isEnd()).isTrue()
         );
     }
 
