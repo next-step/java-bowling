@@ -36,18 +36,18 @@ public class BowlingGame {
     }
 
     public void shoot(ShootScore shootScore) {
-        Frame nextFrame = frames.shoot(shootScore);
+        Frame currentFrame = frames.shoot(shootScore);
 
         scores.calculateBonusScore(shootScore, scoreBoard);
 
-        if (nextFrame.isEnd() && beforeMaxRound()) {
-            scores.addScore(nextFrame.findMyStatus(), scoreBoard);
+        if (currentFrame.isEnd() && beforeMaxRound()) {
+            scores.addScore(currentFrame.findMyStatus(), scoreBoard);
             frames.goNextRound();
             return;
         }
 
-        if (nextFrame.isEnd() && isMaxRound()) {
-            scoreBoard.lastBonusScore((LastFrame) nextFrame);
+        if (currentFrame.isEnd() && isMaxRound()) {
+            scoreBoard.lastBonusScore((LastFrame) currentFrame);
             frames.goNextRound();
         }
     }
