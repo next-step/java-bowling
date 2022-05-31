@@ -1,14 +1,13 @@
 package bowling.domain.score;
 
-import bowling.domain.bowl.type.BowlType;
-import bowling.domain.exception.RunningBowlException;
-import bowling.domain.pitch.PitchResult;
 
 public class Score {
 
     public static final int CANNOT_CALCULATE_SCORE = -1;
     private static final String INVALID_VALUE_OR_LEFT = "Score의 점숫값과 남은 더하기 개수 값은 양수만 허용합니다.";
     private static final int FINISHED_REMAIN_COUNT = 0;
+    private static final int MIN_VALUE = 0;
+    private static final int MIN_REMAIN_ADD_COUNT = 0;
 
     private int value;
     private final int left;
@@ -21,7 +20,7 @@ public class Score {
 
 
     void validate(int value, int remainAddCount){
-        if(value < 0 || remainAddCount < 0){
+        if(value < MIN_VALUE || remainAddCount < MIN_REMAIN_ADD_COUNT){
             throw new IllegalArgumentException(INVALID_VALUE_OR_LEFT);
         }
     }
