@@ -35,6 +35,10 @@ public class Game {
         return frames.currentNumber();
     }
 
+    public Player player() {
+        return player;
+    }
+
     public static Game enter(Player player) {
         return new Game(player, Frames.initialize());
     }

@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.frame.FrameNumber;
+import bowling.domain.player.Player;
 
 import java.util.Scanner;
 
@@ -10,13 +10,21 @@ public class InputView {
     private InputView() {
     }
 
-    public static String inputPlayerName() {
-        System.out.println("플레이어 이름은(3 english letters)?: ");
+    public static int inputPlayerCount() {
+        System.out.println("How many people?");
+
+        int playerCount = inputNextInt();
+        flushNewLine();
+        return playerCount;
+    }
+
+    public static String inputPlayerName(int playerNumber) {
+        System.out.printf("플레이어 %s의 이름은?(3 english letters): %n", playerNumber);
         return SCANNER.nextLine();
     }
 
-    public static int inputPinCount(FrameNumber frameNumber) {
-        System.out.printf("%s 프레임 투구 : %n", frameNumber);
+    public static int inputPinCount(Player player) {
+        System.out.printf("%s's turn : %n", player);
 
         int pinCount = inputNextInt();
         flushNewLine();
