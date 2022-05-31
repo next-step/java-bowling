@@ -48,11 +48,7 @@ public class FinalFrame implements Frame{
         if(bowls.canProceed()){
             return Score.CANNOT_CALCULATE_SCORE;
         }
-        return bowls.getBowls()
-                .stream()
-                .map(bowl -> Score.createScore(bowl.getPitchResult()))
-                .mapToInt(Score::getValue)
-                .sum();
+        return bowls.score();
     }
 
     @Override

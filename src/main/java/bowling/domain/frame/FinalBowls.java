@@ -9,6 +9,7 @@ import bowling.domain.bowl.Strike;
 import bowling.domain.pin.Pins;
 import bowling.domain.exception.CannotPitchException;
 import bowling.domain.pitch.PitchCount;
+import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -69,4 +70,12 @@ public class FinalBowls {
         return bowls.get(bowls.size()-1);
     }
 
+    public int score() {
+        Score score = bowls.get(0).score();
+        for(int i=1; i<bowls.size(); i++){
+            Bowl bowl = bowls.get(i);
+            score = bowl.calculateScore(score);
+        }
+        return score.getValue();
+    }
 }

@@ -44,8 +44,7 @@ public class NormalFrame implements Frame{
         if(!bowl.isEnd()){
             return Score.CANNOT_CALCULATE_SCORE;
         }
-        PitchResult pitchResult = bowl.getPitchResult();
-        Score curScore = Score.createScore(pitchResult);
+        Score curScore = bowl.score();
         if(curScore.isFinished()){
             return curScore.getValue();
         }
