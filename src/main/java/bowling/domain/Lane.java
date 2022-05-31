@@ -39,13 +39,10 @@ public class Lane {
     }
 
     public boolean isEnd() {
-        for (BowlingGame bowlingGame : bowlingGames) {
-            if (!bowlingGame.isEnd()) {
-                return false;
-            }
-        }
-
-        return true;
+        return bowlingGames.stream()
+                .filter(bowlingGame -> !bowlingGame.isEnd())
+                .findAny()
+                .isEmpty();
     }
 
     public void shoot(ShootScore shootScore) {
