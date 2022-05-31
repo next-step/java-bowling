@@ -4,6 +4,10 @@ import static bowling.domain.Pins.START_PIN_COUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import bowling.domain.state.FirstBowl;
+import bowling.domain.state.Miss;
+import bowling.domain.state.Spare;
+import bowling.domain.state.Strike;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +21,55 @@ class FrameTest {
         frame = new Frame();
     }
 
+    @Test
+    void 프레임의_최초_준비상태에서_한번던진상태로_간다() {
+        frame.shot2(1);
+        assertThat(frame.getState()).isOfAnyClassIn(FirstBowl.class);
+    }
+
+    @Test
+    void 프레임의_최초_준비상태에서_스트라이크상태로_간다() {
+        frame.shot2(10);
+        assertThat(frame.getState()).isOfAnyClassIn(Strike.class);
+    }
+
+    @Test
+    void 프레임의_한번던진상태에서_스페어상태로_간다() {
+        frame.shot2(1);
+        frame.shot2(9);
+        assertThat(frame.getState()).isOfAnyClassIn(Spare.class);
+    }
+
+    @Test
+    void 프레임의_한번던진상태에서_미스상태로_간다() {
+        frame.shot2(1);
+        frame.shot2(1);
+        assertThat(frame.getState()).isOfAnyClassIn(Miss.class);
+    }
+
+    @Test
+    void 프레임에서_MISS_이후_던지는_기회가_끝났는지_확인한다() {
+        assertThat(frame.isDone()).isFalse();
+        frame.shot2(1);
+        frame.shot2(1);
+        assertThat(frame.isDone2()).isTrue();
+    }
+
+    @Test
+    void 프레임에서_SPARE_이후_던지는_기회가_끝났는지_확인한다() {
+        assertThat(frame.isDone()).isFalse();
+        frame.shot2(5);
+        frame.shot2(5);
+        assertThat(frame.isDone2()).isTrue();
+    }
+
+    @Test
+    void 프레임에서_STRIKE_이후_던지는_기회가_끝났는지_확인한다() {
+        assertThat(frame.isDone()).isFalse();
+        frame.shot2(10);
+        assertThat(frame.isDone2()).isTrue();
+    }
+    
     @Test
     void createTest() {
         Frame frame = new Frame();

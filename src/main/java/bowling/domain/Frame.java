@@ -4,7 +4,7 @@ import static bowling.domain.HitState.NORMAL;
 import static bowling.domain.HitState.SPARE;
 import static bowling.domain.HitState.STRIKE;
 
-import java.util.Objects;
+import bowling.domain.state.State;
 import java.util.Optional;
 import java.util.OptionalInt;
 
@@ -14,6 +14,7 @@ public class Frame {
     private Frame beforeFrame;
     protected Pins pins = new Pins();
     protected Scores scores = new Scores();
+    private State state = State.ofReady();
 
     public Frame() {
         this(null, null);
@@ -59,8 +60,16 @@ public class Frame {
         scores.hit(hitCount);
     }
 
+    public void shot2(int hitCount) {
+        state = state.bowl(hitCount);
+    }
+
     public boolean isDone() {
         return pins.isHitAll() || scores.isPlayTwice();
+    }
+
+    public boolean isDone2() {
+        return state.isDone();
     }
 
     public int remainedPins() {
@@ -95,24 +104,6 @@ public class Frame {
         return this.beforeFrame;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Frame frame = (Frame) o;
-        return Objects.equals(nextFrame, frame.nextFrame) && Objects.equals(beforeFrame, frame.beforeFrame) && Objects.equals(pins, frame.pins) && Objects.equals(
-            scores, frame.scores);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(nextFrame, beforeFrame, pins, scores);
-    }
-
     public boolean hasNext() {
         return this.nextFrame != null;
     }
@@ -129,4 +120,7 @@ public class Frame {
             .get();
     }
 
+    protected State getState() {
+        return state;
+    }
 }
