@@ -22,6 +22,17 @@
         * [x] 시작 전 출력
         * [x] 총 10번의 프레임 각각에 대해 2번씩 결과 출력하기(간격 일정 유지)
         * [x] 요구사항에 맞게 출력
+* 3단계
+    * 리팩토링
+        * [x] 도메인 외부 if문 제거([상태 패턴 도입](#상태-패턴-도입))
+    * 도메인
+        * [x] 10라운드의 경우 3번 투구
+        * [x] 프레임별 누적 점수 계산
+    * 출력
+        * [x] 점수 출력
+
+### 상태 패턴 도입
+<img src="img/bowling_state_diagram.png" width="500" height="450"></br>
 
 ## 온라인 코드 리뷰 과정
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)

@@ -1,9 +1,12 @@
 package bowling.view;
 
 import bowling.domain.Frame;
+import bowling.domain.LastFrame;
+import bowling.domain.NormalFrame;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class ResultView {
     private static final List<String> FRAMES = Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10");
@@ -11,51 +14,91 @@ public class ResultView {
     private ResultView() {
     }
 
-    public static void printLabel() {
+    public static void printBeforeGame(String name) {
+        printLabel();
+        printSymbol(name, new ArrayList<Frame>());
+        printScore(accumulateScore(new ArrayList<String>()));
+    }
+
+    public static void printGameInProgress(String name, List<Frame> records, List<String> scores) {
+        printLabel();
+        printSymbol(name, records);
+        printScore(accumulateScore(scores));
+    }
+
+    private static void printLabel() {
         System.out.print("| NAME |");
         FRAMES.stream()
                 .forEach(frame -> System.out.print("\t" + frame + "\t|"));
         System.out.println();
     }
 
-    public static void printScore(String name, List<Frame> records) {
+    private static void printSymbol(String name, List<Frame> records) {
         System.out.print("|  " + name + " |");
         records.stream()
-                .forEach(frame -> System.out.print("\t" + toFrameScore(frame) + "\t|"));
+                .forEach(frame -> System.out.print("\t" + symbol(frame) + "\t|"));
+        printBlank(records);
         System.out.println();
     }
 
-    private static String toFrameScore(Frame frame) {
-        int first = frame.getFirst();
-        int second = frame.getSecond();
-
-        StringBuilder stringBuilder = new StringBuilder();
-        if (first != Frame.BEFORE_BOWLING) {
-            stringBuilder.append(convertFirstScore(first));
+    private static String symbol(Frame frame) {
+        if (frame instanceof LastFrame) {
+            return symbolIfLastFrame((LastFrame) frame);
         }
-        if (second != Frame.BEFORE_BOWLING) {
-            stringBuilder.append(convertSecondScore(first, second));
-        }
-        return stringBuilder.toString();
+        return symbolIfNormalFrame((NormalFrame) frame);
     }
 
-    private static String convertFirstScore(int first) {
-        if (first == Frame.MAX_NUMBER_OF_PIN) {
-            return "X";
+    private static String symbolIfNormalFrame(NormalFrame frame) {
+        if (frame.firstOfFrame()) {
+            return frame.firstState().symbol();
         }
-        if (first == Frame.ZERO) {
-            return  "-";
-        }
-        return String.valueOf(first);
+        return frame.firstState().symbol() + frame.secondState().symbol();
     }
 
-    private static String convertSecondScore(int first, int second) {
-        if (second == Frame.ZERO) {
-            return "│-";
+    private static String symbolIfLastFrame(LastFrame frame) {
+        if (frame.firstOfFrame()) {
+            return frame.firstState().symbol();
         }
-        if (second == Frame.MAX_NUMBER_OF_PIN || (first + second) == Frame.MAX_NUMBER_OF_PIN) {
-            return "│/";
+        if (frame.secondOfFrame()) {
+            return frame.firstState().symbol() + frame.secondState().symbol();
         }
-        return "│" + String.valueOf(second);
+        return frame.firstState().symbol() + frame.secondState().symbol() + ((LastFrame) frame).thirdState().symbol();
+    }
+
+    private static <E> void printBlank(List<E> list) {
+        int remains = FRAMES.size() - list.size();
+        if (remains != 0) {
+            IntStream.range(0, remains)
+                    .forEach((remain -> System.out.print("\t\t|")));
+        }
+    }
+
+    public static void printScore(List<String> scores) {
+        System.out.print("|      |");
+        scores.stream()
+                .forEach(score -> System.out.print("\t" + score + "\t|"));
+        printBlank(scores);
+        System.out.println();
+    }
+
+    private static List<String> accumulateScore(List<String> scores) {
+        List<Integer> cumulativeScores = new ArrayList<>();
+        List<Integer> _scores = new ArrayList<>();
+        for (int i = 0; i < scores.size(); i++) {
+            String score = scores.get(i);
+            if (score == "") {
+                break;
+            }
+            _scores.add(i, Integer.parseInt(scores.get(i)));
+            cumulativeScores.add(i, accumulate(_scores));
+        }
+        return cumulativeScores.stream()
+                .map(Object::toString)
+                .collect(Collectors.toList());
+    }
+
+    private static int accumulate(List<Integer> numbers) {
+        return numbers.stream()
+                .reduce(0, Integer::sum);
     }
 }
