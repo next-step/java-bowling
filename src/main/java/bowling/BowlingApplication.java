@@ -1,11 +1,13 @@
 package bowling;
 
+import bowling.domain.Lane;
 import bowling.domain.BowlingGame;
 import bowling.domain.PlayerName;
 import bowling.frame.*;
-import bowling.score.Scores;
 import bowling.view.InputView;
 import bowling.view.ResultView;
+
+import java.util.List;
 
 public class BowlingApplication {
 
@@ -13,12 +15,10 @@ public class BowlingApplication {
         InputView inputView = new InputView();
         ResultView resultView = new ResultView();
 
-        Frames frames = Frames.create();
-        Scores scores = Scores.create();
-        PlayerName playerName = PlayerName.from(inputView.inputPlayerName());
-        BowlingGame bowlingGame = BowlingGame.from(playerName, frames, scores);
+        List<PlayerName> playerNames = inputView.inputPlayerName();
+        Lane lane = Lane.from(playerNames);
 
-        startBowlingGame(bowlingGame, inputView, resultView);
+        startBowlingGame(lane, inputView, resultView);
     }
 
     private static void startBowlingGame(BowlingGame bowlingGame, InputView inputView, ResultView resultView) {
@@ -29,6 +29,18 @@ public class BowlingApplication {
             int shootScore = inputView.inputShootScore(Round.from(currentRound));
             bowlingGame.shoot(ShootScore.from(shootScore));
             resultView.printFrameBoard(bowlingGame);
+        }
+    }
+
+    private static void startBowlingGame(Lane lane, InputView inputView, ResultView resultView) {
+        resultView.printFrameBoard(lane);
+
+        while (!lane.isEnd()) {
+            String currentPlayer = lane.currentPlayer();
+            int shootScore = inputView.inputShootScore(currentPlayer);
+
+            lane.shoot(ShootScore.from(shootScore));
+            resultView.printFrameBoard(lane);
         }
     }
 

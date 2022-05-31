@@ -1,5 +1,6 @@
 package bowling.view;
 
+import bowling.domain.Lane;
 import bowling.domain.BowlingGame;
 import bowling.frame.*;
 import bowling.status.*;
@@ -134,5 +135,17 @@ public class ResultView {
 
     private String boardFormat(int board) {
         return String.format("%-3s", board);
+    }
+
+    public void printFrameBoard(Lane lane) {
+        printRoundBoard();
+        printAllBoard(lane);
+    }
+
+    private void printAllBoard(Lane lane) {
+        for (BowlingGame bowlingGame : lane.bowlingGames()) {
+            printBoard(bowlingGame);
+            printScoreBoard(bowlingGame);
+        }
     }
 }
