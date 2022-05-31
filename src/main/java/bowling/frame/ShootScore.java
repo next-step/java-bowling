@@ -40,6 +40,10 @@ public class ShootScore {
         return shootScore;
     }
 
+    public boolean overMaxShoot(ShootScore shootScore) {
+        return this.shootScore + shootScore.shootScore > STRIKE;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

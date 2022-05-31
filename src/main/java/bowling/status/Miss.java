@@ -1,10 +1,15 @@
 package bowling.status;
 
 import bowling.frame.ShootScore;
+import bowling.score.Score;
 
 import java.util.Objects;
 
+import static bowling.status.StatusBoardFactory.drawGutterOrScore;
+
 public class Miss implements Status {
+
+    private static final String DIVIDER = "|";
 
     private final ShootScore firstShoot;
     private final ShootScore secondShoot;
@@ -25,22 +30,33 @@ public class Miss implements Status {
         return new Miss(firstShoot, secondShoot);
     }
 
-    public ShootScore findFirstShoot() {
-        return firstShoot;
-    }
-
-    public ShootScore findSecondShoot(){
-        return secondShoot;
+    private int totalScore() {
+        return firstShoot.getShootScore() + secondShoot.getShootScore();
     }
 
     @Override
     public Status shoot(ShootScore shootScore) {
-        throw new IllegalArgumentException("2번의 투구를 모두 하셨습니다");
+        throw new UnsupportedOperationException("2번의 투구를 모두 하셨습니다");
     }
 
     @Override
     public boolean isEnd() {
         return true;
+    }
+
+    @Override
+    public String board() {
+        return drawGutterOrScore(firstShoot) + DIVIDER + drawGutterOrScore(secondShoot);
+    }
+
+    @Override
+    public Score createScore() {
+        return Score.toMiss(totalScore());
+    }
+
+    @Override
+    public int ownScore() {
+        return totalScore();
     }
 
     @Override

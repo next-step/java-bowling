@@ -10,25 +10,28 @@ public class Frames {
 
     private final List<Frame> frames = new ArrayList<>();
 
+    private int currentRound;
+
     private Frames() {
         for (int round = FIRST_ROUND; round < LAST_ROUND; round++) {
             frames.add(NormalFrame.create());
         }
         frames.add(LastFrame.create());
+        this.currentRound = FIRST_ROUND;
     }
 
     public static Frames create() {
         return new Frames();
     }
 
-    public void shoot(Round round, ShootScore shootScore) {
-        Frame specificRoundFrame = findFrameByRound(round);
+    public Frame shoot(ShootScore shootScore) {
+        Frame currentFrame = frames.get(currentRound);
 
-        if (specificRoundFrame.isEnd()) {
+        if (currentFrame.isEnd()) {
             throw new IllegalArgumentException("투구가 끝난 Frame 에는 더 투구할 수 없습니다.");
         }
 
-        specificRoundFrame.shoot(shootScore);
+        return currentFrame.shoot(shootScore);
     }
 
     public Frame findFrameByRound(Round round) {
@@ -37,5 +40,13 @@ public class Frames {
 
     public boolean isRoundEnd(Round round) {
         return round.isRoundEnd(frames);
+    }
+
+    public int currentRound() {
+        return currentRound;
+    }
+
+    public void goNextRound() {
+        currentRound++;
     }
 }

@@ -3,11 +3,11 @@ package bowling.frame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static bowling.frame.ConstShootScore.FIVE_SCORE;
 import static org.assertj.core.api.Assertions.*;
 
 class FramesTest {
 
-    private static final int FIVE = 5;
     private static final int ZERO = 0;
 
     @Test
@@ -15,7 +15,7 @@ class FramesTest {
     void frameShootAndEndTest() {
         Frames frames = Frames.create();
 
-        frames.shoot(Round.from(ZERO), ShootScore.from(FIVE));
+        frames.shoot(FIVE_SCORE);
         assertThat(frames.isRoundEnd(Round.from(ZERO))).isFalse();
     }
 
@@ -24,10 +24,10 @@ class FramesTest {
     void invalidFrame() {
         Frames frames = Frames.create();
 
-        frames.shoot(Round.from(ZERO), ShootScore.from(FIVE));
-        frames.shoot(Round.from(ZERO), ShootScore.from(FIVE));
+        frames.shoot(FIVE_SCORE);
+        frames.shoot(FIVE_SCORE);
 
-        assertThatThrownBy(() -> frames.shoot(Round.from(ZERO), ShootScore.from(FIVE)))
+        assertThatThrownBy(() -> frames.shoot(FIVE_SCORE))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

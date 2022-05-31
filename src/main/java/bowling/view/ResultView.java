@@ -1,8 +1,10 @@
 package bowling.view;
 
-import bowling.domain.PlayerName;
+import bowling.domain.BowlingGame;
 import bowling.frame.*;
 import bowling.status.*;
+
+import java.util.List;
 
 public class ResultView {
 
@@ -14,13 +16,11 @@ public class ResultView {
     private static final String TWO_BLANK = "  ";
     private static final String NAME = "NAME";
     private static final String DIVIDER = "|";
-    private static final String STRIKE_SIGNATURE = "X";
-    private static final String SPARE_SIGNATURE = "/";
-    private static final String GUTTER_SIGNATURE = "-";
 
-    public void printFrameBoard(PlayerName playerName, Frames frames) {
+    public void printFrameBoard(BowlingGame bowlingGame) {
         printRoundBoard();
-        printScoreBoard(playerName, frames);
+        printBoard(bowlingGame);
+        printScoreBoard(bowlingGame);
     }
 
     private void printRoundBoard() {
@@ -29,37 +29,63 @@ public class ResultView {
         roundBuilder
                 .append(DIVIDER)
                 .append(TWO_BLANK)
-                .append(NAME)
-                .append(TWO_BLANK)
+                .append(boardFormat(NAME))
+                .append(ONE_BLANK)
                 .append(DIVIDER);
 
         for (int round = MIN_ROUND; round < MAX_ROUND + ONE_INDEX; round++) {
             roundBuilder
                     .append(TWO_BLANK)
-                    .append(round + ONE_INDEX)
-                    .append(TWO_BLANK)
+                    .append(boardFormat(round + ONE_INDEX))
                     .append(DIVIDER);
         }
 
         System.out.println(roundBuilder);
     }
 
-    private void printScoreBoard(PlayerName playerName, Frames frames) {
+    private void printBoard(BowlingGame bowlingGame) {
         StringBuilder scoreBuilder = new StringBuilder();
 
-        scoreBuilder.append(buildPlayerName(playerName));
-        scoreBuilder.append(buildNormalFrame(frames));
-        scoreBuilder.append(buildLastFrame((LastFrame) frames.findFrameByRound(Round.from(MAX_ROUND))));
+        scoreBuilder.append(buildPlayerName(bowlingGame.playerName()));
+        scoreBuilder.append(buildNormalFrame(bowlingGame.frames()));
+        scoreBuilder.append(buildLastFrame((LastFrame) bowlingGame.frames().findFrameByRound(Round.from(MAX_ROUND))));
 
         System.out.println(scoreBuilder);
     }
 
-    private String buildPlayerName(PlayerName playerName) {
+    private void printScoreBoard(BowlingGame bowlingGame) {
+        StringBuilder scoreBuilder = new StringBuilder();
+
+        scoreBuilder
+                .append(DIVIDER)
+                .append(TWO_BLANK)
+                .append(boardFormat(ONE_BLANK))
+                .append(TWO_BLANK)
+                .append(DIVIDER)
+                .append(buildScoreFrame(bowlingGame.totalScores()));
+
+        System.out.println(scoreBuilder);
+    }
+
+    private String buildScoreFrame(List<Integer> totalScores) {
+        StringBuilder scoreFrameBuilder = new StringBuilder();
+
+        for (Integer score : totalScores) {
+            scoreFrameBuilder
+                    .append(TWO_BLANK)
+                    .append(boardFormat(score))
+                    .append(DIVIDER);
+        }
+
+        return scoreFrameBuilder.toString();
+    }
+
+    private String buildPlayerName(String playerName) {
         StringBuilder playerNameBuilder = new StringBuilder();
         playerNameBuilder
                 .append(DIVIDER)
                 .append(TWO_BLANK)
-                .append(playerName.getPlayerName())
+                .append(boardFormat(playerName))
                 .append(TWO_BLANK)
                 .append(DIVIDER);
 
@@ -70,11 +96,11 @@ public class ResultView {
         StringBuilder normalFrameBuilder = new StringBuilder();
         for (int round = MIN_ROUND; round < MAX_ROUND; round++) {
             Frame frameByRound = frames.findFrameByRound(Round.from(round));
+            Status myStatus = frameByRound.findMyStatus();
 
             normalFrameBuilder
                     .append(TWO_BLANK)
-                    .append(drawScoreByStatus(frameByRound.findMyStatus()))
-                    .append(TWO_BLANK)
+                    .append(boardFormat(myStatus.board()))
                     .append(DIVIDER);
         }
         return normalFrameBuilder.toString();
@@ -82,61 +108,31 @@ public class ResultView {
 
     private String buildLastFrame(LastFrame lastFrame) {
         StringBuilder lastBuilder = new StringBuilder();
+        String lastFrameStatus = lastFrameBoard(lastFrame.findMyAllStatus());
 
         lastBuilder
-                .append(TWO_BLANK);
-
-        for (Status myAllStatus : lastFrame.findMyAllStatus()) {
-            lastBuilder.append(drawScoreByStatus(myAllStatus));
-        }
-
-        lastBuilder.append(TWO_BLANK);
-        lastBuilder.append(DIVIDER);
+                .append(TWO_BLANK)
+                .append(boardFormat(lastFrameStatus))
+                .append(DIVIDER);
 
         return lastBuilder.toString();
     }
 
-    private String drawScoreByStatus(Status myStatus) {
-        if (myStatus instanceof FirstShoot) {
-            return drawFirstShootStatus((FirstShoot) myStatus);
+    private String lastFrameBoard(List<Status> myAllStatus) {
+        StringBuilder lastFrameBoardBuilder = new StringBuilder();
+
+        for (Status myStatus : myAllStatus) {
+            lastFrameBoardBuilder.append(myStatus.board());
         }
 
-        if (myStatus instanceof Miss) {
-            return drawMissStatus((Miss) myStatus);
-        }
-
-        if (myStatus instanceof Strike) {
-            return STRIKE_SIGNATURE;
-        }
-
-        if (myStatus instanceof Spare) {
-            return drawSpareStatus((Spare) myStatus);
-        }
-
-        return ONE_BLANK;
+        return lastFrameBoardBuilder.toString();
     }
 
-    private String drawMissStatus(Miss myStatus) {
-        String firstShootSignature = drawGutterOrScore(myStatus.findFirstShoot());
-        String secondShootSignature = drawGutterOrScore(myStatus.findSecondShoot());
-
-        return firstShootSignature + DIVIDER + secondShootSignature;
+    private String boardFormat(String board) {
+        return String.format("%-3s", board);
     }
 
-    private String drawGutterOrScore(ShootScore shootScore) {
-        if (shootScore.isGutter()) {
-            return GUTTER_SIGNATURE;
-        }
-        return Integer.toString(shootScore.getShootScore());
+    private String boardFormat(int board) {
+        return String.format("%-3s", board);
     }
-
-
-    private String drawFirstShootStatus(FirstShoot myStatus) {
-        return drawGutterOrScore(myStatus.findFirstShoot());
-    }
-
-    private String drawSpareStatus(Spare myStatus) {
-        return drawGutterOrScore(myStatus.findFirstShoot()) + DIVIDER + SPARE_SIGNATURE;
-    }
-
 }

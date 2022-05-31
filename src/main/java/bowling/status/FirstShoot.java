@@ -1,8 +1,11 @@
 package bowling.status;
 
 import bowling.frame.ShootScore;
+import bowling.score.Score;
 
 import java.util.Objects;
+
+import static bowling.status.StatusBoardFactory.drawGutterOrScore;
 
 public class FirstShoot implements Status {
 
@@ -19,12 +22,12 @@ public class FirstShoot implements Status {
         return new FirstShoot(firstShoot);
     }
 
-    public ShootScore findFirstShoot() {
-        return firstShoot;
-    }
-
     @Override
     public Status shoot(ShootScore secondShoot) {
+        if (firstShoot.overMaxShoot(secondShoot)) {
+            throw new IllegalArgumentException("첫 번째 슈팅과 두 번째 슈팅의 합은 10을 초과할 수 없습니다.");
+        }
+
         if (firstShoot.isSpare(secondShoot)) {
             return Spare.from(firstShoot);
         }
@@ -35,6 +38,21 @@ public class FirstShoot implements Status {
     @Override
     public boolean isEnd() {
         return false;
+    }
+
+    @Override
+    public String board() {
+        return drawGutterOrScore(firstShoot);
+    }
+
+    @Override
+    public Score createScore() {
+        throw new UnsupportedOperationException("첫 번째 슛 상태에서는 점수를 산정할 수 없습니다.");
+    }
+
+    @Override
+    public int ownScore() {
+        return firstShoot.getShootScore();
     }
 
     @Override

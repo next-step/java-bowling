@@ -4,7 +4,7 @@ import bowling.status.Status;
 
 public interface Frame {
 
-    void shoot(ShootScore shootScore);
+    Frame shoot(ShootScore shootScore);
 
     boolean isEnd();
 

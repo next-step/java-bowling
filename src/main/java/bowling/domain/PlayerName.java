@@ -30,7 +30,7 @@ public class PlayerName {
         return new PlayerName(playerName);
     }
 
-    public String getPlayerName() {
+    public String playerName() {
         return playerName;
     }
 
