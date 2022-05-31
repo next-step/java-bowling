@@ -40,11 +40,6 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public int inputShootScore(Round round) {
-        System.out.print(round.getRound() + ONE_INDEX + " 프레임 투구 : ");
-        return Integer.parseInt(inputScannerString());
-    }
-
     public int inputShootScore(String currentPlayer) {
         System.out.print(currentPlayer + "'s turn : ");
         return Integer.parseInt(inputScannerString());

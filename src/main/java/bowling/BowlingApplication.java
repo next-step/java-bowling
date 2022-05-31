@@ -1,7 +1,6 @@
 package bowling;
 
 import bowling.domain.Lane;
-import bowling.domain.BowlingGame;
 import bowling.domain.PlayerName;
 import bowling.frame.*;
 import bowling.view.InputView;
@@ -19,17 +18,6 @@ public class BowlingApplication {
         Lane lane = Lane.from(playerNames);
 
         startBowlingGame(lane, inputView, resultView);
-    }
-
-    private static void startBowlingGame(BowlingGame bowlingGame, InputView inputView, ResultView resultView) {
-        resultView.printFrameBoard(bowlingGame);
-
-        while (!bowlingGame.isEnd()) {
-            int currentRound = bowlingGame.currentRound();
-            int shootScore = inputView.inputShootScore(Round.from(currentRound));
-            bowlingGame.shoot(ShootScore.from(shootScore));
-            resultView.printFrameBoard(bowlingGame);
-        }
     }
 
     private static void startBowlingGame(Lane lane, InputView inputView, ResultView resultView) {
