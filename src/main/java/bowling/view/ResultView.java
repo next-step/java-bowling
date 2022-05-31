@@ -2,7 +2,6 @@ package bowling.view;
 
 import bowling.domain.BowlingGame;
 import bowling.frame.*;
-import bowling.score.ScoreBoard;
 import bowling.status.*;
 
 import java.util.List;
@@ -63,15 +62,15 @@ public class ResultView {
                 .append(boardFormat(ONE_BLANK))
                 .append(TWO_BLANK)
                 .append(DIVIDER)
-                .append(buildScoreFrame(bowlingGame.scoreBoard()));
+                .append(buildScoreFrame(bowlingGame.totalScores()));
 
         System.out.println(scoreBuilder);
     }
 
-    private String buildScoreFrame(ScoreBoard scoreBoard) {
+    private String buildScoreFrame(List<Integer> totalScores) {
         StringBuilder scoreFrameBuilder = new StringBuilder();
 
-        for (Integer score : scoreBoard.scores()) {
+        for (Integer score : totalScores) {
             scoreFrameBuilder
                     .append(TWO_BLANK)
                     .append(boardFormat(score))

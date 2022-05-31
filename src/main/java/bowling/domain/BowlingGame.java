@@ -4,8 +4,10 @@ import bowling.frame.Frame;
 import bowling.frame.Frames;
 import bowling.frame.LastFrame;
 import bowling.frame.ShootScore;
-import bowling.score.ScoreBoard;
+import bowling.score.Score;
 import bowling.score.Scores;
+
+import java.util.List;
 
 public class BowlingGame {
 
@@ -14,17 +16,15 @@ public class BowlingGame {
     private final PlayerName playerName;
     private final Frames frames;
     private final Scores scores;
-    private final ScoreBoard scoreBoard;
 
-    public BowlingGame(PlayerName playerName, Frames frames, Scores scores, ScoreBoard scoreBoard) {
+    public BowlingGame(PlayerName playerName, Frames frames, Scores scores) {
         this.playerName = playerName;
         this.frames = frames;
         this.scores = scores;
-        this.scoreBoard = scoreBoard;
     }
 
-    public static BowlingGame from(PlayerName playerName, Frames frames, Scores scores, ScoreBoard scoreBoard) {
-        return new BowlingGame(playerName, frames, scores, scoreBoard);
+    public static BowlingGame from(PlayerName playerName, Frames frames, Scores scores) {
+        return new BowlingGame(playerName, frames, scores);
     }
 
     public boolean isEnd() {
@@ -38,16 +38,18 @@ public class BowlingGame {
     public void shoot(ShootScore shootScore) {
         Frame currentFrame = frames.shoot(shootScore);
 
-        scores.calculateBonusScore(shootScore, scoreBoard);
+        scores.calculateBonusScore(shootScore);
 
         if (currentFrame.isEnd() && beforeMaxRound()) {
-            scores.addScore(currentFrame.findMyStatus(), scoreBoard);
+            Score score = currentFrame.findMyStatus().createScore();
+
+            scores.addScore(score);
             frames.goNextRound();
             return;
         }
 
         if (currentFrame.isEnd() && isMaxRound()) {
-            scoreBoard.lastBonusScore((LastFrame) currentFrame);
+            scores.lastBonusScore((LastFrame) currentFrame);
             frames.goNextRound();
         }
     }
@@ -68,7 +70,7 @@ public class BowlingGame {
         return frames;
     }
 
-    public ScoreBoard scoreBoard() {
-        return scoreBoard;
+    public List<Integer> totalScores() {
+        return scores.scoreBoard();
     }
 }
