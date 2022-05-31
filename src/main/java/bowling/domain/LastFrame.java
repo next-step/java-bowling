@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.domain.state.last.LastReady;
 import bowling.domain.state.ThrowingState;
+import bowling.domain.state.last.SecondReady;
 import bowling.exception.EndedFrameException;
 import bowling.exception.MaximumSumExceededException;
 
@@ -28,7 +29,7 @@ public class LastFrame implements Frame {
             if (first() != Bowl.MAX_NUMBER_OF_PIN) {
                 second = new Bowl(first.state());
             } else {
-                second = new Bowl(new LastReady(this));
+                second = new Bowl(new SecondReady(this));
             }
             second.bowl(numberOfFallenPins);
             return this;
