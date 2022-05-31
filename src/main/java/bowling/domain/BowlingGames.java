@@ -34,7 +34,16 @@ public class BowlingGames {
                 .collect(Collectors.collectingAndThen(Collectors.toList(), BowlingGames::new));
     }
 
-    public boolean isNextPitching() {
+    public boolean isNextPitchingAndIncreaseFrameNumber() {
+        boolean result = isNextPitching();
+        if(result) {
+            increaseFrameNumber();
+        }
+
+        return result;
+    }
+
+    private boolean isNextPitching() {
         return values.stream()
                 .anyMatch(BowlingGame::isNextPitching);
     }
