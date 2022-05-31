@@ -12,14 +12,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class NormalFrameTest {
 
     Frame previousFrame;
-    Bowl previousBowl;
+    Bowl sprae;
 
     @BeforeEach
     void before(){
         previousFrame = new NormalFrame(9);
         previousFrame.pitch(new Pins(1));
         previousFrame.pitch(new Pins(9));
-        previousBowl = previousFrame.getBowls().get(0);
+        sprae = previousFrame.getBowls().get(0);
     }
 
     @Test
@@ -56,6 +56,6 @@ class NormalFrameTest {
         cur.pitch(new Pins(2));
         cur.pitch(new Pins(3));
 
-        assertThat(cur.calculateAdditionalScore(previousBowl.score())).isEqualTo(15);
+        assertThat(cur.calculateAdditionalScore(sprae.score())).isEqualTo(12);
     }
 }

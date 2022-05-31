@@ -81,6 +81,16 @@ public class FinalFrame implements Frame{
     }
 
     @Override
+    public boolean isEnd() {
+        return score() != Score.CANNOT_CALCULATE_SCORE;
+    }
+
+    @Override
+    public Frame getNextFrame() {
+        throw new IllegalArgumentException("마지막 프레임입니다.");
+    }
+
+    @Override
     public String toString(){
         return "[final frame]" +
                 "\nindex: "+index

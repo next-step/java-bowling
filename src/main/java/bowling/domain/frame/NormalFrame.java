@@ -72,6 +72,16 @@ public class NormalFrame implements Frame{
     }
 
     @Override
+    public boolean isEnd() {
+        return score() != Score.CANNOT_CALCULATE_SCORE;
+    }
+
+    @Override
+    public Frame getNextFrame() {
+        return nextFrame;
+    }
+
+    @Override
     public int getIndex() {
         return index.getIndex();
     }

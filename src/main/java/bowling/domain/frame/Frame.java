@@ -13,4 +13,6 @@ public interface Frame {
     int score();
     int calculateAdditionalScore(Score score);
     List<Bowl> getBowls();
+    boolean isEnd();
+    Frame getNextFrame();
 }
