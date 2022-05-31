@@ -35,7 +35,7 @@ public class BowlingGame {
         return frames.currentRound();
     }
 
-    public void shoot(ShootScore shootScore) {
+    public Frame shoot(ShootScore shootScore) {
         Frame currentFrame = frames.shoot(shootScore);
 
         scores.calculateBonusScore(shootScore);
@@ -45,13 +45,14 @@ public class BowlingGame {
 
             scores.addScore(score);
             frames.goNextRound();
-            return;
+            return currentFrame;
         }
 
         if (currentFrame.isEnd() && isMaxRound()) {
             scores.lastBonusScore((LastFrame) currentFrame);
             frames.goNextRound();
         }
+        return currentFrame;
     }
 
     private boolean beforeMaxRound() {
