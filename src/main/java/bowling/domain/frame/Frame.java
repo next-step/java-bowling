@@ -17,8 +17,6 @@ public interface Frame {
 
     boolean isPrinting();
 
-    String result();
-
     State state();
 
     int score();

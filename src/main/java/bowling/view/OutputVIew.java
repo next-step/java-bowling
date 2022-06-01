@@ -38,7 +38,7 @@ public class OutputVIew {
             int lastRound = frames.lastRound();
 
             if (i <= lastRound && !frames.isEmpty()) {
-                return frames.getFrame(i).result();
+                return frames.getFrame(i).state().symbol();
             }
 
             return BLANK;

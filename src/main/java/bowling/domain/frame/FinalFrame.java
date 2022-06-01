@@ -74,11 +74,6 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public String result() {
-        return this.state.symbol();
-    }
-
-    @Override
     public State state() {
         return this.state;
     }
