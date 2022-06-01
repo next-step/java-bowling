@@ -60,3 +60,5 @@
         - [x] Strike
             - 첫 번쟤 시도가 10 인 상태
             - 종료 상태
+- [x] 점수계산
+    - [볼링 점수 계산 방법](bowling_calculation.md) 
