@@ -40,7 +40,9 @@ class GeneralFrameTest {
 
 		assertAll(
 			() -> assertThat(frame.isEnd()).isFalse(),
-			() -> assertThat(frame.nextFrame()).isNotPresent()
+			() -> assertThat(frame).extracting("next").isNull(),
+			() -> assertThat(frame.nextFrame()).isNotPresent(),
+			() -> assertThat(frame).extracting("next").isNull()
 		);
 	}
 
@@ -63,7 +65,9 @@ class GeneralFrameTest {
 		assertAll(
 			() -> assertThat(frame.isEnd()).isTrue(),
 			() -> assertThat(frame.number()).isNotEqualTo(Frame.MAX_FRAME_NUMBER - 1),
-			() -> assertThat(frame.nextFrame()).isPresent().get().isEqualTo(GeneralFrame.initialized(2))
+			() -> assertThat(frame).extracting("next").isNull(),
+			() -> assertThat(frame.nextFrame()).isPresent().get().isEqualTo(GeneralFrame.initialized(2)),
+			() -> assertThat(frame).extracting("next").isNotNull()
 		);
 	}
 
@@ -86,7 +90,9 @@ class GeneralFrameTest {
 		assertAll(
 			() -> assertThat(frame.isEnd()).isTrue(),
 			() -> assertThat(frame.number()).isEqualTo(Frame.MAX_FRAME_NUMBER - 1),
-			() -> assertThat(frame.nextFrame()).isPresent().get().isExactlyInstanceOf(EndFrame.class)
+			() -> assertThat(frame).extracting("next").isNull(),
+			() -> assertThat(frame.nextFrame()).isPresent().get().isExactlyInstanceOf(EndFrame.class),
+			() -> assertThat(frame).extracting("next").isNotNull()
 		);
 	}
 }

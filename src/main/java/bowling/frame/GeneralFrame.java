@@ -13,6 +13,7 @@ public class GeneralFrame implements Frame {
 
 	private final int number;
 	private State state;
+	private Frame next;
 
 	private GeneralFrame(int number, State state) {
 		Validator.min(MIN_FRAME_NUMBER, number,
@@ -40,7 +41,8 @@ public class GeneralFrame implements Frame {
 	@Override
 	public Optional<Frame> nextFrame() {
 		if (isEnd()) {
-			return Optional.of(createFrame());
+			this.next = createFrame();
+			return Optional.of(this.next);
 		}
 		return Optional.empty();
 	}
