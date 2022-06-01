@@ -63,7 +63,6 @@ public class FinalFrame implements Frame{
         }
     }
 
-
     public int getScore() {
         Score score = states.get(0).getScore();
         for(int i = 1; i<statesSize(); i++) {

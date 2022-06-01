@@ -35,10 +35,6 @@ public class NormalFrame implements Frame {
         return this.state;
     }
 
-    public boolean isCalculateScore() {
-        return this.state.getScore().isCalculateScore();
-    }
-
     @Override
     public String expression() {
         String stateExpression = this.state.expression();
@@ -51,7 +47,7 @@ public class NormalFrame implements Frame {
         if(score.isCalculateScore()) {
             return score;
         }
-        return this.nextFrame.calculateAddScore(beforeScore);
+        return this.nextFrame.calculateAddScore(score);
     }
 
     @Override
