@@ -3,8 +3,10 @@ package bowling.frame;
 import java.util.Objects;
 import java.util.Optional;
 
+import bowling.score.Score;
 import bowling.state.Initialized;
 import bowling.state.State;
+import bowling.util.ErrorTarget;
 import bowling.util.Validator;
 
 public class GeneralFrame implements Frame {
@@ -62,6 +64,34 @@ public class GeneralFrame implements Frame {
 	@Override
 	public String symbol() {
 		return state.symbol();
+	}
+
+	@Override
+	public int score() {
+		if (!state.canScore()) {
+			return Score.UNAVAILABLE_NOW;
+		}
+
+		Score score = state.score();
+		if (score.canScore()) {
+			return score.getValue();
+		}
+
+		return next.bonus(score);
+	}
+
+	@Override
+	public int bonus(Score previousScore) {
+		try {
+			Score score = state.bonus(previousScore);
+			if (score.canScore()) {
+				return score.getValue();
+			}
+			Validator.notNull(next, ErrorTarget.NEXT_FRAME);
+			return next.bonus(score);
+		} catch (UnsupportedOperationException | IllegalArgumentException e) {
+			return Score.UNAVAILABLE_NOW;
+		}
 	}
 
 	@Override

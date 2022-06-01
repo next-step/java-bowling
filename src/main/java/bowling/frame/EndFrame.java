@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import bowling.score.Score;
 import bowling.state.Initialized;
 import bowling.state.Open;
 import bowling.state.State;
@@ -78,6 +79,32 @@ public class EndFrame implements Frame {
 		return states.stream()
 			.map(State::symbol)
 			.collect(Collectors.joining("|"));
+	}
+
+	@Override
+	public int score() {
+		if (!isEnd()) {
+			return Score.UNAVAILABLE_NOW;
+		}
+
+		return states.stream()
+			.mapToInt(state -> state.score().getValue())
+			.sum();
+	}
+
+	@Override
+	public int bonus(Score previousScore) {
+		try {
+			State firstState = states.get(0);
+			Score currentScore = firstState.bonus(previousScore);
+			if (currentScore.canScore()) {
+				return currentScore.getValue();
+			}
+			State secondState = states.get(1);
+			return secondState.bonus(currentScore).getValue();
+		} catch (UnsupportedOperationException | IndexOutOfBoundsException e) {
+			return Score.UNAVAILABLE_NOW;
+		}
 	}
 
 	@Override
