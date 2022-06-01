@@ -1,5 +1,7 @@
 package bowling.domain.score;
 
+import bowling.domain.score.exception.DoNotCalculateException;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Score {
@@ -22,7 +24,7 @@ public class Score {
 
     public int getScore() {
         if (!doNotCalculate()) {
-            throw new IllegalArgumentException();
+            throw new DoNotCalculateException(this.left);
         }
 
         return this.score;
