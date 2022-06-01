@@ -9,6 +9,8 @@ public class BowlingApp {
         String name = Input.scan();
         Player player = new Player(name);
         Output.printFrame(player);
+
         player.plays();
+        Output.printFrames(player);
     }
 }

@@ -13,6 +13,11 @@ public class Player {
         this.frames = new Frames();
     }
 
+    public Player(PlayerName playerName, Frames frames) {
+        this.playerName = playerName;
+        this.frames = frames;
+    }
+
     public static int pitch(int max) {
         return RANDOM.nextInt(max + 1);
     }
@@ -31,5 +36,17 @@ public class Player {
 
     public PlayerName name() {
         return this.playerName;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "playerName=" + playerName +
+                ", frames=" + frames +
+                '}';
+    }
+
+    public Frames frames() {
+        return this.frames;
     }
 }

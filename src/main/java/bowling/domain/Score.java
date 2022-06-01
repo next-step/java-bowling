@@ -78,6 +78,14 @@ public class Score {
         return this.scoreType != ScoreType.SECOND;
     }
 
+    @Override
+    public String toString() {
+        return "Score{" +
+                "scoreType=" + scoreType +
+                ", hit=" + hit +
+                "}\n";
+    }
+
     public ScoreType scoreType() {
         return this.scoreType;
     }

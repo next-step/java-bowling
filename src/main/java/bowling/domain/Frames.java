@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.view.Output;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
@@ -41,6 +42,7 @@ public class Frames {
             }
         }
         handleLast(player);
+//        return new Player(player.name(), this);
     }
 
     private void handleLast(Player player) {
@@ -56,6 +58,14 @@ public class Frames {
             return;
         }
         Output.printFrame(10, player);
+    }
+
+    @Override
+    public String toString() {
+        return "Frames{" +
+                "scores=" + scores +
+                ", subtotals=" + subtotals +
+                '}';
     }
 
     public List<Subtotal> subtotals() {

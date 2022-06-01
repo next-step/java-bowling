@@ -38,4 +38,8 @@ public class Output {
     public static String format(String string) {
         return String.format("%-5s", string);
     }
+
+    public static void printFrames(Player player) {
+        player.frames()
+    }
 }

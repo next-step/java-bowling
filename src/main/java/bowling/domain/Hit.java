@@ -73,6 +73,15 @@ public class Hit {
         return charHandler(this.third);
     }
 
+    @Override
+    public String toString() {
+        return "Hit{" +
+                "first=" + first +
+                ", second=" + second +
+                ", third=" + third +
+                '}';
+    }
+
     public int third() {
         return this.third;
     }

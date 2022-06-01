@@ -66,6 +66,14 @@ public class Subtotal {
         return this.waiting;
     }
 
+    @Override
+    public String toString() {
+        return "Subtotal{" +
+                "score=" + score +
+                ", waiting=" + waiting +
+                "}\n";
+    }
+
     public void setLast() {
         this.waiting = 0;
     }
