@@ -7,7 +7,6 @@ public class Frames {
 
     private Frame head;
     private Frame current;
-    private Integer size = 1;
 
     public Frames() {
         create();
@@ -26,17 +25,15 @@ public class Frames {
     }
 
     private void create() {
-        Frame frame = new Frame();
+        Frame frame = new NormalFrame();
 
         head = frame;
         current = frame;
         for (int i = 1; i < BOWLING_NORMAL_FRAMES; ++i) {
             frame = frame.createNext();
-            ++size;
         }
 
         frame.createFinal();
-        ++size;
     }
 
     public Frame head() {
@@ -45,10 +42,6 @@ public class Frames {
 
     public boolean isEndGame() {
         return current == null;
-    }
-
-    public Integer size() {
-        return size;
     }
 
 }

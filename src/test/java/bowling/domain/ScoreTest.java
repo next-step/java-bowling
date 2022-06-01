@@ -13,4 +13,18 @@ class ScoreTest {
         assertThat(score).isNotNull();
     }
 
+    @Test
+    void createSpareTest() {
+        Score spare = Score.ofSpare();
+
+        assertThat(spare).isEqualTo(new Score(10, 1));
+    }
+
+    @Test
+    void createStrikeTest() {
+        Score strike = Score.ofStrike();
+
+        assertThat(strike).isEqualTo(new Score(10, 2));
+    }
+
 }

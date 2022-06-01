@@ -1,11 +1,8 @@
 package bowling.domain;
 
-import static bowling.domain.Frames.BOWLING_FINAL_FRAMES;
-import static bowling.domain.Frames.BOWLING_NORMAL_FRAMES;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.Optional;
 import java.util.OptionalInt;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,14 +24,6 @@ class FramesTest {
         assertThat(frames).isNotNull();
     }
 
-    @DisplayName("프레임들 객체에서 볼링게임 기본프레임 9개와 최종프레임 1개를 생성한다.")
-    @Test
-    void createTest2() {
-        Frames frames = new Frames();
-
-        assertThat(frames.size()).isEqualTo(BOWLING_NORMAL_FRAMES + BOWLING_FINAL_FRAMES);
-    }
-
     @DisplayName("프레임들 생성 후 현재프레임은 가장 앞 프레임이다.")
     @Test
     void createTest3() {
@@ -48,8 +37,7 @@ class FramesTest {
         frames.throwBall(4);
         frames.throwBall(3);
 
-        assertThat(frames.head().firstScore()).isEqualTo(4);
-        assertThat(frames.head().secondScore()).isEqualTo(3);
+        assertThat(frames.head().scoreCalculated().getAsInt()).isEqualTo(7);
     }
 
     @DisplayName("유효하지 않은 맞춘개수 입력 시 예외 발생한다.")
@@ -72,11 +60,9 @@ class FramesTest {
         frames.throwBall(8);    // 3
         frames.throwBall(1);    // 3
 
-        assertThat(frames.head().firstScore()).isEqualTo(9);                // 1-1
-        assertThat(frames.head().secondScore()).isEqualTo(1);               // 1-2
-        assertThat(frames.head().next().firstScore()).isEqualTo(10);        // 2-1
-        assertThat(frames.current().before().firstScore()).isEqualTo(8);    // 3-1
-        assertThat(frames.current().before().secondScore()).isEqualTo(1);   // 3-2
+        assertThat(frames.head().scoreCalculated().getAsInt()).isEqualTo(20);              // 1-1
+        assertThat(frames.head().next().scoreCalculated().getAsInt()).isEqualTo(19);       // 2-1
+        assertThat(frames.current().before().scoreCalculated().getAsInt()).isEqualTo(9);        // 3-1
     }
 
     @DisplayName("10프레임에 스트라이크를 치면 2번 볼 던지기 추가 진행 가능하다.")
@@ -189,6 +175,38 @@ class FramesTest {
 
         frames.throwBall(10);
         assertThat(finalFrame.scoreCalculated()).isEqualTo(OptionalInt.of(20));
+    }
+
+    @DisplayName("8,9 프레임에 스트라이크를 친 경우도 마지막프레임 결과에 따라 정상 계산된다.")
+    @Test
+    void calculateScoreTest5() {
+        throwBallSevenFrames();
+
+        Frame eightFrame = frames.current();
+        frames.throwBall(10);
+        assertThat(eightFrame.scoreCalculated()).isEmpty();
+
+        Frame nineFrame = frames.current();
+        frames.throwBall(10);
+        assertThat(eightFrame.scoreCalculated()).isEmpty();
+        assertThat(nineFrame.scoreCalculated()).isEmpty();
+
+        frames.throwBall(10);
+        assertThat(eightFrame.scoreCalculated()).isEqualTo(OptionalInt.of(30));
+        assertThat(nineFrame.scoreCalculated()).isEmpty();
+
+        frames.throwBall(10);
+        assertThat(nineFrame.scoreCalculated()).isEqualTo(OptionalInt.of(30));
+    }
+
+    private void throwBallSevenFrames() {
+        frames.throwBall(10); // 1
+        frames.throwBall(10);
+        frames.throwBall(10);
+        frames.throwBall(10);
+        frames.throwBall(10); // 5
+        frames.throwBall(10);
+        frames.throwBall(10); // 7
     }
 
 }

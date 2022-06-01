@@ -1,11 +1,10 @@
 package bowling.domain;
 
-import java.util.Objects;
-import java.util.Optional;
+import bowling.domain.state.FinalState;
 import java.util.OptionalInt;
 
 public class FinalFrame extends Frame {
-    private Score extraScore;
+    private FinalState state = new FinalState();
 
     public FinalFrame(Frame beforeFrame, Frame nextFrame) {
         super(beforeFrame, nextFrame);
@@ -16,73 +15,26 @@ public class FinalFrame extends Frame {
         if (!isDone()) {
             return OptionalInt.empty();
         }
+        return state.score().getAsOptionalInt();
+    }
 
-        int score = 0;
-
-        if (getFirstScoreAsOptional().isPresent()) {
-            score += firstScore();
-        }
-
-        if (getSecondScoreAsOptional().isPresent()) {
-            score += secondScore();
-        }
-
-        if (extraScore != null) {
-            score += extraScore.get();
-        }
-
-        return OptionalInt.of(score);
+    @Override
+    protected Score bonusScore(Score score) {
+        return state.addBonus(score);
     }
 
     @Override
     public void shot(int hitCount) {
-        if (isPlayedTwice() && checkExtraShot()) {
-            extraScore = new Score(hitCount);
-            return;
-        }
-
-        super.shot(hitCount);
-
-        if (checkExtraShot()) {
-            pins = new Pins();
-        }
-    }
-
-    private boolean isPlayedTwice() {
-        return scores.isPlayTwice();
-    }
-
-    private boolean checkExtraShot() {
-        return scores.isSpare() || scores.isStrike();
+        state.bowl(hitCount);
     }
 
     @Override
     public boolean isDone() {
-        return (!checkExtraShot() && isPlayedTwice())
-            || Objects.nonNull(extraScore);
-    }
-
-    public Optional<Score> getExtraScore() {
-        return Optional.ofNullable(extraScore);
+        return state.isDone();
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-        FinalFrame that = (FinalFrame) o;
-        return Objects.equals(extraScore, that.extraScore);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), extraScore);
+    public String output() {
+        return state.output();
     }
 }
