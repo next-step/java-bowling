@@ -29,8 +29,9 @@ public class Frames {
 
     public List<Integer> getScores(){
         List<Integer> scores = new ArrayList<>();
-        Frame frame = getCurFrame();
+        Frame frame = frames.get(0);
         int accumulatedScore = 0;
+
         while(frame.isEnd() && frame.hasNext()){
             accumulatedScore += frame.score();
             scores.add(accumulatedScore);

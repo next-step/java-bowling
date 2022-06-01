@@ -9,13 +9,13 @@ import bowling.domain.score.Scores;
 
 import java.util.List;
 
-public class First extends Running{
+public class First extends Running {
 
     private static final int MAX_PIN_HIT_COUNT = 10;
     private static final int PITCH_COUNT = 1;
     private final Pins prePins;
 
-    public First(Scores scores){
+    public First(Scores scores) {
         this.prePins = new Pins(scores.getFistScore());
     }
 
@@ -29,13 +29,13 @@ public class First extends Running{
     }
 
     private void validate(Pins pins) {
-        if(pins.getCount() + prePins.getCount() > MAX_PIN_HIT_COUNT){
+        if (pins.getCount() + prePins.getCount() > MAX_PIN_HIT_COUNT) {
             throw new OutOfPinCountException();
         }
     }
 
-    public static boolean checkType(Scores scores){
-        if(!scores.checkSize(PITCH_COUNT)){
+    public static boolean checkType(Scores scores) {
+        if (!scores.checkSize(PITCH_COUNT)) {
             return false;
         }
         return scores.getFistScore() != MAX_PIN_HIT_COUNT;
@@ -50,4 +50,5 @@ public class First extends Running{
     public PitchResult getPitchResult() {
         return PitchResult.first(prePins.getCount());
     }
+
 }
