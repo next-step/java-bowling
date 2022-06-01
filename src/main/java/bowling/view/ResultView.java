@@ -1,5 +1,6 @@
 package bowling.view;
 
+import bowling.domain.Lane;
 import bowling.domain.BowlingGame;
 import bowling.frame.*;
 import bowling.status.*;
@@ -17,10 +18,9 @@ public class ResultView {
     private static final String NAME = "NAME";
     private static final String DIVIDER = "|";
 
-    public void printFrameBoard(BowlingGame bowlingGame) {
+    public void printFrameBoard(Lane lane) {
         printRoundBoard();
-        printBoard(bowlingGame);
-        printScoreBoard(bowlingGame);
+        printAllBoard(lane);
     }
 
     private void printRoundBoard() {
@@ -41,6 +41,13 @@ public class ResultView {
         }
 
         System.out.println(roundBuilder);
+    }
+
+    private void printAllBoard(Lane lane) {
+        for (BowlingGame bowlingGame : lane.bowlingGames()) {
+            printBoard(bowlingGame);
+            printScoreBoard(bowlingGame);
+        }
     }
 
     private void printBoard(BowlingGame bowlingGame) {

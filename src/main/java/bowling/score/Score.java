@@ -28,11 +28,12 @@ public class Score {
         return new Score(MAX_SCORE, TWO_WAIT_LEFTOVER);
     }
 
-    public Score bonusScore(int score) {
+    public void bonusScore(int score) {
         if (!canCalculate()) {
             throw new IllegalStateException("본 점수는 추가 점수가 없는 Score 입니다.");
         }
-        return new Score(this.score += score, leftover--);
+        this.score += score;
+        this.leftover--;
     }
 
     public boolean canCalculate() {

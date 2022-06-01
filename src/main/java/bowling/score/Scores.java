@@ -37,7 +37,6 @@ public class Scores {
     }
 
     public void addScore(Score score) {
-        // Score 가 필요한거고
         if (score.canCalculate()) {
             bonusScores.add(score);
             return;
