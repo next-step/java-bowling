@@ -27,10 +27,6 @@ public class BowlingGame {
         return getCurFrame().hasNext();
     }
 
-    public int getFameIndex(){
-        return getCurFrame().getIndex();
-    }
-
     public Frame getCurFrame(){
         return frames.getCurFrame();
     }
