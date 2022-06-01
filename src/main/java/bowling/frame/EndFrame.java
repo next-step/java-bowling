@@ -15,6 +15,8 @@ public class EndFrame implements Frame {
 
 	private static final int MIN_TRY_COUNT = 2;
 	private static final int MAX_TRY_COUNT = 3;
+	private static final int FIRST_INDEX = 0;
+	private static final int SECOND_INDEX = 1;
 
 	private final List<State> states = new ArrayList<>();
 	private int tryCount;
@@ -95,12 +97,14 @@ public class EndFrame implements Frame {
 	@Override
 	public int bonus(Score previousScore) {
 		try {
-			State firstState = states.get(0);
+			State firstState = states.get(FIRST_INDEX);
+
 			Score currentScore = firstState.bonus(previousScore);
 			if (currentScore.canScore()) {
 				return currentScore.getValue();
 			}
-			State secondState = states.get(1);
+
+			State secondState = states.get(SECOND_INDEX);
 			return secondState.bonus(currentScore).getValue();
 		} catch (UnsupportedOperationException | IndexOutOfBoundsException e) {
 			return Score.UNAVAILABLE_NOW;

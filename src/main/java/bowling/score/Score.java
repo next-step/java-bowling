@@ -6,6 +6,10 @@ public class Score {
 
 	public static final int UNAVAILABLE_NOW = -1;
 
+	private static final int OPEN_BONUS_COUNT = 0;
+	private static final int SPARE_BONUS_COUNT = 1;
+	private static final int STRIKE_BONUS_COUNT = 2;
+
 	private final int value;
 	private final int bonusCount;
 
@@ -19,15 +23,15 @@ public class Score {
 	}
 
 	public static Score open(Score first, Score second) {
-		return new Score(first.value + second.value, 0);
+		return new Score(first.value + second.value, OPEN_BONUS_COUNT);
 	}
 
 	public static Score spare(Score maxScore) {
-		return new Score(maxScore.value, 1);
+		return new Score(maxScore.value, SPARE_BONUS_COUNT);
 	}
 
 	public static Score strike(Score score) {
-		return new Score(score.value, 2);
+		return new Score(score.value, STRIKE_BONUS_COUNT);
 	}
 
 	public boolean canScore() {
