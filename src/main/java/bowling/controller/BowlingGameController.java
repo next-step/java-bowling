@@ -1,11 +1,17 @@
 package bowling.controller;
 
+import bowling.Games;
 import bowling.domain.Game;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BowlingGameController {
 
-    public Game createFrames(String name) {
-        return new Game(name);
+    public Games createFrames(List<String> names) {
+        return new Games(names.stream()
+            .map(Game::new)
+            .collect(Collectors.toUnmodifiableList())
+        );
     }
 
 }

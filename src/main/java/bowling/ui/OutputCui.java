@@ -4,6 +4,7 @@ import static java.lang.System.out;
 
 import bowling.domain.Frame;
 import bowling.domain.Game;
+import java.util.List;
 import java.util.OptionalInt;
 
 public final class OutputCui {
@@ -13,11 +14,30 @@ public final class OutputCui {
 
     private OutputCui() { }
 
+    public static void drawStatus(List<Game> games) {
+        drawUpperLine();
+
+        for (int i = 0; i < games.size(); ++i) {
+            Game game = games.get(i);
+            String name = game.name();
+            Frame current = game.frames().head();
+            out.printf(fixedLengthString("|  %s |", FRAME_WIDTH), name);
+
+            while (current.next() != null) {
+                drawFrame(current);
+                current = current.next();
+            }
+            drawFinalFrame(current);
+            drawScoreLine(game.frames().head());
+            out.println();
+        }
+    }
+
     public static void drawStatus(Game game) {
+        drawUpperLine();
+
         String name = game.name();
         Frame current = game.frames().head();
-
-        drawUpperLine(current);
         out.printf(fixedLengthString("|  %s |", FRAME_WIDTH), name);
 
         while (current.next() != null) {
@@ -29,18 +49,17 @@ public final class OutputCui {
         out.println();
     }
 
-    private static void drawUpperLine(Frame frame) {
+    private static void drawUpperLine() {
         out.print("| NAME |");
-        int number = 1;
-        while (frame != null) {
-            out.printf(fixedLengthString("  %s  |", FRAME_WIDTH), String.format("%02d", number++));
-            frame = frame.next();
+        int number = 0;
+        while (number++ < 10) {
+            out.printf(fixedLengthString("  %s  |", FRAME_WIDTH), String.format("%02d", number));
         }
         out.println();
     }
 
     private static void drawFrame(Frame frame) {
-        out.printf("   " + frame.output() + "  |");
+        out.printf("  " + frame.output() + " |");
     }
 
     private static void drawFinalFrame(Frame finalFrame) {

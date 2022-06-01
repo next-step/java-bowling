@@ -14,7 +14,11 @@ public class FirstBowl implements State {
     }
 
     public int firstScore() {
-        return firstPins.hitCount();
+        if (this.firstPins != null) {
+            return firstPins.hitCount();
+        }
+
+        throw new CannotCalculateScoreException("아직 점수가 없음");
     }
 
     @Override
@@ -38,7 +42,7 @@ public class FirstBowl implements State {
 
     @Override
     public String output() {
-        return firstScore() + SCORE_SEPARATOR;
+        return firstScore() + SCORE_SEPARATOR + " ";
     }
 
 }

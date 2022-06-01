@@ -23,6 +23,6 @@ public class Strike implements State {
 
     @Override
     public String output() {
-        return STRIKE_SYMBOL;
+        return " " + STRIKE_SYMBOL + " ";
     }
 }

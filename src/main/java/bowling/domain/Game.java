@@ -23,13 +23,15 @@ public class Game {
         return frames.isEndGame();
     }
 
-    public void throwBall(int hitCount) {
+    public boolean throwBall(int hitCount) {
         Frame current = frames.current();
         frames.throwBall(hitCount);
 
         if (!current.equals(frames.current())) {
             ++frameNumber;
+            return true;
         }
+        return false;
     }
 
     public int frameNumber() {

@@ -91,6 +91,10 @@ public class FinalState implements State {
         return firstScore != null && secondScore != null;
     }
 
+    private boolean isSecondStrike() {
+        return secondScore != null && secondScore.get() == 10;
+    }
+
     @Override
     public String output() {
         StringBuilder sb = new StringBuilder();
@@ -122,7 +126,7 @@ public class FinalState implements State {
             return;
         }
 
-        if (isStrike() && secondScore.get() == 10) {
+        if (isStrike() && isSecondStrike()) {
             sb.append("|"+"X");
             return;
         }
