@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame{
     private static final int NOT_SCORE_STATE = -1;
+    private static final String PIPE_LINE = " | ";
     private final List<State> states = new ArrayList<>();
 
     public FinalFrame() {
@@ -40,7 +41,7 @@ public class FinalFrame implements Frame{
     public String expression() {
         return states.stream()
                 .map(State::expression)
-                .collect(Collectors.joining(" | "));
+                .collect(Collectors.joining(PIPE_LINE));
     }
 
     @Override
@@ -63,7 +64,6 @@ public class FinalFrame implements Frame{
         }
     }
 
-
     public int getScore() {
         Score score = states.get(0).getScore();
         for(int i = 1; i<statesSize(); i++) {
@@ -71,7 +71,6 @@ public class FinalFrame implements Frame{
         }
         return score.getScore();
     }
-
 
     private int statesSize() {
         return this.states.size();
