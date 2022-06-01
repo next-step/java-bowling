@@ -3,6 +3,7 @@ package bowling.state;
 import java.util.Objects;
 
 import bowling.point.Point;
+import bowling.score.Score;
 
 public class Spare implements State {
 
@@ -38,6 +39,25 @@ public class Spare implements State {
 	@Override
 	public String symbol() {
 		return first.symbol() + " | /";
+	}
+
+	@Override
+	public boolean canScore() {
+		return true;
+	}
+
+	@Override
+	public Score score() {
+		return Score.spare(Point.max().score());
+	}
+
+	@Override
+	public Score bonus(Score prevScore) {
+		Score result = prevScore.accumulate(this.first.score());
+		if (result.canScore()) {
+			return result;
+		}
+		return result.accumulate(this.second.score());
 	}
 
 	@Override

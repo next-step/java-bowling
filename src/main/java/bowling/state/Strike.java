@@ -1,6 +1,7 @@
 package bowling.state;
 
 import bowling.point.Point;
+import bowling.score.Score;
 
 public class Strike implements State {
 
@@ -31,5 +32,20 @@ public class Strike implements State {
 	@Override
 	public String symbol() {
 		return "X";
+	}
+
+	@Override
+	public boolean canScore() {
+		return true;
+	}
+
+	@Override
+	public Score score() {
+		return Score.strike(STRIKE_POINT.score());
+	}
+
+	@Override
+	public Score bonus(Score prevScore) {
+		return prevScore.accumulate(STRIKE_POINT.score());
 	}
 }

@@ -7,6 +7,9 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+import bowling.point.Point;
+import bowling.score.Score;
+
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @DisplayName("핀이 남은 상태 테스트")
 class RemainTest {
@@ -40,6 +43,22 @@ class RemainTest {
 		Remain remain = new Remain(1);
 
 		assertThat(remain.throwBowl(8)).isEqualTo(new Open(1, 8));
+	}
+
+	@Test
+	void 핀이_남은_상태는_점수_계산_불가() {
+		Remain remain = new Remain(1);
+		assertThatThrownBy(
+			remain::score
+		).isExactlyInstanceOf(UnsupportedOperationException.class);
+	}
+
+	@Test
+	void 핀이_남은_상태는_보너스_횟수를_참가하고_점수를_제공함() {
+		Remain remain = new Remain(1);
+		Score strike = Score.strike(Point.max().score());
+
+		assertThat(remain.bonus(strike)).isEqualTo(Score.of(11, 1));
 	}
 
 }

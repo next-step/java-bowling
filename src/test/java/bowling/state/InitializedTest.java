@@ -7,6 +7,8 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
+import bowling.score.Score;
+
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @DisplayName("처음 상태 테스트")
 class InitializedTest {
@@ -31,5 +33,20 @@ class InitializedTest {
 	@Test
 	void 처음_상태에서_투구했을_때_점수가_10이면_스트라이크로_넘어감() {
 		assertThat(INITIALIZED.throwBowl(10)).isSameAs(Strike.getInstance());
+	}
+
+	@Test
+	void 처음_상태에서는_점수_계산_불가() {
+		assertThatThrownBy(
+			INITIALIZED::score
+		).isExactlyInstanceOf(UnsupportedOperationException.class);
+	}
+
+	@Test
+	void 처음_상태에서는_보너스_점수_산출_불가() {
+		Score operand = Score.of(0, 0);
+		assertThatThrownBy(
+			() -> INITIALIZED.bonus(operand)
+		).isExactlyInstanceOf(UnsupportedOperationException.class);
 	}
 }

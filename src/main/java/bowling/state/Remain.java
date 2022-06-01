@@ -3,6 +3,7 @@ package bowling.state;
 import java.util.Objects;
 
 import bowling.point.Point;
+import bowling.score.Score;
 
 public class Remain implements State {
 
@@ -36,6 +37,21 @@ public class Remain implements State {
 	@Override
 	public String symbol() {
 		return first.symbol();
+	}
+
+	@Override
+	public boolean canScore() {
+		return false;
+	}
+
+	@Override
+	public Score score() {
+		throw new UnsupportedOperationException("핀이 남은 상태는 점수를 계산할 수 없습니다.");
+	}
+
+	@Override
+	public Score bonus(Score prevScore) {
+		return prevScore.accumulate(this.first.score());
 	}
 
 	@Override
