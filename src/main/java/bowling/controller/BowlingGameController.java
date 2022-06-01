@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class BowlingGameController {
 
-    public Games createFrames(List<String> names) {
+    public Games createGames(List<String> names) {
         return new Games(names.stream()
             .map(Game::new)
             .collect(Collectors.toUnmodifiableList())

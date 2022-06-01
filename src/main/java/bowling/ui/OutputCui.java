@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.OptionalInt;
 
 public final class OutputCui {
-    private static final String MISS_SYMBOL = "-";
-    private static final String GUTTER_SYMBOL = "-";
     private static final int FRAME_WIDTH = 7;
 
     private OutputCui() { }

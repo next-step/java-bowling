@@ -11,13 +11,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class FrameTest {
+class NormalFrameTest {
 
     private Frame frame;
 
     @BeforeEach
     void setUp() {
-        frame = new Frame();
+        frame = new NormalFrame(null, null);
     }
 
     @Test
@@ -71,14 +71,14 @@ class FrameTest {
     
     @Test
     void createTest() {
-        Frame frame = new Frame();
+        Frame frame = new NormalFrame();
         assertThat(frame).isNotNull();
     }
 
     @DisplayName("현재 프레임과 연결된 다음 프레임을 만들어서 연결한다.")
     @Test
     void createTest2() {
-        Frame currentFrame = new Frame();
+        Frame currentFrame = new NormalFrame();
         Frame nextFrame = currentFrame.createNext();
         Frame beforeFrame = currentFrame.createBefore();
 

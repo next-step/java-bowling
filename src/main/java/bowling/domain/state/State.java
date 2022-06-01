@@ -4,6 +4,9 @@ import bowling.domain.Score;
 import bowling.exception.CannotCalculateScoreException;
 
 public interface State {
+    String CANNOT_ADD_SCORE_STATUS = "점수를 더할 수 없는 상태";
+    String CANNOT_CALCULATE_SCORE_STATUS = "점수를 계산 할 수 없는 상태";
+
     static State ofSpare(int firstHitCount) {
         return new Spare(firstHitCount);
     }
@@ -29,11 +32,11 @@ public interface State {
     String output();
 
     default Score addBonus(Score previousScore) {
-        throw new CannotCalculateScoreException("점수를 더할 수 없는 상태");
+        throw new CannotCalculateScoreException(CANNOT_ADD_SCORE_STATUS);
     }
 
     default Score score() {
-        throw new CannotCalculateScoreException("점수 계산 불가한 상태");
+        throw new CannotCalculateScoreException(CANNOT_CALCULATE_SCORE_STATUS);
     }
 
     default boolean isDone() {

@@ -3,7 +3,6 @@ package bowling.domain;
 public class Game {
 
     private String ownerName;
-    private Integer frameNumber = 1;
     private Frames frames;
 
     public Game(String ownerName) {
@@ -27,15 +26,7 @@ public class Game {
         Frame current = frames.current();
         frames.throwBall(hitCount);
 
-        if (!current.equals(frames.current())) {
-            ++frameNumber;
-            return true;
-        }
-        return false;
-    }
-
-    public int frameNumber() {
-        return frameNumber;
+        return !current.equals(frames.current());
     }
 
 }

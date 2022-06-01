@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import static bowling.domain.ScoreSymbols.SCORE_SEPARATOR;
+
 import bowling.domain.Score;
 
 public class Miss implements State {
@@ -33,6 +35,6 @@ public class Miss implements State {
 
     @Override
     public String output() {
-        return firstHitCount + "|" + secondHitCount;
+        return firstHitCount + SCORE_SEPARATOR + secondHitCount;
     }
 }

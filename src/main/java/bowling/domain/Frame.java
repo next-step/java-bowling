@@ -1,13 +1,12 @@
 package bowling.domain;
 
 import bowling.domain.state.State;
-import bowling.exception.CannotCalculateScoreException;
 import java.util.OptionalInt;
 
-public class Frame {
+public abstract class Frame {
 
-    private Frame nextFrame;
-    private Frame beforeFrame;
+    protected Frame nextFrame;
+    protected Frame beforeFrame;
     protected State state = State.ofReady();
 
     public Frame() {
@@ -19,25 +18,7 @@ public class Frame {
         this.nextFrame = nextFrame;
     }
 
-    public OptionalInt scoreCalculated() {
-        if (!state.canCalculateScore()) {
-            return OptionalInt.empty();
-        }
-
-        Score score = state.score();
-
-        if (score.isAddedAllBonus()) {
-            return score.getAsOptionalInt();
-        }
-
-        try {
-            score = nextFrame.bonusScore(score);
-        } catch (CannotCalculateScoreException e) {
-            return OptionalInt.empty();
-        }
-
-        return score.getAsOptionalInt();
-    }
+    abstract public OptionalInt scoreCalculated();
 
     protected Score bonusScore(Score previousScore) {
         Score score = state.addBonus(previousScore);
@@ -50,7 +31,7 @@ public class Frame {
     }
 
     public Frame createNext() {
-        this.nextFrame = new Frame(this, null);
+        this.nextFrame = new NormalFrame(this, null);
         return nextFrame;
     }
 
@@ -59,7 +40,7 @@ public class Frame {
     }
 
     public Frame createBefore() {
-        this.beforeFrame = new Frame(null, this);
+        this.beforeFrame = new NormalFrame(null, this);
         return beforeFrame;
     }
 

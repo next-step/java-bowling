@@ -1,6 +1,5 @@
 package bowling.ui;
 
-import bowling.domain.Frames;
 import bowling.domain.Game;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

@@ -5,17 +5,21 @@ import java.util.OptionalInt;
 
 public class Score {
 
-    public static final int DEFAULT_SCORE = 0;
+    public static final int MAXIMUM_SCORE = 10;
+    private static final int MINIMUM_SCORE = 0;
+    private static final int ZERO_BONUS_COUNT = 0;
+    private static final int STRIKE_BONUS_COUNT = 2;
+    private static final int SPARE_BONUS_COUNT = 1;
 
     private final int score;
     private final int bonusCount;
 
     public Score() {
-        this(DEFAULT_SCORE, 0);
+        this(MINIMUM_SCORE, ZERO_BONUS_COUNT);
     }
 
     public Score(int hitCount) {
-        this(hitCount, 0);
+        this(hitCount, ZERO_BONUS_COUNT);
     }
 
     public Score(int score, int bonusCount) {
@@ -28,11 +32,11 @@ public class Score {
     }
 
     public static Score ofStrike() {
-        return new Score(10, 2);
+        return new Score(MAXIMUM_SCORE, STRIKE_BONUS_COUNT);
     }
 
     public static Score ofSpare() {
-        return new Score(10, 1);
+        return new Score(MAXIMUM_SCORE, SPARE_BONUS_COUNT);
     }
 
     public int get() {
@@ -44,7 +48,7 @@ public class Score {
     }
 
     public boolean isAddedAllBonus() {
-        return bonusCount == 0;
+        return bonusCount == ZERO_BONUS_COUNT;
     }
 
     public Score add(int hitCount) {
@@ -66,5 +70,26 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(score, bonusCount);
+    }
+
+    public boolean isSpareWith(Score otherScore) {
+        return this.score + otherScore.score == MAXIMUM_SCORE;
+    }
+
+    public boolean isStrike() {
+        return this.score == MAXIMUM_SCORE;
+    }
+
+    public boolean isMiss() {
+        return this.score == MINIMUM_SCORE;
+    }
+
+    public Score add(Score otherScore) {
+        return new Score(this.score + otherScore.score, this.bonusCount-1);
+    }
+
+    @Override
+    public String toString() {
+        return Integer.toString(score);
     }
 }

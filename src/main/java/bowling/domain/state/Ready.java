@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import static bowling.domain.ScoreSymbols.EMPTY_SYMBOL;
+
 public class Ready implements State {
 
     @Override
@@ -13,7 +15,7 @@ public class Ready implements State {
 
     @Override
     public String output() {
-        return "   ";
+        return EMPTY_SYMBOL;
     }
 
 }

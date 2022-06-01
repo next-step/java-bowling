@@ -1,10 +1,20 @@
 package bowling.domain.state;
 
+import static bowling.domain.ScoreSymbols.GUTTER_SYMBOL;
+import static bowling.domain.ScoreSymbols.MISS_SYMBOL;
+import static bowling.domain.ScoreSymbols.SCORE_GAP;
+import static bowling.domain.ScoreSymbols.SCORE_SEPARATOR;
+import static bowling.domain.ScoreSymbols.SPARE_SYMBOL;
+import static bowling.domain.ScoreSymbols.STRIKE_SYMBOL;
+
 import bowling.domain.Score;
 import bowling.exception.CannotCalculateScoreException;
 import java.util.Objects;
 
 public class FinalState implements State {
+    private static final String NO_BONUS_CHANCE = "마지막 프레임에서 보너스투구 기회를 얻지 못하고 세번의 투구는 불가.";
+    private static final String CANNOT_CALCULATE_SCORE_YET = "아직 점수 계산 불가";
+
     private Score firstScore;
     private Score secondScore;
     private Score extraScore;
@@ -27,17 +37,17 @@ public class FinalState implements State {
 
     private void checkValidShot(int hitCount) {
         if (!isSpareOrStrike()) {
-            throw new IllegalStateException("마지막 프레임에서 보너스투구 기회를 얻지 못하고 세번의 투구는 불가.");
+            throw new IllegalStateException(NO_BONUS_CHANCE);
         }
         extraScore = new Score(hitCount);
     }
 
     @Override
     public Score score() {
-        Score score = firstScore.add(secondScore.get());
+        Score score = firstScore.add(secondScore);
 
-        if (extraScore != null) {
-            return score.add(extraScore.get());
+        if (Objects.nonNull(extraScore)) {
+            return score.add(extraScore);
         }
         return score;
     }
@@ -45,18 +55,18 @@ public class FinalState implements State {
     @Override
     public Score addBonus(Score score) {
         validateBonus(firstScore);
-        score = score.add(firstScore.get());
+        score = score.add(firstScore);
         if (score.isAddedAllBonus()) {
             return score;
         }
 
         validateBonus(secondScore);
-        return score.add(secondScore.get());
+        return score.add(secondScore);
     }
 
     private void validateBonus(Score score) {
-        if (score == null) {
-            throw new CannotCalculateScoreException("아직 점수 계산 불가");
+        if (Objects.isNull(score)) {
+            throw new CannotCalculateScoreException(CANNOT_CALCULATE_SCORE_YET);
         }
     }
 
@@ -73,8 +83,8 @@ public class FinalState implements State {
 
     @Override
     public boolean isStrike() {
-        if (firstScore != null) {
-            return firstScore.get() == 10;
+        if (Objects.nonNull(firstScore)) {
+            return firstScore.isStrike();
         }
         return false;
     }
@@ -82,80 +92,96 @@ public class FinalState implements State {
     @Override
     public boolean isSpare() {
         if (isPlayedTwice()) {
-            return firstScore.get() + secondScore.get() == 10;
+            return firstScore.isSpareWith(secondScore);
         }
         return false;
     }
 
     private boolean isPlayedTwice() {
-        return firstScore != null && secondScore != null;
+        return Objects.nonNull(firstScore) && Objects.nonNull(secondScore);
     }
 
     private boolean isSecondStrike() {
-        return secondScore != null && secondScore.get() == 10;
+        return Objects.nonNull(secondScore) && secondScore.isStrike();
     }
 
     @Override
     public String output() {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder scoreStringBuilder = new StringBuilder();
 
-        outputFirstScore(sb);
-        outputSecondScore(sb);
-        outputExtraScore(sb);
+        outputFirstScore(scoreStringBuilder);
+        outputSecondScore(scoreStringBuilder);
+        outputExtraScore(scoreStringBuilder);
 
-        return sb.toString();
+        return scoreStringBuilder.toString();
     }
 
     private void outputFirstScore(StringBuilder sb) {
+        if (Objects.isNull(firstScore)) {
+            sb.append(SCORE_GAP);
+            return;
+        }
+
         if (isStrike()) {
-            sb.append("X");
+            sb.append(STRIKE_SYMBOL);
             return;
         }
 
-        if (isSpare()) {
-            sb.append(""+firstScore.get());
+        if (firstScore.isMiss()) {
+            sb.append(GUTTER_SYMBOL);
             return;
         }
 
-        sb.append(" ");
+        sb.append(firstScore);
     }
 
     private void outputSecondScore(StringBuilder sb) {
+        if (Objects.isNull(secondScore)) {
+            sb.append(SCORE_GAP + SCORE_GAP);
+            return;
+        }
+
         if (isSpare()) {
-            sb.append("|"+"/");
+            sb.append(SCORE_SEPARATOR + SPARE_SYMBOL);
             return;
         }
 
         if (isStrike() && isSecondStrike()) {
-            sb.append("|"+"X");
+            sb.append(SCORE_SEPARATOR + STRIKE_SYMBOL);
             return;
         }
 
-        if (secondScore != null) {
-            sb.append("|"+secondScore.get());
+        if (secondScore.isMiss()) {
+            sb.append(SCORE_SEPARATOR + MISS_SYMBOL);
             return;
         }
 
-        sb.append("  ");
+        sb.append(SCORE_SEPARATOR).append(secondScore);
+
     }
 
     private void outputExtraScore(StringBuilder sb) {
-        if (extraScore == null) {
-            sb.append(" ");
+        if (Objects.isNull(extraScore)) {
+            sb.append(SCORE_GAP);
             return;
         }
 
-        if (extraScore.get() == 10) {
-            sb.append("X");
+        if (extraScore.isMiss()) {
+            sb.append(MISS_SYMBOL);
             return;
         }
 
-        if (!isSpare() && secondScore.get() + extraScore.get() == 10) {
-            sb.append("/");
+        if (extraScore.isStrike()) {
+            sb.append(STRIKE_SYMBOL);
             return;
         }
 
-        sb.append(extraScore.get());
+        if (!isSpare() && secondScore.isSpareWith(extraScore)) {
+            sb.append(SPARE_SYMBOL);
+            return;
+        }
+
+        sb.append(extraScore);
     }
 
 }
