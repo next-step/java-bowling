@@ -40,7 +40,7 @@ public final class OutputCui {
     }
 
     private static void drawFrame(Frame frame) {
-        out.printf("  " + frame.output() + " |");
+        out.printf("   " + frame.output() + "  |");
     }
 
     private static void drawFinalFrame(Frame finalFrame) {

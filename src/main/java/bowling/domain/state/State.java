@@ -1,10 +1,9 @@
 package bowling.domain.state;
 
 import bowling.domain.Score;
+import bowling.exception.CannotCalculateScoreException;
 
 public interface State {
-    String GAP = " ";
-
     static State ofSpare(int firstHitCount) {
         return new Spare(firstHitCount);
     }

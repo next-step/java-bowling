@@ -4,7 +4,7 @@ import bowling.domain.Score;
 
 public class Spare implements State {
     private static final String SPARE_SYMBOL = "/";
-    private static final String SCORE_SEPARATOR = "|";
+    public static final String SCORE_SEPARATOR = "|";
 
     private final int firstHitCount;
 

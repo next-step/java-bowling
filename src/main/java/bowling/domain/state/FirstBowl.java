@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import static bowling.domain.state.Spare.SCORE_SEPARATOR;
+
 import bowling.domain.Pins;
 import bowling.domain.Score;
 import bowling.exception.CannotCalculateScoreException;
@@ -36,7 +38,7 @@ public class FirstBowl implements State {
 
     @Override
     public String output() {
-        return firstScore() + "| ";
+        return firstScore() + SCORE_SEPARATOR;
     }
 
 }

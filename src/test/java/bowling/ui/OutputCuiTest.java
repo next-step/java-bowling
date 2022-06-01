@@ -32,9 +32,8 @@ class OutputCuiTest {
         game.throwBall(10);
         game.throwBall(10);
         game.throwBall(10);
-
-        System.out.println();
         OutputCui.drawStatus(game);
+        System.out.println();
     }
 
     @DisplayName("5|/5")
@@ -45,9 +44,8 @@ class OutputCuiTest {
         game.throwBall(5);
         game.throwBall(5);
         game.throwBall(5);
-
-        System.out.println();
         OutputCui.drawStatus(game);
+        System.out.println();
     }
 
     @DisplayName("5|/X")
@@ -58,9 +56,8 @@ class OutputCuiTest {
         game.throwBall(5);
         game.throwBall(5);
         game.throwBall(10);
-
-        System.out.println();
         OutputCui.drawStatus(game);
+        System.out.println();
     }
 
 }

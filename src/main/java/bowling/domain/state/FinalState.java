@@ -91,21 +91,67 @@ public class FinalState implements State {
         return firstScore != null && secondScore != null;
     }
 
-    public Score getExtraScore() {
-        return extraScore;
-    }
-
     @Override
     public String output() {
-        if (isDone() && extraScore != null) {
-            return firstScore.get() + "|" + secondScore.get() + extraScore.get();
+        StringBuilder sb = new StringBuilder();
+
+        outputFirstScore(sb);
+        outputSecondScore(sb);
+        outputExtraScore(sb);
+
+        return sb.toString();
+    }
+
+    private void outputFirstScore(StringBuilder sb) {
+        if (isStrike()) {
+            sb.append("X");
+            return;
         }
 
-        if (isDone()) {
-            return firstScore.get() + "|" + secondScore.get();
+        if (isSpare()) {
+            sb.append(""+firstScore.get());
+            return;
         }
 
-        return "    ";
+        sb.append(" ");
+    }
+
+    private void outputSecondScore(StringBuilder sb) {
+        if (isSpare()) {
+            sb.append("|"+"/");
+            return;
+        }
+
+        if (isStrike() && secondScore.get() == 10) {
+            sb.append("|"+"X");
+            return;
+        }
+
+        if (secondScore != null) {
+            sb.append("|"+secondScore.get());
+            return;
+        }
+
+        sb.append("  ");
+    }
+
+    private void outputExtraScore(StringBuilder sb) {
+        if (extraScore == null) {
+            sb.append(" ");
+            return;
+        }
+
+        if (extraScore.get() == 10) {
+            sb.append("X");
+            return;
+        }
+
+        if (!isSpare() && secondScore.get() + extraScore.get() == 10) {
+            sb.append("/");
+            return;
+        }
+
+        sb.append(extraScore.get());
     }
 
 }
