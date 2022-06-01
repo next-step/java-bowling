@@ -34,12 +34,6 @@ public class First extends Running {
         }
     }
 
-    public static boolean checkType(Scores scores) {
-        if (!scores.checkSize(PITCH_COUNT)) {
-            return false;
-        }
-        return scores.getFistScore() != MAX_PIN_HIT_COUNT;
-    }
 
     @Override
     public Score calculateScore(Score before) {

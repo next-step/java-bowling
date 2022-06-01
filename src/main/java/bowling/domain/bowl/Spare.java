@@ -46,13 +46,6 @@ public class Spare extends Ended{
         return new Score(MAX_PIN_HIT_COUNT, SPARE_REMAIN_PITCH_COUNT);
     }
 
-    public static boolean checkType(Scores scores){
-        if(!scores.checkSize(PITCH_COUNT)){
-            return false;
-        }
-        return scores.getScoreSum() == MAX_PIN_HIT_COUNT;
-    }
-
     @Override
     public String toString(){
         return "[Spare first: "+firstPin

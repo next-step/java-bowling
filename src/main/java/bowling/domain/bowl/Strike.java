@@ -28,13 +28,6 @@ public class Strike extends Ended{
         return new Score(MAX_PIN_HIT_COUNT, STRIKE_REMAIN_PITCH_COUNT);
     }
 
-    public static boolean checkType(Scores scores){
-        if(!scores.checkSize(PITCH_COUNT)){
-            return false;
-        }
-        return scores.getFistScore() == STRIKE_VALUE;
-    }
-
     @Override
     public String toString(){
         return "[Strike]";

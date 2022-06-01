@@ -39,14 +39,6 @@ public class Miss extends Ended{
         return new Score(firstPin.getCount() + secondPin.getCount(), DEFAULT_BONUS_PITCH_COUNT);
     }
 
-    public static boolean checkType(Scores scores){
-        if(!scores.checkSize(PITCH_COUNT)){
-            return false;
-        }
-        int sum = scores.getScoreSum();
-        return MIN_PIN_HIT_COUNT < sum && sum < MAX_PIN_HIT_COUNT;
-    }
-
     @Override
     public String toString(){
         return "[Miss first: "+firstPin

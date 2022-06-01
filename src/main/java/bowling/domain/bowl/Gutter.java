@@ -32,12 +32,6 @@ public class Gutter extends Ended{
         return new Score(GUTTER_SCORE_VALUE, DEFAULT_BONUS_PITCH_COUNT);
     }
 
-    public static boolean checkType(Scores scores){
-        if(!scores.checkSize(PITCH_COUNT)){
-            return false;
-        }
-        return scores.getScoreSum() == GUTTER_VALUE;
-    }
 
     @Override
     public String toString(){
