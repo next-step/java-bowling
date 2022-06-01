@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.state.State;
+import bowling.exception.CannotCalculateScoreException;
 import java.util.OptionalInt;
 
 public class Frame {
@@ -31,7 +32,7 @@ public class Frame {
 
         try {
             score = nextFrame.bonusScore(score);
-        } catch (IllegalStateException e) {
+        } catch (CannotCalculateScoreException e) {
             return OptionalInt.empty();
         }
 

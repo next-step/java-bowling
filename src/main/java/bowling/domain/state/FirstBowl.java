@@ -2,6 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.Pins;
 import bowling.domain.Score;
+import bowling.exception.CannotCalculateScoreException;
 
 public class FirstBowl implements State {
     private Pins firstPins;
@@ -21,7 +22,7 @@ public class FirstBowl implements State {
             return score;
         }
 
-        throw new IllegalStateException("두번째 던질 때 까지 보너스 점수 계산 불가");
+        throw new CannotCalculateScoreException("두번째 던질 때 까지 보너스 점수 계산 불가");
     }
 
     @Override

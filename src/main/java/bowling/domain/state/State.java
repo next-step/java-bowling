@@ -30,11 +30,11 @@ public interface State {
     String output();
 
     default Score addBonus(Score previousScore) {
-        throw new IllegalStateException("보너스 점수를 더할 수 없는 상태");
+        throw new CannotCalculateScoreException("점수를 더할 수 없는 상태");
     }
 
     default Score score() {
-        throw new IllegalStateException("점수 계산 불가한 상태");
+        throw new CannotCalculateScoreException("점수 계산 불가한 상태");
     }
 
     default boolean isDone() {

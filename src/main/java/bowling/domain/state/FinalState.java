@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Score;
+import bowling.exception.CannotCalculateScoreException;
 import java.util.Objects;
 
 public class FinalState implements State {
@@ -55,7 +56,7 @@ public class FinalState implements State {
 
     private void validateBonus(Score score) {
         if (score == null) {
-            throw new IllegalStateException("아직 점수 계산 불가");
+            throw new CannotCalculateScoreException("아직 점수 계산 불가");
         }
     }
 
