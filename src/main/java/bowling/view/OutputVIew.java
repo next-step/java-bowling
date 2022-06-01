@@ -25,6 +25,23 @@ public class OutputVIew {
         System.out.print(message);
     }
 
+    public static void printScore(Game game) {
+        Frames frames = game.frames();
+        AtomicReference<String> message = new AtomicReference<>(String.format(FIRST_COLUMN, BLANK));
+
+        IntFunction<String> func = i -> {
+            int lastRound = frames.lastRound();
+
+            if (i <= lastRound && !frames.isEmpty()) {
+                return frames.getFrame(i).score() + BLANK;
+            }
+
+            return BLANK;
+        };
+
+        System.out.println(createTable(message, func) + System.lineSeparator());
+    }
+
     public static void printGame(Game game) {
         printIndex();
 
@@ -34,14 +51,15 @@ public class OutputVIew {
 
         IntFunction<String> func = i -> {
             int lastRound = frames.lastRound();
+
             if (i <= lastRound && !frames.isEmpty()) {
-                return frames.getFrame(i).currentResult();
+                return frames.getFrame(i).result();
             }
 
             return BLANK;
         };
 
-        System.out.println(createTable(message, func) + System.lineSeparator());
+        System.out.println(createTable(message, func));
     }
 
     private static void printIndex() {
@@ -50,6 +68,7 @@ public class OutputVIew {
             int index = i + ONE;
             return String.format("%02d", index);
         };
+
         System.out.println(createTable(message, indexFunc));
     }
 

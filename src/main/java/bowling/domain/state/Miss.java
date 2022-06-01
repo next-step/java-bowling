@@ -14,17 +14,28 @@ public class Miss extends State {
     }
 
     @Override
-    public State bowling(int pins) {
-        return Ready.of(pins);
-    }
-
-    @Override
     public String symbol() {
         return String.format("%s|%s", this.firstPitch.pins(), this.secondPitch.pins());
     }
 
     @Override
-    public Score score() {
-        return null;
+    public int totalScore() {
+        return Math.addExact(this.firstPitch.pins(), this.secondPitch.pins());
+    }
+
+    @Override
+    public Score calculateScore(Score before) {
+        Score after = before.nextScore(this.firstPitch.pins());
+
+        if (after.doNotCalculate()) {
+            return after;
+        }
+
+        return after.nextScore(this.secondPitch.pins());
+    }
+
+    @Override
+    public State bowling(int pins) {
+        return Ready.of(pins);
     }
 }

@@ -19,6 +19,7 @@ public class BowlingController {
             int pins = InputView.inputPins(game.currentRound());
             game.bowling(pins);
             OutputVIew.printGame(game);
+            OutputVIew.printScore(game);
         }
     }
 }

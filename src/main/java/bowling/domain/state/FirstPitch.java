@@ -16,6 +16,21 @@ public class FirstPitch extends State {
     }
 
     @Override
+    public String symbol() {
+        return String.valueOf(this.firstPitch.pins());
+    }
+
+    @Override
+    public int totalScore() {
+        return this.firstPitch.pins();
+    }
+
+    @Override
+    public Score calculateScore(Score before) {
+        return before.nextScore(this.totalScore());
+    }
+
+    @Override
     public State bowling(int pins) {
         int totalPins = Math.addExact(firstPitch.pins(), pins);
         if (totalPins == MAX_PINS) {
@@ -27,15 +42,5 @@ public class FirstPitch extends State {
         }
 
         return new Miss(this.firstPitch, pins);
-    }
-
-    @Override
-    public String symbol() {
-        return String.valueOf(this.firstPitch.pins());
-    }
-
-    @Override
-    public Score score() {
-        return null;
     }
 }

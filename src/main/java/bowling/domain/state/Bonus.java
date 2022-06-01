@@ -33,7 +33,33 @@ public class Bonus extends State {
     }
 
     @Override
-    public Score score() {
-        return null;
+    public int totalScore() {
+        return Math.addExact(this.state.totalScore(), this.bonusState.totalScore());
+    }
+
+    @Override
+    public Score calculateScore(Score before) {
+        if (this.state.is(Bonus.class)) {
+            return calculateScoreByBonus(before);
+        }
+
+        Score after = before.nextScore(this.state.totalScore());
+
+        if (after.doNotCalculate()) {
+            return after;
+        }
+
+        return after.nextScore(this.bonusState.totalScore());
+    }
+
+    private Score calculateScoreByBonus(Score before) {
+        Bonus bonus = (Bonus) this.state;
+        Score first = bonus.state.calculateScore(before);
+
+        if (first.doNotCalculate()) {
+            return first;
+        }
+
+        return first.nextScore(bonus.bonusState.totalScore());
     }
 }

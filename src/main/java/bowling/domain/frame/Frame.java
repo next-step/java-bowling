@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
 import bowling.domain.state.State;
 
 public interface Frame {
@@ -14,7 +15,11 @@ public interface Frame {
 
     boolean isFinishBowling();
 
-    String currentResult();
+    String result();
 
     State state();
+
+    int score();
+
+    int nextScore(Score before);
 }

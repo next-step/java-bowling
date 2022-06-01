@@ -4,10 +4,7 @@ import bowling.domain.score.Score;
 
 public class Gutter extends State {
 
-    @Override
-    public State bowling(int pins) {
-        return Ready.of(pins);
-    }
+    private static final int ZERO = 0;
 
     @Override
     public String symbol() {
@@ -15,7 +12,17 @@ public class Gutter extends State {
     }
 
     @Override
-    public Score score() {
-        return null;
+    public int totalScore() {
+        return ZERO;
+    }
+
+    @Override
+    public Score calculateScore(Score before) {
+        return before;
+    }
+
+    @Override
+    public State bowling(int pins) {
+        return Ready.of(pins);
     }
 }

@@ -5,6 +5,8 @@ import bowling.domain.score.Score;
 
 public class Spare extends State {
 
+    private static final int LEFT_COUNT = 1;
+
     private final Pitch firstPitch;
     private final Pitch secondPitch;
 
@@ -14,8 +16,29 @@ public class Spare extends State {
     }
 
     @Override
-    public State bonusBowling(int pins) {
-        return new Bonus(this, Ready.of(pins));
+    public String symbol() {
+        return String.format("%s|/", firstPitch.pins());
+    }
+
+    @Override
+    public int totalScore() {
+        return Math.addExact(this.firstPitch.pins(), this.secondPitch.pins());
+    }
+
+    @Override
+    public Score calculateScore(Score before) {
+        Score after = before.nextScore(this.firstPitch.pins());
+
+        if (after.doNotCalculate()) {
+            return after;
+        }
+
+        return after.nextScore(this.secondPitch.pins());
+    }
+
+    @Override
+    public Score createScore() {
+        return new Score(LEFT_COUNT, this.totalScore());
     }
 
     @Override
@@ -24,12 +47,7 @@ public class Spare extends State {
     }
 
     @Override
-    public String symbol() {
-        return String.format("%s|/", firstPitch.pins());
-    }
-
-    @Override
-    public Score score() {
-        return null;
+    public State bonusBowling(int pins) {
+        return new Bonus(this, Ready.of(pins));
     }
 }
