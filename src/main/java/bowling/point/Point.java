@@ -3,6 +3,7 @@ package bowling.point;
 import java.util.HashMap;
 import java.util.Map;
 
+import bowling.score.Score;
 import bowling.util.Validator;
 
 public class Point {
@@ -48,5 +49,9 @@ public class Point {
 			return "-";
 		}
 		return String.valueOf(value);
+	}
+
+	public Score score() {
+		return Score.of(value, 0);
 	}
 }
