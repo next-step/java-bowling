@@ -7,8 +7,8 @@ import bowling.domain.score.Scores;
 
 public class Spare extends Ended{
 
-    private static final int PITCH_COUNT = 2;
-    private static final int MAX_PIN_HIT_COUNT = 10;
+    public static final int PITCH_COUNT = 2;
+    public static final int MAX_PIN_HIT_COUNT = 10;
     private static final int SPARE_REMAIN_PITCH_COUNT = 1;
 
     private final Pins firstPin;

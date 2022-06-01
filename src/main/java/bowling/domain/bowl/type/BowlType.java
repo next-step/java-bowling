@@ -12,12 +12,43 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum BowlType {
-    GUTTER(Gutter::checkType, Gutter::new),
-    MISS(Miss::checkType, Miss::new),
-    SPARE(Spare::checkType, Spare::new),
-    STRIKE(Strike::checkType, Strike::new),
-    FIRST(First::checkType, First::new),
-    READY(Ready::checkType, Ready::new);
+    GUTTER((scores -> {
+        if(!scores.checkSize(Gutter.PITCH_COUNT)){
+            return false;
+        }
+        return scores.getScoreSum() == Gutter.GUTTER_VALUE;
+    }), Gutter::new),
+
+    MISS((scores -> {
+        if(!scores.checkSize(Miss.PITCH_COUNT)){
+            return false;
+        }
+        int sum = scores.getScoreSum();
+        return Miss.MIN_PIN_HIT_COUNT < sum && sum < Miss.MAX_PIN_HIT_COUNT;
+    }), Miss::new),
+
+    SPARE((scores)->{
+        if(!scores.checkSize(Spare.PITCH_COUNT)){
+            return false;
+        }
+        return scores.getScoreSum() == Spare.MAX_PIN_HIT_COUNT;
+    }, Spare::new),
+
+    STRIKE((scores -> {
+        if(!scores.checkSize(Strike.PITCH_COUNT)){
+            return false;
+        }
+        return scores.getFistScore() == Strike.STRIKE_VALUE;
+    }), Strike::new),
+
+    FIRST((scores)->{
+        if (!scores.checkSize(First.PITCH_COUNT)) {
+            return false;
+        }
+        return scores.getFistScore() != First.MAX_PIN_HIT_COUNT;
+    }, First::new),
+
+    READY((scores -> scores.checkSize(Ready.PITCH_COUNT)), Ready::new);
 
     private final Condition condition;
     private final Creation creation;

@@ -11,8 +11,8 @@ import java.util.List;
 
 public class First extends Running {
 
-    private static final int MAX_PIN_HIT_COUNT = 10;
-    private static final int PITCH_COUNT = 1;
+    public static final int MAX_PIN_HIT_COUNT = 10;
+    public static final int PITCH_COUNT = 1;
     private final Pins prePins;
 
     public First(Scores scores) {

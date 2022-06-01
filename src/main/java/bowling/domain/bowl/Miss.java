@@ -7,9 +7,9 @@ import bowling.domain.score.Scores;
 
 public class Miss extends Ended{
 
-    private static final int PITCH_COUNT = 2;
-    private static final int MIN_PIN_HIT_COUNT = 0;
-    private static final int MAX_PIN_HIT_COUNT = 10;
+    public static final int PITCH_COUNT = 2;
+    public static final int MIN_PIN_HIT_COUNT = 0;
+    public static final int MAX_PIN_HIT_COUNT = 10;
     private static final int DEFAULT_BONUS_PITCH_COUNT = 0;
 
     private final Pins firstPin;

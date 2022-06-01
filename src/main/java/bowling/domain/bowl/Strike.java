@@ -6,8 +6,8 @@ import bowling.domain.score.Scores;
 
 public class Strike extends Ended{
 
-    private static final int PITCH_COUNT = 1;
-    private static final int STRIKE_VALUE = 10;
+    public static final int PITCH_COUNT = 1;
+    public static final int STRIKE_VALUE = 10;
     private static final int STRIKE_REMAIN_PITCH_COUNT = 2;
     private static final int MAX_PIN_HIT_COUNT = 10;
 

@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Ready extends Running{
 
-    private static final int PITCH_COUNT = 0;
+    public static final int PITCH_COUNT = 0;
     private static final int MAX_PIN_HIT_COUNT = 10;
 
     public Ready() {}
@@ -32,10 +32,6 @@ public class Ready extends Running{
         if(pins.getCount()  > MAX_PIN_HIT_COUNT){
             throw new OutOfPinCountException();
         }
-    }
-
-    public static boolean checkType(Scores scores){
-        return scores.checkSize(PITCH_COUNT);
     }
 
     @Override

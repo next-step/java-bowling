@@ -6,8 +6,8 @@ import bowling.domain.score.Scores;
 
 public class Gutter extends Ended{
 
-    private static final int PITCH_COUNT = 2;
-    private static final int GUTTER_VALUE = 0;
+    public static final int PITCH_COUNT = 2;
+    public static final int GUTTER_VALUE = 0;
     private static final int GUTTER_SCORE_VALUE = 0;
     private static final int DEFAULT_BONUS_PITCH_COUNT = 0;
 
