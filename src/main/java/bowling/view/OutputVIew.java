@@ -1,9 +1,11 @@
 package bowling.view;
 
+import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.game.Game;
 import bowling.domain.player.Player;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.IntFunction;
 import java.util.stream.IntStream;
@@ -25,23 +27,6 @@ public class OutputVIew {
         System.out.print(message);
     }
 
-    public static void printScore(Game game) {
-        Frames frames = game.frames();
-        AtomicReference<String> message = new AtomicReference<>(String.format(FIRST_COLUMN, BLANK));
-
-        IntFunction<String> func = i -> {
-            int lastRound = frames.lastRound();
-
-            if (i <= lastRound && !frames.isEmpty()) {
-                return frames.getFrame(i).score() + BLANK;
-            }
-
-            return BLANK;
-        };
-
-        System.out.println(createTable(message, func) + System.lineSeparator());
-    }
-
     public static void printGame(Game game) {
         printIndex();
 
@@ -60,6 +45,32 @@ public class OutputVIew {
         };
 
         System.out.println(createTable(message, func));
+
+        printScore(game);
+    }
+
+    private static void printScore(Game game) {
+        Frames frames = game.frames();
+        AtomicInteger score = new AtomicInteger();
+        AtomicReference<String> message = new AtomicReference<>(String.format(FIRST_COLUMN, BLANK));
+
+        IntFunction<String> func = i -> {
+            int lastRound = frames.lastRound();
+            if (!(i <= lastRound && !frames.isEmpty())) {
+                return BLANK;
+            }
+
+            Frame currentFrame = frames.getFrame(i);
+            score.addAndGet(currentFrame.score());
+
+            if (!currentFrame.isPrinting()) {
+                return BLANK;
+            }
+
+            return score.get() + BLANK;
+        };
+
+        System.out.println(createTable(message, func) + System.lineSeparator());
     }
 
     private static void printIndex() {

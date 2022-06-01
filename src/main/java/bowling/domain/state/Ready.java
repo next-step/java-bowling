@@ -6,9 +6,7 @@ public class Ready extends State {
 
     private static final int MAX_PINS = 10;
     private static final int ZERO = 0;
-
-    private Ready() {
-    }
+    private static final int INIT = -1;
 
     public static State of(int pins) {
         return new Ready().bowling(pins);
@@ -26,13 +24,17 @@ public class Ready extends State {
 
     @Override
     public Score calculateScore(Score before) {
-        return before;
+        return new Score(ZERO, before);
     }
 
     @Override
     public State bowling(int pins) {
         if (pins == MAX_PINS) {
             return new Strike(pins);
+        }
+
+        if (pins == INIT) {
+            return new Ready();
         }
 
         return new FirstPitch(pins);

@@ -14,11 +14,10 @@ public class NormalFrame implements Frame {
     private State state;
     private Frame nextFrame;
 
-
     private NormalFrame(int round, int pins) {
         this.round = round;
         this.state = Ready.of(pins);
-        this.nextFrame = this.next(0);
+        this.nextFrame = this.next(-1);
     }
 
     public static NormalFrame bowling(int round, int pins) {
@@ -60,6 +59,19 @@ public class NormalFrame implements Frame {
                 || this.state.is(Spare.class)
                 || this.state.is(Miss.class)
                 || this.state.is(Gutter.class);
+    }
+
+    @Override
+    public boolean isPrinting() {
+        if (this.state.is(Spare.class) && !this.nextFrame.isFinishBowling()) {
+            return this.nextFrame.state().is(FirstPitch.class);
+        }
+
+        if (this.state.is(Strike.class) || this.state.is(Spare.class)) {
+            return this.isFinishBowling() && this.nextFrame.isFinishBowling();
+        }
+
+        return this.isFinishBowling();
     }
 
     @Override

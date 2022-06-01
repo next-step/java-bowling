@@ -15,6 +15,8 @@ public interface Frame {
 
     boolean isFinishBowling();
 
+    boolean isPrinting();
+
     String result();
 
     State state();

@@ -18,7 +18,7 @@ public class Gutter extends State {
 
     @Override
     public Score calculateScore(Score before) {
-        return before;
+        return new Score(ZERO, before);
     }
 
     @Override

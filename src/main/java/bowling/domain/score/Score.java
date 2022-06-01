@@ -11,6 +11,11 @@ public class Score {
         this.score = score;
     }
 
+    public Score(int left, Score before) {
+        this.left = left;
+        this.score = before.score;
+    }
+
     public Score nextScore(int pins) {
         return new Score(new AtomicInteger(this.left).decrementAndGet(), this.score += pins);
     }

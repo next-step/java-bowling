@@ -69,6 +69,11 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public boolean isPrinting() {
+        return this.isFinishBowling();
+    }
+
+    @Override
     public String result() {
         return this.state.symbol();
     }
