@@ -46,4 +46,8 @@ public class BowlingGame {
     public List<Frame> getFrames() {
         return frames.getValues();
     }
+
+    public boolean isFrameProgress(FrameNumber frameNumber) {
+        return frames.isFrameProgress(frameNumber);
+    }
 }
