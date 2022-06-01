@@ -187,4 +187,36 @@ class FramesTest {
         assertThat(finalFrame.scoreCalculated()).isEqualTo(OptionalInt.of(20));
     }
 
+    @DisplayName("8,9 프레임에 스트라이크를 친 경우도 마지막프레임 결과에 따라 정상 계산된다.")
+    @Test
+    void calculateScoreTest5() {
+        throwBallSevenFrames();
+
+        Frame eightFrame = frames.current();
+        frames.throwBall(10);
+        assertThat(eightFrame.scoreCalculated()).isEmpty();
+
+        Frame nineFrame = frames.current();
+        frames.throwBall(10);
+        assertThat(eightFrame.scoreCalculated()).isEmpty();
+        assertThat(nineFrame.scoreCalculated()).isEmpty();
+
+        frames.throwBall(10);
+        assertThat(eightFrame.scoreCalculated()).isEqualTo(OptionalInt.of(30));
+        assertThat(nineFrame.scoreCalculated()).isEmpty();
+
+        frames.throwBall(10);
+        assertThat(nineFrame.scoreCalculated()).isEqualTo(OptionalInt.of(30));
+    }
+
+    private void throwBallSevenFrames() {
+        frames.throwBall(10); // 1
+        frames.throwBall(10);
+        frames.throwBall(10);
+        frames.throwBall(10);
+        frames.throwBall(10); // 5
+        frames.throwBall(10);
+        frames.throwBall(10); // 7
+    }
+
 }

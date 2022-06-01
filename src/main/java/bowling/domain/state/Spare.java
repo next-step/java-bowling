@@ -3,15 +3,13 @@ package bowling.domain.state;
 import bowling.domain.Score;
 
 public class Spare implements State {
+    private static final String SPARE_SYMBOL = "/";
+    private static final String SCORE_SEPARATOR = "|";
 
     private final int firstHitCount;
 
     public Spare(int firstHitCount) {
         this.firstHitCount = firstHitCount;
-    }
-
-    public int firstScore() {
-        return firstHitCount;
     }
 
     @Override
@@ -34,4 +32,8 @@ public class Spare implements State {
         throw new IllegalStateException("스페어 이 후에는 볼을 더 던질 수 없음");
     }
 
+    @Override
+    public String output() {
+        return firstHitCount + SCORE_SEPARATOR + SPARE_SYMBOL;
+    }
 }

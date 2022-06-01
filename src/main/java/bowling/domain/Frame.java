@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import bowling.domain.state.State;
-import java.util.Optional;
 import java.util.OptionalInt;
 
 public class Frame {
@@ -39,7 +38,7 @@ public class Frame {
         return score.getAsOptionalInt();
     }
 
-    private Score bonusScore(Score previousScore) {
+    protected Score bonusScore(Score previousScore) {
         Score score = state.addBonus(previousScore);
 
         if (score.isAddedAllBonus()) {
@@ -71,16 +70,6 @@ public class Frame {
         return state.isDone();
     }
 
-    public Optional<Score> getFirstScoreAsOptional() {
-        return Optional.empty();
-//        return Optional.ofNullable(state.firstScore());
-    }
-
-    public Optional<Score> getSecondScoreAsOptional() {
-        return Optional.empty();
-//        return Optional.ofNullable(scores.second());
-    }
-
     public Frame next() {
         return this.nextFrame;
     }
@@ -91,6 +80,10 @@ public class Frame {
 
     protected State state() {
         return state;
+    }
+
+    public String output() {
+        return state.output();
     }
 
 }

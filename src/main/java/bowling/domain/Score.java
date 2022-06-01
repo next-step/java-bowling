@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import java.util.Objects;
 import java.util.OptionalInt;
 
 public class Score {
@@ -11,6 +12,10 @@ public class Score {
 
     public Score() {
         this(DEFAULT_SCORE, 0);
+    }
+
+    public Score(int hitCount) {
+        this(hitCount, 0);
     }
 
     public Score(int score, int bonusCount) {
@@ -46,4 +51,20 @@ public class Score {
         return new Score(this.score + hitCount, this.bonusCount-1);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Score score1 = (Score) o;
+        return score == score1.score && bonusCount == score1.bonusCount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score, bonusCount);
+    }
 }

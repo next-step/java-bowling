@@ -3,6 +3,7 @@ package bowling.domain.state;
 import bowling.domain.Score;
 
 public interface State {
+    String GAP = " ";
 
     static State ofSpare(int firstHitCount) {
         return new Spare(firstHitCount);
@@ -25,6 +26,8 @@ public interface State {
     }
 
     State bowl(int hitCount);
+
+    String output();
 
     default Score addBonus(Score previousScore) {
         throw new IllegalStateException("보너스 점수를 더할 수 없는 상태");
@@ -54,14 +57,6 @@ public interface State {
 
     default boolean isMiss() {
         return this instanceof Miss;
-    }
-
-    default boolean isReady() {
-        return this instanceof Ready;
-    }
-
-    default boolean isFirstBowl() {
-        return this instanceof FirstBowl;
     }
 
 }

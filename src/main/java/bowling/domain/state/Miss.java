@@ -11,14 +11,6 @@ public class Miss implements State {
         this.secondHitCount = secondHitCount;
     }
 
-    public int firstScore() {
-        return firstHitCount;
-    }
-
-    public int secondScore() {
-        return secondHitCount;
-    }
-
     @Override
     public Score addBonus(Score score) {
         score = score.add(firstHitCount);
@@ -39,4 +31,8 @@ public class Miss implements State {
         throw new IllegalStateException("두번 다 던진 이 후에는 볼을 더 던질 수 없음");
     }
 
+    @Override
+    public String output() {
+        return firstHitCount + "|" + secondHitCount;
+    }
 }

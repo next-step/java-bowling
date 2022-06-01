@@ -11,4 +11,9 @@ public class Ready implements State {
         return State.ofFirstBowl(countOfPin);
     }
 
+    @Override
+    public String output() {
+        return "   ";
+    }
+
 }

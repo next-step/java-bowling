@@ -33,4 +33,9 @@ public class FirstBowl implements State {
         return State.ofMiss(firstPins.hitCount(), secondHitCount);
     }
 
+    @Override
+    public String output() {
+        return firstScore() + "| ";
+    }
+
 }
