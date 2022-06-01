@@ -1,10 +1,12 @@
-package bowling.domain.State;
+package bowling.domain.state;
 
 import bowling.domain.score.Score;
 
-public class First extends RunningState {
-    public First(Pin pin) {
-        super(pin);
+import static bowling.view.OutputView.COLUMN;
+
+public class Second extends SecondaryState {
+    public Second(Pin pin, State previous) {
+        super(pin, previous);
     }
 
     @Override
@@ -19,31 +21,21 @@ public class First extends RunningState {
             return new Spare(addedPin, this);
         }
 
-        return new Second(pin, this);
+        return new Second(addedPin, this);
     }
 
     @Override
     public Score score() {
-        return Score.unScorable(pin);
-    }
-
-    @Override
-    public Score score(Score score) {
-        return score.bowl(pin);
-    }
-
-    @Override
-    public boolean isDone() {
-        return false;
+        return previous.score().bowl(pin);
     }
 
     @Override
     public String toString() {
-        return pin.toString();
+        return previous + COLUMN + pin;
     }
 
     @Override
     public String toSimpleString() {
-        return toString();
+        return pin.toString();
     }
 }

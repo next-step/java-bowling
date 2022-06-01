@@ -1,8 +1,8 @@
 package bowling.domain.frame;
 
-import bowling.domain.State.Pin;
-import bowling.domain.State.States;
 import bowling.domain.score.Score;
+import bowling.domain.state.Pin;
+import bowling.domain.state.States;
 
 import static bowling.view.OutputView.FINAL_STATE_FORMAT;
 
@@ -59,11 +59,6 @@ public class FinalFrame extends Frame {
     @Override
     public Score score(Score score) {
         return states.score(score);
-    }
-
-    @Override
-    public boolean hasNext() {
-        return false;
     }
 
     @Override

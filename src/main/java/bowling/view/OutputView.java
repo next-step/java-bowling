@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.domain.game.Game;
+import bowling.domain.game.Games;
 import bowling.domain.score.Scores;
 
 public class OutputView {
@@ -14,10 +15,13 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printBoard(Game game) {
+    public static void printBoard(Games games) {
         printBoardHead();
-        printGame(game);
-        printScore(game.score());
+        games.getGames()
+                .forEach(game -> {
+                    printGame(game);
+                    printScore(game.score());
+                });
     }
 
     private static void printBoardHead() {

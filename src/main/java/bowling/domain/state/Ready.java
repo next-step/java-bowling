@@ -1,4 +1,4 @@
-package bowling.domain.State;
+package bowling.domain.state;
 
 import bowling.domain.score.Score;
 
@@ -32,11 +32,6 @@ public class Ready extends RunningState {
     @Override
     public Score score(Score score) {
         return score;
-    }
-
-    @Override
-    public boolean isDone() {
-        return false;
     }
 
     @Override

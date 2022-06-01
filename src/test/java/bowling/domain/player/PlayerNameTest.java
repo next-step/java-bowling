@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerNameTest {
     public static final PlayerName NAME_ONE = new PlayerName("LMJ");
+    public static final PlayerName NAME_TWO = new PlayerName("JML");
 
     @ParameterizedTest
     @NullAndEmptySource

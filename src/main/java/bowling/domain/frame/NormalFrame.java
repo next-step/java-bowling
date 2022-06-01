@@ -1,8 +1,8 @@
 package bowling.domain.frame;
 
-import bowling.domain.State.Pin;
-import bowling.domain.State.State;
 import bowling.domain.score.Score;
+import bowling.domain.state.Pin;
+import bowling.domain.state.State;
 
 import static bowling.view.OutputView.NORMAL_STATE_FORMAT;
 
@@ -61,27 +61,23 @@ public class NormalFrame extends Frame {
     @Override
     public Score score() {
         Score score = state.score();
+        return nextScore(score);
+    }
 
+    @Override
+    public Score score(Score previousScore) {
+        Score score = state.score(previousScore);
+        return nextScore(score);
+    }
+
+    private Score nextScore(Score score) {
         if (score.isNotAbleToScore() && hasNext()) {
             return next.score(score);
         }
-
         return score;
     }
 
-    @Override
-    public Score score(Score score) {
-        Score nextScore = state.score(score);
-
-        if (nextScore.isNotAbleToScore() && hasNext()) {
-            return next.score(nextScore);
-        }
-
-        return nextScore;
-    }
-
-    @Override
-    public boolean hasNext() {
+    private boolean hasNext() {
         return next != null;
     }
 

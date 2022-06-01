@@ -1,4 +1,4 @@
-package bowling.domain.State;
+package bowling.domain.state;
 
 import bowling.domain.score.Score;
 
@@ -29,16 +29,6 @@ public class Gutter extends RunningState {
     @Override
     public Score score() {
         return Score.unScorable(pin);
-    }
-
-    @Override
-    public Score score(Score score) {
-        return score.bowl(pin);
-    }
-
-    @Override
-    public boolean isDone() {
-        return false;
     }
 
     @Override

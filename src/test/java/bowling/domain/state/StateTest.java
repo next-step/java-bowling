@@ -1,12 +1,12 @@
-package bowling.domain.State;
+package bowling.domain.state;
 
 import bowling.domain.score.ScoreTest;
 import org.junit.jupiter.api.Test;
 
-import static bowling.domain.State.PinTest.NINE;
-import static bowling.domain.State.PinTest.ONE;
-import static bowling.domain.State.PinTest.TEN;
-import static bowling.domain.State.PinTest.ZERO;
+import static bowling.domain.state.PinTest.NINE;
+import static bowling.domain.state.PinTest.ONE;
+import static bowling.domain.state.PinTest.TEN;
+import static bowling.domain.state.PinTest.ZERO;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;

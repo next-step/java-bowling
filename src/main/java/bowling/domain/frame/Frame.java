@@ -1,8 +1,8 @@
 package bowling.domain.frame;
 
-import bowling.domain.State.Pin;
-import bowling.domain.State.State;
 import bowling.domain.score.Score;
+import bowling.domain.state.Pin;
+import bowling.domain.state.State;
 
 public abstract class Frame {
     protected final FrameNumber frameNumber;
@@ -37,6 +37,4 @@ public abstract class Frame {
     public abstract Score score();
 
     public abstract Score score(Score score);
-
-    public abstract boolean hasNext();
 }

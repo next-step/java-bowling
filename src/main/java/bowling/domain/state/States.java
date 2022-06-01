@@ -1,4 +1,4 @@
-package bowling.domain.State;
+package bowling.domain.state;
 
 import bowling.domain.score.Score;
 
@@ -35,11 +35,7 @@ public class States {
     }
 
     public boolean isDone() {
-        if (isEmpty()) {
-            return false;
-        }
-
-        if (states.size() == INITIAL_BOWLS) {
+        if (isEmpty() || states.size() == INITIAL_BOWLS) {
             return false;
         }
 
@@ -47,11 +43,7 @@ public class States {
             return true;
         }
 
-        if (first().isDone()) {
-            return false;
-        }
-
-        return last().isMiss() || last().isSecond();
+        return second().isNotTen() && first().isNotTen();
     }
 
     private State last() {
@@ -66,7 +58,7 @@ public class States {
         if (states.size() > INITIAL_BOWLS) {
             return states.get(1);
         }
-        return null;
+        return State.ready();
     }
 
 

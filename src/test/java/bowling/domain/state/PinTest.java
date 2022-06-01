@@ -1,4 +1,4 @@
-package bowling.domain.State;
+package bowling.domain.state;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

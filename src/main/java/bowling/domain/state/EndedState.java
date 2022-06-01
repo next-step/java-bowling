@@ -1,7 +1,7 @@
-package bowling.domain.State;
+package bowling.domain.state;
 
 public abstract class EndedState extends State {
-    public EndedState(Pin pin) {
+    protected EndedState(Pin pin) {
         super(pin);
     }
 
@@ -16,5 +16,10 @@ public abstract class EndedState extends State {
         }
 
         return new First(pin);
+    }
+
+    @Override
+    public boolean isDone() {
+        return true;
     }
 }

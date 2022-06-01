@@ -1,4 +1,4 @@
-package bowling.domain.State;
+package bowling.domain.state;
 
 import bowling.domain.score.Score;
 
@@ -12,16 +12,6 @@ public class Strike extends EndedState {
     @Override
     public Score score() {
         return Score.strike(pin);
-    }
-
-    @Override
-    public Score score(Score score) {
-        return score.bowl(pin);
-    }
-
-    @Override
-    public boolean isDone() {
-        return true;
     }
 
     @Override
