@@ -33,7 +33,7 @@ public class ResultView {
     public static void printEmptyRound(User user) {
         System.out.println(MENU);
         System.out.print(user.getName());
-        for (int k = 0; k < FINAL_ROUND; k++) {
+        for(int k = 0; k<FINAL_ROUND; k++) {
             System.out.print("      " + PIPELINE);
         }
         System.out.println();
@@ -43,19 +43,19 @@ public class ResultView {
         System.out.println(MENU);
         System.out.print(user.getName());
         String frameResult = "";
-        if (i < FINAL_ROUND) {
+        if(i < FINAL_ROUND) {
             frameResult = "  " + stateExpression + EMPTY.substring(stateExpression.length());
-            RESULT_STATES.set(i - 1, frameResult + PIPELINE);
+            RESULT_STATES.set(i -1, frameResult + PIPELINE);
         }
-        if (i >= FINAL_ROUND) {
-            frameResult = "  " + stateExpression + FINAL_ROUND_EMPTY.substring(stateExpression.length());
+        if(i >= FINAL_ROUND) {
+            frameResult = "  "+stateExpression + FINAL_ROUND_EMPTY.substring(stateExpression.length());
             RESULT_STATES.set(RESULT_STATES.size() - 1, frameResult + PIPELINE);
         }
 
         for (String resultState : RESULT_STATES) {
             System.out.print(resultState);
         }
-        for (int k = i; k < FINAL_ROUND; k++) {
+        for(int k = i; k<FINAL_ROUND; k++) {
             System.out.print("      " + PIPELINE);
         }
         System.out.println();

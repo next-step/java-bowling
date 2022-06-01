@@ -17,11 +17,4 @@ public class FrameTotalScores {
     public int getSize() {
         return this.totalScores.size();
     }
-
-    @Override
-    public String toString() {
-        return "FrameTotalScores{" +
-                "totalScores=" + totalScores +
-                '}';
-    }
 }
