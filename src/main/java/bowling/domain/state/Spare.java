@@ -24,4 +24,14 @@ public class Spare extends Finished{
     public String expression() {
         return firstCountOfPins + "|/";
     }
+
+    @Override
+    public Score calculateAddScore(Score beforeScore) {
+        beforeScore = beforeScore.bowl(firstCountOfPins);
+        if(beforeScore.isCalculateScore()) {
+            return beforeScore;
+        }
+        beforeScore = beforeScore.bowl(secondCountOfPins);
+        return beforeScore;
+    }
 }

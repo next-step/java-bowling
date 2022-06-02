@@ -34,11 +34,14 @@ public class Miss extends Finished {
         return firstCountOfPins + "|" + secondCountOfPins;
     }
 
-    public int getFirstCountOfPins() {
-        return firstCountOfPins;
+    @Override
+    public Score calculateAddScore(Score beforeScore) {
+        beforeScore = beforeScore.bowl(firstCountOfPins);
+        if(beforeScore.isCalculateScore()) {
+            return beforeScore;
+        }
+        beforeScore = beforeScore.bowl(secondCountOfPins);
+        return beforeScore;
     }
 
-    public int getSecondCountOfPins() {
-        return secondCountOfPins;
-    }
 }

@@ -6,5 +6,6 @@ public interface State {
     State bowl(int countOfPins);
     Score getScore();
     String expression();
+    Score calculateAddScore(Score beforeScore);
     boolean isFinish();
 }

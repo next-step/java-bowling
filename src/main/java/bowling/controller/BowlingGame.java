@@ -1,8 +1,6 @@
 package bowling.controller;
 
-import bowling.domain.Frame;
-import bowling.domain.NormalFrame;
-import bowling.domain.User;
+import bowling.domain.*;
 import bowling.domain.state.Miss;
 import bowling.view.InputView;
 import bowling.view.ResultView;
@@ -14,31 +12,33 @@ public class BowlingGame {
 
     public static void main(String[] args) {
         User user = InputView.inputLetters();
-        Frame frame = new NormalFrame(FIRST_ROUND);
+        Frames frames = new Frames(new NormalFrame(FIRST_ROUND));
 
         ResultView.printFirstRoundFrame(user);
         int i = 1;
         while (i < FINAL_ROUND) {
             int pin = InputView.inputBowl(i).getPins();
-            Frame currentFrame = frame.bowl(pin);
-            if(frame.getState().isFinish()) {
-                ResultView.printState(user, frame.expression(), i);
-                frame = currentFrame;
+            Frame nextFrame = frames.getFrame(i).bowl(pin);
+
+            if(frames.getFrame(i).getState().isFinish()) {
+                ResultView.printState(user, frames.getFrame(i).expression(), i);
+                ResultView.printScore(frames.calculateTotalScore(i));
+                frames.add(nextFrame);
                 i++;
                 continue;
             }
-            ResultView.printState(user, frame.expression(), i);
+            ResultView.printState(user, frames.getFrame(i).expression(), i);
         }
 
         int count = 1;
         while (true) {
             int pin = InputView.inputBowl(FINAL_ROUND).getPins();
-            frame.bowl(pin);
-            ResultView.printState(user, frame.expression(), i);
-            if(count == FINAL_MAX_ROUND || frame.getState() instanceof Miss) {
+            frames.getFrame(FINAL_ROUND).bowl(pin);
+            ResultView.printState(user, frames.getFrame(FINAL_ROUND).expression(), i);
+            ResultView.printScore(frames.calculateTotalScore(i));
+            if(count == FINAL_MAX_ROUND || frames.getFrame(FINAL_ROUND).getState() instanceof Miss) {
                 break;
             }
-            i++;
             count++;
         }
     }
