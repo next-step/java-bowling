@@ -12,7 +12,7 @@ public class Player {
 	private final String name;
 
 	public Player(String name) {
-		Validator.notBlank(name, ErrorTarget.PlAYER);
+		Validator.notBlank(name, ErrorTarget.PLAYER);
 		Validator.equivalent(PLAYER_NAME_LENGTH, name.length(),
 			String.format("플레이어의 이름은 %d 글자여야 합니다. 입력 : %s", PLAYER_NAME_LENGTH, name));
 
