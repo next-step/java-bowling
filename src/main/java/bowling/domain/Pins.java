@@ -1,23 +1,36 @@
 package bowling.domain;
 
 public class Pins {
-    private static final int MIN_PINS = 0;
     private static final int MAX_PINS = 10;
+    private static final int MIN_PINS = 0;
     private final int pins;
 
-    public Pins(int countOfPins) {
-        validate(countOfPins);
-        this.pins = countOfPins;
+    public Pins(int pins) {
+        validate(pins);
+        this.pins = pins;
     }
 
-    private void validate(int countOfPins) {
-        if(countOfPins < MIN_PINS) {
-            throw new IllegalArgumentException("볼링 핀은 0개 미만일 수 없습니다.");
-        }
-        if(countOfPins > MAX_PINS) {
-            throw new IllegalArgumentException("볼링 핀은 최대 10개를 넘을 수 없습니다.");
+    private void validate(int pins) {
+        if(pins < MIN_PINS|| pins > MAX_PINS) {
+            throw new IllegalArgumentException("투구하는 핀의 범위는 0 ~ 10 입니다.");
         }
     }
+    public boolean isStrike() {
+        return this.pins == MAX_PINS;
+    }
+
+    public boolean isGutter() {
+        return this.pins == MIN_PINS;
+    }
+
+    public boolean isSpare(Pins secondPins) {
+        return this.pins + secondPins.getPins() == MAX_PINS;
+    }
+
+    public String expression() {
+        return String.valueOf(this.pins);
+    }
+
     public int getPins() {
         return pins;
     }

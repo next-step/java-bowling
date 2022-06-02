@@ -1,51 +1,28 @@
 package bowling.domain;
 
-import java.util.Objects;
-
 public class Score {
-    private static final int STRIKE_OR_SPARE = 10;
+    private static final int MAX_PINS = 10;
     private final int score;
-    private final int remainingNumber;
+    private final int remainNumber;
 
-    public Score(int score, int remainingNumber) {
+    public Score(int score, int remainNumber) {
         this.score = score;
-        this.remainingNumber = remainingNumber;
+        this.remainNumber = remainNumber;
     }
 
-    public Score bowl(int countOfPins) {
-        return new Score(this.score + countOfPins, this.remainingNumber - 1);
+    public boolean isCalculatable() {
+        return remainNumber == 0;
+    }
+
+    public Score bowl(int pins) {
+        return new Score(this.score + pins , this.remainNumber -1);
     }
 
     public static Score ofStrike() {
-        return new Score(STRIKE_OR_SPARE, 2);
-    }
-
-    public boolean isCalculateScore() {
-        return remainingNumber == 0;
-    }
-
-    public static Score ofSpare() {
-        return new Score(STRIKE_OR_SPARE, 1);
-    }
-
-    public static Score ofGutter() {
-        return new Score(0, 0);
+        return new Score(MAX_PINS, 2);
     }
 
     public int getScore() {
         return score;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Score)) return false;
-        Score score1 = (Score) o;
-        return score == score1.score && remainingNumber == score1.remainingNumber;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(score, remainingNumber);
     }
 }

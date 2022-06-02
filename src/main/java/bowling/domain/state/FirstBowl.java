@@ -6,39 +6,31 @@ import bowling.exception.BowlingGameException;
 
 public class FirstBowl extends Running {
     private static final String GUTTER_EXPRESSION = "-";
-    private static final int SPARE = 10 ;
-    private static final int GUTTER = 0;
     private final Pins pins;
 
-    public FirstBowl(int countOfPins) {
-        this.pins = new Pins(countOfPins);
+    public FirstBowl(Pins pins) {
+        this.pins = pins;
     }
 
     @Override
     public State bowl(int countOfPins) {
-        if(this.pins.getPins() + countOfPins == SPARE) {
-            return new Spare(this.pins.getPins(), countOfPins);
+        Pins secondPins = new Pins(countOfPins);
+        if(pins.isSpare(secondPins)) {
+            return new Spare();
         }
-        if(this.pins.getPins() == GUTTER && countOfPins == GUTTER) {
-            return new Gutter();
-        }
-        return new Miss(this.pins.getPins(), countOfPins);
+        return new Miss(pins, secondPins);
     }
 
     @Override
     public String expression() {
-        if(this.pins.getPins() == 0) {
+        if(pins.isGutter()) {
             return GUTTER_EXPRESSION;
         }
-        return String.valueOf(this.pins.getPins());
+        return pins.expression();
     }
 
     @Override
-    public Score calculateAddScore(Score beforeScore) {
-        beforeScore = beforeScore.bowl(this.pins.getPins());
-        if(beforeScore.isCalculateScore()) {
-            return beforeScore;
-        }
-        throw new BowlingGameException("스코어에 점수추가가 불가능 합니다.");
+    public Score calculateScore(Score beforeScore) {
+        throw new BowlingGameException("FirstBowl 상태에서는 점수를 계산할 수 없습니다.");
     }
 }

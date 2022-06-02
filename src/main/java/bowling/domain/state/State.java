@@ -3,9 +3,9 @@ package bowling.domain.state;
 import bowling.domain.Score;
 
 public interface State {
-    State bowl(int countOfPins);
+    State bowl(int pins);
     Score getScore();
     String expression();
-    Score calculateAddScore(Score beforeScore);
+    Score calculateScore(Score beforeScore);
     boolean isFinish();
 }
