@@ -11,7 +11,7 @@ public class BowlingGame {
 
     public static void start() {
         ScoreStrategy scoreStrategy = new RandomScoreStrategy();
-        Bowling bowling = new Bowling(scoreStrategy);
+        Bowling bowling = Bowling.of(scoreStrategy);
 
         String name = InputView.inputNames();
 

@@ -9,17 +9,19 @@ public class Bowling implements bowling.engine.Bowling {
     private final List<NormalFrame> normalFrames;
     private final FinalFrame finalFrame;
 
-    public Bowling(ScoreStrategy scoreStrategy) {
+    private Bowling(ScoreStrategy scoreStrategy) {
         this.normalFrames = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            normalFrames.add(new NormalFrame(scoreStrategy));
+        NormalFrame normalFrame = NormalFrame.firstWithRandom(scoreStrategy);
+        normalFrames.add(normalFrame);
+        for (int i = 1; i < 9; i++) {
+            normalFrame = (normalFrame.nextWithRandom(scoreStrategy));
+            normalFrames.add(normalFrame);
         }
         this.finalFrame = new FinalFrame(scoreStrategy);
     }
 
-    public Bowling(List<NormalFrame> normalFrames, FinalFrame finalFrame) {
-        this.normalFrames = normalFrames;
-        this.finalFrame = finalFrame;
+    public static Bowling of(ScoreStrategy scoreStrategy) {
+        return new Bowling(scoreStrategy);
     }
 
     public List<NormalFrame> getNormalFrames() {

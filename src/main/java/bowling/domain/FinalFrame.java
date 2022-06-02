@@ -12,7 +12,7 @@ public class FinalFrame implements bowling.engine.FinalFrame {
     public FinalFrame(ScoreStrategy scoreStrategy) {
         int first = scoreStrategy.createFirst();
         int second = scoreStrategy.createSecond(first);
-        this.normalFrame = new bowling.domain.NormalFrame(first, second);
+        this.normalFrame = NormalFrame.firstWithFactor(first, second);
         this.Bonus = selectBonus(first + second, scoreStrategy);
     }
 

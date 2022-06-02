@@ -87,12 +87,12 @@ public class ResultView {
 
     private static String oneTumble(int num1, int num2) {
         if (num1 + num2 == TEN) {
-            return selectBonus(num1);
+            return selectSpecial(num1);
         }
         return discriminateGutter(num1) + "|" + discriminateGutter(num2);
     }
 
-    private static String selectBonus(int num1) {
+    private static String selectSpecial(int num1) {
         if (num1 == TEN) {
             return STRIKE;
         }
