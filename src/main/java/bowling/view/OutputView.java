@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import bowling.frame.Frame;
-import bowling.frame.Frames;
-import bowling.player.Player;
+import bowling.game.BowlingGame;
+import bowling.game.EachGame;
 import bowling.score.Score;
 
 public class OutputView {
@@ -19,11 +19,10 @@ public class OutputView {
 	private static final String SCORE_FORMAT = "    %-3d |";
 	private static final String EMPTY_FORMAT = "        |";
 
-	public void showResult(Player player, Frames frames) {
+	public void showResult2(BowlingGame bowlingGame) {
 		showHeader();
-		List<Frame> values = frames.values();
-		showContent(player, values);
-		showScore(values);
+		bowlingGame.eachGames()
+			.forEach(this::showEachGameResult);
 	}
 
 	private void showHeader() {
@@ -31,15 +30,21 @@ public class OutputView {
 			"|  NAME  |   01   |   02   |   03   |   04   |   05   |   06   |   07   |   08   |   09   |   10   |");
 	}
 
-	private void showContent(Player player, List<Frame> frames) {
-		String result = createNameFormat(player)
+	private void showEachGameResult(EachGame eachGame) {
+		List<Frame> frames = eachGame.frames();
+		showEachGameContent(eachGame.playerName(), frames);
+		showEachGameScore(frames);
+	}
+
+	private void showEachGameContent(String playerName, List<Frame> frames) {
+		String result = createNameFormat(playerName)
 			+ createResultFrames(frames)
 			+ createEmptyFrame(frames.size());
 		out.println(result);
 	}
 
-	private String createNameFormat(Player player) {
-		return String.format(NAME_HEADER, player.name());
+	private String createNameFormat(String playerName) {
+		return String.format(NAME_HEADER, playerName);
 	}
 
 	private String createResultFrames(List<Frame> frames) {
@@ -53,7 +58,7 @@ public class OutputView {
 		return EMPTY_FORMAT.repeat(emptyResultCount);
 	}
 
-	private void showScore(List<Frame> frames) {
+	private void showEachGameScore(List<Frame> frames) {
 		String result = SCORE_HEADER
 			+ createScore(frames)
 			+ createEmptyFrame(frames.size());
@@ -74,9 +79,9 @@ public class OutputView {
 		return sumTotalScore(frames, frame.number());
 	}
 
-	private String sumTotalScore(List<Frame> frames, int currentNumebr) {
+	private String sumTotalScore(List<Frame> frames, int currentNumber) {
 		int sum = frames.stream()
-			.limit(currentNumebr)
+			.limit(currentNumber)
 			.mapToInt(Frame::score)
 			.sum();
 		return String.format(SCORE_FORMAT, sum);
