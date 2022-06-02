@@ -27,10 +27,9 @@ public class FramesTest {
     @Test
     @DisplayName("다음 라운드 시작 불가능")
     void isNextFail() {
-        IntStream.range(0, 10)
-                .peek(i -> this.frames.bowling(1))
-                .forEach(i -> this.frames.bowling(2));
-
+        IntStream.range(0, 12)
+                .forEach(i -> this.frames.bowling(10));
+        System.out.println(frames);
         assertThat(frames.isNext()).isFalse();
     }
 }

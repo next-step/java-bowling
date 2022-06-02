@@ -1,19 +1,23 @@
 package bowling.domain.frame;
 
-import bowling.domain.pitch.Pitches;
+import bowling.domain.score.Score;
+import bowling.domain.state.*;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class NormalFrame implements Frame {
 
-    private static final int ONE = 1;
     private static final int SEMI_FINAL_INDEX = 9;
-    private static final int MAX_PITCHES_SIZE = 2;
 
     private final int round;
-    private final Pitches pitches;
+
+    private State state;
+    private Frame nextFrame;
 
     private NormalFrame(int round, int pins) {
         this.round = round;
-        this.pitches = Pitches.first(pins);
+        this.state = Ready.of(pins);
+        this.nextFrame = this.next(-1);
     }
 
     public static NormalFrame bowling(int round, int pins) {
@@ -22,17 +26,21 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame bowling(int pins) {
-        this.pitches.next(pins);
+        this.state = this.state.bowling(pins);
         return this;
     }
 
     @Override
     public Frame next(int pins) {
-        int nextIndex = this.increment();
-        if (isSemiFinal()) {
-            return FinalFrame.lastBowling(pins);
+        if (this.round == SEMI_FINAL_INDEX) {
+            this.nextFrame = FinalFrame.lastBowling(pins);
+
+            return this.nextFrame;
         }
-        return bowling(nextIndex, pins);
+
+        this.nextFrame = bowling(new AtomicInteger(this.round).incrementAndGet(), pins);
+
+        return this.nextFrame;
     }
 
     @Override
@@ -47,23 +55,49 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isFinishBowling() {
-        if (this.pitches.isStrikeOrSpare()) {
-            return true;
-        }
-
-        return this.pitches.size() == MAX_PITCHES_SIZE;
+        return this.state.is(Strike.class)
+                || this.state.is(Spare.class)
+                || this.state.is(Miss.class)
+                || this.state.is(Gutter.class);
     }
 
     @Override
-    public String partitionPins() {
-        return this.pitches.currentScore();
+    public boolean isPrinting() {
+        if (this.state.is(Spare.class) && !this.nextFrame.isFinishBowling()) {
+            return this.nextFrame.state().is(FirstPitch.class);
+        }
+
+        if (this.state.is(Strike.class) || this.state.is(Spare.class)) {
+            return this.isFinishBowling() && this.nextFrame.isFinishBowling();
+        }
+
+        return this.isFinishBowling();
     }
 
-    private boolean isSemiFinal() {
-        return this.round == SEMI_FINAL_INDEX;
+    @Override
+    public State state() {
+        return this.state;
     }
 
-    private int increment() {
-        return Math.addExact(this.round, ONE);
+    @Override
+    public int score() {
+        Score currentScore = this.state.createScore();
+
+        if (currentScore.doNotCalculate()) {
+            return currentScore.getScore();
+        }
+
+        return this.nextFrame.nextScore(currentScore);
+    }
+
+    @Override
+    public int nextScore(Score before) {
+        Score after = this.state.calculateScore(before);
+
+        if (after.doNotCalculate()) {
+            return after.getScore();
+        }
+
+        return this.nextFrame.nextScore(after);
     }
 }
