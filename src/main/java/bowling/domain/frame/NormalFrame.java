@@ -9,7 +9,6 @@ public class NormalFrame implements Frame {
 
     private FrameState frameState;
     private final FrameNumber frameNumber;
-    private Frame nextFrame;
 
     public NormalFrame(FrameState frameState, FrameNumber frameNumber) {
         validateFrameStateAndFrameNumber(frameState, frameNumber);
@@ -38,8 +37,7 @@ public class NormalFrame implements Frame {
     public Frame bowl(Pins hitPins) {
         this.frameState = frameState.bowl(hitPins);
         if (isFrameEnd()) {
-            this.nextFrame = nextFrame();
-            return this.nextFrame;
+            return nextFrame();
         }
         return this;
     }
