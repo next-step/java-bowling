@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 import bowling.domain.state.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -156,5 +157,39 @@ class NormalFrameTest {
     void isFinalFrame_false(int number) {
         FrameNumber frameNumber = new FrameNumber(number);
         assertThat(NormalFrame.create(frameNumber).isFinalFrame()).isFalse();
+    }
+
+    @DisplayName("해당 프레임 상태의 점수를 확인한다.")
+    @ParameterizedTest
+    @MethodSource("score_frameStateProvider")
+    void score_프레임상태_점수_체크(NormalFrame normalFrame, Score resultScore) {
+        assertThat(normalFrame.score()).isEqualTo(resultScore);
+    }
+
+    static Stream<Arguments> score_frameStateProvider() {
+        return Stream.of(
+                arguments(new NormalFrame(new BeforeProgress(), new FrameNumber(0)), Score.init()),
+                arguments(new NormalFrame(new FirstBowl(new Pins(5)), new FrameNumber(0)), new Score(5, 0)),
+                arguments(new NormalFrame(new Miss(new Pins(4), new Pins(3)), new FrameNumber(0)), new Score(7, 0)),
+                arguments(new NormalFrame(new Spare(new Pins(8)), new FrameNumber(0)), new Score(10, 1)),
+                arguments(new NormalFrame(new Strike(), new FrameNumber(0)), new Score(10, 2))
+        );
+    }
+
+    @DisplayName("이전 프레임의 점수를 현재 점수와 합하여 확인한다.")
+    @ParameterizedTest
+    @MethodSource("calculateAdditionalScore_frameStateProvider")
+    void calculateAdditionalScore_프레임상태_이전점수합_체크(Score previousScore, NormalFrame normalFrame, Score resultScore) {
+        assertThat(normalFrame.calculateAdditionalScore(previousScore));
+    }
+
+    static Stream<Arguments> calculateAdditionalScore_frameStateProvider() {
+        return Stream.of(
+                arguments(new Score(10, 2) , new NormalFrame(new BeforeProgress(), new FrameNumber(0)), Score.init()),
+                arguments(new Score(10, 2) , new NormalFrame(new FirstBowl(new Pins(5)), new FrameNumber(0)), new Score(15, 1)),
+                arguments(new Score(10, 1) , new NormalFrame(new Miss(new Pins(4), new Pins(3)), new FrameNumber(0)), new Score(14, 0)),
+                arguments(new Score(10, 1) , new NormalFrame(new Spare(new Pins(8)), new FrameNumber(0)), new Score(18, 0)),
+                arguments(new Score(10, 1) , new NormalFrame(new Strike(), new FrameNumber(0)), new Score(20, 0))
+        );
     }
 }

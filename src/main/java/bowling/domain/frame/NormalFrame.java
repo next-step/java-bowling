@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 import bowling.domain.state.*;
 
 public class NormalFrame implements Frame {
@@ -8,6 +9,7 @@ public class NormalFrame implements Frame {
 
     private FrameState frameState;
     private final FrameNumber frameNumber;
+    private Frame nextFrame;
 
     public NormalFrame(FrameState frameState, FrameNumber frameNumber) {
         validateFrameStateAndFrameNumber(frameState, frameNumber);
@@ -36,16 +38,17 @@ public class NormalFrame implements Frame {
     public Frame bowl(Pins hitPins) {
         this.frameState = frameState.bowl(hitPins);
         if (isFrameEnd()) {
-            return nextFrame();
+            this.nextFrame = nextFrame();
+            return this.nextFrame;
         }
         return this;
     }
 
     private Frame nextFrame() {
-        if (frameNumber.next().isLast()) {
+        if (frameNumber.nextFrameNumber().isLast()) {
             return FinalFrame.initialize();
         }
-        return create(frameNumber.next());
+        return create(frameNumber.nextFrameNumber());
     }
 
     @Override
@@ -58,9 +61,23 @@ public class NormalFrame implements Frame {
         return false;
     }
 
+    public FrameNumber frameNumber() {
+        return frameNumber;
+    }
+
     @Override
     public String symbol() {
         return frameState.symbol();
+    }
+
+    @Override
+    public Score score() {
+        return frameState.score();
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score previousScore) {
+        return frameState.calculateAdditionalScore(previousScore);
     }
 
     @Override
