@@ -34,7 +34,7 @@ class FrameNumberTest {
     })
     void FrameNumber_다음_프레임_넘버_반환(int currentNumber, int nextNumber) {
         FrameNumber frameNumber = new FrameNumber(currentNumber);
-        FrameNumber nextFrameNumber = frameNumber.next();
+        FrameNumber nextFrameNumber = frameNumber.nextFrameNumber();
         assertThat(nextFrameNumber).isEqualTo(new FrameNumber(nextNumber));
     }
 
@@ -42,7 +42,7 @@ class FrameNumberTest {
     @Test
     void FrameNumber_다음_프레임_넘버_반환_예외() {
         FrameNumber frameNumber = new FrameNumber(9);
-        assertThatThrownBy(() -> frameNumber.next()).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> frameNumber.nextFrameNumber()).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("현재 프레임 넘버가 마지막 프레임 넘버 인지 확인")
