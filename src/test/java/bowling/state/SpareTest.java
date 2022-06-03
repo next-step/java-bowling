@@ -10,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import bowling.point.Point;
+import bowling.score.Score;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @DisplayName("스페어 테스트")
@@ -55,5 +56,28 @@ class SpareTest {
 		assertThatThrownBy(
 			() -> spare.throwBowl(1)
 		).isExactlyInstanceOf(UnsupportedOperationException.class);
+	}
+
+	@Test
+	void 스페어에서_점수_계산_가능() {
+		Spare spare = new Spare(1, 9);
+
+		assertThat(spare.score()).isEqualTo(Score.of(10, 1));
+	}
+
+	@Test
+	void 스페어에서_한_번_보너스_점수_제공_가능() {
+		Spare spare = new Spare(1, 9);
+		Score previousScore = Score.spare(Point.max().score());
+
+		assertThat(spare.bonus(previousScore)).isEqualTo(Score.of(11, 0));
+	}
+
+	@Test
+	void 스페어에서_두_번_보너스_점수_제공_가능() {
+		Spare spare = new Spare(1, 9);
+		Score previousScore = Score.strike(Point.max().score());
+
+		assertThat(spare.bonus(previousScore)).isEqualTo(Score.of(20, 0));
 	}
 }

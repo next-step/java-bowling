@@ -2,6 +2,8 @@ package bowling.frame;
 
 import java.util.Optional;
 
+import bowling.score.Score;
+
 public interface Frame {
 
 	int MIN_FRAME_NUMBER = 1;
@@ -16,4 +18,8 @@ public interface Frame {
 	int number();
 
 	String symbol();
+
+	int score();
+
+	int bonus(Score previousScore);
 }

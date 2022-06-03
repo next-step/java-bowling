@@ -2,7 +2,8 @@ package bowling.util;
 
 public enum ErrorTarget {
 
-	PlAYER("플레이어");
+	PLAYER("플레이어"),
+	NEXT_FRAME("다음 프레임");
 
 	private final String message;
 

@@ -3,8 +3,10 @@ package bowling.frame;
 import java.util.Objects;
 import java.util.Optional;
 
+import bowling.score.Score;
 import bowling.state.Initialized;
 import bowling.state.State;
+import bowling.util.ErrorTarget;
 import bowling.util.Validator;
 
 public class GeneralFrame implements Frame {
@@ -13,10 +15,7 @@ public class GeneralFrame implements Frame {
 
 	private final int number;
 	private State state;
-
-	public GeneralFrame(int number) {
-		this(number, Initialized.of());
-	}
+	private Frame next;
 
 	private GeneralFrame(int number, State state) {
 		Validator.min(MIN_FRAME_NUMBER, number,
@@ -25,6 +24,10 @@ public class GeneralFrame implements Frame {
 			String.format("일반 프레임의 번호의 최댓값(%d) 보다 입력(%d)이 큽니다.", MAX_GENERAL_FRAME_NUMBER, number));
 		this.number = number;
 		this.state = state;
+	}
+
+	public static GeneralFrame initialized(int number) {
+		return new GeneralFrame(number, Initialized.getInstance());
 	}
 
 	@Override
@@ -40,7 +43,8 @@ public class GeneralFrame implements Frame {
 	@Override
 	public Optional<Frame> nextFrame() {
 		if (isEnd()) {
-			return Optional.of(createFrame());
+			this.next = createFrame();
+			return Optional.of(this.next);
 		}
 		return Optional.empty();
 	}
@@ -49,7 +53,7 @@ public class GeneralFrame implements Frame {
 		if (this.number == MAX_GENERAL_FRAME_NUMBER) {
 			return new EndFrame();
 		}
-		return new GeneralFrame(this.number + 1);
+		return GeneralFrame.initialized(this.number + 1);
 	}
 
 	@Override
@@ -60,6 +64,34 @@ public class GeneralFrame implements Frame {
 	@Override
 	public String symbol() {
 		return state.symbol();
+	}
+
+	@Override
+	public int score() {
+		if (!state.canScore()) {
+			return Score.UNAVAILABLE_NOW;
+		}
+
+		Score score = state.score();
+		if (score.canScore()) {
+			return score.getValue();
+		}
+
+		return next.bonus(score);
+	}
+
+	@Override
+	public int bonus(Score previousScore) {
+		try {
+			Score score = state.bonus(previousScore);
+			if (score.canScore()) {
+				return score.getValue();
+			}
+			Validator.notNull(next, ErrorTarget.NEXT_FRAME);
+			return next.bonus(score);
+		} catch (UnsupportedOperationException | IllegalArgumentException e) {
+			return Score.UNAVAILABLE_NOW;
+		}
 	}
 
 	@Override

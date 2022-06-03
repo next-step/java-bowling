@@ -12,7 +12,7 @@ public class Frames {
 	}
 
 	public static Frames start() {
-		Frame initialFrame = new GeneralFrame(Frame.MIN_FRAME_NUMBER);
+		Frame initialFrame = GeneralFrame.initialized(Frame.MIN_FRAME_NUMBER);
 		return new Frames(List.of(initialFrame));
 	}
 
@@ -37,6 +37,6 @@ public class Frames {
 	}
 
 	public List<Frame> values() {
-		return values;
+		return List.copyOf(values);
 	}
 }

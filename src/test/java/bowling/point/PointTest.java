@@ -10,6 +10,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import bowling.score.Score;
+
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @DisplayName("투구 기록 테스트")
 class PointTest {
@@ -54,5 +56,10 @@ class PointTest {
 		Point point2 = Point.of(second);
 
 		assertThat(point1.isLessThan(point2)).isEqualTo(result);
+	}
+
+	@Test
+	void 스코어_변환() {
+		assertThat(Point.of(2).score()).isEqualTo(Score.of(2, 0));
 	}
 }
