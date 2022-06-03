@@ -78,4 +78,15 @@ class FramesTest {
         frames.bowl(new Pins(4));
         assertThat(frames.getCurrentFrameNumber()).isEqualTo(2);
     }
+
+    @DisplayName("모든 프레임의 점수를 누적한 리스트를 반환한다.")
+    @Test
+    void accumulateScores_누적점수_합() {
+        List<Frame> frames = new ArrayList<>();
+        for (int frameNumber = 0; frameNumber < 9; frameNumber++) {
+            frames.add(new NormalFrame(new Strike(), new FrameNumber(frameNumber)));
+        }
+        frames.add(new FinalFrame(new LinkedList<>(List.of(new Strike(), new Strike(), new Strike())), 3));
+        assertThat(new Frames(frames).accumulateScores()).containsExactly(30, 60, 90, 120, 150, 180, 210, 240, 270, 300);
+    }
 }

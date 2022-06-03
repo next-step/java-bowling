@@ -1,9 +1,12 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
+import bowling.domain.Scores;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Frames {
     private static final int MAX_FRAME_SIZE = 10;
@@ -45,6 +48,43 @@ public class Frames {
 
     private Frame currentFrame() {
         return frames.get(frames.size() - 1);
+    }
+
+    public List<Integer> accumulateScores() {
+        return scores().accumulateScore();
+    }
+
+    private Scores scores() {
+        List<Score> scores = frames.stream()
+                .filter(Frame::isFrameEnd)
+                .map(this::calculateAdditionalScore)
+                .filter(score -> !score.isNotAvailableScore())
+                .collect(Collectors.toList());
+        return new Scores(scores);
+    }
+
+    private Score calculateAdditionalScore(Frame frame) {
+        Frame currentFrame = frame;
+        FrameNumber currentFrameNumber = frame.frameNumber();
+        Score score = currentFrame.score();
+        score = nextFrameAddScore(currentFrameNumber, score);
+        return score;
+    }
+
+    private Score nextFrameAddScore(FrameNumber currentFrameNumber, Score score) {
+        while (!score.isNotCalculable()) {
+            currentFrameNumber = getNextFrameNumber(currentFrameNumber);
+            Frame currentFrame = this.frames.get(currentFrameNumber.frameNumber());
+            score = currentFrame.calculateAdditionalScore(score);
+        }
+        return score;
+    }
+
+    private FrameNumber getNextFrameNumber(FrameNumber currentFrameNumber) {
+        if (currentFrameNumber.isLast()) {
+            return currentFrameNumber;
+        }
+        return currentFrameNumber.nextFrameNumber();
     }
 
     public List<Frame> frames() {
