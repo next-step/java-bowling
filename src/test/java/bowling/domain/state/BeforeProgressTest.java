@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -35,5 +36,20 @@ class BeforeProgressTest {
     @Test
     void symbol_기호_체크() {
         assertThat(new BeforeProgress().symbol()).isEmpty();
+    }
+
+    @DisplayName("BeforeProgress 상태의 점수는 존재 하지 않고, 점수 값과, 남은 기회가 -1인 인스턴스를 반환한다.")
+    @Test
+    void score_점수() {
+        FrameState frameState = new BeforeProgress();
+        assertThat(frameState.score()).isEqualTo(Score.init());
+    }
+
+    @DisplayName("BeforeProgress 상태는 해당 프레임의 이전 점수가 없으므로 추가 점수 계산을 할 수 없고, 점수 값과 남은 기회가 -1인 인스턴스를 반환한다.")
+    @Test
+    void calculateAdditionalScore_추가점수() {
+        FrameState frameState = new BeforeProgress();
+        Score previousScore = Score.init();
+        assertThat(frameState.calculateAdditionalScore(previousScore)).isEqualTo(Score.init());
     }
 }

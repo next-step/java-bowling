@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 
 public class BeforeProgress extends ProgressState {
     private static final String NONE = "";
@@ -16,6 +17,16 @@ public class BeforeProgress extends ProgressState {
     @Override
     public String symbol() {
         return NONE;
+    }
+
+    @Override
+    public Score score() {
+        return Score.init();
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score previousScore) {
+        return Score.init();
     }
 
     @Override
