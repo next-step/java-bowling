@@ -40,6 +40,10 @@ public class BowlingGame {
         frames.bowl(pins);
     }
 
+    public List<Integer> accumulateScores() {
+        return frames.accumulateScores();
+    }
+
     public String playerName() {
         return player.name();
     }
