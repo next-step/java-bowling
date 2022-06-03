@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 import bowling.domain.state.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -161,6 +162,7 @@ class FinalFrameTest {
         return Stream.of(
                 arguments(new FinalFrame(new LinkedList<>(List.of(new BeforeProgress())), 0), false),
                 arguments(new FinalFrame(new LinkedList<>(List.of(new FirstBowl(new Pins(5)))), 1), false),
+                arguments(new FinalFrame(new LinkedList<>(List.of(new Miss(new Pins(3), new Pins(5)))), 2), true),
                 arguments(new FinalFrame(new LinkedList<>(List.of(new Strike(), new FirstBowl(new Pins(5)))), 2), false),
                 arguments(new FinalFrame(new LinkedList<>(List.of(new Strike(), new Strike())), 2), false),
                 arguments(new FinalFrame(new LinkedList<>(List.of(new Strike(), new Miss(new Pins(3), new Pins(5)))), 3), true),
@@ -209,5 +211,58 @@ class FinalFrameTest {
     @Test
     void isFinalFrame_false() {
         assertThat(FinalFrame.initialize().isFinalFrame()).isTrue();
+    }
+
+    @DisplayName("마지막 프레임 상태 점수를 확인한다.")
+    @ParameterizedTest
+    @MethodSource("score_frameStatesProvider")
+    void score_점수(FinalFrame finalFrame, Score resultScore) {
+        assertThat(finalFrame.score()).isEqualTo(resultScore);
+    }
+
+    static Stream<Arguments> score_frameStatesProvider() {
+        return Stream.of(
+                arguments(new FinalFrame(new LinkedList<>(List.of(new BeforeProgress())), 0), Score.init()),
+                arguments(new FinalFrame(new LinkedList<>(List.of(new FirstBowl(new Pins(5)))), 1), new Score(5, 0)),
+                arguments(new FinalFrame(new LinkedList<>(List.of(new Strike(), new FirstBowl(new Pins(5)))), 2), new Score(15, 1)),
+                arguments(new FinalFrame(new LinkedList<>(List.of(new Strike(), new Strike())), 2), new Score(20, 1)),
+                arguments(new FinalFrame(new LinkedList<>(List.of(new Strike(), new Miss(new Pins(3), new Pins(5)))), 3), new Score(18, 0)),
+                arguments(new FinalFrame(new LinkedList<>(List.of(new Strike(), new Spare(new Pins(4)))), 3), new Score(20, 0)),
+                arguments(new FinalFrame(new LinkedList<>(List.of(new Strike(), new Strike(), new FirstBowl(new Pins(5)))), 3), new Score(25, 0)),
+                arguments(new FinalFrame(new LinkedList<>(List.of(new Strike(), new Strike(), new Strike())), 3), new Score(30, 0))
+        );
+    }
+
+    @DisplayName("마지막 프레임 상태에서 이전 점수에 따른 현재 점수를 합하여 확인한다.")
+    @ParameterizedTest
+    @MethodSource("calculateAdditionalScore_frameStatesProvider")
+    void calculateAdditionalScore_점수(Score previousScore, FinalFrame finalFrame, Score resultScore) {
+        assertThat(finalFrame.calculateAdditionalScore(previousScore)).isEqualTo(resultScore);
+    }
+
+    static Stream<Arguments> calculateAdditionalScore_frameStatesProvider() {
+        return Stream.of(
+                arguments(new Score(10, 2),
+                        new FinalFrame(new LinkedList<>(List.of(new BeforeProgress())), 0),
+                        Score.init()),
+                arguments(new Score(10, 1),
+                        new FinalFrame(new LinkedList<>(List.of(new BeforeProgress())), 0),
+                        Score.init()),
+                arguments(new Score(10, 0), new FinalFrame(new LinkedList<>(List.of(new BeforeProgress())), 0), Score.init()),
+                arguments(new Score(10, 2), new FinalFrame(new LinkedList<>(List.of(new FirstBowl(new Pins(5)))), 1), Score.init()),
+                arguments(new Score(10, 1), new FinalFrame(new LinkedList<>(List.of(new FirstBowl(new Pins(5)))), 1), new Score(15, 0)),
+                arguments(new Score(10, 0), new FinalFrame(new LinkedList<>(List.of(new FirstBowl(new Pins(5)))), 1), new Score(10, 0)),
+                arguments(new Score(10, 2), new FinalFrame(new LinkedList<>(List.of(new Miss(new Pins(3), new Pins(5)))), 2), new Score(18, 0)),
+                arguments(new Score(10, 1), new FinalFrame(new LinkedList<>(List.of(new Miss(new Pins(3), new Pins(5)))), 2), new Score(13, 0)),
+                arguments(new Score(10, 0), new FinalFrame(new LinkedList<>(List.of(new Miss(new Pins(3), new Pins(5)))), 2), new Score(10, 0)),
+                arguments(new Score(10, 2), new FinalFrame(new LinkedList<>(List.of(new Strike(), new FirstBowl(new Pins(5)))), 2), new Score(25, 0)),
+                arguments(new Score(10, 1), new FinalFrame(new LinkedList<>(List.of(new Strike(), new FirstBowl(new Pins(5)))), 2), new Score(20, 0)),
+                arguments(new Score(10, 0), new FinalFrame(new LinkedList<>(List.of(new Strike(), new FirstBowl(new Pins(5)))), 2), new Score(10, 0)),
+                arguments(new Score(10, 2), new FinalFrame(new LinkedList<>(List.of(new Strike(), new Strike())), 2), new Score(30, 0)),
+                arguments(new Score(10, 2), new FinalFrame(new LinkedList<>(List.of(new Strike(), new Miss(new Pins(3), new Pins(5)))), 3), new Score(23, 0)),
+                arguments(new Score(10, 0), new FinalFrame(new LinkedList<>(List.of(new Strike(), new Spare(new Pins(4)))), 3), new Score(10, 0)),
+                arguments(new Score(10, 2), new FinalFrame(new LinkedList<>(List.of(new Strike(), new Strike(), new FirstBowl(new Pins(5)))), 3), new Score(30, 0)),
+                arguments(new Score(10, 2), new FinalFrame(new LinkedList<>(List.of(new Strike(), new Strike(), new Strike())), 3), new Score(30, 0))
+        );
     }
 }

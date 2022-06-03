@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 import bowling.domain.state.BeforeProgress;
 import bowling.domain.state.FrameState;
 import bowling.domain.state.Miss;
@@ -77,12 +78,49 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public FrameNumber frameNumber() {
+        return new FrameNumber(FrameNumber.LAST_FRAME_NUMBER);
+    }
+
+    @Override
     public String symbol() {
         return frameStates.stream().map(FrameState::symbol).collect(Collectors.joining(DELIMITER));
     }
 
     private boolean isMiss(FrameState frameState) {
         return frameState instanceof Miss;
+    }
+
+    @Override
+    public Score score() {
+        Score score = getFirstScore();
+
+        for (int stateIndex = 1; stateIndex < frameStates.size(); stateIndex++) {
+            FrameState frameState = frameStates.get(stateIndex);
+            score = frameState.calculateAdditionalScore(score);
+        }
+        return score;
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score previousScore) {
+        try {
+            return calculateAdditionalScore(previousScore, 0);
+        } catch (IndexOutOfBoundsException exception) {
+            return Score.init();
+        }
+    }
+
+    private Score calculateAdditionalScore(Score previousScore, int frameStateIndex) {
+        Score score = frameStates.get(frameStateIndex).calculateAdditionalScore(previousScore);
+        if (score.isNoBonusChance()) {
+            return score;
+        }
+        return calculateAdditionalScore(score, frameStateIndex + 1);
+    }
+
+    private Score getFirstScore() {
+        return frameStates.getFirst().score();
     }
 
     @Override
