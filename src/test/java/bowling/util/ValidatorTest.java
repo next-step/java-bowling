@@ -25,7 +25,7 @@ class ValidatorTest {
 	@NullSource
 	void null_체크(String input) {
 		assertThatIllegalArgumentException().isThrownBy(
-			() -> Validator.notNull(input, ErrorTarget.PlAYER)
+			() -> Validator.notNull(input, ErrorTarget.PLAYER)
 		);
 	}
 
@@ -33,7 +33,7 @@ class ValidatorTest {
 	@NullAndEmptySource
 	void Blank_체크(String input) {
 		assertThatIllegalArgumentException().isThrownBy(
-			() -> Validator.notBlank(input, ErrorTarget.PlAYER)
+			() -> Validator.notBlank(input, ErrorTarget.PLAYER)
 		);
 	}
 

@@ -16,7 +16,8 @@ class ScoreTest {
 	@ParameterizedTest(name = "보너스 카운트가 {0} 이면 {1}")
 	@CsvSource(
 		delimiter = ':',
-		value = {"0:true", "1:false"})
+		value = {"0:true", "1:false"}
+	)
 	void 계산_가능_여부(int bonusCount, boolean result) {
 		assertThat(Score.of(1, bonusCount).canScore()).isEqualTo(result);
 	}
