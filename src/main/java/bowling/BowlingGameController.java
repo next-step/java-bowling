@@ -15,6 +15,7 @@ public class BowlingGameController {
             int currentFrameNumber = bowlingGame.getCurrentFrameNumber();
             bowlingGame.bowl(Pins.create(InputView.scanHitPins(currentFrameNumber)));
             OutputView.printBowlingGameResult(bowlingGame);
+            bowlingGame.nextFrame();
         }
     }
 }
