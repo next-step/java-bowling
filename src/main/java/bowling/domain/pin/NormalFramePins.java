@@ -12,7 +12,6 @@ import java.util.stream.IntStream;
 
 public class NormalFramePins implements Pins {
 
-    public static final int MAX_HITS_SIZE = 2;
     private final List<Hit> hits;
 
     public NormalFramePins() {
@@ -44,11 +43,11 @@ public class NormalFramePins implements Pins {
     }
 
     private void validate(int hit, boolean isBonusHit) {
+        if (isBonusHit) {
+            throw new IllegalStateException();
+        }
         if (hits.size() >= MAX_HITS_SIZE) {
             throw new InvalidHitSizeException(MAX_HITS_SIZE);
-        }
-        if (isBonusHit) {
-            throw new RuntimeException();
         }
         if (isFirstRound()) {
             return ;

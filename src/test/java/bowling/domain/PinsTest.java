@@ -36,7 +36,7 @@ class PinsTest {
     }
 
     @Test
-    @DisplayName("두번의 투구의 총 합이 10을 초과하면 예외를 반환한다.")
+    @DisplayName("모든 프레임 - 두번의 투구의 총 합이 10을 초과하면 예외를 반환한다.")
     void invalidSecondFallDown() {
         assertThatThrownBy(() -> {
             normalFramePins.fallDown(5,false);
@@ -50,7 +50,7 @@ class PinsTest {
     }
 
     @Test
-    @DisplayName("투구는 2번만 던질 수 있다.")
+    @DisplayName("모든 프레임 - 투구는 2번만 던질 수 있다.")
     void invalidThirdFallDown() {
         assertThatThrownBy(() -> {
             normalFramePins.fallDown(5,false);
@@ -66,13 +66,19 @@ class PinsTest {
     }
 
     @Test
-    @DisplayName("일반 프레임의 경우 보너스히트 시 예외를 반환한다.")
+    @DisplayName("일반 프레임 - 보너스히트를 시도할 경우 예외를 반환한다.")
     void normalFrameBonusHit() {
-        assertThatThrownBy(() -> normalFramePins.fallDown(5,true)).isInstanceOf(RuntimeException.class);
+        assertThatThrownBy(() -> normalFramePins.fallDown(5,true)).isInstanceOf(IllegalStateException.class);
     }
 
     @Test
-    @DisplayName("스트라이크를 치면 한번만 투구가 가능하다.")
+    @DisplayName("마지막 프레임 - 첫번째 투구를 보너스히트로 시도할 경우 예외를 반환한다.")
+    void finalFrameBonusHit() {
+        assertThatThrownBy(() -> finalFramePins.fallDown(5,true)).isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
+    @DisplayName("일반 프레임 - 스트라이크를 치면 두번째 투구를 할 수 없다.")
     void strike_secondFallDown_normal() {
         assertThatThrownBy(() -> {
             normalFramePins.fallDown(10,false);
@@ -81,7 +87,7 @@ class PinsTest {
     }
 
     @Test
-    @DisplayName("Strike 일 경우 두번의 보너스 투구를 할 수 있다.")
+    @DisplayName("마지막 프레임 - 스트라이크를 치면 두번의 보너스 투구를 할 수 있다.")
     void strike_secondFallDown_final() {
         finalFramePins.fallDown(10, false);
         finalFramePins.fallDown(10, true);
@@ -91,7 +97,7 @@ class PinsTest {
     }
 
     @Test
-    @DisplayName("spare 일 경우 한번의 보너스 투구를 할 수 있다.")
+    @DisplayName("마지막프레임 - 스페어를 치면 한번의 보너스 투구를 할 수 있다.")
     void spare() {
         finalFramePins.fallDown(7, false);
         finalFramePins.fallDown(3, false);

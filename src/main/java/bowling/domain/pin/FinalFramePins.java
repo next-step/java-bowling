@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 
 public class FinalFramePins implements Pins {
 
-    private static final int MAX_HITS_SIZE = 3;
+    private static final int MAX_HITS_SIZE_WITH_BONUS = 3;
     private final List<Hit> hits;
 
     public FinalFramePins() {
@@ -24,7 +24,7 @@ public class FinalFramePins implements Pins {
     }
 
     public FinalFramePins(List<Hit> hits) {
-        if (hits.size() > MAX_HITS_SIZE) {
+        if (hits.size() > MAX_HITS_SIZE_WITH_BONUS) {
             throw new IllegalArgumentException();
         }
         this.hits = hits;
@@ -44,22 +44,25 @@ public class FinalFramePins implements Pins {
     }
 
     private void validate(int hit, boolean isBonusHit) {
-        if (isFirstRound()) {
-            return ;
-        }
         if (isBonusHit) {
             validateBonus(hit);
             return;
         }
-        if (hits.size() >= NormalFramePins.MAX_HITS_SIZE) {
-            throw new InvalidHitSizeException(NormalFramePins.MAX_HITS_SIZE);
+        if (hits.size() >= MAX_HITS_SIZE) {
+            throw new InvalidHitSizeException(MAX_HITS_SIZE);
+        }
+        if (isFirstRound()) {
+            return ;
         }
         validateMaxHit(firstHit(), hit);
     }
 
     private void validateBonus(int hit) {
-        if (hits.size() > MAX_HITS_SIZE) {
-            throw new InvalidHitSizeException(MAX_HITS_SIZE);
+        if (hits.size() > MAX_HITS_SIZE_WITH_BONUS) {
+            throw new InvalidHitSizeException(MAX_HITS_SIZE_WITH_BONUS);
+        }
+        if (isFirstRound()) {
+            throw new IllegalStateException();
         }
         if (isSecondRound()) {
             return;
