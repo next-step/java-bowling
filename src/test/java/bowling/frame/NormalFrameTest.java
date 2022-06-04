@@ -1,14 +1,26 @@
 package bowling.frame;
 
+import bowling.domain.bowl.Bowl;
+import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.pin.Pins;
-import bowling.domain.pitch.PitchResult;
-import bowling.domain.score.Score;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class NormalFrameTest {
+
+    Frame previousFrame;
+    Bowl sprae;
+
+    @BeforeEach
+    void before(){
+        previousFrame = new NormalFrame(9);
+        previousFrame.pitch(new Pins(1));
+        previousFrame.pitch(new Pins(9));
+        sprae = previousFrame.getBowls().get(0);
+    }
 
     @Test
     @DisplayName("프레임이 끝나지 않았을 때 점수를 구하면 -1을 반환한다.")
@@ -44,6 +56,6 @@ class NormalFrameTest {
         cur.pitch(new Pins(2));
         cur.pitch(new Pins(3));
 
-        assertThat(cur.calculateAdditionalScore(Score.createScore(PitchResult.strike()))).isEqualTo(15);
+        assertThat(cur.calculateAdditionalScore(sprae.score())).isEqualTo(12);
     }
 }

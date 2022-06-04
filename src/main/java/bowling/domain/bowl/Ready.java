@@ -1,47 +1,37 @@
 package bowling.domain.bowl;
 
-import bowling.domain.bowl.type.BowlTypeDto;
 import bowling.domain.bowl.type.BowlType;
 import bowling.domain.exception.OutOfPinCountException;
 import bowling.domain.pitch.PitchResult;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.domain.exception.CannotCalculateException;
+import bowling.domain.score.Scores;
+
 import java.util.List;
 
-public class Ready implements Bowl{
+public class Ready extends Running{
 
-    private static final int PITCH_COUNT = 0;
+    public static final int PITCH_COUNT = 0;
     private static final int MAX_PIN_HIT_COUNT = 10;
+
+    public Ready() {}
+    public Ready(Scores scores) {}
 
     @Override
     public Bowl pitch(Pins pins) {
         validate(pins);
 
-        BowlTypeDto dto = new BowlTypeDto(List.of(pins.getCount()));
-        BowlType type = BowlType.getType(dto);
+        Scores scores = new Scores(List.of(pins.getCount()));
+        BowlType type = BowlType.getType(scores);
 
-        if(type.equals(BowlType.STRIKE)){
-            return new Strike();
-        }
-
-        return new First(pins);
+        return type.create(scores);
     }
 
     private void validate(Pins pins) {
         if(pins.getCount()  > MAX_PIN_HIT_COUNT){
             throw new OutOfPinCountException();
         }
-    }
-
-    public static boolean checkType(BowlTypeDto bowlTypeDto){
-        List<Integer> scores = bowlTypeDto.getScores();
-        return scores.size() == PITCH_COUNT;
-    }
-
-    @Override
-    public String toString(){
-        return "[Ready]";
     }
 
     @Override
@@ -55,7 +45,7 @@ public class Ready implements Bowl{
     }
 
     @Override
-    public boolean isEnd() {
-        return false;
+    public String toString(){
+        return "[Ready]";
     }
 }

@@ -1,11 +1,12 @@
 package bowling.frame;
 
+import bowling.domain.bowl.Bowl;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.exception.CannotPitchException;
+import bowling.domain.frame.NormalFrame;
 import bowling.domain.pin.Pins;
-import bowling.domain.pitch.PitchResult;
-import bowling.domain.score.Score;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,6 +17,23 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FinalFrameTest {
 
+    Frame spareFrame;
+    Bowl spareBowl;
+
+    Frame strikeFrame;
+    Bowl strikeBowl;
+
+    @BeforeEach
+    void before(){
+        spareFrame = new NormalFrame(9);
+        spareFrame.pitch(new Pins(1));
+        spareFrame.pitch(new Pins(9));
+        spareBowl = spareFrame.getBowls().get(0);
+
+        strikeFrame = new NormalFrame(9);
+        strikeFrame.pitch(new Pins(10));
+        strikeBowl = strikeFrame.getBowls().get(0);
+    }
     /*
      * calculateAdditionalScore 테스트
      * */
@@ -27,8 +45,8 @@ class FinalFrameTest {
         finalFrame.pitch(new Pins(10));
         finalFrame.pitch(new Pins(2));
 
-        assertThat(finalFrame.calculateAdditionalScore(Score.createScore(PitchResult.spare(1, 9)))).isEqualTo(20);
-        assertThat(finalFrame.calculateAdditionalScore(Score.createScore(PitchResult.strike()))).isEqualTo(22);
+        assertThat(finalFrame.calculateAdditionalScore(spareBowl.score())).isEqualTo(20);
+        assertThat(finalFrame.calculateAdditionalScore(strikeBowl.score())).isEqualTo(22);
     }
 
     @Test
@@ -39,8 +57,8 @@ class FinalFrameTest {
         finalFrame.pitch(new Pins(2));
         finalFrame.pitch(new Pins(8));
 
-        assertThat(finalFrame.calculateAdditionalScore(Score.createScore(PitchResult.spare(1, 9)))).isEqualTo(12);
-        assertThat(finalFrame.calculateAdditionalScore(Score.createScore(PitchResult.strike()))).isEqualTo(20);
+        assertThat(finalFrame.calculateAdditionalScore(spareBowl.score())).isEqualTo(12);
+        assertThat(finalFrame.calculateAdditionalScore(strikeBowl.score())).isEqualTo(20);
     }
 
     @Test
@@ -51,8 +69,8 @@ class FinalFrameTest {
         finalFrame.pitch(new Pins(0));
         finalFrame.pitch(new Pins(0));
 
-        assertThat(finalFrame.calculateAdditionalScore(Score.createScore(PitchResult.spare(1, 9)))).isEqualTo(10);
-        assertThat(finalFrame.calculateAdditionalScore(Score.createScore(PitchResult.strike()))).isEqualTo(10);
+        assertThat(finalFrame.calculateAdditionalScore(spareBowl.score())).isEqualTo(10);
+        assertThat(finalFrame.calculateAdditionalScore(strikeBowl.score())).isEqualTo(10);
     }
 
     @Test
@@ -63,8 +81,8 @@ class FinalFrameTest {
         finalFrame.pitch(new Pins(2));
         finalFrame.pitch(new Pins(5));
 
-        assertThat(finalFrame.calculateAdditionalScore(Score.createScore(PitchResult.spare(1, 9)))).isEqualTo(12);
-        assertThat(finalFrame.calculateAdditionalScore(Score.createScore(PitchResult.strike()))).isEqualTo(17);
+        assertThat(finalFrame.calculateAdditionalScore(spareBowl.score())).isEqualTo(12);
+        assertThat(finalFrame.calculateAdditionalScore(strikeBowl.score())).isEqualTo(17);
     }
 
     @Test
@@ -74,8 +92,8 @@ class FinalFrameTest {
 
         finalFrame.pitch(new Pins(2));
 
-        assertThat(finalFrame.calculateAdditionalScore(Score.createScore(PitchResult.spare(1, 9)))).isEqualTo(12);
-        assertThat(finalFrame.calculateAdditionalScore(Score.createScore(PitchResult.strike()))).isEqualTo(-1);
+        assertThat(finalFrame.calculateAdditionalScore(spareBowl.score())).isEqualTo(12);
+        assertThat(finalFrame.calculateAdditionalScore(strikeBowl.score())).isEqualTo(-1);
     }
 
     @Test
@@ -85,7 +103,7 @@ class FinalFrameTest {
 
         finalFrame.pitch(new Pins(5));
 
-        assertThat(finalFrame.calculateAdditionalScore(Score.createScore(PitchResult.strike()))).isEqualTo(-1);
+        assertThat(finalFrame.calculateAdditionalScore(strikeBowl.score())).isEqualTo(-1);
     }
 
     @Test
@@ -93,7 +111,8 @@ class FinalFrameTest {
     void 실패_마지막_프레임_점수_계산(){
         Frame finalFrame = new FinalFrame(10);
 
-        assertThat(finalFrame.calculateAdditionalScore(Score.createScore(PitchResult.spare(2, 8)))).isEqualTo(-1);
+        assertThat(finalFrame.calculateAdditionalScore(spareBowl.score())).isEqualTo(-1);
+        assertThat(finalFrame.calculateAdditionalScore(strikeBowl.score())).isEqualTo(-1);
     }
 
 

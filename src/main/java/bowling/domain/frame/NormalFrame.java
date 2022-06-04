@@ -44,8 +44,7 @@ public class NormalFrame implements Frame{
         if(!bowl.isEnd()){
             return Score.CANNOT_CALCULATE_SCORE;
         }
-        PitchResult pitchResult = bowl.getPitchResult();
-        Score curScore = Score.createScore(pitchResult);
+        Score curScore = bowl.score();
         if(curScore.isFinished()){
             return curScore.getValue();
         }
@@ -70,6 +69,16 @@ public class NormalFrame implements Frame{
     @Override
     public List<Bowl> getBowls() {
         return List.of(bowl);
+    }
+
+    @Override
+    public boolean isEnd() {
+        return score() != Score.CANNOT_CALCULATE_SCORE;
+    }
+
+    @Override
+    public Frame getNextFrame() {
+        return nextFrame;
     }
 
     @Override

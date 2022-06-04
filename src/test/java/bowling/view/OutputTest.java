@@ -57,6 +57,6 @@ class OutputTest {
         bowlingGame.pitch(new Pins(2));
         bowlingGame.pitch(new Pins(8));
 
-        Output.printBoard(bowlingGame);
+        Output.printBowlingGameResult(bowlingGame);
     }
 }

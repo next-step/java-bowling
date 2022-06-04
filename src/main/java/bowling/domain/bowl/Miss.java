@@ -1,32 +1,23 @@
 package bowling.domain.bowl;
 
-import bowling.domain.bowl.type.BowlTypeDto;
 import bowling.domain.pitch.PitchResult;
 import bowling.domain.score.Score;
 import bowling.domain.pin.Pins;
-
-import java.util.List;
+import bowling.domain.score.Scores;
 
 public class Miss extends Ended{
 
-    private static final int PITCH_COUNT = 2;
-    private static final int MIN_PIN_HIT_COUNT = 0;
-    private static final int MAX_PIN_HIT_COUNT = 10;
+    public static final int PITCH_COUNT = 2;
+    public static final int MIN_PIN_HIT_COUNT = 0;
+    public static final int MAX_PIN_HIT_COUNT = 10;
+    private static final int DEFAULT_BONUS_PITCH_COUNT = 0;
 
     private final Pins firstPin;
     private final Pins secondPin;
 
-
-    public Miss(Pins firstPin, Pins secondPin) {
-        this.firstPin = firstPin;
-        this.secondPin = secondPin;
-    }
-
-
-    @Override
-    public String toString(){
-        return "[Miss first: "+firstPin
-                +" second: "+secondPin+"]";
+    public Miss(Scores scores) {
+        this.firstPin = new Pins(scores.getFistScore());
+        this.secondPin = new Pins(scores.getSecondScore());
     }
 
     @Override
@@ -43,14 +34,14 @@ public class Miss extends Ended{
         return PitchResult.miss(firstPin.getCount(), secondPin.getCount());
     }
 
-    public static boolean checkType(BowlTypeDto bowlTypeDto){
-        List<Integer> scores = bowlTypeDto.getScores();
-        if(scores.size() != PITCH_COUNT){
-            return false;
-        }
-        int first = scores.get(0);
-        int second = scores.get(1);
-        int sum = first + second;
-        return MIN_PIN_HIT_COUNT < sum && sum < MAX_PIN_HIT_COUNT;
+    @Override
+    public Score score() {
+        return new Score(firstPin.getCount() + secondPin.getCount(), DEFAULT_BONUS_PITCH_COUNT);
+    }
+
+    @Override
+    public String toString(){
+        return "[Miss first: "+firstPin
+                +" second: "+secondPin+"]";
     }
 }

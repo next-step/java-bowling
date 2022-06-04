@@ -48,11 +48,7 @@ public class FinalFrame implements Frame{
         if(bowls.canProceed()){
             return Score.CANNOT_CALCULATE_SCORE;
         }
-        return bowls.getBowls()
-                .stream()
-                .map(bowl -> Score.createScore(bowl.getPitchResult()))
-                .mapToInt(Score::getValue)
-                .sum();
+        return bowls.score();
     }
 
     @Override
@@ -82,6 +78,16 @@ public class FinalFrame implements Frame{
     @Override
     public List<Bowl> getBowls() {
         return bowls.getBowls();
+    }
+
+    @Override
+    public boolean isEnd() {
+        return score() != Score.CANNOT_CALCULATE_SCORE;
+    }
+
+    @Override
+    public Frame getNextFrame() {
+        throw new IllegalArgumentException("마지막 프레임입니다.");
     }
 
     @Override

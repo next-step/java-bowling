@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.domain.BowlingGame;
+import bowling.domain.BowlingGames;
 import bowling.domain.bowl.Bowl;
 import bowling.domain.bowl.type.BowlType;
 import bowling.domain.pitch.PitchResult;
@@ -8,7 +9,6 @@ import bowling.domain.player.Player;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -25,7 +25,12 @@ public class Output {
     private static final String GUTTER_SYMBOL = "-|-";
     private static final int MAX_FRAME_COUNT = 10;
 
-    public static void printBoard(BowlingGame bowlingGame){
+    public static void printBowlingGameResults(BowlingGames bowlingGames) {
+        bowlingGames.getBowlingGames()
+                .forEach(Output::printBowlingGameResult);
+    }
+
+    public static void printBowlingGameResult(BowlingGame bowlingGame){
         Frames frames = bowlingGame.getFrames();
         Player player = bowlingGame.getPlayer();
 
@@ -41,7 +46,6 @@ public class Output {
     public static String getSymbolBody(Frames frames) {
         StringBuilder res = new StringBuilder();
         for(Frame frame: frames.getFrames()){
-
             String symbol = frame.getBowls()
                     .stream()
                     .map(Bowl::getPitchResult)
@@ -50,6 +54,9 @@ public class Output {
                     .collect(Collectors.joining(SYMBOL_DELIMITER));
             res.append(String.format(SYMBOL_RESULT_FRAME, symbol));
         }
+
+        res.append(getEmptyFrameResults(MAX_FRAME_COUNT - frames.getFrames().size()));
+
         return res.toString();
     }
 

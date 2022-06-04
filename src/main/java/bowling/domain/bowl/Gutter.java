@@ -1,20 +1,17 @@
 package bowling.domain.bowl;
 
-import bowling.domain.bowl.type.BowlTypeDto;
 import bowling.domain.pitch.PitchResult;
 import bowling.domain.score.Score;
-
-import java.util.List;
+import bowling.domain.score.Scores;
 
 public class Gutter extends Ended{
 
-    private static final int PITCH_COUNT = 2;
-    private static final int GUTTER_VALUE = 0;
+    public static final int PITCH_COUNT = 2;
+    public static final int GUTTER_VALUE = 0;
+    private static final int GUTTER_SCORE_VALUE = 0;
+    private static final int DEFAULT_BONUS_PITCH_COUNT = 0;
 
-    @Override
-    public String toString(){
-        return "[Gutter]";
-    }
+    public Gutter(Scores scores) {}
 
     @Override
     public Score calculateScore(Score before) {
@@ -30,14 +27,15 @@ public class Gutter extends Ended{
         return PitchResult.gutter();
     }
 
-    public static boolean checkType(BowlTypeDto bowlTypeDto){
-        List<Integer> scores = bowlTypeDto.getScores();
-        if(scores.size() != PITCH_COUNT){
-            return false;
-        }
-        int first = scores.get(0);
-        int second = scores.get(1);
-        int sum = first + second;
-        return sum == GUTTER_VALUE;
+    @Override
+    public Score score() {
+        return new Score(GUTTER_SCORE_VALUE, DEFAULT_BONUS_PITCH_COUNT);
     }
+
+
+    @Override
+    public String toString(){
+        return "[Gutter]";
+    }
+
 }

@@ -13,4 +13,6 @@ public interface Bowl {
     Score calculateScore(Score before);
 
     PitchResult getPitchResult();
+
+    Score score();
 }
