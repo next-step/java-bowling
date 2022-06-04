@@ -1,8 +1,5 @@
 package bowling.game;
 
-import java.util.List;
-
-import bowling.frame.Frame;
 import bowling.frame.Frames;
 import bowling.player.Player;
 
@@ -40,7 +37,7 @@ public class EachGame {
 		return this.player.name();
 	}
 
-	public List<Frame> frames() {
-		return frames.values();
+	public Frames frames() {
+		return frames;
 	}
 }

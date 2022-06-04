@@ -2,10 +2,10 @@ package bowling.view;
 
 import static java.lang.System.*;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 import bowling.frame.Frame;
+import bowling.frame.Frames;
 import bowling.game.BowlingGame;
 import bowling.game.EachGame;
 import bowling.score.Score;
@@ -31,15 +31,14 @@ public class OutputView {
 	}
 
 	private void showEachGameResult(EachGame eachGame) {
-		List<Frame> frames = eachGame.frames();
-		showEachGameContent(eachGame.playerName(), frames);
-		showEachGameScore(frames);
+		showEachGameContent(eachGame);
+		showEachGameScore(eachGame);
 	}
 
-	private void showEachGameContent(String playerName, List<Frame> frames) {
-		String result = createNameFormat(playerName)
-			+ createResultFrames(frames)
-			+ createEmptyFrame(frames.size());
+	private void showEachGameContent(EachGame eachGame) {
+		String result = createNameFormat(eachGame.playerName())
+			+ createResultFrames(eachGame.frames())
+			+ createEmptyFrame(eachGame.frameNumber());
 		out.println(result);
 	}
 
@@ -47,9 +46,10 @@ public class OutputView {
 		return String.format(NAME_HEADER, playerName);
 	}
 
-	private String createResultFrames(List<Frame> frames) {
-		return frames.stream()
-			.map(frame -> String.format(RESULT_FORMAT, frame.symbol()))
+	private String createResultFrames(Frames frames) {
+		return frames.symbols()
+			.stream()
+			.map(symbol -> String.format(RESULT_FORMAT, symbol))
 			.collect(Collectors.joining());
 	}
 
@@ -58,32 +58,25 @@ public class OutputView {
 		return EMPTY_FORMAT.repeat(emptyResultCount);
 	}
 
-	private void showEachGameScore(List<Frame> frames) {
+	private void showEachGameScore(EachGame eachGame) {
 		String result = SCORE_HEADER
-			+ createScore(frames)
-			+ createEmptyFrame(frames.size());
+			+ createScore(eachGame.frames())
+			+ createEmptyFrame(eachGame.frameNumber());
 
 		out.println(result);
 	}
 
-	private String createScore(List<Frame> frames) {
-		return frames.stream()
+	private String createScore(Frames frames) {
+		return frames.values()
+			.stream()
 			.map(frame -> formatScore(frames, frame))
 			.collect(Collectors.joining());
 	}
 
-	private String formatScore(List<Frame> frames, Frame frame) {
+	private String formatScore(Frames frames, Frame frame) {
 		if (frame.score() == Score.UNAVAILABLE_NOW) {
 			return EMPTY_FORMAT;
 		}
-		return sumTotalScore(frames, frame.number());
-	}
-
-	private String sumTotalScore(List<Frame> frames, int currentNumber) {
-		int sum = frames.stream()
-			.limit(currentNumber)
-			.mapToInt(Frame::score)
-			.sum();
-		return String.format(SCORE_FORMAT, sum);
+		return String.format(SCORE_FORMAT, frames.sumUntil(frame.number()));
 	}
 }
