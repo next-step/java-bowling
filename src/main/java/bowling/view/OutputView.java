@@ -50,7 +50,6 @@ public class OutputView {
 
     private static void printScoreSymbols(List<Frame> frames) {
         frames.stream().forEach(frame -> System.out.printf(String.format(SYMBOL_FRAME, frame.symbol())));
-        printBlankFrame(MAX_FRAME_NUMBER - frames.size());
     }
 
     private static void printBlankFrame(int leftFrameNumber) {
