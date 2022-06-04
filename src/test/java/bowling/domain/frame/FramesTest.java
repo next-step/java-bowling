@@ -7,6 +7,7 @@ import bowling.domain.state.Strike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullSource;
 
 import java.util.ArrayList;
@@ -17,26 +18,74 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FramesTest {
-
     @DisplayName("Frames 를 생성한다.")
     @Test
     void Frames_생성() {
-        List<Frame> frames = List.of(new NormalFrame(new BeforeProgress(), new FrameNumber(0)));
-        assertThat(new Frames(frames)).isNotNull().isInstanceOf(Frames.class);
+        List<Frame> frames = List.of(new NormalFrame(new BeforeProgress()));
+        assertThat(new Frames(frames, new FrameNumber(0))).isNotNull().isInstanceOf(Frames.class);
     }
 
     @DisplayName("Frames 생성 시 프레임 리스트가 null 일 경우 예외가 발생한다.")
     @ParameterizedTest
     @NullSource
-    void Frames_생성_예외(List<Frame> frames) {
-        assertThatThrownBy(() -> new Frames(frames)).isInstanceOf(IllegalArgumentException.class);
+    void Frames_생성_예외_프레임리스트_null_인_경우(List<Frame> frames) {
+        assertThatThrownBy(() -> new Frames(frames, new FrameNumber(0))).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("Frames 생성 시 프레임 넘버가 null 일 경우 예외가 발생한다.")
+    @ParameterizedTest
+    @NullSource
+    void Frames_생성_예외_프레임넘버_null_인_경우(FrameNumber frameNumber) {
+        List<Frame> normalFrames = List.of(new NormalFrame(new BeforeProgress()));
+        assertThatThrownBy(() -> new Frames(normalFrames, frameNumber)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("Frames 를 초기화 한다.")
     @Test
     void Frames_초기화() {
-        List<Frame> frames = List.of(new NormalFrame(new BeforeProgress(), new FrameNumber(0)));
-        assertThat(Frames.initialize()).isEqualTo(new Frames(frames));
+        List<Frame> frames = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            frames.add(new NormalFrame(new BeforeProgress()));
+        }
+        frames.add(FinalFrame.initialize());
+        assertThat(Frames.initialize()).isEqualTo(new Frames(frames, new FrameNumber(0)));
+    }
+
+    @DisplayName("현재 프레임이 종료된 경우, 다음 프레임으로 넘어가기 위해 프레임 넘버를 1 증가시킨다.")
+    @Test
+    void nextFrame_다음프레임() {
+        List<Frame> frames = new ArrayList<>();
+        for (int frameNumber = 0; frameNumber < 9; frameNumber++) {
+            frames.add(new NormalFrame(new Strike()));
+        }
+        Frames resultFrames = new Frames(frames, new FrameNumber(0));
+        resultFrames.nextFrame();
+        assertThat(resultFrames.isCurrentFrameNumber(new FrameNumber(1))).isTrue();
+    }
+
+    @DisplayName("현재 프레임이 종료되었고, 현재 프레임이 마지막 프레임이면 프레임 넘버는 그대로 유지한다.")
+    @Test
+    void nextFrame_마지막프레임() {
+        List<Frame> frames = new ArrayList<>();
+        for (int frameNumber = 0; frameNumber < 9; frameNumber++) {
+            frames.add(new NormalFrame(new Strike()));
+        }
+        frames.add(new FinalFrame(new LinkedList<>(List.of(new Strike(), new Strike(), new Strike())), 3));
+
+        Frames resultFrames = new Frames(frames, new FrameNumber(9));
+        resultFrames.nextFrame();
+        assertThat(resultFrames.isCurrentFrameNumber(new FrameNumber(9))).isTrue();
+    }
+
+    @DisplayName("현재 프레임 넘버가 맞는지 확인한다.")
+    @ParameterizedTest
+    @CsvSource(value = {
+            "0, true",
+            "1, false"
+    })
+    void isCurrentFrameNumber_확인(int currentFrameNumber, boolean trueOrFalse) {
+        Frames frames = Frames.initialize();
+        assertThat(frames.isCurrentFrameNumber(new FrameNumber(currentFrameNumber))).isEqualTo(trueOrFalse);
     }
 
     @DisplayName("Frames 의 마지막 프레임이 종료인 경우 true 를 반환한다.")
@@ -44,10 +93,10 @@ class FramesTest {
     void isFinalFrameEnd_마지막_프레임_종료_true() {
         List<Frame> frames = new ArrayList<>();
         for (int frameNumber = 0; frameNumber < 9; frameNumber++) {
-            frames.add(new NormalFrame(new Strike(), new FrameNumber(frameNumber)));
+            frames.add(new NormalFrame(new Strike()));
         }
         frames.add(new FinalFrame(new LinkedList<>(List.of(new Strike(), new Spare(new Pins(3)))), 3));
-        assertThat(new Frames(frames).isFinalFrameEnd()).isTrue();
+        assertThat(new Frames(frames, new FrameNumber(9)).isFinalFrameEnd()).isTrue();
     }
 
     @DisplayName("Frames 의 마지막 프레임이 종료되지 않은 경우 false 를 반환한다.")
@@ -55,28 +104,11 @@ class FramesTest {
     void isFinalFrameEnd_마지막_프레임_종료_false() {
         List<Frame> frames = new ArrayList<>();
         for (int frameNumber = 0; frameNumber < 9; frameNumber++) {
-            frames.add(new NormalFrame(new Strike(), new FrameNumber(frameNumber)));
+            frames.add(new NormalFrame(new Strike()));
         }
-        assertThat(new Frames(frames).isFinalFrameEnd()).isFalse();
+        assertThat(new Frames(frames, new FrameNumber(8)).isFinalFrameEnd()).isFalse();
         frames.add(new FinalFrame(new LinkedList<>(List.of(new Strike())), 1));
-        assertThat(new Frames(frames).isFinalFrameEnd()).isFalse();
-    }
-
-    @DisplayName("Frames 의 현재 프레임이 진행 중이라면 다음 투구 진행 시 새로운 프레임이 추가되지 않는다.")
-    @Test
-    void bowl_추가_프레임_없음() {
-        Frames frames = Frames.initialize();
-        frames.bowl(new Pins(5));
-        assertThat(frames.getCurrentFrameNumber()).isEqualTo(1);
-    }
-
-    @DisplayName("Frames 의 현재 프레임이 종료 됐다면 다음 투구 진행 시 새로운 프레임이 추가된다.")
-    @Test
-    void bowl_추가_프레임() {
-        Frames frames = Frames.initialize();
-        frames.bowl(new Pins(10));
-        frames.bowl(new Pins(4));
-        assertThat(frames.getCurrentFrameNumber()).isEqualTo(2);
+        assertThat(new Frames(frames, new FrameNumber(9)).isFinalFrameEnd()).isFalse();
     }
 
     @DisplayName("모든 프레임의 점수를 누적한 리스트를 반환한다.")
@@ -84,9 +116,9 @@ class FramesTest {
     void accumulateScores_누적점수_합() {
         List<Frame> frames = new ArrayList<>();
         for (int frameNumber = 0; frameNumber < 9; frameNumber++) {
-            frames.add(new NormalFrame(new Strike(), new FrameNumber(frameNumber)));
+            frames.add(new NormalFrame(new Strike()));
         }
         frames.add(new FinalFrame(new LinkedList<>(List.of(new Strike(), new Strike(), new Strike())), 3));
-        assertThat(new Frames(frames).accumulateScores()).containsExactly(30, 60, 90, 120, 150, 180, 210, 240, 270, 300);
+        assertThat(new Frames(frames, new FrameNumber(9)).accumulateScores()).containsExactly(30, 60, 90, 120, 150, 180, 210, 240, 270, 300);
     }
 }

@@ -4,50 +4,60 @@ import bowling.domain.Pins;
 import bowling.domain.Score;
 import bowling.domain.Scores;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Frames {
-    private static final int MAX_FRAME_SIZE = 10;
-
     private final List<Frame> frames;
+    private FrameNumber currentFrameNumber;
 
-    public Frames(List<Frame> frames) {
-        validateFrames(frames);
+    public Frames(List<Frame> frames, FrameNumber frameNumber) {
+        validateFramesAndFrameNumber(frames, frameNumber);
+        this.currentFrameNumber = frameNumber;
         this.frames = frames;
     }
 
-    private void validateFrames(List<Frame> frames) {
+    private void validateFramesAndFrameNumber(List<Frame> frames, FrameNumber frameNumber) {
         if (frames == null) {
             throw new IllegalArgumentException("프레임 리스트는 null 일 수 없습니다.");
+        }
+        if (frameNumber == null) {
+            throw new IllegalArgumentException("프레임 넘버는 null 일 수 없습니다.");
         }
     }
 
     public static Frames initialize() {
-        List<Frame> frames = new ArrayList<>();
-        frames.add(NormalFrame.initialize());
-        return new Frames(frames);
+        return new Frames(FrameFactory.create(), new FrameNumber(FrameNumber.START_FRAME_NUMBER));
     }
 
     public boolean isFinalFrameEnd() {
-        return frames.size() == MAX_FRAME_SIZE && currentFrame().isFrameEnd();
+        return currentFrameNumber.isLast() && currentFrame().isFrameEnd();
     }
 
     public void bowl(Pins hitPins) {
         Frame currentFrame = currentFrame();
-        Frame resultFrame = currentFrame().bowl(hitPins);
-        if (currentFrame.isFrameEnd() && !currentFrame.isFinalFrame()) {
-            frames.add(resultFrame);
+        currentFrame.bowl(hitPins);
+    }
+
+    public void nextFrame() {
+        if (currentFrame().isFrameEnd()) {
+            updateNextFrameNumber();
         }
     }
 
+    private void updateNextFrameNumber() {
+        if (this.currentFrameNumber.isLast()) {
+            return;
+        }
+        this.currentFrameNumber = this.currentFrameNumber.nextFrameNumber();
+    }
+
     public int getCurrentFrameNumber() {
-        return frames.size();
+        return currentFrameNumber.frameNumber();
     }
 
     private Frame currentFrame() {
-        return frames.get(frames.size() - 1);
+        return frames.get(currentFrameNumber.frameNumber());
     }
 
     public List<Integer> accumulateScores() {
@@ -65,9 +75,9 @@ public class Frames {
 
     private Score calculateAdditionalScore(Frame frame) {
         Frame currentFrame = frame;
-        FrameNumber currentFrameNumber = frame.frameNumber();
+        int currentFrameNumber = this.frames.indexOf(currentFrame);
         Score score = currentFrame.score();
-        score = nextFrameAddScore(currentFrameNumber, score);
+        score = nextFrameAddScore(new FrameNumber(currentFrameNumber), score);
         return score;
     }
 
@@ -91,6 +101,10 @@ public class Frames {
         return frames;
     }
 
+    public boolean isCurrentFrameNumber(FrameNumber currentFrameNumber) {
+        return this.currentFrameNumber.equals(currentFrameNumber);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -98,11 +112,14 @@ public class Frames {
 
         Frames frames1 = (Frames) o;
 
-        return frames.equals(frames1.frames);
+        if (!frames.equals(frames1.frames)) return false;
+        return currentFrameNumber.equals(frames1.currentFrameNumber);
     }
 
     @Override
     public int hashCode() {
-        return frames.hashCode();
+        int result = frames.hashCode();
+        result = 31 * result + currentFrameNumber.hashCode();
+        return result;
     }
 }
