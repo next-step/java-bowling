@@ -7,7 +7,7 @@ public class BowlingGame {
     private final Player player;
     private final Frames frames;
 
-    public BowlingGame(Player player, Frames frames) {
+    public BowlingGame(Player player) {
         this.player = player;
         this.frames = Frames.initialize();
     }
