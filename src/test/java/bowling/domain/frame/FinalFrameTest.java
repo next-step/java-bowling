@@ -35,7 +35,8 @@ class FinalFrameTest {
     @ParameterizedTest
     @ValueSource(ints = {-2, -1, 4, 5})
     void FinalFrame_생성_프레임상태_예외(int bowlCount) {
-        assertThatThrownBy(() -> new FinalFrame(new LinkedList<>(List.of(new BeforeProgress())), bowlCount)).isInstanceOf(IllegalArgumentException.class);
+        LinkedList<FrameState> frameStates = new LinkedList<>(List.of(new BeforeProgress()));
+        assertThatThrownBy(() -> new FinalFrame(frameStates, bowlCount)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("파이널 프레임을 초기화 한다.")
@@ -51,20 +52,20 @@ class FinalFrameTest {
     @ValueSource(ints = {0, 1, 2, 8, 9})
     void bowl_첫번째_투구_NON_STRIKE(int hitPins) {
         FinalFrame initialFinalFrame = FinalFrame.initialize();
-        FinalFrame resultFrame = (FinalFrame) initialFinalFrame.bowl(new Pins(hitPins));
+        initialFinalFrame.bowl(new Pins(hitPins));
         LinkedList<FrameState> frameStates = new LinkedList<>(List.of(new FirstBowl(new Pins(hitPins))));
-        assertThat(resultFrame.isEqualFrameStates(frameStates)).isTrue();
-        assertThat(resultFrame.isMatchBowlCount(1)).isTrue();
+        assertThat(initialFinalFrame.isEqualFrameStates(frameStates)).isTrue();
+        assertThat(initialFinalFrame.isMatchBowlCount(1)).isTrue();
     }
 
     @DisplayName("파이널 프레임, 첫번째 투구에서 스트라이크한 경우 프레임 상태는 ['Strike'] 이 되고, 투구 횟수는 1이 된다.")
     @Test
     void bowl_첫번째_투구_STRIKE() {
         FinalFrame initialFinalFrame = FinalFrame.initialize();
-        FinalFrame resultFrame = (FinalFrame)initialFinalFrame.bowl(new Pins(10));
+        initialFinalFrame.bowl(new Pins(10));
         LinkedList<FrameState> frameStates = new LinkedList<>(List.of(new Strike()));
-        assertThat(resultFrame.isEqualFrameStates(frameStates)).isTrue();
-        assertThat(resultFrame.isMatchBowlCount(1)).isTrue();
+        assertThat(initialFinalFrame.isEqualFrameStates(frameStates)).isTrue();
+        assertThat(initialFinalFrame.isMatchBowlCount(1)).isTrue();
     }
 
     @DisplayName("파이널 프레임, 첫번째 투구에서 스트라이크 후, 두번째 투구에서 스트라이크 하지 못한 경우 프레임 상태는 ['Strike', 'FirstBowl'] 이 되고, 투구 횟수는 2가 된다.")
@@ -73,10 +74,10 @@ class FinalFrameTest {
     void bowl_첫번째_투구_STRIKE_두번째_투구_NON_STRIKE(int hitPins) {
         FinalFrame initialFinalFrame = FinalFrame.initialize();
         initialFinalFrame.bowl(new Pins(10));
-        FinalFrame resultFrame = (FinalFrame) initialFinalFrame.bowl(new Pins(hitPins));
+        initialFinalFrame.bowl(new Pins(hitPins));
         LinkedList<FrameState> frameStates = new LinkedList<>(List.of(new Strike(), new FirstBowl(new Pins(hitPins))));
-        assertThat(resultFrame.isEqualFrameStates(frameStates)).isTrue();
-        assertThat(resultFrame.isMatchBowlCount(2)).isTrue();
+        assertThat(initialFinalFrame.isEqualFrameStates(frameStates)).isTrue();
+        assertThat(initialFinalFrame.isMatchBowlCount(2)).isTrue();
     }
 
     @DisplayName("파이널 프레임, 첫번째 투구에서 스트라이크 후, 두번째 투구에서 스트라이크 한 경우 프레임 상태는 ['Strike', 'Strike'] 이 되고, 투구 횟수는 2가 된다.")
@@ -84,10 +85,10 @@ class FinalFrameTest {
     void bowl_첫번째_투구_STRIKE_두번째_투구_STRIKE() {
         FinalFrame initialFinalFrame = FinalFrame.initialize();
         initialFinalFrame.bowl(new Pins(10));
-        FinalFrame resultFrame = (FinalFrame) initialFinalFrame.bowl(new Pins(10));
+        initialFinalFrame.bowl(new Pins(10));
         LinkedList<FrameState> frameStates = new LinkedList<>(List.of(new Strike(), new Strike()));
-        assertThat(resultFrame.isEqualFrameStates(frameStates)).isTrue();
-        assertThat(resultFrame.isMatchBowlCount(2)).isTrue();
+        assertThat(initialFinalFrame.isEqualFrameStates(frameStates)).isTrue();
+        assertThat(initialFinalFrame.isMatchBowlCount(2)).isTrue();
     }
 
     @DisplayName("파이널 프레임, 첫번째 투구에서 스트라이크 후, 두번째 투구에서 10개 미만의 공을 쓰러뜨린 후, 세번째 투구에서 스페어 처리하지 못한 경우 프레임 상태는 ['Strike', 'Miss'] 이 되고, 투구 횟수는 3이 된다.")
@@ -102,10 +103,10 @@ class FinalFrameTest {
         FinalFrame initialFinalFrame = FinalFrame.initialize();
         initialFinalFrame.bowl(new Pins(10));
         initialFinalFrame.bowl(new Pins(secondPins));
-        FinalFrame resultFrame = (FinalFrame) initialFinalFrame.bowl(new Pins(thirdPins));
+        initialFinalFrame.bowl(new Pins(thirdPins));
         LinkedList<FrameState> frameStates = new LinkedList<>(List.of(new Strike(), new Miss(new Pins(secondPins), new Pins(thirdPins))));
-        assertThat(resultFrame.isEqualFrameStates(frameStates)).isTrue();
-        assertThat(resultFrame.isMatchBowlCount(3)).isTrue();
+        assertThat(initialFinalFrame.isEqualFrameStates(frameStates)).isTrue();
+        assertThat(initialFinalFrame.isMatchBowlCount(3)).isTrue();
     }
 
     @DisplayName("파이널 프레임, 첫번째 투구에서 스트라이크 후, 두번째 투구에서 10개 미만의 공을 쓰러뜨린 후, 세번째 투구에서 스페어 처리한 경우 프레임 상태는 ['Strike', 'Spare'] 이 되고, 투구 횟수는 3이 된다.")
@@ -120,10 +121,10 @@ class FinalFrameTest {
         FinalFrame initialFinalFrame = FinalFrame.initialize();
         initialFinalFrame.bowl(new Pins(10));
         initialFinalFrame.bowl(new Pins(secondPins));
-        FinalFrame resultFrame = (FinalFrame) initialFinalFrame.bowl(new Pins(thirdPins));
+        initialFinalFrame.bowl(new Pins(thirdPins));
         LinkedList<FrameState> frameStates = new LinkedList<>(List.of(new Strike(), new Spare(new Pins(secondPins))));
-        assertThat(resultFrame.isEqualFrameStates(frameStates)).isTrue();
-        assertThat(resultFrame.isMatchBowlCount(3)).isTrue();
+        assertThat(initialFinalFrame.isEqualFrameStates(frameStates)).isTrue();
+        assertThat(initialFinalFrame.isMatchBowlCount(3)).isTrue();
     }
 
     @DisplayName("파이널 프레임, 첫번째 투구에서 스트라이크 후, 두번째 투구에서 스트라이크 후, 세번째 투구에서 10개 미만의 핀을 쓰러뜨린 경우 프레임 상태는 ['Strike', 'Strike', 'FirstBowl'] 이 되고, 투구 횟수는 3이 된다.")
@@ -133,10 +134,10 @@ class FinalFrameTest {
         FinalFrame initialFinalFrame = FinalFrame.initialize();
         initialFinalFrame.bowl(new Pins(10));
         initialFinalFrame.bowl(new Pins(10));
-        FinalFrame resultFrame = (FinalFrame) initialFinalFrame.bowl(new Pins(thirdPins));
+        initialFinalFrame.bowl(new Pins(thirdPins));
         LinkedList<FrameState> frameStates = new LinkedList<>(List.of(new Strike(), new Strike(), new FirstBowl(new Pins(thirdPins))));
-        assertThat(resultFrame.isEqualFrameStates(frameStates)).isTrue();
-        assertThat(resultFrame.isMatchBowlCount(3)).isTrue();
+        assertThat(initialFinalFrame.isEqualFrameStates(frameStates)).isTrue();
+        assertThat(initialFinalFrame.isMatchBowlCount(3)).isTrue();
     }
 
     @DisplayName("파이널 프레임, 첫번째 투구에서 스트라이크 후, 두번째 투구에서 스트라이크 후, 세번째 투구에서 스트라이크 한 경우 프레임 상태는 ['Strike', 'Strike', 'Strike'] 이 되고, 투구 횟수는 3이 된다.")
@@ -145,10 +146,10 @@ class FinalFrameTest {
         FinalFrame initialFinalFrame = FinalFrame.initialize();
         initialFinalFrame.bowl(new Pins(10));
         initialFinalFrame.bowl(new Pins(10));
-        FinalFrame resultFrame = (FinalFrame) initialFinalFrame.bowl(new Pins(10));
+        initialFinalFrame.bowl(new Pins(10));
         LinkedList<FrameState> frameStates = new LinkedList<>(List.of(new Strike(), new Strike(), new Strike()));
-        assertThat(resultFrame.isEqualFrameStates(frameStates)).isTrue();
-        assertThat(resultFrame.isMatchBowlCount(3)).isTrue();
+        assertThat(initialFinalFrame.isEqualFrameStates(frameStates)).isTrue();
+        assertThat(initialFinalFrame.isMatchBowlCount(3)).isTrue();
     }
 
     @DisplayName("마지막 프레임이 종료됐는지 확인한다.")

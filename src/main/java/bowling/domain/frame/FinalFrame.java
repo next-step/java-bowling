@@ -52,16 +52,15 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Frame bowl(Pins hitPins) {
+    public void bowl(Pins hitPins) {
         this.bowlCount++;
         FrameState lastFrameState = frameStates.getLast();
         if (lastFrameState.isEnd() && !isMiss(lastFrameState)) {
             frameStates.add(new BeforeProgress().bowl(hitPins));
-            return this;
+            return;
         }
         frameStates.removeLast();
         frameStates.add(lastFrameState.bowl(hitPins));
-        return this;
     }
 
     @Override
@@ -75,11 +74,6 @@ public class FinalFrame implements Frame {
     @Override
     public boolean isFinalFrame() {
         return true;
-    }
-
-    @Override
-    public FrameNumber frameNumber() {
-        return new FrameNumber(FrameNumber.LAST_FRAME_NUMBER);
     }
 
     @Override

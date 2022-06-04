@@ -5,48 +5,26 @@ import bowling.domain.Score;
 import bowling.domain.state.*;
 
 public class NormalFrame implements Frame {
-    private static final int START_FRAME_NUMBER = 0;
-
     private FrameState frameState;
-    private final FrameNumber frameNumber;
 
-    public NormalFrame(FrameState frameState, FrameNumber frameNumber) {
-        validateFrameStateAndFrameNumber(frameState, frameNumber);
+    public NormalFrame(FrameState frameState) {
+        validateFrameState(frameState);
         this.frameState = frameState;
-        this.frameNumber = frameNumber;
     }
 
-    private void validateFrameStateAndFrameNumber(FrameState frameState, FrameNumber frameNumber) {
+    private void validateFrameState(FrameState frameState) {
         if (frameState == null) {
             throw new IllegalArgumentException("프레임 상태는 null 일 수 없습니다.");
         }
-        if (frameNumber == null) {
-            throw new IllegalArgumentException("프레임 넘버는 null 일 수 없습니다.");
-        }
-    }
-
-    public static Frame create(FrameNumber frameNumber) {
-        return new NormalFrame(new BeforeProgress(), frameNumber);
     }
 
     public static NormalFrame initialize() {
-        return new NormalFrame(new BeforeProgress(), new FrameNumber(START_FRAME_NUMBER));
+        return new NormalFrame(new BeforeProgress());
     }
 
     @Override
-    public Frame bowl(Pins hitPins) {
+    public void bowl(Pins hitPins) {
         this.frameState = frameState.bowl(hitPins);
-        if (isFrameEnd()) {
-            return nextFrame();
-        }
-        return this;
-    }
-
-    private Frame nextFrame() {
-        if (frameNumber.nextFrameNumber().isLast()) {
-            return FinalFrame.initialize();
-        }
-        return create(frameNumber.nextFrameNumber());
     }
 
     @Override
@@ -57,10 +35,6 @@ public class NormalFrame implements Frame {
     @Override
     public boolean isFinalFrame() {
         return false;
-    }
-
-    public FrameNumber frameNumber() {
-        return frameNumber;
     }
 
     @Override
@@ -85,14 +59,11 @@ public class NormalFrame implements Frame {
 
         NormalFrame that = (NormalFrame) o;
 
-        if (!frameState.equals(that.frameState)) return false;
-        return frameNumber.equals(that.frameNumber);
+        return frameState.equals(that.frameState);
     }
 
     @Override
     public int hashCode() {
-        int result = frameState.hashCode();
-        result = 31 * result + frameNumber.hashCode();
-        return result;
+        return frameState.hashCode();
     }
 }
