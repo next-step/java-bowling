@@ -7,6 +7,7 @@ public class Score {
 	public static final int UNAVAILABLE_NOW = -1;
 
 	private static final int OPEN_BONUS_COUNT = 0;
+	private static final int REMAIN_BONUS_COUNT = 0;
 	private static final int SPARE_BONUS_COUNT = 1;
 	private static final int STRIKE_BONUS_COUNT = 2;
 
@@ -20,6 +21,10 @@ public class Score {
 
 	public static Score of(int value, int bonusCount) {
 		return new Score(value, bonusCount);
+	}
+
+	public static Score remain(Score first) {
+		return new Score(first.value, REMAIN_BONUS_COUNT);
 	}
 
 	public static Score open(Score first, Score second) {
