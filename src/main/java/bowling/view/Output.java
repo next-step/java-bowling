@@ -40,6 +40,6 @@ public class Output {
     }
 
     public static void printFrames(Player player) {
-        player.frames()
+        player.frames();
     }
 }
