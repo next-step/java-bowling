@@ -46,7 +46,7 @@ public class Score {
 	public static Score of(int value, int bonusCount) {
 		Validator.min(MIN_SCORE, value,
 			String.format("점수의 최솟값(%d) 보다 입력(%d)이 작습니다.", MIN_SCORE, value));
-		Validator.min(MIN_BONUS_COUNT, value,
+		Validator.min(MIN_BONUS_COUNT, bonusCount,
 			String.format("보너스 카운트 최솟값(%d) 보다 입력(%d)이 작습니다.", MIN_BONUS_COUNT, value));
 		return new Score(value, bonusCount);
 	}
