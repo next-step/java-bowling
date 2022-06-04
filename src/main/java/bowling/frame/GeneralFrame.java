@@ -76,7 +76,7 @@ public class GeneralFrame implements Frame {
 		if (score.canScore()) {
 			return score;
 		}
-
+		Validator.notNull(next, ErrorTarget.NEXT_FRAME);
 		return next.bonus(score);
 	}
 
