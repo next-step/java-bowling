@@ -35,11 +35,6 @@ public class Strike implements State {
 	}
 
 	@Override
-	public boolean canScore() {
-		return true;
-	}
-
-	@Override
 	public Score score() {
 		return Score.strike(STRIKE_POINT.score());
 	}

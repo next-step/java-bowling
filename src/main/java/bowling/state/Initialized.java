@@ -34,11 +34,6 @@ public class Initialized implements State {
 	}
 
 	@Override
-	public boolean canScore() {
-		return false;
-	}
-
-	@Override
 	public Score score() {
 		throw new UnsupportedOperationException("초기화 상태는 점수를 계산할 수 없습니다.");
 	}

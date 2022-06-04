@@ -7,6 +7,8 @@ import bowling.score.Score;
 
 public class Spare implements State {
 
+	private static final Point SUM_OF_POINTS = Point.max();
+
 	private final Point first;
 	private final Point second;
 
@@ -23,7 +25,7 @@ public class Spare implements State {
 	}
 
 	public static boolean isConstructible(Point remain, Point operand) {
-		return remain.add(operand) == Point.max();
+		return remain.add(operand) == SUM_OF_POINTS;
 	}
 
 	@Override
@@ -42,13 +44,8 @@ public class Spare implements State {
 	}
 
 	@Override
-	public boolean canScore() {
-		return true;
-	}
-
-	@Override
 	public Score score() {
-		return Score.spare(Point.max().score());
+		return Score.spare(SUM_OF_POINTS.score());
 	}
 
 	@Override

@@ -43,11 +43,6 @@ public class Open implements State {
 	}
 
 	@Override
-	public boolean canScore() {
-		return true;
-	}
-
-	@Override
 	public Score score() {
 		return Score.open(first.score(), second.score());
 	}

@@ -67,30 +67,30 @@ public class GeneralFrame implements Frame {
 	}
 
 	@Override
-	public int score() {
-		if (!state.canScore()) {
-			return Score.UNAVAILABLE_NOW;
+	public Score score() {
+		if (!isEnd()) {
+			return Score.unavailable();
 		}
 
 		Score score = state.score();
 		if (score.canScore()) {
-			return score.getValue();
+			return score;
 		}
 
 		return next.bonus(score);
 	}
 
 	@Override
-	public int bonus(Score previousScore) {
+	public Score bonus(Score previousScore) {
 		try {
 			Score score = state.bonus(previousScore);
 			if (score.canScore()) {
-				return score.getValue();
+				return score;
 			}
 			Validator.notNull(next, ErrorTarget.NEXT_FRAME);
 			return next.bonus(score);
 		} catch (UnsupportedOperationException | IllegalArgumentException e) {
-			return Score.UNAVAILABLE_NOW;
+			return Score.unavailable();
 		}
 	}
 

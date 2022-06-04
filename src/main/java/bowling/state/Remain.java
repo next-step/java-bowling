@@ -40,11 +40,6 @@ public class Remain implements State {
 	}
 
 	@Override
-	public boolean canScore() {
-		return false;
-	}
-
-	@Override
 	public Score score() {
 		return Score.remain(first.score());
 	}

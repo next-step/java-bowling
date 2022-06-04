@@ -4,10 +4,10 @@ import java.util.Objects;
 
 public class Score {
 
-	public static final int UNAVAILABLE_NOW = -1;
+	private static final int UNAVAILABLE_SCORE = -1;
+	private static final int UNAVAILABLE_COUNT = -1;
 
-	private static final int OPEN_BONUS_COUNT = 0;
-	private static final int REMAIN_BONUS_COUNT = 0;
+	private static final int MIN_BONUS_COUNT = 0;
 	private static final int SPARE_BONUS_COUNT = 1;
 	private static final int STRIKE_BONUS_COUNT = 2;
 
@@ -19,36 +19,47 @@ public class Score {
 		this.bonusCount = bonusCount;
 	}
 
+	public static Score unavailable() {
+		return new Score(UNAVAILABLE_SCORE, UNAVAILABLE_COUNT);
+	}
+
+	public static Score remain(Score first) {
+		return Score.of(first.value, MIN_BONUS_COUNT);
+	}
+
+	public static Score open(Score first, Score second) {
+		return Score.of(first.value + second.value, MIN_BONUS_COUNT);
+	}
+
+	public static Score spare(Score score) {
+		return Score.of(score.value, SPARE_BONUS_COUNT);
+	}
+
+	public static Score strike(Score score) {
+		return Score.of(score.value, STRIKE_BONUS_COUNT);
+	}
+
 	public static Score of(int value, int bonusCount) {
 		return new Score(value, bonusCount);
 	}
 
-	public static Score remain(Score first) {
-		return new Score(first.value, REMAIN_BONUS_COUNT);
-	}
-
-	public static Score open(Score first, Score second) {
-		return new Score(first.value + second.value, OPEN_BONUS_COUNT);
-	}
-
-	public static Score spare(Score maxScore) {
-		return new Score(maxScore.value, SPARE_BONUS_COUNT);
-	}
-
-	public static Score strike(Score score) {
-		return new Score(score.value, STRIKE_BONUS_COUNT);
-	}
-
 	public boolean canScore() {
+		if (!isAvailable()) {
+			return false;
+		}
 		return bonusCount == 0;
 	}
 
-	public int getValue() {
-		return value;
+	private boolean isAvailable() {
+		return value != UNAVAILABLE_SCORE && bonusCount != UNAVAILABLE_COUNT;
 	}
 
 	public Score accumulate(Score operand) {
 		return new Score(value + operand.value, this.bonusCount - 1);
+	}
+
+	public int getValue() {
+		return value;
 	}
 
 	@Override
