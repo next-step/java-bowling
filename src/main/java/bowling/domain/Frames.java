@@ -25,25 +25,25 @@ public class Frames {
         return Collections.unmodifiableList(this.scores);
     }
 
-    public void plays(Player player) {
-        ListIterator<Score> iterator = this.scores.listIterator();
-        while (iterator.hasNext()) {
-            int i = iterator.nextIndex();
-            Score score = this.scores.get(i);
-            Score newScore = Score.play(score);
-            this.scores.set(i, newScore);
-            Subtotal prevSubtotal = this.subtotals.get(i > 0 ? i - 1 : 0);
-            prevSubtotal.evaluateBonus(newScore);
-            Output.printFrame(i + 1, player);
-            if (newScore.done()) {
-                Subtotal newSubtotal = Subtotal.create(newScore, i > 0 ? prevSubtotal.score() : 0);
-                this.subtotals.set(i, newSubtotal);
-                iterator.next();
-            }
-        }
-        handleLast(player);
-//        return new Player(player.name(), this);
-    }
+//    public void plays(Player player) {
+//        ListIterator<Score> iterator = this.scores.listIterator();
+//        while (iterator.hasNext()) {
+//            int i = iterator.nextIndex();
+//            Score score = this.scores.get(i);
+//            Score newScore = Score.play(score);
+//            this.scores.set(i, newScore);
+//            Subtotal prevSubtotal = this.subtotals.get(i > 0 ? i - 1 : 0);
+//            prevSubtotal.evaluateBonus(newScore);
+//            Output.printFrame(i + 1, player);
+//            if (newScore.done()) {
+//                Subtotal newSubtotal = Subtotal.create(newScore, i > 0 ? prevSubtotal.score() : 0);
+//                this.subtotals.set(i, newSubtotal);
+//                iterator.next();
+//            }
+//        }
+//        handleLast(player);
+////        return new Player(player.name(), this);
+//    }
 
     private void handleLast(Player player) {
         Subtotal prevSubtotal = this.subtotals.get(9);
