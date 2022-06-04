@@ -8,7 +8,6 @@ import bowling.frame.Frame;
 import bowling.frame.Frames;
 import bowling.game.BowlingGame;
 import bowling.game.EachGame;
-import bowling.score.Score;
 
 public class OutputView {
 
@@ -74,7 +73,7 @@ public class OutputView {
 	}
 
 	private String formatScore(Frames frames, Frame frame) {
-		if (frame.score() == Score.UNAVAILABLE_NOW) {
+		if (!frame.canScore()) {
 			return EMPTY_FORMAT;
 		}
 		return String.format(SCORE_FORMAT, frames.sumUntil(frame.number()));

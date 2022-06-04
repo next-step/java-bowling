@@ -40,7 +40,7 @@ public class Frames {
 	public int sumUntil(int frameNumber) {
 		return values.stream()
 			.limit(frameNumber)
-			.mapToInt(Frame::score)
+			.mapToInt(frame -> frame.score().getValue())
 			.sum();
 	}
 

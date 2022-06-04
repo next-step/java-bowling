@@ -19,7 +19,11 @@ public interface Frame {
 
 	String symbol();
 
-	int score();
+	default boolean canScore() {
+		return score().canScore();
+	}
 
-	int bonus(Score previousScore);
+	Score score();
+
+	Score bonus(Score previousScore);
 }
