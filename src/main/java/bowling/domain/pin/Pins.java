@@ -1,5 +1,7 @@
 package bowling.domain.pin;
 
+import bowling.exception.NotSupportMethodException;
+
 public interface Pins {
 
     int FIRST_HIT_INDEX = 0;
@@ -12,5 +14,12 @@ public interface Pins {
 
     int firstHit();
     int secondHit();
-    int thirdHit();
+    default int thirdHit() {
+        throw new NotSupportMethodException();
+    }
+    int totalHits();
+    boolean hasSecondHit();
+    default boolean hasThirdHit() {
+        throw new NotSupportMethodException();
+    }
 }

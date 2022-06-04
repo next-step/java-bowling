@@ -90,17 +90,43 @@ public class FinalFramePins implements Pins {
 
     @Override
     public int firstHit() {
+        if (hits.size() <= FIRST_HIT_INDEX) {
+            return 0;
+        }
         return hits.get(FIRST_HIT_INDEX).toInt();
     }
 
     @Override
     public int secondHit() {
+        if (hits.size() <= SECOND_HIT_INDEX) {
+            return 0;
+        }
         return hits.get(SECOND_HIT_INDEX).toInt();
     }
 
     @Override
     public int thirdHit() {
+        if (hits.size() <= THIRD_HIT_INDEX) {
+            return 0;
+        }
         return hits.get(THIRD_HIT_INDEX).toInt();
+    }
+
+    @Override
+    public int totalHits() {
+        return hits.stream()
+                .mapToInt(Hit::toInt)
+                .sum();
+    }
+
+    @Override
+    public boolean hasSecondHit() {
+        return hits.size() == MAX_HITS_SIZE;
+    }
+
+    @Override
+    public boolean hasThirdHit() {
+        return hits.size() == MAX_HITS_SIZE_WITH_BONUS;
     }
 
     @Override

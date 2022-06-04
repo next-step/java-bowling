@@ -68,17 +68,30 @@ public class NormalFramePins implements Pins {
 
     @Override
     public int firstHit() {
+        if (hits.size() <= FIRST_HIT_INDEX) {
+            return 0;
+        }
         return hits.get(FIRST_HIT_INDEX).toInt();
     }
 
     @Override
     public int secondHit() {
+        if (hits.size() <= SECOND_HIT_INDEX) {
+            return 0;
+        }
         return hits.get(SECOND_HIT_INDEX).toInt();
     }
 
     @Override
-    public int thirdHit() {
-        return hits.get(THIRD_HIT_INDEX).toInt();
+    public int totalHits() {
+        return hits.stream()
+                .mapToInt(Hit::toInt)
+                .sum();
+    }
+
+    @Override
+    public boolean hasSecondHit() {
+        return hits.size() == MAX_HITS_SIZE;
     }
 
     @Override
