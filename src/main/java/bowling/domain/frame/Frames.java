@@ -46,26 +46,20 @@ public class Frames {
         return currentFrameNumber == LAST_FRAME_NUMBER && currentFrame().isFrameEnd();
     }
 
+    public boolean isCurrentFrameEnd() {
+        return currentFrame().isFrameEnd();
+    }
+
     public void bowl(Pins hitPins) {
         Frame currentFrame = currentFrame();
         currentFrame.bowl(hitPins);
     }
 
-    public void nextFrame() {
-        if (currentFrame().isFrameEnd()) {
-            updateNextFrameNumber();
-        }
-    }
-
-    private void updateNextFrameNumber() {
+    public void updateToNextFrameNumber() {
         if (this.currentFrameNumber == LAST_FRAME_NUMBER) {
             return;
         }
         this.currentFrameNumber += UNIT_FRAME_NUMBER;
-    }
-
-    public int currentFrameNumber() {
-        return currentFrameNumber + UNIT_FRAME_NUMBER;
     }
 
     private Frame currentFrame() {

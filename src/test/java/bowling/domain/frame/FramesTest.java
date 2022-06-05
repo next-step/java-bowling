@@ -10,13 +10,17 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.Arguments;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class FramesTest {
     @DisplayName("Frames 를 생성한다.")
@@ -41,6 +45,20 @@ class FramesTest {
         assertThatThrownBy(() -> new Frames(normalFrames, currentFrameNumber)).isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("현재 프레임이 종료 됐는지 확인")
+    @ParameterizedTest
+    @MethodSource("frames_provider")
+    void isCurrentFrameEnd_현_프레임_종료_확인(Frames resultFrames, boolean trueOrFalse) {
+        assertThat(resultFrames.isCurrentFrameEnd()).isEqualTo(trueOrFalse);
+    }
+
+    static Stream<Arguments> frames_provider() {
+        return Stream.of(
+                arguments(new Frames(List.of(new NormalFrame(new BeforeProgress())), 0), false),
+                arguments(new Frames(List.of(new NormalFrame(new Strike())), 0), true)
+        );
+    }
+
     @DisplayName("현재 프레임이 종료된 경우, 다음 프레임으로 넘어가기 위해 프레임 넘버를 1 증가시킨다.")
     @Test
     void nextFrame_다음프레임() {
@@ -49,7 +67,7 @@ class FramesTest {
             frames.add(new NormalFrame(new Strike()));
         }
         Frames resultFrames = new Frames(frames, 0);
-        resultFrames.nextFrame();
+        resultFrames.updateToNextFrameNumber();
         assertThat(resultFrames.isCurrentFrameNumber(1)).isTrue();
     }
 
@@ -63,7 +81,7 @@ class FramesTest {
         frames.add(new FinalFrame(new LinkedList<>(List.of(new Strike(), new Strike(), new Strike())), 3));
 
         Frames resultFrames = new Frames(frames, 9);
-        resultFrames.nextFrame();
+        resultFrames.updateToNextFrameNumber();
         assertThat(resultFrames.isCurrentFrameNumber(9)).isTrue();
     }
 
