@@ -24,7 +24,7 @@ public class FinalFrame implements Frame {
         this.bowlCount = 0;
     }
 
-    FinalFrame(LinkedList<FrameState> frameStates, int bowlCount) {
+    public FinalFrame(LinkedList<FrameState> frameStates, int bowlCount) {
         validateFrameStatesAndBowlCount(frameStates, bowlCount);
         this.frameStates = frameStates;
         this.bowlCount = bowlCount;
