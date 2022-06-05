@@ -29,9 +29,8 @@ public class OutputView {
     private static void printScore(BowlingGame bowlingGame) {
         System.out.printf(BLANK_FRAME);
         List<Integer> accumulateScores = bowlingGame.accumulateScores();
-        bowlingGame.accumulateScores().forEach(score -> System.out.printf(SCORE_FRAME, score));
+        accumulateScores.forEach(score -> System.out.printf(SCORE_FRAME, score));
         printBlankFrame(MAX_FRAME_NUMBER - accumulateScores.size());
-
     }
 
     private static void printFrameHeader() {
