@@ -5,7 +5,7 @@ import bowling.domain.Score;
 import bowling.exception.BowlingGameException;
 
 public class FirstBowl extends Running {
-    private static final String GUTTER_EXPRESSION = "-";
+    private static final String GUTTER_EXPRESSION = "-|";
     private final Pins pins;
 
     public FirstBowl(Pins pins) {
@@ -16,7 +16,7 @@ public class FirstBowl extends Running {
     public State bowl(int countOfPins) {
         Pins secondPins = new Pins(countOfPins);
         if(pins.isSpare(secondPins)) {
-            return new Spare();
+            return new Spare(pins, secondPins);
         }
         return new Miss(pins, secondPins);
     }
@@ -31,6 +31,10 @@ public class FirstBowl extends Running {
 
     @Override
     public Score calculateScore(Score beforeScore) {
-        throw new BowlingGameException("FirstBowl 상태에서는 점수를 계산할 수 없습니다.");
+        Score score = beforeScore.bowl(this.pins.getPins());
+        if(score.isCalculable()) {
+            return score;
+        }
+        throw new BowlingGameException("스코어에 점수추가가 불가능 합니다.");
     }
 }

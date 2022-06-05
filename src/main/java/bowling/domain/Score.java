@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Objects;
+
 public class Score {
     private static final int MAX_PINS = 10;
     private final int score;
@@ -10,7 +12,7 @@ public class Score {
         this.remainNumber = remainNumber;
     }
 
-    public boolean isCalculatable() {
+    public boolean isCalculable() {
         return remainNumber == 0;
     }
 
@@ -22,7 +24,24 @@ public class Score {
         return new Score(MAX_PINS, 2);
     }
 
+    public static Score ofSpare() {
+        return new Score(MAX_PINS, 1);
+    }
+
     public int getScore() {
         return score;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Score score1 = (Score) o;
+        return score == score1.score && remainNumber == score1.remainNumber;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score, remainNumber);
     }
 }

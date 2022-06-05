@@ -4,8 +4,7 @@ import bowling.domain.Pins;
 import bowling.domain.Score;
 import bowling.exception.BowlingGameException;
 
-public abstract class Ready extends Running {
-    private static final int STRIKE = 10;
+public class Ready extends Running {
     @Override
     public State bowl(int countOfPins) {
         Pins pins = new Pins(countOfPins);

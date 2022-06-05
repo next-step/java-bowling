@@ -5,4 +5,5 @@ public interface Frame {
     Score calculateScore(Score beforeScore);
     int score();
     String frameExpression();
+    boolean isFinish();
 }

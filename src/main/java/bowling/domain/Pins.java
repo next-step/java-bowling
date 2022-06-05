@@ -3,6 +3,7 @@ package bowling.domain;
 public class Pins {
     private static final int MAX_PINS = 10;
     private static final int MIN_PINS = 0;
+    private static final String PIPE = "|";
     private final int pins;
 
     public Pins(int pins) {
@@ -15,6 +16,11 @@ public class Pins {
             throw new IllegalArgumentException("투구하는 핀의 범위는 0 ~ 10 입니다.");
         }
     }
+
+    public int sum(Pins pins) {
+        return this.pins + pins.pins;
+    }
+
     public boolean isStrike() {
         return this.pins == MAX_PINS;
     }
@@ -28,7 +34,11 @@ public class Pins {
     }
 
     public String expression() {
-        return String.valueOf(this.pins);
+        return this.pins + PIPE;
+    }
+
+    public String expression(Pins secondPins) {
+        return this.pins + PIPE + secondPins.pins;
     }
 
     public int getPins() {
