@@ -26,6 +26,9 @@ public class Miss extends Finished {
 
     @Override
     public String expression() {
+        if(this.firstPins.isGutter() && this.secondPins.isGutter()) {
+            return "-|-";
+        }
         return this.firstPins.expression(this.secondPins);
     }
 
