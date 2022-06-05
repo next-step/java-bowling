@@ -80,6 +80,13 @@ class ScoreTest {
         assertThat(previousScore.addScore(addScore)).isEqualTo(new Score(resultScore, 1));
     }
 
+    @DisplayName("보너스 기회가 0 일 경우 점수를 더할 수 없다.")
+    @Test
+    void addScore_예외() {
+        Score previousScore = new Score(10, 0);
+        assertThatThrownBy(() -> previousScore.addScore(5)).isInstanceOf(IllegalArgumentException.class);
+    }
+
     @DisplayName("보너스 기회가 남아있는지 확인한다.")
     @ParameterizedTest
     @CsvSource(value = {
