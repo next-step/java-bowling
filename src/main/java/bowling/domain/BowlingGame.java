@@ -6,8 +6,6 @@ import bowling.domain.frame.Frames;
 import java.util.List;
 
 public class BowlingGame {
-    private static final int UNIT_FRAME_NUMBER = 1;
-
     private final Player player;
     private final Frames frames;
 
@@ -30,8 +28,8 @@ public class BowlingGame {
         return new BowlingGame(player, Frames.initialize());
     }
 
-    public int getCurrentFrameNumber() {
-        return frames.getCurrentFrameNumber() + UNIT_FRAME_NUMBER;
+    public int currentFrameNumber() {
+        return frames.currentFrameNumber();
     }
 
     public boolean isRunning() {

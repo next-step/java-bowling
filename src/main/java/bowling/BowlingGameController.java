@@ -12,7 +12,7 @@ public class BowlingGameController {
         BowlingGame bowlingGame = BowlingGame.create(player);
         OutputView.printBowlingGameResult(bowlingGame);
         while (bowlingGame.isRunning()) {
-            int currentFrameNumber = bowlingGame.getCurrentFrameNumber();
+            int currentFrameNumber = bowlingGame.currentFrameNumber();
             bowlingGame.bowl(Pins.create(InputView.scanHitPins(currentFrameNumber)));
             OutputView.printBowlingGameResult(bowlingGame);
             bowlingGame.nextFrame();
