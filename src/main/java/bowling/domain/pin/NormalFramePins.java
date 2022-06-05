@@ -90,6 +90,11 @@ public class NormalFramePins implements Pins {
     }
 
     @Override
+    public int hitSize() {
+        return hits.size();
+    }
+
+    @Override
     public boolean hasSecondHit() {
         return hits.size() == MAX_HITS_SIZE;
     }

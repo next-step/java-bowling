@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.constant.Score;
 import bowling.domain.Content;
 import bowling.domain.Hit;
 import bowling.domain.pin.Pins;
@@ -25,7 +24,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public void bowling(int hit) {
-        if (Score.of(pins).isStrike() || Score.of(pins).isSpare()) {
+        if (hasBonusChance()) {
             pins.fallDown(hit, true);
             return;
         }
@@ -34,10 +33,19 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isFinish() {
-        if (Score.of(pins).isStrike() || Score.of(pins).isSpare()) {
+        if (hasBonusChance()) {
             return pins.hasThirdHit();
         }
         return pins.hasSecondHit();
+    }
+
+    private boolean hasBonusChance() {
+        return pins.firstHit() == Hit.MAX_NUMBER || pins.firstHit() + pins.secondHit() == Hit.MAX_NUMBER;
+    }
+
+    @Override
+    public boolean isFinalFrame() {
+        return true;
     }
 
     @Override

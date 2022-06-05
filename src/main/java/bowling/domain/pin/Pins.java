@@ -18,6 +18,7 @@ public interface Pins {
         throw new NotSupportMethodException();
     }
     int totalHits();
+    int hitSize();
     boolean hasSecondHit();
     default boolean hasThirdHit() {
         throw new NotSupportMethodException();

@@ -9,6 +9,9 @@ public interface Frame {
     Frame next() throws NotCreateFrameException;
     void bowling(int hit);
     boolean isFinish();
+    default boolean isFinalFrame() {
+        return false;
+    }
     Pins pins();
     Content content();
 }

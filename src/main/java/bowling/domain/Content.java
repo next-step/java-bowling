@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Content {
 
-    private static final int LAST_FRAME_NO = 10;
+    public static final int LAST_FRAME_NO = 10;
     private static final int INITIAL_FRAME_NO = 1;
     private static final int NEXT_FRAME_NO = 1;
 
