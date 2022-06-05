@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.domain.BowlingGame;
+import bowling.domain.BowlingGames;
 import bowling.domain.frame.Frame;
 
 import java.util.List;
@@ -19,8 +20,12 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printBowlingGameResult(BowlingGame bowlingGame) {
+    public static void printBowlingGamesResult(BowlingGames bowlingGames) {
         printFrameHeader();
+        bowlingGames.bowlingGames().forEach(OutputView::printEachPlayerInfo);
+    }
+
+    private static void printEachPlayerInfo(BowlingGame bowlingGame) {
         printPlayerAndScoreSymbols(bowlingGame);
         printScore(bowlingGame);
         System.out.println();
