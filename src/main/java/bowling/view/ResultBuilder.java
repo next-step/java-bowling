@@ -92,11 +92,11 @@ public class ResultBuilder {
 
     private static String renderSecondScore(Frame frame) {
         if (!frame.isFinalFrame()) {
-            renderNormalFrameSecondScore(frame.pins());
+            return renderNormalFrameSecondScore(frame.pins());
         }
 
         if (frame.pins().secondHit() == Hit.MAX_NUMBER) {
-            strikeOrSpare(frame.pins().firstHit());
+            return strikeOrSpare(frame.pins().firstHit());
         }
 
         if (frame.pins().firstHit() + frame.pins().secondHit() == Hit.MAX_NUMBER) {
@@ -130,9 +130,8 @@ public class ResultBuilder {
         if (!frame.isFinalFrame()) {
             throw new RuntimeException();
         }
-
         if (frame.pins().thirdHit() == Hit.MAX_NUMBER) {
-            renderFinalFrameThirdScore(frame.pins());
+            return renderFinalFrameThirdScore(frame.pins());
         }
         if (frame.pins().secondHit() + frame.pins().thirdHit() == Hit.MAX_NUMBER) {
             return SPARE;
