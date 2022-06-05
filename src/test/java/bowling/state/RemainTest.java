@@ -46,15 +46,13 @@ class RemainTest {
 	}
 
 	@Test
-	void 핀이_남은_상태는_점수_계산_불가() {
+	void 핀이_남은_상태는_점수_계산_가능() {
 		Remain remain = new Remain(1);
-		assertThatThrownBy(
-			remain::score
-		).isExactlyInstanceOf(UnsupportedOperationException.class);
+		assertThat(remain.score()).isEqualTo(Score.of(1, 0));
 	}
 
 	@Test
-	void 핀이_남은_상태는_보너스_횟수를_참가하고_점수를_제공함() {
+	void 핀이_남은_상태는_보너스_횟수를_차감하고_점수를_제공함() {
 		Remain remain = new Remain(1);
 		Score strike = Score.strike(Point.max().score());
 

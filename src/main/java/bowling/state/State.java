@@ -10,8 +10,6 @@ public interface State {
 
 	String symbol();
 
-	boolean canScore();
-
 	Score score();
 
 	Score bonus(Score prevScore);

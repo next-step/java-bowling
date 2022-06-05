@@ -40,13 +40,8 @@ public class Remain implements State {
 	}
 
 	@Override
-	public boolean canScore() {
-		return false;
-	}
-
-	@Override
 	public Score score() {
-		throw new UnsupportedOperationException("핀이 남은 상태는 점수를 계산할 수 없습니다.");
+		return Score.remain(first.score());
 	}
 
 	@Override

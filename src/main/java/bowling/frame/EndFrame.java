@@ -84,30 +84,32 @@ public class EndFrame implements Frame {
 	}
 
 	@Override
-	public int score() {
+	public Score score() {
 		if (!isEnd()) {
-			return Score.UNAVAILABLE_NOW;
+			return Score.unavailable();
 		}
 
-		return states.stream()
+		int sum = states.stream()
 			.mapToInt(state -> state.score().getValue())
 			.sum();
+
+		return Score.of(sum, 0);
 	}
 
 	@Override
-	public int bonus(Score previousScore) {
+	public Score bonus(Score previousScore) {
 		try {
 			State firstState = states.get(FIRST_INDEX);
 
 			Score currentScore = firstState.bonus(previousScore);
 			if (currentScore.canScore()) {
-				return currentScore.getValue();
+				return currentScore;
 			}
 
 			State secondState = states.get(SECOND_INDEX);
-			return secondState.bonus(currentScore).getValue();
+			return secondState.bonus(currentScore);
 		} catch (UnsupportedOperationException | IndexOutOfBoundsException e) {
-			return Score.UNAVAILABLE_NOW;
+			return Score.unavailable();
 		}
 	}
 

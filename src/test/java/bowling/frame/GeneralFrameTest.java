@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import bowling.score.Score;
+
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @DisplayName("일반 프레임 테스트")
 class GeneralFrameTest {
@@ -94,5 +96,70 @@ class GeneralFrameTest {
 			() -> assertThat(frame.nextFrame()).isPresent().get().isExactlyInstanceOf(EndFrame.class),
 			() -> assertThat(frame).extracting("next").isNotNull()
 		);
+	}
+
+	@Test
+	void 끝나지_않은_상태면_점수_계산_불가() {
+		GeneralFrame generalFrame = GeneralFrame.initialized(1);
+		generalFrame.throwBowl(1);
+
+		assertThat(generalFrame.score()).isEqualTo(Score.unavailable());
+	}
+
+	@Test
+	void 오픈은_점수_계산_가능() {
+		GeneralFrame generalFrame = GeneralFrame.initialized(1);
+		generalFrame.throwBowl(1);
+		generalFrame.throwBowl(1);
+
+		assertThat(generalFrame.score()).isEqualTo(Score.of(2, 0));
+	}
+
+	@Test
+	void 다음_프레임이_지정되지않으면__보너스_계산_불가() {
+		GeneralFrame generalFrame = GeneralFrame.initialized(1);
+		generalFrame.throwBowl(10);
+
+		assertThatThrownBy(
+			generalFrame::score
+		).isExactlyInstanceOf(IllegalArgumentException.class);
+	}
+
+	@Test
+	void 스페어_계산() {
+		GeneralFrame generalFrame = GeneralFrame.initialized(1);
+		generalFrame.throwBowl(2);
+		generalFrame.throwBowl(8);
+
+		Frame firstBonusFrame = generalFrame.nextFrame().get();
+		firstBonusFrame.throwBowl(1);
+
+		assertThat(generalFrame.score()).isEqualTo(Score.of(11, 0));
+	}
+
+	@Test
+	void 스트라이크와_다음프레임_1개_점수_계산() {
+		GeneralFrame generalFrame = GeneralFrame.initialized(1);
+		generalFrame.throwBowl(10);
+
+		Frame firstBonusFrame = generalFrame.nextFrame().get();
+		firstBonusFrame.throwBowl(1);
+		firstBonusFrame.throwBowl(1);
+
+		assertThat(generalFrame.score()).isEqualTo(Score.of(12, 0));
+	}
+
+	@Test
+	void 스트라이크와_다음_두_개의_프레임_계산() {
+		GeneralFrame generalFrame = GeneralFrame.initialized(1);
+		generalFrame.throwBowl(10);
+
+		Frame firstBonusFrame = generalFrame.nextFrame().get();
+		firstBonusFrame.throwBowl(10);
+
+		Frame secondBonusFrame = firstBonusFrame.nextFrame().get();
+		secondBonusFrame.throwBowl(10);
+
+		assertThat(generalFrame.score()).isEqualTo(Score.of(30, 0));
 	}
 }
