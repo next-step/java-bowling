@@ -5,6 +5,7 @@ import bowling.domain.Content;
 import bowling.domain.Frames;
 import bowling.domain.Hit;
 import bowling.domain.frame.Frame;
+import bowling.domain.pin.Pins;
 
 public class ResultBuilder {
 
@@ -91,20 +92,11 @@ public class ResultBuilder {
 
     private static String renderSecondScore(Frame frame) {
         if (!frame.isFinalFrame()) {
-            if (frame.pins().totalHits() == Hit.MAX_NUMBER) {
-                return SPARE;
-            }
-            if (frame.pins().secondHit() == Hit.MIN_NUMBER) {
-                return GUTTER;
-            }
-            return String.valueOf(frame.pins().secondHit());
+            renderNormalFrameSecondScore(frame.pins());
         }
 
         if (frame.pins().secondHit() == Hit.MAX_NUMBER) {
-            if (frame.pins().firstHit() == Hit.MAX_NUMBER) {
-                return STRIKE;
-            }
-            return SPARE;
+            strikeOrSpare(frame.pins().firstHit());
         }
 
         if (frame.pins().firstHit() + frame.pins().secondHit() == Hit.MAX_NUMBER) {
@@ -117,16 +109,30 @@ public class ResultBuilder {
         return String.valueOf(frame.pins().secondHit());
     }
 
+    private static String renderNormalFrameSecondScore(Pins pins) {
+        if (pins.totalHits() == Hit.MAX_NUMBER) {
+            return SPARE;
+        }
+        if (pins.secondHit() == Hit.MIN_NUMBER) {
+            return GUTTER;
+        }
+        return String.valueOf(pins.secondHit());
+    }
+
+    private static String strikeOrSpare(int hit) {
+        if (hit == Hit.MAX_NUMBER) {
+            return STRIKE;
+        }
+        return SPARE;
+    }
+
     private static String renderThirdScore(Frame frame) {
         if (!frame.isFinalFrame()) {
             throw new RuntimeException();
         }
 
         if (frame.pins().thirdHit() == Hit.MAX_NUMBER) {
-            if (frame.pins().secondHit() == Hit.MAX_NUMBER || frame.pins().firstHit() + frame.pins().secondHit() == Hit.MAX_NUMBER) {
-                return STRIKE;
-            }
-            return SPARE;
+            renderFinalFrameThirdScore(frame.pins());
         }
         if (frame.pins().secondHit() + frame.pins().thirdHit() == Hit.MAX_NUMBER) {
             return SPARE;
@@ -135,6 +141,13 @@ public class ResultBuilder {
             return GUTTER;
         }
         return String.valueOf(frame.pins().thirdHit());
+    }
+
+    private static String renderFinalFrameThirdScore(Pins pins) {
+        if (pins.secondHit() == Hit.MAX_NUMBER || pins.firstHit() + pins.secondHit() == Hit.MAX_NUMBER) {
+            return STRIKE;
+        }
+        return SPARE;
     }
 
     private static void initializeStringBuilder() {
