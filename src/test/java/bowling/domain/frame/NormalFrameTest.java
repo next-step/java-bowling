@@ -29,49 +29,6 @@ class NormalFrameTest {
         assertThatThrownBy(() -> new NormalFrame(frameState)).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("노멀 프레임을 초기화 한다.")
-    @Test
-    void initialize_노멀프레임_초기화() {
-        NormalFrame initialNormalFrame = NormalFrame.initialize();
-        NormalFrame expectedNormalFrame = new NormalFrame(new BeforeProgress());
-        assertThat(initialNormalFrame).isEqualTo(expectedNormalFrame);
-    }
-
-    @DisplayName("노멀 프레임, 첫번째 투구에서 스트라이크 하지 못한 경우 현재 프레임 상태는 'FirstBowl' 이 된다.")
-    @ParameterizedTest
-    @ValueSource(ints = {0, 1, 2, 8, 9})
-    void bowl_첫번째_투구_NON_STRIKE(int hitPins) {
-        NormalFrame initialNormalFrame = NormalFrame.initialize();
-        initialNormalFrame.bowl(new Pins(hitPins));
-        NormalFrame expectedNormalFrame = new NormalFrame(new FirstBowl(new Pins(hitPins)));
-        assertThat(initialNormalFrame).isEqualTo(expectedNormalFrame);
-    }
-
-    @DisplayName("노멀 프레임, 첫번째 투구에서 스트라이크한 경우 현재 프레임 상태는 'STRIKE' 가 된다.")
-    @Test
-    void bowl_첫번째_투구_STRIKE() {
-        NormalFrame initialNormalFrame = NormalFrame.initialize();
-        initialNormalFrame.bowl(new Pins(10));
-        NormalFrame expectedNormalFrame = new NormalFrame(new Strike());
-        assertThat(initialNormalFrame).isEqualTo(expectedNormalFrame);
-    }
-
-    @DisplayName("노멀 프레임, 두번째 투구에서 스페어 처리한 경우 현재 프레임 상태는 'SPARE' 가 된다.")
-    @ParameterizedTest
-    @CsvSource(value = {
-            "1, 9",
-            "3, 7",
-            "5, 5",
-            "0, 10"
-    })
-    void bowl_두번째_투구_SPARE(int firstPins, int secondPins) {
-        NormalFrame initialNormalFrame = NormalFrame.initialize();
-        initialNormalFrame.bowl(new Pins(firstPins));
-        initialNormalFrame.bowl(new Pins(secondPins));
-        NormalFrame expectedNormalFrame = new NormalFrame(new Spare(new Pins(firstPins)));
-        assertThat(initialNormalFrame).isEqualTo(expectedNormalFrame);
-    }
-
     @DisplayName("해당 프레임이 종료됬는지 확인")
     @ParameterizedTest
     @MethodSource("isFrameEnd_frameStateProvider")
