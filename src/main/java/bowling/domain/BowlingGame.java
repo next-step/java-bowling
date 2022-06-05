@@ -38,6 +38,7 @@ public class BowlingGame {
 
     public void bowl(Pins pins) {
         frames.bowl(pins);
+        nextFrame();
     }
 
     public List<Integer> accumulateScores() {
