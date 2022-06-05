@@ -28,25 +28,24 @@ public class BowlingGame {
         return new BowlingGame(player, Frames.initialize());
     }
 
-    public int currentFrameNumber() {
-        return frames.currentFrameNumber();
-    }
-
     public boolean isRunning() {
         return !frames.isFinalFrameEnd();
     }
 
+    public boolean isCurrentFrameEnd() {
+        return frames.isCurrentFrameEnd();
+    }
+
     public void bowl(Pins pins) {
         frames.bowl(pins);
-        nextFrame();
     }
 
     public List<Integer> accumulateScores() {
         return frames.accumulateScores();
     }
 
-    public void nextFrame() {
-        this.frames.nextFrame();
+    public void updateToNextFrameNumber() {
+        this.frames.updateToNextFrameNumber();
     }
 
     public String playerName() {
