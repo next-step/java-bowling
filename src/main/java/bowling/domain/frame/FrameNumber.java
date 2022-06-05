@@ -1,8 +1,8 @@
 package bowling.domain.frame;
 
 public class FrameNumber {
-    private static final int LAST_FRAME_NUMBER = 9;
-    private static final int START_FRAME_NUMBER = 0;
+    public static final int LAST_FRAME_NUMBER = 9;
+    public static final int START_FRAME_NUMBER = 0;
 
     private final int number;
 
@@ -17,7 +17,7 @@ public class FrameNumber {
         }
     }
 
-    public FrameNumber next() {
+    public FrameNumber nextFrameNumber() {
         validateNextFrameNumber();
         return new FrameNumber(this.number + 1);
     }
@@ -30,6 +30,10 @@ public class FrameNumber {
 
     public boolean isLast() {
         return this.number == LAST_FRAME_NUMBER;
+    }
+
+    public int frameNumber() {
+        return this.number;
     }
 
     @Override

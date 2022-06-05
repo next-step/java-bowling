@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 
 public class Miss extends EndState {
     private static final String SYMBOL_FORMAT = "%s|%s";
@@ -31,6 +32,26 @@ public class Miss extends EndState {
             return GUTTER_SYMBOL;
         }
         return String.valueOf(pins.hitPins());
+    }
+
+    @Override
+    public Score score() {
+        int totalHitPins = firstPins.addPins(secondPins);
+        return Score.miss(totalHitPins);
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score previousScore) {
+        if (previousScore.isNoBonusChance()) {
+            return previousScore;
+        }
+
+        Score firstAdditionalScore = previousScore.addScore(firstPins.hitPins());
+        if (firstAdditionalScore.isNoBonusChance()) {
+            return firstAdditionalScore;
+        }
+
+        return firstAdditionalScore.addScore(secondPins.hitPins());
     }
 
     @Override

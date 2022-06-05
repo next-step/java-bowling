@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 
 public class Spare extends EndState {
     private static final String SYMBOL_FORMAT = "%s|%s";
@@ -31,6 +32,26 @@ public class Spare extends EndState {
         }
         return String.valueOf(pins.hitPins());
     }
+
+    @Override
+    public Score score() {
+        return Score.spare();
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score previousScore) {
+        if (previousScore.isNoBonusChance()) {
+            return previousScore;
+        }
+
+        Score firstAdditionalScore = previousScore.addScore(firstPins.hitPins());
+        if (firstAdditionalScore.isNoBonusChance()) {
+            return firstAdditionalScore;
+        }
+
+        return firstAdditionalScore.addScore(Pins.MAX_HIT_COUNT - firstPins.hitPins());
+    }
+
 
     @Override
     public boolean equals(Object o) {

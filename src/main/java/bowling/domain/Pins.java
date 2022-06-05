@@ -1,8 +1,8 @@
 package bowling.domain;
 
 public class Pins {
-    private static final int MIN_HIT_COUNT = 0;
-    private static final int MAX_HIT_COUNT = 10;
+    public static final int MIN_HIT_COUNT = 0;
+    public static final int MAX_HIT_COUNT = 10;
 
     private final int hitPins;
 
@@ -47,6 +47,10 @@ public class Pins {
 
     public boolean isOverMaxHitPins(Pins hitPins) {
         return this.hitPins + hitPins.hitPins > MAX_HIT_COUNT;
+    }
+
+    public int addPins(Pins nextHitPins) {
+        return this.hitPins + nextHitPins.hitPins;
     }
 
     @Override

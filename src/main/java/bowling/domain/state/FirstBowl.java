@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 
 public class FirstBowl extends ProgressState {
     private static final String GUTTER_SYMBOL = "-";
@@ -40,6 +41,19 @@ public class FirstBowl extends ProgressState {
             return GUTTER_SYMBOL;
         }
         return String.valueOf(firstPins.hitPins());
+    }
+
+    @Override
+    public Score score() {
+        return new Score(firstPins.hitPins(), Score.MIN_BONUS_CHANCE_COUNT);
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score previousScore) {
+        if (previousScore.isNoBonusChance()) {
+            return previousScore;
+        }
+        return previousScore.addScore(firstPins.hitPins());
     }
 
     @Override
