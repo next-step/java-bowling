@@ -70,6 +70,9 @@ public class FinalFramePins implements Pins {
         if (secondHit() == Hit.MAX_NUMBER) {
             return;
         }
+        if (firstHit() + secondHit() == Hit.MAX_NUMBER) {
+            return;
+        }
         validateMaxHit(secondHit(), hit);
     }
 

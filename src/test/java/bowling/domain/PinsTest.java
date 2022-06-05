@@ -99,10 +99,10 @@ class PinsTest {
     @Test
     @DisplayName("마지막프레임 - 스페어를 치면 한번의 보너스 투구를 할 수 있다.")
     void spare() {
-        finalFramePins.fallDown(7, false);
         finalFramePins.fallDown(3, false);
+        finalFramePins.fallDown(7, false);
         finalFramePins.fallDown(5, true);
 
-        assertThat(finalFramePins).isEqualTo(new FinalFramePins(7, 3, 5));
+        assertThat(finalFramePins).isEqualTo(new FinalFramePins(3, 7, 5));
     }
 }
