@@ -11,8 +11,8 @@ public class Frame {
         this.index = index;
     }
 
-    public int index() {
-        return index;
+    public boolean equal(int index) {
+        return this.index == index;
     }
 
     public void addScore(int score) {
