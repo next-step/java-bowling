@@ -1,35 +1,41 @@
 package bowling.controller;
 
-import bowling.domain.*;
+import bowling.domain.Frame;
+import bowling.domain.FramesList;
+import bowling.domain.Pins;
+import bowling.domain.Users;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class BowlingController {
+    private static final int FINAL_ROUND = 10;
 
     public static void start(Users users) {
         int round = 1;
         FramesList userFrames = new FramesList(users);
 
         ResultView.printInit(users);
-        while(round < 10) {
-            for (int i = 0; i< users.size(); i++) {
-                if(userFrames.isFramesFinish(i, round)) {
-                    continue;
-                }
-                Pins pins = InputView.inputBowl(users.getUsers().get(i).getLetters());
-                Frame nextFrame = userFrames.getUserFrames().get(i).getFrame(round).bowl(pins.getPins());
+        while (round < FINAL_ROUND) {
+            for (int i = 0; i < users.size(); i++) {
+                playRound(userFrames, users, i, round);
+            }
+            round++;
+        }
 
-                if(!userFrames.getUserFrames().get(i).getFrame(round).equals(nextFrame)) {
-                    userFrames.getUserFrames().get(i).add(nextFrame);
-                }
+    }
+
+
+
+    public static void playRound(FramesList framesList, Users users, int i, int round) {
+        while (!framesList.isFramesFinish(i, round)) {
+            Pins pins = InputView.inputBowl(users.getUsers().get(i).getLetters());
+            Frame nextFrame = framesList.getUserFrames().get(i).getFrame(round).bowl(pins.getPins());
+            if (!framesList.getFrame(i, round).equals(nextFrame)) {
+                framesList.getUserFrames().get(i).add(nextFrame);
             }
-            if(userFrames.isFinishAllFromFrame(round)) {
-                round++;
-            }
+            ResultView.printState(users ,framesList, round);
         }
     }
+
 }

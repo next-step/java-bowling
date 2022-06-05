@@ -27,7 +27,7 @@ public class Spare extends Finished {
 
     @Override
     public String expression() {
-        return firstPins.expression() + "|/";
+        return firstPins.expression() + "/";
     }
 
     @Override

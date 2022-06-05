@@ -22,5 +22,4 @@ public class Frames {
         this.frames.add(frame);
     }
 
-
 }

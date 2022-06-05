@@ -19,15 +19,11 @@ public class FramesList {
     }
 
     public boolean isFramesFinish(int i, int round) {
-        return userFrames.get(i).getFrame(round).isFinish();
+        return this.userFrames.get(i).getFrame(round).isFinish();
     }
 
-    public boolean isFinishAllFromFrame(int i) {
-        long count = userFrames.stream()
-                .filter(frames -> frames.getFrame(i).isFinish())
-                .count();
-
-        return count == userFrames.size();
+    public Frame getFrame(int i, int round) {
+        return this.userFrames.get(i).getFrame(round);
     }
 
 }

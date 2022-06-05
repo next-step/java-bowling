@@ -38,6 +38,12 @@ public class Pins {
     }
 
     public String expression(Pins secondPins) {
+        if(this.pins == MIN_PINS) {
+            return "-" + PIPE + secondPins.pins;
+        }
+        if(secondPins.isGutter()) {
+            return this.pins + PIPE + "-";
+        }
         return this.pins + PIPE + secondPins.pins;
     }
 
