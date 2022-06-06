@@ -1,25 +1,9 @@
 package bowling.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+public interface Frame {
+    int score();
 
-public class Frame {
-    private final int index;
-    private final List<Integer> scores = new ArrayList<>();
+    Frame validateMoveToNext(Board board);
 
-    public Frame(int index) {
-        this.index = index;
-    }
-
-    public boolean equal(int index) {
-        return this.index == index;
-    }
-
-    public void addScore(int score) {
-        scores.add(score);
-    }
-
-    public List<Integer> scores() {
-        return scores;
-    }
+    boolean notLastFrame();
 }

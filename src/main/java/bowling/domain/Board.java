@@ -11,21 +11,21 @@ public class Board {
     private static final int START = 1;
     private static final int END = 10;
 
-    private final List<Frame> frames;
+    private final List<NormalFrame> frames;
 
     public static Board init() {
         return new Board(
                 IntStream.rangeClosed(START, END)
-                        .mapToObj(Frame::new)
+                        .mapToObj(NormalFrame::new)
                         .collect(Collectors.toList())
         );
     }
 
-    private Board(List<Frame> frames) {
+    private Board(List<NormalFrame> frames) {
         this.frames = frames;
     }
 
-    public List<Frame> frames() {
+    public List<NormalFrame> frames() {
         return frames;
     }
 
@@ -33,10 +33,17 @@ public class Board {
         frame(frameIndex).addScore(score);
     }
 
-    Frame frame(int index) {
+    public NormalFrame frame(int index) {
         return frames.stream()
                 .filter(frame -> frame.equal(index))
                 .findFirst()
                 .orElseThrow(() -> new BowlingException(BowlingExceptionCode.INVALID_FRAME_INDEX, String.valueOf(index)));
+    }
+
+    @Override
+    public String toString() {
+        return "Board{" +
+                "frames=" + frames +
+                '}';
     }
 }
