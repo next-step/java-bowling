@@ -2,27 +2,39 @@ package refactor;
 
 import java.util.Objects;
 
-import static bowling.util.Const.RANDOM;
-
 public class Frame {
-    private static int MAX_SCORE = 10;
-    private final int score;
-    private final int remaining;
+    private Score score;
+    private Frame next;
 
-    public Frame(int score, int remaining) {
-        validate(score);
+//    public Frame() {
+//        this.score = new Score();
+//        this.next = null;
+//    }
+
+    public Frame(Frame next) {
+        this.score = new Score();
+        this.next = next;
+    }
+
+    public Frame(Score score, Frame next) {
         this.score = score;
-        this.remaining = remaining;
+        this.next = next;
     }
 
-    private void validate(int score) {
-        if (score > 10) {
-            throw new IllegalArgumentException("score cannot be over 10.");
-        }
+    public static Frame last() {
+        return new Frame(new Score(0, 3), null);
     }
 
-    public Frame() {
-        this(0, 2);
+    @Override
+    public String toString() {
+        return "Frame{" +
+                "score=" + score +
+                ", next=" + next +
+                "}\n";
+    }
+
+    public Frame next() {
+        return this.next;
     }
 
     @Override
@@ -30,33 +42,25 @@ public class Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Frame frame = (Frame) o;
-        return score == frame.score && remaining ==frame.remaining;
+        return Objects.equals(score, frame.score) && Objects.equals(next, frame.next);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score, remaining);
+        return Objects.hash(score, next);
     }
 
+    //    public int score() {
+//        if (!score.playing()) {
+//            return score.score();
+//        }
+//        return this.next.calculateBonus(score);
+//    }
 
-    public Frame pitchManual(int numberOfPins) {
-        return new Frame(this.score + numberOfPins, remaining - 1);
-    }
+//    private Score createScore() {
+//    }
 
-    public Frame pitch() {
-        int numberOfPins = RANDOM.nextInt(MAX_SCORE - this.score + 1);
-        return new Frame(numberOfPins, this.remaining - 1);
-    }
-
-    @Override
-    public String toString() {
-        return "Frame{" +
-                "score=" + score +
-                ", remaining=" + remaining +
-                '}';
-    }
-
-    public int score() {
-        return this.score;
-    }
+//    private int calculateBonus(Score previousScore) {
+//
+//    }
 }

@@ -7,14 +7,14 @@ public class Output {
         System.out.print(payload);
     }
 
-    public static void printFrame(Frames frames) {
-        print(HEADER_STR + "\n");
-        String payload = "| NAME |" + frames.frames()
-                .stream()
-                .map(frame -> String.format("%-7s", "  " + frame.score()))
-                .reduce((acc, cur) -> acc + "|" + cur)
-                .orElseThrow(() -> new UnsupportedOperationException())
-                + "|";
-        print(payload);
-    }
+//    public static void printFrame(Frames frames) {
+//        print(HEADER_STR + "\n");
+//        String payload = "| NAME |" + frames.frames()
+//                .stream()
+//                .map(frame -> String.format("%-7s", "  " + frame.score()))
+//                .reduce((acc, cur) -> acc + "|" + cur)
+//                .orElseThrow(() -> new UnsupportedOperationException())
+//                + "|";
+//        print(payload);
+//    }
 }
