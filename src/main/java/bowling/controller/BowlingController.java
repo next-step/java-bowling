@@ -12,19 +12,18 @@ public class BowlingController {
     private static final int FINAL_ROUND = 10;
 
     public static void start(Users users) {
-        int round = 1;
         FramesList userFrames = new FramesList(users);
-
         ResultView.printInit(users);
-        while (round < FINAL_ROUND) {
+
+        for (int round = 1; round < FINAL_ROUND; round++) {
             for (int i = 0; i < users.size(); i++) {
                 playRound(userFrames, users, i, round);
             }
-            round++;
         }
-
+        for (int i = 0; i < users.size(); i++) {
+            playFinalRound(userFrames, users, i);
+        }
     }
-
 
 
     public static void playRound(FramesList framesList, Users users, int i, int round) {
@@ -34,7 +33,15 @@ public class BowlingController {
             if (!framesList.getFrame(i, round).equals(nextFrame)) {
                 framesList.getUserFrames().get(i).add(nextFrame);
             }
-            ResultView.printState(users ,framesList, round);
+            ResultView.printState(users, framesList, round);
+        }
+    }
+
+    public static void playFinalRound(FramesList framesList, Users users, int i) {
+        while (!framesList.isFramesFinish(i, FINAL_ROUND)) {
+            Pins pins = InputView.inputBowl(users.getUsers().get(i).getLetters());
+            framesList.getUserFrames().get(i).getFrame(FINAL_ROUND).bowl(pins.getPins());
+            ResultView.printState(users, framesList, FINAL_ROUND);
         }
     }
 

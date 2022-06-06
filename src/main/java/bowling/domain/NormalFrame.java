@@ -8,10 +8,11 @@ import java.util.Objects;
 
 public class NormalFrame implements Frame {
     private static final int NOT_SCORE = -1;
+    private static final int LAST_NORMAL_FRAME = 9;
     private static final String BLANK = "    ";
     private State state;
     private Frame nextFrame;
-    private int round;
+    private final int round;
 
     public NormalFrame(int round) {
         this.state = new Ready();
@@ -21,8 +22,9 @@ public class NormalFrame implements Frame {
     @Override
     public Frame bowl(int pins) {
         this.state = this.state.bowl(pins);
-        if(this.round == 9 && this.state.isFinish()) {
-
+        if(this.round == LAST_NORMAL_FRAME && this.state.isFinish()) {
+            this.nextFrame = new FinalFrame();
+            return this.nextFrame;
         }
         if(this.state.isFinish()) {
             this.nextFrame = new NormalFrame(this.round + 1);
@@ -65,7 +67,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isFinish() {
-        return this.nextFrame != null;
+        return this.state.isFinish();
     }
 
     @Override

@@ -3,6 +3,7 @@ package bowling.domain.state;
 import bowling.domain.Score;
 
 public class Strike extends Finished {
+    private static final int STRIKE_SCORE = 10;
     private static final String STRIKE = "X";
 
     @Override
@@ -20,7 +21,7 @@ public class Strike extends Finished {
         if(beforeScore.isCalculable()) {
             return beforeScore;
         }
-        return beforeScore.bowl(beforeScore.getScore());
+        return beforeScore.bowl(STRIKE_SCORE);
     }
 
     @Override

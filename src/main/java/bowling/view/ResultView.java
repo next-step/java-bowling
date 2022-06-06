@@ -9,7 +9,9 @@ public class ResultView {
             MENU = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     private static final String EMPTY = "      ";
     private static final String EMPTY_STATE = "    ";
+    private static final String EMPTY_FINAL_STATE = "      ";
     private static final String PIPE = "|";
+    private static final int THREE_STRIKE_EXPRESSION = 5;
     private static final int FIRST_FRAME = 1;
     private static final int FINAL_FRAME = 10;
 
@@ -60,6 +62,10 @@ public class ResultView {
     private static void printStateUntilRound(FramesList userFrames, int idx, int round) {
         for(int i =1; i<=round; i++) {
             String expression = userFrames.getUserFrames().get(idx).getFrame(i).frameExpression();
+            if(expression.length() == THREE_STRIKE_EXPRESSION) {
+                System.out.print(" " + expression +  EMPTY_FINAL_STATE.substring(expression.length()) + PIPE);
+                break;
+            }
             System.out.print("  " + expression +  EMPTY_STATE.substring(expression.length()) + PIPE);
         }
         for(int i = round + 1; i<=FINAL_FRAME; i++) {
