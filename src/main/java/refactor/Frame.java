@@ -55,4 +55,8 @@ public class Frame {
                 ", remaining=" + remaining +
                 '}';
     }
+
+    public int score() {
+        return this.score;
+    }
 }
