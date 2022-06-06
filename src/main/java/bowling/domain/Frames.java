@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Frames {
+    private static final int NOT_SCORE_STATE = -1;
     private final List<Frame> frames;
 
     public Frames(Frame frame) {
@@ -20,6 +21,20 @@ public class Frames {
 
     public void add(Frame frame) {
         this.frames.add(frame);
+    }
+
+    public List<Integer> calculateTotalScore(int i) {
+        List<Integer> result = new ArrayList<>();
+        int total = 0;
+        for(int j = 1; j<=i; j++) {
+            if(getFrame(j).score()== NOT_SCORE_STATE) {
+                result.add(NOT_SCORE_STATE);
+                continue;
+            }
+            total += getFrame(j).score();
+            result.add(total);
+        }
+        return result;
     }
 
 }
