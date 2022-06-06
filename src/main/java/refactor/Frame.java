@@ -50,6 +50,10 @@ public class Frame {
         return Objects.hash(score, next);
     }
 
+    public void pitch() {
+        this.score = score.pitch();
+    }
+
     //    public int score() {
 //        if (!score.playing()) {
 //            return score.score();
