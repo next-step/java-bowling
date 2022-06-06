@@ -49,7 +49,7 @@ public class Spare extends EndState {
             return firstAdditionalScore;
         }
 
-        return firstAdditionalScore.addScore(Pins.MAX_HIT_COUNT - firstPins.hitPins());
+        return firstAdditionalScore.addScore(firstPins.toComplementScore());
     }
 
 

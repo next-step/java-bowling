@@ -24,7 +24,7 @@ public class FinalFrame implements Frame {
         this.bowlCount = 0;
     }
 
-    FinalFrame(LinkedList<FrameState> frameStates, int bowlCount) {
+    public FinalFrame(LinkedList<FrameState> frameStates, int bowlCount) {
         validateFrameStatesAndBowlCount(frameStates, bowlCount);
         this.frameStates = frameStates;
         this.bowlCount = bowlCount;
@@ -115,23 +115,5 @@ public class FinalFrame implements Frame {
 
     private Score getFirstScore() {
         return frameStates.getFirst().score();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        FinalFrame that = (FinalFrame) o;
-
-        if (bowlCount != that.bowlCount) return false;
-        return frameStates.equals(that.frameStates);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = frameStates.hashCode();
-        result = 31 * result + bowlCount;
-        return result;
     }
 }

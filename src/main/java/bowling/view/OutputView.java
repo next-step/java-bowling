@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.domain.BowlingGame;
+import bowling.domain.BowlingGames;
 import bowling.domain.frame.Frame;
 
 import java.util.List;
@@ -19,8 +20,12 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printBowlingGameResult(BowlingGame bowlingGame) {
+    public static void printBowlingGamesResult(BowlingGames bowlingGames) {
         printFrameHeader();
+        bowlingGames.bowlingGames().forEach(OutputView::printEachPlayerInfo);
+    }
+
+    private static void printEachPlayerInfo(BowlingGame bowlingGame) {
         printPlayerAndScoreSymbols(bowlingGame);
         printScore(bowlingGame);
         System.out.println();
@@ -29,9 +34,8 @@ public class OutputView {
     private static void printScore(BowlingGame bowlingGame) {
         System.out.printf(BLANK_FRAME);
         List<Integer> accumulateScores = bowlingGame.accumulateScores();
-        bowlingGame.accumulateScores().forEach(score -> System.out.printf(SCORE_FRAME, score));
+        accumulateScores.forEach(score -> System.out.printf(SCORE_FRAME, score));
         printBlankFrame(MAX_FRAME_NUMBER - accumulateScores.size());
-
     }
 
     private static void printFrameHeader() {

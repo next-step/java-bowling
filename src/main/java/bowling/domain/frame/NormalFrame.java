@@ -49,21 +49,9 @@ public class NormalFrame implements Frame {
 
     @Override
     public Score calculateAdditionalScore(Score previousScore) {
+        if (previousScore.isNoBonusChance()) {
+            return previousScore;
+        }
         return frameState.calculateAdditionalScore(previousScore);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        NormalFrame that = (NormalFrame) o;
-
-        return frameState.equals(that.frameState);
-    }
-
-    @Override
-    public int hashCode() {
-        return frameState.hashCode();
     }
 }

@@ -8,30 +8,46 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Frames {
-    private final List<Frame> frames;
-    private FrameNumber currentFrameNumber;
+    private static final int LAST_FRAME_NUMBER = 9;
+    private static final int START_FRAME_NUMBER = 0;
+    private static final int UNIT_FRAME_NUMBER = 1;
 
-    public Frames(List<Frame> frames, FrameNumber frameNumber) {
-        validateFramesAndFrameNumber(frames, frameNumber);
-        this.currentFrameNumber = frameNumber;
+    private final List<Frame> frames;
+    private int currentFrameNumber;
+
+    public Frames(List<Frame> frames, int currentFrameNumber) {
+        validateFramesAndFrameNumber(frames, currentFrameNumber);
+        this.currentFrameNumber = currentFrameNumber;
         this.frames = frames;
     }
 
-    private void validateFramesAndFrameNumber(List<Frame> frames, FrameNumber frameNumber) {
+    private void validateFramesAndFrameNumber(List<Frame> frames, int currentFrameNumber) {
+        validateFrames(frames);
+        validateFrameNumber(currentFrameNumber);
+    }
+
+    private void validateFrames(List<Frame> frames) {
         if (frames == null) {
             throw new IllegalArgumentException("프레임 리스트는 null 일 수 없습니다.");
         }
-        if (frameNumber == null) {
-            throw new IllegalArgumentException("프레임 넘버는 null 일 수 없습니다.");
+    }
+
+    private void validateFrameNumber(int currentFrameNumber) {
+        if (currentFrameNumber > LAST_FRAME_NUMBER || currentFrameNumber < START_FRAME_NUMBER) {
+            throw new IllegalArgumentException(String.format("프레임 넘버는 0 ~ 9를 벗어날 수 없습니다. 전달 받은 프레임 넘버 : %d", currentFrameNumber));
         }
     }
 
     public static Frames initialize() {
-        return new Frames(FrameFactory.create(), new FrameNumber(FrameNumber.START_FRAME_NUMBER));
+        return new Frames(FrameFactory.create(), START_FRAME_NUMBER);
     }
 
     public boolean isFinalFrameEnd() {
-        return currentFrameNumber.isLast() && currentFrame().isFrameEnd();
+        return currentFrameNumber == LAST_FRAME_NUMBER && currentFrame().isFrameEnd();
+    }
+
+    public boolean isCurrentFrameEnd() {
+        return currentFrame().isFrameEnd();
     }
 
     public void bowl(Pins hitPins) {
@@ -39,25 +55,15 @@ public class Frames {
         currentFrame.bowl(hitPins);
     }
 
-    public void nextFrame() {
-        if (currentFrame().isFrameEnd()) {
-            updateNextFrameNumber();
-        }
-    }
-
-    private void updateNextFrameNumber() {
-        if (this.currentFrameNumber.isLast()) {
+    public void updateToNextFrameNumber() {
+        if (this.currentFrameNumber == LAST_FRAME_NUMBER) {
             return;
         }
-        this.currentFrameNumber = this.currentFrameNumber.nextFrameNumber();
-    }
-
-    public int getCurrentFrameNumber() {
-        return currentFrameNumber.frameNumber();
+        this.currentFrameNumber += UNIT_FRAME_NUMBER;
     }
 
     private Frame currentFrame() {
-        return frames.get(currentFrameNumber.frameNumber());
+        return frames.get(currentFrameNumber);
     }
 
     public List<Integer> accumulateScores() {
@@ -77,32 +83,32 @@ public class Frames {
         Frame currentFrame = frame;
         int currentFrameNumber = this.frames.indexOf(currentFrame);
         Score score = currentFrame.score();
-        score = nextFrameAddScore(new FrameNumber(currentFrameNumber), score);
+        score = nextFrameAddScore(score, currentFrameNumber);
         return score;
     }
 
-    private Score nextFrameAddScore(FrameNumber currentFrameNumber, Score score) {
+    private Score nextFrameAddScore(Score score, int currentFrameNumber) {
         while (!score.isNotCalculable()) {
             currentFrameNumber = getNextFrameNumber(currentFrameNumber);
-            Frame currentFrame = this.frames.get(currentFrameNumber.frameNumber());
+            Frame currentFrame = this.frames.get(currentFrameNumber);
             score = currentFrame.calculateAdditionalScore(score);
         }
         return score;
     }
 
-    private FrameNumber getNextFrameNumber(FrameNumber currentFrameNumber) {
-        if (currentFrameNumber.isLast()) {
+    private int getNextFrameNumber(int currentFrameNumber) {
+        if (currentFrameNumber == LAST_FRAME_NUMBER) {
             return currentFrameNumber;
         }
-        return currentFrameNumber.nextFrameNumber();
+        return currentFrameNumber + UNIT_FRAME_NUMBER;
     }
 
     public List<Frame> frames() {
         return frames;
     }
 
-    public boolean isCurrentFrameNumber(FrameNumber currentFrameNumber) {
-        return this.currentFrameNumber.equals(currentFrameNumber);
+    public boolean isCurrentFrameNumber(int currentFrameNumber) {
+        return this.currentFrameNumber == currentFrameNumber;
     }
 
     @Override
@@ -112,14 +118,14 @@ public class Frames {
 
         Frames frames1 = (Frames) o;
 
-        if (!frames.equals(frames1.frames)) return false;
-        return currentFrameNumber.equals(frames1.currentFrameNumber);
+        if (currentFrameNumber != frames1.currentFrameNumber) return false;
+        return frames.equals(frames1.frames);
     }
 
     @Override
     public int hashCode() {
         int result = frames.hashCode();
-        result = 31 * result + currentFrameNumber.hashCode();
+        result = 31 * result + currentFrameNumber;
         return result;
     }
 }
