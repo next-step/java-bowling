@@ -3,7 +3,7 @@ package bowling.domain;
 public interface Frame {
     int score();
 
-    Frame validateMoveToNext(Board board);
+    int validateMoveToNextIndex();
 
     boolean notLastFrame();
 }

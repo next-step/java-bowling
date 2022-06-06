@@ -14,8 +14,12 @@ public class BowlingGame {
         do {
             frame.score();
 //  TODO(jack.comeback) : output 점수 출력
-            frame = frame.validateMoveToNext(board);
-        } while (frame.notLastFrame());
+            int mayBeNextIndex = frame.validateMoveToNextIndex();
+            if (mayBeNextIndex > 10) {
+                break;
+            }
+            frame = board.frame(mayBeNextIndex);
+        } while (true);
 
         System.out.println(board.toString());
     }

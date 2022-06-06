@@ -40,14 +40,15 @@ public class NormalFrame implements Frame {
         return score;
     }
 
-    public Frame validateMoveToNext(Board board) {
+    @Override
+    public int validateMoveToNextIndex() {
         if (tryNo < 1 || remain > 9) {
             int nextIndex = index + 1;
             tryNo = 2;
             remain = 0;
-            return board.frame(nextIndex);
+            return nextIndex;
         }
-        return this;
+        return index;
     }
 
     @Override
