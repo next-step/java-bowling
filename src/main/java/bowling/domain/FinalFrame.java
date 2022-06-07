@@ -1,39 +1,48 @@
 package bowling.domain;
 
-import bowling.engine.ScoreStrategy;
+import bowling.engine.Frame;
 
-public class FinalFrame implements bowling.engine.FinalFrame {
-    private static final int TEN = 10;
-    private static final int ZERO = 0;
+public class FinalFrame implements Frame {
+    public static final int FINAL_SIZE = 2;
 
-    private final NormalFrame normalFrame;
-    private final int Bonus;
+    private NormalFrame normalFrame;
+    private Pitching bonusPitching;
 
-    public FinalFrame(ScoreStrategy scoreStrategy) {
-        int first = scoreStrategy.createFirst();
-        int second = scoreStrategy.createSecond(first);
-        this.normalFrame = NormalFrame.firstWithFactor(first, second);
-        this.Bonus = selectBonus(first + second, scoreStrategy);
+    private FinalFrame(NormalFrame normalFrame) {
+        this.normalFrame = normalFrame;
     }
 
-    public FinalFrame(NormalFrame normalFrame, int bonus) {
+    private FinalFrame(NormalFrame normalFrame, int bonusNumber) {
         this.normalFrame = normalFrame;
-        Bonus = bonus;
+        this.bonusPitching = new Pitching(bonusNumber);
+    }
+
+    public static FinalFrame first(int firstPitchingNumber) {
+        return new FinalFrame(NormalFrame.first(firstPitchingNumber));
+    }
+
+    public FinalFrame second(int secondPitchingNumber) {
+        return new FinalFrame(this.normalFrame.second(secondPitchingNumber));
+    }
+
+    public FinalFrame bonus(int bonusPitchingNumber) {
+        return new FinalFrame(this.normalFrame, bonusPitchingNumber);
+    }
+
+    public FinalFrame of(NormalFrame normalFrame, int bonusNumber) {
+        return new FinalFrame(normalFrame, bonusNumber);
+    }
+
+    @Override
+    public boolean isEnd() {
+        return this.normalFrame.isEnd();
     }
 
     public NormalFrame getNormalFrame() {
         return normalFrame;
     }
 
-    public int getBonus() {
-        return Bonus;
-    }
-
-    @Override
-    public int selectBonus(int sum, ScoreStrategy scoreStrategy) {
-        if (sum == TEN) {
-            return scoreStrategy.createFirst();
-        }
-        return ZERO;
+    public Pitching getBonusPitching() {
+        return bonusPitching;
     }
 }

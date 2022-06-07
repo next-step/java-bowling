@@ -1,52 +1,40 @@
 package bowling.domain;
 
-import bowling.engine.ScoreStrategy;
+import bowling.engine.Frame;
 
-public class NormalFrame implements bowling.engine.NormalFrame {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-    private final FirstTry firstTry;
-    private final SecondTry secondTry;
+public class NormalFrame implements Frame {
+    public static final int INITIAL_INDEX = 0;
+    public static final int FINAL_SIZE = 2;
 
-    private NormalFrame(ScoreStrategy scoreStrategy) {
-        int first = scoreStrategy.createFirst();
-        this.firstTry = new FirstTry(first);
-        this.secondTry = new SecondTry(scoreStrategy.createSecond(first));
+    private final List<Pitching> pitchings;
+
+    private NormalFrame(List<Pitching> pitchings) {
+        this.pitchings = pitchings;
     }
 
-    private NormalFrame(int num1, int num2) {
-        this.firstTry = new FirstTry(num1);
-        this.secondTry = new SecondTry(num2);
+    public static NormalFrame first(int firstPitchingNumber) {
+        return new NormalFrame(new ArrayList<>(Arrays.asList(new Pitching(firstPitchingNumber))));
     }
 
-    public static NormalFrame firstWithRandom(ScoreStrategy scoreStrategy) {
-        return new NormalFrame(scoreStrategy);
+    public NormalFrame second(int secondPitchingNumber) {
+        this.pitchings.add(new Pitching(secondPitchingNumber));
+        return new NormalFrame(this.pitchings);
     }
 
-    public NormalFrame nextWithRandom(ScoreStrategy scoreStrategy) {
-        return new NormalFrame(scoreStrategy);
+    @Override
+    public boolean isEnd() {
+        return this.pitchings.size() == FINAL_SIZE;
     }
 
-    public NormalFrame lastWithRandom(ScoreStrategy scoreStrategy) {
-        return new NormalFrame(scoreStrategy);
+    public boolean isStrike() {
+        return this.pitchings.get(INITIAL_INDEX).isStrike();
     }
 
-    public static NormalFrame firstWithFactor(int num1, int num2) {
-        return new NormalFrame(num1, num2);
-    }
-
-    public NormalFrame nextWithFactor(int num1, int num2) {
-        return new NormalFrame(num1, num2);
-    }
-
-    public NormalFrame lastWithFactor(int num1, int num2) {
-        return new NormalFrame(num1, num2);
-    }
-
-    public FirstTry getFirstTry() {
-        return firstTry;
-    }
-
-    public SecondTry getSecondTry() {
-        return secondTry;
+    public List<Pitching> getPitchings() {
+        return pitchings;
     }
 }
