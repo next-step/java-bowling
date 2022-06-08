@@ -1,8 +1,8 @@
 package refactor;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,7 +20,7 @@ public class Frames {
     }
 
     public void save(Frame frame) {
-       this.frames.set(this.frames.indexOf(frame), frame);
+       this.frames.set(index(frame), frame);
     }
 
     @Override
@@ -41,8 +41,20 @@ public class Frames {
     }
 
     public Frame next(Frame frame) {
-        return this.frames.get(this.frames.indexOf(frame) + 1);
+        return this.frames.get(index(frame) + 1);
     }
+
+    int index(Frame frame) {
+        return this.frames.indexOf(frame);
+    }
+
+    public Frame prev(Frame frame) {
+        if (index(frame) == 0) {
+            throw new UnsupportedOperationException("cannot access to prev");
+        }
+        return this.frames.get(index(frame) - 1);
+    }
+
 
 //    public Frame play(Frame frame) {
 //        Frame doneFrame = frame.pitches();

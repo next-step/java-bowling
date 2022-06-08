@@ -45,8 +45,6 @@ public class Scores {
         return this.scores.get(size - 1);
     }
 
-
-
     @Override
     public String toString() {
         return "Scores{" +
@@ -79,5 +77,9 @@ public class Scores {
 
     public List<Integer> scores() {
         return this.scores;
+    }
+
+    public boolean isStrike() {
+        return this.scores.get(0) == 10;
     }
 }

@@ -1,24 +1,25 @@
 package refactor;
 
+
 import java.util.List;
 import java.util.Objects;
 
 public class Frame {
     private Scores scores;
-    private int subtotal;
+    private Subtotal subtotal;
 
-    public Frame(Scores scores, int subtotal) {
+    public Frame(Scores scores, Subtotal subtotal) {
         this.scores = scores;
         this.subtotal = subtotal;
     }
 
     public Frame() {
-        this(new Scores(), 0);
+        this(new Scores(), new Subtotal());
     }
 
-    public Frame(int subtotal) {
-        this(new Scores(), subtotal);
-    }
+//    public Frame(int subtotal) {
+//        this(new Scores(), subtotal);
+//    }
 
 //    public Frame pitches() {
 //        return pitch(this.scores);
@@ -53,34 +54,44 @@ public class Frame {
                 '}';
     }
 
-    public Frame accumulatedNextFrame(Frame next) {
-        return new Frame(this.subtotal + next.subtotal);
-    }
+//    public Frame accumulatedNextFrame(Frame next) {
+//        return new Frame(this.subtotal + next.subtotal);
+//    }
 
-    public void pitch(int numPins) {
+    public void pitchManual(int numPins, Frames frames) {
         Scores scores = this.scores.pitch(numPins);
-        if (scores.done()) {
-//            return new Frame(scores, subtotal + scores.sum());
-            this.scores = scores;
-            this.subtotal += scores.sum();
-        }
-//        return new Frame(scores, subtotal);
-        this.scores = scores;
+        pitch(scores, frames);
     }
 
-    public void pitchRandom() {
+    public void pitchRandom(Frames frames) {
         Scores scores = this.scores.pitchRandom();
+        pitch(scores, frames);
+    }
+
+    private void pitch(Scores scores, Frames frames) {
         if (scores.done()) {
-//            return new Frame(scores, subtotal + scores.sum());
             this.scores = scores;
-            this.subtotal += scores.sum();
+            State state = evaluateState(scores);
+            this.subtotal = new Subtotal(state, this.subtotal.add(scores.sum()));
         }
-//        return new Frame(scores, subtotal);
         this.scores = scores;
+        if (frames.index(this) > 0 && frames.prev(this).subtotal.state() != State.DONE) {
+            frames.prev(this).subtotal.accumulateBonus(this.scores.lastScore());
+        }
+    }
+
+    private State evaluateState(Scores scores) {
+        if (scores.isStrike()) {
+            return State.WAIT_TWICE;
+        }
+        if (scores.sum() == 10) {
+            return  State.WAIT_ONCE;
+        }
+        return State.DONE;
     }
 
 
-    public int subtotal() {
+    public Subtotal subtotal() {
         return this.subtotal;
     }
 
@@ -92,7 +103,7 @@ public class Frame {
         return this.scores.scores();
     }
 
-    public void updateSubtotal(int subtotal) {
-        this.subtotal = subtotal;
+    public void updateSubtotal(Subtotal subtotal) {
+        this.subtotal = new Subtotal(State.WAITING, subtotal.value());
     }
 }

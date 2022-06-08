@@ -19,11 +19,18 @@ public class Output {
     private static void printSubtotals(Frames frames) {
         String payload = "| NAME |" + frames.frames()
                 .stream()
-                .map(frame -> formatRecord(frame.subtotal() + ""))
+                .map(frame -> mastSubtotal(frame.subtotal()))
                 .reduce((acc, cur) -> acc + "|" + cur)
                 .orElseThrow(() -> new UnsupportedOperationException())
                 + "|\n";
         print(payload);
+    }
+
+    private static String mastSubtotal(Subtotal subtotal) {
+        if (subtotal.state() == State.WAITING) {
+            return formatRecord("");
+        }
+        return formatRecord(subtotal.value() + "");
     }
 
     private static void printScores(Frames frames) {
