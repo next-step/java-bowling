@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class FramesTest {
     @Test
     void next는다음Frame을가리킨다() {
-        Frame first = new Frame(new Scores(Arrays.asList(3, 4), 0), new Subtotal(State.WAITING, 7));
+        Frame first = new Frame(new Scores(Arrays.asList(3, 4), 0), new Subtotal(State.INIT, 7));
         Frame second = new Frame(new Scores(Arrays.asList(2, 4), 0), new Subtotal(State.DONE, 16));
         Frames frames = new Frames(Arrays.asList(first, second));
         assertThat(frames.first()).isEqualTo(first);

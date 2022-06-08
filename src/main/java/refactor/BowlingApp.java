@@ -24,7 +24,7 @@ public class BowlingApp {
             Output.printFrames(frames);
         }
         if (frame.done() && index < 9) {
-            frames.next(frame).updateSubtotal(frame.subtotal());
+            frames.next(frame).updateNextSubtotal(frame.subtotal());
         }
     }
 }

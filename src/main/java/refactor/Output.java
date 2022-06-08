@@ -19,15 +19,15 @@ public class Output {
     private static void printSubtotals(Frames frames) {
         String payload = "| NAME |" + frames.frames()
                 .stream()
-                .map(frame -> mastSubtotal(frame.subtotal()))
+                .map(frame -> maskSubtotal(frame.subtotal()))
                 .reduce((acc, cur) -> acc + "|" + cur)
                 .orElseThrow(() -> new UnsupportedOperationException())
                 + "|\n";
         print(payload);
     }
 
-    private static String mastSubtotal(Subtotal subtotal) {
-        if (subtotal.state() == State.WAITING) {
+    private static String maskSubtotal(Subtotal subtotal) {
+        if (subtotal.state() != State.DONE) {
             return formatRecord("");
         }
         return formatRecord(subtotal.value() + "");

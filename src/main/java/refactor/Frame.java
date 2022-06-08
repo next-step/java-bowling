@@ -69,14 +69,15 @@ public class Frame {
     }
 
     private void pitch(Scores scores, Frames frames) {
-        if (scores.done()) {
-            this.scores = scores;
-            State state = evaluateState(scores);
-            this.subtotal = new Subtotal(state, this.subtotal.add(scores.sum()));
-        }
         this.scores = scores;
-        if (frames.index(this) > 0 && frames.prev(this).subtotal.state() != State.DONE) {
+        if (scores.done()) {
+            State state = evaluateState(scores);
+            this.subtotal = new Subtotal(state, this.subtotal.value() + scores.sum());
+        }
+        if (frames.index(this) > 0 && frames.prev(this).subtotal.state().waiting()) {
             frames.prev(this).subtotal.accumulateBonus(this.scores.lastScore());
+//            this.updateSubtotal(new Subtotal(this.subtotal.state(), frames.prev(this).subtotal.value()));
+            this.subtotal = new Subtotal(this.subtotal.state(), this.subtotal.value() + this.scores.lastScore());
         }
     }
 
@@ -85,7 +86,7 @@ public class Frame {
             return State.WAIT_TWICE;
         }
         if (scores.sum() == 10) {
-            return  State.WAIT_ONCE;
+            return State.WAIT_ONCE;
         }
         return State.DONE;
     }
@@ -103,7 +104,7 @@ public class Frame {
         return this.scores.scores();
     }
 
-    public void updateSubtotal(Subtotal subtotal) {
-        this.subtotal = new Subtotal(State.WAITING, subtotal.value());
+    public void updateNextSubtotal(Subtotal subtotal) {
+        this.subtotal = new Subtotal(State.INIT, subtotal.value());
     }
 }

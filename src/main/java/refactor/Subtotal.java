@@ -12,13 +12,13 @@ public class Subtotal {
     }
 
     public Subtotal() {
-        this.state = State.WAITING;
+        this.state = State.INIT;
         this.value = 0;
     }
 
-    public int add(int sum) {
-        return this.value + sum;
-    }
+//    public int add(int sum) {
+//        return this.value + sum;
+//    }
 
     @Override
     public boolean equals(Object o) {
@@ -54,5 +54,8 @@ public class Subtotal {
     public void accumulateBonus(int bonus) {
         this.state = this.state.decreaseWait();
         this.value += bonus;
+        if (bonus == 10) {
+            this.state = State.DONE;
+        }
     }
 }
