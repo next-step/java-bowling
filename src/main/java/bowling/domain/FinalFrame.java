@@ -44,15 +44,20 @@ public class FinalFrame implements Frame {
         if(!this.stateList.get(0).isFinish()) {
             return NOT_SCORE;
         }
+
         try {
-            Score score = this.stateList.get(0).getScore();
-            for (int i = 1; i < size(); i++) {
-                score = this.stateList.get(i).calculateScore(score);
-            }
-            return score.getScore();
+            return getScore();
         }catch(BowlingGameException b) {
             return NOT_SCORE;
         }
+    }
+
+    private int getScore() {
+        Score score = this.stateList.get(0).getScore();
+        for (int i = 1; i < size(); i++) {
+            score = this.stateList.get(i).calculateScore(score);
+        }
+        return score.getScore();
     }
 
     @Override

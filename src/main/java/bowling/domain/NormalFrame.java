@@ -49,14 +49,18 @@ public class NormalFrame implements Frame {
             return NOT_SCORE;
         }
         try {
-            Score score = this.state.getScore();
-            if (score.isCalculable()) {
-                return score.getScore();
-            }
-            return this.nextFrame.calculateScore(score).getScore();
+            return getScore();
         }catch(BowlingGameException b) {
             return NOT_SCORE;
         }
+    }
+
+    private int getScore() {
+        Score score = this.state.getScore();
+        if (score.isCalculable()) {
+            return score.getScore();
+        }
+        return this.nextFrame.calculateScore(score).getScore();
     }
 
     @Override

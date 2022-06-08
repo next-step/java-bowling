@@ -17,4 +17,9 @@ public class Users {
         return this.users.size();
     }
 
+    public String getUserLetter(int index) {
+        return this.users.get(index)
+                .getLetters();
+    }
+
 }

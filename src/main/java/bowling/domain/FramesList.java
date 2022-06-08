@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class FramesList {
-    private List<Frames> userFrames;
+    private final List<Frames> userFrames;
 
     public FramesList(Users users) {
         this.userFrames = IntStream.range(0, users.size())
@@ -16,6 +16,18 @@ public class FramesList {
 
     public List<Frames> getUserFrames() {
         return Collections.unmodifiableList(this.userFrames);
+    }
+
+    public Frame getUserFrame(int index, int frameIndex) {
+        return this.userFrames.get(index).getFrame(frameIndex);
+    }
+
+    public void addNextFrame(int index, Frame nextFrame) {
+        this.userFrames.get(index).add(nextFrame);
+    }
+
+    public List<Integer> calculateTotalScore(int index, int round) {
+        return this.userFrames.get(index).calculateTotalScore(round);
     }
 
     public boolean isFramesFinish(int i, int round) {

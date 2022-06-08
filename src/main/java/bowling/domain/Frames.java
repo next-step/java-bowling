@@ -27,14 +27,25 @@ public class Frames {
         List<Integer> result = new ArrayList<>();
         int total = 0;
         for(int j = 1; j<=i; j++) {
-            if(getFrame(j).score()== NOT_SCORE_STATE) {
-                result.add(NOT_SCORE_STATE);
-                continue;
-            }
+            total = addTotal(result, total, j);
+        }
+        return result;
+    }
+
+    private int addTotal(List<Integer> result, int total, int j) {
+        if (!checkNotScoreState(result, j)) {
             total += getFrame(j).score();
             result.add(total);
         }
-        return result;
+        return total;
+    }
+
+    private boolean checkNotScoreState(List<Integer> result, int j) {
+        if(getFrame(j).score()== NOT_SCORE_STATE) {
+            result.add(NOT_SCORE_STATE);
+            return true;
+        }
+        return false;
     }
 
 }
