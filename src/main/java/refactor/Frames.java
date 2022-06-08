@@ -14,7 +14,7 @@ public class Frames {
     }
 
     public static Frames create() {
-        return new Frames(Stream.iterate(new Frame(), frame -> new Frame())
+        return new Frames(Stream.iterate(new FrameGeneral(), frame -> new FrameGeneral())
                 .limit(10)
                 .collect(Collectors.toList()));
     }
