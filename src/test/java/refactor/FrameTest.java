@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 public class FrameTest {
     @Test
     void frame() {
-        new Frame()
+        Frame frame = new Frame();
+        Frame result = frame.pitches();
+        System.out.println(result);
     }
 }

@@ -2,19 +2,32 @@ package refactor;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.stream.Stream;
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FramesTest {
     @Test
-    void 마지막프레임은3번의기회를가져야함() {
+    void next는다음Frame을가리킨다() {
+        Frame first = new Frame(new Scores(Arrays.asList(3, 4), 0), 7);
+        Frame second = new Frame(new Scores(Arrays.asList(2, 4), 0), 16);
+        Frames frames = new Frames(Arrays.asList(first, second));
+        assertThat(frames.first()).isEqualTo(first);
+        assertThat(frames.next(first)).isEqualTo(second);
+    }
+
+    @Test
+    void 다음Frame은이전Frame의subtotal을더해야함() {
         Frames frames = Frames.create();
-        Frame last = Stream.iterate(frames.first(), frame -> frame.next())
-                .limit(10)
-                .skip(9)
-                .findFirst()
-                .orElseThrow();
-        assertThat(last).isEqualTo(Frame.last());
+        Frame first = frames.first();
+        first = frames.play(first);
+        System.out.println(first);
+        Frame second = frames.next(first);
+        second = frames.play(second);
+        System.out.println(second);
+    }
+
+    @Test
+    void strike혹은spare인경우다음Frame을기다렸다가subtotal갱신한다() {
     }
 }

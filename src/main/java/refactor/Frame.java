@@ -3,38 +3,32 @@ package refactor;
 import java.util.Objects;
 
 public class Frame {
-    private Score score;
-    private Frame next;
+    private Scores scores;
+    private int subtotal;
 
-//    public Frame() {
-//        this.score = new Score();
-//        this.next = null;
-//    }
-
-    public Frame(Frame next) {
-        this.score = new Score();
-        this.next = next;
+    public Frame(Scores scores, int subtotal) {
+        this.scores = scores;
+        this.subtotal = subtotal;
     }
 
-    public Frame(Score score, Frame next) {
-        this.score = score;
-        this.next = next;
+    public Frame() {
+        this(new Scores(), 0);
     }
 
-    public static Frame last() {
-        return new Frame(new Score(0, 3), null);
+    public Frame(int subtotal) {
+        this(new Scores(), subtotal);
     }
 
-    @Override
-    public String toString() {
-        return "Frame{" +
-                "score=" + score +
-                ", next=" + next +
-                "}\n";
+
+    public Frame pitches() {
+        return pitch(this.scores);
     }
 
-    public Frame next() {
-        return this.next;
+    private Frame pitch(Scores scores) {
+        if (!scores.done()) {
+            return pitch(scores.pitchRandom());
+        }
+        return new Frame(scores, subtotal + scores.sum());
     }
 
     @Override
@@ -42,29 +36,24 @@ public class Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Frame frame = (Frame) o;
-        return Objects.equals(score, frame.score) && Objects.equals(next, frame.next);
+        return subtotal == frame.subtotal && Objects.equals(scores, frame.scores);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score, next);
+        return Objects.hash(scores, subtotal);
     }
 
-    public void pitch() {
-        this.score = score.pitch();
+    @Override
+    public String
+    toString() {
+        return "Frame{" +
+                "scores=" + scores +
+                ", subtotal=" + subtotal +
+                '}';
     }
 
-    //    public int score() {
-//        if (!score.playing()) {
-//            return score.score();
-//        }
-//        return this.next.calculateBonus(score);
-//    }
-
-//    private Score createScore() {
-//    }
-
-//    private int calculateBonus(Score previousScore) {
-//
-//    }
+    public Frame accumulatedNextFrame(Frame next) {
+        return new Frame(this.subtotal + next.subtotal);
+    }
 }

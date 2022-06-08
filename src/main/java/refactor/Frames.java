@@ -1,7 +1,7 @@
 package refactor;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -13,50 +13,38 @@ public class Frames {
     }
 
     public static Frames create() {
-        List<Frame> list = Stream.iterate(Frame.last(), next -> new Frame(next))
+        return new Frames(Stream.iterate(new Frame(), frame -> new Frame())
                 .limit(10)
-                .collect(Collectors.toList());
-        Collections.reverse(list);
-        return new Frames(list);
+                .collect(Collectors.toList()));
     }
 
     @Override
-    public String toString() {
-        return "Frames{" +
-                "frames=" + frames +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Frames frames1 = (Frames) o;
+        return Objects.equals(frames, frames1.frames);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frames);
     }
 
     public Frame first() {
         return this.frames.get(0);
     }
 
-//    public static Frames create() {
-//        List<Frame> frames = Stream.iterate(new Frame(), frame -> frame)
-//                .limit(9)
-//                .collect(Collectors.toList());
-//        frames.add(new Frame(0, 3));
-//        return new Frames(frames);
-//    }
-
-    public void add(Frame frame) {
-        this.frames.add(frame);
+    public Frame next(Frame frame) {
+        return this.frames.get(this.frames.indexOf(frame) + 1);
     }
 
-    public List<Frame> frames() {
-        return this.frames;
-    }
-
-    public Frame get(int i) {
-        return this.frames.get(i);
-    }
-
-    public void play(int i) {
-        Frame frame = this.frames.get(i);
-        frame.pitch();
-//        if (frame.playing()) {
-//            frame = frame.pitch();
-//            this.frames.set(i, frame);
-        }
+    public Frame play(Frame frame) {
+        Frame doneFrame = frame.pitches();
+        int index = this.frames.indexOf(frame);
+        this.frames.set(index, doneFrame);
+        Frame accumulatedNextFrame = doneFrame.accumulatedNextFrame(next(doneFrame));
+        this.frames.set(index + 1, accumulatedNextFrame);
+        return doneFrame;
     }
 }
