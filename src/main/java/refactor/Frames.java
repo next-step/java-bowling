@@ -14,13 +14,17 @@ public class Frames {
     }
 
     public static Frames create() {
-        return new Frames(Stream.iterate(new FrameGeneral(), frame -> new FrameGeneral())
-                .limit(10)
+        return new Frames(Stream.iterate(0, i -> i < 10, i -> ++i)
+                .map(i -> createFrame(i))
                 .collect(Collectors.toList()));
     }
 
+    private static Frame createFrame(Integer index) {
+        return index < 9 ? new FrameGeneral() : new FrameLast();
+    }
+
     public void save(Frame frame) {
-       this.frames.set(index(frame), frame);
+        this.frames.set(index(frame), frame);
     }
 
     @Override
