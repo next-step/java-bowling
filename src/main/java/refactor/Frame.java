@@ -1,5 +1,6 @@
 package refactor;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Frame {
@@ -19,17 +20,16 @@ public class Frame {
         this(new Scores(), subtotal);
     }
 
+//    public Frame pitches() {
+//        return pitch(this.scores);
+//    }
 
-    public Frame pitches() {
-        return pitch(this.scores);
-    }
-
-    private Frame pitch(Scores scores) {
-        if (!scores.done()) {
-            return pitch(scores.pitchRandom());
-        }
-        return new Frame(scores, subtotal + scores.sum());
-    }
+//    private Frame pitch(Scores scores) {
+//        if (!scores.done()) {
+//            return pitch(scores.pitchRandom());
+//        }
+//        return new Frame(scores, subtotal + scores.sum());
+//    }
 
     @Override
     public boolean equals(Object o) {
@@ -55,5 +55,44 @@ public class Frame {
 
     public Frame accumulatedNextFrame(Frame next) {
         return new Frame(this.subtotal + next.subtotal);
+    }
+
+    public void pitch(int numPins) {
+        Scores scores = this.scores.pitch(numPins);
+        if (scores.done()) {
+//            return new Frame(scores, subtotal + scores.sum());
+            this.scores = scores;
+            this.subtotal += scores.sum();
+        }
+//        return new Frame(scores, subtotal);
+        this.scores = scores;
+    }
+
+    public void pitchRandom() {
+        Scores scores = this.scores.pitchRandom();
+        if (scores.done()) {
+//            return new Frame(scores, subtotal + scores.sum());
+            this.scores = scores;
+            this.subtotal += scores.sum();
+        }
+//        return new Frame(scores, subtotal);
+        this.scores = scores;
+    }
+
+
+    public int subtotal() {
+        return this.subtotal;
+    }
+
+    public boolean done() {
+        return this.scores.done();
+    }
+
+    public List<Integer> scores() {
+        return this.scores.scores();
+    }
+
+    public void updateSubtotal(int subtotal) {
+        this.subtotal = subtotal;
     }
 }

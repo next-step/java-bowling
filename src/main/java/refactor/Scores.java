@@ -76,4 +76,8 @@ public class Scores {
     public int hashCode() {
         return Objects.hash(scores, remainingTry);
     }
+
+    public List<Integer> scores() {
+        return this.scores;
+    }
 }
