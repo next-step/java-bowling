@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.constant.Score;
-
 import java.util.Objects;
 
 public class Content {

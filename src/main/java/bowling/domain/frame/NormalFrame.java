@@ -1,21 +1,20 @@
 package bowling.domain.frame;
 
-import bowling.constant.Score;
 import bowling.domain.Content;
-import bowling.domain.pin.FinalFramePins;
-import bowling.domain.pin.NormalFramePins;
-import bowling.domain.pin.Pins;
+import bowling.domain.Score;
+import bowling.domain.state.State;
+import bowling.domain.state.StateFactory;
 import bowling.exception.NotCreateFrameException;
 
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
 
-    private final Pins pins;
     private final Content content;
+    private State state;
 
     private NormalFrame(Content content) {
-        this.pins = new NormalFramePins();
+        this.state = StateFactory.initialState();
         this.content = content;
     }
 
@@ -28,26 +27,26 @@ public class NormalFrame implements Frame {
         if (content.isNextFrameNoLast()) {
             return last();
         }
-        return new NormalFrame(content.next(Score.of(this)));
+        return new NormalFrame(content.next(new Score()));
     }
 
     private Frame last() {
-        return new FinalFrame(new FinalFramePins(), content.next(Score.of(this)));
+        return new FinalFrame(content.next(new Score()));
     }
 
     @Override
     public void bowling(int hit) {
-        pins.fallDown(hit, false);
+        state = state.bowl(hit);
     }
 
     @Override
     public boolean isFinish() {
-        return Score.of(pins).isStrike() || pins.hasSecondHit();
+        return state.isFinish();
     }
 
     @Override
-    public Pins pins() {
-        return pins;
+    public boolean hasLastBonusChance() {
+        return false;
     }
 
     @Override
@@ -60,11 +59,16 @@ public class NormalFrame implements Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalFrame that = (NormalFrame) o;
-        return Objects.equals(pins, that.pins) && Objects.equals(content, that.content);
+        return Objects.equals(state, that.state) && Objects.equals(content, that.content);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pins, content);
+        return Objects.hash(state, content);
+    }
+
+    @Override
+    public String toString() {
+        return state.description();
     }
 }

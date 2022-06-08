@@ -1,27 +1,32 @@
 package bowling.domain.frame;
 
-import bowling.exception.NotCreateFrameException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class FrameTest {
+class NormalFrameTest {
 
     private Frame normalFrame;
-    private Frame finalFrame;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setup() {
         normalFrame = NormalFrame.initialize();
+    }
 
-        finalFrame = NormalFrame.initialize();
-        for (int i = 1; i < 10; i++) {
-            finalFrame.bowling(10);
-            finalFrame = finalFrame.next();
+    @ParameterizedTest(name = "{0} Frame: NormalFrame")
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
+    void nextFrame(int number) throws Exception {
+        for (int i = 1; i < number; i++) {
+            normalFrame.bowling(10);
+            normalFrame = normalFrame.next();
         }
+
+        assertThat(normalFrame.content().frameNo()).isEqualTo(number);
+        assertThat(normalFrame).isInstanceOf(NormalFrame.class);
     }
 
     @Test
@@ -39,13 +44,4 @@ class FrameTest {
 
         assertThat(normalFrame.isFinish()).isTrue();
     }
-
-    @Test
-    @DisplayName("마지막 프레임일 경우 다음 프레임을 생성하면 예외를 반환한다.")
-    void invalidNext() {
-        assertThatThrownBy(() -> finalFrame.next())
-                .isInstanceOf(NotCreateFrameException.class)
-                .hasMessage("다음 프레임을 생성할 수 없습니다. 현재 프레임: 10");
-    }
-
 }
