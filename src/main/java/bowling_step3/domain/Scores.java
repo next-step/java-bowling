@@ -7,23 +7,23 @@ public class Scores {
     private static int MAX_SCORE = 10;
     private static Random Random = new Random();
     private final List<Integer> scores;
-    private final int remainingTry;
+    private final int remainingPitch;
 
     public Scores() {
         this(new ArrayList(), 2);
     }
 
-    public Scores(List<Integer> scores, int remainingTry) {
+    public Scores(List<Integer> scores, int remainingPitch) {
         this.scores = scores;
-        this.remainingTry = remainingTry;
+        this.remainingPitch = remainingPitch;
     }
 
     public Scores pitch(int numPins) {
         this.scores.add(numPins);
         if (numPins == 10 && sum() != 20) {
-            return new Scores(this.scores, remainingTry - 2);
+            return new Scores(this.scores, remainingPitch - 2);
         }
-        return new Scores(this.scores, remainingTry - 1);
+        return new Scores(this.scores, remainingPitch - 1);
     }
     public Scores pitchRandom() {
         int numPins = Random.nextInt(remainingPins());
@@ -49,12 +49,12 @@ public class Scores {
     public String toString() {
         return "Scores{" +
                 "scores=" + scores +
-                ", remainingTry=" + remainingTry +
+                ", remainingPitch=" + remainingPitch +
                 '}';
     }
 
     public boolean done() {
-        return this.remainingTry <= 0;
+        return this.remainingPitch <= 0;
     }
 
     public int sum() {
@@ -67,12 +67,12 @@ public class Scores {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Scores scores1 = (Scores) o;
-        return remainingTry == scores1.remainingTry && Objects.equals(scores, scores1.scores);
+        return remainingPitch == scores1.remainingPitch && Objects.equals(scores, scores1.scores);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(scores, remainingTry);
+        return Objects.hash(scores, remainingPitch);
     }
 
     public List<Integer> scores() {
@@ -84,13 +84,13 @@ public class Scores {
     }
 
     public Scores evaluateLastBonus() {
-        int remainingTry = this.remainingTry;
+        int remainingPitch = this.remainingPitch;
         if (sum() >= 10) {
-            remainingTry++;
+            remainingPitch++;
         }
         if (this.scores.size() == 3) {
             return new Scores(this.scores, 0);
         }
-        return new Scores(this.scores, remainingTry);
+        return new Scores(this.scores, remainingPitch);
     }
 }
