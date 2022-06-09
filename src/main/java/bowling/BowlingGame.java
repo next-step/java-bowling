@@ -21,6 +21,6 @@ public class BowlingGame {
             frame = board.frame(mayBeNextIndex);
         } while (true);
 
-        System.out.println(board.toString());
+        System.out.println(board);
     }
 }

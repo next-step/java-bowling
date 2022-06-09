@@ -43,10 +43,7 @@ public class NormalFrame implements Frame {
     @Override
     public int validateMoveToNextIndex() {
         if (tryNo < 1 || remain > 9) {
-            int nextIndex = index + 1;
-            tryNo = 2;
-            remain = 0;
-            return nextIndex;
+            return index + 1;
         }
         return index;
     }
