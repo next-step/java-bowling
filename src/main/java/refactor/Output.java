@@ -46,10 +46,28 @@ public class Output {
     private static String formatScore(List<Integer> scores) {
         String payload = scores.stream()
                 .map(String::valueOf)
-                .reduce((acc, cur) -> acc + "/" + cur)
+                .reduce((acc, cur) -> getString(acc, cur, scores))
                 .orElse("");
         return formatRecord(payload);
     }
+
+    private static String getString(String acc, String cur, List<Integer> scores) {
+        if (scores.size() == 2 && scores.stream().mapToInt(Integer::valueOf).sum() == 10) {
+            cur = "/";
+        }
+        return toSymbol(acc) + "|" + toSymbol(cur);
+    }
+
+    private static String toSymbol(String number) {
+        if (number.equals("10")) {
+            return "X";
+        }
+        if (number.equals("0")) {
+            return "-";
+        }
+        return number;
+    }
+
 
     private static String formatRecord(String payload) {
         return String.format("%-8s", "  " + payload);
