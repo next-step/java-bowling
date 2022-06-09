@@ -1,7 +1,7 @@
 package bowling;
 
 import bowling.domain.Board;
-import bowling.domain.Frame;
+import bowling.domain.frame.Frame;
 import bowling.domain.Player;
 import bowling.presentation.Input;
 
@@ -21,6 +21,7 @@ public class BowlingGame {
             frame = board.frame(mayBeNextIndex);
         } while (true);
 
+        // TODO(jack.comeback) : remove
         System.out.println(board);
     }
 }

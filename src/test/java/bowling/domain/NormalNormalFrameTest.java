@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.frame.NormalFrame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

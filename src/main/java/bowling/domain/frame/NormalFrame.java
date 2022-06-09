@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +18,6 @@ public class NormalFrame implements Frame {
     public NormalFrame(int index, int tryNo) {
         this.index = index;
         this.tryNo = tryNo;
-    }
-
-    public boolean equal(int index) {
-        return this.index == index;
     }
 
     public void addScore(int score) {
@@ -49,8 +45,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public boolean notLastFrame() {
-        return this.index < 11;
+    public boolean equal(int index) {
+        return this.index == index;
     }
 
     @Override

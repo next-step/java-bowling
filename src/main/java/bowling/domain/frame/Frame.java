@@ -1,9 +1,9 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 public interface Frame {
     int score();
 
     int validateMoveToNextIndex();
 
-    boolean notLastFrame();
+    boolean equal(int index);
 }

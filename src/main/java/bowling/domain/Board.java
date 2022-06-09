@@ -1,5 +1,8 @@
 package bowling.domain;
 
+import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
 import bowling.exception.BowlingException;
 import bowling.exception.BowlingExceptionCode;
 
@@ -11,29 +14,25 @@ public class Board {
     private static final int START = 1;
     private static final int END = 10;
 
-    private final List<NormalFrame> frames;
+    private final List<Frame> frames;
 
     public static Board init() {
-        return new Board(
-                IntStream.rangeClosed(START, END)
-                        .mapToObj(NormalFrame::new)
-                        .collect(Collectors.toList())
-        );
+        List<Frame> frames = IntStream.rangeClosed(START, END-1)
+                .mapToObj(NormalFrame::new)
+                .collect(Collectors.toList());
+        frames.add(new FinalFrame(END));
+        return new Board(frames);
     }
 
-    private Board(List<NormalFrame> frames) {
+    private Board(List<Frame> frames) {
         this.frames = frames;
     }
 
-    public List<NormalFrame> frames() {
+    public List<Frame> frames() {
         return frames;
     }
 
-    public void addScore(int frameIndex, int score) {
-        frame(frameIndex).addScore(score);
-    }
-
-    public NormalFrame frame(int index) {
+    public Frame frame(int index) {
         return frames.stream()
                 .filter(frame -> frame.equal(index))
                 .findFirst()
