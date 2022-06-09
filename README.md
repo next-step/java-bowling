@@ -295,23 +295,51 @@ gon
 ```
 
 ### Todo
+
 #### first implement at `bowling`
+
 - [x] print 로직을 Output 으로 이동
 - [x] 누계 점수 기능 구현
     - [x] Subtotal class 생성
-      - 인자로 이전 subtotal을 받아 합산
-      - 생성 시 strike, miss, spare 경우에 따라 waiting 설정
+        - 인자로 이전 subtotal을 받아 합산
+        - 생성 시 strike, miss, spare 경우에 따라 waiting 설정
     - [x] Scores -> Frames 로 이름 변경하고 subtotals 추가
     - [x] plays 내에서 subtotal 생성하고 evaluateBonus 로직 추가
     - [x] 10 프레임 이후에는 handleLast 에서 strike, spare 인 경우 한번 더 투구: playBonus
-      - 이외의 경우에는 subtotal.setLast 로 기다리지 않아도 됌을 명시하고 최종 점수 출력
+        - 이외의 경우에는 subtotal.setLast 로 기다리지 않아도 됌을 명시하고 최종 점수 출력
 - [x] domain test 추가
-  - Player
-  - Frames
-  - Scores
-  - Subtotal
+    - Player
+    - Frames
+    - Scores
+    - Subtotal
 - [ ] Refactoring 가능 class 확인
 
 #### second implement at `bowling_Step3`
+
 - [x] 최하위도메인인 Scores는 scores(점수 리스트 최대 3개), remainingPitch(남은 투구 횟수) 를 가진다.
-- 
+    - [x] 최대핀개수10개를 활용해 remainingPins구함
+    - [x] pitchRandom() 수행 시 남은 핀의 개수를 최대 범위로 하여 랜덤 투구 수행
+    - [x] lastScore() 통해 scores 중 마지막 투구한 점수 도출
+    - [x] isStrike() 스트라이크 여부 확인
+    - [x] done() 잔여 투구가 없는지 여부 확인
+    - [x] evaluateLastBonus() FrameLast에서 Strike이거나 Spare인경우 remainingPitch를 하나 더 준다, 최종 3번째 투구인 경우 remainingPitch는 0으로
+      고정
+- [x] Subtotal 은 State와 value를 가진다.
+    - [x] accumulateBonus(int bonus) 는 State의 wait 단계를 한 단계 낮추고 보너스를 합산한다. bonus가 10인경우(Strige) 는 바로 DONE으로 설정
+- [x] State 는 INIT, DONE, WAIT_TWICE, WAIT_ONCE 의 상태를 가진다
+    - [x] 각 상태는 remainingWait를 가지며 보너스를 기다려야할 횟수를 의미한다.
+    - [x] decreaseWait(): WAIT 단계를 한 단계 낮춰준다.
+    - [x] waiting(): 기다려야 할 보너스가 남았는지 여부 리턴
+- [x] FrameGeneral은 1 ~ 9 라운드를 담당하며, Scores, Subtotal을 멤버로 가진다.
+    - [x] pitchManual()은 수동으로, pitchRandom()은 자동으로 투구를 하고 pitch 를 호출한다
+    - [x] pitch(Scores scores, Frames frames) 는 이전 프레임이 보너스를 대기중일 경우 subtotal에 점수를 합산하고 현재 프레임의 subtotal에도 합산한다.
+        - [x] evaluateState() 프레임의 투구를 모두 마친 경우에는 score의 상태를 평가하여 WAIT_TWICE, WAIT_ONCE, DONE 중에 하나를 가진다
+- [x] FrameLast 는 10라운드를 담당한다
+    - [x] pitch의 경우 FrameGeneral과 다르게 scores.evaluateLastBonus() 를 수행하여 남은 투구횟수를 추가할 지 결정한다.
+- [x] Frames 는 frame에 대한 일급 컬렉션이다
+    - [x] create() 는 0~8 은 FrameGeneral, 9는 FrameLast 를 생성해준다
+    - index(): 현재 프레임의 index를 리턴
+    - first(): 첫 Frame 리턴
+    - next(): 다음 Frame을 리턴
+- [x] Frame 은 Frames 일급 컬렉션이 FrameGeneral과 FrameLast 를 모두 가지게 해주는 인터페이스
+- [x] Player 는 String name을 변수로 가지며 name은 3글자를 초과할 수 없다.  

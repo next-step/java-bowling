@@ -84,13 +84,13 @@ public class Scores {
     }
 
     public Scores evaluateLastBonus() {
-        int remainingPitch = this.remainingPitch;
+        int remainingTry = this.remainingPitch;
         if (sum() >= 10) {
-            remainingPitch++;
+            remainingTry++;
         }
         if (this.scores.size() == 3) {
             return new Scores(this.scores, 0);
         }
-        return new Scores(this.scores, remainingPitch);
+        return new Scores(this.scores, remainingTry);
     }
 }
