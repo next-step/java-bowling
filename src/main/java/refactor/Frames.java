@@ -2,7 +2,6 @@ package refactor;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -21,10 +20,6 @@ public class Frames {
 
     private static Frame createFrame(Integer index) {
         return index < 9 ? new FrameGeneral() : new FrameLast();
-    }
-
-    public void save(Frame frame) {
-        this.frames.set(index(frame), frame);
     }
 
     @Override
