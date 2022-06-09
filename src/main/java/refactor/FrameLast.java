@@ -35,7 +35,6 @@ public class FrameLast implements Frame {
         }
         if (frames.index(this) > 0 && frames.prev(this).subtotal().state().waiting()) {
             frames.prev(this).subtotal().accumulateBonus(this.scores.lastScore());
-//            this.updateSubtotal(new Subtotal(this.subtotal.state(), frames.prev(this).subtotal.value()));
             this.subtotal = new Subtotal(this.subtotal.state(), this.subtotal.value() + this.scores.lastScore());
         }
     }

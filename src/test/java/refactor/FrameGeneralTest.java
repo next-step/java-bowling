@@ -128,9 +128,6 @@ public class FrameGeneralTest {
         fourth.pitchManual(8, frames);
         assertThat(fourth.subtotal()).isEqualTo(new Subtotal(State.INIT, 47));
     }
-//            | NAME |  01   |  02   |  03   |  04   |  05   |  06   |  07   |  08   |  09   |  10   |
-//            | NAME |  4/3  |  9/0  |  10   |  1/9  |  8    |       |       |       |       |       |
-//            | NAME |  7    |  16   |  36   |  44   |  44   |       |       |       |       |       |
 }
 
 

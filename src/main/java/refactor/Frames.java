@@ -59,15 +59,6 @@ public class Frames {
         return this.frames.get(index(frame) - 1);
     }
 
-
-//    public Frame play(Frame frame) {
-//        Frame doneFrame = frame.pitches();
-//        int index = this.frames.indexOf(frame);
-//        this.frames.set(index, doneFrame);
-//        Frame accumulatedNextFrame = doneFrame.accumulatedNextFrame(next(doneFrame));
-//        this.frames.set(index + 1, accumulatedNextFrame);
-//        return doneFrame;
-
     @Override
     public String toString() {
         return "Frames{" +
@@ -82,5 +73,4 @@ public class Frames {
     public List<Frame> frames() {
         return this.frames;
     }
-//    }
 }

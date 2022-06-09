@@ -17,22 +17,6 @@ public class FrameGeneral implements Frame {
         this(new Scores(), new Subtotal());
     }
 
-//    public Frame(int subtotal) {
-//        this(new Scores(), subtotal);
-//    }
-
-//    public Frame pitches() {
-//        return pitch(this.scores);
-//    }
-
-//    private Frame pitch(Scores scores) {
-//        if (!scores.done()) {
-//            return pitch(scores.pitchRandom());
-//        }
-//        return new Frame(scores, subtotal + scores.sum());
-//    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -55,10 +39,6 @@ public class FrameGeneral implements Frame {
                 '}';
     }
 
-//    public Frame accumulatedNextFrame(Frame next) {
-//        return new Frame(this.subtotal + next.subtotal);
-//    }
-
     public void pitchManual(int numPins, Frames frames) {
         Scores scores = this.scores.pitch(numPins);
         pitch(scores, frames);
@@ -77,7 +57,6 @@ public class FrameGeneral implements Frame {
         }
         if (frames.index(this) > 0 && frames.prev(this).subtotal().state().waiting()) {
             frames.prev(this).subtotal().accumulateBonus(this.scores.lastScore());
-//            this.updateSubtotal(new Subtotal(this.subtotal.state(), frames.prev(this).subtotal.value()));
             this.subtotal = new Subtotal(this.subtotal.state(), this.subtotal.value() + this.scores.lastScore());
         }
     }

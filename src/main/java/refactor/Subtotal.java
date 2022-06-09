@@ -16,10 +16,6 @@ public class Subtotal {
         this.value = 0;
     }
 
-//    public int add(int sum) {
-//        return this.value + sum;
-//    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

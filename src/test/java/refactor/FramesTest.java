@@ -15,19 +15,4 @@ public class FramesTest {
         assertThat(frames.first()).isEqualTo(first);
         assertThat(frames.next(first)).isEqualTo(second);
     }
-
-//    @Test
-//    void 다음Frame은이전Frame의subtotal을더해야함() {
-//        Frames frames = Frames.create();
-//        Frame first = frames.first();
-//        first = frames.play(first);
-//        System.out.println(first);
-//        Frame second = frames.next(first);
-//        second = frames.play(second);
-//        System.out.println(second);
-//    }
-
-    @Test
-    void strike혹은spare인경우다음Frame을기다렸다가subtotal갱신한다() {
-    }
 }
