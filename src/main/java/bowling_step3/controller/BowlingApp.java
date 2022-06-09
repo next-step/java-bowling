@@ -1,10 +1,10 @@
-package bowling.controller;
+package bowling_step3.controller;
 
-import bowling.domain.Frame;
-import bowling.domain.Frames;
-import bowling.domain.Player;
-import bowling.view.Input;
-import bowling.view.Output;
+import bowling_step3.domain.Frame;
+import bowling_step3.domain.Frames;
+import bowling_step3.domain.Player;
+import bowling_step3.view.Input;
+import bowling_step3.view.Output;
 
 import java.util.stream.Stream;
 

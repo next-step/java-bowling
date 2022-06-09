@@ -1,4 +1,4 @@
-package bowling.view;
+package bowling_step3.view;
 
 import java.util.Scanner;
 

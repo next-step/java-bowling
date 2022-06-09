@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling_step3.domain;
 
 public class Player {
     private final String name;

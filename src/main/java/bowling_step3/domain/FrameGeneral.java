@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling_step3.domain;
 
 
 import java.util.List;

@@ -1,9 +1,9 @@
-package bowling.view;
+package bowling_step3.view;
 
-import bowling.domain.Frames;
-import bowling.domain.Player;
-import bowling.domain.State;
-import bowling.domain.Subtotal;
+import bowling_step3.domain.Frames;
+import bowling_step3.domain.Player;
+import bowling_step3.domain.State;
+import bowling_step3.domain.Subtotal;
 
 import java.util.List;
 
