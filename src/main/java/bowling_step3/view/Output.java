@@ -14,7 +14,11 @@ public class Output {
         System.out.print(payload);
     }
 
-    public static void printFrames(Frames frames, Player player) {
+    public static void printFrames(int round, Frames frames, Player player) {
+        if (round > 0) {
+            List<Integer> scores = frames.get(round - 1).scores();
+            print(round + " Frame pitch: " + scores.get(scores.size() - 1) + "\n");
+        }
         print(HEADER_STR + "\n");
         printScores(frames, player);
         printSubtotals(frames, player);

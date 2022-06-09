@@ -13,7 +13,7 @@ public class BowlingApp {
         String name = Input.scanPlayer();
         Player player = new Player(name);
         Frames frames = Frames.create();
-        Output.printFrames(frames, player);
+        Output.printFrames(0, frames, player);
         playFrames(frames, player);
     }
 
@@ -26,7 +26,7 @@ public class BowlingApp {
         Frame frame = frames.get(index);
         while (!frame.done()) {
             frame.pitchRandom(frames);
-            Output.printFrames(frames, player);
+            Output.printFrames(index+1, frames, player);
         }
         if (frame.done() && index < 9) {
             frames.next(frame).updateNextSubtotal(frame.subtotal());
