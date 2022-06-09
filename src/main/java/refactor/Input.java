@@ -7,4 +7,10 @@ public class Input {
     public static String scan() {
         return scanner.nextLine();
     }
+
+
+    public static String scanPlayer() {
+        Output.print("Please put player name (Max 3 latters)\n");
+        return scan();
+    }
 }

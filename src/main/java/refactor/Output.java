@@ -9,15 +9,15 @@ public class Output {
         System.out.print(payload);
     }
 
-    public static void printFrames(Frames frames) {
+    public static void printFrames(Frames frames, Player player) {
         print(HEADER_STR + "\n");
-        printScores(frames);
-        printSubtotals(frames);
+        printScores(frames, player);
+        printSubtotals(frames, player);
         System.out.println();
     }
 
-    private static void printSubtotals(Frames frames) {
-        String payload = "| NAME |" + frames.frames()
+    private static void printSubtotals(Frames frames, Player player) {
+        String payload = "| " + formatName(player.name()) + " |" + frames.frames()
                 .stream()
                 .map(frame -> maskSubtotal(frame.subtotal()))
                 .reduce((acc, cur) -> acc + "|" + cur)
@@ -33,14 +33,18 @@ public class Output {
         return formatRecord(subtotal.value() + "");
     }
 
-    private static void printScores(Frames frames) {
-        String payload = "| NAME |" + frames.frames()
+    private static void printScores(Frames frames, Player player) {
+        String payload = "| " + formatName(player.name()) + " |" + frames.frames()
                 .stream()
                 .map(frame -> formatScore(frame.scores()))
                 .reduce((acc, cur) -> acc + "|" + cur)
                 .orElseThrow(() -> new UnsupportedOperationException())
                 + "|\n";
         print(payload);
+    }
+
+    private static String formatName(String name) {
+        return String.format("%-4s", name);
     }
 
     private static String formatScore(List<Integer> scores) {
@@ -68,8 +72,8 @@ public class Output {
         return number;
     }
 
-
     private static String formatRecord(String payload) {
         return String.format("%-8s", "  " + payload);
     }
+
 }
