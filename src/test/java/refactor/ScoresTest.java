@@ -2,6 +2,8 @@ package refactor;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.*;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ScoresTest {
@@ -27,5 +29,48 @@ public class ScoresTest {
         Scores playing = scores.pitch(5);
         Scores done = playing.pitch(4);
         assertThat(done.sum()).isEqualTo(9);
+    }
+
+    @Test
+    void evaluateBonus_SPARE_BONUS() {
+        Scores scores = new Scores(new ArrayList<>(List.of(1, 9)), 0);
+        scores = scores.evaluateLastBonus();
+        assertThat(scores).isEqualTo(new Scores(new ArrayList<>(List.of(1, 9)), 1));
+        scores = scores.pitch(8);
+        assertThat(scores).isEqualTo(new Scores(new ArrayList<>(List.of(1, 9, 8)), 0));
+    }
+
+    @Test
+    void evaluateBonus_STRIKE_BONUS_BONUS() {
+        Scores scores = new Scores(new ArrayList<>(List.of(10)), 0);
+        scores = scores.evaluateLastBonus();
+        assertThat(scores).isEqualTo(new Scores(new ArrayList<>(List.of(10)), 1));
+        scores = scores.pitch(8);
+        scores = scores.evaluateLastBonus();
+        assertThat(scores).isEqualTo(new Scores(new ArrayList<>(List.of(10, 8)), 1));
+        scores = scores.pitch(1);
+        scores = scores.evaluateLastBonus();
+        assertThat(scores).isEqualTo(new Scores(new ArrayList<>(List.of(10, 8, 1)), 0));
+    }
+
+    @Test
+    void evaluateBonus_STRIKE_STRIKE_STRIKE() {
+        Scores scores = new Scores(new ArrayList<>(List.of(10)), 0);
+        scores = scores.evaluateLastBonus();
+        assertThat(scores).isEqualTo(new Scores(new ArrayList<>(List.of(10)), 1));
+        scores = scores.pitch(10);
+        assertThat(scores).isEqualTo(new Scores(new ArrayList<>(List.of(10, 10)), 0));
+        scores = scores.evaluateLastBonus();
+        assertThat(scores).isEqualTo(new Scores(new ArrayList<>(List.of(10, 10)), 1));
+        scores = scores.pitch(10);
+        scores = scores.evaluateLastBonus();
+        assertThat(scores).isEqualTo(new Scores(new ArrayList<>(List.of(10, 10, 10)), 0));
+    }
+
+    @Test
+    void evaluateBonus_MISS() {
+        Scores scores = new Scores(new ArrayList<>(List.of(1,2)), 0);
+        scores = scores.evaluateLastBonus();
+        assertThat(scores).isEqualTo(new Scores(new ArrayList<>(List.of(1, 2)), 0));
     }
 }

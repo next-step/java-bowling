@@ -20,7 +20,7 @@ public class Scores {
 
     public Scores pitch(int numPins) {
         this.scores.add(numPins);
-        if (numPins == 10) {
+        if (numPins == 10 && sum() != 20) {
             return new Scores(this.scores, remainingTry - 2);
         }
         return new Scores(this.scores, remainingTry - 1);
@@ -81,5 +81,16 @@ public class Scores {
 
     public boolean isStrike() {
         return this.scores.get(0) == 10;
+    }
+
+    public Scores evaluateLastBonus() {
+        int remainingTry = this.remainingTry;
+        if (sum() >= 10) {
+            remainingTry++;
+        }
+        if (this.scores.size() == 3) {
+            return new Scores(this.scores, 0);
+        }
+        return new Scores(this.scores, remainingTry);
     }
 }

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class FrameTest {
+public class FrameGeneralTest {
     @Test
     void subtotal은두번다쳤을때기록() {
         Frames frames = Frames.create();

@@ -8,7 +8,7 @@ public class FrameLast implements Frame {
     private Subtotal subtotal;
 
     public FrameLast() {
-        this.scores = new Scores(new ArrayList<>(), 3);
+        this.scores = new Scores(new ArrayList<>(), 2);
         this.subtotal = new Subtotal();
     }
 
@@ -23,10 +23,10 @@ public class FrameLast implements Frame {
     }
 
     private void pitch(Scores scores, Frames frames) {
-        this.scores = scores;
-        if (scores.done()) {
-            State state = evaluateState(scores);
-            this.subtotal = new Subtotal(state, this.subtotal.value() + scores.sum());
+        this.scores = scores.evaluateLastBonus();
+        if (this.scores.done()) {
+            State state = evaluateState(this.scores);
+            this.subtotal = new Subtotal(state, this.subtotal.value() + this.scores.sum());
         }
         if (frames.index(this) > 0 && frames.prev(this).subtotal().state().waiting()) {
             frames.prev(this).subtotal().accumulateBonus(this.scores.lastScore());
