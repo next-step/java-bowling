@@ -1,4 +1,10 @@
-package refactor;
+package bowling.controller;
+
+import bowling.domain.Frame;
+import bowling.domain.Frames;
+import bowling.domain.Player;
+import bowling.view.Input;
+import bowling.view.Output;
 
 import java.util.stream.Stream;
 

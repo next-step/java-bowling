@@ -1,4 +1,4 @@
-package refactor;
+package bowling.domain;
 
 public enum State {
     INIT(-1), DONE(0), WAIT_TWICE(2), WAIT_ONCE(1);

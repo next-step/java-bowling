@@ -1,4 +1,4 @@
-package refactor;
+package bowling.view;
 
 import java.util.Scanner;
 

@@ -1,4 +1,4 @@
-package refactor;
+package bowling.domain;
 
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package refactor;
+package bowling.domain;
 
 public class Player {
     private final String name;
