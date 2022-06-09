@@ -3,7 +3,7 @@ package refactor;
 import java.util.List;
 
 public class Output {
-    public final static String HEADER_STR = "| NAME |  01   |  02   |  03   |  04   |  05   |  06   |  07   |  08   |  09   |  10   |";
+    public final static String HEADER_STR = "| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |";
 
     public static void print(String payload) {
         System.out.print(payload);
@@ -52,6 +52,6 @@ public class Output {
     }
 
     private static String formatRecord(String payload) {
-        return String.format("%-7s", "  " + payload);
+        return String.format("%-8s", "  " + payload);
     }
 }
