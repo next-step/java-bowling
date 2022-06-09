@@ -2,10 +2,10 @@ package refactor;
 
 import java.util.*;
 
-import static bowling.util.Const.RANDOM;
 
 public class Scores {
     private static int MAX_SCORE = 10;
+    private static Random Random = new Random();
     private final List<Integer> scores;
     private final int remainingTry;
 
@@ -26,7 +26,7 @@ public class Scores {
         return new Scores(this.scores, remainingTry - 1);
     }
     public Scores pitchRandom() {
-        int numPins = RANDOM.nextInt(remainingPins());
+        int numPins = Random.nextInt(remainingPins());
         return pitch(numPins);
     }
 

@@ -2,14 +2,19 @@ package refactor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class FrameLast implements Frame {
     private Scores scores;
     private Subtotal subtotal;
 
     public FrameLast() {
-        this.scores = new Scores(new ArrayList<>(), 2);
-        this.subtotal = new Subtotal();
+        this(new Scores(new ArrayList<>(), 2), new Subtotal());
+    }
+
+    public FrameLast(Scores scores, Subtotal subtotal) {
+        this.scores = scores ;
+        this.subtotal = subtotal;
     }
 
     public void pitchManual(int numPins, Frames frames) {
@@ -36,13 +41,10 @@ public class FrameLast implements Frame {
     }
 
     private State evaluateState(Scores scores) {
-        if (scores.isStrike()) {
-            return State.WAIT_TWICE;
+        if (scores.done()) {
+            return State.DONE;
         }
-        if (scores.sum() == 10) {
-            return State.WAIT_ONCE;
-        }
-        return State.DONE;
+        return State.INIT;
     }
 
 
@@ -58,7 +60,28 @@ public class FrameLast implements Frame {
         return this.scores.scores();
     }
 
+    @Override
+    public String toString() {
+        return "FrameLast{" +
+                "scores=" + scores +
+                ", subtotal=" + subtotal +
+                '}';
+    }
+
     public void updateNextSubtotal(Subtotal subtotal) {
         this.subtotal = new Subtotal(State.INIT, subtotal.value());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FrameLast frameLast = (FrameLast) o;
+        return Objects.equals(scores, frameLast.scores) && Objects.equals(subtotal, frameLast.subtotal);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(scores, subtotal);
     }
 }

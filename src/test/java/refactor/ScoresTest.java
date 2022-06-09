@@ -69,8 +69,25 @@ public class ScoresTest {
 
     @Test
     void evaluateBonus_MISS() {
-        Scores scores = new Scores(new ArrayList<>(List.of(1,2)), 0);
+        Scores scores = new Scores(new ArrayList<>(List.of(1, 2)), 0);
         scores = scores.evaluateLastBonus();
         assertThat(scores).isEqualTo(new Scores(new ArrayList<>(List.of(1, 2)), 0));
+    }
+
+    @Test
+    void name() {
+        /*
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| NAME |  8|-   |  3|2   |  2|4   |  8|-   |  7|1   |  1|3   |  10    |  6|3   |  5|-   |  6|4|- |
+| NAME |  8     |  13    |  19    |  27    |  35    |  39    |  58    |  67    |  72    |        |
+        * */
+        Scores scores = new Scores();
+        scores.pitch(6);
+        scores = scores.evaluateLastBonus();
+        scores = scores.pitch(4);
+        scores = scores.evaluateLastBonus();
+        scores = scores.pitch(0);
+        scores = scores.evaluateLastBonus();
+        assertThat(scores).isEqualTo(new Scores(new ArrayList<>(List.of(6, 4, 0)), 0));
     }
 }
