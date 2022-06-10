@@ -35,4 +35,10 @@ class ScoreTest {
     void spare() {
         assertThat(Score.spare()).isEqualTo(Score.of(10, 1));
     }
+
+    @Test
+    @DisplayName("미스의 경우 첫번째 투구와 두번째 투구의 합의 점수와 0번의 추가점수 기회가 있다.")
+    void miss() {
+        assertThat(Score.miss(Hit.valueOf(3),Hit.valueOf(5))).isEqualTo(Score.of(8, 0));
+    }
 }

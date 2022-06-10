@@ -14,6 +14,7 @@ public class Score {
     private static final int STRIKE_OR_SPARE_BASE_SCORE = 10;
     private static final int STRIKE_ADDITIONAL_COUNT = 2;
     private static final int SPARE_ADDITIONAL_COUNT = 1;
+    private static final int MISS_ADDITIONAL_COUNT = 0;
 
     private int score;
     private int additionalScoreCount;
@@ -39,6 +40,10 @@ public class Score {
 
     public static Score spare() {
         return of(STRIKE_OR_SPARE_BASE_SCORE, SPARE_ADDITIONAL_COUNT);
+    }
+
+    public static Score miss(Hit firstHit, Hit secondHit) {
+        return of(firstHit.sum(secondHit).toInt(), MISS_ADDITIONAL_COUNT);
     }
 
     @Override
