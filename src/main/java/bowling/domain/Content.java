@@ -9,19 +9,17 @@ public class Content {
     private static final int NEXT_FRAME_NO = 1;
 
     private final int frameNo;
-    private final Score lastScore;
 
-    private Content(int frameNo, Score lastScore) {
+    private Content(int frameNo) {
         this.frameNo = frameNo;
-        this.lastScore = lastScore;
     }
 
     public static Content initialize() {
-        return new Content(INITIAL_FRAME_NO, null);
+        return new Content(INITIAL_FRAME_NO);
     }
 
-    public Content next(Score lastScore) {
-        return new Content(nextFrameNo(), lastScore);
+    public Content next() {
+        return new Content(nextFrameNo());
     }
 
     private int nextFrameNo() {
@@ -41,11 +39,11 @@ public class Content {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Content content = (Content) o;
-        return frameNo == content.frameNo && lastScore == content.lastScore;
+        return frameNo == content.frameNo;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frameNo, lastScore);
+        return Objects.hash(frameNo);
     }
 }

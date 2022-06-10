@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
 import bowling.domain.Content;
-import bowling.domain.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.StateFactory;
 import bowling.exception.NotCreateFrameException;
@@ -27,11 +26,11 @@ public class NormalFrame implements Frame {
         if (content.isNextFrameNoLast()) {
             return last();
         }
-        return new NormalFrame(content.next(new Score()));
+        return new NormalFrame(content.next());
     }
 
     private Frame last() {
-        return new FinalFrame(content.next(new Score()));
+        return new FinalFrame(content.next());
     }
 
     @Override
