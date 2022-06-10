@@ -1,79 +1,79 @@
 package bowling.domain;
 
-import bowling.domain.state.*;
+import bowling.domain.state.Miss;
+import bowling.domain.state.Ready;
+import bowling.domain.state.State;
 import bowling.exception.BowlingGameException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FinalFrame implements Frame{
-    private static final int NOT_SCORE_STATE = -1;
-    private static final String PIPE_LINE = " | ";
-    private final List<State> states = new ArrayList<>();
+public class FinalFrame implements Frame {
+    private static final int NOT_SCORE = -1;
+    private static final int MAX_ROUND = 3;
+    private static final String PILE = "|";
+    private final List<State> stateList = new ArrayList<>();
 
     public FinalFrame() {
-        this.states.add(new Ready());
+        this.stateList.add(new Ready());
     }
 
     @Override
-    public Frame bowl(int countOfPins) {
-        State state = states.get(states.size() -1);
-        if(state.isFinish() && !(state instanceof Miss)) {
-            states.add(new Ready().bowl(countOfPins));
+    public Frame bowl(int pins) {
+        State state = this.stateList.get(size() - 1);
+        if(state.isFinish()) {
+            this.stateList.add(new Ready().bowl(pins));
             return this;
         }
-
-        if(state.isFinish() && state instanceof Miss) {
-            return this;
-        }
-        states.remove(statesSize() -1);
-        states.add(state.bowl(countOfPins));
+        this.stateList.remove(size() - 1);
+        this.stateList.add(state.bowl(pins));
         return this;
     }
 
     @Override
-    public State getState() {
-        return states.get(statesSize() -1);
-    }
-
-    @Override
-    public String expression() {
-        return states.stream()
-                .map(State::expression)
-                .collect(Collectors.joining(PIPE_LINE));
-    }
-
-    @Override
-    public Score calculateAddScore(Score beforeScore) {
-        for(State state : states) {
-            beforeScore = state.calculateAddScore(beforeScore);
+    public Score calculateScore(Score beforeScore) {
+        for(State state : stateList) {
+            beforeScore = state.calculateScore(beforeScore);
         }
         return beforeScore;
     }
 
     @Override
-    public FrameScore getFrameScore() {
-        if(!this.states.get(0).isFinish()) {
-            return new FrameScore(NOT_SCORE_STATE);
+    public int score() {
+        if(!this.stateList.get(0).isFinish()) {
+            return NOT_SCORE;
         }
+
         try {
-            return new FrameScore(getScore());
+            return getScore();
         }catch(BowlingGameException b) {
-            return new FrameScore(NOT_SCORE_STATE);
+            return NOT_SCORE;
         }
     }
 
-    public int getScore() {
-        Score score = states.get(0).getScore();
-        for(int i = 1; i<statesSize(); i++) {
-            score = states.get(i).calculateAddScore(score);
+    private int getScore() {
+        Score score = this.stateList.get(0).getScore();
+        for (int i = 1; i < size(); i++) {
+            score = this.stateList.get(i).calculateScore(score);
         }
         return score.getScore();
     }
 
-    private int statesSize() {
-        return this.states.size();
+    @Override
+    public String frameExpression() {
+        return this.stateList.stream()
+                .map(State::expression)
+                .collect(Collectors.joining(PILE));
+    }
+
+    @Override
+    public boolean isFinish() {
+        return size() == MAX_ROUND || this.stateList.get(size() -1) instanceof Miss;
+    }
+
+    private int size() {
+        return this.stateList.size();
     }
 
 }

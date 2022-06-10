@@ -4,23 +4,25 @@ import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 import bowling.exception.BowlingGameException;
 
+import java.util.Objects;
+
 public class NormalFrame implements Frame {
-    private static final int FINAL_NORMAL_FRAME = 9;
-    private static final String BLANK = "    ";
     private static final int NOT_SCORE = -1;
-    private Frame nextFrame;
+    private static final int LAST_NORMAL_FRAME = 9;
+    private static final String BLANK = "    ";
     private State state;
+    private Frame nextFrame;
     private final int round;
 
     public NormalFrame(int round) {
-        this.round = round;
         this.state = new Ready();
+        this.round = round;
     }
 
     @Override
-    public Frame bowl(int countOfPins) {
-        this.state = this.state.bowl(countOfPins);
-        if(round == FINAL_NORMAL_FRAME && this.state.isFinish()) {
+    public Frame bowl(int pins) {
+        this.state = this.state.bowl(pins);
+        if(this.round == LAST_NORMAL_FRAME && this.state.isFinish()) {
             this.nextFrame = new FinalFrame();
             return this.nextFrame;
         }
@@ -28,46 +30,60 @@ public class NormalFrame implements Frame {
             this.nextFrame = new NormalFrame(this.round + 1);
             return this.nextFrame;
         }
+
         return this;
     }
 
-    public State getState() {
-        return this.state;
+    @Override
+    public Score calculateScore(Score beforeScore) {
+        Score score = this.state.calculateScore(beforeScore);
+        if(score.isCalculable()) {
+            return score;
+        }
+        return this.nextFrame.calculateScore(score);
     }
 
     @Override
-    public String expression() {
+    public int score() {
+        if(!this.state.isFinish()) {
+            return NOT_SCORE;
+        }
+        try {
+            return getScore();
+        }catch(BowlingGameException b) {
+            return NOT_SCORE;
+        }
+    }
+
+    private int getScore() {
+        Score score = this.state.getScore();
+        if (score.isCalculable()) {
+            return score.getScore();
+        }
+        return this.nextFrame.calculateScore(score).getScore();
+    }
+
+    @Override
+    public String frameExpression() {
         String stateExpression = this.state.expression();
         return stateExpression + BLANK.substring(stateExpression.length());
     }
 
     @Override
-    public Score calculateAddScore(Score beforeScore) {
-        Score score = this.state.calculateAddScore(beforeScore);
-        if(score.isCalculateScore()) {
-            return score;
-        }
-        return this.nextFrame.calculateAddScore(score);
+    public boolean isFinish() {
+        return this.state.isFinish();
     }
 
     @Override
-    public FrameScore getFrameScore() {
-        if(!this.state.isFinish()) {
-            return new FrameScore(NOT_SCORE);
-        }
-        try {
-            return new FrameScore(getScore());
-        }catch(BowlingGameException b) {
-            return new FrameScore(NOT_SCORE);
-        }
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NormalFrame that = (NormalFrame) o;
+        return round == that.round && Objects.equals(state, that.state) && Objects.equals(nextFrame, that.nextFrame);
     }
 
-    public int getScore() {
-        Score score = this.state.getScore();
-        if(score.isCalculateScore()) {
-            return score.getScore();
-        }
-        return this.nextFrame.calculateAddScore(score).getScore();
+    @Override
+    public int hashCode() {
+        return Objects.hash(state, nextFrame, round);
     }
-
 }

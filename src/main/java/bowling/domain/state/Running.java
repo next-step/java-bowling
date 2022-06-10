@@ -11,7 +11,7 @@ public abstract class Running implements State {
 
     @Override
     public Score getScore() {
-        throw new BowlingGameException("Running 중에는 스코어를 불러올 수 없습니다.");
+        throw new BowlingGameException("러닝 상태에선 스코어를 구할 수 없습니다.");
     }
 
 }

@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ReadyTest {
     @Test
-    void 레디상태에서_스코어_조회() {
+    void 레디상태에서_점수가져오려_할_경우() {
         assertThatThrownBy(() -> {
             new Ready().getScore();
         }).isInstanceOf(BowlingGameException.class);
@@ -17,7 +17,8 @@ class ReadyTest {
     @Test
     void 레디상태에서_추가_점수_계산() {
         assertThatThrownBy(() -> {
-            new Ready().calculateAddScore(new Score(1,1));
+            new Ready().calculateScore(new Score(1,1));
         }).isInstanceOf(BowlingGameException.class);
     }
+
 }

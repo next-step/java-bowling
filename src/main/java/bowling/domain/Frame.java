@@ -1,12 +1,9 @@
 package bowling.domain;
 
-import bowling.domain.state.State;
-
 public interface Frame {
-    Frame bowl(int countOfPins);
-    State getState();
-    String expression();
-    Score calculateAddScore(Score beforeScore);
-    FrameScore getFrameScore();
-    int getScore();
+    Frame bowl(int pins);
+    Score calculateScore(Score beforeScore);
+    int score();
+    String frameExpression();
+    boolean isFinish();
 }

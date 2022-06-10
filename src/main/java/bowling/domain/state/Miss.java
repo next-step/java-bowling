@@ -1,47 +1,44 @@
 package bowling.domain.state;
 
+import bowling.domain.Pins;
 import bowling.domain.Score;
 
 public class Miss extends Finished {
-    private final int firstCountOfPins;
-    private final int secondCountOfPins;
+    private Pins firstPins;
+    private Pins secondPins;
 
-    public Miss(int firstCountOfPins, int secondCountOfPins) {
-        validate(firstCountOfPins, secondCountOfPins);
-        this.firstCountOfPins = firstCountOfPins;
-        this.secondCountOfPins = secondCountOfPins;
+    public Miss(Pins firstPins, Pins secondPins) {
+        validate(firstPins, secondPins);
+        this.firstPins = firstPins;
+        this.secondPins = secondPins;
     }
 
-    private void validate(int firstCountOfPins, int secondCountOfPins) {
-        if (firstCountOfPins + secondCountOfPins > 10) {
+    private void validate(Pins firstCountOfPins, Pins secondCountOfPins) {
+        if (firstCountOfPins.sum(secondCountOfPins) > 10) {
             throw new IllegalArgumentException("핀의 합은 10개가 넘을 수 없습니다.");
         }
     }
 
     @Override
     public Score getScore() {
-        return new Score(this.firstCountOfPins + this.secondCountOfPins, 0);
+        return new Score(firstPins.sum(secondPins),0);
     }
 
     @Override
     public String expression() {
-        if (firstCountOfPins != 0 && secondCountOfPins == 0) {
-            return firstCountOfPins + "|-";
+        if(this.firstPins.isGutter() && this.secondPins.isGutter()) {
+            return "-|-";
         }
-        if (firstCountOfPins == 0 && secondCountOfPins != 0) {
-            return "-|" + secondCountOfPins;
-        }
-        return firstCountOfPins + "|" + secondCountOfPins;
+        return this.firstPins.expression(this.secondPins);
     }
 
     @Override
-    public Score calculateAddScore(Score beforeScore) {
-        beforeScore = beforeScore.bowl(firstCountOfPins);
-        if(beforeScore.isCalculateScore()) {
+    public Score calculateScore(Score beforeScore) {
+        beforeScore = beforeScore.bowl(firstPins.getPins());
+        if(beforeScore.isCalculable()) {
             return beforeScore;
         }
-        beforeScore = beforeScore.bowl(secondCountOfPins);
+        beforeScore = beforeScore.bowl(secondPins.getPins());
         return beforeScore;
     }
-
 }

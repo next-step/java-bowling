@@ -1,18 +1,23 @@
 package bowling.domain.state;
 
+import bowling.domain.Pins;
 import bowling.domain.Score;
 
-public class Spare extends Finished{
-    private static final int SPARE_TOTAL = 10;
-    private final int firstCountOfPins;
-    private final int secondCountOfPins;
+public class Spare extends Finished {
+    private static final int MAX_PINS = 10;
+    private final Pins firstPins;
+    private final Pins secondPins;
 
-    public Spare(int firstCountOfPins, int secondCountOfPins) {
-        if(firstCountOfPins + secondCountOfPins != SPARE_TOTAL) {
-            throw new IllegalArgumentException("Spare 핀 수 합은 10이여야 합니다.");
+    public Spare(Pins firstPins, Pins secondPins) {
+        validate(firstPins, secondPins);
+        this.firstPins = firstPins;
+        this.secondPins = secondPins;
+    }
+
+    private void validate(Pins firstPins, Pins secondPins) {
+        if(firstPins.sum(secondPins) != MAX_PINS) {
+            throw new IllegalArgumentException("총 쓰러진 볼링 핀의 합이 10 이 아닙니다.");
         }
-        this.firstCountOfPins = firstCountOfPins;
-        this.secondCountOfPins = secondCountOfPins;
     }
 
     @Override
@@ -22,16 +27,16 @@ public class Spare extends Finished{
 
     @Override
     public String expression() {
-        return firstCountOfPins + "|/";
+        return firstPins.expression() + "/";
     }
 
     @Override
-    public Score calculateAddScore(Score beforeScore) {
-        beforeScore = beforeScore.bowl(firstCountOfPins);
-        if(beforeScore.isCalculateScore()) {
+    public Score calculateScore(Score beforeScore) {
+        beforeScore = beforeScore.bowl(firstPins.getPins());
+        if(beforeScore.isCalculable()) {
             return beforeScore;
         }
-        beforeScore = beforeScore.bowl(secondCountOfPins);
+        beforeScore = beforeScore.bowl(secondPins.getPins());
         return beforeScore;
     }
 }
