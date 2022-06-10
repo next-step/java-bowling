@@ -29,4 +29,10 @@ class ScoreTest {
     void strike() {
         assertThat(Score.strike()).isEqualTo(Score.of(10, 2));
     }
+
+    @Test
+    @DisplayName("스페어의 경우 10점과 1번의 추가점수 기회가 있다.")
+    void spare() {
+        assertThat(Score.spare()).isEqualTo(Score.of(10, 1));
+    }
 }

@@ -11,8 +11,9 @@ public class Score {
     public static final int MAX_BASE_SCORE = 10;
     public static final int MIN_ADDITIONAL_COUNT = 0;
     public static final int MAX_ADDITIONAL_COUNT = 2;
-    private static final int STRIKE_BASE_SCORE = 10;
+    private static final int STRIKE_OR_SPARE_BASE_SCORE = 10;
     private static final int STRIKE_ADDITIONAL_COUNT = 2;
+    private static final int SPARE_ADDITIONAL_COUNT = 1;
 
     private int score;
     private int additionalScoreCount;
@@ -33,7 +34,11 @@ public class Score {
     }
 
     public static Score strike() {
-        return of(STRIKE_BASE_SCORE, STRIKE_ADDITIONAL_COUNT);
+        return of(STRIKE_OR_SPARE_BASE_SCORE, STRIKE_ADDITIONAL_COUNT);
+    }
+
+    public static Score spare() {
+        return of(STRIKE_OR_SPARE_BASE_SCORE, SPARE_ADDITIONAL_COUNT);
     }
 
     @Override
