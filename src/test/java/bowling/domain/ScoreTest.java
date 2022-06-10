@@ -37,8 +37,14 @@ class ScoreTest {
     }
 
     @Test
-    @DisplayName("미스의 경우 첫번째 투구와 두번째 투구의 합의 점수와 0번의 추가점수 기회가 있다.")
+    @DisplayName("미스의 경우 첫번째 투구와 두번째 투구의 합의 점수와 추가점수 기회가 없다.")
     void miss() {
         assertThat(Score.miss(Hit.valueOf(3),Hit.valueOf(5))).isEqualTo(Score.of(8, 0));
+    }
+
+    @Test
+    @DisplayName("보너스의 경우 첫번째 히트 점수와 추가점수 기회가 없다.")
+    void bonus() {
+        assertThat(Score.bonus(Hit.valueOf(3))).isEqualTo(Score.of(3, 0));
     }
 }

@@ -46,6 +46,10 @@ public class Score {
         return of(firstHit.sum(secondHit).toInt(), MISS_ADDITIONAL_COUNT);
     }
 
+    public static Score bonus(Hit bonusHit) {
+        return of(bonusHit.toInt(), MISS_ADDITIONAL_COUNT);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
