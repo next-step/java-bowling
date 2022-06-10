@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import bowling.domain.Score;
+
 public class Strike extends Finished {
 
     private static final String SYMBOL = "X";
@@ -17,5 +19,10 @@ public class Strike extends Finished {
     @Override
     public String description() {
         return SYMBOL;
+    }
+
+    @Override
+    public Score score() {
+        return null;
     }
 }

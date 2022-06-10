@@ -1,11 +1,13 @@
 package bowling.domain.state;
 
+import bowling.exception.NotSupportMethodException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ReadyTest {
 
@@ -43,5 +45,11 @@ class ReadyTest {
     @DisplayName("Ready 의 bowlingCount 는 0이다.")
     void bowlingCount() {
         assertThat(new Ready().bowlingCount()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("Ready 의 score 는 프레임이 종료되지 않아 예외를 반환한다.")
+    void score() {
+        assertThatThrownBy(() -> new Ready().score()).isInstanceOf(NotSupportMethodException.class);
     }
 }

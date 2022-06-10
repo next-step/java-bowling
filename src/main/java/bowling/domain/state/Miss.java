@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Hit;
+import bowling.domain.Score;
 import bowling.exception.NotCreateStateException;
 
 import java.util.Objects;
@@ -33,6 +34,11 @@ public class Miss extends Finished {
     @Override
     public String description() {
         return String.format(DESCRIPTION_FORMAT, firstHit.description(), secondHit.description());
+    }
+
+    @Override
+    public Score score() {
+        return null;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import bowling.domain.Score;
+
 public interface State {
 
     int NO_HIT = 0;
@@ -15,4 +17,6 @@ public interface State {
     int bowlingCount();
 
     String description();
+
+    Score score();
 }

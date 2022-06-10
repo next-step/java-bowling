@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Hit;
+import bowling.domain.Score;
 import bowling.exception.NotCreateStateException;
 
 import java.util.Objects;
@@ -34,6 +35,11 @@ public class Spare extends Finished {
     @Override
     public String description() {
         return String.format(DESCRIPTION_FORMAT, firstHit.description(), SYMBOL);
+    }
+
+    @Override
+    public Score score() {
+        return null;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Hit;
+import bowling.domain.Score;
 
 import java.util.Objects;
 
@@ -29,6 +30,11 @@ public class BonusHit extends Finished {
     @Override
     public String description() {
         return bonusHit.description();
+    }
+
+    @Override
+    public Score score() {
+        return null;
     }
 
     @Override

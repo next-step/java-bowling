@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.exception.NotSupportMethodException;
 import bowling.exception.OverflowHitException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -59,5 +60,11 @@ class FirstHitTest {
     @DisplayName("FirstHit 의 bowlingCount 는 1이다.")
     void bowlingCount() {
         assertThat(firstHit.bowlingCount()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("FirstHit 의 score 는 프레임이 종료되지 않아 예외를 반환한다.")
+    void score() {
+        assertThatThrownBy(() -> firstHit.score()).isInstanceOf(NotSupportMethodException.class);
     }
 }
