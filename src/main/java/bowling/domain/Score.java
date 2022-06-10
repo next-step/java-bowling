@@ -3,12 +3,16 @@ package bowling.domain;
 import bowling.exception.InvalidScoreCountException;
 import bowling.exception.InvalidScoreException;
 
+import java.util.Objects;
+
 public class Score {
 
     public static final int MIN_BASE_SCORE = 0;
     public static final int MAX_BASE_SCORE = 10;
     public static final int MIN_ADDITIONAL_COUNT = 0;
     public static final int MAX_ADDITIONAL_COUNT = 2;
+    private static final int STRIKE_BASE_SCORE = 10;
+    private static final int STRIKE_ADDITIONAL_COUNT = 2;
 
     private int score;
     private int additionalScoreCount;
@@ -28,4 +32,20 @@ public class Score {
         return new Score(score, additionalScoreCount);
     }
 
+    public static Score strike() {
+        return of(STRIKE_BASE_SCORE, STRIKE_ADDITIONAL_COUNT);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Score score1 = (Score) o;
+        return score == score1.score && additionalScoreCount == score1.additionalScoreCount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score, additionalScoreCount);
+    }
 }

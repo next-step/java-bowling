@@ -23,4 +23,10 @@ class ScoreTest {
         assertThatThrownBy(() -> Score.of(0, 3)).isInstanceOf(InvalidScoreCountException.class);
         assertThatThrownBy(() -> Score.of(0, -1)).isInstanceOf(InvalidScoreCountException.class);
     }
+
+    @Test
+    @DisplayName("스트라이크의 경우 10점과 2번의 추가점수 기회가 있다.")
+    void strike() {
+        assertThat(Score.strike()).isEqualTo(Score.of(10, 2));
+    }
 }
