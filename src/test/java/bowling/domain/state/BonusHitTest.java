@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.Score;
 import bowling.exception.NotSupportMethodException;
 import bowling.exception.OverflowHitException;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,5 +47,11 @@ class BonusHitTest {
     @DisplayName("BonusHit 의 bowlingCount 는 1이다.")
     void bowlingCount() {
         assertThat(bonusHit.bowlingCount()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("BonusHit 의 점수는 Bonus Score 를 반환한다.")
+    void score() {
+        assertThat(bonusHit.score()).isEqualTo(Score.of(5, 0));
     }
 }

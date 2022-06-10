@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.Score;
 import bowling.exception.NotSupportMethodException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,5 +38,11 @@ class StrikeTest {
     @DisplayName("Strike 의 bowlingCount 는 1이다.")
     void bowlingCount() {
         assertThat(new Strike().bowlingCount()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("Strike 의 점수는 Strike Score 를 반환한다.")
+    void score() {
+        assertThat(new Strike().score()).isEqualTo(Score.strike());
     }
 }

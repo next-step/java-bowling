@@ -34,7 +34,7 @@ public class BonusHit extends Finished {
 
     @Override
     public Score score() {
-        return null;
+        return Score.bonus(bonusHit);
     }
 
     @Override

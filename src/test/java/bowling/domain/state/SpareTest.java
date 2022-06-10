@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Hit;
+import bowling.domain.Score;
 import bowling.exception.NotCreateStateException;
 import bowling.exception.NotSupportMethodException;
 import bowling.exception.OverflowHitException;
@@ -61,5 +62,11 @@ class SpareTest {
     @DisplayName("Spare 의 bowlingCount 는 2이다.")
     void bowlingCount() {
         assertThat(spare.bowlingCount()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("Spare 의 점수는 Spare Score 를 반환한다.")
+    void score() {
+        assertThat(spare.score()).isEqualTo(Score.spare());
     }
 }

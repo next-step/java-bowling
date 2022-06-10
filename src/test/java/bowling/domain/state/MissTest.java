@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Hit;
+import bowling.domain.Score;
 import bowling.exception.NotCreateStateException;
 import bowling.exception.OverflowHitException;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,5 +54,11 @@ class MissTest {
     @DisplayName("Miss 의 bowlingCount 는 2이다.")
     void bowlingCount() {
         assertThat(miss.bowlingCount()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("Miss 의 점수는 Miss Score 를 반환한다.")
+    void score() {
+        assertThat(miss.score()).isEqualTo(Score.of(5, 0));
     }
 }
