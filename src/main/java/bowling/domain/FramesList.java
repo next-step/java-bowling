@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -12,10 +11,6 @@ public class FramesList {
         this.userFrames = IntStream.range(0, users.size())
                 .mapToObj(i -> new Frames(new NormalFrame(1)))
                 .collect(Collectors.toList());
-    }
-
-    public List<Frames> getUserFrames() {
-        return Collections.unmodifiableList(this.userFrames);
     }
 
     public Frame getUserFrame(int index, int frameIndex) {

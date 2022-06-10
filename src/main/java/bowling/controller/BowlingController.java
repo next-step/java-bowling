@@ -50,7 +50,7 @@ public class BowlingController {
                     .bowl(pins.getPins());
             checkEqualNextFrame(framesList, i, round, nextFrame);
             userScores.set(i, framesList.calculateTotalScore(i,round));
-            ResultView.printState(users, framesList, round, userScores);
+            ResultView.print(users, framesList, round, userScores);
         }
     }
 
@@ -66,7 +66,7 @@ public class BowlingController {
             framesList.getUserFrame(i,FINAL_ROUND)
                     .bowl(pins.getPins());
             userScores.set(i, framesList.calculateTotalScore(i, FINAL_ROUND));
-            ResultView.printState(users, framesList, FINAL_ROUND, userScores);
+            ResultView.print(users, framesList, FINAL_ROUND, userScores);
         }
     }
 
