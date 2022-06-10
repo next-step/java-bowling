@@ -1,42 +1,45 @@
 package bowling.domain;
 
-public class FinalFrame extends Frame {
-    private String bonusDelivery;
+public class FinalFrame extends NormalFrame {
+    private State bonusState;
 
     FinalFrame() {
+        super();
+        this.bonusState = new Ready();
     }
 
     @Override
-    public void delivery(int inputScore) {
-        if (super.firstDelivery == null || super.firstDelivery.isBlank()) {
-            super.firstDelivery = Score.value(inputScore, false);
+    public void delivery(int countOfPins) {
+        if (states.finalDelivery(countOfPins)) {
             return;
         }
 
-        if (super.secondDelivery == null || super.secondDelivery.isBlank()) {
-            super.secondDelivery = Score.value(inputScore, super.spare(inputScore));
+        if (StateEnum.isStrike(secondState()) || StateEnum.isSpare(secondState())) {
+            bonusState = bonusState.bowl(countOfPins);
             return;
         }
 
-        bonusDelivery = Score.value(inputScore, spare(inputScore));
-    }
-
-    @Override
-    boolean spare(int inputScore) {
-        if (Score.strike(super.secondDelivery) || Score.spare(super.secondDelivery)) {
-            return false;
+        if (StateEnum.isStrike(firstState())) {
+            bonusState = states.getSecondState().bowl(countOfPins);
         }
-
-        return Integer.parseInt(super.secondDelivery) + inputScore == 10;
     }
 
     @Override
     public boolean additionallyDeliverable() {
-        return bonusDelivery == null
-                && (Score.strike(super.firstDelivery) || Score.spare(super.secondDelivery) || super.secondDelivery == null);
+        return StateEnum.isReady(bonusState) && states.additionallyFinalDeliverable();
     }
 
-    public String getBonusDelivery() {
-        return bonusDelivery;
+    @Override
+    public int getScore() {
+        if ((StateEnum.isReady(secondState()) || StateEnum.isSpare(secondState()) || StateEnum.isStrike(secondState()))
+                && StateEnum.isReady(bonusState)) {
+            return 0;
+        }
+
+        return firstState().countOfPins + secondState().countOfPins + bonusState.countOfPins;
+    }
+
+    public State getBonusState() {
+        return bonusState;
     }
 }
