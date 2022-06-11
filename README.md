@@ -342,15 +342,20 @@ gon
     - first(): 첫 Frame 리턴
     - next(): 다음 Frame을 리턴
 - [x] Frame 은 Frames 일급 컬렉션이 FrameGeneral과 FrameLast 를 모두 가지게 해주는 인터페이스
-- [x] Player 는 String name을 변수로 가지며 name은 3글자를 초과할 수 없다.  
+- [x] Player 는 String name을 변수로 가지며 name은 3글자를 초과할 수 없다.
 
 ### Requested changes
+
 - [x] equals, hashCode 는 클래스의 제일 아래에 구현
 - [x] 인터페이스와 구현 클래스 사이에 추상 클래스 추가하여 중복 제거
-- [x] pitch 에서 투구할 때는 투구 정보만 관리, score, subtotal 계산은 별도 분리 
-  - [x] rename pitchManual to playManual
-  - [x] rename pitchRandom to pitchRandom
-  - [x] split to updateScore
-  - [x] split to updateSubtotal
+- [x] pitch 에서 투구할 때는 투구 정보만 관리, score, subtotal 계산은 별도 분리
+    - [x] rename pitchManual to playManual
+    - [x] rename pitchRandom to pitchRandom
+    - [x] split to updateScore
+    - [x] split to updateSubtotal
 - [ ] Frame immutable 을 지향하기 위채 최대한 노력
+    - Frame 를 리턴해서 다시 Frames 의 특정 index 에 할당하는 방식으로 구현을 시도했으나 next Frame 에 대한 subtotal 값을 처리하는 부분이 멤버 변수에 값을 할당하는 형태로
+      되어있어 좀 더 대규모의 리팩토링이 필요할 것같습니다 ㅠ
 - [ ] pitchManual 과 random 으로 분리한 이유?
+    - 프레임 단위의 투구에 대한 테스트를 위해 manual 과 random 으로 분리하였습니다. 
+    - score 도메인에서 이미 random 과 manual 에 대한 테스트 가 되어 있으므로 불필요한 메서드 일까요?
