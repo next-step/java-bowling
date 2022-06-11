@@ -28,7 +28,7 @@ public class QuestionTest {
     @DisplayName("질문을 삭제할 권한이 없으면 예외를 던진다.")
     public void validateOwnerTest(User loginUser, Question question) {
         Assertions.assertThrows(CannotDeleteException.class , () ->
-                question.deleteAnswers(loginUser, 0)
+                question.delete(loginUser, 0)
         );
     }
 }

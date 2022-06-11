@@ -26,11 +26,11 @@ public class Answers {
     }
 
     public List<Answer> searchAnswers(User loginUser) throws CannotDeleteException {
-        for (Answer answer : answers) {
+        for (Answer answer : this.answers) {
             validateOwner(answer, loginUser);
         }
 
-        return answers;
+        return this.answers;
     }
 
     private void validateOwner(Answer answer, User loginUser) throws CannotDeleteException {
@@ -42,17 +42,13 @@ public class Answers {
     public DeleteHistories deleteAnswer(User loginUser, DeleteHistories deleteHistories) throws CannotDeleteException {
         List<Answer> answers = searchAnswers(loginUser);
 
-        for (Answer answer : answers) {
-            validateOwner(answer, loginUser);
-
-            deleteAnswer(deleteHistories, answer);
-        }
+        answers.stream().forEach((answer) -> deleteAnswer(deleteHistories, answer));
 
         return deleteHistories;
     }
 
     private void deleteAnswer(DeleteHistories deleteHistories, Answer answer) {
-        answer.delete();
+        answer.deleteState();
         deleteHistories.addAnswerDeleteHistory(answer);
     }
 }
