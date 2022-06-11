@@ -1,16 +1,13 @@
 package bowling_step3.domain;
 
-import java.util.ArrayList;
-
 public class FrameLast extends FrameMutual implements Frame {
 
     public FrameLast() {
-        this(new Scores(new ArrayList<>(), 2), new Subtotal());
+        super();
     }
 
     public FrameLast(Scores scores, Subtotal subtotal) {
-        this.scores = scores;
-        this.subtotal = subtotal;
+        super(scores, subtotal);
     }
 
     protected void pitch(Scores scores, Frames frames) {
@@ -33,6 +30,6 @@ public class FrameLast extends FrameMutual implements Frame {
     }
 
     public void updateNextSubtotal(Subtotal subtotal) {
-       throw new UnsupportedOperationException("There is no next Frame.");
+        throw new UnsupportedOperationException("There is no next Frame.");
     }
 }

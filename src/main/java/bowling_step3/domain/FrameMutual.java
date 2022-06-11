@@ -7,6 +7,15 @@ public abstract class FrameMutual {
     Scores scores;
     Subtotal subtotal;
 
+    public FrameMutual(Scores scores, Subtotal subtotal) {
+        this.scores = scores;
+        this.subtotal = subtotal;
+    }
+
+    public FrameMutual() {
+        this(new Scores(), new Subtotal());
+    }
+
     public void pitchManual(int numPins, Frames frames) {
         Scores scores = this.scores.pitch(numPins);
         pitch(scores, frames);
@@ -33,8 +42,6 @@ public abstract class FrameMutual {
     public List<Integer> scores() {
         return this.scores.scores();
     }
-
-    abstract void updateNextSubtotal(Subtotal subtotal);
 
     @Override
     public String toString() {
