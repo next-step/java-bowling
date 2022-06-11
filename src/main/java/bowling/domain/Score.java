@@ -82,4 +82,9 @@ public class Score {
     public int hashCode() {
         return Objects.hash(score, additionalScoreCount);
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(score);
+    }
 }

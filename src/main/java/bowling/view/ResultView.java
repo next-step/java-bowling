@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.BowlingGame;
+import bowling.dto.BowlingResult;
 import bowling.exception.NotSupportInstanceException;
 
 public class ResultView {
@@ -9,7 +9,7 @@ public class ResultView {
         throw new NotSupportInstanceException();
     }
 
-    public static void bowlingResultView(BowlingGame bowlingGame) {
-        System.out.println(ResultBuilder.bowlingResultChart(bowlingGame));
+    public static void bowlingResultView(BowlingResult bowlingResult) {
+        System.out.println(ResultBuilder.bowlingResultChart(bowlingResult));
     }
 }
