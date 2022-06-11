@@ -22,7 +22,7 @@ class AnswersTest {
     }
 
     @ParameterizedTest
-    @MethodSource("answersExceptionTestArgs")
+    @MethodSource("answersOwnerExceptionArgs")
     @DisplayName("다른 사람이 쓴 답변이 있어서 삭제를 못하는 경우 예외를 던진다")
     void validateOwnerTest(User loginUser, Answer answer) {
         Answers answers = new Answers();
