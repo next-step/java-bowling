@@ -3,7 +3,7 @@ package bowling_step3.domain;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class FrameMutual {
+public abstract class FrameMutual implements Frame {
     Scores scores;
     Subtotal subtotal;
 
@@ -16,17 +16,30 @@ public abstract class FrameMutual {
         this(new Scores(), new Subtotal());
     }
 
-    public void pitchManual(int numPins, Frames frames) {
+    public void playManual(int numPins, Frames frames) {
         Scores scores = this.scores.pitch(numPins);
-        pitch(scores, frames);
+        updateScore(scores, frames);
+        updateSubtotal(frames);
     }
 
-    public void pitchRandom(Frames frames) {
+    public void playRandom(Frames frames) {
         Scores scores = this.scores.pitchRandom();
-        pitch(scores, frames);
+        updateScore(scores, frames);
+        updateSubtotal(frames);
     }
 
-    abstract void pitch(Scores scores, Frames frames);
+    abstract void updateScore(Scores scores, Frames frames);
+
+    public void updateSubtotal(Frames frames) {
+        if (this.scores.done()) {
+            State state = evaluateState(this.scores);
+            this.subtotal = new Subtotal(state, this.subtotal.value() + this.scores.sum());
+        }
+        if (frames.index(this) > 0 && frames.prev(this).subtotal().state().waiting()) {
+            frames.prev(this).subtotal().accumulateBonus(this.scores.lastScore());
+            this.subtotal = new Subtotal(this.subtotal.state(), this.subtotal.value() + this.scores.lastScore());
+        }
+    }
 
     abstract State evaluateState(Scores scores);
 
@@ -41,6 +54,10 @@ public abstract class FrameMutual {
 
     public List<Integer> scores() {
         return this.scores.scores();
+    }
+
+    public void updateNextSubtotal(Subtotal subtotal) {
+        this.subtotal = new Subtotal(State.INIT, subtotal.value());
     }
 
     @Override

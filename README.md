@@ -347,6 +347,10 @@ gon
 ### Requested changes
 - [x] equals, hashCode 는 클래스의 제일 아래에 구현
 - [x] 인터페이스와 구현 클래스 사이에 추상 클래스 추가하여 중복 제거
-- [ ] pitch 에서 투구할 때는 투구 정보만 관리, getScore 호출하는 시점에 점수 계산
-- [ ] pitchManual 과 random 으로 분리한 이유?
+- [x] pitch 에서 투구할 때는 투구 정보만 관리, score, subtotal 계산은 별도 분리 
+  - [x] rename pitchManual to playManual
+  - [x] rename pitchRandom to pitchRandom
+  - [x] split to updateScore
+  - [x] split to updateSubtotal
 - [ ] Frame immutable 을 지향하기 위채 최대한 노력
+- [ ] pitchManual 과 random 으로 분리한 이유?

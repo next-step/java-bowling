@@ -25,7 +25,7 @@ public class BowlingApp {
     private static void playAFrame(int index, Frames frames, Player player) {
         Frame frame = frames.get(index);
         while (!frame.done()) {
-            frame.pitchRandom(frames);
+            frame.playRandom(frames);
             Output.printFrames(index+1, frames, player);
         }
         if (frame.done() && index < 9) {
