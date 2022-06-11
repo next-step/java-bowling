@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.CannotCalculateScore;
 import bowling.exception.InvalidScoreCountException;
 import bowling.exception.InvalidScoreException;
 import org.junit.jupiter.api.DisplayName;
@@ -11,10 +12,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class ScoreTest {
 
     @Test
-    @DisplayName("추가점수를 제외한 기본 점수의 범위는 0 ~ 10 점이다.")
+    @DisplayName("점수의 최솟값은 0 점이다.")
     void invalidScore() {
         assertThatThrownBy(() -> Score.of(-1, 2)).isInstanceOf(InvalidScoreException.class);
-        assertThatThrownBy(() -> Score.of(11, 2)).isInstanceOf(InvalidScoreException.class);
     }
 
     @Test
@@ -46,5 +46,25 @@ class ScoreTest {
     @DisplayName("보너스의 경우 첫번째 히트 점수와 추가점수 기회가 없다.")
     void bonus() {
         assertThat(Score.bonus(Hit.valueOf(3))).isEqualTo(Score.of(3, 0));
+    }
+
+    @Test
+    @DisplayName("추가 점수 계산 시 Score 는 Hit 개수만큼 증가하고 additionalScoreCount 는 1 감소한 Score 를 반환한다.")
+    void addAdditionalScore() {
+        Score strike = Score.strike();
+        Hit additionalHit = Hit.valueOf(5);
+
+        Score score = strike.addAdditionalScore(additionalHit);
+
+        assertThat(score).isEqualTo(Score.of(15, 1));
+    }
+
+    @Test
+    @DisplayName("추가 점수 기회가 없을때 호출 시 예외를 반환한다.")
+    void invalidAddAdditionalScore() {
+        Score miss = Score.of(7, 0);
+        Hit additionalHit = Hit.valueOf(5);
+
+        assertThatThrownBy(() -> miss.addAdditionalScore(additionalHit)).isInstanceOf(CannotCalculateScore.class);
     }
 }

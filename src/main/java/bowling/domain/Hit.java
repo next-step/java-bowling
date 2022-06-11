@@ -63,6 +63,10 @@ public class Hit {
         return this.toString();
     }
 
+    public int sumScore(int score) {
+        return value + score;
+    }
+
     public int toInt() {
         return value;
     }

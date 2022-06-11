@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.CannotCalculateScore;
 import bowling.exception.InvalidScoreCountException;
 import bowling.exception.InvalidScoreException;
 
@@ -7,20 +8,20 @@ import java.util.Objects;
 
 public class Score {
 
-    public static final int MIN_BASE_SCORE = 0;
-    public static final int MAX_BASE_SCORE = 10;
+    public static final int MIN_SCORE = 0;
     public static final int MIN_ADDITIONAL_COUNT = 0;
     public static final int MAX_ADDITIONAL_COUNT = 2;
+    private static final int UNIT_ADDITIONAL_COUNT = 1;
     private static final int STRIKE_OR_SPARE_BASE_SCORE = 10;
     private static final int STRIKE_ADDITIONAL_COUNT = 2;
     private static final int SPARE_ADDITIONAL_COUNT = 1;
     private static final int MISS_ADDITIONAL_COUNT = 0;
 
-    private int score;
-    private int additionalScoreCount;
+    private final int score;
+    private final int additionalScoreCount;
 
     private Score(int score, int additionalScoreCount) {
-        if (score > MAX_BASE_SCORE || score < MIN_BASE_SCORE) {
+        if (score < MIN_SCORE) {
             throw new InvalidScoreException(score);
         }
         if (additionalScoreCount < MIN_ADDITIONAL_COUNT || additionalScoreCount > MAX_ADDITIONAL_COUNT) {
@@ -48,6 +49,21 @@ public class Score {
 
     public static Score bonus(Hit bonusHit) {
         return of(bonusHit.toInt(), MISS_ADDITIONAL_COUNT);
+    }
+
+    public boolean hasAdditionalScoreCount() {
+        return additionalScoreCount > MIN_ADDITIONAL_COUNT;
+    }
+
+    public Score addAdditionalScore(Hit hit) {
+        if (!hasAdditionalScoreCount()) {
+            throw new CannotCalculateScore();
+        }
+        return new Score(hit.sumScore(score), useAdditionalCount());
+    }
+
+    private int useAdditionalCount() {
+        return additionalScoreCount - UNIT_ADDITIONAL_COUNT;
     }
 
     @Override
