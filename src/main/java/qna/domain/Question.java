@@ -4,7 +4,6 @@ import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -74,10 +73,6 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    private void setDeleteState(boolean deleted) {
-        this.deleted = deleted;
-    }
-
     public boolean isDeleted() {
         return deleted;
     }
@@ -87,30 +82,22 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public List<DeleteHistory> deleteAnswers(User loginUser, long questionId) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser, long questionId) throws CannotDeleteException {
         validateOwner(loginUser);
 
-        List<Answer> answers = searchAnswers(loginUser);
+        DeleteHistories deleteHistories = deleteQuestion(questionId);
+        answers.deleteAnswer(loginUser,deleteHistories);
 
-        setDeleteState(true);
-
-        List<DeleteHistory> deleteHistories = getDeleteHistories(questionId, answers);
-
-        return deleteHistories;
+        return deleteHistories.getDeleteHistories();
     }
 
-    private List<DeleteHistory> getDeleteHistories(long questionId, List<Answer> answers) {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, getWriter(), LocalDateTime.now()));
-        for (Answer answer : answers) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }
-        return deleteHistories;
-    }
+    private DeleteHistories deleteQuestion(long questionId) {
+        deleted = true;
 
-    private List<Answer> searchAnswers(User loginUser) throws CannotDeleteException {
-        return answers.searchAnswers(loginUser);
+        DeleteHistories deleteHistories = new DeleteHistories();
+        deleteHistories.addQuestionDeleteHistory(questionId, getWriter());
+
+        return deleteHistories;
     }
 
     private void validateOwner(User loginUser) throws CannotDeleteException {

@@ -38,4 +38,21 @@ public class Answers {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
     }
+
+    public DeleteHistories deleteAnswer(User loginUser, DeleteHistories deleteHistories) throws CannotDeleteException {
+        List<Answer> answers = searchAnswers(loginUser);
+
+        for (Answer answer : answers) {
+            validateOwner(answer, loginUser);
+
+            deleteAnswer(deleteHistories, answer);
+        }
+
+        return deleteHistories;
+    }
+
+    private void deleteAnswer(DeleteHistories deleteHistories, Answer answer) {
+        answer.delete();
+        deleteHistories.addAnswerDeleteHistory(answer);
+    }
 }
