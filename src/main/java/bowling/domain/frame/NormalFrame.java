@@ -1,8 +1,10 @@
 package bowling.domain.frame;
 
 import bowling.domain.Content;
+import bowling.domain.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.StateFactory;
+import bowling.exception.CannotCalculateScore;
 import bowling.exception.NotCreateFrameException;
 
 import java.util.Objects;
@@ -11,6 +13,7 @@ public class NormalFrame implements Frame {
 
     private final Content content;
     private State state;
+    private Frame next;
 
     private NormalFrame(Content content) {
         this.state = StateFactory.initialState();
@@ -23,19 +26,37 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame next() throws NotCreateFrameException {
-        if (content.isNextFrameNoLast()) {
-            return last();
-        }
-        return new NormalFrame(content.next());
+        generateNextFrame();
+        return next;
     }
 
-    private Frame last() {
-        return new FinalFrame(content.next());
+    private void generateNextFrame() {
+        if (content.isNextFrameNoLast()) {
+            next = new FinalFrame(content.next());
+            return;
+        }
+        next = new NormalFrame(content.next());
     }
 
     @Override
     public void bowling(int hit) {
         state = state.bowl(hit);
+    }
+
+    @Override
+    public Score calculate(Score score) {
+        Score calculatedScore = state.calculateAdditionalScore(score);
+        if (calculatedScore.hasAdditionalScoreCount()) {
+            return calculateScoreToNextFrame(calculatedScore);
+        }
+        return calculatedScore;
+    }
+
+    private Score calculateScoreToNextFrame(Score score) {
+        if (next == null) {
+            throw new CannotCalculateScore();
+        }
+        return next.calculate(score);
     }
 
     @Override
@@ -51,6 +72,18 @@ public class NormalFrame implements Frame {
     @Override
     public Content content() {
         return content;
+    }
+
+    @Override
+    public Score score() {
+        if (!isFinish()) {
+            throw new CannotCalculateScore();
+        }
+        Score score = state.score();
+        if (score.hasAdditionalScoreCount()) {
+            return calculateScoreToNextFrame(score);
+        }
+        return score;
     }
 
     @Override

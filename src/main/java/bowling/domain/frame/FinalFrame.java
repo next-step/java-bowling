@@ -1,8 +1,11 @@
 package bowling.domain.frame;
 
 import bowling.domain.Content;
+import bowling.domain.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.StateFactory;
+import bowling.exception.CannotCalculateScore;
+import bowling.exception.InvalidBoundStateException;
 import bowling.exception.NotCreateFrameException;
 
 import java.util.ArrayList;
@@ -14,6 +17,8 @@ public class FinalFrame implements Frame {
 
     private static final int LAST_CHANCE = 1;
     private static final int TOTAL_HIT_COUNT_WITH_BONUS = 3;
+    private static final int FIRST_STATE_INDEX = 0;
+    private static final int SECOND_STATE_INDEX = 1;
     private static final String DELIMITER = "|";
 
     private final Content content;
@@ -39,12 +44,36 @@ public class FinalFrame implements Frame {
         renewState(currentState().bowl(hit));
     }
 
+    @Override
+    public Score calculate(Score score) {
+        Score calculatedScore = state(FIRST_STATE_INDEX).calculateAdditionalScore(score);
+        if (calculatedScore.hasAdditionalScoreCount()) {
+            return calculateScoreToSecondState(calculatedScore);
+        }
+        return calculatedScore;
+    }
+
+    private State state(int index) {
+        if (states.size() < index + 1) {
+            throw new InvalidBoundStateException(index);
+        }
+        return states.get(index);
+    }
+
+    private Score calculateScoreToSecondState(Score score) {
+        try {
+            return state(SECOND_STATE_INDEX).calculateAdditionalScore(score);
+        } catch (InvalidBoundStateException e) {
+            throw new CannotCalculateScore();
+        }
+    }
+
     private int lastStateIndex() {
         return states.size() - 1;
     }
 
     private State currentState() {
-        return states.get(lastStateIndex());
+        return state(lastStateIndex());
     }
 
     private void renewState(State state) {
@@ -87,6 +116,17 @@ public class FinalFrame implements Frame {
     @Override
     public Content content() {
         return content;
+    }
+
+    @Override
+    public Score score() {
+        if (!isFinish()) {
+            throw new CannotCalculateScore();
+        }
+        return states.stream()
+                .map(State::score)
+                .reduce(Score::sum)
+                .orElseThrow(CannotCalculateScore::new);
     }
 
     @Override

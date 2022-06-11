@@ -66,6 +66,10 @@ public class Score {
         return additionalScoreCount - UNIT_ADDITIONAL_COUNT;
     }
 
+    public Score sum(Score anotherScore) {
+        return of(score + anotherScore.score, 0);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

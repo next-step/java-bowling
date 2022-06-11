@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.Score;
+import bowling.exception.CannotCalculateScore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -7,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class NormalFrameTest {
 
@@ -43,5 +46,58 @@ class NormalFrameTest {
         normalFrame.bowling(2);
 
         assertThat(normalFrame.isFinish()).isTrue();
+    }
+
+    @Test
+    @DisplayName("Strike 의 경우 이후 2번의 투구점수(프레임 상관없이 투구횟수만)를 합산한다.")
+    void score_strike() throws Exception {
+        normalFrame.bowling(10);
+        Frame nextFrame = normalFrame.next();
+        nextFrame.bowling(5);
+        nextFrame.bowling(5);
+
+        assertThat(normalFrame.score()).isEqualTo(Score.of(20, 0));
+    }
+
+    @Test
+    @DisplayName("Strike 의 경우 이후 2번의 투구점수(프레임 상관없이 투구횟수만)를 합산한다.")
+    void score_strike_2() throws Exception {
+        normalFrame.bowling(10);
+        Frame nextFrame = normalFrame.next();
+        nextFrame.bowling(10);
+        Frame nextFrame2 = nextFrame.next();
+        nextFrame2.bowling(3);
+        nextFrame2.bowling(5);
+
+        assertThat(normalFrame.score()).isEqualTo(Score.of(23, 0));
+    }
+
+    @Test
+    @DisplayName("Spare 의 경우 이후 1번의 투구점수를 합산한다.")
+    void score_spare() throws Exception {
+        normalFrame.bowling(3);
+        normalFrame.bowling(7);
+        Frame nextFrame = normalFrame.next();
+        nextFrame.bowling(5);
+        nextFrame.bowling(5);
+
+        assertThat(normalFrame.score()).isEqualTo(Score.of(15, 0));
+    }
+
+    @Test
+    @DisplayName("Miss 의 경우 프레임의 점수는 {firstHit} + {secondHit} 이다.")
+    void score_miss() {
+        normalFrame.bowling(3);
+        normalFrame.bowling(2);
+
+        assertThat(normalFrame.score()).isEqualTo(Score.of(5, 0));
+    }
+
+    @Test
+    @DisplayName("프레임이 종료되지 않을 경우 예외를 반환한다.")
+    void score_empty() {
+        normalFrame.bowling(5);
+
+        assertThatThrownBy(() -> normalFrame.score()).isInstanceOf(CannotCalculateScore.class);
     }
 }
