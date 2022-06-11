@@ -1,12 +1,8 @@
 package bowling_step3.domain;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
-public class FrameLast implements Frame {
-    private Scores scores;
-    private Subtotal subtotal;
+public class FrameLast extends FrameMutual implements Frame {
 
     public FrameLast() {
         this(new Scores(new ArrayList<>(), 2), new Subtotal());
@@ -17,17 +13,7 @@ public class FrameLast implements Frame {
         this.subtotal = subtotal;
     }
 
-    public void pitchManual(int numPins, Frames frames) {
-        Scores scores = this.scores.pitch(numPins);
-        pitch(scores, frames);
-    }
-
-    public void pitchRandom(Frames frames) {
-        Scores scores = this.scores.pitchRandom();
-        pitch(scores, frames);
-    }
-
-    private void pitch(Scores scores, Frames frames) {
+    protected void pitch(Scores scores, Frames frames) {
         this.scores = scores.evaluateLastBonus();
         if (this.scores.done()) {
             State state = evaluateState(this.scores);
@@ -39,48 +25,14 @@ public class FrameLast implements Frame {
         }
     }
 
-    private State evaluateState(Scores scores) {
+    protected State evaluateState(Scores scores) {
         if (scores.done()) {
             return State.DONE;
         }
         return State.INIT;
     }
 
-
-    public Subtotal subtotal() {
-        return this.subtotal;
-    }
-
-    public boolean done() {
-        return this.scores.done();
-    }
-
-    public List<Integer> scores() {
-        return this.scores.scores();
-    }
-
     public void updateNextSubtotal(Subtotal subtotal) {
-        this.subtotal = new Subtotal(State.INIT, subtotal.value());
-    }
-
-    @Override
-    public String toString() {
-        return "FrameLast{" +
-                "scores=" + scores +
-                ", subtotal=" + subtotal +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FrameLast frameLast = (FrameLast) o;
-        return Objects.equals(scores, frameLast.scores) && Objects.equals(subtotal, frameLast.subtotal);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(scores, subtotal);
+       throw new UnsupportedOperationException("There is no next Frame.");
     }
 }
