@@ -45,4 +45,14 @@ class StrikeTest {
     void score() {
         assertThat(new Strike().score()).isEqualTo(Score.strike());
     }
+
+    @Test
+    @DisplayName("Strike 의 경우 추가계산이 필요한 점수에 10점을 추가한다.")
+    void calculateAdditionalScore() {
+        Score score = Score.of(10, 1);
+
+        Score calculatedScore = new Strike().calculateAdditionalScore(score);
+
+        assertThat(calculatedScore).isEqualTo(Score.of(20, 0));
+    }
 }

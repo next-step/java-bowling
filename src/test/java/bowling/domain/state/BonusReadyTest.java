@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Score;
+import bowling.exception.CannotCalculateScore;
 import bowling.exception.InvalidScoreCountException;
 import bowling.exception.NotSupportMethodException;
 import org.junit.jupiter.api.DisplayName;
@@ -53,5 +54,13 @@ class BonusReadyTest {
     @DisplayName("BonusReady 의 score 는 프레임이 종료되지 않아 예외를 반환한다.")
     void score() {
         assertThatThrownBy(() -> new BonusReady().score()).isInstanceOf(NotSupportMethodException.class);
+    }
+
+    @Test
+    @DisplayName("BonusReady 의 경우 추가계산 호출 시 예외를 반환한다.")
+    void calculateAdditionalScore_1() {
+        Score score = Score.of(10, 1);
+
+        assertThatThrownBy(() -> new Ready().calculateAdditionalScore(score)).isInstanceOf(CannotCalculateScore.class);
     }
 }

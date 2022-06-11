@@ -9,14 +9,10 @@ public interface State {
     int TWO_HIT = 2;
 
     State bowl(int hit);
-
     boolean isFinish();
-
     boolean hasBonusChance();
-
     int bowlingCount();
-
     String description();
-
     Score score();
+    Score calculateAdditionalScore(Score score);
 }

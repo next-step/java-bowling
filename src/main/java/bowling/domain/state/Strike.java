@@ -1,10 +1,12 @@
 package bowling.domain.state;
 
+import bowling.domain.Hit;
 import bowling.domain.Score;
 
 public class Strike extends Finished {
 
     private static final String SYMBOL = "X";
+    private static final int STRIKE_HIT = 10;
 
     @Override
     public boolean hasBonusChance() {
@@ -24,5 +26,10 @@ public class Strike extends Finished {
     @Override
     public Score score() {
         return Score.strike();
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        return score.addAdditionalScore(Hit.valueOf(STRIKE_HIT));
     }
 }

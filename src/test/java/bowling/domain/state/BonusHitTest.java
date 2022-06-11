@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Score;
+import bowling.exception.CannotCalculateScore;
 import bowling.exception.NotSupportMethodException;
 import bowling.exception.OverflowHitException;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,5 +54,13 @@ class BonusHitTest {
     @DisplayName("BonusHit 의 점수는 Bonus Score 를 반환한다.")
     void score() {
         assertThat(bonusHit.score()).isEqualTo(Score.of(5, 0));
+    }
+
+    @Test
+    @DisplayName("BinusHit 의 경우 추가계산 호출 시 예외를 반환한다.")
+    void calculateAdditionalScore_1() {
+        Score score = Score.of(10, 1);
+
+        assertThatThrownBy(() -> new Ready().calculateAdditionalScore(score)).isInstanceOf(CannotCalculateScore.class);
     }
 }

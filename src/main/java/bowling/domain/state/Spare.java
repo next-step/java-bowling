@@ -43,6 +43,15 @@ public class Spare extends Finished {
     }
 
     @Override
+    public Score calculateAdditionalScore(Score score) {
+        Score calculatedScore = score.addAdditionalScore(firstHit);
+        if (!calculatedScore.hasAdditionalScoreCount()) {
+            return calculatedScore;
+        }
+        return calculatedScore.addAdditionalScore(secondHit);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

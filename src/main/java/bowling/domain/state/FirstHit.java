@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Hit;
+import bowling.domain.Score;
 
 import java.util.Objects;
 
@@ -28,6 +29,11 @@ public class FirstHit extends Ongoing {
     @Override
     public String description() {
         return firstHit.description();
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        return score.addAdditionalScore(firstHit);
     }
 
     @Override

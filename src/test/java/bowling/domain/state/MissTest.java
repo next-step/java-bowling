@@ -61,4 +61,24 @@ class MissTest {
     void score() {
         assertThat(miss.score()).isEqualTo(Score.of(5, 0));
     }
+
+    @Test
+    @DisplayName("Miss 의 경우 추가계산이 1회 필요한 점수에 {firstHit} 점을 추가한다.")
+    void calculateAdditionalScore_1() {
+        Score score = Score.of(10, 1);
+
+        Score calculatedScore = miss.calculateAdditionalScore(score);
+
+        assertThat(calculatedScore).isEqualTo(Score.of(10, 0));
+    }
+
+    @Test
+    @DisplayName("Miss 의 경우 추가계산이 2회 필요한 점수에 {firstHit} + {secondHit} 점을 추가한다.")
+    void calculateAdditionalScore_2() {
+        Score score = Score.of(10, 2);
+
+        Score calculatedScore = miss.calculateAdditionalScore(score);
+
+        assertThat(calculatedScore).isEqualTo(Score.of(15, 0));
+    }
 }

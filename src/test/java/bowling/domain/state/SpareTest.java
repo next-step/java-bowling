@@ -69,4 +69,24 @@ class SpareTest {
     void score() {
         assertThat(spare.score()).isEqualTo(Score.spare());
     }
+
+    @Test
+    @DisplayName("Spare 의 경우 추가계산이 1회 필요한 점수에 {firstHit} 점을 추가한다.")
+    void calculateAdditionalScore_1() {
+        Score score = Score.of(10, 1);
+
+        Score calculatedScore = spare.calculateAdditionalScore(score);
+
+        assertThat(calculatedScore).isEqualTo(Score.of(13, 0));
+    }
+
+    @Test
+    @DisplayName("Spare 의 경우 추가계산이 2회 필요한 점수에 {firstHit} + {secondHit} 점을 추가한다.")
+    void calculateAdditionalScore_2() {
+        Score score = Score.of(10, 2);
+
+        Score calculatedScore = spare.calculateAdditionalScore(score);
+
+        assertThat(calculatedScore).isEqualTo(Score.of(20, 0));
+    }
 }

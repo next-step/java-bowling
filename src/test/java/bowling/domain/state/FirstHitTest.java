@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.Score;
 import bowling.exception.NotSupportMethodException;
 import bowling.exception.OverflowHitException;
 import org.junit.jupiter.api.BeforeEach;
@@ -66,5 +67,15 @@ class FirstHitTest {
     @DisplayName("FirstHit 의 score 는 프레임이 종료되지 않아 예외를 반환한다.")
     void score() {
         assertThatThrownBy(() -> firstHit.score()).isInstanceOf(NotSupportMethodException.class);
+    }
+
+    @Test
+    @DisplayName("FirstHit 의 경우 추가계산이 필요한 점수에 {firstHit} 점을 추가한다.")
+    void calculateAdditionalScore_1() {
+        Score score = Score.of(10, 1);
+
+        Score calculatedScore = firstHit.calculateAdditionalScore(score);
+
+        assertThat(calculatedScore).isEqualTo(Score.of(15, 0));
     }
 }

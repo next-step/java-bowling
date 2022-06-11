@@ -1,6 +1,8 @@
 package bowling.domain.state;
 
 import bowling.domain.Hit;
+import bowling.domain.Score;
+import bowling.exception.CannotCalculateScore;
 
 public class Ready extends Ongoing {
 
@@ -16,6 +18,11 @@ public class Ready extends Ongoing {
     @Override
     public String description() {
         return "";
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        throw new CannotCalculateScore();
     }
 
     @Override
