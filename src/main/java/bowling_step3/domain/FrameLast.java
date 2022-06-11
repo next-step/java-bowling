@@ -13,7 +13,7 @@ public class FrameLast implements Frame {
     }
 
     public FrameLast(Scores scores, Subtotal subtotal) {
-        this.scores = scores ;
+        this.scores = scores;
         this.subtotal = subtotal;
     }
 
@@ -59,16 +59,16 @@ public class FrameLast implements Frame {
         return this.scores.scores();
     }
 
+    public void updateNextSubtotal(Subtotal subtotal) {
+        this.subtotal = new Subtotal(State.INIT, subtotal.value());
+    }
+
     @Override
     public String toString() {
         return "FrameLast{" +
                 "scores=" + scores +
                 ", subtotal=" + subtotal +
                 '}';
-    }
-
-    public void updateNextSubtotal(Subtotal subtotal) {
-        this.subtotal = new Subtotal(State.INIT, subtotal.value());
     }
 
     @Override

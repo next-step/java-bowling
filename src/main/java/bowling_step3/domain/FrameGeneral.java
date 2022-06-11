@@ -17,28 +17,6 @@ public class FrameGeneral implements Frame {
         this(new Scores(), new Subtotal());
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FrameGeneral that = (FrameGeneral) o;
-        return Objects.equals(scores, that.scores) && Objects.equals(subtotal, that.subtotal);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(scores, subtotal);
-    }
-
-    @Override
-    public String
-    toString() {
-        return "Frame{" +
-                "scores=" + scores +
-                ", subtotal=" + subtotal +
-                '}';
-    }
-
     public void pitchManual(int numPins, Frames frames) {
         Scores scores = this.scores.pitch(numPins);
         pitch(scores, frames);
@@ -86,5 +64,26 @@ public class FrameGeneral implements Frame {
 
     public void updateNextSubtotal(Subtotal subtotal) {
         this.subtotal = new Subtotal(State.INIT, subtotal.value());
+    }
+
+    @Override
+    public String toString() {
+        return "FrameGeneral{" +
+                "scores=" + scores +
+                ", subtotal=" + subtotal +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FrameGeneral that = (FrameGeneral) o;
+        return Objects.equals(scores, that.scores) && Objects.equals(subtotal, that.subtotal);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(scores, subtotal);
     }
 }

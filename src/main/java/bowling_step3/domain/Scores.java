@@ -25,6 +25,7 @@ public class Scores {
         }
         return new Scores(this.scores, remainingPitch - 1);
     }
+
     public Scores pitchRandom() {
         int numPins = Random.nextInt(remainingPins());
         return pitch(numPins);
@@ -45,35 +46,15 @@ public class Scores {
         return this.scores.get(size - 1);
     }
 
-    @Override
-    public String toString() {
-        return "Scores{" +
-                "scores=" + scores +
-                ", remainingPitch=" + remainingPitch +
-                '}';
-    }
-
     public boolean done() {
         return this.remainingPitch <= 0;
     }
 
     public int sum() {
         return this.scores.stream()
-                .reduce(0, (acc, cur) -> acc+cur);
+                .reduce(0, (acc, cur) -> acc + cur);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Scores scores1 = (Scores) o;
-        return remainingPitch == scores1.remainingPitch && Objects.equals(scores, scores1.scores);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(scores, remainingPitch);
-    }
 
     public List<Integer> scores() {
         return this.scores;
@@ -92,5 +73,26 @@ public class Scores {
             return new Scores(this.scores, 0);
         }
         return new Scores(this.scores, remainingTry);
+    }
+
+    @Override
+    public String toString() {
+        return "Scores{" +
+                "scores=" + scores +
+                ", remainingPitch=" + remainingPitch +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Scores scores1 = (Scores) o;
+        return remainingPitch == scores1.remainingPitch && Objects.equals(scores, scores1.scores);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(scores, remainingPitch);
     }
 }

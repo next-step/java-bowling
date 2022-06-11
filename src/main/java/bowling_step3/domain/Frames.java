@@ -22,18 +22,6 @@ public class Frames {
         return index < 9 ? new FrameGeneral() : new FrameLast();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Frames frames1 = (Frames) o;
-        return Objects.equals(frames, frames1.frames);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(frames);
-    }
 
     public Frame first() {
         return this.frames.get(0);
@@ -54,12 +42,6 @@ public class Frames {
         return this.frames.get(index(frame) - 1);
     }
 
-    @Override
-    public String toString() {
-        return "Frames{" +
-                "frames=" + frames +
-                '}';
-    }
 
     public Frame get(int i) {
         return this.frames.get(i);
@@ -67,5 +49,25 @@ public class Frames {
 
     public List<Frame> frames() {
         return this.frames;
+    }
+
+    @Override
+    public String toString() {
+        return "Frames{" +
+                "frames=" + frames +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Frames frames1 = (Frames) o;
+        return Objects.equals(frames, frames1.frames);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frames);
     }
 }
