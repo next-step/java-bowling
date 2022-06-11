@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.Content;
+import bowling.domain.FrameNo;
 import bowling.domain.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.StateFactory;
@@ -21,17 +21,17 @@ public class FinalFrame implements Frame {
     private static final int SECOND_STATE_INDEX = 1;
     private static final String DELIMITER = "|";
 
-    private final Content content;
+    private final FrameNo frameNo;
     private final List<State> states = new ArrayList<>();
 
-    public FinalFrame(Content content) {
+    public FinalFrame(FrameNo frameNo) {
         this.states.add(StateFactory.initialState());
-        this.content = content;
+        this.frameNo = frameNo;
     }
 
     @Override
     public Frame next() throws NotCreateFrameException {
-        throw new NotCreateFrameException(content.frameNo());
+        throw new NotCreateFrameException(frameNo.toInt());
     }
 
     @Override
@@ -114,8 +114,8 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Content content() {
-        return content;
+    public FrameNo frameNo() {
+        return frameNo;
     }
 
     @Override
@@ -134,12 +134,12 @@ public class FinalFrame implements Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FinalFrame that = (FinalFrame) o;
-        return Objects.equals(content, that.content) && Objects.equals(states, that.states);
+        return Objects.equals(frameNo, that.frameNo) && Objects.equals(states, that.states);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(content, states);
+        return Objects.hash(frameNo, states);
     }
 
     @Override

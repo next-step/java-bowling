@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.Content;
+import bowling.domain.FrameNo;
 import bowling.domain.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.StateFactory;
@@ -11,17 +11,17 @@ import java.util.Objects;
 
 public class NormalFrame implements Frame {
 
-    private final Content content;
+    private final FrameNo frameNo;
     private State state;
     private Frame next;
 
-    private NormalFrame(Content content) {
+    private NormalFrame(FrameNo frameNo) {
         this.state = StateFactory.initialState();
-        this.content = content;
+        this.frameNo = frameNo;
     }
 
     public static NormalFrame initialize() {
-        return new NormalFrame(Content.initialize());
+        return new NormalFrame(FrameNo.initialize());
     }
 
     @Override
@@ -31,11 +31,11 @@ public class NormalFrame implements Frame {
     }
 
     private void generateNextFrame() {
-        if (content.isNextFrameNoLast()) {
-            next = new FinalFrame(content.next());
+        if (frameNo.isNextFrameNoLast()) {
+            next = new FinalFrame(frameNo.next());
             return;
         }
-        next = new NormalFrame(content.next());
+        next = new NormalFrame(frameNo.next());
     }
 
     @Override
@@ -70,8 +70,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Content content() {
-        return content;
+    public FrameNo frameNo() {
+        return frameNo;
     }
 
     @Override
@@ -91,12 +91,12 @@ public class NormalFrame implements Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalFrame that = (NormalFrame) o;
-        return Objects.equals(state, that.state) && Objects.equals(content, that.content);
+        return Objects.equals(state, that.state) && Objects.equals(frameNo, that.frameNo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(state, content);
+        return Objects.hash(state, frameNo);
     }
 
     @Override

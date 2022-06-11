@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.Content;
+import bowling.domain.FrameNo;
 import bowling.domain.Score;
 import bowling.exception.NotCreateFrameException;
 
@@ -11,6 +11,6 @@ public interface Frame {
     Score calculate(Score score);
     boolean isFinish();
     boolean hasLastBonusChance();
-    Content content();
+    FrameNo frameNo();
     Score score();
 }

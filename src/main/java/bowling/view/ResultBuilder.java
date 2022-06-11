@@ -1,8 +1,9 @@
 package bowling.view;
 
 import bowling.domain.BowlingGame;
-import bowling.domain.Content;
+import bowling.domain.FrameNo;
 import bowling.domain.Frames;
+import bowling.domain.Player;
 import bowling.domain.frame.Frame;
 
 public class ResultBuilder {
@@ -19,7 +20,7 @@ public class ResultBuilder {
 
     public static String bowlingResultChart(BowlingGame bowlingGame) {
         String header = renderChartHeader(bowlingGame.frames());
-        String body = renderChartBody(bowlingGame);
+        String body = renderChartBody(bowlingGame.frames(), bowlingGame.player());
         initializeStringBuilder();
         return sb.append(header)
                 .append(BLANK_LIME)
@@ -32,25 +33,25 @@ public class ResultBuilder {
 
         sb.append(HEADER_UNIT_NAME);
         for (Frame frame : frames.toList()) {
-            sb.append(String.format(HEADER_UNIT_FRAME_NO, frame.content().frameNo()));
+            sb.append(String.format(HEADER_UNIT_FRAME_NO, frame.frameNo().toInt()));
         }
 
-        for (int i = frames.currentFrame().content().frameNo() + 1; i <= Content.LAST_FRAME_NO; i++) {
+        for (int i = frames.currentFrame().frameNo().toInt() + 1; i <= FrameNo.LAST_FRAME_NO; i++) {
             sb.append(String.format(HEADER_UNIT_FRAME_NO, i));
         }
 
         return sb.toString();
     }
 
-    private static String renderChartBody(BowlingGame bowlingGame) {
+    private static String renderChartBody(Frames frames, Player player) {
         initializeStringBuilder();
 
-        sb.append(String.format(BODY_UNIT_NAME, bowlingGame.player()));
-        for (Frame frame : bowlingGame.frames().toList()) {
+        sb.append(String.format(BODY_UNIT_NAME, player));
+        for (Frame frame : frames.toList()) {
             sb.append(String.format(BODY_UNIT_SCORE_ONE, frame));
         }
 
-        for (int i = bowlingGame.frames().currentFrame().content().frameNo() + 1; i <= Content.LAST_FRAME_NO; i++) {
+        for (int i = frames.currentFrame().frameNo().toInt() + 1; i <= FrameNo.LAST_FRAME_NO; i++) {
             sb.append(BODY_UNIT_EMPTY_SCORE);
         }
         return sb.toString();

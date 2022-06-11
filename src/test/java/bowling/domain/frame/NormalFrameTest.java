@@ -28,7 +28,7 @@ class NormalFrameTest {
             normalFrame = normalFrame.next();
         }
 
-        assertThat(normalFrame.content().frameNo()).isEqualTo(number);
+        assertThat(normalFrame.frameNo().toInt()).isEqualTo(number);
         assertThat(normalFrame).isInstanceOf(NormalFrame.class);
     }
 

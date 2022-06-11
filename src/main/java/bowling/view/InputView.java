@@ -37,7 +37,7 @@ public class InputView {
     }
 
     public static int hitCountView(Frame frame) {
-        System.out.print(String.format(MESSAGE_HIT_COUNT_INPUT, frame.content().frameNo()));
+        System.out.print(String.format(MESSAGE_HIT_COUNT_INPUT, frame.frameNo().toInt()));
         return inputInt();
     }
 
