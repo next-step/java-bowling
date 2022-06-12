@@ -1,58 +1,89 @@
 package bowling.domain.frame;
 
-import bowling.constant.Score;
-import bowling.domain.Content;
-import bowling.domain.pin.FinalFramePins;
-import bowling.domain.pin.NormalFramePins;
-import bowling.domain.pin.Pins;
+import bowling.domain.FrameNo;
+import bowling.domain.Score;
+import bowling.domain.state.State;
+import bowling.domain.state.StateFactory;
+import bowling.exception.CannotCalculateScore;
 import bowling.exception.NotCreateFrameException;
 
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
 
-    private final Pins pins;
-    private final Content content;
+    private final FrameNo frameNo;
+    private State state;
+    private Frame next;
 
-    private NormalFrame(Content content) {
-        this.pins = new NormalFramePins();
-        this.content = content;
+    private NormalFrame(FrameNo frameNo) {
+        this.state = StateFactory.initialState();
+        this.frameNo = frameNo;
     }
 
     public static NormalFrame initialize() {
-        return new NormalFrame(Content.initialize());
+        return new NormalFrame(FrameNo.initialize());
     }
 
     @Override
     public Frame next() throws NotCreateFrameException {
-        if (content.isNextFrameNoLast()) {
-            return last();
-        }
-        return new NormalFrame(content.next(Score.of(this)));
+        generateNextFrame();
+        return next;
     }
 
-    private Frame last() {
-        return new FinalFrame(new FinalFramePins(), content.next(Score.of(this)));
+    private void generateNextFrame() {
+        if (frameNo.isNextFrameNoLast()) {
+            next = new FinalFrame(frameNo.next());
+            return;
+        }
+        next = new NormalFrame(frameNo.next());
     }
 
     @Override
     public void bowling(int hit) {
-        pins.fallDown(hit, false);
+        state = state.bowl(hit);
+    }
+
+    @Override
+    public Score calculate(Score score) {
+        Score calculatedScore = state.calculateAdditionalScore(score);
+        if (calculatedScore.hasAdditionalScoreCount()) {
+            return calculateScoreToNextFrame(calculatedScore);
+        }
+        return calculatedScore;
+    }
+
+    private Score calculateScoreToNextFrame(Score score) {
+        if (next == null) {
+            throw new CannotCalculateScore();
+        }
+        return next.calculate(score);
     }
 
     @Override
     public boolean isFinish() {
-        return Score.of(pins).isStrike() || pins.hasSecondHit();
+        return state.isFinish();
     }
 
     @Override
-    public Pins pins() {
-        return pins;
+    public boolean hasLastBonusChance() {
+        return false;
     }
 
     @Override
-    public Content content() {
-        return content;
+    public FrameNo frameNo() {
+        return frameNo;
+    }
+
+    @Override
+    public Score score() {
+        if (!isFinish()) {
+            throw new CannotCalculateScore();
+        }
+        Score score = state.score();
+        if (score.hasAdditionalScoreCount()) {
+            return calculateScoreToNextFrame(score);
+        }
+        return score;
     }
 
     @Override
@@ -60,11 +91,16 @@ public class NormalFrame implements Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalFrame that = (NormalFrame) o;
-        return Objects.equals(pins, that.pins) && Objects.equals(content, that.content);
+        return Objects.equals(state, that.state) && Objects.equals(frameNo, that.frameNo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pins, content);
+        return Objects.hash(state, frameNo);
+    }
+
+    @Override
+    public String toString() {
+        return state.description();
     }
 }

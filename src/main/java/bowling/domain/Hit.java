@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import bowling.exception.InvalidBoundHitException;
+import bowling.exception.OverflowHitException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +11,7 @@ public class Hit {
 
     public static final int MIN_NUMBER = 0;
     public static final int MAX_NUMBER = 10;
+    private static final String MINIMUM_SYMBOL = "-";
 
     private final int value;
 
@@ -32,6 +34,39 @@ public class Hit {
         return HitCache.cacheHit(new Hit(number));
     }
 
+    public boolean isMaximum() {
+        return value == MAX_NUMBER;
+    }
+
+    private boolean isMinimum() {
+        return value == MIN_NUMBER;
+    }
+
+    public boolean isLessThanMaximum() {
+        return value < MAX_NUMBER;
+    }
+
+    public Hit sum(Hit anotherHit) {
+        if (value + anotherHit.value > MAX_NUMBER) {
+            throw new OverflowHitException(value, anotherHit.value);
+        }
+        return Hit.valueOf(value + anotherHit.value);
+    }
+
+    public String description() {
+        if (isMaximum()) {
+            throw new IllegalStateException();
+        }
+        if (isMinimum()) {
+            return MINIMUM_SYMBOL;
+        }
+        return this.toString();
+    }
+
+    public int sumScore(int score) {
+        return value + score;
+    }
+
     public int toInt() {
         return value;
     }
@@ -47,6 +82,11 @@ public class Hit {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
     }
 
     private static class HitCache {
