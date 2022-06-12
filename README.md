@@ -363,4 +363,4 @@ gon
 ### Requested changes - phase2
 - [x] FrameMutual.scores, subtotal private 으로 변경
   - rename updateScore to evaluateScore
-- 
+- [ ] play하나로 구현하고 테스트도 가능한 구조 찾기

@@ -18,6 +18,10 @@ public class Scores {
         this.remainingPitch = remainingPitch;
     }
 
+//    public Scores(List<Integer> scores) {
+//        this(scores, 2);
+//    }
+
     public Scores pitch(int numPins) {
         this.scores.add(numPins);
         if (numPins == 10 && sum() != 20) {
@@ -94,5 +98,14 @@ public class Scores {
     @Override
     public int hashCode() {
         return Objects.hash(scores, remainingPitch);
+    }
+
+    public Integer getScore() {
+        if (done()) {
+            return this.scores
+                    .stream()
+                    .reduce(0,(acc, cur) -> acc + cur);
+        }
+        throw new UnsupportedOperationException("Cannot get score yet");
     }
 }
