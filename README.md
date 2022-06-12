@@ -359,3 +359,8 @@ gon
 - [ ] pitchManual 과 random 으로 분리한 이유?
     - 프레임 단위의 투구에 대한 테스트를 위해 manual 과 random 으로 분리하였습니다. 
     - score 도메인에서 이미 random 과 manual 에 대한 테스트 가 되어 있으므로 불필요한 메서드 일까요?
+
+### Requested changes - phase2
+- [x] FrameMutual.scores, subtotal private 으로 변경
+  - rename updateScore to evaluateScore
+- 

@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class FrameMutual implements Frame {
-    Scores scores;
-    Subtotal subtotal;
+    private Scores scores;
+    private Subtotal subtotal;
 
     public FrameMutual(Scores scores, Subtotal subtotal) {
         this.scores = scores;
@@ -18,17 +18,17 @@ public abstract class FrameMutual implements Frame {
 
     public void playManual(int numPins, Frames frames) {
         Scores scores = this.scores.pitch(numPins);
-        updateScore(scores, frames);
+        this.scores = evaluateScore(scores);
         updateSubtotal(frames);
     }
 
     public void playRandom(Frames frames) {
         Scores scores = this.scores.pitchRandom();
-        updateScore(scores, frames);
+        this.scores = evaluateScore(scores);
         updateSubtotal(frames);
     }
 
-    abstract void updateScore(Scores scores, Frames frames);
+    abstract Scores evaluateScore(Scores scores);
 
     public void updateSubtotal(Frames frames) {
         if (this.scores.done()) {

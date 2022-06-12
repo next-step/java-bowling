@@ -9,8 +9,8 @@ public class FrameGeneral extends FrameMutual implements Frame {
         super(scores, subtotal);
     }
 
-    protected void updateScore(Scores scores, Frames frames) {
-        this.scores = scores;
+    protected Scores evaluateScore(Scores scores) {
+        return scores;
     }
 
     protected State evaluateState(Scores scores) {
