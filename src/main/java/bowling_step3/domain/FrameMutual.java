@@ -60,6 +60,10 @@ public abstract class FrameMutual implements Frame {
         this.subtotal = new Subtotal(State.INIT, subtotal.value());
     }
 
+    int getScore() {
+        return this.scores.getScore();
+    }
+
     @Override
     public String toString() {
         return "FrameMutual{" +

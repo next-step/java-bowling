@@ -16,4 +16,6 @@ public interface Frame {
     List<Integer> scores();
 
     void updateSubtotal(Frames frames);
+
+    boolean getScore();
 }
