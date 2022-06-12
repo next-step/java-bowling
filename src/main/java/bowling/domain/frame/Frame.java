@@ -10,7 +10,6 @@ public interface Frame {
     void bowling(int hit);
     Score calculate(Score score);
     boolean isFinish();
-    boolean hasLastBonusChance();
     FrameNo frameNo();
     Score score();
 }

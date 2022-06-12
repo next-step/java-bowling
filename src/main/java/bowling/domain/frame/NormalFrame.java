@@ -65,11 +65,6 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public boolean hasLastBonusChance() {
-        return false;
-    }
-
-    @Override
     public FrameNo frameNo() {
         return frameNo;
     }
