@@ -10,38 +10,36 @@ public class FinalFrame implements Frame {
     private final List<Integer> scores = new ArrayList<>();
 
     private int tryNo;
-    private int remain;
+    private int leftScore;
+    private int bonus = 1;
 
     public FinalFrame(int index) {
-        this(index, 3, 0);
+        this(index, 2, 0);
     }
 
-    public FinalFrame(int index, int tryNo, int remain) {
+    public FinalFrame(int index, int tryNo, int leftScore) {
         this.index = index;
         this.tryNo = tryNo;
-        this.remain = remain;
+        this.leftScore = leftScore;
     }
 
     @Override
     public int score() {
-        int score = new Random().nextInt(10 - remain) + 1;
-        remain += score;
+        int score = new Random().nextInt(10 - leftScore) + 1;
+        leftScore += score;
         tryNo--;
-        if (tryNo < 2 && remain == 0) {
-            int score2 = new Random().nextInt(10 - remain) + 1;
-            remain += score;
-            tryNo--;
+        if (tryNo < 2 && leftScore == 10) {
+            tryNo += bonus--;
+            leftScore = 0;
         }
+        scores.add(score);
 
         return score;
     }
 
     @Override
     public int validateMoveToNextIndex() {
-        if (tryNo < 1) { // 3번 던지면 무조건 끝
-            return index + 1;
-        }
-        if (tryNo < 2 && remain > 0) { // 2번 던졌는데 스페어나 스트라이크가 아니면 끝
+        if (tryNo < 1) { // 다 던지면 끝
             return index + 1;
         }
         return index;
@@ -50,5 +48,18 @@ public class FinalFrame implements Frame {
     @Override
     public boolean equal(int index) {
         return this.index == index;
+    }
+
+    @Override
+    public List<Integer> scores() {
+        return scores;
+    }
+
+    @Override
+    public String toString() {
+        return "FinalFrame{" +
+                "index=" + index +
+                ", scores=" + scores +
+                '}';
     }
 }

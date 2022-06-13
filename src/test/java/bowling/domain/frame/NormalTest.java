@@ -1,6 +1,5 @@
-package bowling.domain;
+package bowling.domain.frame;
 
-import bowling.domain.frame.NormalFrame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,8 +7,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class NormalFrameTest {
-
+public class NormalTest {
     private NormalFrame frame;
 
     @BeforeEach

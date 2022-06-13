@@ -8,7 +8,7 @@ public class NormalFrame implements Frame {
     private final int index;
     private final List<Integer> scores = new ArrayList<>();
 
-    private int remain;
+    private int leftScore;
     private int tryNo;
 
     public NormalFrame(int index) {
@@ -29,8 +29,8 @@ public class NormalFrame implements Frame {
     }
 
     public int score() {
-        int score = new Random().nextInt(10 - remain) + 1;
-        remain += score;
+        int score = new Random().nextInt(10 - leftScore) + 1;
+        leftScore += score;
         tryNo--;
         scores.add(score);
         return score;
@@ -38,7 +38,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public int validateMoveToNextIndex() {
-        if (tryNo < 1 || remain > 9) {
+        if (tryNo < 1 || leftScore > 9) {
             return index + 1;
         }
         return index;
