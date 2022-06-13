@@ -33,6 +33,9 @@ public class Board {
     }
 
     public Frame frame(int index) {
+        if (index > 10) {
+            return new NormalFrame(11);
+        }
         return frames.stream()
                 .filter(frame -> frame.equal(index))
                 .findFirst()

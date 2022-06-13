@@ -11,15 +11,14 @@ public class BowlingGame {
         Board board = Board.init();
 
         Frame frame = board.frame(1);
+        int mayBeNextIndex;
+
         do {
             frame.score();
 //  TODO(jack.comeback) : output 점수 출력
-            int mayBeNextIndex = frame.validateMoveToNextIndex();
-            if (mayBeNextIndex > 10) {
-                break;
-            }
+            mayBeNextIndex = frame.validateMoveToNextIndex();
             frame = board.frame(mayBeNextIndex);
-        } while (true);
+        } while (mayBeNextIndex < 11);
 
         // TODO(jack.comeback) : remove
         System.out.println(board);

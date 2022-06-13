@@ -1,11 +1,9 @@
 package bowling.domain;
 
-import bowling.exception.BowlingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BoardTest {
     private Board board;
@@ -21,8 +19,7 @@ class BoardTest {
     }
 
     @Test
-    void indexGiven_ReturnExp() {
-        assertThatThrownBy(() -> board.frame(11))
-                .isInstanceOf(BowlingException.class);
+    void indexIsGreaterThan10Given_ReturnFrame() {
+        assertThat(board.frame(11).equal(11)).isTrue();
     }
 }
