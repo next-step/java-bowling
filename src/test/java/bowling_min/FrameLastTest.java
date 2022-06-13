@@ -4,7 +4,6 @@ import bowling_step3.domain.Frame;
 import bowling_step3.domain.Frames;
 import bowling_step3.domain.Scores;
 import bowling_step3.domain.State;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -24,14 +23,15 @@ public class FrameLastTest {
     public void miss() {
         lastFrame.playManual(8, frames);
         lastFrame.playManual(1, frames);
-        assertThat(lastFrame.subtotal().state()).isEqualTo(State.WAIT_ONCE);
+        assertThat(lastFrame.done()).isTrue();
     }
 
     @Test
     public void spare_isnot_endgame() {
         lastFrame.playManual(8, frames);
         lastFrame.playManual(2, frames);
-        assertThat(lastFrame.subtotal().state()).isEqualTo(State.WAIT_ONCE);
+        System.out.println(lastFrame);
+        assertThat(lastFrame.done()).isFalse();
     }
 
     @Test
@@ -39,10 +39,8 @@ public class FrameLastTest {
         lastFrame.playManual(8, frames);
         lastFrame.playManual(2, frames);
         lastFrame.playManual(7, frames);
-        assertThat(lastFrame.subtotal().state()).isEqualTo(State.DONE);
+        assertThat(lastFrame.done()).isTrue();
     }
-
-}
 
     @Test
     public void game_over() {

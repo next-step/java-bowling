@@ -16,7 +16,7 @@ public class Output {
 
     public static void printFrames(int round, Frames frames, Player player) {
         if (round > 0) {
-            List<Integer> scores = frames.get(round - 1).scores();
+            List<Integer> scores = frames.get(round - 1).scores().scores();
             print(round + " Frame pitch: " + scores.get(scores.size() - 1) + "\n");
         }
         print(HEADER_STR + "\n");
@@ -45,7 +45,7 @@ public class Output {
     private static void printScores(Frames frames, Player player) {
         String payload = "| " + formatName(player.name()) + " |" + frames.frames()
                 .stream()
-                .map(frame -> formatScore(frame.scores()))
+                .map(frame -> formatScore(frame.scores().scores()))
                 .reduce((acc, cur) -> acc + "|" + cur)
                 .orElseThrow(() -> new UnsupportedOperationException())
                 + "|\n";

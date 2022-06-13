@@ -1,6 +1,5 @@
 package bowling_step3.domain;
 
-import java.util.List;
 import java.util.Objects;
 
 public abstract class FrameMutual implements Frame {
@@ -17,6 +16,9 @@ public abstract class FrameMutual implements Frame {
     }
 
     public void playManual(int numPins, Frames frames) {
+        if (this.done()) {
+            throw new UnsupportedOperationException("This frame is done.");
+        }
         Scores scores = this.scores.pitch(numPins);
         this.scores = evaluateScore(scores);
         updateSubtotal(frames);
@@ -52,15 +54,15 @@ public abstract class FrameMutual implements Frame {
         return this.scores.done();
     }
 
-    public List<Integer> scores() {
-        return this.scores.scores();
+    public Scores scores() {
+        return this.scores;
     }
 
     public void updateNextSubtotal(Subtotal subtotal) {
         this.subtotal = new Subtotal(State.INIT, subtotal.value());
     }
 
-    int getScore() {
+    public int getScore() {
         return this.scores.getScore();
     }
 

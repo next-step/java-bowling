@@ -1,23 +1,21 @@
 package bowling_step3.domain;
 
-import java.util.List;
-
 public interface Frame {
     void playManual(int numPins, Frames frames);
 
     void playRandom(Frames frames);
 
-    boolean done();
-
     Subtotal subtotal();
 
     void updateNextSubtotal(Subtotal subtotal);
 
-    List<Integer> scores();
+    Scores scores();
 
     void updateSubtotal(Frames frames);
 
-    boolean getScore();
+    int getScore();
 
     int calculateAdditionalScore(Scores scores);
+
+    boolean done();
 }
