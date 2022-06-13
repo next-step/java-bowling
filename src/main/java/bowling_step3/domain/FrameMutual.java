@@ -64,6 +64,10 @@ public abstract class FrameMutual implements Frame {
         return this.scores.getScore();
     }
 
+    public int calculateAdditionalScore(Scores scores) {
+        return this.scores.getScore() + scores.getScore();
+    }
+
     @Override
     public String toString() {
         return "FrameMutual{" +

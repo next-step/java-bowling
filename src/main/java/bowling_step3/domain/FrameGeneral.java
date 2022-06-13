@@ -22,4 +22,5 @@ public class FrameGeneral extends FrameMutual implements Frame {
         }
         return State.DONE;
     }
+
 }

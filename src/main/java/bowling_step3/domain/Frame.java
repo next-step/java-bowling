@@ -18,4 +18,6 @@ public interface Frame {
     void updateSubtotal(Frames frames);
 
     boolean getScore();
+
+    int calculateAdditionalScore(Scores scores);
 }
