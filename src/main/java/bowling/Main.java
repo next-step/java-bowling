@@ -9,6 +9,7 @@ import bowling.view.ResultView;
 public class Main {
 
     public static void main(String[] args) {
+        int playerNumber = InputView.playerNumberView();
         Player player = InputView.playerNameView();
         BowlingGame bowlingGame = new BowlingGame(player);
 
