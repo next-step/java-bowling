@@ -35,29 +35,30 @@ public class OutPut {
     // TODO(jack.comeback) : scores 일급콜렉션
     private static String getScoreFormat(List<Integer> scores) {
         if (scores.size() == 1) {
-            return String.format(centerAlignFormat(3), getSingleScoreFormat(scores));
+            return String.format(centerAlignFormat(3), getSingleScoreFormat(scores.get(0)));
         }
         if (scores.size() == 2) {
-            return String.format(centerAlignFormat(4), getDoubleScoreFormat(scores));
+            return String.format(centerAlignFormat(4), getDoubleScoreFormat(scores.get(0), scores.get(1)));
         }
         if (scores.size() == 3) {
-            return String.format("%4s|%1s", getDoubleScoreFormat(scores.subList(0,2)), getSingleScoreFormat(scores.subList(2,3)));
+            // TODO(jack.comeback) : 3자리수 출력 개선 필요 ex. X|5|5, 7|/|3
+            return String.format("%4s|%1s", getDoubleScoreFormat(scores.get(0), scores.get(1)), getSingleScoreFormat(scores.get(2)));
         }
         return String.format(centerAlignFormat(6), "");
     }
 
-    private static String getDoubleScoreFormat(List<Integer> scores) {
-        if (scores.stream().mapToInt(i -> i).sum() == 10) {
-            return scores.get(0) + DELIMITER.format() + SPARE.format();
+    private static String getDoubleScoreFormat(int first, int second) {
+        if (first + second == 10) {
+            return first + DELIMITER.format() + SPARE.format();
         }
-        if (scores.get(1) == 0) {
-            return scores.get(0) + DELIMITER.format() + GUTTER.format();
+        if (second == 0) {
+            return first + DELIMITER.format() + GUTTER.format();
         }
-        return scores.get(0) + DELIMITER.format() + scores.get(1);
+        return getSingleScoreFormat(first) + DELIMITER.format() + getSingleScoreFormat(second);
     }
 
-    private static String getSingleScoreFormat(List<Integer> scores) {
-        return scores.get(0) == 10 ? STRIKE.format() : scores.get(0).toString();
+    private static String getSingleScoreFormat(int score) {
+        return score == 10 ? STRIKE.format() : String.valueOf(score);
     }
 
     public static void score(Frame frame, int score) {
