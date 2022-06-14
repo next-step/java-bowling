@@ -4,6 +4,7 @@ import bowling.domain.Board;
 import bowling.domain.frame.Frame;
 import bowling.domain.Player;
 import bowling.presentation.Input;
+import bowling.presentation.OutPut;
 
 public class BowlingGame {
     public static void main(String[] args) {
@@ -12,15 +13,14 @@ public class BowlingGame {
 
         Frame frame = board.frame(1);
         int mayBeNextIndex;
+        OutPut.board(board, player);
 
         do {
-            frame.score();
-//  TODO(jack.comeback) : output 점수 출력
+            int score = frame.score();
+            OutPut.score(frame, score);
+            OutPut.board(board,player);
             mayBeNextIndex = frame.validateMoveToNextIndex();
             frame = board.frame(mayBeNextIndex);
         } while (mayBeNextIndex < 11);
-
-        // TODO(jack.comeback) : remove
-        System.out.println(board);
     }
 }

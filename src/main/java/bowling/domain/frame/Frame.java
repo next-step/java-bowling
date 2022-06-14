@@ -10,4 +10,6 @@ public interface Frame {
     boolean equal(int index);
 
     List<Integer> scores();
+
+    int index();
 }

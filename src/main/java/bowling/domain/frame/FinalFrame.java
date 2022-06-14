@@ -56,6 +56,11 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public int index() {
+        return index;
+    }
+
+    @Override
     public String toString() {
         return "FinalFrame{" +
                 "index=" + index +

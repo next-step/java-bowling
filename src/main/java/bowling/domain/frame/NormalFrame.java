@@ -28,6 +28,11 @@ public class NormalFrame implements Frame {
         return scores;
     }
 
+    @Override
+    public int index() {
+        return index;
+    }
+
     public int score() {
         int score = new Random().nextInt(10 - leftScore) + 1;
         leftScore += score;
