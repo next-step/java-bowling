@@ -63,4 +63,10 @@ class BonusHitTest {
 
         assertThatThrownBy(() -> new Ready().calculateAdditionalScore(score)).isInstanceOf(CannotCalculateScore.class);
     }
+
+    @Test
+    @DisplayName("BonusHit 의 경우 진행 중 상태가 아니다.")
+    void isProgressing() {
+        assertThat(bonusHit.isProgressing()).isFalse();
+    }
 }

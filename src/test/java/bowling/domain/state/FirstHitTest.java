@@ -78,4 +78,10 @@ class FirstHitTest {
 
         assertThat(calculatedScore).isEqualTo(Score.of(15, 0));
     }
+
+    @Test
+    @DisplayName("FirstHit 의 경우 진행 중 상태이다.")
+    void isProgressing() {
+        assertThat(firstHit.isProgressing()).isTrue();
+    }
 }

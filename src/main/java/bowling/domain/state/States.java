@@ -72,6 +72,10 @@ public class States {
         return currentState().isFinish() && !remainBonusChance();
     }
 
+    public boolean isProgressing() {
+        return currentState().isProgressing();
+    }
+
     private boolean remainBonusChance() {
         if (states.isEmpty()) {
             return false;

@@ -16,6 +16,11 @@ public class BonusReady extends Ongoing {
     }
 
     @Override
+    public boolean isProgressing() {
+        return true;
+    }
+
+    @Override
     public int bowlingCount() {
         return 0;
     }

@@ -10,6 +10,7 @@ public interface State {
 
     State bowl(int hit);
     boolean isFinish();
+    boolean isProgressing();
     boolean hasBonusChance();
     int bowlingCount();
     String description();

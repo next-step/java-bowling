@@ -48,6 +48,10 @@ public class Frames {
         return currentFrame().isFinish();
     }
 
+    public boolean isProgressing() {
+        return currentFrame().isProgressing();
+    }
+
     public List<Frame> toList() {
         return Collections.unmodifiableList(frames);
     }

@@ -81,4 +81,10 @@ class MissTest {
 
         assertThat(calculatedScore).isEqualTo(Score.of(15, 0));
     }
+
+    @Test
+    @DisplayName("Miss 의 경우 진행 중 상태이 아니다.")
+    void isProgressing() {
+        assertThat(miss.isProgressing()).isFalse();
+    }
 }

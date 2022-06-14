@@ -61,6 +61,12 @@ class BonusReadyTest {
     void calculateAdditionalScore_1() {
         Score score = Score.of(10, 1);
 
-        assertThatThrownBy(() -> new Ready().calculateAdditionalScore(score)).isInstanceOf(CannotCalculateScore.class);
+        assertThatThrownBy(() -> new BonusReady().calculateAdditionalScore(score)).isInstanceOf(CannotCalculateScore.class);
+    }
+
+    @Test
+    @DisplayName("BonusReady 의 경우 진행 중 상태이다.")
+    void isProgressing() {
+        assertThat(new BonusReady().isProgressing()).isTrue();
     }
 }

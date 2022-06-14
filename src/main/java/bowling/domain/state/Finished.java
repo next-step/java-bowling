@@ -10,6 +10,11 @@ abstract class Finished implements State {
     }
 
     @Override
+    public boolean isProgressing() {
+        return false;
+    }
+
+    @Override
     public State bowl(int hit) {
         throw new NotSupportMethodException();
     }

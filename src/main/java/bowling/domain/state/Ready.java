@@ -16,6 +16,11 @@ public class Ready extends Ongoing {
     }
 
     @Override
+    public boolean isProgressing() {
+        return false;
+    }
+
+    @Override
     public String description() {
         return "";
     }

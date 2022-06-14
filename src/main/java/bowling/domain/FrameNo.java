@@ -2,7 +2,7 @@ package bowling.domain;
 
 import java.util.Objects;
 
-public class FrameNo {
+public class FrameNo implements Comparable<FrameNo> {
 
     public static final int LAST_FRAME_NO = 10;
     private static final int INITIAL_FRAME_NO = 1;
@@ -32,6 +32,11 @@ public class FrameNo {
 
     public int toInt() {
         return value;
+    }
+
+    @Override
+    public int compareTo(FrameNo o) {
+        return Integer.compare(this.toInt(), o.toInt());
     }
 
     @Override

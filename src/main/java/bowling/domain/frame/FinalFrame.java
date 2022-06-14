@@ -39,6 +39,11 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public boolean isProgressing() {
+        return states.isProgressing();
+    }
+
+    @Override
     public FrameNo frameNo() {
         return frameNo;
     }

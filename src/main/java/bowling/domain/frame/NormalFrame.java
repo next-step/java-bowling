@@ -65,6 +65,11 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public boolean isProgressing() {
+        return state.isProgressing();
+    }
+
+    @Override
     public FrameNo frameNo() {
         return frameNo;
     }

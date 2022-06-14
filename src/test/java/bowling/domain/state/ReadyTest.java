@@ -62,4 +62,10 @@ class ReadyTest {
 
         assertThatThrownBy(() -> new Ready().calculateAdditionalScore(score)).isInstanceOf(CannotCalculateScore.class);
     }
+
+    @Test
+    @DisplayName("Ready 의 경우 진행 중 상태이 아니다.")
+    void isProgressing() {
+        assertThat(new Ready().isProgressing()).isFalse();
+    }
 }

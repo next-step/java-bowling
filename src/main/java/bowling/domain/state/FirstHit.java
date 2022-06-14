@@ -27,6 +27,11 @@ public class FirstHit extends Ongoing {
     }
 
     @Override
+    public boolean isProgressing() {
+        return true;
+    }
+
+    @Override
     public String description() {
         return firstHit.description();
     }
