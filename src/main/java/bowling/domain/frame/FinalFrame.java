@@ -6,6 +6,7 @@ import java.util.Random;
 
 public class FinalFrame implements Frame {
 
+    private static final Random RANDOM = new Random();
     private final int index;
     private final List<Integer> scores = new ArrayList<>();
 
@@ -25,16 +26,24 @@ public class FinalFrame implements Frame {
 
     @Override
     public int score() {
-        int score = new Random().nextInt(10 - leftScore) + 1;
+        int score = getScore();
         leftScore += score;
         tryNo--;
-        if (tryNo < 2 && leftScore == 10) {
+        if (isBonus()) {
             tryNo += bonus--;
             leftScore = 0;
         }
         scores.add(score);
 
         return score;
+    }
+
+    private boolean isBonus() {
+        return tryNo < 2 && leftScore == 10;
+    }
+
+    private int getScore() {
+        return RANDOM.nextInt(10 - leftScore) + 1;
     }
 
     @Override

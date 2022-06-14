@@ -15,8 +15,21 @@ class FinalFrameTest {
     }
 
     @Test
-    void score() {
-        // random이라 테스트 쉽지 않음
-        assertThat(frame.score()).isLessThanOrEqualTo(10);
+    void score_success() {
+        int first = frame.score();
+        assertThat(frame.scores().size()).isEqualTo(1);
+
+        if (first == 10) {
+            assertThat(frame.score()).isBetween(1, 11);
+        } else {
+            assertThat(frame.score()).isBetween(1, 11 - first);
+        }
+
+        assertThat(frame.scores().size()).isEqualTo(2);
+    }
+
+    @Test
+    void validateMoveToNextIndex_success() {
+        assertThat(frame.validateMoveToNextIndex()).isEqualTo(10);
     }
 }
