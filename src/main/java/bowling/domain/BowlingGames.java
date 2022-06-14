@@ -49,6 +49,7 @@ public class BowlingGames {
 
     private Player lowerFrameNoGamePlayer() {
         return values.stream()
+                .filter(bowlingGame -> !bowlingGame.isFinish())
                 .min(BowlingGame::compareTo)
                 .map(BowlingGame::player)
                 .orElseThrow(IllegalStateException::new);
@@ -60,6 +61,11 @@ public class BowlingGames {
                 .findFirst()
                 .map(BowlingGame::player)
                 .orElseThrow(IllegalStateException::new);
+    }
+
+    public boolean isFinish() {
+        return values.stream()
+                .allMatch(BowlingGame::isFinish);
     }
 
     public List<BowlingGame> values() {

@@ -73,7 +73,7 @@ public class States {
     }
 
     public boolean isProgressing() {
-        return currentState().isProgressing();
+        return currentState().isProgressing() || remainBonusChance();
     }
 
     private boolean remainBonusChance() {

@@ -46,4 +46,15 @@ class BowlingGamesTest {
         assertThat(player).isEqualTo(new Player("tom"));
         assertThat(bowlingGames.currentPlayer()).isEqualTo(new Player("tim"));
     }
+
+    @Test
+    @DisplayName("모든 프레임이 종료되면 게임도 종료된다.")
+    void isFinish() {
+        for (int i = 0; i < 24; i++) {
+            Player player = bowlingGames.currentPlayer();
+            bowlingGames.bowl(10, player);
+        }
+
+        assertThat(bowlingGames.isFinish()).isTrue();
+    }
 }
