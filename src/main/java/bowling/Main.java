@@ -6,12 +6,14 @@ import bowling.dto.BowlingResult;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
         int playerNumber = InputView.playerNumberView();
-        Player player = InputView.playerNameView();
-        BowlingGame bowlingGame = new BowlingGame(player);
+        List<Player> player = InputView.playerNameView(playerNumber);
+        BowlingGame bowlingGame = new BowlingGame(new Player("TOM"));
 
         playBowling(bowlingGame);
     }
