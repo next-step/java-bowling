@@ -1,7 +1,6 @@
 package bowling.view;
 
 import bowling.domain.Player;
-import bowling.domain.frame.Frame;
 import bowling.exception.InvalidNameException;
 import bowling.exception.NotSupportInstanceException;
 
@@ -14,9 +13,10 @@ public class InputView {
 
     private static final String MESSAGE_PLAYER_NUMBER_INPUT = "How many people? ";
     private static final String MASSAGE_PLAYER_NAME_INPUT = "플레이어 %d의 이름은? (3 english letters) : ";
-    private static final String MESSAGE_HIT_COUNT_INPUT = "%d 프레임 투구 : ";
+    private static final String MESSAGE_HIT_COUNT_INPUT = "%s's turn : ";
     private static final String MESSAGE_INVALID_NUMBER_FORMAT = "숫자만 입력 가능합니다.";
     private static final String MESSAGE_DUPLICATE_NAME = "이미 등록된 이름입니다.";
+    private static final String BLANK_LINE = "\n";
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -49,8 +49,9 @@ public class InputView {
         return player;
     }
 
-    public static int hitCountView(Frame frame) {
-        System.out.print(String.format(MESSAGE_HIT_COUNT_INPUT, frame.frameNo().toInt()));
+    public static int hitCountView(Player player) {
+        System.out.print(BLANK_LINE);
+        System.out.print(String.format(MESSAGE_HIT_COUNT_INPUT, player));
         return inputInt();
     }
 
