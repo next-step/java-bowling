@@ -1,39 +1,33 @@
 package bowling.domain.frame;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class NormalFrame implements Frame {
     private final int index;
-    private final List<Integer> scores = new ArrayList<>();
+    private final Scores scores;
 
     private int leftScore;
     private int tryNo;
 
     public NormalFrame(int index) {
-        this(index, 2);
+        this(index, 2, new Scores());
     }
 
-    public NormalFrame(int index, int tryNo) {
+    public NormalFrame(int index, int tryNo, Scores scores) {
         this.index = index;
         this.tryNo = tryNo;
+        this.scores = scores;
     }
 
     public void addScore(int score) {
         scores.add(score);
     }
 
-    public List<Integer> scores() {
+    public Scores scores() {
         return scores;
     }
 
-    @Override
-    public int index() {
-        return index;
-    }
-
-    public int score() {
+    public int attempt() {
         int score = new Random().nextInt(10 - leftScore) + 1;
         leftScore += score;
         tryNo--;
@@ -52,6 +46,11 @@ public class NormalFrame implements Frame {
     @Override
     public boolean equal(int index) {
         return this.index == index;
+    }
+
+    @Override
+    public int index() {
+        return index;
     }
 
     @Override

@@ -3,8 +3,7 @@ package bowling.presentation;
 import bowling.domain.Board;
 import bowling.domain.Player;
 import bowling.domain.frame.Frame;
-
-import java.util.List;
+import bowling.domain.frame.Scores;
 
 import static bowling.presentation.ScoreFormat.*;
 
@@ -27,22 +26,21 @@ public class OutPut {
     private static String centerAlignFormat(int size) {
         int MAX = 6;
         if (size > MAX) {
-            throw new IllegalArgumentException(String.format("size는 %d보다 작아야 합나디. - %d", MAX, size));
+            throw new IllegalArgumentException(String.format("size는 %d보다 작아야 합니다. - %d", MAX, size));
         }
         return "%" + size + "s" + " ".repeat(MAX - size);
     }
 
-    // TODO(jack.comeback) : scores 일급콜렉션
-    private static String getScoreFormat(List<Integer> scores) {
+    private static String getScoreFormat(Scores scores) {
         if (scores.size() == 1) {
-            return String.format(centerAlignFormat(3), getSingleScoreFormat(scores.get(0)));
+            return String.format(centerAlignFormat(3), getSingleScoreFormat(scores.first()));
         }
         if (scores.size() == 2) {
-            return String.format(centerAlignFormat(4), getDoubleScoreFormat(scores.get(0), scores.get(1)));
+            return String.format(centerAlignFormat(4), getDoubleScoreFormat(scores.first(), scores.second()));
         }
         if (scores.size() == 3) {
             // TODO(jack.comeback) : 3자리수 출력 개선 필요 ex. X|5|5, 7|/|3
-            return String.format("%4s|%1s", getDoubleScoreFormat(scores.get(0), scores.get(1)), getSingleScoreFormat(scores.get(2)));
+            return String.format("%4s|%1s", getDoubleScoreFormat(scores.first(), scores.second()), getSingleScoreFormat(scores.third()));
         }
         return String.format(centerAlignFormat(6), "");
     }

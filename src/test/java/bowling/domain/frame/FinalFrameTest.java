@@ -16,13 +16,13 @@ class FinalFrameTest {
 
     @Test
     void score_success() {
-        int first = frame.score();
+        int first = frame.attempt();
         assertThat(frame.scores().size()).isEqualTo(1);
 
         if (first == 10) {
-            assertThat(frame.score()).isBetween(1, 11);
+            assertThat(frame.attempt()).isBetween(1, 11);
         } else {
-            assertThat(frame.score()).isBetween(1, 11 - first);
+            assertThat(frame.attempt()).isBetween(1, 11 - first);
         }
 
         assertThat(frame.scores().size()).isEqualTo(2);

@@ -16,7 +16,7 @@ public class BowlingGame {
         OutPut.board(board, player);
 
         do {
-            int score = frame.score();
+            int score = frame.attempt();
             OutPut.score(frame, score);
             OutPut.board(board,player);
             mayBeNextIndex = frame.validateMoveToNextIndex();
