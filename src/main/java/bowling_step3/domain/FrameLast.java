@@ -20,4 +20,14 @@ public class FrameLast extends FrameMutual implements Frame {
         return State.INIT;
     }
 
+    @Override
+    public Subtotal calculateAdditionalScore(Subtotal subtotal) {
+        if (subtotal.state() == State.WAIT_TWICE) {
+            return new Subtotal(State.DONE, subtotal.value() + getAdditionalForStrike());
+        }
+        if (subtotal.state() == State.WAIT_ONCE) {
+            return new Subtotal(State.DONE, subtotal.value() + getFirstScore());
+        }
+        throw new UnsupportedOperationException("Cannot calculate additional yet.");
+    }
 }

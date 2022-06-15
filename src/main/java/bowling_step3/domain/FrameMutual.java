@@ -66,8 +66,26 @@ public abstract class FrameMutual implements Frame {
         return this.scores.getScore();
     }
 
-    public int calculateAdditionalScore(Scores scores) {
-        return this.scores.getScore() + scores.getScore();
+    public Subtotal calculateAdditionalScore(Subtotal subtotal) {
+        if (subtotal.state() == State.WAIT_TWICE) {
+            return new Subtotal(State.DONE, subtotal.value() + this.scores.getScore());
+        }
+        if (subtotal.state() == State.WAIT_ONCE) {
+            return new Subtotal(State.DONE, subtotal.value() + this.scores.getFirstScore());
+        }
+        throw new UnsupportedOperationException("Cannot calculate additional yet.");
+    }
+
+    public Subtotal getSubtotal(Frames frames) {
+        return new Subtotal(State.DONE, this.subtotal().value() + frames.next(this).subtotal().value());
+    }
+
+    public int getAdditionalForStrike() {
+        return this.scores.getAdditionalForStrike();
+    }
+
+    public int getFirstScore() {
+        return this.scores.getFirstScore();
     }
 
     @Override

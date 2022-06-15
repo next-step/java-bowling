@@ -1,9 +1,6 @@
 package bowling_min;
 
-import bowling_step3.domain.Frame;
-import bowling_step3.domain.Frames;
-import bowling_step3.domain.Scores;
-import bowling_step3.domain.State;
+import bowling_step3.domain.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -14,10 +11,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class FrameLastTest {
     Frames frames = Frames.create();
     Frame lastFrame = frames.get(9);
-//    @BeforeEach
-//    public void setup() {
-
-//    }
 
     @Test
     public void miss() {
@@ -93,29 +86,27 @@ public class FrameLastTest {
 
     @Test
     public void getScore_9프레임_Strike() {
-        Scores scores = new Scores(Arrays.asList(10), 0);
+        Subtotal subtotal = new Subtotal(State.WAIT_TWICE, 10);
         lastFrame.playManual(10, frames);
         lastFrame.playManual(10, frames);
-        assertThat(lastFrame.calculateAdditionalScore(scores)).isEqualTo(30);
+        assertThat(lastFrame.calculateAdditionalScore(subtotal).value()).isEqualTo(30);
     }
 
     @Test
     public void getScore_9프레임_Spare() {
-        Scores scores = new Scores(Arrays.asList(9, 1), 0);
+        Subtotal subtotal = new Subtotal(State.WAIT_ONCE, 10);
         lastFrame.playManual(9, frames);
         lastFrame.playManual(1, frames);
-        assertThat(lastFrame.calculateAdditionalScore(scores)).isEqualTo(19);
+        assertThat(lastFrame.calculateAdditionalScore(subtotal).value()).isEqualTo(19);
     }
 
     @Test
     public void getScore_9프레임_Strike_notReady() {
         assertThatThrownBy(() -> {
-//            Score score = Score.strike();
-//            lastFrame.bowl(10);
-//            lastFrame.calculateAdditionalScore(score).getScore();
             Scores scores = new Scores(Arrays.asList(10), 0);
             lastFrame.playManual(10, frames);
-            lastFrame.calculateAdditionalScore(scores);
+            Subtotal subtotal = new Subtotal(State.WAIT_TWICE, 10);
+            lastFrame.calculateAdditionalScore(subtotal);
         }).isInstanceOf(UnsupportedOperationException.class);
     }
 

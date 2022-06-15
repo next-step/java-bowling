@@ -104,8 +104,24 @@ public class Scores {
         if (done()) {
             return this.scores
                     .stream()
-                    .reduce(0,(acc, cur) -> acc + cur);
+                    .reduce(0, (acc, cur) -> acc + cur);
         }
         throw new UnsupportedOperationException("Cannot get score yet");
     }
+
+
+    public int getAdditionalForStrike() {
+        if (this.scores.size() >= 2) {
+            return this.scores.get(0) + this.scores.get(1);
+        }
+        throw new UnsupportedOperationException("Not enough scores");
+    }
+
+    public int getFirstScore() {
+        if (this.scores.size() >= 1) {
+            return this.scores.get(0);
+        }
+        throw new UnsupportedOperationException("Not enough scores");
+    }
+
 }

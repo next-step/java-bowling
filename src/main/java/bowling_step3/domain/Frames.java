@@ -28,7 +28,7 @@ public class Frames {
     }
 
     public Frame next(Frame frame) {
-        return this.frames.get(index(frame) + 1);
+        return get(index(frame) + 1);
     }
 
     int index(Frame frame) {
