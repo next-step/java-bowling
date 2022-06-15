@@ -20,6 +20,10 @@ public class BowlingGame {
             OutPut.score(frame, score);
             OutPut.board(board, player);
             mayBeNextIndex = frame.validateMoveToNextIndex();
-        } while (mayBeNextIndex < 11);
+        } while (finished(mayBeNextIndex));
+    }
+
+    private static boolean finished(int mayBeNextIndex) {
+        return mayBeNextIndex < 11;
     }
 }
