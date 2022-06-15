@@ -4,11 +4,12 @@ import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.exception.BowlingException;
-import bowling.exception.BowlingExceptionCode;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static bowling.exception.BowlingExceptionCode.INVALID_FRAME_INDEX;
 
 public class Board {
     private static final int START = 1;
@@ -33,13 +34,10 @@ public class Board {
     }
 
     public Frame frame(int index) {
-        if (index > 10) {
-            return new NormalFrame(11);
-        }
         return frames.stream()
                 .filter(frame -> frame.equal(index))
                 .findFirst()
-                .orElseThrow(() -> new BowlingException(BowlingExceptionCode.INVALID_FRAME_INDEX, String.valueOf(index)));
+                .orElseThrow(() -> new BowlingException(INVALID_FRAME_INDEX, String.valueOf(index)));
     }
 
     @Override

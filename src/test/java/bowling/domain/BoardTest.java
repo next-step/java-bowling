@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BoardTest {
     private Board board;
@@ -19,7 +20,8 @@ class BoardTest {
     }
 
     @Test
-    void indexIsGreaterThan10Given_ReturnFrame() {
-        assertThat(board.frame(11).equal(11)).isTrue();
+    void indexIsGreaterThan10Given_ThrowExp() {
+        assertThatThrownBy(() -> board.frame(11))
+                .hasMessageContaining("찾으려는 index의 frame이 없습니다.");
     }
 }
