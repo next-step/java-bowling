@@ -32,7 +32,10 @@ public class Frames {
     }
 
     int index(Frame frame) {
-        return this.frames.indexOf(frame);
+        int t =  this.frames.indexOf(frame);
+        System.out.println(t);
+        System.out.println(Objects.hash(frame));
+        return t;
     }
 
     public Frame prev(Frame frame) {
@@ -51,12 +54,12 @@ public class Frames {
         return this.frames;
     }
 
-    @Override
-    public String toString() {
-        return "Frames{" +
-                "frames=" + frames +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Frames{" +
+//                "frames=" + frames +
+//                '}';
+//    }
 
     @Override
     public boolean equals(Object o) {
@@ -69,5 +72,10 @@ public class Frames {
     @Override
     public int hashCode() {
         return Objects.hash(frames);
+    }
+
+
+   public Frame last() {
+        return get(9);
     }
 }

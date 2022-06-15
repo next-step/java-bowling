@@ -15,13 +15,19 @@ public abstract class FrameMutual implements Frame {
         this(new Scores(), new Subtotal());
     }
 
-    public void playManual(int numPins, Frames frames) {
+    public Frame playManual(int numPins, Frames frames) {
         if (this.done()) {
             throw new UnsupportedOperationException("This frame is done.");
         }
         Scores scores = this.scores.pitch(numPins);
-        this.scores = evaluateScore(scores);
-        updateSubtotal(frames);
+//        this.scores = evaluateScore(scores);
+//        updateSubtotal(frames);
+        this.scores = scores;
+        if (scores.done()) {
+            return next(frames);
+        }
+        return this;
+//                new FrameGeneral(scores, this.subtotal);
     }
 
     public void playRandom(Frames frames) {
@@ -86,6 +92,10 @@ public abstract class FrameMutual implements Frame {
 
     public int getFirstScore() {
         return this.scores.getFirstScore();
+    }
+
+    public Frame next(Frames frames) {
+        return frames.next(this);
     }
 
     @Override

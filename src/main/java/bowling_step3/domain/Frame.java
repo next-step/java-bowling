@@ -1,7 +1,7 @@
 package bowling_step3.domain;
 
 public interface Frame {
-    void playManual(int numPins, Frames frames);
+    Frame playManual(int numPins, Frames frames);
 
     void playRandom(Frames frames);
 
@@ -20,4 +20,6 @@ public interface Frame {
     boolean done();
 
     Subtotal getSubtotal(Frames frames);
+
+    Frame next(Frames frames);
 }
