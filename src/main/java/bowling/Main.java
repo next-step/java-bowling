@@ -2,6 +2,7 @@ package bowling;
 
 import bowling.domain.BowlingGames;
 import bowling.domain.Player;
+import bowling.dto.BowlingResults;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -19,10 +20,10 @@ public class Main {
 
     private static void playBowling(BowlingGames bowlingGames) {
         while (!bowlingGames.isFinish()) {
-            ResultView.bowlingResultView(bowlingGames);
+            ResultView.bowlingResultView(BowlingResults.from(bowlingGames));
             loopBowlingResult(bowlingGames);
         }
-        ResultView.bowlingResultView(bowlingGames);
+        ResultView.bowlingResultView(BowlingResults.from(bowlingGames));
     }
 
     private static void loopBowlingResult(BowlingGames bowlingGames) {
