@@ -24,14 +24,11 @@ public abstract class FrameMutual implements Frame {
             throw new UnsupportedOperationException("This frame is done.");
         }
         Scores scores = this.scores.pitch(numPins);
-//        this.scores = evaluateScore(scores);
-//        updateSubtotal(frames);
         this.scores = scores;
         if (scores.done()) {
             return nextFrame;
         }
         return this;
-//                new FrameGeneral(scores, this.subtotal);
     }
 
 //    public void playRandom(Frames frames) {
@@ -72,19 +69,19 @@ public abstract class FrameMutual implements Frame {
 //        this.subtotal = new Subtotal(State.INIT, subtotal.value());
 //    }
 
-//    public int getScore() {
-//        return this.scores.getScore();
-//    }
+    public int getScore() {
+        return this.scores.getScore();
+    }
 
-//    public Subtotal calculateAdditionalScore(Subtotal subtotal) {
-//        if (subtotal.state() == State.WAIT_TWICE) {
-//            return new Subtotal(State.DONE, subtotal.value() + this.scores.getScore());
-//        }
-//        if (subtotal.state() == State.WAIT_ONCE) {
-//            return new Subtotal(State.DONE, subtotal.value() + this.scores.getFirstScore());
-//        }
-//        throw new UnsupportedOperationException("Cannot calculate additional yet.");
-//    }
+    public Subtotal calculateAdditionalScore(Subtotal subtotal) {
+        if (subtotal.state() == State.WAIT_TWICE) {
+            return new Subtotal(State.DONE, subtotal.value() + this.scores.getScore());
+        }
+        if (subtotal.state() == State.WAIT_ONCE) {
+            return new Subtotal(State.DONE, subtotal.value() + this.scores.getFirstScore());
+        }
+        throw new UnsupportedOperationException("Cannot calculate additional yet.");
+    }
 
 //    public Subtotal getSubtotal(Frames frames) {
 //        return new Subtotal(State.DONE, this.subtotal().value() + frames.next(this).subtotal().value());

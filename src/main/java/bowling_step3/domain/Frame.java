@@ -13,9 +13,9 @@ public interface Frame {
 
 //    void updateSubtotal(Frames frames);
 
-//    int getScore();
+    int getScore();
 
-//    Subtotal calculateAdditionalScore(Subtotal subtotal);
+    Subtotal calculateAdditionalScore(Subtotal subtotal);
 
     boolean done();
 

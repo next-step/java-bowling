@@ -5,6 +5,10 @@ public class FrameLast extends FrameMutual implements Frame {
         super(null);
     }
 
+    public FrameLast(Scores scores, Frame next) {
+        super(scores, null);
+    }
+
     protected Scores evaluateScore(Scores scores) {
         return scores.evaluateLastBonus();
     }
@@ -34,6 +38,18 @@ public class FrameLast extends FrameMutual implements Frame {
 ////        this.scores = evaluateScore(scores);
 //        return new FrameLast(scores, this.subtotal());
 //    }
+
+    public Frame playManual(int numPins) {
+        if (this.done()) {
+            throw new UnsupportedOperationException("This frame is done.");
+        }
+        Scores scores = this.scores().pitch(numPins);
+//        this.scores = scores;
+//        if (scores.done()) {
+//            return nextFrame;
+//        }
+        return new FrameLast(scores, null);
+    }
 
     @Override
     public void playRandom(Frames frames) {
