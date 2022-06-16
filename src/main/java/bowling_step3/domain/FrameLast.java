@@ -2,7 +2,7 @@ package bowling_step3.domain;
 
 public class FrameLast extends FrameMutual implements Frame {
     public FrameLast() {
-        super(null);
+        super(new Scores(3), null);
     }
 
     public FrameLast(Scores scores, Frame next) {
@@ -43,11 +43,10 @@ public class FrameLast extends FrameMutual implements Frame {
         if (this.done()) {
             throw new UnsupportedOperationException("This frame is done.");
         }
-        Scores scores = this.scores().pitch(numPins);
-//        this.scores = scores;
-//        if (scores.done()) {
-//            return nextFrame;
-//        }
+        Scores scores = this.scores().pitchLast(numPins);
+        if (this.scores().sum() < 10 && this.scores().scores().size() == 2) {
+            return new FrameLast(new Scores(scores.scores(), 0), null);
+        }
         return new FrameLast(scores, null);
     }
 

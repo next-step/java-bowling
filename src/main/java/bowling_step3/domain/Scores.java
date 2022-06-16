@@ -18,6 +18,10 @@ public class Scores {
         this.remainingPitch = remainingPitch;
     }
 
+    public Scores(int remainingPitch) {
+        this(new ArrayList(), remainingPitch);
+    }
+
 //    public Scores(List<Integer> scores) {
 //        this(scores, 2);
 //    }
@@ -27,6 +31,11 @@ public class Scores {
         if (numPins == 10 && sum() != 20) {
             return new Scores(this.scores, remainingPitch - 2);
         }
+        return new Scores(this.scores, remainingPitch - 1);
+    }
+
+    public Scores pitchLast(int numPins) {
+        this.scores.add(numPins);
         return new Scores(this.scores, remainingPitch - 1);
     }
 
