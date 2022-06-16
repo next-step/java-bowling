@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class FrameGeneralTest {
     private Frames frames;
@@ -20,26 +21,26 @@ public class FrameGeneralTest {
     @Test
     public void doneWhenStrike() throws Exception {
         Frame frame = frames.first();
-        frame.playManual(10, frames);
+        frame.playManual(10);
         assertThat(frame.state()).isEqualTo(State.WAIT_TWICE);
     }
 
     @Test
     public void doneWhenSpare() throws Exception {
         Frame frame = frames.first();
-        frame.playManual(8, frames);
-        assertThat(frame.subtotal().state()).isEqualTo(State.INIT);
-        frame.playManual(2, frames);
-        assertThat(frame.subtotal().state()).isEqualTo(State.WAIT_ONCE);
+        frame.playManual(8);
+        assertThatThrownBy(() -> frame.state()).isInstanceOf(UnsupportedOperationException.class);
+        frame.playManual(2);
+        assertThat(frame.state()).isEqualTo(State.WAIT_ONCE);
     }
 
     @Test
     public void doneWhenMiss() throws Exception {
         Frame frame = frames.first();
-        frame.playManual(8, frames);
-        assertThat(frame.subtotal().state()).isEqualTo(State.INIT);
-        frame.playManual(1, frames);
-        assertThat(frame.subtotal().state()).isEqualTo(State.DONE);
+        frame.playManual(8);
+        assertThatThrownBy(() -> frame.state()).isInstanceOf(UnsupportedOperationException.class);
+        frame.playManual(1);
+        assertThat(frame.state()).isEqualTo(State.DONE);
     }
 
 //    @Test

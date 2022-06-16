@@ -19,7 +19,7 @@ public abstract class FrameMutual implements Frame {
         this(new Scores(), frame);
     }
 
-    public Frame playManual(int numPins, Frames frames) {
+    public Frame playManual(int numPins) {
         if (this.done()) {
             throw new UnsupportedOperationException("This frame is done.");
         }

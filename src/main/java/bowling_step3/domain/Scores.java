@@ -125,6 +125,9 @@ public class Scores {
     }
 
     public State state() {
+        if (!done()) {
+            throw new UnsupportedOperationException("cannot get state yet.");
+        }
         if (getFirstScore() == 10) {
             return State.WAIT_TWICE;
         }

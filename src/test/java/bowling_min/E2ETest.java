@@ -26,27 +26,27 @@ public class E2ETest {
 
     @Test
     public void roll_strike() throws Exception {
-        frame = frame.playManual(10, frames);
+        frame = frame.playManual(10);
         assertThat(frames.get(0).scores().getFirstScore()).isEqualTo(10);
 //        Frame second = frames.next(first);
-        frame = frame.playManual(8, frames);
+        frame = frame.playManual(8);
         assertThat(frames.get(1).scores().getFirstScore()).isEqualTo(8);
     }
 
     @Test
     public void roll_spare() throws Exception {
-        frame = frame.playManual(9, frames);
-        frame = frame.playManual(1, frames);
+        frame = frame.playManual(9);
+        frame = frame.playManual(1);
         assertThat(frames.get(0).scores().scores()).isEqualTo(Arrays.asList(9, 1));
-        frame = frame.playManual(10, frames);
+        frame = frame.playManual(10);
         assertThat(frames.get(1).scores().getFirstScore()).isEqualTo(10);
     }
 
     @Test
     public void roll_miss() throws Exception {
-        frame.playManual(8, frames);
+        frame.playManual(8);
         assertThat(frames.first().scores().getFirstScore()).isEqualTo(8);
-        frame.playManual(1, frames);
+        frame.playManual(1);
         assertThat(frames.first().scores().scores()).isEqualTo(Arrays.asList(8, 1));
     }
 
@@ -88,7 +88,7 @@ public class E2ETest {
     public void all_strike() throws Exception {
         Player player = new Player("usr");
         for (int i = 1; i <= 12; i++) {
-            frame = frame.playManual(10, frames);
+            frame = frame.playManual(10);
             System.out.println(frame);
             Output.printFrames(i > 10 ? 10 : i, frames, player);
             System.out.println(frames);

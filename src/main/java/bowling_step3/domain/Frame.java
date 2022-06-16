@@ -1,7 +1,7 @@
 package bowling_step3.domain;
 
 public interface Frame {
-    Frame playManual(int numPins, Frames frames);
+    Frame playManual(int numPins);
 
     void playRandom(Frames frames);
 
