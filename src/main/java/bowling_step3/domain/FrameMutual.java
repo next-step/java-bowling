@@ -4,16 +4,18 @@ import java.util.Objects;
 
 public abstract class FrameMutual implements Frame {
     private Scores scores;
-    private Subtotal subtotal;
+    private Frame nextFrame;
+//    private Subtotal subtotal;
 
-    public FrameMutual(Scores scores, Subtotal subtotal) {
+    public FrameMutual(Scores scores, Frame nextFrame) {
         this.scores = scores;
-        this.subtotal = subtotal;
+        this.nextFrame=nextFrame;
+//        this.subtotal = subtotal;
     }
 
-    public FrameMutual() {
-        this(new Scores(), new Subtotal());
-    }
+//    public FrameMutual() {
+//        this(new Scores(), new Frame() );
+//    }
 
     public Frame playManual(int numPins, Frames frames) {
         if (this.done()) {
@@ -24,37 +26,37 @@ public abstract class FrameMutual implements Frame {
 //        updateSubtotal(frames);
         this.scores = scores;
         if (scores.done()) {
-            return next(frames);
+            return nextFrame;
         }
         return this;
 //                new FrameGeneral(scores, this.subtotal);
     }
 
-    public void playRandom(Frames frames) {
-        Scores scores = this.scores.pitchRandom();
-        this.scores = evaluateScore(scores);
-        updateSubtotal(frames);
-    }
+//    public void playRandom(Frames frames) {
+//        Scores scores = this.scores.pitchRandom();
+//        this.scores = evaluateScore(scores);
+//        updateSubtotal(frames);
+//    }
 
     abstract Scores evaluateScore(Scores scores);
 
-    public void updateSubtotal(Frames frames) {
-        if (this.scores.done()) {
-            State state = evaluateState(this.scores);
-            this.subtotal = new Subtotal(state, this.subtotal.value() + this.scores.sum());
-        }
-        if (frames.index(this) > 0 && frames.prev(this).subtotal().state().waiting()) {
-            frames.prev(this).subtotal().accumulateBonus(this.scores.lastScore());
-            this.subtotal = new Subtotal(this.subtotal.state(), this.subtotal.value() + this.scores.lastScore());
-        }
-    }
+//    public void updateSubtotal(Frames frames) {
+//        if (this.scores.done()) {
+//            State state = evaluateState(this.scores);
+//            this.subtotal = new Subtotal(state, this.subtotal.value() + this.scores.sum());
+//        }
+//        if (frames.index(this) > 0 && frames.prev(this).subtotal().state().waiting()) {
+//            frames.prev(this).subtotal().accumulateBonus(this.scores.lastScore());
+//            this.subtotal = new Subtotal(this.subtotal.state(), this.subtotal.value() + this.scores.lastScore());
+//        }
+//    }
 
-    abstract State evaluateState(Scores scores);
+//    abstract State evaluateState(Scores scores);
 
 
-    public Subtotal subtotal() {
-        return this.subtotal;
-    }
+//    public Subtotal subtotal() {
+//        return this.subtotal;
+//    }
 
     public boolean done() {
         return this.scores.done();
@@ -64,9 +66,9 @@ public abstract class FrameMutual implements Frame {
         return this.scores;
     }
 
-    public void updateNextSubtotal(Subtotal subtotal) {
-        this.subtotal = new Subtotal(State.INIT, subtotal.value());
-    }
+//    public void updateNextSubtotal(Subtotal subtotal) {
+//        this.subtotal = new Subtotal(State.INIT, subtotal.value());
+//    }
 
     public int getScore() {
         return this.scores.getScore();
@@ -95,27 +97,8 @@ public abstract class FrameMutual implements Frame {
     }
 
     public Frame next(Frames frames) {
-        return frames.next(this);
+        return nextFrame;
     }
 
-    @Override
-    public String toString() {
-        return "FrameMutual{" +
-                "scores=" + scores +
-                ", subtotal=" + subtotal +
-                '}';
-    }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FrameMutual that = (FrameMutual) o;
-        return Objects.equals(scores, that.scores) && Objects.equals(subtotal, that.subtotal);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(scores, subtotal);
-    }
 }
