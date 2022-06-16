@@ -124,4 +124,13 @@ public class Scores {
         throw new UnsupportedOperationException("Not enough scores");
     }
 
+    public State state() {
+        if (getFirstScore() == 10) {
+            return State.WAIT_TWICE;
+        }
+        if (sum() == 10) {
+            return State.WAIT_ONCE;
+        }
+        return State.DONE;
+    }
 }

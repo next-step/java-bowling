@@ -4,18 +4,24 @@ import bowling_step3.domain.Frame;
 import bowling_step3.domain.FrameGeneral;
 import bowling_step3.domain.Frames;
 import bowling_step3.domain.State;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FrameGeneralTest {
-    Frames frames = Frames.create();
+    private Frames frames;
+
+    @BeforeEach
+    public void setup() {
+        frames = Frames.create();
+    }
 
     @Test
     public void doneWhenStrike() throws Exception {
         Frame frame = frames.first();
         frame.playManual(10, frames);
-        assertThat(frame.subtotal().state()).isEqualTo(State.WAIT_TWICE);
+        assertThat(frame.state()).isEqualTo(State.WAIT_TWICE);
     }
 
     @Test

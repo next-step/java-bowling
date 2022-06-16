@@ -11,15 +11,19 @@ public interface Frame {
 
     Scores scores();
 
-    void updateSubtotal(Frames frames);
+//    void updateSubtotal(Frames frames);
 
-    int getScore();
+//    int getScore();
 
-    Subtotal calculateAdditionalScore(Subtotal subtotal);
+//    Subtotal calculateAdditionalScore(Subtotal subtotal);
 
     boolean done();
 
-    Subtotal getSubtotal(Frames frames);
+    Frame next();
 
-    Frame next(Frames frames);
+    State state();
+
+//    Subtotal getSubtotal(Frames frames);
+
+//    Frame next(Frames frames);
 }

@@ -1,7 +1,6 @@
 package bowling_step3.domain;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -13,15 +12,27 @@ public class Frames {
     }
 
     public static Frames create() {
-        return new Frames(Stream.iterate(new , i -> i < 10, i -> ++i)
+        Frame lastFrame = new FrameLast();
+        List<Frame> frames = Stream.concat(
+                Stream.of(lastFrame),
+                Stream.iterate(new FrameGeneral(lastFrame), frame -> new FrameGeneral(frame)).limit(9)
+        ).collect(Collectors.toList());
+        Collections.reverse(frames);
+        return new Frames(frames);
+
     }
 
+    @Override
+    public String toString() {
+        return "Frames{" +
+                "frames=" + frames +
+                '}';
+    }
 //    public static Frames create() {
 //        return new Frames(Stream.iterate(0, i -> i < 10, i -> ++i)
 //                .map(i -> createFrame(i))
 //                .collect(Collectors.toList()));
 //    }
-
 
 
     private static Frame createFrame(Integer index) {
@@ -38,7 +49,7 @@ public class Frames {
     }
 
     int index(Frame frame) {
-        int t =  this.frames.indexOf(frame);
+        int t = this.frames.indexOf(frame);
         System.out.println(t);
         System.out.println(Objects.hash(frame));
         return t;
@@ -81,7 +92,7 @@ public class Frames {
     }
 
 
-   public Frame last() {
+    public Frame last() {
         return get(9);
     }
 }

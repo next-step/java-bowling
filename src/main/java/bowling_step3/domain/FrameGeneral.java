@@ -5,8 +5,8 @@ public class FrameGeneral extends FrameMutual implements Frame {
         super();
     }
 
-    public FrameGeneral(Scores scores, Subtotal subtotal) {
-        super(scores, subtotal);
+    public FrameGeneral(Frame frame) {
+        super(frame);
     }
 
     protected Scores evaluateScore(Scores scores) {
@@ -23,4 +23,18 @@ public class FrameGeneral extends FrameMutual implements Frame {
         return State.DONE;
     }
 
+    @Override
+    public void playRandom(Frames frames) {
+
+    }
+
+    @Override
+    public Subtotal subtotal() {
+        return null;
+    }
+
+    @Override
+    public void updateNextSubtotal(Subtotal subtotal) {
+
+    }
 }

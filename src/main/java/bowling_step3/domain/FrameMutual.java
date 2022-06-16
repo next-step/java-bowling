@@ -1,7 +1,5 @@
 package bowling_step3.domain;
 
-import java.util.Objects;
-
 public abstract class FrameMutual implements Frame {
     private Scores scores;
     private Frame nextFrame;
@@ -9,13 +7,17 @@ public abstract class FrameMutual implements Frame {
 
     public FrameMutual(Scores scores, Frame nextFrame) {
         this.scores = scores;
-        this.nextFrame=nextFrame;
+        this.nextFrame = nextFrame;
 //        this.subtotal = subtotal;
     }
 
-//    public FrameMutual() {
-//        this(new Scores(), new Frame() );
-//    }
+    public FrameMutual() {
+        this(new Scores(), new FrameGeneral());
+    }
+
+    public FrameMutual(Frame frame) {
+        this(new Scores(), frame);
+    }
 
     public Frame playManual(int numPins, Frames frames) {
         if (this.done()) {
@@ -70,23 +72,23 @@ public abstract class FrameMutual implements Frame {
 //        this.subtotal = new Subtotal(State.INIT, subtotal.value());
 //    }
 
-    public int getScore() {
-        return this.scores.getScore();
-    }
+//    public int getScore() {
+//        return this.scores.getScore();
+//    }
 
-    public Subtotal calculateAdditionalScore(Subtotal subtotal) {
-        if (subtotal.state() == State.WAIT_TWICE) {
-            return new Subtotal(State.DONE, subtotal.value() + this.scores.getScore());
-        }
-        if (subtotal.state() == State.WAIT_ONCE) {
-            return new Subtotal(State.DONE, subtotal.value() + this.scores.getFirstScore());
-        }
-        throw new UnsupportedOperationException("Cannot calculate additional yet.");
-    }
+//    public Subtotal calculateAdditionalScore(Subtotal subtotal) {
+//        if (subtotal.state() == State.WAIT_TWICE) {
+//            return new Subtotal(State.DONE, subtotal.value() + this.scores.getScore());
+//        }
+//        if (subtotal.state() == State.WAIT_ONCE) {
+//            return new Subtotal(State.DONE, subtotal.value() + this.scores.getFirstScore());
+//        }
+//        throw new UnsupportedOperationException("Cannot calculate additional yet.");
+//    }
 
-    public Subtotal getSubtotal(Frames frames) {
-        return new Subtotal(State.DONE, this.subtotal().value() + frames.next(this).subtotal().value());
-    }
+//    public Subtotal getSubtotal(Frames frames) {
+//        return new Subtotal(State.DONE, this.subtotal().value() + frames.next(this).subtotal().value());
+//    }
 
     public int getAdditionalForStrike() {
         return this.scores.getAdditionalForStrike();
@@ -96,9 +98,15 @@ public abstract class FrameMutual implements Frame {
         return this.scores.getFirstScore();
     }
 
-    public Frame next(Frames frames) {
+    public Frame next() {
         return nextFrame;
     }
+//    public Frame next(Frames frames) {
+//        return nextFrame;
+//    }
 
 
+    public State state() {
+        return this.scores.state();
+    }
 }
