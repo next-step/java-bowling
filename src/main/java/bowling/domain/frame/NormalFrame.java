@@ -6,7 +6,7 @@ public class NormalFrame implements Frame {
     private final int index;
     private final Scores scores;
 
-    private int leftScore;
+    private int totalScore;
     private int tryNo;
 
     public NormalFrame(int index) {
@@ -28,8 +28,8 @@ public class NormalFrame implements Frame {
     }
 
     public int attempt() {
-        int score = new Random().nextInt(10 - leftScore) + 1;
-        leftScore += score;
+        int score = new Random().nextInt(10 - totalScore) + 1;
+        totalScore += score;
         tryNo--;
         scores.add(score);
         return score;
@@ -37,10 +37,14 @@ public class NormalFrame implements Frame {
 
     @Override
     public int validateMoveToNextIndex() {
-        if (tryNo < 1 || leftScore > 9) {
+        if (moveable()) {
             return index + 1;
         }
         return index;
+    }
+
+    private boolean moveable() {
+        return tryNo < 1 || totalScore > 9;
     }
 
     @Override

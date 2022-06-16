@@ -3,6 +3,8 @@ package bowling.domain.frame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class NormalTest {
@@ -24,9 +26,9 @@ public class NormalTest {
         assertThat(frame.attempt()).isLessThanOrEqualTo(10);
     }
 
-    // TODO(jack.comeback) : 작성 필요
-//    @Test
-//    void validateMoveToNext() {
-//        frame = new NormalFrame(1, 0);
-//    }
+    @Test
+    void tryNoIs0Given_validateMoveToNext() {
+        frame = new NormalFrame(1, 0, new Scores(List.of(1,3)));
+        assertThat(frame.validateMoveToNextIndex()).isEqualTo(2);
+    }
 }

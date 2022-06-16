@@ -9,28 +9,28 @@ public class FinalFrame implements Frame {
     private final Scores scores;
 
     private int tryNo;
-    private int leftScore;
+    private int totalScore;
     private int bonus = 1;
 
     public FinalFrame(int index) {
         this(index, 2, 0, new Scores());
     }
 
-    public FinalFrame(int index, int tryNo, int leftScore, Scores scores) {
+    public FinalFrame(int index, int tryNo, int totalScore, Scores scores) {
         this.index = index;
         this.tryNo = tryNo;
-        this.leftScore = leftScore;
+        this.totalScore = totalScore;
         this.scores = scores;
     }
 
     @Override
     public int attempt() {
         int score = getScore();
-        leftScore += score;
+        totalScore += score;
         tryNo--;
         if (isBonus()) {
             tryNo += bonus--;
-            leftScore = 0;
+            totalScore = 0;
         }
         scores.add(score);
 
@@ -38,11 +38,11 @@ public class FinalFrame implements Frame {
     }
 
     private boolean isBonus() {
-        return tryNo < 2 && leftScore == 10;
+        return tryNo < 2 && totalScore == 10;
     }
 
     private int getScore() {
-        return RANDOM.nextInt(10 - leftScore) + 1;
+        return RANDOM.nextInt(10 - totalScore) + 1;
     }
 
     public Scores scores() {

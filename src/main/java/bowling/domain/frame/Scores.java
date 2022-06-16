@@ -10,6 +10,10 @@ public class Scores {
         scores = new ArrayList<>();
     }
 
+    public Scores(List<Integer> scores) {
+        this.scores = scores;
+    }
+
     public void add(int score) {
         scores.add(score);
     }
