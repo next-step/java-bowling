@@ -51,10 +51,14 @@ public class FinalFrame implements Frame {
 
     @Override
     public int validateMoveToNextIndex() {
-        if (tryNo < 1) { // 다 던지면 끝
+        if (moveable()) { // 다 던지면 끝
             return index + 1;
         }
         return index;
+    }
+
+    private boolean moveable() {
+        return tryNo < 1;
     }
 
     @Override
