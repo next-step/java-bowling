@@ -1,6 +1,5 @@
 package bowling.domain.state;
 
-import bowling.domain.frame.Frame;
 import bowling.exception.NotSupportInstanceException;
 
 public class StateFactory {
@@ -13,8 +12,8 @@ public class StateFactory {
         return new Ready();
     }
 
-    public static State nextState(Frame frame) {
-        if (frame.hasLastBonusChance()) {
+    public static State nextState(States states) {
+        if (states.hasLastBonusChance()) {
             return new BonusReady();
         }
         return new Ready();

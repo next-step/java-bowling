@@ -2,7 +2,7 @@ package bowling.domain;
 
 import bowling.domain.frame.Frame;
 
-public class BowlingGame {
+public class BowlingGame implements Comparable<BowlingGame> {
 
     private final Player player;
     private final Frames frames;
@@ -24,11 +24,24 @@ public class BowlingGame {
         return frames.isFinish();
     }
 
+    public boolean isProgressing() {
+        return frames.isProgressing();
+    }
+
+    public boolean isSamePlayer(Player player) {
+        return this.player.equals(player);
+    }
+
     public Player player() {
         return player;
     }
 
     public Frames frames() {
         return frames;
+    }
+
+    @Override
+    public int compareTo(BowlingGame o) {
+        return this.currentFrame().frameNo().compareTo(o.currentFrame().frameNo());
     }
 }

@@ -7,4 +7,8 @@ public class InvalidNameException extends IllegalArgumentException {
     public InvalidNameException() {
         super(MESSAGE);
     }
+
+    public InvalidNameException(String message) {
+        super(message);
+    }
 }

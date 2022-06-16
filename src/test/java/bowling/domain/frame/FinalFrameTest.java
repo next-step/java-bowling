@@ -64,23 +64,6 @@ class FinalFrameTest {
     }
 
     @Test
-    @DisplayName("스트라이크 시 보너스 찬스가 두번 주어진다.")
-    void hasLastBonusChance_strike() {
-        finalFrame.bowling(10);
-
-        assertThat(finalFrame.hasLastBonusChance()).isFalse();
-    }
-
-    @Test
-    @DisplayName("스페어 시 보너스 찬스가 한번 주어진다.")
-    void hasLastBonusChance_spare() {
-        finalFrame.bowling(5);
-        finalFrame.bowling(5);
-
-        assertThat(finalFrame.hasLastBonusChance()).isTrue();
-    }
-
-    @Test
     @DisplayName("마지막 프레임일 경우 다음 프레임을 생성하면 예외를 반환한다.")
     void invalidNext() {
         assertThatThrownBy(() -> finalFrame.next())

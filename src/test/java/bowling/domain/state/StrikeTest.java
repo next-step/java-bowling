@@ -55,4 +55,10 @@ class StrikeTest {
 
         assertThat(calculatedScore).isEqualTo(Score.of(20, 0));
     }
+
+    @Test
+    @DisplayName("Strike 의 경우 진행 중 상태이 아니다.")
+    void isProgressing() {
+        assertThat(new Strike().isProgressing()).isFalse();
+    }
 }

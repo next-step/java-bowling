@@ -65,8 +65,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public boolean hasLastBonusChance() {
-        return false;
+    public boolean isProgressing() {
+        return state.isProgressing();
     }
 
     @Override

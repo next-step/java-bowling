@@ -1,39 +1,42 @@
 package bowling;
 
-import bowling.domain.BowlingGame;
+import bowling.domain.BowlingGames;
 import bowling.domain.Player;
-import bowling.dto.BowlingResult;
+import bowling.dto.BowlingResults;
 import bowling.view.InputView;
 import bowling.view.ResultView;
+
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
-        Player player = InputView.playerNameView();
-        BowlingGame bowlingGame = new BowlingGame(player);
+        int playerNumber = InputView.playerNumberView();
+        List<Player> player = InputView.playerNameView(playerNumber);
+        BowlingGames bowlingGames = BowlingGames.initialize(player);
 
-        playBowling(bowlingGame);
+        playBowling(bowlingGames);
     }
 
-    private static void playBowling(BowlingGame bowlingGame) {
-        while (!bowlingGame.isFinish()) {
-            ResultView.bowlingResultView(BowlingResult.from(bowlingGame));
-            bowlingGame = loopBowlingResult(bowlingGame);
+    private static void playBowling(BowlingGames bowlingGames) {
+        while (!bowlingGames.isFinish()) {
+            ResultView.bowlingResultView(BowlingResults.from(bowlingGames));
+            loopBowlingResult(bowlingGames);
         }
-        ResultView.bowlingResultView(BowlingResult.from(bowlingGame));
+        ResultView.bowlingResultView(BowlingResults.from(bowlingGames));
     }
 
-    private static BowlingGame loopBowlingResult(BowlingGame bowlingGame) {
+    private static void loopBowlingResult(BowlingGames bowlingGames) {
         try {
-            return validatePlayerName(bowlingGame);
+            validatePlayerName(bowlingGames);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
-            return loopBowlingResult(bowlingGame);
+            loopBowlingResult(bowlingGames);
         }
     }
-    private static BowlingGame validatePlayerName(BowlingGame bowlingGame) {
-        int hit = InputView.hitCountView(bowlingGame.currentFrame());
-        bowlingGame.bowling(hit);
-        return bowlingGame;
+    private static void validatePlayerName(BowlingGames bowlingGames) {
+        Player currentPlayer = bowlingGames.currentPlayer();
+        int hit = InputView.hitCountView(currentPlayer);
+        bowlingGames.bowl(hit, currentPlayer);
     }
 }
