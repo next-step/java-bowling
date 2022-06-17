@@ -19,4 +19,8 @@ public class Subtotals {
                 .mapToInt(Integer::intValue)
                 .sum();
     }
+
+    public void add(Integer subtotal) {
+        this.subtotal.add(subtotal);
+    }
 }

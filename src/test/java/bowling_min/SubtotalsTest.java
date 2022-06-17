@@ -3,29 +3,50 @@ package bowling_min;
 import bowling_step3.domain.Frame;
 import bowling_step3.domain.Frames;
 import bowling_step3.domain.Subtotals;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class SubtotalsTest {
-    @Test
-    void name() {
-        Frames frames = Frames.create();
-        Frame first = frames.first();
-        first.playManual(3);
-        first.playManual(2);
-//        Subtotals subtotals = new Subtotals();
-//        subtotals.add(first.subtotal());
-        assertThat(first.subtotal(frames)).isEqualTo(5);
-        System.out.println(first.subtotal(frames));
+    private Frames frames;
+    private Frame frame;
+    private Subtotals subtotals;
+
+    @BeforeEach
+    public void setup() {
+        frames = Frames.create();
+        frame = frames.first();
+        subtotals = new Subtotals();
     }
+
+
+//    @Test
+//    void name() {
+//        frame.playManual(3);
+//        frame.playManual(2);
+//        Integer subtotal = frame.subtotal(subtotals);
+//        assertThat(subtotal).isEqualTo(5);
+////        subtotals.add(frame.subtotal(subtotals));
+////        System.out.println(frame.subtotal(frames));
+//    }
 
     @Test
     void name2() {
-        Frames frames = Frames.create();
-        Frame first = frames.first();
-        first.playManual(3);
-        first.playManual(7);
-        System.out.println(first.subtotal(frames));
+        frame = frame.playManual(3);
+        Frame next = frame.playManual(7);
+        assertThatThrownBy(() -> frame.subtotal(subtotals)).isInstanceOf(UnsupportedOperationException.class);
+        next = next.playManual(1);
+        assertThat(frame.subtotal(subtotals)).isEqualTo(11);
+    }
+
+    @Test
+    void name3() {
+        Frame next = frame.playManual(10);
+        assertThatThrownBy(() -> frame.subtotal(subtotals)).isInstanceOf(UnsupportedOperationException.class);
+        next = next.playManual(1);
+        next = next.playManual(2);
+        assertThat(frame.subtotal(subtotals)).isEqualTo(13);
     }
 }

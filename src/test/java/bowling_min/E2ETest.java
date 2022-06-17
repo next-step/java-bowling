@@ -3,6 +3,7 @@ package bowling_min;
 import bowling_step3.domain.Frame;
 import bowling_step3.domain.Frames;
 import bowling_step3.domain.Player;
+import bowling_step3.domain.Subtotals;
 import bowling_step3.view.Output;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,17 +11,20 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class E2ETest {
     private Frames frames;
     private Frame frame;
+    private Subtotals subtotals;
 
     @BeforeEach
     public void setup() {
         frames = Frames.create();
         frame = frames.first();
+        subtotals = new Subtotals();
     }
 
     @Test
@@ -57,7 +61,7 @@ public class E2ETest {
 //        assertThat(result.get(2)).isEqualTo("81");
 //    }
 
-//    @Test
+    //    @Test
 //    public void createResult_10frame_miss() throws Exception {
 //        List<Integer> falledPinsOf10 = Arrays.asList(8);
 //        String result = bowling.createResultOf10(falledPinsOf10);
@@ -110,4 +114,24 @@ public class E2ETest {
 //        List<String> result = bowling.roll(9);
 //        assertThat(result.get(9)).isEqualTo("8/9");
 //    }
+
+
+    @Test
+    void e2e() {
+//        Frame next = frame.playManual(10);
+//        if (next.scores().scores().size() == 0) {
+//
+//        }
+//        subtotals.add(current.subtotal(subtotals));
+        Stream.iterate(0, i -> i < 10, i -> ++i)
+                .forEach(i -> {
+                            while (!frame.done()) {
+                                frame = frame.playManual(10);
+                                subtotals.add(frames.get(i).subtotal(subtotals));
+                            }
+                        }
+                );
+        System.out.println(subtotals);
+
+    }
 }
