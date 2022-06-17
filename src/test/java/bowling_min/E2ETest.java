@@ -27,7 +27,6 @@ public class E2ETest {
     public void roll_strike() throws Exception {
         frame = frame.playManual(10);
         assertThat(frames.get(0).scores().getFirstScore()).isEqualTo(10);
-//        Frame second = frames.next(first);
         frame = frame.playManual(8);
         assertThat(frames.get(1).scores().getFirstScore()).isEqualTo(8);
     }
@@ -49,7 +48,7 @@ public class E2ETest {
         assertThat(frames.first().scores().scores()).isEqualTo(Arrays.asList(8, 1));
     }
 
-    //    @Test
+//        @Test
 //    public void createResult() throws Exception {
 //        List<Integer> falledPins = Arrays.asList(10, 0, 9, 1, 8, 1);
 //        List<String> result = bowling.createResult(falledPins);
@@ -57,7 +56,7 @@ public class E2ETest {
 //        assertThat(result.get(1)).isEqualTo("9/");
 //        assertThat(result.get(2)).isEqualTo("81");
 //    }
-//
+
 //    @Test
 //    public void createResult_10frame_miss() throws Exception {
 //        List<Integer> falledPinsOf10 = Arrays.asList(8);
@@ -85,27 +84,12 @@ public class E2ETest {
 //
     @Test
     public void all_strike() throws Exception {
-        Player player = new Player("usr");
-        for (int i = 1; i <= 12; i++) {
+        for (int i = 0; i < 12; i++) {
             frame = frame.playManual(10);
-            System.out.println(frame);
-            Output.printFrames(i > 10 ? 10 : i, frames, player);
-            System.out.println(frames);
         }
         assertThat(frames.last().scores().scores()).isEqualTo(Arrays.asList(10, 10, 10));
     }
 
-    @Test
-    void name() {
-       List<Integer> a = new LinkedList<>();
-        System.out.println(a.hashCode());
-        a.add(1);
-        System.out.println(a.hashCode());
-        a.add(1);
-        System.out.println(a.hashCode());
-    }
-
-    //
 //    @Test
 //    public void tenframe_miss() throws Exception {
 //        for (int i = 0; i < 9; i++) {
