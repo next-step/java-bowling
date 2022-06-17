@@ -111,9 +111,10 @@ public class Scores {
 
     public Integer getScore() {
         if (done()) {
-            return this.scores
-                    .stream()
-                    .reduce(0, (acc, cur) -> acc + cur);
+            return sum();
+//            return this.scores
+//                    .stream()
+//                    .reduce(0, (acc, cur) -> acc + cur);
         }
         throw new UnsupportedOperationException("Cannot get score yet");
     }

@@ -10,11 +10,12 @@ import java.util.stream.Stream;
 
 public class BowlingApp {
     public static void main(String[] args) {
-        String name = Input.scanPlayer();
-        Player player = new Player(name);
+//        String name = Input.scanPlayer();
+        Player player = new Player("tst");
         Frames frames = Frames.create();
         Output.printFrames(0, frames, player);
         playFrames(frames, player);
+        System.out.println(frames.last());
     }
 
     private static void playFrames(Frames frames, Player player) {
@@ -23,13 +24,16 @@ public class BowlingApp {
     }
 
     private static void playAFrame(int index, Frames frames, Player player) {
-        Frame frame = frames.get(index);
-        while (!frame.done()) {
-            frame.playRandom(frames);
-            Output.printFrames(index+1, frames, player);
-        }
-        if (frame.done() && index < 9) {
-            frames.next(frame).updateNextSubtotal(frame.subtotal());
-        }
+        Frame frame = frames.first();
+
+        frame = frame.playManual(10);
+//        Frame frame = frames.get(index);
+//        while (!frame.done()) {
+//            frame = frame.playManual(10);
+//            Output.printFrames(index+1, frames, player);
+//        }
+//        if (frame.done() && index < 9) {
+//            frames.next(frame).updateNextSubtotal(frame.subtotal());
+//        }
     }
 }

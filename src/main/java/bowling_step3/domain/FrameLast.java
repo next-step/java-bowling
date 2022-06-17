@@ -44,6 +44,9 @@ public class FrameLast extends FrameMutual implements Frame {
             throw new UnsupportedOperationException("This frame is done.");
         }
         Scores scores = this.scores().pitchLast(numPins);
+//        if (scores.scores().size() == 3) {
+//            return new FrameLast(scores, null);
+//        }
         if (this.scores().sum() < 10 && this.scores().scores().size() == 2) {
             return new FrameLast(new Scores(scores.scores(), 0), null);
         }
@@ -56,12 +59,8 @@ public class FrameLast extends FrameMutual implements Frame {
     }
 
     @Override
-    public Subtotal subtotal() {
-        return null;
-    }
-
-    @Override
     public void updateNextSubtotal(Subtotal subtotal) {
 
     }
+
 }

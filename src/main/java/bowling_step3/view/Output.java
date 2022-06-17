@@ -23,19 +23,19 @@ public class Output {
         }
         print(HEADER_STR + "\n");
         printScores(frames, player);
-        printSubtotals(frames, player);
+//        printSubtotals(frames, player);
         System.out.println();
     }
 
-    private static void printSubtotals(Frames frames, Player player) {
-        String payload = "| " + formatName(player.name()) + " |" + frames.frames()
-                .stream()
-                .map(frame -> maskSubtotal(frame.subtotal()))
-                .reduce((acc, cur) -> acc + "|" + cur)
-                .orElseThrow(() -> new UnsupportedOperationException())
-                + "|\n";
-        print(payload);
-    }
+//    private static void printSubtotals(Frames frames, Player player) {
+//        String payload = "| " + formatName(player.name()) + " |" + frames.frames()
+//                .stream()
+//                .map(frame -> maskSubtotal(frame.subtotal()))
+//                .reduce((acc, cur) -> acc + "|" + cur)
+//                .orElseThrow(() -> new UnsupportedOperationException())
+//                + "|\n";
+//        print(payload);
+//    }
 
     private static String maskSubtotal(Subtotal subtotal) {
         if (subtotal.state() != State.DONE) {

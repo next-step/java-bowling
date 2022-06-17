@@ -5,7 +5,7 @@ public interface Frame {
 
     void playRandom(Frames frames);
 
-    Subtotal subtotal();
+    Integer subtotal(Subtotals subtotals);
 
     void updateNextSubtotal(Subtotal subtotal);
 

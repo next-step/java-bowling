@@ -1,9 +1,7 @@
 package bowling_min;
 
-import bowling_step3.domain.Frame;
-import bowling_step3.domain.FrameGeneral;
-import bowling_step3.domain.Frames;
-import bowling_step3.domain.State;
+import bowling_step3.domain.*;
+import bowling_step3.view.Output;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -43,21 +41,20 @@ public class FrameGeneralTest {
         assertThat(frame.state()).isEqualTo(State.DONE);
     }
 
-//    @Test
-//    public void createBoard() throws Exception {
-//        Frame normalFrame = new NormalFrame(1);
-//        normalFrame
-//                .bowl(8).bowl(2)
-//                .bowl(9).bowl(1)
-//                .bowl(10)
-//                .bowl(10)
-//                .bowl(8).bowl(1)
-//                .bowl(7).bowl(3)
-//                .bowl(10)
-//                .bowl(10)
-//                .bowl(8).bowl(1)
-//                .bowl(10).bowl(8).bowl(2);
-//        Board board = normalFrame.createBoard();
-//        System.out.println(board);
-//    }
+    @Test
+    public void createBoard() throws Exception {
+        Frame frame = frames.first();
+        frame
+                .playManual(8).playManual(2)
+                .playManual(9).playManual(1)
+                .playManual(10)
+                .playManual(10)
+                .playManual(8).playManual(1)
+                .playManual(7).playManual(3)
+                .playManual(10)
+                .playManual(10)
+                .playManual(8).playManual(1)
+                .playManual(10).playManual(8).playManual(2);
+        Output.printFrames(10, frames, new Player("tst"));
+    }
 }

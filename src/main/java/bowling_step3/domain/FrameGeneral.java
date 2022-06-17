@@ -29,11 +29,6 @@ public class FrameGeneral extends FrameMutual implements Frame {
     }
 
     @Override
-    public Subtotal subtotal() {
-        return null;
-    }
-
-    @Override
     public void updateNextSubtotal(Subtotal subtotal) {
 
     }
