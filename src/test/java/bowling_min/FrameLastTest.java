@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -93,27 +94,26 @@ public class FrameLastTest {
 
     @Test
     public void getScore_9프레임_Strike() {
-        Subtotal subtotal = new Subtotal(State.WAIT_TWICE, 10);
+        Scores scores = new Scores(List.of(10), 0);
         lastFrame = lastFrame.playManual(10);
         lastFrame = lastFrame.playManual(10);
-        assertThat(lastFrame.calculateAdditionalScore(subtotal).value()).isEqualTo(30);
+        assertThat(lastFrame.calculateAdditionalScore(scores)).isEqualTo(30);
     }
 
     @Test
     public void getScore_9프레임_Spare() {
-        Subtotal subtotal = new Subtotal(State.WAIT_ONCE, 10);
+        Scores scores = new Scores(List.of(9, 1), 0);
         lastFrame = lastFrame.playManual(9);
         lastFrame = lastFrame.playManual(1);
-        assertThat(lastFrame.calculateAdditionalScore(subtotal).value()).isEqualTo(19);
+        assertThat(lastFrame.calculateAdditionalScore(scores)).isEqualTo(19);
     }
 
     @Test
     public void getScore_9프레임_Strike_notReady() {
         assertThatThrownBy(() -> {
-            Scores scores = new Scores(Arrays.asList(10), 0);
+            Scores scores = new Scores(List.of(10), 0);
             lastFrame = lastFrame.playManual(10);
-            Subtotal subtotal = new Subtotal(State.WAIT_TWICE, 10);
-            lastFrame.calculateAdditionalScore(subtotal);
+            lastFrame.calculateAdditionalScore(scores);
         }).isInstanceOf(UnsupportedOperationException.class);
     }
 

@@ -145,4 +145,12 @@ public class Scores {
         }
         return State.DONE;
     }
+
+    public Integer sumOfTwo() {
+        return this.scores
+                .stream()
+                .limit(2)
+                .reduce((acc, cur) -> acc + cur)
+                .orElseThrow(() -> new UnsupportedOperationException("cannot get sum of Two"));
+    }
 }
