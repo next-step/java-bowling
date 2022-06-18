@@ -23,6 +23,10 @@ public interface Frame {
 
     State state();
 
+    Subtotals createSubtotals();
+
+    void accumulateResult(Subtotals subtotals);
+
 //    Subtotal getSubtotal(Frames frames);
 
 //    Frame next(Frames frames);

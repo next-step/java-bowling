@@ -30,7 +30,7 @@ public class FrameLast extends FrameMutual implements Frame {
 //        throw new UnsupportedOperationException("Cannot calculate additional yet.");
 //    }
 
-//    public Frame playManual(int numPins, Frames frames) {
+    //    public Frame playManual(int numPins, Frames frames) {
 //        if (this.done()) {
 //            throw new UnsupportedOperationException("This frame is done.");
 //        }
@@ -38,7 +38,7 @@ public class FrameLast extends FrameMutual implements Frame {
 ////        this.scores = evaluateScore(scores);
 //        return new FrameLast(scores, this.subtotal());
 //    }
-
+    @Override
     public Frame playManual(int numPins) {
         if (this.done()) {
             throw new UnsupportedOperationException("This frame is done.");
@@ -47,10 +47,16 @@ public class FrameLast extends FrameMutual implements Frame {
 //        if (scores.scores().size() == 3) {
 //            return new FrameLast(scores, null);
 //        }
+        this.scores = scores;
         if (this.scores().sum() < 10 && this.scores().scores().size() == 2) {
             return new FrameLast(new Scores(scores.scores(), 0), null);
         }
-        return new FrameLast(scores, null);
+        System.out.println("last: " + scores);
+        System.out.println("last: " + this.scores);
+//        if (scores.scores().size() == 3) {
+//            return new FrameLast(new Scores(scores.scores(), 0), null);
+//        }
+        return this;
     }
 
     @Override
@@ -63,4 +69,22 @@ public class FrameLast extends FrameMutual implements Frame {
 
     }
 
+//    @Override
+//    public void accumulateResult(Subtotals subtotals) {
+//        subtotals.add(frameResult());
+//    }
+
+    @Override
+    Integer frameResult() {
+        return this.scores.getScore();
+        // todo
+//        System.out.println(this);
+//        if (scores.state() == State.DONE) {
+//            System.out.println(scores);
+//            return this.scores.getScore();
+//
+//        }
+//        System.out.println(this.scores);
+//        return nextFrame.calculateAdditionalScore(scores);
+    }
 }

@@ -1,7 +1,7 @@
 package bowling_step3.domain;
 
 public abstract class FrameMutual implements Frame {
-    private Scores scores;
+    Scores scores;
     private Frame nextFrame;
 //    private Subtotal subtotal;
 
@@ -24,6 +24,7 @@ public abstract class FrameMutual implements Frame {
             throw new UnsupportedOperationException("This frame is done.");
         }
         Scores scores = this.scores.pitch(numPins);
+        System.out.println("mutual: " + scores);
         this.scores = scores;
         if (scores.done()) {
             return nextFrame;
@@ -39,6 +40,29 @@ public abstract class FrameMutual implements Frame {
 
     abstract Scores evaluateScore(Scores scores);
 
+    public Subtotals createSubtotals() {
+        Subtotals subtotals = new Subtotals();
+        accumulateResult(subtotals);
+        return subtotals;
+    }
+
+    public void accumulateResult(Subtotals subtotals) {
+        subtotals.add(frameResult());
+        if (nextFrame != null) {
+            nextFrame.accumulateResult(subtotals);
+        }
+    }
+
+    Integer frameResult() {
+        System.out.println(this);
+        if (scores.state() == State.DONE) {
+            System.out.println(scores);
+            return this.scores.getScore();
+
+        }
+        System.out.println(this.scores);
+        return nextFrame.calculateAdditionalScore(scores);
+    }
 //    public void updateSubtotal(Frames frames) {
 //        if (this.scores.done()) {
 //            State state = evaluateState(this.scores);
@@ -81,7 +105,7 @@ public abstract class FrameMutual implements Frame {
     }
 
     public int calculateAdditionalScore(Scores scores) {
-        if (scores.state() == State.WAIT_TWICE && this.scores.scores().size() == 2) {
+        if (scores.state() == State.WAIT_TWICE) {
             return scores.getScore() + this.scores.sumOfTwo();
         }
         if (scores.state() == State.WAIT_ONCE && this.scores.scores().size() >= 1) {
@@ -113,7 +137,6 @@ public abstract class FrameMutual implements Frame {
     public State state() {
         return this.scores.state();
     }
-
 
 
     @Override

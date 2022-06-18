@@ -6,11 +6,11 @@ import java.util.stream.Stream;
 
 public class Frames {
     private final List<Frame> frames;
-//    private final Subtotals subtotals;
+    private final Subtotals subtotals;
 
     public Frames(List<Frame> frames) {
         this.frames = frames;
-//        this.subtotals = null;
+        this.subtotals = new Subtotals();
     }
 
     public static Frames create() {
@@ -96,5 +96,9 @@ public class Frames {
 
     public Frame last() {
         return get(9);
+    }
+
+    public Subtotals subtotals() {
+        return this.subtotals;
     }
 }

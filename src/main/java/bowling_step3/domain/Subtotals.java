@@ -23,4 +23,11 @@ public class Subtotals {
     public void add(Integer subtotal) {
         this.subtotal.add(subtotal);
     }
+
+    @Override
+    public String toString() {
+        return "Subtotals{" +
+                "subtotal=" + subtotal +
+                '}';
+    }
 }

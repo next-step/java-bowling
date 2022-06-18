@@ -55,6 +55,9 @@ public class FrameGeneralTest {
                 .playManual(10)
                 .playManual(8).playManual(1)
                 .playManual(10).playManual(8).playManual(2);
+        System.out.println(frames);
+        Subtotals subtotals = frame.createSubtotals();
         Output.printFrames(10, frames, new Player("tst"));
+        System.out.println(subtotals);
     }
 }
