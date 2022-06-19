@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
 public interface Frame {
-    int attempt();
+    int determineSpare(int fallenPins);
 
     int validateMoveToNextIndex();
 
@@ -9,5 +9,5 @@ public interface Frame {
 
     int index();
 
-    Scores scores();
+    Pins pins();
 }

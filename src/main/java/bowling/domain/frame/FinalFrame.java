@@ -1,52 +1,44 @@
 package bowling.domain.frame;
 
-import java.util.Random;
-
 public class FinalFrame implements Frame {
 
-    private static final Random RANDOM = new Random();
     private final int index;
-    private final Scores scores;
+    private final Pins pins;
 
     private int tryNo;
-    private int totalScore;
+    private int fallenPins;
     private int bonus = 1;
 
     public FinalFrame(int index) {
-        this(index, 2, 0, new Scores());
+        this(index, 2, 0, new Pins());
     }
 
-    public FinalFrame(int index, int tryNo, int totalScore, Scores scores) {
+    public FinalFrame(int index, int tryNo, int fallenPins, Pins pins) {
         this.index = index;
         this.tryNo = tryNo;
-        this.totalScore = totalScore;
-        this.scores = scores;
+        this.fallenPins = fallenPins;
+        this.pins = pins;
     }
 
     @Override
-    public int attempt() {
-        int score = getScore();
-        totalScore += score;
+    public int determineSpare(int fallenPins) {
+        this.fallenPins += fallenPins;
         tryNo--;
         if (isBonus()) {
             tryNo += bonus--;
-            totalScore = 0;
+            this.fallenPins = 0;
         }
-        scores.add(score);
-
-        return score;
+        pins.add(fallenPins);
+        return 0;
     }
 
     private boolean isBonus() {
-        return tryNo < 2 && totalScore == 10;
+        return tryNo < 2 && fallenPins == 10;
     }
 
-    private int getScore() {
-        return RANDOM.nextInt(10 - totalScore) + 1;
-    }
-
-    public Scores scores() {
-        return scores;
+    @Override
+    public Pins pins() {
+        return pins;
     }
 
     @Override
@@ -75,7 +67,7 @@ public class FinalFrame implements Frame {
     public String toString() {
         return "FinalFrame{" +
                 "index=" + index +
-                ", scores=" + scores +
+                ", pins=" + pins +
                 '}';
     }
 }

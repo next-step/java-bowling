@@ -1,38 +1,40 @@
 package bowling.domain.frame;
 
-import java.util.Random;
-
 public class NormalFrame implements Frame {
     private final int index;
-    private final Scores scores;
+    private final Pins pins;
 
-    private int totalScore;
+    private int fallenPins;
     private int tryNo;
 
     public NormalFrame(int index) {
-        this(index, 2, new Scores());
+        this(index, 2, new Pins());
     }
 
-    public NormalFrame(int index, int tryNo, Scores scores) {
+    public NormalFrame(int index, int tryNo, Pins pins) {
         this.index = index;
         this.tryNo = tryNo;
-        this.scores = scores;
+        this.pins = pins;
     }
 
-    public void addScore(int score) {
-        scores.add(score);
+    public void addPins(int pins) {
+        this.pins.add(pins);
     }
 
-    public Scores scores() {
-        return scores;
+    @Override
+    public Pins pins() {
+        return pins;
     }
 
-    public int attempt() {
-        int score = new Random().nextInt(10 - totalScore) + 1;
-        totalScore += score;
+    @Override
+    public int determineSpare(int fallenPins) {
+        if (10 < this.fallenPins + fallenPins) {
+            // throw "쓰러트린 핀의 개수가 10가 넘습니다."
+        }
+        this.fallenPins += fallenPins;
         tryNo--;
-        scores.add(score);
-        return score;
+        pins.add(fallenPins);
+        return 10 - this.fallenPins;
     }
 
     @Override
@@ -44,7 +46,7 @@ public class NormalFrame implements Frame {
     }
 
     private boolean moveable() {
-        return tryNo < 1 || totalScore > 9;
+        return tryNo < 1 || fallenPins > 9;
     }
 
     @Override
@@ -59,9 +61,9 @@ public class NormalFrame implements Frame {
 
     @Override
     public String toString() {
-        return "Frame{" +
+        return "NormalFrame{" +
                 "index=" + index +
-                ", scores=" + scores +
+                ", pins=" + pins +
                 '}';
     }
 }

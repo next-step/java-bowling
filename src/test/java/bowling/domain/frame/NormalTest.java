@@ -16,19 +16,14 @@ public class NormalTest {
     }
 
     @Test
-    void scoreGiven_addScore() {
-        frame.addScore(3);
-        assertThat(frame.scores().first()).isEqualTo(3);
-    }
-
-    @Test
-    void getScore() {
-        assertThat(frame.attempt()).isLessThanOrEqualTo(10);
+    void pinsGiven_addPin() {
+        frame.addPins(3);
+        assertThat(frame.pins().first()).isEqualTo(3);
     }
 
     @Test
     void tryNoIs0Given_validateMoveToNext() {
-        frame = new NormalFrame(1, 0, new Scores(List.of(1,3)));
+        frame = new NormalFrame(1, 0, new Pins(List.of(1,3)));
         assertThat(frame.validateMoveToNextIndex()).isEqualTo(2);
     }
 }

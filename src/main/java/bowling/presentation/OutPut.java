@@ -3,7 +3,7 @@ package bowling.presentation;
 import bowling.domain.Board;
 import bowling.domain.Player;
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.Scores;
+import bowling.domain.frame.Pins;
 
 import static bowling.presentation.ScoreFormat.*;
 
@@ -20,7 +20,7 @@ public class OutPut {
         System.out.print("|\n");
         System.out.printf(DELIMITER.format() + centerAlignFormat(4), player.name());
         board.frames()
-                .forEach(frame -> System.out.printf("|%s", getScoreFormat(frame.scores())));
+                .forEach(frame -> System.out.printf("|%s", getScoreFormat(frame.pins())));
         System.out.println("|\n");
     }
 
@@ -32,21 +32,21 @@ public class OutPut {
         return "%" + size + "s" + " ".repeat(MAX - size);
     }
 
-    private static String getScoreFormat(Scores scores) {
-        if (scores.size() == 1) {
-            return String.format(centerAlignFormat(3), getSingleScoreFormat(scores.first()));
+    private static String getScoreFormat(Pins pins) {
+        if (pins.size() == 1) {
+            return String.format(centerAlignFormat(3), getSingleScoreFormat(pins.first()));
         }
-        if (scores.size() == 2) {
-            return String.format(centerAlignFormat(4), getDoubleScoreFormat(scores.first(), scores.second()));
+        if (pins.size() == 2) {
+            return String.format(centerAlignFormat(4), getDoubleScoreFormat(pins.first(), pins.second()));
         }
-        if (scores.size() == 3) {
-            if (scores.first() == TEN) {
-                return String.format("%2s|%3s", getSingleScoreFormat(scores.first()), getDoubleScoreFormat(scores.second(), scores.third()));
+        if (pins.size() == 3) {
+            if (pins.first() == TEN) {
+                return String.format("%2s|%3s", getSingleScoreFormat(pins.first()), getDoubleScoreFormat(pins.second(), pins.third()));
             }
-            if (scores.first() == TEN && scores.second() == TEN) {
-                return String.format("%2s|%1s|%1s", getSingleScoreFormat(scores.first()), getSingleScoreFormat(scores.second()), getSingleScoreFormat(scores.third()));
+            if (pins.first() == TEN && pins.second() == TEN) {
+                return String.format("%2s|%1s|%1s", getSingleScoreFormat(pins.first()), getSingleScoreFormat(pins.second()), getSingleScoreFormat(pins.third()));
             }
-            return String.format("%4s|%1s", getDoubleScoreFormat(scores.first(), scores.second()), getSingleScoreFormat(scores.third()));
+            return String.format("%4s|%1s", getDoubleScoreFormat(pins.first(), pins.second()), getSingleScoreFormat(pins.third()));
         }
         return String.format(centerAlignFormat(6), "");
     }
@@ -66,7 +66,7 @@ public class OutPut {
     }
 
     public static void score(Frame frame, int score) {
-        System.out.printf("%s프레임 투구 : %d", frame.index(), score);
-        System.out.println();
+//        System.out.printf("%s프레임 투구 : %d", frame.index(), score);
+//        System.out.println();
     }
 }
