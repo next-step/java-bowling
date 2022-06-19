@@ -60,4 +60,5 @@ public class FrameGeneralTest {
         Output.printFrames(10, frames, new Player("tst"));
         System.out.println(subtotals);
     }
+
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Subtotals {
     private List<Integer> subtotal;
+
     public Subtotals(List<Integer> subtotal) {
         this.subtotal = subtotal;
     }
@@ -29,5 +30,12 @@ public class Subtotals {
         return "Subtotals{" +
                 "subtotal=" + subtotal +
                 '}';
+    }
+
+    public Integer last() {
+        if (this.subtotal.size() == 0) {
+            return 0;
+        }
+        return this.subtotal.get(this.subtotal.size() - 1);
     }
 }

@@ -47,7 +47,11 @@ public abstract class FrameMutual implements Frame {
     }
 
     public void accumulateResult(Subtotals subtotals) {
-        subtotals.add(frameResult());
+//        Integer result = frameResult();
+        if (!done()) {
+            return;
+        }
+        subtotals.add(frameResult() + subtotals.last());
         if (nextFrame != null) {
             nextFrame.accumulateResult(subtotals);
         }

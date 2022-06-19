@@ -76,7 +76,10 @@ public class FrameLast extends FrameMutual implements Frame {
 
     @Override
     Integer frameResult() {
-        return this.scores.getScore();
+        if (this.done()) {
+            return this.scores.getScore();
+        }
+        return null;
         // todo
 //        System.out.println(this);
 //        if (scores.state() == State.DONE) {
