@@ -38,4 +38,8 @@ public class Subtotals {
         }
         return this.subtotal.get(this.subtotal.size() - 1);
     }
+
+    public List<Integer> subtotals() {
+        return this.subtotal;
+    }
 }

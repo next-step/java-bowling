@@ -1,9 +1,6 @@
 package bowling_step3.view;
 
-import bowling_step3.domain.Frames;
-import bowling_step3.domain.Player;
-import bowling_step3.domain.State;
-import bowling_step3.domain.Subtotal;
+import bowling_step3.domain.*;
 
 import java.util.List;
 
@@ -27,6 +24,19 @@ public class Output {
         System.out.println();
     }
 
+    public static void printSubtotals(Subtotals subtotals, Player player) {
+        List<Integer> listSubtotals = subtotals.subtotals();
+        int emptySize = 10 - listSubtotals.size();
+        System.out.println(emptySize);
+        String payload = "| " + formatName(player.name()) + " |" + listSubtotals.stream()
+                .map(subtotal -> formatRecord(subtotal + ""))
+                .reduce((acc, cur) -> acc + "|" + formatRecord(cur))
+                .orElse("")
+                + (formatRecord(" ")+"|").repeat(emptySize)
+                + "|\n";
+        print(payload);
+
+    }
 //    private static void printSubtotals(Frames frames, Player player) {
 //        String payload = "| " + formatName(player.name()) + " |" + frames.frames()
 //                .stream()

@@ -65,10 +65,10 @@ public class FrameGeneralTest {
     void name9() {
         Frame frame =frames.first();
         while (!(frame.next() == null && frame.done())) {
-//            Frame sub = frame;
             frame = frame.playManual(5);
             Subtotals subtotals = frames.first().createSubtotals();
-            System.out.println(subtotals);
+//            System.out.println(subtotals);
+            Output.printSubtotals(subtotals, new Player("tst"));
         }
         Output.printFrames(10, frames, new Player("tst"));
     }
