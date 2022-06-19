@@ -27,8 +27,8 @@ public class BowlingGame {
         int mayBeNextIndex = 1;
         do {
             Frame frame = board.frame(mayBeNextIndex);
-            int score = frame.attempt();
-            OutPut.score(frame, score);
+            int fallenPins = Input.askBowling(mayBeNextIndex);
+            frame.determineSpare(fallenPins);
             OutPut.board(board, player);
             mayBeNextIndex = frame.validateMoveToNextIndex();
         } while (finished(mayBeNextIndex));

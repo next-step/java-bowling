@@ -1,5 +1,9 @@
 package bowling.domain.frame;
 
+import bowling.exception.BowlingException;
+
+import static bowling.exception.BowlingExceptionCode.INVALID_COUNT_OF_FALLEN_PINS;
+
 public class FinalFrame implements Frame {
 
     private final int index;
@@ -21,7 +25,10 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public int determineSpare(int fallenPins) {
+    public void determineSpare(int fallenPins) {
+        if (excessive(fallenPins)) {
+            throw new BowlingException(INVALID_COUNT_OF_FALLEN_PINS, fallenPins);
+        }
         this.fallenPins += fallenPins;
         tryNo--;
         if (isBonus()) {
@@ -29,7 +36,10 @@ public class FinalFrame implements Frame {
             this.fallenPins = 0;
         }
         pins.add(fallenPins);
-        return 0;
+    }
+
+    private boolean excessive(int fallenPins) {
+        return 10 < this.fallenPins + fallenPins;
     }
 
     private boolean isBonus() {

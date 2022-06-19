@@ -1,5 +1,9 @@
 package bowling.domain.frame;
 
+import bowling.exception.BowlingException;
+
+import static bowling.exception.BowlingExceptionCode.*;
+
 public class NormalFrame implements Frame {
     private final int index;
     private final Pins pins;
@@ -27,14 +31,17 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public int determineSpare(int fallenPins) {
-        if (10 < this.fallenPins + fallenPins) {
-            // throw "쓰러트린 핀의 개수가 10가 넘습니다."
+    public void determineSpare(int fallenPins) {
+        if (excessive(fallenPins)) {
+            throw new BowlingException(INVALID_COUNT_OF_FALLEN_PINS, fallenPins);
         }
         this.fallenPins += fallenPins;
         tryNo--;
         pins.add(fallenPins);
-        return 10 - this.fallenPins;
+    }
+
+    private boolean excessive(int fallenPins) {
+        return 10 < this.fallenPins + fallenPins;
     }
 
     @Override
