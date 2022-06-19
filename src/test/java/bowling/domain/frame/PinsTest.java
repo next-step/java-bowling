@@ -5,31 +5,31 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ScoresTest {
+class PinsTest {
 
-    private Scores scores;
+    private Pins pins;
 
     @BeforeEach
     void setUp() {
-        scores = new Scores();
-        scores.add(1);
-        scores.add(2);
-        scores.add(3);
+        pins = new Pins();
+        pins.add(1);
+        pins.add(2);
+        pins.add(3);
     }
 
     @Test
     void size() {
-        assertThat(scores.size()).isEqualTo(3);
+        assertThat(pins.size()).isEqualTo(3);
     }
 
     @Test
     void first() {
-        assertThat(scores.first()).isEqualTo(1);
+        assertThat(pins.first()).isEqualTo(1);
     }
 
     @Test
     void add() {
-        scores.add(4);
-        assertThat(scores.size()).isEqualTo(4);
+        pins.add(4);
+        assertThat(pins.size()).isEqualTo(4);
     }
 }
