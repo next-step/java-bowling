@@ -48,7 +48,14 @@ public abstract class FrameMutual implements Frame {
 
     public void accumulateResult(Subtotals subtotals) {
 //        Integer result = frameResult();
-        if (!done()) {
+        System.out.println(this);
+        if (!done() ) {
+            return;
+        }
+        if(this.state() == State.WAIT_ONCE && nextFrame.scores().scores().size() < 1) {
+            return;
+        }
+        if(this.state() == State.WAIT_TWICE && nextFrame.scores().scores().size()  < 2){
             return;
         }
         subtotals.add(frameResult() + subtotals.last());
@@ -115,6 +122,8 @@ public abstract class FrameMutual implements Frame {
         if (scores.state() == State.WAIT_ONCE && this.scores.scores().size() >= 1) {
             return scores.getScore() + this.scores.getFirstScore();
         }
+        System.out.println(scores);
+        System.out.println(this.scores);
         throw new UnsupportedOperationException("Cannot calculate additional yet.");
     }
 
