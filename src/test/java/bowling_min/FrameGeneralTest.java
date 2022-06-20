@@ -19,25 +19,25 @@ public class FrameGeneralTest {
     @Test
     public void doneWhenStrike() throws Exception {
         Frame frame = frames.first();
-        frame.playManual(10);
+        frame.play(10);
         assertThat(frame.state()).isEqualTo(State.WAIT_TWICE);
     }
 
     @Test
     public void doneWhenSpare() throws Exception {
         Frame frame = frames.first();
-        frame.playManual(8);
+        frame.play(8);
         assertThatThrownBy(() -> frame.state()).isInstanceOf(UnsupportedOperationException.class);
-        frame.playManual(2);
+        frame.play(2);
         assertThat(frame.state()).isEqualTo(State.WAIT_ONCE);
     }
 
     @Test
     public void doneWhenMiss() throws Exception {
         Frame frame = frames.first();
-        frame.playManual(8);
+        frame.play(8);
         assertThatThrownBy(() -> frame.state()).isInstanceOf(UnsupportedOperationException.class);
-        frame.playManual(1);
+        frame.play(1);
         assertThat(frame.state()).isEqualTo(State.DONE);
     }
 
@@ -45,16 +45,16 @@ public class FrameGeneralTest {
     public void createBoard() throws Exception {
         Frame frame = frames.first();
         frame
-                .playManual(8).playManual(2)
-                .playManual(9).playManual(1)
-                .playManual(10)
-                .playManual(10)
-                .playManual(8).playManual(1)
-                .playManual(7).playManual(3)
-                .playManual(10)
-                .playManual(10)
-                .playManual(8).playManual(1)
-                .playManual(10).playManual(8).playManual(2);
+                .play(8).play(2)
+                .play(9).play(1)
+                .play(10)
+                .play(10)
+                .play(8).play(1)
+                .play(7).play(3)
+                .play(10)
+                .play(10)
+                .play(8).play(1)
+                .play(10).play(8).play(2);
         System.out.println(frames);
         Subtotals subtotals = frame.createSubtotals();
         Output.printFrames(10, frames, new Player("tst"));
@@ -65,7 +65,7 @@ public class FrameGeneralTest {
     void printSubtotalsWithFives() {
         Frame frame =frames.first();
         while (!(frame.next() == null && frame.done())) {
-            frame = frame.playManual(5);
+            frame = frame.play(5);
             Subtotals subtotals = frames.first().createSubtotals();
             Output.printFrames(10, frames, new Player("tst"));
             Output.printSubtotals(subtotals, new Player("tst"));

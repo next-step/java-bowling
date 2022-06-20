@@ -34,19 +34,19 @@ public class SubtotalsTest {
 
     @Test
     void name2() {
-        frame = frame.playManual(3);
-        Frame next = frame.playManual(7);
+        frame = frame.play(3);
+        Frame next = frame.play(7);
         assertThatThrownBy(() -> frame.subtotal(subtotals)).isInstanceOf(UnsupportedOperationException.class);
-        next = next.playManual(1);
+        next = next.play(1);
         assertThat(frame.subtotal(subtotals)).isEqualTo(11);
     }
 
     @Test
     void name3() {
-        Frame next = frame.playManual(10);
+        Frame next = frame.play(10);
         assertThatThrownBy(() -> frame.subtotal(subtotals)).isInstanceOf(UnsupportedOperationException.class);
-        next = next.playManual(1);
-        next = next.playManual(2);
+        next = next.play(1);
+        next = next.play(2);
         assertThat(frame.subtotal(subtotals)).isEqualTo(13);
     }
 }

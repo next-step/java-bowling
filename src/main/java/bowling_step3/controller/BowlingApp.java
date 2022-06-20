@@ -1,9 +1,6 @@
 package bowling_step3.controller;
 
-import bowling_step3.domain.Frame;
-import bowling_step3.domain.Frames;
-import bowling_step3.domain.Player;
-import bowling_step3.view.Input;
+import bowling_step3.domain.*;
 import bowling_step3.view.Output;
 
 import java.util.stream.Stream;
@@ -12,10 +9,18 @@ public class BowlingApp {
     public static void main(String[] args) {
 //        String name = Input.scanPlayer();
         Player player = new Player("tst");
+
         Frames frames = Frames.create();
-        Output.printFrames(0, frames, player);
-        playFrames(frames, player);
-        System.out.println(frames.last());
+        Frame frame =frames.first();
+        while (!(frame.next() == null && frame.done())) {
+//            frame = frame.playManual(5);
+            Scores scores = frame.scores().pitch(10);
+//            Scores scores = frame.scores().pitchRandom();
+            frame = frame.play(scores);
+            Subtotals subtotals = frames.first().createSubtotals();
+            Output.printFrames(10, frames, player);
+            Output.printSubtotals(subtotals, player);
+        }
     }
 
     private static void playFrames(Frames frames, Player player) {
@@ -26,7 +31,7 @@ public class BowlingApp {
     private static void playAFrame(int index, Frames frames, Player player) {
         Frame frame = frames.first();
 
-        frame = frame.playManual(10);
+        frame = frame.play(10);
 //        Frame frame = frames.get(index);
 //        while (!frame.done()) {
 //            frame = frame.playManual(10);

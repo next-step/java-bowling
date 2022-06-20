@@ -19,7 +19,7 @@ public abstract class FrameMutual implements Frame {
         this(new Scores(), frame);
     }
 
-    public Frame playManual(int numPins) {
+    public Frame play(int numPins) {
         if (this.done()) {
             throw new UnsupportedOperationException("This frame is done.");
         }
@@ -30,7 +30,28 @@ public abstract class FrameMutual implements Frame {
         }
         return this;
     }
+    public Frame play(Scores scores) {
+        if (this.done()) {
+            throw new UnsupportedOperationException("This frame is done.");
+        }
+        this.scores = scores;
+        if (scores.done()) {
+            return nextFrame;
+        }
+        return this;
+    }
 
+    public Frame playRandom() {
+        if (this.done()) {
+            throw new UnsupportedOperationException("This frame is done.");
+        }
+        Scores scores = this.scores.pitchRandom();
+        this.scores = scores;
+        if (scores.done()) {
+            return nextFrame;
+        }
+        return this;
+    }
 //    public void playRandom(Frames frames) {
 //        Scores scores = this.scores.pitchRandom();
 //        this.scores = evaluateScore(scores);
@@ -53,7 +74,7 @@ public abstract class FrameMutual implements Frame {
         if(this.state() == State.WAIT_ONCE && nextFrame.scores().scores().size() < 1) {
             return;
         }
-        if(this.state() == State.WAIT_TWICE && nextFrame.scores().scores().size()  < 2){
+        if(this.state() == State.WAIT_TWICE && !nextFrame.done()){
             return;
         }
         subtotals.add(frameResult() + subtotals.last());

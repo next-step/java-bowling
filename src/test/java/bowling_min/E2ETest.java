@@ -2,15 +2,11 @@ package bowling_min;
 
 import bowling_step3.domain.Frame;
 import bowling_step3.domain.Frames;
-import bowling_step3.domain.Player;
 import bowling_step3.domain.Subtotals;
-import bowling_step3.view.Output;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,26 +25,26 @@ public class E2ETest {
 
     @Test
     public void roll_strike() throws Exception {
-        frame = frame.playManual(10);
+        frame = frame.play(10);
         assertThat(frames.get(0).scores().getFirstScore()).isEqualTo(10);
-        frame = frame.playManual(8);
+        frame = frame.play(8);
         assertThat(frames.get(1).scores().getFirstScore()).isEqualTo(8);
     }
 
     @Test
     public void roll_spare() throws Exception {
-        frame = frame.playManual(9);
-        frame = frame.playManual(1);
+        frame = frame.play(9);
+        frame = frame.play(1);
         assertThat(frames.get(0).scores().scores()).isEqualTo(Arrays.asList(9, 1));
-        frame = frame.playManual(10);
+        frame = frame.play(10);
         assertThat(frames.get(1).scores().getFirstScore()).isEqualTo(10);
     }
 
     @Test
     public void roll_miss() throws Exception {
-        frame.playManual(8);
+        frame.play(8);
         assertThat(frames.first().scores().getFirstScore()).isEqualTo(8);
-        frame.playManual(1);
+        frame.play(1);
         assertThat(frames.first().scores().scores()).isEqualTo(Arrays.asList(8, 1));
     }
 
@@ -89,7 +85,7 @@ public class E2ETest {
     @Test
     public void all_strike() throws Exception {
         for (int i = 0; i < 12; i++) {
-            frame = frame.playManual(10);
+            frame = frame.play(10);
         }
         assertThat(frames.last().scores().scores()).isEqualTo(Arrays.asList(10, 10, 10));
     }
@@ -126,7 +122,7 @@ public class E2ETest {
         Stream.iterate(0, i -> i < 10, i -> ++i)
                 .forEach(i -> {
                             while (!frame.done()) {
-                                frame = frame.playManual(10);
+                                frame = frame.play(10);
                                 subtotals.add(frames.get(i).subtotal(subtotals));
                             }
                         }

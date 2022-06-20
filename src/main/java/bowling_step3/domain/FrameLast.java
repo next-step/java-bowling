@@ -39,7 +39,7 @@ public class FrameLast extends FrameMutual implements Frame {
 //        return new FrameLast(scores, this.subtotal());
 //    }
     @Override
-    public Frame playManual(int numPins) {
+    public Frame play(int numPins) {
         if (this.done()) {
             throw new UnsupportedOperationException("This frame is done.");
         }
@@ -58,8 +58,31 @@ public class FrameLast extends FrameMutual implements Frame {
     }
 
     @Override
-    public void playRandom(Frames frames) {
+    public Frame play(Scores scores) {
+        if (this.done()) {
+            throw new UnsupportedOperationException("This frame is done.");
+        }
+        this.scores = scores;
+        if (this.scores().sum() == 20 && this.scores().scores().size() == 2) {
+            return new FrameLast(new Scores(scores.scores(), scores.remainingPitch() + 1), null);
+        }
+        if (this.scores().sum() < 10 && this.scores().scores().size() == 2) {
+            return new FrameLast(new Scores(scores.scores(), 0), null);
+        }
+        return this;
+    }
 
+    public Frame playRandom() {
+        if (this.done()) {
+            throw new UnsupportedOperationException("This frame is done.");
+        }
+//        Scores scores = this.scores().pitchLast(numPins);
+        Scores scores = this.scores.pitchRandom();
+        this.scores = scores;
+        if (this.scores().sum() < 10 && this.scores().scores().size() == 2) {
+            return new FrameLast(new Scores(scores.scores(), 0), null);
+        }
+        return this;
     }
 
     @Override
@@ -67,10 +90,13 @@ public class FrameLast extends FrameMutual implements Frame {
 
     }
 
-//    @Override
-//    public void accumulateResult(Subtotals subtotals) {
-//        subtotals.add(frameResult());
-//    }
+    @Override
+    public void accumulateResult(Subtotals subtotals) {
+        if (!done()) {
+            return;
+        }
+        subtotals.add(frameResult() + subtotals.last());
+    }
 
     @Override
     Integer frameResult() {

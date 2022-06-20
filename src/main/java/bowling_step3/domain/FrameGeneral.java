@@ -23,10 +23,6 @@ public class FrameGeneral extends FrameMutual implements Frame {
         return State.DONE;
     }
 
-    @Override
-    public void playRandom(Frames frames) {
-
-    }
 
     @Override
     public void updateNextSubtotal(Subtotal subtotal) {

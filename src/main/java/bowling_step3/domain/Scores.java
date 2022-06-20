@@ -154,4 +154,8 @@ public class Scores {
                 .reduce((acc, cur) -> acc + cur)
                 .orElseThrow(() -> new UnsupportedOperationException("cannot get sum of Two"));
     }
+
+    public int remainingPitch() {
+        return remainingPitch;
+    }
 }
