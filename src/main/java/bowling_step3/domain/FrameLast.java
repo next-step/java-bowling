@@ -64,10 +64,12 @@ public class FrameLast extends FrameMutual implements Frame {
         }
         this.scores = scores;
         if (this.scores().sum() == 20 && this.scores().scores().size() == 2) {
-            return new FrameLast(new Scores(scores.scores(), scores.remainingPitch() + 1), null);
+            this.scores = new Scores(scores.scores(), scores.remainingPitch() + 1);
+//            return new FrameLast(new Scores(scores.scores(), scores.remainingPitch() + 1), null);
         }
         if (this.scores().sum() < 10 && this.scores().scores().size() == 2) {
-            return new FrameLast(new Scores(scores.scores(), 0), null);
+            this.scores = new Scores(scores.scores(), 0);
+//            return new FrameLast(new Scores(scores.scores(), 0), null);
         }
         return this;
     }
