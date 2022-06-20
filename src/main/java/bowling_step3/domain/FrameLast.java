@@ -51,8 +51,6 @@ public class FrameLast extends FrameMutual implements Frame {
         if (this.scores().sum() < 10 && this.scores().scores().size() == 2) {
             return new FrameLast(new Scores(scores.scores(), 0), null);
         }
-        System.out.println("last: " + scores);
-        System.out.println("last: " + this.scores);
 //        if (scores.scores().size() == 3) {
 //            return new FrameLast(new Scores(scores.scores(), 0), null);
 //        }

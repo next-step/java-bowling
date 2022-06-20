@@ -24,7 +24,6 @@ public abstract class FrameMutual implements Frame {
             throw new UnsupportedOperationException("This frame is done.");
         }
         Scores scores = this.scores.pitch(numPins);
-        System.out.println("mutual: " + scores);
         this.scores = scores;
         if (scores.done()) {
             return nextFrame;
@@ -48,7 +47,6 @@ public abstract class FrameMutual implements Frame {
 
     public void accumulateResult(Subtotals subtotals) {
 //        Integer result = frameResult();
-        System.out.println(this);
         if (!done() ) {
             return;
         }
@@ -65,13 +63,10 @@ public abstract class FrameMutual implements Frame {
     }
 
     Integer frameResult() {
-        System.out.println(this);
         if (scores.state() == State.DONE) {
-            System.out.println(scores);
             return this.scores.getScore();
 
         }
-        System.out.println(this.scores);
         return nextFrame.calculateAdditionalScore(scores);
     }
 //    public void updateSubtotal(Frames frames) {
@@ -122,8 +117,6 @@ public abstract class FrameMutual implements Frame {
         if (scores.state() == State.WAIT_ONCE && this.scores.scores().size() >= 1) {
             return scores.getScore() + this.scores.getFirstScore();
         }
-        System.out.println(scores);
-        System.out.println(this.scores);
         throw new UnsupportedOperationException("Cannot calculate additional yet.");
     }
 

@@ -21,21 +21,18 @@ public class Output {
         print(HEADER_STR + "\n");
         printScores(frames, player);
 //        printSubtotals(frames, player);
-        System.out.println();
     }
 
     public static void printSubtotals(Subtotals subtotals, Player player) {
         List<Integer> listSubtotals = subtotals.subtotals();
         int emptySize = 10 - listSubtotals.size();
-        System.out.println(emptySize);
         String payload = "| " + formatName(player.name()) + " |" + listSubtotals.stream()
                 .map(subtotal -> formatRecord(subtotal + ""))
-                .reduce((acc, cur) -> acc + "|" + formatRecord(cur))
-                .orElse("")
-                + (formatRecord(" ")+"|").repeat(emptySize)
-                + "|\n";
+                .reduce("",(acc, cur) -> acc + cur+"|") // empty
+                + (formatRecord("")+"|").repeat(emptySize)
+                + "\n";
         print(payload);
-
+        System.out.println();
     }
 //    private static void printSubtotals(Frames frames, Player player) {
 //        String payload = "| " + formatName(player.name()) + " |" + frames.frames()

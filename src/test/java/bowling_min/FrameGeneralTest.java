@@ -62,14 +62,13 @@ public class FrameGeneralTest {
     }
 
     @Test
-    void name9() {
+    void printSubtotalsWithFives() {
         Frame frame =frames.first();
         while (!(frame.next() == null && frame.done())) {
             frame = frame.playManual(5);
             Subtotals subtotals = frames.first().createSubtotals();
-//            System.out.println(subtotals);
+            Output.printFrames(10, frames, new Player("tst"));
             Output.printSubtotals(subtotals, new Player("tst"));
         }
-        Output.printFrames(10, frames, new Player("tst"));
     }
 }
