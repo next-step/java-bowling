@@ -46,10 +46,6 @@ public class FrameLast extends FrameMutual implements Frame {
 //        Scores scores = this.scores().pitchLast(numPins);
         Scores scores = this.scores().pitch(numPins);
         this.scores = scores;
-//        if (this.scores().sum() < 10 && this.scores().scores().size() == 2) {
-//            return new FrameLast(new Scores(scores.scores(), 0), null);
-//        }
-
         if (this.scores().sum() == 20 && this.scores().scores().size() == 2) {
             this.scores = new Scores(scores.scores(), scores.remainingPitch() + 1);
         }
