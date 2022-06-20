@@ -11,9 +11,11 @@ public class FinalFrame implements Frame {
     private int fallenPins;
     private int tryNo;
     private int bonus = 1;
+    private FrameProperties frameProperties;
 
     public FinalFrame(int index) {
         this(index, 2, 0, new Pins());
+        frameProperties = new FrameProperties(index);
     }
 
     public FinalFrame(int index, int tryNo, int fallenPins, Pins pins) {
@@ -64,7 +66,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public int index() {
-        return index;
+        return frameProperties.index();
     }
 
     @Override

@@ -10,9 +10,11 @@ public class NormalFrame implements Frame {
 
     private int fallenPins;
     private int tryNo;
+    private FrameProperties frameProperties;
 
     public NormalFrame(int index) {
         this(index, 2, new Pins());
+        frameProperties = new FrameProperties(index);
     }
 
     public NormalFrame(int index, int tryNo, Pins pins) {
@@ -58,7 +60,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public int index() {
-        return index;
+        return frameProperties.index();
     }
 
     @Override
