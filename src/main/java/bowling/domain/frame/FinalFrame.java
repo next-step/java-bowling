@@ -5,12 +5,11 @@ import bowling.exception.BowlingException;
 import static bowling.exception.BowlingExceptionCode.INVALID_COUNT_OF_FALLEN_PINS;
 
 public class FinalFrame implements Frame {
-
     private final int index;
     private final Pins pins;
 
-    private int tryNo;
     private int fallenPins;
+    private int tryNo;
     private int bonus = 1;
 
     public FinalFrame(int index) {
@@ -51,21 +50,16 @@ public class FinalFrame implements Frame {
         return pins;
     }
 
+    private boolean moveable() {
+        return tryNo < 1;
+    }
+
     @Override
     public int validateMoveToNextIndex() {
         if (moveable()) { // 다 던지면 끝
             return index + 1;
         }
         return index;
-    }
-
-    private boolean moveable() {
-        return tryNo < 1;
-    }
-
-    @Override
-    public boolean equal(int index) {
-        return this.index == index;
     }
 
     @Override

@@ -18,7 +18,7 @@ public class Board {
     private final List<Frame> frames;
 
     public static Board init() {
-        List<Frame> frames = IntStream.rangeClosed(START, END-1)
+        List<Frame> frames = IntStream.rangeClosed(START, END - 1)
                 .mapToObj(NormalFrame::new)
                 .collect(Collectors.toList());
         frames.add(new FinalFrame(END));
@@ -35,7 +35,7 @@ public class Board {
 
     public Frame frame(int index) {
         return frames.stream()
-                .filter(frame -> frame.equal(index))
+                .filter(frame -> frame.index() == index)
                 .findFirst()
                 .orElseThrow(() -> new BowlingException(INVALID_FRAME_INDEX, String.valueOf(index)));
     }

@@ -5,8 +5,6 @@ public interface Frame {
 
     int validateMoveToNextIndex();
 
-    boolean equal(int index);
-
     int index();
 
     Pins pins();

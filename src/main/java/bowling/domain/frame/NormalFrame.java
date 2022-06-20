@@ -44,21 +44,16 @@ public class NormalFrame implements Frame {
         return 10 < this.fallenPins + fallenPins;
     }
 
+    private boolean moveable() {
+        return tryNo < 1 || fallenPins > 9;
+    }
+
     @Override
     public int validateMoveToNextIndex() {
         if (moveable()) {
             return index + 1;
         }
         return index;
-    }
-
-    private boolean moveable() {
-        return tryNo < 1 || fallenPins > 9;
-    }
-
-    @Override
-    public boolean equal(int index) {
-        return this.index == index;
     }
 
     @Override
