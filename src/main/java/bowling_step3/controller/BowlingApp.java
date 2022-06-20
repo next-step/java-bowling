@@ -13,10 +13,10 @@ public class BowlingApp {
         Frames frames = Frames.create();
         Frame frame =frames.first();
         while (!(frame.next() == null && frame.done())) {
-//            frame = frame.playManual(5);
 //            Scores scores = frame.scores().pitch(10);
-            Scores scores = frame.scores().pitchRandom();
-            frame = frame.play(scores);
+//            Scores scores = frame.scores().pitchRandom();
+            int randomPin = frame.scores().getRandom();
+            frame = frame.play(randomPin);
             Subtotals subtotals = frames.first().createSubtotals();
             Output.printFrames(10, frames, player);
             Output.printSubtotals(subtotals, player);

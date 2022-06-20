@@ -112,22 +112,22 @@ public class E2ETest {
 //    }
 
 
-    @Test
-    void e2e() {
-//        Frame next = frame.playManual(10);
-//        if (next.scores().scores().size() == 0) {
+//    @Test
+//    void e2e() {
+////        Frame next = frame.playManual(10);
+////        if (next.scores().scores().size() == 0) {
+////
+////        }
+////        subtotals.add(current.subtotal(subtotals));
+//        Stream.iterate(0, i -> i < 10, i -> ++i)
+//                .forEach(i -> {
+//                            while (!frame.done()) {
+//                                frame = frame.play(10);
+//                                subtotals.add(frames.get(i).subtotal(subtotals));
+//                            }
+//                        }
+//                );
+//        System.out.println(subtotals);
 //
-//        }
-//        subtotals.add(current.subtotal(subtotals));
-        Stream.iterate(0, i -> i < 10, i -> ++i)
-                .forEach(i -> {
-                            while (!frame.done()) {
-                                frame = frame.play(10);
-                                subtotals.add(frames.get(i).subtotal(subtotals));
-                            }
-                        }
-                );
-        System.out.println(subtotals);
-
-    }
+//    }
 }

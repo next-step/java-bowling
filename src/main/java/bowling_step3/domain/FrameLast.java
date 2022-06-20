@@ -43,17 +43,20 @@ public class FrameLast extends FrameMutual implements Frame {
         if (this.done()) {
             throw new UnsupportedOperationException("This frame is done.");
         }
-        Scores scores = this.scores().pitchLast(numPins);
-//        if (scores.scores().size() == 3) {
-//            return new FrameLast(scores, null);
-//        }
+//        Scores scores = this.scores().pitchLast(numPins);
+        Scores scores = this.scores().pitch(numPins);
         this.scores = scores;
-        if (this.scores().sum() < 10 && this.scores().scores().size() == 2) {
-            return new FrameLast(new Scores(scores.scores(), 0), null);
-        }
-//        if (scores.scores().size() == 3) {
+//        if (this.scores().sum() < 10 && this.scores().scores().size() == 2) {
 //            return new FrameLast(new Scores(scores.scores(), 0), null);
 //        }
+
+        if (this.scores().sum() == 20 && this.scores().scores().size() == 2) {
+            this.scores = new Scores(scores.scores(), scores.remainingPitch() + 1);
+        }
+        if (this.scores().sum() < 10 && this.scores().scores().size() == 2) {
+            this.scores = new Scores(scores.scores(), 0);
+        }
+
         return this;
     }
 
@@ -65,11 +68,9 @@ public class FrameLast extends FrameMutual implements Frame {
         this.scores = scores;
         if (this.scores().sum() == 20 && this.scores().scores().size() == 2) {
             this.scores = new Scores(scores.scores(), scores.remainingPitch() + 1);
-//            return new FrameLast(new Scores(scores.scores(), scores.remainingPitch() + 1), null);
         }
         if (this.scores().sum() < 10 && this.scores().scores().size() == 2) {
             this.scores = new Scores(scores.scores(), 0);
-//            return new FrameLast(new Scores(scores.scores(), 0), null);
         }
         return this;
     }
@@ -115,5 +116,18 @@ public class FrameLast extends FrameMutual implements Frame {
 //        }
 //        System.out.println(this.scores);
 //        return nextFrame.calculateAdditionalScore(scores);
+    }
+
+    public int calculateAdditionalScore(Scores scores) {
+//        if (scores.state() == State.WAIT_TWICE && this.scores.getFirstScore() == 10) {
+//            return 30;
+//        }
+        if (scores.state() == State.WAIT_TWICE && this.scores.scores().size() >= 2) {
+            return scores.getScore() + this.scores.sumOfTwo();
+        }
+        if (scores.state() == State.WAIT_ONCE && this.scores.scores().size() >= 1) {
+            return scores.getScore() + this.scores.getFirstScore();
+        }
+        throw new UnsupportedOperationException("Cannot calculate additional yet.");
     }
 }

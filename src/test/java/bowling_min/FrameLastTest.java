@@ -103,7 +103,7 @@ public class FrameLastTest {
     public void getScore_9프레임_Spare() {
         Scores scores = new Scores(List.of(9, 1), 0);
         lastFrame = lastFrame.play(9);
-        lastFrame = lastFrame.play(1);
+//        lastFrame = lastFrame.play(1);
         assertThat(lastFrame.calculateAdditionalScore(scores)).isEqualTo(19);
     }
 

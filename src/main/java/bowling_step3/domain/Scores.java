@@ -43,6 +43,9 @@ public class Scores {
         int numPins = Random.nextInt(remainingPins());
         return pitch(numPins);
     }
+    public int getRandom() {
+        return Random.nextInt(remainingPins());
+    }
 
     private int remainingPins() {
         if (this.scores.size() == 0) {

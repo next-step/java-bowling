@@ -132,7 +132,10 @@ public abstract class FrameMutual implements Frame {
     }
 
     public int calculateAdditionalScore(Scores scores) {
-        if (scores.state() == State.WAIT_TWICE && this.scores.state() == State.WAIT_TWICE) {
+//        if (!this.done()) {
+//            throw new UnsupportedOperationException("Cannot calculate additional yet.");
+//        }
+        if (scores.state() == State.WAIT_TWICE && this.scores.getFirstScore() == 10) {
             return 30;
         }
         if (scores.state() == State.WAIT_TWICE) {
