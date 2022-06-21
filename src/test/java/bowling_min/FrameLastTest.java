@@ -77,9 +77,11 @@ public class FrameLastTest {
 
     @Test
     public void getScore_twoStrike() {
-        lastFrame = lastFrame.play(10);
-        lastFrame = lastFrame.play(10);
-        lastFrame = lastFrame.play(8);
+//        lastFrame = lastFrame.play(10);
+//        lastFrame = lastFrame.play(10);
+//        lastFrame = lastFrame.play(8);
+        lastFrame.play(10).play(10).play(8);
+        System.out.println(lastFrame);
         assertThat(lastFrame.getScore()).isEqualTo(28);
     }
 

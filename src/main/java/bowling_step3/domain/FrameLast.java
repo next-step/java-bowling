@@ -43,16 +43,15 @@ public class FrameLast extends FrameMutual implements Frame {
         if (this.done()) {
             throw new UnsupportedOperationException("This frame is done.");
         }
-//        Scores scores = this.scores().pitchLast(numPins);
-        Scores scores = this.scores().pitch(numPins);
+        Scores scores = this.scores().pitchLast(numPins);
+//        Scores scores = this.scores().pitch(numPins);
         this.scores = scores;
-        if (this.scores().sum() == 20 && this.scores().scores().size() == 2) {
-            this.scores = new Scores(scores.scores(), scores.remainingPitch() + 1);
-        }
+//        if (this.scores().sum() == 20 && this.scores().scores().size() == 2) {
+//            this.scores = new Scores(scores.scores(), scores.remainingPitch() + 1);
+//        }
         if (this.scores().sum() < 10 && this.scores().scores().size() == 2) {
             this.scores = new Scores(scores.scores(), 0);
         }
-
         return this;
     }
 
