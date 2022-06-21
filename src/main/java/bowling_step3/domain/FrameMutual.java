@@ -71,13 +71,6 @@ public abstract class FrameMutual implements Frame {
         return this.scores.getScore();
     }
 
-    public Integer subtotal(Subtotals subtotals) {
-        if (this.scores.state() == State.DONE) {
-            return subtotals.sum() + this.scores.getScore();
-        }
-        return subtotals.sum() + nextFrame.calculateAdditionalScore(this.scores);
-    }
-
     public int calculateAdditionalScore(Scores scores) {
         if (scores.state() == State.WAIT_TWICE && this.scores.getFirstScore() == 10) {
             return 30;

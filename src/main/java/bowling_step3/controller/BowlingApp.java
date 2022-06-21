@@ -8,8 +8,8 @@ import java.util.stream.Stream;
 
 public class BowlingApp {
     public static void main(String[] args) {
-//        String name = Input.scanPlayer();
-        Player player = new Player("tst");
+        String name = Input.scanPlayer();
+        Player player = new Player(name);
 
         Frames frames = Frames.create();
         Frame frame =frames.first();

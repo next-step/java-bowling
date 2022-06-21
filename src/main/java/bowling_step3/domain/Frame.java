@@ -3,8 +3,6 @@ package bowling_step3.domain;
 public interface Frame {
     Frame play(int numPins);
 
-    Integer subtotal(Subtotals subtotals);
-
     Scores scores();
 
     int getScore();

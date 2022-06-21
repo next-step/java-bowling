@@ -2,7 +2,9 @@ package bowling_step3;
 
 import bowling_step3.domain.Frame;
 import bowling_step3.domain.Frames;
+import bowling_step3.domain.Player;
 import bowling_step3.domain.Subtotals;
+import bowling_step3.view.Output;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,13 +15,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class E2ETest {
     private Frames frames;
     private Frame frame;
-    private Subtotals subtotals;
 
     @BeforeEach
     public void setup() {
         frames = Frames.create();
         frame = frames.first();
-        subtotals = new Subtotals();
     }
 
     @Test
@@ -55,4 +55,23 @@ public class E2ETest {
         assertThat(frames.last().scores().scores()).isEqualTo(Arrays.asList(10, 10, 10));
     }
 
+    @Test
+    public void createSubtotals() throws Exception {
+        Frame frame = frames.first();
+        frame
+                .play(8).play(2)
+                .play(9).play(1)
+                .play(10)
+                .play(10)
+                .play(8).play(1)
+                .play(7).play(3)
+                .play(10)
+                .play(10)
+                .play(8).play(1)
+                .play(10).play(8).play(2);
+        Subtotals subtotals = frame.createSubtotals();
+        Player player = new Player("tst");
+        Output.printFrames(10, frames, player);
+        Output.printSubtotals(subtotals, player);
+    }
 }

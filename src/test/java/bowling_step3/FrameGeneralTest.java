@@ -41,29 +41,10 @@ public class FrameGeneralTest {
         assertThat(frame.state()).isEqualTo(State.DONE);
     }
 
-    @Test
-    public void createBoard() throws Exception {
-        Frame frame = frames.first();
-        frame
-                .play(8).play(2)
-                .play(9).play(1)
-                .play(10)
-                .play(10)
-                .play(8).play(1)
-                .play(7).play(3)
-                .play(10)
-                .play(10)
-                .play(8).play(1)
-                .play(10).play(8).play(2);
-        System.out.println(frames);
-        Subtotals subtotals = frame.createSubtotals();
-        Output.printFrames(10, frames, new Player("tst"));
-        System.out.println(subtotals);
-    }
 
     @Test
     void printSubtotalsWithFives() {
-        Frame frame =frames.first();
+        Frame frame = frames.first();
         while (!(frame.next() == null && frame.done())) {
             frame = frame.play(5);
             Subtotals subtotals = frames.first().createSubtotals();
