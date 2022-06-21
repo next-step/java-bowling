@@ -363,4 +363,6 @@ gon
 ### Requested changes - phase2
 - [x] FrameMutual.scores, subtotal private 으로 변경
   - rename updateScore to evaluateScore
-- [ ] play하나로 구현하고 테스트도 가능한 구조 찾기
+- [x] play하나로 구현하고 테스트도 가능한 구조 찾기
+  - 밖에서 randomPins 를 구한 후 파라미터로 입력
+- [x] 

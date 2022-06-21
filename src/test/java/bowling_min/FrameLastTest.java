@@ -77,9 +77,6 @@ public class FrameLastTest {
 
     @Test
     public void getScore_twoStrike() {
-//        lastFrame = lastFrame.play(10);
-//        lastFrame = lastFrame.play(10);
-//        lastFrame = lastFrame.play(8);
         lastFrame.play(10).play(10).play(8);
         System.out.println(lastFrame);
         assertThat(lastFrame.getScore()).isEqualTo(28);
@@ -105,7 +102,6 @@ public class FrameLastTest {
     public void getScore_9프레임_Spare() {
         Scores scores = new Scores(List.of(9, 1), 0);
         lastFrame = lastFrame.play(9);
-//        lastFrame = lastFrame.play(1);
         assertThat(lastFrame.calculateAdditionalScore(scores)).isEqualTo(19);
     }
 
@@ -117,23 +113,4 @@ public class FrameLastTest {
             lastFrame.calculateAdditionalScore(scores);
         }).isInstanceOf(UnsupportedOperationException.class);
     }
-
-//    @Test
-//    public void getDesc_3Strike() {
-//        lastFrame.bowl(10).bowl(10).bowl(10);
-//        assertThat(lastFrame.getDesc()).isEqualTo("X | X | X");
-//    }
-//
-//    @Test
-//    public void getDesc_Spare() {
-//        lastFrame.bowl(8).bowl(2).bowl(10);
-//        assertThat(lastFrame.getDesc()).isEqualTo("8 | / | X");
-//    }
-//
-//    @Test
-//    public void getDesc_Miss() {
-//        lastFrame.bowl(8).bowl(1);
-//        assertThat(lastFrame.getDesc()).isEqualTo("8 | 1");
-//
-//    }
 }

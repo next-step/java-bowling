@@ -22,22 +22,12 @@ public class SubtotalsTest {
     }
 
 
-//    @Test
-//    void name() {
-//        frame.playManual(3);
-//        frame.playManual(2);
-//        Integer subtotal = frame.subtotal(subtotals);
-//        assertThat(subtotal).isEqualTo(5);
-////        subtotals.add(frame.subtotal(subtotals));
-////        System.out.println(frame.subtotal(frames));
-//    }
-
     @Test
     void name2() {
         frame = frame.play(3);
         Frame next = frame.play(7);
         assertThatThrownBy(() -> frame.subtotal(subtotals)).isInstanceOf(UnsupportedOperationException.class);
-        next = next.play(1);
+        next.play(1);
         assertThat(frame.subtotal(subtotals)).isEqualTo(11);
     }
 

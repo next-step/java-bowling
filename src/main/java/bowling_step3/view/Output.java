@@ -20,7 +20,6 @@ public class Output {
         }
         print(HEADER_STR + "\n");
         printScores(frames, player);
-//        printSubtotals(frames, player);
     }
 
     public static void printSubtotals(Subtotals subtotals, Player player) {
@@ -28,21 +27,12 @@ public class Output {
         int emptySize = 10 - listSubtotals.size();
         String payload = "| " + formatName(player.name()) + " |" + listSubtotals.stream()
                 .map(subtotal -> formatRecord(subtotal + ""))
-                .reduce("",(acc, cur) -> acc + cur+"|") // empty
-                + (formatRecord("")+"|").repeat(emptySize)
+                .reduce("", (acc, cur) -> acc + cur + "|") // empty
+                + (formatRecord("") + "|").repeat(emptySize)
                 + "\n";
         print(payload);
         System.out.println();
     }
-//    private static void printSubtotals(Frames frames, Player player) {
-//        String payload = "| " + formatName(player.name()) + " |" + frames.frames()
-//                .stream()
-//                .map(frame -> maskSubtotal(frame.subtotal()))
-//                .reduce((acc, cur) -> acc + "|" + cur)
-//                .orElseThrow(() -> new UnsupportedOperationException())
-//                + "|\n";
-//        print(payload);
-//    }
 
     private static String maskSubtotal(Subtotal subtotal) {
         if (subtotal.state() != State.DONE) {

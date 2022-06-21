@@ -8,8 +8,4 @@ public class FrameGeneral extends FrameMutual implements Frame {
     public FrameGeneral(Frame frame) {
         super(frame);
     }
-
-    protected Scores evaluateScore(Scores scores) {
-        return scores;
-    }
 }
