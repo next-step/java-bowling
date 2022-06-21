@@ -37,4 +37,10 @@ class FramePropertiesTest {
         frameProperties.minusTryNo();
         assertThat(frameProperties.tryNo()).isEqualTo(1);
     }
+
+    @Test
+    void plusTryNo() {
+        frameProperties.plusTryNo(1);
+        assertThat(frameProperties.tryNo()).isEqualTo(3);
+    }
 }

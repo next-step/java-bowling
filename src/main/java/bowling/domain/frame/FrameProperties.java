@@ -39,6 +39,10 @@ public class FrameProperties {
         return tryNo;
     }
 
+    public void plusTryNo(int tryNo) {
+        this.tryNo += tryNo;
+    }
+
     @Override
     public String toString() {
         return "FrameProperties{" +
