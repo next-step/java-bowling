@@ -6,30 +6,29 @@ import static bowling.exception.BowlingExceptionCode.*;
 
 public class NormalFrame implements Frame {
     private final int index;
-    private final Pins pins;
+    private final FallenPins fallenPins;
 
-    private int fallenPins;
     private int tryNo;
     private FrameProperties frameProperties;
 
     public NormalFrame(int index) {
-        this(index, 2, new Pins());
+        this(index, 2, new FallenPins());
         frameProperties = new FrameProperties(index);
     }
 
-    public NormalFrame(int index, int tryNo, Pins pins) {
+    public NormalFrame(int index, int tryNo, FallenPins fallenPins) {
         this.index = index;
         this.tryNo = tryNo;
-        this.pins = pins;
+        this.fallenPins = fallenPins;
     }
 
-    public void addPins(int pins) {
-        this.pins.add(pins);
+    public void addPins(int fallenPins) {
+        frameProperties.addPins(fallenPins);
     }
 
     @Override
-    public Pins pins() {
-        return pins;
+    public FallenPins pins() {
+        return frameProperties.pins();
     }
 
     @Override
@@ -37,17 +36,16 @@ public class NormalFrame implements Frame {
         if (excessive(fallenPins)) {
             throw new BowlingException(INVALID_COUNT_OF_FALLEN_PINS, fallenPins);
         }
-        this.fallenPins += fallenPins;
         tryNo--;
-        pins.add(fallenPins);
+        this.fallenPins.add(fallenPins);
     }
 
     private boolean excessive(int fallenPins) {
-        return 10 < this.fallenPins + fallenPins;
+        return 10 < frameProperties.computeSumOfFallenPins() + fallenPins;
     }
 
     private boolean moveable() {
-        return tryNo < 1 || fallenPins > 9;
+        return tryNo < 1 || frameProperties.computeSumOfFallenPins() > 9;
     }
 
     @Override
@@ -67,7 +65,7 @@ public class NormalFrame implements Frame {
     public String toString() {
         return "NormalFrame{" +
                 "index=" + index +
-                ", pins=" + pins +
+                ", pins=" + fallenPins +
                 '}';
     }
 }

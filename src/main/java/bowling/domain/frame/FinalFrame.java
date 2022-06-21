@@ -6,23 +6,23 @@ import static bowling.exception.BowlingExceptionCode.INVALID_COUNT_OF_FALLEN_PIN
 
 public class FinalFrame implements Frame {
     private final int index;
-    private final Pins pins;
-
-    private int fallenPins;
     private int tryNo;
+    private final FallenPins fallenPins;
+    private int totalFallenPins;
+
     private int bonus = 1;
     private FrameProperties frameProperties;
 
     public FinalFrame(int index) {
-        this(index, 2, 0, new Pins());
+        this(index, 2, new FallenPins(), 0);
         frameProperties = new FrameProperties(index);
     }
 
-    public FinalFrame(int index, int tryNo, int fallenPins, Pins pins) {
+    public FinalFrame(int index, int tryNo, FallenPins pins, int totalFallenPins) {
         this.index = index;
         this.tryNo = tryNo;
-        this.fallenPins = fallenPins;
-        this.pins = pins;
+        this.fallenPins = pins;
+        this.totalFallenPins = totalFallenPins;
     }
 
     @Override
@@ -30,26 +30,26 @@ public class FinalFrame implements Frame {
         if (excessive(fallenPins)) {
             throw new BowlingException(INVALID_COUNT_OF_FALLEN_PINS, fallenPins);
         }
-        this.fallenPins += fallenPins;
+        totalFallenPins += fallenPins;
         tryNo--;
         if (isBonus()) {
             tryNo += bonus--;
-            this.fallenPins = 0;
+            totalFallenPins = 0; // TODO(jack.comeback) : fallenPins의 합을 0으로 만들어야 함.
         }
-        pins.add(fallenPins);
+        this.fallenPins.add(fallenPins);
     }
 
     private boolean excessive(int fallenPins) {
-        return 10 < this.fallenPins + fallenPins;
+        return 10 < totalFallenPins + fallenPins;
     }
 
     private boolean isBonus() {
-        return tryNo < 2 && fallenPins == 10;
+        return tryNo < 2 && totalFallenPins == 10;
     }
 
     @Override
-    public Pins pins() {
-        return pins;
+    public FallenPins pins() {
+        return frameProperties.pins();
     }
 
     private boolean moveable() {
@@ -73,7 +73,7 @@ public class FinalFrame implements Frame {
     public String toString() {
         return "FinalFrame{" +
                 "index=" + index +
-                ", pins=" + pins +
+                ", pins=" + fallenPins +
                 '}';
     }
 }
