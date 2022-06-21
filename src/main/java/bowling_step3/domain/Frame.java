@@ -3,15 +3,9 @@ package bowling_step3.domain;
 public interface Frame {
     Frame play(int numPins);
 
-    Frame playRandom();
-
     Integer subtotal(Subtotals subtotals);
 
-    void updateNextSubtotal(Subtotal subtotal);
-
     Scores scores();
-
-//    void updateSubtotal(Frames frames);
 
     int getScore();
 
@@ -26,10 +20,4 @@ public interface Frame {
     Subtotals createSubtotals();
 
     void accumulateResult(Subtotals subtotals);
-
-    Frame play(Scores scores);
-
-//    Subtotal getSubtotal(Frames frames);
-
-//    Frame next(Frames frames);
 }

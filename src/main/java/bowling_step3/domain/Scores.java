@@ -2,7 +2,6 @@ package bowling_step3.domain;
 
 import java.util.*;
 
-
 public class Scores {
     private static int MAX_SCORE = 10;
     private static Random Random = new Random();
@@ -22,10 +21,6 @@ public class Scores {
         this(new ArrayList(), remainingPitch);
     }
 
-//    public Scores(List<Integer> scores) {
-//        this(scores, 2);
-//    }
-
     public Scores pitch(int numPins) {
         this.scores.add(numPins);
         if (numPins == 10 && sum() != 20) {
@@ -39,10 +34,6 @@ public class Scores {
         return new Scores(this.scores, remainingPitch - 1);
     }
 
-    public Scores pitchRandom() {
-        int numPins = Random.nextInt(remainingPins());
-        return pitch(numPins);
-    }
     public int getRandom() {
         return Random.nextInt(remainingPins());
     }
@@ -74,10 +65,6 @@ public class Scores {
 
     public List<Integer> scores() {
         return this.scores;
-    }
-
-    public boolean isStrike() {
-        return this.scores.get(0) == 10;
     }
 
     public Scores evaluateLastBonus() {
@@ -115,19 +102,8 @@ public class Scores {
     public Integer getScore() {
         if (done()) {
             return sum();
-//            return this.scores
-//                    .stream()
-//                    .reduce(0, (acc, cur) -> acc + cur);
         }
         throw new UnsupportedOperationException("Cannot get score yet");
-    }
-
-
-    public int getAdditionalForStrike() {
-        if (this.scores.size() >= 2) {
-            return this.scores.get(0) + this.scores.get(1);
-        }
-        throw new UnsupportedOperationException("Not enough scores");
     }
 
     public int getFirstScore() {
@@ -156,9 +132,5 @@ public class Scores {
                 .limit(2)
                 .reduce((acc, cur) -> acc + cur)
                 .orElseThrow(() -> new UnsupportedOperationException("cannot get sum of Two"));
-    }
-
-    public int remainingPitch() {
-        return remainingPitch;
     }
 }

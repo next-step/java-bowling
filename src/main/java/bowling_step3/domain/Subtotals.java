@@ -25,13 +25,6 @@ public class Subtotals {
         this.subtotal.add(subtotal);
     }
 
-    @Override
-    public String toString() {
-        return "Subtotals{" +
-                "subtotal=" + subtotal +
-                '}';
-    }
-
     public Integer last() {
         if (this.subtotal.size() == 0) {
             return 0;
@@ -42,4 +35,5 @@ public class Subtotals {
     public List<Integer> subtotals() {
         return this.subtotal;
     }
+
 }

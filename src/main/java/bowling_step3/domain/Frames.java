@@ -6,11 +6,9 @@ import java.util.stream.Stream;
 
 public class Frames {
     private final List<Frame> frames;
-    private final Subtotals subtotals;
 
     public Frames(List<Frame> frames) {
         this.frames = frames;
-        this.subtotals = new Subtotals();
     }
 
     public static Frames create() {
@@ -30,40 +28,10 @@ public class Frames {
                 "frames=" + frames +
                 '}';
     }
-//    public static Frames create() {
-//        return new Frames(Stream.iterate(0, i -> i < 10, i -> ++i)
-//                .map(i -> createFrame(i))
-//                .collect(Collectors.toList()));
-//    }
-
-
-    private static Frame createFrame(Integer index) {
-        return index < 9 ? new FrameGeneral() : new FrameLast();
-    }
-
 
     public Frame first() {
         return this.frames.get(0);
     }
-
-    public Frame next(Frame frame) {
-        return get(index(frame) + 1);
-    }
-
-    int index(Frame frame) {
-        int t = this.frames.indexOf(frame);
-        System.out.println(t);
-        System.out.println(Objects.hash(frame));
-        return t;
-    }
-
-    public Frame prev(Frame frame) {
-        if (index(frame) == 0) {
-            throw new UnsupportedOperationException("cannot access to prev");
-        }
-        return this.frames.get(index(frame) - 1);
-    }
-
 
     public Frame get(int i) {
         return this.frames.get(i);
@@ -72,13 +40,6 @@ public class Frames {
     public List<Frame> frames() {
         return this.frames;
     }
-
-//    @Override
-//    public String toString() {
-//        return "Frames{" +
-//                "frames=" + frames +
-//                '}';
-//    }
 
     @Override
     public boolean equals(Object o) {
@@ -93,12 +54,7 @@ public class Frames {
         return Objects.hash(frames);
     }
 
-
     public Frame last() {
         return get(9);
-    }
-
-    public Subtotals subtotals() {
-        return this.subtotals;
     }
 }

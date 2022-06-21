@@ -3,12 +3,10 @@ package bowling_step3.domain;
 public abstract class FrameMutual implements Frame {
     Scores scores;
     private Frame nextFrame;
-//    private Subtotal subtotal;
 
     public FrameMutual(Scores scores, Frame nextFrame) {
         this.scores = scores;
         this.nextFrame = nextFrame;
-//        this.subtotal = subtotal;
     }
 
     public FrameMutual() {
@@ -30,35 +28,6 @@ public abstract class FrameMutual implements Frame {
         }
         return this;
     }
-    public Frame play(Scores scores) {
-        if (this.done()) {
-            throw new UnsupportedOperationException("This frame is done.");
-        }
-        this.scores = scores;
-        if (scores.done()) {
-            return nextFrame;
-        }
-        return this;
-    }
-
-    public Frame playRandom() {
-        if (this.done()) {
-            throw new UnsupportedOperationException("This frame is done.");
-        }
-        Scores scores = this.scores.pitchRandom();
-        this.scores = scores;
-        if (scores.done()) {
-            return nextFrame;
-        }
-        return this;
-    }
-//    public void playRandom(Frames frames) {
-//        Scores scores = this.scores.pitchRandom();
-//        this.scores = evaluateScore(scores);
-//        updateSubtotal(frames);
-//    }
-
-    abstract Scores evaluateScore(Scores scores);
 
     public Subtotals createSubtotals() {
         Subtotals subtotals = new Subtotals();
@@ -67,14 +36,13 @@ public abstract class FrameMutual implements Frame {
     }
 
     public void accumulateResult(Subtotals subtotals) {
-//        Integer result = frameResult();
-        if (!done() ) {
+        if (!done()) {
             return;
         }
-        if(this.state() == State.WAIT_ONCE && nextFrame.scores().scores().size() < 1) {
+        if (this.state() == State.WAIT_ONCE && nextFrame.scores().scores().size() < 1) {
             return;
         }
-        if(this.state() == State.WAIT_TWICE && !nextFrame.done()){
+        if (this.state() == State.WAIT_TWICE && !nextFrame.done()) {
             return;
         }
         subtotals.add(frameResult() + subtotals.last());
@@ -90,23 +58,6 @@ public abstract class FrameMutual implements Frame {
         }
         return nextFrame.calculateAdditionalScore(scores);
     }
-//    public void updateSubtotal(Frames frames) {
-//        if (this.scores.done()) {
-//            State state = evaluateState(this.scores);
-//            this.subtotal = new Subtotal(state, this.subtotal.value() + this.scores.sum());
-//        }
-//        if (frames.index(this) > 0 && frames.prev(this).subtotal().state().waiting()) {
-//            frames.prev(this).subtotal().accumulateBonus(this.scores.lastScore());
-//            this.subtotal = new Subtotal(this.subtotal.state(), this.subtotal.value() + this.scores.lastScore());
-//        }
-//    }
-
-//    abstract State evaluateState(Scores scores);
-
-
-//    public Subtotal subtotal() {
-//        return this.subtotal;
-//    }
 
     public boolean done() {
         return this.scores.done();
@@ -115,10 +66,6 @@ public abstract class FrameMutual implements Frame {
     public Scores scores() {
         return this.scores;
     }
-
-//    public void updateNextSubtotal(Subtotal subtotal) {
-//        this.subtotal = new Subtotal(State.INIT, subtotal.value());
-//    }
 
     public int getScore() {
         return this.scores.getScore();
@@ -132,9 +79,6 @@ public abstract class FrameMutual implements Frame {
     }
 
     public int calculateAdditionalScore(Scores scores) {
-//        if (!this.done()) {
-//            throw new UnsupportedOperationException("Cannot calculate additional yet.");
-//        }
         if (scores.state() == State.WAIT_TWICE && this.scores.getFirstScore() == 10) {
             return 30;
         }
@@ -147,30 +91,13 @@ public abstract class FrameMutual implements Frame {
         throw new UnsupportedOperationException("Cannot calculate additional yet.");
     }
 
-//    public Subtotal getSubtotal(Frames frames) {
-//        return new Subtotal(State.DONE, this.subtotal().value() + frames.next(this).subtotal().value());
-//    }
-
-    public int getAdditionalForStrike() {
-        return this.scores.getAdditionalForStrike();
-    }
-
-    public int getFirstScore() {
-        return this.scores.getFirstScore();
-    }
-
     public Frame next() {
         return nextFrame;
     }
-//    public Frame next(Frames frames) {
-//        return nextFrame;
-//    }
-
 
     public State state() {
         return this.scores.state();
     }
-
 
     @Override
     public String toString() {

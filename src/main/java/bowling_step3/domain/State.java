@@ -27,8 +27,4 @@ public enum State {
     public State decreaseWait() {
         return of(this.remainingWait - 1);
     }
-
-    public boolean waiting() {
-        return this.remainingWait > 0;
-    }
 }

@@ -6,11 +6,6 @@ public class Subtotal {
     private State state;
     private int value;
 
-    public Subtotal(State state, int value) {
-        this.state = state;
-        this.value = value;
-    }
-
     public Subtotal() {
         this.state = State.INIT;
         this.value = 0;
@@ -22,14 +17,6 @@ public class Subtotal {
 
     public int value() {
         return this.value;
-    }
-
-    public void accumulateBonus(int bonus) {
-        this.state = this.state.decreaseWait();
-        this.value += bonus;
-        if (bonus == 10) {
-            this.state = State.DONE;
-        }
     }
 
     @Override
