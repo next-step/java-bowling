@@ -34,13 +34,6 @@ public class Output {
         System.out.println();
     }
 
-    private static String maskSubtotal(Subtotal subtotal) {
-        if (subtotal.state() != State.DONE) {
-            return formatRecord("");
-        }
-        return formatRecord(subtotal.value() + "");
-    }
-
     private static void printScores(Frames frames, Player player) {
         String payload = "| " + formatName(player.name()) + " |" + frames.frames()
                 .stream()
