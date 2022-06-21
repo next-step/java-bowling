@@ -357,12 +357,14 @@ gon
     - Frame 를 리턴해서 다시 Frames 의 특정 index 에 할당하는 방식으로 구현을 시도했으나 next Frame 에 대한 subtotal 값을 처리하는 부분이 멤버 변수에 값을 할당하는 형태로
       되어있어 좀 더 대규모의 리팩토링이 필요할 것같습니다 ㅠ
 - [ ] pitchManual 과 random 으로 분리한 이유?
-    - 프레임 단위의 투구에 대한 테스트를 위해 manual 과 random 으로 분리하였습니다. 
+    - 프레임 단위의 투구에 대한 테스트를 위해 manual 과 random 으로 분리하였습니다.
     - score 도메인에서 이미 random 과 manual 에 대한 테스트 가 되어 있으므로 불필요한 메서드 일까요?
 
 ### Requested changes - phase2
+
 - [x] FrameMutual.scores, subtotal private 으로 변경
-  - rename updateScore to evaluateScore
-- [x] play하나로 구현하고 테스트도 가능한 구조 찾기
-  - 밖에서 randomPins 를 구한 후 파라미터로 입력
-- [x] 
+    - rename updateScore to evaluateScore
+- [x] play 하나로 구현하고 테스트도 가능한 구조 찾기
+    - 밖에서 randomPins 를 구한 후 파라미터로 입력
+- [x] play 시에는 play만 하여 scores를 구하고 이후에 createSubtotals 를 통해 중간누적점수를 구함
+- [x] 테스트를 작은 단위로 분리
