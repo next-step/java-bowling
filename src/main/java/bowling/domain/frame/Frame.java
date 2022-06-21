@@ -7,5 +7,5 @@ public interface Frame {
 
     int index();
 
-    Pins pins();
+    FallenPins pins();
 }

@@ -3,7 +3,7 @@ package bowling.presentation;
 import bowling.domain.Board;
 import bowling.domain.Player;
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.Pins;
+import bowling.domain.frame.FallenPins;
 
 import static bowling.presentation.ScoreFormat.*;
 
@@ -32,21 +32,21 @@ public class OutPut {
         return "%" + size + "s" + " ".repeat(MAX - size);
     }
 
-    private static String getScoreFormat(Pins pins) {
-        if (pins.size() == 1) {
-            return String.format(centerAlignFormat(3), getSingleScoreFormat(pins.first()));
+    private static String getScoreFormat(FallenPins fallenPins) {
+        if (fallenPins.size() == 1) {
+            return String.format(centerAlignFormat(3), getSingleScoreFormat(fallenPins.first()));
         }
-        if (pins.size() == 2) {
-            return String.format(centerAlignFormat(4), getDoubleScoreFormat(pins.first(), pins.second()));
+        if (fallenPins.size() == 2) {
+            return String.format(centerAlignFormat(4), getDoubleScoreFormat(fallenPins.first(), fallenPins.second()));
         }
-        if (pins.size() == 3) {
-            if (pins.first() == TEN) {
-                return String.format("%2s|%3s", getSingleScoreFormat(pins.first()), getDoubleScoreFormat(pins.second(), pins.third()));
+        if (fallenPins.size() == 3) {
+            if (fallenPins.first() == TEN) {
+                return String.format("%2s|%3s", getSingleScoreFormat(fallenPins.first()), getDoubleScoreFormat(fallenPins.second(), fallenPins.third()));
             }
-            if (pins.first() == TEN && pins.second() == TEN) {
-                return String.format("%2s|%1s|%1s", getSingleScoreFormat(pins.first()), getSingleScoreFormat(pins.second()), getSingleScoreFormat(pins.third()));
+            if (fallenPins.first() == TEN && fallenPins.second() == TEN) {
+                return String.format("%2s|%1s|%1s", getSingleScoreFormat(fallenPins.first()), getSingleScoreFormat(fallenPins.second()), getSingleScoreFormat(fallenPins.third()));
             }
-            return String.format("%4s|%1s", getDoubleScoreFormat(pins.first(), pins.second()), getSingleScoreFormat(pins.third()));
+            return String.format("%4s|%1s", getDoubleScoreFormat(fallenPins.first(), fallenPins.second()), getSingleScoreFormat(fallenPins.third()));
         }
         return String.format(centerAlignFormat(6), "");
     }
