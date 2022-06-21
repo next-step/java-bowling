@@ -25,7 +25,7 @@ public class NormalTest {
 
     @Test
     void tryNoIs0Given_validateMoveToNext() {
-        frame = new NormalFrame(1, 0, new FallenPins(List.of(1,3)));
+        frame = new NormalFrame(new FrameProperties(1, new FallenPins(List.of(1,3)), 0));
         assertThat(frame.validateMoveToNextIndex()).isEqualTo(2);
     }
 

@@ -31,4 +31,10 @@ class FramePropertiesTest {
         frameProperties = new FrameProperties(1, new FallenPins(List.of(1,3)), 0);
         assertThat(frameProperties.computeSumOfFallenPins()).isEqualTo(4);
     }
+
+    @Test
+    void minusTryNo() {
+        frameProperties.minusTryNo();
+        assertThat(frameProperties.tryNo()).isEqualTo(1);
+    }
 }

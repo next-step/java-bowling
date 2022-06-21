@@ -30,4 +30,21 @@ public class FrameProperties {
     public int computeSumOfFallenPins() {
         return pins().computeSum();
     }
+
+    public void minusTryNo() {
+        tryNo--;
+    }
+
+    public int tryNo() {
+        return tryNo;
+    }
+
+    @Override
+    public String toString() {
+        return "FrameProperties{" +
+                "index=" + index +
+                ", fallenPins=" + fallenPins +
+                ", tryNo=" + tryNo +
+                '}';
+    }
 }
