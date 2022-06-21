@@ -1,4 +1,4 @@
-package bowling_min;
+package bowling_step3;
 
 import bowling_step3.domain.Frame;
 import bowling_step3.domain.Frames;
@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

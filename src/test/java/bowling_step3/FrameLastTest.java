@@ -1,4 +1,4 @@
-package bowling_min;
+package bowling_step3;
 
 import bowling_step3.domain.*;
 import org.junit.jupiter.api.BeforeEach;
