@@ -151,7 +151,7 @@ Frame 10
 - [x] 인스턴스화 하지 않는 Input등의 유틸은 생성자를 private으로 써서 불필요한 인스턴스 생성을 막는다
 - [x] payload -> 세부 이름으로 변경
 - [x] DeleteHistories 에 Optional 제거
-  - overload 으로 두 개의 add를 구현
+    - overload 으로 두 개의 add를 구현
 - [x] 각 테스트별 @DisplayName 추가
 - [x] 점수판 출력에 대한 중복 부분 const화
     - [x] 점수판 헤더
@@ -163,8 +163,208 @@ Frame 10
     - 플레이를 할때마다 Score 인스턴스 스스로 점수를 받아서 더한다
     - 1 ~ 9 프레임을 NormalFrame, 10 프레임을 FinalFrame과 같은 구조로 구현한 후 Frame을 추가해 중복을 제거해 본다.
     - 다음 Frame을 현재 Frame 외부에서 생성하기 보다 현재 Frame에서 다음 Frame을 생성하는 방식으로 구현해 보고, 어느 구현이 더 좋은지 검토해 본다.
-- [x] Score 에 대한 format 을 ScoreType enum 내에 포장 
+- [x] Score 에 대한 format 을 ScoreType enum 내에 포장
 - [x] 누락 테스트 추가
-  - Scores
-  - PlayFrames
-  - PlayFrame
+    - Scores
+    - PlayFrames
+    - PlayFrame
+
+### Requested changes phase 2
+
+- [x] create factory method of Scores for Player
+- [ ] Const 의 변수들 필요한 위치로 분리
+    - class 당 2개 변수 제한 때문에 옮기기 어렵다 -> static 변수는 괜찮은가?
+- [x] 컬렉션을 리턴해줄때는 불변으로 리턴 (PlayFrames)
+- [x] 주석 제거
+
+## Step3
+
+### Result
+
+```
+Please put player name (Max 3 latters)
+gon
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| gon  |        |        |        |        |        |        |        |        |        |        |
+| gon  |        |        |        |        |        |        |        |        |        |        |
+
+1 Frame pitch: 6
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| gon  |  6     |        |        |        |        |        |        |        |        |        |
+| gon  |        |        |        |        |        |        |        |        |        |        |
+
+1 Frame pitch: 2
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| gon  |  6|2   |        |        |        |        |        |        |        |        |        |
+| gon  |  8     |        |        |        |        |        |        |        |        |        |
+
+2 Frame pitch: 5
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| gon  |  6|2   |  5     |        |        |        |        |        |        |        |        |
+| gon  |  8     |        |        |        |        |        |        |        |        |        |
+
+2 Frame pitch: 4
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| gon  |  6|2   |  5|4   |        |        |        |        |        |        |        |        |
+| gon  |  8     |  17    |        |        |        |        |        |        |        |        |
+
+3 Frame pitch: 4
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| gon  |  6|2   |  5|4   |  4     |        |        |        |        |        |        |        |
+| gon  |  8     |  17    |        |        |        |        |        |        |        |        |
+
+3 Frame pitch: 2
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| gon  |  6|2   |  5|4   |  4|2   |        |        |        |        |        |        |        |
+| gon  |  8     |  17    |  23    |        |        |        |        |        |        |        |
+
+4 Frame pitch: 7
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| gon  |  6|2   |  5|4   |  4|2   |  7     |        |        |        |        |        |        |
+| gon  |  8     |  17    |  23    |        |        |        |        |        |        |        |
+
+4 Frame pitch: 3
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| gon  |  6|2   |  5|4   |  4|2   |  7|/   |        |        |        |        |        |        |
+| gon  |  8     |  17    |  23    |        |        |        |        |        |        |        |
+
+5 Frame pitch: 9
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| gon  |  6|2   |  5|4   |  4|2   |  7|/   |  9     |        |        |        |        |        |
+| gon  |  8     |  17    |  23    |  42    |        |        |        |        |        |        |
+
+5 Frame pitch: 0
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| gon  |  6|2   |  5|4   |  4|2   |  7|/   |  9|-   |        |        |        |        |        |
+| gon  |  8     |  17    |  23    |  42    |  51    |        |        |        |        |        |
+
+6 Frame pitch: 5
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| gon  |  6|2   |  5|4   |  4|2   |  7|/   |  9|-   |  5     |        |        |        |        |
+| gon  |  8     |  17    |  23    |  42    |  51    |        |        |        |        |        |
+
+6 Frame pitch: 2
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| gon  |  6|2   |  5|4   |  4|2   |  7|/   |  9|-   |  5|2   |        |        |        |        |
+| gon  |  8     |  17    |  23    |  42    |  51    |  58    |        |        |        |        |
+
+7 Frame pitch: 1
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| gon  |  6|2   |  5|4   |  4|2   |  7|/   |  9|-   |  5|2   |  1     |        |        |        |
+| gon  |  8     |  17    |  23    |  42    |  51    |  58    |        |        |        |        |
+
+7 Frame pitch: 3
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| gon  |  6|2   |  5|4   |  4|2   |  7|/   |  9|-   |  5|2   |  1|3   |        |        |        |
+| gon  |  8     |  17    |  23    |  42    |  51    |  58    |  62    |        |        |        |
+
+8 Frame pitch: 1
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| gon  |  6|2   |  5|4   |  4|2   |  7|/   |  9|-   |  5|2   |  1|3   |  1     |        |        |
+| gon  |  8     |  17    |  23    |  42    |  51    |  58    |  62    |        |        |        |
+
+8 Frame pitch: 4
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| gon  |  6|2   |  5|4   |  4|2   |  7|/   |  9|-   |  5|2   |  1|3   |  1|4   |        |        |
+| gon  |  8     |  17    |  23    |  42    |  51    |  58    |  62    |  67    |        |        |
+
+9 Frame pitch: 8
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| gon  |  6|2   |  5|4   |  4|2   |  7|/   |  9|-   |  5|2   |  1|3   |  1|4   |  8     |        |
+| gon  |  8     |  17    |  23    |  42    |  51    |  58    |  62    |  67    |        |        |
+
+9 Frame pitch: 1
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| gon  |  6|2   |  5|4   |  4|2   |  7|/   |  9|-   |  5|2   |  1|3   |  1|4   |  8|1   |        |
+| gon  |  8     |  17    |  23    |  42    |  51    |  58    |  62    |  67    |  76    |        |
+
+10 Frame pitch: 10
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| gon  |  6|2   |  5|4   |  4|2   |  7|/   |  9|-   |  5|2   |  1|3   |  1|4   |  8|1   |  10    |
+| gon  |  8     |  17    |  23    |  42    |  51    |  58    |  62    |  67    |  76    |        |
+
+10 Frame pitch: 0
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| gon  |  6|2   |  5|4   |  4|2   |  7|/   |  9|-   |  5|2   |  1|3   |  1|4   |  8|1   |  X|/   |
+| gon  |  8     |  17    |  23    |  42    |  51    |  58    |  62    |  67    |  76    |        |
+
+10 Frame pitch: 2
+| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |
+| gon  |  6|2   |  5|4   |  4|2   |  7|/   |  9|-   |  5|2   |  1|3   |  1|4   |  8|1   |  X|-|2 |
+| gon  |  8     |  17    |  23    |  42    |  51    |  58    |  62    |  67    |  76    |  88    ||
+```
+
+### Todo
+
+#### first implement at `bowling`
+
+- [x] print 로직을 Output 으로 이동
+- [x] 누계 점수 기능 구현
+    - [x] Subtotal class 생성
+        - 인자로 이전 subtotal을 받아 합산
+        - 생성 시 strike, miss, spare 경우에 따라 waiting 설정
+    - [x] Scores -> Frames 로 이름 변경하고 subtotals 추가
+    - [x] plays 내에서 subtotal 생성하고 evaluateBonus 로직 추가
+    - [x] 10 프레임 이후에는 handleLast 에서 strike, spare 인 경우 한번 더 투구: playBonus
+        - 이외의 경우에는 subtotal.setLast 로 기다리지 않아도 됌을 명시하고 최종 점수 출력
+- [x] domain test 추가
+    - Player
+    - Frames
+    - Scores
+    - Subtotal
+- [ ] Refactoring 가능 class 확인
+
+#### second implement at `bowling_Step3`
+
+- [x] 최하위도메인인 Scores는 scores(점수 리스트 최대 3개), remainingPitch(남은 투구 횟수) 를 가진다.
+    - [x] 최대핀개수10개를 활용해 remainingPins구함
+    - [x] pitchRandom() 수행 시 남은 핀의 개수를 최대 범위로 하여 랜덤 투구 수행
+    - [x] lastScore() 통해 scores 중 마지막 투구한 점수 도출
+    - [x] isStrike() 스트라이크 여부 확인
+    - [x] done() 잔여 투구가 없는지 여부 확인
+    - [x] evaluateLastBonus() FrameLast에서 Strike이거나 Spare인경우 remainingPitch를 하나 더 준다, 최종 3번째 투구인 경우 remainingPitch는 0으로
+      고정
+- [x] Subtotal 은 State와 value를 가진다.
+    - [x] accumulateBonus(int bonus) 는 State의 wait 단계를 한 단계 낮추고 보너스를 합산한다. bonus가 10인경우(Strige) 는 바로 DONE으로 설정
+- [x] State 는 INIT, DONE, WAIT_TWICE, WAIT_ONCE 의 상태를 가진다
+    - [x] 각 상태는 remainingWait를 가지며 보너스를 기다려야할 횟수를 의미한다.
+    - [x] decreaseWait(): WAIT 단계를 한 단계 낮춰준다.
+    - [x] waiting(): 기다려야 할 보너스가 남았는지 여부 리턴
+- [x] FrameGeneral은 1 ~ 9 라운드를 담당하며, Scores, Subtotal을 멤버로 가진다.
+    - [x] pitchManual()은 수동으로, pitchRandom()은 자동으로 투구를 하고 pitch 를 호출한다
+    - [x] pitch(Scores scores, Frames frames) 는 이전 프레임이 보너스를 대기중일 경우 subtotal에 점수를 합산하고 현재 프레임의 subtotal에도 합산한다.
+        - [x] evaluateState() 프레임의 투구를 모두 마친 경우에는 score의 상태를 평가하여 WAIT_TWICE, WAIT_ONCE, DONE 중에 하나를 가진다
+- [x] FrameLast 는 10라운드를 담당한다
+    - [x] pitch의 경우 FrameGeneral과 다르게 scores.evaluateLastBonus() 를 수행하여 남은 투구횟수를 추가할 지 결정한다.
+- [x] Frames 는 frame에 대한 일급 컬렉션이다
+    - [x] create() 는 0~8 은 FrameGeneral, 9는 FrameLast 를 생성해준다
+    - index(): 현재 프레임의 index를 리턴
+    - first(): 첫 Frame 리턴
+    - next(): 다음 Frame을 리턴
+- [x] Frame 은 Frames 일급 컬렉션이 FrameGeneral과 FrameLast 를 모두 가지게 해주는 인터페이스
+- [x] Player 는 String name을 변수로 가지며 name은 3글자를 초과할 수 없다.
+
+### Requested changes
+
+- [x] equals, hashCode 는 클래스의 제일 아래에 구현
+- [x] 인터페이스와 구현 클래스 사이에 추상 클래스 추가하여 중복 제거
+- [x] pitch 에서 투구할 때는 투구 정보만 관리, score, subtotal 계산은 별도 분리
+    - [x] rename pitchManual to playManual
+    - [x] rename pitchRandom to pitchRandom
+    - [x] split to updateScore
+    - [x] split to updateSubtotal
+- [ ] Frame immutable 을 지향하기 위채 최대한 노력
+    - Frame 를 리턴해서 다시 Frames 의 특정 index 에 할당하는 방식으로 구현을 시도했으나 next Frame 에 대한 subtotal 값을 처리하는 부분이 멤버 변수에 값을 할당하는 형태로
+      되어있어 좀 더 대규모의 리팩토링이 필요할 것같습니다 ㅠ
+- [ ] pitchManual 과 random 으로 분리한 이유?
+    - 프레임 단위의 투구에 대한 테스트를 위해 manual 과 random 으로 분리하였습니다.
+    - score 도메인에서 이미 random 과 manual 에 대한 테스트 가 되어 있으므로 불필요한 메서드 일까요?
+
+### Requested changes - phase2
+
+- [x] FrameMutual.scores, subtotal private 으로 변경
+    - rename updateScore to evaluateScore
+- [x] play 하나로 구현하고 테스트도 가능한 구조 찾기
+    - 밖에서 randomPins 를 구한 후 파라미터로 입력
+- [x] play 시에는 play만 하여 scores를 구하고 이후에 createSubtotals 를 통해 중간누적점수를 구함
+- [x] 테스트를 작은 단위로 분리
