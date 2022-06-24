@@ -18,4 +18,6 @@ public interface Frame {
     Subtotals createSubtotals();
 
     void accumulateResult(Subtotals subtotals);
+
+    boolean finished();
 }

@@ -92,6 +92,10 @@ public abstract class FrameMutual implements Frame {
         return this.scores.state();
     }
 
+    public boolean finished() {
+        return this.next() == null && this.done();
+    }
+
     @Override
     public String toString() {
         return "FrameMutual{" +

@@ -4,16 +4,14 @@ import bowling_step3.domain.*;
 import bowling_step3.view.Input;
 import bowling_step3.view.Output;
 
-import java.util.stream.Stream;
-
 public class BowlingApp {
     public static void main(String[] args) {
         String name = Input.scanPlayer();
         Player player = new Player(name);
 
         Frames frames = Frames.create();
-        Frame frame =frames.first();
-        while (!(frame.next() == null && frame.done())) {
+        Frame frame = frames.first();
+        while (!frame.finished()) {
             int randomPin = frame.scores().getRandom();
             frame = frame.play(randomPin);
             Subtotals subtotals = frames.first().createSubtotals();

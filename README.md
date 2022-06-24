@@ -373,7 +373,7 @@ gon
 
 #### BowlingApp.java
 
-- [ ] frame.finished 로 종료 여부 판단
+- [x] frame.finished 로 종료 여부 판단
 
 #### Frame.java
 
