@@ -4,17 +4,17 @@ public abstract class AbstractFrame implements Frame {
     Scores scores;
     private Frame nextFrame;
 
-    public AbstractFrame(Scores scores, Frame nextFrame) {
-        this.scores = scores;
-        this.nextFrame = nextFrame;
-    }
-
     public AbstractFrame() {
         this(new Scores(), new FrameGeneral());
     }
 
     public AbstractFrame(Frame frame) {
         this(new Scores(), frame);
+    }
+
+    public AbstractFrame(Scores scores, Frame nextFrame) {
+        this.scores = scores;
+        this.nextFrame = nextFrame;
     }
 
     public Frame play(int numPins) {

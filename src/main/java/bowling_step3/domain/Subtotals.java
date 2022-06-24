@@ -7,12 +7,12 @@ import java.util.Objects;
 public class Subtotals {
     private List<Integer> subtotal;
 
-    public Subtotals(List<Integer> subtotal) {
-        this.subtotal = subtotal;
-    }
-
     public Subtotals() {
         this(new LinkedList<>());
+    }
+
+    public Subtotals(List<Integer> subtotal) {
+        this.subtotal = subtotal;
     }
 
     public Integer sum() {

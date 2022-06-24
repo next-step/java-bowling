@@ -12,13 +12,13 @@ public class Scores {
         this(new ArrayList(), 2);
     }
 
+    public Scores(int remainingPitch) {
+        this(new ArrayList(), remainingPitch);
+    }
+
     public Scores(List<Integer> scores, int remainingPitch) {
         this.scores = scores;
         this.remainingPitch = remainingPitch;
-    }
-
-    public Scores(int remainingPitch) {
-        this(new ArrayList(), remainingPitch);
     }
 
     public Scores pitch(int numPins) {
