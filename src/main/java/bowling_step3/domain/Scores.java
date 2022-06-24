@@ -67,17 +67,6 @@ public class Scores {
         return this.scores;
     }
 
-    public Scores evaluateLastBonus() {
-        int remainingTry = this.remainingPitch;
-        if (sum() >= 10) {
-            remainingTry++;
-        }
-        if (this.scores.size() == 3) {
-            return new Scores(this.scores, 0);
-        }
-        return new Scores(this.scores, remainingTry);
-    }
-
     @Override
     public String toString() {
         return "Scores{" +

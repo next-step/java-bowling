@@ -15,13 +15,6 @@ public class Subtotals {
         this.subtotal = subtotal;
     }
 
-    public Integer sum() {
-        return this.subtotal
-                .stream()
-                .mapToInt(Integer::intValue)
-                .sum();
-    }
-
     public void add(Integer subtotal) {
         this.subtotal.add(subtotal);
     }
