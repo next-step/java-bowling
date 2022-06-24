@@ -1,6 +1,6 @@
 package bowling_step3.domain;
 
-public class FrameLast extends FrameMutual {
+public class FrameLast extends AbstractFrame {
     public FrameLast() {
         super(new Scores(3), null);
     }

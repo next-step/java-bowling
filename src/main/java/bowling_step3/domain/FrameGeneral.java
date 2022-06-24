@@ -1,6 +1,6 @@
 package bowling_step3.domain;
 
-public class FrameGeneral extends FrameMutual {
+public class FrameGeneral extends AbstractFrame {
     public FrameGeneral() {
         super();
     }

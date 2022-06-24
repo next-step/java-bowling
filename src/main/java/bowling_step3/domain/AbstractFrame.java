@@ -1,19 +1,19 @@
 package bowling_step3.domain;
 
-public abstract class FrameMutual implements Frame {
+public abstract class AbstractFrame implements Frame {
     Scores scores;
     private Frame nextFrame;
 
-    public FrameMutual(Scores scores, Frame nextFrame) {
+    public AbstractFrame(Scores scores, Frame nextFrame) {
         this.scores = scores;
         this.nextFrame = nextFrame;
     }
 
-    public FrameMutual() {
+    public AbstractFrame() {
         this(new Scores(), new FrameGeneral());
     }
 
-    public FrameMutual(Frame frame) {
+    public AbstractFrame(Frame frame) {
         this(new Scores(), frame);
     }
 
