@@ -1,7 +1,8 @@
 package bowling_step3;
 
 import bowling_step3.domain.Frame;
-import bowling_step3.domain.FrameLast;
+//import bowling_step3.domain.FrameLast;
+import bowling_step3.domain.FrameMutual;
 import bowling_step3.domain.Frames;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +18,6 @@ public class FramesTest {
                 .skip(9)
                 .findFirst()
                 .orElseThrow();
-        assertThat(actual).isInstanceOf(FrameLast.class);
+        assertThat(actual.next()).isNull();
     }
 }

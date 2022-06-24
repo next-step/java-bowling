@@ -1,6 +1,10 @@
 package bowling_step3.domain;
 
-public class FrameLast extends FrameMutual implements Frame {
+public class FrameLast extends FrameMutual {
+    public FrameLast() {
+        super(new Scores(3), null);
+    }
+
     @Override
     public Frame play(int numPins) {
         if (this.done()) {

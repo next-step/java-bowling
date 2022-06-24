@@ -375,18 +375,19 @@ gon
 
 - [x] frame.finished 로 종료 여부 판단
 
-#### Frame.java
-
-- [ ] interface 분리하여 메서드 수 줄이기
 
 #### FrameLast.java
 
-- [ ] FrameMutual 이 Frame interface 를 구현하고 있으므로 FrameMutual 만 상속
+- [x] FrameMutual 이 Frame interface 를 구현하고 있으므로 FrameMutual 만 상속
 
 #### FrameMutual.java
 
 - [ ] 추상 클래스임을 표현 하기 위해 AbstractFrame 으로 변경
 - [ ] 주 생성자는 생성자의 마지막에 구현
 - [ ] 인스턴스 변수를 private 접근 제어자로 변경
+
+#### Frame.java
+
+- [ ] interface 분리하여 메서드 수 줄이기
 
 ## Step 4

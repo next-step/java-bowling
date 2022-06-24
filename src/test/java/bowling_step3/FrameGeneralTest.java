@@ -41,7 +41,6 @@ public class FrameGeneralTest {
         assertThat(frame.state()).isEqualTo(State.DONE);
     }
 
-
     @Test
     void printSubtotalsWithFives() {
         Frame frame = frames.first();
