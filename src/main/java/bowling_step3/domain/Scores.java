@@ -122,4 +122,8 @@ public class Scores {
                 .reduce((acc, cur) -> acc + cur)
                 .orElseThrow(() -> new UnsupportedOperationException("cannot get sum of Two"));
     }
+
+    public boolean isSpare() {
+        return this.sumOfTwo() == MAX_SCORE;
+    }
 }
