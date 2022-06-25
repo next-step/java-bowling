@@ -15,10 +15,7 @@ public class FrameLast extends AbstractFrame {
             throw new UnsupportedOperationException("This frame is done.");
         }
         Scores scores = this.scores().pitchLast(numPins);
-//        this.scores = scores;
-//        Frame newFrame = new FrameLast(scores);
         if (scores.sum() < 10 && scores.scores().size() == 2) {
-//            this.scores =
             return new FrameLast(new Scores(scores.scores(), 0));
         }
         return new FrameLast(scores);

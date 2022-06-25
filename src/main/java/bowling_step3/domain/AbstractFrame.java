@@ -2,7 +2,7 @@ package bowling_step3.domain;
 
 public abstract class AbstractFrame implements Frame {
     private Scores scores;
-    private Frame nextFrame;
+    private final Frame nextFrame;
 
     public AbstractFrame() {
         this(new Scores(), new FrameGeneral());
