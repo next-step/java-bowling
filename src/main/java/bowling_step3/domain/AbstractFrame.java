@@ -1,7 +1,7 @@
 package bowling_step3.domain;
 
 public abstract class AbstractFrame implements Frame {
-    Scores scores;
+    private Scores scores;
     private Frame nextFrame;
 
     public AbstractFrame() {
@@ -102,5 +102,13 @@ public abstract class AbstractFrame implements Frame {
                 "scores=" + scores +
                 ", nextFrame=" + nextFrame +
                 '}';
+    }
+
+    protected Integer sumOfTwo() {
+        return this.scores.sumOfTwo();
+    }
+
+    protected Integer getFirstScore() {
+        return this.scores.getFirstScore();
     }
 }

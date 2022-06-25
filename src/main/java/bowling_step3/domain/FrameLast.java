@@ -5,17 +5,23 @@ public class FrameLast extends AbstractFrame {
         super(new Scores(3), null);
     }
 
+    public FrameLast(Scores scores) {
+        super(scores, null);
+    }
+
     @Override
     public Frame play(int numPins) {
         if (this.done()) {
             throw new UnsupportedOperationException("This frame is done.");
         }
         Scores scores = this.scores().pitchLast(numPins);
-        this.scores = scores;
-        if (this.scores().sum() < 10 && this.scores().scores().size() == 2) {
-            this.scores = new Scores(scores.scores(), 0);
+//        this.scores = scores;
+//        Frame newFrame = new FrameLast(scores);
+        if (scores.sum() < 10 && scores.scores().size() == 2) {
+//            this.scores =
+            return new FrameLast(new Scores(scores.scores(), 0));
         }
-        return this;
+        return new FrameLast(scores);
     }
 
     @Override
@@ -29,18 +35,19 @@ public class FrameLast extends AbstractFrame {
     @Override
     Integer frameResult() {
         if (this.done()) {
-            return this.scores.getScore();
+            return this.getScore();
         }
         return null;
     }
 
     public int calculateAdditionalScore(Scores scores) {
-        if (scores.state() == State.WAIT_TWICE && this.scores.scores().size() >= 2) {
-            return scores.getScore() + this.scores.sumOfTwo();
+        if (scores.state() == State.WAIT_TWICE && this.scores().scores().size() >= 2) {
+            return scores.getScore() + this.sumOfTwo();
         }
-        if (scores.state() == State.WAIT_ONCE && this.scores.scores().size() >= 1) {
-            return scores.getScore() + this.scores.getFirstScore();
+        if (scores.state() == State.WAIT_ONCE && this.scores().scores().size() >= 1) {
+            return scores.getScore() + this.getFirstScore();
         }
         throw new UnsupportedOperationException("Cannot calculate additional yet.");
     }
 }
+
