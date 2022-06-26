@@ -3,7 +3,7 @@ package bowling_step3.domain;
 import java.util.*;
 
 public class Scores {
-    private static int MAX_SCORE = 10;
+    public static int MAX_SCORE = 10;
     private static Random Random = new Random();
     private final List<Integer> scores;
     private final int remainingPitch;
