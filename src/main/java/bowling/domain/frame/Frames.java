@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 public class Frames {
     private static final int NUMBERS_OF_NORMAL_FRAME = 9;
@@ -17,6 +17,9 @@ public class Frames {
         frames.add(new FinalFrame());
     }
 
+    public Frame getFrame(int frameIndex) {
+        return frames.get(frameIndex);
+    }
 
     public FrameLinkedList getFrames() {
         return frames;
