@@ -126,4 +126,8 @@ public class Scores {
     public boolean isSpare() {
         return this.sumOfTwo() == MAX_SCORE;
     }
+
+    public boolean isStrike() {
+       return this.lastScore() == MAX_SCORE;
+    }
 }

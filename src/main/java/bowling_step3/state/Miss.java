@@ -8,4 +8,9 @@ public class Miss implements State {
     public Miss(Scores scores) {
         this.scores = scores;
     }
+
+    @Override
+    public State pitch(int i) {
+        throw new UnsupportedOperationException("cannot pitch more");
+    }
 }

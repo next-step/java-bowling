@@ -8,4 +8,9 @@ public class Spare implements State {
     public Spare(Scores scores) {
         this.scores = scores;
     }
+
+    @Override
+    public State pitch(int i) {
+        return null;
+    }
 }
