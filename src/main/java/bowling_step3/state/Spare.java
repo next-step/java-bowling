@@ -2,15 +2,21 @@ package bowling_step3.state;
 
 import bowling_step3.domain.Scores;
 
-public class Spare implements State {
+public class Spare extends Done {
     private final Scores scores;
 
     public Spare(Scores scores) {
+        validate(scores);
         this.scores = scores;
     }
 
-    @Override
-    public State pitch(int i) {
-        return null;
+    private void validate(Scores scores) {
+        if (!scores.isSpare()) {
+            throw new IllegalArgumentException("argument is not spare");
+        }
+    }
+
+    public boolean calculateAdditionalScore(Scores score) {
+        return false;
     }
 }
