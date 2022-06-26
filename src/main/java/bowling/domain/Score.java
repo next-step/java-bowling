@@ -11,11 +11,11 @@ public class Score {
     private int score;
     private int left;
 
-    Score() {
+    public Score() {
         this(DEFAULT_VALUE, DEFAULT_VALUE);
     }
 
-    Score(int score, int left) {
+    public Score(int score, int left) {
         this.score = score;
         this.left = left;
     }
@@ -24,18 +24,18 @@ public class Score {
         return new Score(score += countOfPins, left - 1);
     }
 
-    int getScore() {
+    public int getScore() {
         if (!canCalculateScore()) {
             throw new CannotCalculateException("점수를 계산 할 수 없습니다.");
         }
         return this.score;
     }
 
-    boolean canCalculateScore() {
+    public boolean canCalculateScore() {
         return left == NO_MORE_CALCULATION;
     }
 
-    int getLeft() {
+    public int getLeft() {
         return left;
     }
 

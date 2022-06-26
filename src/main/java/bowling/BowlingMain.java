@@ -1,32 +1,50 @@
 package bowling;
 
-import bowling.domain.FrameLinkedList;
-import bowling.domain.Frames;
-import bowling.domain.Frame;
-import bowling.domain.Name;
+import bowling.domain.Player;
+import bowling.domain.Players;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class BowlingMain {
-    private static final int NUMBERS_OF_NORMAL_FRAMES = 9;
+    private static final int NUMBERS_OF_FRAMES = 10;
     private static final int INITIAL_INDEX = 0;
 
     public static void main(String[] args) {
-        Name name = new Name(InputView.inputPlayerName());
+        Players players = createPlayers();
+        for (int frameIndex = INITIAL_INDEX; frameIndex < NUMBERS_OF_FRAMES; frameIndex++) {
+            getPlayersScore(players, frameIndex);
+        }
+    }
 
-        Frames frames = new Frames();
-        int frameIndex = INITIAL_INDEX;
+    private static Players createPlayers() {
+        int numberOfPlayers = InputView.inputNumberOfPlayers();
 
-        while (frameIndex <= NUMBERS_OF_NORMAL_FRAMES) {
-            FrameLinkedList frameLinkedList = frames.getFrames();
-            Frame frame = frameLinkedList.get(frameIndex);
-            frame.delivery(InputView.inputScore(frameIndex + 1));
-            ResultView.printBowlingGame(name.getName(), frames, frameIndex);
+        Map<Player, Frames> playerMap = new LinkedHashMap<>();
+        for (int i = 0; i < numberOfPlayers; i++) {
+            playerMap.put(new Player(InputView.inputPlayerName()), new Frames());
+        }
+        return new Players(playerMap);
+    }
 
-            if (frame.additionallyDeliverable()) {
-                continue;
-            }
-            frameIndex++;
+    private static void getPlayersScore(Players players, int frameIndex) {
+        Map<Player, Frames> playersMap = players.getPlayers();
+        for (Player player : playersMap.keySet()) {
+            getEachPlayersScore(frameIndex, player, players);
+        }
+    }
+
+    private static void getEachPlayersScore(int frameIndex, Player player, Players players) {
+        Frame frame = players.getFrame(player, frameIndex);
+        frame.bowl(InputView.inputScore(player, frameIndex + 1));
+        ResultView.printBowlingGame(players, frameIndex);
+
+        if (frame.capableOfAdditionalBowling()) {
+            getEachPlayersScore(frameIndex, player, players);
         }
     }
 }
