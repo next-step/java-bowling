@@ -14,6 +14,6 @@ public class FirstPitch implements State {
         if (scores.isSpare()) {
             return new Spare(scores);
         }
-        throw new UnsupportedOperationException("unreachable");
+        return new Miss(scores);
     }
 }
