@@ -4,9 +4,6 @@ import bowling.domain.state.AbstractState;
 import bowling.domain.state.FullFrameState;
 
 public abstract class AbstractFrame implements Frame {
-    static final int NOT_COMPLETED_CALCULATION = 0;
-    static final int CALCULATE_TWICE = 2;
-    static final int CALCULATE_ONCE = 1;
 
     FullFrameState fullFrameState;
     AbstractFrame next;
@@ -44,6 +41,10 @@ public abstract class AbstractFrame implements Frame {
 
     public String symbolOfSecondFrame() {
         return fullFrameState.symbolOfSecondFrame();
+    }
+
+    AbstractFrame getNext() {
+        return next;
     }
 
     AbstractFrame afterNext() {

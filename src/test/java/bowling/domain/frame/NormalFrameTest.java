@@ -127,7 +127,20 @@ class NormalFrameTest {
         assertThat(abstractFrame.getScore()).isEqualTo(6);
     }
 
-    @DisplayName("Frame이 추가 점수가 필요할 경우 next에서 결과 도출")
+    @DisplayName("miss 점수를 계산하여 출력한다.")
+    @Test
+    void getScore_miss() {
+        FrameLinkedList frameLinkedList = new FrameLinkedList();
+        frameLinkedList.add(new NormalFrame());
+        AbstractFrame abstractFrame1 = frameLinkedList.get();
+        abstractFrame1.bowl(3);
+        abstractFrame1.bowl(6);
+
+        int score1 = abstractFrame1.getScore();
+        assertThat(score1).isEqualTo(9);
+    }
+
+    @DisplayName("Spare의 점수를 계산하여 출력한다.")
     @Test
     void getScore_spare() {
         FrameLinkedList frameLinkedList = new FrameLinkedList();
@@ -135,7 +148,7 @@ class NormalFrameTest {
         AbstractFrame abstractFrame1 = frameLinkedList.get();
         abstractFrame1.bowl(3);
         abstractFrame1.bowl(7);
-        AbstractFrame abstractFrame2 = abstractFrame1.next;
+        AbstractFrame abstractFrame2 = abstractFrame1.getNext();
         abstractFrame2.bowl(5);
         abstractFrame2.bowl(1);
 
@@ -143,5 +156,37 @@ class NormalFrameTest {
         assertThat(score1).isEqualTo(15);
         int score2 = abstractFrame2.getScore();
         assertThat(score2).isEqualTo(6);
+    }
+
+    @DisplayName("Strike의 점수를 계산하여 출력한다.")
+    @Test
+    void getScore_Strike() {
+        FrameLinkedList frameLinkedList = new FrameLinkedList();
+        frameLinkedList.add(new NormalFrame());
+        AbstractFrame abstractFrame1 = frameLinkedList.get();
+        abstractFrame1.bowl(10);
+        AbstractFrame abstractFrame2 = abstractFrame1.getNext();
+        abstractFrame2.bowl(1);
+        abstractFrame2.bowl(2);
+
+        int score1 = abstractFrame1.getScore();
+        assertThat(score1).isEqualTo(13);
+    }
+
+    @DisplayName("turkey의 점수를 계산하여 출력한다.")
+    @Test
+    void getScore_turkey() {
+        FrameLinkedList frameLinkedList = new FrameLinkedList();
+        frameLinkedList.add(new NormalFrame());
+        AbstractFrame abstractFrame1 = frameLinkedList.get();
+        abstractFrame1.bowl(10);
+        AbstractFrame abstractFrame2 = abstractFrame1.getNext();
+        abstractFrame2.bowl(10);
+        AbstractFrame abstractFrame3 = new NormalFrame();
+        frameLinkedList.add(abstractFrame3);
+        abstractFrame3.bowl(10);
+
+        int score1 = abstractFrame1.getScore();
+        assertThat(score1).isEqualTo(30);
     }
 }

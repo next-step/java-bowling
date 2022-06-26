@@ -19,45 +19,45 @@ public enum StateEnum {
     }
 
     public static boolean isReady(State state) {
-        return value(state, READY);
+        return compareStates(state, READY);
     }
 
     public static boolean isFirstBowl(State state) {
-        return value(state, FIRST_BOWL);
+        return compareStates(state, FIRST_BOWL);
     }
 
     public static boolean isStrike(State state) {
-        return value(state, STRIKE);
+        return compareStates(state, STRIKE);
     }
 
     public static boolean isSpare(State state) {
-        return value(state, SPARE);
+        return compareStates(state, SPARE);
     }
 
     public static boolean isMiss(State state) {
-        return value(state, MISS);
+        return compareStates(state, MISS);
     }
 
     public static boolean isGutter(State state) {
-        return value(state, GUTTER);
+        return compareStates(state, GUTTER);
     }
 
     public static boolean isRunning(State state) {
-        return valueOfSuperClass(state, "Running");
+        return compareSuperClassStates(state, "Running");
     }
 
     public static boolean isFinished(State state) {
-        return valueOfSuperClass(state, "Finished");
+        return compareSuperClassStates(state, "Finished");
     }
 
-    private static boolean value(State state, StateEnum referenceState) {
+    private static boolean compareStates(State state, StateEnum referenceState) {
         StateEnum matchedState = Arrays.stream(values())
                                        .filter(stateEnum -> stateEnum.className.equals(state.getClass().getSimpleName()))
                                        .findFirst().orElse(READY);
         return referenceState == matchedState;
     }
 
-    private static boolean valueOfSuperClass(State state, String superClassName) {
+    private static boolean compareSuperClassStates(State state, String superClassName) {
         StateEnum matchedState = Arrays.stream(values())
                                        .filter(stateEnum -> stateEnum.className.equals(state.getClass().getSimpleName()))
                                        .findFirst().orElse(READY);

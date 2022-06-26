@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Score;
+import bowling.exception.IllegalCalculateException;
 import bowling.exception.InvalidScoreException;
 
 public abstract class Running extends AbstractState {
@@ -35,5 +36,10 @@ public abstract class Running extends AbstractState {
         if (fallenPins > MAX_COUNT_OF_PINS || this.fallenPins + fallenPins > MAX_COUNT_OF_PINS) {
             throw new InvalidScoreException("핀을 쓰러뜨린 수는 10을 초과할 수 없습니다.");
         }
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score score, int fallenPins) {
+        throw new IllegalCalculateException("실행할 수 없는 메서드 입니다.");
     }
 }

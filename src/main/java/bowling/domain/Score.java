@@ -20,6 +20,10 @@ public class Score {
         this.left = left;
     }
 
+    public static Score incompleteCalculation() {
+        return new Score();
+    }
+
     public Score bowl(int countOfPins) {
         return new Score(score += countOfPins, left - 1);
     }
@@ -33,10 +37,6 @@ public class Score {
 
     public boolean canCalculateScore() {
         return left == NO_MORE_CALCULATION;
-    }
-
-    public int getLeft() {
-        return left;
     }
 
     @Override

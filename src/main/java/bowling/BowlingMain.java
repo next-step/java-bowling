@@ -17,7 +17,7 @@ public class BowlingMain {
     public static void main(String[] args) {
         Players players = createPlayers();
         for (int frameIndex = INITIAL_INDEX; frameIndex < NUMBERS_OF_FRAMES; frameIndex++) {
-            getPlayersScore(players, frameIndex);
+            printPlayersScore(players, frameIndex);
         }
     }
 
@@ -31,7 +31,7 @@ public class BowlingMain {
         return new Players(playerMap);
     }
 
-    private static void getPlayersScore(Players players, int frameIndex) {
+    private static void printPlayersScore(Players players, int frameIndex) {
         Map<Player, Frames> playersMap = players.getPlayers();
         for (Player player : playersMap.keySet()) {
             getEachPlayersScore(frameIndex, player, players);
