@@ -23,10 +23,10 @@ public class SpareTest {
         }).isInstanceOf(UnsupportedOperationException.class);
     }
 
-//    @Test
-//    public void calculateAdditionalScore() throws Exception {
-//        Scores score = new Scores(List.of(10, 2), 0);
-//        Spare spare = new Spare(new Scores(List.of(8, 2), 0));
-//        assertThat(spare.calculateAdditionalScore(score)).isEqualTo(new Scores(List.of(20), 0));
-//    }
+    @Test
+    public void calculateAdditionalScore() throws Exception {
+        Scores scores = new Scores(List.of(10, 2), 0);
+        Spare spare = new Spare(new Scores(List.of(8, 2), 0));
+        assertThat(spare.calculateAdditionalScore(scores)).isEqualTo(20);
+    }
 }

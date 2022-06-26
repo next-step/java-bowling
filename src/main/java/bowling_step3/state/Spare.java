@@ -16,7 +16,7 @@ public class Spare extends Done {
         }
     }
 
-    public boolean calculateAdditionalScore(Scores score) {
-        return false;
+    public int calculateAdditionalScore(Scores scores) {
+       return this.scores.sum() + scores.getFirstScore();
     }
 }
