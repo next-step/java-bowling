@@ -1,14 +1,11 @@
 package bowling.domain;
 
-import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
 import bowling.exception.BowlingException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static bowling.exception.BowlingExceptionCode.INVALID_FRAME_INDEX;
 
@@ -19,11 +16,7 @@ public class Board {
     private final List<Frame> frames;
 
     public static Board init() {
-        List<Frame> frames = IntStream.rangeClosed(START, END - 1)
-                .mapToObj(NormalFrame::new)
-                .collect(Collectors.toList());
-        frames.add(new FinalFrame(END));
-        return new Board(frames);
+        return new Board(new ArrayList<>());
     }
 
     private Board(List<Frame> frames) {

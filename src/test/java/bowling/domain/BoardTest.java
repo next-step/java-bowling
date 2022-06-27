@@ -16,7 +16,7 @@ class BoardTest {
 
     @Test
     void init() {
-        assertThat(board.frames().size()).isEqualTo(10);
+        assertThat(board.frames().size()).isEqualTo(0);
     }
 
     @Test
