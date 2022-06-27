@@ -2,7 +2,7 @@ package bowling_step3.domain.state;
 
 import bowling_step3.domain.Scores;
 
-public class Ready implements State {
+public class Ready extends Running {
     private Scores scores;
 
     public Ready() {

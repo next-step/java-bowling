@@ -2,7 +2,7 @@ package bowling_step3.domain.state;
 
 import bowling_step3.domain.Scores;
 
-public class FirstPitch implements State {
+public class FirstPitch extends Running {
     private Scores scores;
 
     public FirstPitch(Scores scores) {
