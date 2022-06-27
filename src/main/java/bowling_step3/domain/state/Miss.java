@@ -1,4 +1,4 @@
-package bowling_step3.state;
+package bowling_step3.domain.state;
 
 import bowling_step3.domain.Scores;
 

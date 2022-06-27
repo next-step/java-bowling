@@ -1,5 +1,9 @@
 package bowling_step3.state;
 
+import bowling_step3.domain.state.FirstPitch;
+import bowling_step3.domain.state.Ready;
+import bowling_step3.domain.state.State;
+import bowling_step3.domain.state.Strike;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

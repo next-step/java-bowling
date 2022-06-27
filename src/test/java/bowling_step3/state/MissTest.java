@@ -1,5 +1,6 @@
 package bowling_step3.state;
 
+import bowling_step3.domain.state.Ready;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

@@ -1,6 +1,7 @@
 package bowling_step3.state;
 
 import bowling_step3.domain.Scores;
+import bowling_step3.domain.state.Spare;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

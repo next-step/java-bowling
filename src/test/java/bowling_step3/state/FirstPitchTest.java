@@ -3,6 +3,10 @@ package bowling_step3.state;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import bowling_step3.domain.Scores;
+import bowling_step3.domain.state.FirstPitch;
+import bowling_step3.domain.state.Miss;
+import bowling_step3.domain.state.Spare;
+import bowling_step3.domain.state.State;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
