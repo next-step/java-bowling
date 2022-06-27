@@ -57,4 +57,12 @@ public class Frames {
     public Frame last() {
         return get(9);
     }
+
+    public void renewLast(Frame frame) {
+        if (frame instanceof FrameLast) {
+            this.frames.remove(9);
+            this.frames.add(frame);
+            this.get(8)
+        }
+    }
 }
