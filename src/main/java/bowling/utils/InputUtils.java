@@ -13,9 +13,4 @@ public class InputUtils {
         System.out.println(inputText);
         return scanner.nextLine();
     }
-
-    public static int scanNumber(String inputText) {
-        System.out.print(inputText);
-        return scanner.nextInt();
-    }
 }

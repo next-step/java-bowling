@@ -1,35 +1,35 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 public class FrameLinkedList {
     private static final int INITIAL_SIZE = 1;
 
     private int size;
-    private Frame head;
+    private AbstractFrame head;
 
     FrameLinkedList() {
         this.head = new NormalFrame();
         this.size = INITIAL_SIZE;
     }
 
-    void add(Frame newFrame) {
-        Frame tempHead = this.head;
+    void add(AbstractFrame newAbstractFrame) {
+        AbstractFrame tempHead = this.head;
         while (tempHead.next != null) {
             tempHead = tempHead.next;
         }
-        tempHead.next = newFrame;
+        tempHead.next = newAbstractFrame;
         this.size++;
     }
 
-    Frame get() {
+    AbstractFrame get() {
         return head;
     }
 
-    public Frame get(int index) {
+    public AbstractFrame get(int index) {
         return search(index);
     }
 
-    private Frame search(int index) {
-        Frame before = head;
+    private AbstractFrame search(int index) {
+        AbstractFrame before = head;
         for (int i = 0; i < index; i++) {
             before = before.next;
         }
