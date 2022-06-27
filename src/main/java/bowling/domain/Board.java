@@ -6,6 +6,7 @@ import bowling.domain.frame.NormalFrame;
 import bowling.exception.BowlingException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -38,6 +39,12 @@ public class Board {
                 .filter(frame -> frame.index() == index)
                 .findFirst()
                 .orElseThrow(() -> new BowlingException(INVALID_FRAME_INDEX, String.valueOf(index)));
+    }
+
+    public Optional<Frame> frame2(int index) {
+        return frames.stream()
+                .filter(frame -> frame.index() == index)
+                .findFirst();
     }
 
     @Override

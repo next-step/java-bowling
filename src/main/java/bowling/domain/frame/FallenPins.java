@@ -7,6 +7,10 @@ import java.util.Objects;
 public class FallenPins {
     private final List<Integer> pins;
 
+    public static FallenPins emptyPins() {
+        return new FallenPins();
+    }
+
     public FallenPins() {
         this(new ArrayList<>());
     }

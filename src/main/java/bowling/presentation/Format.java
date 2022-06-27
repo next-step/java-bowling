@@ -68,7 +68,7 @@ public class Format {
         return DELIMITER.format() + String.format(centerAlignFormat(4), name) + DELIMITER.format();
     }
 
-    public static String centerAlignFormat(int size) {
+    private static String centerAlignFormat(int size) {
         int MAX_WIDTH = 6;
         if (size > MAX_WIDTH) {
             throw new IllegalArgumentException(String.format("size는 %d보다 작아야 합니다. - %d", MAX_WIDTH, size));
