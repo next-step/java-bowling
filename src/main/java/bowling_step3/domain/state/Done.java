@@ -28,7 +28,7 @@ public class Done implements Status {
 
     @Override
     public Integer getScore() {
-        return 0;
+        return this.scores.getScore();
     }
 
 //    @Override
@@ -36,13 +36,11 @@ public class Done implements Status {
 //        return null;
 //    }
 
-    @Override
     public int calculateAdditionalScore(Status status) {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
-    @Override
     public Scores scores() {
-        return null;
+        return this.scores;
     }
 }

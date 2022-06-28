@@ -82,13 +82,13 @@ public class FrameLastTest {
     @Test
     public void getScore_twoStrike() {
         lastFrame = lastFrame.play(10).play(10).play(8);
-        System.out.println(lastFrame);
         assertThat(lastFrame.getScore()).isEqualTo(28);
     }
 
     @Test
     public void getScore_threeStrike() {
         lastFrame = lastFrame.play(10);
+        System.out.println(lastFrame);
         lastFrame = lastFrame.play(10);
         lastFrame = lastFrame.play(10);
         assertThat(lastFrame.getScore()).isEqualTo(30);
