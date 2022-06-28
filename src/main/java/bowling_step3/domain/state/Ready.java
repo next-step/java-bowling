@@ -21,7 +21,7 @@ public class Ready extends Running {
 //
     public Status pitchLast(int numPins) {
         Status status = pitch(numPins);
-        if(status instanceof Strike) {
+        if (status instanceof Strike) {
             return new LastBonus(status.scores());
         }
         return status;

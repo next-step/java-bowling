@@ -2,8 +2,8 @@ package bowling_step3.domain.state;
 
 import bowling_step3.domain.Scores;
 
-public class Miss extends Done {
-    public Miss(Scores scores) {
+public class GameOver extends Done {
+    public GameOver(Scores scores) {
         super(scores);
     }
 
@@ -12,6 +12,6 @@ public class Miss extends Done {
     }
 
     public Status pitchLast(int numPins) {
-        return pitch(numPins);
+        throw new UnsupportedOperationException();
     }
 }

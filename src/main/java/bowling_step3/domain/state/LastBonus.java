@@ -17,14 +17,11 @@ public class LastBonus extends Running {
         // s + p -> lb
         // s -> lb
         // length 1, s -> return lastB
-
+        boolean secondPhase = this.scores().size() == 1;
         Scores scores = this.scores().pitchLast(numPins);
-        if (this.scores().size() == 2 && this.scores().isStrike()) {
+        if (secondPhase) {
             return new LastBonus(scores);
         }
-        if (scores.isStrike()) {
-            return new Strike(scores);
-        }
-        return new Spare(scores);
+        return new GameOver(scores);
     }
 }
