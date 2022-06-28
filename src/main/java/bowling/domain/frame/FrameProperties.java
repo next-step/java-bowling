@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import java.util.Objects;
+
 public class FrameProperties {
     private final int index;
     private final FallenPins fallenPins;
@@ -50,5 +52,18 @@ public class FrameProperties {
                 ", fallenPins=" + fallenPins +
                 ", tryNo=" + tryNo +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FrameProperties that = (FrameProperties) o;
+        return index == that.index && tryNo == that.tryNo && fallenPins.equals(that.fallenPins);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(index, fallenPins, tryNo);
     }
 }

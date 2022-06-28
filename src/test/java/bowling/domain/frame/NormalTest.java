@@ -24,9 +24,27 @@ public class NormalTest {
     }
 
     @Test
-    void tryNoIs0Given_validateMoveToNext() {
+    void tryNoIs1Given_returnSelf() {
+        frame = new NormalFrame(new FrameProperties(1, new FallenPins(List.of(1)), 1));
+        assertThat(frame.validateMoveToNextFrame()).isEqualTo(frame);
+    }
+
+    @Test
+    void tryNoIs0Given_returnNextFrame() {
         frame = new NormalFrame(new FrameProperties(1, new FallenPins(List.of(1,3)), 0));
-        assertThat(frame.validateMoveToNextIndex()).isEqualTo(2);
+        assertThat(frame.validateMoveToNextFrame()).isEqualTo(new NormalFrame(2));
+    }
+
+    @Test
+    void tryNoIs0AndIndexIs9Given_returnFinalFrame() {
+        frame = new NormalFrame(new FrameProperties(9, new FallenPins(List.of(1,3)), 0));
+        assertThat(frame.validateMoveToNextFrame()).isEqualTo(new FinalFrame(10));
+    }
+
+    @Test
+    void strikeIsGiven_returnNextFrame() {
+        frame = new NormalFrame(new FrameProperties(1, new FallenPins(List.of(10)), 1));
+        assertThat(frame.validateMoveToNextFrame()).isEqualTo(new NormalFrame(2));
     }
 
     @Test

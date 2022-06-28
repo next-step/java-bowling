@@ -2,9 +2,13 @@ package bowling.domain.frame;
 
 import bowling.exception.BowlingException;
 
-import static bowling.exception.BowlingExceptionCode.*;
+import java.util.Objects;
+
+import static bowling.exception.BowlingExceptionCode.INVALID_COUNT_OF_FALLEN_PINS;
 
 public class NormalFrame implements Frame {
+    private static final int FINAL_INDEX = 10;
+
     private FrameProperties frameProperties;
 
     public NormalFrame(int index) {
@@ -41,11 +45,16 @@ public class NormalFrame implements Frame {
         return frameProperties.tryNo() < 1 || frameProperties.computeSumOfFallenPins() > 9;
     }
 
-    public int validateMoveToNextIndex() {
-        if (moveable()) {
-            return frameProperties.index() + 1;
+    @Override
+    public Frame validateMoveToNextFrame() {
+        if (!moveable()) {
+            return this;
         }
-        return frameProperties.index();
+        int nextIndex = frameProperties.index() + 1;
+        if (nextIndex >= FINAL_INDEX) {
+            return new FinalFrame(FINAL_INDEX);
+        }
+        return new NormalFrame(nextIndex);
     }
 
     @Override
@@ -58,5 +67,18 @@ public class NormalFrame implements Frame {
         return "NormalFrame{" +
                 "frameProperties=" + frameProperties +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NormalFrame that = (NormalFrame) o;
+        return frameProperties.equals(that.frameProperties);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frameProperties);
     }
 }

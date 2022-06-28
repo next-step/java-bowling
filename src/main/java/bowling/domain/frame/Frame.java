@@ -3,7 +3,7 @@ package bowling.domain.frame;
 public interface Frame {
     void determineSpare(int fallenPins);
 
-    int validateMoveToNextIndex();
+    Frame validateMoveToNextFrame();
 
     int index();
 

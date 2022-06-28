@@ -10,18 +10,6 @@ import static bowling.presentation.ScoreFormat.DELIMITER;
 
 public class OutPut {
     public static void board(Board board, Player player) {
-        System.out.print(Format.nameProperty());
-        board.frames()
-                .forEach(frame -> System.out.print(Format.frameIndex(frame.index())));
-        System.out.print("\n");
-        System.out.print(Format.playerName(player.name()));
-        board.frames()
-                .forEach(frame -> System.out.printf(Format.fallenPinsFormat(frame.pins()) + DELIMITER.format()));
-        System.out.println("\n");
-    }
-
-    // TODO(jack.comeback) : 테스트 후 적용
-    public static void board2(Board board, Player player) {
         printTheUpper();
         printTheBottom(board, player);
     }
