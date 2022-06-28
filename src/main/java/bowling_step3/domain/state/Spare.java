@@ -3,11 +3,9 @@ package bowling_step3.domain.state;
 import bowling_step3.domain.Scores;
 
 public class Spare extends Done {
-    private final Scores scores;
-
     public Spare(Scores scores) {
+        super(scores);
         validate(scores);
-        this.scores = scores;
     }
 
     private void validate(Scores scores) {
@@ -17,6 +15,6 @@ public class Spare extends Done {
     }
 
     public int calculateAdditionalScore(Scores scores) {
-       return this.scores.sum() + scores.getFirstScore();
+       return this.scores().sum() + scores.getFirstScore();
     }
 }
