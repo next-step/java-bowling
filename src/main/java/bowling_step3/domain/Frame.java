@@ -1,5 +1,7 @@
 package bowling_step3.domain;
 
+import bowling_step3.domain.state.Status;
+
 public interface Frame {
     Frame play(int numPins);
 
@@ -7,17 +9,19 @@ public interface Frame {
 
     int getScore();
 
-    int calculateAdditionalScore(Scores scores);
+    int calculateAdditionalScore(Status status);
 
     boolean done();
 
     Frame next();
 
-    State state();
+//    State state();
 
     Subtotals createSubtotals();
 
     void accumulateResult(Subtotals subtotals);
 
     boolean finished();
+
+    Status status();
 }

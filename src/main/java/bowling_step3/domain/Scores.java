@@ -21,6 +21,10 @@ public class Scores {
         this.remainingPitch = remainingPitch;
     }
 
+    public static Scores strike() {
+        return new Scores(new ArrayList<>(Arrays.asList(10)),0);
+    }
+
     public Scores pitch(int numPins) {
         this.scores.add(numPins);
         if (numPins == 10 && sum() != 20) {

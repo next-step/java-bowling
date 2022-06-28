@@ -8,4 +8,5 @@ public class FrameGeneral extends AbstractFrame {
     public FrameGeneral(Frame frame) {
         super(frame);
     }
+
 }

@@ -1,24 +1,31 @@
 package bowling_step3.domain;
 
+import bowling_step3.domain.state.Done;
+import bowling_step3.domain.state.Ready;
+import bowling_step3.domain.state.Status;
+
 public class FrameLast extends AbstractFrame {
     public FrameLast() {
-        super(new Scores(3), null);
+        super(new Ready(new Scores(3)), null);
     }
 
-    public FrameLast(Scores scores) {
-        super(scores, null);
-    }
+//    public FrameLast(Status status) {
+//        super(status, null);
+//    }
+
 
     @Override
     public Frame play(int numPins) {
-        if (this.done()) {
-            throw new UnsupportedOperationException("This frame is done.");
-        }
-        Scores scores = this.scores().pitchLast(numPins);
-        if (scores.sum() < 10 && scores.scores().size() == 2) {
-            return new FrameLast(new Scores(scores.scores(), 0));
-        }
-        renewScores(scores);
+//        if (this.done()) {
+//            throw new UnsupportedOperationException("This frame is done.");
+//        }
+//        Scores scores = this.scores().pitchLast(numPins);
+        Status status = this.status().pitchLast(numPins);
+
+//        if (scores.sum() < 10 && scores.scores().size() == 2) {
+//            return new FrameLast(new Done(new Scores(scores.scores(), 0)));
+//        }
+        renewStatus(status);
         return this;
     }
 
