@@ -134,4 +134,8 @@ public class Scores {
     public boolean isStrike() {
        return this.lastScore() == MAX_SCORE;
     }
+
+    public int size() {
+        return this.scores.size();
+    }
 }

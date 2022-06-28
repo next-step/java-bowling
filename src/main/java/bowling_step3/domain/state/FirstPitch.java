@@ -7,4 +7,10 @@ public class FirstPitch extends Running {
         super(scores);
     }
 
+    public Status pitchLast(int numPins) {
+        if (scores().isSpare()) {
+            return new LastBonus(this.scores());
+        }
+        return new Miss(this.scores());
+    }
 }

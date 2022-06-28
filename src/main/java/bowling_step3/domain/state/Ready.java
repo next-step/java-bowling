@@ -11,20 +11,19 @@ public class Ready extends Running {
         super(scores);
     }
 
-    public Status pitch(int numPins) {
-        Scores scores = this.scores().pitch(numPins);
-        if (scores.isStrike()) {
-            return new Strike();
-        }
-        return new FirstPitch(scores);
-    }
-
-    @Override
+    //    public Status pitch(int numPins) {
+//        Scores scores = this.scores().pitch(numPins);
+//        if (scores.isStrike()) {
+//            return new Strike();
+//        }
+//        return new FirstPitch(scores);
+//    }
+//
     public Status pitchLast(int numPins) {
-        Scores scores = this.scores().pitchLast(numPins);
-        if (scores.isStrike()) {
-            return new Strike();
+        Status status = pitch(numPins);
+        if(status instanceof Strike) {
+            return new LastBonus(status.scores());
         }
-        return new FirstPitch(scores);
+        return status;
     }
 }
