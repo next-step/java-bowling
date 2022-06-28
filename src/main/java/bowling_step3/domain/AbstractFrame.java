@@ -111,4 +111,8 @@ public abstract class AbstractFrame implements Frame {
     protected Integer getFirstScore() {
         return this.scores.getFirstScore();
     }
+
+    void renewScores(Scores scores) {
+        this.scores = scores;
+    }
 }

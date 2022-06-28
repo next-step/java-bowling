@@ -18,7 +18,8 @@ public class FrameLast extends AbstractFrame {
         if (scores.sum() < 10 && scores.scores().size() == 2) {
             return new FrameLast(new Scores(scores.scores(), 0));
         }
-        return new FrameLast(scores);
+        renewScores(scores);
+        return this;
     }
 
     @Override
