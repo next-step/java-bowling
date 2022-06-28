@@ -9,7 +9,7 @@ public class FirstPitch extends Running {
         this.scores = scores;
     }
 
-    public State pitch(int numPins) {
+    public Status pitch(int numPins) {
         Scores scores = this.scores.pitch(numPins);
         if (scores.isSpare()) {
             return new Spare(scores);

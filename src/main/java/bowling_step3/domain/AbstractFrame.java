@@ -1,19 +1,23 @@
 package bowling_step3.domain;
 
+import bowling_step3.domain.state.Ready;
+import bowling_step3.domain.state.Status;
+
 public abstract class AbstractFrame implements Frame {
-    private Scores scores;
+//    private Scores scores;
+    private Status status;
     private final Frame nextFrame;
 
     public AbstractFrame() {
-        this(new Scores(), new FrameGeneral());
+        this(new Ready(), new FrameGeneral());
     }
 
     public AbstractFrame(Frame frame) {
-        this(new Scores(), frame);
+        this(new Ready(), frame);
     }
 
-    public AbstractFrame(Scores scores, Frame nextFrame) {
-        this.scores = scores;
+    public AbstractFrame(Status status, Frame nextFrame) {
+        this.status = status;
         this.nextFrame = nextFrame;
     }
 

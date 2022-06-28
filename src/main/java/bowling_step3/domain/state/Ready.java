@@ -9,7 +9,7 @@ public class Ready extends Running {
         this.scores = new Scores();
     }
 
-    public State pitch(int numPins) {
+    public Status pitch(int numPins) {
         Scores scores = this.scores.pitch(numPins);
         if (scores.isStrike()) {
             return new Strike();
