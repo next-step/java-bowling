@@ -5,7 +5,7 @@ import bowling_step3.domain.Scores;
 public class Spare extends Done {
     public Spare(Scores scores) {
         super(scores);
-//        validate(scores);
+        validate(scores);
     }
 
     private void validate(Scores scores) {
