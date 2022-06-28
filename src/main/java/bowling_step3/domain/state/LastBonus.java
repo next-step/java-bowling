@@ -12,9 +12,12 @@ public class LastBonus extends Running {
 //        throw new UnsupportedOperationException("Unreachable");
 //    }
 //
-//    @Override
-//    public Status pitchLast(int numPins) {
-//        Scores scores = this.scores().pitchLast(numPins);
-//        return new Done(scores);
-//    }
+    @Override
+    public Status pitchLast(int numPins) {
+        Scores scores = this.scores().pitchLast(numPins);
+        if (scores.isStrike()) {
+            return new Strike(scores);
+        }
+        return new Spare(scores);
+    }
 }
