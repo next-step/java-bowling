@@ -1,6 +1,8 @@
 package bowling_step3.state;
 
 import bowling_step3.domain.Scores;
+import bowling_step3.domain.state.Miss;
+import bowling_step3.domain.state.Status;
 import bowling_step3.domain.state.Strike;
 import org.junit.jupiter.api.Test;
 
@@ -20,16 +22,18 @@ public class StrikeTest {
     @Test
     void strike_additionalTwo() {
         Scores scores = new Scores(List.of(2, 3), 0);
+        Status status = new Miss(scores);
         Strike strike = new Strike();
-        int score = strike.calculateAdditionalScore(scores);
+        int score = strike.calculateAdditionalScore(status);
         assertThat(score).isEqualTo(15);
     }
 
     @Test
     public void strike_strikeWithDoubled() throws Exception {
         Scores scores = new Scores(List.of(10), 0);
+        Status status = new Strike(scores);
         Strike strike = new Strike();
-        int score = strike.calculateAdditionalScore(scores);
+        int score = strike.calculateAdditionalScore(status);
         assertThat(score).isEqualTo(30);
     }
 }

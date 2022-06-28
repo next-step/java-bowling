@@ -7,14 +7,14 @@ public class LastBonus extends Running {
         super(scores);
     }
 
-    @Override
-    public Status pitch(int numPins) {
-        throw new UnsupportedOperationException("Unreachable");
-    }
-
-    @Override
-    public Status pitchLast(int numPins) {
-        Scores scores = this.scores().pitchLast(numPins);
-        return new Done(scores) ;
-    }
+//    @Override
+//    public Status pitch(int numPins) {
+//        throw new UnsupportedOperationException("Unreachable");
+//    }
+//
+//    @Override
+//    public Status pitchLast(int numPins) {
+//        Scores scores = this.scores().pitchLast(numPins);
+//        return new Done(scores);
+//    }
 }

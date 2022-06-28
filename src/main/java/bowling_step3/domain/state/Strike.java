@@ -13,11 +13,11 @@ public class Strike extends Done {
         super(scores);
     }
 
-    public int calculateAdditionalScore(Scores scores) {
-        if (scores.isStrike()) {
-            return MAX_SCORE + scores.sumOfTwo() * 2;
+    public int calculateAdditionalScore(Status status) {
+        if (status instanceof Strike) {
+            return MAX_SCORE + status.scores().sumOfTwo() * 2;
         }
-        return MAX_SCORE + scores.sumOfTwo();
+        return MAX_SCORE + status.scores().sumOfTwo();
     }
 
     @Override

@@ -6,4 +6,8 @@ public class Miss extends Done {
     public Miss(Scores scores) {
         super(scores);
     }
+
+    public int calculateAdditionalScore(Status status) {
+        throw new UnsupportedOperationException();
+    }
 }

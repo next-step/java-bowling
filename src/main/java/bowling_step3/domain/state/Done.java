@@ -2,7 +2,7 @@ package bowling_step3.domain.state;
 
 import bowling_step3.domain.Scores;
 
-public class Done implements Status {
+public abstract class Done implements Status {
     private Scores scores;
 
     public Done(Scores scores) {
@@ -35,10 +35,6 @@ public class Done implements Status {
 //    public Status pitchLast(int numPins) {
 //        return null;
 //    }
-
-    public int calculateAdditionalScore(Status status) {
-        throw new UnsupportedOperationException();
-    }
 
     public Scores scores() {
         return this.scores;
