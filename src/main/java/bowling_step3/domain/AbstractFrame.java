@@ -4,7 +4,7 @@ import bowling_step3.domain.state.Ready;
 import bowling_step3.domain.state.Status;
 
 public abstract class AbstractFrame implements Frame {
-//    private Scores scores;
+    //    private Scores scores;
     private Status status;
     private final Frame nextFrame;
 
@@ -22,12 +22,12 @@ public abstract class AbstractFrame implements Frame {
     }
 
     public Frame play(int numPins) {
-        if (this.done()) {
-            throw new UnsupportedOperationException("This frame is done.");
-        }
-        Scores scores = this.scores.pitch(numPins);
-        this.scores = scores;
-        if (scores.done()) {
+//        if (this.done()) {
+//            throw new UnsupportedOperationException("This frame is done.");
+//        }
+        Status status = this.status.pitch(numPins);
+        this.status = status;
+        if (status.isFinished()) {
             return nextFrame;
         }
         return this;
@@ -56,36 +56,37 @@ public abstract class AbstractFrame implements Frame {
     }
 
     Integer frameResult() {
-        if (scores.state() == State.DONE) {
-            return this.scores.getScore();
-
+        if (this.status.isFinished()) {
+            return this.status.getScore();
         }
-        return nextFrame.calculateAdditionalScore(scores);
+        return nextFrame.calculateAdditionalScore(this.status);
     }
 
     public boolean done() {
-        return this.scores.done();
+        return this.status.isFinished();
     }
 
     public Scores scores() {
-        return this.scores;
+        return this.status.scores();
     }
 
     public int getScore() {
-        return this.scores.getScore();
+        return this.status.getScore();
     }
 
-    public int calculateAdditionalScore(Scores scores) {
-        if (scores.state() == State.WAIT_TWICE && this.scores.getFirstScore() == 10) {
-            return 30;
-        }
-        if (scores.state() == State.WAIT_TWICE) {
-            return scores.getScore() + this.scores.sumOfTwo();
-        }
-        if (scores.state() == State.WAIT_ONCE && this.scores.scores().size() >= 1) {
-            return scores.getScore() + this.scores.getFirstScore();
-        }
-        throw new UnsupportedOperationException("Cannot calculate additional yet.");
+    public int calculateAdditionalScore(Status status) {
+        return status.calculateAdditionalScore(status);
+
+//        if (scores.state() == State.WAIT_TWICE && this.scores.getFirstScore() == 10) {
+//            return 30;
+//        }
+//        if (scores.state() == State.WAIT_TWICE) {
+//            return scores.getScore() + this.scores.sumOfTwo();
+//        }
+//        if (scores.state() == State.WAIT_ONCE && this.scores.scores().size() >= 1) {
+//            return scores.getScore() + this.scores.getFirstScore();
+//        }
+//        throw new UnsupportedOperationException("Cannot calculate additional yet.");
     }
 
     public Frame next() {
@@ -93,30 +94,35 @@ public abstract class AbstractFrame implements Frame {
     }
 
     public State state() {
-        return this.scores.state();
+        return this.status.scores().state();
     }
 
     public boolean finished() {
         return this.next() == null && this.done();
     }
 
-    @Override
-    public String toString() {
-        return "FrameMutual{" +
-                "scores=" + scores +
-                ", nextFrame=" + nextFrame +
-                '}';
-    }
-
     protected Integer sumOfTwo() {
-        return this.scores.sumOfTwo();
+        return this.status.scores().sumOfTwo();
     }
 
     protected Integer getFirstScore() {
-        return this.scores.getFirstScore();
+        return this.status.scores().getFirstScore();
     }
 
-    void renewScores(Scores scores) {
-        this.scores = scores;
+    void renewStatus(Status status) {
+        this.status = status;
+    }
+
+
+    public Status status() {
+        return this.status;
+    }
+
+    @Override
+    public String toString() {
+        return "AbstractFrame{" +
+                "status=" + status +
+                ", nextFrame=" + nextFrame +
+                '}';
     }
 }
