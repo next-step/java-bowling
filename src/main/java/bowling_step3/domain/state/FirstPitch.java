@@ -15,11 +15,10 @@ public class FirstPitch extends Running {
     }
 
     public Status pitchLast(int numPins) {
-        return pitch(numPins);
-//        Scores scores = this.scores().pitch(numPins);
-//        if (scores.isSpare()) {
-//            return new LastBonus(this.scores());
-//        }
-//        return new Miss(this.scores);
+        Status status = pitch(numPins);
+        if (status instanceof Spare) {
+            return new LastBonus(status.scores());
+        };
+        return status;
     }
 }
