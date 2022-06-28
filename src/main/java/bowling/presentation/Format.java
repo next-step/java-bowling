@@ -4,6 +4,7 @@ import bowling.domain.frame.FallenPins;
 
 import static bowling.presentation.ScoreFormat.*;
 import static java.math.BigInteger.TEN;
+import static java.math.BigInteger.ZERO;
 
 // board에 출력되는 format을 만드는 객체
 public class Format {
@@ -25,7 +26,13 @@ public class Format {
     }
 
     private static String singlePinFormat(int score) {
-        return TEN.intValue() == score ? STRIKE.format() : String.valueOf(score);
+        if (TEN.intValue() == score) {
+            return STRIKE.format();
+        }
+        if (ZERO.intValue() == score) {
+            return GUTTER.format();
+        }
+        return String.valueOf(score);
     }
 
     private static String doublePinInBoard(FallenPins fallenPins) {
@@ -35,9 +42,6 @@ public class Format {
     private static String doublePinFormat(int first, int second) {
         if (first + second == TEN.intValue()) {
             return first + DELIMITER.format() + SPARE.format();
-        }
-        if (second == 0) {
-            return first + DELIMITER.format() + GUTTER.format();
         }
         return singlePinFormat(first) + DELIMITER.format() + singlePinFormat(second);
     }
