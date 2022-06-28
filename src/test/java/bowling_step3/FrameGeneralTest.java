@@ -1,6 +1,8 @@
 package bowling_step3;
 
 import bowling_step3.domain.*;
+import bowling_step3.domain.state.Done;
+import bowling_step3.domain.state.FirstPitch;
 import bowling_step3.view.Output;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,35 +22,36 @@ public class FrameGeneralTest {
     public void doneWhenStrike() throws Exception {
         Frame frame = frames.first();
         frame.play(10);
-        assertThat(frame.state()).isEqualTo(State.WAIT_TWICE);
+        assertThat(frame.status()).isInstanceOf(Done.class);
     }
 
     @Test
     public void doneWhenSpare() throws Exception {
         Frame frame = frames.first();
         frame.play(8);
-        assertThatThrownBy(() -> frame.state()).isInstanceOf(UnsupportedOperationException.class);
+//        assertThatThrownBy(() -> frame.state()).isInstanceOf(UnsupportedOperationException.class);
         frame.play(2);
-        assertThat(frame.state()).isEqualTo(State.WAIT_ONCE);
+        assertThat(frame.status()).isInstanceOf(Done.class);
     }
 
     @Test
     public void doneWhenMiss() throws Exception {
         Frame frame = frames.first();
         frame.play(8);
-        assertThatThrownBy(() -> frame.state()).isInstanceOf(UnsupportedOperationException.class);
+//        assertThatThrownBy(() -> frame.status()).isInstanceOf(UnsupportedOperationException.class);
+//        assertThat(frame.status()).isInstanceOf(FirstPitch.class);
         frame.play(1);
-        assertThat(frame.state()).isEqualTo(State.DONE);
+        assertThat(frame.status()).isInstanceOf(Done.class);
     }
 
-    @Test
-    void printSubtotalsWithFives() {
-        Frame frame = frames.first();
-        while (!(frame.next() == null && frame.done())) {
-            frame = frame.play(5);
-            Subtotals subtotals = frames.first().createSubtotals();
-            Output.printFrames(10, frames, new Player("tst"));
-            Output.printSubtotals(subtotals, new Player("tst"));
-        }
-    }
+//    @Test
+//    void printSubtotalsWithFives() {
+//        Frame frame = frames.first();
+//        while (!(frame.next() == null && frame.done())) {
+//            frame = frame.play(5);
+//            Subtotals subtotals = frames.first().createSubtotals();
+//            Output.printFrames(10, frames, new Player("tst"));
+//            Output.printSubtotals(subtotals, new Player("tst"));
+//        }
+//    }
 }

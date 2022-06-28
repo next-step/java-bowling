@@ -1,6 +1,9 @@
 package bowling_step3;
 
 import bowling_step3.domain.*;
+import bowling_step3.domain.state.Spare;
+import bowling_step3.domain.state.Status;
+import bowling_step3.domain.state.Strike;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -39,6 +42,7 @@ public class FrameLastTest {
         lastFrame = lastFrame.play(8);
         lastFrame = lastFrame.play(2);
         lastFrame = lastFrame.play(7);
+        System.out.println(lastFrame);
         assertThat(lastFrame.done()).isTrue();
     }
 
@@ -92,25 +96,28 @@ public class FrameLastTest {
 
     @Test
     public void getScore_9프레임_Strike() {
-        Scores scores = new Scores(List.of(10), 0);
+//        Scores scores = new Scores(List.of(10), 0);
+        Status status = new Strike();
         lastFrame = lastFrame.play(10);
         lastFrame = lastFrame.play(10);
-        assertThat(lastFrame.calculateAdditionalScore(scores)).isEqualTo(30);
+        assertThat(lastFrame.calculateAdditionalScore(status)).isEqualTo(30);
     }
 
     @Test
     public void getScore_9프레임_Spare() {
         Scores scores = new Scores(List.of(9, 1), 0);
+        Status status = new Spare(scores);
         lastFrame = lastFrame.play(9);
-        assertThat(lastFrame.calculateAdditionalScore(scores)).isEqualTo(19);
+        assertThat(lastFrame.calculateAdditionalScore(status)).isEqualTo(19);
     }
 
     @Test
     public void getScore_9프레임_Strike_notReady() {
         assertThatThrownBy(() -> {
-            Scores scores = new Scores(List.of(10), 0);
+//            Scores scores = new Scores(List.of(10), 0);
+            Status status = new Strike();
             lastFrame = lastFrame.play(10);
-            lastFrame.calculateAdditionalScore(scores);
+            lastFrame.calculateAdditionalScore(status);
         }).isInstanceOf(UnsupportedOperationException.class);
     }
 }
