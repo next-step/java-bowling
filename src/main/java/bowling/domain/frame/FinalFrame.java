@@ -14,6 +14,9 @@ public class FinalFrame implements Frame {
     public FinalFrame(int index) {
         frameProperties = new FrameProperties(index);
     }
+    public FinalFrame(FrameProperties frameProperties) {
+        this.frameProperties = frameProperties;
+    }
 
     @Override
     public void determineSpare(int fallenPins) {
@@ -46,17 +49,12 @@ public class FinalFrame implements Frame {
         return frameProperties.pins();
     }
 
-    public int validateMoveToNextIndex() {
-        if (moveable()) { // 다 던지면 끝
-            return frameProperties.index() + 1;
-        }
-        return frameProperties.index();
-    }
-
-    // TODO(jack.comeback) : need to impl
     @Override
     public Frame validateMoveToNextFrame() {
-        return null;
+        if (moveable()) { // 다 던지면 끝
+            return new FinalFrame(frameProperties.index() + 1);
+        }
+        return this;
     }
 
     @Override
