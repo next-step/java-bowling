@@ -17,6 +17,10 @@ public class Strike extends Done {
         if (status instanceof Strike) {
             return MAX_SCORE + status.scores().sumOfTwo() * 2;
         }
+//        || status instanceof Strike || status.scores().getFirstScore() == 10
+        if (status.scores().size() < 2 ) {
+            throw new UnsupportedOperationException("not yet to calculate.");
+        }
         return MAX_SCORE + status.scores().sumOfTwo();
     }
 

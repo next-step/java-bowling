@@ -30,9 +30,10 @@ public class StrikeTest {
 
     @Test
     public void strike_strikeWithDoubled() throws Exception {
-        Scores scores = new Scores(List.of(10), 0);
-        Status status = new Strike(scores);
+//        Scores scores = new Scores(List.of(10), 0);
+        Status status = new Strike();
         Strike strike = new Strike();
+        System.out.println(status);
         int score = strike.calculateAdditionalScore(status);
         assertThat(score).isEqualTo(30);
     }
