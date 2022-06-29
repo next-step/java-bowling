@@ -41,10 +41,6 @@ public class NormalFrame implements Frame {
         return 10 < frameProperties.computeSumOfFallenPins() + fallenPins;
     }
 
-    private boolean moveable() {
-        return frameProperties.tryNo() < 1 || frameProperties.computeSumOfFallenPins() > 9;
-    }
-
     @Override
     public Frame validateMoveToNextFrame() {
         if (!moveable()) {
@@ -55,6 +51,10 @@ public class NormalFrame implements Frame {
             return new FinalFrame(FINAL_INDEX);
         }
         return new NormalFrame(nextIndex);
+    }
+
+    private boolean moveable() {
+        return frameProperties.tryNo() < 1 || frameProperties.computeSumOfFallenPins() > 9;
     }
 
     @Override

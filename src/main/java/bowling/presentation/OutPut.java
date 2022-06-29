@@ -6,7 +6,7 @@ import bowling.domain.frame.FallenPins;
 
 import java.util.stream.IntStream;
 
-import static bowling.presentation.ScoreFormat.DELIMITER;
+import static bowling.presentation.PinFormat.DELIMITER;
 
 public class OutPut {
     public static void board(Board board, Player player) {

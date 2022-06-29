@@ -36,10 +36,10 @@ public class BowlingGame {
             OutPut.board(board, player);
             frame = frame.validateMoveToNextFrame();
             board.addFrameIfAbsent(frame);
-        } while (stoppable(frame.index()));
+        } while (continuous(frame.index()));
     }
 
-    private static boolean stoppable(int mayBeNextIndex) {
+    private static boolean continuous(int mayBeNextIndex) {
         return mayBeNextIndex < STOPPABLE_INDEX;
     }
 }

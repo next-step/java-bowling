@@ -2,7 +2,7 @@ package bowling.presentation;
 
 import bowling.domain.frame.FallenPins;
 
-import static bowling.presentation.ScoreFormat.*;
+import static bowling.presentation.PinFormat.*;
 import static java.math.BigInteger.TEN;
 import static java.math.BigInteger.ZERO;
 

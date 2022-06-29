@@ -40,10 +40,6 @@ public class FinalFrame implements Frame {
         return frameProperties.tryNo() < 2 && totalFallenPins == 10;
     }
 
-    private boolean moveable() {
-        return frameProperties.tryNo() < 1;
-    }
-
     @Override
     public FallenPins pins() {
         return frameProperties.pins();
@@ -55,6 +51,10 @@ public class FinalFrame implements Frame {
             return new FinalFrame(frameProperties.index() + 1);
         }
         return this;
+    }
+
+    private boolean moveable() {
+        return frameProperties.tryNo() < 1;
     }
 
     @Override

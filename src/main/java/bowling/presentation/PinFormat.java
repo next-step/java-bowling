@@ -1,6 +1,6 @@
 package bowling.presentation;
 
-public enum ScoreFormat {
+public enum PinFormat {
     // score
     STRIKE("X"),
     SPARE("/"),
@@ -11,7 +11,7 @@ public enum ScoreFormat {
 
     private final String format;
 
-    ScoreFormat(String format) {
+    PinFormat(String format) {
         this.format = format;
     }
 
