@@ -24,4 +24,12 @@ public class LastBonus extends Running {
         }
         return new GameOver(scores);
     }
+
+//    public int calculateAdditionalScore(Status status) {
+//        if (status instanceof  Running) {
+//        throw new UnsupportedOperationException("Cannot calculate yet.");
+//
+//        }
+//
+//    }
 }

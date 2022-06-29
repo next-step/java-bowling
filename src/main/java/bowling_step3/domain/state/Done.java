@@ -36,6 +36,13 @@ public abstract class Done implements Status {
 //        return null;
 //    }
 
+    @Override
+    public String toString() {
+        return "Done{" +
+                "scores=" + scores +
+                '}';
+    }
+
     public Scores scores() {
         return this.scores;
     }

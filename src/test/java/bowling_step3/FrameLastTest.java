@@ -6,8 +6,10 @@ import bowling_step3.domain.state.Status;
 import bowling_step3.domain.state.Strike;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.internal.matchers.Null;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -60,6 +62,7 @@ public class FrameLastTest {
     public void getScore_miss() {
         lastFrame = lastFrame.play(8);
         lastFrame = lastFrame.play(1);
+        System.out.println(lastFrame);
         assertThat(lastFrame.getScore()).isEqualTo(9);
     }
 
@@ -101,6 +104,7 @@ public class FrameLastTest {
         Status status = new Strike();
         lastFrame = lastFrame.play(10);
         lastFrame = lastFrame.play(10);
+        System.out.println(lastFrame);
         assertThat(lastFrame.calculateAdditionalScore(status)).isEqualTo(30);
     }
 
