@@ -45,14 +45,14 @@ public class FrameLast extends AbstractFrame {
         return null;
     }
 
-    public int calculateAdditionalScore(Scores scores) {
-        if (scores.state() == State.WAIT_TWICE && this.scores().scores().size() >= 2) {
-            return scores.getScore() + this.sumOfTwo();
-        }
-        if (scores.state() == State.WAIT_ONCE && this.scores().scores().size() >= 1) {
-            return scores.getScore() + this.getFirstScore();
-        }
-        throw new UnsupportedOperationException("Cannot calculate additional yet.");
-    }
+//    public int calculateAdditionalScore(Scores scores) {
+//        if (scores.state() == State.WAIT_TWICE && this.scores().scores().size() >= 2) {
+//            return scores.getScore() + this.sumOfTwo();
+//        }
+//        if (scores.state() == State.WAIT_ONCE && this.scores().scores().size() >= 1) {
+//            return scores.getScore() + this.getFirstScore();
+//        }
+//        throw new UnsupportedOperationException("Cannot calculate additional yet.");
+//    }
 }
 

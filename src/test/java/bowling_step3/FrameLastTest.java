@@ -118,6 +118,7 @@ public class FrameLastTest {
 //            Scores scores = new Scores(List.of(10), 0);
             Status status = new Strike();
             lastFrame = lastFrame.play(10);
+            System.out.println(lastFrame);
             lastFrame.calculateAdditionalScore(status);
         }).isInstanceOf(UnsupportedOperationException.class);
     }
