@@ -75,7 +75,7 @@ public abstract class AbstractFrame implements Frame {
     }
 
     public int calculateAdditionalScore(Status status) {
-        return this.status.calculateAdditionalScore(status);
+        return status.calculateAdditionalScore(this.status);
 
 //        if (scores.state() == State.WAIT_TWICE && this.scores.getFirstScore() == 10) {
 //            return 30;
