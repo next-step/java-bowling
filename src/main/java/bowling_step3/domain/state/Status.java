@@ -6,8 +6,6 @@ public interface Status {
     Status pitch(int numPins);
     boolean isFinished();
 
-//    int getScores();
-
     int calculateAdditionalScore(Status status);
 
     Scores scores();

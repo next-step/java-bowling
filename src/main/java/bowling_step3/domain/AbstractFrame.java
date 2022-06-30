@@ -3,7 +3,6 @@ package bowling_step3.domain;
 import bowling_step3.domain.state.*;
 
 public abstract class AbstractFrame implements Frame {
-    //    private Scores scores;
     private Status status;
     private final Frame nextFrame;
 
@@ -21,9 +20,6 @@ public abstract class AbstractFrame implements Frame {
     }
 
     public Frame play(int numPins) {
-//        if (this.done()) {
-//            throw new UnsupportedOperationException("This frame is done.");
-//        }
         Status status = this.status.pitch(numPins);
         this.status = status;
         if (status.isFinished()) {
@@ -42,7 +38,6 @@ public abstract class AbstractFrame implements Frame {
         if (!done()) {
             return;
         }
-//        if (this.status instanceof Spare && nextFrame.scores().scores().size() < 1) {
         if (this.status instanceof Spare && nextFrame.status() instanceof Ready) {
             return;
         }
@@ -76,17 +71,6 @@ public abstract class AbstractFrame implements Frame {
 
     public int calculateAdditionalScore(Status status) {
         return status.calculateAdditionalScore(this.status);
-
-//        if (scores.state() == State.WAIT_TWICE && this.scores.getFirstScore() == 10) {
-//            return 30;
-//        }
-//        if (scores.state() == State.WAIT_TWICE) {
-//            return scores.getScore() + this.scores.sumOfTwo();
-//        }
-//        if (scores.state() == State.WAIT_ONCE && this.scores.scores().size() >= 1) {
-//            return scores.getScore() + this.scores.getFirstScore();
-//        }
-//        throw new UnsupportedOperationException("Cannot calculate additional yet.");
     }
 
     public Frame next() {

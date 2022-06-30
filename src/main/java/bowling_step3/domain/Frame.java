@@ -15,8 +15,6 @@ public interface Frame {
 
     Frame next();
 
-//    State state();
-
     Subtotals createSubtotals();
 
     void accumulateResult(Subtotals subtotals);

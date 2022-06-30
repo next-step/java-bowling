@@ -7,16 +7,8 @@ public class LastBonus extends Running {
         super(scores);
     }
 
-    //    @Override
-//    public Status pitch(int numPins) {
-//        throw new UnsupportedOperationException("Unreachable");
-//    }
-//
     @Override
     public Status pitchLast(int numPins) {
-        // s + p -> lb
-        // s -> lb
-        // length 1, s -> return lastB
         boolean secondPhase = this.scores().size() == 1;
         Scores scores = this.scores().pitchLast(numPins);
         if (secondPhase) {
@@ -24,12 +16,4 @@ public class LastBonus extends Running {
         }
         return new GameOver(scores);
     }
-
-//    public int calculateAdditionalScore(Status status) {
-//        if (status instanceof  Running) {
-//        throw new UnsupportedOperationException("Cannot calculate yet.");
-//
-//        }
-//
-//    }
 }

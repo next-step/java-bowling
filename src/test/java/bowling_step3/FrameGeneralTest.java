@@ -29,7 +29,6 @@ public class FrameGeneralTest {
     public void doneWhenSpare() throws Exception {
         Frame frame = frames.first();
         frame.play(8);
-//        assertThatThrownBy(() -> frame.state()).isInstanceOf(UnsupportedOperationException.class);
         frame.play(2);
         assertThat(frame.status()).isInstanceOf(Done.class);
     }
@@ -38,8 +37,6 @@ public class FrameGeneralTest {
     public void doneWhenMiss() throws Exception {
         Frame frame = frames.first();
         frame.play(8);
-//        assertThatThrownBy(() -> frame.status()).isInstanceOf(UnsupportedOperationException.class);
-//        assertThat(frame.status()).isInstanceOf(FirstPitch.class);
         frame.play(1);
         assertThat(frame.status()).isInstanceOf(Done.class);
     }

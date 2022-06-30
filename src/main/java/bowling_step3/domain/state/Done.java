@@ -9,11 +9,6 @@ public abstract class Done implements Status {
         this.scores = scores;
     }
 
-//    public Done(Scores scores) {
-//        this.scores = scores;
-//    }
-
-
     public Status pitch(int i) {
         throw new UnsupportedOperationException("cannot pitch more");
     }
@@ -30,11 +25,6 @@ public abstract class Done implements Status {
     public Integer getScore() {
         return this.scores.getScore();
     }
-
-//    @Override
-//    public Status pitchLast(int numPins) {
-//        return null;
-//    }
 
     @Override
     public String toString() {

@@ -17,7 +17,6 @@ public class Strike extends Done {
         if (status instanceof Strike) {
             return MAX_SCORE + status.scores().sumOfTwo() * 2;
         }
-//        || status instanceof Strike || status.scores().getFirstScore() == 10
         if (status.scores().size() < 2 ) {
             throw new UnsupportedOperationException("not yet to calculate.");
         }
@@ -27,9 +26,6 @@ public class Strike extends Done {
     @Override
     public Status pitchLast(int numPins) {
         Scores scores = this.scores().pitchLast(numPins);
-//        if (this.scores().done()) {
-//            return new Done(this.scores());
-//        }
         if (scores.isStrike()) {
             return new Strike(scores);
         }

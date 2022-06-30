@@ -1,7 +1,6 @@
 package bowling_step3;
 
 import bowling_step3.domain.Frame;
-//import bowling_step3.domain.FrameLast;
 import bowling_step3.domain.Frames;
 import org.junit.jupiter.api.Test;
 
