@@ -394,3 +394,13 @@ gon
     - done() => use instanceof Done
 
 ## Step 4
+
+### Todo
+
+#### 1명 이상의 사용자가 플레이 할 수 있는 볼링 점수판 구현
+
+- Players 1st class collection
+    - [ ] get number of Players
+    - [ ] Player{name, Frames}: get each player name, create each frames
+- [ ] Iterate each player to pitch, print, create subtotal
+- [ ] print winner
