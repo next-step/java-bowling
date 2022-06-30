@@ -38,7 +38,6 @@ public class SubtotalsTest {
         frame.play(10)
                 .play(5)
                 .play(5);
-        Output.printFrames(0,frames, new Player("abc"));
         Subtotals subtotals = frames.first().createSubtotals();
         assertThat(subtotals).isEqualTo(new Subtotals(List.of(20)));
     }

@@ -44,7 +44,6 @@ public class FrameLastTest {
         lastFrame = lastFrame.play(8);
         lastFrame = lastFrame.play(2);
         lastFrame = lastFrame.play(7);
-        System.out.println(lastFrame);
         assertThat(lastFrame.done()).isTrue();
     }
 
@@ -62,7 +61,6 @@ public class FrameLastTest {
     public void getScore_miss() {
         lastFrame = lastFrame.play(8);
         lastFrame = lastFrame.play(1);
-        System.out.println(lastFrame);
         assertThat(lastFrame.getScore()).isEqualTo(9);
     }
 
@@ -85,14 +83,12 @@ public class FrameLastTest {
     @Test
     public void getScore_twoStrike() {
         lastFrame = lastFrame.play(10).play(10).play(8);
-        System.out.println(lastFrame);
         assertThat(lastFrame.getScore()).isEqualTo(28);
     }
 
     @Test
     public void getScore_threeStrike() {
         lastFrame = lastFrame.play(10);
-        System.out.println(lastFrame);
         lastFrame = lastFrame.play(10);
         lastFrame = lastFrame.play(10);
         assertThat(lastFrame.getScore()).isEqualTo(30);
@@ -100,11 +96,9 @@ public class FrameLastTest {
 
     @Test
     public void getScore_9프레임_Strike() {
-//        Scores scores = new Scores(List.of(10), 0);
         Status status = new Strike();
         lastFrame = lastFrame.play(10);
         lastFrame = lastFrame.play(10);
-        System.out.println(lastFrame);
         assertThat(lastFrame.calculateAdditionalScore(status)).isEqualTo(30);
     }
 
@@ -119,10 +113,8 @@ public class FrameLastTest {
     @Test
     public void getScore_9프레임_Strike_notReady() {
         assertThatThrownBy(() -> {
-//            Scores scores = new Scores(List.of(10), 0);
             Status status = new Strike();
             lastFrame = lastFrame.play(10);
-            System.out.println(lastFrame);
             lastFrame.calculateAdditionalScore(status);
         }).isInstanceOf(UnsupportedOperationException.class);
     }
