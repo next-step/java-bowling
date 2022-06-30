@@ -8,9 +8,13 @@ public class Input {
         return scanner.nextLine();
     }
 
-
     public static String scanPlayer() {
         Output.print("Please put player name (Max 3 latters)\n");
         return scan();
+    }
+
+    public static int scanNumPlayers() {
+        System.out.println("How many people to play?");
+        return scanner.nextInt();
     }
 }

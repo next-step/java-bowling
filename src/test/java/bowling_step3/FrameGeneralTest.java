@@ -2,7 +2,6 @@ package bowling_step3;
 
 import bowling_step3.domain.*;
 import bowling_step3.domain.state.Done;
-import bowling_step3.domain.state.FirstPitch;
 import bowling_step3.view.Output;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,8 +46,8 @@ public class FrameGeneralTest {
         while (!(frame.next() == null && frame.status().isFinished())) {
             frame = frame.play(5);
             Subtotals subtotals = frames.first().createSubtotals();
-            Output.printFrames(10, frames, new Player("tst"));
-            Output.printSubtotals(subtotals, new Player("tst"));
+            Output.printFrames(10, frames, new Player("tst", frames));
+            Output.printSubtotals(subtotals, new Player("tst", frames));
         }
     }
 }

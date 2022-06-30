@@ -2,10 +2,12 @@ package bowling_step3.domain;
 
 public class Player {
     private final String name;
+    private final Frames frames;
 
-    public Player(String name) {
+    public Player(String name, Frames frames) {
         verify(name);
         this.name = name;
+        this.frames = frames;
     }
 
     private void verify(String name) {
