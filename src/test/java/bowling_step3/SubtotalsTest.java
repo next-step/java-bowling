@@ -2,9 +2,7 @@ package bowling_step3;
 
 import bowling_step3.domain.Frame;
 import bowling_step3.domain.Frames;
-import bowling_step3.domain.Player;
 import bowling_step3.domain.Subtotals;
-import bowling_step3.view.Output;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,13 +13,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SubtotalsTest {
     private Frames frames;
     private Frame frame;
-    private Subtotals subtotals;
 
     @BeforeEach
     public void setup() {
         frames = Frames.create();
         frame = frames.first();
-        subtotals = new Subtotals();
     }
 
     @Test

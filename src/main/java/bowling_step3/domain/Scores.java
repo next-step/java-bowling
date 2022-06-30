@@ -66,7 +66,6 @@ public class Scores {
                 .reduce(0, (acc, cur) -> acc + cur);
     }
 
-
     public List<Integer> scores() {
         return this.scores;
     }
@@ -104,19 +103,6 @@ public class Scores {
             return this.scores.get(0);
         }
         throw new UnsupportedOperationException("Not enough scores");
-    }
-
-    public State state() {
-        if (!done()) {
-            throw new UnsupportedOperationException("cannot get state yet.");
-        }
-        if (getFirstScore() == 10) {
-            return State.WAIT_TWICE;
-        }
-        if (sum() == 10) {
-            return State.WAIT_ONCE;
-        }
-        return State.DONE;
     }
 
     public Integer sumOfTwo() {

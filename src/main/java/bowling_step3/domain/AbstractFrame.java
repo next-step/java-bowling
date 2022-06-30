@@ -77,26 +77,13 @@ public abstract class AbstractFrame implements Frame {
         return nextFrame;
     }
 
-    public State state() {
-        return this.status.scores().state();
-    }
-
     public boolean finished() {
         return this.next() == null && this.done();
-    }
-
-    protected Integer sumOfTwo() {
-        return this.status.scores().sumOfTwo();
-    }
-
-    protected Integer getFirstScore() {
-        return this.status.scores().getFirstScore();
     }
 
     void renewStatus(Status status) {
         this.status = status;
     }
-
 
     public Status status() {
         return this.status;

@@ -1,6 +1,5 @@
 package bowling_step3.domain;
 
-import bowling_step3.domain.state.Done;
 import bowling_step3.domain.state.Ready;
 import bowling_step3.domain.state.Status;
 
