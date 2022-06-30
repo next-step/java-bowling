@@ -29,14 +29,14 @@ public class FrameLastTest {
     public void miss() {
         lastFrame = lastFrame.play(8);
         lastFrame = lastFrame.play(1);
-        assertThat(lastFrame.done()).isTrue();
+        assertThat(lastFrame.status().isFinished()).isTrue();
     }
 
     @Test
     public void spare_isnot_endgame() {
         lastFrame = lastFrame.play(8);
         lastFrame = lastFrame.play(2);
-        assertThat(lastFrame.done()).isFalse();
+        assertThat(lastFrame.status().isFinished()).isFalse();
     }
 
     @Test
@@ -44,7 +44,7 @@ public class FrameLastTest {
         lastFrame = lastFrame.play(8);
         lastFrame = lastFrame.play(2);
         lastFrame = lastFrame.play(7);
-        assertThat(lastFrame.done()).isTrue();
+        assertThat(lastFrame.status().isFinished()).isTrue();
     }
 
     @Test
@@ -61,14 +61,14 @@ public class FrameLastTest {
     public void getScore_miss() {
         lastFrame = lastFrame.play(8);
         lastFrame = lastFrame.play(1);
-        assertThat(lastFrame.getScore()).isEqualTo(9);
+        assertThat(lastFrame.scores().getScore()).isEqualTo(9);
     }
 
     @Test
     public void getScore_cannot_calculate() {
         assertThatThrownBy(() -> {
             lastFrame = lastFrame.play(8);
-            lastFrame.getScore();
+            lastFrame.scores().getScore();
         }).isInstanceOf(UnsupportedOperationException.class);
     }
 
@@ -77,13 +77,13 @@ public class FrameLastTest {
         lastFrame = lastFrame.play(8);
         lastFrame = lastFrame.play(2);
         lastFrame = lastFrame.play(9);
-        assertThat(lastFrame.getScore()).isEqualTo(19);
+        assertThat(lastFrame.scores().getScore()).isEqualTo(19);
     }
 
     @Test
     public void getScore_twoStrike() {
         lastFrame = lastFrame.play(10).play(10).play(8);
-        assertThat(lastFrame.getScore()).isEqualTo(28);
+        assertThat(lastFrame.scores().getScore()).isEqualTo(28);
     }
 
     @Test
@@ -91,7 +91,7 @@ public class FrameLastTest {
         lastFrame = lastFrame.play(10);
         lastFrame = lastFrame.play(10);
         lastFrame = lastFrame.play(10);
-        assertThat(lastFrame.getScore()).isEqualTo(30);
+        assertThat(lastFrame.scores().getScore()).isEqualTo(30);
     }
 
     @Test

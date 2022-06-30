@@ -44,7 +44,7 @@ public class FrameGeneralTest {
     @Test
     void printSubtotalsWithFives() {
         Frame frame = frames.first();
-        while (!(frame.next() == null && frame.done())) {
+        while (!(frame.next() == null && frame.status().isFinished())) {
             frame = frame.play(5);
             Subtotals subtotals = frames.first().createSubtotals();
             Output.printFrames(10, frames, new Player("tst"));

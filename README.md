@@ -375,7 +375,6 @@ gon
 
 - [x] frame.finished 로 종료 여부 판단
 
-
 #### FrameLast.java
 
 - [x] FrameMutual 이 Frame interface 를 구현하고 있으므로 FrameMutual 만 상속
@@ -388,6 +387,10 @@ gon
 
 #### Frame.java
 
-- [ ] interface 분리하여 메서드 수 줄이기
+- [x] Status 도입하여 if문 줄이기
+- [x] Frame interface 분리하여 메서드 수 줄이기
+    - getScore => scores().getScore()
+    - finished() => use instanceof Done or Running
+    - done() => use instanceof Done
 
 ## Step 4

@@ -7,19 +7,13 @@ public interface Frame {
 
     Scores scores();
 
-    int getScore();
-
     int calculateAdditionalScore(Status status);
-
-    boolean done();
 
     Frame next();
 
     Subtotals createSubtotals();
 
     void accumulateResult(Subtotals subtotals);
-
-    boolean finished();
 
     Status status();
 }

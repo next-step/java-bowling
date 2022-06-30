@@ -2,7 +2,7 @@ package bowling_step3.domain.state;
 
 import bowling_step3.domain.Scores;
 
-abstract class Running implements Status {
+public abstract class Running implements Status {
     private Scores scores;
 
     public Running(Scores scores) {

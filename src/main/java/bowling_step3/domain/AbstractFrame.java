@@ -41,7 +41,7 @@ public abstract class AbstractFrame implements Frame {
         if (this.status instanceof Spare && nextFrame.status() instanceof Ready) {
             return;
         }
-        if (this.status instanceof Strike && !nextFrame.done()) {
+        if (this.status instanceof Strike && !nextFrame.status().isFinished()) {
             return;
         }
         subtotals.add(frameResult() + subtotals.last());
