@@ -1,7 +1,6 @@
 package bowling_step3.domain;
 
-import bowling_step3.domain.state.Ready;
-import bowling_step3.domain.state.Status;
+import bowling_step3.domain.state.*;
 
 public abstract class AbstractFrame implements Frame {
     //    private Scores scores;
@@ -43,10 +42,11 @@ public abstract class AbstractFrame implements Frame {
         if (!done()) {
             return;
         }
-        if (this.state() == State.WAIT_ONCE && nextFrame.scores().scores().size() < 1) {
+//        if (this.status instanceof Spare && nextFrame.scores().scores().size() < 1) {
+        if (this.status instanceof Spare && nextFrame.status() instanceof Ready) {
             return;
         }
-        if (this.state() == State.WAIT_TWICE && !nextFrame.done()) {
+        if (this.status instanceof Strike && !nextFrame.done()) {
             return;
         }
         subtotals.add(frameResult() + subtotals.last());
@@ -56,7 +56,7 @@ public abstract class AbstractFrame implements Frame {
     }
 
     Integer frameResult() {
-        if (this.status.isFinished()) {
+        if (this.status instanceof Miss) {
             return this.status.getScore();
         }
         return nextFrame.calculateAdditionalScore(this.status);

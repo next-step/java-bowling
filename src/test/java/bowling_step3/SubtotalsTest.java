@@ -2,7 +2,9 @@ package bowling_step3;
 
 import bowling_step3.domain.Frame;
 import bowling_step3.domain.Frames;
+import bowling_step3.domain.Player;
 import bowling_step3.domain.Subtotals;
+import bowling_step3.view.Output;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,6 +38,7 @@ public class SubtotalsTest {
         frame.play(10)
                 .play(5)
                 .play(5);
+        Output.printFrames(0,frames, new Player("abc"));
         Subtotals subtotals = frames.first().createSubtotals();
         assertThat(subtotals).isEqualTo(new Subtotals(List.of(20)));
     }
