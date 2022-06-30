@@ -41,14 +41,14 @@ public class FrameGeneralTest {
         assertThat(frame.status()).isInstanceOf(Done.class);
     }
 
-//    @Test
-//    void printSubtotalsWithFives() {
-//        Frame frame = frames.first();
-//        while (!(frame.next() == null && frame.done())) {
-//            frame = frame.play(5);
-//            Subtotals subtotals = frames.first().createSubtotals();
-//            Output.printFrames(10, frames, new Player("tst"));
-//            Output.printSubtotals(subtotals, new Player("tst"));
-//        }
-//    }
+    @Test
+    void printSubtotalsWithFives() {
+        Frame frame = frames.first();
+        while (!(frame.next() == null && frame.done())) {
+            frame = frame.play(5);
+            Subtotals subtotals = frames.first().createSubtotals();
+            Output.printFrames(10, frames, new Player("tst"));
+            Output.printSubtotals(subtotals, new Player("tst"));
+        }
+    }
 }
