@@ -46,7 +46,7 @@ public class FrameGeneralTest {
         while (!(frame.next() == null && frame.status().isFinished())) {
             frame = frame.play(5);
             Subtotals subtotals = frames.first().createSubtotals();
-            Output.printFrames(10, frames, new Player("tst", frames));
+            Output.printFrames(10, new Player("tst", frames));
             Output.printSubtotals(subtotals, new Player("tst", frames));
         }
     }

@@ -33,8 +33,10 @@ public class BowlingApp {
                     int randomPin = frame.scores().getRandom();
                     frame = frame.play(randomPin);
                     Subtotals subtotals = frames.first().createSubtotals();
-                    Output.printFrames(i, frames, player);
-                    Output.printSubtotals(subtotals, player);
+//                    Output.printFrames(i, frames, player);
+//                    Output.printSubtotals(subtotals, player);
+                    Output.printPlayerResult(i, frame, player);
+                    Output.printPlayersFrames(i, players, subtotals);
                     if (frame.status() instanceof Ready || frame.status() instanceof GameOver) {
                         frames.renewCurrentIndex();
                         break;

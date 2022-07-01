@@ -2,6 +2,7 @@ package bowling_step3.view;
 
 import bowling_step3.domain.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Output {
@@ -11,27 +12,26 @@ public class Output {
         System.out.print(payload);
     }
 
-    public static void printFrames(int round, Frames frames, Player player) {
-        if (round > 0) {
-            List<Integer> scores = frames.get(round - 1).scores().scores();
-            if (scores.size() > 0) {
-                print(round + " Frame pitch: " + scores.get(scores.size() - 1) + "\n");
-            }
-        }
-        print(HEADER_STR + "\n");
+    public static void printFrames(int round, Player player) {
+        Frames frames = player.frames();
+//        if (round > 0) {
+//            List<Integer> scores = frames.get(round - 1).scores().scores();
+//            if (scores.size() > 0) {
+//                print(round + " Frame pitch: " + scores.get(scores.size() - 1) + "\n");
+//            }
+//        }
         printScores(frames, player);
     }
 
     public static void printSubtotals(Subtotals subtotals, Player player) {
         List<Integer> listSubtotals = subtotals.subtotals();
         int emptySize = 10 - listSubtotals.size();
-        String payload = "| " + formatName(player.name()) + " |" + listSubtotals.stream()
+        String payload = "| " + formatName("") + " |" + listSubtotals.stream()
                 .map(subtotal -> formatRecord(subtotal + ""))
                 .reduce("", (acc, cur) -> acc + cur + "|") // empty
                 + (formatRecord("") + "|").repeat(emptySize)
                 + "\n";
         print(payload);
-        System.out.println();
     }
 
     private static void printScores(Frames frames, Player player) {
@@ -77,4 +77,28 @@ public class Output {
         return String.format("%-8s", "  " + payload);
     }
 
+    public static void printPlayersFrames(int round, LinkedList<Player> players, Subtotals subtotals) {
+//        print(HEADER_STR + "\n");
+        for (Player player : players) {
+//            if (round > 0) {
+//                List<Integer> scores = player.frames().get(round - 1).scores().scores();
+//                if (scores.size() > 0) {
+//                    print(round + " Frame pitch: " + scores.get(scores.size() - 1) + "\n");
+//                }
+//            }
+            printFrames(round, player);
+            printSubtotals(subtotals, player);
+        }
+        System.out.println();
+    }
+
+    public static void printPlayerResult(int round, Frame frame, Player player) {
+        if (round > 0) {
+            List<Integer> scores = frame.scores().scores();
+            if (scores.size() > 0) {
+                print(round + " Frame [" + player.name() + "] pitched: " + scores.get(scores.size() - 1) + "\n");
+                print(HEADER_STR + "\n");
+            }
+        }
+    }
 }
