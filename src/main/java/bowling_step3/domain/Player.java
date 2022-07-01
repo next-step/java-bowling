@@ -1,5 +1,7 @@
 package bowling_step3.domain;
 
+import bowling_step3.domain.state.GameOver;
+
 public class Player {
     private final String name;
     private final Frames frames;
@@ -18,5 +20,13 @@ public class Player {
 
     public String name() {
         return this.name;
+    }
+
+    public boolean gameOver() {
+        return this.frames.last().status() instanceof GameOver;
+    }
+
+    public Frames frames() {
+        return this.frames;
     }
 }

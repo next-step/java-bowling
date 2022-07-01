@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Input {
     private static Scanner scanner = new Scanner(System.in);
+
     public static String scan() {
         return scanner.nextLine();
     }
@@ -15,6 +16,6 @@ public class Input {
 
     public static int scanNumPlayers() {
         System.out.println("How many people to play?");
-        return scanner.nextInt();
+        return Integer.parseInt(scanner.nextLine());
     }
 }

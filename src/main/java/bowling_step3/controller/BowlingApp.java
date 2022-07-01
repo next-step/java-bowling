@@ -1,24 +1,47 @@
 package bowling_step3.controller;
 
 import bowling_step3.domain.*;
+import bowling_step3.domain.state.GameOver;
+import bowling_step3.domain.state.Ready;
 import bowling_step3.view.Input;
 import bowling_step3.view.Output;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class BowlingApp {
     public static void main(String[] args) {
         int numPlayers = Input.scanNumPlayers();
-        List<Player> players = new ArrayList<>();
+        LinkedList<Player> players = new LinkedList<>();
         for (int i = 0; i < numPlayers; i++) {
-//            String name = Input.scanPlayer();
+            String name = Input.scanPlayer();
             Frames frames = Frames.create();
-            players.add(new Player("ttt", frames));
+            players.add(new Player(name, frames));
         }
         System.out.println(players);
 //        while 10 rounds
 //            while n players
+//                pitch till Done
+//        Player lastPlayer = players.getLast();
+//        while (!lastPlayer.gameOver()) {
+        for (int i = 1; i <= 10; i++) {
+            for (Player player : players) {
+                Frames frames = player.frames();
+                Frame frame = frames.current();
+                while (true) {
+                    int randomPin = frame.scores().getRandom();
+                    frame = frame.play(randomPin);
+                    Subtotals subtotals = frames.first().createSubtotals();
+                    Output.printFrames(i, frames, player);
+                    Output.printSubtotals(subtotals, player);
+                    if (frame.status() instanceof Ready || frame.status() instanceof GameOver) {
+                        frames.renewCurrentIndex();
+                        break;
+                    }
+                }
+            }
+        }
 //
 //        Frame frame = frames.first();
 //        while (!frame.status().isFinished()) {

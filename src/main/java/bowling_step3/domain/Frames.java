@@ -6,9 +6,11 @@ import java.util.stream.Stream;
 
 public class Frames {
     private final List<Frame> frames;
+    private int currentIndex;
 
     public Frames(List<Frame> frames) {
         this.frames = frames;
+        this.currentIndex = 0;
     }
 
     public static Frames create() {
@@ -56,5 +58,13 @@ public class Frames {
 
     public Frame last() {
         return get(9);
+    }
+
+    public Frame current() {
+        return this.frames.get(this.currentIndex);
+    }
+
+    public void renewCurrentIndex() {
+        this.currentIndex++;
     }
 }
