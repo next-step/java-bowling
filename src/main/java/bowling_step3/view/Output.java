@@ -15,13 +15,7 @@ public class Output {
 
     public static void printFrames(int round, Player player) {
         Frames frames = player.frames();
-//        if (round > 0) {
-//            List<Integer> scores = frames.get(round - 1).scores().scores();
-//            if (scores.size() > 0) {
-//                print(round + " Frame pitch: " + scores.get(scores.size() - 1) + "\n");
-//            }
-//        }
-        printScores(frames, player);
+       printScores(frames, player);
     }
 
     public static void printSubtotals(Subtotals subtotals, Player player) {
@@ -79,14 +73,7 @@ public class Output {
     }
 
     public static void printPlayersFrames(int round, LinkedList<Player> players, Map<Player, Subtotals> playerSubtotals) {
-//        print(HEADER_STR + "\n");
         for (Player player : players) {
-//            if (round > 0) {
-//                List<Integer> scores = player.frames().get(round - 1).scores().scores();
-//                if (scores.size() > 0) {
-//                    print(round + " Frame pitch: " + scores.get(scores.size() - 1) + "\n");
-//                }
-//            }
             printFrames(round, player);
             printSubtotals(playerSubtotals.get(player), player);
         }

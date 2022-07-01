@@ -17,12 +17,6 @@ public class BowlingApp {
             Frames frames = Frames.create();
             players.add(new Player(name, frames));
         }
-        System.out.println(players);
-//        while 10 rounds
-//            while n players
-//                pitch till Done
-//        Player lastPlayer = players.getLast();
-//        while (!lastPlayer.gameOver()) {
         for (int i = 1; i <= 10; i++) {
             for (Player player : players) {
                 Frames frames = player.frames();
@@ -30,11 +24,8 @@ public class BowlingApp {
                 while (true) {
                     int randomPin = frame.scores().getRandom();
                     frame = frame.play(randomPin);
-//                    Subtotals subtotals = frames.first().createSubtotals();
                     Map<Player, Subtotals> playerSubtotals = new HashMap<>();
                     players.stream().forEach(p -> playerSubtotals.put(p, p.frames().first().createSubtotals()));
-//                    Output.printFrames(i, frames, player);
-//                    Output.printSubtotals(subtotals, player);
                     Output.printPlayerResult(i, frame, player);
                     Output.printPlayersFrames(i, players, playerSubtotals);
                     if (frame.status() instanceof Ready || frame.status() instanceof GameOver) {
@@ -44,14 +35,5 @@ public class BowlingApp {
                 }
             }
         }
-//
-//        Frame frame = frames.first();
-//        while (!frame.status().isFinished()) {
-//            int randomPin = frame.scores().getRandom();
-//            frame = frame.play(randomPin);
-//            Subtotals subtotals = frames.first().createSubtotals();
-//            Output.printFrames(10, frames, player);
-//            Output.printSubtotals(subtotals, player);
-//        }
     }
 }
