@@ -4,6 +4,7 @@ import bowling_step3.domain.*;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class Output {
     public final static String HEADER_STR = "| NAME |  01    |  02    |  03    |  04    |  05    |  06    |  07    |  08    |  09    |  10    |";
@@ -77,7 +78,7 @@ public class Output {
         return String.format("%-8s", "  " + payload);
     }
 
-    public static void printPlayersFrames(int round, LinkedList<Player> players, Subtotals subtotals) {
+    public static void printPlayersFrames(int round, LinkedList<Player> players, Map<Player, Subtotals> playerSubtotals) {
 //        print(HEADER_STR + "\n");
         for (Player player : players) {
 //            if (round > 0) {
@@ -87,7 +88,7 @@ public class Output {
 //                }
 //            }
             printFrames(round, player);
-            printSubtotals(subtotals, player);
+            printSubtotals(playerSubtotals.get(player), player);
         }
         System.out.println();
     }

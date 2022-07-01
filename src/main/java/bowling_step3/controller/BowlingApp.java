@@ -6,9 +6,7 @@ import bowling_step3.domain.state.Ready;
 import bowling_step3.view.Input;
 import bowling_step3.view.Output;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class BowlingApp {
     public static void main(String[] args) {
@@ -32,11 +30,13 @@ public class BowlingApp {
                 while (true) {
                     int randomPin = frame.scores().getRandom();
                     frame = frame.play(randomPin);
-                    Subtotals subtotals = frames.first().createSubtotals();
+//                    Subtotals subtotals = frames.first().createSubtotals();
+                    Map<Player, Subtotals> playerSubtotals = new HashMap<>();
+                    players.stream().forEach(p -> playerSubtotals.put(p, p.frames().first().createSubtotals()));
 //                    Output.printFrames(i, frames, player);
 //                    Output.printSubtotals(subtotals, player);
                     Output.printPlayerResult(i, frame, player);
-                    Output.printPlayersFrames(i, players, subtotals);
+                    Output.printPlayersFrames(i, players, playerSubtotals);
                     if (frame.status() instanceof Ready || frame.status() instanceof GameOver) {
                         frames.renewCurrentIndex();
                         break;
