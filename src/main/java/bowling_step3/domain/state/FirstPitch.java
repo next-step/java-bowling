@@ -19,6 +19,6 @@ public class FirstPitch extends Running {
         if (status instanceof Spare) {
             return new LastBonus(status.scores());
         };
-        return new Miss(new Scores(status.scores().scores(), 0));
+        return new GameOver(new Scores(status.scores().scores(), 0));
     }
 }
