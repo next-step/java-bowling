@@ -617,6 +617,8 @@ def
 |      |  9     |  16    |  25    |  34    |  41    |  45    |  75    |  92    |  99    |  104   |
 | def  |  6|1   |  10    |  10    |  7|-   |  3|/   |  9|-   |  7|-   |  3|5   |  6|/   |  2|-   |
 |      |  7     |  37    |  54    |  61    |  80    |  89    |  96    |  104   |  116   |  118   |
+
+🎉Winner: def
 ```
 ### Todo
 
@@ -626,4 +628,4 @@ def
     - [x] get number of Players
     - [x] Player{name, Frames}: get each player name, create each frames
 - [x] Iterate each player to pitch, print, create subtotal
-- [ ] print winner
+- [x] print winner
