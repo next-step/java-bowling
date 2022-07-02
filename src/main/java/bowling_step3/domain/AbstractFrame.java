@@ -77,10 +77,6 @@ public abstract class AbstractFrame implements Frame {
         return nextFrame;
     }
 
-    public boolean finished() {
-        return this.next() == null && this.done();
-    }
-
     void renewStatus(Status status) {
         this.status = status;
     }
