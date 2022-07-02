@@ -5,8 +5,6 @@ import bowling_step3.domain.state.GameOver;
 import bowling_step3.domain.state.Ready;
 import bowling_step3.view.Input;
 import bowling_step3.view.Output;
-
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
