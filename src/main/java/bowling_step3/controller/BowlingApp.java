@@ -1,12 +1,7 @@
 package bowling_step3.controller;
 
 import bowling_step3.domain.*;
-import bowling_step3.domain.state.GameOver;
-import bowling_step3.domain.state.Ready;
 import bowling_step3.view.Input;
-import bowling_step3.view.Output;
-
-import java.util.*;
 import java.util.stream.Stream;
 
 public class BowlingApp {
