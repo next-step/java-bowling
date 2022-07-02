@@ -1,8 +1,6 @@
 package bowling_step3.domain;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Subtotals {
     private List<Integer> subtotal;
@@ -13,6 +11,11 @@ public class Subtotals {
 
     public Subtotals(List<Integer> subtotal) {
         this.subtotal = subtotal;
+    }
+
+    public static Player winner(Map<Player, Subtotals> playerSubtotals) {
+        return Collections.max(playerSubtotals.entrySet(), (entry1, entry2) -> entry1.getValue().subtotal.get(9) - entry2.getValue().subtotal.get(9))
+                .getKey();
     }
 
     public void add(Integer subtotal) {

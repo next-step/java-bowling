@@ -24,14 +24,10 @@ public class BowlingApp {
         for (int i = 1; i <= 10; i++) {
             playerSubtotals = iteratePlays(i, players.players());
         }
-        Player winner = winner(playerSubtotals);
+        Player winner = Subtotals.winner(playerSubtotals);
         System.out.println(winner.name());
     }
 
-    private static Player winner(Map<Player, Subtotals> playerSubtotals) {
-        return Collections.max(playerSubtotals.entrySet(), (entry1, entry2) -> entry1.getValue().subtotals().get(9) - entry2.getValue().subtotals().get(9))
-                .getKey();
-    }
 
     public static Map<Player, Subtotals> iteratePlays(Integer round, LinkedList<Player> players) {
         return players.stream().map(player -> plays(players, round, player))
