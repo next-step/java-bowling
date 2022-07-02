@@ -12,7 +12,7 @@ import java.util.Map;
 public class BowlingApp {
     public static void main(String[] args) {
         int numPlayers = Input.scanNumPlayers();
-        Players players = new Players();
+        LinkedList<Player> players = new LinkedList<>();
         for (int i = 0; i < numPlayers; i++) {
             String name = Input.scanPlayer();
             Frames frames = Frames.create();
@@ -20,12 +20,11 @@ public class BowlingApp {
         }
         Map<Player, Subtotals> playerSubtotals = new HashMap<>();
         for (int i = 1; i <= 10; i++) {
-            playerSubtotals = iteratePlays(i, players.players());
+            playerSubtotals = iteratePlays(i, players);
         }
         Player winner = Subtotals.winner(playerSubtotals);
         Output.printWinner(winner);
     }
-
 
     public static Map<Player, Subtotals> iteratePlays(Integer round, LinkedList<Player> players) {
         return players.stream().map(player -> plays(players, round, player))
