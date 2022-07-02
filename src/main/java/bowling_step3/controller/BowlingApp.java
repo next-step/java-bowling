@@ -23,7 +23,7 @@ public class BowlingApp {
             playerSubtotals = iteratePlays(i, players.players());
         }
         Player winner = Subtotals.winner(playerSubtotals);
-        System.out.println(winner.name());
+        Output.printWinner(winner);
     }
 
 

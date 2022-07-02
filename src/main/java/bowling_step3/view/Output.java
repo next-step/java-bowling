@@ -15,7 +15,7 @@ public class Output {
 
     public static void printFrames(int round, Player player) {
         Frames frames = player.frames();
-       printScores(frames, player);
+        printScores(frames, player);
     }
 
     public static void printSubtotals(Subtotals subtotals, Player player) {
@@ -88,5 +88,9 @@ public class Output {
                 print(HEADER_STR + "\n");
             }
         }
+    }
+
+    public static void printWinner(Player winner) {
+        print("🎉Winner: " + winner.name() + "\n");
     }
 }
