@@ -404,4 +404,3 @@ gon
     - [x] Player{name, Frames}: get each player name, create each frames
 - [x] Iterate each player to pitch, print, create subtotal
 - [ ] print winner
-- fix: should not show subtotal before pitch
