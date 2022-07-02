@@ -6,6 +6,7 @@ import bowling_step3.domain.Subtotals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,7 +27,7 @@ public class SubtotalsTest {
                 .play(5)
                 .play(3);
         Subtotals subtotals = frames.first().createSubtotals();
-        assertThat(subtotals).isEqualTo(new Subtotals(List.of(13)));
+        assertThat(subtotals).isEqualTo(new Subtotals(new LinkedList<>(List.of(13))));
     }
 
     @Test
@@ -35,7 +36,7 @@ public class SubtotalsTest {
                 .play(5)
                 .play(5);
         Subtotals subtotals = frames.first().createSubtotals();
-        assertThat(subtotals).isEqualTo(new Subtotals(List.of(20)));
+        assertThat(subtotals).isEqualTo(new Subtotals(new LinkedList<>(List.of(20))));
     }
 
     @Test
@@ -43,7 +44,7 @@ public class SubtotalsTest {
         frame.play(10)
                 .play(10);
         Subtotals subtotals = frames.first().createSubtotals();
-        assertThat(subtotals).isEqualTo(new Subtotals(List.of(30)));
+        assertThat(subtotals).isEqualTo(new Subtotals(new LinkedList<>(List.of(30))));
     }
 
     @Test
@@ -51,7 +52,7 @@ public class SubtotalsTest {
         frame.play(3)
                 .play(4);
         Subtotals subtotals = frames.first().createSubtotals();
-        assertThat(subtotals).isEqualTo(new Subtotals(List.of(7)));
+        assertThat(subtotals).isEqualTo(new Subtotals(new LinkedList<>(List.of(7))));
     }
 
     @Test
@@ -59,6 +60,6 @@ public class SubtotalsTest {
         frame.play(6)
                 .play(4);
         Subtotals subtotals = frames.first().createSubtotals();
-        assertThat(subtotals).isEqualTo(new Subtotals(List.of()));
+        assertThat(subtotals).isEqualTo(new Subtotals(new LinkedList<>(List.of())));
     }
 }

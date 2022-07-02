@@ -3,18 +3,21 @@ package bowling_step3.domain;
 import java.util.*;
 
 public class Subtotals {
-    private List<Integer> subtotals;
+    private LinkedList<Integer> subtotals;
 
     public Subtotals() {
         this(new LinkedList<>());
     }
 
-    public Subtotals(List<Integer> subtotals) {
+    public Subtotals(LinkedList<Integer> subtotals) {
         this.subtotals = subtotals;
     }
 
     public static Player winner(Map<Player, Subtotals> playerSubtotals) {
-        return Collections.max(playerSubtotals.entrySet(), (entry1, entry2) -> entry1.getValue().subtotals.get(9) - entry2.getValue().subtotals.get(9))
+        return Collections.max(
+                        playerSubtotals.entrySet()
+                        , (entry1, entry2) -> entry1.getValue().subtotals.getLast() - entry2.getValue().subtotals.getLast()
+                )
                 .getKey();
     }
 
