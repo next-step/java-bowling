@@ -1,28 +1,17 @@
 package bowling_step3.domain;
 
-public class FrameLast extends FrameMutual implements Frame {
+import bowling_step3.domain.state.Ready;
+import bowling_step3.domain.state.Status;
+
+public class FrameLast extends AbstractFrame {
     public FrameLast() {
-        super(new Scores(3), null);
-    }
-
-    public FrameLast(Scores scores, Frame next) {
-        super(scores, null);
-    }
-
-    protected Scores evaluateScore(Scores scores) {
-        return scores.evaluateLastBonus();
+        super(new Ready(new Scores(3)), null);
     }
 
     @Override
     public Frame play(int numPins) {
-        if (this.done()) {
-            throw new UnsupportedOperationException("This frame is done.");
-        }
-        Scores scores = this.scores().pitchLast(numPins);
-        this.scores = scores;
-        if (this.scores().sum() < 10 && this.scores().scores().size() == 2) {
-            this.scores = new Scores(scores.scores(), 0);
-        }
+        Status status = this.status().pitchLast(numPins);
+        renewStatus(status);
         return this;
     }
 
@@ -37,18 +26,9 @@ public class FrameLast extends FrameMutual implements Frame {
     @Override
     Integer frameResult() {
         if (this.done()) {
-            return this.scores.getScore();
+            return this.getScore();
         }
         return null;
     }
-
-    public int calculateAdditionalScore(Scores scores) {
-        if (scores.state() == State.WAIT_TWICE && this.scores.scores().size() >= 2) {
-            return scores.getScore() + this.scores.sumOfTwo();
-        }
-        if (scores.state() == State.WAIT_ONCE && this.scores.scores().size() >= 1) {
-            return scores.getScore() + this.scores.getFirstScore();
-        }
-        throw new UnsupportedOperationException("Cannot calculate additional yet.");
-    }
 }
+

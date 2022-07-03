@@ -1,10 +1,15 @@
 package bowling_step3;
 
 import bowling_step3.domain.*;
+import bowling_step3.domain.state.Spare;
+import bowling_step3.domain.state.Status;
+import bowling_step3.domain.state.Strike;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.internal.matchers.Null;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -24,14 +29,14 @@ public class FrameLastTest {
     public void miss() {
         lastFrame = lastFrame.play(8);
         lastFrame = lastFrame.play(1);
-        assertThat(lastFrame.done()).isTrue();
+        assertThat(lastFrame.status().isFinished()).isTrue();
     }
 
     @Test
     public void spare_isnot_endgame() {
         lastFrame = lastFrame.play(8);
         lastFrame = lastFrame.play(2);
-        assertThat(lastFrame.done()).isFalse();
+        assertThat(lastFrame.status().isFinished()).isFalse();
     }
 
     @Test
@@ -39,7 +44,7 @@ public class FrameLastTest {
         lastFrame = lastFrame.play(8);
         lastFrame = lastFrame.play(2);
         lastFrame = lastFrame.play(7);
-        assertThat(lastFrame.done()).isTrue();
+        assertThat(lastFrame.status().isFinished()).isTrue();
     }
 
     @Test
@@ -56,14 +61,14 @@ public class FrameLastTest {
     public void getScore_miss() {
         lastFrame = lastFrame.play(8);
         lastFrame = lastFrame.play(1);
-        assertThat(lastFrame.getScore()).isEqualTo(9);
+        assertThat(lastFrame.scores().getScore()).isEqualTo(9);
     }
 
     @Test
     public void getScore_cannot_calculate() {
         assertThatThrownBy(() -> {
             lastFrame = lastFrame.play(8);
-            lastFrame.getScore();
+            lastFrame.scores().getScore();
         }).isInstanceOf(UnsupportedOperationException.class);
     }
 
@@ -72,14 +77,13 @@ public class FrameLastTest {
         lastFrame = lastFrame.play(8);
         lastFrame = lastFrame.play(2);
         lastFrame = lastFrame.play(9);
-        assertThat(lastFrame.getScore()).isEqualTo(19);
+        assertThat(lastFrame.scores().getScore()).isEqualTo(19);
     }
 
     @Test
     public void getScore_twoStrike() {
-        lastFrame.play(10).play(10).play(8);
-        System.out.println(lastFrame);
-        assertThat(lastFrame.getScore()).isEqualTo(28);
+        lastFrame = lastFrame.play(10).play(10).play(8);
+        assertThat(lastFrame.scores().getScore()).isEqualTo(28);
     }
 
     @Test
@@ -87,30 +91,31 @@ public class FrameLastTest {
         lastFrame = lastFrame.play(10);
         lastFrame = lastFrame.play(10);
         lastFrame = lastFrame.play(10);
-        assertThat(lastFrame.getScore()).isEqualTo(30);
+        assertThat(lastFrame.scores().getScore()).isEqualTo(30);
     }
 
     @Test
     public void getScore_9프레임_Strike() {
-        Scores scores = new Scores(List.of(10), 0);
+        Status status = new Strike();
         lastFrame = lastFrame.play(10);
         lastFrame = lastFrame.play(10);
-        assertThat(lastFrame.calculateAdditionalScore(scores)).isEqualTo(30);
+        assertThat(lastFrame.calculateAdditionalScore(status)).isEqualTo(30);
     }
 
     @Test
     public void getScore_9프레임_Spare() {
         Scores scores = new Scores(List.of(9, 1), 0);
+        Status status = new Spare(scores);
         lastFrame = lastFrame.play(9);
-        assertThat(lastFrame.calculateAdditionalScore(scores)).isEqualTo(19);
+        assertThat(lastFrame.calculateAdditionalScore(status)).isEqualTo(19);
     }
 
     @Test
     public void getScore_9프레임_Strike_notReady() {
         assertThatThrownBy(() -> {
-            Scores scores = new Scores(List.of(10), 0);
+            Status status = new Strike();
             lastFrame = lastFrame.play(10);
-            lastFrame.calculateAdditionalScore(scores);
+            lastFrame.calculateAdditionalScore(status);
         }).isInstanceOf(UnsupportedOperationException.class);
     }
 }

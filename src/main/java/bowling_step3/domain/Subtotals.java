@@ -1,59 +1,58 @@
 package bowling_step3.domain;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Subtotals {
-    private List<Integer> subtotal;
-
-    public Subtotals(List<Integer> subtotal) {
-        this.subtotal = subtotal;
-    }
+    private LinkedList<Integer> subtotals;
 
     public Subtotals() {
         this(new LinkedList<>());
     }
 
-    public Integer sum() {
-        return this.subtotal
-                .stream()
-                .mapToInt(Integer::intValue)
-                .sum();
+    public Subtotals(LinkedList<Integer> subtotals) {
+        this.subtotals = subtotals;
+    }
+
+    public static Player winner(Map<Player, Subtotals> playerSubtotals) {
+        return Collections.max(
+                        playerSubtotals.entrySet()
+                        , (entry1, entry2) -> entry1.getValue().subtotals.getLast() - entry2.getValue().subtotals.getLast()
+                )
+                .getKey();
     }
 
     public void add(Integer subtotal) {
-        this.subtotal.add(subtotal);
+        this.subtotals.add(subtotal);
     }
 
     public Integer last() {
-        if (this.subtotal.size() == 0) {
+        if (this.subtotals.size() == 0) {
             return 0;
         }
-        return this.subtotal.get(this.subtotal.size() - 1);
+        return this.subtotals.get(this.subtotals.size() - 1);
     }
 
     public List<Integer> subtotals() {
-        return this.subtotal;
+        return this.subtotals;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Subtotals subtotals = (Subtotals) o;
-        return Objects.equals(subtotal, subtotals.subtotal);
+        Subtotals subtotals1 = (Subtotals) o;
+        return Objects.equals(subtotals, subtotals1.subtotals);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(subtotal);
+        return Objects.hash(subtotals);
     }
 
     @Override
     public String toString() {
         return "Subtotals{" +
-                "subtotal=" + subtotal +
+                "subtotals=" + subtotals +
                 '}';
     }
 }

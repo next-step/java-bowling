@@ -3,7 +3,7 @@ package bowling_step3.domain;
 import java.util.*;
 
 public class Scores {
-    private static int MAX_SCORE = 10;
+    public static int MAX_SCORE = 10;
     private static Random Random = new Random();
     private final List<Integer> scores;
     private final int remainingPitch;
@@ -12,13 +12,17 @@ public class Scores {
         this(new ArrayList(), 2);
     }
 
+    public Scores(int remainingPitch) {
+        this(new ArrayList(), remainingPitch);
+    }
+
     public Scores(List<Integer> scores, int remainingPitch) {
         this.scores = scores;
         this.remainingPitch = remainingPitch;
     }
 
-    public Scores(int remainingPitch) {
-        this(new ArrayList(), remainingPitch);
+    public static Scores strike() {
+        return new Scores(new ArrayList<>(Arrays.asList(10)),0);
     }
 
     public Scores pitch(int numPins) {
@@ -62,20 +66,8 @@ public class Scores {
                 .reduce(0, (acc, cur) -> acc + cur);
     }
 
-
     public List<Integer> scores() {
         return this.scores;
-    }
-
-    public Scores evaluateLastBonus() {
-        int remainingTry = this.remainingPitch;
-        if (sum() >= 10) {
-            remainingTry++;
-        }
-        if (this.scores.size() == 3) {
-            return new Scores(this.scores, 0);
-        }
-        return new Scores(this.scores, remainingTry);
     }
 
     @Override
@@ -113,24 +105,23 @@ public class Scores {
         throw new UnsupportedOperationException("Not enough scores");
     }
 
-    public State state() {
-        if (!done()) {
-            throw new UnsupportedOperationException("cannot get state yet.");
-        }
-        if (getFirstScore() == 10) {
-            return State.WAIT_TWICE;
-        }
-        if (sum() == 10) {
-            return State.WAIT_ONCE;
-        }
-        return State.DONE;
-    }
-
     public Integer sumOfTwo() {
         return this.scores
                 .stream()
                 .limit(2)
                 .reduce((acc, cur) -> acc + cur)
                 .orElseThrow(() -> new UnsupportedOperationException("cannot get sum of Two"));
+    }
+
+    public boolean isSpare() {
+        return this.sumOfTwo() == MAX_SCORE;
+    }
+
+    public boolean isStrike() {
+       return this.lastScore() == MAX_SCORE;
+    }
+
+    public int size() {
+        return this.scores.size();
     }
 }

@@ -70,8 +70,8 @@ public class E2ETest {
                 .play(8).play(1)
                 .play(10).play(8).play(2);
         Subtotals subtotals = frame.createSubtotals();
-        Player player = new Player("tst");
-        Output.printFrames(10, frames, player);
+        Player player = new Player("tst", frames);
+        Output.printFrames(10, player);
         Output.printSubtotals(subtotals, player);
     }
 }
