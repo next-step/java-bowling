@@ -9,15 +9,20 @@ public class QuestionTest {
 
     @Test
     void deletable() {
+        // 질문만 했을경우
         Assertions.assertThat(Q1.deletable(UserTest.JAVAJIGI)).isTrue();
-        System.out.println("Q1.deletable(UserTest.JAVAJIGI) = " + Q1.deletable(UserTest.JAVAJIGI));
 
+        // 내가 답변했을 경우
         Q1.addAnswer(AnswerTest.A1);
-        System.out.println("Q1.deletable(UserTest.JAVAJIGI) = " + Q1.deletable(UserTest.JAVAJIGI));
         Assertions.assertThat(Q1.deletable(UserTest.JAVAJIGI)).isTrue();
 
+        // 남이 답변한 경우
         Q1.addAnswer(AnswerTest.A2);
-        System.out.println("Q1.deletable(UserTest.JAVAJIGI) = " + Q1.deletable(UserTest.JAVAJIGI));
         Assertions.assertThat(Q1.deletable(UserTest.JAVAJIGI)).isFalse();
+    }
+
+    @Test
+    void delete() {
+        Q1.delete();
     }
 }
