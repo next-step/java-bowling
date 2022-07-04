@@ -88,6 +88,14 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
+    public boolean deletable(User loginUser) {
+        if (!isOwner(loginUser)) {
+            return false;
+        }
+
+        return answers.stream().noneMatch(answer -> !answer.isOwner(loginUser));
+    }
+
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
