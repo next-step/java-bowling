@@ -3,6 +3,8 @@ package qna.domain;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 public class QuestionTest {
     public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
     public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
@@ -23,6 +25,8 @@ public class QuestionTest {
 
     @Test
     void delete() {
-        Q1.delete();
+        List<DeleteHistory> delete = Q1.delete();
+        Assertions.assertThat(delete.contains(Q1));
+
     }
 }
