@@ -19,10 +19,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -67,7 +65,7 @@ public class Question extends AbstractEntity {
             return false;
         }
 
-        return answers.stream().noneMatch(answer -> !answer.isOwner(loginUser));
+        return answers.isOwner(loginUser);
     }
 
     public List<DeleteHistory> delete() {
@@ -76,11 +74,7 @@ public class Question extends AbstractEntity {
         deleted = true;
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
 
-        for (Answer answer : answers) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }
-
+        answers.writeDeleteHistories(deleteHistories);
         return deleteHistories;
     }
 
