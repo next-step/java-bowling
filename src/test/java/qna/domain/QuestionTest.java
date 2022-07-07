@@ -2,6 +2,7 @@ package qna.domain;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import qna.CannotDeleteException;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public class QuestionTest {
     public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
 
     @Test
-    void deletable() {
+    void deletable() throws CannotDeleteException {
         // 질문만 했을경우
         Assertions.assertThat(Q1.deletable(UserTest.JAVAJIGI)).isTrue();
 
@@ -24,8 +25,8 @@ public class QuestionTest {
     }
 
     @Test
-    void delete() {
-        List<DeleteHistory> delete = Q1.delete();
+    void delete() throws CannotDeleteException {
+        List<DeleteHistory> delete = Q1.delete(UserTest.JAVAJIGI);
         Assertions.assertThat(delete.contains(Q1));
 
     }
