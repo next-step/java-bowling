@@ -28,8 +28,7 @@ public class Answers {
 
     public void writeDeleteHistories(List<DeleteHistory> deleteHistories) {
         for (Answer answer : answers) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+            answer.delete(answer, deleteHistories);
         }
     }
 }
