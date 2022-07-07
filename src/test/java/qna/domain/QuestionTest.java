@@ -28,6 +28,5 @@ public class QuestionTest {
     void delete() throws CannotDeleteException {
         List<DeleteHistory> delete = Q1.delete(UserTest.JAVAJIGI);
         Assertions.assertThat(delete.contains(Q1));
-
     }
 }
