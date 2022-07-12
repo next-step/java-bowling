@@ -12,4 +12,8 @@ public class Frame {
         this.pinCount -= count;
         attemptCount++;
     }
+
+    public boolean isStrike() {
+        return this.pinCount == 0;
+    }
 }
