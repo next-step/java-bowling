@@ -21,4 +21,10 @@ class FrameTest {
         Assertions.assertThat(frame.isStrike()).isTrue();
     }
 
+    @Test
+    void 프레임에_두번쨰_투구에서_핀이_0개가_되면_스페어다() {
+        Frame frame = new Frame(8);
+        frame.throwBall(2);
+        Assertions.assertThat(frame.getScoreType()).isEqualTo(ScoreType.SPARE);
+    }
 }

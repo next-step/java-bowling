@@ -2,9 +2,21 @@ package bowling;
 
 public class Frame {
     private int pinCount = 10;
-    private int attemptCount = 1;
+    private int attemptCount;
 
     public Frame(int count) {
+        throwBall(count);
+    }
+
+    public boolean isStrike() {
+        return this.attemptCount == 1 && this.pinCount == 0;
+    }
+
+    private boolean isSpare() {
+        return this.attemptCount == 2 && this.pinCount == 0;
+    }
+
+    public void throwBall(int count) {
         this.pinCount -= count;
 
         if (this.pinCount < 0) {
@@ -13,7 +25,17 @@ public class Frame {
         attemptCount++;
     }
 
-    public boolean isStrike() {
-        return this.pinCount == 0;
+    public ScoreType getScoreType() {
+        if (isStrike()) {
+            return ScoreType.STRIKE;
+        }
+
+        if (isSpare()) {
+            return ScoreType.SPARE;
+        }
+
+
+        return null;
     }
+
 }
