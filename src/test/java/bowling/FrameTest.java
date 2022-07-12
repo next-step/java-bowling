@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class FrameTest {
 
     @Test
-    void 투구수가_10개_이상이면_안된다() {
+    void 투구수가_10개_이상이면_안된() {
         Assertions.assertThatThrownBy(() -> {
             new Frame(11);
         }).isInstanceOf(IllegalArgumentException.class)
@@ -20,4 +20,5 @@ class FrameTest {
         Frame frame = new Frame(10);
         Assertions.assertThat(frame.isStrike()).isTrue();
     }
+
 }
