@@ -2,8 +2,8 @@ package bowling;
 
 public class PinCount {
     private int totalPinCount = 10;
-    private int firstCount;
-    private int SecondCount;
+    private int firstCount = 0;
+    private int secondCount = 0;
 
 
     public boolean isZero() {
@@ -17,10 +17,24 @@ public class PinCount {
             throw new IllegalArgumentException("핀은 10개 이상 넘어갈 수 없습니다");
         }
 
+
         if (first) {
             this.firstCount = count;
         }
 
-        this.SecondCount = count;
+        this.secondCount = count;
     }
+
+    public String score() {
+        if (firstCount == 10) {
+            return "X";
+        }
+
+        if (firstCount < 10 && totalPinCount == 0) {
+            return firstCount + "|" + "/";
+        }
+
+        return firstCount + "|" + secondCount;
+    }
+
 }

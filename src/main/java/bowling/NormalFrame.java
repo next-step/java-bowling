@@ -11,9 +11,9 @@ public class NormalFrame extends Frame{
 
     @Override
     public Frame next() {
-        if (this.index < 10) {
+        if (this.index < 9) {
             return new NormalFrame(this.index + 1);
         }
-        return new FinalFrame(this.index++);
+        return new FinalFrame(this.index + 1);
     }
 }

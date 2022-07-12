@@ -6,7 +6,7 @@ abstract public class Frame {
     private int attemptCount;
 
     public Frame() {
-        pinCount = new PinCount();
+        this.pinCount = new PinCount();
     }
 
     protected boolean isStrike() {
@@ -44,9 +44,14 @@ abstract public class Frame {
         return ScoreType.MISS;
     }
 
+    public String score() {
+        return this.pinCount.score();
+    }
+
     private boolean isFirst() {
         return attemptCount == 1;
     }
 
     abstract Frame next();
+
 }
