@@ -4,9 +4,8 @@ public class Frame {
     private PinCount pinCount;
     private int attemptCount;
 
-    public Frame(int count) {
+    public Frame() {
         pinCount = new PinCount();
-        throwBall(count);
     }
 
     public boolean isStrike() {
@@ -17,20 +16,18 @@ public class Frame {
         return this.attemptCount == 2 && this.pinCount.isZero();
     }
 
-    private boolean isMiss() {
-        return attemptCount == 2 && !pinCount.isZero();
-    }
+    public ScoreType throwBall(int count) {
+        if (attemptCount > 2) {
+            throw new IllegalArgumentException("두번 이상 투구를 할 수 없습니다.");
+        }
 
-    public void throwBall(int count) {
         attemptCount++;
         this.pinCount.decreaseCount(count, isFirst());
+
+        return getScoreType(count);
     }
 
-    private boolean isFirst() {
-        return attemptCount == 1;
-    }
-
-    public ScoreType getScoreType() {
+    private ScoreType getScoreType(int count) {
         if (isStrike()) {
             return ScoreType.STRIKE;
         }
@@ -39,11 +36,14 @@ public class Frame {
             return ScoreType.SPARE;
         }
 
-        if (isMiss()) {
-            return ScoreType.MISS;
+        if (count == 0) {
+            return ScoreType.GUTTER;
         }
 
+        return ScoreType.MISS;
+    }
 
-        return null;
+    private boolean isFirst() {
+        return attemptCount == 1;
     }
 }
