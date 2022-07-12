@@ -27,4 +27,12 @@ class FrameTest {
         frame.throwBall(2);
         Assertions.assertThat(frame.getScoreType()).isEqualTo(ScoreType.SPARE);
     }
+
+    @Test
+    void 프레임의_두번재_투구에서도_모든_핀이_쓰러지지_않은_상태는_미스다() {
+        Frame frame = new Frame(3);
+        frame.throwBall(4);
+        Assertions.assertThat(frame.getScoreType()).isEqualTo(ScoreType.MISS);
+
+    }
 }

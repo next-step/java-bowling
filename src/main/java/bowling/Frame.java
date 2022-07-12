@@ -16,6 +16,10 @@ public class Frame {
         return this.attemptCount == 2 && this.pinCount == 0;
     }
 
+    private boolean isMiss() {
+        return attemptCount == 2 && this.pinCount > 0;
+    }
+
     public void throwBall(int count) {
         this.pinCount -= count;
 
@@ -34,8 +38,12 @@ public class Frame {
             return ScoreType.SPARE;
         }
 
+        if (isMiss()) {
+            return ScoreType.MISS;
+        }
+
+
 
         return null;
     }
-
 }
