@@ -18,7 +18,7 @@ class FrameTest {
     @Test
     void 투구수_10개면_스트라이크다() {
         Frame frame = new Frame(10);
-        Assertions.assertThat(frame.isStrike()).isTrue();
+        Assertions.assertThat(frame.getScoreType()).isEqualTo(ScoreType.STRIKE);
     }
 
     @Test
