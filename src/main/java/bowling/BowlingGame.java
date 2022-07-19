@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.domain.Board;
+import bowling.domain.Board2;
 import bowling.domain.Player;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
@@ -37,6 +38,19 @@ public class BowlingGame {
             frame = frame.validateMoveToNextFrame();
             board.addFrameIfAbsent(frame);
         } while (continuous(frame.index()));
+    }
+
+    private static void doBowling2() {
+        Player player = Input.askName();
+        Board2 board = Board2.init();
+
+        // TODO(jack.comeback) : print empty board
+
+
+
+
+
+
     }
 
     private static boolean continuous(int mayBeNextIndex) {
