@@ -5,8 +5,12 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Frame2 {
-    private int pins = 10;
-    private List<Integer> fallenPins = new ArrayList<>();
+    protected int pins = 10;
+    protected List<Integer> fallenPins = new ArrayList<>();
+    protected Frame2 prev;
+    protected Frame2 next;
+
+    public abstract Frame2 askCurrentFrame();
 
     public void subtractPins(int fallenPin) {
         fallenPins.add(fallenPin);

@@ -4,6 +4,17 @@ import java.util.List;
 
 public class NormalFrame2 extends Frame2 {
 
+    @Override
+    public Frame2 askCurrentFrame() {
+        if (pins == 0) {
+            Frame2 nextFrame = new NormalFrame2();
+            next = nextFrame;
+            nextFrame.prev = this;
+            return nextFrame;
+        }
+        return this;
+    }
+
     public NormalFrame2() {
     }
 
