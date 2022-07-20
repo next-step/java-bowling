@@ -6,7 +6,7 @@ public class NormalFrame2 extends Frame2 {
 
     @Override
     public Frame2 askCurrentFrame() {
-        if (pins == 0) {
+        if (restOfPins == 0) {
             Frame2 nextFrame = new NormalFrame2();
             next = nextFrame;
             nextFrame.prev = this;
@@ -16,14 +16,19 @@ public class NormalFrame2 extends Frame2 {
     }
 
     public NormalFrame2() {
+        super(1);
     }
 
-    public NormalFrame2(int pins) {
-        super(pins);
+    public NormalFrame2(int index) {
+        super(index);
     }
 
     public NormalFrame2(int pins, List<Integer> fallenPins) {
         super(pins, fallenPins);
+    }
+
+    public NormalFrame2(int index, int restOfPins, List<Integer> fallenPins) {
+        super(index, restOfPins, fallenPins);
     }
 
     @Override

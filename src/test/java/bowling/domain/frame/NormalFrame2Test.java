@@ -17,17 +17,17 @@ class NormalFrame2Test {
         assertThat(frame).isEqualTo(new NormalFrame2(6, List.of(4)));
     }
 
-    @DisplayName("프레임이 투구를 다 던졌는지 물어보고 다 던졌으면 다음 프레임으로 넘어간다.")
+    @DisplayName("프레임에게 투구를 다 던졌는지 물어보고 다 던졌으면 다음 프레임으로 넘어간다.")
     @Test
     void askFrameIsOver() {
-        Frame2 frame = new NormalFrame2(0, List.of(3, 7));
-        assertThat(frame.askCurrentFrame()).isEqualTo(new NormalFrame2());
+        Frame2 frame = new NormalFrame2(1, 0, List.of(3, 7));
+        assertThat(frame.askCurrentFrame()).isEqualTo(new NormalFrame2(2));
     }
 
-    @DisplayName("프레임이 투구를 다 던졌는지 물어보고 다 안 던졌으면 자기 자신 리턴한다.")
+    @DisplayName("프레임에게 투구를 다 던졌는지 물어보고 다 안 던졌으면 자기 자신 리턴한다.")
     @Test
     void askFrameIsOver2() {
-        Frame2 frame = new NormalFrame2(4, List.of(6));
+        Frame2 frame = new NormalFrame2(1, 4, List.of(6));
         assertThat(frame.askCurrentFrame()).isEqualTo(frame);
     }
 
