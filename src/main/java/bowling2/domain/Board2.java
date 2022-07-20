@@ -1,6 +1,6 @@
-package bowling.domain;
+package bowling2.domain;
 
-import bowling.domain.frame.Frame2;
+import bowling2.domain.frame.Frame2;
 
 import java.util.ArrayList;
 import java.util.List;

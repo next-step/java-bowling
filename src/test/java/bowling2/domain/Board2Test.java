@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling2.domain;
 
 import org.junit.jupiter.api.Test;
 
