@@ -36,6 +36,12 @@ public abstract class Frame2 {
         this.fallenPins = fallenPins;
     }
 
+    public Frame2(int index, Frame2 prev, Frame2 next) {
+        this.index = index;
+        this.prev = prev;
+        this.next = next;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
