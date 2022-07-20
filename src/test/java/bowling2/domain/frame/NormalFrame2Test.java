@@ -34,12 +34,24 @@ class NormalFrame2Test {
     @DisplayName("프레임이 투구를 다 던지면 다음 프레임 생성하고 현재 프레임과 연결해준다.")
     @Test
     void link() {
+        // given
+        Frame2 frame = new NormalFrame2(1, 0, List.of(3, 7));
+        Frame2 nextFrame = new NormalFrame2(2, frame, null);
 
+        // when, then
+        assertThat(frame.askCurrentFrame()).isEqualTo(nextFrame);
+        assertThat(frame.getNext()).isEqualTo(nextFrame);
     }
 
     @DisplayName("9번째 프레임이 다 던지면 파이널 프레임을 생성한다.")
     @Test
     void createFinalFrame() {
+        // given
+        Frame2 frame = new NormalFrame2(9, 0, List.of(3,7));
 
+        // when, then
+        Frame2 finalFrame = new FinalFrame2(10, frame, null);
+        assertThat(frame.askCurrentFrame()).isEqualTo(finalFrame);
+        assertThat(finalFrame.getPrev()).isEqualTo(frame);
     }
 }

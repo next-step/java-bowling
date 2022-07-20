@@ -42,6 +42,26 @@ public abstract class Frame2 {
         this.next = next;
     }
 
+    public int getIndex() {
+        return index;
+    }
+
+    public int getRestOfPins() {
+        return restOfPins;
+    }
+
+    public List<Integer> getFallenPins() {
+        return fallenPins;
+    }
+
+    public Frame2 getPrev() {
+        return prev;
+    }
+
+    public Frame2 getNext() {
+        return next;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

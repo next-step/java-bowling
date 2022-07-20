@@ -6,13 +6,25 @@ public class NormalFrame2 extends Frame2 {
 
     @Override
     public Frame2 askCurrentFrame() {
-        if (restOfPins == 0) {
-            Frame2 nextFrame = new NormalFrame2();
-            next = nextFrame;
-            nextFrame.prev = this;
+        if (moveToFinalFrame()) {
+            Frame2 nextFrame = new FinalFrame2(10, this, null);
+            this.next = nextFrame;
+            return nextFrame;
+        }
+        if (moveToNextFrame()) {
+            Frame2 nextFrame = new NormalFrame2(index + 1, this, null);
+            this.next = nextFrame;
             return nextFrame;
         }
         return this;
+    }
+
+    private boolean moveToNextFrame() {
+        return restOfPins == 0;
+    }
+
+    private boolean moveToFinalFrame() {
+        return moveToNextFrame() && index == 9;
     }
 
     public NormalFrame2() {
@@ -29,6 +41,10 @@ public class NormalFrame2 extends Frame2 {
 
     public NormalFrame2(int index, int restOfPins, List<Integer> fallenPins) {
         super(index, restOfPins, fallenPins);
+    }
+
+    public NormalFrame2(int index, Frame2 prev, Frame2 next) {
+        super(index, prev, next);
     }
 
     @Override
