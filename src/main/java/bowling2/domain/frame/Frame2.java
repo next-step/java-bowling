@@ -13,10 +13,7 @@ public abstract class Frame2 {
 
     public abstract Frame2 askCurrentFrame();
 
-    public void subtractPins(int fallenPin) {
-        fallenPins.add(fallenPin);
-        restOfPins -= fallenPin;
-    };
+    public abstract void handleAfterTry(int fallenPin);
 
     public Frame2() {
     }

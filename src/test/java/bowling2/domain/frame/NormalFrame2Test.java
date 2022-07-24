@@ -12,7 +12,7 @@ class NormalFrame2Test {
     @Test
     void fallenPinsGiven_subtractPins() {
         Frame2 frame = new NormalFrame2();
-        frame.subtractPins(4);
+        frame.handleAfterTry(4);
 
         assertThat(frame).isEqualTo(new NormalFrame2(6, List.of(4)));
     }
