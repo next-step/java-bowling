@@ -25,4 +25,12 @@ class BoardTest {
         Frame2 firstFrame = new NormalFrame2(1);
         assertThat(board).isEqualTo(new Board(List.of(firstFrame), firstFrame));
     }
+
+    @DisplayName("쓰러트린 핀이 남은 핀을 넘으면 throw exp")
+    @Test
+    void handleAfterTry() {
+        board.handleAfterTry(3);
+        assertThatThrownBy(() -> board.handleAfterTry(8))
+                .isInstanceOf(BowlingException.class);
+    }
 }

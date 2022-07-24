@@ -15,6 +15,10 @@ public abstract class Frame2 {
 
     public abstract void handleAfterTry(int fallenPin);
 
+    public boolean validatePins(int fallenPins) {
+        return fallenPins > restOfPins;
+    }
+
     public Frame2() {
     }
 
