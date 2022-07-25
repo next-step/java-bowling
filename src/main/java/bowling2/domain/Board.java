@@ -1,7 +1,7 @@
 package bowling2.domain;
 
-import bowling2.domain.frame.Frame2;
-import bowling2.domain.frame.NormalFrame2;
+import bowling2.domain.frame.Frame;
+import bowling2.domain.frame.NormalFrame;
 import bowling2.exception.BowlingException;
 
 import java.util.ArrayList;
@@ -9,34 +9,34 @@ import java.util.List;
 import java.util.Objects;
 
 public class Board {
-    private final List<Frame2> frame2s;
-    private Frame2 currentFrame;
+    private final List<Frame> frames;
+    private Frame currentFrame;
 
     public static Board init() {
-        Frame2 firstFrame = new NormalFrame2(1);
+        Frame firstFrame = new NormalFrame(1);
         Board board = new Board(new ArrayList<>(), firstFrame);
         board.addFrameIfMoveToNext(firstFrame);
         return board;
     }
 
-    private void addFrameIfMoveToNext(Frame2 mayBeNewFrame) {
-        boolean notExisted = frame2s.stream()
+    private void addFrameIfMoveToNext(Frame mayBeNewFrame) {
+        boolean notExisted = frames.stream()
                 .noneMatch(existingFrame -> existingFrame.getIndex() == mayBeNewFrame.getIndex());
         if (notExisted) {
-            frame2s.add(mayBeNewFrame);
+            frames.add(mayBeNewFrame);
         }
     }
 
-    public Board(List<Frame2> frame2s) {
-        this(frame2s, new NormalFrame2(1));
+    public Board(List<Frame> frames) {
+        this(frames, new NormalFrame(1));
     }
 
-    public Board(List<Frame2> frame2s, Frame2 currentFrame) {
-        this.frame2s = frame2s;
+    public Board(List<Frame> frames, Frame currentFrame) {
+        this.frames = frames;
         this.currentFrame = currentFrame;
     }
 
-    public Frame2 currentFrame() {
+    public Frame currentFrame() {
         return currentFrame;
     }
 
@@ -44,7 +44,7 @@ public class Board {
         return currentFrame.getIndex();
     }
 
-    public Frame2 askCurrentFrame() {
+    public Frame askCurrentFrame() {
         return currentFrame.askCurrentFrame();
     }
 
@@ -62,11 +62,11 @@ public class Board {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Board board = (Board) o;
-        return Objects.equals(frame2s, board.frame2s);
+        return Objects.equals(frames, board.frames);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frame2s);
+        return Objects.hash(frames);
     }
 }

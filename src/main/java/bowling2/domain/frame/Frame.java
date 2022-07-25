@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Frame2 {
+public abstract class Frame {
     protected int index;
     protected int restOfPins = 10;
     protected List<Integer> fallenPins = new ArrayList<>();
-    protected Frame2 prev;
-    protected Frame2 next;
+    protected Frame prev;
+    protected Frame next;
 
-    public abstract Frame2 askCurrentFrame();
+    public abstract Frame askCurrentFrame();
 
     public abstract void handleAfterTry(int fallenPin);
 
@@ -19,25 +19,25 @@ public abstract class Frame2 {
         return fallenPins > restOfPins;
     }
 
-    public Frame2() {
+    public Frame() {
     }
 
-    public Frame2(int index) {
+    public Frame(int index) {
         this.index = index;
     }
 
-    public Frame2(int restOfPins, List<Integer> fallenPins) {
+    public Frame(int restOfPins, List<Integer> fallenPins) {
         this.restOfPins = restOfPins;
         this.fallenPins = fallenPins;
     }
 
-    public Frame2(int index, int restOfPins, List<Integer> fallenPins) {
+    public Frame(int index, int restOfPins, List<Integer> fallenPins) {
         this.index = index;
         this.restOfPins = restOfPins;
         this.fallenPins = fallenPins;
     }
 
-    public Frame2(int index, Frame2 prev, Frame2 next) {
+    public Frame(int index, Frame prev, Frame next) {
         this.index = index;
         this.prev = prev;
         this.next = next;
@@ -55,11 +55,11 @@ public abstract class Frame2 {
         return fallenPins;
     }
 
-    public Frame2 getPrev() {
+    public Frame getPrev() {
         return prev;
     }
 
-    public Frame2 getNext() {
+    public Frame getNext() {
         return next;
     }
 
@@ -67,8 +67,8 @@ public abstract class Frame2 {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Frame2 frame2 = (Frame2) o;
-        return restOfPins == frame2.restOfPins && Objects.equals(fallenPins, frame2.fallenPins);
+        Frame frame = (Frame) o;
+        return restOfPins == frame.restOfPins && Objects.equals(fallenPins, frame.fallenPins);
     }
 
     @Override

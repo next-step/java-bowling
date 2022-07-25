@@ -1,7 +1,7 @@
 package bowling2.domain;
 
-import bowling2.domain.frame.Frame2;
-import bowling2.domain.frame.NormalFrame2;
+import bowling2.domain.frame.Frame;
+import bowling2.domain.frame.NormalFrame;
 import bowling2.exception.BowlingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +22,7 @@ class BoardTest {
 
     @Test
     void init() {
-        Frame2 firstFrame = new NormalFrame2(1);
+        Frame firstFrame = new NormalFrame(1);
         assertThat(board).isEqualTo(new Board(List.of(firstFrame), firstFrame));
     }
 
