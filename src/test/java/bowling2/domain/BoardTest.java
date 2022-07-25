@@ -33,4 +33,14 @@ class BoardTest {
         assertThatThrownBy(() -> board.handleAfterTry(8))
                 .isInstanceOf(BowlingException.class);
     }
+
+    @DisplayName("투구가 끝나면 새로운 프레임은 보드에 추가된다.")
+    @Test
+    void moveToNextFrame() {
+        assertThat(board.frameSize()).isEqualTo(1);
+        board.handleAfterTry(3);
+        board.handleAfterTry(4);
+        board.askCurrentFrame();
+        assertThat(board.frameSize()).isEqualTo(2);
+    }
 }

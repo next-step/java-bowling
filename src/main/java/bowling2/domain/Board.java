@@ -44,17 +44,24 @@ public class Board {
         return currentFrame.getIndex();
     }
 
-    public Frame askCurrentFrame() {
-        return currentFrame.askCurrentFrame();
+    public void askCurrentFrame() {
+        currentFrame = currentFrame.askCurrentFrame();
+        addFrameIfMoveToNext(currentFrame);
     }
-
-    // TODO(jack.comeback) : addFrameIfMoveToNext() 라는 역할 필요. 프레임이 끝나면 다음 프레임을 board에 추가한다.
 
     public void handleAfterTry(int fallenPins) {
         if (currentFrame.validatePins(fallenPins)) {
             throw new BowlingException();
         }
         currentFrame.handleAfterTry(fallenPins);
+    }
+
+    public boolean inProgress() {
+        return currentFrame != null;
+    }
+
+    public int frameSize() {
+        return frames.size();
     }
 
     @Override
