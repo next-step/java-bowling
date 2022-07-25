@@ -3,13 +3,14 @@ package bowling2.domain.frame;
 import java.util.List;
 
 public class FinalFrame extends Frame {
-    private int remainedTryNo = 2;
     public int bonusTryPossible = 1; // 보너스를 줄 수 있는 남은 횟수
 
-    // TODO(jack.comeback) : 마지막 프레임한테 현재 프레임 물어볼 때 로직 구현
     @Override
     public Frame askCurrentFrame() {
-        return null;
+        if (remainedTryNo == 0) {
+            return null;
+        }
+        return this;
     }
 
     @Override

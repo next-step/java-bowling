@@ -3,8 +3,6 @@ package bowling2.domain.frame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FinalFrameTest {
@@ -65,22 +63,26 @@ class FinalFrameTest {
     @DisplayName("2번 던졌을 때 스트라이크나 스페어가 없으면 null 리턴한다.")
     @Test
     void askCurrentFrame() {
-        Frame finalFrame = new FinalFrame(10, 0, List.of(4,7));
+        Frame finalFrame = new FinalFrame(10);
+        finalFrame.handleAfterTry(3);
+        finalFrame.handleAfterTry(4);
         assertThat(finalFrame.askCurrentFrame()).isNull();
-    }
-
-    @DisplayName("투구 완료했을 때 next는 null이다.")
-    @Test
-    void askCurrentFrame4() {
-    }
-
-    @DisplayName("1번 던졌을 때는 현재 프레임을 유지한다.")
-    @Test
-    void askCurrentFrame2() {
     }
 
     @DisplayName("2번 던졌을 때 스트라이크나 스페어가 나와서 현재 프레임을 유지한다.")
     @Test
     void askCurrentFrame3() {
+        Frame finalFrame = new FinalFrame(10);
+        finalFrame.handleAfterTry(4);
+        finalFrame.handleAfterTry(6);
+        assertThat(finalFrame.askCurrentFrame()).isEqualTo(finalFrame);
+    }
+
+    @DisplayName("1번 던졌을 때는 현재 프레임을 유지한다.")
+    @Test
+    void askCurrentFrame2() {
+        Frame finalFrame = new FinalFrame(10);
+        finalFrame.handleAfterTry(4);
+        assertThat(finalFrame.askCurrentFrame()).isEqualTo(finalFrame);
     }
 }
