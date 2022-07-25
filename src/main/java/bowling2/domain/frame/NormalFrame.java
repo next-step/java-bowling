@@ -43,10 +43,11 @@ public class NormalFrame extends Frame {
     public void handleAfterTry(int fallenPin) {
         fallenPins.add(fallenPin);
         restOfPins -= fallenPin;
+        remainedTryNo--;
     }
 
     private boolean moveToNextFrame() {
-        return restOfPins == 0;
+        return remainedTryNo == 0 || restOfPins == 0;
     }
 
     private boolean moveToFinalFrame() {

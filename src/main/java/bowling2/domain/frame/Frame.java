@@ -10,6 +10,7 @@ public abstract class Frame {
     protected List<Integer> fallenPins = new ArrayList<>();
     protected Frame prev;
     protected Frame next;
+    protected int remainedTryNo = 2;
 
     public abstract Frame askCurrentFrame();
 
