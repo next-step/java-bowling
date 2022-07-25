@@ -64,6 +64,10 @@ public class Board {
         return frames.size();
     }
 
+    public List<Frame> frames() {
+        return frames;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
