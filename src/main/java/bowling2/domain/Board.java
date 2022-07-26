@@ -36,17 +36,8 @@ public class Board {
         this.currentFrame = currentFrame;
     }
 
-    public Frame currentFrame() {
-        return currentFrame;
-    }
-
     public int indexOfCurrentFrame() {
         return currentFrame.getIndex();
-    }
-
-    public void askCurrentFrame() {
-        currentFrame = currentFrame.askCurrentFrame();
-        addFrameIfMoveToNext(currentFrame);
     }
 
     public void handleAfterTry(int fallenPins) {
@@ -54,6 +45,12 @@ public class Board {
             throw new BowlingException();
         }
         currentFrame.handleAfterTry(fallenPins);
+        askCurrentFrame();
+    }
+
+    private void askCurrentFrame() {
+        currentFrame = currentFrame.askCurrentFrame();
+        addFrameIfMoveToNext(currentFrame);
     }
 
     public boolean inProgress() {
