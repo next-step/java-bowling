@@ -7,6 +7,7 @@ import bowling2.exception.BowlingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Board {
     private final List<Frame> frames;
@@ -20,11 +21,16 @@ public class Board {
     }
 
     private void addFrameIfMoveToNext(Frame mayBeNewFrame) {
-        boolean notExisted = frames.stream()
-                .noneMatch(existingFrame -> existingFrame.getIndex() == mayBeNewFrame.getIndex());
-        if (notExisted) {
-            frames.add(mayBeNewFrame);
-        }
+        Optional.ofNullable(mayBeNewFrame)
+                .ifPresent(newFrame -> {
+                            boolean notExisted = frames.stream()
+                                    .noneMatch(existingFrame -> existingFrame.getIndex() == newFrame.getIndex());
+                            if (notExisted) {
+                                frames.add(newFrame);
+                            }
+                        }
+                );
+
     }
 
     public Board(List<Frame> frames) {
