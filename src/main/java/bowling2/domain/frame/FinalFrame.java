@@ -22,6 +22,11 @@ public class FinalFrame extends Frame {
         refillPins();
     }
 
+    @Override
+    public ScoreType scoreType() {
+        return ScoreType.COMMON;
+    }
+
     private void addBonusIfNeeded() {
         if (bonusTryPossible == 1 && bonusCondition()) {
             remainedTryNo += bonusTryPossible--;

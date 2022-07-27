@@ -46,6 +46,17 @@ public class NormalFrame extends Frame {
         remainedTryNo--;
     }
 
+    @Override
+    public ScoreType scoreType() {
+        if (restOfPins > 0) {
+            return ScoreType.COMMON;
+        }
+        if (fallenPins.size() > 1) {
+            return ScoreType.SPARE;
+        }
+        return ScoreType.STRIKE;
+    }
+
     private boolean moveToNextFrame() {
         return remainedTryNo == 0 || restOfPins == 0;
     }

@@ -3,7 +3,10 @@ package bowling2.domain.frame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class FinalFrameTest {
 
@@ -84,5 +87,19 @@ class FinalFrameTest {
         Frame finalFrame = new FinalFrame(10);
         finalFrame.handleAfterTry(4);
         assertThat(finalFrame.askCurrentFrame()).isEqualTo(finalFrame);
+    }
+
+    @DisplayName("파이널의 스코어타입은 항상 Common이다.")
+    @Test
+    void scoreType() {
+        FinalFrame finalFrame = new FinalFrame(1, 6, List.of(1, 3));
+        FinalFrame finalFrame2 = new FinalFrame(1, 3, List.of(1, 9, 7));
+        FinalFrame finalFrame3 = new FinalFrame(1, 0, List.of(10, 10, 10));
+
+        assertAll(
+                () -> assertThat(finalFrame.scoreType()).isEqualTo(ScoreType.COMMON),
+                () -> assertThat(finalFrame2.scoreType()).isEqualTo(ScoreType.COMMON),
+                () -> assertThat(finalFrame3.scoreType()).isEqualTo(ScoreType.COMMON)
+        );
     }
 }

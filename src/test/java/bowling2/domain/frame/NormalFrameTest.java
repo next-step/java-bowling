@@ -63,4 +63,18 @@ class NormalFrameTest {
         assertThat(frame.askCurrentFrame()).isEqualTo(finalFrame);
         assertThat(finalFrame.getPrev()).isEqualTo(frame);
     }
+
+    @DisplayName("프레임의 스코어 타입을 정한다.")
+    @Test
+    void scoreType() {
+        // given
+        NormalFrame commonFrame = new NormalFrame(1, 5, List.of(1, 4));
+        NormalFrame spareFrame = new NormalFrame(2, 0, List.of(1, 9));
+        NormalFrame strikeFrame = new NormalFrame(3, 0, List.of(10));
+
+        // when ,then
+        assertThat(commonFrame.scoreType()).isEqualTo(ScoreType.COMMON);
+        assertThat(spareFrame.scoreType()).isEqualTo(ScoreType.SPARE);
+        assertThat(strikeFrame.scoreType()).isEqualTo(ScoreType.STRIKE);
+    }
 }
