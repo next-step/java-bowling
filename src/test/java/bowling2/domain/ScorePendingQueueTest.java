@@ -15,7 +15,7 @@ class ScorePendingQueueTest {
     void minusPopCount() {
         // given
         Queue<PendingFrame> pendings = new LinkedList<>();
-        pendings.add(PendingFrame.strike(1));
+        pendings.add(new PendingFrame(1, 2));
 
         // when
         ScorePendingQueue queue = new ScorePendingQueue(pendings);
@@ -24,4 +24,21 @@ class ScorePendingQueueTest {
         // then
         assertThat(queue.peek().popCount()).isEqualTo(1);
     }
+
+    @DisplayName("popCount = 0인 펜딩 건을 꺼낸다.")
+    @Test
+    void pop_popCountIs0() {
+        // given
+        Queue<PendingFrame> pendings = new LinkedList<>();
+        pendings.add(new PendingFrame(1, 0));
+        pendings.add(new PendingFrame(2, 1));
+
+        // when
+        ScorePendingQueue queue = new ScorePendingQueue(pendings);
+        PendingFrame preparedPending = queue.getPreparedPending().get();
+
+        // then
+        assertThat(preparedPending.popCount()).isEqualTo(0);
+    }
+
 }

@@ -1,6 +1,7 @@
 package bowling2.domain;
 
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.Queue;
 
 public class ScorePendingQueue {
@@ -19,6 +20,12 @@ public class ScorePendingQueue {
 
     public PendingFrame peek() {
         return queue.peek();
+    }
+
+    public Optional<PendingFrame> getPreparedPending() {
+        return queue.stream()
+                .filter(pendingFrame -> pendingFrame.popCount() == 0)
+                .findFirst();
     }
 }
 
