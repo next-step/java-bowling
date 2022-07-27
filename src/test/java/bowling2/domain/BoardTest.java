@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,5 +50,23 @@ class BoardTest {
         assertThat(board.frameSize()).isEqualTo(1);
         board.handleAfterTry(3);
         assertThat(board.frameSize()).isEqualTo(1);
+    }
+
+
+    @DisplayName("인덱스에 해당하는 프레임을 찾는데 성공한다.")
+    @Test
+    void findPendingFrame() {
+        board = new Board(List.of(new NormalFrame(1, 0, List.of(1, 9))));
+
+        assertThat(board.search(1).getIndex()).isEqualTo(1);
+    }
+
+    @DisplayName("인덱스에 해당하는 프레임이 없어서 exp")
+    @Test
+    void findPendingFrame_fail() {
+        board = new Board(Collections.emptyList());
+
+        assertThatThrownBy(() -> board.search(1))
+                .isInstanceOf(BowlingException.class);
     }
 }

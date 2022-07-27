@@ -71,6 +71,14 @@ public class Board {
         return frames;
     }
 
+    // TODO(jack.comeback) : 에러처리 디테일하게
+    public Frame search(int index) {
+        return frames.stream()
+                .filter(frame -> frame.getIndex() == index)
+                .findFirst()
+                .orElseThrow(() -> new BowlingException("index에 해당하는 프레임이 없습니다. index = " + index));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
