@@ -70,6 +70,10 @@ public class FinalFrame extends Frame {
         super(index, prev, next);
     }
 
+    public FinalFrame(int index, int restOfPins, List<Integer> fallenPins, Frame prev, Frame next) {
+        super(index, restOfPins, fallenPins, prev, next);
+    }
+
     public int getRemainedTryNo() {
         return remainedTryNo;
     }

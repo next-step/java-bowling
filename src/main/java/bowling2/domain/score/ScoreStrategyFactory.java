@@ -1,4 +1,4 @@
-package bowling2.domain;
+package bowling2.domain.score;
 
 import bowling2.domain.frame.Frame;
 import bowling2.exception.BowlingException;

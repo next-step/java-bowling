@@ -1,6 +1,7 @@
 package bowling2.domain.frame;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,6 +12,7 @@ public abstract class Frame {
     protected Frame prev;
     protected Frame next;
     protected int remainedTryNo = 2;
+    protected int score;
 
     public abstract Frame askCurrentFrame();
 
@@ -30,20 +32,28 @@ public abstract class Frame {
     }
 
     public Frame(int restOfPins, List<Integer> fallenPins) {
-        this.restOfPins = restOfPins;
-        this.fallenPins = fallenPins;
+        this(1, restOfPins, fallenPins);
     }
 
     public Frame(int index, int restOfPins, List<Integer> fallenPins) {
-        this.index = index;
-        this.restOfPins = restOfPins;
-        this.fallenPins = fallenPins;
+        this(index, restOfPins, fallenPins, null, null);
     }
 
     public Frame(int index, Frame prev, Frame next) {
+        this(index, 10, Collections.emptyList(), prev, next);
+    }
+
+    public Frame(int index, int restOfPins, List<Integer> fallenPins, Frame prev, Frame next) {
+        this(index, restOfPins, fallenPins, prev, next, 0);
+    }
+
+    public Frame(int index, int restOfPins, List<Integer> fallenPins, Frame prev, Frame next, int score) {
         this.index = index;
+        this.restOfPins = restOfPins;
+        this.fallenPins = fallenPins;
         this.prev = prev;
         this.next = next;
+        this.score = score;
     }
 
     public int getIndex() {
@@ -64,6 +74,10 @@ public abstract class Frame {
 
     public Frame getNext() {
         return next;
+    }
+
+    public int score() {
+        return score;
     }
 
     @Override
