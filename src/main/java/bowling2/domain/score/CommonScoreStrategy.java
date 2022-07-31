@@ -11,9 +11,7 @@ public class CommonScoreStrategy implements ScoreStrategy {
                 .map(Frame::score)
                 .orElse(0);
 
-        int sumOfFallenPins = frame.getFallenPins()
-                .stream().mapToInt(e -> e)
-                .sum();
+        int sumOfFallenPins = frame.sumOfFallenPins();
 
         return prevScore + sumOfFallenPins;
     }

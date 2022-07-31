@@ -3,7 +3,6 @@ package bowling2.domain.score;
 import bowling2.domain.frame.Frame;
 import bowling2.exception.BowlingException;
 
-import java.util.Objects;
 import java.util.Optional;
 
 public class StrikeScoreStrategy implements ScoreStrategy {
@@ -16,8 +15,8 @@ public class StrikeScoreStrategy implements ScoreStrategy {
 
         int sumOfFallenPins = frame.sumOfFallenPins();
 
-        Frame nextFrame = frame.getNext();
-        Objects.requireNonNull(nextFrame);
+        Frame nextFrame = Optional.ofNullable(frame.getNext())
+                .orElseThrow(() -> new BowlingException("nextFrame이 null이면 안됩니다."));
         // next 프레임의 핀 개수가 2개면 next 프레임만 필요
         if (nextFrame.countOfFallenPins() >= 2) {
             int nextScore = nextFrame.sumOfFallenPins();
@@ -27,8 +26,8 @@ public class StrikeScoreStrategy implements ScoreStrategy {
         // next 프레임의 핀 개수가 1개면 next의 next 프레임도 필요
         if (nextFrame.countOfFallenPins() < 2) {
             int firstNextScore = nextFrame.sumOfFallenPins();
-            Frame nextnextFrame = nextFrame.getNext();
-            Objects.requireNonNull(nextnextFrame);
+            Frame nextnextFrame = Optional.ofNullable(nextFrame.getNext())
+                    .orElseThrow(() -> new BowlingException("nextnextFrame이 null이면 안됩니다."));
             int secondNextScore = nextnextFrame.sumOfFallenPins();
 
             return prevScore + sumOfFallenPins + firstNextScore + secondNextScore;

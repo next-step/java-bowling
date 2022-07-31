@@ -18,12 +18,8 @@ public class SpareScoreStrategy implements ScoreStrategy {
                 .mapToInt(e -> e)
                 .sum();
 
-        // TODO(jack.comeback) : Optional.of()에서 null일 경우 orElseThrow가 나가나? 아님 NPE가 나가는지 확인필요
-        Integer nextScore = Optional.of(frame.getNext())
-                .map(frame1 -> frame1.getFallenPins()
-                        .stream()
-                        .mapToInt(e -> e)
-                        .sum())
+        Integer nextScore = Optional.ofNullable(frame.getNext())
+                .map(Frame::sumOfFallenPins)
                 .orElseThrow(() -> new BowlingException("spare 점수 계산 시에는 next는 null이면 안됩니다."));
 
         return prevScore + sumOfFallenPins + nextScore;
