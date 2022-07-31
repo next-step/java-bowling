@@ -59,7 +59,7 @@ public class NormalFrame extends Frame {
         if (restOfPins > 0) {
             return ScoreType.COMMON;
         }
-        if (fallenPins.size() > 1) {
+        if (countOfFallenPins() > 1) {
             return ScoreType.SPARE;
         }
         return ScoreType.STRIKE;

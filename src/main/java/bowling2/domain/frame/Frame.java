@@ -80,7 +80,6 @@ public abstract class Frame {
         return score;
     }
 
-    // TODO(jack.comeback) : 이 메서드 사용안하는 리팩토링 대상있음
     public int countOfFallenPins() {
         return fallenPins.size();
     }
