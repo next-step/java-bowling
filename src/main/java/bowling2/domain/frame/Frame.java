@@ -1,5 +1,7 @@
 package bowling2.domain.frame;
 
+import bowling2.domain.score.ScoreStrategy;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +21,10 @@ public abstract class Frame {
     public abstract void handleAfterTry(int fallenPin);
 
     public abstract ScoreType scoreType();
+
+    public void computeScore(ScoreStrategy scoreStrategy) {
+        this.score = scoreStrategy.compute(this);
+    }
 
     public boolean validatePins(int fallenPins) {
         return fallenPins > restOfPins;
@@ -91,6 +97,10 @@ public abstract class Frame {
                 .sum();
     }
 
+    public boolean isOver() {
+        return remainedTryNo == 0 || restOfPins == 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -103,4 +113,5 @@ public abstract class Frame {
     public int hashCode() {
         return Objects.hash(restOfPins, fallenPins);
     }
+
 }

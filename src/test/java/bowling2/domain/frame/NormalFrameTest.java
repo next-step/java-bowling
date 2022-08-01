@@ -1,5 +1,6 @@
 package bowling2.domain.frame;
 
+import bowling2.domain.score.SpareScoreStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -76,5 +77,20 @@ class NormalFrameTest {
         assertThat(commonFrame.scoreType()).isEqualTo(ScoreType.COMMON);
         assertThat(spareFrame.scoreType()).isEqualTo(ScoreType.SPARE);
         assertThat(strikeFrame.scoreType()).isEqualTo(ScoreType.STRIKE);
+    }
+
+    @DisplayName("점수 전략을 전달받고 점수 계산에 성공한다.")
+    @Test
+    void computeScore() {
+        // given
+        NormalFrame prev = new NormalFrame(2, 0, List.of(3, 4), null, null, 90);
+        NormalFrame next = new NormalFrame(4, 6, List.of(4), null, null, 0);
+        Frame current = new NormalFrame(3, 0, List.of(5, 5), prev, next, 0);
+
+        // when
+        current.computeScore(new SpareScoreStrategy());
+
+        // then
+        assertThat(current.score()).isEqualTo(104);
     }
 }
