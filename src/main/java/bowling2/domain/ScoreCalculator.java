@@ -1,7 +1,6 @@
 package bowling2.domain;
 
 import bowling2.domain.frame.Frame;
-import bowling2.domain.score.ScoreStrategy;
 import bowling2.domain.score.ScoreStrategyFactory;
 
 import java.util.Optional;
@@ -27,8 +26,7 @@ public class ScoreCalculator {
     }
 
     public void handlePending(Frame frame) {
-        ScoreStrategy scoreStrategy = ScoreStrategyFactory.getScoreStrategy(frame);
-//        frame.computeScore(scoreStrategy);
+        frame.computeScore(ScoreStrategyFactory.getScoreStrategy(frame));
     }
 
     public static void pendingOrCalculate(Frame currentFrame) {

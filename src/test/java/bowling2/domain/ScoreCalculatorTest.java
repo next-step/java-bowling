@@ -36,12 +36,6 @@ class ScoreCalculatorTest {
         assertThat(queue.peek().popCount()).isEqualTo(1);
     }
 
-    @DisplayName("1회 투구 후 처리할 pending 건이 있는 경우 해당 건 점수 계산한다.")
-    @Test
-    void handlePending_success2() {
-
-    }
-
     @DisplayName("다음 프레임으로 넘어갈 때 점수계산을 바로할지 pending처리할지 정한 뒤 처리한다.")
     @Test
     void pendingOrCalculate() {
