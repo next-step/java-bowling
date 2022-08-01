@@ -4,7 +4,7 @@ import bowling2.domain.frame.Frame;
 import bowling2.exception.BowlingException;
 
 public class ScoreStrategyFactory {
-    public ScoreStrategy getScoreStrategy(Frame frame) {
+    public static ScoreStrategy getScoreStrategy(Frame frame) {
         switch (frame.scoreType()) {
             case COMMON:
                 return new CommonScoreStrategy();
