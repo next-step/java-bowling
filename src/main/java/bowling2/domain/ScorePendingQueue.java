@@ -23,9 +23,13 @@ public class ScorePendingQueue {
     }
 
     public Optional<PendingFrame> getPreparedPending() {
-        return queue.stream()
-                .filter(pendingFrame -> pendingFrame.popCount() == 0)
-                .findFirst();
+        if (queue.isEmpty()) {
+            return Optional.empty();
+        }
+        if (queue.peek().popCount() == 0) {
+            return Optional.of(queue.poll());
+        }
+        return Optional.empty();
     }
 }
 
@@ -48,5 +52,9 @@ class PendingFrame {
 
     public int popCount() {
         return popCount;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }
