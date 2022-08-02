@@ -1,10 +1,12 @@
 package bowling2.domain;
 
+import bowling2.domain.frame.NormalFrame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Queue;
 
@@ -36,9 +38,34 @@ class ScoreCalculatorTest {
         assertThat(queue.peek().popCount()).isEqualTo(1);
     }
 
-    @DisplayName("다음 프레임으로 넘어갈 때 점수계산을 바로할지 pending처리할지 정한 뒤 처리한다.")
+    @DisplayName("스트라이크나 스페어면 다음 프레임으로 넘어갈 때 pending처리")
     @Test
-    void pendingOrCalculate() {
+    void pendingOrCalculate_pending() {
+        // given
+        Queue<PendingFrame> queue = new LinkedList<>();
+        scoreCalculator = new ScoreCalculator(new ScorePendingQueue(queue));
+
+        int index = 2;
+        NormalFrame currentFrame = new NormalFrame(index, 0, List.of(3, 7), null, null, 0);
+
+        // when
+        scoreCalculator.pendingOrCalculate(currentFrame);
+
+        // then
+        assertThat(queue.peek()).isEqualTo(PendingFrame.spare(index));
+    }
+
+    @DisplayName("스트라이크나 스페어가 아니면 다음 프레임으로 넘어갈 때 점수계산")
+    @Test
+    void pendingOrCalculate_calculate() {
+        // given
+        NormalFrame currentFrame = new NormalFrame(1, 3, List.of(3, 4), null, null, 0);
+
+        // when
+        scoreCalculator.pendingOrCalculate(currentFrame);
+
+        // then
+        assertThat(currentFrame.score()).isEqualTo(7);
 
     }
 }

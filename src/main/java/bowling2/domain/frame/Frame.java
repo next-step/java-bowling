@@ -101,6 +101,18 @@ public abstract class Frame {
         return remainedTryNo == 0 || restOfPins == 0;
     }
 
+    public boolean isCommonScoreType() {
+        return scoreType().equals(ScoreType.COMMON);
+    }
+
+    public boolean isStrikeScoreType() {
+        return scoreType().equals(ScoreType.STRIKE);
+    }
+
+    public boolean isSpareScoreType() {
+        return scoreType().equals(ScoreType.SPARE);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -113,5 +125,4 @@ public abstract class Frame {
     public int hashCode() {
         return Objects.hash(restOfPins, fallenPins);
     }
-
 }

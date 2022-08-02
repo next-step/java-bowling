@@ -29,12 +29,15 @@ public class ScoreCalculator {
         frame.computeScore(ScoreStrategyFactory.getScoreStrategy(frame));
     }
 
-    public static void pendingOrCalculate(Frame currentFrame) {
-        // TODO(jack.comeback) : logic
-        // if currentFrame이 스트라이크나 스페어면 큐에 추가한다.
-        // 아니라면
-        // 점수 전략 + 점수 계산 메서드화
-            // 점수 전략을 꺼낸댜.
-            // Frame에게 점수 전략을 넘기며 점수 계산 요청한다.
+    public void pendingOrCalculate(Frame currentFrame) {
+        if (currentFrame.isCommonScoreType()) {
+            currentFrame.computeScore(ScoreStrategyFactory.getScoreStrategy(currentFrame));
+        }
+        if (currentFrame.isStrikeScoreType()) {
+            scorePendingQueue.add(PendingFrame.strike(currentFrame.getIndex()));
+        }
+        if (currentFrame.isSpareScoreType()) {
+            scorePendingQueue.add(PendingFrame.spare(currentFrame.getIndex()));
+        }
     }
 }

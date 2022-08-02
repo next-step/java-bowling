@@ -1,6 +1,7 @@
 package bowling2.domain;
 
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Queue;
 
@@ -31,6 +32,10 @@ public class ScorePendingQueue {
         }
         return Optional.empty();
     }
+
+    public void add(PendingFrame pendingFrame) {
+        queue.add(pendingFrame);
+    }
 }
 
 class PendingFrame {
@@ -46,6 +51,10 @@ class PendingFrame {
         return new PendingFrame(index, 2);
     }
 
+    public static PendingFrame spare(int index) {
+        return new PendingFrame(index, 1);
+    }
+
     public void minusPopCount() {
         popCount--;
     }
@@ -56,5 +65,18 @@ class PendingFrame {
 
     public int getIndex() {
         return index;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PendingFrame that = (PendingFrame) o;
+        return getIndex() == that.getIndex() && popCount == that.popCount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getIndex(), popCount);
     }
 }
