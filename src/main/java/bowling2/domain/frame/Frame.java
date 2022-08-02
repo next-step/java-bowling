@@ -3,7 +3,6 @@ package bowling2.domain.frame;
 import bowling2.domain.score.ScoreStrategy;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,7 +45,7 @@ public abstract class Frame {
     }
 
     public Frame(int index, Frame prev, Frame next) {
-        this(index, 10, Collections.emptyList(), prev, next);
+        this(index, 10, new ArrayList<>(), prev, next);
     }
 
     public Frame(int index, int restOfPins, List<Integer> fallenPins, Frame prev, Frame next) {
