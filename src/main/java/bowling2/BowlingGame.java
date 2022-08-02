@@ -19,7 +19,6 @@ public class BowlingGame {
         while(board.inProgress()) {
             int fallenPins = Input.askBowling(board.indexOfCurrentFrame());
             board.handleAfterTry(fallenPins);
-            // TODO(jack.comeback) : 점수 계산
             OutPut.printBoard(board, player);
             System.out.println();
         }

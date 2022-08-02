@@ -12,6 +12,7 @@ import java.util.Optional;
 public class Board {
     private final List<Frame> frames;
     private Frame currentFrame;
+    private ScoreCalculator scoreCalculator;
 
     public static Board init() {
         Frame firstFrame = new NormalFrame(1);
@@ -34,12 +35,17 @@ public class Board {
     }
 
     public Board(List<Frame> frames) {
-        this(frames, new NormalFrame(1));
+        this(frames, new NormalFrame(1), ScoreCalculator.init());
     }
 
     public Board(List<Frame> frames, Frame currentFrame) {
+        this(frames, currentFrame, ScoreCalculator.init());
+    }
+
+    public Board(List<Frame> frames, Frame currentFrame, ScoreCalculator scoreCalculator) {
         this.frames = frames;
         this.currentFrame = currentFrame;
+        this.scoreCalculator = scoreCalculator;
     }
 
     public int indexOfCurrentFrame() {
@@ -51,7 +57,18 @@ public class Board {
             throw new BowlingException();
         }
         currentFrame.handleAfterTry(fallenPins);
-        askCurrentFrame();
+        // 투구 1번 끝날 때 마다 pending 건 처리 시도
+        scoreCalculator.findPreparedPending()
+                .ifPresent(pendingFrame -> {
+                    Frame frame = search(pendingFrame.getIndex());
+                    scoreCalculator.handlePending(frame);
+                });
+
+        // 다음 프레임으로 넘어가야할 때 pending에 들어가거나 점수 계산 바로 한다.
+        if (currentFrame.isOver()) {
+            scoreCalculator.pendingOrCalculate(currentFrame);
+            askCurrentFrame();
+        }
     }
 
     private void askCurrentFrame() {
