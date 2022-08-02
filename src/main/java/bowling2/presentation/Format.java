@@ -18,6 +18,10 @@ public class Format {
         if (fallenPins.size() == 3) {
             return triplePinInBoard(fallenPins);
         }
+        return emptyFormat();
+    }
+
+    public static String emptyFormat() {
         return String.format(centerAlignFormat(6), "");
     }
 
@@ -78,5 +82,11 @@ public class Format {
             throw new IllegalArgumentException(String.format("size는 %d보다 작아야 합니다. - %d", MAX_WIDTH, size));
         }
         return "%" + size + "s" + " ".repeat(MAX_WIDTH - size);
+    }
+
+    public static String scoreFormat(int score) {
+        return score == 0
+                ? String.format(centerAlignFormat(6), "")
+                : String.format(centerAlignFormat(3), String.format("%3d", score));
     }
 }
