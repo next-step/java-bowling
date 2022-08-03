@@ -5,7 +5,6 @@ import bowling.exception.BowlingException;
 
 import java.util.Optional;
 
-// TODO(jack.comeback) : 외부에서 prev, next null인지 아닌지 검증하고 들어온다. (내부에서도 해야할까?)
 public class SpareScoreStrategy implements ScoreStrategy {
     @Override
     public int compute(Frame frame) {
