@@ -1,7 +1,7 @@
-package bowling2.domain.score;
+package bowling.domain.score;
 
-import bowling2.domain.frame.Frame;
-import bowling2.exception.BowlingException;
+import bowling.domain.frame.Frame;
+import bowling.exception.BowlingException;
 
 public class ScoreStrategyFactory {
     public static ScoreStrategy getScoreStrategy(Frame frame) {

@@ -1,5 +1,6 @@
 package bowling.domain;
 
+
 import bowling.exception.BowlingException;
 
 import static bowling.exception.BowlingExceptionCode.INVALID_PLAYER_NAME;

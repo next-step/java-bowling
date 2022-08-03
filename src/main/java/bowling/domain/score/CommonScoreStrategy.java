@@ -1,6 +1,6 @@
-package bowling2.domain.score;
+package bowling.domain.score;
 
-import bowling2.domain.frame.Frame;
+import bowling.domain.frame.Frame;
 
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package bowling2.domain.frame;
+package bowling.domain.frame;
 
 public enum ScoreType {
     COMMON,

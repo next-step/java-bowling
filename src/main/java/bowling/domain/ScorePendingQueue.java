@@ -1,4 +1,4 @@
-package bowling2.domain;
+package bowling.domain;
 
 import java.util.LinkedList;
 import java.util.Objects;

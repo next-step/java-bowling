@@ -1,12 +1,12 @@
-package bowling2.domain;
+package bowling.domain;
 
-import bowling2.domain.frame.FinalFrame;
-import bowling2.domain.frame.Frame;
-import bowling2.domain.frame.NormalFrame;
-import bowling2.domain.score.CommonScoreStrategy;
-import bowling2.domain.score.ScoreStrategyFactory;
-import bowling2.domain.score.SpareScoreStrategy;
-import bowling2.domain.score.StrikeScoreStrategy;
+import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
+import bowling.domain.score.CommonScoreStrategy;
+import bowling.domain.score.ScoreStrategyFactory;
+import bowling.domain.score.SpareScoreStrategy;
+import bowling.domain.score.StrikeScoreStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

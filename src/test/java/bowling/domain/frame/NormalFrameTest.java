@@ -1,6 +1,6 @@
-package bowling2.domain.frame;
+package bowling.domain.frame;
 
-import bowling2.domain.score.SpareScoreStrategy;
+import bowling.domain.score.SpareScoreStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,7 +1,7 @@
-package bowling2.domain;
+package bowling.domain;
 
-import bowling2.domain.frame.Frame;
-import bowling2.domain.score.ScoreStrategyFactory;
+import bowling.domain.frame.Frame;
+import bowling.domain.score.ScoreStrategyFactory;
 
 import java.util.Optional;
 

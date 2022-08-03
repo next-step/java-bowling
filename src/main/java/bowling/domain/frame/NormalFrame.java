@@ -1,84 +1,85 @@
 package bowling.domain.frame;
 
-import bowling.exception.BowlingException;
+import java.util.List;
 
-import java.util.Objects;
+public class NormalFrame extends Frame {
 
-import static bowling.exception.BowlingExceptionCode.INVALID_COUNT_OF_FALLEN_PINS;
-
-public class NormalFrame implements Frame {
-    private static final int FINAL_INDEX = 10;
-
-    private FrameProperties frameProperties;
+    public NormalFrame() {
+        super(1);
+    }
 
     public NormalFrame(int index) {
-        frameProperties = new FrameProperties(index);
+        super(index);
     }
 
-    public NormalFrame(FrameProperties frameProperties) {
-        this.frameProperties = frameProperties;
+    public NormalFrame(int pins, List<Integer> fallenPins) {
+        super(pins, fallenPins);
     }
 
-    public void addPins(int fallenPins) {
-        frameProperties.addPins(fallenPins);
+    public NormalFrame(int index, int restOfPins, List<Integer> fallenPins) {
+        super(index, restOfPins, fallenPins);
+    }
+
+    public NormalFrame(int index, Frame prev, Frame next) {
+        super(index, prev, next);
+    }
+
+    public NormalFrame(int index, int restOfPins, List<Integer> fallenPins, Frame prev, Frame next) {
+        super(index, restOfPins, fallenPins, prev, next);
+    }
+
+    public NormalFrame(int index, int restOfPins, List<Integer> fallenPins, Frame prev, Frame next, int score) {
+        super(index, restOfPins, fallenPins, prev, next, score);
     }
 
     @Override
-    public FallenPins pins() {
-        return frameProperties.pins();
-    }
-
-    @Override
-    public void determineSpare(int fallenPins) {
-        if (excessive(fallenPins)) {
-            throw new BowlingException(INVALID_COUNT_OF_FALLEN_PINS, fallenPins);
+    public Frame askCurrentFrame() {
+        if (moveToFinalFrame()) {
+            Frame nextFrame = new FinalFrame(10, this, null);
+            this.next = nextFrame;
+            return nextFrame;
         }
-        frameProperties.minusTryNo();
-        frameProperties.addPins(fallenPins);
-    }
-
-    private boolean excessive(int fallenPins) {
-        return 10 < frameProperties.computeSumOfFallenPins() + fallenPins;
-    }
-
-    @Override
-    public Frame validateMoveToNextFrame() {
-        if (!moveable()) {
-            return this;
+        if (moveToNextFrame()) {
+            Frame nextFrame = new NormalFrame(index + 1, this, null);
+            this.next = nextFrame;
+            return nextFrame;
         }
-        int nextIndex = frameProperties.index() + 1;
-        if (nextIndex >= FINAL_INDEX) {
-            return new FinalFrame(FINAL_INDEX);
+        return this;
+    }
+
+    @Override
+    public void handleAfterTry(int fallenPin) {
+        fallenPins.add(fallenPin);
+        restOfPins -= fallenPin;
+        remainedTryNo--;
+    }
+
+    @Override
+    public ScoreType scoreType() {
+        if (restOfPins > 0) {
+            return ScoreType.COMMON;
         }
-        return new NormalFrame(nextIndex);
+        if (countOfFallenPins() > 1) {
+            return ScoreType.SPARE;
+        }
+        return ScoreType.STRIKE;
     }
 
-    private boolean moveable() {
-        return frameProperties.tryNo() < 1 || frameProperties.computeSumOfFallenPins() > 9;
+    private boolean moveToNextFrame() {
+        return remainedTryNo == 0 || restOfPins == 0;
     }
 
-    @Override
-    public int index() {
-        return frameProperties.index();
-    }
-
-    @Override
-    public String toString() {
-        return "NormalFrame{" +
-                "frameProperties=" + frameProperties +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        NormalFrame that = (NormalFrame) o;
-        return frameProperties.equals(that.frameProperties);
+    private boolean moveToFinalFrame() {
+        return moveToNextFrame() && index == 9;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frameProperties);
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 }

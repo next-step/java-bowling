@@ -2,33 +2,48 @@ package bowling.presentation;
 
 import bowling.domain.Board;
 import bowling.domain.Player;
-import bowling.domain.frame.FallenPins;
 
+import java.util.Collections;
 import java.util.stream.IntStream;
 
 import static bowling.presentation.PinFormat.DELIMITER;
 
+
 public class OutPut {
-    public static void board(Board board, Player player) {
-        printTheUpper();
-        printTheBottom(board, player);
+    private final static int COUNT_OF_TOTAL_FRAME = 10;
+
+    public static void printBoard(Board board, Player player) {
+        printTheHead();
+        printThePins(board, player);
+        printTheScores(board);
     }
 
-    private static void printTheUpper() {
+    private static void printTheHead() {
         System.out.print(Format.nameProperty());
         IntStream.rangeClosed(1, 10)
                 .forEach(index -> System.out.print(Format.frameIndex(index)));
         System.out.print("\n");
     }
 
-    private static void printTheBottom(Board board, Player player) {
+    private static void printThePins(Board board, Player player) {
         System.out.print(Format.playerName(player.name()));
 
-        int countOfFrame = board.frames().size();
-        int countOfEmptyFrame = 10 - countOfFrame;
-        board.frames().forEach(frame -> System.out.printf(Format.fallenPinsFormat(frame.pins()) + DELIMITER.format()));
+        int countOfFrame = board.frameSize();
+        int countOfEmptyFrame = COUNT_OF_TOTAL_FRAME - countOfFrame;
+        board.frames().forEach(frame -> System.out.printf(Format.fallenPinsFormat(frame.getFallenPins()) + DELIMITER.format()));
         IntStream.rangeClosed(1, countOfEmptyFrame)
-                .forEach(index -> System.out.printf(Format.fallenPinsFormat(FallenPins.emptyPins()) + DELIMITER.format()));
+                .forEach(index -> System.out.printf(Format.fallenPinsFormat(Collections.emptyList()) + DELIMITER.format()));
+        System.out.print("\n");
+    }
+
+    private static void printTheScores(Board board) {
+        System.out.print(Format.scoreName("score"));
+
+        int countOfFrame = board.frameSize();
+        int countOfEmptyFrame = COUNT_OF_TOTAL_FRAME - countOfFrame;
+        board.frames().forEach(frame -> System.out.printf(Format.scoreFormat(frame.score()) + DELIMITER.format()));
+        IntStream.rangeClosed(1, countOfEmptyFrame)
+                .forEach(index -> System.out.printf(Format.emptyFormat() + DELIMITER.format()));
         System.out.print("\n");
     }
 }

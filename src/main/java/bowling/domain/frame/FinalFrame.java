@@ -1,84 +1,80 @@
 package bowling.domain.frame;
 
-import bowling.exception.BowlingException;
+import java.util.List;
 
-import java.util.Objects;
-
-import static bowling.exception.BowlingExceptionCode.INVALID_COUNT_OF_FALLEN_PINS;
-
-public class FinalFrame implements Frame {
-    private final FrameProperties frameProperties;
-    private int totalFallenPins;
-    private int bonus = 1;
-
-    public FinalFrame(int index) {
-        frameProperties = new FrameProperties(index);
-    }
-    public FinalFrame(FrameProperties frameProperties) {
-        this.frameProperties = frameProperties;
-    }
+public class FinalFrame extends Frame {
+    public int bonusTryPossible = 1; // 보너스를 줄 수 있는 남은 횟수
 
     @Override
-    public void determineSpare(int fallenPins) {
-        if (excessive(fallenPins)) {
-            throw new BowlingException(INVALID_COUNT_OF_FALLEN_PINS, fallenPins);
-        }
-        totalFallenPins += fallenPins;
-        frameProperties.minusTryNo();
-        if (isBonus()) {
-            frameProperties.plusTryNo(bonus--);
-            totalFallenPins = 0;
-        }
-        frameProperties.addPins(fallenPins);
-    }
-
-    private boolean excessive(int fallenPins) {
-        return 10 < totalFallenPins + fallenPins;
-    }
-
-    private boolean isBonus() {
-        return frameProperties.tryNo() < 2 && totalFallenPins == 10;
-    }
-
-    @Override
-    public FallenPins pins() {
-        return frameProperties.pins();
-    }
-
-    @Override
-    public Frame validateMoveToNextFrame() {
-        if (moveable()) { // 다 던지면 끝
-            return new FinalFrame(frameProperties.index() + 1);
+    public Frame askCurrentFrame() {
+        if (remainedTryNo == 0) {
+            return null;
         }
         return this;
     }
 
-    private boolean moveable() {
-        return frameProperties.tryNo() < 1;
+    @Override
+    public void handleAfterTry(int fallenPin) {
+        fallenPins.add(fallenPin);
+        restOfPins -= fallenPin;
+        remainedTryNo--;
+        addBonusIfNeeded();
+        refillPins();
     }
 
     @Override
-    public int index() {
-        return frameProperties.index();
+    public ScoreType scoreType() {
+        return ScoreType.COMMON;
     }
 
-    @Override
-    public String toString() {
-        return "FinalFrame{" +
-                "frameProperties=" + frameProperties +
-                '}';
+    private void addBonusIfNeeded() {
+        if (bonusTryPossible == 1 && bonusCondition()) {
+            remainedTryNo += bonusTryPossible--;
+        }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FinalFrame that = (FinalFrame) o;
-        return totalFallenPins == that.totalFallenPins && isBonus() == that.isBonus() && frameProperties.equals(that.frameProperties);
+    private boolean bonusCondition() {
+        return isStrike() || isSpare();
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(frameProperties, totalFallenPins, isBonus());
+    private boolean isSpare() {
+        return restOfPins == 0 && remainedTryNo == 0;
+    }
+
+    private boolean isStrike() {
+        return restOfPins == 0 && remainedTryNo == 1;
+    }
+
+    private void refillPins() {
+        if (restOfPins == 0) {
+            restOfPins = 10;
+        }
+    }
+
+    public FinalFrame() {
+    }
+
+    public FinalFrame(int index) {
+        super(index);
+    }
+
+    public FinalFrame(int restOfPins, List<Integer> fallenPins) {
+        super(restOfPins, fallenPins);
+    }
+
+    public FinalFrame(int index, int restOfPins, List<Integer> fallenPins) {
+        super(index, restOfPins, fallenPins);
+    }
+
+    public FinalFrame(int index, Frame prev, Frame next) {
+        super(index, prev, next);
+    }
+
+    public FinalFrame(int index, int restOfPins, List<Integer> fallenPins, Frame prev, Frame next) {
+        super(index, restOfPins, fallenPins, prev, next);
+    }
+
+    public int getRemainedTryNo() {
+        return remainedTryNo;
     }
 }

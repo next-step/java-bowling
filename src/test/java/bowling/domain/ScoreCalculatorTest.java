@@ -1,6 +1,6 @@
-package bowling2.domain;
+package bowling.domain;
 
-import bowling2.domain.frame.NormalFrame;
+import bowling.domain.frame.NormalFrame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
