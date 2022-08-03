@@ -51,15 +51,8 @@ public class FinalFrame extends Frame {
         }
     }
 
-    public FinalFrame() {
-    }
-
     public FinalFrame(int index) {
         super(index);
-    }
-
-    public FinalFrame(int restOfPins, List<Integer> fallenPins) {
-        super(restOfPins, fallenPins);
     }
 
     public FinalFrame(int index, int restOfPins, List<Integer> fallenPins) {

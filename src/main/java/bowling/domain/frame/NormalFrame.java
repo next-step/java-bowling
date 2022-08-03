@@ -24,10 +24,6 @@ public class NormalFrame extends Frame {
         super(index, prev, next);
     }
 
-    public NormalFrame(int index, int restOfPins, List<Integer> fallenPins, Frame prev, Frame next) {
-        super(index, restOfPins, fallenPins, prev, next);
-    }
-
     public NormalFrame(int index, int restOfPins, List<Integer> fallenPins, Frame prev, Frame next, int score) {
         super(index, restOfPins, fallenPins, prev, next, score);
     }
