@@ -3,11 +3,14 @@ package bowling.domain;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.exception.BowlingException;
+import bowling.exception.BowlingExceptionCode;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import static bowling.exception.BowlingExceptionCode.NO_SUCH_FRAME;
 
 public class Board {
     private final List<Frame> frames;
@@ -54,7 +57,7 @@ public class Board {
 
     public void handleAfterTry(int fallenPins) {
         if (currentFrame.validatePins(fallenPins)) {
-            throw new BowlingException(); // TODO(jack.comeback) : code 넣기
+            throw new BowlingException(BowlingExceptionCode.INVALID_COUNT_OF_FALLEN_PINS, fallenPins);
         }
         currentFrame.handleAfterTry(fallenPins);
         // 투구 1번 끝날 때 마다 pending 건 처리 시도
@@ -88,12 +91,11 @@ public class Board {
         return frames;
     }
 
-    // TODO(jack.comeback) : 에러처리 디테일하게
     public Frame search(int index) {
         return frames.stream()
                 .filter(frame -> frame.getIndex() == index)
                 .findFirst()
-                .orElseThrow(() -> new BowlingException("index에 해당하는 프레임이 없습니다. index = " + index));
+                .orElseThrow(() -> new BowlingException(NO_SUCH_FRAME, index));
     }
 
     @Override

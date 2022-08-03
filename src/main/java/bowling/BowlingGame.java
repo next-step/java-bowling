@@ -7,7 +7,11 @@ import bowling.presentation.OutPut;
 
 public class BowlingGame {
     public static void main(String[] args) {
-        doBowling();
+        try {
+            doBowling();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void doBowling() {
@@ -16,7 +20,7 @@ public class BowlingGame {
 
         OutPut.printBoard(board, player);
 
-        while(board.inProgress()) {
+        while (board.inProgress()) {
             int fallenPins = Input.askBowling(board.indexOfCurrentFrame());
             board.handleAfterTry(fallenPins);
             OutPut.printBoard(board, player);

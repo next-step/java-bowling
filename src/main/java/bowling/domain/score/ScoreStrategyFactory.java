@@ -3,6 +3,8 @@ package bowling.domain.score;
 import bowling.domain.frame.Frame;
 import bowling.exception.BowlingException;
 
+import static bowling.exception.BowlingExceptionCode.NO_SUCH_SCORE_STRATEGY;
+
 public class ScoreStrategyFactory {
     public static ScoreStrategy getScoreStrategy(Frame frame) {
         switch (frame.scoreType()) {
@@ -13,7 +15,7 @@ public class ScoreStrategyFactory {
             case STRIKE:
                 return new StrikeScoreStrategy();
             default:
-                throw new BowlingException("해당하는 scoreStrategy가 없습니다."); // TODO(jack.comeback) : 에러처리 디테일
+                throw new BowlingException(NO_SUCH_SCORE_STRATEGY);
         }
     }
 }

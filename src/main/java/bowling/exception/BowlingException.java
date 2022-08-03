@@ -1,13 +1,13 @@
 package bowling.exception;
 
-// TODO(jack.comeback) : code 추가
 public class BowlingException extends RuntimeException {
-
-    public BowlingException() {
-    }
 
     public BowlingException(String message) {
         super(message);
+    }
+
+    public BowlingException(BowlingExceptionCode code) {
+        super(code.getMessage());
     }
 
     public BowlingException(BowlingExceptionCode exceptionCode, String value) {

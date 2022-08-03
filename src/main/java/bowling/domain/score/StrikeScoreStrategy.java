@@ -5,6 +5,8 @@ import bowling.exception.BowlingException;
 
 import java.util.Optional;
 
+import static bowling.exception.BowlingExceptionCode.FAIL_STRIKE_SCORE_COMPUTING;
+
 public class StrikeScoreStrategy implements ScoreStrategy {
 
     @Override
@@ -34,6 +36,6 @@ public class StrikeScoreStrategy implements ScoreStrategy {
         }
 
         // 이전에 리턴안되고 여기까지 오면 점수 계산이 이상한거라 exp
-        throw new BowlingException("strike 점수 계산 중 에러가 발생했습니다."); // TODO(jack.comeback) : 에러 디테일
+        throw new BowlingException(FAIL_STRIKE_SCORE_COMPUTING);
     }
 }
