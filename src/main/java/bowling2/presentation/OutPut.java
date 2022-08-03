@@ -14,7 +14,7 @@ public class OutPut {
     public static void printBoard(Board board, Player player) {
         printTheHead();
         printThePins(board, player);
-        printTheScores(board, player);
+        printTheScores(board);
     }
 
     private static void printTheHead() {
@@ -35,8 +35,8 @@ public class OutPut {
         System.out.print("\n");
     }
 
-    private static void printTheScores(Board board, Player player) {
-        System.out.print(Format.playerName(player.name()));
+    private static void printTheScores(Board board) {
+        System.out.print(Format.scoreName("score"));
 
         int countOfFrame = board.frameSize();
         int countOfEmptyFrame = COUNT_OF_TOTAL_FRAME - countOfFrame;

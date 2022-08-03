@@ -76,6 +76,10 @@ public class Format {
         return DELIMITER.format() + String.format(centerAlignFormat(4), name) + DELIMITER.format();
     }
 
+    public static String scoreName(String name) {
+        return DELIMITER.format() + String.format(centerAlignFormat(5), name) + DELIMITER.format();
+    }
+
     private static String centerAlignFormat(int size) {
         int MAX_WIDTH = 6;
         if (size > MAX_WIDTH) {
