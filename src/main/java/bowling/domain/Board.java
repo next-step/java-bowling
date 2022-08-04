@@ -15,13 +15,27 @@ import static bowling.exception.BowlingExceptionCode.NO_SUCH_FRAME;
 public class Board {
     private final List<Frame> frames;
     private Frame currentFrame;
-    private ScoreCalculator scoreCalculator;
+    private ScorePendingQueue scorePendingQueue;
 
     public static Board init() {
         Frame firstFrame = new NormalFrame(1);
         Board board = new Board(new ArrayList<>(), firstFrame);
         board.addFrameIfMoveToNext(firstFrame);
         return board;
+    }
+
+    public Board(List<Frame> frames) {
+        this(frames, new NormalFrame(1), new ScorePendingQueue());
+    }
+
+    public Board(List<Frame> frames, Frame currentFrame) {
+        this(frames, currentFrame, new ScorePendingQueue());
+    }
+
+    public Board(List<Frame> frames, Frame currentFrame, ScorePendingQueue scorePendingQueue) {
+        this.frames = frames;
+        this.currentFrame = currentFrame;
+        this.scorePendingQueue = scorePendingQueue;
     }
 
     private void addFrameIfMoveToNext(Frame mayBeNewFrame) {
@@ -37,41 +51,49 @@ public class Board {
 
     }
 
-    public Board(List<Frame> frames) {
-        this(frames, new NormalFrame(1), ScoreCalculator.init());
-    }
-
-    public Board(List<Frame> frames, Frame currentFrame) {
-        this(frames, currentFrame, ScoreCalculator.init());
-    }
-
-    public Board(List<Frame> frames, Frame currentFrame, ScoreCalculator scoreCalculator) {
-        this.frames = frames;
-        this.currentFrame = currentFrame;
-        this.scoreCalculator = scoreCalculator;
-    }
-
     public int indexOfCurrentFrame() {
         return currentFrame.getIndex();
     }
 
     public void handleAfterTry(int fallenPins) {
-        if (currentFrame.validatePins(fallenPins)) {
+        if(currentFrame.validatePins(fallenPins)) {
             throw new BowlingException(BowlingExceptionCode.INVALID_COUNT_OF_FALLEN_PINS, fallenPins);
         }
         currentFrame.handleAfterTry(fallenPins);
         // 투구 1번 끝날 때 마다 pending 건 처리 시도
-        scoreCalculator.findPreparedPending()
-                .ifPresent(pendingFrame -> {
-                    Frame frame = search(pendingFrame.getIndex());
-                    scoreCalculator.handlePending(frame);
-                });
+        handlePendingIfExisted();
 
         // 다음 프레임으로 넘어가야할 때 pending에 들어가거나 점수 계산 바로 한다.
         if (currentFrame.isOver()) {
-            scoreCalculator.pendingOrCalculate(currentFrame);
-            askCurrentFrame();
+            deferOrCalculate(currentFrame);
+            askCurrentFrame(); // TODO(jack.comeback) : 프레임이 끝나고 항상 넘어오니까 moveToNextFrame() 이런 네이밍은 어떨지?
         }
+    }
+
+    // 스트라이크, 스페어면 점수 계산 지연한다.
+    private void deferOrCalculate(Frame currentFrame) {
+        if (currentFrame.isCommonScoreType()) {
+            ScoreCalculator.calculate(currentFrame);
+        }
+        defer(currentFrame);
+    }
+
+    private void defer(Frame currentFrame) {
+        if (currentFrame.isSpareScoreType()) {
+            scorePendingQueue.add(PendingFrame.spare(currentFrame.getIndex()));
+        }
+        if (currentFrame.isStrikeScoreType()) {
+            scorePendingQueue.add(PendingFrame.strike(currentFrame.getIndex()));
+        }
+    }
+
+    private void handlePendingIfExisted() {
+        scorePendingQueue.minusPopCount();
+        scorePendingQueue.getPreparedPending()
+                .ifPresent(pending -> {
+                    Frame pendingFrame = search(pending.getIndex());
+                    ScoreCalculator.handlePending(pendingFrame);
+                });
     }
 
     private void askCurrentFrame() {
