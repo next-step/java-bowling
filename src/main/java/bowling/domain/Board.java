@@ -60,10 +60,13 @@ public class Board {
             throw new BowlingException(BowlingExceptionCode.INVALID_COUNT_OF_FALLEN_PINS, fallenPins);
         }
         currentFrame.handleAfterTry(fallenPins);
-        // 투구 1번 끝날 때 마다 pending 건 처리 시도
+    }
+
+    public void calculateScore() {
+        // 투구 1번 끝날 때 마다 pending 건 점수 계산 시도
         handlePendingIfExisted();
 
-        // 다음 프레임으로 넘어가야할 때 pending에 들어가거나 점수 계산 바로 한다.
+        // 다음 프레임으로 넘어가야할 때 pendingQueue에 들어가거나 점수 계산 바로 한다.
         if (currentFrame.isOver()) {
             deferOrCalculate(currentFrame);
             askCurrentFrame(); // TODO(jack.comeback) : 프레임이 끝나고 항상 넘어오니까 moveToNextFrame() 이런 네이밍은 어떨지?

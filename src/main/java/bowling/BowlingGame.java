@@ -23,6 +23,7 @@ public class BowlingGame {
         while (board.inProgress()) {
             int fallenPins = Input.askBowling(board.indexOfCurrentFrame());
             board.handleAfterTry(fallenPins);
+            board.calculateScore();
             OutPut.printBoard(board, player);
             System.out.println();
         }

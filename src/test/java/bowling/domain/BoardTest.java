@@ -7,8 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -29,7 +28,7 @@ class BoardTest {
 
     @DisplayName("쓰러트린 핀이 남은 핀을 넘으면 throw exp")
     @Test
-    void handleAfterTry() {
+    void handleAfterTry_fail() {
         board.handleAfterTry(3);
         assertThatThrownBy(() -> board.handleAfterTry(8))
                 .isInstanceOf(BowlingException.class);
@@ -69,4 +68,47 @@ class BoardTest {
         assertThatThrownBy(() -> board.search(1))
                 .isInstanceOf(BowlingException.class);
     }
+
+    @DisplayName("이전 프레임이 스페어일 때 투구 후 펜딩된 스페어 점수 계산한다.")
+    @Test
+    void calculateScore_success() {
+        // given
+        Frame current = new NormalFrame(2, 5, List.of(5), null, null, 0);
+        Frame prev = new NormalFrame(1, 0, List.of(5,5), null, current, 0);
+
+        List<Frame> frames = new ArrayList<>();
+        frames.add(prev);
+        frames.add(current);
+
+        Queue<PendingFrame> queue = new LinkedList<>();
+        queue.add(new PendingFrame(1, 1));
+
+        board = new Board(frames, current, new ScorePendingQueue(queue));
+
+        // when
+        board.calculateScore();
+
+        // then
+        assertThat(prev.score()).isEqualTo(15);
+    }
+
+    @DisplayName("이전 프레임이 스트라이크이고, 현재 프레임도 투구가 끝났으면 펜딩된 스트라이크와 현재 프레임 모두 점수 계산한다.")
+    @Test
+    void calculateScore_success2() {
+        // given
+        board = Board.init();
+        board.handleAfterTry(10);
+
+        // when
+        board.calculateScore();
+        board.handleAfterTry(5);
+        board.calculateScore();
+        board.handleAfterTry(4);
+        board.calculateScore();
+
+        // then
+        assertThat(board.search(1).score()).isEqualTo(19);
+        assertThat(board.search(2).score()).isEqualTo(28);
+    }
 }
+
