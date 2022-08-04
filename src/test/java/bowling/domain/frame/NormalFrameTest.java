@@ -22,7 +22,7 @@ class NormalFrameTest {
     @Test
     void askFrameIsOver() {
         Frame frame = new NormalFrame(1, 0, List.of(3, 7));
-        assertThat(frame.askCurrentFrame()).isEqualTo(new NormalFrame(2));
+        assertThat(frame.moveToNextFrame()).isEqualTo(new NormalFrame(2));
     }
 
     @DisplayName("남은 핀이 있어도 시도횟수가 0이면 다음 프레임으로 넘어간다.")
@@ -30,14 +30,14 @@ class NormalFrameTest {
     void askFrameIsOver3() {
         Frame normalFrame = new NormalFrame(1);
         normalFrame.handleAfterTry(4);
-        assertThat(normalFrame.askCurrentFrame()).isEqualTo(normalFrame);
+        assertThat(normalFrame.moveToNextFrame()).isEqualTo(normalFrame);
     }
 
     @DisplayName("프레임에게 투구를 다 던졌는지 물어보고 다 안 던졌으면 자기 자신 리턴한다.")
     @Test
     void askFrameIsOver2() {
         Frame frame = new NormalFrame(1, 4, List.of(6));
-        assertThat(frame.askCurrentFrame()).isEqualTo(frame);
+        assertThat(frame.moveToNextFrame()).isEqualTo(frame);
     }
 
     @DisplayName("프레임이 투구를 다 던지면 다음 프레임 생성하고 현재 프레임과 연결해준다.")
@@ -48,7 +48,7 @@ class NormalFrameTest {
         Frame nextFrame = new NormalFrame(2, currentFrame, null);
 
         // when, then
-        assertThat(currentFrame.askCurrentFrame()).isEqualTo(nextFrame);
+        assertThat(currentFrame.moveToNextFrame()).isEqualTo(nextFrame);
         assertThat(currentFrame.getNext()).isEqualTo(nextFrame);
         assertThat(nextFrame.getPrev()).isEqualTo(currentFrame);
     }
@@ -61,7 +61,7 @@ class NormalFrameTest {
 
         // when, then
         Frame finalFrame = new FinalFrame(10, frame, null);
-        assertThat(frame.askCurrentFrame()).isEqualTo(finalFrame);
+        assertThat(frame.moveToNextFrame()).isEqualTo(finalFrame);
         assertThat(finalFrame.getPrev()).isEqualTo(frame);
     }
 

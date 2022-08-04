@@ -69,7 +69,7 @@ class FinalFrameTest {
         Frame finalFrame = new FinalFrame(10);
         finalFrame.handleAfterTry(3);
         finalFrame.handleAfterTry(4);
-        assertThat(finalFrame.askCurrentFrame()).isNull();
+        assertThat(finalFrame.moveToNextFrame()).isNull();
     }
 
     @DisplayName("2번 던졌을 때 스트라이크나 스페어가 나와서 현재 프레임을 유지한다.")
@@ -78,7 +78,7 @@ class FinalFrameTest {
         Frame finalFrame = new FinalFrame(10);
         finalFrame.handleAfterTry(4);
         finalFrame.handleAfterTry(6);
-        assertThat(finalFrame.askCurrentFrame()).isEqualTo(finalFrame);
+        assertThat(finalFrame.moveToNextFrame()).isEqualTo(finalFrame);
     }
 
     @DisplayName("1번 던졌을 때는 현재 프레임을 유지한다.")
@@ -86,7 +86,7 @@ class FinalFrameTest {
     void askCurrentFrame2() {
         Frame finalFrame = new FinalFrame(10);
         finalFrame.handleAfterTry(4);
-        assertThat(finalFrame.askCurrentFrame()).isEqualTo(finalFrame);
+        assertThat(finalFrame.moveToNextFrame()).isEqualTo(finalFrame);
     }
 
     @DisplayName("파이널의 스코어타입은 항상 Common이다.")

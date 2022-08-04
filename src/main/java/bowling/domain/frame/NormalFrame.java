@@ -29,13 +29,13 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public Frame askCurrentFrame() {
+    public Frame moveToNextFrame() {
         if (moveToFinalFrame()) {
             Frame nextFrame = new FinalFrame(10, this, null);
             this.next = nextFrame;
             return nextFrame;
         }
-        if (moveToNextFrame()) {
+        if (moveToNormalFrame()) {
             Frame nextFrame = new NormalFrame(index + 1, this, null);
             this.next = nextFrame;
             return nextFrame;
@@ -61,12 +61,12 @@ public class NormalFrame extends Frame {
         return ScoreType.STRIKE;
     }
 
-    private boolean moveToNextFrame() {
+    private boolean moveToNormalFrame() {
         return remainedTryNo == 0 || restOfPins == 0;
     }
 
     private boolean moveToFinalFrame() {
-        return moveToNextFrame() && index == 9;
+        return moveToNormalFrame() && index == 9;
     }
 
     @Override

@@ -15,7 +15,7 @@ public abstract class Frame {
     protected int remainedTryNo = 2;
     protected int score;
 
-    public abstract Frame askCurrentFrame();
+    public abstract Frame moveToNextFrame();
 
     public abstract void handleAfterTry(int fallenPin);
 

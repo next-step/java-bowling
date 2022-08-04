@@ -6,7 +6,7 @@ public class FinalFrame extends Frame {
     public int bonusTryPossible = 1; // 보너스를 줄 수 있는 남은 횟수
 
     @Override
-    public Frame askCurrentFrame() {
+    public Frame moveToNextFrame() {
         if (remainedTryNo == 0) {
             return null;
         }

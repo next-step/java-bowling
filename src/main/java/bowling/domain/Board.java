@@ -48,7 +48,6 @@ public class Board {
                             }
                         }
                 );
-
     }
 
     public int indexOfCurrentFrame() {
@@ -69,7 +68,7 @@ public class Board {
         // 다음 프레임으로 넘어가야할 때 pendingQueue에 들어가거나 점수 계산 바로 한다.
         if (currentFrame.isOver()) {
             deferOrCalculate(currentFrame);
-            askCurrentFrame(); // TODO(jack.comeback) : 프레임이 끝나고 항상 넘어오니까 moveToNextFrame() 이런 네이밍은 어떨지?
+            moveToNextFrame();
         }
     }
 
@@ -99,8 +98,8 @@ public class Board {
                 });
     }
 
-    private void askCurrentFrame() {
-        currentFrame = currentFrame.askCurrentFrame();
+    private void moveToNextFrame() {
+        currentFrame = currentFrame.moveToNextFrame();
         addFrameIfMoveToNext(currentFrame);
     }
 
