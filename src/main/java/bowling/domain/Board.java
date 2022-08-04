@@ -73,6 +73,15 @@ public class Board {
     }
 
     // 스트라이크, 스페어면 점수 계산 지연한다.
+    private void handlePendingIfExisted() {
+        scorePendingQueue.minusPopCount();
+        scorePendingQueue.getPreparedPending()
+                .ifPresent(pending -> {
+                    Frame pendingFrame = search(pending.getIndex());
+                    ScoreCalculator.handlePending(pendingFrame);
+                });
+    }
+
     private void deferOrCalculate(Frame currentFrame) {
         if (currentFrame.isCommonScoreType()) {
             ScoreCalculator.calculate(currentFrame);
@@ -87,15 +96,6 @@ public class Board {
         if (currentFrame.isStrikeScoreType()) {
             scorePendingQueue.add(PendingFrame.strike(currentFrame.getIndex()));
         }
-    }
-
-    private void handlePendingIfExisted() {
-        scorePendingQueue.minusPopCount();
-        scorePendingQueue.getPreparedPending()
-                .ifPresent(pending -> {
-                    Frame pendingFrame = search(pending.getIndex());
-                    ScoreCalculator.handlePending(pendingFrame);
-                });
     }
 
     private void moveToNextFrame() {

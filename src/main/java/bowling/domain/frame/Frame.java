@@ -15,20 +15,6 @@ public abstract class Frame {
     protected int remainedTryNo = 2;
     protected int score;
 
-    public abstract Frame moveToNextFrame();
-
-    public abstract void handleAfterTry(int fallenPin);
-
-    public abstract ScoreType scoreType();
-
-    public void computeScore(ScoreStrategy scoreStrategy) {
-        this.score = scoreStrategy.compute(this);
-    }
-
-    public boolean validatePins(int fallenPins) {
-        return fallenPins > restOfPins;
-    }
-
     public Frame() {
     }
 
@@ -59,6 +45,20 @@ public abstract class Frame {
         this.prev = prev;
         this.next = next;
         this.score = score;
+    }
+
+    public abstract Frame moveToNextFrame();
+
+    public abstract void handleAfterTry(int fallenPin);
+
+    public abstract ScoreType scoreType();
+
+    public void computeScore(ScoreStrategy scoreStrategy) {
+        this.score = scoreStrategy.compute(this);
+    }
+
+    public boolean validatePins(int fallenPins) {
+        return fallenPins > restOfPins;
     }
 
     public int getIndex() {

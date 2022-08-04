@@ -5,6 +5,22 @@ import java.util.List;
 public class FinalFrame extends Frame {
     public int bonusTryPossible = 1; // 보너스를 줄 수 있는 남은 횟수
 
+    public FinalFrame(int index) {
+        super(index);
+    }
+
+    public FinalFrame(int index, int restOfPins, List<Integer> fallenPins) {
+        super(index, restOfPins, fallenPins);
+    }
+
+    public FinalFrame(int index, Frame prev, Frame next) {
+        super(index, prev, next);
+    }
+
+    public FinalFrame(int index, int restOfPins, List<Integer> fallenPins, Frame prev, Frame next) {
+        super(index, restOfPins, fallenPins, prev, next);
+    }
+
     @Override
     public Frame moveToNextFrame() {
         if (remainedTryNo == 0) {
@@ -49,22 +65,6 @@ public class FinalFrame extends Frame {
         if (restOfPins == 0) {
             restOfPins = 10;
         }
-    }
-
-    public FinalFrame(int index) {
-        super(index);
-    }
-
-    public FinalFrame(int index, int restOfPins, List<Integer> fallenPins) {
-        super(index, restOfPins, fallenPins);
-    }
-
-    public FinalFrame(int index, Frame prev, Frame next) {
-        super(index, prev, next);
-    }
-
-    public FinalFrame(int index, int restOfPins, List<Integer> fallenPins, Frame prev, Frame next) {
-        super(index, restOfPins, fallenPins, prev, next);
     }
 
     public int getRemainedTryNo() {

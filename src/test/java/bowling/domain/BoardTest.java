@@ -39,7 +39,9 @@ class BoardTest {
     void moveToNextFrame() {
         assertThat(board.frameSize()).isEqualTo(1);
         board.handleAfterTry(3);
+        board.calculateScore();
         board.handleAfterTry(4);
+        board.calculateScore();
         assertThat(board.frameSize()).isEqualTo(2);
     }
 
