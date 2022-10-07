@@ -1,6 +1,5 @@
 package qna.domain.entity;
 
-import org.hibernate.annotations.Where;
 import qna.exception.CannotDeleteException;
 
 import javax.persistence.*;
@@ -20,10 +19,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers;
 
     private boolean deleted = false;
 
@@ -54,22 +51,27 @@ public class Question extends AbstractEntity {
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
 
         validateWriter(loginUser);
-        validateOtherUserAnswers(loginUser);
-        this.deleted = true;
+
+        this.delete();
+        answers.delete(loginUser);
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now()));
-        for (Answer answer : answers) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }
+
+        deleteHistories.add(makeHistory());
+        deleteHistories.addAll(answers.makeHistories());
+
         return deleteHistories;
     }
 
-    private void validateOtherUserAnswers(User loginUser) throws CannotDeleteException {
-        if(this.answers.stream().anyMatch(a -> !a.isOwner(loginUser))){
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+    public DeleteHistory makeHistory() {
+        if(this.deleted == false){
+            throw new CannotDeleteException("삭제 상태가 아닌 질문을 이력으로 만들 수 없습니다.");
         }
+        return new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now());
+    }
+
+    private void delete() {
+        this.deleted = true;
     }
 
     private void validateWriter(User loginUser) throws CannotDeleteException {
@@ -81,5 +83,9 @@ public class Question extends AbstractEntity {
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    public boolean isDeleted() {
+        return deleted;
     }
 }

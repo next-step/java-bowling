@@ -7,7 +7,6 @@ import qna.domain.entity.Question;
 import qna.domain.entity.User;
 import qna.exception.CannotDeleteException;
 import qna.exception.NotFoundException;
-import qna.repository.AnswerRepository;
 import qna.repository.QuestionRepository;
 
 import javax.annotation.Resource;
