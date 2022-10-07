@@ -32,11 +32,11 @@ public class Answer extends AbstractEntity {
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
 
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
 
@@ -59,19 +59,18 @@ public class Answer extends AbstractEntity {
     }
 
     public void delete(User loginUser) {
-
-
+        validateUser(loginUser);
         this.deleted = true;
     }
 
     private void validateUser(User loginUser) {
-        if(this.writer.equals(loginUser)){
+        if (!this.writer.equals(loginUser)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변은 삭제할 수 없습니다.");
         }
     }
 
     public DeleteHistory makeHistory() throws CannotDeleteException {
-        if(this.deleted == false){
+        if (this.deleted == false) {
             throw new CannotDeleteException("삭제 상태가 아닌 답변을 이력으로 만들 수 없습니다.");
         }
         return new DeleteHistory(ContentType.ANSWER, this.getId(), this.writer, LocalDateTime.now());
