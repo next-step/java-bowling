@@ -5,7 +5,6 @@ import qna.exception.NotFoundException;
 import qna.exception.UnAuthorizedException;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -58,9 +57,10 @@ public class Answer extends AbstractEntity {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
 
-    public void delete(User loginUser) {
+    public DeleteHistory delete(User loginUser) {
         validateUser(loginUser);
         this.deleted = true;
+        return makeHistory(loginUser);
     }
 
     private void validateUser(User loginUser) {
@@ -69,10 +69,10 @@ public class Answer extends AbstractEntity {
         }
     }
 
-    public DeleteHistory makeHistory() throws CannotDeleteException {
+    private DeleteHistory makeHistory(User loginUser) throws CannotDeleteException {
         if (this.deleted == false) {
             throw new CannotDeleteException("삭제 상태가 아닌 답변을 이력으로 만들 수 없습니다.");
         }
-        return new DeleteHistory(ContentType.ANSWER, this.getId(), this.writer, LocalDateTime.now());
+        return new DeleteHistory(this, loginUser);
     }
 }

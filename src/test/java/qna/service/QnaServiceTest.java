@@ -14,7 +14,6 @@ import qna.domain.entity.Question;
 import qna.exception.CannotDeleteException;
 import qna.repository.QuestionRepository;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,9 +84,7 @@ public class QnaServiceTest {
     }
 
     private void verifyDeleteHistories() {
-        List<DeleteHistory> deleteHistories = Arrays.asList(
-                question.makeHistory(),
-                answer.makeHistory());
+        List<DeleteHistory> deleteHistories = question.delete(UserTest.JAVAJIGI);
         verify(deleteHistoryService).saveAll(deleteHistories);
     }
 }

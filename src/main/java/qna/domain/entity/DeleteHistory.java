@@ -19,16 +19,21 @@ public class DeleteHistory {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_deletehistory_to_user"))
     private User deletedBy;
 
-    private LocalDateTime createDate = LocalDateTime.now();
+    private LocalDateTime createDate;
 
     public DeleteHistory() {
     }
 
-    public DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
-        this.contentType = contentType;
-        this.contentId = contentId;
+    public DeleteHistory(AbstractEntity entity, User deletedBy){
+        if(entity instanceof Answer){
+            this.contentType = ContentType.ANSWER;
+        }
+        if(entity instanceof Question){
+            this.contentType = ContentType.QUESTION;
+        }
+        this.contentId = entity.getId();
         this.deletedBy = deletedBy;
-        this.createDate = createDate;
+        this.createDate = LocalDateTime.now();
     }
 
     @Override
