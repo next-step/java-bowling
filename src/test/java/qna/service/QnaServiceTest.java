@@ -6,8 +6,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import qna.CannotDeleteException;
+import qna.exception.CannotDeleteException;
 import qna.domain.*;
+import qna.domain.entity.Answer;
+import qna.domain.entity.ContentType;
+import qna.domain.entity.DeleteHistory;
+import qna.domain.entity.Question;
+import qna.repository.QuestionRepository;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package qna.domain;
+package qna.domain.entity;
 
 import org.hibernate.annotations.Where;
 
@@ -37,28 +37,6 @@ public class Question extends AbstractEntity {
         super(id);
         this.title = title;
         this.contents = contents;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
-
-    public User getWriter() {
-        return writer;
     }
 
     public Question writeBy(User loginUser) {
