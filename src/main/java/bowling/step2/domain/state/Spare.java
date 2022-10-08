@@ -1,8 +1,9 @@
 package bowling.step2.domain.state;
 
-public class Spare implements State {
-    @Override
-    public State bowl(final int fallenPins) {
-        return null;
+public class Spare extends Finished {
+    private final int firstFallenPins;
+    
+    public Spare(final int firstFallenPins) {
+        this.firstFallenPins = firstFallenPins;
     }
 }

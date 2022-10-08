@@ -10,7 +10,7 @@ public class Normal implements State {
     @Override
     public State bowl(final int secondFallenPins) {
         if (isAllFallenPins(secondFallenPins)) {
-            return new Spare();
+            return new Spare(firstFallenPins);
         }
         
         return new Miss(firstFallenPins, secondFallenPins);
