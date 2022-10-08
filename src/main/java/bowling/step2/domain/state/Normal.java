@@ -1,9 +1,11 @@
 package bowling.step2.domain.state;
 
+import bowling.step2.domain.Score;
+
 public class Normal implements State {
-    private final int firstFallenPins;
+    private final Score firstFallenPins;
     
-    public Normal(final int firstFallenPins) {
+    public Normal(final Score firstFallenPins) {
         this.firstFallenPins = firstFallenPins;
     }
     
@@ -13,10 +15,10 @@ public class Normal implements State {
             return new Spare(firstFallenPins);
         }
         
-        return new Miss(firstFallenPins, secondFallenPins);
+        return new Miss(firstFallenPins, new Score(secondFallenPins));
     }
     
     private boolean isAllFallenPins(final int secondFallenPins) {
-        return COUNT_OF_MAX_PINS == firstFallenPins + secondFallenPins;
+        return firstFallenPins.isAllFallenPins(secondFallenPins);
     }
 }

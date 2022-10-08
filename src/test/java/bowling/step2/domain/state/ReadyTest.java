@@ -11,7 +11,7 @@ public class ReadyTest {
     @Test
     @DisplayName("스트라이크")
     void strike() {
-        State state = READY.bowl(0);
+        State state = READY.bowl(10);
         assertThat(state).isExactlyInstanceOf(Strike.class);
     }
     

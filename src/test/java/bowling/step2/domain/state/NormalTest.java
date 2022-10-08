@@ -1,12 +1,13 @@
 package bowling.step2.domain.state;
 
+import bowling.step2.domain.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class NormalTest {
-    public static final Normal NORMAL = new Normal(3);
+    public static final Normal NORMAL = new Normal(new Score(3));
     
     @Test
     @DisplayName("스페어")
