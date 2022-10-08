@@ -9,4 +9,9 @@ abstract public class Finished implements State {
     public State bowl(final int fallenPins) {
         throw new BowlException(IMPOSSIBLE_BOWL_EXCEPTION);
     }
+    
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
 }

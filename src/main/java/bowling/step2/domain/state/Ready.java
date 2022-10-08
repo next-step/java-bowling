@@ -2,7 +2,7 @@ package bowling.step2.domain.state;
 
 import bowling.step2.domain.Score;
 
-public class Ready implements State {
+public class Ready extends Running {
     @Override
     public State bowl(final int fallenPins) {
         if (fallenPins == 10) {

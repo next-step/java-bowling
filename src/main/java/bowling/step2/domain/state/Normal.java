@@ -2,7 +2,7 @@ package bowling.step2.domain.state;
 
 import bowling.step2.domain.Score;
 
-public class Normal implements State {
+public class Normal extends Running {
     private final Score firstFallenPins;
     
     public Normal(final Score firstFallenPins) {
