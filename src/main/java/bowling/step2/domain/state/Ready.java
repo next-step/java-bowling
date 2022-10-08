@@ -5,7 +5,7 @@ import bowling.step2.domain.Score;
 public class Ready extends Running {
     @Override
     public State bowl(final int fallenPins) {
-        if (fallenPins == 10) {
+        if (fallenPins == COUNT_OF_MAX_PINS) {
             return new Strike();
         }
         

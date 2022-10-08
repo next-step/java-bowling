@@ -1,4 +1,4 @@
-package bowling.step2.domain;
+package bowling.step2.domain.frame;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class NormalFrameTest {
-    public static final NormalFrame NORMAL_FRAME = new NormalFrame();
+    public final Frame NORMAL_FRAME = new NormalFrame();
     
     @Test
     @DisplayName("다음 프레임으로 넘어가기 - strike")
