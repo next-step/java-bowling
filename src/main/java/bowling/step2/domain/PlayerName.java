@@ -1,0 +1,23 @@
+package bowling.step2.domain;
+
+import bowling.step2.domain.exception.PlayerNameException;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class PlayerName {
+    private final String playerName;
+    
+    public PlayerName(final String playerName) {
+        this.playerName = checkPlayerNameFormat(playerName);
+    }
+    
+    private String checkPlayerNameFormat(final String playerName) {
+        final Matcher matcher = Pattern.compile("[A-Z]{3}").matcher(playerName);
+        if (!matcher.matches()) {
+            throw new PlayerNameException("올바른 이름이 아닙니다. 다시 입력해주세요");
+        }
+        
+        return playerName;
+    }
+}
