@@ -11,7 +11,7 @@ public class FinalFrame implements Frame {
     private static final int COUNT_OF_MAX_BOWL = 2;
     
     private final LinkedList<State> states;
-    private final LeftOverPins leftOverPins;
+    private LeftOverPins leftOverPins;
     
     public FinalFrame() {
         this.states = new LinkedList<>(List.of(new Ready()));
@@ -20,10 +20,11 @@ public class FinalFrame implements Frame {
     
     @Override
     public Frame bowl(final int fallenPins) {
-        State state = parseState(fallenPins);
+        State state = states.getLast();
+        state = state.bowl(fallenPins);
         
         states.set(statesLastIndex(), state);
-        leftOverPins.knockDown(fallenPins);
+        leftOverPins = leftOverPins.knockDown(fallenPins);
     
         return checkGameOver(state);
     }
@@ -50,10 +51,5 @@ public class FinalFrame implements Frame {
     
     private boolean isMiss(final State state) {
         return state.isFinished() && leftOverPins.isExistLeftOverPins();
-    }
-    
-    private State parseState(final int fallenPins) {
-        State state = states.getLast();
-        return state.bowl(fallenPins);
     }
 }

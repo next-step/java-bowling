@@ -6,11 +6,15 @@ public class LeftOverPins {
     private int leftOverPins;
     
     public LeftOverPins() {
-        this.leftOverPins = MAX_PINS;
+        this(MAX_PINS);
     }
     
-    public void knockDown(final int fallenPins) {
-        this.leftOverPins = leftOverPins - fallenPins;
+    public LeftOverPins(final int leftOverPins) {
+        this.leftOverPins = leftOverPins;
+    }
+    
+    public LeftOverPins knockDown(final int fallenPins) {
+        return new LeftOverPins(this.leftOverPins - fallenPins);
     }
     
     public boolean isExistLeftOverPins() {
