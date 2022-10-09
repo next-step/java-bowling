@@ -18,9 +18,14 @@ public class Answers {
     @OrderBy("id ASC")
     List<Answer> values = new ArrayList<>();
 
-    public List<DeleteHistory> delete(User loginUser) {
+    public void delete(User loginUser) {
+         this.values.stream()
+                .forEach(answer -> answer.delete(loginUser));
+    }
+
+    public List<DeleteHistory> makeHistory(User loginUser){
         return this.values.stream()
-                .map(answer -> answer.delete(loginUser))
+                .map(answer -> answer.makeHistory(loginUser))
                 .collect(Collectors.toUnmodifiableList());
     }
 
