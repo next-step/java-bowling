@@ -20,7 +20,7 @@ public class Answers {
 
     public List<DeleteHistory> delete(User loginUser) {
         return this.values.stream()
-                .map(a -> a.delete(loginUser))
+                .map(answer -> answer.delete(loginUser))
                 .collect(Collectors.toUnmodifiableList());
     }
 
