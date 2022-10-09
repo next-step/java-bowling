@@ -20,4 +20,10 @@ class NormalTest {
     void miss() {
         assertThat(NORMAL.bowl(6)).isExactlyInstanceOf(Miss.class);
     }
+    
+    @Test
+    @DisplayName("프레임 진행")
+    void frame_running() {
+        assertThat(NORMAL.isFinished()).isFalse();
+    }
 }

@@ -21,4 +21,10 @@ public class ReadyTest {
         State state = READY.bowl(3);
         assertThat(state).isExactlyInstanceOf(Normal.class);
     }
+    
+    @Test
+    @DisplayName("프레임 진행")
+    void frame_running() {
+        assertThat(READY.isFinished()).isFalse();
+    }
 }
