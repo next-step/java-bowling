@@ -22,4 +22,8 @@ public class CountOfFallenPinsDTO {
         
         return countOfFallenPins;
     }
+    
+    public int getCountOfFallenPins() {
+        return countOfFallenPins;
+    }
 }

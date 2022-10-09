@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 class CountOfFallenPinsExceptionTest {
     @Test
-    @DisplayName("입력 예외 발생 테스트")
+    @DisplayName("투구 결과 입력 예외 발생 테스트")
     void exception() {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {throw new CountOfFallenPinsException();})
