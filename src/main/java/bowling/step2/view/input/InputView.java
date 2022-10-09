@@ -11,7 +11,7 @@ public class InputView {
     
     public static Player inputPlayer() {
         try {
-            System.out.print("플레이어 이름은(3 english letters)?: ");
+            System.out.print("\n플레이어 이름은(3 english letters)?: ");
             return new Player(checkNull(SCANNER.nextLine()));
         }catch (RuntimeException e) {
             System.out.println(e.getMessage());
@@ -21,7 +21,7 @@ public class InputView {
     
     public static CountOfFallenPinsDTO countOfFallenPins(int countOfFrame) {
         try {
-            System.out.printf("%d프레임 투구 : ", countOfFrame);
+            System.out.printf("\n%d프레임 투구 : ", countOfFrame);
             return new CountOfFallenPinsDTO(checkNull(SCANNER.nextLine()));
         }catch (RuntimeException e) {
             System.out.println(e.getMessage());

@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class NormalFrame implements Frame {
     private State state;
-    private No no;
+    private final No no;
     
     
     public NormalFrame(int no) {
@@ -31,6 +31,16 @@ public class NormalFrame implements Frame {
             return new FinalFrame();
         }
         return new NormalFrame(no.increase());
+    }
+    
+    @Override
+    public boolean isNormalFrame() {
+        return true;
+    }
+    
+    @Override
+    public String display() {
+        return state.display();
     }
     
     @Override

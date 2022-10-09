@@ -1,6 +1,7 @@
 package bowling.step2.domain.state;
 
 import bowling.step2.domain.Score;
+import bowling.step2.domain.exception.DisplayException;
 
 public class Ready extends Running {
     @Override
@@ -10,5 +11,10 @@ public class Ready extends Running {
         }
         
         return new Normal(new Score(fallenPins));
+    }
+    
+    @Override
+    public String display() {
+        return "";
     }
 }

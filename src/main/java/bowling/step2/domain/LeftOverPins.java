@@ -3,7 +3,7 @@ package bowling.step2.domain;
 public class LeftOverPins {
     private static final int MAX_PINS = 10;
     
-    private int leftOverPins;
+    private final int leftOverPins;
     
     public LeftOverPins() {
         this(MAX_PINS);

@@ -21,4 +21,8 @@ public class PlayerName {
         
         return playerName;
     }
+    
+    public String getPlayerName() {
+        return playerName;
+    }
 }

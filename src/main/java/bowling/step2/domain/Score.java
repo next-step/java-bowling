@@ -4,6 +4,7 @@ import bowling.step2.domain.exception.PinCountExceededException;
 
 public class Score {
     private static final int COUNT_OF_MAX_PINS = 10;
+    private static final int GUTTER = 0;
     
     private final int fallenPins;
     
@@ -21,5 +22,17 @@ public class Score {
         }
         
         return this.fallenPins + fallenPins == COUNT_OF_MAX_PINS;
+    }
+    
+    public String display() {
+        if (isGutter()) {
+            return "-";
+        }
+        
+        return String.valueOf(fallenPins);
+    }
+    
+    private boolean isGutter() {
+        return fallenPins == GUTTER;
     }
 }

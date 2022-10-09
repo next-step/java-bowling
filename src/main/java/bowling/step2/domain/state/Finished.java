@@ -12,4 +12,9 @@ abstract public class Finished implements State {
     public boolean isFinished() {
         return true;
     }
+    
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
 }

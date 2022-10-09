@@ -6,9 +6,10 @@ import bowling.step2.domain.state.State;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
-    private static final int COUNT_OF_MAX_BOWL = 2;
+    private static final int COUNT_OF_MAX_BOWL = 3;
     
     private final LinkedList<State> states;
     private LeftOverPins leftOverPins;
@@ -34,22 +35,43 @@ public class FinalFrame implements Frame {
     }
     
     private FinalFrame checkGameOver(final State state) {
-        if (isMiss(state) || isBonusBowl()) {
+        if (isCurrentFrameFinished(state)) {
             return new FinalFrame();
         }
     
         if (state.isFinished()) {
             states.add(new Ready());
+            leftOverPins = new LeftOverPins();
         }
-        
         return this;
     }
     
-    private boolean isBonusBowl() {
-        return states.size() >= COUNT_OF_MAX_BOWL;
+    private boolean isCurrentFrameFinished(final State state) {
+        return isMiss(state) || isFinalBonusBowl();
+    }
+    
+    private boolean isFinalBonusBowl() {
+        return (states.size() == 2 && containsSpare()) || (states.size() >= COUNT_OF_MAX_BOWL);
+    }
+    
+    private boolean containsSpare() {
+        return states.stream()
+                .anyMatch(State::isSpare);
     }
     
     private boolean isMiss(final State state) {
         return state.isFinished() && leftOverPins.isExistLeftOverPins();
+    }
+    
+    @Override
+    public boolean isNormalFrame() {
+        return false;
+    }
+    
+    @Override
+    public String display() {
+        return states.stream()
+                .map(State::display)
+                .collect(Collectors.joining("|"));
     }
 }
