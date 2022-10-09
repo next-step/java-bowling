@@ -22,7 +22,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class QnaServiceTest {
+class QnaServiceTest {
     @Mock
     private QuestionRepository questionRepository;
 
@@ -36,14 +36,14 @@ public class QnaServiceTest {
     private Answer answer;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
         answer = new Answer(11L, UserTest.JAVAJIGI, question, "Answers Contents1");
         question.addAnswer(answer);
     }
 
     @Test
-    public void delete_성공() {
+    void delete_성공() {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
         assertThat(question.isDeleted()).isFalse();
@@ -54,7 +54,7 @@ public class QnaServiceTest {
     }
 
     @Test
-    public void delete_다른_사람이_쓴_글() {
+    void delete_다른_사람이_쓴_글() {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
         assertThatThrownBy(() -> {
@@ -63,7 +63,7 @@ public class QnaServiceTest {
     }
 
     @Test
-    public void delete_성공_질문자_답변자_같음() {
+    void delete_성공_질문자_답변자_같음() {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
         qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
@@ -74,7 +74,7 @@ public class QnaServiceTest {
     }
 
     @Test
-    public void delete_답변_중_다른_사람이_쓴_글() {
+    void delete_답변_중_다른_사람이_쓴_글() {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
         assertThatThrownBy(() -> {
@@ -82,8 +82,9 @@ public class QnaServiceTest {
         }).isInstanceOf(CannotDeleteException.class);
     }
 
-    private void verifyDeleteHistories() {
-        List<DeleteHistory> deleteHistories = question.delete(UserTest.JAVAJIGI);
+    void verifyDeleteHistories() {
+        question.delete(UserTest.JAVAJIGI);
+        List<DeleteHistory> deleteHistories = question.makeHistory(UserTest.JAVAJIGI);
         verify(deleteHistoryService).saveAll(deleteHistories);
     }
 }

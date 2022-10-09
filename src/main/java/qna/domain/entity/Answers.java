@@ -19,16 +19,14 @@ public class Answers {
     List<Answer> values = new ArrayList<>();
 
     public void delete(User loginUser) {
-         this.values.stream()
-                .forEach(answer -> answer.delete(loginUser));
+        this.values.forEach(answer -> answer.delete(loginUser));
     }
 
-    public List<DeleteHistory> makeHistory(User loginUser){
+    public List<DeleteHistory> makeHistory(User loginUser) {
         return this.values.stream()
                 .map(answer -> answer.makeHistory(loginUser))
                 .collect(Collectors.toUnmodifiableList());
     }
-
 
     public void add(Answer answer) {
         this.values.add(answer);
