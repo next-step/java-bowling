@@ -52,11 +52,6 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
-    @Override
-    public String toString() {
-        return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
-    }
-
     public DeleteHistory delete(User loginUser) {
         validateUser(loginUser);
         this.deleted = true;

@@ -66,11 +66,6 @@ public class Question extends AbstractEntity {
         }
     }
 
-    @Override
-    public String toString() {
-        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
-    }
-
     public boolean isDeleted() {
         return deleted;
     }
