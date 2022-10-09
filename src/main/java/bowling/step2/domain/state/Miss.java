@@ -2,7 +2,7 @@ package bowling.step2.domain.state;
 
 import bowling.step2.domain.Score;
 
-public class Miss extends Finished{
+public class Miss extends Finished {
     private final Score firstFallenPins;
     private final Score secondFallenPins;
     

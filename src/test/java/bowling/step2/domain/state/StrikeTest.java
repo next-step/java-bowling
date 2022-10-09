@@ -22,4 +22,10 @@ class StrikeTest {
     void frame_finish() {
         assertThat(STRIKE.isFinished()).isTrue();
     }
+    
+    @Test
+    @DisplayName("display 반환 값 확인")
+    void display() {
+        assertThat(STRIKE.display()).isEqualTo("X");
+    }
 }

@@ -30,7 +30,7 @@ class CountOfFallenPinsDTOTest {
     
     @ParameterizedTest(name = "{displayName} = {0}")
     @DisplayName("입력 범위 초과 시 예외")
-    @ValueSource(strings = {"0", "11"})
+    @ValueSource(strings = {"-1", "11"})
     void input_range_exceed_exception(String input) {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> new CountOfFallenPinsDTO(input))

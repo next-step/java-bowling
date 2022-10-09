@@ -13,7 +13,7 @@ public class InputView {
         try {
             System.out.print("\n플레이어 이름은(3 english letters)?: ");
             return new Player(checkNull(SCANNER.nextLine()));
-        }catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             System.out.println(e.getMessage());
             return inputPlayer();
         }
@@ -23,7 +23,7 @@ public class InputView {
         try {
             System.out.printf("\n%d프레임 투구 : ", countOfFrame);
             return new CountOfFallenPinsDTO(checkNull(SCANNER.nextLine()));
-        }catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             System.out.println(e.getMessage());
             return countOfFallenPins(countOfFrame);
         }

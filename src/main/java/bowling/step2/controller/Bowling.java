@@ -36,7 +36,7 @@ public class Bowling {
             isRunningCurrentFrame = player.bowl(countOfFallenPinsDTO);
             ResultView.printPlayerFramesDisplay(new PlayerDTO(player));
             return isRunningCurrentFrame;
-        }catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return isRunningCurrentFrame(player, countOfFrame, isRunningCurrentFrame);
         }

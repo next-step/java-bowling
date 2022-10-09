@@ -5,6 +5,7 @@ public interface State {
     int COUNT_OF_MAX_PINS = 10;
     
     State bowl(int fallenPins);
+    
     boolean isFinished();
     
     String display();

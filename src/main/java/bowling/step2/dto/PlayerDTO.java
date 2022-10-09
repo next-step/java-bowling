@@ -6,7 +6,6 @@ import bowling.step2.domain.PlayerName;
 import bowling.step2.domain.frame.Frame;
 
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 public class PlayerDTO {
@@ -17,7 +16,7 @@ public class PlayerDTO {
     public PlayerDTO(final Player player) {
         final PlayerName playerName = player.getPlayerName();
         this.playerName = playerName.getPlayerName();
-    
+        
         final Frames frames = player.getFrames();
         this.frames = frames.getFrames();
     }

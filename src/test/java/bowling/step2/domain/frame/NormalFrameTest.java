@@ -46,4 +46,20 @@ public class NormalFrameTest {
         Frame normalFrame = new NormalFrame(9);
         assertThat(normalFrame.bowl(10)).isExactlyInstanceOf(FinalFrame.class);
     }
+    
+    @Test
+    @DisplayName("노멀 프레임인지 확인")
+    void is_normal_frame() {
+        assertThat(normalFrame.isNormalFrame()).isTrue();
+    }
+    
+    @Test
+    @DisplayName("display 반환 값 확인")
+    void display() {
+        final Frame frame = normalFrame.bowl(7);
+        assertThat(frame.display()).isEqualTo("7");
+        
+        frame.bowl(3);
+        assertThat(frame.display()).isEqualTo("7|/");
+    }
 }

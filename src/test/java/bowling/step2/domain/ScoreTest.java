@@ -34,4 +34,10 @@ class ScoreTest {
                 .isThrownBy(() -> score.isAllFallenPins(5))
                 .withMessage("핀 최대 개수를 초과하였습니다. 다시 입력해주세요.");
     }
+    
+    @Test
+    @DisplayName("display 반환 값 확인")
+    void display() {
+        assertThat(score.display()).isEqualTo("6");
+    }
 }

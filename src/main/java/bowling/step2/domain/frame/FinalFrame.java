@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
     private static final int COUNT_OF_MAX_BOWL = 3;
+    private static final String EMPTY = "";
+    private static final String DELIMITER = "|";
     
     private final LinkedList<State> states;
     private LeftOverPins leftOverPins;
@@ -26,7 +28,7 @@ public class FinalFrame implements Frame {
         
         states.set(statesLastIndex(), state);
         leftOverPins = leftOverPins.knockDown(fallenPins);
-    
+        
         return checkGameOver(state);
     }
     
@@ -38,7 +40,7 @@ public class FinalFrame implements Frame {
         if (isCurrentFrameFinished(state)) {
             return new FinalFrame();
         }
-    
+        
         if (state.isFinished()) {
             states.add(new Ready());
             leftOverPins = new LeftOverPins();
@@ -72,6 +74,7 @@ public class FinalFrame implements Frame {
     public String display() {
         return states.stream()
                 .map(State::display)
-                .collect(Collectors.joining("|"));
+                .filter(display -> !display.equals(EMPTY))
+                .collect(Collectors.joining(DELIMITER));
     }
 }
