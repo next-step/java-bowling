@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class NormalFrameTest {
-    public final Frame NORMAL_FRAME = new NormalFrame();
+    public final Frame NORMAL_FRAME = new NormalFrame(1);
     
     @Test
     @DisplayName("다음 프레임으로 넘어가기 - strike")
@@ -32,5 +32,12 @@ public class NormalFrameTest {
     @DisplayName("한 번 더 투구하기 - normal")
     void next_frame_normal() {
         assertThat(NORMAL_FRAME.bowl(4)).isEqualTo(NORMAL_FRAME);
+    }
+    
+    @Test
+    @DisplayName("9번째 프레임 끝난 후 FinalFrame 반환")
+    void next_final_frame() {
+        Frame normalFrame = new NormalFrame(9);
+        assertThat(normalFrame.bowl(10)).isExactlyInstanceOf(FinalFrame.class);
     }
 }

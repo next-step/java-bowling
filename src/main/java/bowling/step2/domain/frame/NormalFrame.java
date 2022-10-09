@@ -1,25 +1,36 @@
 package bowling.step2.domain.frame;
 
+import bowling.step2.domain.No;
 import bowling.step2.domain.state.Ready;
 import bowling.step2.domain.state.State;
 
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
-    public State state;
+    private State state;
+    private No no;
     
-    public NormalFrame() {
+    
+    public NormalFrame(int no) {
         this.state = new Ready();
+        this.no = new No(no);
     }
     
     @Override
-    public NormalFrame bowl(final int fallenPins) {
+    public Frame bowl(final int fallenPins) {
         this.state = this.state.bowl(fallenPins);
         if (state.isFinished()) {
-            return new NormalFrame();
+            return nextFrame();
         }
         
         return this;
+    }
+    
+    private Frame nextFrame() {
+        if (no.isNextFinalFrame()) {
+            return new FinalFrame();
+        }
+        return new NormalFrame(no.increase());
     }
     
     @Override
