@@ -65,7 +65,7 @@ public class Answer extends AbstractEntity {
     }
 
     private DeleteHistory makeHistory(User loginUser) throws CannotDeleteException {
-        if (this.deleted == false) {
+        if (!this.deleted) {
             throw new CannotDeleteException("삭제 상태가 아닌 답변을 이력으로 만들 수 없습니다.");
         }
         return new DeleteHistory(this, loginUser);
