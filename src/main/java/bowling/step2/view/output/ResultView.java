@@ -9,6 +9,7 @@ import java.util.stream.IntStream;
 
 public class ResultView {
     private static final String BOARD_BASE_DISPLAY = "| NAME  |  01   |  02   |  03   |  04   |  05   |  06   |  07   |  08   |  09   |  10   |";
+    private static final int MAX_COUNT_OF_FRAME = 10;
     private static final int MAX_LENGTH_OF_PER_FRAME_DISPLAY = 7;
     private static final String DELIMITER = "|";
     private static final String EMPTY = "";
@@ -19,7 +20,7 @@ public class ResultView {
     }
     
     private static String getPlayerResultDisplayFormat(final PlayerDTO playerDTO) {
-        return IntStream.range(0, 10)
+        return IntStream.range(0, MAX_COUNT_OF_FRAME)
                 .mapToObj(index -> getFrameDisplayFormat(playerDTO.getFrames(), index))
                 .collect(Collectors.joining(DELIMITER, DELIMITER + parseFrameDisplayPrintFormat(playerDTO.getPlayerName()) + DELIMITER, DELIMITER));
     }
