@@ -26,11 +26,6 @@ public class Question extends AbstractEntity {
     public Question() {
     }
 
-    public Question(String title, String contents) {
-        this.title = title;
-        this.contents = contents;
-    }
-
     public Question(long id, String title, String contents) {
         super(id);
         this.title = title;
@@ -50,6 +45,7 @@ public class Question extends AbstractEntity {
     public void delete(User loginUser) throws CannotDeleteException {
         validateWriter(loginUser);
         this.deleted = true;
+        answers.delete(loginUser);
     }
 
     public List<DeleteHistory> makeHistory(User loginUser) {
