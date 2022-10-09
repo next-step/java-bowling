@@ -11,7 +11,7 @@ import java.util.List;
 public class PlayerDTO {
     private final String playerName;
     private final List<Frame> frames;
-    ;
+    
     
     public PlayerDTO(final Player player) {
         final PlayerName playerName = player.getPlayerName();
