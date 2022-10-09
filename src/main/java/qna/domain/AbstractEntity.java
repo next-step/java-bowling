@@ -13,30 +13,30 @@ public class AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
     @Column(nullable = false, updatable = false)
     @CreatedDate
     private LocalDateTime createdAt;
-
+    
     @LastModifiedDate
     private LocalDateTime updatedAt;
-
+    
     public AbstractEntity() {
     }
-
+    
     public AbstractEntity(Long id) {
         this.id = id;
     }
-
+    
     public Long getId() {
         return id;
     }
-
+    
     public AbstractEntity setId(Long id) {
         this.id = id;
         return this;
     }
-
+    
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -44,7 +44,7 @@ public class AbstractEntity {
         result = prime * result + (int) (id ^ (id >>> 32));
         return result;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -54,11 +54,9 @@ public class AbstractEntity {
         if (getClass() != obj.getClass())
             return false;
         AbstractEntity other = (AbstractEntity) obj;
-        if (id != other.id)
-            return false;
-        return true;
+        return id == other.id;
     }
-
+    
     @Override
     public String toString() {
         return "AbstractEntity{" +

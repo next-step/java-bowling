@@ -3,10 +3,10 @@ package qna.domain;
 import javax.persistence.Lob;
 
 public class QuestionBody {
-    private String title;
+    private final String title;
     
     @Lob
-    private String contents;
+    private final String contents;
     
     public QuestionBody(final String title, final String contents) {
         this.title = title;
