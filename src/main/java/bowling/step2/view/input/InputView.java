@@ -1,6 +1,7 @@
 package bowling.step2.view.input;
 
 import bowling.step2.domain.Player;
+import bowling.step2.dto.CountOfFallenPinsDTO;
 
 import java.util.Scanner;
 
@@ -12,10 +13,21 @@ public class InputView {
         try {
             System.out.print("플레이어 이름은(3 english letters)?: ");
             return new Player(checkNull(SCANNER.nextLine()));
-        }catch (IllegalArgumentException e) {
+        }catch (RuntimeException e) {
             System.out.println(e.getMessage());
             return inputPlayer();
         }
+    }
+    
+    public static CountOfFallenPinsDTO countOfFallenPins(int countOfFrame) {
+        try {
+            System.out.printf("%d프레임 투구 : ", countOfFrame);
+            return new CountOfFallenPinsDTO(checkNull(SCANNER.nextLine()));
+        }catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return countOfFallenPins(countOfFrame);
+        }
+        
     }
     
     private static String checkNull(String input) {
