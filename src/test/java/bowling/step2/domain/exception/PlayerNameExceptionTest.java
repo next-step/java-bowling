@@ -5,12 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-class BowlExceptionTest {
+class PlayerNameExceptionTest {
     @Test
-    @DisplayName("bowl 예외 발생 테스트")
+    @DisplayName("playerName 예외 발생 테스트")
     void exception() {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> {throw new BowlException();})
-                .withMessage("더이상 투구할 수 없습니다.");
+                .isThrownBy(() -> {throw new PlayerNameException();})
+                .withMessage("플레이어 이름 형식이 잘못되었습니다. 다시 입력해주세요.");
     }
 }

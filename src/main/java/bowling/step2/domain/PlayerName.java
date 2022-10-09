@@ -15,7 +15,7 @@ public class PlayerName {
     private String checkPlayerNameFormat(final String playerName) {
         final Matcher matcher = Pattern.compile("[A-Z]{3}").matcher(playerName);
         if (!matcher.matches()) {
-            throw new PlayerNameException("올바른 이름이 아닙니다. 다시 입력해주세요");
+            throw new PlayerNameException();
         }
         
         return playerName;
