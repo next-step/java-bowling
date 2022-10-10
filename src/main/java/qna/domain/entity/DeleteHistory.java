@@ -1,4 +1,4 @@
-package qna.domain;
+package qna.domain.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,16 +19,21 @@ public class DeleteHistory {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_deletehistory_to_user"))
     private User deletedBy;
 
-    private LocalDateTime createDate = LocalDateTime.now();
+    private LocalDateTime createDate;
 
     public DeleteHistory() {
     }
 
-    public DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
-        this.contentType = contentType;
-        this.contentId = contentId;
+    public DeleteHistory(AbstractEntity entity, User deletedBy){
+        if(entity instanceof Answer){
+            this.contentType = ContentType.ANSWER;
+        }
+        if(entity instanceof Question){
+            this.contentType = ContentType.QUESTION;
+        }
+        this.contentId = entity.getId();
         this.deletedBy = deletedBy;
-        this.createDate = createDate;
+        this.createDate = LocalDateTime.now();
     }
 
     @Override
@@ -47,9 +52,4 @@ public class DeleteHistory {
         return Objects.hash(id, contentType, contentId, deletedBy);
     }
 
-    @Override
-    public String toString() {
-        return "DeleteHistory [id=" + id + ", contentType=" + contentType + ", contentId=" + contentId + ", deletedBy="
-                + deletedBy + ", createDate=" + createDate + "]";
-    }
 }
