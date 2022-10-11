@@ -1,8 +1,12 @@
 package bowling.step2.domain.frame;
 
+import bowling.step2.domain.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -54,12 +58,12 @@ public class NormalFrameTest {
     }
     
     @Test
-    @DisplayName("display 반환 값 확인")
+    @DisplayName("점수 확인")
     void display() {
         final Frame frame = normalFrame.bowl(7);
-        assertThat(frame.display()).isEqualTo("7");
+        assertThat(frame.getScores()).isEqualTo(List.of(new Score(7)));
         
         frame.bowl(3);
-        assertThat(frame.display()).isEqualTo("7|/");
+        assertThat(frame.getScores()).isEqualTo(Arrays.asList(new Score(7), new Score(3)));
     }
 }

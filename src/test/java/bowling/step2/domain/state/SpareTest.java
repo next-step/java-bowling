@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -13,7 +15,7 @@ class SpareTest {
     
     @BeforeEach
     void setUp() {
-        spare = new Spare(new Score(4));
+        spare = new Spare(new Score(4), new Score(6));
     }
     
     @Test
@@ -37,8 +39,8 @@ class SpareTest {
     }
     
     @Test
-    @DisplayName("display 반환 값 확인")
+    @DisplayName("점수 확인")
     void display() {
-        assertThat(spare.display()).isEqualTo("4|/");
+        assertThat(spare.getScores()).isEqualTo(Arrays.asList(new Score(4), new Score(6)));
     }
 }

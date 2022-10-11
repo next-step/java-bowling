@@ -1,7 +1,11 @@
 package bowling.step2.domain.state;
 
+import bowling.step2.domain.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -24,8 +28,8 @@ class StrikeTest {
     }
     
     @Test
-    @DisplayName("display 반환 값 확인")
+    @DisplayName("점수 확인")
     void display() {
-        assertThat(STRIKE.display()).isEqualTo("X");
+        assertThat(STRIKE.getScores()).isEqualTo(List.of(new Score(10)));
     }
 }

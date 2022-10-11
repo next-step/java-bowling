@@ -1,19 +1,21 @@
 package bowling.step2.domain.frame;
 
-import bowling.step2.domain.No;
+import bowling.step2.domain.FrameOrderNumber;
+import bowling.step2.domain.Score;
 import bowling.step2.domain.state.Ready;
 import bowling.step2.domain.state.State;
 
+import java.util.List;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
     private State state;
-    private final No no;
+    private final FrameOrderNumber frameOrderNumber;
     
     
-    public NormalFrame(int no) {
+    public NormalFrame(int frameOrderNumber) {
         this.state = new Ready();
-        this.no = new No(no);
+        this.frameOrderNumber = new FrameOrderNumber(frameOrderNumber);
     }
     
     @Override
@@ -27,10 +29,10 @@ public class NormalFrame implements Frame {
     }
     
     private Frame nextFrame() {
-        if (no.isNextFinalFrame()) {
+        if (frameOrderNumber.isNextFinalFrame()) {
             return new FinalFrame();
         }
-        return new NormalFrame(no.increase());
+        return new NormalFrame(frameOrderNumber.increase());
     }
     
     @Override
@@ -39,8 +41,8 @@ public class NormalFrame implements Frame {
     }
     
     @Override
-    public String display() {
-        return state.display();
+    public List<Score> getScores() {
+        return state.getScores();
     }
     
     @Override

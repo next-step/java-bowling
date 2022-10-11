@@ -1,5 +1,6 @@
 package bowling.step2.view.output;
 
+import bowling.step2.domain.Score;
 import bowling.step2.domain.frame.Frame;
 import bowling.step2.dto.PlayerDTO;
 
@@ -13,6 +14,9 @@ public class ResultView {
     private static final int MAX_LENGTH_OF_PER_FRAME_DISPLAY = 7;
     private static final String DELIMITER = "|";
     private static final String EMPTY = "";
+    private static final String SPARE_DISPLAY = "/";
+    private static final int STRIKE_SCORE = 10;
+    private static final int READY_SCORE = -1;
     
     public static void printPlayerFramesDisplay(final PlayerDTO playerDTO) {
         System.out.println(BOARD_BASE_DISPLAY);
@@ -31,7 +35,40 @@ public class ResultView {
         }
         
         final Frame frame = frames.get(index);
-        return parseFrameDisplayPrintFormat(frame.display());
+        return parseFrameDisplayPrintFormat(parseScoresDisplay(frame.getScores()));
+    }
+    
+    private static String parseScoresDisplay(final List<Score> scores) {
+        return scores.stream()
+                .filter(ResultView::isNotReady)
+                .map(ResultView::scoreToDisplay)
+                .collect(Collectors.joining(DELIMITER));
+    }
+    
+    private static String scoreToDisplay(final Score score) {
+        if (score.isStrike()) {
+            return "X";
+        }
+        
+        if (score.isSpare()) {
+            return "/";
+        }
+        
+        if (score.isGutter()) {
+            return "-";
+        }
+        
+        return String.valueOf(score.getFallenPins());
+    }
+    
+    private static boolean isNotReady(final Score score) {
+        return score.getFallenPins() != READY_SCORE;
+    }
+    
+    private static int getSumScores(final List<Score> scores) {
+        return scores.stream()
+                .mapToInt(Score::getFallenPins)
+                .sum();
     }
     
     private static String parseFrameDisplayPrintFormat(final String display) {

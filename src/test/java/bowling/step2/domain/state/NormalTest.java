@@ -5,6 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class NormalTest {
@@ -34,8 +37,8 @@ class NormalTest {
     }
     
     @Test
-    @DisplayName("display 반환 값 확인")
+    @DisplayName("점수 확인")
     void display() {
-        assertThat(normal.display()).isEqualTo("3");
+        assertThat(normal.getScores()).isEqualTo(List.of(new Score(3)));
     }
 }

@@ -2,6 +2,9 @@ package bowling.step2.domain.state;
 
 import bowling.step2.domain.Score;
 
+import java.util.Collections;
+import java.util.List;
+
 public class Normal extends Running {
     private final Score firstFallenPins;
     
@@ -12,7 +15,7 @@ public class Normal extends Running {
     @Override
     public State bowl(final int secondFallenPins) {
         if (isAllFallenPins(secondFallenPins)) {
-            return new Spare(firstFallenPins);
+            return new Spare(firstFallenPins, new Score(secondFallenPins, true));
         }
         
         return new Miss(firstFallenPins, new Score(secondFallenPins));
@@ -23,7 +26,7 @@ public class Normal extends Running {
     }
     
     @Override
-    public String display() {
-        return String.valueOf(firstFallenPins.display());
+    public List<Score> getScores() {
+        return Collections.singletonList(firstFallenPins);
     }
 }

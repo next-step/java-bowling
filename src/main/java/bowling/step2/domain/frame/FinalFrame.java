@@ -1,12 +1,14 @@
 package bowling.step2.domain.frame;
 
 import bowling.step2.domain.LeftOverPins;
+import bowling.step2.domain.Score;
 import bowling.step2.domain.state.Ready;
 import bowling.step2.domain.state.State;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
     private static final int COUNT_OF_MAX_BOWL = 3;
@@ -71,10 +73,13 @@ public class FinalFrame implements Frame {
     }
     
     @Override
-    public String display() {
-        return states.stream()
-                .map(State::display)
-                .filter(display -> !display.equals(EMPTY))
-                .collect(Collectors.joining(DELIMITER));
+    public List<Score> getScores() {
+        List<Score> scores = new ArrayList<>();
+        for (State state : states) {
+            final List<Score> stateScores = state.getScores();
+            scores.addAll(stateScores);
+        }
+        
+        return Collections.unmodifiableList(scores);
     }
 }
