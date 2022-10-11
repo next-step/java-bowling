@@ -6,10 +6,12 @@ import java.util.Collections;
 import java.util.List;
 
 public class Ready extends Running {
+    private static final int READY_SCORE = -1;
+    
     private final Score firstFallenPins;
     
     public Ready() {
-        this.firstFallenPins = new Score(-1);
+        this.firstFallenPins = new Score(READY_SCORE);
     }
     
     @Override
