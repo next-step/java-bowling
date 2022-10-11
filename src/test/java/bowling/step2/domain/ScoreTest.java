@@ -4,8 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -41,5 +39,11 @@ class ScoreTest {
     @DisplayName("점수 확인")
     void display() {
         assertThat(score.getFallenPins()).isEqualTo(6);
+    }
+    
+    @Test
+    @DisplayName("스페어인지 확인")
+    void is_spare() {
+        assertThat(new Score(4, true).isSpare()).isTrue();
     }
 }

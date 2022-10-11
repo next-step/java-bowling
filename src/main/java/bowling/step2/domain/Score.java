@@ -6,7 +6,6 @@ import java.util.Objects;
 
 public class Score {
     private static final int COUNT_OF_MAX_PINS = 10;
-    private static final int GUTTER = 0;
     
     private final int fallenPins;
     private final boolean isSpare;
@@ -32,20 +31,12 @@ public class Score {
         return this.fallenPins + fallenPins == COUNT_OF_MAX_PINS;
     }
     
-    public int getFallenPins() {
-        return fallenPins;
-    }
-    
-    public boolean isStrike() {
-        return fallenPins == COUNT_OF_MAX_PINS;
-    }
-    
     public boolean isSpare() {
         return isSpare;
     }
     
-    public boolean isGutter() {
-        return fallenPins == GUTTER;
+    public int getFallenPins() {
+        return fallenPins;
     }
     
     @Override

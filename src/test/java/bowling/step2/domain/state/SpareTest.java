@@ -10,12 +10,12 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-class SpareTest {
+public class SpareTest {
     public Spare spare;
     
     @BeforeEach
     void setUp() {
-        spare = new Spare(new Score(4), new Score(6));
+        spare = new Spare(new Score(4), new Score(6, true));
     }
     
     @Test
@@ -41,6 +41,6 @@ class SpareTest {
     @Test
     @DisplayName("점수 확인")
     void display() {
-        assertThat(spare.getScores()).isEqualTo(Arrays.asList(new Score(4), new Score(6)));
+        assertThat(spare.getScores()).isEqualTo(Arrays.asList(new Score(4), new Score(6, true)));
     }
 }

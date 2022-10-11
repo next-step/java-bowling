@@ -22,7 +22,7 @@ public class FinalFrameTest {
     void strike_bonus_bowl() {
         Frame frame = finalFrame.bowl(10);
         assertThat(frame).isEqualTo(finalFrame);
-    
+        
         frame = finalFrame.bowl(10);
         assertThat(frame).isEqualTo(finalFrame);
     }
@@ -129,7 +129,7 @@ public class FinalFrameTest {
     void display() {
         Frame frame = finalFrame.bowl(5);
         frame = frame.bowl(5);
-        assertThat(frame.getScores()).isEqualTo(Arrays.asList(new Score(5), new Score(5),  new Score(-1)));
+        assertThat(frame.getScores()).isEqualTo(Arrays.asList(new Score(5), new Score(5), new Score(-1)));
         
         frame.bowl(5);
         assertThat(frame.getScores()).isEqualTo(Arrays.asList(new Score(5), new Score(5), new Score(5)));
