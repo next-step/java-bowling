@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class ResultView {
-    private static final Map<Integer, String> scoreToDisplay = new HashMap<>();
+    private static final Map<Integer, String> SCORE_TO_DISPLAY = new HashMap<>();
     private static final String FRAME_DISPLAY_FORMAT = "%%%ds%s%%%ds";
     private static final String BOARD_BASE_DISPLAY = "| NAME  |  01   |  02   |  03   |  04   |  05   |  06   |  07   |  08   |  09   |  10   |";
     private static final int MAX_COUNT_OF_FRAME = 10;
@@ -26,9 +26,9 @@ public class ResultView {
     private static final String GUTTER_DISPLAY = "-";
     
     static {
-        scoreToDisplay.put(MAX_COUNT_OF_FRAME, STRIKE_DISPLAY);
-        scoreToDisplay.put(TEMPORARY_SPARE_NUMBER, SPARE_DISPLAY);
-        scoreToDisplay.put(GUTTER_SCORE, GUTTER_DISPLAY);
+        SCORE_TO_DISPLAY.put(MAX_COUNT_OF_FRAME, STRIKE_DISPLAY);
+        SCORE_TO_DISPLAY.put(TEMPORARY_SPARE_NUMBER, SPARE_DISPLAY);
+        SCORE_TO_DISPLAY.put(GUTTER_SCORE, GUTTER_DISPLAY);
     }
     
     public static void printPlayerFramesDisplay(final PlayerDTO playerDTO) {
@@ -60,10 +60,10 @@ public class ResultView {
     
     private static String scoreToDisplay(final Score score) {
         if (score.isSpare()) {
-            return scoreToDisplay.get(TEMPORARY_SPARE_NUMBER);
+            return SCORE_TO_DISPLAY.get(TEMPORARY_SPARE_NUMBER);
         }
         
-        return scoreToDisplay.getOrDefault(score.getFallenPins(), String.valueOf(score.getFallenPins()));
+        return SCORE_TO_DISPLAY.getOrDefault(score.getFallenPins(), String.valueOf(score.getFallenPins()));
     }
     
     private static boolean isNotReady(final Score score) {
