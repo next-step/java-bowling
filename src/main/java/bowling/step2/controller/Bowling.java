@@ -26,11 +26,11 @@ public class Bowling {
     private void runFrames(final Player player, final int countOfFrame) {
         boolean isRunningCurrentFrame = true;
         while (isRunningCurrentFrame) {
-            isRunningCurrentFrame = isRunningCurrentFrame(player, countOfFrame, true);
+            isRunningCurrentFrame = runCurrentFrame(player, countOfFrame, true);
         }
     }
     
-    private boolean isRunningCurrentFrame(final Player player, final int countOfFrame, boolean isRunningCurrentFrame) {
+    private boolean runCurrentFrame(final Player player, final int countOfFrame, boolean isRunningCurrentFrame) {
         try {
             final CountOfFallenPinsDTO countOfFallenPinsDTO = InputView.countOfFallenPins(countOfFrame);
             isRunningCurrentFrame = player.bowl(countOfFallenPinsDTO);
@@ -38,7 +38,7 @@ public class Bowling {
             return isRunningCurrentFrame;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return isRunningCurrentFrame(player, countOfFrame, isRunningCurrentFrame);
+            return runCurrentFrame(player, countOfFrame, isRunningCurrentFrame);
         }
     }
 }
