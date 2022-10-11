@@ -3,7 +3,6 @@ package qna.domain.entity;
 import qna.exception.CannotDeleteException;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -48,13 +47,8 @@ public class Question extends AbstractEntity {
         answers.delete(loginUser);
     }
 
-    public List<DeleteHistory> makeHistory(User loginUser) {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-
-        deleteHistories.add(new DeleteHistory(this, this.writer));
-        deleteHistories.addAll(answers.makeHistory(loginUser));
-
-        return deleteHistories;
+    public List<Answer> getAnswers(){
+        return answers.getValues();
     }
 
 

@@ -7,8 +7,8 @@ import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Embeddable
 public class Answers {
@@ -22,10 +22,8 @@ public class Answers {
         this.values.forEach(answer -> answer.delete(loginUser));
     }
 
-    public List<DeleteHistory> makeHistory(User loginUser) {
-        return this.values.stream()
-                .map(answer -> answer.makeHistory(loginUser))
-                .collect(Collectors.toUnmodifiableList());
+    public List<Answer> getValues() {
+        return Collections.unmodifiableList(values);
     }
 
     public void add(Answer answer) {
