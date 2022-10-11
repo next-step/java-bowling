@@ -2,6 +2,7 @@ package qna.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import qna.domain.entity.DeleteHistories;
 import qna.domain.entity.Question;
 import qna.domain.entity.User;
 import qna.exception.CannotDeleteException;
@@ -29,6 +30,6 @@ public class QnAService {
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
         Question question = findQuestionById(questionId);
         question.delete(loginUser);
-        deleteHistoryService.saveAll(question.makeHistory(loginUser));
+        deleteHistoryService.saveAll(new DeleteHistories(question, loginUser).getValues());
     }
 }
