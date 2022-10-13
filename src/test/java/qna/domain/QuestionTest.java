@@ -1,19 +1,17 @@
 package qna.domain;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-//@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class QuestionTest {
     public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
     public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
-
-    // 삭제할 수 있는지 확인
 
     @Test
     @Order(1)
@@ -43,6 +41,13 @@ public class QuestionTest {
     public void setDeletedTest4(){
         Q1.addAnswer(AnswerTest.A2);
         assertThrows(CannotDeleteException.class, () -> Q1.setDeleted(UserTest.JAVAJIGI));
+    }
+
+    @Test
+    @DisplayName("질문을 삭제했을 때 반환되는 히스토리의 개수가 질문 + 답글 개수와 일치하는지 테스트")
+    public void setDeletedTest5() throws CannotDeleteException {
+        Q2.addAnswer(AnswerTest.A2);
+        assertThat(Q2.setDeleted(UserTest.SANJIGI)).hasSize(2);
     }
 
 }
