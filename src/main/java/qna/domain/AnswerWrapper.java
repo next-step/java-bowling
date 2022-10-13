@@ -1,5 +1,7 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AnswerWrapper {
@@ -13,7 +15,12 @@ public class AnswerWrapper {
         return answers;
     }
     
-    public void deleteAll(){
-        
+    public List<DeleteHistory> deleteAll(){
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        this.getAnswers().forEach((answer)->{
+            answer.setDeleted(true);
+            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+        });
+        return deleteHistories;
     }
 }
