@@ -12,8 +12,6 @@ import java.util.List;
 
 public class FinalFrame implements Frame {
     private static final int COUNT_OF_MAX_BOWL = 3;
-    private static final String EMPTY = "";
-    private static final String DELIMITER = "|";
     
     private final LinkedList<State> states;
     private LeftOverPins leftOverPins;

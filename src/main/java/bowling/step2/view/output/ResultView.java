@@ -34,6 +34,7 @@ public class ResultView {
     public static void printPlayerFramesDisplay(final PlayerDTO playerDTO) {
         System.out.println(BOARD_BASE_DISPLAY);
         System.out.println(getPlayerResultDisplayFormat(playerDTO));
+        
     }
     
     private static String getPlayerResultDisplayFormat(final PlayerDTO playerDTO) {
