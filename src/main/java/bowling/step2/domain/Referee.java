@@ -136,22 +136,17 @@ public class Referee {
     }
     
     private int getOneNextScore(final List<List<Score>> allScores, final int index) {
-        if (isExceedIndex(index, allScores)) {
-            isCalculateStop = true;
-            return STOP_SCORE;
-        }
-        
         final List<Score> nextScores = checkOneNextCalculateStop(allScores, index);
         return nextScores.get(0).getFallenPins();
     }
     
     private List<Score> checkOneNextCalculateStop(final List<List<Score>> allScores, final int index) {
-        final List<Score> currentScores = allScores.get(index);
-        if (isReady(currentScores)) {
+        if (isExceedIndex(index, allScores) || isReady(allScores.get(index))) {
             isCalculateStop = true;
+            return List.of(new Score(STOP_SCORE));
         }
         
-        return currentScores;
+        return allScores.get(index);
     }
     
     private boolean isReady(final List<Score> currentScores) {
