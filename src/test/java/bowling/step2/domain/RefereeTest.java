@@ -2,7 +2,9 @@ package bowling.step2.domain;
 
 import bowling.step2.dto.CountOfFallenPinsDTO;
 import bowling.step2.dto.PlayerDTO;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
 
