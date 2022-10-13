@@ -39,6 +39,13 @@ public class Referee {
         return scores.size() == 1 || (scores.size() == 2 && getSumScores(scores, scores.size()) >= COUNT_OF_MAX_PINS);
     }
     
+    private int getSumScores(final List<Score> scores, int limit) {
+        return scores.stream()
+                .mapToInt(Score::getFallenPins)
+                .limit(limit)
+                .sum();
+    }
+    
     private boolean isExceedIndex(final int index, final List<List<Score>> allScores) {
         return allScores.size() <= index;
     }
@@ -78,19 +85,11 @@ public class Referee {
     
     private List<Score> checkCalculateStop(final List<List<Score>> allScores, final int index) {
         final List<Score> currentScores = allScores.get(index);
-        if (isReadyContains(currentScores) || isNinthScoreStop(allScores, index, currentScores)) {
+        if (isReadyContains(currentScores) || isNormal(currentScores)) {
             isCalculateStop = true;
         }
         
         return currentScores;
-    }
-    
-    private boolean isNinthScoreStop(final List<List<Score>> allScores, final int index, final List<Score> currentScores) {
-        return isNotFirstFrame(index) && isStrike(allScores.get(index - 1)) && isNormal(currentScores);
-    }
-    
-    private boolean isNotFirstFrame(final int index) {
-        return index != 0;
     }
     
     private boolean isNormal(final List<Score> scores) {
@@ -112,7 +111,7 @@ public class Referee {
     }
     
     private int getTwoNextScore(final List<List<Score>> allScores, final int index) {
-        final List<Score> nextScores = checkCalculateStop(allScores, index);
+        final List<Score> nextScores = checkTwoNextCalculateStop(allScores, index);
         if (nextScores.size() >= 2) {
             return getSumScores(nextScores, 2);
         }
@@ -120,19 +119,42 @@ public class Referee {
         return nextScores.get(0).getFallenPins() + getOneNextScore(allScores, index + 1);
     }
     
-    private int getSumScores(final List<Score> scores, int limit) {
-        return scores.stream()
+    private List<Score> checkTwoNextCalculateStop(final List<List<Score>> allScores, final int index) {
+        final List<Score> currentScores = allScores.get(index);
+        if (isTwoReadyContains(currentScores)) {
+            isCalculateStop = true;
+        }
+        
+        return currentScores;
+    }
+    
+    private boolean isTwoReadyContains(final List<Score> currentScores) {
+        return currentScores.stream()
+                .limit(2)
                 .mapToInt(Score::getFallenPins)
-                .limit(limit)
-                .sum();
+                .anyMatch(score -> score == STOP_SCORE);
     }
     
     private int getOneNextScore(final List<List<Score>> allScores, final int index) {
         if (isExceedIndex(index, allScores)) {
+            isCalculateStop = true;
             return STOP_SCORE;
         }
         
-        final List<Score> nextScores = checkCalculateStop(allScores, index);
+        final List<Score> nextScores = checkOneNextCalculateStop(allScores, index);
         return nextScores.get(0).getFallenPins();
+    }
+    
+    private List<Score> checkOneNextCalculateStop(final List<List<Score>> allScores, final int index) {
+        final List<Score> currentScores = allScores.get(index);
+        if (isReady(currentScores)) {
+            isCalculateStop = true;
+        }
+        
+        return currentScores;
+    }
+    
+    private boolean isReady(final List<Score> currentScores) {
+        return currentScores.get(0).getFallenPins() == STOP_SCORE;
     }
 }

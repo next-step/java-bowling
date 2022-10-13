@@ -1,5 +1,6 @@
 package bowling.step2.view.output;
 
+import bowling.step2.domain.Referee;
 import bowling.step2.domain.Score;
 import bowling.step2.domain.frame.Frame;
 import bowling.step2.dto.PlayerDTO;
@@ -24,6 +25,7 @@ public class ResultView {
     private static final String SPARE_DISPLAY = "/";
     private static final String STRIKE_DISPLAY = "X";
     private static final String GUTTER_DISPLAY = "-";
+    private static final String SEVEN_SPACE = "       ";
     
     static {
         SCORE_TO_DISPLAY.put(MAX_COUNT_OF_FRAME, STRIKE_DISPLAY);
@@ -34,22 +36,39 @@ public class ResultView {
     public static void printPlayerFramesDisplay(final PlayerDTO playerDTO) {
         System.out.println(BOARD_BASE_DISPLAY);
         System.out.println(getPlayerResultDisplayFormat(playerDTO));
+        System.out.println(getCumulativeScoreDisplayFormat(playerDTO));
+    }
+    
+    private static String getCumulativeScoreDisplayFormat(final PlayerDTO playerDTO) {
+        final Referee referee = new Referee();
+        return IntStream.range(0, MAX_COUNT_OF_FRAME)
+                .mapToObj(index -> referee.calculateCumulativeScore(playerDTO, index))
+                .map(ResultView::parseCumulativeScore)
+                .map(ResultView::parseDisplayPrintFormat)
+                .collect(Collectors.joining(DELIMITER, DELIMITER + SEVEN_SPACE + DELIMITER, DELIMITER));
+    }
+    
+    private static String parseCumulativeScore(final String score) {
+        if (score.equals(String.valueOf(READY_SCORE))) {
+            return EMPTY;
+        }
         
+        return score;
     }
     
     private static String getPlayerResultDisplayFormat(final PlayerDTO playerDTO) {
         return IntStream.range(0, MAX_COUNT_OF_FRAME)
                 .mapToObj(index -> getFrameDisplayFormat(playerDTO.getFrames(), index))
-                .collect(Collectors.joining(DELIMITER, DELIMITER + parseFrameDisplayPrintFormat(playerDTO.getPlayerName()) + DELIMITER, DELIMITER));
+                .collect(Collectors.joining(DELIMITER, DELIMITER + parseDisplayPrintFormat(playerDTO.getPlayerName()) + DELIMITER, DELIMITER));
     }
     
     private static String getFrameDisplayFormat(final List<Frame> frames, final int index) {
         if (frames.size() - 1 < index) {
-            return parseFrameDisplayPrintFormat(EMPTY);
+            return parseDisplayPrintFormat(EMPTY);
         }
         
         final Frame frame = frames.get(index);
-        return parseFrameDisplayPrintFormat(parseScoresDisplay(frame.getScores()));
+        return parseDisplayPrintFormat(parseScoresDisplay(frame.getScores()));
     }
     
     private static String parseScoresDisplay(final List<Score> scores) {
@@ -71,7 +90,7 @@ public class ResultView {
         return score.getFallenPins() != READY_SCORE;
     }
     
-    private static String parseFrameDisplayPrintFormat(final String display) {
+    private static String parseDisplayPrintFormat(final String display) {
         return String.format(String.format(FRAME_DISPLAY_FORMAT, getLeftSpaceLength(display), display, getRightSpaceLength(display)), EMPTY, EMPTY);
     }
     
