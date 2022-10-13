@@ -18,8 +18,17 @@ public class Referee {
         if (allScores.size() <= index) {
             return String.valueOf(STOP_SCORE);
         }
-    
+        
+        if (isFinalFrame(playerDTO, index)) {
+            return String.valueOf(cumulativeScore + getSumScores(allScores.get(index)));
+        }
         return parseCumulativeScore(index, allScores);
+    }
+    
+    private boolean isFinalFrame(final PlayerDTO playerDTO, final int index) {
+        final List<Frame> frames = playerDTO.getFrames();
+        final Frame frame = frames.get(index);
+        return !frame.isNormalFrame();
     }
     
     private String parseCumulativeScore(final int index, final List<List<Score>> allScores) {
@@ -38,7 +47,7 @@ public class Referee {
     }
     
     private int getCurrentScore(final List<List<Score>> allScores, final int index) {
-        final List<Score> currentScores = checkCalculateStop(allScores.get(index));
+        final List<Score> currentScores = checkCalculateStop(allScores, index);
         if (isStrike(currentScores)) {
             return MAX_PER_SCORE + getTwoNextScore(allScores, index + 1);
         }
@@ -49,12 +58,21 @@ public class Referee {
         return getSumScores(currentScores);
     }
     
-    private List<Score> checkCalculateStop(final List<Score> scores) {
-        if (isReadyContains(scores) || isNormal(scores)) {
+    private List<Score> checkCalculateStop(final List<List<Score>> allScores, final int index) {
+        final List<Score> currentScores = allScores.get(index);
+        if (isReadyContains(currentScores) || (isNotFirstFrame(index) && isPriorScoreStrike(allScores.get(index - 1)) && isNormal(currentScores))) {
             isCalculateStop = true;
         }
         
-        return scores;
+        return currentScores;
+    }
+    
+    private boolean isNotFirstFrame(final int index) {
+        return index != 0;
+    }
+    
+    private boolean isPriorScoreStrike(final List<Score> scores) {
+        return scores.get(0).isStrike();
     }
     
     private boolean isNormal(final List<Score> scores) {
@@ -76,7 +94,7 @@ public class Referee {
     }
     
     private int getTwoNextScore(final List<List<Score>> allScores, final int index) {
-        final List<Score> nextScores = checkCalculateStop(allScores.get(index));
+        final List<Score> nextScores = checkCalculateStop(allScores, index);
         
         if (nextScores.size() == 2) {
             return getSumScores(nextScores);
@@ -96,7 +114,7 @@ public class Referee {
             return STOP_SCORE;
         }
         
-        final List<Score> nextScores = checkCalculateStop(allScores.get(index));
+        final List<Score> nextScores = checkCalculateStop(allScores, index);
         return nextScores.get(0).getFallenPins();
     }
 }
