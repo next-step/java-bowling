@@ -10,4 +10,6 @@ public interface Frame {
     boolean isNormalFrame();
     
     List<Score> getScores();
+    
+    int getOneNextScore();
 }

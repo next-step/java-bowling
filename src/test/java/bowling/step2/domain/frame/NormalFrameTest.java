@@ -66,4 +66,45 @@ public class NormalFrameTest {
         frame.bowl(3);
         assertThat(frame.getScores()).isEqualTo(Arrays.asList(new Score(7), new Score(3)));
     }
+    
+    @Test
+    @DisplayName("다음 프레임의 1개의 점수 구하기 - 레디")
+    void get_one_next_score_ready() {
+        int oneNextScore = normalFrame.getOneNextScore();
+        assertThat(oneNextScore).isEqualTo(-1);
+    }
+    
+    @Test
+    @DisplayName("다음 프레임의 1개의 점수 구하기 - 노멀")
+    void get_one_next_score_normal() {
+        normalFrame.bowl(3);
+        int oneNextScore = normalFrame.getOneNextScore();
+        assertThat(oneNextScore).isEqualTo(3);
+    }
+    
+    @Test
+    @DisplayName("다음 프레임의 1개의 점수 구하기 - 미스")
+    void get_one_next_score_miss() {
+        normalFrame.bowl(5);
+        normalFrame.bowl(3);
+        int oneNextScore = normalFrame.getOneNextScore();
+        assertThat(oneNextScore).isEqualTo(5);
+    }
+    
+    @Test
+    @DisplayName("다음 프레임의 1개의 점수 구하기 - 스페어")
+    void get_one_next_score_spare() {
+        normalFrame.bowl(3);
+        normalFrame.bowl(7);
+        int oneNextScore = normalFrame.getOneNextScore();
+        assertThat(oneNextScore).isEqualTo(3);
+    }
+    
+    @Test
+    @DisplayName("다음 프레임의 1개의 점수 구하기 - 스트라이크")
+    void get_one_next_score_strike() {
+        normalFrame.bowl(10);
+        int oneNextScore = normalFrame.getOneNextScore();
+        assertThat(oneNextScore).isEqualTo(10);
+    }
 }

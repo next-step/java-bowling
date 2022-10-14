@@ -80,4 +80,9 @@ public class FinalFrame implements Frame {
         
         return Collections.unmodifiableList(scores);
     }
+    
+    @Override
+    public int getOneNextScore() {
+        return 0;
+    }
 }

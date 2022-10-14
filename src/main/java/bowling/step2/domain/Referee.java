@@ -14,20 +14,20 @@ public class Referee {
     private int cumulativeScore;
     private boolean isCalculateStop;
     
-    public String calculateCumulativeScore(final PlayerDTO playerDTO, final int index) {
+    public String calculateCumulativeScore(final PlayerDTO playerDTO, final int frameOrderNumber) {
         final List<List<Score>> allScores = getAllScores(playerDTO);
-        if (isExceedIndex(index, allScores)) {
+        if (isExceedFrameOrderNumber(frameOrderNumber, allScores)) {
             return String.valueOf(STOP_SCORE);
         }
         
-        if (isFinalFrame(playerDTO, index)) {
-            return getFinalFrameScore(allScores, index);
+        if (isFinalFrame(playerDTO, frameOrderNumber)) {
+            return getFinalFrameScore(allScores, frameOrderNumber);
         }
-        return parseCumulativeScore(index, allScores);
+        return parseCumulativeScore(frameOrderNumber, allScores);
     }
     
-    private String getFinalFrameScore(final List<List<Score>> allScores, final int index) {
-        final List<Score> scores = allScores.get(index);
+    private String getFinalFrameScore(final List<List<Score>> allScores, final int frameOrderNumber) {
+        final List<Score> scores = allScores.get(frameOrderNumber);
         if (isReadyContains(scores) || isNotMissContains(scores)) {
             return String.valueOf(STOP_SCORE);
         }
@@ -46,18 +46,18 @@ public class Referee {
                 .sum();
     }
     
-    private boolean isExceedIndex(final int index, final List<List<Score>> allScores) {
-        return allScores.size() <= index;
+    private boolean isExceedFrameOrderNumber(final int frameOrderNumber, final List<List<Score>> allScores) {
+        return allScores.size() <= frameOrderNumber;
     }
     
-    private boolean isFinalFrame(final PlayerDTO playerDTO, final int index) {
+    private boolean isFinalFrame(final PlayerDTO playerDTO, final int frameOrderNumber) {
         final List<Frame> frames = playerDTO.getFrames();
-        final Frame frame = frames.get(index);
+        final Frame frame = frames.get(frameOrderNumber);
         return !frame.isNormalFrame();
     }
     
-    private String parseCumulativeScore(final int index, final List<List<Score>> allScores) {
-        cumulativeScore += getCurrentScore(allScores, index);
+    private String parseCumulativeScore(final int frameOrderNumber, final List<List<Score>> allScores) {
+        cumulativeScore += getCurrentScore(allScores, frameOrderNumber);
         if (isCalculateStop) {
             return String.valueOf(STOP_SCORE);
         }
@@ -71,20 +71,20 @@ public class Referee {
                 .collect(Collectors.toList());
     }
     
-    private int getCurrentScore(final List<List<Score>> allScores, final int index) {
-        final List<Score> currentScores = checkCalculateStop(allScores, index);
+    private int getCurrentScore(final List<List<Score>> allScores, final int frameOrderNumber) {
+        final List<Score> currentScores = checkCalculateStop(allScores, frameOrderNumber);
         if (isStrike(currentScores)) {
-            return MAX_PER_SCORE + getTwoNextScore(allScores, index + 1);
+            return MAX_PER_SCORE + getTwoNextScore(allScores, frameOrderNumber + 1);
         }
         
         if (isSpare(currentScores)) {
-            return MAX_PER_SCORE + getOneNextScore(allScores, index + 1);
+            return MAX_PER_SCORE + getOneNextScore(allScores, frameOrderNumber + 1);
         }
         return getSumScores(currentScores, currentScores.size());
     }
     
-    private List<Score> checkCalculateStop(final List<List<Score>> allScores, final int index) {
-        final List<Score> currentScores = allScores.get(index);
+    private List<Score> checkCalculateStop(final List<List<Score>> allScores, final int frameOrderNumber) {
+        final List<Score> currentScores = allScores.get(frameOrderNumber);
         if (isReadyContains(currentScores) || isNormal(currentScores)) {
             isCalculateStop = true;
         }
@@ -110,17 +110,17 @@ public class Referee {
         return currentScores.size() == 2 && currentScores.get(1).isSpare();
     }
     
-    private int getTwoNextScore(final List<List<Score>> allScores, final int index) {
-        final List<Score> nextScores = checkTwoNextCalculateStop(allScores, index);
+    private int getTwoNextScore(final List<List<Score>> allScores, final int frameOrderNumber) {
+        final List<Score> nextScores = checkTwoNextCalculateStop(allScores, frameOrderNumber);
         if (nextScores.size() >= 2) {
             return getSumScores(nextScores, 2);
         }
         
-        return nextScores.get(0).getFallenPins() + getOneNextScore(allScores, index + 1);
+        return nextScores.get(0).getFallenPins() + getOneNextScore(allScores, frameOrderNumber + 1);
     }
     
-    private List<Score> checkTwoNextCalculateStop(final List<List<Score>> allScores, final int index) {
-        final List<Score> currentScores = allScores.get(index);
+    private List<Score> checkTwoNextCalculateStop(final List<List<Score>> allScores, final int frameOrderNumber) {
+        final List<Score> currentScores = allScores.get(frameOrderNumber);
         if (isTwoReadyContains(currentScores)) {
             isCalculateStop = true;
         }
@@ -135,18 +135,18 @@ public class Referee {
                 .anyMatch(score -> score == STOP_SCORE);
     }
     
-    private int getOneNextScore(final List<List<Score>> allScores, final int index) {
-        final List<Score> nextScores = checkOneNextCalculateStop(allScores, index);
+    private int getOneNextScore(final List<List<Score>> allScores, final int frameOrderNumber) {
+        final List<Score> nextScores = checkOneNextCalculateStop(allScores, frameOrderNumber);
         return nextScores.get(0).getFallenPins();
     }
     
-    private List<Score> checkOneNextCalculateStop(final List<List<Score>> allScores, final int index) {
-        if (isExceedIndex(index, allScores) || isReady(allScores.get(index))) {
+    private List<Score> checkOneNextCalculateStop(final List<List<Score>> allScores, final int frameOrderNumber) {
+        if (isExceedFrameOrderNumber(frameOrderNumber, allScores) || isReady(allScores.get(frameOrderNumber))) {
             isCalculateStop = true;
             return List.of(new Score(STOP_SCORE));
         }
         
-        return allScores.get(index);
+        return allScores.get(frameOrderNumber);
     }
     
     private boolean isReady(final List<Score> currentScores) {

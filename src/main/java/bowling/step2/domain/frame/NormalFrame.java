@@ -46,6 +46,12 @@ public class NormalFrame implements Frame {
     }
     
     @Override
+    public int getOneNextScore() {
+        final List<Score> scores = state.getScores();
+        return scores.get(0).getFallenPins();
+    }
+    
+    @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
