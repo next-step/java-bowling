@@ -134,4 +134,45 @@ public class FinalFrameTest {
         frame.bowl(5);
         assertThat(frame.getScores()).isEqualTo(Arrays.asList(new Score(5), new Score(5), new Score(5)));
     }
+    
+    @Test
+    @DisplayName("다음 프레임의 1개의 점수 구하기 - 레디")
+    void get_one_next_score_ready() {
+        int oneNextScore = finalFrame.getOneNextScore();
+        assertThat(oneNextScore).isEqualTo(-1);
+    }
+    
+    @Test
+    @DisplayName("다음 프레임의 1개의 점수 구하기 - 노멀")
+    void get_one_next_score_normal() {
+        finalFrame.bowl(3);
+        int oneNextScore = finalFrame.getOneNextScore();
+        assertThat(oneNextScore).isEqualTo(3);
+    }
+    
+    @Test
+    @DisplayName("다음 프레임의 1개의 점수 구하기 - 미스")
+    void get_one_next_score_miss() {
+        finalFrame.bowl(5);
+        finalFrame.bowl(3);
+        int oneNextScore = finalFrame.getOneNextScore();
+        assertThat(oneNextScore).isEqualTo(5);
+    }
+    
+    @Test
+    @DisplayName("다음 프레임의 1개의 점수 구하기 - 스페어")
+    void get_one_next_score_spare() {
+        finalFrame.bowl(3);
+        finalFrame.bowl(7);
+        int oneNextScore = finalFrame.getOneNextScore();
+        assertThat(oneNextScore).isEqualTo(3);
+    }
+    
+    @Test
+    @DisplayName("다음 프레임의 1개의 점수 구하기 - 스트라이크")
+    void get_one_next_score_strike() {
+        finalFrame.bowl(10);
+        int oneNextScore = finalFrame.getOneNextScore();
+        assertThat(oneNextScore).isEqualTo(10);
+    }
 }
