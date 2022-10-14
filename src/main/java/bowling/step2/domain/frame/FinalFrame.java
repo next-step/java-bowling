@@ -102,8 +102,7 @@ public class FinalFrame implements Frame {
     private boolean isTwoScoreContainsReady() {
         return getScores().stream()
                 .limit(2)
-                .mapToInt(Score::getFallenPins)
-                .anyMatch(score -> score == -1);
+                .anyMatch(Score::isReady);
     }
     
     private int getSumTwoScore() {

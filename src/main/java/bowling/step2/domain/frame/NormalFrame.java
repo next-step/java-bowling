@@ -56,19 +56,27 @@ public class NormalFrame implements Frame {
     @Override
     public int getTwoNextScore() {
         if (state.isFinished()) {
-            if (state.isStrike()) {
-                final int oneNextScore = nextFrame.getOneNextScore();
-                if (oneNextScore == -1) {
-                    return -1;
-                }
-                
-                return getSumScore() + oneNextScore;
-            }
-            
-            return getSumScore();
+            return sumTwoNextScore();
         }
         
-        return -1;
+        return READY_SCORE;
+    }
+    
+    private int sumTwoNextScore() {
+        if (state.isStrike()) {
+            return containsStrikeTwoNextScore();
+        }
+        
+        return getSumScore();
+    }
+    
+    private int containsStrikeTwoNextScore() {
+        final int oneNextScore = nextFrame.getOneNextScore();
+        if (oneNextScore == READY_SCORE) {
+            return READY_SCORE;
+        }
+        
+        return getSumScore() + oneNextScore;
     }
     
     private int getSumScore() {
