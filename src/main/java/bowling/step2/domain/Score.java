@@ -20,10 +20,6 @@ public class Score {
         this.isSpare = isSpare;
     }
     
-    public int add(final int fallenPins) {
-        return this.fallenPins + fallenPins;
-    }
-    
     public boolean isAllFallenPins(final int fallenPins) {
         if (this.fallenPins + fallenPins > COUNT_OF_MAX_PINS) {
             throw new PinCountExceededException();
