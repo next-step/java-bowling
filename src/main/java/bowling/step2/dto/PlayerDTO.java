@@ -3,10 +3,6 @@ package bowling.step2.dto;
 import bowling.step2.domain.Frames;
 import bowling.step2.domain.Player;
 import bowling.step2.domain.PlayerName;
-import bowling.step2.domain.frame.Frame;
-
-import java.util.Collections;
-import java.util.List;
 
 public class PlayerDTO {
     private final String playerName;

@@ -41,7 +41,7 @@ class FramesTest {
         frames.bowl(new CountOfFallenPinsDTO("8")); // 110
         frames.bowl(new CountOfFallenPinsDTO("10")); // 133
         frames.bowl(new CountOfFallenPinsDTO("10")); // 153
-    
+        
         assertThat(frames.getCumulativeScores()).isEqualTo(Arrays.asList(20, 44, 64, 79, 87, 90, 110, -1, -1, -1));
         
         frames.bowl(new CountOfFallenPinsDTO("3"));

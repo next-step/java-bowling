@@ -1,7 +1,6 @@
 package bowling.step2.domain;
 
 import bowling.step2.domain.exception.PinCountExceededException;
-import org.hibernate.procedure.spi.ParameterRegistrationImplementor;
 
 import java.util.Objects;
 
@@ -31,10 +30,6 @@ public class Score {
         }
         
         return this.fallenPins + fallenPins == COUNT_OF_MAX_PINS;
-    }
-    
-    public boolean isStrike() {
-        return fallenPins == COUNT_OF_MAX_PINS;
     }
     
     public boolean isSpare() {

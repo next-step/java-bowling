@@ -48,7 +48,7 @@ public class Frames {
     public List<Integer> getCumulativeScores() {
         List<Integer> cumulativeScores = new ArrayList<>();
         addCumulativeScores(cumulativeScores);
-    
+        
         return cumulativeScores;
     }
     
