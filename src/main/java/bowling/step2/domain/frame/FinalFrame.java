@@ -88,6 +88,28 @@ public class FinalFrame implements Frame {
     
     @Override
     public int getTwoNextScore() {
-        return 0;
+        if (isTwoScoreContainsReady() || isFirstStateNormal()) {
+            return -1;
+        }
+        
+        return getSumTwoScore();
+    }
+    
+    private boolean isFirstStateNormal() {
+        return getScores().size() == 1 && !states.getFirst().isStrike();
+    }
+    
+    private boolean isTwoScoreContainsReady() {
+        return getScores().stream()
+                .limit(2)
+                .mapToInt(Score::getFallenPins)
+                .anyMatch(score -> score == -1);
+    }
+    
+    private int getSumTwoScore() {
+        return getScores().stream()
+                .limit(2)
+                .mapToInt(Score::getFallenPins)
+                .sum();
     }
 }

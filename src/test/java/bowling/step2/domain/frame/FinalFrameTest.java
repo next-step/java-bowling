@@ -175,4 +175,83 @@ public class FinalFrameTest {
         int oneNextScore = finalFrame.getOneNextScore();
         assertThat(oneNextScore).isEqualTo(10);
     }
+    
+    @Test
+    @DisplayName("다음 프레임의 2개의 점수 구하기 - 레디")
+    void get_two_next_score_ready() {
+        int twoNextScore = finalFrame.getTwoNextScore();
+        assertThat(twoNextScore).isEqualTo(-1);
+    }
+    
+    @Test
+    @DisplayName("다음 프레임의 2개의 점수 구하기 - 노멀")
+    void get_two_next_score_normal() {
+        finalFrame.bowl(3);
+        int twoNextScore = finalFrame.getTwoNextScore();
+        assertThat(twoNextScore).isEqualTo(-1);
+    }
+    
+    @Test
+    @DisplayName("다음 프레임의 2개의 점수 구하기 - 미스")
+    void get_two_next_score_miss() {
+        finalFrame.bowl(5);
+        finalFrame.bowl(3);
+        int twoNextScore = finalFrame.getTwoNextScore();
+        assertThat(twoNextScore).isEqualTo(8);
+    }
+    
+    @Test
+    @DisplayName("다음 프레임의 2개의 점수 구하기 - 스페어")
+    void get_two_next_score_spare() {
+        finalFrame.bowl(3);
+        finalFrame.bowl(7);
+        int twoNextScore = finalFrame.getTwoNextScore();
+        assertThat(twoNextScore).isEqualTo(10);
+    }
+    
+    @Test
+    @DisplayName("다음 프레임의 2개의 점수 구하기 - 스트라이크 => 레디")
+    void get_two_next_score_strike_ready() {
+        finalFrame.bowl(10);
+        int twoNextScore = finalFrame.getTwoNextScore();
+        assertThat(twoNextScore).isEqualTo(-1);
+    }
+    
+    @Test
+    @DisplayName("다음 프레임의 2개의 점수 구하기 - 스트라이크 => 노멀")
+    void get_two_next_score_strike_normal() {
+        finalFrame.bowl(10);
+        finalFrame.bowl(5);
+        int twoNextScore = finalFrame.getTwoNextScore();
+        assertThat(twoNextScore).isEqualTo(15);
+    }
+    
+    @Test
+    @DisplayName("다음 프레임의 2개의 점수 구하기 - 스트라이크 => 미스")
+    void get_two_next_score_strike_miss() {
+        finalFrame.bowl(10);
+        finalFrame.bowl(5);
+        finalFrame.bowl(4);
+        int twoNextScore = finalFrame.getTwoNextScore();
+        assertThat(twoNextScore).isEqualTo(15);
+    }
+    
+    @Test
+    @DisplayName("다음 프레임의 2개의 점수 구하기 - 스트라이크 => 스페어")
+    void get_two_next_score_strike_spare() {
+        finalFrame.bowl(10);
+        finalFrame.bowl(5);
+        finalFrame.bowl(5);
+        int twoNextScore = finalFrame.getTwoNextScore();
+        assertThat(twoNextScore).isEqualTo(15);
+    }
+    
+    @Test
+    @DisplayName("다음 프레임의 2개의 점수 구하기 - 스트라이크 => 스트라이크")
+    void get_two_next_score_strike_strike() {
+        finalFrame.bowl(10);
+        finalFrame.bowl(10);
+        int twoNextScore = finalFrame.getTwoNextScore();
+        assertThat(twoNextScore).isEqualTo(20);
+    }
 }
