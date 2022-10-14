@@ -17,4 +17,9 @@ abstract public class Finished implements State {
     public boolean isSpare() {
         return false;
     }
+    
+    @Override
+    public boolean isStrike() {
+        return false;
+    }
 }

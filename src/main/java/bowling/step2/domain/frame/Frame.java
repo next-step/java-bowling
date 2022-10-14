@@ -12,4 +12,6 @@ public interface Frame {
     List<Score> getScores();
     
     int getOneNextScore();
+    
+    int getTwoNextScore();
 }

@@ -85,4 +85,9 @@ public class FinalFrame implements Frame {
     public int getOneNextScore() {
         return getScores().get(0).getFallenPins();
     }
+    
+    @Override
+    public int getTwoNextScore() {
+        return 0;
+    }
 }

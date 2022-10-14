@@ -9,8 +9,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
-    private State state;
     private final FrameOrderNumber frameOrderNumber;
+    private State state;
+    private Frame nextFrame;
     
     
     public NormalFrame(int frameOrderNumber) {
@@ -22,7 +23,8 @@ public class NormalFrame implements Frame {
     public Frame bowl(final int fallenPins) {
         this.state = this.state.bowl(fallenPins);
         if (state.isFinished()) {
-            return nextFrame();
+            nextFrame = nextFrame();
+            return nextFrame;
         }
         
         return this;
@@ -49,6 +51,30 @@ public class NormalFrame implements Frame {
     public int getOneNextScore() {
         final List<Score> scores = state.getScores();
         return scores.get(0).getFallenPins();
+    }
+    
+    @Override
+    public int getTwoNextScore() {
+        if (state.isFinished()) {
+            if (state.isStrike()) {
+                final int oneNextScore = nextFrame.getOneNextScore();
+                if (oneNextScore == -1) {
+                    return -1;
+                }
+                
+                return getSumScore() + oneNextScore;
+            }
+            
+            return getSumScore();
+        }
+        
+        return -1;
+    }
+    
+    private int getSumScore() {
+        return getScores().stream()
+                .mapToInt(Score::getFallenPins)
+                .sum();
     }
     
     @Override

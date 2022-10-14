@@ -9,4 +9,9 @@ public class Strike extends Finished {
     public List<Score> getScores() {
         return List.of(new Score(COUNT_OF_MAX_PINS));
     }
+    
+    @Override
+    public boolean isStrike() {
+        return true;
+    }
 }

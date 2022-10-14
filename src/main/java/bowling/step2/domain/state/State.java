@@ -14,4 +14,6 @@ public interface State {
     boolean isSpare();
     
     List<Score> getScores();
+    
+    boolean isStrike();
 }

@@ -10,4 +10,9 @@ abstract public class Running implements State {
     public boolean isSpare() {
         return false;
     }
+    
+    @Override
+    public boolean isStrike() {
+        return false;
+    }
 }
