@@ -81,19 +81,21 @@ public class FinalFrame implements Frame {
         return Collections.unmodifiableList(scores);
     }
     
+    @Override
     public int getOneNextScore() {
         return getScores().get(0).getFallenPins();
     }
     
+    @Override
     public int getTwoNextScore() {
         if (isTwoScoreContainsReady() || isFirstStateNormal()) {
             return -1;
         }
         
-        return getSumTwoScore();
+        return getSumScore(2);
     }
     
-    private boolean isFirstStateNormal() {
+    public boolean isFirstStateNormal() {
         return getScores().size() == 1 && !states.getFirst().isStrike();
     }
     
@@ -103,15 +105,24 @@ public class FinalFrame implements Frame {
                 .anyMatch(Score::isReady);
     }
     
-    private int getSumTwoScore() {
+    private int getSumScore(int limit) {
         return getScores().stream()
-                .limit(2)
                 .mapToInt(Score::getFallenPins)
+                .limit(limit)
                 .sum();
     }
     
     @Override
     public int calculateCumulativeScore(final int cumulativeScore) {
-        return 0;
+        if (isNotReadyContains() && isCurrentFrameFinished(states.getLast())) {
+            return cumulativeScore + getSumScore(getScores().size());
+        }
+        
+        return READY_SCORE;
+    }
+    
+    private boolean isNotReadyContains() {
+        return getScores().stream()
+                .noneMatch(Score::isReady);
     }
 }
