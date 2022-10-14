@@ -111,4 +111,9 @@ public class FinalFrame implements Frame {
                 .mapToInt(Score::getFallenPins)
                 .sum();
     }
+    
+    @Override
+    public int calculateCumulativeScore(final int cumulativeScore) {
+        return 0;
+    }
 }

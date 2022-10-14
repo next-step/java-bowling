@@ -16,4 +16,6 @@ public interface Frame {
     int getOneNextScore();
     
     int getTwoNextScore();
+    
+    int calculateCumulativeScore(final int cumulativeScore);
 }

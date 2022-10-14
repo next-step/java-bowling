@@ -86,6 +86,33 @@ public class NormalFrame implements Frame {
     }
     
     @Override
+    public int calculateCumulativeScore(final int cumulativeScore) {
+        if (state.isFinished()) {
+            if (state.isSpare() || state.isStrike()) {
+                final int oneNextScore = nextFrame.getOneNextScore();
+                if (oneNextScore == READY_SCORE) {
+                    return READY_SCORE;
+                }
+                
+                if (state.isSpare()) {
+                    return cumulativeScore + getSumScore() + oneNextScore;
+                }
+    
+                final int twoNextScore = nextFrame.getTwoNextScore();
+                if (twoNextScore == READY_SCORE) {
+                    return READY_SCORE;
+                }
+                
+                return cumulativeScore + getSumScore() + twoNextScore;
+            }
+            
+            return cumulativeScore + getSumScore();
+        }
+        
+        return -1;
+    }
+    
+    @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

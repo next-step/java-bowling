@@ -186,4 +186,167 @@ public class NormalFrameTest {
         int twoNextScore = normalFrame.getTwoNextScore();
         assertThat(twoNextScore).isEqualTo(20);
     }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 - 레디")
+    void cumulative_score_ready() {
+        int twoNextScore = normalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(-1);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 - 노멀")
+    void cumulative_score_normal() {
+        normalFrame.bowl(6);
+        int twoNextScore = normalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(-1);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 - 미스")
+    void cumulative_score_miss() {
+        normalFrame.bowl(6);
+        normalFrame.bowl(3);
+        int twoNextScore = normalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(14);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 - 스페어 => 레디")
+    void cumulative_score_spare_ready() {
+        normalFrame.bowl(6);
+        normalFrame.bowl(4);
+        int twoNextScore = normalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(-1);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 - 스페어 => 노멀")
+    void cumulative_score_spare_normal() {
+        normalFrame.bowl(6);
+        final Frame nextFrame = normalFrame.bowl(4);
+        nextFrame.bowl(3);
+        int twoNextScore = normalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(18);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 - 스페어 => 미스")
+    void cumulative_score_spare_miss() {
+        normalFrame.bowl(6);
+        final Frame nextFrame = normalFrame.bowl(4);
+        nextFrame.bowl(3);
+        nextFrame.bowl(5);
+        int twoNextScore = normalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(18);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 - 스페어 => 스페어")
+    void cumulative_score_spare_spare() {
+        normalFrame.bowl(6);
+        final Frame nextFrame = normalFrame.bowl(4);
+        nextFrame.bowl(3);
+        nextFrame.bowl(7);
+        int twoNextScore = normalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(18);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 - 스페어 => 스트라이크")
+    void cumulative_score_spare_strike() {
+        normalFrame.bowl(6);
+        final Frame nextFrame = normalFrame.bowl(4);
+        nextFrame.bowl(10);
+        int twoNextScore = normalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(25);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 - 스트라이크 => 레디")
+    void cumulative_score_strike_ready() {
+        normalFrame.bowl(10);
+        int twoNextScore = normalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(-1);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 - 스트라이크 => 노멀")
+    void cumulative_score_strike_normal() {
+        final Frame nextFrame = normalFrame.bowl(10);
+        nextFrame.bowl(6);
+        int twoNextScore = normalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(-1);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 - 스트라이크 => 미스")
+    void cumulative_score_strike_miss() {
+        final Frame nextFrame = normalFrame.bowl(10);
+        nextFrame.bowl(7);
+        nextFrame.bowl(2);
+        int twoNextScore = normalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(24);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 - 스트라이크 => 스페어")
+    void cumulative_score_strike_spare() {
+        final Frame nextFrame = normalFrame.bowl(10);
+        nextFrame.bowl(7);
+        nextFrame.bowl(3);
+        int twoNextScore = normalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(25);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 - 스트라이크 => 스트라이크 => 레디")
+    void cumulative_score_strike_strike_ready() {
+        final Frame nextFrame = normalFrame.bowl(10);
+        nextFrame.bowl(10);
+        int twoNextScore = normalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(-1);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 - 스트라이크 => 스트라이크 => 노멀")
+    void cumulative_score_strike_strike_normal() {
+        final Frame nextFrame = normalFrame.bowl(10);
+        final Frame twoNextFrame = nextFrame.bowl(10);
+        twoNextFrame.bowl(3);
+        int twoNextScore = normalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(28);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 - 스트라이크 => 스트라이크 => 미스")
+    void cumulative_score_strike_strike_miss() {
+        final Frame nextFrame = normalFrame.bowl(10);
+        final Frame twoNextFrame = nextFrame.bowl(10);
+        twoNextFrame.bowl(3);
+        twoNextFrame.bowl(5);
+        int twoNextScore = normalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(28);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 - 스트라이크 => 스트라이크 => 스페어")
+    void cumulative_score_strike_strike_spare() {
+        final Frame nextFrame = normalFrame.bowl(10);
+        final Frame twoNextFrame = nextFrame.bowl(10);
+        twoNextFrame.bowl(3);
+        twoNextFrame.bowl(7);
+        int twoNextScore = normalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(28);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 - 스트라이크 => 스트라이크 => 스트라이크")
+    void cumulative_score_strike_strike_strike() {
+        final Frame nextFrame = normalFrame.bowl(10);
+        final Frame twoNextFrame = nextFrame.bowl(10);
+        twoNextFrame.bowl(10);
+        int twoNextScore = normalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(35);
+    }
 }
