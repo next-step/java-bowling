@@ -1,5 +1,6 @@
 package bowling.step2.domain.frame;
 
+import bowling.step2.domain.Frames;
 import bowling.step2.domain.Player;
 import bowling.step2.domain.Score;
 import bowling.step2.dto.CountOfFallenPinsDTO;
@@ -24,7 +25,7 @@ public class NormalFrameTest {
         
         Player player = new Player("SJH");
         IntStream.rangeClosed(1, 8).forEach(count -> player.bowl(new CountOfFallenPinsDTO("10")));
-        final List<Frame> frames = new PlayerDTO(player).getFrames();
+        final List<Frame> frames = new PlayerDTO(player).getFrames().getFrames();
         ninthNormalFrame = frames.get(frames.size() - 1);
     }
     

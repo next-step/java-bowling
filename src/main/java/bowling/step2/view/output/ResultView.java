@@ -1,6 +1,6 @@
 package bowling.step2.view.output;
 
-import bowling.step2.domain.Referee;
+import bowling.step2.domain.Frames;
 import bowling.step2.domain.Score;
 import bowling.step2.domain.frame.Frame;
 import bowling.step2.dto.PlayerDTO;
@@ -40,25 +40,25 @@ public class ResultView {
     }
     
     private static String getCumulativeScoreDisplayFormat(final PlayerDTO playerDTO) {
-        final Referee referee = new Referee();
-        return IntStream.range(0, MAX_COUNT_OF_FRAME)
-                .mapToObj(index -> referee.calculateCumulativeScore(playerDTO, index))
+        final List<Integer> cumulativeScores = playerDTO.getFrames().getCumulativeScores();
+        return cumulativeScores.stream()
                 .map(ResultView::parseCumulativeScore)
                 .map(ResultView::parseDisplayPrintFormat)
                 .collect(Collectors.joining(DELIMITER, DELIMITER + SEVEN_SPACE + DELIMITER, DELIMITER));
     }
     
-    private static String parseCumulativeScore(final String score) {
-        if (score.equals(String.valueOf(READY_SCORE))) {
+    private static String parseCumulativeScore(final int score) {
+        if (score == READY_SCORE) {
             return EMPTY;
         }
         
-        return score;
+        return String.valueOf(score);
     }
     
     private static String getPlayerResultDisplayFormat(final PlayerDTO playerDTO) {
+        final Frames frames = playerDTO.getFrames();
         return IntStream.range(0, MAX_COUNT_OF_FRAME)
-                .mapToObj(index -> getFrameDisplayFormat(playerDTO.getFrames(), index))
+                .mapToObj(index -> getFrameDisplayFormat(frames.getFrames(), index))
                 .collect(Collectors.joining(DELIMITER, DELIMITER + parseDisplayPrintFormat(playerDTO.getPlayerName()) + DELIMITER, DELIMITER));
     }
     

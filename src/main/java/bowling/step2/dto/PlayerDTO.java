@@ -10,22 +10,21 @@ import java.util.List;
 
 public class PlayerDTO {
     private final String playerName;
-    private final List<Frame> frames;
+    private final Frames frames;
     
     
     public PlayerDTO(final Player player) {
         final PlayerName playerName = player.getPlayerName();
         this.playerName = playerName.getPlayerName();
         
-        final Frames frames = player.getFrames();
-        this.frames = frames.getFrames();
+        this.frames = player.getFrames();
     }
     
     public String getPlayerName() {
         return playerName;
     }
     
-    public List<Frame> getFrames() {
-        return Collections.unmodifiableList(frames);
+    public Frames getFrames() {
+        return frames;
     }
 }
