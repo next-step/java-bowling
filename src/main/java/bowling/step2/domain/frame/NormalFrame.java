@@ -86,28 +86,40 @@ public class NormalFrame implements Frame {
     @Override
     public int calculateCumulativeScore(final int cumulativeScore) {
         if (state.isFinished()) {
-            if (state.isSpare() || state.isStrike()) {
-                final int oneNextScore = nextFrame.getOneNextScore();
-                if (oneNextScore == READY_SCORE) {
-                    return READY_SCORE;
-                }
-                
-                if (state.isSpare()) {
-                    return cumulativeScore + getSumScore() + oneNextScore;
-                }
-    
-                final int twoNextScore = nextFrame.getTwoNextScore();
-                if (twoNextScore == READY_SCORE) {
-                    return READY_SCORE;
-                }
-                
-                return cumulativeScore + getSumScore() + twoNextScore;
-            }
-            
-            return cumulativeScore + getSumScore();
+            return sumCumulativeScore(cumulativeScore);
         }
         
-        return -1;
+        return READY_SCORE;
+    }
+    
+    private int sumCumulativeScore(final int cumulativeScore) {
+        if (state.isSpare()) {
+            return getSpareScore(cumulativeScore);
+        }
+        
+        if (state.isStrike()) {
+            return getStrikeScore(cumulativeScore);
+        }
+        
+        return cumulativeScore + getSumScore();
+    }
+    
+    private int getSpareScore(final int cumulativeScore) {
+        final int oneNextScore = nextFrame.getOneNextScore();
+        if (oneNextScore == READY_SCORE) {
+            return READY_SCORE;
+        }
+        
+        return cumulativeScore + getSumScore() + oneNextScore;
+    }
+    
+    private int getStrikeScore(final int cumulativeScore) {
+        final int twoNextScore = nextFrame.getTwoNextScore();
+        if (twoNextScore == READY_SCORE) {
+            return READY_SCORE;
+        }
+        
+        return cumulativeScore + getSumScore() + twoNextScore;
     }
     
     @Override
