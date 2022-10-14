@@ -1,21 +1,31 @@
 package bowling.step2.domain.frame;
 
+import bowling.step2.domain.Player;
 import bowling.step2.domain.Score;
+import bowling.step2.dto.CountOfFallenPinsDTO;
+import bowling.step2.dto.PlayerDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class NormalFrameTest {
     public Frame normalFrame;
+    public Frame ninthNormalFrame;
     
     @BeforeEach
     void setUp() {
         normalFrame = new NormalFrame(1);
+        
+        Player player = new Player("SJH");
+        IntStream.rangeClosed(1, 8).forEach(count -> player.bowl(new CountOfFallenPinsDTO("10")));
+        final List<Frame> frames = new PlayerDTO(player).getFrames();
+        ninthNormalFrame = frames.get(frames.size() - 1);
     }
     
     @Test
@@ -347,6 +357,169 @@ public class NormalFrameTest {
         final Frame twoNextFrame = nextFrame.bowl(10);
         twoNextFrame.bowl(10);
         int twoNextScore = normalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(35);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 9프레임 - 레디")
+    void cumulative_score_ready_ninth_frame() {
+        int twoNextScore = ninthNormalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(-1);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 9프레임 - 노멀")
+    void cumulative_score_normal_ninth_frame() {
+        ninthNormalFrame.bowl(6);
+        int twoNextScore = ninthNormalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(-1);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 9프레임 - 미스")
+    void cumulative_score_miss_ninth_frame() {
+        ninthNormalFrame.bowl(6);
+        ninthNormalFrame.bowl(3);
+        int twoNextScore = ninthNormalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(14);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 9프레임 - 스페어 => 레디")
+    void cumulative_score_spare_ready_ninth_frame() {
+        ninthNormalFrame.bowl(6);
+        ninthNormalFrame.bowl(4);
+        int twoNextScore = ninthNormalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(-1);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 9프레임 - 스페어 => 노멀")
+    void cumulative_score_spare_normal_ninth_frame() {
+        ninthNormalFrame.bowl(6);
+        final Frame nextFrame = ninthNormalFrame.bowl(4);
+        nextFrame.bowl(3);
+        int twoNextScore = ninthNormalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(18);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 9프레임 - 스페어 => 미스")
+    void cumulative_score_spare_miss_ninth_frame() {
+        ninthNormalFrame.bowl(6);
+        final Frame nextFrame = ninthNormalFrame.bowl(4);
+        nextFrame.bowl(3);
+        nextFrame.bowl(5);
+        int twoNextScore = ninthNormalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(18);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 9프레임 - 스페어 => 스페어")
+    void cumulative_score_spare_spare_ninth_frame() {
+        ninthNormalFrame.bowl(6);
+        final Frame nextFrame = ninthNormalFrame.bowl(4);
+        nextFrame.bowl(3);
+        nextFrame.bowl(7);
+        int twoNextScore = ninthNormalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(18);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 9프레임 - 스페어 => 스트라이크")
+    void cumulative_score_spare_strike_ninth_frame() {
+        ninthNormalFrame.bowl(6);
+        final Frame nextFrame = ninthNormalFrame.bowl(4);
+        nextFrame.bowl(10);
+        int twoNextScore = ninthNormalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(25);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 9프레임 - 스트라이크 => 레디")
+    void cumulative_score_strike_ready_ninth_frame() {
+        ninthNormalFrame.bowl(10);
+        int twoNextScore = ninthNormalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(-1);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 9프레임 - 스트라이크 => 노멀")
+    void cumulative_score_strike_normal_ninth_frame() {
+        final Frame nextFrame = ninthNormalFrame.bowl(10);
+        nextFrame.bowl(6);
+        int twoNextScore = ninthNormalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(-1);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 9프레임 - 스트라이크 => 미스")
+    void cumulative_score_strike_miss_ninth_frame() {
+        final Frame nextFrame = ninthNormalFrame.bowl(10);
+        nextFrame.bowl(7);
+        nextFrame.bowl(2);
+        int twoNextScore = ninthNormalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(24);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 9프레임 - 스트라이크 => 스페어")
+    void cumulative_score_strike_spare_ninth_frame() {
+        final Frame nextFrame = ninthNormalFrame.bowl(10);
+        nextFrame.bowl(7);
+        nextFrame.bowl(3);
+        int twoNextScore = ninthNormalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(25);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 9프레임 - 스트라이크 => 스트라이크 => 레디")
+    void cumulative_score_strike_strike_ready_ninth_frame() {
+        final Frame nextFrame = ninthNormalFrame.bowl(10);
+        nextFrame.bowl(10);
+        int twoNextScore = ninthNormalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(-1);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 9프레임 - 스트라이크 => 스트라이크 => 노멀")
+    void cumulative_score_strike_strike_normal_ninth_frame() {
+        final Frame nextFrame = ninthNormalFrame.bowl(10);
+        nextFrame.bowl(10);
+        nextFrame.bowl(3);
+        int twoNextScore = ninthNormalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(28);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 9프레임 - 스트라이크 => 스트라이크 => 미스")
+    void cumulative_score_strike_strike_miss_ninth_frame() {
+        final Frame nextFrame = ninthNormalFrame.bowl(10);
+        nextFrame.bowl(10);
+        nextFrame.bowl(3);
+        nextFrame.bowl(5);
+        int twoNextScore = ninthNormalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(28);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 9프레임 - 스트라이크 => 스트라이크 => 스페어")
+    void cumulative_score_strike_strike_spare_ninth_frame() {
+        final Frame nextFrame = ninthNormalFrame.bowl(10);
+        nextFrame.bowl(10);
+        nextFrame.bowl(3);
+        nextFrame.bowl(7);
+        int twoNextScore = ninthNormalFrame.calculateCumulativeScore(5);
+        assertThat(twoNextScore).isEqualTo(28);
+    }
+    
+    @Test
+    @DisplayName("누적 점수 구하기 9프레임 - 스트라이크 => 스트라이크 => 스트라이크")
+    void cumulative_score_strike_strike_strike_ninth_frame() {
+        final Frame nextFrame = ninthNormalFrame.bowl(10);
+        nextFrame.bowl(10);
+        nextFrame.bowl(10);
+        int twoNextScore = ninthNormalFrame.calculateCumulativeScore(5);
         assertThat(twoNextScore).isEqualTo(35);
     }
 }

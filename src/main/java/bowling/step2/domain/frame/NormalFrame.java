@@ -47,13 +47,11 @@ public class NormalFrame implements Frame {
         return state.getScores();
     }
     
-    @Override
     public int getOneNextScore() {
         final List<Score> scores = state.getScores();
         return scores.get(0).getFallenPins();
     }
     
-    @Override
     public int getTwoNextScore() {
         if (state.isFinished()) {
             return sumTwoNextScore();

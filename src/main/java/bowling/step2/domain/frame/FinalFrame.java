@@ -81,12 +81,10 @@ public class FinalFrame implements Frame {
         return Collections.unmodifiableList(scores);
     }
     
-    @Override
     public int getOneNextScore() {
         return getScores().get(0).getFallenPins();
     }
     
-    @Override
     public int getTwoNextScore() {
         if (isTwoScoreContainsReady() || isFirstStateNormal()) {
             return -1;
