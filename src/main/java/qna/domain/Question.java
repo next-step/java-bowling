@@ -109,7 +109,7 @@ public class Question extends AbstractEntity {
 
     public List<DeleteHistory> answerHistory() {
         return this.answers.stream()
-                .map((answer) -> DeleteHistory.withAnswer(answer))
+                .map(DeleteHistory::withAnswer)
                 .collect(Collectors.toList());
     }
 }
