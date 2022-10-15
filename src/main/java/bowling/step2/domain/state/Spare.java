@@ -16,11 +16,6 @@ public class Spare extends Finished {
     }
     
     @Override
-    public boolean isSpare() {
-        return true;
-    }
-    
-    @Override
     public List<Score> getScores() {
         return Collections.unmodifiableList(Arrays.asList(firstFallenPins, secondFallenPins));
     }

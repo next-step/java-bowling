@@ -57,8 +57,8 @@ public class FinalFrame implements Frame {
     }
     
     private boolean containsSpare() {
-        return states.stream()
-                .anyMatch(State::isSpare);
+        return getScores().stream()
+                .anyMatch(Score::isSpare);
     }
     
     private boolean isMiss(final State state) {
@@ -96,7 +96,7 @@ public class FinalFrame implements Frame {
     }
     
     public boolean isFirstStateNormal() {
-        return getScores().size() == 1 && !states.getFirst().isStrike();
+        return getScores().size() == 1 && !getScores().get(0).isStrike();
     }
     
     private boolean isTwoScoreContainsReady() {

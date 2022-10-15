@@ -33,12 +33,6 @@ public class SpareTest {
     }
     
     @Test
-    @DisplayName("Spare 인지 확인")
-    void is_spare() {
-        assertThat(spare.isSpare()).isTrue();
-    }
-    
-    @Test
     @DisplayName("점수 확인")
     void display() {
         assertThat(spare.getScores()).isEqualTo(Arrays.asList(new Score(4), new Score(6, true)));

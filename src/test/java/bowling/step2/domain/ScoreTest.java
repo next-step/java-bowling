@@ -40,4 +40,10 @@ class ScoreTest {
     void is_spare() {
         assertThat(new Score(4, true).isSpare()).isTrue();
     }
+    
+    @Test
+    @DisplayName("스트라이크인지 확인")
+    void is_strike() {
+        assertThat(new Score(10).isStrike()).isTrue();
+    }
 }

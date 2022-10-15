@@ -63,11 +63,15 @@ public class NormalFrame implements Frame {
     }
     
     private int sumTwoNextScore() {
-        if (state.isStrike()) {
+        if (isStrike()) {
             return containsStrikeTwoNextScore();
         }
         
         return getSumScore();
+    }
+    
+    private boolean isStrike() {
+        return getScores().get(0).isStrike();
     }
     
     private int containsStrikeTwoNextScore() {
@@ -95,15 +99,19 @@ public class NormalFrame implements Frame {
     }
     
     private int sumCumulativeScore(final int cumulativeScore) {
-        if (state.isSpare()) {
+        if (isSpare()) {
             return getSpareScore(cumulativeScore);
         }
         
-        if (state.isStrike()) {
+        if (isStrike()) {
             return getStrikeScore(cumulativeScore);
         }
         
         return cumulativeScore + getSumScore();
+    }
+    
+    private boolean isSpare() {
+        return getScores().size() >= 2 && getScores().get(1).isSpare();
     }
     
     private int getSpareScore(final int cumulativeScore) {

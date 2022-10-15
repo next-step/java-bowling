@@ -11,9 +11,5 @@ public interface State {
     
     boolean isFinished();
     
-    boolean isSpare();
-    
     List<Score> getScores();
-    
-    boolean isStrike();
 }
