@@ -5,6 +5,7 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -91,5 +92,24 @@ public class Question extends AbstractEntity {
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    public void delete() {
+        this.deleted = true;
+    }
+
+    public boolean canDeleteAnswer(User loginUser) {
+        return this.answers.stream()
+                .allMatch((answer) -> answer.isOwner(loginUser));
+    }
+
+    public void deleteAnswers() {
+        this.answers.forEach(Answer::delete);
+    }
+
+    public List<DeleteHistory> answerHistory() {
+        return this.answers.stream()
+                .map((answer) -> DeleteHistory.withAnswer(answer))
+                .collect(Collectors.toList());
     }
 }
