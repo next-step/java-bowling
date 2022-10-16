@@ -28,7 +28,7 @@ class PlayerNameTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"a#B", "%b^", "ab ", "a b", "1ab"})
+    @ValueSource(strings = {"a#B", "%b^", "ab!", "a b", "1ab"})
     @DisplayName("이름에 알파벳이 아닌 다른 글자가 들어가면 IllegalArgumentException")
     void is_alphabet(String name) {
         //then
