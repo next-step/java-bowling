@@ -97,7 +97,7 @@ public class BowlingGame {
     }
 
     public int getFrameNumber() {
-        return normalFrames.size();
+        return normalFrames.size()+1;
     }
 
     public Score getNow() {
