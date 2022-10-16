@@ -1,32 +1,29 @@
 package bowling.domain.state;
 
-import bowling.domain.Score;
 import bowling.domain.Scores;
 
+public class Miss extends Finished {
 
-public class Strike extends Finished {
-
-    public Strike(Score score) {
-        super(Scores.of(score));
-
-        if(!score.isStrike()){
+    public Miss(Scores scores) {
+        super(scores);
+        if(!scores.isMiss()){
             throw new IllegalArgumentException();
         }
     }
 
     @Override
     public int bonusCount() {
-        return 2;
+        return 0;
     }
 
     @Override
     public boolean canGetBonus() {
-        return true;
+        return false;
     }
 
     @Override
     public BowlingRecordState getBowlingState() {
-        return BowlingRecordState.STRIKE;
+        return BowlingRecordState.MISS;
     }
 
 }

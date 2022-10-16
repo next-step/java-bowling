@@ -1,22 +1,46 @@
 package bowling.domain.state;
 
 import bowling.domain.Score;
+import bowling.domain.Scores;
 
-import java.util.LinkedList;
+import java.util.List;
 
-public abstract class Running implements State{
+public class Running extends Started {
 
-    LinkedList<Score> scores;
-
+    private Scores scores;
 
     public Running(Score score) {
-        this.scores = new LinkedList<>();
-        this.scores.add(score);
+        if(score.isStrike()){
+            throw new IllegalArgumentException();
+        }
+        this.scores = Scores.of(score);
     }
 
     @Override
-    public boolean isFinish() {
-        return false;
+    public State bowl(Score score) {
+       scores.bowl(score);
+        if(scores.isSpare()){
+            return new Spare(scores);
+        }
+
+       if(scores.isMiss()){
+           return new Miss(scores);
+       }
+        throw new IllegalStateException();
     }
 
+    @Override
+    public int getRemainPins(){
+        return scores.getRemainPins();
+    }
+
+    @Override
+    public BowlingRecordState getBowlingState() {
+        return BowlingRecordState.RUNNING;
+    }
+
+    @Override
+    public List<Integer> getRecord() {
+        return scores.getRecord();
+    }
 }
