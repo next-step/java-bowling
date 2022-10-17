@@ -27,7 +27,8 @@ public class BowlingGame {
     public BowlingGame(PlayerName playerName) {
         this.playerName = playerName;
         this.normalFrames = new LinkedList<>();
-        setNormalFrame();
+        setNormalFrames();
+        setFinalFrame();
     }
 
     public void bowl(ScoreStrategy scoreStrategy) {
@@ -39,12 +40,11 @@ public class BowlingGame {
         }
 
         if (normalFramesIsFinished()) {
-            setFinalFrame();
             finalFrame.bowl(now);
             return;
         }
 
-        setNormalFrame();
+        addNormalFrame();
         normalFrames.getLast().bowl(now);
     }
 
@@ -61,8 +61,15 @@ public class BowlingGame {
                 .orElse(10);
     }
 
-    private void setNormalFrame() {
-        if (normalFrames.isEmpty() || normalFrames.getLast().isFinish()) {
+    private void addNormalFrame() {
+        if (normalFrames.getLast().isFinish()) {
+            normalFrames.add(new NormalFrame());
+        }
+    }
+
+
+    private void setNormalFrames() {
+        if (normalFrames.isEmpty()) {
             normalFrames.add(new NormalFrame());
         }
     }
