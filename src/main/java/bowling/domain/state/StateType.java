@@ -7,19 +7,19 @@ public enum StateType {
     STARTED,
     RUNNING;
 
-    public static StateType valueOf(State state){
-        if(state instanceof Strike){
+    public static StateType valueOf(State state) {
+        if (state instanceof Strike) {
             return STRIKE;
         }
-        if(state instanceof Spare){
+        if (state instanceof Spare) {
             return SPARE;
         }
-        if(state instanceof Miss){
+        if (state instanceof Miss) {
             return MISS;
         }
-        if(state instanceof Started){
-            return STARTED;
+        if (state instanceof Running) {
+            return RUNNING;
         }
-        return RUNNING;
+        return STARTED;
     }
 }
