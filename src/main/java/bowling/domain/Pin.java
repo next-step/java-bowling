@@ -1,9 +1,9 @@
 package bowling.domain;
 
-public class Score {
+public class Pin {
     private final int value;
 
-    public Score(int value) {
+    public Pin(int value) {
         if (value > 10 || value < 0) {
             throw new IllegalArgumentException("점수는 0부터 10까지만 입력할 수 있습니다.");
         }
