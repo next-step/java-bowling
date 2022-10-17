@@ -17,9 +17,7 @@ public class PlayerName {
     }
 
     private boolean isNotAlphabet(String name) {
-        return name.trim()
-                .chars()
-                .anyMatch(character -> !Character.isAlphabetic(character));
+        return !name.trim().matches("[a-zA-Z]+");
     }
 
     @Override
