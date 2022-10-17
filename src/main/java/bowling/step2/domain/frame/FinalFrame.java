@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class FinalFrame implements Frame {
     private static final int COUNT_OF_MAX_BOWL = 3;
@@ -53,12 +54,13 @@ public class FinalFrame implements Frame {
     }
     
     private boolean isFinalBonusBowl() {
-        return (states.size() == 2 && containsSpare()) || (states.size() >= COUNT_OF_MAX_BOWL);
+        return (states.size() >= 2 && isContainsSpare()) || (states.size() >= COUNT_OF_MAX_BOWL);
     }
     
-    private boolean containsSpare() {
-        return getScores().stream()
-                .anyMatch(Score::isSpare);
+    private boolean isContainsSpare() {
+        final List<Score> scores = getScores();
+        return IntStream.range(0, scores.size() - 1)
+                .anyMatch(index -> scores.get(index).getFallenPins() + scores.get(index + 1).getFallenPins() == COUNT_OF_MAX_PINS);
     }
     
     private boolean isMiss(final State state) {
@@ -96,13 +98,13 @@ public class FinalFrame implements Frame {
     }
     
     public boolean isFirstStateNormal() {
-        return getScores().size() == 1 && !getScores().get(0).isStrike();
+        return getScores().size() == 1 && getScores().get(0).getFallenPins() != COUNT_OF_MAX_PINS;
     }
     
     private boolean isTwoScoreContainsReady() {
         return getScores().stream()
                 .limit(2)
-                .anyMatch(Score::isReady);
+                .anyMatch(score -> score.getFallenPins() == READY_SCORE);
     }
     
     private int getSumScore(int limit) {
@@ -123,6 +125,27 @@ public class FinalFrame implements Frame {
     
     private boolean isNotReadyContains() {
         return getScores().stream()
-                .noneMatch(Score::isReady);
+                .noneMatch(score -> score.getFallenPins() == READY_SCORE);
+    }
+    
+    @Override
+    public boolean isCurrentScoreSpare(final int indexOfScore) {
+        if (indexOfScore == 2) {
+            return isCurrentScoreStrike(0) && isSpare(indexOfScore);
+        }
+        
+        if (indexOfScore == 1) {
+            return isSpare(indexOfScore);
+        }
+        
+        return false;
+    }
+    
+    private boolean isSpare(final int indexOfScore) {
+        return getScores().get(indexOfScore - 1).getFallenPins() + getScores().get(indexOfScore).getFallenPins() == COUNT_OF_MAX_PINS;
+    }
+    
+    private boolean isCurrentScoreStrike(final int indexOfScore) {
+        return getScores().get(indexOfScore).getFallenPins() == COUNT_OF_MAX_PINS;
     }
 }

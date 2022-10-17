@@ -15,7 +15,7 @@ public class SpareTest {
     
     @BeforeEach
     void setUp() {
-        spare = new Spare(new Score(4), new Score(6, true));
+        spare = new Spare(new Score(4), new Score(6));
     }
     
     @Test
@@ -35,6 +35,6 @@ public class SpareTest {
     @Test
     @DisplayName("점수 확인")
     void display() {
-        assertThat(spare.getScores()).isEqualTo(Arrays.asList(new Score(4), new Score(6, true)));
+        assertThat(spare.getScores()).isEqualTo(Arrays.asList(new Score(4), new Score(6)));
     }
 }

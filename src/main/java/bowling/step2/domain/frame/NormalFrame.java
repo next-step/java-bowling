@@ -71,7 +71,7 @@ public class NormalFrame implements Frame {
     }
     
     private boolean isStrike() {
-        return getScores().get(0).isStrike();
+        return getScores().get(0).getFallenPins() == COUNT_OF_MAX_PINS;
     }
     
     private int containsStrikeTwoNextScore() {
@@ -111,7 +111,7 @@ public class NormalFrame implements Frame {
     }
     
     private boolean isSpare() {
-        return getScores().size() >= 2 && getScores().get(1).isSpare();
+        return getScores().size() >= 2 && getSumScore() == COUNT_OF_MAX_PINS;
     }
     
     private int getSpareScore(final int cumulativeScore) {
@@ -130,6 +130,11 @@ public class NormalFrame implements Frame {
         }
         
         return cumulativeScore + getSumScore() + twoNextScore;
+    }
+    
+    @Override
+    public boolean isCurrentScoreSpare(final int indexOfScore) {
+        return indexOfScore == 1 && isSpare();
     }
     
     @Override

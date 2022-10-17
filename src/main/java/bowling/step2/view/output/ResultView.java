@@ -14,9 +14,9 @@ import java.util.stream.IntStream;
 public class ResultView {
     private static final Map<Integer, String> SCORE_TO_DISPLAY = new HashMap<>();
     private static final String FRAME_DISPLAY_FORMAT = "%%%ds%s%%%ds";
-    private static final String BOARD_BASE_DISPLAY = "| NAME  |  01   |  02   |  03   |  04   |  05   |  06   |  07   |  08   |  09   |  10   |";
+    private static final String BOARD_BASE_DISPLAY = "|  NAME  |   01   |   02   |   03   |   04   |   05   |   06   |   07   |   08   |   09   |   10   |";
     private static final int MAX_COUNT_OF_FRAME = 10;
-    private static final int MAX_LENGTH_OF_PER_FRAME_DISPLAY = 7;
+    private static final int MAX_LENGTH_OF_PER_FRAME_DISPLAY = 8;
     private static final String DELIMITER = "|";
     private static final String EMPTY = "";
     private static final int READY_SCORE = -1;
@@ -25,7 +25,7 @@ public class ResultView {
     private static final String SPARE_DISPLAY = "/";
     private static final String STRIKE_DISPLAY = "X";
     private static final String GUTTER_DISPLAY = "-";
-    private static final String SEVEN_SPACE = "       ";
+    private static final String EIGHT_SPACE = "        ";
     
     static {
         SCORE_TO_DISPLAY.put(MAX_COUNT_OF_FRAME, STRIKE_DISPLAY);
@@ -44,7 +44,7 @@ public class ResultView {
         return cumulativeScores.stream()
                 .map(ResultView::parseCumulativeScore)
                 .map(ResultView::parseDisplayPrintFormat)
-                .collect(Collectors.joining(DELIMITER, DELIMITER + SEVEN_SPACE + DELIMITER, DELIMITER));
+                .collect(Collectors.joining(DELIMITER, DELIMITER + EIGHT_SPACE + DELIMITER, DELIMITER));
     }
     
     private static String parseCumulativeScore(final int score) {
@@ -67,19 +67,19 @@ public class ResultView {
             return parseDisplayPrintFormat(EMPTY);
         }
         
-        final Frame frame = frames.get(index);
-        return parseDisplayPrintFormat(parseScoresDisplay(frame.getScores()));
+        return parseDisplayPrintFormat(parseScoresDisplay(frames.get(index)));
     }
     
-    private static String parseScoresDisplay(final List<Score> scores) {
-        return scores.stream()
-                .filter(ResultView::isNotReady)
-                .map(ResultView::scoreToDisplay)
+    private static String parseScoresDisplay(Frame frame) {
+        final List<Score> scores = frame.getScores();
+        return IntStream.range(0, scores.size())
+                .filter(indexOfScore -> isNotReady(scores.get(indexOfScore)))
+                .mapToObj(indexOfScore -> ResultView.scoreToDisplay(scores.get(indexOfScore), frame.isCurrentScoreSpare(indexOfScore)))
                 .collect(Collectors.joining(DELIMITER));
     }
     
-    private static String scoreToDisplay(final Score score) {
-        if (score.isSpare()) {
+    private static String scoreToDisplay(final Score score, final boolean isSpare) {
+        if (isSpare) {
             return SCORE_TO_DISPLAY.get(TEMPORARY_SPARE_NUMBER);
         }
         

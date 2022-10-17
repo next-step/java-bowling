@@ -15,7 +15,7 @@ public class Normal extends Running {
     @Override
     public State bowl(final int secondFallenPins) {
         if (isAllFallenPins(secondFallenPins)) {
-            return new Spare(firstFallenPins, new Score(secondFallenPins, true));
+            return new Spare(firstFallenPins, new Score(secondFallenPins));
         }
         
         return new Miss(firstFallenPins, new Score(secondFallenPins));
