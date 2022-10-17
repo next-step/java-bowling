@@ -1,13 +1,13 @@
 package bowling.domain.state;
 
-public enum BowlingRecordState {
+public enum StateType {
     STRIKE,
     SPARE,
     MISS,
     STARTED,
     RUNNING;
 
-    public static BowlingRecordState valueOf(State state){
+    public static StateType valueOf(State state){
         if(state instanceof Strike){
             return STRIKE;
         }

@@ -3,7 +3,7 @@ package bowling.view;
 import bowling.domain.BowlingGame;
 import bowling.domain.dto.Record;
 import bowling.domain.frame.FrameType;
-import bowling.domain.state.BowlingRecordState;
+import bowling.domain.state.StateType;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -55,13 +55,13 @@ public class OutputView {
 
     private static String printScore(Record record) {
 
-        if (record.getState() == BowlingRecordState.STRIKE) {
+        if (record.getState() == StateType.STRIKE) {
             return STRIKE;
         }
-        if (record.getState() == BowlingRecordState.SPARE) {
+        if (record.getState() == StateType.SPARE) {
             return getScore(record.getScores().get(0)) + BAR + SPARE;
         }
-        if (record.getState() == BowlingRecordState.MISS) {
+        if (record.getState() == StateType.MISS) {
             return getScore(record.getScores().get(0))
                     + BAR
                     + getScore(record.getScores().get(1));

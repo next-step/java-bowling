@@ -1,7 +1,7 @@
 package bowling.domain.dto;
 
 import bowling.domain.frame.FrameType;
-import bowling.domain.state.BowlingRecordState;
+import bowling.domain.state.StateType;
 
 import java.util.List;
 
@@ -10,9 +10,9 @@ public class Record {
     private FrameType kind;
     private List<Integer> scores;
     private Integer bonus;
-    private BowlingRecordState state;
+    private StateType state;
 
-    public Record(FrameType kind, List<Integer> scores, Integer bonus, BowlingRecordState state) {
+    public Record(FrameType kind, List<Integer> scores, Integer bonus, StateType state) {
         this.kind = kind;
         this.scores = scores;
         this.bonus = bonus;
@@ -30,7 +30,7 @@ public class Record {
         return bonus;
     }
 
-    public BowlingRecordState getState() {
+    public StateType getState() {
         return state;
     }
 

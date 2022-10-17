@@ -6,7 +6,7 @@ import bowling.domain.frame.Frame;
 import bowling.domain.frame.FrameType;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.scorestrategy.ScoreStrategy;
-import bowling.domain.state.BowlingRecordState;
+import bowling.domain.state.StateType;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -119,7 +119,7 @@ public class BowlingGame {
                     .map(finalPin -> ((FinalFrame) finalPin).getBonus())
                     .map(Pin::getValue)
                     .orElse(null)
-                , BowlingRecordState.valueOf(frame.getState())
+                , StateType.valueOf(frame.getState())
         );
     }
 }
