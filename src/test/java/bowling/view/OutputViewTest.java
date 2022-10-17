@@ -20,7 +20,6 @@ class OutputViewTest {
         bowlingGame.bowl(a -> new Pin(0));
         bowlingGame.bowl(a -> new Pin(5));
         bowlingGame.bowl(a -> new Pin(4));
-        bowlingGame.bowl(a -> new Pin(3));
         OutputView.print(bowlingGame);
     }
 

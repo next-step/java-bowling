@@ -81,4 +81,20 @@ class NormalFrameTest {
         );
     }
 
+    @Test
+    @DisplayName("한번 던지기")
+    void bowl_1() {
+        //given
+        NormalFrame normalFrame = new NormalFrame();
+        //when
+        normalFrame.bowl(new Pin(5));
+        //then
+        assertAll(
+                () -> assertThat(normalFrame.isFinish()).isFalse(),
+                () -> assertThat(normalFrame.getRemainPins()).isEqualTo(5),
+                () -> assertThat(normalFrame.getState()).isInstanceOf(Running.class),
+                () -> assertThat(normalFrame.getState().getRecord()).isEqualTo(List.of(5))
+        );
+    }
+
 }

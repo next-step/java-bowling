@@ -19,16 +19,14 @@ public class BowlingGame {
 
     private static final int NORMAL_TURN = 9;
 
-    private LinkedList<NormalFrame> normalFrames;
-    private FinalFrame finalFrame;
+    private LinkedList<Frame> frames;
     private final PlayerName playerName;
     private Pin now;
 
     public BowlingGame(PlayerName playerName) {
         this.playerName = playerName;
-        this.normalFrames = new LinkedList<>();
-        setNormalFrames();
-        setFinalFrame();
+        this.frames = new LinkedList<>();
+        frames.add(new NormalFrame());
     }
 
     public void bowl(ScoreStrategy scoreStrategy) {
@@ -39,56 +37,36 @@ public class BowlingGame {
             throw new IllegalStateException("게임이 종료되었습니다.");
         }
 
-        if (normalFramesIsFinished()) {
-            finalFrame.bowl(now);
-            return;
-        }
-
-        addNormalFrame();
-        normalFrames.getLast().bowl(now);
+        addFrame();
+        frames.getLast().bowl(now);
     }
 
     private int getRemainPins() {
-        if (normalFramesIsFinished()) {
-            return Optional.ofNullable(finalFrame)
-                    .map(Frame::getRemainPins)
-                    .orElse(10);
-        }
-        return Optional.ofNullable(normalFrames)
+        return Optional.ofNullable(frames)
                 .map(LinkedList::getLast)
                 .filter(frame -> !frame.isFinish())
                 .map(Frame::getRemainPins)
                 .orElse(10);
     }
 
-    private void addNormalFrame() {
-        if (normalFrames.getLast().isFinish()) {
-            normalFrames.add(new NormalFrame());
+    private void addFrame() {
+
+        if(normalFramesIsFinished()){
+            frames.add(new FinalFrame());
         }
-    }
 
-
-    private void setNormalFrames() {
-        if (normalFrames.isEmpty()) {
-            normalFrames.add(new NormalFrame());
-        }
-    }
-
-    private void setFinalFrame() {
-
-        if (finalFrame == null) {
-            finalFrame = new FinalFrame();
+        if (frames.getLast().isFinish()) {
+            frames.add(new NormalFrame());
         }
     }
 
 
     public boolean isFinished() {
-        return normalFramesIsFinished() && Optional.ofNullable(finalFrame)
-                .map(FinalFrame::isFinish).orElse(false);
+        return frames.size() == 10 && frames.getLast().isFinish();
     }
 
     private boolean normalFramesIsFinished() {
-        return normalFrames.size() == NORMAL_TURN && normalFrames.getLast().isFinish();
+        return frames.size() == NORMAL_TURN && frames.getLast().isFinish();
     }
 
     public List<Record> getGameRecord() {
@@ -96,17 +74,14 @@ public class BowlingGame {
                 .mapToObj(i -> new Record())
                 .collect(Collectors.toList());
 
-        IntStream.range(0, normalFrames.size())
-                .forEach(i -> records.set(i, getRecord(normalFrames.get(i))));
-        records.set(9, Optional.ofNullable(finalFrame)
-                .map(this::getRecord)
-                .orElse(null));
+        IntStream.range(0, frames.size())
+                .forEach(i -> records.set(i, getRecord(frames.get(i))));
 
         return Collections.unmodifiableList(records);
     }
 
     public int getFrameNumber() {
-        return normalFrames.size() + 1;
+        return frames.size();
     }
 
     public Pin getNow() {

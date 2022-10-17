@@ -44,16 +44,19 @@ public class OutputView {
                 .map(record -> String.format(FORMAT_FRAME, printRecord(record)))
                 .collect(Collectors.joining(BAR));
 
-        System.out.println(String.format(FORMAT_RECORD, headerName, records));
+        System.out.printf((FORMAT_RECORD) + "%n", headerName, records);
     }
 
     private static String printRecord(Record record) {
         return Optional.ofNullable(record)
                 .map(recordItem -> printScore(recordItem) + printBonus(recordItem))
-                .orElse("");
+                .orElse(BLANK);
     }
 
     private static String printScore(Record record) {
+        if (record.getScores() == null) {
+            return BLANK;
+        }
 
         if (record.getState() == StateType.STRIKE) {
             return STRIKE;
@@ -66,7 +69,7 @@ public class OutputView {
                     + BAR
                     + getScore(record.getScores().get(1));
         }
-        return "";
+        return getScore(record.getScores().get(0));
 
     }
 
@@ -93,6 +96,6 @@ public class OutputView {
         String headerFrame = IntStream.range(1, 11)
                 .mapToObj(i -> String.format(FORMAT_FRAME_NUMBER, i))
                 .collect(Collectors.joining(BAR));
-        System.out.println(String.format(FORMAT_RECORD, headerName, headerFrame));
+        System.out.printf((FORMAT_RECORD) + "%n", headerName, headerFrame);
     }
 }
