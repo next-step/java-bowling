@@ -4,11 +4,16 @@ import bowling.step2.domain.frame.Frame;
 import bowling.step2.domain.frame.NormalFrame;
 import bowling.step2.dto.CountOfFallenPinsDTO;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Frames {
+    private static final int STOP_SCORE = -1;
+    private static final int MAX_COUNT_OF_FRAME = 10;
+    private static final int MIN_COUNT_OF_FRAME = 0;
+    
     private final LinkedList<Frame> frames;
     
     public Frames() {
@@ -38,5 +43,27 @@ public class Frames {
     
     public List<Frame> getFrames() {
         return Collections.unmodifiableList(frames);
+    }
+    
+    public List<Integer> getCumulativeScores() {
+        List<Integer> cumulativeScores = new ArrayList<>();
+        addCumulativeScores(cumulativeScores);
+        
+        return cumulativeScores;
+    }
+    
+    private void addCumulativeScores(final List<Integer> cumulativeScores) {
+        int cumulativeScore = 0;
+        for (int countOfFrameOrder = MIN_COUNT_OF_FRAME; countOfFrameOrder < MAX_COUNT_OF_FRAME; countOfFrameOrder++) {
+            cumulativeScore = calculateCumulativeScore(countOfFrameOrder, cumulativeScore);
+            cumulativeScores.add(cumulativeScore);
+        }
+    }
+    
+    private int calculateCumulativeScore(final int countOfFrameOrder, final int cumulativeScore) {
+        if (frames.size() <= countOfFrameOrder) {
+            return STOP_SCORE;
+        }
+        return frames.get(countOfFrameOrder).calculateCumulativeScore(cumulativeScore);
     }
 }

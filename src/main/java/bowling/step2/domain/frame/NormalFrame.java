@@ -9,8 +9,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
-    private State state;
     private final FrameOrderNumber frameOrderNumber;
+    private State state;
+    private Frame nextFrame;
     
     
     public NormalFrame(int frameOrderNumber) {
@@ -22,7 +23,8 @@ public class NormalFrame implements Frame {
     public Frame bowl(final int fallenPins) {
         this.state = this.state.bowl(fallenPins);
         if (state.isFinished()) {
-            return nextFrame();
+            nextFrame = nextFrame();
+            return nextFrame;
         }
         
         return this;
@@ -43,6 +45,96 @@ public class NormalFrame implements Frame {
     @Override
     public List<Score> getScores() {
         return state.getScores();
+    }
+    
+    @Override
+    public int getOneNextScore() {
+        final List<Score> scores = state.getScores();
+        return scores.get(0).getFallenPins();
+    }
+    
+    @Override
+    public int getTwoNextScore() {
+        if (state.isFinished()) {
+            return sumTwoNextScore();
+        }
+        
+        return READY_SCORE;
+    }
+    
+    private int sumTwoNextScore() {
+        if (isStrike()) {
+            return containsStrikeTwoNextScore();
+        }
+        
+        return getSumScore();
+    }
+    
+    private boolean isStrike() {
+        return getScores().get(0).getFallenPins() == COUNT_OF_MAX_PINS;
+    }
+    
+    private int containsStrikeTwoNextScore() {
+        final int oneNextScore = nextFrame.getOneNextScore();
+        if (oneNextScore == READY_SCORE) {
+            return READY_SCORE;
+        }
+        
+        return getSumScore() + oneNextScore;
+    }
+    
+    private int getSumScore() {
+        return getScores().stream()
+                .mapToInt(Score::getFallenPins)
+                .sum();
+    }
+    
+    @Override
+    public int calculateCumulativeScore(final int cumulativeScore) {
+        if (state.isFinished()) {
+            return sumCumulativeScore(cumulativeScore);
+        }
+        
+        return READY_SCORE;
+    }
+    
+    private int sumCumulativeScore(final int cumulativeScore) {
+        if (isSpare()) {
+            return getSpareScore(cumulativeScore);
+        }
+        
+        if (isStrike()) {
+            return getStrikeScore(cumulativeScore);
+        }
+        
+        return cumulativeScore + getSumScore();
+    }
+    
+    private boolean isSpare() {
+        return getScores().size() >= 2 && getSumScore() == COUNT_OF_MAX_PINS;
+    }
+    
+    private int getSpareScore(final int cumulativeScore) {
+        final int oneNextScore = nextFrame.getOneNextScore();
+        if (oneNextScore == READY_SCORE) {
+            return READY_SCORE;
+        }
+        
+        return cumulativeScore + getSumScore() + oneNextScore;
+    }
+    
+    private int getStrikeScore(final int cumulativeScore) {
+        final int twoNextScore = nextFrame.getTwoNextScore();
+        if (twoNextScore == READY_SCORE) {
+            return READY_SCORE;
+        }
+        
+        return cumulativeScore + getSumScore() + twoNextScore;
+    }
+    
+    @Override
+    public boolean isCurrentScoreSpare(final int indexOfScore) {
+        return indexOfScore == 1 && isSpare();
     }
     
     @Override

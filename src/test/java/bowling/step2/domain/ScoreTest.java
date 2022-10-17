@@ -16,12 +16,6 @@ class ScoreTest {
     }
     
     @Test
-    @DisplayName("점수 더하기")
-    void add() {
-        assertThat(score.add(3)).isEqualTo(9);
-    }
-    
-    @Test
     @DisplayName("핀이 전부 쓰러졌는지 확인")
     void check_all_fallen_pins() {
         assertThat(score.isAllFallenPins(4)).isTrue();
@@ -39,11 +33,5 @@ class ScoreTest {
     @DisplayName("점수 확인")
     void display() {
         assertThat(score.getFallenPins()).isEqualTo(6);
-    }
-    
-    @Test
-    @DisplayName("스페어인지 확인")
-    void is_spare() {
-        assertThat(new Score(4, true).isSpare()).isTrue();
     }
 }
