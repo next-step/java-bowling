@@ -1,12 +1,12 @@
 package bowling.domain.state;
 
-import bowling.domain.Scores;
+import bowling.domain.Pins;
 
 public class Miss extends Finished {
 
-    public Miss(Scores scores) {
-        super(scores);
-        if(!scores.isMiss()){
+    public Miss(Pins pins) {
+        super(pins);
+        if(!pins.isMiss()){
             throw new IllegalArgumentException();
         }
     }
@@ -21,9 +21,5 @@ public class Miss extends Finished {
         return false;
     }
 
-    @Override
-    public BowlingRecordState getBowlingState() {
-        return BowlingRecordState.MISS;
-    }
 
 }

@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
-import bowling.domain.Score;
+import bowling.domain.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +14,7 @@ class StartedTest {
         //given
         Started started = new Started();
         //when
-        State state = started.bowl(new Score(10));
+        State state = started.bowl(new Pin(10));
         //then
         assertThat(state).isInstanceOf(Strike.class);
     }
@@ -25,18 +25,9 @@ class StartedTest {
         //given
         Started started = new Started();
         //when
-        State state = started.bowl(new Score(5));
+        State state = started.bowl(new Pin(5));
         //then
         assertThat(state).isInstanceOf(Running.class);
-    }
-
-    @Test
-    @DisplayName("상태는 started")
-    void state_is_started() {
-        //given
-        Started started = new Started();
-        //then
-        assertThat(started.getBowlingState()).isEqualTo(BowlingRecordState.STARTED);
     }
 
     @Test

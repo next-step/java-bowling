@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.Score;
-import bowling.domain.dto.Record;
+import bowling.domain.Pin;
 
 public class NormalFrame extends Frame {
 
@@ -11,13 +10,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public void bowl(Score score) {
-        this.state = state.bowl(score);
+    public void bowl(Pin pin) {
+        this.state = state.bowl(pin);
     }
-
-    @Override
-    public Record getRecord(){
-        return new Record(KindOfFrame.NORMAL, state.getRecord(), null, state.getBowlingState());
-    }
-
 }

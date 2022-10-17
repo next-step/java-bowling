@@ -1,39 +1,33 @@
 package bowling.domain.frame;
 
-import bowling.domain.Score;
-import bowling.domain.dto.Record;
-
-import java.util.Optional;
+import bowling.domain.Pin;
 
 public class FinalFrame extends Frame {
 
-    private Score bonus;
+    private Pin bonus;
 
     @Override
     public boolean isFinish() {
-        if(state.isFinish() && state.canGetBonus()){
+        if (state.isFinish() && state.canGetBonus()) {
             return bonus != null;
         }
         return state.isFinish() && !state.canGetBonus();
     }
 
     @Override
-    public void bowl(Score score) {
+    public void bowl(Pin pin) {
         if (!state.isFinish()) {
-            this.state = this.state.bowl(score);
+            this.state = this.state.bowl(pin);
             return;
         }
         if (state.canGetBonus()) {
-            this.bonus = score;
+            this.bonus = pin;
             return;
         }
         throw new IllegalStateException();
     }
 
-    @Override
-    public Record getRecord() {
-        Integer bonusValue = Optional.ofNullable(this.bonus).map(Score::getValue).orElse(null);
-        return new Record(KindOfFrame.FINAL, state.getRecord(), bonusValue, state.getBowlingState());
+    public Pin getBonus() {
+        return bonus;
     }
-
 }

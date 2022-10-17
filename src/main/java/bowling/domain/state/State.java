@@ -1,21 +1,19 @@
 package bowling.domain.state;
 
-import bowling.domain.Score;
+import bowling.domain.Pin;
 
 import java.util.List;
 
 public interface State {
     boolean isFinish();
 
-    State bowl(Score score);
+    State bowl(Pin pin);
 
     int bonusCount();
 
     boolean canGetBonus();
 
     int getRemainPins();
-
-    BowlingRecordState getBowlingState();
 
     List<Integer> getRecord();
 

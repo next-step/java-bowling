@@ -1,14 +1,12 @@
 package bowling.domain.frame;
 
-import bowling.domain.Score;
-import bowling.domain.dto.Record;
+import bowling.domain.Pin;
+import bowling.domain.state.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static bowling.domain.frame.KindOfFrame.FINAL;
-import static bowling.domain.state.BowlingRecordState.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -20,15 +18,12 @@ class FinalFrameTest {
     void is_started() {
         //given
         FinalFrame finalFrame = new FinalFrame();
-        //when
-        Record record = finalFrame.getRecord();
         //then
         assertAll(
                 () -> assertThat(finalFrame.isFinish()).isFalse(),
                 () -> assertThat(finalFrame.getRemainPins()).isEqualTo(10),
-                () -> assertThat(record.getState()).isEqualTo(STARTED),
-                () -> assertThat(record.getKind()).isEqualTo(FINAL),
-                () -> assertThat(record.getScores()).isEqualTo(List.of())
+                () -> assertThat(finalFrame.getState()).isInstanceOf(Started.class),
+                () -> assertThat(finalFrame.getState().getRecord()).isEqualTo(List.of())
         );
     }
 
@@ -38,15 +33,13 @@ class FinalFrameTest {
         //given
         FinalFrame finalFrame = new FinalFrame();
         //when
-        finalFrame.bowl(new Score(5));
-        Record record = finalFrame.getRecord();
+        finalFrame.bowl(new Pin(5));
         //then
         assertAll(
                 () -> assertThat(finalFrame.isFinish()).isFalse(),
                 () -> assertThat(finalFrame.getRemainPins()).isEqualTo(5),
-                () -> assertThat(record.getState()).isEqualTo(RUNNING),
-                () -> assertThat(record.getKind()).isEqualTo(FINAL),
-                () -> assertThat(record.getScores()).isEqualTo(List.of(5))
+                () -> assertThat(finalFrame.getState()).isInstanceOf(Running.class),
+                () -> assertThat(finalFrame.getState().getRecord()).isEqualTo(List.of(5))
         );
     }
 
@@ -56,15 +49,13 @@ class FinalFrameTest {
         //given
         FinalFrame finalFrame = new FinalFrame();
         //when
-        finalFrame.bowl(new Score(10));
-        Record record = finalFrame.getRecord();
+        finalFrame.bowl(new Pin(10));
         //then
         assertAll(
                 () -> assertThat(finalFrame.isFinish()).isFalse(),
                 () -> assertThat(finalFrame.getRemainPins()).isZero(),
-                () -> assertThat(record.getState()).isEqualTo(STRIKE),
-                () -> assertThat(record.getKind()).isEqualTo(FINAL),
-                () -> assertThat(record.getScores()).isEqualTo(List.of(10))
+                () -> assertThat(finalFrame.getState()).isInstanceOf(Strike.class),
+                () -> assertThat(finalFrame.getState().getRecord()).isEqualTo(List.of(10))
         );
     }
 
@@ -74,16 +65,14 @@ class FinalFrameTest {
         //given
         FinalFrame finalFrame = new FinalFrame();
         //when
-        finalFrame.bowl(new Score(5));
-        finalFrame.bowl(new Score(5));
-        Record record = finalFrame.getRecord();
+        finalFrame.bowl(new Pin(5));
+        finalFrame.bowl(new Pin(5));
         //then
         assertAll(
                 () -> assertThat(finalFrame.isFinish()).isFalse(),
                 () -> assertThat(finalFrame.getRemainPins()).isZero(),
-                () -> assertThat(record.getState()).isEqualTo(SPARE),
-                () -> assertThat(record.getKind()).isEqualTo(FINAL),
-                () -> assertThat(record.getScores()).isEqualTo(List.of(5, 5))
+                () -> assertThat(finalFrame.getState()).isInstanceOf(Spare.class),
+                () -> assertThat(finalFrame.getState().getRecord()).isEqualTo(List.of(5, 5))
         );
     }
 
@@ -93,16 +82,14 @@ class FinalFrameTest {
         //given
         FinalFrame finalFrame = new FinalFrame();
         //when
-        finalFrame.bowl(new Score(5));
-        finalFrame.bowl(new Score(4));
-        Record record = finalFrame.getRecord();
+        finalFrame.bowl(new Pin(5));
+        finalFrame.bowl(new Pin(4));
         //then
         assertAll(
                 () -> assertThat(finalFrame.isFinish()).isTrue(),
                 () -> assertThat(finalFrame.getRemainPins()).isNotZero(),
-                () -> assertThat(record.getState()).isEqualTo(MISS),
-                () -> assertThat(record.getKind()).isEqualTo(FINAL),
-                () -> assertThat(record.getScores()).isEqualTo(List.of(5, 4))
+                () -> assertThat(finalFrame.getState()).isInstanceOf(Miss.class),
+                () -> assertThat(finalFrame.getState().getRecord()).isEqualTo(List.of(5, 4))
         );
     }
 
@@ -111,21 +98,21 @@ class FinalFrameTest {
     void bonus() {
         //given
         FinalFrame miss = new FinalFrame();
-        miss.bowl(new Score(5));
-        miss.bowl(new Score(4));
+        miss.bowl(new Pin(5));
+        miss.bowl(new Pin(4));
 
         FinalFrame spare = new FinalFrame();
-        spare.bowl(new Score(5));
-        spare.bowl(new Score(5));
+        spare.bowl(new Pin(5));
+        spare.bowl(new Pin(5));
 
         FinalFrame strike = new FinalFrame();
-        strike.bowl(new Score(10));
+        strike.bowl(new Pin(10));
 
         //then
         assertAll(
-                () -> assertThatIllegalStateException().isThrownBy(() -> miss.bowl(new Score(5))),
-                () -> assertThatNoException().isThrownBy(() -> spare.bowl(new Score(5))),
-                () -> assertThatNoException().isThrownBy(() -> strike.bowl(new Score(5)))
+                () -> assertThatIllegalStateException().isThrownBy(() -> miss.bowl(new Pin(5))),
+                () -> assertThatNoException().isThrownBy(() -> spare.bowl(new Pin(5))),
+                () -> assertThatNoException().isThrownBy(() -> strike.bowl(new Pin(5)))
         );
     }
 
@@ -134,12 +121,11 @@ class FinalFrameTest {
     void record_bonus() {
         //given
         FinalFrame spare = new FinalFrame();
-        spare.bowl(new Score(5));
-        spare.bowl(new Score(5));
-        spare.bowl(new Score(5));
-        Record spareRecord = spare.getRecord();
+        spare.bowl(new Pin(5));
+        spare.bowl(new Pin(5));
+        spare.bowl(new Pin(5));
         //then
-        assertThat(spareRecord.getBonus()).isEqualTo(5);
+        assertThat(spare.getBonus().getValue()).isEqualTo(5);
     }
 
 }

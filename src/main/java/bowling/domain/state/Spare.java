@@ -1,13 +1,13 @@
 package bowling.domain.state;
 
-import bowling.domain.Scores;
+import bowling.domain.Pins;
 
 public class Spare extends Finished {
 
 
-    public Spare(Scores scores) {
-        super(scores);
-        if(!scores.isSpare()){
+    public Spare(Pins pins) {
+        super(pins);
+        if(!pins.isSpare()){
             throw new IllegalArgumentException();
         }
     }
@@ -21,11 +21,5 @@ public class Spare extends Finished {
     public boolean canGetBonus() {
         return true;
     }
-
-    @Override
-    public BowlingRecordState getBowlingState() {
-        return BowlingRecordState.SPARE;
-    }
-
 
 }

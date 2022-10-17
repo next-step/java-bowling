@@ -1,20 +1,20 @@
 package bowling.domain.state;
 
-import bowling.domain.Score;
-import bowling.domain.Scores;
+import bowling.domain.Pin;
+import bowling.domain.Pins;
 
 import java.util.List;
 
 public abstract class Finished implements State {
 
-    private Scores scores;
+    private Pins pins;
 
-    protected Finished(Scores scores) {
-        this.scores = scores;
+    protected Finished(Pins pins) {
+        this.pins = pins;
     }
 
     @Override
-    public State bowl(Score score) {
+    public State bowl(Pin pin) {
         throw new IllegalStateException("종료 되었습니다.");
     }
 
@@ -25,11 +25,11 @@ public abstract class Finished implements State {
 
     @Override
     public List<Integer> getRecord() {
-        return scores.getRecord();
+        return pins.getRecord();
     }
 
     @Override
     public int getRemainPins() {
-        return scores.getRemainPins();
+        return pins.getRemainPins();
     }
 }

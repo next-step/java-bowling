@@ -1,7 +1,7 @@
 package bowling.domain.state;
 
-import bowling.domain.Score;
-import bowling.domain.Scores;
+import bowling.domain.Pin;
+import bowling.domain.Pins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,9 +13,9 @@ class SpareTest {
     @DisplayName("보너스 점수 개수는 1개")
     void bonus_one() {
         //given
-        Scores scores = Scores.of(new Score(4));
-        scores.bowl(new Score(6));
-        Spare spare = new Spare(scores);
+        Pins pins = Pins.of(new Pin(4));
+        pins.bowl(new Pin(6));
+        Spare spare = new Spare(pins);
         //then
         assertThat(spare.bonusCount()).isEqualTo(1);
     }
@@ -24,42 +24,31 @@ class SpareTest {
     @DisplayName("스코어가 스페어가 스페어 생성 불가")
     void is_strike() {
         //given
-        Scores scores = Scores.of(new Score(4));
-        scores.bowl(new Score(5));
+        Pins pins = Pins.of(new Pin(4));
+        pins.bowl(new Pin(5));
         //then
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> new Spare(scores));
+                .isThrownBy(() -> new Spare(pins));
     }
 
     @Test
     @DisplayName("파이널 프레임에서 보너스 기회 있음")
     void can_get_bonus_in_final_frame() {
         //given
-        Scores scores = Scores.of(new Score(4));
-        scores.bowl(new Score(6));
-        Spare spare = new Spare(scores);
+        Pins pins = Pins.of(new Pin(4));
+        pins.bowl(new Pin(6));
+        Spare spare = new Spare(pins);
         //then
         assertThat(spare.canGetBonus()).isTrue();
-    }
-
-    @Test
-    @DisplayName("상태는 SPARE")
-    void state_is_spare() {
-        //given
-        Scores scores = Scores.of(new Score(4));
-        scores.bowl(new Score(6));
-        Spare spare = new Spare(scores);
-        //then
-        assertThat(spare.getBowlingState()).isEqualTo(BowlingRecordState.SPARE);
     }
 
     @Test
     @DisplayName("종료된 상태")
     void is_finished() {
         //given
-        Scores scores = Scores.of(new Score(4));
-        scores.bowl(new Score(6));
-        Spare spare = new Spare(scores);
+        Pins pins = Pins.of(new Pin(4));
+        pins.bowl(new Pin(6));
+        Spare spare = new Spare(pins);
         //then
         assertThat(spare.isFinish()).isTrue();
     }
@@ -68,9 +57,9 @@ class SpareTest {
     @DisplayName("남은 핀 개수 0")
     void remain_pins_0() {
         //given
-        Scores scores = Scores.of(new Score(4));
-        scores.bowl(new Score(6));
-        Spare spare = new Spare(scores);
+        Pins pins = Pins.of(new Pin(4));
+        pins.bowl(new Pin(6));
+        Spare spare = new Spare(pins);
         //then
         assertThat(spare.getRemainPins()).isZero();
     }
@@ -79,11 +68,11 @@ class SpareTest {
     @DisplayName("볼은 더 던지먼 오류")
     void bowl_illegalStateException() {
         //given
-        Scores scores = Scores.of(new Score(4));
-        scores.bowl(new Score(6));
-        Spare spare = new Spare(scores);
+        Pins pins = Pins.of(new Pin(4));
+        pins.bowl(new Pin(6));
+        Spare spare = new Spare(pins);
         //then
         assertThatIllegalStateException()
-                .isThrownBy(() -> spare.bowl(new Score(10)));
+                .isThrownBy(() -> spare.bowl(new Pin(10)));
     }
 }

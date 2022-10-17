@@ -1,15 +1,15 @@
 package bowling.domain.state;
 
-import bowling.domain.Score;
-import bowling.domain.Scores;
+import bowling.domain.Pin;
+import bowling.domain.Pins;
 
 
 public class Strike extends Finished {
 
-    public Strike(Score score) {
-        super(Scores.of(score));
+    public Strike(Pin pin) {
+        super(Pins.of(pin));
 
-        if(!score.isStrike()){
+        if(!pin.isStrike()){
             throw new IllegalArgumentException();
         }
     }
@@ -24,9 +24,5 @@ public class Strike extends Finished {
         return true;
     }
 
-    @Override
-    public BowlingRecordState getBowlingState() {
-        return BowlingRecordState.STRIKE;
-    }
 
 }

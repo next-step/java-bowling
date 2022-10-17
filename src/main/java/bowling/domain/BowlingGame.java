@@ -3,8 +3,10 @@ package bowling.domain;
 import bowling.domain.dto.Record;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
+import bowling.domain.frame.FrameType;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.scorestrategy.ScoreStrategy;
+import bowling.domain.state.BowlingRecordState;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -20,7 +22,7 @@ public class BowlingGame {
     private LinkedList<NormalFrame> normalFrames;
     private FinalFrame finalFrame;
     private final PlayerName playerName;
-    private Score now;
+    private Pin now;
 
     public BowlingGame(PlayerName playerName) {
         this.playerName = playerName;
@@ -88,19 +90,19 @@ public class BowlingGame {
                 .collect(Collectors.toList());
 
         IntStream.range(0, normalFrames.size())
-                .forEach(i -> records.set(i, normalFrames.get(i).getRecord()));
+                .forEach(i -> records.set(i, getRecord(normalFrames.get(i))));
         records.set(9, Optional.ofNullable(finalFrame)
-                .map(FinalFrame::getRecord)
+                .map(this::getRecord)
                 .orElse(null));
 
         return Collections.unmodifiableList(records);
     }
 
     public int getFrameNumber() {
-        return normalFrames.size()+1;
+        return normalFrames.size() + 1;
     }
 
-    public Score getNow() {
+    public Pin getNow() {
         return now;
     }
 
@@ -108,4 +110,16 @@ public class BowlingGame {
         return playerName;
     }
 
+    private Record getRecord(Frame frame) {
+
+        return new Record(FrameType.valueOf(frame)
+                , frame.getState().getRecord()
+                , Optional.of(frame)
+                    .filter(FinalFrame.class::isInstance)
+                    .map(finalPin -> ((FinalFrame) finalPin).getBonus())
+                    .map(Pin::getValue)
+                    .orElse(null)
+                , BowlingRecordState.valueOf(frame.getState())
+        );
+    }
 }

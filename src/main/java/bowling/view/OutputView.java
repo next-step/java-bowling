@@ -2,7 +2,7 @@ package bowling.view;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.dto.Record;
-import bowling.domain.frame.KindOfFrame;
+import bowling.domain.frame.FrameType;
 import bowling.domain.state.BowlingRecordState;
 
 import java.util.Optional;
@@ -11,16 +11,16 @@ import java.util.stream.IntStream;
 
 public class OutputView {
 
-    private static String FORMAT_BOWL = "%d프레임 투구 : %d%n";
-    private static String FORMAT_FRAME_NUMBER = "  %02d  ";
-    private static String FORMAT_FRAME = " %4s ";
-    private static String FORMAT_RECORD = "|%s|%s|";
+    private static final String FORMAT_BOWL = "%d프레임 투구 : %d%n";
+    private static final String FORMAT_FRAME_NUMBER = "  %02d  ";
+    private static final String FORMAT_FRAME = " %4s ";
+    private static final String FORMAT_RECORD = "|%s|%s|";
 
-    private static String BAR = "|";
-    private static String STRIKE = "X";
-    private static String SPARE = "/";
-    private static String GUTTER = "-";
-    private static String BLANK = "";
+    private static final String BAR = "|";
+    private static final String STRIKE = "X";
+    private static final String SPARE = "/";
+    private static final String GUTTER = "-";
+    private static final String BLANK = "";
 
     private OutputView() {
 
@@ -72,7 +72,7 @@ public class OutputView {
 
     private static String printBonus(Record input) {
         return Optional.ofNullable(input)
-                .filter(record -> record.getKind() == KindOfFrame.FINAL)
+                .filter(record -> record.getKind() == FrameType.FINAL)
                 .map(Record::getBonus)
                 .map(bonus -> BAR + bonus).orElse("");
     }

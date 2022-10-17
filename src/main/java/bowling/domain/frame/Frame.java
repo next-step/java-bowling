@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.Score;
-import bowling.domain.dto.Record;
+import bowling.domain.Pin;
 import bowling.domain.state.Started;
 import bowling.domain.state.State;
 
@@ -13,14 +12,15 @@ public abstract class Frame {
     }
 
     public abstract boolean isFinish();
-    public abstract void bowl(Score score);
-
-    public abstract Record getRecord();
+    public abstract void bowl(Pin pin);
 
     public int getRemainPins(){
         return state.getRemainPins();
     }
 
+    public State getState() {
+        return state;
+    }
 
 
 }

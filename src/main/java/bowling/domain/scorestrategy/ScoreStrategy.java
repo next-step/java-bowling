@@ -1,8 +1,8 @@
 package bowling.domain.scorestrategy;
 
-import bowling.domain.Score;
+import bowling.domain.Pin;
 
 @FunctionalInterface
 public interface ScoreStrategy {
-    Score getScore(int bound);
+    Pin getScore(int bound);
 }

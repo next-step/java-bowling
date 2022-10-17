@@ -1,14 +1,15 @@
 package bowling.domain.frame;
 
-import bowling.domain.Score;
-import bowling.domain.dto.Record;
+import bowling.domain.Pin;
+import bowling.domain.state.Miss;
+import bowling.domain.state.Running;
+import bowling.domain.state.Spare;
+import bowling.domain.state.Strike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static bowling.domain.frame.KindOfFrame.*;
-import static bowling.domain.state.BowlingRecordState.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -20,15 +21,13 @@ class NormalFrameTest {
         //given
         NormalFrame normalFrame = new NormalFrame();
         //when
-        normalFrame.bowl(new Score(10));
-        Record record = normalFrame.getRecord();
+        normalFrame.bowl(new Pin(10));
         //then
         assertAll(
                 () -> assertThat(normalFrame.isFinish()).isTrue(),
                 () -> assertThat(normalFrame.getRemainPins()).isZero(),
-                () -> assertThat(record.getState()).isEqualTo(STRIKE),
-                () -> assertThat(record.getKind()).isEqualTo(NORMAL),
-                () -> assertThat(record.getScores()).isEqualTo(List.of(10))
+                () -> assertThat(normalFrame.getState()).isInstanceOf(Strike.class),
+                () -> assertThat(normalFrame.getState().getRecord()).isEqualTo(List.of(10))
         );
     }
 
@@ -38,15 +37,13 @@ class NormalFrameTest {
         //given
         NormalFrame normalFrame = new NormalFrame();
         //when
-        normalFrame.bowl(new Score(5));
-        Record record = normalFrame.getRecord();
+        normalFrame.bowl(new Pin(5));
         //then
         assertAll(
                 () -> assertThat(normalFrame.isFinish()).isFalse(),
                 () -> assertThat(normalFrame.getRemainPins()).isEqualTo(5),
-                () -> assertThat(record.getState()).isEqualTo(RUNNING),
-                () -> assertThat(record.getScores()).isEqualTo(List.of(5)),
-                () -> assertThat(record.getKind()).isEqualTo(NORMAL)
+                () -> assertThat(normalFrame.getState()).isInstanceOf(Running.class),
+                () -> assertThat(normalFrame.getState().getRecord()).isEqualTo(List.of(5))
         );
     }
 
@@ -56,16 +53,14 @@ class NormalFrameTest {
         //given
         NormalFrame normalFrame = new NormalFrame();
         //when
-        normalFrame.bowl(new Score(5));
-        normalFrame.bowl(new Score(5));
-        Record record = normalFrame.getRecord();
+        normalFrame.bowl(new Pin(5));
+        normalFrame.bowl(new Pin(5));
         //then
         assertAll(
                 () -> assertThat(normalFrame.isFinish()).isTrue(),
                 () -> assertThat(normalFrame.getRemainPins()).isZero(),
-                () -> assertThat(record.getState()).isEqualTo(SPARE),
-                () -> assertThat(record.getScores()).isEqualTo(List.of(5,5)),
-                () -> assertThat(record.getKind()).isEqualTo(NORMAL)
+                () -> assertThat(normalFrame.getState()).isInstanceOf(Spare.class),
+                () -> assertThat(normalFrame.getState().getRecord()).isEqualTo(List.of(5, 5))
         );
     }
 
@@ -75,16 +70,14 @@ class NormalFrameTest {
         //given
         NormalFrame normalFrame = new NormalFrame();
         //when
-        normalFrame.bowl(new Score(5));
-        normalFrame.bowl(new Score(2));
-        Record record = normalFrame.getRecord();
+        normalFrame.bowl(new Pin(5));
+        normalFrame.bowl(new Pin(2));
         //then
         assertAll(
                 () -> assertThat(normalFrame.isFinish()).isTrue(),
                 () -> assertThat(normalFrame.getRemainPins()).isEqualTo(3),
-                () -> assertThat(record.getState()).isEqualTo(MISS),
-                () -> assertThat(record.getScores()).isEqualTo(List.of(5,2)),
-                () -> assertThat(record.getKind()).isEqualTo(NORMAL)
+                () -> assertThat(normalFrame.getState()).isInstanceOf(Miss.class),
+                () -> assertThat(normalFrame.getState().getRecord()).isEqualTo(List.of(5, 2))
         );
     }
 

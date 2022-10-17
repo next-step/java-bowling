@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
-import bowling.domain.Score;
+import bowling.domain.Pin;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -14,12 +14,12 @@ public class Started implements State {
     }
 
     @Override
-    public State bowl(Score score) {
-        if (score.isStrike()) {
-            return new Strike(score);
+    public State bowl(Pin pin) {
+        if (pin.isStrike()) {
+            return new Strike(pin);
         }
 
-        return new Running(score);
+        return new Running(pin);
     }
 
     @Override
@@ -35,11 +35,6 @@ public class Started implements State {
     @Override
     public int getRemainPins() {
         return 10;
-    }
-
-    @Override
-    public BowlingRecordState getBowlingState() {
-        return BowlingRecordState.STARTED;
     }
 
     @Override

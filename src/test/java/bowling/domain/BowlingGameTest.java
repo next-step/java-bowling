@@ -19,7 +19,7 @@ class BowlingGameTest {
         BowlingGame bowlingGame = new BowlingGame(new PlayerName("AAA"));
         //when
         IntStream.range(0, 11)
-                .forEach(i -> bowlingGame.bowl(range -> new Score(10)));
+                .forEach(i -> bowlingGame.bowl(range -> new Pin(10)));
         List<Record> gameRecord = bowlingGame.getGameRecord();
         //then
         assertAll(
