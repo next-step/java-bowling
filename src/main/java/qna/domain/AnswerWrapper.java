@@ -19,6 +19,10 @@ public class AnswerWrapper {
     
     public List<DeleteHistory> deleteAll(User loginUser) throws CannotDeleteException {
         checkDeletable(loginUser);
+        return delete();
+    }
+
+    private List<DeleteHistory> delete(){
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         this.answers.forEach((answer)->{
             answer.delete(true);
