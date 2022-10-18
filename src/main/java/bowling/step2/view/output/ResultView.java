@@ -1,7 +1,6 @@
 package bowling.step2.view.output;
 
 import bowling.step2.domain.Frames;
-import bowling.step2.domain.Player;
 import bowling.step2.domain.PlayersDTO;
 import bowling.step2.domain.Score;
 import bowling.step2.domain.frame.Frame;
