@@ -1,6 +1,8 @@
 package bowling.step2.view.output;
 
 import bowling.step2.domain.Frames;
+import bowling.step2.domain.Player;
+import bowling.step2.domain.PlayersDTO;
 import bowling.step2.domain.Score;
 import bowling.step2.domain.frame.Frame;
 import bowling.step2.dto.PlayerDTO;
@@ -33,8 +35,17 @@ public class ResultView {
         SCORE_TO_DISPLAY.put(GUTTER_SCORE, GUTTER_DISPLAY);
     }
     
-    public static void printPlayerFramesDisplay(final PlayerDTO playerDTO) {
+    public static void printDisplaySet() {
         System.out.println(BOARD_BASE_DISPLAY);
+    }
+    
+    public static void printAllPlayerFramesDisplay(final PlayersDTO playersDTO) {
+        playersDTO.getPlayers().stream()
+                .map(PlayerDTO::new)
+                .forEach(ResultView::printPlayerFramesDisplay);
+    }
+    
+    private static void printPlayerFramesDisplay(final PlayerDTO playerDTO) {
         System.out.println(getPlayerResultDisplayFormat(playerDTO));
         System.out.println(getCumulativeScoreDisplayFormat(playerDTO));
     }
