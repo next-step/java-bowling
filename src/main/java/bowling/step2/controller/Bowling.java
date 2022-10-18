@@ -11,6 +11,7 @@ public class Bowling {
     private static final int MIN_COUNT_OF_FRAME = 1;
     
     public void run() {
+        int countOfPlayer = InputView.inputCountOfPlayer();
         final Player player = InputView.inputPlayer();
         ResultView.printPlayerFramesDisplay(new PlayerDTO(player));
         
@@ -19,6 +20,7 @@ public class Bowling {
     
     private void playBowl(final Player player) {
         for (int countOfFrame = MIN_COUNT_OF_FRAME; countOfFrame <= MAX_COUNT_OF_FRAME; countOfFrame++) {
+            // 여기서 플레이어 리스트 돌기
             runFrames(player, countOfFrame);
         }
     }
