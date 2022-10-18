@@ -77,7 +77,7 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public List<DeleteHistory> setDeleted(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         checkDeletable(loginUser);
 
         List<DeleteHistory> answerDeleteHistories = this.getAnswers().deleteAll(loginUser);

@@ -21,7 +21,7 @@ public class AnswerWrapper {
         checkDeletable(loginUser);
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         this.answers.forEach((answer)->{
-            answer.setDeleted(true);
+            answer.delete(true);
             deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         });
         return deleteHistories;
