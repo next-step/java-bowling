@@ -1,5 +1,7 @@
 package qna.domain.entity;
 
+import qna.exception.CannotDeleteException;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -21,20 +23,33 @@ public class DeleteHistory {
 
     private LocalDateTime createDate;
 
-    public DeleteHistory() {
+    private DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
+        this.contentType = contentType;
+        this.contentId = contentId;
+        this.deletedBy = deletedBy;
+        this.createDate = createDate;
     }
 
-    public DeleteHistory(AbstractEntity entity, User deletedBy){
-        if(entity instanceof Answer){
-            this.contentType = ContentType.ANSWER;
+    public DeleteHistory(Answer answer, User deletedBy){
+        this(ContentType.ANSWER, answer.getId(), deletedBy, LocalDateTime.now());
+
+        if (!answer.isDeleted()) {
+            throw new CannotDeleteException("삭제된 답변만 이력으로 만들 수 있습니다.");
         }
-        if(entity instanceof Question){
-            this.contentType = ContentType.QUESTION;
-        }
-        this.contentId = entity.getId();
-        this.deletedBy = deletedBy;
-        this.createDate = LocalDateTime.now();
     }
+
+    public DeleteHistory(Question question, User deletedBy){
+        this(ContentType.QUESTION, question.getId(), deletedBy, LocalDateTime.now());
+
+        if (!question.isDeleted()) {
+            throw new CannotDeleteException("삭제된 답변만 이력으로 만들 수 있습니다.");
+        }
+    }
+
+    public DeleteHistory() {
+
+    }
+
 
     @Override
     public boolean equals(Object o) {

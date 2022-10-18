@@ -8,12 +8,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import qna.domain.UserTest;
 import qna.domain.entity.Answer;
-import qna.domain.entity.DeleteHistory;
+import qna.domain.entity.DeleteHistories;
 import qna.domain.entity.Question;
 import qna.exception.CannotDeleteException;
 import qna.repository.QuestionRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -84,7 +83,9 @@ class QnaServiceTest {
 
     void verifyDeleteHistories() {
         question.delete(UserTest.JAVAJIGI);
-        List<DeleteHistory> deleteHistories = question.makeHistory(UserTest.JAVAJIGI);
-        verify(deleteHistoryService).saveAll(deleteHistories);
+        verify(deleteHistoryService).saveAll(
+                new DeleteHistories(question, UserTest.JAVAJIGI).getValues());
+
+
     }
 }
