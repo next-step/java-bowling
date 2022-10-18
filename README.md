@@ -9,5 +9,5 @@
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
 
 ## Step1 - 질문 삭제하기 기능 리팩토링
-- [ ] : Question, Answer 객체에게 메시지 전달
+- [x] : Question, Answer 객체에게 메시지 전달
 - [x] : 일급 콜렉션 생성 
