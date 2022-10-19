@@ -22,10 +22,16 @@ public class DeleteHistory {
     private LocalDateTime createDate = LocalDateTime.now();
 
     public static DeleteHistory withQuestion(Question question) {
+        if (!question.isDeleted()){
+            throw new IllegalStateException("삭제되지 않은 질문입니다.");
+        }
         return new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now());
     }
 
     public static DeleteHistory withAnswer(Answer answer) {
+        if (!answer.isDeleted()){
+            throw new IllegalStateException("삭제되지 않은 답변입니다.");
+        }
         return new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
     }
 
