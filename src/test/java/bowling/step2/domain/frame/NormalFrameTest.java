@@ -1,10 +1,8 @@
 package bowling.step2.domain.frame;
 
 import bowling.step2.domain.Frames;
-import bowling.step2.domain.Player;
 import bowling.step2.domain.Score;
 import bowling.step2.dto.CountOfFallenPinsDTO;
-import bowling.step2.dto.PlayerDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +20,7 @@ public class NormalFrameTest {
     @BeforeEach
     void setUp() {
         normalFrame = new NormalFrame(1);
-    
+        
         Frames frames = new Frames();
         IntStream.rangeClosed(1, 8).forEach(count -> frames.bowl(new CountOfFallenPinsDTO("10")));
         final List<Frame> allFrames = frames.getFrames();
