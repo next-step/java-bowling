@@ -67,7 +67,7 @@ public class QuestionTest {
         Answer answer = new Answer(UserTest.JAVAJIGI, question, "Answers Contents1");
         question.addAnswer(answer);
 
-        assertThatThrownBy(() -> question.deleteHistory()).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> question.getDeleteHistory()).isInstanceOf(IllegalStateException.class);
     }
 
     @Test
@@ -78,7 +78,7 @@ public class QuestionTest {
         question.addAnswer(answer);
         question.delete(UserTest.JAVAJIGI);
 
-        List<DeleteHistory> histories = question.deleteHistory();
+        List<DeleteHistory> histories = question.getDeleteHistory();
 
         assertThat(histories).containsExactly(DeleteHistory.withQuestion(question), DeleteHistory.withAnswer(answer));
     }

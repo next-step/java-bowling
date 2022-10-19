@@ -95,12 +95,13 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public void delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
         this.deleteAnswers();
         this.deleted = true;
+        return this.getDeleteHistory();
     }
 
 
@@ -108,7 +109,7 @@ public class Question extends AbstractEntity {
         this.answers.stream().forEach((answer) -> answer.delete(this.writer));
     }
 
-    public List<DeleteHistory> deleteHistory() {
+     List<DeleteHistory> getDeleteHistory() {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(DeleteHistory.withQuestion(this));
         deleteHistories.addAll(this.answers.stream()
