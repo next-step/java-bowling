@@ -6,6 +6,7 @@ import qna.CannotDeleteException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static qna.domain.AnswerTest.answer;
 
 class AnswersTest {
@@ -17,9 +18,11 @@ class AnswersTest {
 
         List<DeleteHistory> result = answers.delete(UserTest.JAVAJIGI);
 
-        List<DeleteHistory> expected = List.of(new DeleteHistory(ContentType.ANSWER, null, UserTest.JAVAJIGI, null));
-        assertThat(result).isEqualTo(expected);
-        assertThat(answer.isDeleted()).isTrue();
+        List<DeleteHistory> expected = List.of(new DeleteHistory(ContentType.ANSWER, answer.getId(), UserTest.JAVAJIGI, null));
+        assertAll(
+                () -> assertThat(result).isEqualTo(expected),
+                () -> assertThat(answer.isDeleted()).isTrue()
+        );
     }
 
     @Test

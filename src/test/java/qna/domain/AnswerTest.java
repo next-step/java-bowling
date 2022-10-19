@@ -8,6 +8,7 @@ import qna.UnAuthorizedException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class AnswerTest {
     public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
@@ -30,9 +31,11 @@ public class AnswerTest {
         Answer answer = answer();
         DeleteHistory result = answer.delete(UserTest.JAVAJIGI);
 
-        DeleteHistory expected = new DeleteHistory(ContentType.ANSWER, null, UserTest.JAVAJIGI, null);
-        assertThat(result).isEqualTo(expected);
-        assertThat(answer.isDeleted()).isTrue();
+        DeleteHistory expected = new DeleteHistory(ContentType.ANSWER, answer.getId(), UserTest.JAVAJIGI, null);
+        assertAll(
+                () -> assertThat(result).isEqualTo(expected),
+                () -> assertThat(answer.isDeleted()).isTrue()
+        );
     }
 
     @DisplayName("작성자가 아니면 답변을 삭제시 예외 발생")
