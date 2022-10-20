@@ -25,7 +25,7 @@ public class AnswerWrapper {
     private List<DeleteHistory> delete(){
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         this.answers.forEach((answer)->{
-            answer.delete(true);
+            answer.delete();
             deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         });
         return deleteHistories;
