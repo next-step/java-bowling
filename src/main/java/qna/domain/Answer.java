@@ -53,10 +53,6 @@ public class Answer extends AbstractEntity {
         return deleted;
     }
 
-    public boolean isOwner(User writer) {
-        return this.writer.equals(writer);
-    }
-
     public User getWriter() {
         return writer;
     }
@@ -77,12 +73,16 @@ public class Answer extends AbstractEntity {
         this.deleted = true;
     }
 
-    @Override
-    public String toString() {
-        return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
+    private boolean isOwner(User writer) {
+        return this.writer.equals(writer);
     }
 
     public DeleteHistory createDeleteHistory() {
         return new DeleteHistory(ContentType.ANSWER, super.getId(), writer, LocalDateTime.now());
+    }
+
+    @Override
+    public String toString() {
+        return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
 }
