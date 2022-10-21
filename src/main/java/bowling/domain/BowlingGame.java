@@ -8,37 +8,27 @@ import bowling.domain.frame.NormalFrame;
 import bowling.domain.scorestrategy.ScoreStrategy;
 import bowling.domain.state.StateType;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class BowlingGame {
 
-    private static final int NORMAL_TURN = 9;
+    private static final int LAST_NORMAL_TURN = 9;
 
     private LinkedList<Frame> frames;
-    private final PlayerName playerName;
-    private Pin now;
 
-    public BowlingGame(PlayerName playerName) {
-        this.playerName = playerName;
+    public BowlingGame() {
         this.frames = new LinkedList<>();
         frames.add(new NormalFrame());
     }
 
-    public void bowl(ScoreStrategy scoreStrategy) {
-
-        now = scoreStrategy.getScore(getRemainPins());
-
-        if (isFinished()) {
-            throw new IllegalStateException("게임이 종료되었습니다.");
-        }
-
+    public Pin bowl(ScoreStrategy scoreStrategy) {
+        Pin now = scoreStrategy.getScore(getRemainPins());
         addFrame();
         frames.getLast().bowl(now);
+        return now;
     }
 
     private int getRemainPins() {
@@ -51,7 +41,7 @@ public class BowlingGame {
 
     private void addFrame() {
 
-        if(normalFramesIsFinished()){
+        if (normalFramesIsFinished()) {
             frames.add(new FinalFrame());
         }
 
@@ -66,30 +56,17 @@ public class BowlingGame {
     }
 
     private boolean normalFramesIsFinished() {
-        return frames.size() == NORMAL_TURN && frames.getLast().isFinish();
+        return frames.size() == LAST_NORMAL_TURN && frames.getLast().isFinish();
     }
 
     public List<Record> getGameRecord() {
-        List<Record> records = IntStream.range(0, 10)
-                .mapToObj(i -> new Record())
-                .collect(Collectors.toList());
-
-        IntStream.range(0, frames.size())
-                .forEach(i -> records.set(i, getRecord(frames.get(i))));
-
-        return Collections.unmodifiableList(records);
+        return frames.stream()
+                .map(this::getRecord)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     public int getFrameNumber() {
         return frames.size();
-    }
-
-    public Pin getNow() {
-        return now;
-    }
-
-    public PlayerName getPlayerName() {
-        return playerName;
     }
 
     private Record getRecord(Frame frame) {
@@ -97,10 +74,10 @@ public class BowlingGame {
         return new Record(FrameType.valueOf(frame)
                 , frame.getState().getRecord()
                 , Optional.of(frame)
-                    .filter(FinalFrame.class::isInstance)
-                    .map(finalPin -> ((FinalFrame) finalPin).getBonus())
-                    .map(Pin::getValue)
-                    .orElse(null)
+                .filter(FinalFrame.class::isInstance)
+                .map(finalPin -> ((FinalFrame) finalPin).getBonus())
+                .map(Pin::getValue)
+                .orElse(null)
                 , StateType.valueOf(frame.getState())
         );
     }

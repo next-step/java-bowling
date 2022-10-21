@@ -1,6 +1,8 @@
 package bowling.view;
 
 import bowling.domain.BowlingGame;
+import bowling.domain.Pin;
+import bowling.domain.PlayerName;
 import bowling.domain.dto.Record;
 import bowling.domain.frame.FrameType;
 import bowling.domain.state.StateType;
@@ -26,19 +28,19 @@ public class OutputView {
 
     }
 
-    public static void print(BowlingGame bowlingGame) {
-        System.out.printf(FORMAT_BOWL, bowlingGame.getFrameNumber(), bowlingGame.getNow().getValue());
+    public static void print(BowlingGame bowlingGame, PlayerName playerName, Pin now) {
+        System.out.printf(FORMAT_BOWL, bowlingGame.getFrameNumber(), now.getValue());
         printHeader();
-        printRecord(bowlingGame);
+        printRecord(bowlingGame, playerName);
     }
 
-    public static void printStart(BowlingGame bowlingGame) {
+    public static void printStart(BowlingGame bowlingGame, PlayerName playerName) {
         printHeader();
-        printRecord(bowlingGame);
+        printRecord(bowlingGame, playerName);
     }
 
-    private static void printRecord(BowlingGame bowlingGame) {
-        String headerName = String.format(FORMAT_FRAME, bowlingGame.getPlayerName());
+    private static void printRecord(BowlingGame bowlingGame, PlayerName playerName) {
+        String headerName = String.format(FORMAT_FRAME, playerName);
 
         String records = bowlingGame.getGameRecord().stream()
                 .map(record -> String.format(FORMAT_FRAME, printRecord(record)))
