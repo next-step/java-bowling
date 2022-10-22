@@ -17,6 +17,21 @@ public class Score {
         return score;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Score)) return false;
+
+        Score score1 = (Score) o;
+
+        return score == score1.score;
+    }
+
+    @Override
+    public int hashCode() {
+        return score;
+    }
+
     public boolean isMax() {
         return score == MAX;
     }
