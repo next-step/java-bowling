@@ -1,13 +1,86 @@
 package bowling.view;
 
-import bowling.domain.PlayerName;
+import bowling.domain.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
 
 public class ResultView {
-    private final static String SCORE_TABLE_HEAD = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-    private final static String SCORE_TABLE_ROW = "|  %s |      |      |      |      |      |      |      |      |      |      |%n";
+    private static final String SCORE_TABLE_HEAD = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
+    private static final String BAR = "|";
+    private static final String STRIKE = "X";
+    private static final String SPARE = "/";
+    private static final String GUTTER = "-";
 
-    public static void printFrame(PlayerName playerName) {
+    public static void printFrames(PlayerName playerName, Frames frames) {
         System.out.println(SCORE_TABLE_HEAD);
-        System.out.printf(SCORE_TABLE_ROW, playerName.name());
+        List<String> rowElements = new ArrayList<>();
+        rowElements.add(playerName.name());
+        rowElements.addAll(triedFrames(frames));
+        rowElements.addAll(remainingFrames(frames));
+
+        String scoreTableRow = rowElements.stream()
+                .map(ResultView::padded)
+                .collect(joining(BAR, BAR, BAR));
+        System.out.println(scoreTableRow);
+    }
+
+    private static List<String> remainingFrames(Frames frames) {
+        int remainingFrameCount = Frames.MAX_FRAME_NUMBER - frames.lastFrameNumber();
+        return IntStream.range(0, remainingFrameCount)
+                .mapToObj(i -> "")
+                .collect(toList());
+    }
+
+    private static List<String> triedFrames(Frames frames) {
+        return frames.frames()
+                .stream()
+                .map(ResultView::frameString)
+                .collect(toList());
+    }
+
+    private static String frameString(Frame frame) {
+        return frame.bowlings()
+                .stream()
+                .map(ResultView::bowlingString)
+                .collect(joining(BAR));
+    }
+
+    private static String bowlingString(Bowling bowling) {
+        if (bowling.isStrike()) {
+            return STRIKE;
+        }
+
+        List<String> scores = bowling.scores()
+                .stream()
+                .map(Score::score)
+                .map(ResultView::scoreString)
+                .collect(toList());
+
+        if (bowling.isSpare()) {
+            scores.set(bowling.tries() - 1, SPARE);
+        }
+
+        return String.join(BAR, scores);
+    }
+
+    private static String scoreString(int score) {
+        if (score == 0) {
+            return GUTTER;
+        }
+
+        return String.valueOf(score);
+    }
+
+    private static String padded(String string) {
+        String result = " ".repeat(2) + string + " ".repeat(4);
+        if (string.length() > 3) {
+            result = " " + string + " ";
+        }
+        return result.substring(0, 6);
     }
 }
