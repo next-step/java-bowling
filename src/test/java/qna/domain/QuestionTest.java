@@ -1,27 +1,18 @@
 package qna.domain;
 
-<<<<<<< HEAD
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
-=======
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
->>>>>>> 88820b3 (test(domain) : 도메인 객체 테스트 코드 추가)
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-<<<<<<< HEAD
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-=======
->>>>>>> 88820b3 (test(domain) : 도메인 객체 테스트 코드 추가)
 
 public class QuestionTest {
     public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
     public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
 
-<<<<<<< HEAD
 
     @Test
     @DisplayName("답변이 없는 경우, 로그인 사용자와 질문한 사용자가 동일한 경우 삭제가 가능합니다.")
