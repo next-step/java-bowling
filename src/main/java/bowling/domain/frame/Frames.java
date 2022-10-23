@@ -1,10 +1,7 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.Pin;
 import bowling.domain.dto.Record;
-import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.FrameType;
-import bowling.domain.frame.NormalFrame;
 import bowling.domain.scorestrategy.ScoreStrategy;
 import bowling.domain.state.StateType;
 
@@ -13,13 +10,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class BowlingGame {
+public class Frames {
 
     private static final int LAST_NORMAL_TURN = 9;
 
     private LinkedList<Frame> frames;
 
-    public BowlingGame() {
+    public Frames() {
         this.frames = new LinkedList<>();
         frames.add(new NormalFrame());
     }
@@ -27,8 +24,16 @@ public class BowlingGame {
     public Pin bowl(ScoreStrategy scoreStrategy) {
         Pin now = scoreStrategy.getScore(getRemainPins());
         addFrame();
+        calculatePoint(now);
         frames.getLast().bowl(now);
         return now;
+    }
+
+    private void calculatePoint(Pin now) {
+        frames.stream()
+                .filter(Frame::isFinish)
+                .filter(Frame::canAddPoint)
+                .forEach(frame -> frame.addPoint(now));
     }
 
     private int getRemainPins() {
@@ -42,11 +47,11 @@ public class BowlingGame {
     private void addFrame() {
 
         if (normalFramesIsFinished()) {
-            frames.add(new FinalFrame());
+            frames.add(new FinalFrame(frames.getLast()));
         }
 
         if (frames.getLast().isFinish()) {
-            frames.add(new NormalFrame());
+            frames.add(new NormalFrame(frames.getLast()));
         }
     }
 
@@ -79,6 +84,6 @@ public class BowlingGame {
                 .map(Pin::getValue)
                 .orElse(null)
                 , StateType.valueOf(frame.getState())
-        );
+                ,frame.getPoint());
     }
 }
