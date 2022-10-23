@@ -97,4 +97,53 @@ class NormalFrameTest {
         );
     }
 
+    @Test
+    @DisplayName("점수 계산")
+    void calculate_point() {
+        //given
+        NormalFrame frame1 = new NormalFrame();
+        frame1.bowl(new Pin(10));
+        //when
+        //두번째 볼링 8
+        NormalFrame frame2 = new NormalFrame(frame1);
+        Pin turn2 = new Pin(8);
+        frame2.bowl(turn2);
+        if (frame1.canAddPoint()) {
+            frame1.addPoint(turn2);
+        }
+        //세번재 볼링 2
+        Pin turn3 = new Pin(2);
+        frame2.bowl(turn3);
+        if(frame1.canAddPoint()){
+            frame1.addPoint(turn3);
+        }
+        //네번째 볼링 8
+        NormalFrame frame3 = new NormalFrame(frame2);
+        Pin turn4 = new Pin(8);
+        frame3.bowl(turn4);
+        if(frame1.canAddPoint()){
+            frame1.addPoint(turn4);
+        }
+        if(frame2.canAddPoint()){
+            frame2.addPoint(turn4);
+        }
+        //다섯번째 볼링 1
+        Pin turn5 = new Pin(1);
+        frame3.bowl(turn5);
+        if(frame1.canAddPoint()){
+            frame1.addPoint(turn5);
+        }
+        if(frame2.canAddPoint()){
+            frame2.addPoint(turn5);
+        }
+
+        //then
+
+        assertAll(
+                () -> assertThat(frame1.getPoint()).isEqualTo(20),
+                () -> assertThat(frame2.getPoint()).isEqualTo(38),
+                () -> assertThat(frame3.getPoint()).isEqualTo(47)
+        );
+    }
+
 }
