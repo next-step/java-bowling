@@ -41,4 +41,10 @@ public class Started implements State {
     public List<Integer> getRecord() {
         return Collections.unmodifiableList(new LinkedList<>());
     }
+
+    @Override
+    public int getSum() {
+        return 0;
+    }
+
 }

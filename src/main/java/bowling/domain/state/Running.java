@@ -10,7 +10,7 @@ public class Running extends Started {
     private Pins pins;
 
     public Running(Pin pin) {
-        if(pin.isStrike()){
+        if (pin.isStrike()) {
             throw new IllegalArgumentException();
         }
         this.pins = Pins.of(pin);
@@ -18,19 +18,19 @@ public class Running extends Started {
 
     @Override
     public State bowl(Pin pin) {
-       pins.bowl(pin);
-        if(pins.isSpare()){
+        pins.bowl(pin);
+        if (pins.isSpare()) {
             return new Spare(pins);
         }
 
-       if(pins.isMiss()){
-           return new Miss(pins);
-       }
+        if (pins.isMiss()) {
+            return new Miss(pins);
+        }
         throw new IllegalStateException();
     }
 
     @Override
-    public int getRemainPins(){
+    public int getRemainPins() {
         return pins.getRemainPins();
     }
 
@@ -39,4 +39,5 @@ public class Running extends Started {
     public List<Integer> getRecord() {
         return pins.getRecord();
     }
+
 }

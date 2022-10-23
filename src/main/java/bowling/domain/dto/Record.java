@@ -7,20 +7,20 @@ import java.util.List;
 
 public class Record {
 
-    private FrameType kind;
-    private List<Integer> scores;
-    private Integer bonus;
-    private StateType state;
+    private final FrameType kind;
+    private final List<Integer> scores;
+    private final Integer bonus;
+    private final StateType state;
+    private final Integer point;
 
-    public Record(FrameType kind, List<Integer> scores, Integer bonus, StateType state) {
+    public Record(FrameType kind, List<Integer> scores, Integer bonus, StateType state, Integer point) {
         this.kind = kind;
         this.scores = scores;
         this.bonus = bonus;
         this.state = state;
+        this.point = point;
     }
 
-    public Record() {
-    }
 
     public List<Integer> getScores() {
         return scores;
@@ -36,5 +36,9 @@ public class Record {
 
     public FrameType getKind() {
         return kind;
+    }
+
+    public Integer getPoint() {
+        return point;
     }
 }

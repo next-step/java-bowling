@@ -17,4 +17,6 @@ public interface State {
 
     List<Integer> getRecord();
 
+    int getSum();
+
 }
