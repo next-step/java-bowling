@@ -12,11 +12,11 @@ class BallingTest {
         Balling balling = new Balling();
         BallingRound roundA = balling.play(3);
 
-        assertThat(roundA).isEqualTo(new BallingRound(1));
+        assertThat(roundA.isSameRound(new BallingRound(1))).isTrue();
 
         BallingRound roundB = balling.play(7);
-        assertThat(roundB).isEqualTo(new BallingRound(2));
 
+        assertThat(roundB.isSameRound(new BallingRound(1))).isTrue();
     }
 
 }
