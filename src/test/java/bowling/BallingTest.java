@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BallingTest {
 
     @Test
-    void shouldAddRound(){
+    void shouldReturnNextOrCurrentRound(){
         Balling balling = new Balling();
 
         BallingRound roundA = balling.play(3);
@@ -19,6 +19,10 @@ class BallingTest {
 
         BallingRound roundC = balling.play(10);
         assertThat(roundC.isSameRound(new BallingRound(3))).isTrue();
+
+        BallingRound roundD = balling.play(0);
+        assertThat(roundD.isSameRound(new BallingRound(3))).isTrue();
+
     }
 
 }

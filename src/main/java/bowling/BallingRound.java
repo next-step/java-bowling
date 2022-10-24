@@ -24,8 +24,8 @@ public class BallingRound {
         return this.roundNumber == target.roundNumber;
     }
 
-    public BallingRound addKnockDownPins(int numberOfPins) {
-        scores.add(numberOfPins);
+    public BallingRound addKnockDownPins(int pins) {
+        scores.add(pins);
         if (scores.isFull() && !isLastRound()){
             return new BallingRound(roundNumber + 1);
         }
