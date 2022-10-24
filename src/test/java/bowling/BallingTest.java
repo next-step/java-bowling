@@ -10,13 +10,15 @@ class BallingTest {
     @Test
     void shouldAddRound(){
         Balling balling = new Balling();
-        BallingRound roundA = balling.play(3);
 
+        BallingRound roundA = balling.play(3);
         assertThat(roundA.isSameRound(new BallingRound(1))).isTrue();
 
         BallingRound roundB = balling.play(7);
+        assertThat(roundB.isSameRound(new BallingRound(2))).isTrue();
 
-        assertThat(roundB.isSameRound(new BallingRound(1))).isTrue();
+        BallingRound roundC = balling.play(10);
+        assertThat(roundC.isSameRound(new BallingRound(3))).isTrue();
     }
 
 }

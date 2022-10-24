@@ -13,6 +13,8 @@ public class Balling {
     }
 
     public BallingRound play(int numberOfPins) {
-       return currentRound.add(numberOfPins);
+        BallingRound ballingRound = currentRound.addKnockDownPins(numberOfPins);
+        this.currentRound = ballingRound;
+        return ballingRound;
     }
 }
