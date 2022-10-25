@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AnswersTest {
     public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
@@ -21,8 +23,10 @@ public class AnswersTest {
 
         answers.delete(UserTest.JAVAJIGI);
 
-        assertThat(answer1.isDeleted()).isTrue();
-        assertThat(answer2.isDeleted()).isTrue();
+        assertAll(
+                () -> assertTrue(answer1.isDeleted()),
+                () -> assertTrue(answer2.isDeleted())
+        );
     }
 
     @DisplayName("삭제된 답글의 정보를 리스트로 받을 수 있다.")
@@ -34,8 +38,8 @@ public class AnswersTest {
         DeleteHistory deleteHistory1 = new DeleteHistory(ContentType.ANSWER, answer1.getId(), answer1.getWriter(), LocalDateTime.now());
         DeleteHistory deleteHistory2 = new DeleteHistory(ContentType.ANSWER, answer2.getId(), answer2.getWriter(), LocalDateTime.now());
 
-        answers.delete(UserTest.JAVAJIGI);
+        List<DeleteHistory> deleteHistories = answers.delete(UserTest.JAVAJIGI);
 
-        assertThat(answers.deleteHistories()).containsExactly(deleteHistory1, deleteHistory2);
+        assertThat(deleteHistories).containsExactly(deleteHistory1, deleteHistory2);
     }
 }
