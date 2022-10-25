@@ -20,7 +20,7 @@ public class Frames {
     }
 
     public static Frames init() {
-        return new Frames(List.of(NormalFrame.init()));
+        return new Frames(List.of(Frame.init()));
     }
 
     public List<Frame> frames() {
@@ -56,7 +56,7 @@ public class Frames {
             return add(FinalFrame.init());
         }
 
-        return add(NormalFrame.init());
+        return add(Frame.init());
     }
 
     public boolean isOver() {

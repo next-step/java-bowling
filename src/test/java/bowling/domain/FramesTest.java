@@ -15,7 +15,7 @@ class FramesTest {
     @DisplayName("Frames 초기화는 일반프레임을 초기화해서 생성한다")
     @Test
     void init() {
-        assertThat(Frames.init()).isEqualTo(new Frames(List.of(normalFrame())));
+        assertThat(Frames.init()).isEqualTo(new Frames(List.of(frame())));
     }
 
     @DisplayName("투구한 결과가 반환된다")
@@ -24,7 +24,7 @@ class FramesTest {
         Frames result = Frames.init()
                 .bowl(new Score(10));
 
-        assertThat(result).isEqualTo(new Frames(List.of(normalFrame().bowl(new Score(10)))));
+        assertThat(result).isEqualTo(new Frames(List.of(frame().bowl(new Score(10)))));
     }
 
     @DisplayName("다음 Frames 를 반환한다")
@@ -35,8 +35,8 @@ class FramesTest {
                 .next();
 
         Frames expected = new Frames(List.of(
-                normalFrame().bowl(new Score(10)),
-                normalFrame()));
+                frame().bowl(new Score(10)),
+                frame()));
         assertThat(result).isEqualTo(expected);
     }
 
@@ -67,8 +67,8 @@ class FramesTest {
         assertThat(frames(5).lastFrameNumber()).isEqualTo(6);
     }
 
-    private Frame normalFrame() {
-        return NormalFrame.init();
+    private Frame frame() {
+        return Frame.init();
     }
 
     private Frame finalFrame() {
@@ -87,7 +87,7 @@ class FramesTest {
     private List<Frame> frameList(int frameCount) {
         List<Frame> result = new ArrayList<>();
         for (int i = 0; i < frameCount; i++) {
-            result.add(normalFrame().bowl(new Score(10)));
+            result.add(frame().bowl(new Score(10)));
         }
         return result;
     }
