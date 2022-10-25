@@ -4,8 +4,8 @@ public class BowlingGame {
     private final Player player;
     private final FrameHistory frameHistory;
 
-    public BowlingGame(Player player, FrameHistory frameHistory) {
-        this.frameHistory = frameHistory;
+    public BowlingGame(Player player) {
+        this.frameHistory = new FrameHistory();
         this.player = player;
     }
 
