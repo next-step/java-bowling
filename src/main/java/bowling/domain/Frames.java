@@ -23,25 +23,6 @@ public class Frames {
         return new Frames(List.of(Frame.init()));
     }
 
-    public List<Frame> frames() {
-        return unmodifiableList(frames);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Frames)) return false;
-
-        Frames frames1 = (Frames) o;
-
-        return Objects.equals(frames, frames1.frames);
-    }
-
-    @Override
-    public int hashCode() {
-        return frames != null ? frames.hashCode() : 0;
-    }
-
     public Frames bowl(Score score) {
         Frame frame = lastFrame().bowl(score);
         return update(lastIndex(), frame);
@@ -65,6 +46,25 @@ public class Frames {
 
     public int lastFrameNumber() {
         return lastIndex() + 1;
+    }
+
+    public List<Frame> getFrames() {
+        return unmodifiableList(frames);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Frames)) return false;
+
+        Frames frames1 = (Frames) o;
+
+        return Objects.equals(frames, frames1.frames);
+    }
+
+    @Override
+    public int hashCode() {
+        return frames != null ? frames.hashCode() : 0;
     }
 
     private Frames add(Frame frame) {

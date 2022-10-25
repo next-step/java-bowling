@@ -19,7 +19,7 @@ public class ResultView {
     public static void printFrames(PlayerName playerName, Frames frames) {
         System.out.println(SCORE_TABLE_HEAD);
         List<String> rowElements = new ArrayList<>();
-        rowElements.add(playerName.name());
+        rowElements.add(playerName.getName());
         rowElements.addAll(triedFrames(frames));
         rowElements.addAll(remainingFrames(frames));
 
@@ -37,14 +37,14 @@ public class ResultView {
     }
 
     private static List<String> triedFrames(Frames frames) {
-        return frames.frames()
+        return frames.getFrames()
                 .stream()
                 .map(ResultView::frameString)
                 .collect(toList());
     }
 
     private static String frameString(Frame frame) {
-        return frame.bowlings()
+        return frame.getBowlings()
                 .stream()
                 .map(ResultView::bowlingString)
                 .collect(joining(BAR));
@@ -55,9 +55,9 @@ public class ResultView {
             return STRIKE;
         }
 
-        List<String> scores = bowling.scores()
+        List<String> scores = bowling.getScores()
                 .stream()
-                .map(Score::score)
+                .map(Score::getScore)
                 .map(ResultView::scoreString)
                 .collect(toList());
 

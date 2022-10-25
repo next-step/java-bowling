@@ -19,7 +19,7 @@ class FrameTest {
     @DisplayName("일반프레임 안의 투구들을 반환한다")
     @Test
     void bowlings() {
-        List<Bowling> result = frame().bowlings();
+        List<Bowling> result = frame().getBowlings();
 
         List<Bowling> expected = List.of(bowling());
         assertThat(result).isEqualTo(expected);

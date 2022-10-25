@@ -15,7 +15,19 @@ public class Frame {
         return new Frame(List.of(Bowling.init()));
     }
 
-    public List<Bowling> bowlings() {
+    public boolean isFinished() {
+        return lastBowling().isFinished();
+    }
+
+    public Frame bowl(Score score) {
+        if (lastBowling().isFinished()) {
+            return create(add(score));
+        }
+
+        return create(update(score));
+    }
+
+    public List<Bowling> getBowlings() {
         return bowlings;
     }
 
@@ -32,18 +44,6 @@ public class Frame {
     @Override
     public int hashCode() {
         return bowlings != null ? bowlings.hashCode() : 0;
-    }
-
-    public boolean isFinished() {
-        return lastBowling().isFinished();
-    }
-
-    public Frame bowl(Score score) {
-        if (lastBowling().isFinished()) {
-            return create(add(score));
-        }
-
-        return create(update(score));
     }
 
     protected Frame create(List<Bowling> bowlings) {

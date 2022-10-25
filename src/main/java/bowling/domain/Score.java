@@ -16,7 +16,11 @@ public class Score {
         this.score = score;
     }
 
-    public int score() {
+    public boolean isMax() {
+        return score == MAX;
+    }
+
+    public int getScore() {
         return score;
     }
 
@@ -33,9 +37,5 @@ public class Score {
     @Override
     public int hashCode() {
         return score;
-    }
-
-    public boolean isMax() {
-        return score == MAX;
     }
 }

@@ -18,7 +18,7 @@ class FinalFrameTest {
     @DisplayName("최종프레임 안의 투구들을 반환한다")
     @Test
     void getBowlings() {
-        List<Bowling> result = finalFrame().bowlings();
+        List<Bowling> result = finalFrame().getBowlings();
 
         List<Bowling> expected = bowlings();
         assertThat(result).isEqualTo(expected);
