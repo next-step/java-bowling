@@ -25,7 +25,7 @@ public class Pin {
 
     private static void validateRange(int count) {
         if (count < MIN_COUNT || count > MAX_COUNT) {
-            throw new IllegalArgumentException(MIN_COUNT + "~" + MAX_COUNT + "수를 입력해 주세요.");
+            throw new IllegalArgumentException(MIN_COUNT + "~" + MAX_COUNT + " 범위의 수만 가능합니다.");
         }
     }
 

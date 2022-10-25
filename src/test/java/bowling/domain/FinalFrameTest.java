@@ -14,7 +14,7 @@ class FinalFrameTest {
 
     @BeforeEach
     void setUp() {
-        frame = new FinalFrame(10);
+        frame = new FinalFrame();
     }
 
     @DisplayName("프레임의 번호는 10번 이외의 번호를 가질 수 없다.")
@@ -27,17 +27,24 @@ class FinalFrameTest {
     @DisplayName("스트라이크인 경우 한 번 더 투구할 수 있다.")
     @Test
     void fitchStrike() {
-        frame.fitch(10);
+        frame.pitch(10);
 
-        assertDoesNotThrow(() -> frame.fitch(5));
+        assertDoesNotThrow(() -> frame.pitch(5));
     }
 
     @DisplayName("스패어인 경우 한 번 더 투구할 수 있다.")
     @Test
     void fitchSpare() {
-        frame.fitch(7);
-        frame.fitch(3);
+        frame.pitch(7);
+        frame.pitch(3);
 
-        assertDoesNotThrow(() -> frame.fitch(5));
+        assertDoesNotThrow(() -> frame.pitch(5));
+    }
+
+    @DisplayName("마지막 프레임에서 다음 프레임은 생성할 수 없다.")
+    @Test
+    void finalFrameNextException() {
+        assertThatThrownBy(() -> frame.nextFrame())
+                .isInstanceOf(IllegalStateException.class);
     }
 }

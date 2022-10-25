@@ -1,43 +1,37 @@
 package bowling.domain;
 
-import java.util.Objects;
-
 public abstract class Frame {
 
     protected int number;
-    protected Pin firstPin;
-    protected Pin secondPin;
-    protected int chance = 2;
+    protected Score score;
 
     protected Frame() {
 
     }
 
-    public abstract void fitch(int number);
+    public abstract void pitch(int number);
 
-    public abstract boolean isFirst();
-
-    public boolean isStrike() {
-        return firstPin.count() == 10;
-    }
+    public abstract boolean canPitch();
 
     public ScoreType score() {
-        if (Objects.isNull(firstPin)) {
-            throw new IllegalStateException("첫번째 투구가 끝나지 않은 상태입니다.");
-        }
+        return score.status();
+    }
 
-        if (firstPin.count() == 10) {
-            return ScoreType.STRIKE;
-        }
+    public int number() {
+        return number;
+    }
 
-        if (Objects.isNull(secondPin)) {
-            throw new IllegalStateException("두번째 투구가 끝나지 않은 상태입니다.");
-        }
+    public abstract Frame nextFrame();
 
-        if (firstPin.count() + secondPin.count() == 10) {
-            return ScoreType.SPARE;
-        }
+    public boolean isEmpty() {
+        return score.pins().isEmpty();
+    }
 
-        return ScoreType.MISS;
+    public Pin firstPin() {
+        return score.pins().get(0);
+    }
+
+    public Pin secondPin() {
+        return score.pins().get(1);
     }
 }

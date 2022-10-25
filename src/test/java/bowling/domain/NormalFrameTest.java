@@ -16,61 +16,35 @@ class NormalFrameTest {
 
     @BeforeEach
     void setUp() {
-        frame = new NormalFrame(1);
-    }
-
-    @DisplayName("첫번째 투구에서 모든 핀을 쓰러뜨린 경우 스트라이크이다.")
-    @Test
-    void fitchStrike() {
-        frame.fitch(10);
-
-        assertThat(frame.score()).isEqualTo(ScoreType.STRIKE);
+        frame = new NormalFrame();
     }
 
     @DisplayName("스트라이크인 경우 한 번 더 투구할 수 없다.")
     @Test
     void fitchException() {
-        frame.fitch(10);
+        frame.pitch(10);
 
-        assertThatThrownBy(() -> frame.fitch(1))
+        assertThatThrownBy(() -> frame.pitch(1))
                 .isInstanceOf(IllegalStateException.class);
-    }
-
-    @DisplayName("두번째 투구에서 모든 핀을 쓰러뜨린 경우 스패어이다.")
-    @Test
-    void fitchSpare() {
-        frame.fitch(7);
-        frame.fitch(3);
-
-        assertThat(frame.score()).isEqualTo(ScoreType.SPARE);
     }
 
     @DisplayName("스패어 상태에서 한 번 더 투구할 수 없다.")
     @Test
     void fitchSpareException() {
-        frame.fitch(7);
-        frame.fitch(3);
+        frame.pitch(7);
+        frame.pitch(3);
 
-        assertThatThrownBy(() -> frame.fitch(1))
+        assertThatThrownBy(() -> frame.pitch(1))
                 .isInstanceOf(IllegalStateException.class);
-    }
-
-    @DisplayName("두번째 투구에서도 모든 핀이 쓰러지지 않은 경우 미스이다.")
-    @Test
-    void fitchMiss() {
-        frame.fitch(5);
-        frame.fitch(3);
-
-        assertThat(frame.score()).isEqualTo(ScoreType.MISS);
     }
 
     @DisplayName("미스 상태에서 한 번 더 투구할 수 없다.")
     @Test
     void fitchMissException() {
-        frame.fitch(5);
-        frame.fitch(3);
+        frame.pitch(5);
+        frame.pitch(3);
 
-        assertThatThrownBy(() -> frame.fitch(1))
+        assertThatThrownBy(() -> frame.pitch(1))
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -100,9 +74,25 @@ class NormalFrameTest {
     @DisplayName("두 번째 투구가 끝나지 않은 상황에서 점수를 내는 경우 예외가 발생한다.")
     @Test
     void scoreException2() {
-        frame.fitch(0);
+        frame.pitch(0);
 
         assertThatThrownBy(() -> frame.score())
                 .isInstanceOf(IllegalStateException.class);
+    }
+
+    @DisplayName("다음 프레임을 생성 할 수 있다.")
+    @Test
+    void next() {
+        Frame nextFrame = frame.nextFrame();
+
+        assertThat(nextFrame.number()).isEqualTo(2);
+    }
+
+    @DisplayName("마지막 프레임을 생성 할 수 있다.")
+    @Test
+    void nextFinal() {
+        Frame finalFrame = new NormalFrame(9).nextFrame();
+
+        assertThat(finalFrame).isInstanceOf(FinalFrame.class);
     }
 }

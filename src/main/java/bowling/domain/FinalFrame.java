@@ -3,8 +3,9 @@ package bowling.domain;
 public class FinalFrame extends Frame {
     private static final int DEFAULT_FRAME_NUMBER = 10;
 
-    private Pin thirdPin;
-    protected int chance = 3;
+    public FinalFrame() {
+        this(10);
+    }
 
     public FinalFrame(int number) {
         if (number != DEFAULT_FRAME_NUMBER) {
@@ -12,42 +13,27 @@ public class FinalFrame extends Frame {
         }
 
         this.number = number;
+        this.score = new Score(this);
     }
 
     @Override
-    public void fitch(int number) {
-        if (hasNoMoreChance()) {
+    public void pitch(int number) {
+        try {
+            score.addPin(Pin.of(number));
+        } catch (RuntimeException e) {
             throw new IllegalStateException("더 이상 던질 수 없습니다.");
         }
-
-        if (isFirst()) {
-            firstPin = Pin.of(number);
-            chance -= 1;
-            return;
-        }
-
-        if (isStrike()) {
-            secondPin = Pin.of(number);
-            chance -= 2;
-            return;
-        }
-
-        if (chance == 2) {
-            secondPin = Pin.of(number);
-            chance -= 1;
-            return;
-        }
-
-        thirdPin = Pin.of(number);
-        chance -= 1;
     }
 
     @Override
-    public boolean isFirst() {
-        return chance == 3;
+    public boolean canPitch() {
+        return (score.status().equals(ScoreType.STRIKE) && score.pins().size() == 1) ||
+                (score.status().equals(ScoreType.SPARE) && score.pins().size() == 2) ||
+                score.status().equals(ScoreType.PROCEEDING);
     }
 
-    private boolean hasNoMoreChance() {
-        return chance == 0;
+    @Override
+    public Frame nextFrame() {
+        throw new IllegalStateException("마지막 프레임입니다.");
     }
 }
