@@ -21,6 +21,6 @@ public class InputView {
 
     public static Score scanScore(int frameNumber) {
         System.out.printf(SCORE_QUESTION_FORMAT, frameNumber);
-        return new Score(Integer.parseInt(scanner.nextLine()));
+        return Score.of(Integer.parseInt(scanner.nextLine()));
     }
 }

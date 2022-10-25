@@ -27,9 +27,9 @@ class FinalFrameTest {
     @DisplayName("투구하고 그 결과를 반환한다")
     @Test
     void bowl() {
-        Frame result = finalFrame().bowl(new Score(2));
+        Frame result = finalFrame().bowl(Score.of(2));
 
-        Frame expected = new FinalFrame(bowlings()).bowl(new Score(2));
+        Frame expected = new FinalFrame(bowlings()).bowl(Score.of(2));
         assertThat(result).isEqualTo(expected);
     }
 
@@ -37,9 +37,9 @@ class FinalFrameTest {
     @Test
     void finished_whenFirstBowlingIsStrikeAndBonusBowlingFinished() {
         Frame result = FinalFrame.init()
-                .bowl(new Score(10))
-                .bowl(new Score(9))
-                .bowl(new Score(0));
+                .bowl(Score.of(10))
+                .bowl(Score.of(9))
+                .bowl(Score.of(0));
         assertThat(result.isFinished()).isTrue();
     }
 
@@ -47,9 +47,9 @@ class FinalFrameTest {
     @Test
     void finished_whenFirstBowlingIsSpareAndBonusBowlingFinished() {
         Frame result = FinalFrame.init()
-                .bowl(new Score(9))
-                .bowl(new Score(1))
-                .bowl(new Score(0));
+                .bowl(Score.of(9))
+                .bowl(Score.of(1))
+                .bowl(Score.of(0));
         assertThat(result.isFinished()).isTrue();
     }
 
@@ -57,8 +57,8 @@ class FinalFrameTest {
     @Test
     void finished_whenFirstBowlingIsFinishedBeingNotStrikeOrSpare() {
         Frame result = FinalFrame.init()
-                .bowl(new Score(7))
-                .bowl(new Score(2));
+                .bowl(Score.of(7))
+                .bowl(Score.of(2));
         assertThat(result.isFinished()).isTrue();
     }
 
@@ -66,7 +66,7 @@ class FinalFrameTest {
     @Test
     void notFinished_whenFirstBowlingIsStrike() {
         Frame result = FinalFrame.init()
-                .bowl(new Score(10));
+                .bowl(Score.of(10));
         assertThat(result.isFinished()).isFalse();
     }
 
@@ -74,8 +74,8 @@ class FinalFrameTest {
     @Test
     void notFinished_whenFirstBowlingIsStrikeAndTriesOneMore() {
         Frame result = FinalFrame.init()
-                .bowl(new Score(10))
-                .bowl(new Score(10));
+                .bowl(Score.of(10))
+                .bowl(Score.of(10));
         assertThat(result.isFinished()).isFalse();
     }
 
@@ -83,18 +83,18 @@ class FinalFrameTest {
     @Test
     void notFinished_whenFirstBowlingIsSpare() {
         Frame result = FinalFrame.init()
-                .bowl(new Score(9))
-                .bowl(new Score(1));
+                .bowl(Score.of(9))
+                .bowl(Score.of(1));
         assertThat(result.isFinished()).isFalse();
     }
 
     private static List<Bowling> bowlings() {
         return List.of(Bowling.init()
-                .bowl(new Score(8)));
+                .bowl(Score.of(8)));
     }
 
     private Frame finalFrame() {
         return FinalFrame.init()
-                .bowl(new Score(8));
+                .bowl(Score.of(8));
     }
 }

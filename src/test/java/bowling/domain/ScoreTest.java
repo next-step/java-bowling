@@ -14,7 +14,7 @@ class ScoreTest {
     @ParameterizedTest
     @ValueSource(ints = {11, -1})
     void createFail_whenScoreOutOfRange(int score) {
-        assertThatIllegalArgumentException().isThrownBy(() -> new Score(score));
+        assertThatIllegalArgumentException().isThrownBy(() -> Score.of(score));
     }
 
     @ParameterizedTest
@@ -23,6 +23,6 @@ class ScoreTest {
             "9,false"
     })
     void isMax(int score, boolean expected) {
-        assertThat(new Score(score).isMax()).isEqualTo(expected);
+        assertThat(Score.of(score).isMax()).isEqualTo(expected);
     }
 }
