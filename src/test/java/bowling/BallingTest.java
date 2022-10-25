@@ -1,15 +1,16 @@
 package bowling;
 
+import bowling.domain.Balling;
+import bowling.domain.BallingRound;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class BallingTest {
 
     @Test
     void shouldReturnNextOrCurrentRound(){
-        Balling balling = new Balling();
+        Balling balling = new Balling(position, rounds);
 
         BallingRound roundA = balling.play(3);
         assertThat(roundA.isSameRound(new BallingRound(1))).isTrue();

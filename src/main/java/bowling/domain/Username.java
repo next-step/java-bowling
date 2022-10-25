@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain;
 
 public class Username {
 
@@ -9,5 +9,10 @@ public class Username {
             throw new IllegalArgumentException("사용자 이름은 필수값입니다.");
         }
         this.name = name;
+    }
+
+
+    public String getName() {
+        return name;
     }
 }
