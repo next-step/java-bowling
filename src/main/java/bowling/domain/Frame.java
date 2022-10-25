@@ -2,6 +2,7 @@ package bowling.domain;
 
 
 import bowling.view.InputView;
+import bowling.view.ResultView;
 
 public class Frame {
     private int restPin = RuleConfig.NUMBER_OF_PIN;
@@ -18,9 +19,7 @@ public class Frame {
 
         while (!isEndOfFrame()) {
             pitch(frameHistory);
-
-            // TODO
-            // 볼링 점수판 출력
+            ResultView.printScoreBoard(frameHistory, player);
         }
     }
 

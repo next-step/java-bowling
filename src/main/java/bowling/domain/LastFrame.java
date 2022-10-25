@@ -12,16 +12,12 @@ public class LastFrame extends Frame {
         PitchResultEnum pitchResultEnum = null;
         while (!isEndOfFrame()) {
             pitchResultEnum = pitch(frameHistory);
-
-            // TODO
-            // 볼링 점수판 출력
+            ResultView.printScoreBoard(frameHistory, player);
         }
 
         if(checkBonus(pitchResultEnum)){
             doBonusPitch(frameHistory);
-
-            // TODO
-            // 볼링 점수판 출력
+            ResultView.printScoreBoard(frameHistory, player);
         }
     }
 
