@@ -7,7 +7,7 @@ public class Frame {
     private int restPin = RuleConfig.NUMBER_OF_PIN;
     private int restPitchCount = RuleConfig.PITCH_COUNT;
 
-    private void reset(){
+    protected void reset(){
         restPin = RuleConfig.NUMBER_OF_PIN;
         restPitchCount = RuleConfig.PITCH_COUNT;
     }
@@ -17,14 +17,14 @@ public class Frame {
         frameHistory.addHistory();
 
         while (!isEndOfFrame()) {
-            PitchResultEnum pitch = pitch(frameHistory);
+            pitch(frameHistory);
 
             // TODO
             // 볼링 점수판 출력
         }
     }
 
-    private PitchResultEnum pitch(FrameHistory frameHistory) {
+    protected PitchResultEnum pitch(FrameHistory frameHistory) {
         int downPinCount = InputView.inputDownPinCount(frameHistory.getLastIndex());
 
         PitchResultEnum pitchResultEnum = downPin(downPinCount);
@@ -34,12 +34,12 @@ public class Frame {
         return pitchResultEnum;
     }
 
-    private boolean isEndOfFrame() {
+    protected boolean isEndOfFrame() {
         return isDownAllPin() || isTryOut();
     }
 
 
-    private PitchResultEnum downPin(int downPinCount){
+    protected PitchResultEnum downPin(int downPinCount){
         restPin -= downPinCount;
         restPitchCount--;
 
