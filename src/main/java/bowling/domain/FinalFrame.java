@@ -3,7 +3,7 @@ package bowling.domain;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
-public class LastFrame extends Frame {
+public class FinalFrame extends Frame {
 
     public void doFrame(FrameHistory frameHistory, Player player) {
         reset();

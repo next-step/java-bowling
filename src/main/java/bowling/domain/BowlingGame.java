@@ -15,8 +15,8 @@ public class BowlingGame {
             frame.doFrame(frameHistory, player);
         }
 
-        Frame lastFrame = new LastFrame();
-        lastFrame.doFrame(frameHistory, player);
+        Frame finalFrame = new FinalFrame();
+        finalFrame.doFrame(frameHistory, player);
     }
 
 }
