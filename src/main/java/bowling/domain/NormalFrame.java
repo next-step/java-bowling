@@ -18,15 +18,6 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public void pitch(int number) {
-        try {
-            score.addPin(Pin.of(number));
-        } catch (RuntimeException e) {
-            throw new IllegalStateException(e.getMessage());
-        }
-    }
-
-    @Override
     public boolean canPitch() {
         return score.status().equals(ScoreType.PROCEEDING);
     }

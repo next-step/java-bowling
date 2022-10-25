@@ -64,22 +64,6 @@ class NormalFrameTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("첫번째 투구가 끝나지 않은 상황에서 점수를 내는 경우 예외가 발생한다.")
-    @Test
-    void scoreException1() {
-        assertThatThrownBy(() -> frame.score())
-                .isInstanceOf(IllegalStateException.class);
-    }
-
-    @DisplayName("두 번째 투구가 끝나지 않은 상황에서 점수를 내는 경우 예외가 발생한다.")
-    @Test
-    void scoreException2() {
-        frame.pitch(0);
-
-        assertThatThrownBy(() -> frame.score())
-                .isInstanceOf(IllegalStateException.class);
-    }
-
     @DisplayName("다음 프레임을 생성 할 수 있다.")
     @Test
     void next() {

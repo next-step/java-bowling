@@ -9,7 +9,13 @@ public abstract class Frame {
 
     }
 
-    public abstract void pitch(int number);
+    public void pitch(int number) {
+        try {
+            score.addPin(Pin.of(number));
+        } catch (RuntimeException e) {
+            throw new IllegalStateException(e.getMessage());
+        }
+    }
 
     public abstract boolean canPitch();
 

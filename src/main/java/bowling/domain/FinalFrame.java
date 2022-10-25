@@ -17,15 +17,6 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public void pitch(int number) {
-        try {
-            score.addPin(Pin.of(number));
-        } catch (RuntimeException e) {
-            throw new IllegalStateException("더 이상 던질 수 없습니다.");
-        }
-    }
-
-    @Override
     public boolean canPitch() {
         return (score.status().equals(ScoreType.STRIKE) && score.pins().size() == 1) ||
                 (score.status().equals(ScoreType.SPARE) && score.pins().size() == 2) ||
