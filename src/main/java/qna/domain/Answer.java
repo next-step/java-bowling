@@ -65,19 +65,20 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
-    public void delete(User loginUser) {
+    public DeleteHistory delete(User loginUser) {
         if (!isOwner(loginUser)) {
             throw new UnAuthorizedException("답변자와 로그인 정보가 일치하지 않습니다.");
         }
 
         this.deleted = true;
+        return createDeleteHistory();
     }
 
     private boolean isOwner(User writer) {
         return this.writer.equals(writer);
     }
 
-    public DeleteHistory createDeleteHistory() {
+    private DeleteHistory createDeleteHistory() {
         return new DeleteHistory(ContentType.ANSWER, super.getId(), writer, LocalDateTime.now());
     }
 

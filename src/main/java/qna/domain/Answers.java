@@ -33,14 +33,9 @@ public class Answers {
         return values.size();
     }
 
-    public void delete(User loginUser) {
-        values.forEach(answer -> answer.delete(loginUser));
-    }
-
-    public List<DeleteHistory> deleteHistories() {
+    public List<DeleteHistory> delete(User loginUser) {
         return values.stream()
-                .filter(Answer::isDeleted)
-                .map(Answer::createDeleteHistory)
+                .map(answer -> answer.delete(loginUser))
                 .collect(Collectors.toUnmodifiableList());
     }
 }

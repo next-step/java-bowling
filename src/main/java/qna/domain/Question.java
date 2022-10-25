@@ -1,6 +1,7 @@
 package qna.domain;
 
 import qna.exception.CannotDeleteException;
+import qna.exception.UnAuthorizedException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -84,28 +85,30 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
-    public void delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser) {
         if (!isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+            throw new UnAuthorizedException("질문을 삭제할 권한이 없습니다.");
         }
 
-        answers.delete(loginUser);
-
         this.deleted = true;
+        List<DeleteHistory> result = createDeleteHistories();
+        List<DeleteHistory> answerDeleteHistories = answers.delete(loginUser);
+
+        result.addAll(answerDeleteHistories);
+        return result;
     }
 
     private boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
 
-    public List<DeleteHistory> createDeleteHistories() {
+    private List<DeleteHistory> createDeleteHistories() {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
 
         if (deleted) {
             deleteHistories.add(new DeleteHistory(ContentType.QUESTION, super.getId(), writer, LocalDateTime.now()));
         }
 
-        deleteHistories.addAll(answers.deleteHistories());
         return deleteHistories;
     }
 

@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import qna.exception.CannotDeleteException;
 import qna.domain.*;
+import qna.exception.UnAuthorizedException;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -57,7 +58,7 @@ public class QnaServiceTest {
 
         assertThatThrownBy(() -> {
             qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
-        }).isInstanceOf(CannotDeleteException.class);
+        }).isInstanceOf(UnAuthorizedException.class);
     }
 
     @Test
@@ -77,7 +78,7 @@ public class QnaServiceTest {
 
         assertThatThrownBy(() -> {
             qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
-        }).isInstanceOf(CannotDeleteException.class);
+        }).isInstanceOf(UnAuthorizedException.class);
     }
 
     private void verifyDeleteHistories() {

@@ -3,8 +3,10 @@ package qna.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.exception.CannotDeleteException;
+import qna.exception.UnAuthorizedException;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -25,7 +27,7 @@ public class QuestionTest {
     @Test
     void deleteException() {
         assertThatThrownBy(() -> Q1.delete(UserTest.SANJIGI))
-                .isInstanceOf(CannotDeleteException.class);
+                .isInstanceOf(UnAuthorizedException.class);
     }
 
     @DisplayName("삭제된 질문과 답글의 정보를 리스트로 받을 수 있다.")
@@ -42,9 +44,9 @@ public class QuestionTest {
         question.addAnswer(answer1);
         question.addAnswer(answer2);
 
-        question.delete(UserTest.JAVAJIGI);
+        List<DeleteHistory> deleteHistories = question.delete(UserTest.JAVAJIGI);
 
-        assertThat(question.createDeleteHistories()).containsExactly(deleteHistory0, deleteHistory1, deleteHistory2);
+        assertThat(deleteHistories).containsExactly(deleteHistory0, deleteHistory1, deleteHistory2);
     }
 
     @DisplayName("답글이 없는 경우 질문만 삭제된다.")
@@ -55,8 +57,8 @@ public class QuestionTest {
 
         DeleteHistory deleteHistory = new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now());
 
-        question.delete(UserTest.JAVAJIGI);
+        List<DeleteHistory> deleteHistories = question.delete(UserTest.JAVAJIGI);
 
-        assertThat(question.createDeleteHistories()).containsExactly(deleteHistory);
+        assertThat(deleteHistories).containsExactly(deleteHistory);
     }
 }
