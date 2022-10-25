@@ -43,10 +43,10 @@ class FramesTest {
     @DisplayName("9번째 다음은 최종프레임을 넣어 Frames 를 반환한다")
     @Test
     void next_when9Frames() {
-        Frames result = frames(9).next();
+        Frames result = frames(10);
 
         List<Frame> frameList = frameList(9);
-        frameList.add(finalFrame());
+        frameList.add(finalFrame().bowl(new Score(10)));
         Frames expected = new Frames(frameList);
         assertThat(result).isEqualTo(expected);
     }
@@ -79,7 +79,9 @@ class FramesTest {
         Frames result = Frames.init();
         for (int i = 0; i < frameCount; i++) {
             result = result.bowl(new Score(10));
-            result = result.next();
+            if (result.isLastFrameFinished()) {
+                result = result.next();
+            }
         }
         return result;
     }

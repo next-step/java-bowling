@@ -29,10 +29,6 @@ public class Frames {
     }
 
     public Frames next() {
-        if (!lastFrame().isFinished()) {
-            return this;
-        }
-
         if (lastFrameNumber() == MAX_FRAME_NUMBER - 1) {
             return add(FinalFrame.init());
         }
@@ -46,6 +42,10 @@ public class Frames {
 
     public int lastFrameNumber() {
         return lastIndex() + 1;
+    }
+
+    public boolean isLastFrameFinished() {
+        return lastFrame().isFinished();
     }
 
     public List<Frame> getFrames() {

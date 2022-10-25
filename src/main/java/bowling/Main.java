@@ -18,7 +18,9 @@ public class Main {
             frames = frames.bowl(score);
             ResultView.printFrames(playerName, frames);
 
-            frames = frames.next();
+            if (frames.isLastFrameFinished()) {
+                frames = frames.next();
+            }
         }
 
         InputView.closeScan();
