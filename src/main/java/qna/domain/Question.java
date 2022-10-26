@@ -105,8 +105,8 @@ public class Question extends AbstractEntity {
 
 
     public void deleteAnswers() {
-        deleted = true;
         answers.stream().forEach((answer) -> answer.delete(writer));
+        deleted = true;
     }
 
      private List<DeleteHistory> getDeleteHistory() {
