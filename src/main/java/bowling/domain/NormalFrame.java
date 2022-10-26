@@ -19,7 +19,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public boolean canPitch() {
-        return score.status().equals(ScoreType.PROCEEDING);
+        return score.match(ScoreType.PROCEEDING);
     }
 
     @Override

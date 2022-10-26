@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@DisplayName("점수 테스트")
 public class ScoreTest {
 
     private Score score;
@@ -56,17 +57,6 @@ public class ScoreTest {
         score.addPin(Pin.of(5));
 
         assertThatThrownBy(() -> score.addPin(Pin.of(10)))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @DisplayName("[마지막 프레임] 세 번째 투구에서 핀의 합이 20을 넘은 경우 예외가 발생한다.")
-    @Test
-    void finalException() {
-        score = new Score(new FinalFrame());
-        score.addPin(Pin.of(10));
-        score.addPin(Pin.of(10));
-
-        assertThatThrownBy(() -> score.addPin(Pin.of(1)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

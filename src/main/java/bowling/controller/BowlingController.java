@@ -15,7 +15,6 @@ public class BowlingController {
         FramesResult framesResult = new FramesResult(player, frames);
         ResultView.printFrameResult(framesResult);
 
-
         while (!frames.isLast()) {
             Frame lastFrame = frames.lastFrame();
 
@@ -24,6 +23,17 @@ public class BowlingController {
             }
 
             frames.addFrame();
+        }
+    }
+
+    private Player getPlayer() {
+        String playerName = InputView.inputPlayerName();
+
+        try {
+            return new Player(playerName);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return getPlayer();
         }
     }
 
@@ -38,16 +48,5 @@ public class BowlingController {
         }
 
         ResultView.printFrameResult(framesResult);
-    }
-
-    private Player getPlayer() {
-        String playerName = InputView.inputPlayerName();
-
-        try {
-            return new Player(playerName);
-        } catch (RuntimeException e) {
-            System.out.println(e.getMessage());
-            return getPlayer();
-        }
     }
 }

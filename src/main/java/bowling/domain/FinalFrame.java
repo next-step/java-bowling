@@ -18,9 +18,11 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean canPitch() {
-        return (score.status().equals(ScoreType.STRIKE) && score.pins().size() == 1) ||
-                (score.status().equals(ScoreType.SPARE) && score.pins().size() == 2) ||
-                score.status().equals(ScoreType.PROCEEDING);
+        return score.match(ScoreType.STRIKE) ||
+                score.match(ScoreType.SPARE) ||
+                score.match(ScoreType.FINAL_SPARE) ||
+                score.match(ScoreType.FINAL_STRIKE) ||
+                score.match(ScoreType.PROCEEDING);
     }
 
     @Override

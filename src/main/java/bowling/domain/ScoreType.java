@@ -5,5 +5,6 @@ public enum ScoreType {
     SPARE,
     MISS,
     PROCEEDING,
-    DONE,
+    FINAL_STRIKE,
+    FINAL_SPARE,
 }

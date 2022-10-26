@@ -19,7 +19,7 @@ public abstract class Frame {
 
     public abstract boolean canPitch();
 
-    public ScoreType score() {
+    public ScoreType scoreStatus() {
         return score.status();
     }
 
@@ -33,11 +33,11 @@ public abstract class Frame {
         return score.pins().isEmpty();
     }
 
-    public Pin firstPin() {
-        return score.pins().get(0);
+    public int pinNumber(int index) {
+        return score.pinNumber(index);
     }
 
-    public Pin secondPin() {
-        return score.pins().get(1);
+    public int pinsSize() {
+        return score.pins().size();
     }
 }

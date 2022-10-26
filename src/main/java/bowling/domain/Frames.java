@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Frames {
     private final List<Frame> values;
-    private int lastFrameNumber = 0;
 
     public Frames(List<Frame> values) {
         this.values = values;

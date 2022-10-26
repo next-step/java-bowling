@@ -7,7 +7,7 @@ public class ResultView {
     }
 
     public static void printFrameResult(FramesResult result) {
-        System.out.println(result.getFrameNumberLine());
-        System.out.println(result.getFrameScores() + System.lineSeparator());
+        System.out.println(result.frameNumberLine());
+        System.out.println(result.frameScores() + System.lineSeparator());
     }
 }

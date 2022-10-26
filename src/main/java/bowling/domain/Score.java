@@ -22,7 +22,7 @@ public class Score {
                 .mapToInt(Pin::count)
                 .sum();
 
-        if (frame instanceof FinalFrame && sum + pin.count() > 20) {
+        if (frame instanceof FinalFrame && sum + pin.count() > 30) {
             throw new IllegalArgumentException("핀 갯수가 올바르지 않습니다.");
         }
 
@@ -34,20 +34,24 @@ public class Score {
     }
 
     public ScoreType status() {
-        if (frame instanceof FinalFrame) {
-            return getFinalFrameScore();
-        }
-
-        return getNormalFrameScore();
+        return getFrameScore();
     }
 
-    private ScoreType getFinalFrameScore() {
-        if (pins.size() == 1 && pins.get(0).count() == 10) {
+    private ScoreType getFrameScore() {
+        if (pins.size() == 1 && pinNumber(0) == 10) {
             return ScoreType.STRIKE;
         }
 
-        if (pins.size() == 2 && (pins.get(0).count() + pins.get(1).count()) == 10) {
-            return ScoreType.PROCEEDING;
+        if (pins.size() == 2 && pinNumber(1) == 10) {
+            return ScoreType.FINAL_STRIKE;
+        }
+
+        if (pins.size() == 2 && (pinNumber(0) + pinNumber(1)) == 10) {
+            return ScoreType.SPARE;
+        }
+
+        if (pins.size() == 2 && pinNumber(0) == 10 && pinNumber(1) != 10) {
+            return ScoreType.FINAL_SPARE;
         }
 
         if (pins().size() < 2) {
@@ -57,23 +61,15 @@ public class Score {
         return ScoreType.MISS;
     }
 
-    private ScoreType getNormalFrameScore() {
-        if (pins.size() == 1 && pins.get(0).count() == 10) {
-            return ScoreType.STRIKE;
-        }
-
-        if (pins.size() < 2) {
-            return ScoreType.PROCEEDING;
-        }
-
-        if (pins.size() == 2 && (pins.get(0).count() + pins.get(1).count()) == 10) {
-            return ScoreType.SPARE;
-        }
-
-        return ScoreType.MISS;
-    }
-
     public List<Pin> pins() {
         return Collections.unmodifiableList(pins);
+    }
+
+    public boolean match(ScoreType scoreType) {
+        return status().equals(scoreType);
+    }
+
+    public int pinNumber(int index) {
+        return pins.get(index).count();
     }
 }
