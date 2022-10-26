@@ -38,7 +38,7 @@ public class FinalFrame extends Frame {
             return;
         }
 
-        throw new IllegalStateException();
+        throw new UnsupportedOperationException();
     }
 
     private void addPoint() {
@@ -70,7 +70,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public void addPoint(Pin pin) {
-        throw new IllegalStateException();
+        throw new UnsupportedOperationException();
     }
 
     public Pin getBonus() {

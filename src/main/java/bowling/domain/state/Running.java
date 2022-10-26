@@ -26,7 +26,7 @@ public class Running extends Started {
         if (pins.isMiss()) {
             return new Miss(pins);
         }
-        throw new IllegalStateException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
