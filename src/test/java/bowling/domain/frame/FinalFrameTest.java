@@ -110,7 +110,7 @@ class FinalFrameTest {
 
         //then
         assertAll(
-                () -> assertThatIllegalStateException().isThrownBy(() -> miss.bowl(new Pin(5))),
+                () -> assertThatThrownBy(() -> miss.bowl(new Pin(5))).isInstanceOf(UnsupportedOperationException.class),
                 () -> assertThatNoException().isThrownBy(() -> spare.bowl(new Pin(5))),
                 () -> assertThatNoException().isThrownBy(() -> strike.bowl(new Pin(5)))
         );

@@ -3,6 +3,8 @@ package bowling.domain.frame;
 import bowling.domain.Pin;
 import bowling.domain.Point;
 
+import java.util.Optional;
+
 public class FinalFrame extends Frame {
 
 
@@ -43,7 +45,10 @@ public class FinalFrame extends Frame {
     private void addPoint() {
         if (isFinish()) {
             int nowSum = state.getSum() + calculateBonus();
-            this.point = new Point(before.point, nowSum, 0);
+            Point beforePoint = Optional.ofNullable(before)
+                    .map(frame -> frame.point)
+                    .orElse(null);
+            this.point = new Point(beforePoint, nowSum, 0);
         }
     }
 
