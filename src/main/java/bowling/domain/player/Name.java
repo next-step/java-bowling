@@ -1,8 +1,10 @@
 package bowling.domain.player;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class Name {
+    private static final Pattern PATTERN = Pattern.compile("a-zA-Z0-9");
     private static final int MAX_SIZE = 3;
 
     private final String value;
@@ -33,7 +35,7 @@ public class Name {
     }
 
     private boolean isAlpha(String name) {
-        return name.matches("^[a-zA-Z0-9]*$");
+        return PATTERN.matcher(name).matches();
     }
 
     public String value() {
