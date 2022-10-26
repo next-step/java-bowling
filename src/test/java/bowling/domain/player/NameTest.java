@@ -36,4 +36,11 @@ class NameTest {
         assertThatThrownBy(() -> new Name("test"))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("한글이 포함되어 있는 경우 예외가 발생한다.")
+    @Test
+    void korException() {
+        assertThatThrownBy(() -> new Name("ㄱa"))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }

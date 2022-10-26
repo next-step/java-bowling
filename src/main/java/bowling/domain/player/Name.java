@@ -11,7 +11,7 @@ public class Name {
         validateValue(value);
 
         value = value.strip();
-        validateSize(value);
+        validate(value);
 
         this.value = value;
     }
@@ -22,10 +22,18 @@ public class Name {
         }
     }
 
-    private void validateSize(String value) {
+    private void validate(String value) {
         if (value.length() > MAX_SIZE) {
             throw new IllegalArgumentException("이름은 " + MAX_SIZE + "글자 이하이어야 합니다.");
         }
+
+        if (!isAlpha(value)) {
+            throw new IllegalArgumentException("한글은 포함될 수 없습니다.");
+        }
+    }
+
+    private boolean isAlpha(String name) {
+        return name.matches("^[a-zA-Z0-9]*$");
     }
 
     public String value() {
