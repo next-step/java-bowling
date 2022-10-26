@@ -78,12 +78,16 @@ public class Frames {
 
         return new Record(FrameType.valueOf(frame)
                 , frame.getState().getRecord()
-                , Optional.of(frame)
+                , calculateBonus(frame)
+                , StateType.valueOf(frame.getState())
+                , frame.calculatePoint());
+    }
+
+    private static Integer calculateBonus(Frame frame) {
+        return Optional.of(frame)
                 .filter(FinalFrame.class::isInstance)
                 .map(finalPin -> ((FinalFrame) finalPin).getBonus())
                 .map(Pin::getValue)
-                .orElse(null)
-                , StateType.valueOf(frame.getState())
-                ,frame.getPoint());
+                .orElse(null);
     }
 }

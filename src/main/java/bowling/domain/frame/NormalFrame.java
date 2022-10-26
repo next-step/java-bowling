@@ -36,10 +36,11 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public Integer getPoint() {
-        return Optional.ofNullable(point)
-                .map(Point::point)
-                .orElse(null);
+    public Integer calculatePoint() {
+        if(point == null){
+            return null;
+        }
+        return point.point();
     }
 
     @Override

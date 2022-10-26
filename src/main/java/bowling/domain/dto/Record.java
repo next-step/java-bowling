@@ -21,7 +21,6 @@ public class Record {
         this.point = point;
     }
 
-
     public List<Integer> getScores() {
         return scores;
     }

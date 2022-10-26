@@ -140,9 +140,9 @@ class NormalFrameTest {
         //then
 
         assertAll(
-                () -> assertThat(frame1.getPoint()).isEqualTo(20),
-                () -> assertThat(frame2.getPoint()).isEqualTo(38),
-                () -> assertThat(frame3.getPoint()).isEqualTo(47)
+                () -> assertThat(frame1.calculatePoint()).isEqualTo(20),
+                () -> assertThat(frame2.calculatePoint()).isEqualTo(38),
+                () -> assertThat(frame3.calculatePoint()).isEqualTo(47)
         );
     }
 

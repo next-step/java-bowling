@@ -14,23 +14,27 @@ public abstract class Frame {
         this.state = new Started();
     }
 
-    protected Frame(Frame before){
+    protected Frame(Frame before) {
         this.before = before;
         this.state = new Started();
     }
 
     public abstract boolean isFinish();
+
     public abstract void bowl(Pin pin);
 
-    public int getRemainPins(){
+    public int getRemainPins() {
         return state.getRemainPins();
     }
 
     public State getState() {
         return state;
     }
-    public abstract Integer getPoint();
+
+    public abstract Integer calculatePoint();
+
     public abstract boolean canAddPoint();
+
     public abstract void addPoint(Pin pin);
 
- }
+}

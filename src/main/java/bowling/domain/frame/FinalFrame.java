@@ -3,9 +3,8 @@ package bowling.domain.frame;
 import bowling.domain.Pin;
 import bowling.domain.Point;
 
-import java.util.Optional;
-
 public class FinalFrame extends Frame {
+
 
     private Pin bonus;
 
@@ -43,24 +42,25 @@ public class FinalFrame extends Frame {
 
     private void addPoint() {
         if (isFinish()) {
-            this.point = new Point(before.point, state.getSum() + getBonusValue(), 0);
+            int nowSum = state.getSum() + calculateBonus();
+            this.point = new Point(before.point, nowSum, 0);
         }
     }
 
     @Override
-    public Integer getPoint() {
+    public Integer calculatePoint() {
 
-        return Optional.ofNullable(point)
-                .map(Point::point)
-                .map(point -> point + getBonusValue())
-                .orElse(null);
-
+        if (point != null && bonus != null) {
+            return point.point() + bonus.getValue();
+        }
+        return null;
     }
 
-    private Integer getBonusValue() {
-        return Optional.ofNullable(bonus)
-                .map(Pin::getValue)
-                .orElse(0);
+    private int calculateBonus() {
+        if (bonus != null) {
+            return bonus.getValue();
+        }
+        return 0;
     }
 
     @Override
