@@ -13,20 +13,21 @@ public class BallingApp {
 
     public static void main(String[] args) {
 
-        try(InputView inputView = new InputView(new BufferedReader(new InputStreamReader(System.in)))) {
+        try (InputView inputView = new InputView(new BufferedReader(new InputStreamReader(System.in)))) {
             OutputView.printUsernameAskQst();
             Username username = new Username(inputView.getUsername());
 
             Balling balling = new Balling();
-            while (!balling.isFinish()){
+            while (!balling.isFinish()) {
                 BallingRound round = balling.currentRound();
                 OutputView.printPinAskQst(round);
                 Integer knockDownPinNumber = inputView.getKnockDownPinNumber();
-                OutputView.printScore(balling,username);
                 balling.play(knockDownPinNumber);
+                OutputView.printScore(balling, username);
             }
 
-
+        } catch (IllegalArgumentException e) {
+            OutputView.printConsole(e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

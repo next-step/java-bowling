@@ -10,8 +10,8 @@ public class Position {
         this.position = position;
     }
 
-    public Position next(){
-        return new Position(position+1);
+    public Position next() {
+        return new Position(position + 1);
     }
 
 

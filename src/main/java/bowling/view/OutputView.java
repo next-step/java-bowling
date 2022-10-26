@@ -2,56 +2,90 @@ package bowling.view;
 
 import bowling.domain.*;
 
-import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class OutputView {
 
-    private static final String USERNAME_ASK_QST = "플레이어 이름은(3 english letters)?:";
+    private static final int TEMPLATE_INTERVAL = 5;
+
+    private static final String USERNAME_ASK_QST = "플레이어 이름은(%d english letters)?:";
 
     private static final String KNOWN_DOWN_PIN_NUMBER_ASK_QST = "\n %d프레임 투구 : ";
+    private static final String TEMPLATE_SEPARATOR = "|";
+    private static final String NAME_DISPLAY_TEMPLATE = "NAME";
 
-    private OutputView(){
+    private static final int SCORE_INTERVAL = 2;
+
+    private static final String roundTemplate = createRoundTemplate();
+
+    private OutputView() {
 
     }
 
-    public static void printUsernameAskQst(){
-        System.out.println(USERNAME_ASK_QST);
+    public static void printUsernameAskQst() {
+        System.out.printf(USERNAME_ASK_QST, Username.USERNAME_LENGTH);
     }
-    public static void printPinAskQst(BallingRound round){
-        System.out.printf(KNOWN_DOWN_PIN_NUMBER_ASK_QST,round.getRoundNumber());
+
+    public static void printPinAskQst(BallingRound round) {
+        System.out.printf(KNOWN_DOWN_PIN_NUMBER_ASK_QST, round.getRoundNumber());
     }
 
 
-    public static void printScore(Balling balling , Username username) {
-        System.out.print("\n | NAME |");
-        IntStream.range(0,BallingRound.LAST_ROUND_NUM)
-                .mapToObj((roundNum)->{
-                    if (roundNum + 1< 10){
-                        return "0" + roundNum + 1 + "  |";
-                    }
-                    return roundNum + 1 + "  |";
-                })
-                .forEach(System.out::print);
-        System.out.print("\n | " + username.getName() + " |");
-        IntStream.range(0,BallingRound.LAST_ROUND_NUM)
-                .mapToObj((roundNum)->{
+    public static void printScore(Balling balling, Username username) {
+        System.out.println(roundTemplate);
+        System.out.print(TEMPLATE_SEPARATOR + createTemplateUnit(username.getName()));
+        IntStream.range(1, BallingRound.LAST_ROUND_NUM + 1)
+                .mapToObj((roundNum) -> {
                     BallingRound round = balling.getRounds().get(new Position(roundNum));
-                    if (round ==null){
-                        return "    |";
+                    if (round == null) {
+                        return createTemplateUnit("");
                     }
                     Scores scores = round.getScores();
-                    if (scores.isStrike()){
-                       return  "  " + "X" + "  |";
+                    String view = scores.getScores().stream()
+                            .map(PinView::valueOf)
+                            .collect(Collectors.joining(PinView.AND.getView()));
+                    if (scores.isSecondPinSpare()) {
+                        return createTemplateUnit(replaceToSpareExpression(view, SCORE_INTERVAL));
                     }
-                    if (scores.isSpare()){
-                        return "  " + scores.getScores().get(0).getScore() +"  /  |";
-                    }else{
-                        return "  " + scores.getScores().get(0)  +"  |";
+                    if (scores.isThirdPinSpare()) {
+                        return createTemplateUnit(replaceToSpareExpression(view, SCORE_INTERVAL * 2));
                     }
+                    return createTemplateUnit(view);
                 })
                 .forEach(System.out::print);
 
     }
 
+    private static String replaceToSpareExpression(String result, int replaceTargetIndex) {
+        StringBuilder builder = new StringBuilder(result);
+        builder.setCharAt(replaceTargetIndex, PinView.SPARE.getView().charAt(0));
+        return builder.toString();
+    }
+
+    private static String createRoundTemplate() {
+        return TEMPLATE_SEPARATOR + createTemplateUnit(NAME_DISPLAY_TEMPLATE) +
+                IntStream.range(0, BallingRound.LAST_ROUND_NUM)
+                        .mapToObj((roundNum) -> {
+                            int viewRoundNum = roundNum + 1;
+                            if (viewRoundNum < 10) {
+                                return createTemplateUnit("0" + viewRoundNum);
+                            }
+                            return createTemplateUnit(String.valueOf(viewRoundNum));
+                        })
+                        .collect(Collectors.joining());
+    }
+
+    private static String createTemplateUnit(String input) {
+        int whiteSpaceLength = TEMPLATE_INTERVAL - input.length();
+        String whiteSpace = IntStream.range(0, whiteSpaceLength)
+                .mapToObj((idx) -> " ")
+                .collect(Collectors.joining());
+        return whiteSpace + input + "  " + TEMPLATE_SEPARATOR;
+    }
+
+
+    public static void printConsole(String message) {
+        System.out.println(message);
+    }
 }

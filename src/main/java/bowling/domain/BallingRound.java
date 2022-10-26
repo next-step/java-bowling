@@ -4,32 +4,33 @@ public class BallingRound {
     public static final int LAST_ROUND_NUM = 10;
     private final int roundNumber;
 
-    private Scores scores = new Scores();
+    private final Scores scores = new Scores();
 
     public BallingRound(int roundNumber) {
-        if (roundNumber < 0){
+        if (roundNumber <= 0) {
             throw new IllegalArgumentException();
         }
         this.roundNumber = roundNumber;
     }
 
-    public BallingRound next(){
-        return new BallingRound(roundNumber+1);
+    public BallingRound next() {
+        return new BallingRound(roundNumber + 1);
     }
 
-    public boolean isSameRound(BallingRound target){
+    public boolean isSameRound(BallingRound target) {
         return this.roundNumber == target.roundNumber;
     }
 
     public boolean addKnockDownPins(int pins) {
         scores.add(pins);
-        if (!isLastRound() && scores.isNormalRoundEnd()){
-            return true;
-        }
-        return false;
+        return isNextRound();
     }
 
-    private boolean isLastRound(){
+    private boolean isNextRound() {
+        return !isLastRound() && scores.isNormalRoundEnd();
+    }
+
+    private boolean isLastRound() {
         return roundNumber == LAST_ROUND_NUM;
     }
 

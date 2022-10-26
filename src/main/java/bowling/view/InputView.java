@@ -3,7 +3,7 @@ package bowling.view;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public class InputView implements AutoCloseable{
+public class InputView implements AutoCloseable {
 
     private final BufferedReader bufferedReader;
 
@@ -16,7 +16,11 @@ public class InputView implements AutoCloseable{
     }
 
     public Integer getKnockDownPinNumber() throws IOException {
-        return Integer.parseInt(bufferedReader.readLine());
+        try {
+            return Integer.parseInt(bufferedReader.readLine());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("투구 개수는 숫자여야만 합니다.", e);
+        }
     }
 
     @Override
