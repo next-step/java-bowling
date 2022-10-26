@@ -79,10 +79,6 @@ public class FramesResult {
             return String.format("  %d|/ |", frame.pinNumber(0));
         }
 
-        if (score.equals(ScoreType.FINAL_SPARE)) {
-            return String.format("  %d|%d |", frame.pinNumber(0), frame.pinNumber(1));
-        }
-
         return String.format("  %d|%d |", frame.pinNumber(0), frame.pinNumber(1));
     }
 
