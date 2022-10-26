@@ -22,20 +22,20 @@ class FramesTest {
     @Test
     void bowl() {
         Frames result = Frames.init()
-                .bowl(Score.of(10));
+                .bowl(Pins.of(10));
 
-        assertThat(result).isEqualTo(new Frames(List.of(frame().bowl(Score.of(10)))));
+        assertThat(result).isEqualTo(new Frames(List.of(frame().bowl(Pins.of(10)))));
     }
 
     @DisplayName("다음 Frames 를 반환한다")
     @Test
     void next() {
         Frames result = Frames.init()
-                .bowl(Score.of(10))
+                .bowl(Pins.of(10))
                 .next();
 
         Frames expected = new Frames(List.of(
-                frame().bowl(Score.of(10)),
+                frame().bowl(Pins.of(10)),
                 frame()));
         assertThat(result).isEqualTo(expected);
     }
@@ -46,7 +46,7 @@ class FramesTest {
         Frames result = frames(10);
 
         List<Frame> frameList = frameList(9);
-        frameList.add(finalFrame().bowl(Score.of(10)));
+        frameList.add(finalFrame().bowl(Pins.of(10)));
         Frames expected = new Frames(frameList);
         assertThat(result).isEqualTo(expected);
     }
@@ -78,7 +78,7 @@ class FramesTest {
     private Frames frames(int frameCount) {
         Frames result = Frames.init();
         for (int i = 0; i < frameCount; i++) {
-            result = result.bowl(Score.of(10));
+            result = result.bowl(Pins.of(10));
             if (result.isLastFrameFinished()) {
                 result = result.next();
             }
@@ -89,7 +89,7 @@ class FramesTest {
     private List<Frame> frameList(int frameCount) {
         List<Frame> result = new ArrayList<>();
         for (int i = 0; i < frameCount; i++) {
-            result.add(frame().bowl(Score.of(10)));
+            result.add(frame().bowl(Pins.of(10)));
         }
         return result;
     }

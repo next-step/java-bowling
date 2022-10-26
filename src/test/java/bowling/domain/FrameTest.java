@@ -28,17 +28,17 @@ class FrameTest {
     @DisplayName("투구하고 그 결과를 반환한다")
     @Test
     void bowl() {
-        Frame result = frame().bowl(Score.of(2));
+        Frame result = frame().bowl(Pins.of(2));
 
-        Frame expected = new Frame(List.of(bowling().bowl(Score.of(2))));
+        Frame expected = new Frame(List.of(bowling().bowl(Pins.of(2))));
         assertThat(result).isEqualTo(expected);
     }
 
     @DisplayName("투구가 끝나면 일반프레임이 끝난다")
     @Test
     void finished_whenBowlingFinished() {
-        Frame frameWithTriesDoneBowling = frame().bowl(Score.of(1));
-        Frame frameWithStrikeBowling = Frame.init().bowl(Score.of(10));
+        Frame frameWithTriesDoneBowling = frame().bowl(Pins.of(1));
+        Frame frameWithStrikeBowling = Frame.init().bowl(Pins.of(10));
 
         assertAll(
                 () -> assertThat(frameWithTriesDoneBowling.isFinished()).isTrue(),
@@ -53,11 +53,11 @@ class FrameTest {
 
     private static Bowling bowling() {
         return Bowling.init()
-                .bowl(Score.of(8));
+                .bowl(Pins.of(8));
     }
 
     private Frame frame() {
         return Frame.init()
-                .bowl(Score.of(8));
+                .bowl(Pins.of(8));
     }
 }

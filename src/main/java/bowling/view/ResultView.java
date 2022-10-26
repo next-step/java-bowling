@@ -55,25 +55,25 @@ public class ResultView {
             return STRIKE;
         }
 
-        List<String> scores = bowling.getScores()
+        List<String> pinsList = bowling.getPinsList()
                 .stream()
-                .map(Score::getScore)
-                .map(ResultView::scoreString)
+                .map(Pins::getFallenPins)
+                .map(ResultView::pinsString)
                 .collect(toList());
 
         if (bowling.isSpare()) {
-            scores.set(bowling.tries() - 1, SPARE);
+            pinsList.set(bowling.tries() - 1, SPARE);
         }
 
-        return String.join(BAR, scores);
+        return String.join(BAR, pinsList);
     }
 
-    private static String scoreString(int score) {
-        if (score == 0) {
+    private static String pinsString(int fallenPins) {
+        if (fallenPins == 0) {
             return GUTTER;
         }
 
-        return String.valueOf(score);
+        return String.valueOf(fallenPins);
     }
 
     private static String padded(String string) {

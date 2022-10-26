@@ -8,13 +8,13 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-class ScoreTest {
+class PinsTest {
 
-    @DisplayName("정해진 범위 외에 스코어를 생성하면 예외 발생")
+    @DisplayName("정해진 범위 외에 핀들을 생성하면 예외 발생")
     @ParameterizedTest
     @ValueSource(ints = {11, -1})
-    void createFail_whenScoreOutOfRange(int score) {
-        assertThatIllegalArgumentException().isThrownBy(() -> Score.of(score));
+    void createFail_whenPinsOutOfRange(int fallenPins) {
+        assertThatIllegalArgumentException().isThrownBy(() -> Pins.of(fallenPins));
     }
 
     @ParameterizedTest
@@ -22,7 +22,7 @@ class ScoreTest {
             "10,true",
             "9,false"
     })
-    void isMax(int score, boolean expected) {
-        assertThat(Score.of(score).isMax()).isEqualTo(expected);
+    void isMax(int fallenPins, boolean expected) {
+        assertThat(Pins.of(fallenPins).isMax()).isEqualTo(expected);
     }
 }

@@ -23,8 +23,8 @@ public class Frames {
         return new Frames(List.of(Frame.init()));
     }
 
-    public Frames bowl(Score score) {
-        Frame frame = lastFrame().bowl(score);
+    public Frames bowl(Pins pins) {
+        Frame frame = lastFrame().bowl(pins);
         return update(lastIndex(), frame);
     }
 
