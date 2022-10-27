@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Name {
-    private static final Pattern PATTERN = Pattern.compile("a-zA-Z0-9");
+    private static final Pattern PATTERN = Pattern.compile("^[a-zA-Z0-9]+$");
     private static final int MAX_SIZE = 3;
 
     private final String value;
