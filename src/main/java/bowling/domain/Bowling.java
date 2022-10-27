@@ -8,15 +8,15 @@ import static java.util.Collections.unmodifiableList;
 
 public class Bowling {
     private static final int MAX_TRIES = 2;
-    private static final int MAX_PINS_SUM = 10;
+    private static final int MAX_FALLEN_PIN_SUM = 10;
 
-    private final List<FallenPins> fallenPinsList;
+    private final List<FallenPin> fallenPins;
 
-    Bowling(List<FallenPins> fallenPinsList) {
-        this.fallenPinsList = fallenPinsList;
+    Bowling(List<FallenPin> fallenPins) {
+        this.fallenPins = fallenPins;
 
-        if (totalPins() > MAX_PINS_SUM) {
-            throw new IllegalArgumentException(String.format("쓰러진 핀 수의 합은 %s 이하여야 합니다.", MAX_PINS_SUM));
+        if (totalFallenPins() > MAX_FALLEN_PIN_SUM) {
+            throw new IllegalArgumentException(String.format("쓰러진 핀 수의 합은 %s 이하여야 합니다.", MAX_FALLEN_PIN_SUM));
         }
     }
 
@@ -24,15 +24,15 @@ public class Bowling {
         return new Bowling(List.of());
     }
 
-    public Bowling bowl(FallenPins fallenPins) {
-        List<FallenPins> result = new ArrayList<>(this.fallenPinsList);
-        result.add(fallenPins);
+    public Bowling bowl(FallenPin fallenPin) {
+        List<FallenPin> result = new ArrayList<>(this.fallenPins);
+        result.add(fallenPin);
         return new Bowling(result);
     }
 
     public boolean isStrike() {
         if (tries() == 1) {
-            return fallenPinsList.get(0).isMax();
+            return fallenPins.get(0).isMax();
         }
 
         return false;
@@ -40,7 +40,7 @@ public class Bowling {
 
     public boolean isSpare() {
         if (triesDone()) {
-            return totalPins() == MAX_PINS_SUM;
+            return totalFallenPins() == MAX_FALLEN_PIN_SUM;
         }
 
         return false;
@@ -51,11 +51,11 @@ public class Bowling {
     }
 
     public int tries() {
-        return fallenPinsList.size();
+        return fallenPins.size();
     }
 
-    public List<FallenPins> getPinsList() {
-        return unmodifiableList(fallenPinsList);
+    public List<FallenPin> getFallingPins() {
+        return unmodifiableList(fallenPins);
     }
 
     @Override
@@ -65,21 +65,21 @@ public class Bowling {
 
         Bowling bowling = (Bowling) o;
 
-        return Objects.equals(fallenPinsList, bowling.fallenPinsList);
+        return Objects.equals(fallenPins, bowling.fallenPins);
     }
 
     @Override
     public int hashCode() {
-        return fallenPinsList != null ? fallenPinsList.hashCode() : 0;
+        return fallenPins != null ? fallenPins.hashCode() : 0;
     }
 
     private boolean triesDone() {
         return tries() == MAX_TRIES;
     }
 
-    private int totalPins() {
-        return fallenPinsList.stream()
-                .mapToInt(FallenPins::getFallenPins)
+    private int totalFallenPins() {
+        return fallenPins.stream()
+                .mapToInt(FallenPin::getCount)
                 .sum();
     }
 }

@@ -16,7 +16,7 @@ public class InputView {
         return SCANNER.nextLine();
     }
 
-    public static int scanFallenPins(int frameNumber) {
+    public static int scanFallenPinCount(int frameNumber) {
         System.out.printf(FALLEN_PINS_QUESTION_FORMAT, frameNumber);
         return Integer.parseInt(SCANNER.nextLine());
     }
