@@ -1,6 +1,6 @@
 package bowling.domain;
 
-public enum PitchResultEnum {
+public enum PitchResult {
     STRIKE,     // 스트라이크(strike) : 프레임의 첫번째 투구에서 모든 핀(10개)을 쓰러트린 상태
     SPARE,      // 스페어(spare) : 프레임의 두번재 투구에서 모든 핀(10개)을 쓰러트린 상태
     MISS,       // 미스(miss) : 프레임의 두번재 투구에서도 모든 핀이 쓰러지지 않은 상태
@@ -8,7 +8,7 @@ public enum PitchResultEnum {
     NONE
     ;
 
-    public static PitchResultEnum of(int restPin, int downPin, int restPitchCount) {
+    public static PitchResult of(int restPin, int downPin, int restPitchCount) {
         if(isGutter(downPin)){
             return GUTTER;
         }

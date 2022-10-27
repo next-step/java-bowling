@@ -9,8 +9,8 @@ public class FrameHistory {
     private final List<PitchHistory> pitchHistories = new ArrayList<>();
     private FrameHistory nextFrameHistory = null;
 
-    public void record(PitchResultEnum pitchResultEnum, int downPinCount){
-        PitchHistory pitchHistory = new PitchHistory(pitchResultEnum, downPinCount);
+    public void record(PitchResult pitchResult, int downPinCount) {
+        PitchHistory pitchHistory = new PitchHistory(pitchResult, downPinCount);
         FrameHistory lastHistory = getLastHistory();
         lastHistory.addPitchHistory(pitchHistory);
     }

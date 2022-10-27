@@ -9,27 +9,27 @@ public class FinalFrame extends Frame {
         reset();
         frameHistory.addHistory();
 
-        PitchResultEnum pitchResultEnum = null;
+        PitchResult pitchResult = null;
         while (!isEndOfFrame()) {
-            pitchResultEnum = pitch(frameHistory);
+            pitchResult = pitch(frameHistory);
             ResultView.printScoreBoard(frameHistory, player);
         }
 
-        if(checkBonus(pitchResultEnum)){
+        if (checkBonus(pitchResult)) {
             doBonusPitch(frameHistory);
             ResultView.printScoreBoard(frameHistory, player);
         }
     }
 
-    private boolean checkBonus(PitchResultEnum pitchResultEnum){
-        return PitchResultEnum.STRIKE.equals(pitchResultEnum) || PitchResultEnum.SPARE.equals(pitchResultEnum);
+    private boolean checkBonus(PitchResult pitchResult) {
+        return PitchResult.STRIKE.equals(pitchResult) || PitchResult.SPARE.equals(pitchResult);
     }
 
     private void doBonusPitch(FrameHistory frameHistory){
         reset();
         int downPinCount = InputView.inputDownPinCount(frameHistory.getLastIndex());
-        PitchResultEnum pitchResultEnum = downPin(downPinCount);
-        frameHistory.record(pitchResultEnum, downPinCount);
+        PitchResult pitchResult = downPin(downPinCount);
+        frameHistory.record(pitchResult, downPinCount);
     }
 
 }

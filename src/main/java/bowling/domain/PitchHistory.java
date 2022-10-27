@@ -1,15 +1,15 @@
 package bowling.domain;
 
 public class PitchHistory {
-    private final PitchResultEnum result;
+    private final PitchResult result;
     private final int downPin;
 
-    public PitchHistory(PitchResultEnum result, int downPin) {
+    public PitchHistory(PitchResult result, int downPin) {
         this.result = result;
         this.downPin = downPin;
     }
 
-    public PitchResultEnum getResult() {
+    public PitchResult getResult() {
         return result;
     }
 

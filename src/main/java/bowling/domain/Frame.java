@@ -25,14 +25,14 @@ public class Frame {
         }
     }
 
-    protected PitchResultEnum pitch(FrameHistory frameHistory) {
+    protected PitchResult pitch(FrameHistory frameHistory) {
         int downPinCount = InputView.inputDownPinCount(frameHistory.getLastIndex());
 
-        PitchResultEnum pitchResultEnum = downPin(downPinCount);
+        PitchResult pitchResult = downPin(downPinCount);
 
-        frameHistory.record(pitchResultEnum, downPinCount);
+        frameHistory.record(pitchResult, downPinCount);
 
-        return pitchResultEnum;
+        return pitchResult;
     }
 
     protected boolean isEndOfFrame() {
@@ -40,13 +40,13 @@ public class Frame {
     }
 
 
-    protected PitchResultEnum downPin(int downPinCount){
+    protected PitchResult downPin(int downPinCount) {
         checkDownPinCount(downPinCount);
 
         restPin -= downPinCount;
         restPitchCount--;
 
-        return PitchResultEnum.of(restPin, downPinCount, restPitchCount);
+        return PitchResult.of(restPin, downPinCount, restPitchCount);
     }
 
     private boolean isDownAllPin() {
