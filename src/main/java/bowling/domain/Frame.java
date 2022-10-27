@@ -46,7 +46,7 @@ public class Frame {
         restPin -= downPinCount;
         restPitchCount--;
 
-        return PitchResultEnum.getPitchResultEnum(restPin, downPinCount, restPitchCount);
+        return PitchResultEnum.of(restPin, downPinCount, restPitchCount);
     }
 
     private boolean isDownAllPin() {

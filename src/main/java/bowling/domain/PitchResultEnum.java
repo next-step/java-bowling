@@ -8,7 +8,7 @@ public enum PitchResultEnum {
     NONE
     ;
 
-    public static PitchResultEnum getPitchResultEnum(int restPin, int downPin, int restPitchCount){
+    public static PitchResultEnum of(int restPin, int downPin, int restPitchCount) {
         if(isGutter(downPin)){
             return GUTTER;
         }
