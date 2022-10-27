@@ -9,12 +9,16 @@ public class NormalFrame extends Frame {
     }
 
     public NormalFrame(int number) {
-        if (number < MIN_FRAME_NUMBER || number > MAX_FRAME_NUMBER) {
-            throw new IllegalArgumentException(MIN_FRAME_NUMBER + "~" + MAX_FRAME_NUMBER + " 사이의 숫자만 가능합니다.");
-        }
+        checkSize(number);
 
         this.number = number;
         this.score = new Score(this);
+    }
+
+    private void checkSize(int number) {
+        if (number < MIN_FRAME_NUMBER || number > MAX_FRAME_NUMBER) {
+            throw new IllegalArgumentException(MIN_FRAME_NUMBER + "~" + MAX_FRAME_NUMBER + " 사이의 숫자만 가능합니다.");
+        }
     }
 
     @Override

@@ -19,11 +19,11 @@ public class Frames {
     }
 
     public void addFrame() {
-        if (lastFrame() instanceof FinalFrame) {
+        try {
+            values.add(lastFrame().nextFrame());
+        } catch (IllegalStateException e) {
             return;
         }
-
-        values.add(lastFrame().nextFrame());
     }
 
     public Frame lastFrame() {

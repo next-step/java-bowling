@@ -8,6 +8,9 @@ import bowling.domain.player.Player;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static bowling.domain.FinalFrame.MAX_FRAME_NUMBER;
+import static bowling.domain.Pin.MAX_COUNT;
+
 public class FramesResult {
     private final static String FRAME_NUMBER_LINE;
     private static final String STRIKE = "X";
@@ -17,7 +20,7 @@ public class FramesResult {
     private final Frames frames;
 
     static {
-        FRAME_NUMBER_LINE = "| NAME |" + IntStream.rangeClosed(1, 10)
+        FRAME_NUMBER_LINE = "| NAME |" + IntStream.rangeClosed(1, MAX_FRAME_NUMBER)
                 .mapToObj(i -> String.format("  %02d  |", i))
                 .collect(Collectors.joining());
     }
@@ -32,21 +35,21 @@ public class FramesResult {
     }
 
     public String frameScores() {
-        return String.format("| %4s |", player.Name().value()) + createScores();
+        return createPlayerName() + createScores();
+    }
+
+    private String createPlayerName() {
+        return String.format("| %4s |", player.Name().value());
     }
 
     private String createScores() {
         return frames.values()
                 .stream()
-                .map(this::createScore)
+                .map(this::createFrameScore)
                 .collect(Collectors.joining())
                 .replaceAll("10", STRIKE)
                 .replaceAll("0", GUTTER)
                 + createEmptyFrame(frames.lastFrame());
-    }
-
-    private String createScore(Frame frame) {
-        return createFrameScore(frame);
     }
 
     private String createFrameScore(Frame frame) {
@@ -55,11 +58,11 @@ public class FramesResult {
         }
 
         if (frame.pinsSize() == 3) {
-            if (frame.pinNumber(0) + frame.pinNumber(1) == 10) {
+            if (isFirstSpare(frame)) {
                 return String.format(" %d|/|%d|", frame.pinNumber(0), frame.pinNumber(2));
             }
 
-            if (frame.pinNumber(1) + frame.pinNumber(2) == 10) {
+            if (isSecondSpare(frame)) {
                 return String.format(" %d|%d|/|", frame.pinNumber(0), frame.pinNumber(1));
             }
 
@@ -82,12 +85,21 @@ public class FramesResult {
         return String.format("  %d|%d |", frame.pinNumber(0), frame.pinNumber(1));
     }
 
+    private boolean isFirstSpare(Frame frame) {
+        return frame.pinNumber(0) != MAX_COUNT &&
+                frame.pinNumber(0) + frame.pinNumber(1) == MAX_COUNT;
+    }
+
+    private boolean isSecondSpare(Frame frame) {
+        return frame.pinNumber(1) + frame.pinNumber(2) == MAX_COUNT;
+    }
+
     private String createEmptyFrame(Frame frame) {
         if (isFirstFrame(frame)) {
-            return "      |".repeat(10 - frame.number() + 1);
+            return "      |".repeat(MAX_FRAME_NUMBER - frame.number() + 1);
         }
 
-        return "      |".repeat(10 - frame.number());
+        return "      |".repeat(MAX_FRAME_NUMBER - frame.number());
     }
 
     private boolean isFirstFrame(Frame frame) {

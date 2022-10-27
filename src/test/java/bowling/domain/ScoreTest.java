@@ -42,6 +42,15 @@ public class ScoreTest {
         assertThat(score.status()).isEqualTo(ScoreType.SPARE);
     }
 
+    @DisplayName("[일반 프레임] 첫 번째 투구가 0이고 두 번째 투구에서 모든 핀이 쓰러지면 스패어이다.")
+    @Test
+    void zeroSpare() {
+        score.addPin(Pin.of(0));
+        score.addPin(Pin.of(10));
+
+        assertThat(score.status()).isEqualTo(ScoreType.SPARE);
+    }
+
     @DisplayName("[일반 프레임] 두 번째 투구에서도 모든 핀이 쓰러지지 않은 경우 미스이다.")
     @Test
     void miss() {

@@ -19,7 +19,7 @@ public class BowlingController {
             Frame lastFrame = frames.lastFrame();
 
             while (lastFrame.canPitch()) {
-                pitch(framesResult, lastFrame);
+                getPitchNumberAndPrintResult(framesResult, lastFrame);
             }
 
             frames.addFrame();
@@ -37,7 +37,7 @@ public class BowlingController {
         }
     }
 
-    private void pitch(FramesResult framesResult, Frame lastFrame) {
+    private void getPitchNumberAndPrintResult(FramesResult framesResult, Frame lastFrame) {
         int number = InputView.inputPitchNumber(lastFrame.number());
 
         try {
