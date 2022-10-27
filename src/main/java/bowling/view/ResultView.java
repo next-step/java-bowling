@@ -57,7 +57,7 @@ public class ResultView {
 
         List<String> pinsList = bowling.getPinsList()
                 .stream()
-                .map(Pins::getFallenPins)
+                .map(FallenPins::getFallenPins)
                 .map(ResultView::pinsString)
                 .collect(toList());
 

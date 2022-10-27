@@ -19,12 +19,12 @@ public class Frame {
         return lastBowling().isFinished();
     }
 
-    public Frame bowl(Pins pins) {
+    public Frame bowl(FallenPins fallenPins) {
         if (lastBowling().isFinished()) {
-            return create(add(pins));
+            return create(add(fallenPins));
         }
 
-        return create(update(pins));
+        return create(update(fallenPins));
     }
 
     public List<Bowling> getBowlings() {
@@ -50,16 +50,16 @@ public class Frame {
         return new Frame(bowlings);
     }
 
-    private List<Bowling> add(Pins pins) {
+    private List<Bowling> add(FallenPins fallenPins) {
         List<Bowling> result = new ArrayList<>(bowlings);
         Bowling bowling = Bowling.init();
-        result.add(bowling.bowl(pins));
+        result.add(bowling.bowl(fallenPins));
         return result;
     }
 
-    private List<Bowling> update(Pins pins) {
+    private List<Bowling> update(FallenPins fallenPins) {
         List<Bowling> result = new ArrayList<>(bowlings);
-        result.set(lastIndex(), lastBowling().bowl(pins));
+        result.set(lastIndex(), lastBowling().bowl(fallenPins));
         return result;
     }
 

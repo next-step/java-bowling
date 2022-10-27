@@ -10,10 +10,10 @@ public class Bowling {
     private static final int MAX_TRIES = 2;
     private static final int MAX_PINS_SUM = 10;
 
-    private final List<Pins> pinsList;
+    private final List<FallenPins> fallenPinsList;
 
-    Bowling(List<Pins> pinsList) {
-        this.pinsList = pinsList;
+    Bowling(List<FallenPins> fallenPinsList) {
+        this.fallenPinsList = fallenPinsList;
 
         if (totalPins() > MAX_PINS_SUM) {
             throw new IllegalArgumentException(String.format("쓰러진 핀 수의 합은 %s 이하여야 합니다.", MAX_PINS_SUM));
@@ -24,15 +24,15 @@ public class Bowling {
         return new Bowling(List.of());
     }
 
-    public Bowling bowl(Pins pins) {
-        List<Pins> result = new ArrayList<>(this.pinsList);
-        result.add(pins);
+    public Bowling bowl(FallenPins fallenPins) {
+        List<FallenPins> result = new ArrayList<>(this.fallenPinsList);
+        result.add(fallenPins);
         return new Bowling(result);
     }
 
     public boolean isStrike() {
         if (tries() == 1) {
-            return pinsList.get(0).isMax();
+            return fallenPinsList.get(0).isMax();
         }
 
         return false;
@@ -51,11 +51,11 @@ public class Bowling {
     }
 
     public int tries() {
-        return pinsList.size();
+        return fallenPinsList.size();
     }
 
-    public List<Pins> getPinsList() {
-        return unmodifiableList(pinsList);
+    public List<FallenPins> getPinsList() {
+        return unmodifiableList(fallenPinsList);
     }
 
     @Override
@@ -65,12 +65,12 @@ public class Bowling {
 
         Bowling bowling = (Bowling) o;
 
-        return Objects.equals(pinsList, bowling.pinsList);
+        return Objects.equals(fallenPinsList, bowling.fallenPinsList);
     }
 
     @Override
     public int hashCode() {
-        return pinsList != null ? pinsList.hashCode() : 0;
+        return fallenPinsList != null ? fallenPinsList.hashCode() : 0;
     }
 
     private boolean triesDone() {
@@ -78,8 +78,8 @@ public class Bowling {
     }
 
     private int totalPins() {
-        return pinsList.stream()
-                .mapToInt(Pins::getFallenPins)
+        return fallenPinsList.stream()
+                .mapToInt(FallenPins::getFallenPins)
                 .sum();
     }
 }

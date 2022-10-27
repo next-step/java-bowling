@@ -1,7 +1,7 @@
 package bowling;
 
+import bowling.domain.FallenPins;
 import bowling.domain.Frames;
-import bowling.domain.Pins;
 import bowling.domain.PlayerName;
 import bowling.view.InputView;
 import bowling.view.ResultView;
@@ -13,9 +13,9 @@ public class Main {
         Frames frames = Frames.init();
         ResultView.printFrames(playerName, frames);
         while (!frames.isOver()) {
-            Pins pins = Pins.of(InputView.scanFallenPins(frames.lastFrameNumber()));
+            FallenPins fallenPins = FallenPins.of(InputView.scanFallenPins(frames.lastFrameNumber()));
 
-            frames = frames.bowl(pins);
+            frames = frames.bowl(fallenPins);
             ResultView.printFrames(playerName, frames);
 
             if (frames.isLastFrameFinished()) {

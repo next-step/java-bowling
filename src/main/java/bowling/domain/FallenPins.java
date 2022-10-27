@@ -6,25 +6,25 @@ import java.util.stream.IntStream;
 
 import static java.lang.String.format;
 
-public class Pins {
+public class FallenPins {
     private static final int MIN = 0;
     private static final int MAX = 10;
-    private static final Map<Integer, Pins> PINS_POOL;
+    private static final Map<Integer, FallenPins> PINS_POOL;
 
     static {
-        Map<Integer, Pins> pinsMap = new HashMap<>();
+        Map<Integer, FallenPins> pinsMap = new HashMap<>();
         IntStream.rangeClosed(MIN, MAX)
-                .forEach(fallenPins -> pinsMap.put(fallenPins, new Pins(fallenPins)));
+                .forEach(fallenPins -> pinsMap.put(fallenPins, new FallenPins(fallenPins)));
         PINS_POOL = pinsMap;
     }
 
     private final int fallenPins;
 
-    private Pins(int fallenPins) {
+    private FallenPins(int fallenPins) {
         this.fallenPins = fallenPins;
     }
 
-    public static Pins of(int pins) {
+    public static FallenPins of(int pins) {
         if (pins < MIN || pins > MAX) {
             throw new IllegalArgumentException(format("쓰러진 핀 수는 %s에서 %s 사이이어야 합니다.", MIN, MAX));
         }
@@ -43,11 +43,11 @@ public class Pins {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Pins)) return false;
+        if (!(o instanceof FallenPins)) return false;
 
-        Pins pins1 = (Pins) o;
+        FallenPins fallenPins1 = (FallenPins) o;
 
-        return fallenPins == pins1.fallenPins;
+        return fallenPins == fallenPins1.fallenPins;
     }
 
     @Override

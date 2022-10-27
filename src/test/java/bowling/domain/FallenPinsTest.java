@@ -8,13 +8,13 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-class PinsTest {
+class FallenPinsTest {
 
     @DisplayName("정해진 범위 외에 핀들을 생성하면 예외 발생")
     @ParameterizedTest
     @ValueSource(ints = {11, -1})
     void createFail_whenPinsOutOfRange(int fallenPins) {
-        assertThatIllegalArgumentException().isThrownBy(() -> Pins.of(fallenPins));
+        assertThatIllegalArgumentException().isThrownBy(() -> FallenPins.of(fallenPins));
     }
 
     @ParameterizedTest
@@ -23,6 +23,6 @@ class PinsTest {
             "9,false"
     })
     void isMax(int fallenPins, boolean expected) {
-        assertThat(Pins.of(fallenPins).isMax()).isEqualTo(expected);
+        assertThat(FallenPins.of(fallenPins).isMax()).isEqualTo(expected);
     }
 }
