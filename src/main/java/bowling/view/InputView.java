@@ -1,8 +1,5 @@
 package bowling.view;
 
-import bowling.domain.Pins;
-import bowling.domain.PlayerName;
-
 import java.util.Scanner;
 
 public class InputView {
@@ -14,13 +11,13 @@ public class InputView {
         SCANNER.close();
     }
 
-    public static PlayerName scanName() {
+    public static String scanName() {
         System.out.print(NAME_QUESTION);
-        return new PlayerName(SCANNER.nextLine());
+        return SCANNER.nextLine();
     }
 
-    public static Pins scanFallenPins(int frameNumber) {
+    public static int scanFallenPins(int frameNumber) {
         System.out.printf(FALLEN_PINS_QUESTION_FORMAT, frameNumber);
-        return Pins.of(Integer.parseInt(SCANNER.nextLine()));
+        return Integer.parseInt(SCANNER.nextLine());
     }
 }

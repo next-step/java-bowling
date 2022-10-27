@@ -8,12 +8,12 @@ import bowling.view.ResultView;
 
 public class Main {
     public static void main(String[] args) {
-        PlayerName playerName = InputView.scanName();
+        PlayerName playerName = new PlayerName(InputView.scanName());
 
         Frames frames = Frames.init();
         ResultView.printFrames(playerName, frames);
         while (!frames.isOver()) {
-            Pins pins = InputView.scanFallenPins(frames.lastFrameNumber());
+            Pins pins = Pins.of(InputView.scanFallenPins(frames.lastFrameNumber()));
 
             frames = frames.bowl(pins);
             ResultView.printFrames(playerName, frames);
