@@ -5,14 +5,10 @@ import bowling.view.InputView;
 import bowling.view.ResultView;
 
 public class Frame {
-    private static final String WRONG_INPUT_STRING = "Wrong Input: downPinCount";
+    private final Scores scores;
 
-    private int restPin = RuleConfig.NUMBER_OF_PIN;
-    private int restPitchCount = RuleConfig.PITCH_COUNT;
-
-    protected void reset(){
-        restPin = RuleConfig.NUMBER_OF_PIN;
-        restPitchCount = RuleConfig.PITCH_COUNT;
+    public Frame() {
+        this.scores = new Scores();
     }
 
     public void doFrame(FrameHistory frameHistory, Player player) {
