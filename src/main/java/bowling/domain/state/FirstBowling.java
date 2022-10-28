@@ -1,0 +1,55 @@
+package bowling.domain.state;
+
+import bowling.domain.pin.FallenPin;
+
+import java.util.Objects;
+
+public class FirstBowling extends Running {
+    private static final int MAX_PINS_SUM = 10;
+
+    private final FallenPin firstPin;
+
+    public FirstBowling(FallenPin fallenPin) {
+        this.firstPin = fallenPin;
+    }
+
+    @Override
+    public State bowl(FallenPin secondPin) {
+        int sum = firstPin.add(secondPin);
+        if (sum > MAX_PINS_SUM) {
+            throw new IllegalArgumentException(String.format("핀의 합은 %s 이하여야 합니다.", MAX_PINS_SUM));
+        }
+
+        if (sum == MAX_PINS_SUM) {
+            return new Spare(firstPin, secondPin);
+        }
+
+        return new Miss(firstPin, secondPin);
+    }
+
+    @Override
+    public String description() {
+        return String.valueOf(firstPin.getCount())
+                .replace("0", Symbol.GUTTER);
+    }
+
+    @Override
+    public int tries() {
+        return 1;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FirstBowling)) return false;
+
+        FirstBowling that = (FirstBowling) o;
+
+        return Objects.equals(firstPin, that.firstPin);
+    }
+
+    @Override
+    public int hashCode() {
+        return firstPin != null ? firstPin.hashCode() : 0;
+    }
+}
