@@ -14,7 +14,18 @@ public class Scores {
     }
 
     public void record(int downPinCount) {
+        checkDownPinCountValidation(downPinCount);
         downPins.add(downPinCount);
+    }
+
+    public int getTryCount() {
+        return downPins.size();
+    }
+
+    private void checkDownPinCountValidation(int downPinCount) {
+        if (sumOfDownPins() + downPinCount > RuleConfig.NUMBER_OF_PIN) {
+            throw new RuntimeException("Sum of down pin count must not more than 10");
+        }
     }
 
     public boolean isStrike() {
