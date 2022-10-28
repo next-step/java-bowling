@@ -2,7 +2,15 @@ package bowling.domain;
 
 public class BowlingGame {
     private final Player player;
-    private final FrameHistory frameHistory;
+    private final Records records;
+
+    public Records getRecords() {
+        return records;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
 
     public BowlingGame(Player player) {
         this.frameHistory = new FrameHistory();
