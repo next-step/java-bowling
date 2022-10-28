@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.pin;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +34,10 @@ public class FallenPin {
 
     public boolean isMax() {
         return count == MAX;
+    }
+
+    public int add(FallenPin that) {
+        return count + that.count;
     }
 
     public int getCount() {

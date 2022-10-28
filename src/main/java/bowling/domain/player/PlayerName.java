@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.player;
 
 import static java.util.Objects.isNull;
 
