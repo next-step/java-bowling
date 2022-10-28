@@ -28,4 +28,15 @@ public class BowlingGame {
         records.record(downPinCount);
     }
 
+    public int getFrameRound() {
+        int recordCount = records.getRecordCount();
+        if (recordCount == 0) {
+            return 1;
+        }
+
+        if (records.isEndLastFrame()) {
+            return recordCount + 1;
+        }
+        return recordCount;
+    }
 }
