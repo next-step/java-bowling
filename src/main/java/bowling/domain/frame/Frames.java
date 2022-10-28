@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.pin.FallenPin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,7 @@ public class Frames {
     }
 
     public static Frames init() {
-        return new Frames(List.of(Frame.init()));
+        return new Frames(List.of(NormalFrame.init()));
     }
 
     public Frames bowl(FallenPin fallenPin) {
@@ -33,7 +35,7 @@ public class Frames {
             return add(FinalFrame.init());
         }
 
-        return add(Frame.init());
+        return add(NormalFrame.init());
     }
 
     public boolean isOver() {

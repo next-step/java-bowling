@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.pin.FallenPin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,11 +12,10 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FramesTest {
-
-    @DisplayName("Frames 초기화는 일반프레임을 초기화해서 생성한다")
+    @DisplayName("프레임들 초기화는 일반프레임으로 생성된다")
     @Test
     void init() {
-        assertThat(Frames.init()).isEqualTo(new Frames(List.of(frame())));
+        assertThat(Frames.init()).isEqualTo(new Frames(List.of(NormalFrame.init())));
     }
 
     @DisplayName("투구한 결과가 반환된다")
@@ -24,7 +24,7 @@ class FramesTest {
         Frames result = Frames.init()
                 .bowl(FallenPin.of(10));
 
-        assertThat(result).isEqualTo(new Frames(List.of(frame().bowl(FallenPin.of(10)))));
+        assertThat(result).isEqualTo(new Frames(List.of(normalFrame().bowl(FallenPin.of(10)))));
     }
 
     @DisplayName("다음 Frames 를 반환한다")
@@ -35,8 +35,8 @@ class FramesTest {
                 .next();
 
         Frames expected = new Frames(List.of(
-                frame().bowl(FallenPin.of(10)),
-                frame()));
+                normalFrame().bowl(FallenPin.of(10)),
+                normalFrame()));
         assertThat(result).isEqualTo(expected);
     }
 
@@ -45,7 +45,7 @@ class FramesTest {
     void next_when9Frames() {
         Frames result = frames(10);
 
-        List<Frame> frameList = frameList(9);
+        List<Frame> frameList = frameList();
         frameList.add(finalFrame().bowl(FallenPin.of(10)));
         Frames expected = new Frames(frameList);
         assertThat(result).isEqualTo(expected);
@@ -58,7 +58,8 @@ class FramesTest {
             "12,true"
     })
     void isOver(int frameCount, boolean expected) {
-        assertThat(frames(frameCount).isOver()).isEqualTo(expected);
+        Frames frames = frames(frameCount);
+        assertThat(frames.isOver()).isEqualTo(expected);
     }
 
     @DisplayName("마지막 프레임넘버를 반환한다")
@@ -67,8 +68,8 @@ class FramesTest {
         assertThat(frames(5).lastFrameNumber()).isEqualTo(6);
     }
 
-    private Frame frame() {
-        return Frame.init();
+    private Frame normalFrame() {
+        return NormalFrame.init();
     }
 
     private Frame finalFrame() {
@@ -86,10 +87,10 @@ class FramesTest {
         return result;
     }
 
-    private List<Frame> frameList(int frameCount) {
+    private List<Frame> frameList() {
         List<Frame> result = new ArrayList<>();
-        for (int i = 0; i < frameCount; i++) {
-            result.add(frame().bowl(FallenPin.of(10)));
+        for (int i = 0; i < 9; i++) {
+            result.add(normalFrame().bowl(FallenPin.of(10)));
         }
         return result;
     }

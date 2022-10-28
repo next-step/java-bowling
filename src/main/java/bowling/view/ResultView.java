@@ -1,20 +1,20 @@
 package bowling.view;
 
-import bowling.domain.*;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
+import bowling.domain.player.PlayerName;
+import bowling.domain.state.State;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static bowling.domain.state.Symbol.BAR;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
 public class ResultView {
     private static final String SCORE_TABLE_HEAD = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-    private static final String BAR = "|";
-    private static final String STRIKE = "X";
-    private static final String SPARE = "/";
-    private static final String GUTTER = "-";
 
     public static void printFrames(PlayerName playerName, Frames frames) {
         System.out.println(SCORE_TABLE_HEAD);
@@ -44,36 +44,10 @@ public class ResultView {
     }
 
     private static String frameString(Frame frame) {
-        return frame.getBowlings()
+        return frame.getStates()
                 .stream()
-                .map(ResultView::bowlingString)
+                .map(State::description)
                 .collect(joining(BAR));
-    }
-
-    private static String bowlingString(Bowling bowling) {
-        if (bowling.isStrike()) {
-            return STRIKE;
-        }
-
-        List<String> fallingPins = bowling.getFallingPins()
-                .stream()
-                .map(FallenPin::getCount)
-                .map(ResultView::fallingPinString)
-                .collect(toList());
-
-        if (bowling.isSpare()) {
-            fallingPins.set(bowling.tries() - 1, SPARE);
-        }
-
-        return String.join(BAR, fallingPins);
-    }
-
-    private static String fallingPinString(int fallenPinCount) {
-        if (fallenPinCount == 0) {
-            return GUTTER;
-        }
-
-        return String.valueOf(fallenPinCount);
     }
 
     private static String padded(String string) {
