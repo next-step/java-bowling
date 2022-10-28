@@ -20,7 +20,7 @@ public class FinalFrame extends Frame {
         return super.isEndFrame();
     }
 
-    void record(int downPinCount) {
+    public void record(int downPinCount) {
         if (isBonus()) {
             bonus = true;
             bonusScores.record(downPinCount);
@@ -30,10 +30,6 @@ public class FinalFrame extends Frame {
         scores.record(downPinCount);
     }
 
-    public boolean isBonus() {
-        return !bonus && (scores.isStrike() || scores.isSpare());
-    }
-
     public boolean validBonusScore() {
         return scores.getTryCount() != 0;
     }
@@ -41,4 +37,9 @@ public class FinalFrame extends Frame {
     public Scores getBonusScores() {
         return bonusScores;
     }
+
+    private boolean isBonus() {
+        return !bonus && (scores.isStrike() || scores.isSpare());
+    }
+
 }

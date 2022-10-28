@@ -11,7 +11,7 @@ public class Frame {
         return scores;
     }
 
-    void record(int downPinCount) {
+    public void record(int downPinCount) {
         scores.record(downPinCount);
     }
 

@@ -21,6 +21,10 @@ public class Records {
         readyFrame.record(downPintCount);
     }
 
+    public boolean isEndLastFrame() {
+        return getLastFrame().isEndFrame();
+    }
+
     private Frame getReadyFrame() {
         Frame frame = getLastFrame();
         if (frame.isEndFrame()) {
@@ -46,7 +50,4 @@ public class Records {
         return frames.get(frames.size() - 1);
     }
 
-    public boolean isEndLastFrame() {
-        return getLastFrame().isEndFrame();
-    }
 }
