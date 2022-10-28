@@ -13,18 +13,19 @@ public class BowlingGame {
     }
 
     public BowlingGame(Player player) {
-        this.frameHistory = new FrameHistory();
         this.player = player;
+        this.records = new Records();
     }
 
-    public void doGame() {
-        Frame frame = new Frame();
-        for(int index = 0; index < RuleConfig.NUMBER_OF_FRAME - 1; index++) {
-            frame.doFrame(frameHistory, player);
+    public boolean isEndGame() {
+        if (records.getRecordCount() != RuleConfig.NUMBER_OF_FRAME) {
+            return false;
         }
+        return records.isEndLastFrame();
+    }
 
-        Frame finalFrame = new FinalFrame();
-        finalFrame.doFrame(frameHistory, player);
+    public void doGame(int downPinCount) {
+        records.record(downPinCount);
     }
 
 }
