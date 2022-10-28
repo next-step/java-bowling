@@ -8,11 +8,7 @@ import java.util.stream.Collectors;
 public class ResultView {
     private static String INIT_SCORE_BOARD_STRING = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     private static String NAME_STRING = "|  %s |";
-    private static String STRIKE_STRING = "  X   |";
-    private static String SPARE_STRING = "  %s|/ |";
     private static String GUTTER_STRING = "-";
-    private static String FIRST_PITCH_STRING = "  %s|";
-    private static String SECOND_PITCH_STRING = "  %s|%s |";
 
     public static void printScoreBoard(BowlingGame game) {
         System.out.println(INIT_SCORE_BOARD_STRING);
@@ -36,26 +32,20 @@ public class ResultView {
     }
 
     private static void printScore(Scores scores) {
-        if (scores.isStrike()) {
-            System.out.print(STRIKE_STRING);
+        if (!scores.isValid()) {
             return;
         }
 
+        String printString = FrameScore.from(scores).getPrintString();
         List<String> downPins = getDownPinsString(scores);
-        if (scores.isSpare()) {
-            System.out.printf(SPARE_STRING, downPins.get(0));
-            return;
-        }
+        System.out.printf(printString, getOrDefault(downPins, 0, ""), getOrDefault(downPins, 1, ""));
+    }
 
-        if (downPins.size() == 1) {
-            System.out.printf(FIRST_PITCH_STRING, downPins.get(0));
-            return;
+    private static String getOrDefault(List<String> list, int index, String defaultString) {
+        if (list.size() > index) {
+            return list.get(index);
         }
-
-        if (downPins.size() == 2) {
-            System.out.printf(SECOND_PITCH_STRING, downPins.get(0), downPins.get(1));
-            return;
-        }
+        return defaultString;
     }
 
     private static List<String> getDownPinsString(Scores scores) {

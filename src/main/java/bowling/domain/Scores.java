@@ -40,6 +40,10 @@ public class Scores {
         return downPins.size() >= RuleConfig.PITCH_COUNT;
     }
 
+    public boolean isValid() {
+        return downPins.size() != 0;
+    }
+
     private int sumOfDownPins() {
         return downPins
                 .stream()
