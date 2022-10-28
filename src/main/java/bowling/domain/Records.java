@@ -17,12 +17,24 @@ public class Records {
     }
 
     public void record(int downPintCount) {
-        Frame lastFrame = getLastFrame();
-        if (lastFrame.isEndFrame()) {
-            lastFrame = new Frame();
-            frames.add(lastFrame);
+        Frame readyFrame = getReadyFrame();
+        readyFrame.record(downPintCount);
+    }
+
+    private Frame getReadyFrame() {
+        Frame frame = getLastFrame();
+        if (frame.isEndFrame()) {
+            frame = getNewFrame();
+            frames.add(frame);
         }
-        lastFrame.record(downPintCount);
+        return frame;
+    }
+
+    private Frame getNewFrame() {
+        if (frames.size() == RuleConfig.NUMBER_OF_FRAME - 1) {
+            return new FinalFrame();
+        }
+        return new Frame();
     }
 
     private Frame getLastFrame() {

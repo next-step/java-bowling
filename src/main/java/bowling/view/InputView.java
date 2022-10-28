@@ -19,7 +19,7 @@ public class InputView {
     }
 
     public static int inputDownPinCount(int index){
-        System.out.printf(INPUT_DONWNPIN_STRING, index + 1);
+        System.out.printf(INPUT_DONWNPIN_STRING, index);
         Scanner scanner = new Scanner(System.in);
         String downPinCount = scanner.nextLine();
         if (!isNumber(downPinCount)) {

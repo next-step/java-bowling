@@ -26,7 +26,7 @@ public class Scores {
     }
 
     public boolean tryOver() {
-        return downPins.size() == RuleConfig.PITCH_COUNT;
+        return downPins.size() >= RuleConfig.PITCH_COUNT;
     }
 
     private int sumOfDownPins() {

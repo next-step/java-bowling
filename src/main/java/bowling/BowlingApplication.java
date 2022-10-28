@@ -2,9 +2,8 @@ package bowling;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.Player;
+import bowling.view.InputView;
 import bowling.view.ResultView;
-
-import java.util.Random;
 
 public class BowlingApplication {
     public static void main(String[] args) {
@@ -13,12 +12,12 @@ public class BowlingApplication {
 
         BowlingGame game = new BowlingGame(player);
 
-        int inputDonwPinCOunt;
+        int inputDownPinCount;
         while (!game.isEndGame()) {
-//            inputDonwPinCOunt = InputView.inputDownPinCount(1);
-//            inputDonwPinCOunt = 10;
-            inputDonwPinCOunt = new Random().nextInt(11);
-            game.doGame(inputDonwPinCOunt);
+            inputDownPinCount = InputView.inputDownPinCount(game.getFrameRound());
+//            inputDownPinCount = 10;
+//            inputDownPinCount = new Random().nextInt(6);
+            game.doGame(inputDownPinCount);
             ResultView.printScoreBoard(game);
         }
     }

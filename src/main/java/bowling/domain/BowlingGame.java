@@ -18,10 +18,10 @@ public class BowlingGame {
     }
 
     public boolean isEndGame() {
-        if (records.getRecordCount() != RuleConfig.NUMBER_OF_FRAME) {
-            return false;
+        if (records.getRecordCount() >= RuleConfig.NUMBER_OF_FRAME && records.isEndLastFrame()) {
+            return true;
         }
-        return records.isEndLastFrame();
+        return false;
     }
 
     public void doGame(int downPinCount) {
