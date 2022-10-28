@@ -1,7 +1,7 @@
 package bowling.domain;
 
 public class Frame {
-    private final Scores scores;
+    protected final Scores scores;
 
     public Frame() {
         this.scores = new Scores();
@@ -22,6 +22,10 @@ public class Frame {
         if (scores.tryOver()) {
             return true;
         }
+        return false;
+    }
+
+    public boolean validBonusScore() {
         return false;
     }
 

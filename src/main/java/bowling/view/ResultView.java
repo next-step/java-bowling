@@ -1,9 +1,6 @@
 package bowling.view;
 
-import bowling.domain.BowlingGame;
-import bowling.domain.Frame;
-import bowling.domain.Records;
-import bowling.domain.Scores;
+import bowling.domain.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +24,14 @@ public class ResultView {
     private static void printScore(Records records) {
         for (Frame frame : records.getFrames()) {
             printScore(frame.getScores());
+            printBonusScore(frame);
+        }
+    }
+
+    private static void printBonusScore(Frame frame) {
+        if (frame.validBonusScore()) {
+            FinalFrame finalFrame = (FinalFrame) frame;
+            printScore(finalFrame.getBonusScores());
         }
     }
 

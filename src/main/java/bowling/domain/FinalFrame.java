@@ -1,35 +1,44 @@
 package bowling.domain;
 
-import bowling.view.InputView;
-import bowling.view.ResultView;
-
 public class FinalFrame extends Frame {
+    private boolean bonus;
+    private Scores bonusScores;
 
-    public void doFrame(FrameHistory frameHistory, Player player) {
-        reset();
-        frameHistory.addHistory();
+    FinalFrame() {
+        this.bonus = false;
+        this.bonusScores = new Scores();
+    }
 
-        PitchResult pitchResult = null;
-        while (!isEndOfFrame()) {
-            pitchResult = pitch(frameHistory);
-            ResultView.printScoreBoard(frameHistory, player);
+    public Scores getScores() {
+        return scores;
+    }
+
+    public boolean isEndFrame() {
+        if (isBonus()) {
+            return false;
+        }
+        return super.isEndFrame();
+    }
+
+    void record(int downPinCount) {
+        if (isBonus()) {
+            bonus = true;
+            bonusScores.record(downPinCount);
+            return;
         }
 
-        if (checkBonus(pitchResult)) {
-            doBonusPitch(frameHistory);
-            ResultView.printScoreBoard(frameHistory, player);
-        }
+        scores.record(downPinCount);
     }
 
-    private boolean checkBonus(PitchResult pitchResult) {
-        return PitchResult.STRIKE.equals(pitchResult) || PitchResult.SPARE.equals(pitchResult);
+    public boolean isBonus() {
+        return !bonus && (scores.isStrike() || scores.isSpare());
     }
 
-    private void doBonusPitch(FrameHistory frameHistory){
-        reset();
-        int downPinCount = InputView.inputDownPinCount(frameHistory.getLastIndex());
-        PitchResult pitchResult = downPin(downPinCount);
-        frameHistory.record(pitchResult, downPinCount);
+    public boolean validBonusScore() {
+        return scores.getTryCount() != 0;
     }
 
+    public Scores getBonusScores() {
+        return bonusScores;
+    }
 }
