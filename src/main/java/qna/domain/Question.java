@@ -42,10 +42,19 @@ public class Question extends AbstractEntity {
         if (!isOwner(user)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, id, writer, LocalDateTime.now()));
-        deleteHistories.addAll(answers.deleteBy(user));
+
+        List<DeleteHistory> answerDeleteHistories = answers.deleteBy(user);
+
+        DeleteHistory questionDeleteHistory = new DeleteHistory(ContentType.QUESTION, id, writer, LocalDateTime.now());
         this.deleted = true;
+
+        return mergeQuestionAndAnswerDeleteHistories(questionDeleteHistory, answerDeleteHistories);
+    }
+
+    private List<DeleteHistory> mergeQuestionAndAnswerDeleteHistories(DeleteHistory questionDeleteHistory, List<DeleteHistory> answerDeleteHistories) {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(questionDeleteHistory);
+        deleteHistories.addAll(answerDeleteHistories);
         return deleteHistories;
     }
 
