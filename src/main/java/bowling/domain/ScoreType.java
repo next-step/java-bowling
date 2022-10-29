@@ -9,14 +9,14 @@ public enum ScoreType {
     SPARE(pins -> pins.size() == 2 &&
             pins.get(0).count() != 10 &&
             pins.get(0).count() + pins.get(1).count() == 10),
-    MISS(pins -> pins.size() == 2 &&
-            pins.get(0).count() + pins.get(1).count() != 10),
-    PROCEEDING(pins -> pins.size() < 2),
     FINAL_STRIKE(pins -> pins.size() == 2 &&
             pins.get(1).count() == 10),
     FINAL_SPARE(pins -> pins.size() == 2 &&
             pins.get(0).count() == 10 &&
-            pins.get(1).count() != 10);
+            pins.get(1).count() != 10),
+    MISS(pins -> pins.size() == 2 &&
+            pins.get(0).count() + pins.get(1).count() != 10),
+    PROCEEDING(pins -> pins.size() < 2);
 
     private final Predicate<List<Pin>> operate;
 
