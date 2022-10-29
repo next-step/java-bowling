@@ -18,14 +18,14 @@ public enum ScoreType {
             pins.get(0).count() + pins.get(1).count() != 10),
     PROCEEDING(pins -> pins.size() < 2);
 
-    private final Predicate<List<Pin>> operate;
+    private final Predicate<List<Pin>> predicate;
 
-    ScoreType(Predicate<List<Pin>> operate) {
-        this.operate = operate;
+    ScoreType(Predicate<List<Pin>> predicate) {
+        this.predicate = predicate;
     }
 
     public boolean matches(List<Pin> pins) {
-        return operate.test(pins);
+        return predicate.test(pins);
     }
 
     public boolean isKnockedDowned() {
