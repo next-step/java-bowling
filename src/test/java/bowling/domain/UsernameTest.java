@@ -1,18 +1,16 @@
 package bowling.domain;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class UsernameTest {
 
-    @Test
-    void shouldValidateUsername() {
-        assertThatThrownBy(() -> new Username(""))
-                .isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> new Username(null))
-                .isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> new Username("four"))
+    @ParameterizedTest
+    @CsvSource({"four", ","})
+    void shouldValidateUsername(String name) {
+        assertThatThrownBy(() -> new Username(name))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

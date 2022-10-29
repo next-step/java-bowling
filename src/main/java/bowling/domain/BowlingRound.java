@@ -1,32 +1,33 @@
 package bowling.domain;
 
-public class BallingRound {
+import java.util.List;
+
+public class BowlingRound {
     public static final int LAST_ROUND_NUM = 10;
     private final int roundNumber;
 
     private final Scores scores = new Scores();
 
-    public BallingRound(int roundNumber) {
-        if (roundNumber <= 0) {
-            throw new IllegalArgumentException();
+    public BowlingRound(int roundNumber) {
+        if (roundNumber <= 0 || roundNumber > LAST_ROUND_NUM) {
+            throw new IllegalArgumentException("볼링 라운드는 음수 또는 최대 라운드 수를 초과할수 없습니다. ");
         }
         this.roundNumber = roundNumber;
     }
 
-    public BallingRound next() {
-        return new BallingRound(roundNumber + 1);
+    public BowlingRound next() {
+        return new BowlingRound(roundNumber + 1);
     }
 
-    public boolean isSameRound(BallingRound target) {
+    public boolean isSameRound(BowlingRound target) {
         return this.roundNumber == target.roundNumber;
     }
 
-    public boolean addKnockDownPins(int pins) {
+    public void addKnockDownPins(int pins) {
         scores.add(pins);
-        return isNextRound();
     }
 
-    private boolean isNextRound() {
+    public boolean isNextRound() {
         return !isLastRound() && scores.isNormalRoundEnd();
     }
 
@@ -44,5 +45,9 @@ public class BallingRound {
 
     public Scores getScores() {
         return scores;
+    }
+
+    public boolean containsScore(List<Score> scores){
+        return this.scores.containsAll(scores);
     }
 }

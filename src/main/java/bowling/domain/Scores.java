@@ -39,8 +39,13 @@ public class Scores {
         if (scores.size() < size) {
             return false;
         }
-        return !scores.get(current).isGutter() &&
+        return  !scores.get(current).isGutter() &&
+                !scores.get(before).isStrike() &&
                 scores.get(before).sum(scores.get(current)).isStrike();
+    }
+
+    public boolean containsAll(List<Score> scores) {
+        return scores.containsAll(scores);
     }
 
     public List<Score> getScores() {

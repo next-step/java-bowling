@@ -1,35 +1,36 @@
 package bowling.domain;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ScoreTest {
 
-    @Test
-    void shouldValidateScore() {
-        assertThatThrownBy(() -> new Score(-1))
+    @ParameterizedTest
+    @CsvSource({"-1", "11"})
+    void shouldValidateScore(int score) {
+        assertThatThrownBy(() -> new Score(score))
                 .isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> new Score(11))
-                .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test
-    void shouldValidateGutter() {
-        assertThat(new Score(0).isGutter()).isTrue();
-        assertThat(new Score(5).isGutter()).isFalse();
+    @ParameterizedTest
+    @CsvSource({"0,true", "5,false"})
+    void shouldValidateGutter(int score, boolean expectedResult) {
+        assertThat(new Score(score).isGutter()).isEqualTo(expectedResult);
     }
 
-    @Test
-    void shouldValidateStrike() {
-        assertThat(new Score(10).isStrike()).isTrue();
-        assertThat(new Score(5).isStrike()).isFalse();
+    @ParameterizedTest
+    @CsvSource({"10,true", "5,false", "0,false"})
+    void shouldValidateStrike(int score, boolean expectedResult) {
+        assertThat(new Score(score).isStrike()).isEqualTo(expectedResult);
     }
 
-    @Test
-    void shouldSumScore() {
-        assertThat(new Score(5).sum(new Score(5))).isEqualTo(new Score(10));
+    @ParameterizedTest
+    @CsvSource({"5,5,10", "2,0,2", "3,7,10"})
+    void shouldSumScore(int scoreA, int scoreB, int sumScore) {
+        assertThat(new Score(scoreA).sum(new Score(scoreB))).isEqualTo(new Score(sumScore));
     }
 
 }

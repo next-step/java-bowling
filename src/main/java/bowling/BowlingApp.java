@@ -1,7 +1,7 @@
 package bowling;
 
-import bowling.domain.Balling;
-import bowling.domain.BallingRound;
+import bowling.domain.Bowling;
+import bowling.domain.BowlingRound;
 import bowling.domain.Username;
 import bowling.view.InputView;
 import bowling.view.OutputView;
@@ -9,7 +9,7 @@ import bowling.view.OutputView;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-public class BallingApp {
+public class BowlingApp {
 
     public static void main(String[] args) {
 
@@ -17,17 +17,19 @@ public class BallingApp {
             OutputView.printUsernameAskQst();
             Username username = new Username(inputView.getUsername());
 
-            Balling balling = new Balling();
-            while (!balling.isFinish()) {
-                BallingRound round = balling.currentRound();
+            Bowling bowling = new Bowling();
+            while (!bowling.isFinish()) {
+                BowlingRound round = bowling.currentRound();
                 OutputView.printPinAskQst(round);
-                Integer knockDownPinNumber = inputView.getKnockDownPinNumber();
-                balling.play(knockDownPinNumber);
-                OutputView.printScore(balling, username);
+                try {
+                    Integer knockDownPinNumber = inputView.getKnockDownPinNumber();
+                    bowling.play(knockDownPinNumber);
+                } catch (IllegalArgumentException e) {
+                    OutputView.printConsole(e.getMessage());
+                }
+                OutputView.printScore(bowling, username);
             }
 
-        } catch (IllegalArgumentException e) {
-            OutputView.printConsole(e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
