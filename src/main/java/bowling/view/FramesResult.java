@@ -39,7 +39,7 @@ public class FramesResult {
     }
 
     private String createPlayerName() {
-        return String.format("| %4s |", player.Name().value());
+        return String.format("| %4s |", player.getName().getValue());
     }
 
     private String createScores() {

@@ -13,7 +13,7 @@ public class Player {
         this.name = name;
     }
 
-    public Name Name() {
+    public Name getName() {
         return name;
     }
 
