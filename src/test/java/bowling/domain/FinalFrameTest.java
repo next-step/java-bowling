@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -29,7 +30,7 @@ class FinalFrameTest {
     void fitchStrike() {
         frame.pitch(10);
 
-        assertDoesNotThrow(() -> frame.pitch(5));
+        assertThat(frame.canPitch()).isTrue();
     }
 
     @DisplayName("스패어인 경우 한 번 더 투구할 수 있다.")
@@ -39,6 +40,39 @@ class FinalFrameTest {
         frame.pitch(3);
 
         assertDoesNotThrow(() -> frame.pitch(5));
+    }
+
+
+    @DisplayName("투구를 하지 않은 경우 프레임은 끝났다고 판단하지 않는다.")
+    @Test
+    void endFrame() {
+        assertThat(frame.isEnd()).isFalse();
+    }
+
+    @DisplayName("투구가 끝나지 않은 상황에서는 프레임은 끝났다고 판단하지 않는다.")
+    @Test
+    void endFrame1() {
+        frame.pitch(5);
+
+        assertThat(frame.isEnd()).isFalse();
+    }
+
+    @DisplayName("투구가 끝나면 프레임은 끝났다고 판단한다.")
+    @Test
+    void endFrame2() {
+        frame.pitch(5);
+        frame.pitch(3);
+
+        assertThat(frame.isEnd()).isTrue();
+    }
+
+    @DisplayName("10|0 인 경우 더 투구할 수 있다.")
+    @Test
+    void endFrame3() {
+        frame.pitch(10);
+        frame.pitch(0);
+
+        assertThat(frame.isEnd()).isFalse();
     }
 
     @DisplayName("마지막 프레임에서 다음 프레임은 생성할 수 없다.")

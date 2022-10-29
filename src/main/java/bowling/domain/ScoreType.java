@@ -4,19 +4,14 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public enum ScoreType {
-    STRIKE(score -> score.pinsSize() == 1 &&
-            score.pinNumber(0) == 10),
-    SPARE(score -> score.pinsSize() == 2 &&
-            score.pinNumber(0) != 10 &&
-            score.pinNumber(0) + score.pinNumber(1) == 10),
-    FINAL_STRIKE(score -> score.pinsSize() == 2 &&
-            score.pinNumber(1) == 10),
-    FINAL_SPARE(score -> score.pinsSize() == 2 &&
-            score.pinNumber(0) == 10 &&
-            score.pinNumber(1) != 10),
-    MISS(score -> score.pinsSize() == 2 &&
-            score.pinNumber(0) + score.pinNumber(1) != 10),
-    PROCEEDING(score -> score.pinsSize() < 2);
+
+    MISS(score -> score.pinsSize() >= 2 &&
+            score.pinNumber(score.pinsSize() - 2) + score.lastPinNumber() < 10 ||
+            (score.pinsSize() == 3 && score.pinNumber(0) + score.pinNumber(1) == 10 && score.lastPinNumber() < 10)),
+    SPARE(score -> score.pinsSize() >= 2 &&
+            score.pinNumber(score.pinsSize() - 2) != 10 &&
+            score.pinNumber(score.pinsSize() - 2) + score.lastPinNumber() == 10),
+    STRIKE(score -> score.lastPinNumber() == 10);
 
     private final Predicate<Score> predicate;
 
@@ -29,6 +24,6 @@ public enum ScoreType {
     }
 
     public boolean isKnockedDowned() {
-        return List.of(ScoreType.STRIKE, ScoreType.FINAL_STRIKE, ScoreType.SPARE, ScoreType.FINAL_SPARE).contains(this);
+        return List.of(ScoreType.STRIKE, ScoreType.SPARE).contains(this);
     }
 }

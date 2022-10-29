@@ -13,18 +13,19 @@ public class FinalFrame extends Frame {
         }
 
         this.number = number;
-        this.score = new Score(this);
-    }
-
-    @Override
-    public boolean canPitch() {
-        return score.status().isKnockedDowned() ||
-                score.match(ScoreType.PROCEEDING);
+        this.score = new Score();
     }
 
     @Override
     public boolean isEnd() {
-        return false;
+        return !canPitch();
+    }
+
+    @Override
+    public boolean canPitch() {
+        return score.pinsSize() < 2 ||
+                (score.pinsSize() != 3 && status().isKnockedDowned()) ||
+                (score.pinsSize() == 2 && score.pinNumber(0) == 10);
     }
 
     @Override

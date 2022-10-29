@@ -24,8 +24,7 @@ class NormalFrameTest {
     void fitchException() {
         frame.pitch(10);
 
-        assertThatThrownBy(() -> frame.pitch(1))
-                .isInstanceOf(IllegalStateException.class);
+        assertThat(frame.canPitch()).isFalse();
     }
 
     @DisplayName("스패어 상태에서 한 번 더 투구할 수 없다.")
@@ -34,18 +33,16 @@ class NormalFrameTest {
         frame.pitch(7);
         frame.pitch(3);
 
-        assertThatThrownBy(() -> frame.pitch(1))
-                .isInstanceOf(IllegalStateException.class);
+        assertThat(frame.canPitch()).isFalse();
     }
 
-    @DisplayName("미스 상태에서 한 번 더 투구할 수 없다.")
+    @DisplayName("투구가 끝난 상황에서 한 번 더 투구할 수 없다.")
     @Test
     void fitchMissException() {
         frame.pitch(5);
         frame.pitch(3);
 
-        assertThatThrownBy(() -> frame.pitch(1))
-                .isInstanceOf(IllegalStateException.class);
+        assertThat(frame.canPitch()).isFalse();
     }
 
     @DisplayName("프레임의 번호는 0번 또는 10번이 될 수 없다.")

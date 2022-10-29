@@ -17,13 +17,13 @@ public abstract class Frame {
         }
     }
 
-    public abstract boolean canPitch();
-
     public abstract boolean isEnd();
+
+    public abstract boolean canPitch();
 
     public abstract Frame nextFrame();
 
-    public ScoreType scoreStatus() {
+    public ScoreType status() {
         return score.status();
     }
 

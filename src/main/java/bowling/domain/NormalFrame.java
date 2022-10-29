@@ -12,7 +12,7 @@ public class NormalFrame extends Frame {
         checkSize(number);
 
         this.number = number;
-        this.score = new Score(this);
+        this.score = new Score();
     }
 
     private void checkSize(int number) {
@@ -22,14 +22,13 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public boolean canPitch() {
-        return score.match(ScoreType.PROCEEDING);
+    public boolean isEnd() {
+        return !canPitch();
     }
 
     @Override
-    public boolean isEnd() {
-        return score.pinsSize() == 2 ||
-                score.status().equals(ScoreType.STRIKE);
+    public boolean canPitch() {
+        return score.pinsSize() != 2 && !status().isKnockedDowned();
     }
 
     @Override

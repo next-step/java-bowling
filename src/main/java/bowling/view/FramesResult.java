@@ -2,14 +2,12 @@ package bowling.view;
 
 import bowling.domain.Frame;
 import bowling.domain.Frames;
-import bowling.domain.ScoreType;
 import bowling.domain.player.Player;
 
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static bowling.domain.FinalFrame.MAX_FRAME_NUMBER;
-import static bowling.domain.Pin.MAX_COUNT;
 
 public class FramesResult {
     private final static String FRAME_NUMBER_LINE;
@@ -53,45 +51,7 @@ public class FramesResult {
     }
 
     private String createFrameScore(Frame frame) {
-        if (isFirstFrame(frame)) {
-            return "";
-        }
-
-        if (frame.pinsSize() == 3) {
-            if (isFirstSpare(frame)) {
-                return String.format(" %d|/|%d|", frame.pinNumber(0), frame.pinNumber(2));
-            }
-
-            if (isSecondSpare(frame)) {
-                return String.format(" %d|%d|/|", frame.pinNumber(0), frame.pinNumber(1));
-            }
-
-            return String.format(" %d|%d|%d|", frame.pinNumber(0), frame.pinNumber(1), frame.pinNumber(2));
-        }
-
-        ScoreType score = frame.scoreStatus();
-        if (score.equals(ScoreType.FINAL_STRIKE)) {
-            return String.format("  %d|%d |", frame.pinNumber(0), frame.pinNumber(1));
-        }
-
-        if (score.equals(ScoreType.STRIKE) || score.equals(ScoreType.PROCEEDING)) {
-            return String.format("  %d   |", frame.pinNumber(0));
-        }
-
-        if (score.equals(ScoreType.SPARE)) {
-            return String.format("  %d|/ |", frame.pinNumber(0));
-        }
-
-        return String.format("  %d|%d |", frame.pinNumber(0), frame.pinNumber(1));
-    }
-
-    private boolean isFirstSpare(Frame frame) {
-        return frame.pinNumber(0) != MAX_COUNT &&
-                frame.pinNumber(0) + frame.pinNumber(1) == MAX_COUNT;
-    }
-
-    private boolean isSecondSpare(Frame frame) {
-        return frame.pinNumber(1) + frame.pinNumber(2) == MAX_COUNT;
+        return new FrameResult(frame).createFrameScore();
     }
 
     private String createEmptyFrame(Frame frame) {

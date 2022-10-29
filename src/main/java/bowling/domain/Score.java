@@ -8,11 +8,6 @@ import java.util.stream.Stream;
 public class Score {
 
     private final List<Pin> pins = new ArrayList<>();
-    private final Frame frame;
-
-    public Score(Frame frame) {
-        this.frame = frame;
-    }
 
     public void addPin(Pin pin) {
         validate(pin);
@@ -20,17 +15,13 @@ public class Score {
     }
 
     private void validate(Pin pin) {
-        if (frame.isEnd()) {
-            throw new IllegalStateException("더 이상 집계할 수 없습니다.");
-        }
-
         if (!(status().isKnockedDowned()) &&
                 lastPinNumber() + pin.count() > 10) {
             throw new IllegalArgumentException("쓰러뜨릴 핀 갯수가 올바르지 않습니다.");
         }
     }
 
-    private int lastPinNumber() {
+    public int lastPinNumber() {
         if (pins().size() == 0) {
             return 0;
         }
@@ -54,9 +45,5 @@ public class Score {
 
     public List<Pin> pins() {
         return Collections.unmodifiableList(pins);
-    }
-
-    public boolean match(ScoreType scoreType) {
-        return status().equals(scoreType);
     }
 }
