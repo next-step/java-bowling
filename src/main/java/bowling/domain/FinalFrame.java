@@ -18,7 +18,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean canPitch() {
-        return score.status().isKnockedDown() ||
+        return score.status().isKnockedDowned() ||
                 score.match(ScoreType.PROCEEDING);
     }
 

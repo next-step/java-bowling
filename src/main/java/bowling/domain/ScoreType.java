@@ -28,7 +28,7 @@ public enum ScoreType {
         return operate.test(pins);
     }
 
-    public boolean isKnockedDown() {
-        return List.of(ScoreType.STRIKE, ScoreType.FINAL_STRIKE, ScoreType.SPARE).contains(this);
+    public boolean isKnockedDowned() {
+        return List.of(ScoreType.STRIKE, ScoreType.FINAL_STRIKE, ScoreType.SPARE, ScoreType.FINAL_SPARE).contains(this);
     }
 }

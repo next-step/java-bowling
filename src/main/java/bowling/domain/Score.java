@@ -23,7 +23,7 @@ public class Score {
             throw new IllegalStateException("더 이상 집계할 수 없습니다.");
         }
 
-        if (!(status().isKnockedDown()) &&
+        if (!(status().isKnockedDowned()) &&
                 lastPinNumber() + pin.count() > 10) {
             throw new IllegalArgumentException("쓰러뜨릴 핀 갯수가 올바르지 않습니다.");
         }
