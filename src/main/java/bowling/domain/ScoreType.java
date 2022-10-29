@@ -4,28 +4,28 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public enum ScoreType {
-    STRIKE(pins -> pins.size() == 1 &&
-            pins.get(0).count() == 10),
-    SPARE(pins -> pins.size() == 2 &&
-            pins.get(0).count() != 10 &&
-            pins.get(0).count() + pins.get(1).count() == 10),
-    FINAL_STRIKE(pins -> pins.size() == 2 &&
-            pins.get(1).count() == 10),
-    FINAL_SPARE(pins -> pins.size() == 2 &&
-            pins.get(0).count() == 10 &&
-            pins.get(1).count() != 10),
-    MISS(pins -> pins.size() == 2 &&
-            pins.get(0).count() + pins.get(1).count() != 10),
-    PROCEEDING(pins -> pins.size() < 2);
+    STRIKE(score -> score.pinsSize() == 1 &&
+            score.pinNumber(0) == 10),
+    SPARE(score -> score.pinsSize() == 2 &&
+            score.pinNumber(0) != 10 &&
+            score.pinNumber(0) + score.pinNumber(1) == 10),
+    FINAL_STRIKE(score -> score.pinsSize() == 2 &&
+            score.pinNumber(1) == 10),
+    FINAL_SPARE(score -> score.pinsSize() == 2 &&
+            score.pinNumber(0) == 10 &&
+            score.pinNumber(1) != 10),
+    MISS(score -> score.pinsSize() == 2 &&
+            score.pinNumber(0) + score.pinNumber(1) != 10),
+    PROCEEDING(score -> score.pinsSize() < 2);
 
-    private final Predicate<List<Pin>> predicate;
+    private final Predicate<Score> predicate;
 
-    ScoreType(Predicate<List<Pin>> predicate) {
+    ScoreType(Predicate<Score> predicate) {
         this.predicate = predicate;
     }
 
-    public boolean matches(List<Pin> pins) {
-        return predicate.test(pins);
+    public boolean matches(Score score) {
+        return predicate.test(score);
     }
 
     public boolean isKnockedDowned() {

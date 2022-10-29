@@ -40,7 +40,7 @@ public class Score {
 
     public ScoreType status() {
         return Stream.of(ScoreType.values())
-                .filter(scoreType -> scoreType.matches(pins))
+                .filter(scoreType -> scoreType.matches(this))
                 .findFirst().orElse(ScoreType.MISS);
     }
 
