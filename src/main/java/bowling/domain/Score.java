@@ -3,6 +3,7 @@ package bowling.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Score {
 
@@ -38,27 +39,9 @@ public class Score {
     }
 
     public ScoreType status() {
-        if (ScoreType.STRIKE.matches(pins)) {
-            return ScoreType.STRIKE;
-        }
-
-        if (ScoreType.SPARE.matches(pins)) {
-            return ScoreType.SPARE;
-        }
-
-        if (ScoreType.FINAL_STRIKE.matches(pins)) {
-            return ScoreType.FINAL_STRIKE;
-        }
-
-        if (ScoreType.FINAL_SPARE.matches(pins)) {
-            return ScoreType.FINAL_SPARE;
-        }
-
-        if (ScoreType.PROCEEDING.matches(pins)) {
-            return ScoreType.PROCEEDING;
-        }
-
-        return ScoreType.MISS;
+        return Stream.of(ScoreType.values())
+                .filter(scoreType -> scoreType.matches(pins))
+                .findFirst().orElse(ScoreType.MISS);
     }
 
     public int pinsSize() {
