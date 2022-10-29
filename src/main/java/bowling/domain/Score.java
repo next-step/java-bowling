@@ -19,19 +19,13 @@ public class Score {
     }
 
     private void validate(Pin pin) {
-        if (frame instanceof NormalFrame && pins().size() == 2 ) {
+        if (frame.isEnd()) {
             throw new IllegalStateException("더 이상 집계할 수 없습니다.");
         }
 
-        if (frame instanceof NormalFrame && status().equals(ScoreType.STRIKE)) {
-            throw new IllegalStateException("더 이상 집계할 수 없습니다.");
-        }
-
-        if (!(status().equals(ScoreType.STRIKE) ||
-                status().equals(ScoreType.FINAL_STRIKE) ||
-                status().equals(ScoreType.SPARE)) &&
+        if (!(status().isKnockedDown()) &&
                 lastPinNumber() + pin.count() > 10) {
-            throw new IllegalArgumentException("핀 갯수가 올바르지 않습니다.");
+            throw new IllegalArgumentException("쓰러뜨릴 핀 갯수가 올바르지 않습니다.");
         }
     }
 
@@ -44,29 +38,31 @@ public class Score {
     }
 
     public ScoreType status() {
-        if (pins.size() == 1 && pinNumber(0) == 10) {
+        if (ScoreType.STRIKE.matches(pins)) {
             return ScoreType.STRIKE;
         }
 
-        if (pins.size() == 2 &&
-                pinNumber(0) != 10 &&
-                (pinNumber(0) + pinNumber(1)) == 10) {
+        if (ScoreType.SPARE.matches(pins)) {
             return ScoreType.SPARE;
         }
 
-        if (pins.size() == 2 && pinNumber(1) == 10) {
+        if (ScoreType.FINAL_STRIKE.matches(pins)) {
             return ScoreType.FINAL_STRIKE;
         }
 
-        if (pins.size() == 2 && pinNumber(0) == 10 && pinNumber(1) != 10) {
+        if (ScoreType.FINAL_SPARE.matches(pins)) {
             return ScoreType.FINAL_SPARE;
         }
 
-        if (pins().size() < 2) {
+        if (ScoreType.PROCEEDING.matches(pins)) {
             return ScoreType.PROCEEDING;
         }
 
         return ScoreType.MISS;
+    }
+
+    public int pinsSize() {
+        return pins.size();
     }
 
     public int pinNumber(int index) {

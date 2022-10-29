@@ -18,11 +18,13 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean canPitch() {
-        return score.match(ScoreType.STRIKE) ||
-                score.match(ScoreType.SPARE) ||
-                score.match(ScoreType.FINAL_SPARE) ||
-                score.match(ScoreType.FINAL_STRIKE) ||
+        return score.status().isKnockedDown() ||
                 score.match(ScoreType.PROCEEDING);
+    }
+
+    @Override
+    public boolean isEnd() {
+        return false;
     }
 
     @Override

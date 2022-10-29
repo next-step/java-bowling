@@ -19,6 +19,10 @@ public abstract class Frame {
 
     public abstract boolean canPitch();
 
+    public abstract boolean isEnd();
+
+    public abstract Frame nextFrame();
+
     public ScoreType scoreStatus() {
         return score.status();
     }
@@ -26,8 +30,6 @@ public abstract class Frame {
     public int number() {
         return number;
     }
-
-    public abstract Frame nextFrame();
 
     public boolean isEmpty() {
         return score.pins().isEmpty();

@@ -27,6 +27,12 @@ public class NormalFrame extends Frame {
     }
 
     @Override
+    public boolean isEnd() {
+        return score.pinsSize() == 2 ||
+                score.status().equals(ScoreType.STRIKE);
+    }
+
+    @Override
     public Frame nextFrame() {
         if (number == MAX_FRAME_NUMBER) {
             return new FinalFrame(number + 1);
