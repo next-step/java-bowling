@@ -15,7 +15,7 @@ class PinTest {
     @ParameterizedTest(name = "{displayName} 입력값={0}")
     @ValueSource(ints = {-1, 11})
     void pin(int input) {
-        assertThatThrownBy(() -> new Pin(input));
+        assertThatThrownBy(() -> Pin.of(input));
     }
 
     @DisplayName("캐싱된 데이터를 사용할 수 있다.")

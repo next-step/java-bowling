@@ -17,7 +17,7 @@ public class Pin {
                         .forEach(i -> CACHE.put(i, new Pin(i)));
     }
 
-    public Pin(int count) {
+    private Pin(int count) {
         validateRange(count);
 
         this.count = count;
