@@ -7,6 +7,7 @@ import bowling.view.InputView;
 import bowling.view.OutputView;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class BowlingApp {
@@ -21,19 +22,21 @@ public class BowlingApp {
             while (!bowling.isFinish()) {
                 BowlingRound round = bowling.currentRound();
                 OutputView.printPinAskQst(round);
-                try {
-                    Integer knockDownPinNumber = inputView.getKnockDownPinNumber();
-                    bowling.play(knockDownPinNumber);
-                } catch (IllegalArgumentException e) {
-                    OutputView.printConsole(e.getMessage());
-                }
+                getKnockedDownPins(inputView, bowling);
                 OutputView.printScore(bowling, username);
             }
-
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             OutputView.printConsole(e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+    private static void getKnockedDownPins(InputView inputView, Bowling bowling) throws IOException {
+        try {
+            Integer knockDownPinNumber = inputView.getKnockDownPinNumber();
+            bowling.play(knockDownPinNumber);
+        } catch (IllegalArgumentException e) {
+            OutputView.printConsole(e.getMessage());
         }
     }
 
