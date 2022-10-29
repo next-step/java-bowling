@@ -30,6 +30,8 @@ public class BowlingApp {
                 OutputView.printScore(bowling, username);
             }
 
+        } catch (IllegalArgumentException e){
+            OutputView.printConsole(e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
