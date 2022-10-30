@@ -99,20 +99,20 @@ public class Question extends AbstractEntity {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-        this.deleteAnswers();
-        this.deleted = true;
-        return this.getDeleteHistory();
+        deleteAnswers();
+        return getDeleteHistory();
     }
 
 
     public void deleteAnswers() {
-        this.answers.stream().forEach((answer) -> answer.delete(this.writer));
+        answers.stream().forEach((answer) -> answer.delete(writer));
+        deleted = true;
     }
 
-     List<DeleteHistory> getDeleteHistory() {
+     private List<DeleteHistory> getDeleteHistory() {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(DeleteHistory.withQuestion(this));
-        deleteHistories.addAll(this.answers.stream()
+        deleteHistories.addAll(answers.stream()
                 .map(DeleteHistory::withAnswer)
                 .collect(Collectors.toList()));
         return deleteHistories;

@@ -64,10 +64,8 @@ public class QuestionTest {
     @DisplayName("삭제된 상태가 아니라면 삭제 이력을 반환할 수 없습니다. ")
     void shouldNotReturnDeleteHistory_whenNotDeleted() {
         Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        Answer answer = new Answer(UserTest.JAVAJIGI, question, "Answers Contents1");
-        question.addAnswer(answer);
 
-        assertThatThrownBy(() -> question.getDeleteHistory()).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> DeleteHistory.withQuestion(question)).isInstanceOf(IllegalStateException.class);
     }
 
     @Test
@@ -76,9 +74,8 @@ public class QuestionTest {
         Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
         Answer answer = new Answer(UserTest.JAVAJIGI, question, "Answers Contents1");
         question.addAnswer(answer);
-        question.delete(UserTest.JAVAJIGI);
 
-        List<DeleteHistory> histories = question.getDeleteHistory();
+        List<DeleteHistory> histories =  question.delete(UserTest.JAVAJIGI);
 
         assertThat(histories).containsExactly(DeleteHistory.withQuestion(question), DeleteHistory.withAnswer(answer));
     }
