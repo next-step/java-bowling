@@ -11,8 +11,6 @@ import static bowling.domain.FinalFrame.MAX_FRAME_NUMBER;
 
 public class FramesResult {
     private final static String FRAME_NUMBER_LINE;
-    private static final String STRIKE = "X";
-    private static final String GUTTER = "-";
 
     private final Player player;
     private final Frames frames;
@@ -44,25 +42,14 @@ public class FramesResult {
         return frames.values()
                 .stream()
                 .map(this::createFrameScore)
-                .collect(Collectors.joining())
-                .replaceAll("10", STRIKE)
-                .replaceAll("0", GUTTER)
-                + createEmptyFrame(frames.lastFrame());
+                .collect(Collectors.joining()) + createEmptyFrame(frames.lastFrame());
     }
 
     private String createFrameScore(Frame frame) {
-        return new FrameResult(frame).createFrameScore();
+        return new FrameResult(frame).getFrameScore() + " |";
     }
 
     private String createEmptyFrame(Frame frame) {
-        if (isFirstFrame(frame)) {
-            return "      |".repeat(MAX_FRAME_NUMBER - frame.number() + 1);
-        }
-
         return "      |".repeat(MAX_FRAME_NUMBER - frame.number());
-    }
-
-    private boolean isFirstFrame(Frame frame) {
-        return frame.number() == 1 && frame.isEmpty();
     }
 }

@@ -6,39 +6,47 @@ import bowling.domain.ScoreType;
 import static bowling.domain.Pin.MAX_COUNT;
 
 public class FrameResult {
+    private static final String STRIKE = "X";
+    private static final String GUTTER = "-";
+
     private final Frame frame;
 
     public FrameResult(Frame frame) {
         this.frame = frame;
     }
 
+    public String getFrameScore() {
+        return createFrameScore().replaceAll("10", STRIKE)
+                .replaceAll("0", GUTTER);
+    }
+
     public String createFrameScore() {
         if (isFirstFrame(frame)) {
-            return "";
+            return "     ";
         }
 
         if (frame.pinsSize() == 3) {
             if (isFirstSpare(frame)) {
-                return String.format("%d|/|%d |", frame.pinNumber(0), frame.pinNumber(2));
+                return String.format("%d|/|%d", frame.pinNumber(0), frame.pinNumber(2));
             }
 
             if (isSecondSpare(frame)) {
-                return String.format("%d|%d|/ |", frame.pinNumber(0), frame.pinNumber(1));
+                return String.format("%d|%d|/", frame.pinNumber(0), frame.pinNumber(1));
             }
 
-            return String.format("%d|%d|%d |", frame.pinNumber(0), frame.pinNumber(1), frame.pinNumber(2));
+            return String.format("%d|%d|%d", frame.pinNumber(0), frame.pinNumber(1), frame.pinNumber(2));
         }
 
         ScoreType score = frame.status();
         if (score.equals(ScoreType.SPARE)) {
-            return String.format("  %d|/ |", frame.pinNumber(0));
+            return String.format("  %d|/", frame.pinNumber(0));
         }
 
         if (frame.pinsSize() >= 2) {
-            return String.format("  %d|%d |", frame.pinNumber(0), frame.pinNumber(1));
+            return String.format("  %d|%d", frame.pinNumber(0), frame.pinNumber(1));
         }
 
-        return String.format("  %d   |", frame.pinNumber(0));
+        return String.format("  %d  ", frame.pinNumber(0));
     }
 
     private boolean isFirstFrame(Frame frame) {
