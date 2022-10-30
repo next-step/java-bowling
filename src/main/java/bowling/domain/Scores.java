@@ -23,7 +23,11 @@ public class Scores {
     }
 
     public boolean isLastRoundEnd() {
-        return scores.size() == LAST_ROUND_TRY_NUM;
+        return scores.size() == LAST_ROUND_TRY_NUM || (scores.size() == NORMAL_ROUND_TRY_NUM && !isBonusBall());
+    }
+
+    private boolean isBonusBall() {
+        return isSecondPinSpare() || scores.get(FIRST_SCORE).isStrike() || scores.get(SECOND_SCORE).isStrike();
     }
 
 

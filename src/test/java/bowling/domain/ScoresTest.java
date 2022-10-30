@@ -62,8 +62,8 @@ class ScoresTest {
 
     private static Stream<Arguments> generateScoreAndWhetherLastRoundEnded(){
         return Stream.of(
-                Arguments.of(List.of(1,4),false),
-                Arguments.of(List.of(1,4,10),true),
+                Arguments.of(List.of(1,4),true),
+                Arguments.of(List.of(0,0),true),
                 Arguments.of(List.of(0),false),
                 Arguments.of(List.of(10,10,10),true)
         );
