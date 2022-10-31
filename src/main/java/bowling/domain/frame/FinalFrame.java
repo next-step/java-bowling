@@ -63,10 +63,14 @@ public class FinalFrame extends Frame {
     @Override
     public Integer calculatePoint() {
 
-        if (point != null && bonus != null) {
-            return point.point() + bonus.getValue();
-        }
-        return null;
+        int bonusValue = Optional.ofNullable(this.bonus)
+                .map(Pin::getValue)
+                .orElse(0);
+        int pointValue = Optional.ofNullable(this.point)
+                .map(Point::point)
+                .orElse(0);
+
+        return bonusValue + pointValue;
     }
 
     @Override

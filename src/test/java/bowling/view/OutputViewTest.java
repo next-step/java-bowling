@@ -20,8 +20,25 @@ class OutputViewTest {
         frames.bowl(a -> new Pin(1));
         frames.bowl(a -> new Pin(0));
         frames.bowl(a -> new Pin(5));
+
         frames.bowl(a -> new Pin(4));
-        OutputView.print(BowlingRecord.of(frames, new Pin(4), new PlayerName("PJS")));
+        frames.bowl(a -> new Pin(4));
+        frames.bowl(a -> new Pin(4));
+        frames.bowl(a -> new Pin(4));
+        frames.bowl(a -> new Pin(4));
+
+        frames.bowl(a -> new Pin(4));
+        frames.bowl(a -> new Pin(4));
+        frames.bowl(a -> new Pin(4));
+        frames.bowl(a -> new Pin(4));
+        frames.bowl(a -> new Pin(4));
+
+        frames.bowl(a -> new Pin(4));
+        frames.bowl(a -> new Pin(4));
+        frames.bowl(a -> new Pin(4));
+        frames.bowl(a -> new Pin(4));
+        BowlingRecord pjs = BowlingRecord.of(frames, new Pin(4), new PlayerName("PJS"));
+        OutputView.print(pjs);
     }
 
     @Test
