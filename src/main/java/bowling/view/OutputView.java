@@ -12,9 +12,9 @@ import java.util.stream.IntStream;
 public class OutputView {
 
     private static final String FORMAT_BOWL = "%d프레임 투구 : %d%n";
-    private static final String FORMAT_FRAME_NUMBER = "  %02d  ";
-    private static final String FORMAT_FRAME = " %4s ";
-    private static final String FORMAT_RECORD = "| %4s |%s|%n";
+    private static final String FORMAT_FRAME_NUMBER = "   %02d   ";
+    private static final String FORMAT_FRAME = " %5s  ";
+    private static final String FORMAT_RECORD = "| %6s |%s|%n";
 
     private static final String BAR = "|";
     private static final String STRIKE = "X";
@@ -49,8 +49,21 @@ public class OutputView {
                 .map(record -> String.format(FORMAT_FRAME, printPoint(record.getPoint())))
                 .collect(Collectors.joining(BAR));
 
+        records = addRestEmptyRecord(records, bowlingRecord.getNth());
+        points = addRestEmptyRecord(points, bowlingRecord.getNth());
+
         System.out.printf(FORMAT_RECORD, headerName, records);
         System.out.printf(FORMAT_RECORD, headerPoint, points);
+    }
+
+    private static String addRestEmptyRecord(String records, int nth) {
+        String rest = IntStream.range(nth, 10)
+                .mapToObj(a -> String.format(FORMAT_FRAME, BLANK))
+                .collect(Collectors.joining(BAR));
+        if (nth < 10) {
+            rest = BAR + rest;
+        }
+        return records + rest;
     }
 
     private static String printFrameRecord(FrameRecord frameRecord) {
