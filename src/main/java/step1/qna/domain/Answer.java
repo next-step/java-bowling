@@ -1,7 +1,7 @@
-package qna.domain;
+package step1.qna.domain;
 
-import qna.NotFoundException;
-import qna.UnAuthorizedException;
+import step1.qna.NotFoundException;
+import step1.qna.UnAuthorizedException;
 
 import javax.persistence.*;
 

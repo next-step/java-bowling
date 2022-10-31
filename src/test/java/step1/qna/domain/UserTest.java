@@ -1,4 +1,4 @@
-package qna.domain;
+package step1.qna.domain;
 
 public class UserTest {
     public static final User JAVAJIGI = new User(1L, "javajigi", "password", "name", "javajigi@slipp.net");

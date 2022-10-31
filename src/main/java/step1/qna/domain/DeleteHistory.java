@@ -1,4 +1,4 @@
-package qna.domain;
+package step1.qna.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
