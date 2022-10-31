@@ -30,19 +30,19 @@ public class FinalFrame extends Frame {
     public void bowl(Pin pin) {
         if (!state.isFinish()) {
             this.state = this.state.bowl(pin);
-            addPoint();
+            sumPoint();
             return;
         }
         if (state.canGetBonus()) {
             this.bonus = pin;
-            addPoint();
+            sumPoint();
             return;
         }
 
         throw new UnsupportedOperationException();
     }
 
-    private void addPoint() {
+    private void sumPoint() {
         if (isFinish()) {
             int nowSum = state.getSum() + calculateBonus();
             Point beforePoint = Optional.ofNullable(before)
