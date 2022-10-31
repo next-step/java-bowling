@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.FallenPin;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +34,7 @@ class FirstBowlingTest {
         State state = new FirstBowling(FallenPin.of(9));
 
         assertThatIllegalArgumentException().isThrownBy(() -> state.bowl(FallenPin.of(2)))
-                .withMessage("핀의 합은 10 이하여야 합니다.");
+                .withMessage("쓰러진 핀의 합은 10 이하여야 합니다.");
     }
 
     @Test
@@ -46,5 +47,20 @@ class FirstBowlingTest {
     @Test
     void tries() {
         assertThat(new FirstBowling(FallenPin.of(9)).tries()).isEqualTo(1);
+    }
+
+    @Test
+    void getScore() {
+        State state = new FirstBowling(FallenPin.of(9));
+
+        assertThat(state.getScore()).isEqualTo(new Score(9, 0));
+    }
+
+    @Test
+    void addScore() {
+        State state = new FirstBowling(FallenPin.of(9));
+        Score previousScore = new Score(10, 1);
+
+        assertThat(state.addScore(previousScore)).isEqualTo(new Score(19, 0));
     }
 }

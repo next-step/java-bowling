@@ -3,6 +3,7 @@ package bowling.domain.state;
 import bowling.domain.pin.FallenPin;
 
 public abstract class Finished implements State {
+
     @Override
     public boolean isFinished() {
         return true;

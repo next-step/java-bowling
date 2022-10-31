@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.FallenPin;
+import bowling.domain.score.Score;
 
 public class Ready extends Running {
 
@@ -21,6 +22,16 @@ public class Ready extends Running {
     @Override
     public int tries() {
         return 0;
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(0, 0);
+    }
+
+    @Override
+    public Score addScore(Score previousScore) {
+        return previousScore;
     }
 
     @Override

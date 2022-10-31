@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.FallenPin;
+import bowling.domain.score.Score;
 
 import java.util.Objects;
 
@@ -22,6 +23,20 @@ public class Spare extends Finished {
     @Override
     public int tries() {
         return 2;
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(firstPin.add(secondPin), 1);
+    }
+
+    @Override
+    public Score addScore(Score previousScore) {
+        Score score = previousScore.bowl(firstPin.getCount());
+        if (score.canCalculate()) {
+            return score;
+        }
+        return score.bowl(secondPin.getCount());
     }
 
     @Override

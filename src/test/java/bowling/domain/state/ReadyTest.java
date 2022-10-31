@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.FallenPin;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,5 +29,20 @@ class ReadyTest {
     @Test
     void tries() {
         assertThat(new Ready().tries()).isEqualTo(0);
+    }
+
+    @Test
+    void getScore() {
+        State state = new Ready();
+
+        assertThat(state.getScore()).isEqualTo(new Score(0, 0));
+    }
+
+    @Test
+    void addScore() {
+        State state = new Ready();
+        Score previousScore = new Score(10, 1);
+
+        assertThat(state.addScore(previousScore)).isEqualTo(previousScore);
     }
 }

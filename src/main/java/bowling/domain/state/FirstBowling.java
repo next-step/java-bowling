@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.FallenPin;
+import bowling.domain.score.Score;
 
 import java.util.Objects;
 
@@ -17,7 +18,7 @@ public class FirstBowling extends Running {
     public State bowl(FallenPin secondPin) {
         int sum = firstPin.add(secondPin);
         if (sum > MAX_PINS_SUM) {
-            throw new IllegalArgumentException(String.format("핀의 합은 %s 이하여야 합니다.", MAX_PINS_SUM));
+            throw new IllegalArgumentException(String.format("쓰러진 핀의 합은 %s 이하여야 합니다.", MAX_PINS_SUM));
         }
 
         if (sum == MAX_PINS_SUM) {
@@ -36,6 +37,16 @@ public class FirstBowling extends Running {
     @Override
     public int tries() {
         return 1;
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(firstPin.getCount(), 0);
+    }
+
+    @Override
+    public Score addScore(Score previousScore) {
+        return previousScore.bowl(firstPin.getCount());
     }
 
     @Override
