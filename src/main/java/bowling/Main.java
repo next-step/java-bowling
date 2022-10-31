@@ -13,16 +13,20 @@ public class Main {
         Frames frames = Frames.init();
         ResultView.printFrames(playerName, frames);
         while (!frames.isOver()) {
-            FallenPin fallenPin = FallenPin.of(InputView.scanFallenPinCount(frames.lastFrameNumber()));
-
-            frames = frames.bowl(fallenPin);
+            int fallenPins = InputView.scanFallenPinCount(frames.lastFrameNumber());
+            frames = bowl(frames, fallenPins);
             ResultView.printFrames(playerName, frames);
-
-            if (frames.isLastFrameFinished()) {
-                frames = frames.next();
-            }
         }
 
         InputView.closeScan();
+    }
+
+    private static Frames bowl(Frames frames, int fallenPins) {
+        try {
+            return frames.bowl(FallenPin.of(fallenPins));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return frames;
+        }
     }
 }
