@@ -15,40 +15,30 @@ class FramesTest {
     @DisplayName("프레임들 초기화는 일반프레임으로 생성된다")
     @Test
     void init() {
-        assertThat(Frames.init()).isEqualTo(new Frames(List.of(NormalFrame.init())));
+        assertThat(Frames.init()).isEqualTo(new Frames(List.of(NormalFrame.init(1))));
     }
 
-    @DisplayName("투구한 결과가 반환된다")
+    @DisplayName("투구 후 프레임이 끝나지 않았으면 변경된 Frames 를 반환한다")
     @Test
-    void bowl() {
+    void bowl_returnThis() {
+        Frames result = Frames.init()
+                .bowl(FallenPin.of(8));
+
+        assertThat(result).isEqualTo(new Frames(List.of(normalFrame().bowl(FallenPin.of(8)))));
+    }
+
+    @DisplayName("투구 후 프레임이 끝났다면 다음 Frames 를 반환한다")
+    @Test
+    void bowl_returnNext() {
         Frames result = Frames.init()
                 .bowl(FallenPin.of(10));
 
-        assertThat(result).isEqualTo(new Frames(List.of(normalFrame().bowl(FallenPin.of(10)))));
-    }
-
-    @DisplayName("다음 Frames 를 반환한다")
-    @Test
-    void next() {
-        Frames result = Frames.init()
-                .bowl(FallenPin.of(10))
-                .next();
-
-        Frames expected = new Frames(List.of(
-                normalFrame().bowl(FallenPin.of(10)),
-                normalFrame()));
-        assertThat(result).isEqualTo(expected);
-    }
-
-    @DisplayName("9번째 다음은 최종프레임을 넣어 Frames 를 반환한다")
-    @Test
-    void next_when9Frames() {
-        Frames result = frames(10);
-
-        List<Frame> frameList = frameList();
-        frameList.add(finalFrame().bowl(FallenPin.of(10)));
-        Frames expected = new Frames(frameList);
-        assertThat(result).isEqualTo(expected);
+        List<Frame> expectedFrames = new ArrayList<>();
+        Frame normalFrame = normalFrame();
+        Frame next = normalFrame.bowl(FallenPin.of(10));
+        expectedFrames.add(normalFrame);
+        expectedFrames.add(next);
+        assertThat(result).isEqualTo(new Frames(expectedFrames));
     }
 
     @DisplayName("Frames 가 끝났는지 여부를 반환한다.")
@@ -57,8 +47,8 @@ class FramesTest {
             "11,false",
             "12,true"
     })
-    void isOver(int frameCount, boolean expected) {
-        Frames frames = frames(frameCount);
+    void isOver(int tries, boolean expected) {
+        Frames frames = frames(tries);
         assertThat(frames.isOver()).isEqualTo(expected);
     }
 
@@ -69,28 +59,13 @@ class FramesTest {
     }
 
     private Frame normalFrame() {
-        return NormalFrame.init();
+        return NormalFrame.init(1);
     }
 
-    private Frame finalFrame() {
-        return FinalFrame.init();
-    }
-
-    private Frames frames(int frameCount) {
+    private Frames frames(int tries) {
         Frames result = Frames.init();
-        for (int i = 0; i < frameCount; i++) {
+        for (int i = 0; i < tries; i++) {
             result = result.bowl(FallenPin.of(10));
-            if (result.isLastFrameFinished()) {
-                result = result.next();
-            }
-        }
-        return result;
-    }
-
-    private List<Frame> frameList() {
-        List<Frame> result = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            result.add(normalFrame().bowl(FallenPin.of(10)));
         }
         return result;
     }

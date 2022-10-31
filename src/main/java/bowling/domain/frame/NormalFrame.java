@@ -1,30 +1,37 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.FallenPin;
+import bowling.domain.score.Score;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class NormalFrame implements Frame {
-    private final State state;
+    private final FrameNumber frameNumber;
+    private State state;
+    private Frame next;
 
-    NormalFrame(State state) {
+    public NormalFrame(int frameNumber, State state) {
+        this.frameNumber = new FrameNumber(frameNumber);
         this.state = state;
     }
 
-    public static NormalFrame init() {
-        return new NormalFrame(new Ready());
+    public static NormalFrame init(int frameNumber) {
+        return new NormalFrame(frameNumber, new Ready());
     }
 
     @Override
     public Frame bowl(FallenPin fallenPin) {
+        state = state.bowl(fallenPin);
         if (isFinished()) {
-            return NormalFrame.init();
+            next = nextFrame();
+            return next;
         }
 
-        return new NormalFrame(state.bowl(fallenPin));
+        return this;
     }
 
     @Override
@@ -38,17 +45,57 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public boolean isReady() {
+        return state instanceof Ready;
+    }
+
+    @Override
+    public Score getScore() {
+        Score score = state.getScore();
+        if (score.canCalculate()) {
+            return score;
+        }
+
+        return next.addScore(score);
+    }
+
+    @Override
+    public Score addScore(Score previousScore) {
+        Score score = state.addScore(previousScore);
+        if (score.canCalculate()) {
+            return score;
+        }
+
+        return Optional.ofNullable(next)
+                .map(nextFrame -> nextFrame.addScore(score))
+                .orElse(null);
+    }
+
+    private Frame nextFrame() {
+        if (frameNumber.isNextFinal()) {
+            return FinalFrame.init();
+        }
+
+        return NormalFrame.init(frameNumber.increase());
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof NormalFrame)) return false;
 
-        NormalFrame normalFrame = (NormalFrame) o;
+        NormalFrame that = (NormalFrame) o;
 
-        return Objects.equals(state, normalFrame.state);
+        if (!Objects.equals(frameNumber, that.frameNumber)) return false;
+        if (!Objects.equals(state, that.state)) return false;
+        return Objects.equals(next, that.next);
     }
 
     @Override
     public int hashCode() {
-        return state != null ? state.hashCode() : 0;
+        int result = frameNumber.hashCode();
+        result = 31 * result + (state != null ? state.hashCode() : 0);
+        result = 31 * result + (next != null ? next.hashCode() : 0);
+        return result;
     }
 }

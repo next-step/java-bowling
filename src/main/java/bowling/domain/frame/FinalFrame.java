@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.FallenPin;
+import bowling.domain.score.Score;
 import bowling.domain.state.Ready;
 import bowling.domain.state.Spare;
 import bowling.domain.state.State;
@@ -20,16 +21,20 @@ public class FinalFrame implements Frame {
     }
 
     public static FinalFrame init() {
-        return new FinalFrame(List.of(new Ready()));
+        List<State> result = new ArrayList<>();
+        result.add(new Ready());
+        return new FinalFrame(result);
     }
 
     @Override
     public Frame bowl(FallenPin fallenPin) {
         if (lastState().isFinished()) {
-            return addState(fallenPin);
+            states.add(new Ready().bowl(fallenPin));
+            return this;
         }
 
-        return updateState(fallenPin);
+        states.set(lastIndex(), lastState().bowl(fallenPin));
+        return this;
     }
 
     @Override
@@ -46,22 +51,51 @@ public class FinalFrame implements Frame {
         return states;
     }
 
+    @Override
+    public boolean isReady() {
+        return lastState() instanceof Ready;
+    }
+
+    @Override
+    public Score getScore() {
+        Score score = firstState().getScore();
+        if (score.canCalculate()) {
+            return score;
+        }
+
+        return addScoreAfterFirstState(score);
+    }
+
+    @Override
+    public Score addScore(Score previousScore) {
+        Score score = firstState().addScore(previousScore);
+        if (score.canCalculate()) {
+            return score;
+        }
+
+        return addScoreAfterFirstState(score);
+    }
+
+    private Score addScoreAfterFirstState(Score previousScore) {
+        if (previousScore.canCalculate()) {
+            return previousScore;
+        }
+
+        Score score = previousScore;
+        for (int i = 1; i < states.size(); i++) {
+            score = states.get(i).addScore(score);
+            if (score.canCalculate()) {
+                return score;
+            }
+        }
+
+        return null;
+    }
+
     private int totalTries() {
         return states.stream()
                 .mapToInt(State::tries)
                 .sum();
-    }
-
-    private FinalFrame addState(FallenPin fallenPin) {
-        List<State> result = new ArrayList<>(states);
-        result.add(new Ready().bowl(fallenPin));
-        return new FinalFrame(result);
-    }
-
-    private FinalFrame updateState(FallenPin fallenPin) {
-        List<State> result = new ArrayList<>(states);
-        result.set(lastIndex(), lastState().bowl(fallenPin));
-        return new FinalFrame(result);
     }
 
     private State firstState() {
