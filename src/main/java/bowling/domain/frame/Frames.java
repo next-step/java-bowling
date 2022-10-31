@@ -11,6 +11,7 @@ import java.util.Optional;
 public class Frames {
 
     private static final int LAST_NORMAL_TURN = 9;
+    private static final int TOTAL_TURN = 10;
 
     private LinkedList<Frame> frames;
 
@@ -43,6 +44,10 @@ public class Frames {
     }
 
     private void addFrame() {
+
+        if(frames.size() == TOTAL_TURN && frames.getLast().isFinish()){
+            throw new UnsupportedOperationException("10 프레임 이상 경기를 진행할 수 없습니다.");
+        }
 
         if (normalFramesIsFinished()) {
             frames.add(new FinalFrame(frames.getLast()));
