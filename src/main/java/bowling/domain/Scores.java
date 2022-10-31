@@ -43,7 +43,7 @@ public class Scores {
         if (scores.size() < size) {
             return false;
         }
-        return  !scores.get(current).isGutter() &&
+        return !scores.get(current).isGutter() &&
                 !scores.get(before).isStrike() &&
                 scores.get(before).sum(scores.get(current)).isStrike();
     }
@@ -56,4 +56,20 @@ public class Scores {
         return scores;
     }
 
+    public int sum() {
+        int sum = 0;
+        for (Score score : scores) {
+            sum = score.sum(sum);
+        }
+        return sum;
+    }
+
+    public Score getFirstScore() {
+        return scores.get(0);
+    }
+
+    public boolean containsStrike() {
+        return scores.stream()
+                .anyMatch(Score::isStrike);
+    }
 }

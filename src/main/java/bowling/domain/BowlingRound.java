@@ -47,7 +47,19 @@ public class BowlingRound {
         return scores;
     }
 
-    public boolean containsScore(List<Score> scores){
+    public boolean containsScore(List<Score> scores) {
         return this.scores.containsAll(scores);
+    }
+
+    public int sumScores() {
+        return this.scores.sum();
+    }
+
+    public Score getFirstScore() {
+        return this.scores.getFirstScore();
+    }
+
+    public boolean containsStrike() {
+        return scores.containsStrike();
     }
 }

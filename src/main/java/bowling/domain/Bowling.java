@@ -3,9 +3,8 @@ package bowling.domain;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toMap;
 
 public class Bowling {
 
@@ -27,7 +26,7 @@ public class Bowling {
         BowlingRound round = currentRound();
         round.addKnockDownPins(numberOfPins);
         if (round.isNextRound()) {
-            Position nextPosition  = currentPosition.next();
+            Position nextPosition = currentPosition.next();
             BowlingRound nextRound = round.next();
             currentPosition = nextPosition;
             rounds.put(nextPosition, nextRound);
