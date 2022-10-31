@@ -125,7 +125,7 @@ class FinalFrameTest {
         spare.bowl(new Pin(5));
         spare.bowl(new Pin(5));
         //then
-        assertThat(spare.getBonus().getValue()).isEqualTo(5);
+        assertThat(spare.getBonus().get().getValue()).isEqualTo(5);
     }
 
 }

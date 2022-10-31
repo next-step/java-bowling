@@ -1,10 +1,8 @@
 package bowling.view;
 
-import bowling.domain.Pin;
-import bowling.domain.PlayerName;
-import bowling.domain.dto.Record;
+import bowling.domain.dto.BowlingRecord;
+import bowling.domain.dto.FrameRecord;
 import bowling.domain.frame.FrameType;
-import bowling.domain.frame.Frames;
 import bowling.domain.state.StateType;
 
 import java.util.Optional;
@@ -28,26 +26,26 @@ public class OutputView {
 
     }
 
-    public static void print(Frames frames, PlayerName playerName, Pin now) {
-        System.out.printf(FORMAT_BOWL, frames.getFrameNumber(), now.getValue());
+    public static void print(BowlingRecord bowlingRecord) {
+        System.out.printf(FORMAT_BOWL, bowlingRecord.getNth(), bowlingRecord.getNowPin());
         printHeader();
-        printRecord(frames, playerName);
+        printFrameRecord(bowlingRecord);
     }
 
-    public static void printStart(Frames frames, PlayerName playerName) {
+    public static void printStart(BowlingRecord bowlingRecord) {
         printHeader();
-        printRecord(frames, playerName);
+        printFrameRecord(bowlingRecord);
     }
 
-    private static void printRecord(Frames frames, PlayerName playerName) {
-        String headerName = String.format(FORMAT_FRAME, playerName);
+    private static void printFrameRecord(BowlingRecord bowlingRecord) {
+        String headerName = String.format(FORMAT_FRAME, bowlingRecord.getPlayerName());
         String headerPoint = String.format(FORMAT_FRAME, BLANK);
 
-        String records = frames.getGameRecord().stream()
-                .map(record -> String.format(FORMAT_FRAME, printRecord(record)))
+        String records = bowlingRecord.getFrameRecords().stream()
+                .map(record -> String.format(FORMAT_FRAME, printFrameRecord(record)))
                 .collect(Collectors.joining(BAR));
 
-        String points = frames.getGameRecord().stream()
+        String points = bowlingRecord.getFrameRecords().stream()
                 .map(record -> String.format(FORMAT_FRAME, printPoint(record.getPoint())))
                 .collect(Collectors.joining(BAR));
 
@@ -55,36 +53,36 @@ public class OutputView {
         System.out.printf(FORMAT_RECORD, headerPoint, points);
     }
 
-    private static String printRecord(Record record) {
-        return Optional.ofNullable(record)
-                .map(recordItem -> printScore(recordItem) + printBonus(recordItem))
+    private static String printFrameRecord(FrameRecord frameRecord) {
+        return Optional.ofNullable(frameRecord)
+                .map(frameRecordItem -> printScore(frameRecordItem) + printBonus(frameRecordItem))
                 .orElse(BLANK);
     }
 
-    private static String printScore(Record record) {
-        if (record.getScores() == null || record.getScores().isEmpty()) {
+    private static String printScore(FrameRecord frameRecord) {
+        if (frameRecord.getScores() == null || frameRecord.getScores().isEmpty()) {
             return BLANK;
         }
 
-        if (record.getState() == StateType.STRIKE) {
+        if (frameRecord.getState() == StateType.STRIKE) {
             return STRIKE;
         }
-        if (record.getState() == StateType.SPARE) {
-            return getScore(record.getScores().get(0)) + BAR + SPARE;
+        if (frameRecord.getState() == StateType.SPARE) {
+            return getScore(frameRecord.getScores().get(0)) + BAR + SPARE;
         }
-        if (record.getState() == StateType.MISS) {
-            return getScore(record.getScores().get(0))
+        if (frameRecord.getState() == StateType.MISS) {
+            return getScore(frameRecord.getScores().get(0))
                     + BAR
-                    + getScore(record.getScores().get(1));
+                    + getScore(frameRecord.getScores().get(1));
         }
-        return getScore(record.getScores().get(0));
+        return getScore(frameRecord.getScores().get(0));
 
     }
 
-    private static String printBonus(Record input) {
+    private static String printBonus(FrameRecord input) {
         return Optional.ofNullable(input)
-                .filter(record -> record.getKind() == FrameType.FINAL)
-                .map(Record::getBonus)
+                .filter(frameRecord -> frameRecord.getKind() == FrameType.FINAL)
+                .map(FrameRecord::getBonus)
                 .map(bonus -> BAR + bonus).orElse("");
     }
 

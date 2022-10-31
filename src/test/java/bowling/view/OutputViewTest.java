@@ -1,8 +1,9 @@
 package bowling.view;
 
-import bowling.domain.frame.Frames;
-import bowling.domain.PlayerName;
 import bowling.domain.Pin;
+import bowling.domain.PlayerName;
+import bowling.domain.dto.BowlingRecord;
+import bowling.domain.frame.Frames;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +21,7 @@ class OutputViewTest {
         frames.bowl(a -> new Pin(0));
         frames.bowl(a -> new Pin(5));
         frames.bowl(a -> new Pin(4));
-        OutputView.print(frames, new PlayerName("PJS"), new Pin(4));
+        OutputView.print(BowlingRecord.of(frames, new Pin(4), new PlayerName("PJS")));
     }
 
     @Test
@@ -29,7 +30,7 @@ class OutputViewTest {
         Frames frames = new Frames();
         IntStream.range(0, 11)
                 .forEach(i -> frames.bowl(range -> new Pin(10)));
-        OutputView.print(frames, new PlayerName("PJS"), new Pin(10));
+        OutputView.print(BowlingRecord.of(frames, new Pin(10), new PlayerName("PJS")));
     }
 
 

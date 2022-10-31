@@ -1,6 +1,7 @@
 package bowling.domain;
 
-import bowling.domain.dto.Record;
+import bowling.domain.dto.BowlingRecord;
+import bowling.domain.dto.FrameRecord;
 import bowling.domain.frame.Frames;
 import bowling.domain.state.StateType;
 import org.junit.jupiter.api.DisplayName;
@@ -22,13 +23,13 @@ class FramesTest {
         //when
         IntStream.range(0, 11)
                 .forEach(i -> frames.bowl(range -> new Pin(10)));
-        List<Record> gameRecord = frames.getGameRecord();
+        List<FrameRecord> gameFrameRecord = BowlingRecord.of(frames, new Pin(10), new PlayerName("aaa")).getFrameRecords();
         //then
         assertAll(
                 () -> assertThat(frames.isFinished()).isTrue(),
                 () -> assertThat(frames.getFrameNumber()).isEqualTo(10),
-                () -> assertThat(gameRecord).hasSize(10),
-                () -> assertThat(gameRecord.get(gameRecord.size()-1).getPoint()).isEqualTo(300)
+                () -> assertThat(gameFrameRecord).hasSize(10),
+                () -> assertThat(gameFrameRecord.get(gameFrameRecord.size()-1).getPoint()).isEqualTo(300)
         );
 
     }
@@ -39,14 +40,14 @@ class FramesTest {
         //given
         Frames frames = new Frames();
         //when
-        frames.bowl(range -> new Pin(5));
-        List<Record> gameRecord = frames.getGameRecord();
+        Pin now = frames.bowl(range -> new Pin(5));
+        List<FrameRecord> gameFrameRecord = BowlingRecord.of(frames, now, new PlayerName("aaa")).getFrameRecords();
         //then
         assertAll(
                 () -> assertThat(frames.isFinished()).isFalse(),
                 () -> assertThat(frames.getFrameNumber()).isEqualTo(1),
-                () -> assertThat(gameRecord.get(0).getState()).isEqualTo(StateType.RUNNING),
-                () -> assertThat(gameRecord.get(0).getScores()).isEqualTo(List.of(5))
+                () -> assertThat(gameFrameRecord.get(0).getState()).isEqualTo(StateType.RUNNING),
+                () -> assertThat(gameFrameRecord.get(0).getScores()).isEqualTo(List.of(5))
         );
 
     }

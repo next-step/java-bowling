@@ -5,6 +5,8 @@ import bowling.domain.Point;
 import bowling.domain.state.Started;
 import bowling.domain.state.State;
 
+import java.util.Optional;
+
 public abstract class Frame {
     State state;
     Point point;
@@ -36,5 +38,7 @@ public abstract class Frame {
     public abstract boolean canAddPoint();
 
     public abstract void addPoint(Pin pin);
+
+    public abstract Optional<Pin> getBonus();
 
 }

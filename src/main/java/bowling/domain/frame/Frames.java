@@ -1,14 +1,12 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pin;
-import bowling.domain.dto.Record;
 import bowling.domain.scorestrategy.ScoreStrategy;
-import bowling.domain.state.StateType;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class Frames {
 
@@ -64,30 +62,12 @@ public class Frames {
         return frames.size() == LAST_NORMAL_TURN && frames.getLast().isFinish();
     }
 
-    public List<Record> getGameRecord() {
-        return frames.stream()
-                .map(this::getRecord)
-                .collect(Collectors.toUnmodifiableList());
+    public List<Frame> getFrames() {
+        return Collections.unmodifiableList(frames);
     }
 
     public int getFrameNumber() {
         return frames.size();
     }
 
-    private Record getRecord(Frame frame) {
-
-        return new Record(FrameType.valueOf(frame)
-                , frame.getState().getRecord()
-                , calculateBonus(frame)
-                , StateType.valueOf(frame.getState())
-                , frame.calculatePoint());
-    }
-
-    private static Integer calculateBonus(Frame frame) {
-        return Optional.of(frame)
-                .filter(FinalFrame.class::isInstance)
-                .map(finalPin -> ((FinalFrame) finalPin).getBonus())
-                .map(Pin::getValue)
-                .orElse(null);
-    }
 }

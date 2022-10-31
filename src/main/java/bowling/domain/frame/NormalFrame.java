@@ -37,7 +37,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public Integer calculatePoint() {
-        if(point == null){
+        if (point == null) {
             return null;
         }
         return point.point();
@@ -51,5 +51,10 @@ public class NormalFrame extends Frame {
     @Override
     public boolean canAddPoint() {
         return point.canAddPoint();
+    }
+
+    @Override
+    public Optional<Pin> getBonus() {
+        return Optional.empty();
     }
 }

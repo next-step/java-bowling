@@ -43,13 +43,21 @@ public class FinalFrame extends Frame {
     }
 
     private void sumPoint() {
-        if (isFinish()) {
-            int nowSum = state.getSum() + calculateBonus();
-            Point beforePoint = Optional.ofNullable(before)
-                    .map(frame -> frame.point)
-                    .orElse(null);
-            this.point = new Point(beforePoint, nowSum, 0);
+        if (!isFinish()) {
+            return;
         }
+
+        int nowSum = state.getSum()
+                + Optional.ofNullable(bonus)
+                .map(Pin::getValue)
+                .orElse(0);
+
+        Point beforePoint = Optional.ofNullable(before)
+                .map(frame -> frame.point)
+                .orElse(null);
+
+        this.point = new Point(beforePoint, nowSum, 0);
+
     }
 
     @Override
@@ -59,13 +67,6 @@ public class FinalFrame extends Frame {
             return point.point() + bonus.getValue();
         }
         return null;
-    }
-
-    private int calculateBonus() {
-        if (bonus != null) {
-            return bonus.getValue();
-        }
-        return 0;
     }
 
     @Override
@@ -78,7 +79,8 @@ public class FinalFrame extends Frame {
         throw new UnsupportedOperationException();
     }
 
-    public Pin getBonus() {
-        return bonus;
+    @Override
+    public Optional<Pin> getBonus() {
+        return Optional.ofNullable(bonus);
     }
 }
