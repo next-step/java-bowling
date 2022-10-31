@@ -21,17 +21,9 @@ public class AnswerTest {
 
 
     @Test
-    @DisplayName("작성자가 삭제 요청 시 정상적으로 삭제된다.")
-    void deleteWithValidUser() throws CannotDeleteException {
-        answer.delete(UserTest.JAVAJIGI);
+    @DisplayName("삭제 명령을 수행한다.")
+    void deleteWithValidUser() {
+        answer.delete();
         assertThat(answer.isDeleted()).isTrue();
-    }
-
-    @Test
-    @DisplayName("작성자가 아닌 사람이 삭제 요청 시 예외를 던진다.")
-    void deleteWithInvalidUser() {
-        assertThatThrownBy(() -> answer.delete(UserTest.SANJIGI))
-            .isInstanceOf(CannotDeleteException.class)
-            .hasMessageContaining("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }
 }
