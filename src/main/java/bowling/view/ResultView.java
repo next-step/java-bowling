@@ -40,7 +40,8 @@ public class ResultView {
             return;
         }
 
-        String printString = FrameScore.from(scores).getPrintString();
+        FrameScore frameScore = FrameScore.from(scores);
+        String printString = ScoreString.getScoreString(frameScore);
         List<String> downPins = getDownPinsString(scores);
         System.out.printf(printString, getOrDefault(downPins, 0, ""), getOrDefault(downPins, 1, ""));
     }
