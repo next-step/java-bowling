@@ -21,7 +21,7 @@ public class Frame {
         return false;
     }
 
-    public int getScore() {
+    public int getPinScore() {
         return scores.sumOfDownPins();
     }
 

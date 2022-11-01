@@ -33,7 +33,7 @@ public class FinalFrame extends Frame {
         return bonusScores;
     }
 
-    public int getScore() {
+    public int getPinScore() {
         return scores.sumOfDownPins() + bonusScores.sumOfDownPins();
     }
 
