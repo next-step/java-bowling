@@ -22,12 +22,6 @@ public class Scores {
         return downPins.size();
     }
 
-    private void checkDownPinCountValidation(int downPinCount) {
-        if (sumOfDownPins() + downPinCount > RuleConfig.NUMBER_OF_PIN) {
-            throw new RuntimeException("Sum of down pin count must not more than 10");
-        }
-    }
-
     public boolean isStrike() {
         return downPins.size() == TRY_COUNT_TO_STRIKE && sumOfDownPins() == RuleConfig.NUMBER_OF_PIN;
     }
@@ -50,4 +44,9 @@ public class Scores {
                 .reduce(0, Integer::sum);
     }
 
+    private void checkDownPinCountValidation(int downPinCount) {
+        if (sumOfDownPins() + downPinCount > RuleConfig.NUMBER_OF_PIN) {
+            throw new RuntimeException("Sum of down pin count must not more than 10");
+        }
+    }
 }
