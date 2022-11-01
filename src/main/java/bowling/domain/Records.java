@@ -22,11 +22,11 @@ public class Records {
     }
 
     public boolean isEndLastFrame() {
-        return getLastFrame().isEndFrame();
+        return getLatestFrame().isEndFrame();
     }
 
     private Frame getReadyFrame() {
-        Frame frame = getLastFrame();
+        Frame frame = getLatestFrame();
         if (frame.isEndFrame()) {
             frame = getNewFrame();
             frames.add(frame);
@@ -41,7 +41,7 @@ public class Records {
         return new Frame();
     }
 
-    private Frame getLastFrame() {
+    private Frame getLatestFrame() {
         if (CollectionUtils.isEmpty(frames)) {
             Frame frame = new Frame();
             frames.add(frame);
