@@ -25,6 +25,10 @@ public class Records {
         return getLatestFrame().isEndFrame();
     }
 
+    public int getBonusScore(int index) {
+        return -1;
+    }
+
     private Frame getReadyFrame() {
         Frame frame = getLatestFrame();
         if (frame.isEndFrame()) {
