@@ -8,6 +8,7 @@ import java.util.Optional;
 public class FinalFrame extends Frame {
 
     private Pin bonus;
+    private int bonusBowlCount = 0; //보너스 볼을 던진 횟수
 
     public FinalFrame(Point before) {
         super(before);
@@ -32,9 +33,10 @@ public class FinalFrame extends Frame {
             this.point.add(pin);
             return;
         }
-        if (state.canGetBonus()) {
+        if (state.canGetBonus() &&  bonusBowlCount < state.bonusCount()) {
             this.bonus = pin;
             this.point.add(pin);
+            bonusBowlCount++;
             return;
         }
 
