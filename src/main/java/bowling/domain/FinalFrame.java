@@ -34,7 +34,7 @@ public class FinalFrame extends Frame {
     }
 
     public int getPinScore() {
-        return scores.sumOfDownPins() + bonusScores.sumOfDownPins();
+        return scores.getPinScore() + bonusScores.sumOfDownPins();
     }
 
     private boolean isBonus() {

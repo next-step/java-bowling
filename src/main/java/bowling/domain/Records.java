@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.NotReadyException;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -38,21 +39,19 @@ public class Records {
     }
 
     private int getFrameScore(int index) {
-        if (!isValidFrameIndex(index)) {
-            return 0;
-        }
+        checkValidFrameIndex(index);
         Frame frame = frames.get(index);
         return frame.getPinScore() + getBonusScore(index);
     }
 
     private int getBonusScore(int index) {
-        if (!isValidFrameIndex(index)) {
-            return 0;
-        }
-
+        checkValidFrameIndex(index);
         Frame frame = frames.get(index);
         FrameScore frameScore = frame.getResult();
 
+        if (frame.getClass().equals(FinalFrame.class)) {
+            return 0;
+        }
         if (frameScore.equals(FrameScore.STRIKE)) {
             return getStrikeBonusScore(index + 1);
         }
@@ -63,9 +62,7 @@ public class Records {
     }
 
     private int getStrikeBonusScore(int index) {
-        if (!isValidFrameIndex(index)) {
-            return 0;
-        }
+        checkValidFrameIndex(index);
         Frame frame = frames.get(index);
         FrameScore result = frame.getResult();
 
@@ -79,15 +76,15 @@ public class Records {
     }
 
     private int getSpareBonusScore(int index) {
-        if (!isValidFrameIndex(index)) {
-            return 0;
-        }
+        checkValidFrameIndex(index);
         Frame frame = frames.get(index);
         return frame.getFirstPitchScore();
     }
 
-    private boolean isValidFrameIndex(int frameIndex) {
-        return frames.size() > frameIndex;
+    private void checkValidFrameIndex(int frameIndex) {
+        if (frameIndex >= frames.size()) {
+            throw new NotReadyException();
+        }
     }
 
     private Frame getReadyFrame() {

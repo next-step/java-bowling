@@ -22,7 +22,7 @@ public class Frame {
     }
 
     public int getPinScore() {
-        return scores.sumOfDownPins();
+        return scores.getPinScore();
     }
 
     public FrameScore getResult() {

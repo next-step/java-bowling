@@ -361,4 +361,22 @@ class RecordsTest {
         }
         assertThat(records.getTotalScore()).isEqualTo(0);
     }
+
+    @Test
+    @DisplayName("일반 샘플 예제 검증")
+    void getScoreTest() {
+        Records records = new Records();
+
+        records.record(10);
+
+        records.record(8);
+        records.record(2);
+
+        records.record(8);
+        records.record(1);
+
+        assertThat(records.getTotalScore(0)).isEqualTo(20);
+        assertThat(records.getTotalScore(1)).isEqualTo(38);
+        assertThat(records.getTotalScore(2)).isEqualTo(47);
+    }
 }

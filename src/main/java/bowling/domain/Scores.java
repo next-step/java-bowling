@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.NotReadyException;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -46,16 +47,23 @@ public class Scores {
                 .reduce(0, Integer::sum);
     }
 
+    public int getPinScore() {
+        if (!isStrike() && downPins.size() != RuleConfig.PITCH_COUNT) {
+            throw new NotReadyException();
+        }
+        return sumOfDownPins();
+    }
+
     public int getFirstScore() {
         if (CollectionUtils.isEmpty(downPins)) {
-            return 0;
+            throw new NotReadyException();
         }
         return downPins.get(0);
     }
 
     public int getSecondPitchScore() {
         if (downPins.size() < 2) {
-            return 0;
+            throw new NotReadyException();
         }
         return downPins.get(1);
     }
