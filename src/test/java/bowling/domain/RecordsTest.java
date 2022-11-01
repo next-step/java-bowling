@@ -75,7 +75,7 @@ class RecordsTest {
         assertThat(result2).isEqualTo(FrameScore.STRIKE);
         FrameScore result3 = records.getFrames().get(2).getResult();
         assertThat(result3).isEqualTo(FrameScore.STRIKE);
-//        assertThat(records.getBonusScore(0)).isEqualTo(20);
+        assertThat(records.getBonusScore(0)).isEqualTo(20);
     }
 
     @Test
@@ -93,7 +93,7 @@ class RecordsTest {
         assertThat(result2).isEqualTo(FrameScore.STRIKE);
         FrameScore result3 = records.getFrames().get(2).getResult();
         assertThat(result3).isEqualTo(FrameScore.SPARE);
-//        assertThat(records.getBonusScore(0)).isEqualTo(15);
+        assertThat(records.getBonusScore(0)).isEqualTo(15);
     }
 
     @Test
@@ -111,7 +111,7 @@ class RecordsTest {
         assertThat(result2).isEqualTo(FrameScore.STRIKE);
         FrameScore result3 = records.getFrames().get(2).getResult();
         assertThat(result3).isEqualTo(FrameScore.FINISH);
-//        assertThat(records.getBonusScore(0)).isEqualTo(15);
+        assertThat(records.getBonusScore(0)).isEqualTo(15);
     }
 
     @Test
@@ -128,7 +128,7 @@ class RecordsTest {
         assertThat(result2).isEqualTo(FrameScore.STRIKE);
         FrameScore result3 = records.getFrames().get(2).getResult();
         assertThat(result3).isEqualTo(FrameScore.ONGOING);
-//        assertThat(records.getBonusScore(0)).isEqualTo(10);
+        assertThat(records.getBonusScore(0)).isEqualTo(10);
     }
 
     @Test
@@ -142,7 +142,7 @@ class RecordsTest {
         assertThat(result1).isEqualTo(FrameScore.STRIKE);
         FrameScore result2 = records.getFrames().get(1).getResult();
         assertThat(result2).isEqualTo(FrameScore.STRIKE);
-//        assertThat(records.getBonusScore(0)).isEqualTo(10);
+        assertThat(records.getBonusScore(0)).isEqualTo(10);
     }
 
     @Test
@@ -157,7 +157,7 @@ class RecordsTest {
         assertThat(result1).isEqualTo(FrameScore.STRIKE);
         FrameScore result2 = records.getFrames().get(1).getResult();
         assertThat(result2).isEqualTo(FrameScore.SPARE);
-//        assertThat(records.getBonusScore(0)).isEqualTo(10);
+        assertThat(records.getBonusScore(0)).isEqualTo(10);
     }
 
     @Test
@@ -172,7 +172,7 @@ class RecordsTest {
         assertThat(result1).isEqualTo(FrameScore.STRIKE);
         FrameScore result2 = records.getFrames().get(1).getResult();
         assertThat(result2).isEqualTo(FrameScore.FINISH);
-//        assertThat(records.getBonusScore(0)).isEqualTo(9);
+        assertThat(records.getBonusScore(0)).isEqualTo(9);
     }
 
 
@@ -188,7 +188,7 @@ class RecordsTest {
         assertThat(result1).isEqualTo(FrameScore.STRIKE);
         FrameScore result2 = records.getFrames().get(1).getResult();
         assertThat(result2).isEqualTo(FrameScore.FINISH);
-//        assertThat(records.getBonusScore(0)).isEqualTo(0);
+        assertThat(records.getBonusScore(0)).isEqualTo(0);
     }
 
     @DisplayName("보너스 점수 조회 함수 검증 : STRIKE-ONGOING 인 경우")
@@ -198,7 +198,7 @@ class RecordsTest {
 
         FrameScore result1 = records.getFrames().get(0).getResult();
         assertThat(result1).isEqualTo(FrameScore.STRIKE);
-//        assertThat(records.getBonusScore(0)).isEqualTo(0);
+        assertThat(records.getBonusScore(0)).isEqualTo(0);
     }
 
     @Test
@@ -213,7 +213,7 @@ class RecordsTest {
         assertThat(result1).isEqualTo(FrameScore.SPARE);
         FrameScore result2 = records.getFrames().get(1).getResult();
         assertThat(result2).isEqualTo(FrameScore.STRIKE);
-//        assertThat(records.getBonusScore(0)).isEqualTo(10);
+        assertThat(records.getBonusScore(0)).isEqualTo(10);
     }
 
     @Test
@@ -229,7 +229,7 @@ class RecordsTest {
         assertThat(result1).isEqualTo(FrameScore.SPARE);
         FrameScore result2 = records.getFrames().get(1).getResult();
         assertThat(result2).isEqualTo(FrameScore.SPARE);
-//        assertThat(records.getBonusScore(0)).isEqualTo(5);
+        assertThat(records.getBonusScore(0)).isEqualTo(5);
     }
 
     @Test
@@ -245,7 +245,7 @@ class RecordsTest {
         assertThat(result1).isEqualTo(FrameScore.SPARE);
         FrameScore result2 = records.getFrames().get(1).getResult();
         assertThat(result2).isEqualTo(FrameScore.FINISH);
-//        assertThat(records.getBonusScore(0)).isEqualTo(5);
+        assertThat(records.getBonusScore(0)).isEqualTo(5);
     }
 
     @Test
@@ -260,7 +260,7 @@ class RecordsTest {
         assertThat(result1).isEqualTo(FrameScore.SPARE);
         FrameScore result2 = records.getFrames().get(1).getResult();
         assertThat(result2).isEqualTo(FrameScore.ONGOING);
-//        assertThat(records.getBonusScore(0)).isEqualTo(0);
+        assertThat(records.getBonusScore(0)).isEqualTo(0);
     }
 
     @Test
@@ -272,7 +272,7 @@ class RecordsTest {
 
         FrameScore result = records.getFrames().get(0).getResult();
         assertThat(result).isEqualTo(FrameScore.SPARE);
-//        assertThat(records.getBonusScore(0)).isEqualTo(0);
+        assertThat(records.getBonusScore(0)).isEqualTo(0);
     }
 
     @Test
@@ -284,7 +284,7 @@ class RecordsTest {
 
         FrameScore result = records.getFrames().get(0).getResult();
         assertThat(result).isEqualTo(FrameScore.FINISH);
-//        assertThat(records.getBonusScore(0)).isEqualTo(0);
+        assertThat(records.getBonusScore(0)).isEqualTo(0);
     }
 
     @Test
@@ -296,7 +296,7 @@ class RecordsTest {
 
         FrameScore result = records.getFrames().get(0).getResult();
         assertThat(result).isEqualTo(FrameScore.FINISH);
-//        assertThat(records.getBonusScore(0)).isEqualTo(0);
+        assertThat(records.getBonusScore(0)).isEqualTo(0);
     }
 
     @Test
@@ -307,7 +307,14 @@ class RecordsTest {
 
         FrameScore result = records.getFrames().get(0).getResult();
         assertThat(result).isEqualTo(FrameScore.ONGOING);
-//        assertThat(records.getBonusScore(0)).isEqualTo(0);
+        assertThat(records.getBonusScore(0)).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("보너스 점수 조회 함수 검증 : 시작 전의 경우")
+    void getBonusScoreTest18() {
+        Records records = new Records();
+        assertThat(records.getBonusScore(0)).isEqualTo(0);
     }
 
 }

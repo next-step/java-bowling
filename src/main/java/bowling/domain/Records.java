@@ -26,7 +26,48 @@ public class Records {
     }
 
     public int getBonusScore(int index) {
-        return -1;
+        if (!isValidFrameIndex(index)) {
+            return 0;
+        }
+
+        Frame frame = frames.get(index);
+        FrameScore frameScore = frame.getResult();
+
+        if (frameScore.equals(FrameScore.STRIKE)) {
+            return getStrikeBonusScore(index + 1);
+        }
+        if (frameScore.equals(FrameScore.SPARE)) {
+            return getSpareBonusScore(index + 1);
+        }
+        return 0;
+    }
+
+    private int getStrikeBonusScore(int index) {
+        if (!isValidFrameIndex(index)) {
+            return 0;
+        }
+        Frame frame = frames.get(index);
+        FrameScore result = frame.getResult();
+
+        int bonusScore = 0;
+        bonusScore += getSpareBonusScore(index);
+
+        if (FrameScore.STRIKE.equals(result)) {
+            return bonusScore + getSpareBonusScore(index + 1);
+        }
+        return bonusScore + frame.getSecondPitchScore();
+    }
+
+    private int getSpareBonusScore(int index) {
+        if (!isValidFrameIndex(index)) {
+            return 0;
+        }
+        Frame frame = frames.get(index);
+        return frame.getFirstPitchScore();
+    }
+
+    private boolean isValidFrameIndex(int frameIndex) {
+        return frames.size() > frameIndex;
     }
 
     private Frame getReadyFrame() {

@@ -25,4 +25,16 @@ public class Frame {
         return scores.sumOfDownPins();
     }
 
+    public FrameScore getResult() {
+        return FrameScore.from(scores);
+    }
+
+    public int getFirstPitchScore() {
+        return scores.getFirstScore();
+    }
+
+    public int getSecondPitchScore() {
+        return scores.getSecondPitchScore();
+    }
+
 }

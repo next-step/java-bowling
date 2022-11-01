@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import org.springframework.util.CollectionUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +44,20 @@ public class Scores {
         return downPins
                 .stream()
                 .reduce(0, Integer::sum);
+    }
+
+    public int getFirstScore() {
+        if (CollectionUtils.isEmpty(downPins)) {
+            return 0;
+        }
+        return downPins.get(0);
+    }
+
+    public int getSecondPitchScore() {
+        if (downPins.size() < 2) {
+            return 0;
+        }
+        return downPins.get(1);
     }
 
     private void checkDownPinCountValidation(int downPinCount) {
