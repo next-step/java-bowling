@@ -25,8 +25,4 @@ public class Frame {
         return false;
     }
 
-    public boolean validBonusScore() {
-        return false;
-    }
-
 }

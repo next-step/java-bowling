@@ -51,11 +51,4 @@ class FrameTest {
         assertThat(frame.isEndFrame()).isTrue();
     }
 
-    @Test
-    @DisplayName("일반 프레임의 보너스 점수는 유효하지 않음을 테스트")
-    void validBonusScore() {
-        Frame frame = new Frame();
-        assertThat(frame.validBonusScore()).isFalse();
-    }
-
 }
