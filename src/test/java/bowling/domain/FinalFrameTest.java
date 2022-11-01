@@ -80,9 +80,10 @@ class FinalFrameTest {
     }
 
     @Test
-    @DisplayName("마지막 프레임의 보너스 점수는 기록이 한개라도 있어야 유효함을 테스트")
+    @DisplayName("마지막 프레임의 보너스 점수는 보너스 기록이 한개라도 있어야 유효함을 테스트")
     void validBonusScore() {
         FinalFrame finalFrame = new FinalFrame();
+        finalFrame.record(10);
         assertThat(finalFrame.validBonusScore()).isFalse();
         finalFrame.record(5);
         assertThat(finalFrame.validBonusScore()).isTrue();

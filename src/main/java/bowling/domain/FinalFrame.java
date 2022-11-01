@@ -31,7 +31,7 @@ public class FinalFrame extends Frame {
     }
 
     public boolean validBonusScore() {
-        return scores.getTryCount() != 0;
+        return bonusScores.getTryCount() != 0;
     }
 
     public Scores getBonusScores() {
