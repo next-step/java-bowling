@@ -7,13 +7,18 @@ import java.util.Optional;
 
 public class NormalFrame extends Frame {
 
+    private int addedBonusCount = 0;
 
-    public NormalFrame() {
-        super();
+    public NormalFrame(Point before) {
+        super(before);
     }
 
-    public NormalFrame(Frame before) {
-        super(before);
+    public static NormalFrame start(){
+        return new NormalFrame(Point.start());
+    }
+
+    public static NormalFrame of(Frame frame){
+        return new NormalFrame(frame.point);
     }
 
     @Override
@@ -24,33 +29,18 @@ public class NormalFrame extends Frame {
     @Override
     public void bowl(Pin pin) {
         this.state = state.bowl(pin);
-        addPoint();
-    }
-
-    private void addPoint() {
-        if (isFinish()) {
-            this.point = new Point(Optional.ofNullable(before)
-                    .map(frame -> frame.point)
-                    .orElse(null), state.getSum(), state.bonusCount());
-        }
-    }
-
-    @Override
-    public Integer calculatePoint() {
-        if (point == null) {
-            return null;
-        }
-        return point.point();
+        this.point.add(pin);
     }
 
     @Override
     public void addPoint(Pin pin) {
         this.point.add(pin);
+        this.addedBonusCount++;
     }
 
     @Override
     public boolean canAddPoint() {
-        return point.canAddPoint();
+        return addedBonusCount < state.bonusCount();
     }
 
     @Override

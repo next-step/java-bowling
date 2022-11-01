@@ -7,15 +7,14 @@ import java.util.Optional;
 
 public class FinalFrame extends Frame {
 
-
     private Pin bonus;
 
-    public FinalFrame() {
-        super();
+    public FinalFrame(Point before) {
+        super(before);
     }
 
-    public FinalFrame(Frame before) {
-        super(before);
+    public static FinalFrame of(Frame frame){
+        return new FinalFrame(frame.point);
     }
 
     @Override
@@ -30,47 +29,16 @@ public class FinalFrame extends Frame {
     public void bowl(Pin pin) {
         if (!state.isFinish()) {
             this.state = this.state.bowl(pin);
-            sumPoint();
+            this.point.add(pin);
             return;
         }
         if (state.canGetBonus()) {
             this.bonus = pin;
-            sumPoint();
+            this.point.add(pin);
             return;
         }
 
         throw new UnsupportedOperationException();
-    }
-
-    private void sumPoint() {
-        if (!isFinish()) {
-            return;
-        }
-
-        int nowSum = state.getSum()
-                + Optional.ofNullable(bonus)
-                .map(Pin::getValue)
-                .orElse(0);
-
-        Point beforePoint = Optional.ofNullable(before)
-                .map(frame -> frame.point)
-                .orElse(null);
-
-        this.point = new Point(beforePoint, nowSum, 0);
-
-    }
-
-    @Override
-    public Integer calculatePoint() {
-
-        int bonusValue = Optional.ofNullable(this.bonus)
-                .map(Pin::getValue)
-                .orElse(0);
-        int pointValue = Optional.ofNullable(this.point)
-                .map(Point::point)
-                .orElse(0);
-
-        return bonusValue + pointValue;
     }
 
     @Override

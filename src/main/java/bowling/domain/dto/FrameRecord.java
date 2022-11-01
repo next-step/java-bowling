@@ -23,7 +23,7 @@ public class FrameRecord {
         this.point = point;
     }
 
-    public static FrameRecord of(Frame frame){
+    public static FrameRecord of(Frame frame) {
         return new FrameRecord(FrameType.valueOf(frame)
                 , frame.getState().getRecord()
                 , frame.getBonus().map(Pin::getValue).orElse(null)

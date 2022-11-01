@@ -42,9 +42,4 @@ public class Started implements State {
         return Collections.unmodifiableList(new LinkedList<>());
     }
 
-    @Override
-    public int getSum() {
-        return 0;
-    }
-
 }

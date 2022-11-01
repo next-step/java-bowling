@@ -33,8 +33,4 @@ public abstract class Finished implements State {
         return pins.getRemainPins();
     }
 
-    @Override
-    public int getSum() {
-        return pins.getSum();
-    }
 }

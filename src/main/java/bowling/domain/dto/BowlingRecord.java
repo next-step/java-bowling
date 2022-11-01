@@ -39,9 +39,11 @@ public class BowlingRecord {
     }
 
     private static List<FrameRecord> getFrameRecords(Frames frames) {
+
         return frames.getFrames().stream()
                 .map(FrameRecord::of)
                 .collect(Collectors.toUnmodifiableList());
+
     }
 
     public int getNth() {

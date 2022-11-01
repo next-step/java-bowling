@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pin;
+import bowling.domain.Point;
 import bowling.domain.state.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ class FinalFrameTest {
     @DisplayName("시작")
     void is_started() {
         //given
-        FinalFrame finalFrame = new FinalFrame();
+        FinalFrame finalFrame = new FinalFrame(Point.start());
         //then
         assertAll(
                 () -> assertThat(finalFrame.isFinish()).isFalse(),
@@ -31,7 +32,7 @@ class FinalFrameTest {
     @DisplayName("진행중")
     void is_running() {
         //given
-        FinalFrame finalFrame = new FinalFrame();
+        FinalFrame finalFrame = new FinalFrame(Point.start());
         //when
         finalFrame.bowl(new Pin(5));
         //then
@@ -47,7 +48,7 @@ class FinalFrameTest {
     @DisplayName("스트라이크")
     void is_strike() {
         //given
-        FinalFrame finalFrame = new FinalFrame();
+        FinalFrame finalFrame = new FinalFrame(Point.start());
         //when
         finalFrame.bowl(new Pin(10));
         //then
@@ -63,7 +64,7 @@ class FinalFrameTest {
     @DisplayName("스페어")
     void is_spare() {
         //given
-        FinalFrame finalFrame = new FinalFrame();
+        FinalFrame finalFrame = new FinalFrame(Point.start());
         //when
         finalFrame.bowl(new Pin(5));
         finalFrame.bowl(new Pin(5));
@@ -80,7 +81,7 @@ class FinalFrameTest {
     @DisplayName("미스")
     void is_miss() {
         //given
-        FinalFrame finalFrame = new FinalFrame();
+        FinalFrame finalFrame = new FinalFrame(Point.start());
         //when
         finalFrame.bowl(new Pin(5));
         finalFrame.bowl(new Pin(4));
@@ -97,15 +98,15 @@ class FinalFrameTest {
     @DisplayName("상태별 보너스 가능 확인")
     void bonus() {
         //given
-        FinalFrame miss = new FinalFrame();
+        FinalFrame miss = new FinalFrame(Point.start());
         miss.bowl(new Pin(5));
         miss.bowl(new Pin(4));
 
-        FinalFrame spare = new FinalFrame();
+        FinalFrame spare = new FinalFrame(Point.start());
         spare.bowl(new Pin(5));
         spare.bowl(new Pin(5));
 
-        FinalFrame strike = new FinalFrame();
+        FinalFrame strike = new FinalFrame(Point.start());
         strike.bowl(new Pin(10));
 
         //then
@@ -120,7 +121,7 @@ class FinalFrameTest {
     @DisplayName("레코드에서 보너스 값 확인")
     void record_bonus() {
         //given
-        FinalFrame spare = new FinalFrame();
+        FinalFrame spare = new FinalFrame(Point.start());
         spare.bowl(new Pin(5));
         spare.bowl(new Pin(5));
         spare.bowl(new Pin(5));

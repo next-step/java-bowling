@@ -19,7 +19,7 @@ class NormalFrameTest {
     @DisplayName("첫 시도에 스트라이크면 프레임 종료")
     void is_finish_when_strike() {
         //given
-        NormalFrame normalFrame = new NormalFrame();
+        NormalFrame normalFrame = NormalFrame.start();
         //when
         normalFrame.bowl(new Pin(10));
         //then
@@ -35,7 +35,7 @@ class NormalFrameTest {
     @DisplayName("첫 시도에 스트라이크가 아니면 프레임 종료 아님 && 남은 핀 개수")
     void is_not_finish_and_remain_pins() {
         //given
-        NormalFrame normalFrame = new NormalFrame();
+        NormalFrame normalFrame = NormalFrame.start();
         //when
         normalFrame.bowl(new Pin(5));
         //then
@@ -51,7 +51,7 @@ class NormalFrameTest {
     @DisplayName("스페어 처리하면 프레임 종료")
     void is_finish_when_spare() {
         //given
-        NormalFrame normalFrame = new NormalFrame();
+        NormalFrame normalFrame = NormalFrame.start();
         //when
         normalFrame.bowl(new Pin(5));
         normalFrame.bowl(new Pin(5));
@@ -68,7 +68,7 @@ class NormalFrameTest {
     @DisplayName("두번 던지면 프레임 종료")
     void is_finish_when_miss() {
         //given
-        NormalFrame normalFrame = new NormalFrame();
+        NormalFrame normalFrame = NormalFrame.start();
         //when
         normalFrame.bowl(new Pin(5));
         normalFrame.bowl(new Pin(2));
@@ -85,7 +85,7 @@ class NormalFrameTest {
     @DisplayName("한번 던지기")
     void bowl_1() {
         //given
-        NormalFrame normalFrame = new NormalFrame();
+        NormalFrame normalFrame = NormalFrame.start();
         //when
         normalFrame.bowl(new Pin(5));
         //then
@@ -101,11 +101,11 @@ class NormalFrameTest {
     @DisplayName("점수 계산")
     void calculate_point() {
         //given
-        NormalFrame frame1 = new NormalFrame();
+        NormalFrame frame1 = NormalFrame.start();
         frame1.bowl(new Pin(10));
         //when
         //두번째 볼링 8
-        NormalFrame frame2 = new NormalFrame(frame1);
+        NormalFrame frame2 = NormalFrame.of(frame1);
         Pin turn2 = new Pin(8);
         frame2.bowl(turn2);
         if (frame1.canAddPoint()) {
@@ -118,7 +118,7 @@ class NormalFrameTest {
             frame1.addPoint(turn3);
         }
         //네번째 볼링 8
-        NormalFrame frame3 = new NormalFrame(frame2);
+        NormalFrame frame3 = NormalFrame.of(frame2);
         Pin turn4 = new Pin(8);
         frame3.bowl(turn4);
         if(frame1.canAddPoint()){

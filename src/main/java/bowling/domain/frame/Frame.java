@@ -10,16 +10,12 @@ import java.util.Optional;
 public abstract class Frame {
     State state;
     Point point;
-    Frame before;
 
-    protected Frame() {
+    protected Frame(Point before) {
+        this.point = new Point(before);
         this.state = new Started();
     }
 
-    protected Frame(Frame before) {
-        this.before = before;
-        this.state = new Started();
-    }
 
     public abstract boolean isFinish();
 
@@ -33,7 +29,14 @@ public abstract class Frame {
         return state;
     }
 
-    public abstract Integer calculatePoint();
+    public Integer calculatePoint(){
+
+        if( point == null || canAddPoint() ){
+            return null;
+        }
+
+        return point.point();
+    }
 
     public abstract boolean canAddPoint();
 

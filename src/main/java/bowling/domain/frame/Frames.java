@@ -17,7 +17,7 @@ public class Frames {
 
     public Frames() {
         this.frames = new LinkedList<>();
-        frames.add(new NormalFrame());
+        frames.add(NormalFrame.start());
     }
 
     public Pin bowl(ScoreStrategy scoreStrategy) {
@@ -50,11 +50,11 @@ public class Frames {
         }
 
         if (normalFramesIsFinished()) {
-            frames.add(new FinalFrame(frames.getLast()));
+            frames.add(FinalFrame.of(frames.getLast()));
         }
 
         if (frames.getLast().isFinish()) {
-            frames.add(new NormalFrame(frames.getLast()));
+            frames.add(NormalFrame.of(frames.getLast()));
         }
     }
 
