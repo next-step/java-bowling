@@ -4,14 +4,6 @@ public class BowlingGame {
     private final Player player;
     private final Records records;
 
-    public Records getRecords() {
-        return records;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
     public BowlingGame(Player player) {
         this.player = player;
         this.records = new Records();
@@ -36,4 +28,13 @@ public class BowlingGame {
         }
         return recordCount;
     }
+
+    public Records getRecords() {
+        return records;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
 }
