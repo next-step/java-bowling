@@ -1,11 +1,13 @@
 package bowling.domain;
 
+import bowling.exception.NotReadyException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class RecordsTest {
 
@@ -142,7 +144,7 @@ class RecordsTest {
         assertThat(result1).isEqualTo(FrameScore.STRIKE);
         FrameScore result2 = records.getFrames().get(1).getResult();
         assertThat(result2).isEqualTo(FrameScore.STRIKE);
-        assertThat(records.getTotalScore(0)).isEqualTo(10 + 10);
+        assertThatThrownBy(() -> records.getTotalScore(0)).isInstanceOf(NotReadyException.class);
     }
 
     @Test
@@ -272,7 +274,7 @@ class RecordsTest {
 
         FrameScore result = records.getFrames().get(0).getResult();
         assertThat(result).isEqualTo(FrameScore.SPARE);
-        assertThat(records.getTotalScore(0)).isEqualTo(10);
+        assertThatThrownBy(() -> records.getTotalScore(0)).isInstanceOf(NotReadyException.class);
     }
 
     @Test
@@ -307,14 +309,14 @@ class RecordsTest {
 
         FrameScore result = records.getFrames().get(0).getResult();
         assertThat(result).isEqualTo(FrameScore.ONGOING);
-        assertThat(records.getTotalScore(0)).isEqualTo(5);
+        assertThatThrownBy(() -> records.getTotalScore(0)).isInstanceOf(NotReadyException.class);
     }
 
     @Test
     @DisplayName("점수 조회 함수 검증 : 시작 전의 경우")
     void getTotalScoreTest18() {
         Records records = new Records();
-        assertThat(records.getTotalScore(0)).isEqualTo(0);
+        assertThatThrownBy(() -> records.getTotalScore(0)).isInstanceOf(NotReadyException.class);
     }
 
     @Test

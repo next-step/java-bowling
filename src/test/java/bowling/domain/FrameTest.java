@@ -55,9 +55,7 @@ class FrameTest {
     @DisplayName("프레임의 일반 점수 조회 함수 검증")
     void getScoreTest() {
         Frame frame = new Frame();
-        assertThat(frame.getPinScore()).isEqualTo(0);
         frame.record(4);
-        assertThat(frame.getPinScore()).isEqualTo(4);
         frame.record(5);
         assertThat(frame.getPinScore()).isEqualTo(4 + 5);
     }

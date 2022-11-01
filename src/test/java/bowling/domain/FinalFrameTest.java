@@ -93,9 +93,7 @@ class FinalFrameTest {
     @DisplayName("마지막 프레임의 일반 점수 조회 함수 검증")
     void getScoreTest() {
         FinalFrame finalFrame = new FinalFrame();
-        assertThat(finalFrame.getPinScore()).isEqualTo(0);
         finalFrame.record(4);
-        assertThat(finalFrame.getPinScore()).isEqualTo(4);
         finalFrame.record(6);
         assertThat(finalFrame.getPinScore()).isEqualTo(4 + 6);
 
