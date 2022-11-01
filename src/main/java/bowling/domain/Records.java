@@ -25,7 +25,27 @@ public class Records {
         return getLatestFrame().isEndFrame();
     }
 
-    public int getBonusScore(int index) {
+    public int getTotalScore() {
+        return getTotalScore(frames.size() - 1);
+    }
+
+    public int getTotalScore(int targetIndex) {
+        int totalScore = 0;
+        for (int frameIndex = 0; frameIndex <= targetIndex; frameIndex++) {
+            totalScore += getFrameScore(frameIndex);
+        }
+        return totalScore;
+    }
+
+    private int getFrameScore(int index) {
+        if (!isValidFrameIndex(index)) {
+            return 0;
+        }
+        Frame frame = frames.get(index);
+        return frame.getPinScore() + getBonusScore(index);
+    }
+
+    private int getBonusScore(int index) {
         if (!isValidFrameIndex(index)) {
             return 0;
         }
@@ -52,7 +72,7 @@ public class Records {
         int bonusScore = 0;
         bonusScore += getSpareBonusScore(index);
 
-        if (FrameScore.STRIKE.equals(result)) {
+        if (FrameScore.STRIKE.equals(result) && !frame.getClass().equals(FinalFrame.class)) {
             return bonusScore + getSpareBonusScore(index + 1);
         }
         return bonusScore + frame.getSecondPitchScore();

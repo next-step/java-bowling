@@ -62,8 +62,8 @@ class RecordsTest {
     }
 
     @Test
-    @DisplayName("보너스 점수 조회 함수 검증 : STRIKE-STRIKE-STRIKE 인 경우")
-    void getBonusScoreTest1() {
+    @DisplayName("점수 조회 함수 검증 : STRIKE-STRIKE-STRIKE 인 경우")
+    void getTotalScoreTest1() {
         Records records = new Records();
         records.record(10);
         records.record(10);
@@ -75,12 +75,12 @@ class RecordsTest {
         assertThat(result2).isEqualTo(FrameScore.STRIKE);
         FrameScore result3 = records.getFrames().get(2).getResult();
         assertThat(result3).isEqualTo(FrameScore.STRIKE);
-        assertThat(records.getBonusScore(0)).isEqualTo(20);
+        assertThat(records.getTotalScore(0)).isEqualTo(10 + 10 + 10);
     }
 
     @Test
-    @DisplayName("보너스 점수 조회 함수 검증 : STRIKE-STRIKE-SPARE 인 경우")
-    void getBonusScoreTest2() {
+    @DisplayName("점수 조회 함수 검증 : STRIKE-STRIKE-SPARE 인 경우")
+    void getTotalScoreTest2() {
         Records records = new Records();
         records.record(10);
         records.record(10);
@@ -93,12 +93,12 @@ class RecordsTest {
         assertThat(result2).isEqualTo(FrameScore.STRIKE);
         FrameScore result3 = records.getFrames().get(2).getResult();
         assertThat(result3).isEqualTo(FrameScore.SPARE);
-        assertThat(records.getBonusScore(0)).isEqualTo(15);
+        assertThat(records.getTotalScore(0)).isEqualTo(10 + 10 + 5);
     }
 
     @Test
-    @DisplayName("보너스 점수 조회 함수 검증 : STRIKE-STRIKE-MISS 인 경우")
-    void getBonusScoreTest3() {
+    @DisplayName("점수 조회 함수 검증 : STRIKE-STRIKE-MISS 인 경우")
+    void getTotalScoreTest3() {
         Records records = new Records();
         records.record(10);
         records.record(10);
@@ -111,12 +111,12 @@ class RecordsTest {
         assertThat(result2).isEqualTo(FrameScore.STRIKE);
         FrameScore result3 = records.getFrames().get(2).getResult();
         assertThat(result3).isEqualTo(FrameScore.FINISH);
-        assertThat(records.getBonusScore(0)).isEqualTo(15);
+        assertThat(records.getTotalScore(0)).isEqualTo(10 + 10 + 5);
     }
 
     @Test
-    @DisplayName("보너스 점수 조회 함수 검증 : STRIKE-STRIKE-GUTTER 인 경우")
-    void getBonusScoreTest4() {
+    @DisplayName("점수 조회 함수 검증 : STRIKE-STRIKE-GUTTER 인 경우")
+    void getTotalScoreTest4() {
         Records records = new Records();
         records.record(10);
         records.record(10);
@@ -128,12 +128,12 @@ class RecordsTest {
         assertThat(result2).isEqualTo(FrameScore.STRIKE);
         FrameScore result3 = records.getFrames().get(2).getResult();
         assertThat(result3).isEqualTo(FrameScore.ONGOING);
-        assertThat(records.getBonusScore(0)).isEqualTo(10);
+        assertThat(records.getTotalScore(0)).isEqualTo(10 + 10 + 0);
     }
 
     @Test
-    @DisplayName("보너스 점수 조회 함수 검증 : STRIKE-STRIKE-ONGOING 인 경우")
-    void getBonusScoreTest5() {
+    @DisplayName("점수 조회 함수 검증 : STRIKE-STRIKE-ONGOING 인 경우")
+    void getTotalScoreTest5() {
         Records records = new Records();
         records.record(10);
         records.record(10);
@@ -142,12 +142,12 @@ class RecordsTest {
         assertThat(result1).isEqualTo(FrameScore.STRIKE);
         FrameScore result2 = records.getFrames().get(1).getResult();
         assertThat(result2).isEqualTo(FrameScore.STRIKE);
-        assertThat(records.getBonusScore(0)).isEqualTo(10);
+        assertThat(records.getTotalScore(0)).isEqualTo(10 + 10);
     }
 
     @Test
-    @DisplayName("보너스 점수 조회 함수 검증 : STRIKE-SPARE 인 경우")
-    void getBonusScoreTest6() {
+    @DisplayName("점수 조회 함수 검증 : STRIKE-SPARE 인 경우")
+    void getTotalScoreTest6() {
         Records records = new Records();
         records.record(10);
         records.record(5);
@@ -157,12 +157,12 @@ class RecordsTest {
         assertThat(result1).isEqualTo(FrameScore.STRIKE);
         FrameScore result2 = records.getFrames().get(1).getResult();
         assertThat(result2).isEqualTo(FrameScore.SPARE);
-        assertThat(records.getBonusScore(0)).isEqualTo(10);
+        assertThat(records.getTotalScore(0)).isEqualTo(10 + 5 + 5);
     }
 
     @Test
-    @DisplayName("보너스 점수 조회 함수 검증 : STRIKE-MISS 인 경우")
-    void getBonusScoreTest7() {
+    @DisplayName("점수 조회 함수 검증 : STRIKE-MISS 인 경우")
+    void getTotalScoreTest7() {
         Records records = new Records();
         records.record(10);
         records.record(5);
@@ -172,13 +172,13 @@ class RecordsTest {
         assertThat(result1).isEqualTo(FrameScore.STRIKE);
         FrameScore result2 = records.getFrames().get(1).getResult();
         assertThat(result2).isEqualTo(FrameScore.FINISH);
-        assertThat(records.getBonusScore(0)).isEqualTo(9);
+        assertThat(records.getTotalScore(0)).isEqualTo(10 + 5 + 4);
     }
 
 
     @Test
-    @DisplayName("보너스 점수 조회 함수 검증 : STRIKE-GUTTER 인 경우")
-    void getBonusScoreTest8() {
+    @DisplayName("점수 조회 함수 검증 : STRIKE-GUTTER 인 경우")
+    void getTotalScoreTest8() {
         Records records = new Records();
         records.record(10);
         records.record(0);
@@ -188,22 +188,22 @@ class RecordsTest {
         assertThat(result1).isEqualTo(FrameScore.STRIKE);
         FrameScore result2 = records.getFrames().get(1).getResult();
         assertThat(result2).isEqualTo(FrameScore.FINISH);
-        assertThat(records.getBonusScore(0)).isEqualTo(0);
+        assertThat(records.getTotalScore(0)).isEqualTo(10 + 0 + 0);
     }
 
-    @DisplayName("보너스 점수 조회 함수 검증 : STRIKE-ONGOING 인 경우")
-    void getBonusScoreTest9() {
+    @DisplayName("점수 조회 함수 검증 : STRIKE-ONGOING 인 경우")
+    void getTotalScoreTest9() {
         Records records = new Records();
         records.record(10);
 
         FrameScore result1 = records.getFrames().get(0).getResult();
         assertThat(result1).isEqualTo(FrameScore.STRIKE);
-        assertThat(records.getBonusScore(0)).isEqualTo(0);
+        assertThat(records.getTotalScore(0)).isEqualTo(10);
     }
 
     @Test
-    @DisplayName("보너스 점수 조회 함수 검증 : SPARE-STRIKE 인 경우")
-    void getBonusScoreTest10() {
+    @DisplayName("점수 조회 함수 검증 : SPARE-STRIKE 인 경우")
+    void getTotalScoreTest10() {
         Records records = new Records();
         records.record(5);
         records.record(5);
@@ -213,12 +213,12 @@ class RecordsTest {
         assertThat(result1).isEqualTo(FrameScore.SPARE);
         FrameScore result2 = records.getFrames().get(1).getResult();
         assertThat(result2).isEqualTo(FrameScore.STRIKE);
-        assertThat(records.getBonusScore(0)).isEqualTo(10);
+        assertThat(records.getTotalScore(0)).isEqualTo(10 + 10);
     }
 
     @Test
-    @DisplayName("보너스 점수 조회 함수 검증 : SPARE-SPARE 인 경우")
-    void getBonusScoreTest11() {
+    @DisplayName("점수 조회 함수 검증 : SPARE-SPARE 인 경우")
+    void getTotalScoreTest11() {
         Records records = new Records();
         records.record(5);
         records.record(5);
@@ -229,12 +229,12 @@ class RecordsTest {
         assertThat(result1).isEqualTo(FrameScore.SPARE);
         FrameScore result2 = records.getFrames().get(1).getResult();
         assertThat(result2).isEqualTo(FrameScore.SPARE);
-        assertThat(records.getBonusScore(0)).isEqualTo(5);
+        assertThat(records.getTotalScore(0)).isEqualTo(10 + 5);
     }
 
     @Test
-    @DisplayName("보너스 점수 조회 함수 검증 : SPARE-MISS 인 경우")
-    void getBonusScoreTest12() {
+    @DisplayName("점수 조회 함수 검증 : SPARE-MISS 인 경우")
+    void getTotalScoreTest12() {
         Records records = new Records();
         records.record(5);
         records.record(5);
@@ -245,12 +245,12 @@ class RecordsTest {
         assertThat(result1).isEqualTo(FrameScore.SPARE);
         FrameScore result2 = records.getFrames().get(1).getResult();
         assertThat(result2).isEqualTo(FrameScore.FINISH);
-        assertThat(records.getBonusScore(0)).isEqualTo(5);
+        assertThat(records.getTotalScore(0)).isEqualTo(10 + 5);
     }
 
     @Test
-    @DisplayName("보너스 점수 조회 함수 검증 : SPARE-GUTTER 인 경우")
-    void getBonusScoreTest13() {
+    @DisplayName("점수 조회 함수 검증 : SPARE-GUTTER 인 경우")
+    void getTotalScoreTest13() {
         Records records = new Records();
         records.record(5);
         records.record(5);
@@ -260,61 +260,105 @@ class RecordsTest {
         assertThat(result1).isEqualTo(FrameScore.SPARE);
         FrameScore result2 = records.getFrames().get(1).getResult();
         assertThat(result2).isEqualTo(FrameScore.ONGOING);
-        assertThat(records.getBonusScore(0)).isEqualTo(0);
+        assertThat(records.getTotalScore(0)).isEqualTo(10 + 0);
     }
 
     @Test
-    @DisplayName("보너스 점수 조회 함수 검증 : SPARE-ONGOING 인 경우")
-    void getBonusScoreTest14() {
+    @DisplayName("점수 조회 함수 검증 : SPARE-ONGOING 인 경우")
+    void getTotalScoreTest14() {
         Records records = new Records();
         records.record(5);
         records.record(5);
 
         FrameScore result = records.getFrames().get(0).getResult();
         assertThat(result).isEqualTo(FrameScore.SPARE);
-        assertThat(records.getBonusScore(0)).isEqualTo(0);
+        assertThat(records.getTotalScore(0)).isEqualTo(10);
     }
 
     @Test
-    @DisplayName("보너스 점수 조회 함수 검증 : MISS 인 경우")
-    void getBonusScoreTest15() {
+    @DisplayName("점수 조회 함수 검증 : MISS 인 경우")
+    void getTotalScoreTest15() {
         Records records = new Records();
         records.record(5);
         records.record(4);
 
         FrameScore result = records.getFrames().get(0).getResult();
         assertThat(result).isEqualTo(FrameScore.FINISH);
-        assertThat(records.getBonusScore(0)).isEqualTo(0);
+        assertThat(records.getTotalScore(0)).isEqualTo(9);
     }
 
     @Test
-    @DisplayName("보너스 점수 조회 함수 검증 : GUTTER 인 경우")
-    void getBonusScoreTest16() {
+    @DisplayName("점수 조회 함수 검증 : GUTTER 인 경우")
+    void getTotalScoreTest16() {
         Records records = new Records();
         records.record(0);
         records.record(0);
 
         FrameScore result = records.getFrames().get(0).getResult();
         assertThat(result).isEqualTo(FrameScore.FINISH);
-        assertThat(records.getBonusScore(0)).isEqualTo(0);
+        assertThat(records.getTotalScore(0)).isEqualTo(0);
     }
 
     @Test
-    @DisplayName("보너스 점수 조회 함수 검증 : ONGOING 인 경우")
-    void getBonusScoreTest17() {
+    @DisplayName("점수 조회 함수 검증 : ONGOING 인 경우")
+    void getTotalScoreTest17() {
         Records records = new Records();
         records.record(5);
 
         FrameScore result = records.getFrames().get(0).getResult();
         assertThat(result).isEqualTo(FrameScore.ONGOING);
-        assertThat(records.getBonusScore(0)).isEqualTo(0);
+        assertThat(records.getTotalScore(0)).isEqualTo(5);
     }
 
     @Test
-    @DisplayName("보너스 점수 조회 함수 검증 : 시작 전의 경우")
-    void getBonusScoreTest18() {
+    @DisplayName("점수 조회 함수 검증 : 시작 전의 경우")
+    void getTotalScoreTest18() {
         Records records = new Records();
-        assertThat(records.getBonusScore(0)).isEqualTo(0);
+        assertThat(records.getTotalScore(0)).isEqualTo(0);
     }
 
+    @Test
+    @DisplayName("점수 조회 함수 검증 : All Strike")
+    void getTotalScoreTest19() {
+        Records records = new Records();
+        for (int index = 0; index < RuleConfig.NUMBER_OF_FRAME; index++) {
+            records.record(RuleConfig.NUMBER_OF_PIN);
+        }
+        records.record(RuleConfig.NUMBER_OF_PIN);
+        assertThat(records.getTotalScore()).isEqualTo(290);
+    }
+
+    @Test
+    @DisplayName("점수 조회 함수 검증 : All Spare")
+    void getTotalScoreTest20() {
+        Records records = new Records();
+        for (int index = 0; index < RuleConfig.NUMBER_OF_FRAME; index++) {
+            records.record(5);
+            records.record(5);
+        }
+        records.record(5);
+        assertThat(records.getTotalScore()).isEqualTo(15 * 10);
+    }
+
+    @Test
+    @DisplayName("점수 조회 함수 검증 : All Miss")
+    void getTotalScoreTest21() {
+        Records records = new Records();
+        for (int index = 0; index < RuleConfig.NUMBER_OF_FRAME; index++) {
+            records.record(5);
+            records.record(4);
+        }
+        assertThat(records.getTotalScore()).isEqualTo(9 * 10);
+    }
+
+    @Test
+    @DisplayName("점수 조회 함수 검증 : All Gutter")
+    void getTotalScoreTest22() {
+        Records records = new Records();
+        for (int index = 0; index < RuleConfig.NUMBER_OF_FRAME; index++) {
+            records.record(0);
+            records.record(0);
+        }
+        assertThat(records.getTotalScore()).isEqualTo(0);
+    }
 }
