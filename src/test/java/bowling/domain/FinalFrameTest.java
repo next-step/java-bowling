@@ -89,4 +89,20 @@ class FinalFrameTest {
         assertThat(finalFrame.validBonusScore()).isTrue();
     }
 
+    @Test
+    @DisplayName("마지막 프레임의 일반 점수 조회 함수 검증")
+    void getScoreTest() {
+        FinalFrame finalFrame = new FinalFrame();
+        assertThat(finalFrame.getScore()).isEqualTo(0);
+        finalFrame.record(4);
+        assertThat(finalFrame.getScore()).isEqualTo(4);
+        finalFrame.record(6);
+        assertThat(finalFrame.getScore()).isEqualTo(4 + 6);
+
+        assertThat(finalFrame.validBonusScore()).isFalse();
+        finalFrame.record(10);
+        assertThat(finalFrame.validBonusScore()).isTrue();
+        assertThat(finalFrame.getScore()).isEqualTo(4 + 6 + 10);
+    }
+
 }

@@ -90,4 +90,15 @@ class ScoresTest {
         assertThat(scores.tryOver()).isTrue();
     }
 
+    @Test
+    @DisplayName("일반 점수 조회 함수 검증")
+    void getScoreTest() {
+        Scores scores = new Scores();
+        assertThat(scores.sumOfDownPins()).isEqualTo(0);
+        scores.record(4);
+        assertThat(scores.sumOfDownPins()).isEqualTo(4);
+        scores.record(6);
+        assertThat(scores.sumOfDownPins()).isEqualTo(4 + 6);
+    }
+
 }

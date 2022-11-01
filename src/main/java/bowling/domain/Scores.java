@@ -38,7 +38,7 @@ public class Scores {
         return downPins.size() != 0;
     }
 
-    private int sumOfDownPins() {
+    public int sumOfDownPins() {
         return downPins
                 .stream()
                 .reduce(0, Integer::sum);

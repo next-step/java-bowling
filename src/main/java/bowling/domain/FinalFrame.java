@@ -2,15 +2,10 @@ package bowling.domain;
 
 public class FinalFrame extends Frame {
     private boolean bonus;
-    private Scores bonusScores;
+    private Scores bonusScores = new Scores();
 
     FinalFrame() {
         this.bonus = false;
-        this.bonusScores = new Scores();
-    }
-
-    public Scores getScores() {
-        return scores;
     }
 
     public boolean isEndFrame() {
@@ -36,6 +31,10 @@ public class FinalFrame extends Frame {
 
     public Scores getBonusScores() {
         return bonusScores;
+    }
+
+    public int getScore() {
+        return scores.sumOfDownPins() + bonusScores.sumOfDownPins();
     }
 
     private boolean isBonus() {

@@ -1,11 +1,7 @@
 package bowling.domain;
 
 public class Frame {
-    protected final Scores scores;
-
-    public Frame() {
-        this.scores = new Scores();
-    }
+    protected final Scores scores = new Scores();
 
     public Scores getScores() {
         return scores;
@@ -23,6 +19,10 @@ public class Frame {
             return true;
         }
         return false;
+    }
+
+    public int getScore() {
+        return scores.sumOfDownPins();
     }
 
 }
