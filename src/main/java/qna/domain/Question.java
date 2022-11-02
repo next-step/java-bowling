@@ -1,10 +1,8 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -18,15 +16,10 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
-
-    public Question() {
-    }
 
     public Question(String title, String contents) {
         this.title = title;
@@ -37,24 +30,6 @@ public class Question extends AbstractEntity {
         super(id);
         this.title = title;
         this.contents = contents;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
     }
 
     public User getWriter() {
@@ -84,8 +59,21 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
+        this.validateOwner(loginUser);
+        this.deleted = true;
+        DeleteHistories deleteHistories = new DeleteHistories();
+        DeleteHistory questionDeleteHisotry = new DeleteHistory(this);
+        DeleteHistories answerDeleteHistories = answers.delete(loginUser);
+        deleteHistories.add(questionDeleteHisotry);
+        deleteHistories.addAll(answerDeleteHistories.deleteHistories());
+        return deleteHistories;
+    }
+
+    private void validateOwner(User loginUser) throws CannotDeleteException {
+        if (!this.isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
     }
 
     @Override
