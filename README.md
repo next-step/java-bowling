@@ -11,3 +11,4 @@
   - [ ] 질문 삭제 기능 리팩토링
     - [x] question validation 도메인으로 이동
     - [x] answer validation 도메인으로 이동
+    - [ ] 일급 컬렉션 가능 객체 변경
