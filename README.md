@@ -35,7 +35,8 @@
 > - 테스트하기 쉬운 부분과 테스트하기 어려운 부분을 분리해 테스트 가능한 부분만 단위테스트한다.
 
 ## 구현 명세
-- [ ] QnaService의 delete 메서드 Question과 Answer에 delete() 비즈니스 로직 이동.
+- [x] QnaService의 delete 메서드 Question과 Answer에 delete() 비즈니스 로직 이동.
+  - Service 에서 도메인으로 비즈니스 이동할 코드 삭제. 
   - deleted true 변환
   - DeleteHistory 내역 추가
 - [ ] answers 라는 일급 컬랙션 생성하여 로직 구성
