@@ -39,6 +39,7 @@
   - Service 에서 도메인으로 비즈니스 이동할 코드 삭제. 
   - deleted true 변환
   - DeleteHistory 내역 추가
+  - 불필요한 getter/setter 삭제
 - [ ] answers 라는 일급 컬랙션 생성하여 로직 구성
 
 

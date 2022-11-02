@@ -1,18 +1,22 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Question extends AbstractEntity {
+    private static final String QUESTION_DELETE_AUTHORITY_MESSAGE = "질문을 삭제할 권한이 없습니다.";
+
     @Column(length = 100, nullable = false)
-    private String title;
+    private final String title;
 
     @Lob
-    private String contents;
+    private final String contents;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
@@ -25,9 +29,6 @@ public class Question extends AbstractEntity {
 
     private boolean deleted = false;
 
-    public Question() {
-    }
-
     public Question(String title, String contents) {
         this.title = title;
         this.contents = contents;
@@ -39,22 +40,14 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public String getTitle() {
-        return title;
-    }
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        validateDeleteAuthority(loginUser);
+        this.deleted = true;
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+        deleteHistories.addAll(answers.deleteAll(loginUser));
 
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
+        return deleteHistories;
     }
 
     public User getWriter() {
@@ -75,17 +68,28 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    private void validateDeleteAuthority(User loginUser) throws CannotDeleteException {
+        if (!this.isOwner(loginUser)) {
+            throw new CannotDeleteException(QUESTION_DELETE_AUTHORITY_MESSAGE);
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Question question = (Question) o;
+        return deleted == question.deleted && Objects.equals(title, question.title) && Objects.equals(contents, question.contents) && Objects.equals(writer, question.writer) && Objects.equals(answers, question.answers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), title, contents, writer, answers, deleted);
     }
 
     @Override
