@@ -41,7 +41,7 @@ public class BowlingController {
         int number = InputView.inputPitchNumber(lastFrame.number());
 
         try {
-            lastFrame.pitch(number);
+            lastFrame.bowl(number);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
             return;

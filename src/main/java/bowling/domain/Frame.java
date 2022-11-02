@@ -9,7 +9,7 @@ public abstract class Frame {
 
     }
 
-    public void pitch(int number) {
+    public void bowl(int number) {
         try {
             score.addPin(Pin.of(number));
         } catch (RuntimeException e) {

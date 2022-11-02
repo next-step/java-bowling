@@ -28,7 +28,7 @@ class FinalFrameTest {
     @DisplayName("스트라이크인 경우 한 번 더 투구할 수 있다.")
     @Test
     void fitchStrike() {
-        frame.pitch(10);
+        frame.bowl(10);
 
         assertThat(frame.canPitch()).isTrue();
     }
@@ -36,10 +36,10 @@ class FinalFrameTest {
     @DisplayName("스패어인 경우 한 번 더 투구할 수 있다.")
     @Test
     void fitchSpare() {
-        frame.pitch(7);
-        frame.pitch(3);
+        frame.bowl(7);
+        frame.bowl(3);
 
-        assertDoesNotThrow(() -> frame.pitch(5));
+        assertDoesNotThrow(() -> frame.bowl(5));
     }
 
 
@@ -52,7 +52,7 @@ class FinalFrameTest {
     @DisplayName("투구가 끝나지 않은 상황에서는 프레임은 끝났다고 판단하지 않는다.")
     @Test
     void endFrame1() {
-        frame.pitch(5);
+        frame.bowl(5);
 
         assertThat(frame.isEnd()).isFalse();
     }
@@ -60,8 +60,8 @@ class FinalFrameTest {
     @DisplayName("투구가 끝나면 프레임은 끝났다고 판단한다.")
     @Test
     void endFrame2() {
-        frame.pitch(5);
-        frame.pitch(3);
+        frame.bowl(5);
+        frame.bowl(3);
 
         assertThat(frame.isEnd()).isTrue();
     }
@@ -69,8 +69,8 @@ class FinalFrameTest {
     @DisplayName("10|0 인 경우 더 투구할 수 있다.")
     @Test
     void endFrame3() {
-        frame.pitch(10);
-        frame.pitch(0);
+        frame.bowl(10);
+        frame.bowl(0);
 
         assertThat(frame.isEnd()).isFalse();
     }

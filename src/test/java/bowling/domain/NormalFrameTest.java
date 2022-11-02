@@ -21,26 +21,26 @@ class NormalFrameTest {
 
     @DisplayName("스트라이크인 경우 한 번 더 투구할 수 없다.")
     @Test
-    void fitchException() {
-        frame.pitch(10);
+    void bowlException() {
+        frame.bowl(10);
 
         assertThat(frame.canPitch()).isFalse();
     }
 
     @DisplayName("스패어 상태에서 한 번 더 투구할 수 없다.")
     @Test
-    void fitchSpareException() {
-        frame.pitch(7);
-        frame.pitch(3);
+    void bowlSpareException() {
+        frame.bowl(7);
+        frame.bowl(3);
 
         assertThat(frame.canPitch()).isFalse();
     }
 
     @DisplayName("투구가 끝난 상황에서 한 번 더 투구할 수 없다.")
     @Test
-    void fitchMissException() {
-        frame.pitch(5);
-        frame.pitch(3);
+    void bowlMissException() {
+        frame.bowl(5);
+        frame.bowl(3);
 
         assertThat(frame.canPitch()).isFalse();
     }
