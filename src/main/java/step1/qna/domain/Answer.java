@@ -1,5 +1,6 @@
 package step1.qna.domain;
 
+import java.time.LocalDateTime;
 import step1.qna.CannotDeleteException;
 import step1.qna.NotFoundException;
 import step1.qna.UnAuthorizedException;
@@ -47,6 +48,12 @@ public class Answer extends AbstractEntity {
     public Answer setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
+    }
+
+    public DeleteHistory delete() {
+        this.deleted = true;
+        return new DeleteHistory(ContentType.ANSWER, this.getId(), this.getWriter(),
+            LocalDateTime.now());
     }
 
     public boolean isDeleted() {
