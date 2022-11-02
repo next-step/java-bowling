@@ -1,17 +1,18 @@
 package bowling.domain;
 
+import javax.swing.text.html.Option;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toMap;
 
 public class Bowling {
 
     private final Map<Position, BowlingRound> rounds = new HashMap<>();
 
-    private Position currentPosition;
+    private Positions positions; // 꼭 Bowling 객체에서 Positions객체를 관리해야되는가? rounds map은 key값으로 Positiosn가 아닌 Position을 가지게됨
 
     public Bowling() {
         this(1);
@@ -20,18 +21,39 @@ public class Bowling {
     public Bowling(int position) {
         Position startPosition = new Position(position);
         this.rounds.put(startPosition, new BowlingRound(position));
-        this.currentPosition = startPosition;
+        this.positions = new Positions(new Position(position));
     }
 
-    public void play(int numberOfPins) {
+    public Optional<Integer> play(int numberOfPins) {
         BowlingRound round = currentRound();
         round.addKnockDownPins(numberOfPins);
         if (round.isNextRound()) {
-            Position nextPosition  = currentPosition.next();
+            Position nextPosition  = positions.next();
             BowlingRound nextRound = round.next();
-            currentPosition = nextPosition;
             rounds.put(nextPosition, nextRound);
         }
+        if (!positions.isCalculated()){
+            return calculateScore();
+        }
+        return Optional.empty();
+    }
+
+    private Optional<Integer> calculateScore() {
+        BowlingRound unCalculatedRound = rounds.get(positions.getCalculatedPosition());
+        if(unCalculatedRound.isSelfCalculable()){
+            //TODO Default Calculator
+            return Optional.empty();
+        }
+
+        if(positions.isSpareRoundCalculable()){
+            //TODO SpareRound Calculator
+            return Optional.empty();
+        }
+        if(positions.isStrikeRoundCalculable()){
+            //TODO StrikeRound Calculator
+            return Optional.empty();
+        }
+        return Optional.empty();
     }
 
     public boolean isFinish() {
@@ -40,7 +62,7 @@ public class Bowling {
 
 
     public BowlingRound currentRound() {
-        return rounds.get(currentPosition);
+        return rounds.get(position);
     }
 
     public Map<Position, BowlingRound> getRounds() {

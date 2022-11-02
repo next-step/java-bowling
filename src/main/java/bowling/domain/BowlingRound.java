@@ -50,4 +50,9 @@ public class BowlingRound {
     public boolean containsScore(List<Score> scores){
         return this.scores.containsAll(scores);
     }
+
+    public boolean isSelfCalculable() {
+        // TODO
+        return false;
+    }
 }
