@@ -97,18 +97,17 @@ public class Question extends AbstractEntity {
         }
     }
 
-    public List<DeleteHistory> delete(User loginUser) {
+    public DeleteHistories delete(User loginUser) {
         validateAuthentication(loginUser);
         this.deleted = true;
 
         Answers answers = Answers.from(this.answers);
 
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter(),
-            LocalDateTime.now()));
-        deleteHistories.addAll(answers.deleteAll(loginUser));
-
-        return deleteHistories;
+        DeleteHistory deleteQuestionHistory = new DeleteHistory(ContentType.QUESTION, this.getId(),
+            this.getWriter(),
+            LocalDateTime.now());
+        List<DeleteHistory> deleteAnswerHistories = answers.deleteAll(loginUser);
+        return DeleteHistories.of(deleteQuestionHistory, deleteAnswerHistories);
     }
 
     @Override

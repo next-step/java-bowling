@@ -11,7 +11,7 @@
   - [ ] 질문 삭제 기능 리팩토링
     - [x] question validation 도메인으로 이동
     - [x] answer validation 도메인으로 이동
-    - [ ] 일급 컬렉션 가능 객체 변경
+    - [x] 일급 컬렉션 가능 객체 변경
     - [x] question delete + delete history 도메인으로 이동
     - [x] answer delete + delete history 도메인으로 이동
     - [x] 삭제 비즈니스 로직 전체 도메인으로 이동
