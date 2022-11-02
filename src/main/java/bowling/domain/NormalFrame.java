@@ -22,11 +22,6 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public boolean isEnd() {
-        return !canPitch();
-    }
-
-    @Override
     public boolean canPitch() {
         return score.pinsSize() != 2 && !status().isKnockedDowned();
     }

@@ -17,7 +17,9 @@ public abstract class Frame {
         }
     }
 
-    public abstract boolean isEnd();
+    public boolean isEnd() {
+        return !canPitch();
+    }
 
     public abstract boolean canPitch();
 

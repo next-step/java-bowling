@@ -17,11 +17,6 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public boolean isEnd() {
-        return !canPitch();
-    }
-
-    @Override
     public boolean canPitch() {
         return score.pinsSize() < 2 ||
                 (score.pinsSize() != 3 && status().isKnockedDowned()) ||
