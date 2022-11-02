@@ -96,10 +96,18 @@ public class Question extends AbstractEntity {
         }
     }
 
-    public DeleteHistory delete() {
+    public List<DeleteHistory> delete(User loginUser) {
+        validateAuthentication(loginUser);
         this.deleted = true;
-        return new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter(),
-            LocalDateTime.now());
+
+        Answers answers = Answers.from(this.answers);
+
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter(),
+            LocalDateTime.now()));
+        deleteHistories.addAll(answers.deleteAll(loginUser));
+
+        return deleteHistories;
     }
 
     @Override

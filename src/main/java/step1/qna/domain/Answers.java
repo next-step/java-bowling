@@ -14,18 +14,13 @@ public class Answers {
         return new Answers(answers);
     }
 
-    public void validateAnswersAuthentication(User loginUser) {
-        this.answers.stream()
-                .forEach(answer -> answer.validateAnswerAuthentication(loginUser));
-    }
-
     public List<Answer> getAnswers() {
         return answers;
     }
 
-    public List<DeleteHistory> deleteAll() {
+    public List<DeleteHistory> deleteAll(final User loginUser) {
         return answers.stream()
-            .map(answer -> answer.delete())
+            .map(answer -> answer.delete(loginUser))
             .collect(Collectors.toList());
     }
 }
