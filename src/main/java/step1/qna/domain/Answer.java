@@ -45,11 +45,6 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public DeleteHistory delete(User loginUser) {
         validateAnswerAuthentication(loginUser);
         this.deleted = true;

@@ -10,6 +10,7 @@ import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -112,6 +113,7 @@ public class Question extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents
+            + ", writer=" + writer + "]";
     }
 }

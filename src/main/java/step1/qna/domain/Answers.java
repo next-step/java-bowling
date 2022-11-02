@@ -4,13 +4,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Answers {
+
     private final List<Answer> answers;
 
     private Answers(final List<Answer> answers) {
         this.answers = answers;
     }
 
-    public static Answers from(final List<Answer> answers){
+    public static Answers from(final List<Answer> answers) {
         return new Answers(answers);
     }
 
