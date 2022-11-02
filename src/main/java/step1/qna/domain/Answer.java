@@ -25,11 +25,11 @@ public class Answer extends AbstractEntity {
     public Answer() {
     }
 
-    public Answer(User writer, Question question, String contents) {
+    public Answer(final User writer, final Question question, final String contents) {
         this(null, writer, question, contents);
     }
 
-    public Answer(Long id, User writer, Question question, String contents) {
+    public Answer(final Long id, final User writer, final Question question, final String contents) {
         super(id);
 
         if(writer == null) {
@@ -45,7 +45,7 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public DeleteHistory delete(User loginUser) {
+    public DeleteHistory delete(final User loginUser) {
         validateAnswerAuthentication(loginUser);
         this.deleted = true;
         return new DeleteHistory(ContentType.ANSWER, this.getId(), this.getWriter(),
@@ -72,7 +72,7 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
-    public void validateAnswerAuthentication(User loginUser) {
+    public void validateAnswerAuthentication(final User loginUser) {
         if (!this.isOwner(loginUser)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }

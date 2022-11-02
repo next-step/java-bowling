@@ -46,58 +46,39 @@ public class Question extends AbstractEntity {
         return title;
     }
 
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
     public String getContents() {
         return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
     }
 
     public User getWriter() {
         return writer;
     }
 
-    public Question writeBy(User loginUser) {
+    public Question writeBy(final User loginUser) {
         this.writer = loginUser;
         return this;
     }
 
-    public void addAnswer(Answer answer) {
+    public void addAnswer(final Answer answer) {
         answer.toQuestion(this);
         answers.add(answer);
     }
 
-    public boolean isOwner(User loginUser) {
+    public boolean isOwner(final User loginUser) {
         return writer.equals(loginUser);
-    }
-
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
     }
 
     public boolean isDeleted() {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
-    public void validateAuthentication(User loginUser) {
+    public void validateAuthentication(final User loginUser) {
         if (!this.isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
     }
 
-    public DeleteHistories delete(User loginUser) {
+    public DeleteHistories delete(final User loginUser) {
         validateAuthentication(loginUser);
         this.deleted = true;
 
