@@ -8,6 +8,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class RecordsTest {
 
@@ -72,12 +73,15 @@ class RecordsTest {
         records.record(10);
 
         FrameScore result1 = records.getFrames().get(0).getResult();
-        assertThat(result1).isEqualTo(FrameScore.STRIKE);
         FrameScore result2 = records.getFrames().get(1).getResult();
-        assertThat(result2).isEqualTo(FrameScore.STRIKE);
         FrameScore result3 = records.getFrames().get(2).getResult();
-        assertThat(result3).isEqualTo(FrameScore.STRIKE);
-        assertThat(records.getTotalScore(0)).isEqualTo(10 + 10 + 10);
+
+        assertAll(
+                () -> assertThat(result1).isEqualTo(FrameScore.STRIKE),
+                () -> assertThat(result2).isEqualTo(FrameScore.STRIKE),
+                () -> assertThat(result3).isEqualTo(FrameScore.STRIKE),
+                () -> assertThat(records.getTotalScore(0)).isEqualTo(10 + 10 + 10)
+        );
     }
 
     @Test
@@ -90,12 +94,15 @@ class RecordsTest {
         records.record(5);
 
         FrameScore result1 = records.getFrames().get(0).getResult();
-        assertThat(result1).isEqualTo(FrameScore.STRIKE);
         FrameScore result2 = records.getFrames().get(1).getResult();
-        assertThat(result2).isEqualTo(FrameScore.STRIKE);
         FrameScore result3 = records.getFrames().get(2).getResult();
-        assertThat(result3).isEqualTo(FrameScore.SPARE);
-        assertThat(records.getTotalScore(0)).isEqualTo(10 + 10 + 5);
+
+        assertAll(
+                () -> assertThat(result1).isEqualTo(FrameScore.STRIKE),
+                () -> assertThat(result2).isEqualTo(FrameScore.STRIKE),
+                () -> assertThat(result3).isEqualTo(FrameScore.SPARE),
+                () -> assertThat(records.getTotalScore(0)).isEqualTo(10 + 10 + 5)
+        );
     }
 
     @Test
@@ -108,12 +115,15 @@ class RecordsTest {
         records.record(4);
 
         FrameScore result1 = records.getFrames().get(0).getResult();
-        assertThat(result1).isEqualTo(FrameScore.STRIKE);
         FrameScore result2 = records.getFrames().get(1).getResult();
-        assertThat(result2).isEqualTo(FrameScore.STRIKE);
         FrameScore result3 = records.getFrames().get(2).getResult();
-        assertThat(result3).isEqualTo(FrameScore.FINISH);
-        assertThat(records.getTotalScore(0)).isEqualTo(10 + 10 + 5);
+
+        assertAll(
+                () -> assertThat(result1).isEqualTo(FrameScore.STRIKE),
+                () -> assertThat(result2).isEqualTo(FrameScore.STRIKE),
+                () -> assertThat(result3).isEqualTo(FrameScore.FINISH),
+                () -> assertThat(records.getTotalScore(0)).isEqualTo(10 + 10 + 5)
+        );
     }
 
     @Test
@@ -125,12 +135,15 @@ class RecordsTest {
         records.record(0);
 
         FrameScore result1 = records.getFrames().get(0).getResult();
-        assertThat(result1).isEqualTo(FrameScore.STRIKE);
         FrameScore result2 = records.getFrames().get(1).getResult();
-        assertThat(result2).isEqualTo(FrameScore.STRIKE);
         FrameScore result3 = records.getFrames().get(2).getResult();
-        assertThat(result3).isEqualTo(FrameScore.ONGOING);
-        assertThat(records.getTotalScore(0)).isEqualTo(10 + 10 + 0);
+
+        assertAll(
+                () -> assertThat(result1).isEqualTo(FrameScore.STRIKE),
+                () -> assertThat(result2).isEqualTo(FrameScore.STRIKE),
+                () -> assertThat(result3).isEqualTo(FrameScore.ONGOING),
+                () -> assertThat(records.getTotalScore(0)).isEqualTo(10 + 10 + 0)
+        );
     }
 
     @Test
@@ -141,10 +154,13 @@ class RecordsTest {
         records.record(10);
 
         FrameScore result1 = records.getFrames().get(0).getResult();
-        assertThat(result1).isEqualTo(FrameScore.STRIKE);
         FrameScore result2 = records.getFrames().get(1).getResult();
-        assertThat(result2).isEqualTo(FrameScore.STRIKE);
-        assertThatThrownBy(() -> records.getTotalScore(0)).isInstanceOf(NotReadyException.class);
+
+        assertAll(
+                () -> assertThat(result1).isEqualTo(FrameScore.STRIKE),
+                () -> assertThat(result2).isEqualTo(FrameScore.STRIKE),
+                () -> assertThatThrownBy(() -> records.getTotalScore(0)).isInstanceOf(NotReadyException.class)
+        );
     }
 
     @Test
@@ -156,10 +172,13 @@ class RecordsTest {
         records.record(5);
 
         FrameScore result1 = records.getFrames().get(0).getResult();
-        assertThat(result1).isEqualTo(FrameScore.STRIKE);
         FrameScore result2 = records.getFrames().get(1).getResult();
-        assertThat(result2).isEqualTo(FrameScore.SPARE);
-        assertThat(records.getTotalScore(0)).isEqualTo(10 + 5 + 5);
+
+        assertAll(
+                () -> assertThat(result1).isEqualTo(FrameScore.STRIKE),
+                () -> assertThat(result2).isEqualTo(FrameScore.SPARE),
+                () -> assertThat(records.getTotalScore(0)).isEqualTo(10 + 5 + 5)
+        );
     }
 
     @Test
@@ -171,10 +190,13 @@ class RecordsTest {
         records.record(4);
 
         FrameScore result1 = records.getFrames().get(0).getResult();
-        assertThat(result1).isEqualTo(FrameScore.STRIKE);
         FrameScore result2 = records.getFrames().get(1).getResult();
-        assertThat(result2).isEqualTo(FrameScore.FINISH);
-        assertThat(records.getTotalScore(0)).isEqualTo(10 + 5 + 4);
+
+        assertAll(
+                () -> assertThat(result1).isEqualTo(FrameScore.STRIKE),
+                () -> assertThat(result2).isEqualTo(FrameScore.FINISH),
+                () -> assertThat(records.getTotalScore(0)).isEqualTo(10 + 5 + 4)
+        );
     }
 
 
@@ -187,10 +209,13 @@ class RecordsTest {
         records.record(0);
 
         FrameScore result1 = records.getFrames().get(0).getResult();
-        assertThat(result1).isEqualTo(FrameScore.STRIKE);
         FrameScore result2 = records.getFrames().get(1).getResult();
-        assertThat(result2).isEqualTo(FrameScore.FINISH);
-        assertThat(records.getTotalScore(0)).isEqualTo(10 + 0 + 0);
+
+        assertAll(
+                () -> assertThat(result1).isEqualTo(FrameScore.STRIKE),
+                () -> assertThat(result2).isEqualTo(FrameScore.FINISH),
+                () -> assertThat(records.getTotalScore(0)).isEqualTo(10 + 0 + 0)
+        );
     }
 
     @DisplayName("점수 조회 함수 검증 : STRIKE-ONGOING 인 경우")
@@ -212,10 +237,13 @@ class RecordsTest {
         records.record(10);
 
         FrameScore result1 = records.getFrames().get(0).getResult();
-        assertThat(result1).isEqualTo(FrameScore.SPARE);
         FrameScore result2 = records.getFrames().get(1).getResult();
-        assertThat(result2).isEqualTo(FrameScore.STRIKE);
-        assertThat(records.getTotalScore(0)).isEqualTo(10 + 10);
+
+        assertAll(
+                () -> assertThat(result1).isEqualTo(FrameScore.SPARE),
+                () -> assertThat(result2).isEqualTo(FrameScore.STRIKE),
+                () -> assertThat(records.getTotalScore(0)).isEqualTo(10 + 10)
+        );
     }
 
     @Test
@@ -228,10 +256,13 @@ class RecordsTest {
         records.record(5);
 
         FrameScore result1 = records.getFrames().get(0).getResult();
-        assertThat(result1).isEqualTo(FrameScore.SPARE);
         FrameScore result2 = records.getFrames().get(1).getResult();
-        assertThat(result2).isEqualTo(FrameScore.SPARE);
-        assertThat(records.getTotalScore(0)).isEqualTo(10 + 5);
+
+        assertAll(
+                () -> assertThat(result1).isEqualTo(FrameScore.SPARE),
+                () -> assertThat(result2).isEqualTo(FrameScore.SPARE),
+                () -> assertThat(records.getTotalScore(0)).isEqualTo(10 + 5)
+        );
     }
 
     @Test
@@ -244,10 +275,13 @@ class RecordsTest {
         records.record(4);
 
         FrameScore result1 = records.getFrames().get(0).getResult();
-        assertThat(result1).isEqualTo(FrameScore.SPARE);
         FrameScore result2 = records.getFrames().get(1).getResult();
-        assertThat(result2).isEqualTo(FrameScore.FINISH);
-        assertThat(records.getTotalScore(0)).isEqualTo(10 + 5);
+
+        assertAll(
+                () -> assertThat(result1).isEqualTo(FrameScore.SPARE),
+                () -> assertThat(result2).isEqualTo(FrameScore.FINISH),
+                () -> assertThat(records.getTotalScore(0)).isEqualTo(10 + 5)
+        );
     }
 
     @Test
@@ -259,10 +293,13 @@ class RecordsTest {
         records.record(0);
 
         FrameScore result1 = records.getFrames().get(0).getResult();
-        assertThat(result1).isEqualTo(FrameScore.SPARE);
         FrameScore result2 = records.getFrames().get(1).getResult();
-        assertThat(result2).isEqualTo(FrameScore.ONGOING);
-        assertThat(records.getTotalScore(0)).isEqualTo(10 + 0);
+
+        assertAll(
+                () -> assertThat(result1).isEqualTo(FrameScore.SPARE),
+                () -> assertThat(result2).isEqualTo(FrameScore.ONGOING),
+                () -> assertThat(records.getTotalScore(0)).isEqualTo(10 + 0)
+        );
     }
 
     @Test
@@ -377,9 +414,11 @@ class RecordsTest {
         records.record(8);
         records.record(1);
 
-        assertThat(records.getTotalScore(0)).isEqualTo(20);
-        assertThat(records.getTotalScore(1)).isEqualTo(38);
-        assertThat(records.getTotalScore(2)).isEqualTo(47);
+        assertAll(
+                () -> assertThat(records.getTotalScore(0)).isEqualTo(20),
+                () -> assertThat(records.getTotalScore(1)).isEqualTo(38),
+                () -> assertThat(records.getTotalScore(2)).isEqualTo(47)
+        );
     }
 
     @Test
