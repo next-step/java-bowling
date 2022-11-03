@@ -2,6 +2,7 @@ package bowling.view;
 
 import bowling.domain.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
@@ -36,11 +37,29 @@ public class OutputView {
     }
 
 
-    public static void printScore(Bowling bowling, Username username) {
+    public static void printScore(Bowling bowling, Username username, ScoreResult scoreResult) {
         System.out.println(roundTemplate);
         System.out.print(TEMPLATE_SEPARATOR + createTemplateUnit(username.getName()));
+        printPin(bowling);
+        System.out.print("\n" + TEMPLATE_SEPARATOR + createTemplateUnit(""));
+        printScore(scoreResult);
+    }
+
+    private static void printPin(Bowling bowling) {
         IntStream.range(1, BowlingRound.LAST_ROUND_NUM + 1)
                 .mapToObj((roundNum) -> getTemplateUnit(bowling, roundNum))
+                .forEach(System.out::print);
+    }
+
+    private static void printScore(ScoreResult scoreResult) {
+        List<Integer> sum = scoreResult.sum();
+        IntStream.range(0, BowlingRound.LAST_ROUND_NUM)
+                .mapToObj((scoreIndex) -> {
+                    if (scoreIndex < sum.size()) {
+                        return createTemplateUnit(sum.get(scoreIndex) + "");
+                    }
+                    return createTemplateUnit("");
+                })
                 .forEach(System.out::print);
     }
 

@@ -5,13 +5,23 @@ import java.util.List;
 
 public class Scores {
 
+    public static final int MAX_SCORE = 10;
     private static final int NORMAL_ROUND_TRY_NUM = 2;
     private static final int LAST_ROUND_TRY_NUM = 3;
     private static final int FIRST_SCORE = 0;
     private static final int SECOND_SCORE = 1;
     private static final int THIRD_SCORE = 2;
-
     private final List<Score> scores = new ArrayList<>();
+
+    public Scores() {
+
+    }
+
+    public Scores(List<Integer> scores) {
+        scores.stream()
+                .map(Score::new)
+                .forEach(this.scores::add);
+    }
 
     public void add(Integer pins) {
         scores.add(new Score(pins));
@@ -64,12 +74,35 @@ public class Scores {
         return sum;
     }
 
-    public Score getFirstScore() {
-        return scores.get(0);
+    public Integer spareBonus() {
+        return scores.get(0).sum(Scores.MAX_SCORE);
     }
 
     public boolean containsStrike() {
         return scores.stream()
                 .anyMatch(Score::isStrike);
+    }
+
+    public boolean containsSpare() {
+        return isSecondPinSpare() || isThirdPinSpare();
+    }
+
+    public boolean hasScore() {
+        return this.scores.size() > 0;
+    }
+
+    public boolean hasTwoScore() {
+        return this.scores.size() == 2;
+    }
+
+    public Integer doubleStrikeBonus() {
+        return scores.get(0).sum(Scores.MAX_SCORE * 2);
+    }
+
+    public boolean isFirstScoreStrike() {
+        if (!hasScore()) {
+            return false;
+        }
+        return scores.get(0).isStrike();
     }
 }
