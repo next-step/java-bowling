@@ -61,7 +61,7 @@ public class ResultView {
         }
 
         FrameScore frameScore = FrameScore.from(scores);
-        String printString = ScoreString.getScoreString(frameScore);
+        String printString = ScorePhrase.getScoreString(frameScore);
         List<String> downPins = getDownPinsString(scores);
         System.out.printf(printString, getOrDefault(downPins, 0, ""), getOrDefault(downPins, 1, ""));
     }

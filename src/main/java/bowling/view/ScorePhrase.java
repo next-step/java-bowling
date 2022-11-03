@@ -4,7 +4,7 @@ import bowling.domain.FrameScore;
 
 import java.util.Arrays;
 
-public enum ScoreString {
+public enum ScorePhrase {
     STRIKE(FrameScore.STRIKE, "  X   |"),
     SPARE(FrameScore.SPARE, "  %s|/ |"),
     ONGOING(FrameScore.ONGOING, "  %s|"),
@@ -13,7 +13,7 @@ public enum ScoreString {
     private final FrameScore frameScore;
     private final String printString;
 
-    ScoreString(FrameScore frameScore, String printString) {
+    ScorePhrase(FrameScore frameScore, String printString) {
         this.frameScore = frameScore;
         this.printString = printString;
     }
