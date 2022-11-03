@@ -37,7 +37,7 @@ public class Pins {
         return isFinished() && getSum() < MAX_SCORE;
     }
 
-    private int getSum() {
+    public int getSum() {
         return values.stream().mapToInt(Pin::getValue).sum();
     }
 

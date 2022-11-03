@@ -1,7 +1,7 @@
 package bowling.view;
 
-import bowling.domain.BowlingGame;
-import bowling.domain.dto.Record;
+import bowling.domain.dto.BowlingRecord;
+import bowling.domain.dto.FrameRecord;
 import bowling.domain.frame.FrameType;
 import bowling.domain.state.StateType;
 
@@ -12,9 +12,9 @@ import java.util.stream.IntStream;
 public class OutputView {
 
     private static final String FORMAT_BOWL = "%d프레임 투구 : %d%n";
-    private static final String FORMAT_FRAME_NUMBER = "  %02d  ";
-    private static final String FORMAT_FRAME = " %4s ";
-    private static final String FORMAT_RECORD = "|%s|%s|";
+    private static final String FORMAT_FRAME_NUMBER = "   %02d   ";
+    private static final String FORMAT_FRAME = " %5s  ";
+    private static final String FORMAT_RECORD = "| %6s |%s|%n";
 
     private static final String BAR = "|";
     private static final String STRIKE = "X";
@@ -26,57 +26,76 @@ public class OutputView {
 
     }
 
-    public static void print(BowlingGame bowlingGame) {
-        System.out.printf(FORMAT_BOWL, bowlingGame.getFrameNumber(), bowlingGame.getNow().getValue());
+    public static void print(BowlingRecord bowlingRecord) {
+        System.out.printf(FORMAT_BOWL, bowlingRecord.getNth(), bowlingRecord.getNowPin());
         printHeader();
-        printRecord(bowlingGame);
+        printFrameRecord(bowlingRecord);
     }
 
-    public static void printStart(BowlingGame bowlingGame) {
+    public static void printStart(BowlingRecord bowlingRecord) {
         printHeader();
-        printRecord(bowlingGame);
+        printFrameRecord(bowlingRecord);
     }
 
-    private static void printRecord(BowlingGame bowlingGame) {
-        String headerName = String.format(FORMAT_FRAME, bowlingGame.getPlayerName());
+    private static void printFrameRecord(BowlingRecord bowlingRecord) {
+        String headerName = String.format(FORMAT_FRAME, bowlingRecord.getPlayerName());
+        String headerPoint = String.format(FORMAT_FRAME, BLANK);
 
-        String records = bowlingGame.getGameRecord().stream()
-                .map(record -> String.format(FORMAT_FRAME, printRecord(record)))
+        String records = bowlingRecord.getFrameRecords().stream()
+                .map(record -> String.format(FORMAT_FRAME, printFrameRecord(record)))
                 .collect(Collectors.joining(BAR));
 
-        System.out.printf((FORMAT_RECORD) + "%n", headerName, records);
+        String points = bowlingRecord.getFrameRecords().stream()
+                .map(record -> String.format(FORMAT_FRAME, printPoint(record.getPoint())))
+                .collect(Collectors.joining(BAR));
+
+        records = addRestEmptyRecord(records, bowlingRecord.getNth());
+        points = addRestEmptyRecord(points, bowlingRecord.getNth());
+
+        System.out.printf(FORMAT_RECORD, headerName, records);
+        System.out.printf(FORMAT_RECORD, headerPoint, points);
     }
 
-    private static String printRecord(Record record) {
-        return Optional.ofNullable(record)
-                .map(recordItem -> printScore(recordItem) + printBonus(recordItem))
+    private static String addRestEmptyRecord(String records, int nth) {
+        String rest = IntStream.range(nth, 10)
+                .mapToObj(a -> String.format(FORMAT_FRAME, BLANK))
+                .collect(Collectors.joining(BAR));
+        if (nth < 10) {
+            rest = BAR + rest;
+        }
+        return records + rest;
+    }
+
+    private static String printFrameRecord(FrameRecord frameRecord) {
+        return Optional.ofNullable(frameRecord)
+                .map(frameRecordItem -> printScore(frameRecordItem) + printBonus(frameRecordItem))
                 .orElse(BLANK);
     }
 
-    private static String printScore(Record record) {
-        if (record.getScores() == null) {
+    private static String printScore(FrameRecord frameRecord) {
+        if (frameRecord.getScores() == null || frameRecord.getScores().isEmpty()) {
             return BLANK;
         }
 
-        if (record.getState() == StateType.STRIKE) {
+        if (frameRecord.getState() == StateType.STRIKE) {
             return STRIKE;
         }
-        if (record.getState() == StateType.SPARE) {
-            return getScore(record.getScores().get(0)) + BAR + SPARE;
+        if (frameRecord.getState() == StateType.SPARE) {
+            return getScore(frameRecord.getScores().get(0)) + BAR + SPARE;
         }
-        if (record.getState() == StateType.MISS) {
-            return getScore(record.getScores().get(0))
+        if (frameRecord.getState() == StateType.MISS) {
+            return getScore(frameRecord.getScores().get(0))
                     + BAR
-                    + getScore(record.getScores().get(1));
+                    + getScore(frameRecord.getScores().get(1));
         }
-        return getScore(record.getScores().get(0));
+        return getScore(frameRecord.getScores().get(0));
 
     }
 
-    private static String printBonus(Record input) {
+    private static String printBonus(FrameRecord input) {
         return Optional.ofNullable(input)
-                .filter(record -> record.getKind() == FrameType.FINAL)
-                .map(Record::getBonus)
+                .filter(frameRecord -> frameRecord.getKind() == FrameType.FINAL)
+                .map(FrameRecord::getBonus)
                 .map(bonus -> BAR + bonus).orElse("");
     }
 
@@ -96,6 +115,12 @@ public class OutputView {
         String headerFrame = IntStream.range(1, 11)
                 .mapToObj(i -> String.format(FORMAT_FRAME_NUMBER, i))
                 .collect(Collectors.joining(BAR));
-        System.out.printf((FORMAT_RECORD) + "%n", headerName, headerFrame);
+        System.out.printf(FORMAT_RECORD, headerName, headerFrame);
+    }
+
+    private static String printPoint(Integer point) {
+        return Optional.ofNullable(point)
+                .map(String::valueOf)
+                .orElse(BLANK);
     }
 }

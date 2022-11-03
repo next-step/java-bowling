@@ -32,4 +32,5 @@ public abstract class Finished implements State {
     public int getRemainPins() {
         return pins.getRemainPins();
     }
+
 }

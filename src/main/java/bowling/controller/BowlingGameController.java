@@ -1,7 +1,9 @@
 package bowling.controller;
 
-import bowling.domain.BowlingGame;
+import bowling.domain.Pin;
 import bowling.domain.PlayerName;
+import bowling.domain.dto.BowlingRecord;
+import bowling.domain.frame.Frames;
 import bowling.domain.scorestrategy.RandomScoreStrategy;
 import bowling.view.InputView;
 import bowling.view.OutputView;
@@ -9,12 +11,15 @@ import bowling.view.OutputView;
 public class BowlingGameController {
 
     public static void main(String[] args) {
-        String playerName = InputView.askPlayerName();
-        BowlingGame bowlingGame = new BowlingGame(new PlayerName(playerName));
-        OutputView.printStart(bowlingGame);
-        while (!bowlingGame.isFinished()) {
-            bowlingGame.bowl(new RandomScoreStrategy());
-            OutputView.print(bowlingGame);
+        PlayerName playerName = new PlayerName(InputView.askPlayerName());
+        Frames frames = new Frames();
+        OutputView.printStart(BowlingRecord.of(frames, playerName));
+
+        while (!frames.isFinished()) {
+            Pin now = frames.bowl(new RandomScoreStrategy());
+            OutputView.print(BowlingRecord.of(frames, now, playerName));
         }
     }
+
+
 }

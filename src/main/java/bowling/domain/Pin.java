@@ -1,6 +1,8 @@
 package bowling.domain;
 
 public class Pin {
+    public static final int NONE = -1;
+
     private final int value;
 
     public Pin(int value) {
