@@ -41,4 +41,12 @@ public class Frame {
         return scores.getTryCount();
     }
 
+    public boolean isStrike() {
+        return scores.isStrike();
+    }
+
+    public boolean isSpare() {
+        return scores.isSpare();
+    }
+
 }

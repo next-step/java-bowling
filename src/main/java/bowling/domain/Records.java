@@ -47,13 +47,16 @@ public class Records {
             return false;
         }
         Frame frame = frames.get(frameIndex);
-        if (frame.getResult().equals(FrameScore.STRIKE)) {
+        if (!frame.isEndFrame()) {
+            return false;
+        }
+        if (frame.isStrike()) {
             return isReadyTwoPitchScore(frameIndex + 1);
         }
-        if (frame.getResult().equals(FrameScore.SPARE)) {
+        if (frame.isSpare()) {
             return isReadyOnePitchScore(frameIndex + 1);
         }
-        return frame.isEndFrame();
+        return true;
     }
 
     private boolean isReadyOnePitchScore(int frameIndex) {
