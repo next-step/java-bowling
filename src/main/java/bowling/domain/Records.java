@@ -91,10 +91,10 @@ public class Records {
         if (!frame.isValidBonusScore()) {
             return 0;
         }
-        if (frameScore.equals(FrameScore.STRIKE)) {
+        if (frame.isStrike()) {
             return getStrikeBonusScore(index + 1);
         }
-        if (frameScore.equals(FrameScore.SPARE)) {
+        if (frame.isSpare()) {
             return getSpareBonusScore(index + 1);
         }
         return 0;
@@ -103,12 +103,10 @@ public class Records {
     private int getStrikeBonusScore(int index) {
         checkValidFrameIndex(index);
         Frame frame = frames.get(index);
-        FrameScore result = frame.getResult();
 
         int bonusScore = 0;
         bonusScore += getSpareBonusScore(index);
-
-        if (FrameScore.STRIKE.equals(result) && !frame.getClass().equals(FinalFrame.class)) {
+        if (frame.isStrike()) {
             return bonusScore + getSpareBonusScore(index + 1);
         }
         return bonusScore + frame.getSecondPitchScore();
