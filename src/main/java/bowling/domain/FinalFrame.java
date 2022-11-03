@@ -1,7 +1,11 @@
 package bowling.domain;
 
 public class FinalFrame extends Frame {
-    private Scores bonusScores = new Scores();
+    private final Scores bonusScores;
+
+    public FinalFrame() {
+        this.bonusScores = new Scores();
+    }
 
     public boolean isEndFrame() {
         if (isBonus()) {
