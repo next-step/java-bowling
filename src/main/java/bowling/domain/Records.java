@@ -50,10 +50,10 @@ public class Records {
         if (!frame.isEndFrame()) {
             return false;
         }
-        if (frame.isStrike()) {
+        if (frame.isValidBonusScore() && frame.isStrike()) {
             return isReadyTwoPitchScore(frameIndex + 1);
         }
-        if (frame.isSpare()) {
+        if (frame.isValidBonusScore() && frame.isSpare()) {
             return isReadyOnePitchScore(frameIndex + 1);
         }
         return true;
@@ -73,7 +73,7 @@ public class Records {
         }
         Frame frame = frames.get(frameIndex);
 
-        if (frame.getResult().equals(FrameScore.STRIKE)) {
+        if (frame.isValidBonusScore() && frame.isStrike()) {
             return isReadyOnePitchScore(frameIndex + 1);
         }
         return frame.getTryCount() >= 2;
@@ -106,7 +106,7 @@ public class Records {
 
         int bonusScore = 0;
         bonusScore += getSpareBonusScore(index);
-        if (frame.isStrike()) {
+        if (frame.isValidBonusScore() && frame.isStrike()) {
             return bonusScore + getSpareBonusScore(index + 1);
         }
         return bonusScore + frame.getSecondPitchScore();
