@@ -6,8 +6,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 class FrameNumberTest {
+    @Test
+    void create() {
+        assertThatIllegalArgumentException().isThrownBy(() -> new FrameNumber(11))
+                .withMessage("프레임번호(11)는 10 을 초과할 수 없습니다");
+    }
 
     @DisplayName("프레임번호를 1 증가시킨다")
     @Test

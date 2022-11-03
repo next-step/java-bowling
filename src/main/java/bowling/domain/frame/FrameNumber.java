@@ -6,6 +6,10 @@ public class FrameNumber {
     private final int frameNumber;
 
     public FrameNumber(int frameNumber) {
+        if (frameNumber > FINAL_FRAME_NUMBER) {
+            throw new IllegalArgumentException(String.format("프레임번호(%s)는 %s 을 초과할 수 없습니다", frameNumber, FINAL_FRAME_NUMBER));
+        }
+
         this.frameNumber = frameNumber;
     }
 
