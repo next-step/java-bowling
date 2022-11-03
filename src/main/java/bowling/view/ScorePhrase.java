@@ -30,7 +30,7 @@ public enum ScorePhrase {
         return Arrays.stream(values())
                 .filter(vo -> vo.getFrameScore().equals(frameScore))
                 .findFirst()
-                .orElseThrow(RuntimeException::new)
+                .orElseThrow(() -> new RuntimeException("Need to handling new FrameScore Enum"))
                 .getPrintString();
     }
 

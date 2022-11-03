@@ -124,7 +124,7 @@ public class Records {
 
     private void checkValidFrameIndex(int frameIndex) {
         if (frameIndex >= frames.size()) {
-            throw new NotReadyException();
+            throw new NotReadyException("frameIndex must more less than frame size");
         }
     }
 

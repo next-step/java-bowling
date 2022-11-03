@@ -49,21 +49,21 @@ public class Scores {
 
     public int getPinScore() {
         if (!isStrike() && downPins.size() != RuleConfig.PITCH_COUNT) {
-            throw new NotReadyException();
+            throw new NotReadyException("Down Pins Collection size unequal pitch count (NoSTRIKE)");
         }
         return sumOfDownPins();
     }
 
     public int getFirstScore() {
         if (CollectionUtils.isEmpty(downPins)) {
-            throw new NotReadyException();
+            throw new NotReadyException("DownPins Collection is Empty");
         }
         return downPins.get(0);
     }
 
     public int getSecondPitchScore() {
         if (downPins.size() < 2) {
-            throw new NotReadyException();
+            throw new NotReadyException("DownPins Collection is less then 2");
         }
         return downPins.get(1);
     }
