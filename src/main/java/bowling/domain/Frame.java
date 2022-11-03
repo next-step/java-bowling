@@ -15,7 +15,7 @@ public class Frame {
         if (scores.isStrike()) {
             return true;
         }
-        if (scores.tryOver()) {
+        if (scores.isTryOver()) {
             return true;
         }
         return false;

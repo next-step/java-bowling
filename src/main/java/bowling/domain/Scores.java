@@ -33,7 +33,7 @@ public class Scores {
         return downPins.size() == TRY_COUNT_TO_SPARE && sumOfDownPins() == RuleConfig.NUMBER_OF_PIN;
     }
 
-    public boolean tryOver() {
+    public boolean isTryOver() {
         return downPins.size() >= RuleConfig.PITCH_COUNT;
     }
 

@@ -31,7 +31,7 @@ class FrameScoreTest {
     void fromTest3() {
         Scores scores = new Scores();
         scores.record(5);
-        assertThat(scores.tryOver()).isFalse();
+        assertThat(scores.isTryOver()).isFalse();
         assertThat(FrameScore.from(scores)).isEqualTo(FrameScore.ONGOING);
     }
 
@@ -41,7 +41,7 @@ class FrameScoreTest {
         Scores scores = new Scores();
         scores.record(5);
         scores.record(4);
-        assertThat(scores.tryOver()).isTrue();
+        assertThat(scores.isTryOver()).isTrue();
         assertThat(FrameScore.from(scores)).isEqualTo(FrameScore.FINISH);
     }
 
