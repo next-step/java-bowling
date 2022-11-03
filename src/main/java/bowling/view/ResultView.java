@@ -11,7 +11,7 @@ public class ResultView {
     private static String GUTTER_STRING = "-";
     private static String TOTAL_SCORE_STRING = "\n|      |";
     private static String TOTAL_SCORE_RIGHT_STRING = "  |";
-    private static String DOULBE_BLANK = "  ";
+    private static String DOUBLE_BLANK = "  ";
 
     public static void printScoreBoard(BowlingGame game) {
         System.out.println(INIT_SCORE_BOARD_STRING);
@@ -26,7 +26,7 @@ public class ResultView {
         int totalScore;
         for (int index = 0; records.isReadyFrameScore(index); index++) {
             totalScore = records.getTotalScore(index);
-            System.out.print(DOULBE_BLANK + getTotalScoreString(totalScore) + TOTAL_SCORE_RIGHT_STRING);
+            System.out.print(DOUBLE_BLANK + getTotalScoreString(totalScore) + TOTAL_SCORE_RIGHT_STRING);
         }
     }
 

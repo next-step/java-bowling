@@ -1,23 +1,17 @@
 package bowling.domain;
 
 public class FinalFrame extends Frame {
-    private boolean bonus;
     private Scores bonusScores = new Scores();
-
-    FinalFrame() {
-        this.bonus = false;
-    }
 
     public boolean isEndFrame() {
         if (isBonus()) {
-            return false;
+            return bonusScores.getTryCount() >= 1;
         }
         return super.isEndFrame();
     }
 
     public void record(int downPinCount) {
         if (isBonus()) {
-            bonus = true;
             bonusScores.record(downPinCount);
             return;
         }
@@ -49,7 +43,7 @@ public class FinalFrame extends Frame {
     }
 
     private boolean isBonus() {
-        return !bonus && (scores.isStrike() || scores.isSpare());
+        return scores.isStrike() || scores.isSpare();
     }
 
 }
