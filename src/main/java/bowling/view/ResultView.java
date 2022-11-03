@@ -54,7 +54,7 @@ public class ResultView {
         }
 
         FinalFrame finalFrame = (FinalFrame) frame;
-        if (finalFrame.validBonusScore()) {
+        if (finalFrame.isValidBonusScore()) {
             printScore(finalFrame.getBonusScores());
         }
     }
