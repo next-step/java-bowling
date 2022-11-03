@@ -22,6 +22,10 @@ public class Records {
         readyFrame.record(downPintCount);
     }
 
+    public boolean isLastFrame() {
+        return getRecordCount() >= RuleConfig.NUMBER_OF_FRAME;
+    }
+
     public boolean isEndLastFrame() {
         return getLatestFrame().isEndFrame();
     }
