@@ -15,11 +15,19 @@ public class NormalFrame implements Frame {
     private Frame next;
 
     public NormalFrame(int frameNumber, State state) {
-        this.frameNumber = new FrameNumber(frameNumber);
+        this(new FrameNumber(frameNumber), state);
+    }
+
+    public NormalFrame(FrameNumber frameNumber, State state) {
+        this.frameNumber = frameNumber;
         this.state = state;
     }
 
     public static NormalFrame init(int frameNumber) {
+        return new NormalFrame(frameNumber, new Ready());
+    }
+
+    public static NormalFrame init(FrameNumber frameNumber) {
         return new NormalFrame(frameNumber, new Ready());
     }
 
@@ -72,11 +80,12 @@ public class NormalFrame implements Frame {
     }
 
     private Frame nextFrame() {
-        if (frameNumber.isNextFinal()) {
+        FrameNumber nextFrameNumber = frameNumber.increase();
+        if (nextFrameNumber.isFinal()) {
             return FinalFrame.init();
         }
 
-        return NormalFrame.init(frameNumber.increase());
+        return NormalFrame.init(nextFrameNumber);
     }
 
     @Override

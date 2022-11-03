@@ -18,16 +18,16 @@ class FrameNumberTest {
     @DisplayName("프레임번호를 1 증가시킨다")
     @Test
     void increase() {
-        assertThat(new FrameNumber(1).increase()).isEqualTo(2);
+        assertThat(new FrameNumber(1).increase()).isEqualTo(new FrameNumber(2));
     }
 
-    @DisplayName("다음이 최종프레임인지 여부를 반환한다")
+    @DisplayName("최종프레임 번호인지 여부를 반환한다")
     @ParameterizedTest
     @CsvSource(value = {
-            "8,false",
-            "9,true"
+            "9,false",
+            "10,true"
     })
-    void isNextFinal(int frameNumber, boolean expected) {
-        assertThat(new FrameNumber(frameNumber).isNextFinal()).isEqualTo(expected);
+    void isFinal(int frameNumber, boolean expected) {
+        assertThat(new FrameNumber(frameNumber).isFinal()).isEqualTo(expected);
     }
 }

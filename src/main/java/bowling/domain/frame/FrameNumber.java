@@ -13,12 +13,12 @@ public class FrameNumber {
         this.frameNumber = frameNumber;
     }
 
-    public int increase() {
-        return frameNumber + 1;
+    public FrameNumber increase() {
+        return new FrameNumber(frameNumber + 1);
     }
 
-    public boolean isNextFinal() {
-        return frameNumber == FINAL_FRAME_NUMBER - 1;
+    public boolean isFinal() {
+        return frameNumber == FINAL_FRAME_NUMBER;
     }
 
     @Override

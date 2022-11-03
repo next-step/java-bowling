@@ -16,7 +16,9 @@ class NormalFrameTest {
     @DisplayName("일반프레임 초기화는 준비 상태로 생성된다")
     @Test
     void init() {
-        assertThat(NormalFrame.init(1)).isEqualTo(new NormalFrame(1, new Ready()));
+        assertAll(
+                () -> assertThat(NormalFrame.init(1)).isEqualTo(new NormalFrame(1, new Ready())),
+                () -> assertThat(NormalFrame.init(new FrameNumber(1))).isEqualTo(new NormalFrame(new FrameNumber(1), new Ready())));
     }
 
     @DisplayName("투구 후 결과 프레임을 반환한다")
