@@ -88,9 +88,7 @@ public class Records {
     private int getBonusScore(int index) {
         checkValidFrameIndex(index);
         Frame frame = frames.get(index);
-        FrameScore frameScore = frame.getResult();
-
-        if (frame.getClass().equals(FinalFrame.class)) {
+        if (!frame.isValidBonusScore()) {
             return 0;
         }
         if (frameScore.equals(FrameScore.STRIKE)) {

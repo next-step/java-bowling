@@ -42,6 +42,10 @@ public class FinalFrame extends Frame {
         return scores.getTryCount() + bonusScores.getTryCount();
     }
 
+    public boolean isValidBonusScore() {
+        return false;
+    }
+
     private boolean isBonus() {
         return scores.isStrike() || scores.isSpare();
     }

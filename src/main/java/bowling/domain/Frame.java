@@ -49,4 +49,12 @@ public class Frame {
         return scores.isSpare();
     }
 
+    public boolean isValidBonusScore() {
+        return true;
+    }
+
+    public boolean isValidBonusGameScore() {
+        return false;
+    }
+
 }
