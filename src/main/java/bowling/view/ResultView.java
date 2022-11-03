@@ -1,7 +1,6 @@
 package bowling.view;
 
 import bowling.domain.*;
-import bowling.exception.NotReadyException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,17 +17,14 @@ public class ResultView {
         System.out.println(INIT_SCORE_BOARD_STRING);
         System.out.printf(NAME_STRING, game.getPlayer().getName());
         printPinScore(game.getRecords());
-        try {
-            printTotalScores(game.getRecords());
-        } catch (NotReadyException ignored) {
-        }
+        printTotalScores(game.getRecords());
         System.out.println();
     }
 
     private static void printTotalScores(Records records) {
         System.out.print(TOTAL_SCORE_STRING);
         int totalScore;
-        for (int index = 0; index < records.getRecordCount(); index++) {
+        for (int index = 0; records.isReadyFrameScore(index); index++) {
             totalScore = records.getTotalScore(index);
             System.out.print(DOULBE_BLANK + getTotalScoreString(totalScore) + TOTAL_SCORE_RIGHT_STRING);
         }
