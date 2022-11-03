@@ -1,75 +1,53 @@
 package qna.domain;
 
-import qna.NotFoundException;
-import qna.UnAuthorizedException;
-
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Answer extends AbstractEntity {
-    @ManyToOne(optional = false)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
-    private User writer;
+    @Embedded
+    private AnswerBody answerBody = new AnswerBody();
 
-    @ManyToOne(optional = false)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
-    private Question question;
-
-    @Lob
-    private String contents;
-
-    private boolean deleted = false;
+    @Embedded
+    private ArticleInfo articleInfo = new ArticleInfo();
 
     public Answer() {
     }
 
-    public Answer(User writer, Question question, String contents) {
-        this(null, writer, question, contents);
+    public Answer(ArticleInfo articleInfo, AnswerBody answerBody) {
+        this(null, articleInfo, answerBody);
     }
 
-    public Answer(Long id, User writer, Question question, String contents) {
+    public Answer(Long id, ArticleInfo articleInfo, AnswerBody answerBody) {
         super(id);
-
-        if(writer == null) {
-            throw new UnAuthorizedException();
-        }
-
-        if(question == null) {
-            throw new NotFoundException();
-        }
-
-        this.writer = writer;
-        this.question = question;
-        this.contents = contents;
-    }
-
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+        this.answerBody = answerBody;
+        this.articleInfo = articleInfo;
     }
 
     public boolean isDeleted() {
-        return deleted;
+        return articleInfo.isDeleted();
     }
 
     public boolean isOwner(User writer) {
-        return this.writer.equals(writer);
-    }
-
-    public User getWriter() {
-        return writer;
-    }
-
-    public String getContents() {
-        return contents;
+        return articleInfo.isOwner(writer);
     }
 
     public void toQuestion(Question question) {
-        this.question = question;
+        answerBody.toQuestion(question);
+    }
+
+    public DeleteHistory delete() {
+        articleInfo.delete();
+        return new DeleteHistory(
+                ContentType.ANSWER, getId(), articleInfo.getWriter(), LocalDateTime.now()
+        );
     }
 
     @Override
     public String toString() {
-        return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
+        return "Answer{" +
+                "answerBody=" + answerBody +
+                ", articleInfo=" + articleInfo +
+                '}';
     }
 }
