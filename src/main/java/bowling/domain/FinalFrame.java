@@ -19,7 +19,7 @@ public class FinalFrame extends Frame {
         scores.record(downPinCount);
     }
 
-    public boolean isValidBonusScore() {
+    public boolean isValidBonusGameScore() {
         return bonusScores.getTryCount() != 0;
     }
 

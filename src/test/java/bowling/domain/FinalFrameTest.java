@@ -81,12 +81,12 @@ class FinalFrameTest {
 
     @Test
     @DisplayName("마지막 프레임의 보너스 점수는 보너스 기록이 한개라도 있어야 유효함을 테스트")
-    void isValidBonusScoreTest() {
+    void isValidBonusGameScoreTest() {
         FinalFrame finalFrame = new FinalFrame();
         finalFrame.record(10);
-        assertThat(finalFrame.isValidBonusScore()).isFalse();
+        assertThat(finalFrame.isValidBonusGameScore()).isFalse();
         finalFrame.record(5);
-        assertThat(finalFrame.isValidBonusScore()).isTrue();
+        assertThat(finalFrame.isValidBonusGameScore()).isTrue();
     }
 
     @Test
@@ -97,9 +97,9 @@ class FinalFrameTest {
         finalFrame.record(6);
         assertThat(finalFrame.getPinScore()).isEqualTo(4 + 6);
 
-        assertThat(finalFrame.isValidBonusScore()).isFalse();
+        assertThat(finalFrame.isValidBonusGameScore()).isFalse();
         finalFrame.record(10);
-        assertThat(finalFrame.isValidBonusScore()).isTrue();
+        assertThat(finalFrame.isValidBonusGameScore()).isTrue();
         assertThat(finalFrame.getPinScore()).isEqualTo(4 + 6 + 10);
     }
 
@@ -111,7 +111,7 @@ class FinalFrameTest {
         finalFrame.record(5);
         finalFrame.record(5);
 
-        assertThat(finalFrame.isValidBonusScore()).isTrue();
+        assertThat(finalFrame.isValidBonusGameScore()).isTrue();
         assertThat(finalFrame.getTryCount()).isEqualTo(3);
     }
 }

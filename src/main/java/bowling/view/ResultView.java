@@ -50,7 +50,7 @@ public class ResultView {
         }
 
         FinalFrame finalFrame = (FinalFrame) frame;
-        if (finalFrame.isValidBonusScore()) {
+        if (finalFrame.isValidBonusGameScore()) {
             printScore(finalFrame.getBonusScores());
         }
     }
