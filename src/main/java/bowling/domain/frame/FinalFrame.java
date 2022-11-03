@@ -2,9 +2,9 @@ package bowling.domain.frame;
 
 import bowling.domain.pin.FallenPin;
 import bowling.domain.score.Score;
+import bowling.domain.state.FrameState;
 import bowling.domain.state.Ready;
 import bowling.domain.state.Spare;
-import bowling.domain.state.State;
 import bowling.domain.state.Strike;
 
 import java.util.ArrayList;
@@ -14,14 +14,14 @@ import java.util.Objects;
 public class FinalFrame implements Frame {
     private static final int BONUS_INCLUDED_TOTAL_TRIES = 3;
 
-    private final List<State> states;
+    private final List<FrameState> frameStates;
 
-    FinalFrame(List<State> states) {
-        this.states = states;
+    FinalFrame(List<FrameState> frameStates) {
+        this.frameStates = frameStates;
     }
 
     public static FinalFrame init() {
-        List<State> result = new ArrayList<>();
+        List<FrameState> result = new ArrayList<>();
         result.add(new Ready());
         return new FinalFrame(result);
     }
@@ -29,11 +29,11 @@ public class FinalFrame implements Frame {
     @Override
     public Frame bowl(FallenPin fallenPin) {
         if (lastState().isFinished()) {
-            states.add(new Ready().bowl(fallenPin));
+            frameStates.add(new Ready().bowl(fallenPin));
             return this;
         }
 
-        states.set(lastIndex(), lastState().bowl(fallenPin));
+        frameStates.set(lastIndex(), lastState().bowl(fallenPin));
         return this;
     }
 
@@ -47,8 +47,8 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public List<State> getStates() {
-        return states;
+    public List<FrameState> getStates() {
+        return frameStates;
     }
 
     @Override
@@ -82,8 +82,8 @@ public class FinalFrame implements Frame {
         }
 
         Score score = previousScore;
-        for (int i = 1; i < states.size(); i++) {
-            score = states.get(i).addScore(score);
+        for (int i = 1; i < frameStates.size(); i++) {
+            score = frameStates.get(i).addScore(score);
             if (score.canCalculate()) {
                 return score;
             }
@@ -93,21 +93,21 @@ public class FinalFrame implements Frame {
     }
 
     private int totalTries() {
-        return states.stream()
-                .mapToInt(State::tries)
+        return frameStates.stream()
+                .mapToInt(FrameState::tries)
                 .sum();
     }
 
-    private State firstState() {
-        return states.get(0);
+    private FrameState firstState() {
+        return frameStates.get(0);
     }
 
-    private State lastState() {
-        return states.get(lastIndex());
+    private FrameState lastState() {
+        return frameStates.get(lastIndex());
     }
 
     private int lastIndex() {
-        return states.size() - 1;
+        return frameStates.size() - 1;
     }
 
     @Override
@@ -117,11 +117,11 @@ public class FinalFrame implements Frame {
 
         FinalFrame that = (FinalFrame) o;
 
-        return Objects.equals(states, that.states);
+        return Objects.equals(frameStates, that.frameStates);
     }
 
     @Override
     public int hashCode() {
-        return states != null ? states.hashCode() : 0;
+        return frameStates != null ? frameStates.hashCode() : 0;
     }
 }

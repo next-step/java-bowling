@@ -2,7 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.pin.FallenPin;
 import bowling.domain.score.Score;
-import bowling.domain.state.State;
+import bowling.domain.state.FrameState;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public interface Frame {
 
     boolean isFinished();
 
-    List<State> getStates();
+    List<FrameState> getStates();
 
     boolean isReady();
 

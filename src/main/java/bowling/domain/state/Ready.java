@@ -6,7 +6,7 @@ import bowling.domain.score.Score;
 public class Ready extends Running {
 
     @Override
-    public State bowl(FallenPin fallenPin) {
+    public FrameState bowl(FallenPin fallenPin) {
         if (fallenPin.isMax()) {
             return new Strike();
         }

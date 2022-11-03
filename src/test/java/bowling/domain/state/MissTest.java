@@ -20,17 +20,17 @@ class MissTest {
 
     @Test
     void getScore() {
-        State state = miss();
+        FrameState frameState = miss();
 
-        assertThat(state.getScore()).isEqualTo(new Score(9, 0));
+        assertThat(frameState.getScore()).isEqualTo(new Score(9, 0));
     }
 
     @Test
     void addScore() {
-        State state = miss();
+        FrameState frameState = miss();
         Score previousScore = new Score(10, 1);
 
-        assertThat(state.addScore(previousScore)).isEqualTo(new Score(19, 0));
+        assertThat(frameState.addScore(previousScore)).isEqualTo(new Score(19, 0));
     }
 
     private Miss miss() {

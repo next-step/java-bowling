@@ -19,16 +19,16 @@ class StrikeTest {
 
     @Test
     void getScore() {
-        State state = new Strike();
+        FrameState frameState = new Strike();
 
-        assertThat(state.getScore()).isEqualTo(new Score(10, 2));
+        assertThat(frameState.getScore()).isEqualTo(new Score(10, 2));
     }
 
     @Test
     void addScore() {
-        State state = new Strike();
+        FrameState frameState = new Strike();
         Score previousScore = new Score(10, 1);
 
-        assertThat(state.addScore(previousScore)).isEqualTo(new Score(20, 0));
+        assertThat(frameState.addScore(previousScore)).isEqualTo(new Score(20, 0));
     }
 }

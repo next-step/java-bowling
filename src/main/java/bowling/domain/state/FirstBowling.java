@@ -15,7 +15,7 @@ public class FirstBowling extends Running {
     }
 
     @Override
-    public State bowl(FallenPin secondPin) {
+    public FrameState bowl(FallenPin secondPin) {
         int sum = firstPin.add(secondPin);
         if (sum > MAX_PINS_SUM) {
             throw new IllegalArgumentException(String.format("쓰러진 핀의 합은 %s 이하여야 합니다.", MAX_PINS_SUM));

@@ -3,9 +3,9 @@ package bowling.domain.state;
 import bowling.domain.pin.FallenPin;
 import bowling.domain.score.Score;
 
-public interface State {
+public interface FrameState {
 
-    State bowl(FallenPin fallenPin);
+    FrameState bowl(FallenPin fallenPin);
 
     boolean isFinished();
 

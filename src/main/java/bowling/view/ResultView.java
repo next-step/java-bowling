@@ -5,7 +5,7 @@ import bowling.domain.frame.FrameNumber;
 import bowling.domain.frame.Frames;
 import bowling.domain.player.PlayerName;
 import bowling.domain.score.Score;
-import bowling.domain.state.State;
+import bowling.domain.state.FrameState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +82,7 @@ public class ResultView {
     private static String frameString(Frame frame) {
         return frame.getStates()
                 .stream()
-                .map(State::description)
+                .map(FrameState::description)
                 .collect(joining(BAR));
     }
 

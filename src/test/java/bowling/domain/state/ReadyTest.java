@@ -33,16 +33,16 @@ class ReadyTest {
 
     @Test
     void getScore() {
-        State state = new Ready();
+        FrameState frameState = new Ready();
 
-        assertThat(state.getScore()).isEqualTo(new Score(0, 0));
+        assertThat(frameState.getScore()).isEqualTo(new Score(0, 0));
     }
 
     @Test
     void addScore() {
-        State state = new Ready();
+        FrameState frameState = new Ready();
         Score previousScore = new Score(10, 1);
 
-        assertThat(state.addScore(previousScore)).isEqualTo(previousScore);
+        assertThat(frameState.addScore(previousScore)).isEqualTo(previousScore);
     }
 }

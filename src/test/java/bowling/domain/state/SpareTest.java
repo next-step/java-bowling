@@ -20,17 +20,17 @@ class SpareTest {
 
     @Test
     void getScore() {
-        State state = spare();
+        FrameState frameState = spare();
 
-        assertThat(state.getScore()).isEqualTo(new Score(10, 1));
+        assertThat(frameState.getScore()).isEqualTo(new Score(10, 1));
     }
 
     @Test
     void addScore() {
-        State state = spare();
+        FrameState frameState = spare();
         Score previousScore = new Score(10, 1);
 
-        assertThat(state.addScore(previousScore)).isEqualTo(new Score(19, 0));
+        assertThat(frameState.addScore(previousScore)).isEqualTo(new Score(19, 0));
     }
 
     private Spare spare() {

@@ -2,7 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.pin.FallenPin;
 
-public abstract class Finished implements State {
+public abstract class Finished implements FrameState {
 
     @Override
     public boolean isFinished() {
@@ -10,7 +10,7 @@ public abstract class Finished implements State {
     }
 
     @Override
-    public State bowl(FallenPin fallenPin) {
+    public FrameState bowl(FallenPin fallenPin) {
         throw new UnsupportedOperationException("끝난 상태에서는 더이상 투구할 수 없습니다.");
     }
 }
