@@ -103,4 +103,15 @@ class FinalFrameTest {
         assertThat(finalFrame.getPinScore()).isEqualTo(4 + 6 + 10);
     }
 
+    @Test
+    @DisplayName("마지막 프레임의 시도 횟수 조회 시 보너스 게임의 시도 횟수까지 제대로 카운트하는지 검증")
+    void getTryCountTest() {
+        FinalFrame finalFrame = new FinalFrame();
+        finalFrame.record(5);
+        finalFrame.record(5);
+        finalFrame.record(5);
+
+        assertThat(finalFrame.isValidBonusScore()).isTrue();
+        assertThat(finalFrame.getTryCount()).isEqualTo(3);
+    }
 }

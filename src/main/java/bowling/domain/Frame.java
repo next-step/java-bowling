@@ -37,4 +37,8 @@ public class Frame {
         return scores.getSecondPitchScore();
     }
 
+    public int getTryCount() {
+        return scores.getTryCount();
+    }
+
 }

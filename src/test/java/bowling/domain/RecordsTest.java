@@ -381,4 +381,109 @@ class RecordsTest {
         assertThat(records.getTotalScore(1)).isEqualTo(38);
         assertThat(records.getTotalScore(2)).isEqualTo(47);
     }
+
+    @Test
+    @DisplayName("프레임 점수 준비 여부 검증 함수 검증 : GUTTER - 실패")
+    void isReadyFrameScoreTest1() {
+        Records records = new Records();
+        records.record(0);
+
+        assertThat(records.isReadyFrameScore(0)).isFalse();
+    }
+
+    @Test
+    @DisplayName("프레임 점수 준비 여부 검증 함수 검증 : GUTTER/MISS - 성공")
+    void isReadyFrameScoreTest2() {
+        Records records = new Records();
+        records.record(0);
+        records.record(9);
+
+        assertThat(records.isReadyFrameScore(0)).isTrue();
+    }
+
+    @Test
+    @DisplayName("프레임 점수 준비 여부 검증 함수 검증 : SPARE - 실패")
+    void isReadyFrameScoreTest3() {
+        Records records = new Records();
+
+        records.record(1);
+        records.record(9);
+        assertThat(records.isReadyFrameScore(0)).isFalse();
+    }
+
+    @Test
+    @DisplayName("프레임 점수 준비 여부 검증 함수 검증 : SPARE - 성공 1")
+    void isReadyFrameScoreTest4() {
+        Records records = new Records();
+
+        records.record(1);
+        records.record(9);
+        records.record(10);
+        assertThat(records.isReadyFrameScore(0)).isTrue();
+    }
+
+    @Test
+    @DisplayName("프레임 점수 준비 여부 검증 함수 검증 : SPARE - 성공 2")
+    void isReadyFrameScoreTest5() {
+        Records records = new Records();
+
+        records.record(1);
+        records.record(9);
+        records.record(0);
+        assertThat(records.isReadyFrameScore(0)).isTrue();
+    }
+
+    @Test
+    @DisplayName("프레임 점수 준비 여부 검증 함수 검증 : STRIKE - 실패 1")
+    void isReadyFrameScoreTest6() {
+        Records records = new Records();
+
+        records.record(10);
+        records.record(10);
+        assertThat(records.isReadyFrameScore(0)).isFalse();
+    }
+
+    @Test
+    @DisplayName("프레임 점수 준비 여부 검증 함수 검증 : STRIKE - 실패 2")
+    void isReadyFrameScoreTest7() {
+        Records records = new Records();
+
+        records.record(10);
+        records.record(0);
+        assertThat(records.isReadyFrameScore(0)).isFalse();
+    }
+
+    @Test
+    @DisplayName("프레임 점수 준비 여부 검증 함수 검증 : STRIKE - 성공 1")
+    void isReadyFrameScoreTest8() {
+        Records records = new Records();
+
+        records.record(10);
+        records.record(10);
+        records.record(10);
+        assertThat(records.isReadyFrameScore(0)).isTrue();
+    }
+
+    @Test
+    @DisplayName("프레임 점수 준비 여부 검증 함수 검증 : STRIKE - 성공 1")
+    void isReadyFrameScoreTest9() {
+        Records records = new Records();
+
+        records.record(10);
+        records.record(10);
+        records.record(0);
+        assertThat(records.isReadyFrameScore(0)).isTrue();
+    }
+
+    @Test
+    @DisplayName("프레임 점수 준비 여부 검증 함수 검증 : STRIKE - 성공 2")
+    void isReadyFrameScoreTest10() {
+        Records records = new Records();
+
+        records.record(10);
+        records.record(0);
+        records.record(0);
+        assertThat(records.isReadyFrameScore(0)).isTrue();
+    }
+
 }

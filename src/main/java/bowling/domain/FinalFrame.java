@@ -37,14 +37,19 @@ public class FinalFrame extends Frame {
         return scores.getPinScore() + bonusScores.sumOfDownPins();
     }
 
-    private boolean isBonus() {
-        return !bonus && (scores.isStrike() || scores.isSpare());
-    }
-
     public int getSecondPitchScore() {
         if (FrameScore.STRIKE.equals(getResult())) {
             return bonusScores.getFirstScore();
         }
         return scores.getSecondPitchScore();
     }
+
+    public int getTryCount() {
+        return scores.getTryCount() + bonusScores.getTryCount();
+    }
+
+    private boolean isBonus() {
+        return !bonus && (scores.isStrike() || scores.isSpare());
+    }
+
 }
