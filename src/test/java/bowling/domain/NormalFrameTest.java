@@ -171,8 +171,11 @@ class NormalFrameTest {
         Frame third = second.getNextFrame();
         third.bowl(8);
 
-        assertThat(frame.getIntScore()).isEqualTo(20);
-        assertThat(second.getIntScore()).isEqualTo(18);
+
+        assertAll(
+                () -> assertEquals(frame.getIntScore(), 20),
+                () -> assertEquals(second.getIntScore(), 18)
+        );
     }
 
     @DisplayName("X, 8|/, 8|1 인 경우")
@@ -188,9 +191,12 @@ class NormalFrameTest {
         third.bowl(8);
         third.bowl(1);
 
-        assertThat(frame.getIntScore()).isEqualTo(20);
-        assertThat(second.getIntScore()).isEqualTo(18);
-        assertThat(third.getIntScore()).isEqualTo(9);
+
+        assertAll(
+                () -> assertEquals(frame.getIntScore(), 20),
+                () -> assertEquals(second.getIntScore(), 18),
+                () -> assertEquals(third.getIntScore(), 9)
+        );
     }
 
     @DisplayName("X, X, 5| 인 경우")
@@ -219,8 +225,10 @@ class NormalFrameTest {
         third.bowl(5);
         third.bowl(4);
 
-        assertThat(frame.getIntScore()).isEqualTo(25);
-        assertThat(second.getIntScore()).isEqualTo(19);
-        assertThat(third.getIntScore()).isEqualTo(9);
+        assertAll(
+                () -> assertEquals(frame.getIntScore(), 25),
+                () -> assertEquals(second.getIntScore(), 19),
+                () -> assertEquals(third.getIntScore(), 9)
+        );
     }
 }

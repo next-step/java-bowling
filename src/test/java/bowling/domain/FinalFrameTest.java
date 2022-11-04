@@ -71,6 +71,7 @@ class FinalFrameTest {
     void endFrame3() {
         frame.bowl(10);
         frame.bowl(0);
+
         assertThat(frame.isFinished()).isFalse();
     }
 
