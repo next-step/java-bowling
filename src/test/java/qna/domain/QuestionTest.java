@@ -8,6 +8,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static qna.domain.AnswerTest.A1;
 
 public class QuestionTest {
     public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
@@ -21,6 +22,15 @@ public class QuestionTest {
         assertThat(deleteHistories).hasSize(1);
     }
 
+    @Test
+    @DisplayName("질문작성자가 자신의 답변만 있는 질문을 삭제하면, 질문과 답변은 삭제상태가 되고 각각의 삭제 내역을 반환해야 한다.")
+    void deleteQuestionSuccessExistsAnswerTest() throws CannotDeleteException {
+        Q1.addAnswer(A1);
+        List<DeleteHistory> deleteHistories = Q1.delete(UserTest.JAVAJIGI);
+        assertThat(Q1.isDeleted()).isTrue();
+        assertThat(A1.isDeleted()).isTrue();
+        assertThat(deleteHistories).hasSize(2);
+    }
 
     @Test
     @DisplayName("질문작성자가 아니면, 삭제할 권한이 없어 에러 발생한다.")
