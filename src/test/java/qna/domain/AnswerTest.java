@@ -19,7 +19,7 @@ public class AnswerTest {
     }
 
     @Test
-    @DisplayName("본인이 답변 작성자가 아면 삭제 실패하고 에러 발생 한다.")
+    @DisplayName("본인이 답변 작성자가 아니면 삭제 실패하고 에러 발생 한다.")
     void deleteAnswerFailByIsNotWriter() {
         assertThatThrownBy(() -> A1.delete(UserTest.SANJIGI))
                 .isInstanceOf(CannotDeleteException.class)
