@@ -80,7 +80,7 @@ public class Question extends AbstractEntity {
 
     public void delete(User user) {
         validateWriter(user);
-
+        setDeleted(true);
     }
 
     private void validateWriter(User user) {

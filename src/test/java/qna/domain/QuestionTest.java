@@ -62,4 +62,14 @@ public class QuestionTest {
         assertThatThrownBy(() -> question.deleteAllAnswers(UserTest.JAVAJIGI))
                 .isInstanceOf(UnAuthorizedException.class);
     }
+
+    @DisplayName("질문 삭제시 상태를 삭제 상태로 변경한다.")
+    @Test
+    void delete_setDelete() {
+        assertThat(question.isDeleted()).isFalse();
+
+        question.delete(UserTest.JAVAJIGI);
+
+        assertThat(question.isDeleted()).isTrue();
+    }
 }
