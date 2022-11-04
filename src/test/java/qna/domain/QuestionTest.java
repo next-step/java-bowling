@@ -2,6 +2,7 @@ package qna.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,5 +23,15 @@ public class QuestionTest {
     @Test
     void validate_writer() {
         assertThatThrownBy(() -> question.delete(UserTest.SANJIGI)).isInstanceOf(UnAuthorizedException.class);
+    }
+
+    @DisplayName("질문의 상태를 삭제 상태로 변경한다.")
+    @Test
+    void set_delete() {
+        Assertions.assertAll(
+                () -> assertThat(question.isDeleted()).isFalse(),
+                () -> assertThat(question.setDeleted(true).isDeleted()).isTrue(),
+                () -> assertThat(question.setDeleted(false).isDeleted()).isFalse()
+        );
     }
 }
