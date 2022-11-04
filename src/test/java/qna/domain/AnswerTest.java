@@ -26,7 +26,7 @@ public class AnswerTest {
         assertThatThrownBy(() -> A1.delete(UserTest.SANJIGI)).isInstanceOf(UnAuthorizedException.class);
     }
 
-    @DisplayName("질문의 상태를 삭제 상태로 변경한다.")
+    @DisplayName("답변 상태를 삭제 상태로 변경한다.")
     @Test
     void set_delete() {
         Assertions.assertAll(
@@ -43,5 +43,13 @@ public class AnswerTest {
                 = new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
 
         assertThat(answer.delete(UserTest.JAVAJIGI)).isEqualTo(expected);
+    }
+
+    @DisplayName("답변 삭제시 상태를 삭제 상태로 변경한다.")
+    @Test
+    void delete_setDelete() {
+        answer.delete(answer.getWriter());
+
+        assertThat(answer.isDeleted()).isTrue();
     }
 }
