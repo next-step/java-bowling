@@ -56,7 +56,7 @@ public class Answer extends AbstractEntity {
     }
 
     private void validateWriter(User user) throws UnAuthorizedException {
-        if (!this.writer.equalsNameAndEmail(user)) {
+        if (!isOwner(user)) {
             throw new UnAuthorizedException("답변은 답변자만 지울 수 있습니다.");
         }
     }
