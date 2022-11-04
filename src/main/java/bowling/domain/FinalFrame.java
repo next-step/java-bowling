@@ -36,14 +36,13 @@ public class FinalFrame extends Frame {
             return;
         }
 
-        states.remove(states.size() - 1);
+        removeLastState();
         State bowl = state.bowl(Pin.of(number));
         states.add(bowl);
     }
 
     @Override
     public Score calculateAdditionalScore(Score beforeScore) {
-
         return state.calculateAdditionalScore(beforeScore);
     }
 
@@ -52,8 +51,13 @@ public class FinalFrame extends Frame {
         return getFirstScore().getScore();
     }
 
+    @Override
+    public boolean canBowl() {
+        return !getFirstScore().canCalculateScore();
+    }
+
     public Score getFirstScore() {
-        Score firstScore = states.get(0).getScore();
+        Score firstScore = firstState().getScore();
 
         for (int i = 1; i < states.size(); i++) {
             State state = states.get(i);
@@ -63,13 +67,16 @@ public class FinalFrame extends Frame {
         return firstScore;
     }
 
-    @Override
-    public boolean canBowl() {
-        return !getFirstScore().canCalculateScore();
+    private State firstState() {
+        return states.get(0);
     }
 
     private State lastState() {
         return states.get(states.size() - 1);
+    }
+
+    private void removeLastState() {
+        states.remove(states.size() - 1);
     }
 
     @Override

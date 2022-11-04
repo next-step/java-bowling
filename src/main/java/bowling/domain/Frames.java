@@ -19,11 +19,7 @@ public class Frames {
     }
 
     public void addFrame() {
-        try {
-            values.add(lastFrame().nextFrame);
-        } catch (IllegalStateException e) {
-            return;
-        }
+        values.add(lastFrame().nextFrame);
     }
 
     public Frame lastFrame() {

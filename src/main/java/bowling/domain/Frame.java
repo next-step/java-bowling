@@ -11,8 +11,8 @@ public abstract class Frame {
     public static final int NO_SCORE = -1;
 
     protected int number;
-    protected State state = new Ready();
     protected Frame nextFrame;
+    protected State state = new Ready();
     protected Score score = state.getScore();
 
     protected Frame() {
