@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import qna.UnAuthorizedException;
+import qna.CannotDeleteException;
 
 public class AnswerTest {
     public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
@@ -20,10 +20,10 @@ public class AnswerTest {
         answer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "content");
     }
 
-    @DisplayName("사용자가 답변자가 아닌 경우 UnAuthorizedException 예외를 throw한다.")
+    @DisplayName("사용자가 답변자가 아닌 경우 CannotDeleteException 예외를 throw한다.")
     @Test
     void validate_writer() {
-        assertThatThrownBy(() -> A1.delete(UserTest.SANJIGI)).isInstanceOf(UnAuthorizedException.class);
+        assertThatThrownBy(() -> A1.delete(UserTest.SANJIGI)).isInstanceOf(CannotDeleteException.class);
     }
 
     @DisplayName("답변 상태를 삭제 상태로 변경한다.")
@@ -38,7 +38,7 @@ public class AnswerTest {
 
     @DisplayName("답변 삭제시 삭제이력을 남긴다.")
     @Test
-    void delete_deleteHistory() {
+    void delete_deleteHistory() throws CannotDeleteException {
         DeleteHistory expected
                 = new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
 
@@ -47,7 +47,7 @@ public class AnswerTest {
 
     @DisplayName("답변 삭제시 상태를 삭제 상태로 변경한다.")
     @Test
-    void delete_setDelete() {
+    void delete_setDelete() throws CannotDeleteException {
         assertThat(answer.isDeleted()).isFalse();
 
         answer.delete(answer.getWriter());

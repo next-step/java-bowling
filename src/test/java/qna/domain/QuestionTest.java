@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import qna.UnAuthorizedException;
+import qna.CannotDeleteException;
 
 public class QuestionTest {
     public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
@@ -20,10 +20,10 @@ public class QuestionTest {
         question = new Question("question", "content").writeBy(UserTest.JAVAJIGI);
     }
 
-    @DisplayName("사용자와 질문자가 아닌 경우 UnAuthorizedException 예외를 throw한다.")
+    @DisplayName("사용자와 질문자가 아닌 경우 CannotDeleteException 예외를 throw한다.")
     @Test
     void validate_writer() {
-        assertThatThrownBy(() -> question.delete(UserTest.SANJIGI)).isInstanceOf(UnAuthorizedException.class);
+        assertThatThrownBy(() -> question.delete(UserTest.SANJIGI)).isInstanceOf(CannotDeleteException.class);
     }
 
     @DisplayName("질문의 상태를 삭제 상태로 변경한다.")
@@ -38,7 +38,7 @@ public class QuestionTest {
 
     @DisplayName("모든 답변의 상태를 삭제로 변경한다.")
     @Test
-    void set_deleteAllAnswers() {
+    void set_deleteAllAnswers() throws CannotDeleteException {
         Answer answer1 = new Answer(UserTest.JAVAJIGI, question, "answer1");
         question.addAnswer(answer1);
         Answer answer2 = new Answer(UserTest.JAVAJIGI, question, "answer2");
@@ -52,7 +52,7 @@ public class QuestionTest {
         );
     }
 
-    @DisplayName("답변 중 사용자가 답변자가 아닌 경우 UnAuthorizedException 예외를 throw한다.")
+    @DisplayName("답변 중 사용자가 답변자가 아닌 경우 CannotDeleteException 예외를 throw한다.")
     @Test
     void set_deleteAllAnswers_contain_not_owner() {
         Answer answer1 = new Answer(UserTest.JAVAJIGI, question, "answer1");
@@ -61,12 +61,12 @@ public class QuestionTest {
         question.addAnswer(answer2);
 
         assertThatThrownBy(() -> question.deleteAllAnswers(UserTest.JAVAJIGI))
-                .isInstanceOf(UnAuthorizedException.class);
+                .isInstanceOf(CannotDeleteException.class);
     }
 
     @DisplayName("질문 삭제시 상태를 삭제 상태로 변경한다.")
     @Test
-    void delete_setDelete() {
+    void delete_setDelete() throws CannotDeleteException {
         assertThat(question.isDeleted()).isFalse();
 
         question.delete(UserTest.JAVAJIGI);
@@ -76,7 +76,7 @@ public class QuestionTest {
 
     @DisplayName("질문 삭제시 삭제이력을 남긴다.")
     @Test
-    void delete_deleteHistory() {
+    void delete_deleteHistory() throws CannotDeleteException {
         Answer answer1 = new Answer(UserTest.JAVAJIGI, question, "answer1");
         question.addAnswer(answer1);
         Answer answer2 = new Answer(UserTest.JAVAJIGI, question, "answer2");
