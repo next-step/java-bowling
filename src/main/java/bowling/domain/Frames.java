@@ -20,7 +20,7 @@ public class Frames {
 
     public void addFrame() {
         try {
-            values.add(lastFrame().nextFrame());
+            values.add(lastFrame().nextFrame);
         } catch (IllegalStateException e) {
             return;
         }
@@ -31,7 +31,7 @@ public class Frames {
     }
 
     public boolean isLast() {
-        return !lastFrame().canPitch();
+        return !lastFrame().canBowl();
     }
 
     public List<Frame> values() {

@@ -12,7 +12,6 @@ public class NormalFrame extends Frame {
         checkSize(number);
 
         this.number = number;
-        this.score = new Score();
     }
 
     private void checkSize(int number) {
@@ -21,17 +20,33 @@ public class NormalFrame extends Frame {
         }
     }
 
+    public void bowlV2(int number) {
+        state = state.bowl(Pin.of(number));
+
+        if (state.isFinished()) {
+            scoreV2 = state.getScore();
+            nextFrame = nextFrame();
+        }
+    }
+
     @Override
-    public boolean canPitch() {
-        return score.pinsSize() != 2 && !status().isKnockedDowned();
+    public boolean canBowl() {
+        return !state.isFinished();
     }
 
     @Override
     public Frame nextFrame() {
         if (number == MAX_FRAME_NUMBER) {
-            return new FinalFrame(number + 1);
+            nextFrame = new FinalFrame(number + 1);
+            return nextFrame;
         }
 
-        return new NormalFrame(number + 1);
+        nextFrame = new NormalFrame(number + 1);
+        return nextFrame;
+    }
+
+    @Override
+    public boolean isLastFrame() {
+        return false;
     }
 }

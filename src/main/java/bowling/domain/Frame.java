@@ -1,47 +1,79 @@
 package bowling.domain;
 
+import bowling.domain.state.Ready;
+import bowling.domain.state.State;
+
+import java.util.Objects;
+
 public abstract class Frame {
 
+    public static final int NO_SCORE = -1;
+
     protected int number;
-    protected Score score;
+    protected State state = new Ready();
+    protected Frame nextFrame;
+    protected ScoreV2 scoreV2 = state.getScore();
 
     protected Frame() {
 
     }
 
-    public void bowl(int number) {
-        try {
-            score.addPin(Pin.of(number));
-        } catch (RuntimeException e) {
-            throw new IllegalStateException(e.getMessage());
+    public void bowlV2(int number) {
+        state = state.bowl(Pin.of(number));
+
+        if (state.isFinished()) {
+            scoreV2 = state.getScore();
+            nextFrame = nextFrame();
         }
     }
 
-    public boolean isEnd() {
-        return !canPitch();
+    public boolean isFinished() {
+        return !canBowl();
     }
 
-    public abstract boolean canPitch();
+    public abstract boolean canBowl();
 
     public abstract Frame nextFrame();
-
-    public ScoreType status() {
-        return score.status();
-    }
 
     public int number() {
         return number;
     }
 
-    public boolean isEmpty() {
-        return score.pins().isEmpty();
+    public abstract boolean isLastFrame();
+
+    public int getIntScore() {
+        if (scoreV2.canCalculateScore()) {
+            return scoreV2.getScore();
+        }
+
+        validateNextFrame();
+
+        scoreV2 = nextFrame.calculateAdditionalScore(scoreV2);
+        return scoreV2.getScore();
     }
 
-    public int pinNumber(int index) {
-        return score.pinNumber(index);
+    public ScoreV2 calculateAdditionalScore(ScoreV2 beforeScore) {
+        ScoreV2 score = state.calculateAdditionalScore(beforeScore);
+
+        if (!score.canCalculateScore()) {
+            validateNextFrame();
+            return nextFrame.calculateAdditionalScore(score);
+        }
+
+        return score;
     }
 
-    public int pinsSize() {
-        return score.pins().size();
+    private void validateNextFrame() {
+        if (Objects.isNull(nextFrame)) {
+            throw new UnsupportedOperationException("점수를 계산할 수 없습니다.");
+        }
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public Frame getNextFrame() {
+        return nextFrame;
     }
 }
