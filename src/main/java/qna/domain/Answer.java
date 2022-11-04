@@ -1,6 +1,7 @@
 package qna.domain;
 
 import qna.NotFoundException;
+import qna.UnAuthenticationException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
@@ -30,11 +31,11 @@ public class Answer extends AbstractEntity {
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
 
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
 
@@ -46,6 +47,16 @@ public class Answer extends AbstractEntity {
     public Answer setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
+    }
+
+    public void delete(User user) throws UnAuthenticationException {
+        validateWriter(user);
+    }
+
+    private void validateWriter(User user) throws UnAuthenticationException {
+        if (!this.writer.equalsNameAndEmail(user)) {
+            throw new UnAuthenticationException("답변은 답변자만 지울 수 있습니다.");
+        }
     }
 
     public boolean isDeleted() {

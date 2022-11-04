@@ -16,7 +16,7 @@
 
 ### 답변
 - [ ] 답변을 삭제한다.
-    - [ ] 사용자가 답변자가 아닌 경우 UnAuthorizedException 예외를 throw한다.
+    - [x] 사용자가 답변자가 아닌 경우 UnAuthorizedException 예외를 throw한다.
     - [ ] 답변의 상태를 삭제 상태로 변경한다.
     - [ ] 답변 삭제시 삭제이력을 남긴다.
 
