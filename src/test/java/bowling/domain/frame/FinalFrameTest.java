@@ -111,7 +111,7 @@ class FinalFrameTest {
 
         //then
         assertAll(
-                () -> assertThatThrownBy(() -> miss.bowl(new Pin(5))).isInstanceOf(UnsupportedOperationException.class),
+                () -> assertThatIllegalStateException().isThrownBy(() -> miss.bowl(new Pin(5))),
                 () -> assertThatNoException().isThrownBy(() -> spare.bowl(new Pin(5))),
                 () -> assertThatNoException().isThrownBy(() -> strike.bowl(new Pin(5)))
         );
@@ -126,7 +126,7 @@ class FinalFrameTest {
         spare.bowl(new Pin(5));
         spare.bowl(new Pin(5));
         //then
-        assertThat(spare.getBonus().get().getValue()).isEqualTo(5);
+        assertThat(spare.getBonus().get(0).getValue()).isEqualTo(5);
     }
 
 }

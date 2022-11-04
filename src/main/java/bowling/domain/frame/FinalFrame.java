@@ -3,12 +3,13 @@ package bowling.domain.frame;
 import bowling.domain.Pin;
 import bowling.domain.Point;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class FinalFrame extends Frame {
 
-    private Pin bonus;
-    private int bonusBowlCount = 0; //보너스 볼을 던진 횟수
+    private List<Pin> bonus = new ArrayList<>();
 
     public FinalFrame(Point before) {
         super(before);
@@ -21,7 +22,7 @@ public class FinalFrame extends Frame {
     @Override
     public boolean isFinish() {
         if (state.isFinish() && state.canGetBonus()) {
-            return bonus != null;
+            return bonus.size() == state.bonusCount();
         }
         return state.isFinish() && !state.canGetBonus();
     }
@@ -33,10 +34,9 @@ public class FinalFrame extends Frame {
             this.point.add(pin);
             return;
         }
-        if (state.canGetBonus() &&  bonusBowlCount < state.bonusCount()) {
-            this.bonus = pin;
+        if (state.canGetBonus() &&  bonus.size() < state.bonusCount()) {
+            this.bonus.add(pin);
             this.point.add(pin);
-            bonusBowlCount++;
             return;
         }
 
@@ -54,7 +54,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public Optional<Pin> getBonus() {
-        return Optional.ofNullable(bonus);
+    public List<Pin> getBonus() {
+        return Collections.unmodifiableList(bonus);
     }
 }

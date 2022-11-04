@@ -45,7 +45,7 @@ class OutputViewTest {
     @DisplayName("퍼펙트 게임 출력")
     void print_perfectGame() {
         Frames frames = new Frames();
-        IntStream.range(0, 11)
+        IntStream.range(0, 12)
                 .forEach(i -> frames.bowl(range -> new Pin(10)));
         OutputView.print(BowlingRecord.of(frames, new Pin(10), new PlayerName("PJS")));
     }

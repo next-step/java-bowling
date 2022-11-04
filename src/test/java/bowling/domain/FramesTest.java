@@ -21,7 +21,7 @@ class FramesTest {
         //given
         Frames frames = new Frames();
         //when
-        IntStream.range(0, 11)
+        IntStream.range(0, 12)
                 .forEach(i -> frames.bowl(range -> new Pin(10)));
         List<FrameRecord> gameFrameRecord = BowlingRecord.of(frames, new Pin(10), new PlayerName("aaa")).getFrameRecords();
         //then

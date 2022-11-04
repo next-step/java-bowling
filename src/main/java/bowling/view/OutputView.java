@@ -96,7 +96,8 @@ public class OutputView {
         return Optional.ofNullable(input)
                 .filter(frameRecord -> frameRecord.getKind() == FrameType.FINAL)
                 .map(FrameRecord::getBonus)
-                .map(bonus -> BAR + bonus).orElse("");
+                .stream()
+                .map(bonus -> BAR + bonus).collect(Collectors.joining(BLANK));
     }
 
     private static String getScore(Integer integer) {
