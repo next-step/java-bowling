@@ -48,6 +48,8 @@ public class AnswerTest {
     @DisplayName("답변 삭제시 상태를 삭제 상태로 변경한다.")
     @Test
     void delete_setDelete() {
+        assertThat(answer.isDeleted()).isFalse();
+
         answer.delete(answer.getWriter());
 
         assertThat(answer.isDeleted()).isTrue();
