@@ -12,6 +12,7 @@ public class Frames {
 
     private static final int LAST_NORMAL_TURN = 9;
     private static final int TOTAL_TURN = 10;
+    private static final int MAX_REMAIN_PINS = 10;
 
     private LinkedList<Frame> frames;
 
@@ -40,7 +41,7 @@ public class Frames {
                 .map(LinkedList::getLast)
                 .filter(frame -> !frame.isFinish())
                 .map(Frame::getRemainPins)
-                .orElse(10);
+                .orElse(MAX_REMAIN_PINS);
     }
 
     private void addFrame() {
@@ -60,7 +61,7 @@ public class Frames {
 
 
     public boolean isFinished() {
-        return frames.size() == 10 && frames.getLast().isFinish();
+        return frames.size() == TOTAL_TURN && frames.getLast().isFinish();
     }
 
     private boolean normalFramesIsFinished() {
