@@ -41,6 +41,7 @@ public class Spare extends State {
 
     @Override
     public String describe() {
-        return firstPin.getCount() + "|/";
+        String result = firstPin.getCount() + "|/";
+        return result.replaceAll("0", GUTTER);
     }
 }

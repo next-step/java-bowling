@@ -37,6 +37,7 @@ public class FirstBowl extends State {
 
     @Override
     public String describe() {
-        return String.valueOf(pin.getCount());
+        return String.valueOf(pin.getCount())
+                .replace("0", GUTTER);
     }
 }

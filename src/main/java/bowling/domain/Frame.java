@@ -3,6 +3,7 @@ package bowling.domain;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Frame {
@@ -46,10 +47,13 @@ public abstract class Frame {
             return score.getScore();
         }
 
-        validateNextFrame();
-
-        score = nextFrame.calculateAdditionalScore(score);
-        return score.getScore();
+        try {
+            validateNextFrame();
+            score = nextFrame.calculateAdditionalScore(score);
+            return score.getScore();
+        } catch (UnsupportedOperationException e) {
+            return NO_SCORE;
+        }
     }
 
     public Score calculateAdditionalScore(Score beforeScore) {
@@ -72,6 +76,8 @@ public abstract class Frame {
     public State getState() {
         return state;
     }
+
+    public abstract List<State> getStates();
 
     public Frame getNextFrame() {
         return nextFrame;

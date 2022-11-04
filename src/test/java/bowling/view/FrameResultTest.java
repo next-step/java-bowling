@@ -17,8 +17,8 @@ class FrameResultTest {
         finalFrame.bowl(10);
         finalFrame.bowl(10);
 
-        FrameResult result = new FrameResult(finalFrame);
+        FrameResult result = new FrameResult();
 
-        assertThat(result.getFrameSign()).contains("X|X|X");
+        assertThat(result.frameSign(finalFrame)).contains("X|X|X");
     }
 }

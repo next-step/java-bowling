@@ -42,6 +42,7 @@ public class Miss extends State {
 
     @Override
     public String describe() {
-        return firstPin.getCount() + "|" + secondPin.getCount();
+        String result = firstPin.getCount() + "|" + secondPin.getCount();
+        return result.replaceAll("0", GUTTER);
     }
 }

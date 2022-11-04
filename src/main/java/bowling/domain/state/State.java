@@ -4,6 +4,7 @@ import bowling.domain.Pin;
 import bowling.domain.Score;
 
 public abstract class State {
+    protected static final String GUTTER = "-";
 
     public abstract State bowl(Pin pin);
     public abstract boolean isFinished();

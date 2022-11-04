@@ -1,5 +1,9 @@
 package bowling.domain;
 
+import bowling.domain.state.State;
+
+import java.util.List;
+
 public class NormalFrame extends Frame {
     private static final int MIN_FRAME_NUMBER = 1;
     private static final int MAX_FRAME_NUMBER = 9;
@@ -48,5 +52,10 @@ public class NormalFrame extends Frame {
     @Override
     public boolean isLastFrame() {
         return false;
+    }
+
+    @Override
+    public List<State> getStates() {
+        return List.of(state);
     }
 }
