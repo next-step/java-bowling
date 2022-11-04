@@ -18,7 +18,7 @@ public class BowlingController {
         while (!frames.isLast()) {
             Frame lastFrame = frames.lastFrame();
 
-            while (lastFrame.canPitch()) {
+            while (lastFrame.canBowl()) {
                 getPitchNumberAndPrintResult(framesResult, lastFrame);
             }
 
@@ -41,7 +41,7 @@ public class BowlingController {
         int number = InputView.inputPitchNumber(lastFrame.number());
 
         try {
-            lastFrame.bowl(number);
+            lastFrame.bowlV2(number);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
             return;

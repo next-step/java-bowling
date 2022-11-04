@@ -8,6 +8,6 @@ public class ResultView {
 
     public static void printFrameResult(FramesResult result) {
         System.out.println(result.frameNumberLine());
-        System.out.println(result.frameScores() + System.lineSeparator());
+        System.out.println(result.frameResult() + System.lineSeparator());
     }
 }
