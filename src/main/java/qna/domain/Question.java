@@ -1,5 +1,6 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 import org.hibernate.annotations.Where;
 
@@ -78,9 +79,14 @@ public class Question extends AbstractEntity {
     }
 
 
-    public void delete(User user) {
+    public List<DeleteHistory> delete(User user) {
         validateWriter(user);
         setDeleted(true);
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now()));
+        deleteHistories.addAll(deleteAllAnswers(user));
+        return deleteHistories;
+
     }
 
     private void validateWriter(User user) {

@@ -2,6 +2,7 @@ package qna.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -71,5 +72,22 @@ public class QuestionTest {
         question.delete(UserTest.JAVAJIGI);
 
         assertThat(question.isDeleted()).isTrue();
+    }
+
+    @DisplayName("질문 삭제시 삭제이력을 남긴다.")
+    @Test
+    void delete_deleteHistory() {
+        Answer answer1 = new Answer(UserTest.JAVAJIGI, question, "answer1");
+        question.addAnswer(answer1);
+        Answer answer2 = new Answer(UserTest.JAVAJIGI, question, "answer2");
+        question.addAnswer(answer2);
+
+        assertThat(question.delete(UserTest.JAVAJIGI))
+                .contains(
+                        new DeleteHistory(ContentType.QUESTION, question.getId(), UserTest.JAVAJIGI,
+                                LocalDateTime.now()),
+                        new DeleteHistory(ContentType.ANSWER, question.getId(), UserTest.JAVAJIGI, LocalDateTime.now()),
+                        new DeleteHistory(ContentType.ANSWER, question.getId(), UserTest.JAVAJIGI, LocalDateTime.now())
+                );
     }
 }
