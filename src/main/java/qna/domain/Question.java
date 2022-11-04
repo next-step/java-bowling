@@ -5,6 +5,7 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import qna.UnAuthorizedException;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -73,6 +74,18 @@ public class Question extends AbstractEntity {
 
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
+    }
+
+
+    public void delete(User user) {
+        validateWriter(user);
+
+    }
+
+    private void validateWriter(User user) {
+        if (!isOwner(user)) {
+            throw new UnAuthorizedException("질문은 질문자만 지울 수 있습니다.");
+        }
     }
 
     public Question setDeleted(boolean deleted) {
