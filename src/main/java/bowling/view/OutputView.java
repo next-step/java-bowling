@@ -1,7 +1,7 @@
 package bowling.view;
 
-import bowling.domain.dto.BowlingRecord;
-import bowling.domain.dto.FrameRecord;
+import bowling.dto.BowlingRecord;
+import bowling.dto.FrameRecord;
 import bowling.domain.frame.FrameType;
 import bowling.domain.state.StateType;
 

@@ -2,7 +2,7 @@ package bowling.controller;
 
 import bowling.domain.Pin;
 import bowling.domain.PlayerName;
-import bowling.domain.dto.BowlingRecord;
+import bowling.dto.BowlingRecord;
 import bowling.domain.frame.Frames;
 import bowling.domain.scorestrategy.RandomScoreStrategy;
 import bowling.view.InputView;

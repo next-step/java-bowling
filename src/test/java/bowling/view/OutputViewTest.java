@@ -2,7 +2,7 @@ package bowling.view;
 
 import bowling.domain.Pin;
 import bowling.domain.PlayerName;
-import bowling.domain.dto.BowlingRecord;
+import bowling.dto.BowlingRecord;
 import bowling.domain.frame.Frames;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

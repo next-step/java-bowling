@@ -1,7 +1,7 @@
 package bowling.domain;
 
-import bowling.domain.dto.BowlingRecord;
-import bowling.domain.dto.FrameRecord;
+import bowling.dto.BowlingRecord;
+import bowling.dto.FrameRecord;
 import bowling.domain.frame.Frames;
 import bowling.domain.state.StateType;
 import org.junit.jupiter.api.DisplayName;
