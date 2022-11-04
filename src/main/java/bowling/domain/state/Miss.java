@@ -40,6 +40,7 @@ public class Miss extends State {
         return score.add(secondPin.getCount());
     }
 
+    @Override
     public String describe() {
         return firstPin.getCount() + "|" + secondPin.getCount();
     }

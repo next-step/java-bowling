@@ -35,7 +35,8 @@ public class FirstBowl extends State {
         return score.add(pin.getCount());
     }
 
+    @Override
     public String describe() {
-        return "" + pin.getCount();
+        return String.valueOf(pin.getCount());
     }
 }

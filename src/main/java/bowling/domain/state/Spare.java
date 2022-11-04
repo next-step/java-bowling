@@ -39,6 +39,7 @@ public class Spare extends State {
         return score.add(secondPin.getCount());
     }
 
+    @Override
     public String describe() {
         return firstPin.getCount() + "|/";
     }

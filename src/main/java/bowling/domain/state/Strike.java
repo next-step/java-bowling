@@ -17,14 +17,15 @@ public class Strike extends State {
 
     @Override
     public Score getScore() {
-        return new Score(10, 2);
+        return new Score(Pin.MAX_COUNT, 2);
     }
 
     @Override
     public Score calculateAdditionalScore(Score score) {
-        return score.add(10);
+        return score.add(Pin.MAX_COUNT);
     }
 
+    @Override
     public String describe() {
         return "X";
     }
