@@ -40,7 +40,7 @@ public class FinalFrame extends Frame {
             return;
         }
 
-        throw new UnsupportedOperationException();
+        throw new IllegalStateException();
     }
 
     @Override
