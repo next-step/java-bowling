@@ -104,7 +104,7 @@ public class Question extends AbstractEntity {
         this.setDeleted(true);
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), this.getWriter(), LocalDateTime.now()));
 
-        answers.deleteAnswers(true, deleteHistories);
+        answers.deleteAnswers(writer, deleteHistories);
         return deleteHistories;
     }
 }
