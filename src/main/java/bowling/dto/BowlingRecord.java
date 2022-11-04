@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BowlingRecord {
+
     private final int nth;
     private final int nowPin;
     private final String playerName;
@@ -19,7 +20,6 @@ public class BowlingRecord {
         this.playerName = playerName;
         this.frameRecords = frameRecords;
     }
-
 
     public static BowlingRecord of(Frames frames, Pin now, PlayerName playerName) {
 
@@ -35,7 +35,7 @@ public class BowlingRecord {
 
         List<FrameRecord> records = getFrameRecords(frames);
 
-        return new BowlingRecord(frameNth, Pin.NONE, playerName.toString(), records);
+        return new BowlingRecord(frameNth, 0, playerName.toString(), records);
     }
 
     private static List<FrameRecord> getFrameRecords(Frames frames) {
