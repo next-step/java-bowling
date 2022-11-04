@@ -14,16 +14,19 @@ public class Answer extends AbstractEntity {
 
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
-    private final User writer;
+    private User writer;
 
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
     private Question question;
 
     @Lob
-    private final String contents;
+    private String contents;
 
     private boolean deleted = false;
+
+    public Answer() {
+    }
 
     public Answer(User writer, Question question, String contents) {
         this(null, writer, question, contents);

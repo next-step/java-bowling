@@ -13,10 +13,10 @@ public class Question extends AbstractEntity {
     private static final String QUESTION_DELETE_AUTHORITY_MESSAGE = "질문을 삭제할 권한이 없습니다.";
 
     @Column(length = 100, nullable = false)
-    private final String title;
+    private String title;
 
     @Lob
-    private final String contents;
+    private String contents;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
@@ -26,6 +26,9 @@ public class Question extends AbstractEntity {
     private final Answers answers = new Answers();
 
     private boolean deleted = false;
+
+    public Question() {
+    }
 
     public Question(String title, String contents) {
         this.title = title;
