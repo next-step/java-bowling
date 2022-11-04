@@ -1,7 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pin;
-import bowling.domain.ScoreV2;
+import bowling.domain.Score;
 
 public class FirstBowl extends State {
 
@@ -26,13 +26,13 @@ public class FirstBowl extends State {
     }
 
     @Override
-    public ScoreV2 getScore() {
-        return new ScoreV2(pin.getCount(), 1);
+    public Score getScore() {
+        return new Score(pin.getCount(), 1);
     }
 
     @Override
-    public ScoreV2 calculateAdditionalScore(ScoreV2 scoreV2) {
-        return scoreV2.add(pin.getCount());
+    public Score calculateAdditionalScore(Score score) {
+        return score.add(pin.getCount());
     }
 
     public String describe() {

@@ -1,16 +1,16 @@
 package bowling.domain;
 
-public class ScoreV2 {
+public class Score {
     private final int score;
     private final int left;
 
-    public ScoreV2(int score, int left) {
+    public Score(int score, int left) {
         this.score = score;
         this.left = left;
     }
 
-    public ScoreV2 add(int countOfPins) {
-        return new ScoreV2(score + countOfPins, left - 1);
+    public Score add(int countOfPins) {
+        return new Score(score + countOfPins, left - 1);
     }
 
     public int getScore() {

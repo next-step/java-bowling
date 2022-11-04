@@ -20,11 +20,11 @@ public class NormalFrame extends Frame {
         }
     }
 
-    public void bowlV2(int number) {
+    public void bowl(int number) {
         state = state.bowl(Pin.of(number));
 
         if (state.isFinished()) {
-            scoreV2 = state.getScore();
+            score = state.getScore();
             nextFrame = nextFrame();
         }
     }

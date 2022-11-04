@@ -6,8 +6,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,52 +23,52 @@ class NormalFrameTest {
         frame = new NormalFrame();
     }
 
-//    @DisplayName("스트라이크인 경우 한 번 더 투구할 수 없다.")
-//    @Test
-//    void bowlException() {
-//        frame.bowl(10);
-//
-//        assertThat(frame.canPitch()).isFalse();
-//    }
-//
-//    @DisplayName("스패어 상태에서 한 번 더 투구할 수 없다.")
-//    @Test
-//    void bowlSpareException() {
-//        frame.bowl(7);
-//        frame.bowl(3);
-//
-//        assertThat(frame.canPitch()).isFalse();
-//    }
-//
-//    @DisplayName("투구가 끝난 상황에서 한 번 더 투구할 수 없다.")
-//    @Test
-//    void bowlMissException() {
-//        frame.bowl(5);
-//        frame.bowl(3);
-//
-//        assertThat(frame.canPitch()).isFalse();
-//    }
-//
-//    @DisplayName("프레임의 번호는 0번 또는 10번이 될 수 없다.")
-//    @ParameterizedTest(name = "{displayName} 입력값={0}")
-//    @ValueSource(ints = {0, 10})
-//    void normalFrameException(int input) {
-//        assertThatThrownBy(() -> new NormalFrame(input))
-//                .isInstanceOf(IllegalArgumentException.class);
-//    }
-//
-//    @DisplayName("프레임의 번호는 0번 또는 10번이 될 수 없다.")
-//    @ParameterizedTest(name = "{displayName} 입력값={0}")
-//    @ValueSource(ints = {0, 10})
-//    void finalFrameException(int input) {
-//        assertThatThrownBy(() -> new NormalFrame(input))
-//                .isInstanceOf(IllegalArgumentException.class);
-//    }
+    @DisplayName("스트라이크인 경우 한 번 더 투구할 수 없다.")
+    @Test
+    void bowlException() {
+        frame.bowl(10);
+
+        assertThat(frame.canBowl()).isFalse();
+    }
+
+    @DisplayName("스패어 상태에서 한 번 더 투구할 수 없다.")
+    @Test
+    void bowlSpareException() {
+        frame.bowl(7);
+        frame.bowl(3);
+
+        assertThat(frame.canBowl()).isFalse();
+    }
+
+    @DisplayName("투구가 끝난 상황에서 한 번 더 투구할 수 없다.")
+    @Test
+    void bowlMissException() {
+        frame.bowl(5);
+        frame.bowl(3);
+
+        assertThat(frame.canBowl()).isFalse();
+    }
+
+    @DisplayName("프레임의 번호는 0번 또는 10번이 될 수 없다.")
+    @ParameterizedTest(name = "{displayName} 입력값={0}")
+    @ValueSource(ints = {0, 10})
+    void normalFrameException(int input) {
+        assertThatThrownBy(() -> new NormalFrame(input))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("프레임의 번호는 0번 또는 10번이 될 수 없다.")
+    @ParameterizedTest(name = "{displayName} 입력값={0}")
+    @ValueSource(ints = {0, 10})
+    void finalFrameException(int input) {
+        assertThatThrownBy(() -> new NormalFrame(input))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 
     @DisplayName("10개를 쓰러뜨린 경우 프레임의 상태는 스트라이크다.")
     @Test
     void state() {
-        frame.bowlV2(10);
+        frame.bowl(10);
 
         assertThat(frame.getState()).isInstanceOf(Strike.class);
     }
@@ -82,7 +84,7 @@ class NormalFrameTest {
     @DisplayName("스트라이크인 경우 다음 프레임이 생성된다.")
     @Test
     void strikeNextFrame() {
-        frame.bowlV2(10);
+        frame.bowl(10);
 
         Frame nextFrame = frame.getNextFrame();
 
@@ -92,8 +94,8 @@ class NormalFrameTest {
     @DisplayName("스패어인 경우 다음 프레임이 생성된다.")
     @Test
     void spareNextFrame() {
-        frame.bowlV2(0);
-        frame.bowlV2(10);
+        frame.bowl(0);
+        frame.bowl(10);
 
         Frame nextFrame = frame.getNextFrame();
 
@@ -103,8 +105,8 @@ class NormalFrameTest {
     @DisplayName("미스인 경우 다음 프레임이 생성된다.")
     @Test
     void missNextFrame() {
-        frame.bowlV2(0);
-        frame.bowlV2(10);
+        frame.bowl(0);
+        frame.bowl(10);
 
         Frame nextFrame = frame.getNextFrame();
 
@@ -118,8 +120,8 @@ class NormalFrameTest {
             "0,9,9"
     })
     void missScore(int firstPinCount, int secondPinCount, int expected) {
-        frame.bowlV2(firstPinCount);
-        frame.bowlV2(secondPinCount);
+        frame.bowl(firstPinCount);
+        frame.bowl(secondPinCount);
 
         assertThat(frame.getIntScore()).isEqualTo(expected);
     }
@@ -131,11 +133,11 @@ class NormalFrameTest {
             "0,9,19,9"
     })
     void score1(int firstPin, int secondPin, int firstExpected, int secondExpected) {
-        frame.bowlV2(10);
+        frame.bowl(10);
         Frame nextFrame = frame.getNextFrame();
 
-        nextFrame.bowlV2(firstPin);
-        nextFrame.bowlV2(secondPin);
+        nextFrame.bowl(firstPin);
+        nextFrame.bowl(secondPin);
 
         assertAll(
                 () -> assertEquals(firstExpected, frame.getIntScore()),
@@ -148,11 +150,11 @@ class NormalFrameTest {
             "8,2,20"
     })
     void score2(int firstPin, int secondPin, int expected) {
-        frame.bowlV2(10);
+        frame.bowl(10);
         Frame nextFrame = frame.getNextFrame();
 
-        nextFrame.bowlV2(firstPin);
-        nextFrame.bowlV2(secondPin);
+        nextFrame.bowl(firstPin);
+        nextFrame.bowl(secondPin);
 
         assertThat(frame.getIntScore()).isEqualTo(expected);
     }
@@ -160,14 +162,14 @@ class NormalFrameTest {
     @DisplayName("X, 8|/, 8 인 경우")
     @Test
     void score3() {
-        frame.bowlV2(10);
+        frame.bowl(10);
         Frame second = frame.getNextFrame();
 
-        second.bowlV2(8);
-        second.bowlV2(2);
+        second.bowl(8);
+        second.bowl(2);
 
         Frame third = second.getNextFrame();
-        third.bowlV2(8);
+        third.bowl(8);
 
         assertThat(frame.getIntScore()).isEqualTo(20);
         assertThat(second.getIntScore()).isEqualTo(18);
@@ -176,15 +178,15 @@ class NormalFrameTest {
     @DisplayName("X, 8|/, 8|1 인 경우")
     @Test
     void score4() {
-        frame.bowlV2(10);
+        frame.bowl(10);
         Frame second = frame.getNextFrame();
 
-        second.bowlV2(8);
-        second.bowlV2(2);
+        second.bowl(8);
+        second.bowl(2);
 
         Frame third = second.getNextFrame();
-        third.bowlV2(8);
-        third.bowlV2(1);
+        third.bowl(8);
+        third.bowl(1);
 
         assertThat(frame.getIntScore()).isEqualTo(20);
         assertThat(second.getIntScore()).isEqualTo(18);
@@ -194,13 +196,13 @@ class NormalFrameTest {
     @DisplayName("X, X, 5| 인 경우")
     @Test
     void score5() {
-        frame.bowlV2(10);
+        frame.bowl(10);
         Frame second = frame.getNextFrame();
 
-        second.bowlV2(10);
+        second.bowl(10);
 
         Frame third = second.getNextFrame();
-        third.bowlV2(5);
+        third.bowl(5);
 
         assertThat(frame.getIntScore()).isEqualTo(25);
     }
@@ -208,14 +210,14 @@ class NormalFrameTest {
     @DisplayName("X, X, 5|4 인 경우")
     @Test
     void score6() {
-        frame.bowlV2(10);
+        frame.bowl(10);
         Frame second = frame.getNextFrame();
 
-        second.bowlV2(10);
+        second.bowl(10);
 
         Frame third = second.getNextFrame();
-        third.bowlV2(5);
-        third.bowlV2(4);
+        third.bowl(5);
+        third.bowl(4);
 
         assertThat(frame.getIntScore()).isEqualTo(25);
         assertThat(second.getIntScore()).isEqualTo(19);

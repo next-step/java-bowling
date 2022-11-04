@@ -12,17 +12,17 @@ public abstract class Frame {
     protected int number;
     protected State state = new Ready();
     protected Frame nextFrame;
-    protected ScoreV2 scoreV2 = state.getScore();
+    protected Score score = state.getScore();
 
     protected Frame() {
 
     }
 
-    public void bowlV2(int number) {
+    public void bowl(int number) {
         state = state.bowl(Pin.of(number));
 
         if (state.isFinished()) {
-            scoreV2 = state.getScore();
+            score = state.getScore();
             nextFrame = nextFrame();
         }
     }
@@ -42,18 +42,18 @@ public abstract class Frame {
     public abstract boolean isLastFrame();
 
     public int getIntScore() {
-        if (scoreV2.canCalculateScore()) {
-            return scoreV2.getScore();
+        if (score.canCalculateScore()) {
+            return score.getScore();
         }
 
         validateNextFrame();
 
-        scoreV2 = nextFrame.calculateAdditionalScore(scoreV2);
-        return scoreV2.getScore();
+        score = nextFrame.calculateAdditionalScore(score);
+        return score.getScore();
     }
 
-    public ScoreV2 calculateAdditionalScore(ScoreV2 beforeScore) {
-        ScoreV2 score = state.calculateAdditionalScore(beforeScore);
+    public Score calculateAdditionalScore(Score beforeScore) {
+        Score score = state.calculateAdditionalScore(beforeScore);
 
         if (!score.canCalculateScore()) {
             validateNextFrame();

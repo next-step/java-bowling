@@ -28,7 +28,7 @@ class FinalFrameTest {
     @DisplayName("스트라이크인 경우 한 번 더 투구할 수 있다.")
     @Test
     void fitchStrike() {
-        frame.bowlV2(10);
+        frame.bowl(10);
 
         assertThat(frame.canBowl()).isTrue();
     }
@@ -36,10 +36,10 @@ class FinalFrameTest {
     @DisplayName("스패어인 경우 한 번 더 투구할 수 있다.")
     @Test
     void fitchSpare() {
-        frame.bowlV2(7);
-        frame.bowlV2(3);
+        frame.bowl(7);
+        frame.bowl(3);
 
-        assertDoesNotThrow(() -> frame.bowlV2(5));
+        assertDoesNotThrow(() -> frame.bowl(5));
     }
 
 
@@ -52,7 +52,7 @@ class FinalFrameTest {
     @DisplayName("투구가 끝나지 않은 상황에서는 프레임은 끝났다고 판단하지 않는다.")
     @Test
     void endFrame1() {
-        frame.bowlV2(5);
+        frame.bowl(5);
 
         assertThat(frame.isFinished()).isFalse();
     }
@@ -60,8 +60,8 @@ class FinalFrameTest {
     @DisplayName("투구가 끝나면 프레임은 끝났다고 판단한다.")
     @Test
     void endFrame2() {
-        frame.bowlV2(5);
-        frame.bowlV2(3);
+        frame.bowl(5);
+        frame.bowl(3);
 
         assertThat(frame.isFinished()).isTrue();
     }
@@ -69,17 +69,17 @@ class FinalFrameTest {
     @DisplayName("10|0 인 경우 더 투구할 수 있다.")
     @Test
     void endFrame3() {
-        frame.bowlV2(10);
-        frame.bowlV2(0);
+        frame.bowl(10);
+        frame.bowl(0);
         assertThat(frame.isFinished()).isFalse();
     }
 
     @DisplayName("10|0|9 인 경우 끝이다.")
     @Test
     void endFrame4() {
-        frame.bowlV2(10);
-        frame.bowlV2(0);
-        frame.bowlV2(9);
+        frame.bowl(10);
+        frame.bowl(0);
+        frame.bowl(9);
 
         assertThat(frame.isFinished()).isTrue();
     }
@@ -87,8 +87,8 @@ class FinalFrameTest {
     @DisplayName("5|3 인 경우 끝이다.")
     @Test
     void missFrame5() {
-        frame.bowlV2(5);
-        frame.bowlV2(3);
+        frame.bowl(5);
+        frame.bowl(3);
 
         assertThat(frame.canBowl()).isFalse();
     }
@@ -96,9 +96,9 @@ class FinalFrameTest {
     @DisplayName("10|10|10 인 경우 끝이다.")
     @Test
     void endFrame5() {
-        frame.bowlV2(10);
-        frame.bowlV2(10);
-        frame.bowlV2(10);
+        frame.bowl(10);
+        frame.bowl(10);
+        frame.bowl(10);
 
         assertThat(frame.isFinished()).isTrue();
     }

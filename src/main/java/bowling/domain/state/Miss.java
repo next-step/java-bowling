@@ -1,7 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pin;
-import bowling.domain.ScoreV2;
+import bowling.domain.Score;
 
 public class Miss extends State {
 
@@ -24,14 +24,14 @@ public class Miss extends State {
     }
 
     @Override
-    public ScoreV2 getScore() {
+    public Score getScore() {
 
-        return new ScoreV2(firstPin.getCount() + secondPin.getCount(), 0);
+        return new Score(firstPin.getCount() + secondPin.getCount(), 0);
     }
 
     @Override
-    public ScoreV2 calculateAdditionalScore(ScoreV2 scoreV2) {
-        ScoreV2 score = scoreV2.add(firstPin.getCount());
+    public Score calculateAdditionalScore(Score scoreV2) {
+        Score score = scoreV2.add(firstPin.getCount());
 
         if (score.canCalculateScore()) {
             return score;

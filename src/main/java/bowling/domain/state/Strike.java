@@ -1,7 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pin;
-import bowling.domain.ScoreV2;
+import bowling.domain.Score;
 
 public class Strike extends State {
 
@@ -16,13 +16,13 @@ public class Strike extends State {
     }
 
     @Override
-    public ScoreV2 getScore() {
-        return new ScoreV2(10, 2);
+    public Score getScore() {
+        return new Score(10, 2);
     }
 
     @Override
-    public ScoreV2 calculateAdditionalScore(ScoreV2 scoreV2) {
-        return scoreV2.add(10);
+    public Score calculateAdditionalScore(Score score) {
+        return score.add(10);
     }
 
     public String describe() {

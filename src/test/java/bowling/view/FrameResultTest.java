@@ -13,9 +13,9 @@ class FrameResultTest {
     void finalFrame() {
         FinalFrame finalFrame = new FinalFrame();
 
-        finalFrame.bowlV2(10);
-        finalFrame.bowlV2(10);
-        finalFrame.bowlV2(10);
+        finalFrame.bowl(10);
+        finalFrame.bowl(10);
+        finalFrame.bowl(10);
 
         FrameResult result = new FrameResult(finalFrame);
 

@@ -27,7 +27,7 @@ public class FinalFrame extends Frame {
         states.add(new Ready());
     }
 
-    public void bowlV2(int number) {
+    public void bowl(int number) {
         state = lastState();
 
         if (state.isFinished()) {
@@ -42,7 +42,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public ScoreV2 calculateAdditionalScore(ScoreV2 beforeScore) {
+    public Score calculateAdditionalScore(Score beforeScore) {
 
         return state.calculateAdditionalScore(beforeScore);
     }
@@ -52,8 +52,8 @@ public class FinalFrame extends Frame {
         return getFirstScore().getScore();
     }
 
-    public ScoreV2 getFirstScore() {
-        ScoreV2 firstScore = states.get(0).getScore();
+    public Score getFirstScore() {
+        Score firstScore = states.get(0).getScore();
 
         for (int i = 1; i < states.size(); i++) {
             State state = states.get(i);
