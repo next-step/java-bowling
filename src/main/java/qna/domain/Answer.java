@@ -1,5 +1,6 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
 import qna.NotFoundException;
 import qna.UnAuthenticationException;
 import qna.UnAuthorizedException;
@@ -49,8 +50,10 @@ public class Answer extends AbstractEntity {
         return this;
     }
 
-    public void delete(User user) throws UnAuthenticationException {
+    public DeleteHistory delete(User user) throws UnAuthenticationException {
         validateWriter(user);
+        setDeleted(true);
+        return new DeleteHistory(ContentType.ANSWER, this.getId(), this.writer, LocalDateTime.now());
     }
 
     private void validateWriter(User user) throws UnAuthenticationException {

@@ -2,9 +2,12 @@ package qna.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import qna.UnAuthenticationException;
 import qna.UnAuthorizedException;
 
 public class AnswerTest {
@@ -27,5 +30,16 @@ public class AnswerTest {
                 () -> assertThat(answer.setDeleted(true).isDeleted()).isTrue(),
                 () -> assertThat(answer.setDeleted(false).isDeleted()).isFalse()
         );
+    }
+
+    @DisplayName("답변 삭제시 삭제이력을 남긴다.")
+    @Test
+    void delete_deleteHistory() throws UnAuthenticationException {
+        Answer answer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "content");
+
+        DeleteHistory expected
+                = new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
+
+        assertThat(answer.delete(UserTest.JAVAJIGI)).isEqualTo(expected);
     }
 }
