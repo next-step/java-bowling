@@ -2,7 +2,6 @@ package qna.domain;
 
 import java.time.LocalDateTime;
 import qna.NotFoundException;
-import qna.UnAuthenticationException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
@@ -50,15 +49,15 @@ public class Answer extends AbstractEntity {
         return this;
     }
 
-    public DeleteHistory delete(User user) throws UnAuthenticationException {
+    public DeleteHistory delete(User user) throws UnAuthorizedException {
         validateWriter(user);
         setDeleted(true);
         return new DeleteHistory(ContentType.ANSWER, this.getId(), this.writer, LocalDateTime.now());
     }
 
-    private void validateWriter(User user) throws UnAuthenticationException {
+    private void validateWriter(User user) throws UnAuthorizedException {
         if (!this.writer.equalsNameAndEmail(user)) {
-            throw new UnAuthenticationException("답변은 답변자만 지울 수 있습니다.");
+            throw new UnAuthorizedException("답변은 답변자만 지울 수 있습니다.");
         }
     }
 
