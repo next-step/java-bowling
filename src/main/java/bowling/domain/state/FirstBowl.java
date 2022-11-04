@@ -3,6 +3,8 @@ package bowling.domain.state;
 import bowling.domain.Pin;
 import bowling.domain.Score;
 
+import java.util.List;
+
 public class FirstBowl extends State {
 
     private final Pin pin;
@@ -36,8 +38,27 @@ public class FirstBowl extends State {
     }
 
     @Override
-    public String describe() {
-        return String.valueOf(pin.getCount())
-                .replace("0", GUTTER);
+    public List<Pin> pins() {
+        return List.of(pin);
+    }
+
+    @Override
+    public boolean isReady() {
+        return false;
+    }
+
+    @Override
+    public boolean isFirstBowl() {
+        return true;
+    }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
+
+    @Override
+    public boolean isStrike() {
+        return false;
     }
 }

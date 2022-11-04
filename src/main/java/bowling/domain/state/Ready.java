@@ -3,6 +3,8 @@ package bowling.domain.state;
 import bowling.domain.Pin;
 import bowling.domain.Score;
 
+import java.util.List;
+
 public class Ready extends State {
 
     @Override
@@ -30,7 +32,27 @@ public class Ready extends State {
     }
 
     @Override
-    public String describe() {
-        return "";
+    public List<Pin> pins() {
+        return List.of();
+    }
+
+    @Override
+    public boolean isReady() {
+        return true;
+    }
+
+    @Override
+    public boolean isFirstBowl() {
+        return false;
+    }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
+
+    @Override
+    public boolean isStrike() {
+        return false;
     }
 }
