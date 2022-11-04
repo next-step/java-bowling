@@ -34,4 +34,32 @@ public class QuestionTest {
                 () -> assertThat(question.setDeleted(false).isDeleted()).isFalse()
         );
     }
+
+    @DisplayName("모든 답변의 상태를 삭제로 변경한다.")
+    @Test
+    void set_deleteAllAnswers() {
+        Answer answer1 = new Answer(UserTest.JAVAJIGI, question, "answer1");
+        question.addAnswer(answer1);
+        Answer answer2 = new Answer(UserTest.JAVAJIGI, question, "answer2");
+        question.addAnswer(answer2);
+
+        question.deleteAllAnswers(UserTest.JAVAJIGI);
+
+        Assertions.assertAll(
+                () -> assertThat(answer1.isDeleted()).isTrue(),
+                () -> assertThat(answer2.isDeleted()).isTrue()
+        );
+    }
+
+    @DisplayName("답변 중 사용자가 답변자가 아닌 경우 UnAuthorizedException 예외를 throw한다.")
+    @Test
+    void set_deleteAllAnswers_contain_not_owner() {
+        Answer answer1 = new Answer(UserTest.JAVAJIGI, question, "answer1");
+        question.addAnswer(answer1);
+        Answer answer2 = new Answer(UserTest.SANJIGI, question, "answer2");
+        question.addAnswer(answer2);
+
+        assertThatThrownBy(() -> question.deleteAllAnswers(UserTest.JAVAJIGI))
+                .isInstanceOf(UnAuthorizedException.class);
+    }
 }

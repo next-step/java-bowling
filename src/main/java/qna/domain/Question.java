@@ -1,5 +1,6 @@
 package qna.domain;
 
+import java.util.stream.Collectors;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -91,6 +92,12 @@ public class Question extends AbstractEntity {
     public Question setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
+    }
+
+    public List<DeleteHistory> deleteAllAnswers(User user) {
+        return this.answers.stream()
+                .map(answer -> answer.delete(user))
+                .collect(Collectors.toList());
     }
 
     public boolean isDeleted() {
