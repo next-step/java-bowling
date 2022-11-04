@@ -73,11 +73,6 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
-    }
-
-
     public List<DeleteHistory> delete(User user) throws CannotDeleteException {
         validateWriter(user);
         setDeleted(true);
@@ -85,13 +80,16 @@ public class Question extends AbstractEntity {
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now()));
         deleteHistories.addAll(deleteAllAnswers(user));
         return deleteHistories;
-
     }
 
     private void validateWriter(User user) throws CannotDeleteException {
         if (!isOwner(user)) {
             throw new CannotDeleteException("질문은 질문자만 지울 수 있습니다.");
         }
+    }
+
+    public boolean isOwner(User loginUser) {
+        return writer.equals(loginUser);
     }
 
     public Question setDeleted(boolean deleted) {

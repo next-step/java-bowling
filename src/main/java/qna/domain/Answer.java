@@ -45,11 +45,6 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public DeleteHistory delete(User user) throws CannotDeleteException {
         validateWriter(user);
         setDeleted(true);
@@ -62,12 +57,17 @@ public class Answer extends AbstractEntity {
         }
     }
 
-    public boolean isDeleted() {
-        return deleted;
-    }
-
     public boolean isOwner(User writer) {
         return this.writer.equals(writer);
+    }
+
+    public Answer setDeleted(boolean deleted) {
+        this.deleted = deleted;
+        return this;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
     }
 
     public User getWriter() {
