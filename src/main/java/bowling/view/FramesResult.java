@@ -71,7 +71,7 @@ public class FramesResult {
 
         return result.stream()
                 .map(this::createScore)
-                .collect(Collectors.joining()) + createEmptyFrame(10 - result.size());
+                .collect(Collectors.joining()) + createEmptyFrame(MAX_FRAME_NUMBER - result.size());
     }
 
     private String createScore(int score) {

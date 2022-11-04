@@ -26,7 +26,7 @@ public class FrameResult {
         return String.format(" %3s  ", sign(state));
     }
 
-    public String sign(State state) {
+    private String sign(State state) {
         return createSign(state)
                 .replaceAll("10", STRIKE)
                 .replaceAll("0", GUTTER);
