@@ -3,11 +3,11 @@ package bowling.domain;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractHitHistory implements HitHistory {
+public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
 
     protected final List<Integer> hits;
 
-    protected AbstractHitHistory(List<Integer> hits) {
+    protected AbstractBowlingGameFrame(List<Integer> hits) {
         validateSizeOfHits(hits);
         validateHitsContainsNegative(hits);
         validateHits(hits);
@@ -15,8 +15,8 @@ public abstract class AbstractHitHistory implements HitHistory {
     }
 
     private void validateSizeOfHits(List<Integer> hits) {
-        if (hits.size() > getMaxSizeOfHitHistory()) {
-            throw new IllegalArgumentException(String.format("투구 기록은 최대 %d회 까지 저장할 수 있습니다.", getMaxSizeOfHitHistory()));
+        if (hits.size() > getMaxSizeOfHits()) {
+            throw new IllegalArgumentException(String.format("투구 기록은 최대 %d회 까지 저장할 수 있습니다.", getMaxSizeOfHits()));
         }
     }
 
@@ -36,16 +36,16 @@ public abstract class AbstractHitHistory implements HitHistory {
     }
 
     private void validateSizeOfHits() {
-        if (hits.size() == getMaxSizeOfHitHistory()) {
-            throw new IllegalStateException(String.format("투구 기록은 최대 %d회 까지 저장할 수 있습니다.", getMaxSizeOfHitHistory()));
+        if (hits.size() == getMaxSizeOfHits()) {
+            throw new IllegalStateException(String.format("투구 기록은 최대 %d회 까지 저장할 수 있습니다.", getMaxSizeOfHits()));
         }
     }
 
-    public abstract int getMaxSizeOfHitHistory();
+    public abstract int getMaxSizeOfHits();
 
     private void validateHitIsNegative(int hit) {
-        if (hit < BowlingGameFrame.MIN_NUMBER_OF_BOWLING_PIN) {
-            throw new IllegalArgumentException(String.format("투구는 %d 보다 작을 수 없습니다.", BowlingGameFrame.MIN_NUMBER_OF_BOWLING_PIN));
+        if (hit < BowlingGameFrame.MIN_NUMBER_OF_BOWLING_PINS) {
+            throw new IllegalArgumentException(String.format("투구는 %d 보다 작을 수 없습니다.", BowlingGameFrame.MIN_NUMBER_OF_BOWLING_PINS));
         }
     }
 
@@ -54,7 +54,7 @@ public abstract class AbstractHitHistory implements HitHistory {
             return;
         }
 
-        int remainedPins = BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PIN - sumOfRemainedPins() % BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PIN;
+        int remainedPins = BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS - sumOfRemainedPins() % BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS;
         if (hit > remainedPins) {
             throw new IllegalArgumentException(String.format("투구는 남은 핀의 개수(%d) 보다 클 수 없습니다.", remainedPins));
         }
@@ -65,19 +65,19 @@ public abstract class AbstractHitHistory implements HitHistory {
     @Override
     public boolean isStrike() {
         return hits.size() == 1
-                && hits.get(0) == BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PIN;
+                && hits.get(0) == BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS;
     }
 
     @Override
     public boolean isSpare() {
         return hits.size() == 2
-                && sumOfRemainedPins() == BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PIN;
+                && sumOfRemainedPins() == BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS;
     }
 
     @Override
     public boolean isMiss() {
         return hits.size() == 2
-                && sumOfRemainedPins() < BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PIN;
+                && sumOfRemainedPins() < BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS;
     }
 
     private int sumOfRemainedPins() {
@@ -89,7 +89,7 @@ public abstract class AbstractHitHistory implements HitHistory {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AbstractHitHistory that = (AbstractHitHistory) o;
+        AbstractBowlingGameFrame that = (AbstractBowlingGameFrame) o;
         return Objects.equals(hits, that.hits);
     }
 

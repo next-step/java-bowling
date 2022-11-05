@@ -3,23 +3,23 @@ package bowling.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NormalFrameHitHistory extends AbstractHitHistory {
+public class NormalBowlingGameFrame extends AbstractBowlingGameFrame {
 
-    private static final int MAX_SIZE_OF_HIT_HISTORY = 2;
+    private static final int MAX_SIZE_OF_HITS = 2;
 
-    public NormalFrameHitHistory() {
+    public NormalBowlingGameFrame() {
         this(new ArrayList<>());
     }
 
-    public NormalFrameHitHistory(List<Integer> hits) {
+    public NormalBowlingGameFrame(List<Integer> hits) {
         super(hits);
     }
 
     protected void validateHits(List<Integer> hits) {
         int sum = hits.stream()
                 .reduce(0, Integer::sum);
-        if (sum > BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PIN) {
-            throw new IllegalArgumentException(String.format("투구의 합은 최대 %d 이어야 합니다.", BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PIN));
+        if (sum > BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS) {
+            throw new IllegalArgumentException(String.format("투구의 합은 최대 %d 이어야 합니다.", BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS));
         }
     }
 
@@ -30,8 +30,8 @@ public class NormalFrameHitHistory extends AbstractHitHistory {
     }
 
     @Override
-    public int getMaxSizeOfHitHistory() {
-        return MAX_SIZE_OF_HIT_HISTORY;
+    public int getMaxSizeOfHits() {
+        return MAX_SIZE_OF_HITS;
     }
 
 }

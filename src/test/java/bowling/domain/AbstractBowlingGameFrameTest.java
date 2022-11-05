@@ -9,13 +9,13 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class AbstractHitHistoryTest {
+class AbstractBowlingGameFrameTest {
 
-    private HitHistory history;
+    private BowlingGameFrame history;
 
     @BeforeEach
     void setUp() {
-        history = new AbstractHitHistory(new ArrayList<>()) {
+        history = new AbstractBowlingGameFrame(new ArrayList<>()) {
             @Override
             protected void validateHits(List<Integer> hits) {}
 
@@ -23,7 +23,7 @@ class AbstractHitHistoryTest {
             protected void validateState() {}
 
             @Override
-            public int getMaxSizeOfHitHistory() {
+            public int getMaxSizeOfHits() {
                 return 2;
             }
         };

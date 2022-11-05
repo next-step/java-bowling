@@ -9,13 +9,13 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-class FinalFrameHitHistoryTest {
+class FinalBowlingGameFrameTest {
 
     @DisplayName("투구 기록을 생성할 때, 3회 초과의 기록을 저장하면, 예외가 발생해야 한다.")
     @Test
     void create_givenOverMaxSize() {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> new FinalFrameHitHistory(List.of(1, 2, 3, 4)))
+                .isThrownBy(() -> new FinalBowlingGameFrame(List.of(1, 2, 3, 4)))
                 .withMessage("투구 기록은 최대 3회 까지 저장할 수 있습니다.");
     }
 
@@ -23,7 +23,7 @@ class FinalFrameHitHistoryTest {
     @Test
     void create_givenContainingNegative() {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> new FinalFrameHitHistory(List.of(1, -1, 2)))
+                .isThrownBy(() -> new FinalBowlingGameFrame(List.of(1, -1, 2)))
                 .withMessage("투구는 0 보다 작을 수 없습니다.");
     }
 
@@ -31,7 +31,7 @@ class FinalFrameHitHistoryTest {
     @Test
     void create_givenNotStrikeAndSpare() {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> new FinalFrameHitHistory(List.of(1, 2, 3)))
+                .isThrownBy(() -> new FinalBowlingGameFrame(List.of(1, 2, 3)))
                 .withMessage("세번째 투구는 스트라이크이거나, 스페어인 경우에만 가능합니다.");
     }
 
@@ -44,17 +44,17 @@ class FinalFrameHitHistoryTest {
             "10,10,10",
     })
     void add(int firstHit, int secondHit, int thirdHit) {
-        HitHistory hitHistory = new FinalFrameHitHistory();
-        hitHistory.add(firstHit);
-        hitHistory.add(secondHit);
-        hitHistory.add(thirdHit);
-        assertThat(hitHistory).isEqualTo(new FinalFrameHitHistory(List.of(firstHit, secondHit, thirdHit)));
+        BowlingGameFrame bowlingGameFrame = new FinalBowlingGameFrame();
+        bowlingGameFrame.add(firstHit);
+        bowlingGameFrame.add(secondHit);
+        bowlingGameFrame.add(thirdHit);
+        assertThat(bowlingGameFrame).isEqualTo(new FinalBowlingGameFrame(List.of(firstHit, secondHit, thirdHit)));
     }
 
     @DisplayName("세번째 투구 기록을 저장할 떄, 스페어 또는 스트라이크가 아니라면, 예외가 발생해야 한다.")
     @Test
     void add_givenNotStrikeAndSpare() {
-        HitHistory history = new FinalFrameHitHistory();
+        BowlingGameFrame history = new FinalBowlingGameFrame();
         history.add(1);
         history.add(2);
         assertThatIllegalStateException()
