@@ -1,5 +1,6 @@
 package step1.qna.domain;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import step1.qna.CannotDeleteException;
@@ -7,8 +8,13 @@ import step1.qna.CannotDeleteException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class QuestionTest {
-    public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-    public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
+    private Question Q1;
+    private Question Q2;
+    @BeforeEach
+    void setUp(){
+        Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
+    }
 
     @DisplayName("질문자가 아닌 다른 사람이 질문을 삭제하려고 할 때 예외 처리")
     @Test
