@@ -48,7 +48,9 @@ public class Answer extends AbstractEntity {
     public DeleteHistory delete(final User loginUser) {
         validateAnswerAuthentication(loginUser);
         this.deleted = true;
-        return new DeleteHistory(ContentType.ANSWER, this.getId(), this.getWriter(),
+        return new DeleteHistory(ContentType.ANSWER,
+            this.getId(),
+            this.getWriter(),
             LocalDateTime.now());
     }
 
