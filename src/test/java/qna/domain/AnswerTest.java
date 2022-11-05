@@ -31,4 +31,9 @@ public class AnswerTest {
     void 답변_삭제_상태를_판별_할_수_있다() {
         assertFalse(A1.isNotDeleted());
     }
+
+    @Test
+    void 삭제_히스토리를_생성할_수_있다() {
+        assertThat(A1.deleteHistory()).isEqualTo(new DeleteHistory(ContentType.ANSWER, JAVAJIGI));
+    }
 }
