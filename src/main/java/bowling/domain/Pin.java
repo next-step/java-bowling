@@ -42,12 +42,4 @@ public class Pin {
     public boolean isKnockDown() {
         return count == MAX_COUNT;
     }
-
-    public Pin add(Pin other) {
-        if (count + other.count > 10) {
-            throw new IllegalArgumentException("올바르지 않은 수 입니다.");
-        }
-
-        return Pin.of(count + other.count);
-    }
 }
