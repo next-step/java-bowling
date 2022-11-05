@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import qna.domain.DeleteHistory;
 import qna.domain.DeleteHistoryRepository;
+import qna.domain.Question;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -17,6 +18,14 @@ public class DeleteHistoryService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void saveAll(List<DeleteHistory> deleteHistories) {
         deleteHistoryRepository.saveAll(deleteHistories);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void saveQuestion(Question question) {
+        if (question.isNotDeleted()) {
+            throw new IllegalArgumentException("질문은 삭제된 상태가 아닙니다.");
+        }
+        deleteHistoryRepository.save(question.deleteHistory());
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
