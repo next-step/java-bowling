@@ -36,7 +36,7 @@ public abstract class Frame {
 
     public abstract Frame nextFrame();
 
-    public int number() {
+    public int getFrameNumber() {
         return number;
     }
 

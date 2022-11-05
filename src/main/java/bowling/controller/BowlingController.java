@@ -38,7 +38,7 @@ public class BowlingController {
     }
 
     private void getBowlNumberAndPrintResult(FramesResult framesResult, Frame lastFrame) {
-        int number = InputView.inputBowlNumber(lastFrame.number());
+        int number = InputView.inputBowlNumber(lastFrame.getFrameNumber());
 
         try {
             lastFrame.bowl(number);

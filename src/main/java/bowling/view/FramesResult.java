@@ -87,7 +87,7 @@ public class FramesResult {
     }
 
     private String createEmptyFrame(Frame frame) {
-        return createEmptyFrame(MAX_FRAME_NUMBER - frame.number());
+        return createEmptyFrame(MAX_FRAME_NUMBER - frame.getFrameNumber());
     }
 
     private String createEmptyFrame(int count) {

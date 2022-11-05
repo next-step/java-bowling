@@ -37,8 +37,8 @@ public class FinalFrame extends Frame {
         }
 
         removeLastState();
-        State bowl = state.bowl(Pin.of(number));
-        states.add(bowl);
+        state = state.bowl(Pin.of(number));
+        states.add(state);
     }
 
     @Override
