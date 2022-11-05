@@ -40,8 +40,16 @@ public class BowlingGame {
         return previousFrame.isOnGoing() && frame.isEnded();
     }
 
-    public boolean isEnded() {
-        return indexOfCurrentFrame == SIZE_OF_FRAMES;
+    public BowlingGameFrame get(int index) {
+        return frames.get(index);
+    }
+
+    public void hit(int pins) {
+        BowlingGameFrame currentFrame = getCurrentFrame();
+        currentFrame.add(pins);
+        if (currentFrame.isEnded()) {
+            indexOfCurrentFrame++;
+        }
     }
 
     public BowlingGameFrame getCurrentFrame() {
@@ -51,12 +59,8 @@ public class BowlingGame {
         return frames.get(indexOfCurrentFrame);
     }
 
-    public void hit(int pins) {
-        BowlingGameFrame currentFrame = getCurrentFrame();
-        currentFrame.add(pins);
-        if (currentFrame.isEnded()) {
-            indexOfCurrentFrame++;
-        }
+    public boolean isEnded() {
+        return indexOfCurrentFrame == SIZE_OF_FRAMES;
     }
 
     @Override

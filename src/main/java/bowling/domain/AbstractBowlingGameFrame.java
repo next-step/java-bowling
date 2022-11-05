@@ -20,6 +20,8 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
         }
     }
 
+    public abstract int getMaxSizeOfHits();
+
     private void validateHitsContainsNegative(List<Integer> hits) {
         hits.forEach(this::validateHitIsNegative);
     }
@@ -34,7 +36,15 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
         hits.add(hit);
     }
 
-    public abstract int getMaxSizeOfHits();
+    @Override
+    public int size() {
+        return hits.size();
+    }
+
+    @Override
+    public int get(int index) {
+        return hits.get(index);
+    }
 
     private void validateHitIsNegative(int hit) {
         if (hit < BowlingGameFrame.MIN_NUMBER_OF_BOWLING_PINS) {

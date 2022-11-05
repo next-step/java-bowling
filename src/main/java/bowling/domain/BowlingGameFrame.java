@@ -7,6 +7,10 @@ public interface BowlingGameFrame {
 
     void add(int hit);
 
+    int size();
+
+    int get(int index);
+
     boolean isStrike();
 
     boolean isSpare();
