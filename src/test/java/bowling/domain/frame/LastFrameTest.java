@@ -54,6 +54,13 @@ class LastFrameTest {
             .hasMessageContaining("이미 종료된 프레임입니다");
     }
 
+    @Test
+    @DisplayName("마지막 프레임에서는 다음 프레임을 생성할 수 없다.")
+    void createInvalidNextFrame() {
+        assertThatThrownBy(() -> new LastFrame().createNextFrame())
+            .isInstanceOf(UnsupportedOperationException.class);
+    }
+
     private static Stream<Arguments> provideThrowingExceptionSource() {
         return Stream.of(
             Arguments.of(List.of(10, 10, 10)),

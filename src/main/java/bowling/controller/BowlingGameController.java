@@ -1,5 +1,6 @@
 package bowling.controller;
 
+import bowling.domain.BowlingGame;
 import bowling.domain.Player;
 import bowling.view.InputView;
 import bowling.view.ResultView;
@@ -25,5 +26,11 @@ public class BowlingGameController {
         Player player = new Player(inputView.getPlayerName());
         resultView.printScoreBoard(player.getName());
 
+        BowlingGame bowlingGame = new BowlingGame();
+        while (bowlingGame.isGamePlayable()) {
+            int falledPins = inputView.getFalledPins(bowlingGame.getCurrentFrameNumber());
+            bowlingGame.bowl(falledPins);
+            resultView.printScoreBoard(player.getName());
+        }
     }
 }

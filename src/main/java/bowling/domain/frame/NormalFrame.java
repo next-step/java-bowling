@@ -22,6 +22,15 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public Frame createNextFrame() {
+        if (frameNumber + 1 == BowlingGame.LAST_FRAME) {
+            return new LastFrame();
+        }
+
+        return new NormalFrame(frameNumber + 1);
+    }
+
+    @Override
     public int getFrameNumber() {
         return frameNumber;
     }

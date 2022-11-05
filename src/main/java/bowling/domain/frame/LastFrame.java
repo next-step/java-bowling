@@ -36,6 +36,11 @@ public class LastFrame implements Frame {
     }
 
     @Override
+    public Frame createNextFrame() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public int getFrameNumber() {
         return BowlingGame.LAST_FRAME;
     }
