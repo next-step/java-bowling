@@ -51,7 +51,7 @@ class NormalFrameHitHistoryTest {
                 .withMessage("투구는 0 보다 작을 수 없습니다.");
     }
 
-    @DisplayName("투구 기록을 추가할 때, 남은 핀의 수보다록큰 정수를 입력하면, 예외가 발생해야 한다.")
+    @DisplayName("투구 기록을 추가할 때, 남은 핀의 수보다 큰 정수를 입력하면, 예외가 발생해야 한다.")
     @Test
     void add_givenOverRemainedPins() {
         HitHistory history = new NormalFrameHitHistory();
@@ -70,6 +70,16 @@ class NormalFrameHitHistoryTest {
         assertThatIllegalStateException()
                 .isThrownBy(() -> hitHistory.add(1))
                 .withMessage("투구 기록은 최대 2회 까지 저장할 수 있습니다.");
+    }
+
+    @DisplayName("두번째 투구 기록을 추가할 때, 스트라이크라면, 예외가 발생해야 한다.")
+    @Test
+    void add_givenStrike() {
+        HitHistory history = new NormalFrameHitHistory();
+        history.add(10);
+        assertThatIllegalStateException()
+                .isThrownBy(() -> history.add(0))
+                .withMessage("두번째 투구는 스트라이크가 아닌 경우에만 가능합니다.");
     }
 
 }
