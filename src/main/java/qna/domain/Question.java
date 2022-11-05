@@ -4,9 +4,12 @@ import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import static qna.domain.ContentType.QUESTION;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -125,5 +128,9 @@ public class Question extends AbstractEntity {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), title, contents, writer, answers, deleted);
+    }
+
+    public DeleteHistory deleteHistory() {
+        return new DeleteHistory(QUESTION, getId(), writer, LocalDateTime.now());
     }
 }
