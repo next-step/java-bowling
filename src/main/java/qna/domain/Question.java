@@ -6,6 +6,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -92,20 +94,21 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public void delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> deleteQnA(User loginUser) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
         this.setDeleted(true);
-    }
-
-    public List<DeleteHistory> deleteQnA(User loginUser) throws CannotDeleteException {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-
-        delete(loginUser);
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
-        answers.deleteAnswers(writer, deleteHistories);
 
+        if (!answers.allIsOwner(loginUser)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+        List<DeleteHistory> deleteAnswers = answers.deleteAnswers(writer);
+
+        deleteHistories = Stream.concat(deleteHistories.stream(), deleteAnswers.stream()).collect(Collectors.toList());
         return deleteHistories;
     }
 }

@@ -1,7 +1,6 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
-import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -38,15 +37,15 @@ public class Answers extends AbstractEntity {
         return !answerNotByLoginUser.isPresent();
     }
 
-    public void deleteAnswers(User loginUser, List<DeleteHistory> deleteHistories) {
+    public List<DeleteHistory> deleteAnswers(User loginUser) {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+
         this.answers
                 .forEach(answer -> {
-                    try {
-                        answer.delete(loginUser);
-                        deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-                    } catch (CannotDeleteException e) {
-                        throw new RuntimeException(e);
-                    }
+                    answer.setDeleted(true);
+                    deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
                 });
+
+        return deleteHistories;
     }
 }
