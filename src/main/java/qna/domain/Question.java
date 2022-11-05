@@ -1,6 +1,7 @@
 package qna.domain;
 
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -75,8 +76,12 @@ public class Question extends AbstractEntity {
 
     public List<DeleteHistory> delete(User user) throws CannotDeleteException {
         validateWriter(user);
+
         setDeleted(true);
-        return createDeleteHistories(user);
+
+        List<DeleteHistory> answersDeleteHistories = deleteAllAnswers(user);
+
+        return createDeleteHistories(answersDeleteHistories);
     }
 
     private void validateWriter(User user) throws CannotDeleteException {
@@ -94,10 +99,13 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    private List<DeleteHistory> createDeleteHistories(User user) throws CannotDeleteException {
+    private List<DeleteHistory> createDeleteHistories(List<DeleteHistory> answersDeleteHistories) {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
+
         deleteHistories.add(createQuestionDeleteHistory());
-        deleteHistories.addAll(deleteAllAnswers(user));
+
+        deleteHistories.addAll(answersDeleteHistories);
+
         return deleteHistories;
     }
 
@@ -106,11 +114,13 @@ public class Question extends AbstractEntity {
     }
 
     public List<DeleteHistory> deleteAllAnswers(User user) throws CannotDeleteException {
-        List<DeleteHistory> answerDeleteHistories = new ArrayList<>();
-        for (int i = 0; i < answers.size(); i++) {
-            answerDeleteHistories.add(answers.get(i).delete(user));
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+
+        for (Answer answer : this.answers) {
+            deleteHistories.add(answer.delete(user));
         }
-        return answerDeleteHistories;
+
+        return deleteHistories;
     }
 
     public boolean isDeleted() {
