@@ -59,7 +59,7 @@ class FinalBowlingGameFrameTest {
         history.add(2);
         assertThatIllegalStateException()
                 .isThrownBy(() -> history.add(3))
-                .withMessage("세번째 투구는 스트라이크이거나, 스페어인 경우에만 가능합니다.");
+                .withMessage("프레임이 종료되어 더 이상 투구 할 수 없습니다.");
     }
 
 }

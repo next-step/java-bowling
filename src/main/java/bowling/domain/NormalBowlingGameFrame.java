@@ -23,15 +23,14 @@ public class NormalBowlingGameFrame extends AbstractBowlingGameFrame {
         }
     }
 
-    protected void validateState() {
-        if (isStrike()) {
-            throw new IllegalStateException("두번째 투구는 스트라이크가 아닌 경우에만 가능합니다.");
-        }
-    }
-
     @Override
     public int getMaxSizeOfHits() {
         return MAX_SIZE_OF_HITS;
+    }
+
+    @Override
+    public boolean isEnded() {
+        return isStrike() || hits.size() == MAX_SIZE_OF_HITS;
     }
 
 }

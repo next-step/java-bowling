@@ -28,17 +28,10 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
 
     @Override
     public void add(int hit) {
-        validateSizeOfHits();
+        validateState();
         validateHitIsNegative(hit);
         validateHitIsUnderRemainedPins(hit);
-        validateState();
         hits.add(hit);
-    }
-
-    private void validateSizeOfHits() {
-        if (hits.size() == getMaxSizeOfHits()) {
-            throw new IllegalStateException(String.format("투구 기록은 최대 %d회 까지 저장할 수 있습니다.", getMaxSizeOfHits()));
-        }
     }
 
     public abstract int getMaxSizeOfHits();
@@ -60,7 +53,11 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
         }
     }
 
-    protected abstract void validateState();
+    private void validateState() {
+        if (isEnded()) {
+            throw new IllegalStateException("프레임이 종료되어 더 이상 투구 할 수 없습니다.");
+        }
+    }
 
     @Override
     public boolean isStrike() {
@@ -84,6 +81,14 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
         return hits.stream()
                 .reduce(0, Integer::sum);
     }
+
+    @Override
+    public boolean isOnGoing() {
+        return !isEnded();
+    }
+
+    @Override
+    abstract public boolean isEnded();
 
     @Override
     public boolean equals(Object o) {

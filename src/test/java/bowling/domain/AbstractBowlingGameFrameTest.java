@@ -20,12 +20,15 @@ class AbstractBowlingGameFrameTest {
             protected void validateHits(List<Integer> hits) {}
 
             @Override
-            protected void validateState() {}
-
-            @Override
             public int getMaxSizeOfHits() {
                 return 2;
             }
+
+            @Override
+            public boolean isEnded() {
+                return false;
+            }
+
         };
     }
 

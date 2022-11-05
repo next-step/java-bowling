@@ -69,7 +69,7 @@ class NormalBowlingGameFrameTest {
         bowlingGameFrame.add(4);
         assertThatIllegalStateException()
                 .isThrownBy(() -> bowlingGameFrame.add(1))
-                .withMessage("투구 기록은 최대 2회 까지 저장할 수 있습니다.");
+                .withMessage("프레임이 종료되어 더 이상 투구 할 수 없습니다.");
     }
 
     @DisplayName("두번째 투구 기록을 추가할 때, 스트라이크라면, 예외가 발생해야 한다.")
@@ -79,7 +79,7 @@ class NormalBowlingGameFrameTest {
         history.add(10);
         assertThatIllegalStateException()
                 .isThrownBy(() -> history.add(0))
-                .withMessage("두번째 투구는 스트라이크가 아닌 경우에만 가능합니다.");
+                .withMessage("프레임이 종료되어 더 이상 투구 할 수 없습니다.");
     }
 
 }

@@ -35,15 +35,13 @@ public class FinalBowlingGameFrame extends AbstractBowlingGameFrame {
     }
 
     @Override
-    protected void validateState() {
-        if (isMiss()) {
-            throw new IllegalStateException("세번째 투구는 스트라이크이거나, 스페어인 경우에만 가능합니다.");
-        }
+    public int getMaxSizeOfHits() {
+        return MAX_SIZE_OF_HITS;
     }
 
     @Override
-    public int getMaxSizeOfHits() {
-        return MAX_SIZE_OF_HITS;
+    public boolean isEnded() {
+        return isMiss() || hits.size() == MAX_SIZE_OF_HITS;
     }
 
 }
