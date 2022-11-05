@@ -1,6 +1,7 @@
 package qna.domain;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Assertions;
@@ -38,7 +39,7 @@ public class QuestionTest {
 
     @DisplayName("모든 답변의 상태를 삭제로 변경한다.")
     @Test
-    void set_deleteAllAnswers() throws CannotDeleteException {
+    void set_deleteAllAnswers() throws Exception {
         Answer answer1 = new Answer(UserTest.JAVAJIGI, question, "answer1");
         question.addAnswer(answer1);
         Answer answer2 = new Answer(UserTest.JAVAJIGI, question, "answer2");
@@ -66,7 +67,7 @@ public class QuestionTest {
 
     @DisplayName("질문 삭제시 상태를 삭제 상태로 변경한다.")
     @Test
-    void delete_setDelete() throws CannotDeleteException {
+    void delete_setDelete() throws Exception {
         assertThat(question.isDeleted()).isFalse();
 
         question.delete(UserTest.JAVAJIGI);
@@ -76,7 +77,7 @@ public class QuestionTest {
 
     @DisplayName("질문 삭제시 삭제이력을 남긴다.")
     @Test
-    void delete_deleteHistory() throws CannotDeleteException {
+    void delete_deleteHistory() throws Exception {
         Answer answer1 = new Answer(UserTest.JAVAJIGI, question, "answer1");
         question.addAnswer(answer1);
         Answer answer2 = new Answer(UserTest.JAVAJIGI, question, "answer2");

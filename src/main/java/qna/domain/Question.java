@@ -1,12 +1,18 @@
 package qna.domain;
 
 import java.time.LocalDateTime;
-import java.util.stream.Collectors;
-import org.hibernate.annotations.Where;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
 @Entity
@@ -74,7 +80,7 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public List<DeleteHistory> delete(User user) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User user) throws Exception {
         validateWriter(user);
 
         setDeleted(true);
@@ -113,7 +119,7 @@ public class Question extends AbstractEntity {
         return new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now());
     }
 
-    public List<DeleteHistory> deleteAllAnswers(User user) throws CannotDeleteException {
+    public List<DeleteHistory> deleteAllAnswers(User user) throws Exception {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
 
         for (Answer answer : this.answers) {
