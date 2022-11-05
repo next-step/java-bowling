@@ -12,7 +12,7 @@ public class AnswerTest {
     @DisplayName("다른 사람의 답변이 있는 경우 삭제 시 예외처리")
     @Test
     void other_answer_delete_throw_exception() {
-        Assertions.assertThatThrownBy(() -> A1.validateAnswerAuthentication(UserTest.SANJIGI))
+        Assertions.assertThatThrownBy(() -> A1.delete(UserTest.SANJIGI))
                 .isInstanceOf(CannotDeleteException.class)
                 .hasMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }
