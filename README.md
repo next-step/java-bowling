@@ -99,20 +99,29 @@
 
 ### 기능 구현 사항
 
-- [X] `Frame`
-  - frame의 주요 기능 인터페이스 기능 정리
-  - [X] `NormalFrame`
-    - 10번 담당 객체
-  - [X] `LastFrame`
-    - 10번째 Frame 담당 객체
-- [X] `Frames`
-  - 전체 Frame를 담당하는 객체
-- [X] `Name`
-  - 플레이어 이름을 담당하는 객체
-- [X] `Pin`
-  - 볼링 핀을 담당하는 객체
-- [X] `Score`
-  - 핀의 점수를 담당하는 객체
-- [X] `ScoreType`
-  - Spare, Strike, Miss를 처리하는 enum 객체
+- domain
+  - [X] `Frame`
+    - frame의 주요 기능 인터페이스 기능 정리
+    - [X] `NormalFrame`
+      - 마지막 Frame을 제외한 담당 객체
+    - [X] `LastFrame`
+      - 마지막 Frame 담당 객체
+  - [X] `Frames`
+    - 전체 Frame를 담당하는 객체
+  - [X] `Name`
+    - 플레이어 이름을 담당하는 객체
+  - [X] `Pin`
+    - 볼링 핀을 담당하는 객체
+  - [X] `Score`
+    - 핀의 점수를 담당하는 객체
+  - [X] `ScoreType`
+    - Spare, Strike, Miss를 처리하는 enum 객체
+- input
+  - [X] InputView
+    - 입력 담당 객체
+- result
+  - [X] `FrameResult`, `FramesResult`
+    - 출력용 처리 담당 객체
+  - [X] `ResultView`
+    - 출력 담당 객체
 
