@@ -5,6 +5,7 @@ import qna.CannotDeleteException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static qna.domain.UserTest.JAVAJIGI;
 import static qna.domain.UserTest.SANJIGI;
 
@@ -30,4 +31,10 @@ public class QuestionTest {
     void 삭제_히스토리를_생성할_수_있다() {
         assertThat(Q1.deleteHistory()).isEqualTo(new DeleteHistory(ContentType.QUESTION, JAVAJIGI));
     }
+
+    @Test
+    void 삭제_여부를_판별할_수_있다() {
+        assertFalse(Q1.isNotDeleted());
+    }
+
 }
