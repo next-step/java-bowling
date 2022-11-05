@@ -1,11 +1,10 @@
 package bowling.domain.frame.state;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class PinsTest {
@@ -22,5 +21,27 @@ class PinsTest {
     void createWithOutOfRangePins(int falledPins) {
         assertThatThrownBy(() -> new Pins(falledPins))
             .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("스트라이크 여부를 확인한다.")
+    @ParameterizedTest(name = "{displayName}; 핀 갯수: {0}")
+    @CsvSource({
+        "10,true",
+        "9,false",
+        "1,false",
+        "0,false"})
+    void checkStrike(int pins, boolean expected) {
+        assertThat(new Pins(pins).isStrike()).isEqualTo(expected);
+    }
+
+    @DisplayName("스페어 여부를 확인한다.")
+    @ParameterizedTest(name = "{displayName}; 핀 갯수: {0}, {1}")
+    @CsvSource({
+        "10,0, false",
+        "4,6,true",
+        "5,4,false",
+        "0,10,true"})
+    void checkStrike(int firstPins, int secondPins, boolean expected) {
+        assertThat(new Pins(firstPins).isSpare(new Pins(secondPins))).isEqualTo(expected);
     }
 }

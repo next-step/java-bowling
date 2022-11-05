@@ -4,11 +4,23 @@ public class Pins {
     private static final int MIN_PINS = 0;
     private static final int MAX_PINS = 10;
 
-    private int falledPins;
+    private final int falledPins;
 
     public Pins(int falledPins) {
         validate(falledPins);
         this.falledPins = falledPins;
+    }
+
+    public boolean isStrike() {
+        return falledPins == MAX_PINS;
+    }
+
+    public boolean isSpare(Pins secondPins) {
+        if (falledPins == MAX_PINS) {
+            return false;
+        }
+
+        return this.falledPins + secondPins.falledPins == MAX_PINS;
     }
 
     private void validate(int falledPins) {
