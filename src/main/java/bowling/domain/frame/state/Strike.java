@@ -10,4 +10,9 @@ public class Strike implements State {
     public boolean isFinish() {
         return true;
     }
+
+    @Override
+    public boolean canBonusBowl() {
+        return true;
+    }
 }

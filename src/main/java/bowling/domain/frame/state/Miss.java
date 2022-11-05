@@ -22,6 +22,11 @@ public class Miss implements State {
         return true;
     }
 
+    @Override
+    public boolean canBonusBowl() {
+        return false;
+    }
+
     private void validate(Pins firstPins, Pins secondPins) {
         if (firstPins.isStrike() || firstPins.isSpare(secondPins)) {
             throw new IllegalArgumentException(INVALID_PINS_EXCEPTION_MESSAGE);

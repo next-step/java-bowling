@@ -22,6 +22,11 @@ public class Spare implements State {
         return true;
     }
 
+    @Override
+    public boolean canBonusBowl() {
+        return true;
+    }
+
     private void validate(Pins firstPins, Pins secondPins) {
         if (!firstPins.isSpare(secondPins)) {
             throw new IllegalArgumentException(INVALID_PINS_EXCEPTION_MESSAGE);

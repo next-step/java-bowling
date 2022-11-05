@@ -24,5 +24,6 @@ public class BowlingGameController {
     private void doRun() {
         Player player = new Player(inputView.getPlayerName());
         resultView.printScoreBoard(player.getName());
+
     }
 }

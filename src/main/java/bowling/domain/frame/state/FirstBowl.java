@@ -21,4 +21,9 @@ public class FirstBowl implements State {
     public boolean isFinish() {
         return false;
     }
+
+    @Override
+    public boolean canBonusBowl() {
+        return true;
+    }
 }
