@@ -5,6 +5,8 @@ import bowling.domain.Score;
 
 import java.util.List;
 
+import static bowling.domain.Pin.MAX_COUNT;
+
 public class FirstBowl extends State {
 
     private final Pin pin;
@@ -15,7 +17,12 @@ public class FirstBowl extends State {
 
     @Override
     public State bowl(Pin pin) {
-        if (this.pin.add(pin).isKnockDown()) {
+        int sum = this.pin.getCount() + pin.getCount();
+        if (sum > MAX_COUNT) {
+            throw new IllegalArgumentException(MAX_COUNT - this.pin.getCount() + "이하의 숫자만 입력이 가능합니다.");
+        }
+
+        if (Pin.of(sum).isKnockDown()) {
             return new Spare(this.pin, pin);
         }
 
