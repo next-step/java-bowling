@@ -29,15 +29,15 @@ public class FinalFrame extends Frame {
 
     public void bowl(int number) {
         state = lastState();
+        Pin pin = Pin.of(number);
 
         if (state.isFinished()) {
-            Ready ready = new Ready();
-            states.add(ready.bowl(Pin.of(number)));
+            states.add(new Ready().bowl(pin));
             return;
         }
 
+        state = state.bowl(pin);
         removeLastState();
-        state = state.bowl(Pin.of(number));
         states.add(state);
     }
 
