@@ -27,6 +27,10 @@ public class Pins {
         return new Pins(this.falledPins + falledPins);
     }
 
+    public int getPins() {
+        return falledPins;
+    }
+
     private void validate(int falledPins) {
         if (falledPins < MIN_PINS) {
             throw new IllegalArgumentException("볼링 핀의 갯수는 0 미만이 될 수 없습니다.");

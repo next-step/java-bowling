@@ -1,5 +1,7 @@
 package bowling.domain.frame.state;
 
+import java.util.List;
+
 public class Ready implements State {
     @Override
     public State bowl(int falledPins) {
@@ -9,6 +11,11 @@ public class Ready implements State {
         }
 
         return new FirstBowl(pins);
+    }
+
+    @Override
+    public Score createScore() {
+        return new Score(List.of());
     }
 
     @Override

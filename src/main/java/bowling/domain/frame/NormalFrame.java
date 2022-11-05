@@ -1,6 +1,9 @@
 package bowling.domain.frame;
 
+import java.util.List;
+
 import bowling.domain.BowlingGame;
+import bowling.domain.BowlingGameFrameRecord;
 import bowling.domain.frame.state.Ready;
 import bowling.domain.frame.state.State;
 
@@ -28,6 +31,11 @@ public class NormalFrame implements Frame {
         }
 
         return new NormalFrame(frameNumber + 1);
+    }
+
+    @Override
+    public BowlingGameFrameRecord createFrameRecord() {
+        return new BowlingGameFrameRecord(List.of(state.createScore()));
     }
 
     @Override

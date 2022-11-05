@@ -1,5 +1,7 @@
 package bowling.domain.frame.state;
 
+import java.util.List;
+
 public class Spare implements State {
     private static final String INVALID_PINS_EXCEPTION_MESSAGE = "스페어의 조건을 만족하지 않습니다.";
 
@@ -15,6 +17,11 @@ public class Spare implements State {
     @Override
     public State bowl(int pins) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Score createScore() {
+        return new Score(List.of(firstPins.getPins(), secondPins.getPins()), true);
     }
 
     @Override

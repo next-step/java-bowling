@@ -1,20 +1,29 @@
 package bowling.view;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.List;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import bowling.domain.BowlingGameFrameRecord;
+import bowling.domain.frame.state.Score;
+
 public class ResultView {
     private static final int START_FRAME = 1;
     private static final int END_FRAME = 10;
 
-    public void printScoreBoard(String name) {
+    public void printScoreBoard(String name, List<BowlingGameFrameRecord> frameRecords) {
         printScoreBoardTitle();
-        // TODO: 볼링 게임과 연관지어서 출력하도록 바꿀 것
-        printScoreBoardContent(name, List.of("", "", "", "", "", "", "", "", "", ""));
+
+        List<String> frameContents = frameRecords.stream()
+            .map(BowlingGameFrameRecord::getScores)
+            .map(this::convertScoresToDescription)
+            .collect(toList());
+
+        printScoreBoardContent(name, frameContents);
         System.out.println();
-        // printScoreBoardContent(name, List.of("X", "8", "8|", "8|/", "7", "7|", "7|-", "", "", ""));
     }
 
     public void printError(String message) {
@@ -24,7 +33,7 @@ public class ResultView {
     private void printScoreBoardTitle() {
         List<String> frameNumbers = IntStream.range(START_FRAME, END_FRAME + 1)
             .mapToObj(number -> String.format("%02d", number))
-            .collect(Collectors.toList());
+            .collect(toList());
 
         printScoreBoardContent("NAME", frameNumbers);
     }
@@ -38,5 +47,36 @@ public class ResultView {
         }
         joiner.add("");
         System.out.println(joiner);
+    }
+
+    private String convertScoresToDescription(List<Score> scores) {
+        return scores.stream()
+            .map(this::convertSingleScoreToDescription)
+            .collect(Collectors.joining("|"));
+    }
+
+    private String convertSingleScoreToDescription(Score score) {
+        if (score.isStrike()) {
+            return "X";
+        }
+
+        List<String> pinsList = score.getValues().stream()
+            .map(value -> Integer.toString(value))
+            .map(this::convertGutter)
+            .collect(toList());
+
+        if (score.isSpare()) {
+            pinsList.set(pinsList.size() - 1, "/");
+        }
+
+        return String.join("|", pinsList);
+    }
+
+    private String convertGutter(String pins) {
+        if (pins.equals("0")) {
+            return "-";
+        }
+
+        return pins;
     }
 }

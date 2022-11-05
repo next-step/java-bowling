@@ -1,9 +1,14 @@
 package bowling.domain.frame;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.LinkedList;
+import java.util.List;
 
 import bowling.domain.BowlingGame;
+import bowling.domain.BowlingGameFrameRecord;
 import bowling.domain.frame.state.Ready;
+import bowling.domain.frame.state.Score;
 import bowling.domain.frame.state.State;
 
 public class LastFrame implements Frame {
@@ -38,6 +43,15 @@ public class LastFrame implements Frame {
     @Override
     public Frame createNextFrame() {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public BowlingGameFrameRecord createFrameRecord() {
+        List<Score> scores = states.stream()
+            .map(State::createScore)
+            .collect(toList());
+
+        return new BowlingGameFrameRecord(scores);
     }
 
     @Override

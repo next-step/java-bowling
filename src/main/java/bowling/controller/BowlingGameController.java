@@ -24,13 +24,13 @@ public class BowlingGameController {
 
     private void doRun() {
         Player player = new Player(inputView.getPlayerName());
-        resultView.printScoreBoard(player.getName());
-
         BowlingGame bowlingGame = new BowlingGame();
+        resultView.printScoreBoard(player.getName(), bowlingGame.createFrameRecords());
+
         while (bowlingGame.isGamePlayable()) {
             int falledPins = inputView.getFalledPins(bowlingGame.getCurrentFrameNumber());
             bowlingGame.bowl(falledPins);
-            resultView.printScoreBoard(player.getName());
+            resultView.printScoreBoard(player.getName(), bowlingGame.createFrameRecords());
         }
     }
 }

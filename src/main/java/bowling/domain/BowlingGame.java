@@ -1,7 +1,10 @@
 package bowling.domain;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
@@ -22,6 +25,19 @@ public class BowlingGame {
         if (isCurrentFrameEnded() && isGamePlayable()) {
             frames.add(getCurrentFrame().createNextFrame());
         }
+    }
+
+    public List<BowlingGameFrameRecord> createFrameRecords() {
+        List<BowlingGameFrameRecord> frameRecords = frames.stream()
+            .map(Frame::createFrameRecord)
+            .collect(toList());
+
+        IntStream.range(frames.size(), LAST_FRAME)
+            .forEach(i -> {
+                frameRecords.add(new BowlingGameFrameRecord(List.of()));
+            });
+
+        return frameRecords;
     }
 
     public boolean isGamePlayable() {

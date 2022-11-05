@@ -1,5 +1,7 @@
 package bowling.domain.frame.state;
 
+import java.util.List;
+
 public class FirstBowl implements State {
     private final Pins firstPins;
 
@@ -15,6 +17,11 @@ public class FirstBowl implements State {
         }
 
         return new Miss(firstPins, secondPins);
+    }
+
+    @Override
+    public Score createScore() {
+        return new Score(List.of(firstPins.getPins()));
     }
 
     @Override
