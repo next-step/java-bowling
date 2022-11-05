@@ -43,6 +43,10 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
+    public Answer(User writer) {
+        this.writer = writer;
+    }
+
     public Answer setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;

@@ -1,6 +1,7 @@
 package qna.service;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -40,8 +41,9 @@ public class QnaServiceTest {
         question.addAnswer(answer);
     }
 
+    @DisplayName("로그인 한 사용자와 질문한 사람이 같고 질문한 사람 외에 다른 사람의 답변이 없다면 질문의 삭제상태를 true 로 변경하고 삭제이력을 저장한다.")
     @Test
-    public void delete_성공() throws Exception {
+    public void deleteQuestion() throws Exception {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
         assertThat(question.isDeleted()).isFalse();
