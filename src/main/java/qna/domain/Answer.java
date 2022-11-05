@@ -104,4 +104,9 @@ public class Answer extends AbstractEntity {
     public int hashCode() {
         return Objects.hash(super.hashCode(), writer, question, contents, deleted);
     }
+
+    public boolean isNotDeleted() {
+        return !deleted;
+    }
+
 }
