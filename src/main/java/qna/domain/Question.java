@@ -133,4 +133,9 @@ public class Question extends AbstractEntity {
     public DeleteHistory deleteHistory() {
         return new DeleteHistory(QUESTION, getId(), writer, LocalDateTime.now());
     }
+
+    public boolean isNotDeleted() {
+        return !deleted;
+    }
+
 }
