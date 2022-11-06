@@ -18,12 +18,12 @@ public class AnswersTest {
         Answers answers = new Answers(List.of(AnswerTest.A3));
         // when
         // then
-        assertThat(answers.delete(UserTest.BADA)).containsExactly(new DeleteHistory(ContentType.ANSWER, 1L, UserTest.BADA, LocalDateTime.now()));
+        assertThat(answers.delete(UserTest.BADA)).containsExactly(new DeleteHistory(ContentType.ANSWER, 1L, UserTest.BADA));
     }
 
     @Test
     @DisplayName("답변들 삭제 실패")
-    void test2() throws CannotDeleteException {
+    void test2() {
         // given
         Answers answers = new Answers(List.of(AnswerTest.A1));
         // when

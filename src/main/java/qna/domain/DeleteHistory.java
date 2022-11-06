@@ -1,15 +1,10 @@
 package qna.domain;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-public class DeleteHistory {
-    @Id
-    @GeneratedValue
-    private Long id;
-
+public class DeleteHistory extends CreatedEntity {
     @Enumerated(EnumType.STRING)
     private ContentType contentType;
 
@@ -19,16 +14,14 @@ public class DeleteHistory {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_deletehistory_to_user"))
     private User deletedBy;
 
-    private LocalDateTime createDate = LocalDateTime.now();
 
     public DeleteHistory() {
     }
 
-    public DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
+    public DeleteHistory(ContentType contentType, Long contentId, User deletedBy) {
         this.contentType = contentType;
         this.contentId = contentId;
         this.deletedBy = deletedBy;
-        this.createDate = createDate;
     }
 
     @Override
@@ -36,7 +29,7 @@ public class DeleteHistory {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DeleteHistory that = (DeleteHistory) o;
-        return Objects.equals(id, that.id) &&
+        return Objects.equals(getId(), that.getId()) &&
                 contentType == that.contentType &&
                 Objects.equals(contentId, that.contentId) &&
                 Objects.equals(deletedBy, that.deletedBy);
@@ -44,12 +37,12 @@ public class DeleteHistory {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, contentType, contentId, deletedBy);
+        return Objects.hash(getId(), contentType, contentId, deletedBy);
     }
 
     @Override
     public String toString() {
-        return "DeleteHistory [id=" + id + ", contentType=" + contentType + ", contentId=" + contentId + ", deletedBy="
-                + deletedBy + ", createDate=" + createDate + "]";
+        return "DeleteHistory [id=" + getId() + ", contentType=" + contentType + ", contentId=" + contentId + ", deletedBy="
+                + deletedBy + ", createdAt=" + getCreatedAt() + "]";
     }
 }

@@ -21,7 +21,7 @@ public class AnswerTest {
         // when
         DeleteHistory deleteHistory = A3.delete(UserTest.BADA);
         // then
-        assertThat(deleteHistory).isEqualTo(new DeleteHistory(ContentType.ANSWER, 1L, UserTest.BADA, LocalDateTime.now()));
+        assertThat(deleteHistory).isEqualTo(new DeleteHistory(ContentType.ANSWER, 1L, UserTest.BADA));
     }
 
     @Test

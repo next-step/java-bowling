@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class AbstractEntity {
+public class CreatedEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,13 +18,10 @@ public class AbstractEntity {
     @CreatedDate
     private LocalDateTime createdAt;
 
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
-
-    public AbstractEntity() {
+    public CreatedEntity() {
     }
 
-    public AbstractEntity(Long id) {
+    public CreatedEntity(Long id) {
         this.id = id;
     }
 
@@ -32,9 +29,8 @@ public class AbstractEntity {
         return id;
     }
 
-    public AbstractEntity setId(Long id) {
-        this.id = id;
-        return this;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
     @Override
@@ -53,7 +49,7 @@ public class AbstractEntity {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        AbstractEntity other = (AbstractEntity) obj;
+        CreatedEntity other = (CreatedEntity) obj;
         if (id != other.id)
             return false;
         return true;
@@ -61,10 +57,9 @@ public class AbstractEntity {
 
     @Override
     public String toString() {
-        return "AbstractEntity{" +
+        return "CreatedEntity{" +
                 "id=" + id +
                 ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
                 '}';
     }
 }

@@ -4,25 +4,24 @@ import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Answer extends AbstractEntity {
-    @ManyToOne(optional = false)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
-    private User writer;
+public class Answer extends ArticleEntity {
 
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
     private Question question;
 
-    @Lob
-    private String contents;
-
-    private boolean deleted = false;
+    @ManyToOne(optional = false)
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
+    private User writer;
 
     public Answer() {
+        super();
     }
 
     public Answer(User writer, Question question, String contents) {
@@ -30,24 +29,20 @@ public class Answer extends AbstractEntity {
     }
 
     public Answer(Long id, User writer, Question question, String contents) {
-        super(id);
+        super(id, contents);
 
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
 
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
 
         this.writer = writer;
         this.question = question;
-        this.contents = contents;
     }
 
-    public boolean isDeleted() {
-        return deleted;
-    }
     private boolean isOwner(User writer) {
         return this.writer.equals(writer);
     }
@@ -64,12 +59,12 @@ public class Answer extends AbstractEntity {
         if (!isOwner(deleteBy)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
-        this.deleted = true;
-        return new DeleteHistory(ContentType.ANSWER, getId(), deleteBy, LocalDateTime.now());
+        setDeletedTrue();
+        return new DeleteHistory(ContentType.ANSWER, getId(), deleteBy);
     }
 
     @Override
     public String toString() {
-        return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
+        return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + getContents() + "]";
     }
 }

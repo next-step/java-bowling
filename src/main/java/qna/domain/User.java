@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import java.util.Objects;
 
 @Entity
-public class User extends AbstractEntity {
+public class User extends UpdatedEntity {
     public static final GuestUser GUEST_USER = new GuestUser();
 
     @Column(unique = true, nullable = false)

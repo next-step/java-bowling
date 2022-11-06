@@ -22,7 +22,7 @@ public class QuestionTest {
         List<DeleteHistory> deleteHistory = Q3.delete(UserTest.BADA);
         // when
         // then
-        assertThat(deleteHistory).containsExactly(new DeleteHistory(ContentType.QUESTION, 1L, UserTest.BADA, LocalDateTime.now()));
+        assertThat(deleteHistory).containsExactly(new DeleteHistory(ContentType.QUESTION, 1L, UserTest.BADA));
     }
 
     @Test
