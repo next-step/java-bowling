@@ -1,10 +1,13 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -75,6 +78,32 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
+    public List<DeleteHistory> delete(User loginUser) {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        validateQuestionAuth(loginUser);
+        validateAnswerAuth(loginUser);
+
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+        this.deleted = true;
+        answers.forEach(answer -> {
+            deleteHistories.add(answer.delete());
+        });
+        return deleteHistories;
+    }
+
+    private void validateQuestionAuth(User loginUser) {
+        if (!this.isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
+    private void validateAnswerAuth(User loginUser) {
+        Optional<Answer> notAuthAnswer = answers.stream().filter(answer -> !answer.isOwner(loginUser)).findAny();
+        if (notAuthAnswer.isPresent()) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+    }
+
     public Question setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
@@ -82,10 +111,6 @@ public class Question extends AbstractEntity {
 
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
     }
 
     @Override
