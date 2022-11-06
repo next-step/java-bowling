@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationEventPublisher;
 import qna.CannotDeleteException;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class QuestionTest {
@@ -18,5 +19,11 @@ public class QuestionTest {
         assertThatThrownBy(() -> Q1.delete(UserTest.SANJIGI, eventPublisher))
                 .isInstanceOf(CannotDeleteException.class)
                 .hasMessage("질문을 삭제할 권한이 없습니다.");
+    }
+
+    @Test
+    void 질문_삭제() throws CannotDeleteException {
+        Q1.delete(UserTest.JAVAJIGI, eventPublisher);
+        assertThat(Q1.isDeleted()).isTrue();
     }
 }
