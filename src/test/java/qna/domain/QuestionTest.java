@@ -26,11 +26,27 @@ public class QuestionTest {
     }
 
     @Test
-    public void delete_성공_질문자_답변자_같음() throws Exception {
-        List<DeleteHistory> deleteHistories = question.delete(UserTest.JAVAJIGI);
+    public void delete_되지_않으면_deleteHistory_빈값() throws Exception {
+        List<DeleteHistory> deleteHistories = question.deleteHistories();
+        assertThat(deleteHistories).isEmpty();
+    }
+
+    @Test
+    public void answer이_하나라도_delete_되지_않으면_deleteHistory_빈값() throws Exception {
+        question.delete(UserTest.JAVAJIGI);
+        question.addAnswer(new Answer(UserTest.SANJIGI, question, ""));
+        List<DeleteHistory> deleteHistories = question.deleteHistories();
 
         assertThat(question.isDeleted()).isTrue();
-        assertThat(deleteHistories.size()).isOne();
+        assertThat(deleteHistories).isEmpty();
+    }
+
+    @Test
+    public void delete_성공_질문자_답변자_같음() throws Exception {
+        question.delete(UserTest.JAVAJIGI);
+
+        assertThat(question.isDeleted()).isTrue();
+        assertThat(question.deleteHistories().size()).isOne();
     }
 
     @Test

@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -78,16 +80,26 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public List<DeleteHistory> delete(User loginUser) {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
+    public void delete(User loginUser) {
         validateQuestionAuth(loginUser);
         validateAnswerAuth(loginUser);
+        this.deleted = true;
+        answers.forEach(Answer::delete);
+    }
+
+    public List<DeleteHistory> deleteHistories() {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        List<Optional<DeleteHistory>> answerHistories = answers.stream()
+                .map(Answer::deleteHistory)
+                .collect(Collectors.toList());
+
+        boolean anyDeleteHistoryIsEmpty = answerHistories.stream().anyMatch(Optional::isEmpty);
+        if(!isDeleted() || anyDeleteHistoryIsEmpty) {
+            return deleteHistories;
+        }
 
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
-        this.deleted = true;
-        answers.forEach(answer -> {
-            deleteHistories.add(answer.delete());
-        });
+        answerHistories.forEach(history -> deleteHistories.add(history.get()));
         return deleteHistories;
     }
 
@@ -104,10 +116,6 @@ public class Question extends AbstractEntity {
         }
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
 
     public boolean isDeleted() {
         return deleted;
