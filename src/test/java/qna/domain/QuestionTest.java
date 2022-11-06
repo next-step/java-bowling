@@ -26,4 +26,12 @@ public class QuestionTest {
         Q1.delete(UserTest.JAVAJIGI, eventPublisher);
         assertThat(Q1.isDeleted()).isTrue();
     }
+
+    @Test
+    void 삭제_내역_생성() {
+        DeleteHistory deleteHistory = Q1.createDeleteHistory();
+        assertThat(deleteHistory).isEqualTo(
+                new DeleteHistory(ContentType.QUESTION, Q1.getId(), UserTest.JAVAJIGI, null)
+        );
+    }
 }
