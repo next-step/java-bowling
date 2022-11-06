@@ -70,6 +70,12 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
+    public void delete(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("답변자 본인만 답변을 삭제할 수 있습니다");
+        }
+        this.setDeleted(true);
+    }
     @Override
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";

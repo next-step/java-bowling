@@ -1,12 +1,12 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Entity
 @Embeddable
@@ -29,23 +29,22 @@ public class Answers extends AbstractEntity {
         this.answers.add(answer);
     }
 
-    public boolean allIsOwner(User loginUser) {
-        Optional<Answer> answerNotByLoginUser = answers.stream()
-                .filter(answer -> !answer.isOwner(loginUser))
-                .findAny();
-
-        return !answerNotByLoginUser.isPresent();
-    }
-
-    public List<DeleteHistory> deleteAnswers(User loginUser) {
+    public List<DeleteHistory> deleteAnswers(User loginUser) throws CannotDeleteException {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
 
-        this.answers
-                .forEach(answer -> {
-                    answer.setDeleted(true);
-                    deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-                });
+        for (Answer answer : this.answers) {
+            exceptionIfNotOwner(loginUser, answer);
+            answer.delete(loginUser);
+            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+        }
 
         return deleteHistories;
     }
+
+    private void exceptionIfNotOwner(User loginUser, Answer answer) throws CannotDeleteException {
+        if (!answer.isOwner(loginUser)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+    }
+
 }

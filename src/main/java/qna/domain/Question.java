@@ -103,9 +103,6 @@ public class Question extends AbstractEntity {
         this.setDeleted(true);
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
 
-        if (!answers.allIsOwner(loginUser)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-        }
         List<DeleteHistory> deleteAnswers = answers.deleteAnswers(writer);
 
         deleteHistories = Stream.concat(deleteHistories.stream(), deleteAnswers.stream()).collect(Collectors.toList());
