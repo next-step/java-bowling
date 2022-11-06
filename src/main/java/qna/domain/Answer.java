@@ -1,9 +1,14 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
-
-import javax.persistence.*;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -30,11 +35,11 @@ public class Answer extends AbstractEntity {
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
 
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
 
@@ -43,17 +48,33 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
+    public DeleteHistory delete(User user) throws Exception {
+        validateWriter(user);
+        setDeleted(true);
+        return createAnswerDeleteHistory();
+    }
+
+    private void validateWriter(User user) throws CannotDeleteException {
+        if (!isOwner(user)) {
+            throw new CannotDeleteException("답변은 답변자만 지울 수 있습니다.");
+        }
+    }
+
+    public boolean isOwner(User writer) {
+        return this.writer.equals(writer);
+    }
+
     public Answer setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
     }
 
-    public boolean isDeleted() {
-        return deleted;
+    private DeleteHistory createAnswerDeleteHistory() {
+        return new DeleteHistory(ContentType.ANSWER, this.getId(), this.writer, LocalDateTime.now());
     }
 
-    public boolean isOwner(User writer) {
-        return this.writer.equals(writer);
+    public boolean isDeleted() {
+        return deleted;
     }
 
     public User getWriter() {

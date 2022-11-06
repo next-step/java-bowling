@@ -1,10 +1,19 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
-
-import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -71,6 +80,22 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
+    public List<DeleteHistory> delete(User user) throws Exception {
+        validateWriter(user);
+
+        setDeleted(true);
+
+        List<DeleteHistory> answersDeleteHistories = deleteAllAnswers(user);
+
+        return createDeleteHistories(answersDeleteHistories);
+    }
+
+    private void validateWriter(User user) throws CannotDeleteException {
+        if (!isOwner(user)) {
+            throw new CannotDeleteException("질문은 질문자만 지울 수 있습니다.");
+        }
+    }
+
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
@@ -78,6 +103,30 @@ public class Question extends AbstractEntity {
     public Question setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
+    }
+
+    private List<DeleteHistory> createDeleteHistories(List<DeleteHistory> answersDeleteHistories) {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+
+        deleteHistories.add(createQuestionDeleteHistory());
+
+        deleteHistories.addAll(answersDeleteHistories);
+
+        return deleteHistories;
+    }
+
+    private DeleteHistory createQuestionDeleteHistory() {
+        return new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now());
+    }
+
+    public List<DeleteHistory> deleteAllAnswers(User user) throws Exception {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+
+        for (Answer answer : this.answers) {
+            deleteHistories.add(answer.delete(user));
+        }
+
+        return deleteHistories;
     }
 
     public boolean isDeleted() {
