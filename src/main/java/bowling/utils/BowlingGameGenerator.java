@@ -11,6 +11,9 @@ import java.util.stream.IntStream;
 
 public class BowlingGameGenerator {
 
+    private BowlingGameGenerator() {
+    }
+
     public static BowlingGame createBowlingGame() {
         List<BowlingGameFrame> frames = new ArrayList<>();
         IntStream.range(0, BowlingGame.SIZE_OF_FRAMES - 1)
