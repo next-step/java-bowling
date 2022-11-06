@@ -7,6 +7,7 @@ public class FinalFrame extends Frame {
         this.bonusScores = new Scores();
     }
 
+    @Override
     public boolean isEndFrame() {
         if (isBonus()) {
             return bonusScores.getTryCount() >= 1;
@@ -14,6 +15,7 @@ public class FinalFrame extends Frame {
         return super.isEndFrame();
     }
 
+    @Override
     public void record(int downPinCount) {
         if (isBonus()) {
             bonusScores.record(downPinCount);
@@ -23,18 +25,17 @@ public class FinalFrame extends Frame {
         scores.record(downPinCount);
     }
 
+    @Override
     public boolean isValidBonusGameScore() {
         return bonusScores.getTryCount() != 0;
     }
 
-    public Scores getBonusScores() {
-        return bonusScores;
-    }
-
+    @Override
     public int getPinScore() {
         return scores.getPinScore() + bonusScores.sumOfDownPins();
     }
 
+    @Override
     public int getSecondPitchScore() {
         if (FrameScore.STRIKE.equals(getResult())) {
             return bonusScores.getFirstScore();
@@ -42,12 +43,18 @@ public class FinalFrame extends Frame {
         return scores.getSecondPitchScore();
     }
 
+    @Override
     public int getTryCount() {
         return scores.getTryCount() + bonusScores.getTryCount();
     }
 
+    @Override
     public boolean isValidBonusScore() {
         return false;
+    }
+
+    public Scores getBonusScores() {
+        return bonusScores;
     }
 
     private boolean isBonus() {
