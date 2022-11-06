@@ -54,7 +54,6 @@ public class OutputView {
 
     private static void printScore(List<ScoreResult> scoreResults) {
         Integer[] result = cumulativeSum(scoreResults);
-
         IntStream.range(0, BowlingRound.LAST_ROUND_NUM)
                 .mapToObj((scoreIndex) -> {
                     if (scoreIndex < result.length) {

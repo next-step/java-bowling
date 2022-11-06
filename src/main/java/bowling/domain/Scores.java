@@ -67,11 +67,9 @@ public class Scores {
     }
 
     public int sum() {
-        int sum = 0;
-        for (Score score : scores) {
-            sum = score.sum(sum);
-        }
-        return sum;
+        return scores.stream()
+                .mapToInt(Score::getScore)
+                .sum();
     }
 
     public Integer spareBonus() {
@@ -96,13 +94,13 @@ public class Scores {
     }
 
     public Integer doubleStrikeBonus() {
-        return scores.get(0).sum(Scores.MAX_SCORE * 2);
+        return scores.get(FIRST_SCORE).sum(Scores.MAX_SCORE * 2);
     }
 
     public boolean isFirstScoreStrike() {
         if (!hasScore()) {
             return false;
         }
-        return scores.get(0).isStrike();
+        return scores.get(FIRST_SCORE).isStrike();
     }
 }

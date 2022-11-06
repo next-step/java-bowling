@@ -13,11 +13,10 @@ public class BowlingRounds {
     private Position position;
 
     public BowlingRounds() {
-        this.position = new Position(1);
-        this.rounds.put(position, new BowlingRound(1));
+        this(1);
     }
 
-    public BowlingRounds(int startPosition) {
+    private BowlingRounds(int startPosition) {
         this.position = new Position(startPosition);
         this.rounds.put(position, new BowlingRound(startPosition));
     }
