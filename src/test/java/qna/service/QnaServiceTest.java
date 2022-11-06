@@ -7,7 +7,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import qna.CannotDeleteException;
-import qna.domain.*;
+import qna.domain.Answer;
+import qna.domain.ContentType;
+import qna.domain.DeleteHistory;
+import qna.domain.Question;
+import qna.domain.QuestionRepository;
+import qna.domain.QuestionTest;
+import qna.domain.UserTest;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -20,7 +26,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class QnaServiceTest {
+class QnaServiceTest {
     @Mock
     private QuestionRepository questionRepository;
 
