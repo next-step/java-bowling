@@ -1,6 +1,8 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import org.springframework.context.ApplicationEventPublisher;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -88,8 +90,15 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
+    public void delete(User loginUser, ApplicationEventPublisher eventPublisher) throws CannotDeleteException {
+        if (!loginUser.equals(writer)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
+
 }
