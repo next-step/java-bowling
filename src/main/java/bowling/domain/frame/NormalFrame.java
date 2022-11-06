@@ -5,6 +5,7 @@ import bowling.domain.status.BowlStatus;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
+    public static final int LAST_FRAME_NO = 9;
     private final int frameNo;
     private final BowlStatus state;
 
@@ -15,7 +16,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame bowl() {
-        if (frameNo == 9 && isFinished()) {
+        if (frameNo == LAST_FRAME_NO && isFinished()) {
             System.out.println("final frame");
             return new FinalFrame();
         }
