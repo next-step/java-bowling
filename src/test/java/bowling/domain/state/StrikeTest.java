@@ -1,15 +1,18 @@
 package bowling.domain.state;
 
+import bowling.domain.pin.FallenPin;
 import bowling.domain.score.Score;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class StrikeTest {
 
     @Test
-    void description() {
-        assertThat(new Strike().description()).isEqualTo("X");
+    void getFallenPins() {
+        assertThat(new Strike().getFallenPins()).isEqualTo(List.of(FallenPin.of(10)));
     }
 
     @Test

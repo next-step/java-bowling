@@ -3,21 +3,27 @@ package bowling.view;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.FrameNumber;
 import bowling.domain.frame.Frames;
+import bowling.domain.pin.FallenPin;
 import bowling.domain.player.PlayerName;
 import bowling.domain.score.Score;
 import bowling.domain.state.FrameState;
+import bowling.domain.state.Spare;
+import bowling.domain.state.Strike;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-import static bowling.domain.state.Symbol.BAR;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
 public class ResultView {
     private static final String NAME_COLUMN_TITLE = "NAME";
+    public static final String BAR = "|";
+    public static final String STRIKE = "X";
+    public static final String SPARE = "/";
+    public static final String GUTTER = "-";
 
     public static void printFrames(PlayerName playerName, Frames frames) {
         System.out.println(scoreTableRow(NAME_COLUMN_TITLE, frameNumberColumnTitles()));
@@ -82,8 +88,27 @@ public class ResultView {
     private static String frameString(Frame frame) {
         return frame.getStates()
                 .stream()
-                .map(FrameState::description)
+                .map(ResultView::frameStateString)
+                .map(string -> string.replace("0", GUTTER))
                 .collect(joining(BAR));
+    }
+
+    private static String frameStateString(FrameState frameState) {
+        if (frameState instanceof Strike) {
+            return STRIKE;
+        }
+
+        List<String> fallenPins = frameState.getFallenPins()
+                .stream()
+                .map(FallenPin::getCount)
+                .map(String::valueOf)
+                .collect(toList());
+
+        if (frameState instanceof Spare) {
+            fallenPins.set(frameState.tries() - 1, SPARE);
+        }
+
+        return String.join(BAR, fallenPins);
     }
 
     private static String padded(String string) {

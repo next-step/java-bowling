@@ -3,6 +3,8 @@ package bowling.domain.state;
 import bowling.domain.pin.FallenPin;
 import bowling.domain.score.Score;
 
+import java.util.List;
+
 public class Ready extends Running {
 
     @Override
@@ -15,8 +17,8 @@ public class Ready extends Running {
     }
 
     @Override
-    public String description() {
-        return "";
+    public List<FallenPin> getFallenPins() {
+        return List.of();
     }
 
     @Override

@@ -4,13 +4,15 @@ import bowling.domain.pin.FallenPin;
 import bowling.domain.score.Score;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SpareTest {
 
     @Test
     void description() {
-        assertThat(spare().description()).isEqualTo("9|/");
+        assertThat(spare().getFallenPins()).isEqualTo(List.of(FallenPin.of(9), FallenPin.of(1)));
     }
 
     @Test

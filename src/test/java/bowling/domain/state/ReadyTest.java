@@ -5,6 +5,8 @@ import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ReadyTest {
@@ -23,7 +25,7 @@ class ReadyTest {
 
     @Test
     void description() {
-        assertThat(new Ready().description()).isEqualTo("");
+        assertThat(new Ready().getFallenPins()).isEqualTo(List.of());
     }
 
     @Test

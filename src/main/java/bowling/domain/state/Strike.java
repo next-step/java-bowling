@@ -1,13 +1,16 @@
 package bowling.domain.state;
 
+import bowling.domain.pin.FallenPin;
 import bowling.domain.score.Score;
+
+import java.util.List;
 
 public class Strike extends Finished {
     private static final int STRIKE_FALLEN_PINS = 10;
 
     @Override
-    public String description() {
-        return Symbol.STRIKE;
+    public List<FallenPin> getFallenPins() {
+        return List.of(FallenPin.of(10));
     }
 
     @Override

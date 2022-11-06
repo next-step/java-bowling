@@ -4,13 +4,15 @@ import bowling.domain.pin.FallenPin;
 import bowling.domain.score.Score;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class MissTest {
 
     @Test
     void description() {
-        assertThat(miss().description()).isEqualTo("9|-");
+        assertThat(miss().getFallenPins()).isEqualTo(List.of(FallenPin.of(9), FallenPin.of(0)));
     }
 
     @Test

@@ -3,6 +3,7 @@ package bowling.domain.state;
 import bowling.domain.pin.FallenPin;
 import bowling.domain.score.Score;
 
+import java.util.List;
 import java.util.Objects;
 
 public class FirstBowling extends Running {
@@ -29,9 +30,8 @@ public class FirstBowling extends Running {
     }
 
     @Override
-    public String description() {
-        return String.valueOf(firstPin.getCount())
-                .replace("0", Symbol.GUTTER);
+    public List<FallenPin> getFallenPins() {
+        return List.of(firstPin);
     }
 
     @Override

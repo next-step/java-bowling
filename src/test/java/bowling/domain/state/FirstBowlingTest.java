@@ -5,6 +5,8 @@ import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -41,7 +43,7 @@ class FirstBowlingTest {
     void description() {
         FrameState frameState = new FirstBowling(FallenPin.of(9));
 
-        assertThat(frameState.description()).isEqualTo("9");
+        assertThat(frameState.getFallenPins()).isEqualTo(List.of(FallenPin.of(9)));
     }
 
     @Test

@@ -3,6 +3,7 @@ package bowling.domain.state;
 import bowling.domain.pin.FallenPin;
 import bowling.domain.score.Score;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Miss extends Finished {
@@ -15,9 +16,8 @@ public class Miss extends Finished {
     }
 
     @Override
-    public String description() {
-        String result = firstPin.getCount() + "|" + secondPin.getCount();
-        return result.replace("0", Symbol.GUTTER);
+    public List<FallenPin> getFallenPins() {
+        return List.of(firstPin, secondPin);
     }
 
     @Override
