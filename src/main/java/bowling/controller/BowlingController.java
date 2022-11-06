@@ -16,13 +16,7 @@ public class BowlingController {
         ResultView.printFrameResult(framesResult);
 
         while (!frames.isLast()) {
-            Frame lastFrame = frames.lastFrame();
-
-            while (lastFrame.canBowl()) {
-                getBowlNumberAndPrintResult(framesResult, lastFrame);
-            }
-
-            frames.addFrame();
+            inputBowlNumberAndPrintResult(framesResult, frames);
         }
     }
 
@@ -37,16 +31,24 @@ public class BowlingController {
         }
     }
 
-    private void getBowlNumberAndPrintResult(FramesResult framesResult, Frame lastFrame) {
-        int number = InputView.inputBowlNumber(lastFrame.getFrameNumber());
+    private void inputBowlNumberAndPrintResult(FramesResult framesResult, Frames frames) {
+        Frame lastFrame = frames.lastFrame();
 
-        try {
-            lastFrame.bowl(number);
-        } catch (RuntimeException e) {
-            System.out.println(e.getMessage());
-            return;
+        while (lastFrame.canBowl()) {
+            bowl(lastFrame);
+            ResultView.printFrameResult(framesResult);
         }
 
-        ResultView.printFrameResult(framesResult);
+        frames.addFrame();
+    }
+
+    private void bowl(Frame frame) {
+        int number = InputView.inputBowlNumber(frame.getFrameNumber());
+
+        try {
+            frame.bowl(number);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
