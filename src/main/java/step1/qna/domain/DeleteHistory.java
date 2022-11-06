@@ -1,4 +1,4 @@
-package qna.domain;
+package step1.qna.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -24,7 +24,7 @@ public class DeleteHistory {
     public DeleteHistory() {
     }
 
-    public DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
+    public DeleteHistory(final ContentType contentType, final Long contentId, final User deletedBy, final LocalDateTime createDate) {
         this.contentType = contentType;
         this.contentId = contentId;
         this.deletedBy = deletedBy;

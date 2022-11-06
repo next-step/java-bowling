@@ -1,6 +1,6 @@
-package qna.domain;
+package step1.qna.domain;
 
-import qna.UnAuthorizedException;
+import step1.qna.UnAuthorizedException;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

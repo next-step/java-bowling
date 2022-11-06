@@ -1,7 +1,9 @@
-package qna.domain;
+package step1.qna.domain;
 
-import qna.NotFoundException;
-import qna.UnAuthorizedException;
+import java.time.LocalDateTime;
+import step1.qna.CannotDeleteException;
+import step1.qna.NotFoundException;
+import step1.qna.UnAuthorizedException;
 
 import javax.persistence.*;
 
@@ -23,11 +25,11 @@ public class Answer extends AbstractEntity {
     public Answer() {
     }
 
-    public Answer(User writer, Question question, String contents) {
+    public Answer(final User writer, final Question question, final String contents) {
         this(null, writer, question, contents);
     }
 
-    public Answer(Long id, User writer, Question question, String contents) {
+    public Answer(final Long id, final User writer, final Question question, final String contents) {
         super(id);
 
         if(writer == null) {
@@ -43,9 +45,13 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public DeleteHistory delete(final User loginUser) {
+        validateAnswerAuthentication(loginUser);
+        this.deleted = true;
+        return new DeleteHistory(ContentType.ANSWER,
+            this.getId(),
+            this.getWriter(),
+            LocalDateTime.now());
     }
 
     public boolean isDeleted() {
@@ -66,6 +72,12 @@ public class Answer extends AbstractEntity {
 
     public void toQuestion(Question question) {
         this.question = question;
+    }
+
+    private void validateAnswerAuthentication(final User loginUser) {
+        if (!this.isOwner(loginUser)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
     }
 
     @Override
