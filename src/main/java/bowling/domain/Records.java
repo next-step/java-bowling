@@ -50,10 +50,18 @@ public class Records {
         if (!frame.isEndFrame()) {
             return false;
         }
-        if (frame.isValidBonusScore() && frame.isStrike()) {
+        if (frame.isValidBonusScore()) {
+            return isReadyBonusScore(frameIndex);
+        }
+        return true;
+    }
+
+    private boolean isReadyBonusScore(int frameIndex) {
+        Frame frame = frames.get(frameIndex);
+        if (frame.isStrike()) {
             return isReadyTwoPitchScore(frameIndex + 1);
         }
-        if (frame.isValidBonusScore() && frame.isSpare()) {
+        if (frame.isSpare()) {
             return isReadyOnePitchScore(frameIndex + 1);
         }
         return true;
