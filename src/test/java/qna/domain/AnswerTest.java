@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationEventPublisher;
 import qna.CannotDeleteException;
 
+import java.util.Objects;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -25,5 +27,13 @@ public class AnswerTest {
     void 삭제_성공() throws CannotDeleteException {
         A1.delete(UserTest.JAVAJIGI, eventPublisher);
         assertThat(A1.isDeleted()).isTrue();
+    }
+
+    @Test
+    void 삭제_내역_생성() {
+        DeleteHistory deleteHistory = A1.createDeleteHistory();
+        assertThat(deleteHistory).isEqualTo(
+                new DeleteHistory(ContentType.ANSWER, A1.getId(), UserTest.JAVAJIGI, null)
+        );
     }
 }
