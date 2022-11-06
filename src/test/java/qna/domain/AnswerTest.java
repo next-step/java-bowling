@@ -14,7 +14,7 @@ public class AnswerTest {
     public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
     public static final Answer A2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
 
-    private ApplicationEventPublisher eventPublisher;
+    private ApplicationEventPublisher eventPublisher = event -> {};
 
     @Test
     void 로그인한_사용자와_답변자가_같은경우만_삭제가능() {
