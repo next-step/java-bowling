@@ -3,7 +3,6 @@ package bowling.domain;
 public class BowlingRound {
     public static final int LAST_ROUND_NUM = 10;
     private final int roundNumber;
-
     private final Scores scores = new Scores();
 
     public BowlingRound(int roundNumber) {

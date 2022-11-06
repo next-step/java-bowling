@@ -17,9 +17,9 @@ class BowlingTest {
 
     static Stream<Arguments> generatedPinsAndExpectedRound() {
         return Stream.of(
-                Arguments.of(1, 2, List.of(5, 5), 0),
-                Arguments.of(3, 4, List.of(10), 0),
-                Arguments.of(10, 10, List.of(10, 10, 10), 30)
+                Arguments.of(List.of(5, 4), List.of(0, 9)),
+                Arguments.of(List.of(10), List.of(0)),
+                Arguments.of(List.of(10, 10, 10), List.of(0, 0, 30))
         );
     }
 
@@ -33,23 +33,30 @@ class BowlingTest {
     private void playUntilFinish(Bowling bowling) {
         ScoreResult scoreResult = new ScoreResult();
         IntStream.range(0, BowlingRound.LAST_ROUND_NUM)
-                .forEach((idx) -> bowling.play(10, scoreResult));
-        bowling.play(10, scoreResult);
+                .forEach((idx) -> bowling.play(10));
+        bowling.play(10);
         assertThat(bowling.isFinish()).isFalse();
-        bowling.play(10, scoreResult);
+        bowling.play(10);
     }
 
     @ParameterizedTest
-    @DisplayName("쓰러트린 핀 개수 추가 및 현재 볼링 라운드 위치를 변경해야 합니다.")
+    @DisplayName("계산 결과를 반환해야 합니다.")
     @MethodSource("generatedPinsAndExpectedRound")
-    void testPlay(int startRoundNumber, int expectedRoundNumber, List<Integer> pins, int expectedScoreResult) {
-        Bowling bowling = new Bowling(startRoundNumber, startRoundNumber);
-        ScoreResult scoreResult = new ScoreResult();
-        pins.forEach((pin) -> bowling.play(pin, scoreResult));
-        BowlingRound currentRound = bowling.currentRound();
+    void testPlay(List<Integer> pins, List<Integer> expectedScoreResult) {
+        Bowling bowling = new Bowling();
 
-        assertThat(currentRound.isSameRound(new BowlingRound(expectedRoundNumber)));
-        System.out.println("scoreResult = " + scoreResult.sum());
+        IntStream.range(0, pins.size())
+                .forEach((index) -> validateCalculateResult(pins, expectedScoreResult, bowling, index));
+    }
+
+    private void validateCalculateResult(List<Integer> pins, List<Integer> expectedScoreResult, Bowling bowling, int index) {
+        ScoreResult scoreResult = bowling.play(pins.get(index));
+        Integer expectResult = expectedScoreResult.get(index);
+        if (expectResult.equals(0)) {
+            assertThat(scoreResult.getScores()).isEmpty();
+            return;
+        }
+        assertThat(scoreResult.getScores()).containsExactly(expectResult);
     }
 
 }
