@@ -43,7 +43,7 @@ public class Records {
     }
 
     public boolean isReadyFrameScore(int frameIndex) {
-        if (frames.size() <= frameIndex) {
+        if (isValidFrameIndex(frameIndex)) {
             return false;
         }
         Frame frame = frames.get(frameIndex);
@@ -54,6 +54,10 @@ public class Records {
             return isReadyBonusScore(frameIndex);
         }
         return true;
+    }
+
+    private boolean isValidFrameIndex(int frameIndex) {
+        return frames.size() <= frameIndex;
     }
 
     private boolean isReadyBonusScore(int frameIndex) {
@@ -68,7 +72,7 @@ public class Records {
     }
 
     private boolean isReadyOnePitchScore(int frameIndex) {
-        if (frames.size() <= frameIndex) {
+        if (isValidFrameIndex(frameIndex)) {
             return false;
         }
         Frame frame = frames.get(frameIndex);
@@ -76,7 +80,7 @@ public class Records {
     }
 
     private boolean isReadyTwoPitchScore(int frameIndex) {
-        if (frames.size() <= frameIndex) {
+        if (isValidFrameIndex(frameIndex)) {
             return false;
         }
         Frame frame = frames.get(frameIndex);
