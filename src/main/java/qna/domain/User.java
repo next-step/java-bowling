@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import java.util.Objects;
 
 @Entity
-public class User extends AbstractEntity {
+public class User extends UpdatedEntity {
     public static final GuestUser GUEST_USER = new GuestUser();
 
     @Column(unique = true, nullable = false)
@@ -115,6 +115,14 @@ public class User extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email=" + email + "]";
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", updatedAt=" + getUpdatedAt() +
+                ", id=" + getId() +
+                ", createdAt=" + getCreatedAt() +
+                '}';
     }
 }
