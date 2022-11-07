@@ -18,25 +18,33 @@ class OutputViewTest {
     void print_bowlingGame() {
         Player pls = new Player(new PlayerName("pls"));
         pls.play(a -> new Pin(10));
+        pls.next();
         pls.play(a -> new Pin(9));
         pls.play(a -> new Pin(1));
+        pls.next();
         pls.play(a -> new Pin(0));
         pls.play(a -> new Pin(5));
+        pls.next();
 
         pls.play(a -> new Pin(4));
         pls.play(a -> new Pin(4));
+        pls.next();
         pls.play(a -> new Pin(4));
         pls.play(a -> new Pin(4));
+        pls.next();
         pls.play(a -> new Pin(4));
+        pls.play(a -> new Pin(4));
+        pls.next();
+        pls.play(a -> new Pin(4));
+        pls.play(a -> new Pin(4));
+        pls.next();
+        pls.play(a -> new Pin(4));
+        pls.play(a -> new Pin(4));
+        pls.next();
 
         pls.play(a -> new Pin(4));
         pls.play(a -> new Pin(4));
-        pls.play(a -> new Pin(4));
-        pls.play(a -> new Pin(4));
-        pls.play(a -> new Pin(4));
-
-        pls.play(a -> new Pin(4));
-        pls.play(a -> new Pin(4));
+        pls.next();
         pls.play(a -> new Pin(4));
         pls.play(a -> new Pin(4));
 
@@ -51,7 +59,12 @@ class OutputViewTest {
         Player pls = new Player(new PlayerName("pls"));
 
         IntStream.range(0, 12)
-                .forEach(i -> pls.play(range -> new Pin(10)));
+                .forEach(i -> {
+                    pls.play(range -> new Pin(10));
+                    if (!pls.isFinished()) {
+                        pls.next();
+                    }
+                });
 
         List<BowlingRecord> list = new ArrayList<>();
         list.add(BowlingRecord.of(pls));
