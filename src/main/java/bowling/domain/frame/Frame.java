@@ -1,7 +1,15 @@
 package bowling.domain.frame;
 
-public interface Frame {
+import bowling.domain.status.Ready;
+import bowling.domain.status.Status;
 
-    Frame bowl();
+public abstract class Frame {
+
+     protected int frameNo = 0;
+     Status status = new Ready();
+
+    Frame bowl() {
+        return null;
+    }
 
 }

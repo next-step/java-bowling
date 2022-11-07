@@ -1,34 +1,29 @@
 package bowling.domain.frame;
 
-import bowling.domain.status.BowlStatus;
+import bowling.domain.status.Status;
 
 import java.util.Objects;
 
-public class NormalFrame implements Frame {
+public class NormalFrame extends Frame {
     public static final int LAST_FRAME_NO = 9;
-    private final int frameNo;
-    private final BowlStatus state;
 
-    public NormalFrame(int frameNo, BowlStatus state) {
-        this.frameNo = frameNo;
-        this.state = state;
+    public NormalFrame(int newFrameNo) {
+        this.frameNo = newFrameNo;
     }
 
     @Override
     public Frame bowl() {
-        if (frameNo == LAST_FRAME_NO && isFinished()) {
-            System.out.println("final frame");
+        if (frameNo == LAST_FRAME_NO && status.isFinished()) {
             return new FinalFrame();
         }
-        if (isFinished()) {
-            System.out.println("normal frame " + frameNo + 1);
-            return new NormalFrame(frameNo + 1, BowlStatus.NORAML);
+        if (status.isFinished()) {
+            return new NormalFrame(frameNo + 1);
         }
         return this;
     }
 
-    private boolean isFinished() {
-        return state == BowlStatus.STRIKE || state == BowlStatus.SPARE || state == BowlStatus.MISS;
+    public Status getStatus() {
+        return status;
     }
 
     @Override
@@ -36,11 +31,11 @@ public class NormalFrame implements Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalFrame that = (NormalFrame) o;
-        return frameNo == that.frameNo && state == that.state;
+        return frameNo == that.frameNo && status == that.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frameNo, state);
+        return Objects.hash(frameNo, status);
     }
 }
