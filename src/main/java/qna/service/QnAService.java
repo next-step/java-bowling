@@ -15,44 +15,40 @@ import java.util.List;
 
 @Service("qnaService")
 public class QnAService {
-    private static final Logger log = LoggerFactory.getLogger(QnAService.class);
 
-    @Resource(name = "questionRepository")
-    private QuestionRepository questionRepository;
+	private static final Logger log = LoggerFactory.getLogger(QnAService.class);
 
-    @Resource(name = "answerRepository")
-    private AnswerRepository answerRepository;
+	@Resource(name = "questionRepository")
+	private QuestionRepository questionRepository;
 
-    @Resource(name = "deleteHistoryService")
-    private DeleteHistoryService deleteHistoryService;
+	@Resource(name = "answerRepository")
+	private AnswerRepository answerRepository;
 
-    @Transactional(readOnly = true)
-    public Question findQuestionById(Long id) {
-        return questionRepository.findByIdAndDeletedFalse(id)
-                .orElseThrow(NotFoundException::new);
-    }
+	@Resource(name = "deleteHistoryService")
+	private DeleteHistoryService deleteHistoryService;
 
-    @Transactional
-    public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
-        Question question = findQuestionById(questionId);
-        if (!question.isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
+	@Transactional(readOnly = true)
+	public Question findQuestionById(Long id) {
+		return questionRepository.findByIdAndDeletedFalse(id)
+			.orElseThrow(NotFoundException::new);
+	}
 
-        List<Answer> answers = question.getAnswers();
-        for (Answer answer : answers) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
-        }
+	@Transactional
+	public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
 
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        question.setDeleted(true);
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
-        for (Answer answer : answers) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }
-        deleteHistoryService.saveAll(deleteHistories);
-    }
+		Question question = findQuestionById(questionId);
+		DeleteHistories deleteHistories = new DeleteHistories();
+
+		question.isOwner(loginUser);
+		question.isAnswerOwner(loginUser);
+
+		question.delete();
+		deleteHistories.addHistory(DeleteHistory.questionHistory(question));
+
+		question.deleteAnswer();
+
+		deleteHistories.deleteAnswerHistories(question);
+
+		deleteHistoryService.saveAll(deleteHistories);
+	}
 }
