@@ -14,4 +14,10 @@ public class QuestionTest {
                 () -> Q1.checkOwner(UserTest.SANJIGI)
         ).isInstanceOf(CannotDeleteException.class);
     }
+
+    @Test
+    void delete() {
+        Q1.deleted();
+        Assertions.assertThat(Q1.isDeleted()).isTrue();
+    }
 }
