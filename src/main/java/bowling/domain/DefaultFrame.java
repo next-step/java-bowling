@@ -8,11 +8,13 @@ public class DefaultFrame implements Frame {
 
     private static final int MAX_SCORE = 10;
 
-    private final List<Score> scores;
+    private final List<Score> scores = new ArrayList<>();
+
+    public DefaultFrame() {
+    }
 
     public DefaultFrame(int first, int second) {
         validateSum(first, second);
-        this.scores = new ArrayList<>();
         this.scores.add(Score.of(first));
         this.scores.add(Score.of(second));
     }
