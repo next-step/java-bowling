@@ -34,6 +34,10 @@ public class Score {
         }
     }
 
+    public int value(int score) {
+        return scoreMap.get(score).score;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
