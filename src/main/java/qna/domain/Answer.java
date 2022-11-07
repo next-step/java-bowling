@@ -1,12 +1,16 @@
 package qna.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+
 import org.springframework.context.ApplicationEventPublisher;
+
 import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 public class Answer extends AbstractEntity {
