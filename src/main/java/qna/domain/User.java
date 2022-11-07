@@ -8,113 +8,94 @@ import java.util.Objects;
 
 @Entity
 public class User extends AbstractEntity {
-    public static final GuestUser GUEST_USER = new GuestUser();
 
-    @Column(unique = true, nullable = false)
-    private String userId;
+	public static final GuestUser GUEST_USER = new GuestUser();
 
-    @Column(nullable = false)
-    private String password;
+	@Column(unique = true, nullable = false)
+	private String userId;
 
-    @Column(nullable = false)
-    private String name;
+	@Column(nullable = false)
+	private String password;
 
-    private String email;
+	@Column(nullable = false)
+	private String name;
 
-    public User() {
-    }
+	private String email;
 
-    public User(String userId, String password, String name, String email) {
-        this(null, userId, password, name, email);
-    }
+	public User() {
+	}
 
-    public User(Long id, String userId, String password, String name, String email) {
-        super(id);
-        this.userId = userId;
-        this.password = password;
-        this.name = name;
-        this.email = email;
-    }
+	public User(String userId, String password, String name, String email) {
+		this(null, userId, password, name, email);
+	}
 
-    public String getUserId() {
-        return userId;
-    }
+	public User(Long id, String userId, String password, String name, String email) {
+		super(id);
+		this.userId = userId;
+		this.password = password;
+		this.name = name;
+		this.email = email;
+	}
 
-    public User setUserId(String userId) {
-        this.userId = userId;
-        return this;
-    }
+	public String getUserId() {
+		return userId;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public User setUserId(String userId) {
+		this.userId = userId;
+		return this;
+	}
 
-    public User setPassword(String password) {
-        this.password = password;
-        return this;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public String getName() {
-        return name;
-    }
 
-    public User setName(String name) {
-        this.name = name;
-        return this;
-    }
+	public void update(User loginUser, User target) {
+		if (!matchUserId(loginUser.getUserId())) {
+			throw new UnAuthorizedException();
+		}
 
-    public String getEmail() {
-        return email;
-    }
+		if (!matchPassword(target.getPassword())) {
+			throw new UnAuthorizedException();
+		}
 
-    public User setEmail(String email) {
-        this.email = email;
-        return this;
-    }
+		this.name = target.name;
+		this.email = target.email;
+	}
 
-    public void update(User loginUser, User target) {
-        if (!matchUserId(loginUser.getUserId())) {
-            throw new UnAuthorizedException();
-        }
+	private boolean matchUserId(String userId) {
+		return this.userId.equals(userId);
+	}
 
-        if (!matchPassword(target.getPassword())) {
-            throw new UnAuthorizedException();
-        }
+	public boolean matchPassword(String targetPassword) {
+		return password.equals(targetPassword);
+	}
 
-        this.name = target.name;
-        this.email = target.email;
-    }
+	public boolean equalsNameAndEmail(User target) {
+		if (Objects.isNull(target)) {
+			return false;
+		}
 
-    private boolean matchUserId(String userId) {
-        return this.userId.equals(userId);
-    }
+		return name.equals(target.name) &&
+			email.equals(target.email);
+	}
 
-    public boolean matchPassword(String targetPassword) {
-        return password.equals(targetPassword);
-    }
+	public boolean isGuestUser() {
+		return false;
+	}
 
-    public boolean equalsNameAndEmail(User target) {
-        if (Objects.isNull(target)) {
-            return false;
-        }
+	private static class GuestUser extends User {
 
-        return name.equals(target.name) &&
-                email.equals(target.email);
-    }
+		@Override
+		public boolean isGuestUser() {
+			return true;
+		}
+	}
 
-    public boolean isGuestUser() {
-        return false;
-    }
-
-    private static class GuestUser extends User {
-        @Override
-        public boolean isGuestUser() {
-            return true;
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email=" + email + "]";
-    }
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email="
+			+ email + "]";
+	}
 }

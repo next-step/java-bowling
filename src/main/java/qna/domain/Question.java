@@ -44,24 +44,6 @@ public class Question extends AbstractEntity {
 		this.contents = contents;
 	}
 
-	public String getTitle() {
-		return title;
-	}
-
-	public Question setTitle(String title) {
-		this.title = title;
-		return this;
-	}
-
-	public String getContents() {
-		return contents;
-	}
-
-	public Question setContents(String contents) {
-		this.contents = contents;
-		return this;
-	}
-
 	public User getWriter() {
 		return writer;
 	}
@@ -82,7 +64,8 @@ public class Question extends AbstractEntity {
 		}
 	}
 
-	public void delete() {
+	public void delete(User loginUser) throws CannotDeleteException {
+		isOwner(loginUser);
 		this.deleted = true;
 	}
 
@@ -91,8 +74,11 @@ public class Question extends AbstractEntity {
 	}
 
 	public void isAnswerOwner(User user) throws CannotDeleteException {
+		if(answers.isEmpty()){
+			return;
+		}
 		for (Answer answer : answers) {
-			answer.isOwner(user);
+			answer.isWriter(user);
 		}
 	}
 
@@ -107,17 +93,19 @@ public class Question extends AbstractEntity {
 	}
 
 	public List<DeleteHistory> answersHistory() {
-		return answers.stream()
+		return answers
+			.stream()
 			.map(answer -> answer.answerHistory())
 			.collect(Collectors.toList());
 	}
 
-	public void deleteAnswer(){
-		answers.stream()
-			.forEach(answer -> answer.delete());
+	public void deleteAnswer() throws CannotDeleteException {
+		for(Answer answer : answers){
+			answer.delete(writer);
+	}
 	}
 
-	public boolean isAnswersDeleted(){
+	public boolean isAnswersDeleted() {
 		return answers.stream()
 			.map(answer -> answer.isDeleted())
 			.allMatch(Predicate.isEqual(true));

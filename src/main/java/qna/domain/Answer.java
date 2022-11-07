@@ -46,16 +46,11 @@ public class Answer extends AbstractEntity {
 		this.contents = contents;
 	}
 
-	public Answer setDeleted(boolean deleted) {
-		this.deleted = deleted;
-		return this;
-	}
-
 	public boolean isDeleted() {
 		return deleted;
 	}
 
-	public void isOwner(User writer) throws CannotDeleteException {
+	public void isWriter(User writer) throws CannotDeleteException {
 		if (writer != this.writer) {
 			throw new CannotDeleteException("답변자와 질문자가 같지 않습니다");
 		}
@@ -65,19 +60,16 @@ public class Answer extends AbstractEntity {
 		return writer;
 	}
 
-	public String getContents() {
-		return contents;
-	}
-
 	public void toQuestion(Question question) {
 		this.question = question;
 	}
 
-	public void delete() {
+	public void delete(User writer) throws CannotDeleteException {
+		isWriter(writer);
 		this.deleted = true;
 	}
 
-	public DeleteHistory answerHistory(){
+	public DeleteHistory answerHistory() {
 		return new DeleteHistory(ContentType.ANSWER, this.Id(), writer, LocalDateTime.now());
 	}
 
@@ -85,4 +77,5 @@ public class Answer extends AbstractEntity {
 	public String toString() {
 		return "Answer [id=" + Id() + ", writer=" + writer + ", contents=" + contents + "]";
 	}
+
 }

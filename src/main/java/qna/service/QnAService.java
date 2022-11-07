@@ -39,14 +39,10 @@ public class QnAService {
 		Question question = findQuestionById(questionId);
 		DeleteHistories deleteHistories = new DeleteHistories();
 
-		question.isOwner(loginUser);
-		question.isAnswerOwner(loginUser);
-
-		question.delete();
+		question.delete(loginUser);
 		deleteHistories.addHistory(DeleteHistory.questionHistory(question));
 
 		question.deleteAnswer();
-
 		deleteHistories.deleteAnswerHistories(question);
 
 		deleteHistoryService.saveAll(deleteHistories);

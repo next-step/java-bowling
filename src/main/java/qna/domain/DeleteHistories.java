@@ -9,11 +9,11 @@ public class DeleteHistories {
 
 	private List<DeleteHistory> deleteHistories;
 
-	public DeleteHistories(){
+	public DeleteHistories() {
 		this(new ArrayList<>());
 	}
 
-	public DeleteHistories(DeleteHistory deleteHistory){
+	public DeleteHistories(DeleteHistory deleteHistory) {
 		this(Arrays.asList(deleteHistory));
 	}
 
@@ -21,7 +21,7 @@ public class DeleteHistories {
 		this.deleteHistories = deleteHistories;
 	}
 
-	public static DeleteHistories deleteHistories(List<DeleteHistory> deleteHistories){
+	public static DeleteHistories deleteHistories(List<DeleteHistory> deleteHistories) {
 		return new DeleteHistories(deleteHistories);
 	}
 
@@ -29,13 +29,14 @@ public class DeleteHistories {
 		deleteHistories.add(questionHistory);
 	}
 
-	public void deleteAnswerHistories(Question question){
+	public void deleteAnswerHistories(Question question) {
 		deleteHistories.addAll(question.answersHistory());
 	}
 
-	public List<DeleteHistory> deleteHistories(){
+	public List<DeleteHistory> deleteHistories() {
 		return deleteHistories;
 	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
