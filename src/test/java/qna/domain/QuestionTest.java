@@ -26,14 +26,14 @@ public class QuestionTest {
 
     @Test
     @DisplayName("질문자와 답변자가 일치하지 않으면 삭제 불가 반환")
-    void isAnswerOwner(){
+    void isAnswerOwner() {
 
-        User user1 = new User();
+        User user1 = new User("user1", "psswd", "user1", "user1@gmail.com");
+        User user2 = new User("user2", "psswd", "user2", "user2@gmail.com");
+
+        Answer answer1 = new Answer(user2,Q1,"test1");
+        Q1.addAnswer(answer1);
         assertThatThrownBy(() -> Q1.isAnswerOwner(user1))
-            .isInstanceOf(CannotDeleteException.class);
-
-        User user2 = new User();
-        assertThatThrownBy(() -> Q2.isAnswerOwner(user2))
             .isInstanceOf(CannotDeleteException.class);
 
     }
