@@ -22,7 +22,7 @@ public class FinalBowlingGameFrame extends AbstractBowlingGameFrame {
             remainedPins = calculateRemainedPins(remainedPins, hit);
         }
 
-        if (isStrikeOrSpare(hits)) {
+        if (isNotStrikeOrSpare(hits)) {
             throw new IllegalArgumentException("세번째 투구는 스트라이크이거나, 스페어인 경우에만 가능합니다.");
         }
     }
@@ -39,7 +39,7 @@ public class FinalBowlingGameFrame extends AbstractBowlingGameFrame {
         return remainedPins;
     }
 
-    private boolean isStrikeOrSpare(List<Integer> hits) {
+    private boolean isNotStrikeOrSpare(List<Integer> hits) {
         return hits.size() == MAX_SIZE_OF_HITS && hits.get(0) + hits.get(1) < BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS;
     }
 

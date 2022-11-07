@@ -115,7 +115,7 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
 
     @Override
     public String toString() {
-        return "AbstractHitHistory{" +
+        return "AbstractBowlingGameFrame{" +
                 "hits=" + hits +
                 '}';
     }

@@ -9,26 +9,20 @@ import java.util.stream.IntStream;
 public class BowlingGameFrameDto {
 
     private final List<Integer> hits;
-    private final boolean isEnded;
 
-    public BowlingGameFrameDto(List<Integer> hits, boolean isEnded) {
+    public BowlingGameFrameDto(List<Integer> hits) {
         this.hits = hits;
-        this.isEnded = isEnded;
     }
 
     public static BowlingGameFrameDto from(BowlingGameFrame frame) {
         List<Integer> hits = new ArrayList<>();
         IntStream.range(0, frame.size())
                 .forEach(i -> hits.add(frame.get(i)));
-        return new BowlingGameFrameDto(hits, frame.isEnded());
+        return new BowlingGameFrameDto(hits);
     }
 
     public List<Integer> getHits() {
         return hits;
-    }
-
-    public boolean isEnded() {
-        return isEnded;
     }
 
 }
