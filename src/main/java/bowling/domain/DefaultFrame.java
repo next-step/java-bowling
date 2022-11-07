@@ -1,38 +1,29 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class DefaultFrame implements Frame {
 
-    private static final int MAX_SCORE = 10;
-
     private final List<Score> scores = new ArrayList<>();
 
     public DefaultFrame() {
+
     }
 
     public DefaultFrame(int first, int second) {
         this.scores.add(Score.of(first));
         this.scores.add(Score.of(second));
-        validateSum();
-    }
-
-    private void validateSum() {
-        if (this.scores.size() < 2) {
-            return;
-        }
-        if (this.scores.get(0).value() + this.scores.get(1).value() > MAX_SCORE) {
-            throw new IllegalArgumentException();
-        }
+        ScoreValidator.validate(this);
     }
 
     @Override
     public void addScore(Score score) {
         if (isRemainChance()) {
             this.scores.add(score);
-            validateSum();
+            ScoreValidator.validate(this);
             return;
         }
         throw new IllegalArgumentException("남은 기회가 없습니다.");
@@ -47,6 +38,11 @@ public class DefaultFrame implements Frame {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<Score> scores() {
+        return Collections.unmodifiableList(this.scores);
     }
 
     @Override
