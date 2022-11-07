@@ -23,12 +23,12 @@ public class Frames {
 
     public Pin bowl(ScoreStrategy scoreStrategy) {
         Pin now = scoreStrategy.getScore(getRemainPins());
-        calculatePoint(now);
+        sumPoint(now);
         frames.getLast().bowl(now);
         return now;
     }
 
-    private void calculatePoint(Pin now) {
+    private void sumPoint(Pin now) {
         frames.stream()
                 .filter(Frame::isFinish)
                 .filter(Frame::canAddPoint)
