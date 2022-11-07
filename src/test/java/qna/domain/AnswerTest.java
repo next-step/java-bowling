@@ -23,7 +23,7 @@ public class AnswerTest {
     }
 
     @Test
-    @DisplayName("답변 삭제 실패")
+    @DisplayName("답변 삭제 실패 : 답변자가 삭제자와 다를 경우")
     void test2() {
         // given
         // when

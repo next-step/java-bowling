@@ -25,7 +25,7 @@ public class QuestionTest {
     }
 
     @Test
-    @DisplayName("질문 삭제 실패")
+    @DisplayName("질문 삭제 실패 : 질문자와 삭제자가 다를 경우")
     void test2() {
         // given
         // when

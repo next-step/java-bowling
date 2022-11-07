@@ -21,7 +21,7 @@ public class AnswersTest {
     }
 
     @Test
-    @DisplayName("답변들 삭제 실패")
+    @DisplayName("답변들 삭제 실패 : 답변자들이 삭제자와 다를 경우")
     void test2() {
         // given
         Answers answers = new Answers(List.of(AnswerTest.A1));
