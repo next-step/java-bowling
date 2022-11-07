@@ -18,7 +18,7 @@ public class Score {
         }
     }
 
-    public Score(int score) {
+    private Score(int score) {
         validateRange(score);
         this.score = score;
     }
