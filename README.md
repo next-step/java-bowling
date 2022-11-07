@@ -13,8 +13,8 @@
 
 ### 점수
 
-- [ ] 점수를 입력받는다.
-    - [ ] 0 ~ 10 이외의 숫자를 입력하면 IllegalArgumentException 예외를 throw 한다.
+- [x] 점수를 입력받는다.
+    - [x] 0 ~ 10 이외의 숫자를 입력하면 IllegalArgumentException 예외를 throw 한다.
 
 ### 이름
 
