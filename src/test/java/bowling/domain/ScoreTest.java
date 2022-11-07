@@ -25,4 +25,13 @@ public class ScoreTest {
                 () -> assertThatThrownBy(() -> Score.of(11)).isInstanceOf(IllegalArgumentException.class)
         );
     }
+
+    @DisplayName("10점이면 true를 반환한다.")
+    @Test
+    void is_strike() {
+        Assertions.assertAll(
+                () -> assertThat(Score.of(9).isStrike()).isFalse(),
+                () -> assertThat(Score.of(10).isStrike()).isTrue()
+        );
+    }
 }
