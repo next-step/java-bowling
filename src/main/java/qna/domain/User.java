@@ -115,6 +115,14 @@ public class User extends UpdatedEntity {
 
     @Override
     public String toString() {
-        return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email=" + email + "]";
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", updatedAt=" + getUpdatedAt() +
+                ", id=" + getId() +
+                ", createdAt=" + getCreatedAt() +
+                '}';
     }
 }

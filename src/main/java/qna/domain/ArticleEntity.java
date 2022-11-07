@@ -8,7 +8,7 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class ArticleEntity extends UpdatedEntity {
+public abstract class ArticleEntity extends UpdatedEntity {
 
     @Lob
     private String contents;
@@ -35,22 +35,8 @@ public class ArticleEntity extends UpdatedEntity {
         return deleted;
     }
 
-    public String getContents() {
+    protected String getContents() {
         return contents;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + (int) (getId() ^ (getId() >>> 32));
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "DeletableEntity{" +
-                "deleted=" + deleted +
-                '}';
-    }
 }

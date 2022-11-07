@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class UpdatedEntity extends CreatedEntity {
+public abstract class UpdatedEntity extends CreatedEntity {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
@@ -20,18 +20,7 @@ public class UpdatedEntity extends CreatedEntity {
         super(id);
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + (int) (getId() ^ (getId() >>> 32));
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "UpdatedEntity{" +
-                "updatedAt=" + updatedAt +
-                '}';
+    protected LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 }

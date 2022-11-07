@@ -6,10 +6,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class CreatedEntity {
+public abstract class CreatedEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,37 +30,21 @@ public class CreatedEntity {
         return id;
     }
 
-    public LocalDateTime getCreatedAt() {
+    protected LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CreatedEntity that = (CreatedEntity) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + (int) (id ^ (id >>> 32));
-        return result;
+        return Objects.hash(id);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        CreatedEntity other = (CreatedEntity) obj;
-        if (id != other.id)
-            return false;
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "CreatedEntity{" +
-                "id=" + id +
-                ", createdAt=" + createdAt +
-                '}';
-    }
 }

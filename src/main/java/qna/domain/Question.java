@@ -70,6 +70,15 @@ public class Question extends ArticleEntity {
 
     @Override
     public String toString() {
-        return "Question [id=" + getId() + ", title=" + title + ", contents=" + getContents() + ", writer=" + writer + "]";
+        return "Question{" +
+                "title='" + title + '\'' +
+                ", writer=" + writer +
+                ", answers=" + answers +
+                ", contents=" + getContents() +
+                ", deleted=" + isDeleted() +
+                ", updatedAt=" + getUpdatedAt() +
+                ", id=" + getId() +
+                ", createdAt=" + getCreatedAt() +
+                '}';
     }
 }

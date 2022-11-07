@@ -42,7 +42,12 @@ public class DeleteHistory extends CreatedEntity {
 
     @Override
     public String toString() {
-        return "DeleteHistory [id=" + getId() + ", contentType=" + contentType + ", contentId=" + contentId + ", deletedBy="
-                + deletedBy + ", createdAt=" + getCreatedAt() + "]";
+        return "DeleteHistory{" +
+                "contentType=" + contentType +
+                ", contentId=" + contentId +
+                ", deletedBy=" + deletedBy +
+                ", id=" + getId() +
+                ", createdAt=" + getCreatedAt() +
+                '}';
     }
 }
