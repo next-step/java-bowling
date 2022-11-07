@@ -21,13 +21,23 @@ public class LastFrameTest {
         assertThatThrownBy(() -> new LastFrame(9, 10, 10)).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("첫 번째 프레임이 스트라이크가 아니고 두번째 프레임 결과가 스페어가 아니면 false를 반환한다.")
+    @DisplayName("첫 번째 시도가 스트라이크가 아니고 두번째 프레임 결과가 스페어가 아니면 false를 반환한다.")
     @Test
-    void is_remain_strike() {
+    void is_remain_chance() {
         LastFrame firstStrikeFrame = new LastFrame();
         firstStrikeFrame.addScore(Score.of(8));
         firstStrikeFrame.addScore(Score.of(1));
 
         assertThatThrownBy(() -> firstStrikeFrame.addScore(Score.of(10))).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("첫 번째 시도가 스트라이크이고 두번째 시도와 세번째 시도의 결과가 10 이상이면 IllegalArgumentException 예외를 throw 한다.")
+    @Test
+    void second_third_sum() {
+        LastFrame firstStrikeFrame = new LastFrame();
+        firstStrikeFrame.addScore(Score.of(10));
+        firstStrikeFrame.addScore(Score.of(9));
+
+        assertThatThrownBy(() -> firstStrikeFrame.addScore(Score.of(2))).isInstanceOf(IllegalArgumentException.class);
     }
 }
