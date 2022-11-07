@@ -24,9 +24,13 @@ public class Pins {
         }
     }
 
-    public int totalPins(int secondPins) {
+    public Pins totalPins(int secondPins) {
         int totalPins = falledPins + secondPins;
         validPins(totalPins);
-        return totalPins;
+        return new Pins(totalPins);
+    }
+
+    public int getFalledPins() {
+        return falledPins;
     }
 }
