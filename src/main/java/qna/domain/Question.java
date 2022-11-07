@@ -64,7 +64,7 @@ public class Question extends AbstractEntity {
         validate(loginUser);
         this.deleted = true;
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, this.writer, LocalDateTime.now()));
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now()));
 
         for (Answer answer : this.answers) {
             deleteHistories.add(answer.delete());
