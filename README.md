@@ -8,8 +8,15 @@
 
 ### 프레임
 
+### 기본 프레임
+
 - [x] 두 점수를 입력받는다.
     - [x] 첫 번째 점수와 두 번째 점수의 합이 10을 넘으면 IllegalArgumentException 예외를 throw 한다.
+
+### 마지막 프레임
+
+- [x] 세 점수를 입력받는다.
+    - [x] 스트라이크가 아니고 첫 번째 점수와 두 번째 점수의 합이 10을 넘으면 IllegalArgumentException 예외를 throw 한다.
 
 ### 점수
 
