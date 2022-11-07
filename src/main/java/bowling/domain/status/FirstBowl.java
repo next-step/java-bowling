@@ -4,8 +4,6 @@ import bowling.domain.Pin;
 
 public class FirstBowl extends Status {
 
-    private final Pin first;
-
     public FirstBowl(Pin pin) {
         this.first = pin;
     }

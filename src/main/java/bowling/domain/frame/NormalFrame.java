@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.Pin;
 import bowling.domain.status.Status;
 
 import java.util.Objects;
@@ -12,18 +13,34 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public Frame bowl() {
-        if (frameNo == LAST_FRAME_NO && status.isFinished()) {
-            return new FinalFrame();
-        }
-        if (status.isFinished()) {
-            return new NormalFrame(frameNo + 1);
-        }
+    public Frame bowl(Pin pin) {
+        status = status.bowl(pin);
         return this;
     }
 
+    @Override
     public Status getStatus() {
         return status;
+    }
+
+    @Override
+    public Boolean isFinished() {
+        return status.isFinished();
+    }
+
+    @Override
+    public Boolean isFinalFrame() {
+        return false;
+    }
+
+    public Frame nextFrame() {
+        if (frameNo == LAST_FRAME_NO && isFinished()) {
+            return new FinalFrame();
+        }
+        if (isFinished()) {
+            return new NormalFrame(frameNo + 1);
+        }
+        return this;
     }
 
     @Override

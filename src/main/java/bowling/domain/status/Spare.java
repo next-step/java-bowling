@@ -4,9 +4,6 @@ import bowling.domain.Pin;
 
 public class Spare extends Status {
 
-    private final Pin first;
-    private final Pin second;
-
     public Spare(Pin first, Pin second) {
         this.first = first;
         this.second = second;
@@ -21,4 +18,6 @@ public class Spare extends Status {
     public boolean isFinished() {
         return true;
     }
+
+
 }

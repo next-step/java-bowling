@@ -4,9 +4,6 @@ import bowling.domain.Pin;
 
 public class Miss extends Status {
 
-    private final Pin first;
-    private final Pin second;
-
     public Miss(Pin first, Pin second) {
         this.first = first;
         this.second = second;
@@ -21,4 +18,5 @@ public class Miss extends Status {
     public boolean isFinished() {
         return true;
     }
+
 }
