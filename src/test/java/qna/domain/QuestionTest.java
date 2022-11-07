@@ -2,7 +2,6 @@ package qna.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
@@ -13,7 +12,8 @@ public class QuestionTest {
     @Test
     void 질문자가_아니면_삭제_불가() {
         assertThatThrownBy(() -> Q1.delete(UserTest.SANJIGI))
-            .isInstanceOf(CannotDeleteException.class);
+            .isInstanceOf(CannotDeleteException.class)
+            .hasMessageContaining("질문을 삭제할 권한이 없습니다.");
     }
 
     @Test
