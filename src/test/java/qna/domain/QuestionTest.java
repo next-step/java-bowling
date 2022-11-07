@@ -1,5 +1,6 @@
 package qna.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
@@ -36,5 +37,12 @@ public class QuestionTest {
         assertThatThrownBy(() -> Q1.isAnswerOwner(user1))
             .isInstanceOf(CannotDeleteException.class);
 
+    }
+
+    @Test
+    @DisplayName("논리 삭제 구현")
+    void deleted(){
+        Q1.delete();
+        assertThat(Q1.isDeleted()).isEqualTo(true);
     }
 }
