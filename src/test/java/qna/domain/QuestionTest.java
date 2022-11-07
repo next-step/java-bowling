@@ -12,7 +12,7 @@ public class QuestionTest {
 
     @Test
     @DisplayName("질문자와 로그인한 사람이 일치하지 않으면 예외 반환")
-    void isOwnerException1(){
+    void isOwnerException(){
 
         User user1 = new User();
         assertThatThrownBy(() -> Q1.isOwner(user1))
@@ -20,6 +20,20 @@ public class QuestionTest {
 
         User user2 = new User();
         assertThatThrownBy(() -> Q2.isOwner(user2))
+            .isInstanceOf(CannotDeleteException.class);
+
+    }
+
+    @Test
+    @DisplayName("질문자와 답변자가 일치하지 않으면 삭제 불가 반환")
+    void isAnswerOwner(){
+
+        User user1 = new User();
+        assertThatThrownBy(() -> Q1.isAnswerOwner(user1))
+            .isInstanceOf(CannotDeleteException.class);
+
+        User user2 = new User();
+        assertThatThrownBy(() -> Q2.isAnswerOwner(user2))
             .isInstanceOf(CannotDeleteException.class);
 
     }
