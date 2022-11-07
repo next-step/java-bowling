@@ -30,6 +30,13 @@ public class Pins {
         return new Pins(totalPins);
     }
 
+    public String getResult() {
+        if (falledPins == 10) {
+            return "X";
+        }
+        return String.valueOf(falledPins);
+    }
+
     public int getFalledPins() {
         return falledPins;
     }

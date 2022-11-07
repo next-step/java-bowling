@@ -27,9 +27,13 @@ public class ResultView {
             if (frame.getValues().size() == 2) {
                 System.out.printf("%2s",frame.getValues().get(0).getFalledPins());
                 System.out.print("|");
-                System.out.printf("%-3s",frame.getValues().get(1).getFalledPins());
+                if (frame.getValues().get(1).getFalledPins() == 10) {
+                    System.out.printf("%-3s", "/");
+                } else {
+                    System.out.printf("%-3s",frame.getValues().get(1).getFalledPins());
+                }
             } else {
-                frame.getValues().forEach(pins -> System.out.printf(" %-4s ", pins.getFalledPins()));
+                frame.getValues().forEach(pins -> System.out.printf("  %-3s ", pins.getResult()));
             }
         }
 
