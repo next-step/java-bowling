@@ -28,7 +28,7 @@ public class OutputView {
         System.out.printf("|  %s |", participant);
         game.getFrames()
                 .forEach(OutputView::printBowlingGameFrame);
-        System.out.println();
+        System.out.print("\n\n");
     }
 
     private static void printBowlingGameFrame(BowlingGameFrameDto frame) {
@@ -64,6 +64,10 @@ public class OutputView {
         }
 
         return String.valueOf(hit);
+    }
+
+    public static void printError(Exception e) {
+        System.err.println(e.getMessage());
     }
 
 }

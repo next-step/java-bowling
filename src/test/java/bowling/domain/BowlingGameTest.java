@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.utils.BowlingGameGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -106,6 +107,23 @@ class BowlingGameTest {
                 .forEach(i -> frames.add(new NormalBowlingGameFrame()));
         frames.add(new FinalBowlingGameFrame());
         return new BowlingGame(frames);
+    }
+
+    @DisplayName("남아 있는 볼링 핀의 개수를 반환해야 한다.")
+    @Test
+    void getRemainedPins() {
+        BowlingGame game = BowlingGameGenerator.createBowlingGame();
+
+        assertThat(game.getRemainedPins()).isEqualTo(10);
+
+        game.hit(1);
+        assertThat(game.getRemainedPins()).isEqualTo(9);
+
+        game.hit(2);
+        assertThat(game.getRemainedPins()).isEqualTo(10);
+
+        game.hit(3);
+        assertThat(game.getRemainedPins()).isEqualTo(7);
     }
 
 }

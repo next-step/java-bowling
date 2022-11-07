@@ -52,11 +52,19 @@ public class BowlingGame {
         }
     }
 
-    public BowlingGameFrame getCurrentFrame() {
+    public int getIndexOfCurrentFrame() {
         if (isEnded()) {
             throw new IllegalStateException("이미 종료된 게임입니다.");
         }
-        return frames.get(indexOfCurrentFrame);
+        return indexOfCurrentFrame;
+    }
+
+    public BowlingGameFrame getCurrentFrame() {
+        return frames.get(getIndexOfCurrentFrame());
+    }
+
+    public int getRemainedPins() {
+        return getCurrentFrame().getRemainedPins();
     }
 
     public boolean isEnded() {

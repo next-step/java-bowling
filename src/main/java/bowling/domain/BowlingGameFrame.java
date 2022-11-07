@@ -21,4 +21,6 @@ public interface BowlingGameFrame {
 
     boolean isEnded();
 
+    int getRemainedPins();
+
 }

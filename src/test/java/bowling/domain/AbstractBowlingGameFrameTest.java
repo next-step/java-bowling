@@ -11,11 +11,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class AbstractBowlingGameFrameTest {
 
-    private BowlingGameFrame history;
+    private BowlingGameFrame frame;
 
     @BeforeEach
     void setUp() {
-        history = new AbstractBowlingGameFrame(new ArrayList<>()) {
+        frame = new AbstractBowlingGameFrame(new ArrayList<>()) {
             @Override
             protected void validateHits(List<Integer> hits) {}
 
@@ -35,24 +35,32 @@ class AbstractBowlingGameFrameTest {
     @DisplayName("스트라이크라면, true를 반환해야 한다.")
     @Test
     void isStrike() {
-        history.add(10);
-        assertThat(history.isStrike()).isTrue();
+        frame.add(10);
+        assertThat(frame.isStrike()).isTrue();
     }
 
     @DisplayName("스페어라면, true를 반환해야 한다.")
     @Test
     void isSpare() {
-        history.add(2);
-        history.add(8);
-        assertThat(history.isSpare()).isTrue();
+        frame.add(2);
+        frame.add(8);
+        assertThat(frame.isSpare()).isTrue();
     }
 
     @DisplayName("미스라면, true를 반환해야 한다.")
     @Test
     void isMiss() {
-        history.add(0);
-        history.add(2);
-        assertThat(history.isMiss()).isTrue();
+        frame.add(0);
+        frame.add(2);
+        assertThat(frame.isMiss()).isTrue();
+    }
+
+    @DisplayName("남아 있는 핀의 개수를 반환해야 한다.")
+    @Test
+    void getRemainedPins() {
+        frame.add(2);
+        frame.add(3);
+        assertThat(frame.getRemainedPins()).isEqualTo(5);
     }
 
 }

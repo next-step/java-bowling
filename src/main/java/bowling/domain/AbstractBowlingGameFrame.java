@@ -57,7 +57,7 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
             return;
         }
 
-        int remainedPins = BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS - sumOfRemainedPins() % BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS;
+        int remainedPins = getRemainedPins();
         if (hit > remainedPins) {
             throw new IllegalArgumentException(String.format("투구는 남은 핀의 개수(%d) 보다 클 수 없습니다.", remainedPins));
         }
@@ -99,6 +99,11 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
 
     @Override
     abstract public boolean isEnded();
+
+    @Override
+    public int getRemainedPins() {
+        return BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS - sumOfRemainedPins() % BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS;
+    }
 
     @Override
     public boolean equals(Object o) {
