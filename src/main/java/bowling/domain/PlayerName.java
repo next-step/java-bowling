@@ -5,7 +5,7 @@ public class PlayerName {
 
     public PlayerName(String name) {
         if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("이릅을 입력해주세요.");
+            throw new IllegalArgumentException("이름을 입력해주세요.");
         }
         if (name.trim().length() > 3) {
             throw new IllegalArgumentException("이름은 세글자까지만 입력할 수 있습니다.");
