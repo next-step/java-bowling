@@ -8,8 +8,8 @@
 
 ### 프레임
 
-- [ ] 두 점수를 입력받는다.
-    - [ ] 첫 번째 점수와 두 번째 점수의 합이 10을 넘으면 IllegalArgumentException 예외를 throw 한다.
+- [x] 두 점수를 입력받는다.
+    - [x] 첫 번째 점수와 두 번째 점수의 합이 10을 넘으면 IllegalArgumentException 예외를 throw 한다.
 
 ### 점수
 
