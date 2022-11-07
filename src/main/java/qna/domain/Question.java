@@ -1,10 +1,15 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import static qna.domain.ContentType.QUESTION;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -31,6 +36,12 @@ public class Question extends AbstractEntity {
     public Question(String title, String contents) {
         this.title = title;
         this.contents = contents;
+    }
+
+    public Question(String title, String contents, boolean deleted) {
+        this.title = title;
+        this.contents = contents;
+        this.deleted = deleted;
     }
 
     public Question(long id, String title, String contents) {
@@ -71,10 +82,6 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
-    }
-
     public Question setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
@@ -92,4 +99,43 @@ public class Question extends AbstractEntity {
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
+
+    public void delete(User writer) throws CannotDeleteException {
+        verifyCanDelete(writer);
+
+        this.deleted = true;
+    }
+
+    private void verifyCanDelete(User loginUser) throws CannotDeleteException {
+        if(isNotOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
+    private boolean isNotOwner(User loginUser) {
+        return !writer.equals(loginUser);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Question question = (Question) o;
+        return deleted == question.deleted && Objects.equals(title, question.title) && Objects.equals(contents, question.contents) && Objects.equals(writer, question.writer) && Objects.equals(answers, question.answers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), title, contents, writer, answers, deleted);
+    }
+
+    public DeleteHistory deleteHistory() {
+        return new DeleteHistory(QUESTION, getId(), writer, LocalDateTime.now());
+    }
+
+    public boolean isNotDeleted() {
+        return !deleted;
+    }
+
 }
