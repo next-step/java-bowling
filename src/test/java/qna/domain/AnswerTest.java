@@ -4,8 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
-import java.time.LocalDateTime;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -16,7 +14,7 @@ public class AnswerTest {
 
     @Test
     @DisplayName("답변 삭제 성공")
-    void test1() throws CannotDeleteException {
+    void test1() {
         // given
         // when
         DeleteHistory deleteHistory = A3.delete(UserTest.BADA);

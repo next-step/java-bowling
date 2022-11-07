@@ -1,10 +1,8 @@
 package qna.domain;
 
-import qna.CannotDeleteException;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+
+import static java.util.stream.Collectors.toUnmodifiableList;
 
 public class Answers {
     private final List<Answer> answers;
@@ -13,12 +11,10 @@ public class Answers {
         this.answers = answers;
     }
 
-    public List<DeleteHistory> delete(User deleteBy) throws CannotDeleteException {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        for (Answer answer : answers) {
-            deleteHistories.add(answer.delete(deleteBy));
-        }
-        return Collections.unmodifiableList(deleteHistories);
+    public List<DeleteHistory> delete(User deleteBy) {
+        return answers.stream()
+                .map(answer -> answer.delete(deleteBy))
+                .collect(toUnmodifiableList());
     }
 
 }

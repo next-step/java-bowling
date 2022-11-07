@@ -52,7 +52,7 @@ public class Question extends ArticleEntity {
         return writer.equals(loginUser);
     }
 
-    public List<DeleteHistory> delete(User deletedBy) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User deletedBy) {
         if (!isOwner(deletedBy)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
