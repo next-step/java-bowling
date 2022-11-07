@@ -35,7 +35,7 @@ public class NormalFrame extends Frame {
 
     public Frame nextFrame() {
         if (frameNo == LAST_FRAME_NO && isFinished()) {
-            return new FinalFrame();
+            return FinalFrame.init();
         }
         if (isFinished()) {
             return new NormalFrame(frameNo + 1);

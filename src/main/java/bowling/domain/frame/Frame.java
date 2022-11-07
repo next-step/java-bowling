@@ -13,9 +13,7 @@ public abstract class Frame {
         return null;
     }
 
-    Status getStatus() {
-        return status;
-    }
+    public abstract Status getStatus();
 
     public abstract Boolean isFinished();
 
