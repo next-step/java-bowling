@@ -1,52 +1,99 @@
 package bowling.domain;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.*;
 
 public class Bowling {
 
-    private final Map<Position, BowlingRound> rounds = new HashMap<>();
+    private final BowlingRounds rounds = new BowlingRounds();
 
-    private Position currentPosition;
+    private Position calculatePosition;
 
     public Bowling() {
-        this(1);
+        this.calculatePosition = new Position(1);
     }
 
-    public Bowling(int position) {
-        Position startPosition = new Position(position);
-        this.rounds.put(startPosition, new BowlingRound(position));
-        this.currentPosition = startPosition;
+
+    public ScoreResult play(int numberOfPins) {
+        rounds.addKnockDownPins(numberOfPins);
+        return calculateScore(new ScoreResult());
     }
 
-    public void play(int numberOfPins) {
-        BowlingRound round = currentRound();
-        round.addKnockDownPins(numberOfPins);
-        if (round.isNextRound()) {
-            Position nextPosition  = currentPosition.next();
-            BowlingRound nextRound = round.next();
-            currentPosition = nextPosition;
-            rounds.put(nextPosition, nextRound);
+    private ScoreResult calculateScore(ScoreResult scoreResult) {
+        rounds.findRoundByPosition(calculatePosition)
+                .ifPresent((round) -> {
+                    calculateWithOutBonus(scoreResult, round);
+                    Position nextPosition = calculatePosition.next();
+                    calculateWithBonus(scoreResult, nextPosition, round);
+                });
+        return scoreResult;
+
+    }
+
+    private void calculateWithOutBonus(ScoreResult scoreResult, BowlingRound round) {
+        if (!round.isSelfCalculable()) {
+            return;
+        }
+        increaseCalculatePosition();
+        scoreResult.addScore(round.sumScores());
+    }
+
+
+    private void calculateWithBonus(ScoreResult scoreResult, Position nextPosition, BowlingRound previousRound) {
+        rounds.findRoundByPosition(nextPosition)
+                .ifPresent((round) -> calculateWithBonus(scoreResult, round, previousRound, nextPosition));
+    }
+
+    private void calculateWithBonus(ScoreResult scoreResult, BowlingRound round, BowlingRound previousRound, Position position) {
+        if (previousRound.containsSpare() && round.hasScore()) {
+            addSpareBonus(scoreResult, round);
+        }
+        if (previousRound.containsStrike() && round.hasTwoScore()) {
+            addSingleStrikeBonus(scoreResult, round);
+        }
+        if (previousRound.containsStrike() && round.isFirstScoreStrike()) {
+            addDoubleStrikeBonus(scoreResult, position);
         }
     }
 
-    public boolean isFinish() {
-        return currentRound().isFinish();
+    private void addSpareBonus(ScoreResult scoreResult, BowlingRound nextRound) {
+        increaseCalculatePosition();
+        scoreResult.addScore(nextRound.spareBonus());
+    }
+
+    private void addSingleStrikeBonus(ScoreResult scoreResult, BowlingRound nextRound) {
+        increaseCalculatePosition();
+        scoreResult.addScore(nextRound.sumScores() + 10);
+        calculateScore(scoreResult);
+    }
+
+    private void increaseCalculatePosition() {
+        calculatePosition = calculatePosition.next();
+    }
+
+    private void addDoubleStrikeBonus(ScoreResult scoreResult, Position position) {
+        Position nextPosition = position.next();
+        rounds.findRoundByPosition(nextPosition)
+                .ifPresent((round) -> addDoubleStrikeBonus(scoreResult, round));
+    }
+
+    private void addDoubleStrikeBonus(ScoreResult scoreResult, BowlingRound round) {
+        if (!round.hasScore()) {
+            return;
+        }
+        increaseCalculatePosition();
+        scoreResult.addScore(round.doubleStrikeBonus());
     }
 
 
+    public boolean isFinish() {
+        return rounds.isFinish();
+    }
+
     public BowlingRound currentRound() {
-        return rounds.get(currentPosition);
+        return rounds.currentRound();
     }
 
     public Map<Position, BowlingRound> getRounds() {
-        return rounds.entrySet()
-                .stream()
-                .collect(toMap(Entry::getKey, Entry::getValue));
+        return rounds.getRounds();
     }
-
 }

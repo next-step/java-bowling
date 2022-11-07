@@ -33,4 +33,5 @@ class ScoreTest {
         assertThat(new Score(scoreA).sum(new Score(scoreB))).isEqualTo(new Score(sumScore));
     }
 
+
 }

@@ -2,6 +2,8 @@ package bowling.view;
 
 import bowling.domain.*;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
@@ -36,13 +38,40 @@ public class OutputView {
     }
 
 
-    public static void printScore(Bowling bowling, Username username) {
+    public static void printScore(Bowling bowling, Username username, List<ScoreResult> scoreResults) {
         System.out.println(roundTemplate);
         System.out.print(TEMPLATE_SEPARATOR + createTemplateUnit(username.getName()));
+        printPin(bowling);
+        System.out.print("\n" + TEMPLATE_SEPARATOR + createTemplateUnit(""));
+        printScore(scoreResults);
+    }
+
+    private static void printPin(Bowling bowling) {
         IntStream.range(1, BowlingRound.LAST_ROUND_NUM + 1)
                 .mapToObj((roundNum) -> getTemplateUnit(bowling, roundNum))
                 .forEach(System.out::print);
     }
+
+    private static void printScore(List<ScoreResult> scoreResults) {
+        Integer[] result = cumulativeSum(scoreResults);
+        IntStream.range(0, BowlingRound.LAST_ROUND_NUM)
+                .mapToObj((scoreIndex) -> {
+                    if (scoreIndex < result.length) {
+                        return createTemplateUnit(result[scoreIndex] + "");
+                    }
+                    return createTemplateUnit("");
+                })
+                .forEach(System.out::print);
+    }
+
+    private static Integer[] cumulativeSum(List<ScoreResult> scoreResults) {
+        Integer[] result = scoreResults.stream()
+                .flatMap(scoreResult -> scoreResult.getScores().stream())
+                .toArray(Integer[]::new);
+        Arrays.parallelPrefix(result, Integer::sum);
+        return result;
+    }
+
 
     private static String getTemplateUnit(Bowling bowling, int roundNum) {
         BowlingRound round = getBowlingRound(bowling, roundNum);

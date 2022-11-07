@@ -1,11 +1,8 @@
 package bowling.domain;
 
-import java.util.List;
-
 public class BowlingRound {
     public static final int LAST_ROUND_NUM = 10;
     private final int roundNumber;
-
     private final Scores scores = new Scores();
 
     public BowlingRound(int roundNumber) {
@@ -47,7 +44,40 @@ public class BowlingRound {
         return scores;
     }
 
-    public boolean containsScore(List<Score> scores){
-        return this.scores.containsAll(scores);
+    public int sumScores() {
+        return this.scores.sum();
+    }
+
+    public boolean containsStrike() {
+        return scores.containsStrike();
+    }
+
+    public boolean containsSpare() {
+        return scores.containsSpare();
+    }
+
+    public boolean isSelfCalculable() {
+        return (this.isLastRound() && scores.isLastRoundEnd()) ||
+                (!scores.containsSpare() && !scores.containsStrike() && scores.isNormalRoundEnd());
+    }
+
+    public boolean hasScore() {
+        return this.scores.hasScore();
+    }
+
+    public boolean hasTwoScore() {
+        return this.scores.hasTwoScore();
+    }
+
+    public boolean isFirstScoreStrike() {
+        return scores.isFirstScoreStrike();
+    }
+
+    public Integer spareBonus() {
+        return scores.spareBonus();
+    }
+
+    public Integer doubleStrikeBonus() {
+        return scores.doubleStrikeBonus();
     }
 }

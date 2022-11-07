@@ -4,7 +4,8 @@ import java.util.Objects;
 
 public class Position {
 
-    private int position = 0;
+    private final int position;
+
 
     public Position(int position) {
         this.position = position;
@@ -14,11 +15,14 @@ public class Position {
         return new Position(position + 1);
     }
 
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Position position1 = (Position) o;
         return position == position1.position;
     }
@@ -27,4 +31,5 @@ public class Position {
     public int hashCode() {
         return Objects.hash(position);
     }
+
 }

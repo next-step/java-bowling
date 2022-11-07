@@ -2,13 +2,15 @@ package bowling;
 
 import bowling.domain.Bowling;
 import bowling.domain.BowlingRound;
+import bowling.domain.ScoreResult;
 import bowling.domain.Username;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BowlingApp {
 
@@ -19,11 +21,13 @@ public class BowlingApp {
             Username username = new Username(inputView.getUsername());
 
             Bowling bowling = new Bowling();
+            List<ScoreResult> results = new ArrayList<>();
             while (!bowling.isFinish()) {
                 BowlingRound round = bowling.currentRound();
                 OutputView.printPinAskQst(round);
-                getKnockedDownPins(inputView, bowling);
-                OutputView.printScore(bowling, username);
+                ScoreResult scoreResult = getKnockedDownPins(inputView, bowling);
+                results.add(scoreResult);
+                OutputView.printScore(bowling, username, results);
             }
         } catch (IllegalArgumentException e) {
             OutputView.printConsole(e.getMessage());
@@ -31,13 +35,16 @@ public class BowlingApp {
             throw new RuntimeException(e);
         }
     }
-    private static void getKnockedDownPins(InputView inputView, Bowling bowling) throws IOException {
+
+    private static ScoreResult getKnockedDownPins(InputView inputView, Bowling bowling) {
         try {
             Integer knockDownPinNumber = inputView.getKnockDownPinNumber();
-            bowling.play(knockDownPinNumber);
+            return bowling.play(knockDownPinNumber);
         } catch (IllegalArgumentException e) {
             OutputView.printConsole(e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
+        throw new AssertionError();
     }
-
 }

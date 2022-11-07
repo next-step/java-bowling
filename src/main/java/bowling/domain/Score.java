@@ -18,6 +18,10 @@ public class Score implements Comparable<Score> {
         return new Score(this.score + score.score);
     }
 
+    public Integer sum(int score) {
+        return this.score + score;
+    }
+
     public boolean isGutter() {
         return score == MIN_SCORE;
     }
