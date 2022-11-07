@@ -29,4 +29,21 @@ public class QuestionTest {
         }).isInstanceOf(CannotDeleteException.class);
     }
 
+    @Test
+    @DisplayName("질문과 답변 삭제 성공")
+    void test3() {
+        Q3.addAnswer(new Answer(UserTest.BADA, Q3, "content"));
+        List<DeleteHistory> deleteHistory = Q3.delete(UserTest.BADA);
+        assertThat(deleteHistory).containsExactly(new DeleteHistory(ContentType.QUESTION, 1L, UserTest.BADA), new DeleteHistory(ContentType.ANSWER, null, UserTest.BADA));
+    }
+
+    @Test
+    @DisplayName("질문과 답변 삭제 실패 : 답변자와 삭제자가 다를 경우")
+    void test4() {
+        assertThatThrownBy(() -> {
+            Q3.addAnswer(new Answer(UserTest.JAVAJIGI, Q3, "content"));
+            Q3.delete(UserTest.BADA);
+        }).isInstanceOf(CannotDeleteException.class);
+    }
+
 }
