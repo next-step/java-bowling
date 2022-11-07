@@ -80,9 +80,8 @@ public class Question extends AbstractEntity {
 		}
 	}
 
-	public Question setDeleted(boolean deleted) {
-		this.deleted = deleted;
-		return this;
+	public void delete() {
+		this.deleted = true;
 	}
 
 	public boolean isDeleted() {
@@ -100,5 +99,4 @@ public class Question extends AbstractEntity {
 		return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents
 			+ ", writer=" + writer + "]";
 	}
-
 }
