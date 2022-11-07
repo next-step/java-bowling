@@ -45,4 +45,11 @@ public class QuestionTest {
         Q1.delete();
         assertThat(Q1.isDeleted()).isEqualTo(true);
     }
+
+    @Test
+    @DisplayName("Answers 논리 삭제 구현")
+    void deletedAnswers(){
+        Q1.deleteAnswer();
+        assertThat(Q1.isAnswersDeleted()).isEqualTo(true);
+    }
 }
