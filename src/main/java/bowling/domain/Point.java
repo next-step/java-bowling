@@ -24,7 +24,7 @@ public class Point {
     }
 
     public static Point start() {
-        return null;
+        return new Point(null);
     }
 
 
