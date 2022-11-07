@@ -1,13 +1,10 @@
 package bowling.domain;
 
-import bowling.dto.BowlingRecord;
-import bowling.dto.FrameRecord;
 import bowling.domain.frame.Frames;
-import bowling.domain.state.StateType;
+import bowling.domain.state.Running;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,16 +17,21 @@ class FramesTest {
     void perfect_game() {
         //given
         Frames frames = new Frames();
+
         //when
         IntStream.range(0, 12)
-                .forEach(i -> frames.bowl(range -> new Pin(10)));
-        List<FrameRecord> gameFrameRecord = BowlingRecord.of(frames, new Pin(10), new PlayerName("aaa")).getFrameRecords();
+                .forEach(i -> {
+                    frames.bowl(range -> new Pin(10));
+                    if (!frames.isFinished()) {
+                        frames.next();
+                    }
+                });
+
         //then
         assertAll(
                 () -> assertThat(frames.isFinished()).isTrue(),
                 () -> assertThat(frames.getFrameNumber()).isEqualTo(10),
-                () -> assertThat(gameFrameRecord).hasSize(10),
-                () -> assertThat(gameFrameRecord.get(gameFrameRecord.size()-1).getPoint()).isEqualTo(300)
+                () -> assertThat(frames.getFrames().get(9).calculatePoint()).isEqualTo(300)
         );
 
     }
@@ -41,13 +43,12 @@ class FramesTest {
         Frames frames = new Frames();
         //when
         Pin now = frames.bowl(range -> new Pin(5));
-        List<FrameRecord> gameFrameRecord = BowlingRecord.of(frames, now, new PlayerName("aaa")).getFrameRecords();
         //then
         assertAll(
                 () -> assertThat(frames.isFinished()).isFalse(),
                 () -> assertThat(frames.getFrameNumber()).isEqualTo(1),
-                () -> assertThat(gameFrameRecord.get(0).getState()).isEqualTo(StateType.RUNNING),
-                () -> assertThat(gameFrameRecord.get(0).getScores()).isEqualTo(List.of(5))
+                () -> assertThat(frames.getFrames().get(0).getState()).isInstanceOf(Running.class),
+                () -> assertThat(frames.getFrames().get(0).calculatePoint()).isEqualTo(5)
         );
 
     }
