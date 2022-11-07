@@ -15,19 +15,13 @@ public class AnswerTest {
     @Test
     @DisplayName("답변 삭제 성공")
     void test1() {
-        // given
-        // when
         DeleteHistory deleteHistory = A3.delete(UserTest.BADA);
-        // then
         assertThat(deleteHistory).isEqualTo(new DeleteHistory(ContentType.ANSWER, 1L, UserTest.BADA));
     }
 
     @Test
     @DisplayName("답변 삭제 실패 : 답변자가 삭제자와 다를 경우")
     void test2() {
-        // given
-        // when
-        // then
         assertThatThrownBy(() -> {
             A3.delete(UserTest.JAVAJIGI);
         }).isInstanceOf(CannotDeleteException.class);

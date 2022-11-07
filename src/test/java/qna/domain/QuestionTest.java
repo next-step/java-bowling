@@ -17,19 +17,13 @@ public class QuestionTest {
     @Test
     @DisplayName("질문 삭제 성공")
     void test() {
-        // given
         List<DeleteHistory> deleteHistory = Q3.delete(UserTest.BADA);
-        // when
-        // then
         assertThat(deleteHistory).containsExactly(new DeleteHistory(ContentType.QUESTION, 1L, UserTest.BADA));
     }
 
     @Test
     @DisplayName("질문 삭제 실패 : 질문자와 삭제자가 다를 경우")
     void test2() {
-        // given
-        // when
-        // then
         assertThatThrownBy(() -> {
             Q1.delete(UserTest.BADA);
         }).isInstanceOf(CannotDeleteException.class);
