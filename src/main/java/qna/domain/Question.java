@@ -1,15 +1,23 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+
 import org.hibernate.annotations.Where;
 import org.springframework.context.ApplicationEventPublisher;
 
 import qna.CannotDeleteException;
-
-import javax.persistence.*;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -93,7 +101,7 @@ public class Question extends AbstractEntity {
 		return answers;
 	}
 
-	public void delete(User loginUser, ApplicationEventPublisher eventPublisher) throws CannotDeleteException {
+	public void delete(User loginUser, ApplicationEventPublisher eventPublisher) {
 		if (!isOwner(loginUser)) {
 			throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
 		}
@@ -102,7 +110,7 @@ public class Question extends AbstractEntity {
 		eventPublisher.publishEvent(new QuestionDeleteEvent(this));
 	}
 
-	private void deleteAnswers(User loginUser, ApplicationEventPublisher eventPublisher) throws CannotDeleteException {
+	private void deleteAnswers(User loginUser, ApplicationEventPublisher eventPublisher) {
 		for (Answer answer : answers) {
 			answer.delete(loginUser, eventPublisher);
 		}
