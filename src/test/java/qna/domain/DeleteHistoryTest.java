@@ -11,16 +11,21 @@ public class DeleteHistoryTest {
 
 	@Test
 	@DisplayName("question 삭제 기록을 남긴다")
-	void deleteQuestionHistory(){
+	void deleteQuestionHistory() {
 		Assertions.assertThat(questionHistory(Q1))
 			.isInstanceOf(DeleteHistory.class);
 	}
 
 	@Test
 	@DisplayName("answer 삭제 기록을 남긴다")
-	void deleteAnswerHistory(){
-		Assertions.assertThat(answerHistory(Q1))
-			.isInstanceOf(DeleteHistory.class);
+	void deleteAnswerHistory() {
+		DeleteHistories deleteHistories = new DeleteHistories();
+		Q1.addAnswer(new Answer(User.GUEST_USER, Q1, "testAnswer"));
+		deleteHistories.deleteAnswerHistories(Q1);
+
+		Assertions.assertThat(
+				deleteHistories.deleteHistories())
+			.isNotEmpty();
 	}
 
 }

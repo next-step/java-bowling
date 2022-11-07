@@ -2,6 +2,7 @@ package qna.domain;
 
 import java.time.LocalDateTime;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -103,6 +104,12 @@ public class Question extends AbstractEntity {
 
 	public DeleteHistory questionHistory() {
 		return new DeleteHistory(ContentType.QUESTION, this.Id(), writer, LocalDateTime.now());
+	}
+
+	public List<DeleteHistory> answersHistory() {
+		return answers.stream()
+			.map(answer -> answer.answerHistory())
+			.collect(Collectors.toList());
 	}
 
 	public void deleteAnswer(){

@@ -3,7 +3,6 @@ package qna.domain;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import org.hibernate.sql.Delete;
 
 @Entity
 public class DeleteHistory {
