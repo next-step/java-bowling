@@ -38,6 +38,10 @@ public class Score {
         return scoreMap.get(score).score;
     }
 
+    public int value() {
+        return this.score;
+    }
+
     public boolean isStrike() {
         return this.score == SCORE_MAX;
     }

@@ -34,4 +34,12 @@ public class ScoreTest {
                 () -> assertThat(Score.of(10).isStrike()).isTrue()
         );
     }
+
+    @DisplayName("점수 값을 반환한다.")
+    @Test
+    void value() {
+        for (int i = 0; i <= 10; i++) {
+            assertThat(Score.of(i).value()).isEqualTo(i);
+        }
+    }
 }
