@@ -40,7 +40,7 @@ public class OutputView {
             return EMPTY_FORMAT;
         }
         int leftEmptyCount = hits.size() < OFFSET_REFERENCE ? OFFSET_OF_SHORT_FORMAT : OFFSET_OF_LONG_FORMAT;
-        StringBuilder stringBuilder = new StringBuilder(EMPTY.repeat(leftEmptyCount) + formatHit(hits.get(0), 0));
+        StringBuilder stringBuilder = new StringBuilder(EMPTY.repeat(leftEmptyCount) + formatHit(hits.get(0), BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS));
         IntStream.range(1, hits.size())
                 .forEach(i -> stringBuilder.append(SPLITTER)
                         .append(formatHit(hits.get(i), hits.get(i - 1))));
@@ -51,16 +51,16 @@ public class OutputView {
     }
 
     private static String formatHit(int hit, int previousHit) {
-        if (hit == BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS) {
-            return STRIKE;
-        }
-
         if (hit == BowlingGameFrame.MIN_NUMBER_OF_BOWLING_PINS) {
             return GUTTER;
         }
 
         if (hit + previousHit == BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS) {
             return SPARE;
+        }
+
+        if (hit == BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS) {
+            return STRIKE;
         }
 
         return String.valueOf(hit);
