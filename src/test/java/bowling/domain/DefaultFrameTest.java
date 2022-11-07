@@ -20,4 +20,13 @@ public class DefaultFrameTest {
     void validate_sum() {
         assertThatThrownBy(() -> new DefaultFrame(5, 6)).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("첫번째 시도가 스트라이크면 false를 반환한다.")
+    @Test
+    void is_not_remain_chance_strike() {
+        Frame strikeFrame = new DefaultFrame();
+        strikeFrame.addScore(Score.of(10));
+
+        assertThat(strikeFrame.isRemainChance()).isFalse();
+    }
 }

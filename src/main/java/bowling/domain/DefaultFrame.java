@@ -26,6 +26,23 @@ public class DefaultFrame implements Frame {
     }
 
     @Override
+    public void addScore(Score score) {
+        isRemainChance();
+        this.scores.add(score);
+    }
+
+    @Override
+    public boolean isRemainChance() {
+        if (this.scores.size() < 1) {
+            return true;
+        }
+        if (this.scores.get(0).isStrike()) {
+            return false;
+        }
+        return false;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
