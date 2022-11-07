@@ -58,8 +58,8 @@
   * [x] Pins
     * [x] 볼링핀 개수는 0 ~ 10개
   * [ ] Score
-  * [ ] NormalFrame
-    * [ ] 1~9 번 프레임
+  * [x] NormalFrame
+    * [x] 1~9 번 프레임
   * [ ] FinalFrame
     * [ ] 10번 프레임
     * [ ] 2회 안에 스트라이크 or 스페어이면 1번 더 투구 가능
