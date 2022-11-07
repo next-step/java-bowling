@@ -1,9 +1,8 @@
 package bowling.view;
 
+import bowling.domain.state.StateType;
 import bowling.dto.BowlingRecord;
 import bowling.dto.FrameRecord;
-import bowling.domain.frame.FrameType;
-import bowling.domain.state.StateType;
 
 import java.util.List;
 import java.util.Optional;
@@ -88,11 +87,14 @@ public class OutputView {
     }
 
     private static String printBonus(FrameRecord input) {
-        return Optional.ofNullable(input)
-                .filter(frameRecord -> frameRecord.getKind() == FrameType.FINAL)
-                .map(FrameRecord::getBonus)
-                .stream()
-                .map(bonus -> BAR + bonus).collect(Collectors.joining(BLANK));
+
+        if (input.getBonus() == null && input.getBonus().isEmpty()) {
+            return BLANK;
+        }
+
+        return input.getBonus().stream()
+                .map(bonus -> BAR + bonus)
+                .collect(Collectors.joining(BLANK));
     }
 
     private static String getScore(Integer integer) {
