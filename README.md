@@ -19,7 +19,7 @@
 ### 이름
 
 - [ ] 이름을 입력받는다.
-    - [ ] 3글자가 아니면 IllegalArgumentException 예외를 throw 한다.
+    - [x] 3글자가 아니면 IllegalArgumentException 예외를 throw 한다.
     - [ ] 영어가 아니면 IllegalArgumentException 예외를 throw 한다.
 
 ## 입출력
