@@ -20,6 +20,9 @@ public class DefaultFrame implements Frame {
     }
 
     private void validateSum() {
+        if (this.scores.size() < 2) {
+            return;
+        }
         if (this.scores.get(0).value() + this.scores.get(1).value() > MAX_SCORE) {
             throw new IllegalArgumentException();
         }
@@ -27,13 +30,12 @@ public class DefaultFrame implements Frame {
 
     @Override
     public void addScore(Score score) {
-        if (!isRemainChance()) {
-            throw new IllegalArgumentException("남은 기회가 없습니다.");
-        }
-        this.scores.add(score);
-        if (this.scores.size() == 2) {
+        if (isRemainChance()) {
+            this.scores.add(score);
             validateSum();
+            return;
         }
+        throw new IllegalArgumentException("남은 기회가 없습니다.");
     }
 
     @Override
