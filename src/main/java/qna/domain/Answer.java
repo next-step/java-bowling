@@ -6,8 +6,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
-import org.springframework.context.ApplicationEventPublisher;
-
 import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
@@ -75,15 +73,15 @@ public class Answer extends AbstractEntity {
 		this.question = question;
 	}
 
-	public void delete(User loginUser, ApplicationEventPublisher eventPublisher) {
+	public DeleteHistory delete(User loginUser) {
 		if (!isOwner(loginUser)) {
 			throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
 		}
 		this.deleted = true;
-		eventPublisher.publishEvent(new AnswerDeleteEvent(this));
+		return createDeleteHistory();
 	}
 
-	public DeleteHistory createDeleteHistory() {
+	private DeleteHistory createDeleteHistory() {
 		return new DeleteHistory(ContentType.ANSWER, getId(), writer, java.time.LocalDateTime.now());
 	}
 

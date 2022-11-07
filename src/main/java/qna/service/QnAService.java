@@ -2,7 +2,6 @@ package qna.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,25 +13,26 @@ import qna.domain.User;
 
 @Service("qnaService")
 public class QnAService {
-    private static final Logger log = LoggerFactory.getLogger(QnAService.class);
+	private static final Logger log = LoggerFactory.getLogger(QnAService.class);
 
-    private final QuestionRepository questionRepository;
-    private final ApplicationEventPublisher eventPublisher;
+	private final QuestionRepository questionRepository;
+	private final DeleteHistoryService deleteHistoryService;
 
-    public QnAService(QuestionRepository questionRepository, ApplicationEventPublisher eventPublisher) {
-        this.questionRepository = questionRepository;
-        this.eventPublisher = eventPublisher;
-    }
+	public QnAService(final QuestionRepository questionRepository,
+		final DeleteHistoryService deleteHistoryService) {
+		this.questionRepository = questionRepository;
+		this.deleteHistoryService = deleteHistoryService;
+	}
 
-    @Transactional(readOnly = true)
-    public Question findQuestionById(Long id) {
-        return questionRepository.findByIdAndDeletedFalse(id)
-                .orElseThrow(NotFoundException::new);
-    }
+	@Transactional(readOnly = true)
+	public Question findQuestionById(Long id) {
+		return questionRepository.findByIdAndDeletedFalse(id)
+			.orElseThrow(NotFoundException::new);
+	}
 
-    @Transactional
-    public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
-        Question question = findQuestionById(questionId);
-        question.delete(loginUser, eventPublisher);
-    }
+	@Transactional
+	public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
+		Question question = findQuestionById(questionId);
+		deleteHistoryService.saveAll(question.delete(loginUser));
+	}
 }

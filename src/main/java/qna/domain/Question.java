@@ -15,7 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
 import org.hibernate.annotations.Where;
-import org.springframework.context.ApplicationEventPublisher;
 
 import qna.CannotDeleteException;
 
@@ -101,22 +100,25 @@ public class Question extends AbstractEntity {
 		return answers;
 	}
 
-	public void delete(User loginUser, ApplicationEventPublisher eventPublisher) {
+	public List<DeleteHistory> delete(User loginUser) {
 		if (!isOwner(loginUser)) {
 			throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
 		}
 		this.deleted = true;
-		deleteAnswers(loginUser, eventPublisher);
-		eventPublisher.publishEvent(new QuestionDeleteEvent(this));
+		List<DeleteHistory> answersDeletedHistories = deleteAnswers(loginUser);
+		answersDeletedHistories.add(createDeleteHistory());
+		return answersDeletedHistories;
 	}
 
-	private void deleteAnswers(User loginUser, ApplicationEventPublisher eventPublisher) {
+	private List<DeleteHistory> deleteAnswers(User loginUser) {
+		List<DeleteHistory> result = new ArrayList<>();
 		for (Answer answer : answers) {
-			answer.delete(loginUser, eventPublisher);
+			result.add(answer.delete(loginUser));
 		}
+		return result;
 	}
 
-	public DeleteHistory createDeleteHistory() {
+	private DeleteHistory createDeleteHistory() {
 		return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
 	}
 
