@@ -42,22 +42,22 @@ public class QuestionTest {
         Question question = question(123L, UserTest.JAVAJIGI, UserTest.JAVAJIGI, UserTest.JAVAJIGI);
         assertThatThrownBy(() -> question.delete(UserTest.SANJIGI)).isInstanceOf(CannotDeleteException.class).hasMessage("질문을 삭제할 권한이 없습니다.");
     }
-    
-    public static Question question(long contentId, User questionWriter, User... answerWriters) {
-        Question question = question(contentId, questionWriter);
-        for (Answer answer : answers(answerWriters)) {
-            question.addAnswer(answer);
-        }
-        return question;
-    }
-    
-    private static Question question(long contentId, User writer) {
+
+    public static Question question(long contentId, User writer) {
         Question question = new Question("title", "contents").writeBy(writer);
         question.setId(contentId);
         return question;
     }
+
+    private static List<Answer> answers(User questionWriter, User... answerWriters) {
+        return Arrays.stream(answerWriters).map(writer -> answer(questionWriter, writer)).collect(Collectors.toList());
+    }
     
-    private static List<Answer> answers(User... writers) {
-        return Arrays.stream(writers).map(writer -> new Answer(writer)).collect(Collectors.toList());
+    private static Question question(long contentId, User questionWriter, User... answerWriters) {
+        Question question = question(contentId, questionWriter);
+        for (Answer answer : answers(questionWriter, answerWriters)) {
+            question.addAnswer(answer);
+        }
+        return question;
     }
 }
