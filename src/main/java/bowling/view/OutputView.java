@@ -5,16 +5,17 @@ import bowling.dto.FrameRecord;
 import bowling.domain.frame.FrameType;
 import bowling.domain.state.StateType;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class OutputView {
 
-    private static final String FORMAT_BOWL = "%d프레임 투구 : %d%n";
     private static final String FORMAT_FRAME_NUMBER = "   %02d   ";
     private static final String FORMAT_FRAME = " %5s  ";
     private static final String FORMAT_RECORD = "| %6s |%s|%n";
+    private static final String FORMAT_BOWL_NOW = "%s's turn : %d";
 
     private static final String BAR = "|";
     private static final String STRIKE = "X";
@@ -26,15 +27,9 @@ public class OutputView {
 
     }
 
-    public static void print(BowlingRecord bowlingRecord) {
-        System.out.printf(FORMAT_BOWL, bowlingRecord.getNth(), bowlingRecord.getNowPin());
+    public static void print(List<BowlingRecord> bowlingRecords) {
         printHeader();
-        printFrameRecord(bowlingRecord);
-    }
-
-    public static void printStart(BowlingRecord bowlingRecord) {
-        printHeader();
-        printFrameRecord(bowlingRecord);
+        bowlingRecords.forEach(OutputView::printFrameRecord);
     }
 
     private static void printFrameRecord(BowlingRecord bowlingRecord) {
@@ -123,5 +118,10 @@ public class OutputView {
         return Optional.ofNullable(point)
                 .map(String::valueOf)
                 .orElse(BLANK);
+    }
+
+    public static void printBowlNow(String playerName, int now) {
+        String bowlNow = String.format(FORMAT_BOWL_NOW, playerName, now);
+        System.out.println(bowlNow);
     }
 }
