@@ -1,6 +1,6 @@
 package qna.domain;
 
-import java.util.function.Predicate;
+import java.time.LocalDateTime;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -96,7 +96,11 @@ public class Question extends AbstractEntity {
 
 	@Override
 	public String toString() {
-		return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents
+		return "Question [id=" + Id() + ", title=" + title + ", contents=" + contents
 			+ ", writer=" + writer + "]";
+	}
+
+	public DeleteHistory questionHistory() {
+		return new DeleteHistory(ContentType.QUESTION, this.Id(), writer, LocalDateTime.now());
 	}
 }
