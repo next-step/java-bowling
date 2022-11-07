@@ -60,13 +60,13 @@ public class Question extends AbstractEntity {
     }
 
 
-    public DeleteHistories delete(User loginUser, long questionId) throws CannotDeleteException {
-        isCanDelete(loginUser);
+    public DeletedHistories delete(User loginUser, long questionId) throws CannotDeleteException {
+        validate(loginUser);
         this.deleted = true;
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, this.writer, LocalDateTime.now()));
         deleteHistories.add(deleteAnswer(questionId));
-        return new DeleteHistories(deleteHistories);
+        return new DeletedHistories(deleteHistories);
     }
 
     private DeleteHistory deleteAnswer(long questionId) {
@@ -76,7 +76,7 @@ public class Question extends AbstractEntity {
         return new DeleteHistory(ContentType.ANSWER, questionId, this.writer, LocalDateTime.now());
     }
 
-    private void isCanDelete(User loginUser) throws CannotDeleteException {
+    private void validate(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
