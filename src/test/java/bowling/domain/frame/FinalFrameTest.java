@@ -47,7 +47,8 @@ class FinalFrameTest {
     void isFinished_true2() {
         Frame frame = FinalFrame.init();
         frame.bowl(new Pin(7));
-        frame.bowl(new Pin(2));
+        frame.bowl(new Pin(3));
+        frame.bowl(new Pin(9));
 
         assertThat(frame.isFinished()).isTrue();
     }

@@ -1,10 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pin;
-import bowling.domain.status.Ready;
-import bowling.domain.status.Spare;
-import bowling.domain.status.Status;
-import bowling.domain.status.Strike;
+import bowling.domain.status.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +49,14 @@ public class FinalFrame extends Frame {
 
     @Override
     public Boolean isFinished() {
-        return statuses.get(statuses.size() - 1).isFinished();
+        if (statuses.size() == 1 && statuses.get(0) instanceof Miss) return true;
+        if (statuses.size() == 2 && statuses.get(0) instanceof Spare && statuses.get(1) instanceof FirstBowl) return true;
+        if (statuses.size() == 2 && statuses.get(0) instanceof Strike && statuses.get(1) instanceof Spare) return true;
+        if (statuses.size() == 2 && statuses.get(0) instanceof Strike && statuses.get(1) instanceof Miss) return true;
+        return false;
+    }
+
+    public List<Status> getStatuses() {
+        return statuses;
     }
 }

@@ -34,7 +34,7 @@ public class Frames {
 
     public Frames addNextFrame(Frame frame) {
         List<Frame> newFrames = new ArrayList<>(this.frames);
-        if (frame.isFinished()) {
+        if (!frame.isFinalFrame() && frame.isFinished()) {
             Frame nextFrame = frame.nextFrame();
             newFrames.add(nextFrame);
         }
