@@ -36,14 +36,10 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
         hits.add(hit);
     }
 
-    @Override
-    public int size() {
-        return hits.size();
-    }
-
-    @Override
-    public int get(int index) {
-        return hits.get(index);
+    private void validateState() {
+        if (isEnded()) {
+            throw new IllegalStateException("프레임이 종료되어 더 이상 투구 할 수 없습니다.");
+        }
     }
 
     private void validateHitIsNegative(int hit) {
@@ -63,10 +59,14 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
         }
     }
 
-    private void validateState() {
-        if (isEnded()) {
-            throw new IllegalStateException("프레임이 종료되어 더 이상 투구 할 수 없습니다.");
-        }
+    @Override
+    public int size() {
+        return hits.size();
+    }
+
+    @Override
+    public int get(int index) {
+        return hits.get(index);
     }
 
     @Override
@@ -87,23 +87,18 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
                 && sumOfRemainedPins() < BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS;
     }
 
+    @Override
+    public int getRemainedPins() {
+        return BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS - sumOfRemainedPins() % BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS;
+    }
+
     private int sumOfRemainedPins() {
         return hits.stream()
                 .reduce(0, Integer::sum);
     }
 
     @Override
-    public boolean isOnGoing() {
-        return !isEnded();
-    }
-
-    @Override
     abstract public boolean isEnded();
-
-    @Override
-    public int getRemainedPins() {
-        return BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS - sumOfRemainedPins() % BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS;
-    }
 
     @Override
     public boolean equals(Object o) {

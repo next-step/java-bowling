@@ -17,7 +17,9 @@ public interface BowlingGameFrame {
 
     boolean isMiss();
 
-    boolean isOnGoing();
+    default boolean isOnGoing() {
+        return !isEnded();
+    }
 
     boolean isEnded();
 
