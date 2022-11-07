@@ -5,7 +5,6 @@ import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 public class Answer extends AbstractEntity {
