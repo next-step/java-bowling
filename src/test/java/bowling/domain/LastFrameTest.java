@@ -20,4 +20,14 @@ public class LastFrameTest {
     void validate_sum() {
         assertThatThrownBy(() -> new LastFrame(9, 10, 10)).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("첫 번째 프레임이 스트라이크가 아니고 두번째 프레임 결과가 스페어가 아니면 false를 반환한다.")
+    @Test
+    void is_remain_strike() {
+        LastFrame firstStrikeFrame = new LastFrame();
+        firstStrikeFrame.addScore(Score.of(8));
+        firstStrikeFrame.addScore(Score.of(1));
+
+        assertThatThrownBy(() -> firstStrikeFrame.addScore(Score.of(10))).isInstanceOf(IllegalArgumentException.class);
+    }
 }
