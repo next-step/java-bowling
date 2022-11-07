@@ -14,21 +14,26 @@ public class DefaultFrame implements Frame {
     }
 
     public DefaultFrame(int first, int second) {
-        validateSum(first, second);
         this.scores.add(Score.of(first));
         this.scores.add(Score.of(second));
+        validateSum();
     }
 
-    private void validateSum(int first, int second) {
-        if ((first + second) > MAX_SCORE) {
+    private void validateSum() {
+        if (this.scores.get(0).value() + this.scores.get(1).value() > MAX_SCORE) {
             throw new IllegalArgumentException();
         }
     }
 
     @Override
     public void addScore(Score score) {
-        isRemainChance();
+        if (!isRemainChance()) {
+            throw new IllegalArgumentException("남은 기회가 없습니다.");
+        }
         this.scores.add(score);
+        if (this.scores.size() == 2) {
+            validateSum();
+        }
     }
 
     @Override
@@ -36,8 +41,8 @@ public class DefaultFrame implements Frame {
         if (this.scores.size() < 1) {
             return true;
         }
-        if (this.scores.get(0).isStrike()) {
-            return false;
+        if (!this.scores.get(0).isStrike() && this.scores.size() < 2) {
+            return true;
         }
         return false;
     }

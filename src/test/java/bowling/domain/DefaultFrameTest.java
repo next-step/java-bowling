@@ -29,4 +29,12 @@ public class DefaultFrameTest {
 
         assertThat(strikeFrame.isRemainChance()).isFalse();
     }
+
+    @DisplayName("첫번째 시도가 스트라이크가 아니고 두 점수의 합이 10을 넘으면 IllegalArgumentException 예외를 throw 한다.")
+    @Test
+    void is_not_remain_chance_size() {
+        Frame strikeFrame = new DefaultFrame();
+        strikeFrame.addScore(Score.of(9));
+        assertThatThrownBy(() -> strikeFrame.addScore(Score.of(2))).isInstanceOf(IllegalArgumentException.class);
+    }
 }
