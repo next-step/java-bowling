@@ -9,13 +9,14 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 class OutputViewTest {
 
     @Test
-    @DisplayName("게임 출력 확인")
-    void print_bowlingGame() {
+    @DisplayName("게임 완료 후 출력 확인")
+    void print_bowlingGame_finish() {
         Player pls = new Player(new PlayerName("pls"));
         pls.play(a -> new Pin(10));
         pls.next();
@@ -71,5 +72,19 @@ class OutputViewTest {
         OutputView.print(list);
     }
 
+    @Test
+    @DisplayName("게임 시작 출력")
+    void print_bowling_game_start() {
+        //given
+        List<Player> players = new ArrayList<>();
+        players.add(new Player(new PlayerName("aaa")));
+        players.add(new Player(new PlayerName("bbb")));
+        //when
+
+        //then
+        List<BowlingRecord> records = players.stream().map(BowlingRecord::of)
+                .collect(Collectors.toUnmodifiableList());
+        OutputView.print(records);
+    }
 
 }

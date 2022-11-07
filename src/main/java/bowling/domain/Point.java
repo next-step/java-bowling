@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import java.util.Optional;
-
 public class Point {
 
     private Point before;
@@ -16,15 +14,17 @@ public class Point {
         this.now += pin.getValue();
     }
 
-    public int point() {
-        return Optional.ofNullable(before)
-                .map(Point::point)
-                .orElse(0)
-                + now;
+    public Integer point() {
+
+        if (before == null) {
+            return null;
+        }
+
+        return before.point() + now;
     }
 
     public static Point start() {
-        return new Point(null);
+        return null;
     }
 
 
