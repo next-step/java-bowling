@@ -1,7 +1,6 @@
 package bowling.dto;
 
-import bowling.domain.Pin;
-import bowling.domain.PlayerName;
+import bowling.domain.Player;
 import bowling.domain.frame.Frames;
 
 import java.util.List;
@@ -10,32 +9,18 @@ import java.util.stream.Collectors;
 public class BowlingRecord {
 
     private final int nth;
-    private final int nowPin;
     private final String playerName;
     private final List<FrameRecord> frameRecords;
 
-    public BowlingRecord(int nth, int nowPin, String playerName, List<FrameRecord> frameRecords) {
+    public BowlingRecord(int nth, String playerName, List<FrameRecord> frameRecords) {
         this.nth = nth;
-        this.nowPin = nowPin;
         this.playerName = playerName;
         this.frameRecords = frameRecords;
     }
 
-    public static BowlingRecord of(Frames frames, Pin now, PlayerName playerName) {
-
-        int frameNth = frames.getFrameNumber();
-
-        List<FrameRecord> records = getFrameRecords(frames);
-
-        return new BowlingRecord(frameNth, now.getValue(), playerName.toString(), records);
-    }
-
-    public static BowlingRecord of(Frames frames, PlayerName playerName) {
-        int frameNth = frames.getFrameNumber();
-
-        List<FrameRecord> records = getFrameRecords(frames);
-
-        return new BowlingRecord(frameNth, 0, playerName.toString(), records);
+    public static BowlingRecord of(Player player) {
+        List<FrameRecord> records = getFrameRecords(player.getFrames());
+        return new BowlingRecord(player.nth(), player.getPlayerName(), records);
     }
 
     private static List<FrameRecord> getFrameRecords(Frames frames) {
@@ -46,19 +31,15 @@ public class BowlingRecord {
 
     }
 
-    public int getNth() {
-        return nth;
-    }
-
-    public int getNowPin() {
-        return nowPin;
-    }
-
     public String getPlayerName() {
         return playerName;
     }
 
     public List<FrameRecord> getFrameRecords() {
         return frameRecords;
+    }
+
+    public int getNth() {
+        return nth;
     }
 }

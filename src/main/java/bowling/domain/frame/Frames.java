@@ -23,7 +23,6 @@ public class Frames {
 
     public Pin bowl(ScoreStrategy scoreStrategy) {
         Pin now = scoreStrategy.getScore(getRemainPins());
-        addFrame();
         calculatePoint(now);
         frames.getLast().bowl(now);
         return now;
@@ -44,7 +43,7 @@ public class Frames {
                 .orElse(MAX_REMAIN_PINS);
     }
 
-    private void addFrame() {
+    public void next() {
 
         if(frames.size() == TOTAL_TURN && frames.getLast().isFinish()){
             throw new UnsupportedOperationException("10 프레임 이상 경기를 진행할 수 없습니다.");
@@ -74,6 +73,10 @@ public class Frames {
 
     public int getFrameNumber() {
         return frames.size();
+    }
+
+    public boolean endOfTurn(){
+        return frames.getLast().isFinish();
     }
 
 }
