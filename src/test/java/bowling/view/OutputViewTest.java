@@ -84,7 +84,7 @@ class OutputViewTest {
         //then
         List<BowlingRecord> records = players.stream().map(BowlingRecord::of)
                 .collect(Collectors.toUnmodifiableList());
-        OutputView.print(records);
+        OutputView.printStart(records);
     }
 
 }

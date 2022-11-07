@@ -25,7 +25,7 @@ public class BowlingGameController {
             players.add(new Player(playerName));
         }
         // 최초 출력
-        OutputView.print(makeRecord(players));
+        OutputView.printStart(makeRecord(players));
         // 게임 진행
         while (!isFinished(players)) {
             playAndPrint(players);

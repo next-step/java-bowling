@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Optional;
+
 public class Point {
 
     private Point before;
@@ -15,12 +17,10 @@ public class Point {
     }
 
     public Integer point() {
-
-        if (before == null) {
-            return null;
-        }
-
-        return before.point() + now;
+        return Optional.ofNullable(before)
+                .map(Point::point)
+                .orElse(0)
+                + now;
     }
 
     public static Point start() {

@@ -26,27 +26,53 @@ public class OutputView {
 
     }
 
+    public static void printStart(List<BowlingRecord> bowlingRecords) {
+        printHeader();
+        bowlingRecords.forEach(record -> {
+            printFrameRecord(record);
+            printPointsStart();
+        } );
+    }
+
     public static void print(List<BowlingRecord> bowlingRecords) {
         printHeader();
-        bowlingRecords.forEach(OutputView::printFrameRecord);
+        bowlingRecords.forEach(record -> {
+            printFrameRecord(record);
+            printPoints(record);
+        } );
     }
 
     private static void printFrameRecord(BowlingRecord bowlingRecord) {
         String headerName = String.format(FORMAT_FRAME, bowlingRecord.getPlayerName());
-        String headerPoint = String.format(FORMAT_FRAME, BLANK);
 
         String records = bowlingRecord.getFrameRecords().stream()
                 .map(record -> String.format(FORMAT_FRAME, printFrameRecord(record)))
                 .collect(Collectors.joining(BAR));
 
+        records = addRestEmptyRecord(records, bowlingRecord.getNth());
+
+        System.out.printf(FORMAT_RECORD, headerName, records);
+    }
+
+    private static void printPoints(BowlingRecord bowlingRecord){
         String points = bowlingRecord.getFrameRecords().stream()
                 .map(record -> String.format(FORMAT_FRAME, printPoint(record.getPoint())))
                 .collect(Collectors.joining(BAR));
 
-        records = addRestEmptyRecord(records, bowlingRecord.getNth());
         points = addRestEmptyRecord(points, bowlingRecord.getNth());
 
-        System.out.printf(FORMAT_RECORD, headerName, records);
+        String headerPoint = String.format(FORMAT_FRAME, BLANK);
+
+        System.out.printf(FORMAT_RECORD, headerPoint, points);
+    }
+
+    private static void printPointsStart(){
+        String points = IntStream.range(0,10)
+                .mapToObj(i -> String.format(FORMAT_FRAME, BLANK))
+                .collect(Collectors.joining(BAR));
+
+        String headerPoint = String.format(FORMAT_FRAME, BLANK);
+
         System.out.printf(FORMAT_RECORD, headerPoint, points);
     }
 
