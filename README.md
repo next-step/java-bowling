@@ -61,6 +61,6 @@
   * [ ] Score
   * [x] NormalFrame
     * [x] 1~9 번 프레임
-  * [ ] FinalFrame
+  * [x] FinalFrame
     * [ ] 10번 프레임
     * [ ] 2회 안에 스트라이크 or 스페어이면 1번 더 투구 가능

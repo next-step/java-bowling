@@ -5,10 +5,11 @@ import java.util.List;
 
 public class ResultView {
 
-    public static void printResult(String name, List<NormalFrame> frames) {
+    public static void printResult(String name, List<NormalFrame> frames, FinalFrame finalFrame) {
         printRoundTemplate();
         printUserName(name);
         printFrames(frames);
+        printLastFrame(finalFrame);
     }
     private static void printRoundTemplate() {
         System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
@@ -37,10 +38,20 @@ public class ResultView {
             }
         }
 
-        int other = 11 - frames.size();
+        int other = 9 - frames.size();
         for (int i = 0; i < other; i++) {
             System.out.print("|      ");
         }
+    }
+
+    private static void printLastFrame(FinalFrame finalFrame) {
+        System.out.print("|");
+        if (finalFrame.getValues().size() == 0) {
+            System.out.print("      ");
+        } else {
+            finalFrame.getValues().forEach(i -> System.out.print(i.getFalledPins()));
+        }
+        System.out.print("|");
         System.out.println();
     }
 }
