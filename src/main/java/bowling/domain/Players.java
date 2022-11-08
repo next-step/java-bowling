@@ -9,4 +9,10 @@ public class Players {
     public Players(List<String> names) {
         names.forEach((name) -> players.add(new Player(name)));
     }
+
+    public Records getRecords() {
+        List<Record> recordList = new ArrayList<>();
+        players.forEach((player) -> recordList.add(new Record(player)));
+        return new Records(recordList);
+    }
 }

@@ -1,40 +1,38 @@
 package bowling.domain;
 
 public class BowlingGame {
-    private final Player player;
-    private final Record record;
+    private final Records records;
 
-    public BowlingGame(Player player) {
-        this.player = player;
-        this.record = new Record(player);
+    public BowlingGame(Players players) {
+        this.records = players.getRecords();
     }
 
     public boolean isEndGame() {
-        return record.isLastFrame() && record.isEndLastFrame();
+        return records.isEndRecords();
     }
 
-    public void doGame(int downPinCount) {
-        record.record(downPinCount);
+    public boolean isEndLastFrame(int laneIndex) {
+        return records.isEndLastFrame(laneIndex);
     }
 
-    public int getFrameRound() {
-        int recordCount = record.getRecordCount();
+    public void doGame(int laneIndex, int downPinCount) {
+        records.record(laneIndex, downPinCount);
+    }
+
+    public int getFrameRound(int laneIndex) {
+        int recordCount = records.getRecordCount(laneIndex);
         if (recordCount == 0) {
             return 1;
         }
 
-        if (record.isEndLastFrame()) {
+        if (records.isEndLastFrame(laneIndex)) {
             return recordCount + 1;
         }
         return recordCount;
     }
 
-    public Record getRecord() {
-        return record;
-    }
-
-    public Player getPlayer() {
-        return player;
+    public Record getRecord(int laneIndex) {
+        return records.getRecord(laneIndex);
     }
 
 }

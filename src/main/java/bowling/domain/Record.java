@@ -31,6 +31,10 @@ public class Record {
         return getRecordCount() >= RuleConfig.NUMBER_OF_FRAME;
     }
 
+    public boolean isEndRecord() {
+        return isLastFrame() && isEndLastFrame();
+    }
+
     public boolean isEndLastFrame() {
         return getLatestFrame().isEndFrame();
     }
