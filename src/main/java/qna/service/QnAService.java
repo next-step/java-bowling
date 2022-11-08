@@ -15,6 +15,7 @@ import java.util.List;
 
 @Service("qnaService")
 public class QnAService {
+
     private static final Logger log = LoggerFactory.getLogger(QnAService.class);
 
     @Resource(name = "questionRepository")
@@ -36,15 +37,8 @@ public class QnAService {
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
         Question question = findQuestionById(questionId);
 
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        List<DeleteHistory> deleteHistories = question.delete(loginUser);
 
-        deleteHistories.add(question.delete(loginUser));
-
-        List<Answer> answers = question.getAnswers();
-        for (Answer answer : answers) {
-            deleteHistories.add(answer.delete(loginUser));
-        }
-        
         deleteHistoryService.saveAll(deleteHistories);
     }
 }

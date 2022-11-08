@@ -1,6 +1,7 @@
 package qna.domain;
 
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import qna.CannotDeleteException;
 
 @Entity
 public class Question extends AbstractEntity {
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -90,22 +92,39 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
-    public DeleteHistory delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
 
+        deleteHistories.add(deleteMe(loginUser));
+        deleteHistories.addAll(deleteAnswer(loginUser));
+
+        return deleteHistories;
+    }
+
+    private DeleteHistory deleteMe(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
 
         setDeleted(true);
-        return new DeleteHistory(
-                        ContentType.QUESTION,
-                        getId(),
-                        getWriter(),
-                        LocalDateTime.now());
+        return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
+    }
+
+    private List<DeleteHistory> deleteAnswer(User loginUser) {
+        return getAnswers().stream()
+                .map(answer -> {
+                    try {
+                        return answer.delete(loginUser);
+                    } catch (CannotDeleteException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
     }
 
     @Override
     public String toString() {
-        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents
+                + ", writer=" + writer + "]";
     }
 }
