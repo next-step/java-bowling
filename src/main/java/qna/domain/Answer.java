@@ -56,7 +56,7 @@ public class Answer extends AbstractEntity {
         return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
     }
 
-    public Answer setDeleted(boolean deleted) {
+    private Answer setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
     }
@@ -65,11 +65,11 @@ public class Answer extends AbstractEntity {
         return deleted;
     }
 
-    public boolean isOwner(User writer) {
+    private boolean isOwner(User writer) {
         return this.writer.equals(writer);
     }
 
-    public User getWriter() {
+    private User getWriter() {
         return writer;
     }
 
