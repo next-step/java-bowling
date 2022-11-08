@@ -6,7 +6,7 @@ public class BowlingGame {
 
     public BowlingGame(Player player) {
         this.player = player;
-        this.record = new Record();
+        this.record = new Record(player);
     }
 
     public boolean isEndGame() {

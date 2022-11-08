@@ -8,6 +8,11 @@ import java.util.List;
 
 public class Record {
     private final List<Frame> frames = new ArrayList<>();
+    private final Player player;
+
+    public Record(Player player) {
+        this.player = player;
+    }
 
     public List<Frame> getFrames() {
         return frames;
