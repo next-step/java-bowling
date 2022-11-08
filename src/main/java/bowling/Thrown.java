@@ -1,50 +1,16 @@
 package bowling;
 
-public class Thrown {
+public interface Thrown {
 
-    private final Pins firstPins;
-    private Pins secondPins;
+    boolean isStrike();
 
-    public Thrown(Pins firstPins) {
-        this.firstPins = firstPins;
-    }
+    boolean hasTurn();
 
-    public boolean isStrike() {
-        return firstPins.isMax();
-    }
+    void bowl(int secondPins);
 
-    public boolean hasTurn() {
-        if (isStrike()) {
-            return false;
-        }
+    int getScore();
 
-        if (secondPins != null) {
-            return false;
-        }
+    int firstPins();
 
-        return true;
-    }
-
-    public boolean isSpare() {
-        return secondPins.isMax();
-    }
-
-    public void bowl(int secondPins) {
-        this.secondPins = firstPins.totalPins(secondPins);
-    }
-
-    public int getScore() {
-        if (secondPins == null) {
-            return firstPins.getFalledPins();
-        }
-        return secondPins.getFalledPins();
-    }
-
-    public int firstPins() {
-        return firstPins.getFalledPins();
-    }
-
-    public int secondPins() {
-        return secondPins.getFalledPins();
-    }
+    int secondPins();
 }

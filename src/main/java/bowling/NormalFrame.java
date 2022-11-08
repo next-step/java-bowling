@@ -1,23 +1,21 @@
 package bowling;
 
-import java.util.List;
-
 public class NormalFrame implements Frame {
     private static int MIN_FRAMES = 1;
     private static int MAX_FRAMES = 9;
 
     private int frameNumber;
-    private Thrown thrown;
+    private NorMalThrown norMalThrown;
 
-    private NormalFrame(int frameNumber, Thrown thrown) {
+    private NormalFrame(int frameNumber, NorMalThrown norMalThrown) {
         valid(frameNumber);
         this.frameNumber = frameNumber;
-        this.thrown = thrown;
+        this.norMalThrown = norMalThrown;
     }
 
     public static NormalFrame of(int frameNumber, int countOfPins) {
         Pins pins = Pins.from(countOfPins);
-        return new NormalFrame(frameNumber, new Thrown(pins));
+        return new NormalFrame(frameNumber, new NorMalThrown(pins));
     }
 
     @Override
@@ -30,7 +28,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public int getScore() {
-        return thrown.getScore();
+        return norMalThrown.getScore();
     }
 
     private void valid(int frameNumber) {
@@ -41,7 +39,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame bowl(int countOfPins) {
-        thrown.bowl(countOfPins);
+        norMalThrown.bowl(countOfPins);
         return this;
     }
 
@@ -52,16 +50,16 @@ public class NormalFrame implements Frame {
 
     @Override
     public int firstPins() {
-        return thrown.firstPins();
+        return norMalThrown.firstPins();
     }
 
     @Override
     public int secondPins() {
-        return thrown.secondPins();
+        return norMalThrown.secondPins();
     }
 
     @Override
     public boolean hasTurn() {
-        return thrown.hasTurn();
+        return norMalThrown.hasTurn();
     }
 }

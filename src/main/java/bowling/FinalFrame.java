@@ -1,27 +1,30 @@
 package bowling;
 
-import java.util.List;
-
 public class FinalFrame implements Frame {
 
-    private Thrown thrown;
+    private FinalThrown finalThrown;
     private Pins bonusPins;
 
-    private FinalFrame(Thrown thrown) {
-        this.thrown = thrown;
+    private FinalFrame(FinalThrown finalThrown) {
+        this.finalThrown = finalThrown;
     }
 
     public static FinalFrame of(int countOfPins) {
-        return new FinalFrame(new Thrown(Pins.from(countOfPins)));
+        return new FinalFrame(new FinalThrown(Pins.from(countOfPins)));
+    }
+
+    public Frame bonusBowl(int countOfPins) {
+        bonusPins = Pins.from(countOfPins);
+        return this;
     }
 
     @Override
     public boolean isFinished() {
-        if (bonusPins.getFalledPins() > 0) {
+        if (bonusPins != null) {
             return true;
         }
 
-        if (!thrown.isSpare()) {
+        if (secondPins() != 0 && getScore() != 10) {
             return true;
         }
 
@@ -30,8 +33,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame bowl(int countOfPins) {
-        int totalScore = thrown.getScore() + countOfPins;
-        bonusPins = Pins.from(totalScore);
+        finalThrown.bowl(countOfPins);
         return this;
     }
 
@@ -42,21 +44,24 @@ public class FinalFrame implements Frame {
 
     @Override
     public int getScore() {
-        return thrown.getScore() + bonusPins.getFalledPins();
+        if (bonusPins == null) {
+            return finalThrown.getScore();
+        }
+        return finalThrown.getScore() + bonusPins.getFalledPins();
     }
 
     @Override
     public int firstPins() {
-        return thrown.firstPins();
+        return finalThrown.firstPins();
     }
 
     @Override
     public int secondPins() {
-        return thrown.secondPins();
+        return finalThrown.secondPins();
     }
 
     @Override
     public boolean hasTurn() {
-        return thrown.hasTurn();
+        return finalThrown.hasTurn();
     }
 }

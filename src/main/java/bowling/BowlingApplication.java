@@ -32,9 +32,16 @@ public class BowlingApplication {
                 frames.add(frame);
                 ResultView.printResult(userName, frames);
 
-                while (!frame.isFinished()) {
+                if (frame.isFinished()) {
+                    continue;
+                }
+                score = InputView.inputUserScore(i);
+                frame.bowl(score);
+                ResultView.printResult(userName, frames);
+
+                if (frame.isFinished()) {
                     score = InputView.inputUserScore(i);
-                    frame.bowl(score);
+                    frame.bonusBowl(score);
                     ResultView.printResult(userName, frames);
                 }
             }

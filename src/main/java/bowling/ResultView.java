@@ -1,6 +1,5 @@
 package bowling;
 
-import java.util.Iterator;
 import java.util.List;
 
 public class ResultView {
@@ -45,8 +44,12 @@ public class ResultView {
             return "-";
         }
 
-        if (!frame.hasTurn()) {
+        if (!frame.hasTurn() && !frame.isFinalFrame()) {
             return frame.firstPins() + "|" + frame.secondPins();
+        }
+
+        if (!frame.hasTurn() && frame.isFinalFrame()) {
+            return frame.firstPins() + "|" + frame.secondPins() + "|" + frame.getScore();
         }
 
         return String.valueOf(frame.getScore());
