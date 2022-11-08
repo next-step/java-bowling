@@ -50,7 +50,7 @@ public class Answer extends AbstractEntity {
 		return deleted;
 	}
 
-	public void isWriter(User writer) throws CannotDeleteException {
+	public void validWriter(User writer) throws CannotDeleteException {
 		if (writer != this.writer) {
 			throw new CannotDeleteException("답변자와 질문자가 같지 않습니다");
 		}
@@ -65,7 +65,7 @@ public class Answer extends AbstractEntity {
 	}
 
 	public void delete(User writer) throws CannotDeleteException {
-		isWriter(writer);
+		validWriter(writer);
 		this.deleted = true;
 	}
 

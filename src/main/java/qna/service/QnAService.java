@@ -16,35 +16,34 @@ import java.util.List;
 @Service("qnaService")
 public class QnAService {
 
-	private static final Logger log = LoggerFactory.getLogger(QnAService.class);
+    private static final Logger log = LoggerFactory.getLogger(QnAService.class);
 
-	@Resource(name = "questionRepository")
-	private QuestionRepository questionRepository;
+    @Resource(name = "questionRepository")
+    private QuestionRepository questionRepository;
 
-	@Resource(name = "answerRepository")
-	private AnswerRepository answerRepository;
+    @Resource(name = "answerRepository")
+    private AnswerRepository answerRepository;
 
-	@Resource(name = "deleteHistoryService")
-	private DeleteHistoryService deleteHistoryService;
+    @Resource(name = "deleteHistoryService")
+    private DeleteHistoryService deleteHistoryService;
 
-	@Transactional(readOnly = true)
-	public Question findQuestionById(Long id) {
-		return questionRepository.findByIdAndDeletedFalse(id)
-			.orElseThrow(NotFoundException::new);
-	}
+    @Transactional(readOnly = true)
+    public Question findQuestionById(Long id) {
+        return questionRepository.findByIdAndDeletedFalse(id)
+            .orElseThrow(NotFoundException::new);
+    }
 
-	@Transactional
-	public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
+    @Transactional
+    public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
 
-		Question question = findQuestionById(questionId);
-		DeleteHistories deleteHistories = new DeleteHistories();
+        Question question = findQuestionById(questionId);
+        DeleteHistories deleteHistories = new DeleteHistories();
 
-		question.delete(loginUser);
-		deleteHistories.addHistory(DeleteHistory.questionHistory(question));
+        question.delete(loginUser);
 
-		question.deleteAnswer();
-		deleteHistories.deleteAnswerHistories(question);
+        deleteHistories.addHistory(DeleteHistory.questionHistory(question));
+        deleteHistories.deleteAnswerHistories(question);
 
-		deleteHistoryService.saveAll(deleteHistories);
-	}
+        deleteHistoryService.saveAll(deleteHistories);
+    }
 }
