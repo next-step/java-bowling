@@ -12,6 +12,11 @@ class PinsTest {
     }
 
     @Test
+    void 볼링_캐싱() {
+        assertThat(Pins.from(5) == Pins.from(5)).isTrue();
+    }
+
+    @Test
     void 핀은_0에서_10만_가능() {
         assertThatThrownBy(() -> new Pins(-1))
             .isInstanceOf(IllegalArgumentException.class);
