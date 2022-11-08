@@ -526,4 +526,26 @@ class RecordTest {
         assertThat(record.isReadyFrameScore(0)).isTrue();
     }
 
+    @Test
+    void isEndFrameTest1() {
+        Record record = new Record(new Player(name));
+        assertThat(record.isEndFrame(0)).isFalse();
+    }
+
+    @Test
+    void isEndFrameTest2() {
+        Record record = new Record(new Player(name));
+        record.record(0);
+        assertThat(record.isEndFrame(0)).isFalse();
+    }
+
+    @Test
+    void isEndFrameTest3() {
+        Record record = new Record(new Player(name));
+        record.record(0);
+        record.record(0);
+        assertThat(record.isEndFrame(0)).isTrue();
+    }
+
+
 }
