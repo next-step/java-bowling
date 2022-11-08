@@ -1,15 +1,24 @@
 package qna.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
 import qna.CannotDeleteException;
 import qna.domain.Answer;
+import qna.domain.AnswerRepository;
+import qna.domain.ContentType;
+import qna.domain.DeleteHistory;
 import qna.domain.User;
 
 @Service("answerService")
 public class AnswerService {
+
+	@Resource(name = "answerRepository")
+	private AnswerRepository answerRepository;
 
 	public void checkOwnerOrThrow(User loginUser, List<Answer> answers) {
 		answers.stream()
