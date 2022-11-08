@@ -7,17 +7,19 @@ import java.util.stream.Collectors;
 
 public class ResultView {
     private static String INIT_SCORE_BOARD_STRING = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-    private static String NAME_STRING = "|  %s |";
+    private static String NAME_STRING = "\n|  %s |";
     private static String GUTTER_STRING = "-";
     private static String TOTAL_SCORE_STRING = "\n|      |";
     private static String TOTAL_SCORE_RIGHT_STRING = "  |";
     private static String DOUBLE_BLANK = "  ";
 
     public static void printScoreBoard(BowlingGame game) {
-        System.out.println(INIT_SCORE_BOARD_STRING);
-        System.out.printf(NAME_STRING, game.getPlayer().getName());
-        printPinScore(game.getRecord());
-        printTotalScores(game.getRecord());
+        System.out.print(INIT_SCORE_BOARD_STRING);
+        for (Record record : game.getRecords()) {
+            System.out.printf(NAME_STRING, record.getPlayerName());
+            printPinScore(record);
+            printTotalScores(record);
+        }
         System.out.println();
     }
 
