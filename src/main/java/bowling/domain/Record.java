@@ -6,7 +6,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Records {
+public class Record {
     private final List<Frame> frames = new ArrayList<>();
 
     public List<Frame> getFrames() {

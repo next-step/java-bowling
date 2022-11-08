@@ -16,16 +16,16 @@ public class ResultView {
     public static void printScoreBoard(BowlingGame game) {
         System.out.println(INIT_SCORE_BOARD_STRING);
         System.out.printf(NAME_STRING, game.getPlayer().getName());
-        printPinScore(game.getRecords());
-        printTotalScores(game.getRecords());
+        printPinScore(game.getRecord());
+        printTotalScores(game.getRecord());
         System.out.println();
     }
 
-    private static void printTotalScores(Records records) {
+    private static void printTotalScores(Record record) {
         System.out.print(TOTAL_SCORE_STRING);
         int totalScore;
-        for (int index = 0; records.isReadyFrameScore(index); index++) {
-            totalScore = records.getTotalScore(index);
+        for (int index = 0; record.isReadyFrameScore(index); index++) {
+            totalScore = record.getTotalScore(index);
             System.out.print(DOUBLE_BLANK + getTotalScoreString(totalScore) + TOTAL_SCORE_RIGHT_STRING);
         }
     }
@@ -37,8 +37,8 @@ public class ResultView {
         return "" + totalScore;
     }
 
-    private static void printPinScore(Records records) {
-        for (Frame frame : records.getFrames()) {
+    private static void printPinScore(Record record) {
+        for (Frame frame : record.getFrames()) {
             printScore(frame.getScores());
             printBonusScore(frame);
         }
