@@ -4,8 +4,6 @@ import bowling.domain.pin.FallenPin;
 import bowling.domain.score.Score;
 import bowling.domain.state.FrameState;
 import bowling.domain.state.Ready;
-import bowling.domain.state.Spare;
-import bowling.domain.state.Strike;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +37,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isFinished() {
-        if (firstState() instanceof Strike || firstState() instanceof Spare) {
+        if (firstState().isStrike() || firstState().isSpare()) {
             return totalTries() == BONUS_INCLUDED_TOTAL_TRIES;
         }
 
@@ -53,7 +51,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isReady() {
-        return lastState() instanceof Ready;
+        return lastState().isReady();
     }
 
     @Override

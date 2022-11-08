@@ -7,8 +7,6 @@ import bowling.domain.pin.FallenPin;
 import bowling.domain.player.PlayerName;
 import bowling.domain.score.Score;
 import bowling.domain.state.FrameState;
-import bowling.domain.state.Spare;
-import bowling.domain.state.Strike;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +92,7 @@ public class ResultView {
     }
 
     private static String frameStateString(FrameState frameState) {
-        if (frameState instanceof Strike) {
+        if (frameState.isStrike()) {
             return STRIKE;
         }
 
@@ -104,7 +102,7 @@ public class ResultView {
                 .map(String::valueOf)
                 .collect(toList());
 
-        if (frameState instanceof Spare) {
+        if (frameState.isSpare()) {
             fallenPins.set(frameState.tries() - 1, SPARE);
         }
 

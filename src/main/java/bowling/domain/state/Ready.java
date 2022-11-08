@@ -37,6 +37,11 @@ public class Ready extends Running {
     }
 
     @Override
+    public boolean isReady() {
+        return true;
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other instanceof Ready;
     }

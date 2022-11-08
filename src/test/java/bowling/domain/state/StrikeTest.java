@@ -34,4 +34,14 @@ class StrikeTest {
 
         assertThat(frameState.addScore(previousScore)).isEqualTo(new Score(20, 0));
     }
+
+    @Test
+    void isSpare() {
+        assertThat(new Strike().isSpare()).isFalse();
+    }
+
+    @Test
+    void isStrike() {
+        assertThat(new Strike().isStrike()).isTrue();
+    }
 }

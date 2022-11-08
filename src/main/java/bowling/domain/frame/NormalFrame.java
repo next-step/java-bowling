@@ -54,7 +54,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isReady() {
-        return frameState instanceof Ready;
+        return frameState.isReady();
     }
 
     @Override

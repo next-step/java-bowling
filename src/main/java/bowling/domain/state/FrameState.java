@@ -18,4 +18,10 @@ public interface FrameState {
     Score getScore();
 
     Score addScore(Score previousScore);
+
+    boolean isReady();
+
+    boolean isSpare();
+
+    boolean isStrike();
 }

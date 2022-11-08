@@ -12,6 +12,16 @@ class RunningTest {
         assertThat(running().isFinished()).isFalse();
     }
 
+    @Test
+    void isSpare() {
+        assertThat(running().isSpare()).isFalse();
+    }
+
+    @Test
+    void isStrike() {
+        assertThat(running().isStrike()).isFalse();
+    }
+
     private static Running running() {
         return new FirstBowling(FallenPin.of(9));
     }
