@@ -11,6 +11,7 @@ public class NormalFrame extends Frame {
     private static final int MAX_FRAME_NUMBER = 9;
 
     private State state = new Ready();
+    private Score score = state.getScore();
 
     public NormalFrame() {
         this(1);
@@ -60,7 +61,6 @@ public class NormalFrame extends Frame {
 
     @Override
     public int getIntScore() {
-        Score score = state.getScore();
         if (score.canCalculateScore()) {
             return score.getScore();
         }
