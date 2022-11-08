@@ -75,12 +75,6 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    @Deprecated
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public void delete() {
         deleted = true;
     }
