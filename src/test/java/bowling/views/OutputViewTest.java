@@ -2,6 +2,7 @@ package bowling.views;
 
 import bowling.dto.BowlingGameDto;
 import bowling.dto.BowlingGameFrameDto;
+import bowling.dto.PlayerDto;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -24,7 +25,7 @@ class OutputViewTest {
                         new BowlingGameFrameDto(List.of(1, 9, 10))
                 )
         );
-        OutputView.printBowlingGame("PJS", game);
+        OutputView.printBowlingGame(new PlayerDto("PJS"), game);
     }
 
 }

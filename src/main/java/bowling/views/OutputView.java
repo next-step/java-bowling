@@ -3,6 +3,7 @@ package bowling.views;
 import bowling.domain.BowlingGameFrame;
 import bowling.dto.BowlingGameDto;
 import bowling.dto.BowlingGameFrameDto;
+import bowling.dto.PlayerDto;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -23,9 +24,9 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printBowlingGame(String participant, BowlingGameDto game) {
+    public static void printBowlingGame(PlayerDto player, BowlingGameDto game) {
         System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
-        System.out.printf("|  %s |", participant);
+        System.out.printf("|  %s |", player.getName());
         game.getFrames()
                 .forEach(OutputView::printBowlingGameFrame);
         System.out.print("\n\n");
