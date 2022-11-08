@@ -7,6 +7,7 @@ import java.util.Objects;
 
 public class DefaultFrame implements Frame {
 
+    private static final int DEFAULT_FRAME_SIZE = 2;
     private final List<Score> scores = new ArrayList<>();
 
     public DefaultFrame() {
@@ -31,10 +32,10 @@ public class DefaultFrame implements Frame {
 
     @Override
     public boolean isRemainChance() {
-        if (this.scores.size() < 1) {
+        if (this.scores.isEmpty()) {
             return true;
         }
-        if (!this.scores.get(0).isStrike() && this.scores.size() < 2) {
+        if (!this.scores.get(0).isStrike() && this.scores.size() < DEFAULT_FRAME_SIZE) {
             return true;
         }
         return false;
