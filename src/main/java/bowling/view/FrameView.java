@@ -35,7 +35,7 @@ public class FrameView {
         List<String> contents = getNormalFramesContents(frames);
         contents.add(getFinalFrameContents(frames));
 
-        for (int i = frames.getFramesSize(); i < MAX_FRAME_NO; i++) {
+        for (int i = frames.getCurrentFrameIdx() + 1; i < MAX_FRAME_NO; i++) {
             contents.add(String.format("%7s", BAR_MARK));
         }
 

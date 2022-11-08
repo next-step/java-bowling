@@ -24,8 +24,8 @@ public class Frames {
                 .collect(Collectors.toList());
     }
 
-    public int getFramesSize() {
-        return frames.size();
+    public int getCurrentFrameIdx() {
+        return frames.size() - 1;
     }
 
     public Frame bowl(Pin pin) {
@@ -42,7 +42,7 @@ public class Frames {
     }
 
     public Frame getCurrentFrame() {
-        return frames.get(getFramesSize() - 1);
+        return frames.get(getCurrentFrameIdx());
     }
 
     public boolean isOver() {

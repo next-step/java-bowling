@@ -14,7 +14,7 @@ public class BowlingApplication {
 
         Frames frames = Frames.init();
         while(!frames.isOver()) {
-            Pin pin = InputView.inputCountOfPin(frames.getFramesSize());
+            Pin pin = InputView.inputCountOfPin(frames.getCurrentFrameIdx() + 1);
             Frame frame = frames.bowl(pin);
             printFrameResult(name, frames);
             frames = frames.addNextFrame(frame);
