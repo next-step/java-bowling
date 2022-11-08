@@ -27,28 +27,9 @@ public class FinalFrame extends Frame {
         states.add(new Ready());
     }
 
-    public void bowl(int number) {
-        state = lastState();
-        Pin pin = Pin.of(number);
-
-        if (state.isFinished()) {
-            states.add(new Ready().bowl(pin));
-            return;
-        }
-
-        state = state.bowl(pin);
-        removeLastState();
-        states.add(state);
-    }
-
     @Override
-    public Score calculateAdditionalScore(Score beforeScore) {
-        return state.calculateAdditionalScore(beforeScore);
-    }
-
-    @Override
-    public int getIntScore() {
-        return getFirstScore().getScore();
+    public boolean isLastFrame() {
+        return true;
     }
 
     @Override
@@ -56,7 +37,35 @@ public class FinalFrame extends Frame {
         return !getFirstScore().canCalculateScore();
     }
 
-    public Score getFirstScore() {
+    @Override
+    public void bowl(int number) {
+        State state = lastState();
+        Pin pin = Pin.of(number);
+
+        if (state.isFinished()) {
+            states.add(new Ready().bowl(pin));
+            return;
+        }
+
+        updateLastState(state.bowl(pin));
+    }
+
+    private void updateLastState(State state) {
+        states.remove(states.size() - 1);
+        states.add(state);
+    }
+
+    @Override
+    public Frame nextFrame() {
+        throw new IllegalStateException("마지막 프레임입니다.");
+    }
+
+    @Override
+    public int getIntScore() {
+        return getFirstScore().getScore();
+    }
+
+    private Score getFirstScore() {
         Score firstScore = firstState().getScore();
 
         for (int i = 1; i < states.size(); i++) {
@@ -71,24 +80,21 @@ public class FinalFrame extends Frame {
         return states.get(0);
     }
 
+    @Override
+    public Score calculateAdditionalScore(Score beforeScore) {
+        return lastState().calculateAdditionalScore(beforeScore);
+    }
+
+    @Override
+    public State getState() {
+        return lastState();
+    }
+
     private State lastState() {
         return states.get(states.size() - 1);
     }
 
-    private void removeLastState() {
-        states.remove(states.size() - 1);
-    }
-
     @Override
-    public Frame nextFrame() {
-        throw new IllegalStateException("마지막 프레임입니다.");
-    }
-
-    @Override
-    public boolean isLastFrame() {
-        return true;
-    }
-
     public List<State> getStates() {
         return Collections.unmodifiableList(states);
     }

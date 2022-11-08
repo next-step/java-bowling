@@ -1,12 +1,16 @@
 package bowling.domain;
 
+import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
 import java.util.List;
+import java.util.Objects;
 
 public class NormalFrame extends Frame {
     private static final int MIN_FRAME_NUMBER = 1;
     private static final int MAX_FRAME_NUMBER = 9;
+
+    private State state = new Ready();
 
     public NormalFrame() {
         this(1);
@@ -24,17 +28,23 @@ public class NormalFrame extends Frame {
         }
     }
 
+    @Override
+    public boolean isLastFrame() {
+        return false;
+    }
+
+    @Override
+    public boolean canBowl() {
+        return !state.isFinished();
+    }
+
+    @Override
     public void bowl(int number) {
         state = state.bowl(Pin.of(number));
 
         if (state.isFinished()) {
             nextFrame = nextFrame();
         }
-    }
-
-    @Override
-    public boolean canBowl() {
-        return !state.isFinished();
     }
 
     @Override
@@ -49,8 +59,42 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public boolean isLastFrame() {
-        return false;
+    public int getIntScore() {
+        Score score = state.getScore();
+        if (score.canCalculateScore()) {
+            return score.getScore();
+        }
+
+        try {
+            validateNextFrame();
+            score = nextFrame.calculateAdditionalScore(score);
+            return score.getScore();
+        } catch (UnsupportedOperationException e) {
+            return NO_SCORE;
+        }
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score beforeScore) {
+        Score score = state.calculateAdditionalScore(beforeScore);
+
+        if (!score.canCalculateScore()) {
+            validateNextFrame();
+            return nextFrame.calculateAdditionalScore(score);
+        }
+
+        return score;
+    }
+
+    private void validateNextFrame() {
+        if (Objects.isNull(nextFrame)) {
+            throw new UnsupportedOperationException("점수를 계산할 수 없습니다.");
+        }
+    }
+
+    @Override
+    public State getState() {
+        return state;
     }
 
     @Override

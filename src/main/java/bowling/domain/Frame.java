@@ -1,10 +1,8 @@
 package bowling.domain;
 
-import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
 import java.util.List;
-import java.util.Objects;
 
 public abstract class Frame {
 
@@ -12,73 +10,36 @@ public abstract class Frame {
 
     protected int number;
     protected Frame nextFrame;
-    protected State state = new Ready();
 
     protected Frame() {
 
     }
 
-    public void bowl(int number) {
-        state = state.bowl(Pin.of(number));
+    public int getFrameNumber() {
+        return number;
+    }
 
-        if (state.isFinished()) {
-            nextFrame = nextFrame();
-        }
+    public Frame getNextFrame() {
+        return nextFrame;
     }
 
     public boolean isFinished() {
         return !canBowl();
     }
 
+    public abstract boolean isLastFrame();
+
     public abstract boolean canBowl();
+
+    public abstract void bowl(int number);
 
     public abstract Frame nextFrame();
 
-    public int getFrameNumber() {
-        return number;
-    }
+    public abstract int getIntScore();
 
-    public abstract boolean isLastFrame();
+    public abstract Score calculateAdditionalScore(Score beforeScore);
 
-    public int getIntScore() {
-        Score score = state.getScore();
-        if (score.canCalculateScore()) {
-            return score.getScore();
-        }
-
-        try {
-            validateNextFrame();
-            score = nextFrame.calculateAdditionalScore(score);
-            return score.getScore();
-        } catch (UnsupportedOperationException e) {
-            return NO_SCORE;
-        }
-    }
-
-    public Score calculateAdditionalScore(Score beforeScore) {
-        Score score = state.calculateAdditionalScore(beforeScore);
-
-        if (!score.canCalculateScore()) {
-            validateNextFrame();
-            return nextFrame.calculateAdditionalScore(score);
-        }
-
-        return score;
-    }
-
-    private void validateNextFrame() {
-        if (Objects.isNull(nextFrame)) {
-            throw new UnsupportedOperationException("점수를 계산할 수 없습니다.");
-        }
-    }
-
-    public State getState() {
-        return state;
-    }
+    public abstract State getState();
 
     public abstract List<State> getStates();
-
-    public Frame getNextFrame() {
-        return nextFrame;
-    }
 }
