@@ -24,8 +24,8 @@ public class InputView {
         }
     }
 
-    public static int inputNumberOfPinsHit(int indexOfFrame, int remainedPins) {
-        System.out.printf("%d프레임 투구 : ", (indexOfFrame + 1));
+    public static int inputNumberOfPinsHit(int numberOfFrame) {
+        System.out.printf("%d프레임 투구 : ", numberOfFrame);
         return Integer.parseInt(SCANNER.nextLine());
     }
 

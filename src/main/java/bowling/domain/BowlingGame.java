@@ -37,15 +37,20 @@ public class BowlingGame {
         }
     }
 
-    public int getIndexOfCurrentFrame() {
-        if (isEnded()) {
-            throw new IllegalStateException("이미 종료된 게임입니다.");
-        }
-        return indexOfCurrentFrame;
+    public int getNumberOfCurrentFrame() {
+        validateState();
+        return indexOfCurrentFrame + 1;
     }
 
     public BowlingGameFrame getCurrentFrame() {
-        return frames.get(getIndexOfCurrentFrame());
+        validateState();
+        return frames.get(indexOfCurrentFrame);
+    }
+
+    private void validateState() {
+        if (isEnded()) {
+            throw new IllegalStateException("이미 종료된 게임입니다.");
+        }
     }
 
     public int getRemainedPins() {

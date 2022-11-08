@@ -21,7 +21,7 @@ public class BowlingGameApplication {
         OutputView.printBowlingGame(playerName, BowlingGameDto.from(game));
 
         while (!game.isEnded()) {
-            int hit = InputView.inputNumberOfPinsHit(game.getIndexOfCurrentFrame(), game.getRemainedPins());
+            int hit = InputView.inputNumberOfPinsHit(game.getNumberOfCurrentFrame());
             game.hit(hit);
             OutputView.printBowlingGame(playerName, BowlingGameDto.from(game));
         }
