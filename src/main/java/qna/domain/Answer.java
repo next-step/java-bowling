@@ -48,6 +48,10 @@ public class Answer extends AbstractEntity {
         return this;
     }
 
+    public boolean isNotDeleted() {
+        return !isDeleted();
+    }
+
     public boolean isDeleted() {
         return deleted;
     }
@@ -71,5 +75,9 @@ public class Answer extends AbstractEntity {
     @Override
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
+    }
+
+    public void delete() {
+        deleted = true;
     }
 }
