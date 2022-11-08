@@ -16,8 +16,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class QnaServiceTest {
@@ -26,6 +25,7 @@ public class QnaServiceTest {
 
     @Mock
     private DeleteHistoryService deleteHistoryService;
+
 
     @InjectMocks
     private QnAService qnAService;
@@ -81,9 +81,7 @@ public class QnaServiceTest {
     }
 
     private void verifyDeleteHistories() {
-        List<DeleteHistory> deleteHistories = Arrays.asList(
-                new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()),
-                new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        verify(deleteHistoryService).saveAll(deleteHistories);
+        verify(deleteHistoryService).saveAll(List.of(new DeleteHistory(ContentType.QUESTION, question.getId(), UserTest.JAVAJIGI, LocalDateTime.now()),
+                new DeleteHistory(ContentType.ANSWER, answer.getId(), UserTest.JAVAJIGI, LocalDateTime.now())));
     }
 }
