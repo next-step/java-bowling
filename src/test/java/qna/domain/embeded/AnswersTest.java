@@ -12,9 +12,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Created by seungwoo.song on 2022-11-07
  */
-class AnswersTest {
+public class AnswersTest {
 
-	private static final Answers A1 = new Answers(List.of(AnswerTest.A1, AnswerTest.A2));
+	public static final Answers A1 = new Answers(List.of(AnswerTest.A1, AnswerTest.A2));
 
 	@ParameterizedTest
 	@CsvSource(value = {"0", "1"})
