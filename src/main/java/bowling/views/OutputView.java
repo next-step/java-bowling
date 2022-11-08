@@ -1,6 +1,6 @@
 package bowling.views;
 
-import bowling.domain.BowlingGameFrame;
+import bowling.domain.BowlingGameHitResult;
 import bowling.dto.BowlingGameDto;
 import bowling.dto.BowlingGameFrameDto;
 import bowling.dto.PlayerDto;
@@ -33,34 +33,34 @@ public class OutputView {
     }
 
     private static void printBowlingGameFrame(BowlingGameFrameDto frame) {
-        System.out.print(getFormatOfHits(frame.getHits()));
+        System.out.print(getFormatOfHits(frame.getHits(), frame.getResults()));
     }
 
-    private static String getFormatOfHits(List<Integer> hits) {
+    private static String getFormatOfHits(List<Integer> hits, List<BowlingGameHitResult> results) {
         if (hits.isEmpty()) {
             return EMPTY_FORMAT;
         }
         int leftEmptyCount = hits.size() < OFFSET_REFERENCE ? OFFSET_OF_SHORT_FORMAT : OFFSET_OF_LONG_FORMAT;
-        StringBuilder stringBuilder = new StringBuilder(EMPTY.repeat(leftEmptyCount) + formatHit(hits.get(0), BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS));
+        StringBuilder stringBuilder = new StringBuilder(EMPTY.repeat(leftEmptyCount) + formatHit(hits.get(0), results.get(0)));
         IntStream.range(1, hits.size())
                 .forEach(i -> stringBuilder.append(SPLITTER)
-                        .append(formatHit(hits.get(i), hits.get(i - 1))));
+                        .append(formatHit(hits.get(i), results.get(i))));
         int rightEmptyCount = TOTAL_LENGTH - leftEmptyCount - hits.size() * 2;
         return stringBuilder.append(EMPTY.repeat(rightEmptyCount))
                 .append(SPLITTER)
                 .toString();
     }
 
-    private static String formatHit(int hit, int previousHit) {
-        if (hit == BowlingGameFrame.MIN_NUMBER_OF_BOWLING_PINS) {
+    private static String formatHit(int hit, BowlingGameHitResult result) {
+        if (result == BowlingGameHitResult.GUTTER) {
             return GUTTER;
         }
 
-        if (hit + previousHit == BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS) {
+        if (result == BowlingGameHitResult.SPARE) {
             return SPARE;
         }
 
-        if (hit == BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS) {
+        if (result == BowlingGameHitResult.STRIKE) {
             return STRIKE;
         }
 
