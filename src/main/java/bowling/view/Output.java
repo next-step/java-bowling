@@ -18,6 +18,7 @@ public class Output {
     public static void printScoreboard(Scoreboard scoreboard) {
         StringBuilder result = new StringBuilder();
         result.append(firstLine());
+        result.append("\n");
         result.append(secondLine(scoreboard));
         System.out.println(result);
     }
@@ -57,7 +58,7 @@ public class Output {
     }
 
     private static String frameFormat(Frame frame) {
-        if (frame.scores().size() == 0) {
+        if (frame.scores().isEmpty()) {
             return "";
         }
         if (frame.scores().size() == 1) {
