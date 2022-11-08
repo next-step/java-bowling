@@ -6,7 +6,7 @@ public class Ready extends Status {
 
     @Override
     public Status bowl(Pin pin) {
-        if (pin.isStrike()) {
+        if (pin.isAllPinsDown()) {
             return new Strike();
         }
         return new FirstBowl(pin);

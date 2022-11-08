@@ -10,7 +10,7 @@ public class FirstBowl extends Status {
 
     @Override
     public Status bowl(Pin second) {
-        if (Pin.sumBowls(first, second).isStrike()) {
+        if (Pin.sumBowls(first, second).isAllPinsDown()) {
             return new Spare(first, second);
         }
         return new Miss(first, second);

@@ -28,7 +28,7 @@ public class Pin {
         return countOfPin;
     }
 
-    public boolean isStrike() {
+    public boolean isAllPinsDown() {
         return countOfPin == MAX_COUNT_OF_PIN;
     }
 
