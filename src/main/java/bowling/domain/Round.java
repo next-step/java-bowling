@@ -1,15 +1,14 @@
 package bowling.domain;
 
+import bowling.global.BowlingConst;
 import java.util.Objects;
 
 public class Round {
 
-    private static final int START_ROUND = 1;
-    private static final int LAST_ROUND = 10;
     private int round;
 
     public Round() {
-        this.round = START_ROUND;
+        this.round = BowlingConst.ROUND_START;
     }
 
     public Round(int number) {
@@ -20,7 +19,7 @@ public class Round {
         if (!frame.isRemainChance()) {
             this.round += 1;
         }
-        if (this.round <= LAST_ROUND) {
+        if (this.round <= BowlingConst.ROUND_END) {
             return false;
         }
         if (frame.isRemainChance()) {

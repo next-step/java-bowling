@@ -1,10 +1,9 @@
 package bowling.domain;
 
+import bowling.global.BowlingConst;
 import java.util.List;
 
 public class ScoreValidator {
-
-    private static final int STRIKE = 10;
 
     private ScoreValidator() throws InstantiationException {
         throw new InstantiationException("ScoreValidator는 생성할 수 없습니다.");
@@ -23,7 +22,7 @@ public class ScoreValidator {
         if (scores.size() < 2) {
             return;
         }
-        if (scores.get(0).value() + scores.get(1).value() <= STRIKE) {
+        if (scores.get(0).value() + scores.get(1).value() <= BowlingConst.SCORE_STRIKE) {
             return;
         }
         throw new IllegalArgumentException();
@@ -50,7 +49,7 @@ public class ScoreValidator {
         if (first.isStrike()) {
             return;
         }
-        if ((first.value() + second.value()) <= STRIKE) {
+        if ((first.value() + second.value()) <= BowlingConst.SCORE_STRIKE) {
             return;
         }
         throw new IllegalArgumentException();
@@ -63,10 +62,10 @@ public class ScoreValidator {
         if (first.isStrike() && second.isStrike()) {
             return;
         }
-        if ((first.value() + second.value()) == STRIKE) {
+        if ((first.value() + second.value()) == BowlingConst.SCORE_STRIKE) {
             return;
         }
-        if (first.isStrike() && (second.value() + third.value()) <= STRIKE) {
+        if (first.isStrike() && (second.value() + third.value()) <= BowlingConst.SCORE_STRIKE) {
             return;
         }
         throw new IllegalArgumentException();

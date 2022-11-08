@@ -1,13 +1,12 @@
 package bowling.domain;
 
+import bowling.global.BowlingConst;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class LastFrame implements Frame {
-
-    private static final int STRIKE = 10;
 
     private final List<Score> scores = new ArrayList<>();
 
@@ -46,7 +45,7 @@ public class LastFrame implements Frame {
     private boolean isRemainThirdTimeChance() {
         Score first = this.scores.get(0);
         Score second = this.scores.get(1);
-        if (first.isStrike() || second.isStrike() || ((first.value() + second.value()) == STRIKE)) {
+        if (first.isStrike() || second.isStrike() || ((first.value() + second.value()) == BowlingConst.SCORE_STRIKE)) {
             return true;
         }
         return false;
