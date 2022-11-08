@@ -1,13 +1,7 @@
 package qna.domain;
 
-import net.bytebuddy.build.ToStringPlugin;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.*;
 import static qna.domain.AnswerTest.*;
 import static qna.domain.UserTest.*;
@@ -25,7 +19,8 @@ public class QuestionTest {
 
     @Test
     void delete() {
-        Q1.deleted();
+        DeleteHistories deleteHistories = new DeleteHistories();
+        Q1.deleteQuestion(deleteHistories);
         assertThat(Q1.isDeleted()).isTrue();
     }
 
@@ -38,10 +33,8 @@ public class QuestionTest {
     }
 
     @Test
-    void deleteAnswers() {
-        DeleteHistories deleteHistories = new DeleteHistories();
-        Q1.addAnswer(A2);
-        Q1.deleteAnswers(deleteHistories);
-        assertThat(A2.isDeleted()).isTrue();
+    void addAnswer() {
+        Q1.addAnswer(A1);
+        assertThat(Q1.getAnswers().contains(A1)).isTrue();
     }
 }

@@ -67,7 +67,7 @@ public class Question extends AbstractEntity {
 
     public void addAnswer(Answer answer) {
         answer.toQuestion(this);
-        answers.getAnswers().add(answer);
+        answers.add(answer);
     }
 
     public void checkOwner(User loginUser) throws CannotDeleteException {
@@ -76,8 +76,9 @@ public class Question extends AbstractEntity {
         }
     }
 
-    public void deleted() {
+    public void deleteQuestion(DeleteHistories deleteHistories) {
         this.deleted = true;
+        deleteHistories.addDeleteHistory(new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter()));
     }
 
     public boolean isDeleted() {
@@ -106,10 +107,6 @@ public class Question extends AbstractEntity {
     }
 
     public void deleteAnswers(DeleteHistories deleteHistories) {
-        for (Answer answer : answers.getAnswers()) {
-            answer.delete();
-
-            deleteHistories.addDeleteHistory(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter()));
-        }
+        answers.delete(deleteHistories);
     }
 }

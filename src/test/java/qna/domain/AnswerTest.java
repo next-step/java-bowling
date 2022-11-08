@@ -11,12 +11,6 @@ public class AnswerTest {
     public static final Answer A2 = new Answer(UserTest.SANJIGI, Q1, "Answers Contents2");
 
     @Test
-    void addAnswer() {
-        Q1.addAnswer(A1);
-        assertThat(Q1.getAnswers().contains(A1)).isTrue();
-    }
-
-    @Test
     void delete() {
         A1.delete();
         assertThat(A1.isDeleted()).isTrue();

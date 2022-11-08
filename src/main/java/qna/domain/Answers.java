@@ -24,4 +24,16 @@ public class Answers {
     public boolean contains(Answer answer) {
         return answers.contains(answer);
     }
+
+    public void add(Answer answer) {
+        answers.add(answer);
+    }
+
+    public void delete(DeleteHistories deleteHistories) {
+        for (Answer answer : answers) {
+            answer.delete();
+
+            deleteHistories.addDeleteHistory(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter()));
+        }
+    }
 }
