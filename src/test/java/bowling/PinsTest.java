@@ -26,7 +26,12 @@ class PinsTest {
 
     @Test
     void 스트라이크() {
-        assertThat(new Pins(10).isStrike()).isTrue();
+        assertThat(new Pins(10).isMax()).isTrue();
+    }
+
+    @Test
+    void 스페어() {
+        assertThat(new Pins(1).totalPins(9).isMax()).isTrue();
     }
 
     @Test

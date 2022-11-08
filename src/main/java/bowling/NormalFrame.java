@@ -9,13 +9,25 @@ public class NormalFrame implements Frame {
 
     private int frameNumber;
     private List<Pins> scores;   // 쓰러뜨린 핀 개수 리스트
+    private Thrown thrown;
 
+    // TODO
     private NormalFrame(int frameNumber, List<Pins> scores) {
         valid(frameNumber);
         this.frameNumber = frameNumber;
         this.scores = scores;
     }
 
+    private NormalFrame(int frameNumber, Thrown thrown) {
+        this.frameNumber = frameNumber;
+        this.thrown = thrown;
+    }
+
+    public static NormalFrame of2(int frameNumber, int countOfPins) {
+        return new NormalFrame(frameNumber, new Thrown(Pins.from(countOfPins)));
+    }
+
+    // TODO
     public static NormalFrame of(int frameNumber, int countOfPins) {
         List<Pins> scores = new ArrayList<>();
         Pins pins = new Pins(countOfPins);
@@ -25,20 +37,20 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isFinished() {
-        if (getScore() == 10 || scores.size() == 2) {
+        if (getScore() == 10) {
             return true;
         }
         return false;
     }
 
+    // TODO
     public List<Pins> getValues() {
         return scores;
     }
 
+    @Override
     public int getScore() {
-        return scores.stream()
-            .mapToInt(Pins::getFalledPins)
-            .sum();
+        return thrown.getScore();
     }
 
     private void valid(int frameNumber) {
@@ -47,8 +59,10 @@ public class NormalFrame implements Frame {
         }
     }
 
+    // TODO
     @Override
     public Frame bowl(int countOfPins) {
+        thrown.bowl(countOfPins);
         Pins totalPins = scores.get(0).totalPins(countOfPins);
         scores.add(totalPins);
         return this;
@@ -59,13 +73,4 @@ public class NormalFrame implements Frame {
         return false;
     }
 
-    @Override
-    public int firstScore() {
-        return scores.get(0).getFalledPins();
-    }
-
-    @Override
-    public int secondScore() {
-        return scores.get(1).getFalledPins();
-    }
 }

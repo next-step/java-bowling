@@ -8,7 +8,5 @@ public interface Frame {
 
     boolean isFinalFrame();
 
-    int firstScore();
-
-    int secondScore();
+    int getScore();
 }

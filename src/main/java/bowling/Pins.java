@@ -48,7 +48,7 @@ public class Pins {
         }
     }
 
-    public boolean isStrike() {
+    public boolean isMax() {
         return falledPins == MAX_PINS;
     }
 

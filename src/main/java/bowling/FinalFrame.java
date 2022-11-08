@@ -38,12 +38,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public int firstScore() {
-        return scores.get(0).getFalledPins();
-    }
-
-    @Override
-    public int secondScore() {
-        return scores.get(1).getFalledPins();
+    public int getScore() {
+        return 0;
     }
 }
