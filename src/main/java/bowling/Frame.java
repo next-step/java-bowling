@@ -9,4 +9,10 @@ public interface Frame {
     boolean isFinalFrame();
 
     int getScore();
+
+    int firstPins();
+
+    int secondPins();
+
+    boolean hasTurn();
 }

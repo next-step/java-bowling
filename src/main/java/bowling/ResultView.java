@@ -22,12 +22,33 @@ public class ResultView {
 
     private static void printFrames(List<Frame> frames) {
         for (Frame frame : frames) {
-            System.out.printf("|  %-3s ", frame.getScore());
+            System.out.printf("|  %-3s ", printFrame(frame));
         }
         int emptyFrameSize = 11 - frames.size();
         for (int i = 0; i < emptyFrameSize; i++) {
             System.out.print("|      ");
         }
         System.out.println();
+    }
+
+    private static String printFrame(Frame frame) {
+        // 문제점: -|1   -|-  불가
+        if (frame.firstPins() == 10) {
+            return "X";
+        }
+
+        if (frame.getScore() == 10) {
+            return frame.firstPins() + "|/";
+        }
+
+        if (frame.getScore() == 0) {
+            return "-";
+        }
+
+        if (!frame.hasTurn()) {
+            return frame.firstPins() + "|" + frame.secondPins();
+        }
+
+        return String.valueOf(frame.getScore());
     }
 }

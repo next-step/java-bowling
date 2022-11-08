@@ -28,11 +28,6 @@ public class NormalFrame implements Frame {
         return false;
     }
 
-    // TODO
-    public List<Pins> getValues() {
-        return null;
-    }
-
     @Override
     public int getScore() {
         return thrown.getScore();
@@ -53,5 +48,20 @@ public class NormalFrame implements Frame {
     @Override
     public boolean isFinalFrame() {
         return false;
+    }
+
+    @Override
+    public int firstPins() {
+        return thrown.firstPins();
+    }
+
+    @Override
+    public int secondPins() {
+        return thrown.secondPins();
+    }
+
+    @Override
+    public boolean hasTurn() {
+        return thrown.hasTurn();
     }
 }

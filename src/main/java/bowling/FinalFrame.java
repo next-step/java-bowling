@@ -4,14 +4,8 @@ import java.util.List;
 
 public class FinalFrame implements Frame {
 
-    private List<Pins> scores;
     private Thrown thrown;
     private Pins bonusPins;
-
-    // TODO
-    public FinalFrame(List<Pins> scores) {
-        this.scores = scores;
-    }
 
     private FinalFrame(Thrown thrown) {
         this.thrown = thrown;
@@ -34,14 +28,10 @@ public class FinalFrame implements Frame {
         return false;
     }
 
-    public List<Pins> getValues() {
-        return scores;
-    }
-
     @Override
     public Frame bowl(int countOfPins) {
-        Pins totalPins = scores.get(0).totalPins(countOfPins);
-        scores.add(totalPins);
+        int totalScore = thrown.getScore() + countOfPins;
+        bonusPins = Pins.from(totalScore);
         return this;
     }
 
@@ -53,5 +43,20 @@ public class FinalFrame implements Frame {
     @Override
     public int getScore() {
         return thrown.getScore() + bonusPins.getFalledPins();
+    }
+
+    @Override
+    public int firstPins() {
+        return thrown.firstPins();
+    }
+
+    @Override
+    public int secondPins() {
+        return thrown.secondPins();
+    }
+
+    @Override
+    public boolean hasTurn() {
+        return thrown.hasTurn();
     }
 }

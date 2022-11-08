@@ -13,6 +13,18 @@ public class Thrown {
         return firstPins.isMax();
     }
 
+    public boolean hasTurn() {
+        if (isStrike()) {
+            return false;
+        }
+
+        if (secondPins != null) {
+            return false;
+        }
+
+        return true;
+    }
+
     public boolean isSpare() {
         return secondPins.isMax();
     }
@@ -25,6 +37,14 @@ public class Thrown {
         if (secondPins == null) {
             return firstPins.getFalledPins();
         }
-        return firstPins.getFalledPins() + secondPins.getFalledPins();
+        return secondPins.getFalledPins();
+    }
+
+    public int firstPins() {
+        return firstPins.getFalledPins();
+    }
+
+    public int secondPins() {
+        return secondPins.getFalledPins();
     }
 }
