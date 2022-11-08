@@ -8,6 +8,7 @@ import java.util.Objects;
 
 public class LastFrame implements Frame {
 
+    private static final int LAST_FRAME_SIZE = 3;
     private final List<Score> scores = new ArrayList<>();
 
     public LastFrame() {
@@ -33,10 +34,10 @@ public class LastFrame implements Frame {
 
     @Override
     public boolean isRemainChance() {
-        if (this.scores.size() < 2) {
+        if (this.scores.size() < LAST_FRAME_SIZE - 1) {
             return true;
         }
-        if (this.scores.size() < 3) {
+        if (this.scores.size() == LAST_FRAME_SIZE - 1) {
             return isRemainThirdTimeChance();
         }
         return false;
