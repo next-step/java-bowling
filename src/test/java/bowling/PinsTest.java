@@ -8,7 +8,7 @@ class PinsTest {
 
     @Test
     void 볼링_생성() {
-        assertThat(new Pins(5).totalPins(5)).isEqualTo(10);
+        assertThat(new Pins(5).totalPins(5).getFalledPins()).isEqualTo(10);
     }
 
     @Test
@@ -17,5 +17,15 @@ class PinsTest {
             .isInstanceOf(IllegalArgumentException.class);
         assertThatThrownBy(() -> new Pins(11))
             .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 스트라이크() {
+        assertThat(new Pins(10).isStrike()).isTrue();
+    }
+
+    @Test
+    void 미스() {
+        assertThat(new Pins(0).isMiss()).isTrue();
     }
 }

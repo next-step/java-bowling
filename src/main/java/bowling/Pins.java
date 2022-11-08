@@ -24,6 +24,14 @@ public class Pins {
         }
     }
 
+    public boolean isStrike() {
+        return falledPins == MAX_PINS;
+    }
+
+    public boolean isMiss() {
+        return falledPins == MIN_PINS;
+    }
+
     public Pins totalPins(int secondPins) {
         int totalPins = falledPins + secondPins;
         validPins(totalPins);
