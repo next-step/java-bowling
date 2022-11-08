@@ -3,16 +3,16 @@ package qna.domain;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static qna.domain.QuestionTest.*;
+
 public class AnswerTest {
-    public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
-    public static final Answer A2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
+    public static final Answer A1 = new Answer(UserTest.JAVAJIGI, Q1, "Answers Contents1");
+    public static final Answer A2 = new Answer(UserTest.SANJIGI, Q1, "Answers Contents2");
 
     @Test
     void addAnswer() {
-        Answers answers = new Answers();
-        answers.addAnswer(A1, QuestionTest.Q1);
-
-        Assertions.assertThat(answers.contains(A1)).isTrue();
+        Q1.addAnswer(A1);
+        Assertions.assertThat(Q1.getAnswers().contains(A1)).isTrue();
     }
 
     @Test

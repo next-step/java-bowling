@@ -32,6 +32,7 @@ public class QnaServiceTest {
 
     private Question question;
     private Answer answer;
+    private Answers answers;
 
     @BeforeEach
     public void setUp() throws Exception {
