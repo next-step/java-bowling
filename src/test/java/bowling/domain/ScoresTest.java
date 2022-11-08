@@ -81,13 +81,24 @@ class ScoresTest {
 
     @Test
     @DisplayName("투구 시도 횟수가 초과되었는지 확인하는 함수 검증")
-    void tryOverTest() {
+    void isTryOverTest() {
         Scores scores = new Scores();
-        assertThat(scores.tryOver()).isFalse();
+        assertThat(scores.isTryOver()).isFalse();
         scores.record(0);
-        assertThat(scores.tryOver()).isFalse();
+        assertThat(scores.isTryOver()).isFalse();
         scores.record(0);
-        assertThat(scores.tryOver()).isTrue();
+        assertThat(scores.isTryOver()).isTrue();
+    }
+
+    @Test
+    @DisplayName("일반 점수 조회 함수 검증")
+    void getScoreTest() {
+        Scores scores = new Scores();
+        assertThat(scores.sumOfDownPins()).isEqualTo(0);
+        scores.record(4);
+        assertThat(scores.sumOfDownPins()).isEqualTo(4);
+        scores.record(6);
+        assertThat(scores.sumOfDownPins()).isEqualTo(4 + 6);
     }
 
 }

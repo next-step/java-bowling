@@ -80,12 +80,38 @@ class FinalFrameTest {
     }
 
     @Test
-    @DisplayName("마지막 프레임의 보너스 점수는 기록이 한개라도 있어야 유효함을 테스트")
-    void validBonusScore() {
+    @DisplayName("마지막 프레임의 보너스 점수는 보너스 기록이 한개라도 있어야 유효함을 테스트")
+    void isValidBonusGameScoreTest() {
         FinalFrame finalFrame = new FinalFrame();
-        assertThat(finalFrame.validBonusScore()).isFalse();
+        finalFrame.record(10);
+        assertThat(finalFrame.isValidBonusGameScore()).isFalse();
         finalFrame.record(5);
-        assertThat(finalFrame.validBonusScore()).isTrue();
+        assertThat(finalFrame.isValidBonusGameScore()).isTrue();
     }
 
+    @Test
+    @DisplayName("마지막 프레임의 일반 점수 조회 함수 검증")
+    void getScoreTest() {
+        FinalFrame finalFrame = new FinalFrame();
+        finalFrame.record(4);
+        finalFrame.record(6);
+        assertThat(finalFrame.getPinScore()).isEqualTo(4 + 6);
+
+        assertThat(finalFrame.isValidBonusGameScore()).isFalse();
+        finalFrame.record(10);
+        assertThat(finalFrame.isValidBonusGameScore()).isTrue();
+        assertThat(finalFrame.getPinScore()).isEqualTo(4 + 6 + 10);
+    }
+
+    @Test
+    @DisplayName("마지막 프레임의 시도 횟수 조회 시 보너스 게임의 시도 횟수까지 제대로 카운트하는지 검증")
+    void getTryCountTest() {
+        FinalFrame finalFrame = new FinalFrame();
+        finalFrame.record(5);
+        finalFrame.record(5);
+        finalFrame.record(5);
+
+        assertThat(finalFrame.isValidBonusGameScore()).isTrue();
+        assertThat(finalFrame.getTryCount()).isEqualTo(3);
+    }
 }

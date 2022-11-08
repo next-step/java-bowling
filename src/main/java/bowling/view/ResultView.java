@@ -9,15 +9,35 @@ public class ResultView {
     private static String INIT_SCORE_BOARD_STRING = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     private static String NAME_STRING = "|  %s |";
     private static String GUTTER_STRING = "-";
+    private static String TOTAL_SCORE_STRING = "\n|      |";
+    private static String TOTAL_SCORE_RIGHT_STRING = "  |";
+    private static String DOUBLE_BLANK = "  ";
 
     public static void printScoreBoard(BowlingGame game) {
         System.out.println(INIT_SCORE_BOARD_STRING);
         System.out.printf(NAME_STRING, game.getPlayer().getName());
-        printScore(game.getRecords());
+        printPinScore(game.getRecords());
+        printTotalScores(game.getRecords());
         System.out.println();
     }
 
-    private static void printScore(Records records) {
+    private static void printTotalScores(Records records) {
+        System.out.print(TOTAL_SCORE_STRING);
+        int totalScore;
+        for (int index = 0; records.isReadyFrameScore(index); index++) {
+            totalScore = records.getTotalScore(index);
+            System.out.print(DOUBLE_BLANK + getTotalScoreString(totalScore) + TOTAL_SCORE_RIGHT_STRING);
+        }
+    }
+
+    private static String getTotalScoreString(int totalScore) {
+        if (totalScore < 10) {
+            return "0" + totalScore;
+        }
+        return "" + totalScore;
+    }
+
+    private static void printPinScore(Records records) {
         for (Frame frame : records.getFrames()) {
             printScore(frame.getScores());
             printBonusScore(frame);
@@ -25,7 +45,7 @@ public class ResultView {
     }
 
     private static void printBonusScore(Frame frame) {
-        if (frame.validBonusScore()) {
+        if (frame.isValidBonusGameScore()) {
             FinalFrame finalFrame = (FinalFrame) frame;
             printScore(finalFrame.getBonusScores());
         }
@@ -36,7 +56,8 @@ public class ResultView {
             return;
         }
 
-        String printString = FrameScore.from(scores).getPrintString();
+        FrameScore frameScore = FrameScore.from(scores);
+        String printString = ScorePhrase.getScoreString(frameScore);
         List<String> downPins = getDownPinsString(scores);
         System.out.printf(printString, getOrDefault(downPins, 0, ""), getOrDefault(downPins, 1, ""));
     }

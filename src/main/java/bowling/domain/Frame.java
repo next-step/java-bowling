@@ -1,11 +1,7 @@
 package bowling.domain;
 
 public class Frame {
-    protected final Scores scores;
-
-    public Frame() {
-        this.scores = new Scores();
-    }
+    protected final Scores scores = new Scores();
 
     public Scores getScores() {
         return scores;
@@ -19,13 +15,45 @@ public class Frame {
         if (scores.isStrike()) {
             return true;
         }
-        if (scores.tryOver()) {
+        if (scores.isTryOver()) {
             return true;
         }
         return false;
     }
 
-    public boolean validBonusScore() {
+    public int getPinScore() {
+        return scores.getPinScore();
+    }
+
+    public FrameScore getResult() {
+        return FrameScore.from(scores);
+    }
+
+    public int getFirstPitchScore() {
+        return scores.getFirstScore();
+    }
+
+    public int getSecondPitchScore() {
+        return scores.getSecondPitchScore();
+    }
+
+    public int getTryCount() {
+        return scores.getTryCount();
+    }
+
+    public boolean isStrike() {
+        return scores.isStrike();
+    }
+
+    public boolean isSpare() {
+        return scores.isSpare();
+    }
+
+    public boolean isValidBonusScore() {
+        return true;
+    }
+
+    public boolean isValidBonusGameScore() {
         return false;
     }
 

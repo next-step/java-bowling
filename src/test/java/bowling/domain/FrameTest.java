@@ -52,10 +52,12 @@ class FrameTest {
     }
 
     @Test
-    @DisplayName("일반 프레임의 보너스 점수는 유효하지 않음을 테스트")
-    void validBonusScore() {
+    @DisplayName("프레임의 일반 점수 조회 함수 검증")
+    void getScoreTest() {
         Frame frame = new Frame();
-        assertThat(frame.validBonusScore()).isFalse();
+        frame.record(4);
+        frame.record(5);
+        assertThat(frame.getPinScore()).isEqualTo(4 + 5);
     }
 
 }

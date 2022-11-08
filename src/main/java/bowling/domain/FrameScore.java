@@ -4,18 +4,15 @@ import java.util.Arrays;
 import java.util.function.Predicate;
 
 public enum FrameScore {
-    STRIKE(Scores::isStrike, "  X   |"), SPARE(Scores::isSpare, "  %s|/ |"), ONGOING(scores -> scores.getTryCount() == 1, "  %s|"), FINISH(scores -> scores.getTryCount() == 2, "  %s|%s |");
+    STRIKE(Scores::isStrike),
+    SPARE(Scores::isSpare),
+    ONGOING(scores -> scores.getTryCount() == 1),
+    FINISH(scores -> scores.getTryCount() == 2);
 
     private final Predicate<Scores> predicate;
-    private final String printString;
 
-    FrameScore(Predicate<Scores> predicate, String printString) {
+    FrameScore(Predicate<Scores> predicate) {
         this.predicate = predicate;
-        this.printString = printString;
-    }
-
-    public String getPrintString() {
-        return printString;
     }
 
     public static FrameScore from(Scores scores) {
