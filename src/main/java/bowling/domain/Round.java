@@ -9,10 +9,11 @@ public class Round {
     private int round;
 
     public Round() {
+        this.round = START_ROUND;
     }
 
     public Round(int number) {
-        this.round = START_ROUND;
+        this.round = number;
     }
 
     public boolean isGameEnd(Frame frame) {
