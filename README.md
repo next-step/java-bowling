@@ -30,7 +30,7 @@
 - [x]  question의 정보로 deleteHistory를 만든다.
 
 ### Answers
-- [ ]  Answer를 삭제한다.
+- [x]  Answer를 삭제한다.
 
 ### Answer : User를 받아 삭제 가능한 질문인지 확인한다.
 - [x] Owner가 로그인 User와 같은지 확인한다.

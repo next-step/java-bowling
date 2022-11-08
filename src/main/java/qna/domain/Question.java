@@ -59,10 +59,6 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
@@ -70,12 +66,9 @@ public class Question extends AbstractEntity {
 
     public List<DeleteHistory> deleteWithAnswer(User loginUser) throws CannotDeleteException {
         validateWriterSameAsUser(loginUser);
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
-        for (Answer answer : answers) {
-            deleteHistories.add(answer.delete(loginUser));
-        }
+        List<DeleteHistory> deleteHistories = new Answers(answers).delete(loginUser);
         deleted = true;
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
         return deleteHistories;
     }
 
