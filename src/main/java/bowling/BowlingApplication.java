@@ -33,7 +33,7 @@ public class BowlingApplication {
             pins.add(new Pins(score));
             ResultView.printResult(userName, frames, finalFrame);
             if (finalFrame.isFinished()) {
-                continue;
+                break;
             }
             score = InputView.inputUserScore(10);
             pins.add(new Pins(score));

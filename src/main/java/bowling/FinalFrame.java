@@ -2,7 +2,7 @@ package bowling;
 
 import java.util.List;
 
-public class FinalFrame {
+public class FinalFrame implements Frame {
 
     private List<Pins> scores;
 
@@ -10,8 +10,9 @@ public class FinalFrame {
         this.scores = scores;
     }
 
+    @Override
     public boolean isFinished() {
-        if (scores.size() == 2 && scores.get(1).getFalledPins() == 10) {
+        if (scores.size() == 2 && scores.get(1).getFalledPins() != 10) {
             return true;
         }
         if (scores.size() == 3) {
@@ -24,4 +25,25 @@ public class FinalFrame {
         return scores;
     }
 
+    @Override
+    public Frame bowl(int countOfPins) {
+        Pins totalPins = scores.get(0).totalPins(countOfPins);
+        scores.add(totalPins);
+        return this;
+    }
+
+    @Override
+    public boolean isFinalFrame() {
+        return true;
+    }
+
+    @Override
+    public int firstScore() {
+        return scores.get(0).getFalledPins();
+    }
+
+    @Override
+    public int secondScore() {
+        return scores.get(1).getFalledPins();
+    }
 }

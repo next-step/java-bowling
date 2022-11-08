@@ -3,8 +3,7 @@ package bowling;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NormalFrame {
-
+public class NormalFrame implements Frame {
     private static int MIN_FRAMES = 1;
     private static int MAX_FRAMES = 9;
 
@@ -24,12 +23,7 @@ public class NormalFrame {
         return new NormalFrame(frameNumber, scores);
     }
 
-    public NormalFrame bowl(int countOfPins) {
-        Pins totalPins = scores.get(0).totalPins(countOfPins);
-        scores.add(totalPins);
-        return this;
-    }
-
+    @Override
     public boolean isFinished() {
         if (getScore() == 10 || scores.size() == 2) {
             return true;
@@ -51,5 +45,27 @@ public class NormalFrame {
         if (frameNumber < MIN_FRAMES || frameNumber > MAX_FRAMES) {
             throw new IllegalArgumentException("잘못된 프레임 번호입니다.");
         }
+    }
+
+    @Override
+    public Frame bowl(int countOfPins) {
+        Pins totalPins = scores.get(0).totalPins(countOfPins);
+        scores.add(totalPins);
+        return this;
+    }
+
+    @Override
+    public boolean isFinalFrame() {
+        return false;
+    }
+
+    @Override
+    public int firstScore() {
+        return scores.get(0).getFalledPins();
+    }
+
+    @Override
+    public int secondScore() {
+        return scores.get(1).getFalledPins();
     }
 }
