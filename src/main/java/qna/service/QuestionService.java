@@ -30,7 +30,10 @@ public class QuestionService {
     @Transactional(readOnly = true)
     public Question findQuestionById(Long id) {
         return questionRepository.findByIdAndDeletedFalse(id)
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow(() -> {
+                    log.error("[QUESTION_ERROR] id로 질문 조회 실패 id: {}", id);
+                    throw new NotFoundException();
+                });
     }
 
     @Transactional
