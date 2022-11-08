@@ -1,10 +1,13 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.util.CollectionUtils;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -86,6 +89,25 @@ public class Question extends AbstractEntity {
 
     public List<Answer> getAnswers() {
         return answers;
+    }
+
+    public boolean isDeletableBy(User loginUser) {
+        if (CollectionUtils.isEmpty(answers)) {
+            return true;
+        }
+
+        return answers.stream().allMatch(answer -> answer.isOwner(loginUser));
+    }
+
+    public List<DeleteHistory> delete() {
+        List<DeleteHistory> deleteHistories = deleteAllAnswer();
+        deleted = true;
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+        return deleteHistories;
+    }
+
+    public List<DeleteHistory> deleteAllAnswer() {
+        return answers.stream().map(Answer::delete).collect(Collectors.toList());
     }
 
     @Override
