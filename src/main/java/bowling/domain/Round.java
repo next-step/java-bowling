@@ -20,8 +20,8 @@ public class Round {
         if (!frame.isRemainChance()) {
             this.round += 1;
         }
-        if (this.round > LAST_ROUND) {
-            return true;
+        if (this.round <= LAST_ROUND) {
+            return false;
         }
         if (frame.isRemainChance()) {
             return false;
