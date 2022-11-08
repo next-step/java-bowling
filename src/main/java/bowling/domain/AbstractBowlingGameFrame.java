@@ -7,9 +7,11 @@ import java.util.Objects;
 public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
 
     protected final List<Integer> hits;
+    protected final List<BowlingGameHitResult> results;
 
     protected AbstractBowlingGameFrame() {
         this.hits = new ArrayList<>();
+        this.results = new ArrayList<>();
     }
 
     @Override
@@ -18,6 +20,7 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
         validateHitIsNegative(hit);
         validateHitIsUnderRemainedPins(hit);
         hits.add(hit);
+        results.add(BowlingGameHitResult.from(hits));
     }
 
     private void validateState() {
@@ -50,21 +53,8 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
     }
 
     @Override
-    public boolean isStrike() {
-        return hits.size() == 1
-                && hits.get(0) == BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS;
-    }
-
-    @Override
-    public boolean isSpare() {
-        return hits.size() == 2
-                && sumOfHits() == BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS;
-    }
-
-    @Override
-    public boolean isMiss() {
-        return hits.size() == 2
-                && sumOfHits() < BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS;
+    public BowlingGameHitResult getResult(int index) {
+        return results.get(index);
     }
 
     @Override
@@ -85,18 +75,19 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AbstractBowlingGameFrame that = (AbstractBowlingGameFrame) o;
-        return Objects.equals(hits, that.hits);
+        return Objects.equals(hits, that.hits) && Objects.equals(results, that.results);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(hits);
+        return Objects.hash(hits, results);
     }
 
     @Override
     public String toString() {
         return "AbstractBowlingGameFrame{" +
                 "hits=" + hits +
+                ", results=" + results +
                 '}';
     }
 

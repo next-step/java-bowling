@@ -11,11 +11,7 @@ public interface BowlingGameFrame {
 
     int get(int index);
 
-    boolean isStrike();
-
-    boolean isSpare();
-
-    boolean isMiss();
+    BowlingGameHitResult getResult(int index);
 
     default boolean isOnGoing() {
         return !isEnded();
