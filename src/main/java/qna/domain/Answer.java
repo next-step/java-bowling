@@ -9,9 +9,8 @@ import java.time.LocalDateTime;
 
 @Entity
 public class Answer extends AbstractEntity {
-    @ManyToOne(optional = false)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
-    private User writer;
+    @Embedded
+    private AnswerWriter writer;
 
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
@@ -40,7 +39,7 @@ public class Answer extends AbstractEntity {
             throw new NotFoundException();
         }
 
-        this.writer = writer;
+        this.writer = new AnswerWriter(writer);
         this.question = question;
         this.contents = contents;
     }
@@ -54,12 +53,8 @@ public class Answer extends AbstractEntity {
         return deleted;
     }
 
-    private boolean isOwner(User writer) {
-        return this.writer.equals(writer);
-    }
-
     public User getWriter() {
-        return writer;
+        return writer.getWriter();
     }
 
     public String getContents() {
@@ -76,10 +71,8 @@ public class Answer extends AbstractEntity {
     }
 
     public DeleteHistory delete(User loginUser) throws CannotDeleteException {
-        if (!isOwner(loginUser)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-        }
+        writer.checkDeleteAuthUser(loginUser);
         deleted = true;
-        return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
+        return new DeleteHistory(ContentType.ANSWER, getId(), writer.getWriter(), LocalDateTime.now());
     }
 }
