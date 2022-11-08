@@ -3,6 +3,7 @@ package qna.domain;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.*;
 import static qna.domain.QuestionTest.*;
 
 public class AnswerTest {
@@ -12,12 +13,12 @@ public class AnswerTest {
     @Test
     void addAnswer() {
         Q1.addAnswer(A1);
-        Assertions.assertThat(Q1.getAnswers().contains(A1)).isTrue();
+        assertThat(Q1.getAnswers().contains(A1)).isTrue();
     }
 
     @Test
     void delete() {
         A1.delete();
-        Assertions.assertThat(A1.isDeleted()).isTrue();
+        assertThat(A1.isDeleted()).isTrue();
     }
 }

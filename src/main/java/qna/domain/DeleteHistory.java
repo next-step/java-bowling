@@ -28,7 +28,6 @@ public class DeleteHistory {
         this.contentType = contentType;
         this.contentId = contentId;
         this.deletedBy = deletedBy;
-        this.createDate =  LocalDateTime.now();
     }
 
     @Override
