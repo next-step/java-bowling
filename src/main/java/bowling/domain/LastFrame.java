@@ -38,12 +38,12 @@ public class LastFrame implements Frame {
             return true;
         }
         if (this.scores.size() < 3) {
-            return validateRemainThirdTimeChance();
+            return isRemainThirdTimeChance();
         }
         return false;
     }
 
-    private boolean validateRemainThirdTimeChance() {
+    private boolean isRemainThirdTimeChance() {
         Score first = this.scores.get(0);
         Score second = this.scores.get(1);
         if (first.isStrike() || second.isStrike() || ((first.value() + second.value()) == STRIKE)) {
