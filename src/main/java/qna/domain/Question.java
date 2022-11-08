@@ -20,10 +20,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private final Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -70,7 +68,7 @@ public class Question extends AbstractEntity {
 
     public void addAnswer(Answer answer) {
         answer.toQuestion(this);
-        answers.add(answer);
+        answers.addAnswer(answer);
     }
 
     private boolean isOwner(User loginUser) {
@@ -84,14 +82,8 @@ public class Question extends AbstractEntity {
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
-
-        List<DeleteHistory> answerDeleteHistories = new ArrayList<>();
-        List<Answer> answers = this.answers;
-        for (Answer answer : answers) {
-            answerDeleteHistories.add(answer.delete(loginUser));
-        }
+        deleteHistories.addAll(answers.delete(loginUser));
         deleted = true;
-        deleteHistories.addAll(answerDeleteHistories);
         return deleteHistories;
     }
 
@@ -104,7 +96,7 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
     }
 
