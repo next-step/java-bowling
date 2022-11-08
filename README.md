@@ -65,3 +65,8 @@
     * [ ] 10번 프레임
     * [ ] 2회 안에 스트라이크 or 스페어이면 1번 더 투구 가능
   * [x] Frame
+    * [x] Frame 인터페이스
+  * [x] NormalThrown
+  * [x] FinalThrown
+  * [x] Thrown
+    * [x] Thrown 인터페이스
