@@ -40,37 +40,6 @@ public class QnaServiceTest {
         question.addAnswer(answer);
     }
 
-    @Test
-    public void delete_성공() throws Exception {
-        when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
-
-        assertThat(question.isDeleted()).isFalse();
-        qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
-
-        assertThat(question.isDeleted()).isTrue();
-        verifyDeleteHistories();
-    }
-
-    @Test
-    public void delete_다른_사람이_쓴_글() throws Exception {
-        when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
-
-        assertThatThrownBy(() -> {
-            qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
-        }).isInstanceOf(CannotDeleteException.class);
-    }
-
-    @Test
-    public void delete_성공_질문자_답변자_같음() throws Exception {
-        when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
-
-        qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
-
-        assertThat(question.isDeleted()).isTrue();
-        assertThat(answer.isDeleted()).isTrue();
-        verifyDeleteHistories();
-    }
-
     private void verifyDeleteHistories() {
         List<DeleteHistory> deleteHistories = Arrays.asList(
                 new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()),
