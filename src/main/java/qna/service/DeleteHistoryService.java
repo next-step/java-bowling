@@ -1,17 +1,18 @@
 package qna.service;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import qna.domain.DeleteHistory;
-import qna.domain.DeleteHistoryRepository;
-import qna.domain.Question;
-
-import javax.annotation.Resource;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import qna.domain.DeleteHistory;
+import qna.domain.DeleteHistoryRepository;
+import qna.domain.Question;
 
 @Service("deleteHistoryService")
 public class DeleteHistoryService {

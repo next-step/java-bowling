@@ -1,18 +1,17 @@
 package qna.service;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import qna.CannotDeleteException;
 import qna.NotFoundException;
-import qna.domain.*;
-
-import javax.annotation.Resource;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import qna.domain.Question;
+import qna.domain.QuestionRepository;
+import qna.domain.User;
 
 @Service("questionService")
 public class QuestionService {
@@ -28,17 +27,17 @@ public class QuestionService {
     private DeleteHistoryService deleteHistoryService;
 
     @Transactional(readOnly = true)
-    public Question findQuestionById(Long id) {
+    public Question findByIdAndDeletedFalse(Long id) {
         return questionRepository.findByIdAndDeletedFalse(id)
                 .orElseThrow(() -> {
-                    log.error("[QUESTION_ERROR] id로 질문 조회 실패 id: {}", id);
+                    log.error("[QUESTION_ERROR] 질문 조회 실패 id: {}", id);
                     throw new NotFoundException();
                 });
     }
 
     @Transactional
-    public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
-        Question question = findQuestionById(questionId);
+    public void deleteQuestion(User loginUser, long questionId) {
+        Question question = findByIdAndDeletedFalse(questionId);
 
         executeSoftDelete(loginUser, question);
         answerService.executeSoftDelete(loginUser, question.getAnswers());
@@ -52,9 +51,9 @@ public class QuestionService {
         }
     }
 
-    public boolean executeSoftDelete(User loginUser, Question question) {
+    public Question executeSoftDelete(User loginUser, Question question) {
         checkOwnerOrThrow(loginUser, question);
         question.setDeleted(true);
-        return true;
+        return question;
     }
 }
