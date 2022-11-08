@@ -35,15 +35,15 @@ public class FrameResult {
     private static String createSign(State state) {
         List<Pin> pins = state.pins();
 
-        if (state.isReady()) {
+        if (pins.size() == 0) {
             return "";
         }
 
-        if (state.isFirstBowl() || state.isStrike()) {
+        if (pins.size() == 1) {
             return String.valueOf(pins.get(0).getCount());
         }
 
-        if (state.isSpare()) {
+        if (pins.get(0).getCount() + pins.get(1).getCount() == 10) {
             return String.format("%d|/", pins.get(0).getCount());
         }
 

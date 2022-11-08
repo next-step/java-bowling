@@ -48,24 +48,4 @@ public class FirstBowl extends State {
     public List<Pin> pins() {
         return List.of(pin);
     }
-
-    @Override
-    public boolean isReady() {
-        return false;
-    }
-
-    @Override
-    public boolean isFirstBowl() {
-        return true;
-    }
-
-    @Override
-    public boolean isSpare() {
-        return false;
-    }
-
-    @Override
-    public boolean isStrike() {
-        return false;
-    }
 }

@@ -11,8 +11,4 @@ public abstract class State {
     public abstract Score getScore();
     public abstract Score calculateAdditionalScore(Score score);
     public abstract List<Pin> pins();
-    public abstract boolean isReady();
-    public abstract boolean isFirstBowl();
-    public abstract boolean isSpare();
-    public abstract boolean isStrike();
 }
