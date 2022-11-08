@@ -34,10 +34,6 @@ public class Score {
         }
     }
 
-    public int value(int score) {
-        return scoreMap.get(score).score;
-    }
-
     public int value() {
         return this.score;
     }
