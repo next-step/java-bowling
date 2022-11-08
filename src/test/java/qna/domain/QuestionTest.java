@@ -1,21 +1,29 @@
 package qna.domain;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.when;
 
 public class QuestionTest {
-    public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-    public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
+    public static Question Q1;
+
+    @BeforeEach
+    public void setUp() throws Exception {
+        Q1 = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
+    }
 
     @Test
     public void delete_성공() throws Exception {
-        Q1.delete(UserTest.JAVAJIGI);
+        List<DeleteHistory> deleteHistoryList = new ArrayList<>();
+        deleteHistoryList.add(new DeleteHistory(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), LocalDateTime.now()));
+        assertThat(Q1.delete(UserTest.JAVAJIGI)).containsAll(deleteHistoryList);
         assertThat(Q1.isDeleted()).isTrue();
     }
 

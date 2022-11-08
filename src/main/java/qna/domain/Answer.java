@@ -3,8 +3,13 @@ package qna.domain;
 import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
+import qna.service.DeleteHistoryService;
 
+import javax.annotation.Resource;
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -44,9 +49,11 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public void delete(User writer) throws CannotDeleteException {
+    public DeleteHistory delete(User writer) throws CannotDeleteException {
         if (!isOwner(writer)) throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         setDeleted(true);
+
+        return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
     }
 
     public Answer setDeleted(boolean deleted) {

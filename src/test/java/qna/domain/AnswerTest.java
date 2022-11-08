@@ -12,7 +12,7 @@ public class AnswerTest {
 
     @Test
     void delete_성공_답변자_동일() throws Exception {
-        A1.delete(UserTest.JAVAJIGI);
+        assertThat(A1.delete(UserTest.JAVAJIGI)).isInstanceOf(DeleteHistory.class);
         assertThat(A1.isDeleted()).isTrue();
     }
 
