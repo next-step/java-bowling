@@ -12,6 +12,10 @@ public class Answers {
         this.answers = answers;
     }
 
+    public Answers(Answer... answers) {
+        this.answers = List.of(answers);
+    }
+
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         for (Answer answer : answers) {

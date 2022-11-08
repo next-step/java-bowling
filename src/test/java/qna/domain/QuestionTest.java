@@ -20,11 +20,6 @@ public class QuestionTest {
     }
 
     @Test
-    void 질문_작성자가_삭제할_경우() {
-        assertThatNoException().isThrownBy(() -> Q2.deleteWithAnswer(UserTest.SANJIGI));
-    }
-
-    @Test
     void 정상적으로_삭제할_경우_isDeleted_상태_변경() throws CannotDeleteException {
         List<DeleteHistory> deleteHistories = Q1.deleteWithAnswer(UserTest.JAVAJIGI);
         assertThat(deleteHistories).contains(new DeleteHistory(ContentType.QUESTION, Q1.getId(), UserTest.JAVAJIGI, LocalDateTime.now()));

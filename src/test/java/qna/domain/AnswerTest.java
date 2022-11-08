@@ -20,11 +20,6 @@ public class AnswerTest {
     }
 
     @Test
-    void 답변_작성자와_질문자가_동일한_경우() {
-        assertThatNoException().isThrownBy(() -> A1.delete(UserTest.JAVAJIGI));
-    }
-
-    @Test
     void 정상적으로_삭제되면_isDeleted_상태_변경() throws CannotDeleteException {
         DeleteHistory deleteHistories = A2.delete(UserTest.SANJIGI);
         assertThat(A2.isDeleted()).isTrue();
