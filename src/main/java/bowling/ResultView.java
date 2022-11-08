@@ -5,12 +5,12 @@ import java.util.List;
 
 public class ResultView {
 
-    public static void printResult(String name, List<NormalFrame> frames, FinalFrame finalFrame) {
+    public static void printResult(String name, List<Frame> frames) {
         printRoundTemplate();
         printUserName(name);
         printFrames(frames);
-        printLastFrame(finalFrame);
     }
+
     private static void printRoundTemplate() {
         System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
     }
@@ -20,38 +20,14 @@ public class ResultView {
         System.out.printf("%5s ",name);
     }
 
-    private static void printFrames(List<NormalFrame> frames) {
-        Iterator<NormalFrame> iterator = frames.iterator();
-        while (iterator.hasNext()) {
-            NormalFrame frame = iterator.next();
-            System.out.print("|");
-            if (frame.getValues().size() == 2) {
-                System.out.printf("%2s",frame.getValues().get(0).getFalledPins());
-                System.out.print("|");
-                if (frame.getValues().get(1).getFalledPins() == 10) {
-                    System.out.printf("%-3s", "/");
-                } else {
-                    System.out.printf("%-3s",frame.getValues().get(1).getFalledPins());
-                }
-            } else {
-                frame.getValues().forEach(pins -> System.out.printf("  %-3s ", pins.getResult()));
-            }
+    private static void printFrames(List<Frame> frames) {
+        for (Frame frame : frames) {
+            System.out.printf("|  %-3s ", frame.getScore());
         }
-
-        int other = 9 - frames.size();
-        for (int i = 0; i < other; i++) {
+        int emptyFrameSize = 11 - frames.size();
+        for (int i = 0; i < emptyFrameSize; i++) {
             System.out.print("|      ");
         }
-    }
-
-    private static void printLastFrame(FinalFrame finalFrame) {
-        System.out.print("|");
-        if (finalFrame.getValues().size() == 0) {
-            System.out.print("      ");
-        } else {
-            finalFrame.getValues().forEach(i -> System.out.print(i.getFalledPins()));
-        }
-        System.out.print("|");
         System.out.println();
     }
 }

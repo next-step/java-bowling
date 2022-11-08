@@ -13,9 +13,8 @@ public class Thrown {
         return firstPins.isMax();
     }
 
-    public boolean isSpare(int secondPins) {
-        this.secondPins = firstPins.totalPins(secondPins);
-        return this.secondPins.isMax();
+    public boolean isSpare() {
+        return secondPins.isMax();
     }
 
     public void bowl(int secondPins) {
@@ -23,6 +22,9 @@ public class Thrown {
     }
 
     public int getScore() {
+        if (secondPins == null) {
+            return firstPins.getFalledPins();
+        }
         return firstPins.getFalledPins() + secondPins.getFalledPins();
     }
 }

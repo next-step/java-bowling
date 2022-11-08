@@ -5,19 +5,32 @@ import java.util.List;
 public class FinalFrame implements Frame {
 
     private List<Pins> scores;
+    private Thrown thrown;
+    private Pins bonusPins;
 
+    // TODO
     public FinalFrame(List<Pins> scores) {
         this.scores = scores;
     }
 
+    private FinalFrame(Thrown thrown) {
+        this.thrown = thrown;
+    }
+
+    public static FinalFrame of(int countOfPins) {
+        return new FinalFrame(new Thrown(Pins.from(countOfPins)));
+    }
+
     @Override
     public boolean isFinished() {
-        if (scores.size() == 2 && scores.get(1).getFalledPins() != 10) {
+        if (bonusPins.getFalledPins() > 0) {
             return true;
         }
-        if (scores.size() == 3) {
+
+        if (!thrown.isSpare()) {
             return true;
         }
+
         return false;
     }
 
@@ -39,6 +52,6 @@ public class FinalFrame implements Frame {
 
     @Override
     public int getScore() {
-        return 0;
+        return thrown.getScore() + bonusPins.getFalledPins();
     }
 }

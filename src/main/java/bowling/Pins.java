@@ -10,7 +10,7 @@ public class Pins {
     private static final Map<Integer, Pins> cache = new HashMap<>();
 
     static {
-        for (int index = MIN_PINS; index < MAX_PINS; index++) {
+        for (int index = MIN_PINS; index <= MAX_PINS; index++) {
             cache.put(index, new Pins(index));
         }
     }
