@@ -105,11 +105,11 @@ public class Question extends AbstractEntity {
         }
     }
 
-    public void deleteAnswers(List<DeleteHistory> deleteHistories) {
+    public void deleteAnswers(DeleteHistories deleteHistories) {
         for (Answer answer : answers.getAnswers()) {
             answer.delete();
 
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter()));
+            deleteHistories.addDeleteHistory(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter()));
         }
     }
 }

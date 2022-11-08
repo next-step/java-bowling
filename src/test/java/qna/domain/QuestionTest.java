@@ -39,7 +39,7 @@ public class QuestionTest {
 
     @Test
     void deleteAnswers() {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        DeleteHistories deleteHistories = new DeleteHistories();
         Q1.addAnswer(A2);
         Q1.deleteAnswers(deleteHistories);
         assertThat(A2.isDeleted()).isTrue();
