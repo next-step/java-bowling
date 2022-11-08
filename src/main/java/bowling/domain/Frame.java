@@ -13,7 +13,6 @@ public abstract class Frame {
     protected int number;
     protected Frame nextFrame;
     protected State state = new Ready();
-    protected Score score = state.getScore();
 
     protected Frame() {
 
@@ -23,7 +22,6 @@ public abstract class Frame {
         state = state.bowl(Pin.of(number));
 
         if (state.isFinished()) {
-            score = state.getScore();
             nextFrame = nextFrame();
         }
     }
@@ -43,6 +41,7 @@ public abstract class Frame {
     public abstract boolean isLastFrame();
 
     public int getIntScore() {
+        Score score = state.getScore();
         if (score.canCalculateScore()) {
             return score.getScore();
         }

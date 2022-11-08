@@ -28,7 +28,6 @@ public class NormalFrame extends Frame {
         state = state.bowl(Pin.of(number));
 
         if (state.isFinished()) {
-            score = state.getScore();
             nextFrame = nextFrame();
         }
     }
