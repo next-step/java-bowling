@@ -18,6 +18,17 @@ public class Record {
         return frames;
     }
 
+    public String getPlayerName() {
+        return player.getName();
+    }
+
+    public boolean isEndFrame(int frameIndex) {
+        if (frames.size() <= frameIndex) {
+            return false;
+        }
+        return frames.get(frameIndex).isEndFrame();
+    }
+
     public int getRecordCount() {
         return frames.size();
     }

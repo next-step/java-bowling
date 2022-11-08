@@ -9,28 +9,35 @@ public class Records {
         this.records = records;
     }
 
-    public boolean isEndRecords() {
-        Record notEndRecord = records
-                .stream()
-                .filter(record -> !record.isEndRecord())
-                .findFirst().orElse(null);
-        return notEndRecord == null;
+    public List<Record> getRecords() {
+        return records;
     }
 
-    public boolean isEndLastFrame(int laneIndex) {
-        return records.get(laneIndex).isEndLastFrame();
+    public String getPlayerName(int laneIndex) {
+        return records.get(laneIndex).getPlayerName();
+    }
+
+    public boolean isEndPlayerFrame(int frameIndex, int playerIndex) {
+        if (playerIndex >= records.size()) {
+            return true;
+        }
+        return records.get(playerIndex).isEndFrame(frameIndex);
+    }
+
+    public boolean isEndFrames(int frameIndex) {
+        return records
+                .stream()
+                .allMatch(record -> record.isEndFrame(frameIndex));
+    }
+
+    public boolean isEndRecords() {
+        return records
+                .stream()
+                .allMatch(Record::isEndRecord);
     }
 
     public void record(int laneIndex, int downPinCount) {
         records.get(laneIndex).record(downPinCount);
-    }
-
-    public int getRecordCount(int laneIndex) {
-        return records.get(laneIndex).getRecordCount();
-    }
-
-    public Record getRecord(int laneIndex) {
-        return records.get(laneIndex);
     }
 
 
