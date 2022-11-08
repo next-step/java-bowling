@@ -35,10 +35,11 @@ public class DefaultFrame implements Frame {
         if (this.scores.isEmpty()) {
             return true;
         }
-        if (!this.scores.get(0).isStrike() && this.scores.size() < DEFAULT_FRAME_SIZE) {
-            return true;
-        }
-        return false;
+        return isRemainSecondChance();
+    }
+
+    private boolean isRemainSecondChance() {
+        return (!this.scores.get(0).isStrike()) && (this.scores.size() < DEFAULT_FRAME_SIZE);
     }
 
     @Override
