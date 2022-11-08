@@ -1,36 +1,77 @@
 package bowling.view;
 
-import bowling.domain.*;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.FrameNumber;
+import bowling.domain.frame.Frames;
+import bowling.domain.pin.FallenPin;
+import bowling.domain.player.PlayerName;
+import bowling.domain.score.Score;
+import bowling.domain.state.FrameState;
+import bowling.domain.state.Spare;
+import bowling.domain.state.Strike;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
 public class ResultView {
-    private static final String SCORE_TABLE_HEAD = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-    private static final String BAR = "|";
-    private static final String STRIKE = "X";
-    private static final String SPARE = "/";
-    private static final String GUTTER = "-";
+    private static final String NAME_COLUMN_TITLE = "NAME";
+    public static final String BAR = "|";
+    public static final String STRIKE = "X";
+    public static final String SPARE = "/";
+    public static final String GUTTER = "-";
 
     public static void printFrames(PlayerName playerName, Frames frames) {
-        System.out.println(SCORE_TABLE_HEAD);
-        List<String> rowElements = new ArrayList<>();
-        rowElements.add(playerName.getName());
-        rowElements.addAll(triedFrames(frames));
-        rowElements.addAll(remainingFrames(frames));
-
-        String scoreTableRow = rowElements.stream()
-                .map(ResultView::padded)
-                .collect(joining(BAR, BAR, BAR));
-        System.out.println(scoreTableRow);
+        System.out.println(scoreTableRow(NAME_COLUMN_TITLE, frameNumberColumnTitles()));
+        System.out.println(scoreTableRow(playerName.getName(), triedFrames(frames)));
+        System.out.println(scoreTableRow("", accumulatedScores(frames)));
     }
 
-    private static List<String> remainingFrames(Frames frames) {
-        int remainingFrameCount = Frames.MAX_FRAME_NUMBER - frames.lastFrameNumber();
+    private static List<String> accumulatedScores(Frames frames) {
+        List<Integer> scores = scores(frames);
+
+        List<String> result = new ArrayList<>();
+        int accumulatedScore = 0;
+        for (int score: scores) {
+            accumulatedScore += score;
+            result.add(String.valueOf(accumulatedScore));
+        }
+        return result;
+    }
+
+    private static List<Integer> scores(Frames frames) {
+        return frames.getFrames()
+                .stream()
+                .filter(frame -> !frame.isReady())
+                .filter(Frame::isFinished)
+                .map(Frame::getScore)
+                .filter(Objects::nonNull)
+                .map(Score::getScore)
+                .collect(toList());
+    }
+
+    private static List<String> frameNumberColumnTitles() {
+        return IntStream.rangeClosed(1, FrameNumber.FINAL_FRAME_NUMBER)
+                .mapToObj(i -> String.format("%02d", i))
+                .collect(toList());
+    }
+
+    private static String scoreTableRow(String name, List<String> bodyStrings) {
+        List<String> rowElements = new ArrayList<>();
+        rowElements.add(name);
+        rowElements.addAll(bodyStrings);
+        rowElements.addAll(remainingFrames(FrameNumber.FINAL_FRAME_NUMBER - bodyStrings.size()));
+
+        return rowElements.stream()
+                .map(ResultView::padded)
+                .collect(joining(BAR, BAR, BAR));
+    }
+
+    private static List<String> remainingFrames(int remainingFrameCount) {
         return IntStream.range(0, remainingFrameCount)
                 .mapToObj(i -> "")
                 .collect(toList());
@@ -39,41 +80,35 @@ public class ResultView {
     private static List<String> triedFrames(Frames frames) {
         return frames.getFrames()
                 .stream()
+                .filter(frame -> !frame.isReady())
                 .map(ResultView::frameString)
                 .collect(toList());
     }
 
     private static String frameString(Frame frame) {
-        return frame.getBowlings()
+        return frame.getStates()
                 .stream()
-                .map(ResultView::bowlingString)
+                .map(ResultView::frameStateString)
+                .map(string -> string.replace("0", GUTTER))
                 .collect(joining(BAR));
     }
 
-    private static String bowlingString(Bowling bowling) {
-        if (bowling.isStrike()) {
+    private static String frameStateString(FrameState frameState) {
+        if (frameState instanceof Strike) {
             return STRIKE;
         }
 
-        List<String> pinsList = bowling.getPinsList()
+        List<String> fallenPins = frameState.getFallenPins()
                 .stream()
-                .map(Pins::getFallenPins)
-                .map(ResultView::pinsString)
+                .map(FallenPin::getCount)
+                .map(String::valueOf)
                 .collect(toList());
 
-        if (bowling.isSpare()) {
-            pinsList.set(bowling.tries() - 1, SPARE);
+        if (frameState instanceof Spare) {
+            fallenPins.set(frameState.tries() - 1, SPARE);
         }
 
-        return String.join(BAR, pinsList);
-    }
-
-    private static String pinsString(int fallenPins) {
-        if (fallenPins == 0) {
-            return GUTTER;
-        }
-
-        return String.valueOf(fallenPins);
+        return String.join(BAR, fallenPins);
     }
 
     private static String padded(String string) {

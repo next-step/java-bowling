@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.player;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
