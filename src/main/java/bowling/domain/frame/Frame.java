@@ -9,9 +9,7 @@ public abstract class Frame {
     protected int frameNo;
     protected Status status = new Ready();
 
-    Frame bowl(Pin pin) {
-        return null;
-    }
+    public abstract Frame bowl(Pin pin);
 
     public abstract Status getStatus();
 
