@@ -2,7 +2,6 @@ package bowling;
 
 import bowling.domain.BowlingGame;
 import bowling.dto.BowlingGameDto;
-import bowling.utils.BowlingGameGenerator;
 import bowling.views.InputView;
 import bowling.views.OutputView;
 
@@ -18,7 +17,7 @@ public class BowlingGameApplication {
 
     private static void runApplication() {
         String playerName = InputView.inputPlayerName();
-        BowlingGame game = BowlingGameGenerator.createBowlingGame();
+        BowlingGame game = new BowlingGame();
         OutputView.printBowlingGame(playerName, BowlingGameDto.from(game));
 
         while (!game.isEnded()) {

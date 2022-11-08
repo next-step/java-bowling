@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -7,26 +8,9 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
 
     protected final List<Integer> hits;
 
-    protected AbstractBowlingGameFrame(List<Integer> hits) {
-        validateSizeOfHits(hits);
-        validateHitsContainsNegative(hits);
-        validateHits(hits);
-        this.hits = hits;
+    protected AbstractBowlingGameFrame() {
+        this.hits = new ArrayList<>();
     }
-
-    private void validateSizeOfHits(List<Integer> hits) {
-        if (hits.size() > getMaxSizeOfHits()) {
-            throw new IllegalArgumentException(String.format("투구 기록은 최대 %d회 까지 저장할 수 있습니다.", getMaxSizeOfHits()));
-        }
-    }
-
-    public abstract int getMaxSizeOfHits();
-
-    private void validateHitsContainsNegative(List<Integer> hits) {
-        hits.forEach(this::validateHitIsNegative);
-    }
-
-    protected abstract void validateHits(List<Integer> hits);
 
     @Override
     public void add(int hit) {
