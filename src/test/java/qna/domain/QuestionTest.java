@@ -12,12 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class QuestionTest {
-    public static Question Q1;
-
-    @BeforeEach
-    public void setUp() throws Exception {
-        Q1 = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
-    }
+    public static final Question Q1 = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
 
     @Test
     public void delete_성공() throws Exception {
@@ -45,10 +40,11 @@ public class QuestionTest {
 
     @Test
     public void delete_실패_질문자_답변자_다름() throws Exception {
-        Q1.addAnswer(AnswerTest.A2);
+        Question question = new Question(2L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        question.addAnswer(AnswerTest.A2);
 
         assertThatThrownBy(() -> {
-            Q1.delete(UserTest.JAVAJIGI);
+            question.delete(UserTest.JAVAJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
 }
