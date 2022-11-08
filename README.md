@@ -24,15 +24,15 @@
 - 질문과 답변 삭제 이력에 대한 정보를 DeleteHistory를 활용해 남긴다. 
 
 ### Question : User를 받아 삭제 가능한 질문인지 확인 한다.
-- [ ]  Owner가 로그인 User와 같다.
-- [ ]  Answer들의 Owner가 로그인 User와 같은지 확인한다.
-- [ ]  question을 삭제 상태로 바꾼다.
-- [ ]  question의 정보로 deleteHistory를 만든다.
+- [x]  Owner가 로그인 User와 같다.
+- [x]  Answers도 함께 삭제 한다.
+- [x]  question을 삭제 상태로 바꾼다.
+- [x]  question의 정보로 deleteHistory를 만든다.
+
+### Answers
+- [ ]  Answer를 삭제한다.
 
 ### Answer : User를 받아 삭제 가능한 질문인지 확인한다.
-- [ ] Owner가 로그인 User와 같은지 확인한다.
-- [ ] Answer를 삭제 상태로 바꾼다.
-- [ ] Answer의 정보로 deleteHistory를 만든다.
-
-### User
-- [ ] equals
+- [x] Owner가 로그인 User와 같은지 확인한다.
+- [x] Answer를 삭제 상태로 바꾼다.
+- [x] Answer의 정보로 deleteHistory를 만든다.
