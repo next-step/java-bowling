@@ -12,11 +12,6 @@ public class LastFrame implements Frame {
         this.scores = new Scores();
     }
 
-    public LastFrame(int first, int second, int third) {
-        this.scores = new Scores(Score.of(first), Score.of(second), Score.of(third));
-        ScoreValidator.validate(this);
-    }
-
     @Override
     public void addScore(Score score) {
         if (isRemainChance()) {

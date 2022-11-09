@@ -10,15 +10,18 @@ public class LastFrameTest {
 
     @Test
     void create() {
-        Frame actual = new LastFrame(10, 10, 10);
+        Frame actual = new LastFrame();
 
-        assertThat(actual).isEqualTo(new LastFrame(10, 10, 10));
+        assertThat(actual).isEqualTo(new LastFrame());
     }
 
     @DisplayName("스트라이크가 아니고 첫 번째 점수와 두 번째 점수의 합이 10을 넘으면 IllegalArgumentException 예외를 throw 한다.")
     @Test
     void validate_sum() {
-        assertThatThrownBy(() -> new LastFrame(9, 10, 10)).isInstanceOf(IllegalArgumentException.class);
+        LastFrame lastFrame = new LastFrame();
+        lastFrame.addScore(Score.of(9));
+
+        assertThatThrownBy(() -> lastFrame.addScore(Score.of(10))).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("첫 번째 시도가 스트라이크가 아니고 두번째 프레임 결과가 스페어가 아니면 false를 반환한다.")

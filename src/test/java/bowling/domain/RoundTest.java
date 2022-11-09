@@ -42,7 +42,10 @@ public class RoundTest {
     @Test
     void isGameEnd_lastFrame() {
         Round round1 = new Round(10);
-        Frame lastFrame = new LastFrame(10, 1, 3);
+        Frame lastFrame = new LastFrame();
+        lastFrame.addScore(Score.of(10));
+        lastFrame.addScore(Score.of(1));
+        lastFrame.addScore(Score.of(2));
         Round round2 = new Round(10);
         Frame lastFrameNotStrike = new LastFrame();
         lastFrameNotStrike.addScore(Score.of(5));
