@@ -9,7 +9,7 @@ public class ScoreValidator {
     }
 
     public static void validate(Frame frame) {
-        if (frame.scores().size() < 2) {
+        if (isNotNeedValidate(frame)) {
             return;
         }
         if (frame instanceof DefaultFrame) {
@@ -18,6 +18,10 @@ public class ScoreValidator {
         if (frame instanceof LastFrame) {
             validateLastFrame(frame.scores());
         }
+    }
+
+    private static boolean isNotNeedValidate(Frame frame) {
+        return frame.scores().size() < 2;
     }
 
     private static void validateDefaultFrame(Scores scores) {
