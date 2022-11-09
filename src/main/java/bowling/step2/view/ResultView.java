@@ -1,11 +1,10 @@
 package bowling.step2.view;
 
+import bowling.step2.domain.BowlingGame;
 import bowling.step2.domain.Player;
 
 public class ResultView {
 
-    private static final int GAME_START_INDEX = 1;
-    private static final int GAME_LAST_INDEX = 10;
     private static final String ZERO = "0";
     private static final String WALL_SHAPE = "|";
     private static final String BLANK = " ";
@@ -20,11 +19,11 @@ public class ResultView {
     }
 
     private static void printResult() {
-        for (int i = GAME_START_INDEX; i <= GAME_LAST_INDEX; i++) {
+        for (int i = BowlingGame.GAME_START_INDEX; i <= BowlingGame.GAME_LAST_INDEX; i++) {
             System.out.print(WALL_SHAPE);
             System.out.print(BLANK.repeat(6));
         }
-        System.out.print(WALL_SHAPE);
+        System.out.println(WALL_SHAPE);
     }
 
     private static void printName(Player player) {
@@ -36,7 +35,7 @@ public class ResultView {
     private static void printIndex() {
         System.out.print(WALL_SHAPE);
         System.out.print(BLANK + NAME_TEXT + BLANK);
-        for (int i = GAME_START_INDEX; i <= GAME_LAST_INDEX; i++) {
+        for (int i = BowlingGame.GAME_START_INDEX; i <= BowlingGame.GAME_LAST_INDEX; i++) {
             System.out.print(WALL_SHAPE);
             System.out.print(BLANK.repeat(2) + getIndexNumberString(i) + BLANK.repeat(2));
         }
@@ -44,7 +43,7 @@ public class ResultView {
     }
 
     private static String getIndexNumberString(int num) {
-        if (num < GAME_LAST_INDEX) {
+        if (num < BowlingGame.GAME_LAST_INDEX) {
             return ZERO + num;
         }
         return String.valueOf(num);

@@ -1,5 +1,7 @@
 package bowling.step2.domain;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class Player {
@@ -8,6 +10,8 @@ public class Player {
     static final String NAME_ENGLISH_EXCEPTION = "플레이어 이름은 영어만 사용 가능합니다.";
 
     private final String name;
+
+    private final Map<Integer, Scores> scoreMap = new HashMap<>();
 
     public String name() {
         return name;
@@ -30,5 +34,13 @@ public class Player {
         if (!Pattern.matches("^[a-zA-Z]*$", name)) {
             throw new IllegalArgumentException(NAME_ENGLISH_EXCEPTION);
         }
+    }
+
+    public void addScoreMap(int index, Scores scores) {
+        this.scoreMap.put(index, scores);
+    }
+
+    public Map<Integer, Scores> scoreMap() {
+        return new HashMap<>(scoreMap);
     }
 }
