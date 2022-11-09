@@ -10,6 +10,8 @@ public abstract class Frame {
         this.scores = new Scores();
     }
 
+    public abstract boolean isRemainChance();
+
     public void addScore(Score score) {
         if (!isRemainChance()) {
             throw new IllegalArgumentException("남은 기회가 없습니다.");
@@ -21,8 +23,6 @@ public abstract class Frame {
     public Scores scores() {
         return this.scores;
     }
-
-    abstract boolean isRemainChance();
 
     @Override
     public boolean equals(Object o) {
