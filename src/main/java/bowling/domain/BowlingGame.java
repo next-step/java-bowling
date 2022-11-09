@@ -16,7 +16,15 @@ public class BowlingGame {
 
     public Scoreboard play(Score score) {
         this.scoreboard.addScore(score, this.round);
+        setNextRound();
         return this.scoreboard;
+    }
+
+    private void setNextRound() {
+        Frame frame = this.scoreboard.frame(this.round);
+        if (!frame.isRemainChance()) {
+            this.round.nextRound();
+        }
     }
 
     public boolean isEnd() {

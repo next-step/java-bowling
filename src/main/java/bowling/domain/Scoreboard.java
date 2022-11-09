@@ -23,13 +23,10 @@ public class Scoreboard {
     public void addScore(Score score, Round round) {
         Frame frame = this.frames.get(round.index());
         frame.addScore(score);
-        setNextRound(round, frame);
     }
 
-    private void setNextRound(Round round, Frame frame) {
-        if (!frame.isRemainChance()) {
-            round.nextRound();
-        }
+    public Frame frame(Round round) {
+        return this.frames.get(round.index());
     }
 
     public List<Frame> frames() {
