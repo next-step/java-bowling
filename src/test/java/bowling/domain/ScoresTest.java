@@ -28,36 +28,34 @@ public class ScoresTest {
         Scores notEmptyScores = new Scores();
         notEmptyScores.add(Score.of(4));
 
-        Assertions.assertAll(
-                () -> assertThat(emptyScores.isEmpty()).isTrue(),
-                () -> assertThat(notEmptyScores.isEmpty()).isFalse()
-        );
+        Assertions.assertAll(() -> assertThat(emptyScores.isEmpty()).isTrue(),
+                () -> assertThat(notEmptyScores.isEmpty()).isFalse());
     }
 
     @Test
     void first() {
-        Scores scores = new Scores(Score.of(1), Score.of(2), Score.of(3));
+        Scores scores = new Scores(1, 2, 3);
 
         assertThat(scores.first()).isEqualTo(Score.of(1));
     }
 
     @Test
     void second() {
-        Scores scores = new Scores(Score.of(1), Score.of(2), Score.of(3));
+        Scores scores = new Scores(1, 2, 3);
 
         assertThat(scores.second()).isEqualTo(Score.of(2));
     }
 
     @Test
     void third() {
-        Scores scores = new Scores(Score.of(1), Score.of(2), Score.of(3));
+        Scores scores = new Scores(1, 2, 3);
 
         assertThat(scores.third()).isEqualTo(Score.of(3));
     }
 
     @Test
     void sum() {
-        Scores scores = new Scores(Score.of(1), Score.of(2), Score.of(3));
+        Scores scores = new Scores(1, 2, 3);
 
         assertThat(scores.sum()).isEqualTo(6);
     }

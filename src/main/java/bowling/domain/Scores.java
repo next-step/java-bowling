@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -8,6 +9,16 @@ import java.util.Objects;
 public class Scores {
 
     private final List<Score> scores;
+
+    public Scores() {
+        this.scores = new ArrayList<>();
+    }
+
+    public Scores(int... ints) {
+        this(Arrays.stream(ints)
+                .mapToObj(Score::of)
+                .toArray(Score[]::new));
+    }
 
     public Scores(Score... scores) {
         this.scores = new ArrayList<>();
@@ -33,7 +44,7 @@ public class Scores {
     public Score third() {
         return this.scores.get(2);
     }
-    
+
     public int size() {
         return this.scores.size();
     }
