@@ -1,7 +1,6 @@
 package qna.domain;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +22,7 @@ public class AnswerTest {
     @DisplayName("작성자와 로그인한 사용자가 같을 경우 예외를 던지지 않는다.")
     public void Given_CheckOwner_Then_NotThrow() {
 
-        assertDoesNotThrow(() -> A1.softDelete(UserTest.JAVAJIGI));
+        assertThatNoException().isThrownBy(() -> A1.softDelete(UserTest.JAVAJIGI));
     }
 
     @Test
