@@ -9,6 +9,9 @@ public class ScoreValidator {
     }
 
     public static void validate(Frame frame) {
+        if (frame.scores().size() < 2) {
+            return;
+        }
         if (frame instanceof DefaultFrame) {
             validateDefaultFrame(frame.scores());
         }
@@ -18,9 +21,6 @@ public class ScoreValidator {
     }
 
     private static void validateDefaultFrame(Scores scores) {
-        if (scores.size() < 2) {
-            return;
-        }
         if (scores.sum() <= BowlingConst.SCORE_STRIKE) {
             return;
         }
@@ -28,9 +28,6 @@ public class ScoreValidator {
     }
 
     private static void validateLastFrame(Scores scores) {
-        if (scores.size() < 2) {
-            return;
-        }
         if (scores.size() == 2) {
             validateSecondTimeScore(scores);
             return;
@@ -60,7 +57,7 @@ public class ScoreValidator {
             return;
         }
         if (scores.first().isStrike()
-                && (scores.second().value() + scores.third().value()) <= BowlingConst.SCORE_STRIKE) {
+                && new Scores(scores.first(), scores.second()).sum() <= BowlingConst.SCORE_STRIKE) {
             return;
         }
         throw new IllegalArgumentException();
