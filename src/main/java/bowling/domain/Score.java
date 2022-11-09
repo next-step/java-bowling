@@ -8,13 +8,13 @@ public class Score {
 
     private static final int SCORE_MIN = 0;
     private static final int SCORE_MAX = 10;
-    public static final Map<Integer, Score> scoreMap = new HashMap<>();
+    public static final Map<Integer, Score> scoreCash = new HashMap<>();
 
     private final int score;
 
     static {
         for (int i = SCORE_MIN; i <= SCORE_MAX; i++) {
-            scoreMap.put(i, new Score(i));
+            scoreCash.put(i, new Score(i));
         }
     }
 
@@ -25,7 +25,7 @@ public class Score {
 
     public static Score of(int score) {
         validateRange(score);
-        return scoreMap.get(score);
+        return scoreCash.get(score);
     }
 
     private static void validateRange(int score) {
