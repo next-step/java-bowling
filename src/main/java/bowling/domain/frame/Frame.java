@@ -31,11 +31,15 @@ public abstract class Frame {
 
     public Integer calculatePoint() {
 
-        if (point == null || canAddPoint()) {
+        if (point == null || isNotFinishedCalculate()) {
             return null;
         }
 
         return point.point();
+    }
+
+    private boolean isNotFinishedCalculate() {
+        return canAddPoint() || !isFinish();
     }
 
     public abstract boolean canAddPoint();
