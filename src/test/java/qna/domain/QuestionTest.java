@@ -9,7 +9,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static qna.domain.AnswerTest.A1;
-import static qna.domain.AnswerTest.A2;
 import static qna.domain.UserTest.JAVAJIGI;
 import static qna.domain.UserTest.SANJIGI;
 
@@ -46,11 +45,10 @@ public class QuestionTest {
     @DisplayName("질문자와 답변글의 모든 답변자 다를 경우 예외가 발생한다.")
     @Test
     void deleteQnAByDifferentUser() {
-        Q1.addAnswer(A2);
+        Q2.addAnswer(A1);
 
         assertThatThrownBy(() -> {
-            Q1.delete(JAVAJIGI);
+            Q2.delete(SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
-
 }
