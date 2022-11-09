@@ -11,7 +11,7 @@ public class Player {
 
     private final String name;
 
-    private final Map<Integer, Scores> scoreMap = new HashMap<>();
+    private final Map<Integer, Frame> scoreMap = new HashMap<>();
 
     public String name() {
         return name;
@@ -36,11 +36,11 @@ public class Player {
         }
     }
 
-    public void addScoreMap(int index, Scores scores) {
-        this.scoreMap.put(index, scores);
+    public void addScoreMap(int index, Frame frame) {
+        this.scoreMap.put(index, frame);
     }
 
-    public Map<Integer, Scores> scoreMap() {
+    public Map<Integer, Frame> scoreMap() {
         return new HashMap<>(scoreMap);
     }
 }

@@ -1,11 +1,10 @@
 package bowling.step2.domain;
 
-import java.util.regex.Pattern;
-
 public class Score {
-    private static final String STRIKE = "X";
-    private static final String SPARE = "/";
-    static final String SCORE_EXCEPTION = "볼링점수가 잘못 입력되었습니다.";
+    private static final String STRIKE = "10";
+    static final String SCORE_SIZE_EXCEPTION = "볼링점수는 0-10사이의 숫자가 입력되어야 합니다.";
+    static final String SCORE_FORMAT_EXCEPTION = "볼링점수가 숫자가 입력되어야 합니다.";
+    public static final String ZERO = "0";
 
 
     private final String score;
@@ -17,17 +16,23 @@ public class Score {
     }
 
     private void validate(String score) {
-        if (!score.equals(STRIKE) && !score.equals(SPARE) && !Pattern.matches("[0-9]", score)) {
-            throw new IllegalArgumentException(SCORE_EXCEPTION);
+        try {
+            int num = Integer.parseInt(score);
+            if (num < 0 || num > 10) {
+                throw new IllegalArgumentException(SCORE_SIZE_EXCEPTION);
+            }
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(SCORE_FORMAT_EXCEPTION);
         }
+
     }
 
     public boolean isStrike() {
         return this.score.equals(STRIKE);
     }
 
-    public boolean isSpare() {
-        return this.score.equals(SPARE);
+    public boolean isZero() {
+        return this.score.equals(ZERO);
     }
 
     public String score() {
