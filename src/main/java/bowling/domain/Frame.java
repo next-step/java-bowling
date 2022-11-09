@@ -8,4 +8,6 @@ public interface Frame {
     boolean isRemainChance();
 
     List<Score> scores();
+
+    Scores scores2();
 }

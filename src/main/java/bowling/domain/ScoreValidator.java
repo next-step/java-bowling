@@ -11,18 +11,18 @@ public class ScoreValidator {
 
     public static void validate(Frame frame) {
         if (frame instanceof DefaultFrame) {
-            validateDefaultFrame(frame.scores());
+            validateDefaultFrame(frame.scores2());
         }
         if (frame instanceof LastFrame) {
             validateLastFrame(frame.scores());
         }
     }
 
-    private static void validateDefaultFrame(List<Score> scores) {
+    private static void validateDefaultFrame(Scores scores) {
         if (scores.size() < 2) {
             return;
         }
-        if (scores.get(0).value() + scores.get(1).value() <= BowlingConst.SCORE_STRIKE) {
+        if (scores.sum() <= BowlingConst.SCORE_STRIKE) {
             return;
         }
         throw new IllegalArgumentException();

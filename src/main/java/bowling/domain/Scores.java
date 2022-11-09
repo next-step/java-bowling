@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,7 +10,34 @@ public class Scores {
     private final List<Score> scores;
 
     public Scores(Score... scores) {
-        this.scores = List.of(scores);
+        this.scores = new ArrayList<>();
+        this.scores.addAll(List.of(scores));
+    }
+
+    public void add(Score score) {
+        this.scores.add(score);
+    }
+
+    public boolean isEmpty() {
+        return this.scores.isEmpty();
+    }
+
+    public Score first() {
+        return this.scores.get(0);
+    }
+
+    public int size() {
+        return this.scores.size();
+    }
+
+    public int sum() {
+        return this.scores.stream()
+                .mapToInt(Score::value)
+                .sum();
+    }
+
+    public List<Score> scores() {
+        return Collections.unmodifiableList(this.scores);
     }
 
     @Override

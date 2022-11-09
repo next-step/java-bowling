@@ -58,6 +58,11 @@ public class LastFrame implements Frame {
     }
 
     @Override
+    public Scores scores2() {
+        return null;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

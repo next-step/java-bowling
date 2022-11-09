@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -8,15 +7,15 @@ import java.util.Objects;
 public class DefaultFrame implements Frame {
 
     private static final int DEFAULT_FRAME_SIZE = 2;
-    private final List<Score> scores = new ArrayList<>();
+    private final Scores scores;
 
     public DefaultFrame() {
+        this.scores = new Scores();
 
     }
 
     public DefaultFrame(int first, int second) {
-        this.scores.add(Score.of(first));
-        this.scores.add(Score.of(second));
+        this.scores = new Scores(Score.of(first), Score.of(second));
         ScoreValidator.validate(this);
     }
 
@@ -39,12 +38,17 @@ public class DefaultFrame implements Frame {
     }
 
     private boolean isRemainSecondChance() {
-        return (!this.scores.get(0).isStrike()) && (this.scores.size() < DEFAULT_FRAME_SIZE);
+        return (!this.scores.first().isStrike()) && (this.scores.size() < DEFAULT_FRAME_SIZE);
     }
 
     @Override
     public List<Score> scores() {
-        return Collections.unmodifiableList(this.scores);
+        return Collections.unmodifiableList(this.scores.scores());
+    }
+
+    @Override
+    public Scores scores2() {
+        return this.scores;
     }
 
     @Override
