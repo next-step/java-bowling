@@ -2,7 +2,6 @@ package qna.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
@@ -26,15 +25,11 @@ public class Answers {
         answers.add(answer);
     }
 
-    public List<DeleteHistory> deleteAll(User loginUser) {
-        return getAnswers().stream()
-                .map(answer -> {
-                    try {
-                        return answer.delete(loginUser);
-                    } catch (CannotDeleteException e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .collect(Collectors.toList());
+    public List<DeleteHistory> deleteAll(User loginUser) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        for(Answer answer : getAnswers()) {
+            deleteHistories.add(answer.delete(loginUser));
+        }
+        return deleteHistories;
     }
 }

@@ -4,11 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
+import qna.CannotDeleteException;
 
 class AnswersTest {
 
     @Test
-    void 모든_답변_삭제_성공() {
+    void 모든_답변_삭제_성공() throws CannotDeleteException {
         Answers answers = getSameWriterAnswers();
         assertThat(answers.deleteAll(UserTest.JAVAJIGI).size()).isEqualTo(2);
     }

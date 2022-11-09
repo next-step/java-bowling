@@ -109,7 +109,7 @@ public class Question extends AbstractEntity {
         return deleteHistories;
     }
 
-    private List<DeleteHistory> deleteAnswer(User loginUser) {
+    private List<DeleteHistory> deleteAnswer(User loginUser) throws CannotDeleteException {
         return answers.deleteAll(loginUser);
     }
 
