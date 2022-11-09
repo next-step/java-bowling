@@ -22,22 +22,20 @@ class DeleteHistoryTest {
 
 	@Test
 	void 생성_of_question() {
-		LocalDateTime createDate = LocalDateTime.now();
 		Question q = QuestionTest.Q1;
-		DeleteHistory expected = new DeleteHistory(ContentType.QUESTION, q.getId(), q.getWriter(), createDate);
+		DeleteHistory expected = new DeleteHistory(ContentType.QUESTION, q.getId(), q.getWriter(), LocalDateTime.now());
 
-		DeleteHistory deleteHistory = DeleteHistory.of(q, createDate);
+		DeleteHistory deleteHistory = DeleteHistory.of(q);
 
 		assertThat(deleteHistory).isEqualTo(expected);
 	}
 
 	@Test
 	void 생성_of_answer() {
-		LocalDateTime createDate = LocalDateTime.now();
 		Answer a = AnswerTest.A1;
-		DeleteHistory expected = new DeleteHistory(ContentType.ANSWER, a.getId(), a.getWriter(), createDate);
+		DeleteHistory expected = new DeleteHistory(ContentType.ANSWER, a.getId(), a.getWriter(), LocalDateTime.now());
 
-		DeleteHistory deleteHistory = DeleteHistory.of(a, createDate);
+		DeleteHistory deleteHistory = DeleteHistory.of(a);
 
 		assertThat(deleteHistory).isEqualTo(expected);
 	}
