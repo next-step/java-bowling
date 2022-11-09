@@ -16,36 +16,42 @@ public class RoundTest {
 
     @Test
     void isGameEnd_defaultFrame() {
-        Round round = new Round(9);
+        Round round1 = new Round(10);
         Frame defaultFrame = new DefaultFrame(1, 2);
+        Round round2 = new Round(10);
         Frame defaultFrameStrike = new DefaultFrame();
         defaultFrameStrike.addScore(Score.of(10));
+        Round round3 = new Round(10);
         Frame defaultFrameSpare = new DefaultFrame(8, 2);
+        Round round4 = new Round(10);
+        Frame defaultFrameRemainChance = new DefaultFrame();
+        defaultFrameRemainChance.addScore(Score.of(8));
 
         Assertions.assertAll(
-                () -> assertThat(round.isGameEnd(defaultFrame)).isTrue(),
-                () -> assertThat(round.isGameEnd(defaultFrameStrike)).isTrue(),
-                () -> assertThat(round.isGameEnd(defaultFrameSpare)).isTrue()
+                () -> assertThat(round1.isGameEnd(defaultFrame)).isTrue(),
+                () -> assertThat(round2.isGameEnd(defaultFrameStrike)).isTrue(),
+                () -> assertThat(round3.isGameEnd(defaultFrameSpare)).isTrue(),
+                () -> assertThat(round4.isGameEnd(defaultFrameRemainChance)).isFalse()
         );
     }
 
     @Test
     void isGameEnd_lastFrame() {
-        Round round1 = new Round(9);
+        Round round1 = new Round(10);
         Frame lastFrame = new LastFrame(10, 1, 3);
-        Round round2 = new Round(9);
+        Round round2 = new Round(10);
         Frame lastFrameNotStrike = new LastFrame();
         lastFrameNotStrike.addScore(Score.of(5));
         lastFrameNotStrike.addScore(Score.of(4));
-        Round round3 = new Round(9);
+        Round round3 = new Round(10);
         Frame lastFrameStrike = new LastFrame();
         lastFrameStrike.addScore(Score.of(10));
         lastFrameStrike.addScore(Score.of(10));
-        Round round4 = new Round(9);
+        Round round4 = new Round(10);
         Frame lastFrameSpare = new LastFrame();
         lastFrameSpare.addScore(Score.of(9));
         lastFrameSpare.addScore(Score.of(1));
-        Round round5 = new Round(9);
+        Round round5 = new Round(10);
         Frame lastFrameNotSpare = new LastFrame();
         lastFrameNotSpare.addScore(Score.of(8));
         lastFrameNotSpare.addScore(Score.of(1));
