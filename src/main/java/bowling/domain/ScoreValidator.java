@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import bowling.global.BowlingConst;
-import java.util.List;
 
 public class ScoreValidator {
 
@@ -14,7 +13,7 @@ public class ScoreValidator {
             validateDefaultFrame(frame.scores2());
         }
         if (frame instanceof LastFrame) {
-            validateLastFrame(frame.scores());
+            validateLastFrame(frame.scores2());
         }
     }
 
@@ -28,7 +27,7 @@ public class ScoreValidator {
         throw new IllegalArgumentException();
     }
 
-    private static void validateLastFrame(List<Score> scores) {
+    private static void validateLastFrame(Scores scores) {
         if (scores.size() < 2) {
             return;
         }
@@ -43,29 +42,25 @@ public class ScoreValidator {
         throw new IllegalArgumentException();
     }
 
-    private static void validateSecondTimeScore(List<Score> scores) {
-        Score first = scores.get(0);
-        Score second = scores.get(1);
-        if (first.isStrike()) {
+    private static void validateSecondTimeScore(Scores scores) {
+        if (scores.first().isStrike()) {
             return;
         }
-        if ((first.value() + second.value()) <= BowlingConst.SCORE_STRIKE) {
+        if (scores.sum() <= BowlingConst.SCORE_STRIKE) {
             return;
         }
         throw new IllegalArgumentException();
     }
 
-    private static void validateThirdTimeScore(List<Score> scores) {
-        Score first = scores.get(0);
-        Score second = scores.get(1);
-        Score third = scores.get(2);
-        if (first.isStrike() && second.isStrike()) {
+    private static void validateThirdTimeScore(Scores scores) {
+        if (scores.first().isStrike() && scores.second().isStrike()) {
             return;
         }
-        if ((first.value() + second.value()) == BowlingConst.SCORE_STRIKE) {
+        if (scores.sum() == BowlingConst.SCORE_STRIKE) {
             return;
         }
-        if (first.isStrike() && (second.value() + third.value()) <= BowlingConst.SCORE_STRIKE) {
+        if (scores.first().isStrike()
+                && (scores.second().value() + scores.third().value()) <= BowlingConst.SCORE_STRIKE) {
             return;
         }
         throw new IllegalArgumentException();

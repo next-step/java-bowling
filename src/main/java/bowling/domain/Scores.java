@@ -30,6 +30,10 @@ public class Scores {
         return this.scores.get(1);
     }
 
+    public Score third() {
+        return this.scores.get(2);
+    }
+    
     public int size() {
         return this.scores.size();
     }
