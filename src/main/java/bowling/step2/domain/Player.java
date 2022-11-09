@@ -13,10 +13,6 @@ public class Player {
 
     private final Map<Integer, Frame> scoreMap = new HashMap<>();
 
-    public String name() {
-        return name;
-    }
-
     public Player(String name) {
         validate(name);
         this.name = name;
@@ -42,5 +38,9 @@ public class Player {
 
     public Map<Integer, Frame> scoreMap() {
         return new HashMap<>(scoreMap);
+    }
+
+    public String name() {
+        return name;
     }
 }

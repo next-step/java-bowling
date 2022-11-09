@@ -2,9 +2,9 @@ package bowling.step2.domain;
 
 public class Score {
     private static final String STRIKE = "10";
+    private static final String ZERO = "0";
     static final String SCORE_SIZE_EXCEPTION = "볼링점수는 0-10사이의 숫자가 입력되어야 합니다.";
     static final String SCORE_FORMAT_EXCEPTION = "볼링점수가 숫자가 입력되어야 합니다.";
-    public static final String ZERO = "0";
 
 
     private final String score;

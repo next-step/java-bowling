@@ -15,21 +15,15 @@ public class Frame {
     }
 
     public boolean hasNext(int index) {
-        if (index != GameRuleUtils.GAME_LAST_INDEX && isContainStrike()) {
-            return false;
-        }
-        return true;
+        return index == GameRuleUtils.GAME_LAST_INDEX || !isContainingStrike();
     }
 
     public boolean hasBonus(int index) {
-        if (index == GameRuleUtils.GAME_LAST_INDEX && (isContainStrike() || isSpare())) {
-            return true;
-        }
-        return false;
+        return index == GameRuleUtils.GAME_LAST_INDEX && (isContainingStrike() || isSpare());
     }
 
-    private boolean isContainStrike() {
-        return this.scores.stream().anyMatch(it -> it.isStrike());
+    private boolean isContainingStrike() {
+        return this.scores.stream().anyMatch(Score::isStrike);
     }
 
     public boolean isSpare() {
@@ -44,6 +38,6 @@ public class Frame {
     }
 
     public List<Score> Scores() {
-        return scores;
+        return new ArrayList<>(scores);
     }
 }

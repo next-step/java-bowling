@@ -36,7 +36,7 @@ public class ResultView {
     private static void printInitBoard(int startIndex) {
         for (int i = startIndex; i <= GameRuleUtils.GAME_LAST_INDEX; i++) {
             System.out.print(WALL_SHAPE);
-            System.out.print(BLANK.repeat(6));
+            System.out.print(BLANK.repeat(COLUMN_WIDTH));
         }
         System.out.println(WALL_SHAPE);
     }
