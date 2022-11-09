@@ -87,14 +87,13 @@ public class Output {
     }
 
     private static String thirdThrowOutput(Frame frame) {
-        Scores scores = frame.scores();
-        Score first = scores.first();
-        Score second = scores.second();
-        Score third = scores.third();
-        if (!first.isStrike() && first.value() + second.value() == BowlingConst.SCORE_STRIKE) {
+        Score first = frame.scores().first();
+        Score second = frame.scores().second();
+        Score third = frame.scores().third();
+        if (!first.isStrike() && Scores.sumScores(first, second) == BowlingConst.SCORE_STRIKE) {
             return scoreFormat(first) + SEPARATOR + SPARE_OUTPUT + SEPARATOR + scoreFormat(third);
         }
-        if (first.isStrike() && second.value() + third.value() == BowlingConst.SCORE_STRIKE) {
+        if (first.isStrike() && Scores.sumScores(second, third) == BowlingConst.SCORE_STRIKE) {
             return scoreFormat(first) + SEPARATOR + scoreFormat(second) + SEPARATOR + SPARE_OUTPUT;
         }
         return scoreFormat(first) + SEPARATOR + scoreFormat(second) + SEPARATOR + scoreFormat(third);

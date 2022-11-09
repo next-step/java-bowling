@@ -52,11 +52,11 @@ public class ScoreValidator {
         if (scores.first().isStrike() && scores.second().isStrike()) {
             return;
         }
-        if (scores.first().value() + scores.second().value() == BowlingConst.SCORE_STRIKE) {
+        if (Scores.sumScores(scores.first(), scores.second()) == BowlingConst.SCORE_STRIKE) {
             return;
         }
         if (scores.first().isStrike()
-                && scores.second().value() + scores.third().value() <= BowlingConst.SCORE_STRIKE) {
+                && Scores.sumScores(scores.second(), scores.third()) <= BowlingConst.SCORE_STRIKE) {
             return;
         }
         throw new IllegalArgumentException();

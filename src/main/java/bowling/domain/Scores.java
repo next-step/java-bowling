@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,6 +39,12 @@ public class Scores {
 
     public int sum() {
         return this.scores.stream()
+                .mapToInt(Score::value)
+                .sum();
+    }
+
+    public static int sumScores(Score... scores) {
+        return Arrays.stream(scores)
                 .mapToInt(Score::value)
                 .sum();
     }
