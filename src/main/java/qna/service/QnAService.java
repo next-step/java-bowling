@@ -33,6 +33,6 @@ public class QnAService {
     public void deleteQuestion(User loginUser, long questionId) {
         Question question = findQuestionById(questionId);
         question.softDelete(loginUser);
-        deleteHistoryService.saveAll(DeleteHistory.addAllByQuestion(question));
+        deleteHistoryService.saveAll(DeleteHistory.addAllByQuestion(question, loginUser));
     }
 }
