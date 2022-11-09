@@ -4,7 +4,8 @@ import bowling.domain.frame.Frame;
 import bowling.domain.frame.FrameNumber;
 import bowling.domain.frame.Frames;
 import bowling.domain.pin.FallenPin;
-import bowling.domain.player.PlayerName;
+import bowling.domain.player.Player;
+import bowling.domain.player.Players;
 import bowling.domain.score.Score;
 import bowling.domain.state.FrameState;
 
@@ -23,10 +24,12 @@ public class ResultView {
     public static final String SPARE = "/";
     public static final String GUTTER = "-";
 
-    public static void printFrames(PlayerName playerName, Frames frames) {
+    public static void printFrames(Players players) {
         System.out.println(scoreTableRow(NAME_COLUMN_TITLE, frameNumberColumnTitles()));
-        System.out.println(scoreTableRow(playerName.getName(), triedFrames(frames)));
-        System.out.println(scoreTableRow("", accumulatedScores(frames)));
+        for (Player player: players.getPlayers()) {
+            System.out.println(scoreTableRow(player.getPlayerName().getName(), triedFrames(player.getFrames())));
+            System.out.println(scoreTableRow("", accumulatedScores(player.getFrames())));
+        }
     }
 
     private static List<String> accumulatedScores(Frames frames) {
@@ -34,7 +37,7 @@ public class ResultView {
 
         List<String> result = new ArrayList<>();
         int accumulatedScore = 0;
-        for (int score: scores) {
+        for (int score : scores) {
             accumulatedScore += score;
             result.add(String.valueOf(accumulatedScore));
         }

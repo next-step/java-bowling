@@ -1,32 +1,47 @@
 package bowling;
 
-import bowling.domain.frame.Frames;
-import bowling.domain.pin.FallenPin;
-import bowling.domain.player.PlayerName;
+import bowling.domain.player.Player;
+import bowling.domain.player.Players;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
 public class Main {
     public static void main(String[] args) {
-        PlayerName playerName = new PlayerName(InputView.scanName());
+        int playerCount = InputView.scanPlayerCount();
+        Players players = Players.of(InputView.scanPlayerNames(playerCount));
+        ResultView.printFrames(players);
 
-        Frames frames = Frames.init();
-        ResultView.printFrames(playerName, frames);
-        while (!frames.isOver()) {
-            int fallenPins = InputView.scanFallenPinCount(frames.lastFrameNumber());
-            frames = bowl(frames, fallenPins);
-            ResultView.printFrames(playerName, frames);
+        while (!players.isAllFinished()) {
+            playBowling(players);
         }
 
         InputView.closeScan();
     }
 
-    private static Frames bowl(Frames frames, int fallenPins) {
+    private static void playBowling(Players players) {
+        for (Player player: players.getPlayers()) {
+            bowlInAFrame(players, player);
+        }
+    }
+
+    private static void bowlInAFrame(Players players, Player player) {
+        bowl(players, player);
+        while (!player.isCurrentFrameFinished()) {
+            bowl(players, player);
+        }
+    }
+
+    private static void bowl(Players players, Player player) {
+        int fallenPins = InputView.scanFallenPinCount(player.getPlayerName());
+        tryBowling(player, fallenPins);
+        ResultView.printFrames(players);
+    }
+
+    private static void tryBowling(Player player, int fallenPins) {
         try {
-            return frames.bowl(FallenPin.of(fallenPins));
+            player.bowl(fallenPins);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return frames;
         }
     }
 }
