@@ -11,12 +11,11 @@ public abstract class Frame {
     }
 
     public void addScore(Score score) {
-        if (isRemainChance()) {
-            this.scores.add(score);
-            ScoreValidator.validate(this);
-            return;
+        if (!isRemainChance()) {
+            throw new IllegalArgumentException("남은 기회가 없습니다.");
         }
-        throw new IllegalArgumentException("남은 기회가 없습니다.");
+        this.scores.add(score);
+        ScoreValidator.validate(this);
     }
 
     public Scores scores() {
