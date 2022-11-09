@@ -17,17 +17,10 @@ public class AnswerTest {
     public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
     public static final Answer A2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
 
-    private List<DeleteHistory> deleteHistories;
-
-    @BeforeEach
-    void setup() {
-        deleteHistories = new ArrayList<>();
-    }
-
     @DisplayName("로그인 사용자와 답변한 사람이 같은 경우 삭제 가능하다.")
     @Test
     void deleteByLoginUser() {
-        assertThat(A1.delete(JAVAJIGI, deleteHistories)).hasSize(1);
+        A1.delete(JAVAJIGI);
         assertThat(A1.isDeleted()).isTrue();
     }
 
@@ -35,7 +28,7 @@ public class AnswerTest {
     @Test
     void deleteByAnotherUser() {
         assertThatThrownBy(() -> {
-            A1.delete(SANJIGI, deleteHistories);
+            A1.delete(SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
 }
