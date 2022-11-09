@@ -45,7 +45,7 @@ public class Frames {
 
     public void next() {
 
-        if(frames.size() == TOTAL_TURN && frames.getLast().isFinish()){
+        if (frames.size() == TOTAL_TURN && frames.getLast().isFinish()) {
             throw new UnsupportedOperationException("10 프레임 이상 경기를 진행할 수 없습니다.");
         }
 
@@ -75,7 +75,7 @@ public class Frames {
         return frames.size();
     }
 
-    public boolean isEndOfTurn(){
+    public boolean isEndOfTurn() {
         return frames.getLast().isFinish();
     }
 

@@ -29,9 +29,9 @@ public abstract class Frame {
         return state;
     }
 
-    public Integer calculatePoint(){
+    public Integer calculatePoint() {
 
-        if( point == null || canAddPoint() ){
+        if (point == null || canAddPoint()) {
             return null;
         }
 
