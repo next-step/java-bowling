@@ -1,12 +1,9 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 import qna.domain.embeded.Answers;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -92,7 +89,7 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public void validateDelete(User user) throws CannotDeleteException {
+    private void validateDelete(User user) throws CannotDeleteException {
         if (!isOwner(user)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
@@ -104,7 +101,9 @@ public class Question extends AbstractEntity {
         }
     }
 
-    public void deleteQuestionAndAnswers() {
+    public void deleteQuestionAndAnswers(User user) throws CannotDeleteException {
+        validateDelete(user);
+
         delete();
         answers.deleteAll();
     }
