@@ -16,9 +16,9 @@ public class Point {
         this.now += pin.getValue();
     }
 
-    public Integer point() {
+    public int calculate() {
         return Optional.ofNullable(before)
-                .map(Point::point)
+                .map(Point::calculate)
                 .orElse(0)
                 + now;
     }

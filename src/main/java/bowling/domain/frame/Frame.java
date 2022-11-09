@@ -35,7 +35,7 @@ public abstract class Frame {
             return null;
         }
 
-        return point.point();
+        return point.calculate();
     }
 
     private boolean isNotFinishedCalculate() {
