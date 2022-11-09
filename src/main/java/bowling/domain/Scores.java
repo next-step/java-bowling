@@ -12,11 +12,6 @@ public class Scores {
         this.scores = new ArrayList<>();
     }
 
-    public Scores(Score... scores) {
-        this.scores = new ArrayList<>();
-        this.scores.addAll(List.of(scores));
-    }
-
     public void add(Score score) {
         this.scores.add(score);
     }

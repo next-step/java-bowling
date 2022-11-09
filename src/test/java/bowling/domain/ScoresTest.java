@@ -9,9 +9,9 @@ public class ScoresTest {
 
     @Test
     void create() {
-        Scores scores = new Scores(Score.of(1));
+        Scores scores = new Scores();
 
-        assertThat(scores).isEqualTo(new Scores(Score.of(1)));
+        assertThat(scores).isEqualTo(new Scores());
     }
 
     @Test
@@ -19,7 +19,7 @@ public class ScoresTest {
         Scores scores = new Scores();
         scores.add(Score.of(4));
 
-        assertThat(scores).isEqualTo(new Scores(Score.of(4)));
+        assertThat(scores.first()).isEqualTo(Score.of(4));
     }
 
     @Test
@@ -34,28 +34,37 @@ public class ScoresTest {
 
     @Test
     void first() {
-        Scores scores = new Scores(Score.of(1), Score.of(2), Score.of(3));
+        Scores scores = new Scores();
+        scores.add(Score.of(1));
 
         assertThat(scores.first()).isEqualTo(Score.of(1));
     }
 
     @Test
     void second() {
-        Scores scores = new Scores(Score.of(1), Score.of(2), Score.of(3));
+        Scores scores = new Scores();
+        scores.add(Score.of(1));
+        scores.add(Score.of(2));
 
         assertThat(scores.second()).isEqualTo(Score.of(2));
     }
 
     @Test
     void third() {
-        Scores scores = new Scores(Score.of(1), Score.of(2), Score.of(3));
+        Scores scores = new Scores();
+        scores.add(Score.of(1));
+        scores.add(Score.of(2));
+        scores.add(Score.of(3));
 
         assertThat(scores.third()).isEqualTo(Score.of(3));
     }
 
     @Test
     void sum() {
-        Scores scores = new Scores(Score.of(1), Score.of(2), Score.of(3));
+        Scores scores = new Scores();
+        scores.add(Score.of(1));
+        scores.add(Score.of(2));
+        scores.add(Score.of(3));
 
         assertThat(scores.sum()).isEqualTo(6);
     }
