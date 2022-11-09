@@ -33,8 +33,8 @@ public class DeleteHistories extends AbstractList<DeleteHistory> {
 		return deleteHistories;
 	}
 
-	private static List<DeleteHistory> toDeleteHistoryList(Answers question) {
-		return question.getAnswers()
+	private static List<DeleteHistory> toDeleteHistoryList(Answers answers) {
+		return answers
 			.stream()
 			.map(DeleteHistory::of)
 			.collect(Collectors.toList());
