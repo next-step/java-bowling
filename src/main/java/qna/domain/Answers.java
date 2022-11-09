@@ -2,6 +2,7 @@ package qna.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
@@ -24,7 +25,9 @@ public class Answers {
 		return this.answers;
 	}
 
-	public void softDelete(User loginUser) {
-		answers.forEach(answer -> answer.softDelete(loginUser));
+	public List<DeleteHistory> softDelete(User loginUser) {
+		return answers.stream()
+			.map(answer -> answer.softDelete(loginUser))
+			.collect(Collectors.toList());
 	}
 }

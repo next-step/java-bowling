@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -42,30 +41,10 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
-    public static DeleteHistory from(Question question) {
-        return new DeleteHistory(
-            ContentType.QUESTION,
-            question.getId(),
-            question.getWriter(),
-            LocalDateTime.now()
-        );
-    }
-
-    public static DeleteHistory from(Answer answer) {
-        return new DeleteHistory(
-            ContentType.ANSWER,
-            answer.getId(),
-            answer.getWriter(),
-            LocalDateTime.now()
-        );
-    }
-
-    public static List<DeleteHistory> addAllByQuestion(Question question) {
+    public static List<DeleteHistory> addAllByQuestion(Question question, User loginUser) {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(DeleteHistory.from(question));
-        deleteHistories.addAll(question.getAnswers().get().stream()
-            .map(DeleteHistory::from)
-            .collect(Collectors.toList()));
+        deleteHistories.add(question.softDelete(loginUser));
+        deleteHistories.addAll(question.getAnswers().softDelete(loginUser));
         return deleteHistories;
     }
 
