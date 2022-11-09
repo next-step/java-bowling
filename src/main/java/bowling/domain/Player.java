@@ -15,7 +15,7 @@ public class Player {
     }
 
     public String getPlayerName() {
-        return playerName.toString();
+        return playerName.getName();
     }
 
     public Frames getFrames() {
@@ -41,11 +41,6 @@ public class Player {
     public boolean isEndOfTurn() {
         return frames.isEndOfTurn();
     }
-
-    public boolean isTurnInProgress() {
-        return !frames.isEndOfTurn();
-    }
-
 
     public void next() {
         frames.next();

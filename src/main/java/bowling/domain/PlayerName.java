@@ -20,6 +20,10 @@ public class PlayerName {
         return !name.trim().matches("[a-zA-Z]+");
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return name;
