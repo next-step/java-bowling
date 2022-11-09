@@ -17,12 +17,16 @@ public class RoundTest {
     @Test
     void isGameEnd_defaultFrame() {
         Round round1 = new Round(10);
-        Frame defaultFrame = new DefaultFrame(1, 2);
+        Frame defaultFrame = new DefaultFrame();
+        defaultFrame.addScore(Score.of(1));
+        defaultFrame.addScore(Score.of(2));
         Round round2 = new Round(10);
         Frame defaultFrameStrike = new DefaultFrame();
         defaultFrameStrike.addScore(Score.of(10));
         Round round3 = new Round(10);
-        Frame defaultFrameSpare = new DefaultFrame(8, 2);
+        Frame defaultFrameSpare = new DefaultFrame();
+        defaultFrameSpare.addScore(Score.of(8));
+        defaultFrameSpare.addScore(Score.of(2));
         Round round4 = new Round(10);
         Frame defaultFrameRemainChance = new DefaultFrame();
         defaultFrameRemainChance.addScore(Score.of(8));

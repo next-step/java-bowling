@@ -12,11 +12,6 @@ public class DefaultFrame implements Frame {
 
     }
 
-    public DefaultFrame(int first, int second) {
-        this.scores = new Scores(Score.of(first), Score.of(second));
-        ScoreValidator.validate(this);
-    }
-
     @Override
     public void addScore(Score score) {
         if (isRemainChance()) {
