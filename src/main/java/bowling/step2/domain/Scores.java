@@ -13,4 +13,6 @@ public class Scores {
     public List<Score> scores() {
         return new ArrayList<>(scores);
     }
+
+
 }
