@@ -52,10 +52,18 @@ class FramesTest {
         assertThat(frames.isOver()).isEqualTo(expected);
     }
 
-    @DisplayName("마지막 프레임넘버를 반환한다")
+    @DisplayName("현재 프레임이 끝난 경우 참을 반환한다")
     @Test
-    void lastFrameNumber() {
-        assertThat(frames(5).lastFrameNumber()).isEqualTo(6);
+    void isCurrentFrameFinished_true() {
+        assertThat(frames(1).isCurrentFrameFinished()).isTrue();
+    }
+
+    @DisplayName("현재 프레임이 끝나지 않은 경우 거짓을 반환한다")
+    @Test
+    void isCurrentFrameFinished_false() {
+        Frames frames = frames(1).bowl(FallenPin.of(9));
+
+        assertThat(frames.isCurrentFrameFinished()).isFalse();
     }
 
     private Frame normalFrame() {
