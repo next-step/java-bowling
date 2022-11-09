@@ -18,7 +18,8 @@ public class AnswerTest {
         DeleteHistory history = A1.delete(UserTest.JAVAJIGI);
         assertAll(
                 () -> assertThat(A1.isDeleted()).isTrue(),
-                () -> assertThat(history).isNotNull()
+                () -> assertThat(history.getContentType()).isEqualTo(ContentType.ANSWER),
+                () -> assertThat(history.getDeletedBy()).isEqualTo(UserTest.JAVAJIGI)
         );
     }
 

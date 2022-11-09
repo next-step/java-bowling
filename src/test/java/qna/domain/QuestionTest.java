@@ -20,13 +20,18 @@ public class QuestionTest {
 
     @Test
     void 질문_삭제_성공() throws CannotDeleteException {
-        Q1.addAnswer(getAnswer(UserTest.JAVAJIGI, Q1));
+        Answer answer = getAnswer(UserTest.JAVAJIGI, Q1);
+        Q1.addAnswer(answer);
 
-        List<DeleteHistory> histories = Q1.delete(UserTest.JAVAJIGI);
-
+        List<DeleteHistory> deleteHistories = Q1.delete(UserTest.JAVAJIGI);
         assertAll(
-                () -> assertThat(histories).hasSize(2),
-                () -> assertThat(Q1.isDeleted()).isTrue()
+                () -> assertThat(Q1.isDeleted()).isTrue(),
+                () -> assertThat(answer.isDeleted()).isTrue(),
+                () -> assertThat(deleteHistories).hasSize(2),
+                () -> assertThat(deleteHistories.get(0).getContentType()).isEqualTo(ContentType.QUESTION),
+                () -> assertThat(deleteHistories.get(0).getDeletedBy()).isEqualTo(UserTest.JAVAJIGI),
+                () -> assertThat(deleteHistories.get(1).getContentType()).isEqualTo(ContentType.ANSWER),
+                () -> assertThat(deleteHistories.get(1).getDeletedBy()).isEqualTo(UserTest.JAVAJIGI)
         );
     }
 

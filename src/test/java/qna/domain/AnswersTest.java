@@ -14,7 +14,15 @@ class AnswersTest {
     @Test
     void 모든_답변_삭제_성공() throws CannotDeleteException {
         Answers answers = getSameWriterAnswers();
-        assertThat(answers.deleteAll(UserTest.JAVAJIGI).size()).isEqualTo(2);
+
+        List<DeleteHistory> deleteHistories = answers.deleteAll(UserTest.JAVAJIGI);
+        assertAll(
+                () -> assertThat(deleteHistories).hasSize(2),
+                () -> assertThat(deleteHistories.get(0).getContentType()).isEqualTo(ContentType.ANSWER),
+                () -> assertThat(deleteHistories.get(0).getDeletedBy()).isEqualTo(UserTest.JAVAJIGI),
+                () -> assertThat(deleteHistories.get(1).getContentType()).isEqualTo(ContentType.ANSWER),
+                () -> assertThat(deleteHistories.get(1).getDeletedBy()).isEqualTo(UserTest.JAVAJIGI)
+        );
     }
 
     @Test
