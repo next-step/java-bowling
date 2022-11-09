@@ -21,10 +21,9 @@ public class ScoreValidator {
     }
 
     private static void validateDefaultFrame(Scores scores) {
-        if (scores.sum() <= BowlingConst.SCORE_STRIKE) {
-            return;
+        if (scores.sum() > BowlingConst.SCORE_STRIKE) {
+            throw new IllegalArgumentException();
         }
-        throw new IllegalArgumentException();
     }
 
     private static void validateLastFrame(Scores scores) {
