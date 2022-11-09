@@ -2,8 +2,6 @@ package bowling.domain;
 
 public class DefaultFrame extends Frame {
 
-    private static final int DEFAULT_FRAME_SIZE = 2;
-
     @Override
     public boolean isRemainChance() {
         if (this.scores.isEmpty()) {
@@ -13,6 +11,6 @@ public class DefaultFrame extends Frame {
     }
 
     private boolean isRemainSecondChance() {
-        return (!this.scores.first().isStrike()) && (this.scores.size() < DEFAULT_FRAME_SIZE);
+        return (!this.scores.first().isStrike()) && (this.scores.size() < 2);
     }
 }

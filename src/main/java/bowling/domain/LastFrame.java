@@ -4,14 +4,12 @@ import bowling.global.BowlingConst;
 
 public class LastFrame extends Frame {
 
-    private static final int LAST_FRAME_SIZE = 3;
-
     @Override
     public boolean isRemainChance() {
-        if (this.scores.size() < LAST_FRAME_SIZE - 1) {
+        if (this.scores.size() < 2) {
             return true;
         }
-        if (this.scores.size() == LAST_FRAME_SIZE - 1) {
+        if (this.scores.size() == 2) {
             return isRemainThirdTimeChance();
         }
         return false;
