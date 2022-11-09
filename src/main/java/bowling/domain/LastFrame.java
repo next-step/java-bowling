@@ -14,9 +14,10 @@ public class LastFrame extends Frame {
     }
 
     private boolean isRemainThirdTimeChance() {
-        Score first = this.scores.first();
-        Score second = this.scores.second();
-        if (first.isStrike() || second.isStrike() || ((first.value() + second.value()) == SCORE_STRIKE)) {
+        if (this.scores.first().isStrike() || this.scores.second().isStrike()) {
+            return true;
+        }
+        if (Scores.sumScores(this.scores.first(), this.scores.second()) == SCORE_STRIKE) {
             return true;
         }
         return false;
