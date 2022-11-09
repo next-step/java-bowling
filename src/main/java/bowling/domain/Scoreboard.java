@@ -21,15 +21,19 @@ public class Scoreboard {
     }
 
     public void addScore(Score score, Round round) {
-        this.frames.get(round.index()).addScore(score);
+        Frame frame = this.frames.get(round.index());
+        frame.addScore(score);
+        setNextRound(round, frame);
+    }
+
+    private void setNextRound(Round round, Frame frame) {
+        if (!frame.isRemainChance()) {
+            round.nextRound();
+        }
     }
 
     public List<Frame> frames() {
         return Collections.unmodifiableList(this.frames);
-    }
-
-    public Frame frame(Round round) {
-        return this.frames.get(round.index());
     }
 
     public Name name() {

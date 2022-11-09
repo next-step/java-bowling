@@ -20,7 +20,6 @@ public class BowlingGame {
     }
 
     public boolean isEnd() {
-        Frame frame = this.scoreboard.frame(this.round);
-        return this.round.isGameEnd(frame);
+        return this.round.isGameEnd();
     }
 }

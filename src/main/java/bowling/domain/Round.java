@@ -15,17 +15,8 @@ public class Round {
         this.round = number;
     }
 
-    public boolean isGameEnd(Frame frame) {
-        if (!frame.isRemainChance()) {
-            this.round += 1;
-        }
-        if (this.round <= BowlingConst.ROUND_END) {
-            return false;
-        }
-        if (frame.isRemainChance()) {
-            return false;
-        }
-        return true;
+    public boolean isGameEnd() {
+        return this.round > BowlingConst.ROUND_END;
     }
 
     public int value() {
@@ -34,6 +25,10 @@ public class Round {
 
     public int index() {
         return this.round - 1;
+    }
+
+    public void nextRound() {
+        this.round++;
     }
 
     @Override
