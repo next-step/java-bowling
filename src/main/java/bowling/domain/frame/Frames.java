@@ -75,7 +75,7 @@ public class Frames {
         return frames.size();
     }
 
-    public boolean endOfTurn(){
+    public boolean isEndOfTurn(){
         return frames.getLast().isFinish();
     }
 

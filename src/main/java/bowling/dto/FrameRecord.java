@@ -44,10 +44,6 @@ public class FrameRecord {
         return state;
     }
 
-    public FrameType getKind() {
-        return kind;
-    }
-
     public Integer getPoint() {
         return point;
     }

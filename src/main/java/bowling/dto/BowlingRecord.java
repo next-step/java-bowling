@@ -1,6 +1,7 @@
 package bowling.dto;
 
 import bowling.domain.Player;
+import bowling.domain.Players;
 import bowling.domain.frame.Frames;
 
 import java.util.List;
@@ -21,6 +22,13 @@ public class BowlingRecord {
     public static BowlingRecord of(Player player) {
         List<FrameRecord> records = getFrameRecords(player.getFrames());
         return new BowlingRecord(player.nth(), player.getPlayerName(), records);
+    }
+
+    public static List<BowlingRecord> ofList(Players players){
+        return  players.getPlayers()
+                .stream()
+                .map(BowlingRecord::of)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     private static List<FrameRecord> getFrameRecords(Frames frames) {

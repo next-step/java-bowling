@@ -38,12 +38,12 @@ public class Player {
         return frames.getFrameNumber();
     }
 
-    public boolean endOfTurn() {
-        return frames.endOfTurn();
+    public boolean isEndOfTurn() {
+        return frames.isEndOfTurn();
     }
 
-    public boolean turnInProgress() {
-        return !frames.endOfTurn();
+    public boolean isTurnInProgress() {
+        return !frames.isEndOfTurn();
     }
 
 
