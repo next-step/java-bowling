@@ -4,10 +4,12 @@ import bowling.domain.Frame;
 import bowling.domain.Score;
 import bowling.domain.Scoreboard;
 import bowling.domain.Scores;
-import bowling.global.BowlingConst;
 
 public class Output {
 
+    public static final int SCORE_STRIKE = 10;
+    public static final int ROUND_START = 1;
+    public static final int ROUND_END = 10;
     private static final String SEPARATOR = "|";
     private static final String defaultFrameFormat = SEPARATOR + "  %-3s ";
     private static final String lastFrameFormat = SEPARATOR + " %-5s";
@@ -28,7 +30,7 @@ public class Output {
         StringBuilder result = new StringBuilder();
         result.append(SEPARATOR);
         result.append(" NAME ");
-        for (int round = BowlingConst.ROUND_START; round <= BowlingConst.ROUND_END; round++) {
+        for (int round = ROUND_START; round <= ROUND_END; round++) {
             result.append(SEPARATOR);
             result.append("  ");
             result.append(roundFormat(round));
@@ -48,11 +50,11 @@ public class Output {
     private static String secondLine(Scoreboard scoreboard) {
         StringBuilder result = new StringBuilder();
         result.append(String.format(nameFormat, scoreboard.name().name()));
-        for (int round = BowlingConst.ROUND_START; round < BowlingConst.ROUND_END; round++) {
+        for (int round = ROUND_START; round < ROUND_END; round++) {
             Frame frame = scoreboard.frames().get(round - 1);
             result.append(String.format(defaultFrameFormat, frameFormat(frame)));
         }
-        Frame frame = scoreboard.frames().get(BowlingConst.ROUND_END - 1);
+        Frame frame = scoreboard.frames().get(ROUND_END - 1);
         result.append(String.format(lastFrameFormat, frameFormat(frame)));
         result.append(SEPARATOR);
         return result.toString();
@@ -80,7 +82,7 @@ public class Output {
 
     private static String twiceThrowOutput(Frame frame) {
         Scores scores = frame.scores();
-        if (scores.sum() == BowlingConst.SCORE_STRIKE) {
+        if (scores.sum() == SCORE_STRIKE) {
             return scoreFormat(scores.first()) + SEPARATOR + SPARE_OUTPUT;
         }
         return scoreFormat(scores.first()) + SEPARATOR + scoreFormat(scores.second());
@@ -90,10 +92,10 @@ public class Output {
         Score first = frame.scores().first();
         Score second = frame.scores().second();
         Score third = frame.scores().third();
-        if (!first.isStrike() && Scores.sumScores(first, second) == BowlingConst.SCORE_STRIKE) {
+        if (!first.isStrike() && Scores.sumScores(first, second) == SCORE_STRIKE) {
             return scoreFormat(first) + SEPARATOR + SPARE_OUTPUT + SEPARATOR + scoreFormat(third);
         }
-        if (first.isStrike() && Scores.sumScores(second, third) == BowlingConst.SCORE_STRIKE) {
+        if (first.isStrike() && Scores.sumScores(second, third) == SCORE_STRIKE) {
             return scoreFormat(first) + SEPARATOR + scoreFormat(second) + SEPARATOR + SPARE_OUTPUT;
         }
         return scoreFormat(first) + SEPARATOR + scoreFormat(second) + SEPARATOR + scoreFormat(third);

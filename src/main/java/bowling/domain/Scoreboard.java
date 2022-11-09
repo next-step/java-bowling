@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import bowling.global.BowlingConst;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,13 +7,15 @@ import java.util.Objects;
 
 public class Scoreboard {
 
+    public static final int ROUND_START = 1;
+    public static final int ROUND_END = 10;
     private final Name name;
     private final List<Frame> frames;
 
     public Scoreboard(Name name) {
         this.name = name;
         this.frames = new ArrayList<>();
-        for (int round = BowlingConst.ROUND_START; round < BowlingConst.ROUND_END; round++) {
+        for (int round = ROUND_START; round < ROUND_END; round++) {
             this.frames.add(new DefaultFrame());
         }
         this.frames.add(new LastFrame());

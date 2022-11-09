@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public abstract class Frame {
 
+    public static final int SCORE_STRIKE = 10;
     protected final Scores scores;
 
     public Frame() {

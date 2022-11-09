@@ -1,14 +1,15 @@
 package bowling.domain;
 
-import bowling.global.BowlingConst;
 import java.util.Objects;
 
 public class Round {
 
+    public static final int ROUND_START = 1;
+    public static final int ROUND_END = 10;
     private int round;
 
     public Round() {
-        this.round = BowlingConst.ROUND_START;
+        this.round = ROUND_START;
     }
 
     public Round(int number) {
@@ -16,7 +17,7 @@ public class Round {
     }
 
     public boolean isGameEnd() {
-        return this.round > BowlingConst.ROUND_END;
+        return this.round > ROUND_END;
     }
 
     public int value() {

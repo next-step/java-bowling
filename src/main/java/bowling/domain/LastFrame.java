@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.global.BowlingConst;
-
 public class LastFrame extends Frame {
 
     @Override
@@ -18,7 +16,7 @@ public class LastFrame extends Frame {
     private boolean isRemainThirdTimeChance() {
         Score first = this.scores.first();
         Score second = this.scores.second();
-        if (first.isStrike() || second.isStrike() || ((first.value() + second.value()) == BowlingConst.SCORE_STRIKE)) {
+        if (first.isStrike() || second.isStrike() || ((first.value() + second.value()) == SCORE_STRIKE)) {
             return true;
         }
         return false;
