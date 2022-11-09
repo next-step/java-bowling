@@ -42,6 +42,13 @@ public class ScoresTest {
     }
 
     @Test
+    void second() {
+        Scores scores = new Scores(Score.of(1), Score.of(2), Score.of(3));
+
+        assertThat(scores.second()).isEqualTo(Score.of(2));
+    }
+
+    @Test
     void sum() {
         Scores scores = new Scores(Score.of(1), Score.of(2), Score.of(3));
 

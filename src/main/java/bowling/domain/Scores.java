@@ -26,6 +26,10 @@ public class Scores {
         return this.scores.get(0);
     }
 
+    public Score second() {
+        return this.scores.get(1);
+    }
+
     public int size() {
         return this.scores.size();
     }

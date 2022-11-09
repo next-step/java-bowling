@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import bowling.global.BowlingConst;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -9,16 +8,14 @@ import java.util.Objects;
 public class LastFrame implements Frame {
 
     private static final int LAST_FRAME_SIZE = 3;
-    private final List<Score> scores = new ArrayList<>();
+    private final Scores scores;
 
     public LastFrame() {
-
+        this.scores = new Scores();
     }
 
     public LastFrame(int first, int second, int third) {
-        this.scores.add(Score.of(first));
-        this.scores.add(Score.of(second));
-        this.scores.add(Score.of(third));
+        this.scores = new Scores(Score.of(first), Score.of(second), Score.of(third));
         ScoreValidator.validate(this);
     }
 
@@ -44,8 +41,8 @@ public class LastFrame implements Frame {
     }
 
     private boolean isRemainThirdTimeChance() {
-        Score first = this.scores.get(0);
-        Score second = this.scores.get(1);
+        Score first = this.scores.first();
+        Score second = this.scores.second();
         if (first.isStrike() || second.isStrike() || ((first.value() + second.value()) == BowlingConst.SCORE_STRIKE)) {
             return true;
         }
@@ -54,12 +51,12 @@ public class LastFrame implements Frame {
 
     @Override
     public List<Score> scores() {
-        return Collections.unmodifiableList(this.scores);
+        return Collections.unmodifiableList(this.scores.scores());
     }
 
     @Override
     public Scores scores2() {
-        return null;
+        return this.scores;
     }
 
     @Override
