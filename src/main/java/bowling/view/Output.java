@@ -3,6 +3,7 @@ package bowling.view;
 import bowling.domain.Frame;
 import bowling.domain.Score;
 import bowling.domain.Scoreboard;
+import bowling.domain.Scores;
 import bowling.global.BowlingConst;
 
 public class Output {
@@ -74,22 +75,22 @@ public class Output {
     }
 
     private static String firstThrowOutput(Frame frame) {
-        return scoreFormat(frame.scores().get(0));
+        return scoreFormat(frame.scores().first());
     }
 
     private static String twiceThrowOutput(Frame frame) {
-        Score first = frame.scores().get(0);
-        Score second = frame.scores().get(1);
-        if (first.value() + second.value() == BowlingConst.SCORE_STRIKE) {
-            return scoreFormat(first) + SEPARATOR + SPARE_OUTPUT;
+        Scores scores = frame.scores();
+        if (scores.sum() == BowlingConst.SCORE_STRIKE) {
+            return scoreFormat(scores.first()) + SEPARATOR + SPARE_OUTPUT;
         }
-        return scoreFormat(first) + SEPARATOR + scoreFormat(second);
+        return scoreFormat(scores.first()) + SEPARATOR + scoreFormat(scores.second());
     }
 
     private static String thirdThrowOutput(Frame frame) {
-        Score first = frame.scores().get(0);
-        Score second = frame.scores().get(1);
-        Score third = frame.scores().get(2);
+        Scores scores = frame.scores();
+        Score first = scores.first();
+        Score second = scores.second();
+        Score third = scores.third();
         if (!first.isStrike() && first.value() + second.value() == BowlingConst.SCORE_STRIKE) {
             return scoreFormat(first) + SEPARATOR + SPARE_OUTPUT + SEPARATOR + scoreFormat(third);
         }

@@ -1,8 +1,6 @@
 package bowling.domain;
 
 import bowling.global.BowlingConst;
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
 public class LastFrame implements Frame {
@@ -50,12 +48,7 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public List<Score> scores() {
-        return Collections.unmodifiableList(this.scores.scores());
-    }
-
-    @Override
-    public Scores scores2() {
+    public Scores scores() {
         return this.scores;
     }
 

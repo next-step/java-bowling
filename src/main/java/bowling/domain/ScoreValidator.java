@@ -10,10 +10,10 @@ public class ScoreValidator {
 
     public static void validate(Frame frame) {
         if (frame instanceof DefaultFrame) {
-            validateDefaultFrame(frame.scores2());
+            validateDefaultFrame(frame.scores());
         }
         if (frame instanceof LastFrame) {
-            validateLastFrame(frame.scores2());
+            validateLastFrame(frame.scores());
         }
     }
 

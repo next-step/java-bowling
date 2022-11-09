@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
 public class DefaultFrame implements Frame {
@@ -42,12 +40,7 @@ public class DefaultFrame implements Frame {
     }
 
     @Override
-    public List<Score> scores() {
-        return Collections.unmodifiableList(this.scores.scores());
-    }
-
-    @Override
-    public Scores scores2() {
+    public Scores scores() {
         return this.scores;
     }
 
