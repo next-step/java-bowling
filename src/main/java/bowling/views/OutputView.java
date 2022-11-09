@@ -3,6 +3,7 @@ package bowling.views;
 import bowling.domain.BowlingGameHitResult;
 import bowling.dto.BowlingGameDto;
 import bowling.dto.BowlingGameFrameDto;
+import bowling.dto.BowlingGameHitDto;
 import bowling.dto.PlayerDto;
 
 import java.util.List;
@@ -33,25 +34,26 @@ public class OutputView {
     }
 
     private static void printBowlingGameFrame(BowlingGameFrameDto frame) {
-        System.out.print(getFormatOfHits(frame.getHits(), frame.getResults()));
+        System.out.print(getFormatOfHits(frame.getHits()));
     }
 
-    private static String getFormatOfHits(List<Integer> hits, List<BowlingGameHitResult> results) {
+    private static String getFormatOfHits(List<BowlingGameHitDto> hits) {
         if (hits.isEmpty()) {
             return EMPTY_FORMAT;
         }
         int leftEmptyCount = hits.size() < OFFSET_REFERENCE ? OFFSET_OF_SHORT_FORMAT : OFFSET_OF_LONG_FORMAT;
-        StringBuilder stringBuilder = new StringBuilder(EMPTY.repeat(leftEmptyCount) + formatHit(hits.get(0), results.get(0)));
+        StringBuilder stringBuilder = new StringBuilder(EMPTY.repeat(leftEmptyCount) + formatHit(hits.get(0)));
         IntStream.range(1, hits.size())
                 .forEach(i -> stringBuilder.append(SPLITTER)
-                        .append(formatHit(hits.get(i), results.get(i))));
+                        .append(formatHit(hits.get(i))));
         int rightEmptyCount = TOTAL_LENGTH - leftEmptyCount - hits.size() * 2;
         return stringBuilder.append(EMPTY.repeat(rightEmptyCount))
                 .append(SPLITTER)
                 .toString();
     }
 
-    private static String formatHit(int hit, BowlingGameHitResult result) {
+    private static String formatHit(BowlingGameHitDto hit) {
+        BowlingGameHitResult result = hit.getResult();
         if (result == BowlingGameHitResult.GUTTER) {
             return GUTTER;
         }
@@ -64,7 +66,7 @@ public class OutputView {
             return STRIKE;
         }
 
-        return String.valueOf(hit);
+        return String.valueOf(hit.getValue());
     }
 
     public static void printError(Exception e) {
