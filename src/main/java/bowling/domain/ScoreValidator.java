@@ -32,17 +32,17 @@ public class ScoreValidator {
 
     private static void validateLastFrame(Scores scores) {
         if (scores.size() == 2) {
-            validateSecondTimeScore(scores);
+            validateLastFrameSecondTimeScore(scores);
             return;
         }
         if (scores.size() == 3) {
-            validateThirdTimeScore(scores);
+            validateLastFrameThirdTimeScore(scores);
             return;
         }
         throw new IllegalArgumentException();
     }
 
-    private static void validateSecondTimeScore(Scores scores) {
+    private static void validateLastFrameSecondTimeScore(Scores scores) {
         if (scores.first().isStrike()) {
             return;
         }
@@ -52,7 +52,7 @@ public class ScoreValidator {
         throw new IllegalArgumentException();
     }
 
-    private static void validateThirdTimeScore(Scores scores) {
+    private static void validateLastFrameThirdTimeScore(Scores scores) {
         if (scores.first().isStrike() && scores.second().isStrike()) {
             return;
         }
