@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,10 +27,6 @@ public class Scoreboard {
 
     public Frame frame(Round round) {
         return this.frames.get(round.index());
-    }
-
-    public List<Frame> frames() {
-        return Collections.unmodifiableList(this.frames);
     }
 
     public Name name() {

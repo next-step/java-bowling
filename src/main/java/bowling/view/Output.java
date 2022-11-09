@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.domain.Frame;
+import bowling.domain.Round;
 import bowling.domain.Score;
 import bowling.domain.Scoreboard;
 import bowling.domain.Scores;
@@ -51,10 +52,10 @@ public class Output {
         StringBuilder result = new StringBuilder();
         result.append(String.format(nameFormat, scoreboard.name().name()));
         for (int round = ROUND_START; round < ROUND_END; round++) {
-            Frame frame = scoreboard.frames().get(round - 1);
+            Frame frame = scoreboard.frame(new Round(round));
             result.append(String.format(defaultFrameFormat, frameFormat(frame)));
         }
-        Frame frame = scoreboard.frames().get(ROUND_END - 1);
+        Frame frame = scoreboard.frame(new Round(Round.ROUND_END));
         result.append(String.format(lastFrameFormat, frameFormat(frame)));
         result.append(SEPARATOR);
         return result.toString();
