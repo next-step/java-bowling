@@ -2,7 +2,10 @@ package qna.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
@@ -17,8 +20,12 @@ class AnswersTest {
     @Test
     void 하나라도_작성자가_다르면_삭제_시_예외_발생() {
         Answers answers = getMixWriterAnswers();
-        assertThatThrownBy(() -> answers.deleteAll(UserTest.JAVAJIGI))
-                .hasMessageContaining("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+
+        AtomicReference<List<DeleteHistory>> deleteHistories = new AtomicReference<>();
+        assertAll(
+                () -> assertThatThrownBy(() -> answers.deleteAll(UserTest.JAVAJIGI))
+                        .hasMessageContaining("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다."),
+                () -> assertThat(deleteHistories.get()).isNull());
     }
 
     private Answers getSameWriterAnswers() {

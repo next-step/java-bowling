@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.concurrent.atomic.AtomicReference;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
@@ -23,11 +24,13 @@ public class AnswerTest {
 
     @Test
     void 작성자가_다른_유저일_경우_예외_발생() {
+        AtomicReference<DeleteHistory> history = new AtomicReference<>();
         assertAll(
-                () -> assertThatThrownBy(() -> A2.delete(UserTest.JAVAJIGI))
+                () -> assertThatThrownBy(() -> history.set(A2.delete(UserTest.JAVAJIGI)))
                         .isInstanceOf(CannotDeleteException.class)
                         .hasMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다."),
-                () -> assertThat(A2.isDeleted()).isFalse()
+                () -> assertThat(A2.isDeleted()).isFalse(),
+                () -> assertThat(history.get()).isNull()
         );
     }
 }

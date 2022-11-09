@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
@@ -31,10 +32,12 @@ public class QuestionTest {
 
     @Test
     void 작성자가_다른_유저일_경우_삭제_시_예외_발생() {
+        AtomicReference<List<DeleteHistory>> deleteHistories = new AtomicReference<>();
         assertAll(
-                () -> assertThatThrownBy(() -> Q2.delete(UserTest.JAVAJIGI))
+                () -> assertThatThrownBy(() -> deleteHistories.set(Q2.delete(UserTest.JAVAJIGI)))
                         .hasMessage("질문을 삭제할 권한이 없습니다."),
-                () -> assertThat(Q2.isDeleted()).isFalse()
+                () -> assertThat(Q2.isDeleted()).isFalse(),
+                () -> assertThat(deleteHistories.get()).isNull()
         );
     }
 
@@ -42,10 +45,12 @@ public class QuestionTest {
     void 질문의_답변_중_다른_작성자가_적은_답변이_있을_경우_삭제_시_예외_발생() {
         Q2.addAnswer(getAnswer(UserTest.JAVAJIGI, Q2));
 
+        AtomicReference<List<DeleteHistory>> deleteHistories = new AtomicReference<>();
         assertAll(
-                () -> assertThatThrownBy(() -> Q2.delete(UserTest.SANJIGI))
+                () -> assertThatThrownBy(() -> deleteHistories.set(Q2.delete(UserTest.SANJIGI)))
                         .hasMessageContaining("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다."),
-                () -> assertThat(Q2.isDeleted()).isFalse()
+                () -> assertThat(Q2.isDeleted()).isFalse(),
+                () -> assertThat(deleteHistories.get()).isNull()
         );
     }
 
