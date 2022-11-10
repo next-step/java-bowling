@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * Created by seungwoo.song on 2022-11-08
  */
-public class DeleteHistories extends AbstractList<DeleteHistory> {
+public class DeleteHistories {
 
     private final List<DeleteHistory> values;
 
@@ -15,17 +15,14 @@ public class DeleteHistories extends AbstractList<DeleteHistory> {
         this.values = values;
     }
 
-    @Override
     public DeleteHistory get(int index) {
         return values.get(index);
     }
 
-    @Override
     public int size() {
         return values.size();
     }
 
-    @Override
     public boolean add(DeleteHistory deleteHistory) {
         return values.add(deleteHistory);
     }
