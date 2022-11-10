@@ -7,7 +7,7 @@ import bowling.domain.frame.Score;
 public class Strike extends Finished {
     @Override
     public Score createScore() {
-        return new Score(List.of(10));
+        return new Score(List.of(new Pins(10)));
     }
 
     @Override

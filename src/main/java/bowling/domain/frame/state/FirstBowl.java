@@ -27,7 +27,7 @@ public class FirstBowl extends Running {
 
     @Override
     public Score createScore() {
-        return new Score(List.of(firstPins.getPins()));
+        return new Score(List.of(firstPins));
     }
 
     @Override

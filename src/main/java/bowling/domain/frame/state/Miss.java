@@ -18,7 +18,7 @@ public class Miss extends Finished {
 
     @Override
     public Score createScore() {
-        return new Score(List.of(firstPins.getPins(), secondPins.getPins()));
+        return new Score(List.of(firstPins, secondPins));
     }
 
     @Override

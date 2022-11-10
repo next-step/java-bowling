@@ -18,7 +18,7 @@ public class Spare extends Finished {
 
     @Override
     public Score createScore() {
-        return new Score(List.of(firstPins.getPins(), secondPins.getPins()), true);
+        return new Score(List.of(firstPins, secondPins));
     }
 
     @Override
