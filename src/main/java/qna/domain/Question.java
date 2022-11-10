@@ -83,7 +83,7 @@ public class Question extends AbstractEntity {
     }
 
     public boolean isDeleted() {
-        return deleted && answers.isDeletedAll();
+        return deleted;
     }
 
     public Answers getAnswers() {
