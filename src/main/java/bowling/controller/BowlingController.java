@@ -1,22 +1,16 @@
 package bowling.controller;
 
-import bowling.domain.Frame;
-import bowling.domain.Frames;
 import bowling.domain.player.Player;
-import bowling.view.FramesResult;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
 public class BowlingController {
     public void start() {
         Player player = getPlayer();
+        ResultView.printFrameResult(player);
 
-        Frames frames = Frames.init();
-        FramesResult framesResult = new FramesResult(player, frames);
-        ResultView.printFrameResult(framesResult);
-
-        while (!frames.isLast()) {
-            inputBowlNumberAndPrintResult(framesResult, frames);
+        while (!player.isGameEnd()) {
+            inputBowlNumberAndPrintResult(player);
         }
     }
 
@@ -31,22 +25,18 @@ public class BowlingController {
         }
     }
 
-    private void inputBowlNumberAndPrintResult(FramesResult framesResult, Frames frames) {
-        Frame lastFrame = frames.lastFrame();
-
-        while (lastFrame.canBowl()) {
-            bowl(lastFrame);
-            ResultView.printFrameResult(framesResult);
+    private void inputBowlNumberAndPrintResult(Player player) {
+        while (player.canBowl()) {
+            bowl(player);
+            ResultView.printFrameResult(player);
         }
-
-        frames.addFrame();
     }
 
-    private void bowl(Frame frame) {
-        int number = InputView.inputBowlNumber(frame.getFrameNumber());
+    private void bowl(Player player) {
+        int number = InputView.inputBowlNumber(player.getName().getValue());
 
         try {
-            frame.bowl(number);
+            player.bowl(number);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
