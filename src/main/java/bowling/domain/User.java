@@ -6,7 +6,6 @@ public class User {
     private static final int MAX_LENGTH = 3;
     private static final String ALPHABET_MATCHER = "[a-zA-Z]+";
     private String name;
-
     public User(String name) {
         validateName(name);
         this.name = name;
@@ -24,5 +23,8 @@ public class User {
         if (!name.matches(ALPHABET_MATCHER)) {
             throw new IllegalArgumentException("이름은 영어만 포함되야 합니다.");
         }
+    }
+    public String name() {
+        return name;
     }
 }
