@@ -1,11 +1,9 @@
 package bowling.domain;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("핀 테스트")
@@ -16,11 +14,5 @@ class PinTest {
     @ValueSource(ints = {-1, 11})
     void pin(int input) {
         assertThatThrownBy(() -> Pin.of(input));
-    }
-
-    @DisplayName("캐싱된 데이터를 사용할 수 있다.")
-    @Test
-    void cache() {
-        assertThat(Pin.of(1)).isEqualTo(Pin.of(1));
     }
 }

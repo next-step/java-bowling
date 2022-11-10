@@ -1,46 +1,45 @@
 package bowling.domain;
 
-import org.junit.jupiter.api.BeforeEach;
+import bowling.domain.state.Miss;
+import bowling.domain.state.Spare;
+import bowling.domain.state.Strike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("점수 테스트")
-public class ScoreTest {
+@DisplayName("스코어 테스트")
+class ScoreTest {
 
-    private Score score;
+    @DisplayName("스트라이크인 경우 2번 점수를 더해야 점수 계산이 가능하다.")
+    @Test
+    void strike() {
+        Strike strike = new Strike();
+        Score score = strike.getScore();
 
-    @BeforeEach
-    void setUp() {
-        score = new Score();
+        Score result = score.add(1)
+                .add(2);
+
+        assertThat(result.canCalculateScore()).isTrue();
     }
 
-
-    @DisplayName("스트라이크나 스패어가 아닌 상태에서 다음 핀과의 합이 10을 넘은 경우 예외가 발생한다.")
+    @DisplayName("스패어인 경우 1번 점수를 더해야 점수 계산이 가능하다.")
     @Test
-    void exception() {
-        score.addPin(Pin.of(5));
+    void spare() {
+        Spare spare = new Spare(Pin.of(5), Pin.of(5));
+        Score score = spare.getScore();
 
-        assertThatThrownBy(() -> score.addPin(Pin.of(10)))
-                .isInstanceOf(IllegalArgumentException.class);
+        Score result = score.add(1);
+
+        assertThat(result.canCalculateScore()).isTrue();
     }
 
-    @DisplayName("스트라이크인 상태에서 다음 핀은 10 이하로 던질 수 있다.")
+    @DisplayName("MISS 인 경우 바로 점수 계산이 가능하다.")
     @Test
-    void addPinStrike() {
-        score.addPin(Pin.of(10));
+    void miss() {
+        Miss miss = new Miss(Pin.of(1), Pin.of(2));
+        Score score = miss.getScore();
 
-        assertDoesNotThrow(() -> score.addPin(Pin.of(10)));
-    }
-
-    @DisplayName("스패어인 상태에서 다음 핀은 10 이하로 던질 수 있다.")
-    @Test
-    void addPinSpare() {
-        score.addPin(Pin.of(5));
-        score.addPin(Pin.of(5));
-
-        assertDoesNotThrow(() -> score.addPin(Pin.of(10)));
+        assertThat(score.canCalculateScore()).isTrue();
     }
 }

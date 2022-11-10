@@ -1,8 +1,17 @@
 package bowling.domain;
 
+import bowling.domain.state.Ready;
+import bowling.domain.state.State;
+
+import java.util.List;
+import java.util.Objects;
+
 public class NormalFrame extends Frame {
     private static final int MIN_FRAME_NUMBER = 1;
     private static final int MAX_FRAME_NUMBER = 9;
+
+    private State state = new Ready();
+    private Score score = state.getScore();
 
     public NormalFrame() {
         this(1);
@@ -12,7 +21,6 @@ public class NormalFrame extends Frame {
         checkSize(number);
 
         this.number = number;
-        this.score = new Score();
     }
 
     private void checkSize(int number) {
@@ -22,21 +30,76 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public boolean isEnd() {
-        return !canPitch();
+    public boolean isLastFrame() {
+        return false;
     }
 
     @Override
-    public boolean canPitch() {
-        return score.pinsSize() != 2 && !status().isKnockedDowned();
+    public boolean canBowl() {
+        return !state.isFinished();
+    }
+
+    @Override
+    public void bowl(int number) {
+        state = state.bowl(Pin.of(number));
+
+        if (state.isFinished()) {
+            score = state.getScore();
+            nextFrame = nextFrame();
+        }
     }
 
     @Override
     public Frame nextFrame() {
         if (number == MAX_FRAME_NUMBER) {
-            return new FinalFrame(number + 1);
+            nextFrame = new FinalFrame(number + 1);
+            return nextFrame;
         }
 
-        return new NormalFrame(number + 1);
+        nextFrame = new NormalFrame(number + 1);
+        return nextFrame;
+    }
+
+    @Override
+    public int getIntScore() {
+        if (score.canCalculateScore()) {
+            return score.getScore();
+        }
+
+        try {
+            validateNextFrame();
+            score = nextFrame.calculateAdditionalScore(score);
+            return score.getScore();
+        } catch (UnsupportedOperationException e) {
+            return NO_SCORE;
+        }
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score beforeScore) {
+        Score score = state.calculateAdditionalScore(beforeScore);
+
+        if (!score.canCalculateScore()) {
+            validateNextFrame();
+            return nextFrame.calculateAdditionalScore(score);
+        }
+
+        return score;
+    }
+
+    private void validateNextFrame() {
+        if (Objects.isNull(nextFrame)) {
+            throw new UnsupportedOperationException("점수를 계산할 수 없습니다.");
+        }
+    }
+
+    @Override
+    public State getState() {
+        return state;
+    }
+
+    @Override
+    public List<State> getStates() {
+        return List.of(state);
     }
 }

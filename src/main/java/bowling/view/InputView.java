@@ -16,12 +16,12 @@ public class InputView {
         return inputWithText("플레이어 이름은?: ");
     }
 
-    public static int inputPitchNumber(int frameNumber) {
+    public static int inputBowlNumber(int frameNumber) {
         try {
             return Integer.parseInt(inputWithText(frameNumber + "프레임 투구 : "));
         } catch (NumberFormatException e) {
             System.out.println("숫자를 입력해주세요.");
-            return inputPitchNumber(frameNumber);
+            return inputBowlNumber(frameNumber);
         }
     }
 

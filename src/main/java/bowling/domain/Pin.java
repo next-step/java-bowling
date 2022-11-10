@@ -14,7 +14,7 @@ public class Pin {
 
     static {
         IntStream.rangeClosed(MIN_COUNT, MAX_COUNT)
-                        .forEach(i -> CACHE.put(i, new Pin(i)));
+                .forEach(i -> CACHE.put(i, new Pin(i)));
     }
 
     private Pin(int count) {
@@ -35,7 +35,11 @@ public class Pin {
         }
     }
 
-    public int count() {
+    public int getCount() {
         return count;
+    }
+
+    public boolean isKnockDown() {
+        return count == MAX_COUNT;
     }
 }
