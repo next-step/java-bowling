@@ -15,34 +15,29 @@ class NormalFrameTest {
 
     @Test
     @DisplayName("다음 프레임")
-    void next_frame(Status state) {
+    void next_frame() {
         Frame frame = new NormalFrame(1);
         Pin pin = new Pin(10);
-        assertThat(frame.bowl(pin)).isEqualTo(new NormalFrame(2));
+        assertThat(frame.bowl(pin).frameNo).isEqualTo(2);
     }
 
     @Test
     @DisplayName("마지막 프레임")
-    void next_frame_final(Status state) {
+    void next_frame_final() {
         Frame frame = new NormalFrame(9);
         Pin pin = new Pin(10);
         assertThat(frame.bowl(pin)).isInstanceOf(FinalFrame.class);
     }
 
     @Test
+    @DisplayName("점수 계산하기")
     void get_frame_score() {
-        List<Frame> frameList = new ArrayList<>();
         Frame frame1 = new NormalFrame(1);
         Frame frame2 = new NormalFrame(2);
-        frameList.add(frame1);
-        frameList.add(frame2);
-        Frames frames = new Frames(frameList);
 
-        frames.bowl(new Pin(10));
-        frames.bowl(new Pin(8));
-        frames.bowl(new Pin(2));
-        Score score = frame1.getScore();
-        assertThat(score).isEqualTo(new Score(20, 0));
-
+        frame2 = frame1.bowl(new Pin(10));
+        frame2.bowl(new Pin(8));
+        frame2.bowl(new Pin(2));
+        assertThat(frame1.getScore()).isEqualTo(new Score(20, 0));
     }
 }

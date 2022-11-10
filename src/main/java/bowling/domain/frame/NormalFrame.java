@@ -5,6 +5,7 @@ import bowling.domain.Score;
 import bowling.domain.status.Status;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class NormalFrame extends Frame {
     public static final int LAST_FRAME_NO = 9;
@@ -20,6 +21,7 @@ public class NormalFrame extends Frame {
         status = status.bowl(pin);
         if (isFinished()) {
             nextFrame = nextFrame();
+            return nextFrame;
         }
         return this;
     }
@@ -64,7 +66,10 @@ public class NormalFrame extends Frame {
         if (score.canCalculate()) {
             return score;
         }
-        return nextFrame.addScore(score);
+
+        return Optional.ofNullable(nextFrame)
+                .map(nextFrame -> nextFrame.addScore(score))
+                .orElse(null);
     }
 
     @Override
