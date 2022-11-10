@@ -13,7 +13,7 @@ public class QuestionTest {
     @Test
     void 삭제_실패() {
         assertThatThrownBy(() -> Q1.deleteQuestionAndAnswers(UserTest.SANJIGI))
-            .isInstanceOf(CannotDeleteException.class);
+                .isInstanceOf(CannotDeleteException.class);
     }
 
     @Test
@@ -23,7 +23,16 @@ public class QuestionTest {
         q.addAnswer(AnswerTest.A1);
 
         q.deleteQuestionAndAnswers(q.getWriter());
-        assertThat(q.getAnswers().isDeletedAll()).isTrue();
         assertThat(q.isDeleted()).isTrue();
+    }
+
+    @Test
+    void 생성() throws CannotDeleteException {
+        Question q = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        q.addAnswer(AnswerTest.A1);
+        q.addAnswer(AnswerTest.A1);
+
+        DeleteHistories deleteHistories = q.deleteQuestionAndAnswers(UserTest.JAVAJIGI);
+        assertThat(deleteHistories).hasSize(3);
     }
 }

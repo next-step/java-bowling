@@ -12,27 +12,27 @@ import javax.annotation.Resource;
 
 @Service("qnaService")
 public class QnAService {
-	private static final Logger log = LoggerFactory.getLogger(QnAService.class);
+    private static final Logger log = LoggerFactory.getLogger(QnAService.class);
 
-	@Resource(name = "questionRepository")
-	private QuestionRepository questionRepository;
+    @Resource(name = "questionRepository")
+    private QuestionRepository questionRepository;
 
-	@Resource(name = "answerRepository")
-	private AnswerRepository answerRepository;
+    @Resource(name = "answerRepository")
+    private AnswerRepository answerRepository;
 
-	@Resource(name = "deleteHistoryService")
-	private DeleteHistoryService deleteHistoryService;
+    @Resource(name = "deleteHistoryService")
+    private DeleteHistoryService deleteHistoryService;
 
-	@Transactional(readOnly = true)
-	public Question findQuestionById(Long id) {
-		return questionRepository.findByIdAndDeletedFalse(id)
-			.orElseThrow(NotFoundException::new);
-	}
+    @Transactional(readOnly = true)
+    public Question findQuestionById(Long id) {
+        return questionRepository.findByIdAndDeletedFalse(id)
+                .orElseThrow(NotFoundException::new);
+    }
 
-	@Transactional
-	public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
-		Question question = findQuestionById(questionId);
-		question.deleteQuestionAndAnswers(loginUser);
-		deleteHistoryService.saveAll(DeleteHistories.of(question));
-	}
+    @Transactional
+    public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
+        Question question = findQuestionById(questionId);
+        DeleteHistories deleteHistories = question.deleteQuestionAndAnswers(loginUser);
+        deleteHistoryService.saveAll(deleteHistories);
+    }
 }
