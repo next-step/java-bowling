@@ -9,93 +9,92 @@ import java.util.Objects;
 @Entity
 public class User extends AbstractEntity {
 
-	public static final GuestUser GUEST_USER = new GuestUser();
+    @Column(unique = true, nullable = false)
+    private String userId;
 
-	@Column(unique = true, nullable = false)
-	private String userId;
+    @Column(nullable = false)
+    private String password;
 
-	@Column(nullable = false)
-	private String password;
+    @Column(nullable = false)
+    private String name;
 
-	@Column(nullable = false)
-	private String name;
+    private String email;
 
-	private String email;
+    public static final GuestUser GUEST_USER = new GuestUser();
 
-	public User() {
-	}
+    private static class GuestUser extends User {
 
-	public User(String userId, String password, String name, String email) {
-		this(null, userId, password, name, email);
-	}
+        @Override
+        public boolean isGuestUser() {
+            return true;
+        }
+    }
 
-	public User(Long id, String userId, String password, String name, String email) {
-		super(id);
-		this.userId = userId;
-		this.password = password;
-		this.name = name;
-		this.email = email;
-	}
+    public User() {
+    }
 
-	public String getUserId() {
-		return userId;
-	}
+    public User(String userId, String password, String name, String email) {
+        this(null, userId, password, name, email);
+    }
 
-	public User setUserId(String userId) {
-		this.userId = userId;
-		return this;
-	}
+    public User(Long id, String userId, String password, String name, String email) {
+        super(id);
+        this.userId = userId;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void update(User loginUser, User target) {
+        if (!matchUserId(loginUser.getUserId())) {
+            throw new UnAuthorizedException();
+        }
 
+        if (!matchPassword(target.getPassword())) {
+            throw new UnAuthorizedException();
+        }
 
-	public void update(User loginUser, User target) {
-		if (!matchUserId(loginUser.getUserId())) {
-			throw new UnAuthorizedException();
-		}
+        this.name = target.name;
+        this.email = target.email;
+    }
 
-		if (!matchPassword(target.getPassword())) {
-			throw new UnAuthorizedException();
-		}
+    public boolean matchPassword(String targetPassword) {
+        return password.equals(targetPassword);
+    }
 
-		this.name = target.name;
-		this.email = target.email;
-	}
+    public boolean equalsNameAndEmail(User target) {
+        if (Objects.isNull(target)) {
+            return false;
+        }
 
-	private boolean matchUserId(String userId) {
-		return this.userId.equals(userId);
-	}
+        return name.equals(target.name) &&
+            email.equals(target.email);
+    }
 
-	public boolean matchPassword(String targetPassword) {
-		return password.equals(targetPassword);
-	}
+    public boolean isGuestUser() {
+        return false;
+    }
 
-	public boolean equalsNameAndEmail(User target) {
-		if (Objects.isNull(target)) {
-			return false;
-		}
+    private boolean matchUserId(String userId) {
+        return this.userId.equals(userId);
+    }
 
-		return name.equals(target.name) &&
-			email.equals(target.email);
-	}
+    public String getUserId() {
+        return userId;
+    }
 
-	public boolean isGuestUser() {
-		return false;
-	}
+    public User setUserId(String userId) {
+        this.userId = userId;
+        return this;
+    }
 
-	private static class GuestUser extends User {
+    public String getPassword() {
+        return password;
+    }
 
-		@Override
-		public boolean isGuestUser() {
-			return true;
-		}
-	}
-
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email="
-			+ email + "]";
-	}
+    @Override
+    public String toString() {
+        return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email="
+            + email + "]";
+    }
 }

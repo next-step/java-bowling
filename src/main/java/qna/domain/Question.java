@@ -46,10 +46,6 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public User getWriter() {
-        return writer;
-    }
-
     public Question writeBy(User loginUser) {
         this.writer = loginUser;
         return this;
@@ -76,12 +72,6 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    @Override
-    public String toString() {
-        return "Question [id=" + Id() + ", title=" + title + ", contents=" + contents
-            + ", writer=" + writer + "]";
-    }
-
     public DeleteHistory questionHistory() {
         return new DeleteHistory(ContentType.QUESTION, this.Id(), writer, LocalDateTime.now());
     }
@@ -104,4 +94,15 @@ public class Question extends AbstractEntity {
             .map(answer -> answer.isDeleted())
             .allMatch(Predicate.isEqual(true));
     }
+
+    public User getWriter() {
+        return writer;
+    }
+
+    @Override
+    public String toString() {
+        return "Question [id=" + Id() + ", title=" + title + ", contents=" + contents
+            + ", writer=" + writer + "]";
+    }
+
 }

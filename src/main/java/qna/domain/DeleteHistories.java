@@ -9,6 +9,10 @@ public class DeleteHistories {
 
 	private List<DeleteHistory> deleteHistories;
 
+	public static DeleteHistories deleteHistories(List<DeleteHistory> deleteHistories) {
+		return new DeleteHistories(deleteHistories);
+	}
+
 	public DeleteHistories() {
 		this(new ArrayList<>());
 	}
@@ -19,10 +23,6 @@ public class DeleteHistories {
 
 	private DeleteHistories(List<DeleteHistory> deleteHistories) {
 		this.deleteHistories = deleteHistories;
-	}
-
-	public static DeleteHistories deleteHistories(List<DeleteHistory> deleteHistories) {
-		return new DeleteHistories(deleteHistories);
 	}
 
 	public void addHistory(DeleteHistory questionHistory) {
