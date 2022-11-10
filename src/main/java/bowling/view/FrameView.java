@@ -9,13 +9,14 @@ import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
 public class FrameView {
     private static final int MAX_FRAME_NO = 10;
     private static final int MIN_FRAME_NO = 1;
-    public static final String STRIKE_MARK = "X";
+    public static final String STRIKE_MARK = " X";
     public static final String SPARE_MARK = "/";
     public static final String TWO_BLANK = "  ";
     public static final String BAR_MARK = "|";
@@ -26,18 +27,18 @@ public class FrameView {
                 .collect(toList());
     }
 
-    public static List<String> frameResultContents(Frames frames) {
-        List<String> contents = getNormalFramesContents(frames);
-        contents.add(getFinalFrameContents(frames));
+    public static String frameResultContents(Frames frames) {
+        StringBuilder contents = new StringBuilder(getNormalFramesContents(frames));
+        contents.append(getFinalFrameContents(frames));
 
         for (int i = frames.getCurrentFrameIdx() + 1; i < MAX_FRAME_NO; i++) {
-            contents.add(String.format("%7s", BAR_MARK));
+            contents.append(String.format("%7s", BAR_MARK));
         }
 
-        return contents;
+        return contents.toString();
     }
 
-    private static List<String> getNormalFramesContents(Frames frames) {
+    private static String getNormalFramesContents(Frames frames) {
         return frames.getFrameStatus()
                 .stream()
                 .filter(status -> !Objects.isNull(status))
@@ -46,21 +47,19 @@ public class FrameView {
                         content = String.format("%-4s", STRIKE_MARK);
                     }
                     if (status instanceof Spare) {
-                        String spareScore = List.of(String.valueOf(status.getCountOfFirst()), SPARE_MARK).stream()
-                                .collect(Collectors.joining(BAR_MARK));
+                        String spareScore = String.join(BAR_MARK, String.valueOf(status.getCountOfFirst()), SPARE_MARK);
                         content = String.format("%-4s", spareScore);
                     }
                     if (status instanceof Miss) {
-                        String missScore = List.of(String.valueOf(status.getCountOfFirst()), String.valueOf(status.getCountOfSecond())).stream()
-                                .collect(Collectors.joining(BAR_MARK));
+                        String missScore = String.join(BAR_MARK, String.valueOf(status.getCountOfFirst()), String.valueOf(status.getCountOfSecond()));
                         content = String.format("%-4s", missScore);
                     }
                     if (status instanceof FirstBowl) {
                         content = String.format("%-4s", status.getCountOfFirst() + BAR_MARK);
                     }
-                    return String.join(content, TWO_BLANK, BAR_MARK);
+                    return content;
                 })
-                .collect(toList());
+                .collect(Collectors.joining(" | ", " ", " |"));
     }
 
     private static String getFinalFrameContents(Frames frames) {

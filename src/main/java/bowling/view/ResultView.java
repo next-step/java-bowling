@@ -28,10 +28,8 @@ public class ResultView {
 
     private static void printFrameContents(Name name, Frames frames) {
         System.out.printf(NAME_CONTENT, name.getName());
-        FrameView.frameResultContents(frames)
-                .stream()
-                .map(content -> content.replaceAll(ZERO, GUTTER_MARK))
-                .forEach(System.out::print);
+        String content = FrameView.frameResultContents(frames).replaceAll(ZERO, GUTTER_MARK);
+        System.out.println(content);
         System.out.println();
     }
 
