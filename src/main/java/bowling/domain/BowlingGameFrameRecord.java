@@ -2,6 +2,8 @@ package bowling.domain;
 
 import java.util.List;
 
+import bowling.domain.frame.Score;
+
 public class BowlingGameFrameRecord {
     private final List<Score> scores;
 
