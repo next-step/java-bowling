@@ -17,11 +17,18 @@ public class QuestionTest {
     }
 
     @Test
-    void 삭제_성공() throws CannotDeleteException {
+    void 삭제_성공_답변있음() throws CannotDeleteException {
         Question q = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
         q.addAnswer(AnswerTest.A1);
         q.addAnswer(AnswerTest.A1);
 
+        q.deleteQuestionAndAnswers(q.getWriter());
+        assertThat(q.isDeleted()).isTrue();
+    }
+
+    @Test
+    void 삭제_성공_답변없음() throws CannotDeleteException {
+        Question q = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
         q.deleteQuestionAndAnswers(q.getWriter());
         assertThat(q.isDeleted()).isTrue();
     }
