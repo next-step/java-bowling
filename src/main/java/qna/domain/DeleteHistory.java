@@ -41,10 +41,10 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
-    public static List<DeleteHistory> addAllByQuestion(Question question, User loginUser) {
+    public static List<DeleteHistory> addAllByQuestion(Question question, Answers answers, User loginUser) {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(question.softDelete(loginUser));
-        deleteHistories.addAll(question.getAnswers().softDelete(loginUser));
+        deleteHistories.add(question.delete(loginUser));
+        deleteHistories.addAll(answers.delete(loginUser));
         return deleteHistories;
     }
 

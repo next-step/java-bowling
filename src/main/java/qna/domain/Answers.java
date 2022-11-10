@@ -21,13 +21,9 @@ public class Answers {
 		answers.add(answer);
 	}
 
-	public List<Answer> get() {
-		return this.answers;
-	}
-
-	public List<DeleteHistory> softDelete(User loginUser) {
+	public List<DeleteHistory> delete(User loginUser) {
 		return answers.stream()
-			.map(answer -> answer.softDelete(loginUser))
+			.map(answer -> answer.delete(loginUser))
 			.collect(Collectors.toList());
 	}
 }
