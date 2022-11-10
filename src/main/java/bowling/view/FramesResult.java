@@ -13,8 +13,8 @@ import static bowling.domain.Frame.NO_SCORE;
 
 public class FramesResult {
     private static final String FRAME_NUMBER_LINE;
-    private static final String FRAME_SIGN_BAR = " %3s  |".repeat(MAX_FRAME_NUMBER);
-    private static final String FRAME_SCORE_BAR = "|      |" + " %3s  |".repeat(MAX_FRAME_NUMBER - 1) + " %-5s|";
+    private static final String FRAME_SIGN_BAR = " %3s  |".repeat(MAX_FRAME_NUMBER - 1) + " %-5s|";
+    private static final String FRAME_SCORE_BAR = "|      |" + " %3s  |".repeat(MAX_FRAME_NUMBER);
 
     private final FrameResult frameResult = new FrameResult();
 
