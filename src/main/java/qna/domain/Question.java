@@ -3,8 +3,10 @@ package qna.domain;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -75,9 +77,24 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public boolean isAllAnswersOwner(User user) {
+        for (Answer answer : answers) {
+            if (!answer.isOwner(user)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public DeleteHistory delete() {
+        this.deleted = true;
+        return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
+    }
+
+    public List<DeleteHistory> deleteAnswers() {
+        return answers.stream()
+                .map(Answer::delete)
+                .collect(Collectors.toList());
     }
 
     public boolean isDeleted() {
