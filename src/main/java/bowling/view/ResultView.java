@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import bowling.domain.BowlingGameFrameRecord;
-import bowling.domain.frame.Score;
+import bowling.domain.BowlRecord;
 
 public class ResultView {
     private static final int START_FRAME = 1;
@@ -18,8 +18,8 @@ public class ResultView {
         printScoreBoardTitle();
 
         List<String> frameContents = frameRecords.stream()
-            .map(BowlingGameFrameRecord::getScores)
-            .map(this::convertScoresToDescription)
+            .map(BowlingGameFrameRecord::getBowlRecords)
+            .map(this::convertBowlRecordsToDescription)
             .collect(toList());
 
         printScoreBoardContent(name, frameContents);
@@ -49,23 +49,23 @@ public class ResultView {
         System.out.println(joiner);
     }
 
-    private String convertScoresToDescription(List<Score> scores) {
-        return scores.stream()
-            .map(this::convertSingleScoreToDescription)
+    private String convertBowlRecordsToDescription(List<BowlRecord> bowlRecords) {
+        return bowlRecords.stream()
+            .map(this::convertSingleBowlRecordToDescription)
             .collect(Collectors.joining("|"));
     }
 
-    private String convertSingleScoreToDescription(Score score) {
-        if (score.isStrike()) {
+    private String convertSingleBowlRecordToDescription(BowlRecord bowlRecord) {
+        if (bowlRecord.isStrike()) {
             return "X";
         }
 
-        List<String> pinsList = score.getValues().stream()
+        List<String> pinsList = bowlRecord.getValues().stream()
             .map(value -> Integer.toString(value))
             .map(this::convertGutter)
             .collect(toList());
 
-        if (score.isSpare()) {
+        if (bowlRecord.isSpare()) {
             pinsList.set(pinsList.size() - 1, "/");
         }
 

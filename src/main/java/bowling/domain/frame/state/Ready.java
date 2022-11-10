@@ -2,7 +2,7 @@ package bowling.domain.frame.state;
 
 import java.util.List;
 
-import bowling.domain.frame.Score;
+import bowling.domain.BowlRecord;
 
 public class Ready extends Running {
     @Override
@@ -16,8 +16,8 @@ public class Ready extends Running {
     }
 
     @Override
-    public Score createScore() {
-        return new Score(List.of());
+    public BowlRecord createBowlRecord() {
+        return new BowlRecord(List.of());
     }
 
     @Override

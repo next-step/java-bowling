@@ -1,4 +1,4 @@
-package bowling.domain.frame;
+package bowling.domain;
 
 import static java.util.stream.Collectors.*;
 
@@ -6,10 +6,10 @@ import java.util.List;
 
 import bowling.domain.frame.state.Pins;
 
-public class Score {
+public class BowlRecord {
     private final List<Pins> falledPins;
 
-    public Score(List<Pins> falledPins) {
+    public BowlRecord(List<Pins> falledPins) {
         this.falledPins = falledPins;
     }
 

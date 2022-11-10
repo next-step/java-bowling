@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.*;
 import java.util.LinkedList;
 import java.util.List;
 
+import bowling.domain.BowlRecord;
 import bowling.domain.BowlingGameFrameRecord;
 import bowling.domain.frame.state.Ready;
 import bowling.domain.frame.state.State;
@@ -47,11 +48,11 @@ public class LastFrame extends Frame {
 
     @Override
     public BowlingGameFrameRecord createFrameRecord() {
-        List<Score> scores = states.stream()
-            .map(State::createScore)
+        List<BowlRecord> bowlRecords = states.stream()
+            .map(State::createBowlRecord)
             .collect(toList());
 
-        return new BowlingGameFrameRecord(scores);
+        return new BowlingGameFrameRecord(bowlRecords);
     }
 
     @Override

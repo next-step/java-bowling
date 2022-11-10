@@ -2,7 +2,6 @@ package bowling.domain.frame;
 
 import java.util.List;
 
-import bowling.domain.BowlingGame;
 import bowling.domain.BowlingGameFrameRecord;
 import bowling.domain.frame.state.Ready;
 import bowling.domain.frame.state.State;
@@ -12,6 +11,7 @@ public class NormalFrame extends Frame {
 
     private final int frameNumber;
     private State state;
+    private Frame next;
 
     public NormalFrame(int frameNumber) {
         validate(frameNumber);
@@ -26,16 +26,13 @@ public class NormalFrame extends Frame {
 
     @Override
     public Frame createNextFrame() {
-        if (frameNumber + 1 == LAST_FRAME) {
-            return new LastFrame();
-        }
-
-        return new NormalFrame(frameNumber + 1);
+        next = createNextFrame(this.frameNumber);
+        return next;
     }
 
     @Override
     public BowlingGameFrameRecord createFrameRecord() {
-        return new BowlingGameFrameRecord(List.of(state.createScore()));
+        return new BowlingGameFrameRecord(List.of(state.createBowlRecord()));
     }
 
     @Override
@@ -52,5 +49,13 @@ public class NormalFrame extends Frame {
         if (frameNumber < Frame.START_FRAME || frameNumber > Frame.LAST_FRAME - 1) {
             throw new IllegalArgumentException(INVALID_FRAME_NUMBER_EXCEPTION_MESSAGE);
         }
+    }
+
+    private Frame createNextFrame(int frameNumber) {
+        if (frameNumber + 1 == LAST_FRAME) {
+            return new LastFrame();
+        }
+
+        return new NormalFrame(frameNumber + 1);
     }
 }

@@ -1,11 +1,11 @@
 package bowling.domain.frame.state;
 
-import bowling.domain.frame.Score;
+import bowling.domain.BowlRecord;
 
 public interface State {
     State bowl(int pins);
 
-    Score createScore();
+    BowlRecord createBowlRecord();
 
     boolean isFinish();
 

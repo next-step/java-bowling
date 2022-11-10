@@ -2,7 +2,7 @@ package bowling.domain.frame.state;
 
 import java.util.List;
 
-import bowling.domain.frame.Score;
+import bowling.domain.BowlRecord;
 
 public class Spare extends Finished {
     private static final String INVALID_PINS_EXCEPTION_MESSAGE = "스페어의 조건을 만족하지 않습니다.";
@@ -17,8 +17,8 @@ public class Spare extends Finished {
     }
 
     @Override
-    public Score createScore() {
-        return new Score(List.of(firstPins, secondPins));
+    public BowlRecord createBowlRecord() {
+        return new BowlRecord(List.of(firstPins, secondPins));
     }
 
     @Override
