@@ -59,7 +59,7 @@ public class OutputView {
             return;
         }
 
-        if(bowlingLine.isStrike(printFrame)) {
+        if (bowlingLine.isStrike(printFrame)) {
             return;
         }
 

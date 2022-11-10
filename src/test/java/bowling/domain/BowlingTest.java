@@ -54,7 +54,7 @@ class BowlingTest {
 
     static Stream<Arguments> pitchingScoreMarkSource() {
         return Stream.of(arguments(Frame.FRAME_1_1, Frame.FRAME_1_2, 5, 5, "5", "/"),
-                         arguments(Frame.FRAME_2_1, Frame.FRAME_2_2, 10, 0, "X", " "),
+                         arguments(Frame.FRAME_2_1, Frame.FRAME_2_2, 10, 0, "X", "/"),
                          arguments(Frame.FRAME_2_1, Frame.FRAME_2_2, 0, 10, "-", "/"),
                          arguments(Frame.FRAME_2_1, Frame.FRAME_2_2, 0, 0, "-", "-"),
                          arguments(Frame.FRAME_2_1, Frame.FRAME_2_2, 5, 0, "5", "-"));

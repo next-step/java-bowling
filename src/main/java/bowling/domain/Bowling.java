@@ -39,10 +39,6 @@ public class Bowling {
             return STRIKE;
         }
 
-        if(isSpare(frame) && isStrike(frame.beforeFrame())) {
-            return " ";
-        }
-
         if (isSpare(frame)) {
             return SPARE;
         }
