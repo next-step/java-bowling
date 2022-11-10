@@ -50,25 +50,34 @@ public class FinalFrame extends Frame {
 
     @Override
     public Score getScore() {
-        return null;
+        Score score = getFirstScore();
+        for (int i = 1; i < statuses.size(); i++) {
+            score = statuses.get(i).getScore().addScore(score);
+        }
+        return score;
+    }
+
+    private Score getFirstScore() {
+        return statuses.get(0).getScore();
     }
 
     @Override
     public Score addScore(Score preScore) {
-        return null;
+        return preScore.addScore(getScore());
     }
 
     @Override
     public Frame getNextFrame() {
-        return null;
+        throw new RuntimeException("마지막 프레임입니다.");
     }
 
     @Override
     public Boolean isFinished() {
         if (statuses.size() == 1 && statuses.get(0) instanceof Miss) return true;
-        if (statuses.size() == 2 && statuses.get(0) instanceof Spare && statuses.get(1) instanceof FirstBowl) return true;
-        if (statuses.size() == 2 && statuses.get(0) instanceof Strike && statuses.get(1) instanceof Spare) return true;
-        if (statuses.size() == 2 && statuses.get(0) instanceof Strike && statuses.get(1) instanceof Miss) return true;
+        if (statuses.get(0) instanceof Spare && statuses.get(1) instanceof FirstBowl) return true;
+        if (statuses.get(0) instanceof Strike && statuses.get(1) instanceof Spare) return true;
+        if (statuses.get(0) instanceof Strike && statuses.get(1) instanceof Miss) return true;
+        if (statuses.get(0) instanceof Strike && statuses.get(1) instanceof Strike && statuses.get(2) instanceof Strike) return true;
         return false;
     }
 

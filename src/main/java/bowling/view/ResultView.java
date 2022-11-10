@@ -3,6 +3,7 @@ package bowling.view;
 import bowling.domain.Name;
 import bowling.domain.frame.Frames;
 
+import static bowling.view.FrameView.getFinalFramesScores;
 import static bowling.view.FrameView.getNormalFramesScores;
 
 public class ResultView {
@@ -37,7 +38,7 @@ public class ResultView {
     }
 
     private static void printFrameScores(Frames frames) {
-        String scores = SCORE_HEAD + getNormalFramesScores(frames);
+        String scores = SCORE_HEAD + getNormalFramesScores(frames) + getFinalFramesScores(frames);
         System.out.println(scores);
     }
 }
