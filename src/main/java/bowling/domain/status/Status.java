@@ -9,12 +9,12 @@ public abstract class Status {
 
     public abstract Status bowl(Pin pin);
     public abstract boolean isFinished();
-
     public int getCountOfFirst() {
         return first.getCountOfPin();
     }
-
     public int getCountOfSecond() {
         return second.getCountOfPin();
     }
+
+
 }

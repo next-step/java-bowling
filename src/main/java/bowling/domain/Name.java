@@ -4,10 +4,11 @@ import java.util.Objects;
 
 public class Name {
     public static final String ERR_MSG_NAME_LENGTH = "이름은 3글자여야 합니다.";
+    public static final int NAME_LENGTH = 3;
     private final String name;
 
     public Name(String name) {
-        if (name.length() != 3) {
+        if (name.length() != NAME_LENGTH) {
             throw new IllegalArgumentException(ERR_MSG_NAME_LENGTH);
         }
         this.name = name;
