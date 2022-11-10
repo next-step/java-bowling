@@ -10,7 +10,7 @@ public class FinalFrame extends Frame {
 
     private final List<Status> statuses;
 
-    public FinalFrame(List<Status> statuses) {
+    private FinalFrame(List<Status> statuses) {
         this.statuses = statuses;
     }
 
@@ -29,7 +29,7 @@ public class FinalFrame extends Frame {
         if (status instanceof Strike || status instanceof Spare) {
             statuses.add(new Ready());
         }
-        return new FinalFrame(statuses);
+        return this;
     }
 
     @Override
