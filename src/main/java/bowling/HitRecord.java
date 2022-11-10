@@ -1,13 +1,21 @@
 package bowling;
 
 public class HitRecord {
-    private final int count;
+    private final int hitCount;
 
     public HitRecord(int count) {
-        this.count = count;
+        this.hitCount = count;
     }
 
-    public int getCount() {
-        return count;
+    public int getHitCount() {
+        return hitCount;
+    }
+
+    public boolean hitAll() {
+        return hitCount == BowlingPin.MAX_PIN_NUMBER;
+    }
+
+    public boolean hitZero() {
+        return hitCount == BowlingPin.ZERO;
     }
 }

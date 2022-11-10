@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class BowlingPin {
     public static final int MAX_PIN_NUMBER = 10;
-    private static final int ZERO = 0;
+    public static final int ZERO = 0;
 
     private final int count;
 
