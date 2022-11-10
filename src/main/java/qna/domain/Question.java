@@ -1,12 +1,8 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 public class Question extends AbstractContentsDeletableEntity {
@@ -17,10 +13,7 @@ public class Question extends AbstractContentsDeletableEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    private final Answers answers = new Answers();
 
     public Question() {
     }
@@ -62,13 +55,8 @@ public class Question extends AbstractContentsDeletableEntity {
         return writer.equals(loginUser);
     }
 
-    public boolean isAllAnswersOwner(User user) {
-        for (Answer answer : answers) {
-            if (!answer.isOwner(user)) {
-                return false;
-            }
-        }
-        return true;
+    public boolean isOwnerOfAllAnswer(User user) {
+        return answers.isOwnerOfAll(user);
     }
 
     @Override
@@ -78,13 +66,7 @@ public class Question extends AbstractContentsDeletableEntity {
     }
 
     public List<DeleteHistory> deleteAnswers() {
-        return answers.stream()
-                .map(Answer::delete)
-                .collect(Collectors.toList());
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
+        return answers.deleteAll();
     }
 
     @Override
