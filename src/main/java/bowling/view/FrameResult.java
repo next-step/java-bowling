@@ -15,15 +15,14 @@ public class FrameResult {
 
     public String frameSign(Frame frame) {
         if (frame.isLastFrame()) {
-            String states = String.format(frame.getStates()
+            return String.format(frame.getStates()
                     .stream()
                     .map(this::sign)
-                    .collect(Collectors.joining("|")), "%5s");
-            return String.format("%5s ", states);
+                    .collect(Collectors.joining("|")));
         }
 
         State state = frame.getState();
-        return String.format(" %3s  ", sign(state));
+        return sign(state);
     }
 
     private String sign(State state) {
