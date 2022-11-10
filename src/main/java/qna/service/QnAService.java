@@ -1,7 +1,6 @@
 package qna.service;
 
 import java.util.List;
-import java.util.Optional;
 import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +33,7 @@ public class QnAService {
     }
 
     @Transactional
-    public void deleteQuestion(User loginUser, long questionId) throws Exception {
+    public void deleteQuestion(User loginUser, long questionId) {
         Question question = findQuestionById(questionId);
         List<DeleteHistory> deleteHistories = question.delete(loginUser);
         deleteHistoryService.saveAll(deleteHistories);

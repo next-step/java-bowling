@@ -48,13 +48,13 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public DeleteHistory delete(User user) throws Exception {
+    public DeleteHistory delete(User user) {
         validateWriter(user);
         setDeleted(true);
         return createAnswerDeleteHistory();
     }
 
-    private void validateWriter(User user) throws CannotDeleteException {
+    private void validateWriter(User user) {
         if (!isOwner(user)) {
             throw new CannotDeleteException("답변은 답변자만 지울 수 있습니다.");
         }
