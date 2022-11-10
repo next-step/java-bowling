@@ -28,6 +28,14 @@ public enum ScoreRull {
         return this.fellDownPinCount == fellDownPinCount;
     }
 
+    public static String getSymbolOrScore(int fellDownPinCount, boolean atOnce) {
+        ScoreRull scoreRull = of(fellDownPinCount, atOnce);
+        if(MISS == scoreRull) {
+            return  Integer.toString(fellDownPinCount);
+        }
+        return scoreRull.symbol;
+    }
+
     @Override
     public String toString() {
         return "ScoreRull{" +
