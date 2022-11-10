@@ -8,8 +8,22 @@
 - 질문자와 답변자가 다른 경우 답변을 삭제할수 없다.
 - 질문과 답변 삭제 이력에 대한 정보를 DeleteHistory를 활용해 남긴다.
 
-# 역햘
-Question
-User
-Answer
-DeleteHistory
+# Step1 역햘 & 책임 추출
+- Question
+  - 삭제 상태로 변경(비즈니스적 의미)
+    - 삭제전 질문, 답변 검증진행. 검증실패시 예외 발생
+      - 질문 : 삭제자 - 질문작성자 같은경우
+    - 삭제이력 생성
+  - 질문과 답변 삭제
+    - 삭제후 삭제이력 리턴 (질문 + 답변)
+- Answer
+  - 삭제 상태로 변경
+    - 삭제전 검증후 실패시 예외발생
+      - 질문작성자 - 답변작성자 같은경우
+    - 삭제이력 생성
+- Answers
+  - 모든 답변 삭제
+    - DeleteHistories 생성
+  - 모두 삭제되었는지 판단
+- DeleteHistory
+- DeleteHistories
