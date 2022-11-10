@@ -21,7 +21,6 @@ public class NormalFrame extends Frame {
         status = status.bowl(pin);
         if (isFinished()) {
             nextFrame = nextFrame();
-            return nextFrame;
         }
         return this;
     }
@@ -69,7 +68,11 @@ public class NormalFrame extends Frame {
 
         return Optional.ofNullable(nextFrame)
                 .map(nextFrame -> nextFrame.addScore(score))
-                .orElse(null);
+                .orElse(preScore);
+    }
+
+    public Frame getNextFrame() {
+        return nextFrame;
     }
 
     @Override

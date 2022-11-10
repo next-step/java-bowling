@@ -31,4 +31,8 @@ public class Score {
     public Score addScore(Score nextScore) {
         return new Score(this.score + nextScore.score, this.nextScoreCnt - 1);
     }
+
+    public int getScore() {
+        return score;
+    }
 }

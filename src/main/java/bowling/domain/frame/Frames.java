@@ -1,10 +1,12 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pin;
+import bowling.domain.Score;
 import bowling.domain.status.Status;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Frames {
@@ -28,6 +30,10 @@ public class Frames {
         return frames.size() - 1;
     }
 
+    public int getCurrentFrameNumber() {
+        return frames.size();
+    }
+
     public Frame bowl(Pin pin) {
         return getCurrentFrame().bowl(pin);
     }
@@ -35,8 +41,7 @@ public class Frames {
     public Frames addNextFrame(Frame frame) {
         List<Frame> newFrames = new ArrayList<>(this.frames);
         if (!frame.isFinalFrame() && frame.isFinished()) {
-            Frame nextFrame = frame.nextFrame();
-            newFrames.add(nextFrame);
+            newFrames.add(frame.getNextFrame());
         }
         return new Frames(newFrames);
     }
@@ -47,5 +52,12 @@ public class Frames {
 
     public boolean isOver() {
         return getCurrentFrame().isFinalFrame() && getCurrentFrame().isFinished();
+    }
+
+    public List<Integer> getFrameScores() {
+        return frames.stream()
+                .filter(frame -> !frame.isFinalFrame())
+                .map(frame -> frame.getScore().getScore())
+                .collect(Collectors.toList());
     }
 }

@@ -59,6 +59,11 @@ public class FinalFrame extends Frame {
     }
 
     @Override
+    public Frame getNextFrame() {
+        return null;
+    }
+
+    @Override
     public Boolean isFinished() {
         if (statuses.size() == 1 && statuses.get(0) instanceof Miss) return true;
         if (statuses.size() == 2 && statuses.get(0) instanceof Spare && statuses.get(1) instanceof FirstBowl) return true;

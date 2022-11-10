@@ -23,4 +23,6 @@ public abstract class Frame {
     public abstract Score getScore();
 
     public abstract Score addScore(Score preScore);
+
+    public abstract Frame getNextFrame();
 }

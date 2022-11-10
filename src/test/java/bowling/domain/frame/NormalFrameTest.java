@@ -33,11 +33,7 @@ class NormalFrameTest {
     @DisplayName("점수 계산하기")
     void get_frame_score() {
         Frame frame1 = new NormalFrame(1);
-        Frame frame2 = new NormalFrame(2);
-
-        frame2 = frame1.bowl(new Pin(10));
-        frame2.bowl(new Pin(8));
-        frame2.bowl(new Pin(2));
-        assertThat(frame1.getScore()).isEqualTo(new Score(20, 0));
+        frame1.bowl(new Pin(10));
+        assertThat(frame1.getScore().getScore()).isEqualTo(10);
     }
 }

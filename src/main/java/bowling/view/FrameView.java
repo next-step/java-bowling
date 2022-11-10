@@ -30,7 +30,6 @@ public class FrameView {
     public static String frameResultContents(Frames frames) {
         StringBuilder contents = new StringBuilder(getNormalFramesContents(frames));
         contents.append(getFinalFrameContents(frames));
-
         for (int i = frames.getCurrentFrameIdx() + 1; i < MAX_FRAME_NO; i++) {
             contents.append(String.format("%7s", BAR_MARK));
         }
@@ -87,4 +86,10 @@ public class FrameView {
         return finalContent;
     }
 
+    public static String getNormalFramesScores(Frames frames) {
+        return frames.getFrameScores()
+                .stream()
+                .map(score -> String.format("%2s",score))
+                .collect(Collectors.joining("  |  ", "  ", "  |"));
+    }
 }

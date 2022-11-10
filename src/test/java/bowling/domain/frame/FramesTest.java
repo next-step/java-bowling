@@ -14,4 +14,12 @@ class FramesTest {
         Frame frame = frames.bowl(new Pin(10));
         assertThat(frames.getCurrentFrame().getStatus()).isInstanceOf(Strike.class);
     }
+
+    @Test
+    void bowl2() {
+        Frames frames = Frames.init();
+        Frame frame = frames.bowl(new Pin(10));
+        frames = frames.addNextFrame(frame);
+        assertThat(frames.getCurrentFrameNumber()).isEqualTo(2);
+    }
 }
