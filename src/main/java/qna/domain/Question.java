@@ -1,6 +1,7 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class Question extends AbstractEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    private final List<Answer> answers = new ArrayList<>();
 
     private boolean deleted = false;
 
@@ -71,13 +72,36 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
+    public void delete(User loginUser) throws CannotDeleteException {
+        if (isDeletableBy(loginUser)) {
+            this.deleted = true;
+            deleteAllAnswers();
+        }
+    }
+
+    boolean isDeletableBy(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+        if (!isAllAnswerOwnedBy(loginUser)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+        return true;
+    }
+
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    boolean isAllAnswerOwnedBy(User loginUser) {
+        return answers.stream()
+                .filter(answer -> !answer.isOwner(loginUser))
+                .findFirst()
+                .isEmpty();
+    }
+
+    void deleteAllAnswers() {
+        answers.forEach(answer -> answer.setDeleted(true));
     }
 
     public boolean isDeleted() {
