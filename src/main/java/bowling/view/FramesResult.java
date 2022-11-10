@@ -54,12 +54,16 @@ public class FramesResult {
     }
 
     public String getPlayerScores(Player player) {
-        List<Integer> scores = player.getFrames().values()
-                .stream()
-                .map(this::getScore)
-                .filter(score -> score != NO_SCORE)
+        List<Integer> result = accumulateScore(getIntScores(player));
+
+        List<String> stringScores = result.stream()
+                .map(String::valueOf)
                 .collect(Collectors.toList());
 
+        return String.format(FRAME_SCORE_BAR, padEmptyString(stringScores));
+    }
+
+    private List<Integer> accumulateScore(List<Integer> scores) {
         List<Integer> result = new ArrayList<>();
         if (scores.size() > 0) {
             result.add(scores.get(0));
@@ -68,12 +72,15 @@ public class FramesResult {
         for (int i = 1; i < scores.size(); i++) {
             result.add(result.get(i - 1) + scores.get(i));
         }
+        return result;
+    }
 
-        List<String> stringScores = result.stream()
-                .map(String::valueOf)
+    private List<Integer> getIntScores(Player player) {
+        return player.getFrames().values()
+                .stream()
+                .map(this::getScore)
+                .filter(score -> score != NO_SCORE)
                 .collect(Collectors.toList());
-
-        return String.format(FRAME_SCORE_BAR, padEmptyString(stringScores));
     }
 
     private int getScore(Frame frame) {
