@@ -2,6 +2,8 @@ package bowling.domain.frame.state;
 
 import java.util.List;
 
+import bowling.domain.Score;
+
 public class Miss implements State {
     private static final String INVALID_PINS_EXCEPTION_MESSAGE = "Miss의 조건을 만족하지 않습니다.";
 

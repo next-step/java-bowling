@@ -2,6 +2,8 @@ package bowling.domain.frame.state;
 
 import java.util.List;
 
+import bowling.domain.Score;
+
 public class Spare implements State {
     private static final String INVALID_PINS_EXCEPTION_MESSAGE = "스페어의 조건을 만족하지 않습니다.";
 

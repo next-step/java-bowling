@@ -2,6 +2,8 @@ package bowling.domain.frame.state;
 
 import java.util.List;
 
+import bowling.domain.Score;
+
 public class FirstBowl implements State {
     private final Pins firstPins;
 

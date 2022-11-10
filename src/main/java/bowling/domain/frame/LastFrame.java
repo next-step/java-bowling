@@ -8,7 +8,7 @@ import java.util.List;
 import bowling.domain.BowlingGame;
 import bowling.domain.BowlingGameFrameRecord;
 import bowling.domain.frame.state.Ready;
-import bowling.domain.frame.state.Score;
+import bowling.domain.Score;
 import bowling.domain.frame.state.State;
 
 public class LastFrame implements Frame {

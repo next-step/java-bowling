@@ -2,6 +2,8 @@ package bowling.domain.frame.state;
 
 import java.util.List;
 
+import bowling.domain.Score;
+
 public class Strike implements State {
     @Override
     public State bowl(int pins) {

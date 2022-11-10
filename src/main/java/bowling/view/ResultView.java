@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import bowling.domain.BowlingGameFrameRecord;
-import bowling.domain.frame.state.Score;
+import bowling.domain.Score;
 
 public class ResultView {
     private static final int START_FRAME = 1;
