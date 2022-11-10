@@ -2,22 +2,26 @@ package bowling;
 
 import bowling.view.InputView;
 import bowling.view.OutputView;
+import org.hibernate.type.TrueFalseType;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
         Username username = InputView.playerName();
 
-        BowlingGame bowlingGame = new BowlingGame();
-        FrameNumber frameNumber = FrameNumber.first();
-        while (frameNumber.isBelow(BowlingGame.FRAME_SIZE)) {
-            int count = InputView.hitCount(frameNumber.getFrameNumber());
+        BowlingScoreRecord bowlingScoreRecord = new BowlingScoreRecord();
 
-            frameNumber = bowlingGame.pitchingBall(count);
-
-            Frames frames = bowlingGame.getFrames();
+        int frameNumber = 0;
+        while (frameNumber < 10) {
+            int count = InputView.hitCount(frameNumber + 1);
+            frameNumber = bowlingScoreRecord.hit(frameNumber, count);
+            List<Frame> frames = bowlingScoreRecord.getFrames();
             OutputView.printScoreScreen(username, frames);
         }
+
     }
 }

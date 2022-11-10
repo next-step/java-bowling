@@ -1,9 +1,13 @@
 package bowling;
 
+import bowling.view.ScoreShape;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Frame {
+    private static final int HIT_COUNT = 2;
+
     private BowlingPin bowlingPin;
     private final List<HitRecord> hitRecords;
 
@@ -16,10 +20,18 @@ public class Frame {
         bowlingPin = bowlingPin.hitPins(new BowlingPin(count));
         hitRecords.add(new HitRecord(count));
 
-        return bowlingPin.isZero() || hitRecords.size() == 2;
+        return clearAllFrame() || hitTwice();
     }
 
     public List<HitRecord> getHitRecords() {
         return hitRecords;
+    }
+
+    private boolean clearAllFrame() {
+        return bowlingPin.isZero();
+    }
+
+    private boolean hitTwice() {
+        return hitRecords.size() == HIT_COUNT;
     }
 }
