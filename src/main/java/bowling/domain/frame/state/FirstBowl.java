@@ -4,7 +4,7 @@ import java.util.List;
 
 import bowling.domain.frame.Score;
 
-public class FirstBowl implements State {
+public class FirstBowl extends Running {
     private final Pins firstPins;
 
     public FirstBowl(Pins firstPins) {
@@ -24,11 +24,6 @@ public class FirstBowl implements State {
     @Override
     public Score createScore() {
         return new Score(List.of(firstPins.getPins()));
-    }
-
-    @Override
-    public boolean isFinish() {
-        return false;
     }
 
     @Override
