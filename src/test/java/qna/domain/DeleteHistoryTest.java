@@ -20,7 +20,7 @@ public class DeleteHistoryTest {
 	@DisplayName("answer 삭제 기록을 남긴다")
 	void deleteAnswerHistory() {
 		DeleteHistories deleteHistories = new DeleteHistories();
-		Q1.addAnswer(new Answer(User.GUEST_USER, Q1, "testAnswer"));
+		Q1.addAnswer(Answer.newAnswer(User.GUEST_USER, Q1, "testAnswer"));
 		deleteHistories.deleteAnswerHistories(Q1);
 
 		Assertions.assertThat(

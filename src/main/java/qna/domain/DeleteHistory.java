@@ -26,10 +26,15 @@ public class DeleteHistory {
         return question.questionHistory();
     }
 
-    public DeleteHistory() {
+    public static DeleteHistory newDeleteHistory(ContentType contentType, Long contentId, User deletedBy,
+                                                 LocalDateTime createDate){
+        return new DeleteHistory(contentType,contentId,deletedBy, createDate);
     }
 
-    public DeleteHistory(ContentType contentType, Long contentId, User deletedBy,
+    private DeleteHistory() {
+    }
+
+    private DeleteHistory(ContentType contentType, Long contentId, User deletedBy,
                          LocalDateTime createDate) {
         this.contentType = contentType;
         this.contentId = contentId;

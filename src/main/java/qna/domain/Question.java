@@ -1,7 +1,7 @@
 package qna.domain;
 
 import java.time.LocalDateTime;
-import java.util.function.Predicate;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.hibernate.annotations.Where;
@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import qna.CannotDeleteException;
+
+import static qna.domain.DeleteHistory.newDeleteHistory;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -32,15 +34,29 @@ public class Question extends AbstractEntity {
 
     private boolean deleted = false;
 
-    public Question() {
+    public static Question newQuestion(String title, String contents) {
+        return new Question(title, contents);
     }
 
-    public Question(String title, String contents) {
+    public static Question newQuestionWithDeleted(String title, String contents, boolean status) {
+        return new Question(title, contents, status);
+    }
+
+    private Question() {
+
+    }
+
+    private Question(String title, String contents, boolean deleted) {
+        this(title, contents);
+        this.deleted = deleted;
+    }
+
+    private Question(String title, String contents) {
         this.title = title;
         this.contents = contents;
     }
 
-    public Question(long id, String title, String contents) {
+    private Question(long id, String title, String contents) {
         super(id);
         this.title = title;
         this.contents = contents;
@@ -64,16 +80,12 @@ public class Question extends AbstractEntity {
 
     public void delete(User loginUser) throws CannotDeleteException {
         validOwner(loginUser);
-        this.deleted = true;
+        deleted = true;
         deleteAnswer();
     }
 
-    public boolean isDeleted() {
-        return deleted;
-    }
-
     public DeleteHistory questionHistory() {
-        return new DeleteHistory(ContentType.QUESTION, this.Id(), writer, LocalDateTime.now());
+        return newDeleteHistory(ContentType.QUESTION, this.Id(), writer, LocalDateTime.now());
     }
 
     public List<DeleteHistory> answersHistory() {
@@ -83,16 +95,10 @@ public class Question extends AbstractEntity {
             .collect(Collectors.toList());
     }
 
-    public void deleteAnswer() throws CannotDeleteException {
+    private void deleteAnswer() throws CannotDeleteException {
         for (Answer answer : answers) {
             answer.delete(writer);
         }
-    }
-
-    public boolean isAnswersDeleted() {
-        return answers.stream()
-            .map(answer -> answer.isDeleted())
-            .allMatch(Predicate.isEqual(true));
     }
 
     public User getWriter() {
@@ -105,4 +111,17 @@ public class Question extends AbstractEntity {
             + ", writer=" + writer + "]";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Question question = (Question) o;
+        return deleted == question.deleted && Objects.equals(title, question.title) && Objects.equals(contents, question.contents) && Objects.equals(writer, question.writer) && Objects.equals(answers, question.answers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), title, contents, writer, answers, deleted);
+    }
 }

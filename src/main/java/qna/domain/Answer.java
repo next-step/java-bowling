@@ -8,6 +8,8 @@ import qna.UnAuthorizedException;
 
 import javax.persistence.*;
 
+import static qna.domain.DeleteHistory.newDeleteHistory;
+
 @Entity
 public class Answer extends AbstractEntity {
 
@@ -24,16 +26,7 @@ public class Answer extends AbstractEntity {
 
     private boolean deleted = false;
 
-    public Answer() {
-    }
-
-    public Answer(User writer, Question question, String contents) {
-        this(null, writer, question, contents);
-    }
-
-    public Answer(Long id, User writer, Question question, String contents) {
-        super(id);
-
+    public static Answer newAnswer(User writer,Question question,String contents){
         if (writer == null) {
             throw new UnAuthorizedException();
         }
@@ -42,16 +35,31 @@ public class Answer extends AbstractEntity {
             throw new NotFoundException();
         }
 
+        return new Answer(writer,question,contents);
+    }
+
+    public static Answer newAnswerWithDeleted(User writer, Question question, String contents,boolean status){
+        return new Answer(writer,question,contents,status);
+    }
+
+    private Answer(User writer, Question question, String contents) {
+        this(null, writer, question, contents);
+    }
+
+    private Answer(User writer, Question question, String contents,boolean status) {
+        this(writer,question,contents);
+        this.deleted = status;
+    }
+
+    private Answer(Long id, User writer, Question question, String contents) {
+        super(id);
+
         this.writer = writer;
         this.question = question;
         this.contents = contents;
     }
 
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void validWriter(User writer) throws CannotDeleteException {
+    private void validWriter(User writer) throws CannotDeleteException {
         if (writer != this.writer) {
             throw new CannotDeleteException("답변자와 질문자가 같지 않습니다");
         }
@@ -67,7 +75,7 @@ public class Answer extends AbstractEntity {
     }
 
     public DeleteHistory answerHistory() {
-        return new DeleteHistory(ContentType.ANSWER, this.Id(), writer, LocalDateTime.now());
+        return newDeleteHistory(ContentType.ANSWER, this.Id(), writer, LocalDateTime.now());
     }
 
     public User getWriter() {
