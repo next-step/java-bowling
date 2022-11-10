@@ -68,7 +68,7 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public boolean isOwner(User loginUser) {
+    private boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
 
