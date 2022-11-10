@@ -21,10 +21,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -60,17 +58,16 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question delete() {
+    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
+        validateIfIsOwner(loginUser);
         this.deleted = true;
-        return this;
+        DeleteHistories result = new DeleteHistories(generateDeleteHistory());
+        result.addAll(answers.deleteAll(loginUser));
+        return result;
     }
 
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public Answers getAnswers() {
-        return new Answers(Collections.unmodifiableList(answers));
     }
 
     public void validateIfIsOwner(User loginUser) throws CannotDeleteException {
