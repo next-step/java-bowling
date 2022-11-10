@@ -66,7 +66,7 @@ class NormalFrameTest {
     @Test
     @DisplayName("마지막 라운드는 LastFrame 인스턴스로 생성된다.")
     void createLastFrame() {
-        Frame nextFrame = new NormalFrame(BowlingGame.LAST_FRAME - 1).createNextFrame();
+        Frame nextFrame = new NormalFrame(Frame.LAST_FRAME - 1).createNextFrame();
         assertThat(nextFrame instanceof LastFrame).isTrue();
     }
 }

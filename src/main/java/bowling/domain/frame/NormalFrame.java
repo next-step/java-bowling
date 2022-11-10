@@ -7,7 +7,7 @@ import bowling.domain.BowlingGameFrameRecord;
 import bowling.domain.frame.state.Ready;
 import bowling.domain.frame.state.State;
 
-public class NormalFrame implements Frame {
+public class NormalFrame extends Frame {
     private static final String INVALID_FRAME_NUMBER_EXCEPTION_MESSAGE = "일반 프레임의 숫자는 1과 9 사이의 숫자여야 합니다.";
 
     private final int frameNumber;
@@ -26,7 +26,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame createNextFrame() {
-        if (frameNumber + 1 == BowlingGame.LAST_FRAME) {
+        if (frameNumber + 1 == LAST_FRAME) {
             return new LastFrame();
         }
 
@@ -49,7 +49,7 @@ public class NormalFrame implements Frame {
     }
 
     private void validate(int frameNumber) {
-        if (frameNumber < BowlingGame.START_FRAME || frameNumber > BowlingGame.LAST_FRAME - 1) {
+        if (frameNumber < Frame.START_FRAME || frameNumber > Frame.LAST_FRAME - 1) {
             throw new IllegalArgumentException(INVALID_FRAME_NUMBER_EXCEPTION_MESSAGE);
         }
     }

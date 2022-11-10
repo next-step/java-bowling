@@ -10,13 +10,10 @@ import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 
 public class BowlingGame {
-    public static final int START_FRAME = 1;
-    public static final int LAST_FRAME = 10;
-
     private final List<Frame> frames;
 
     public BowlingGame() {
-        frames = new ArrayList<>(List.of(new NormalFrame(START_FRAME)));
+        frames = new ArrayList<>(List.of(new NormalFrame(Frame.START_FRAME)));
     }
 
     public void bowl(int falledPins) {
@@ -32,7 +29,7 @@ public class BowlingGame {
             .map(Frame::createFrameRecord)
             .collect(toList());
 
-        IntStream.range(frames.size(), LAST_FRAME)
+        IntStream.range(frames.size(), Frame.LAST_FRAME)
             .forEach(i -> {
                 frameRecords.add(new BowlingGameFrameRecord(List.of()));
             });
@@ -41,7 +38,7 @@ public class BowlingGame {
     }
 
     public boolean isGamePlayable() {
-        return !(frames.size() == LAST_FRAME && isCurrentFrameEnded());
+        return !(frames.size() == Frame.LAST_FRAME && isCurrentFrameEnded());
     }
 
     public int getCurrentFrameNumber() {

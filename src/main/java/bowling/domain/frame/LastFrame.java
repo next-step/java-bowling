@@ -10,7 +10,7 @@ import bowling.domain.BowlingGameFrameRecord;
 import bowling.domain.frame.state.Ready;
 import bowling.domain.frame.state.State;
 
-public class LastFrame implements Frame {
+public class LastFrame extends Frame {
     private static final String ALREADY_ENDED_FRAME_EXCEPTION_MESSAGE = "이미 종료된 프레임입니다.";
 
     private final LinkedList<State> states = new LinkedList<>();
@@ -55,7 +55,7 @@ public class LastFrame implements Frame {
 
     @Override
     public int getFrameNumber() {
-        return BowlingGame.LAST_FRAME;
+        return LAST_FRAME;
     }
 
     @Override
