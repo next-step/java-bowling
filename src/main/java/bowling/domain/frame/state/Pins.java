@@ -27,6 +27,10 @@ public class Pins {
         return new Pins(this.falledPins + falledPins);
     }
 
+    public boolean isLegalPins(Pins secondsPins) {
+        return falledPins + secondsPins.falledPins <= MAX_PINS;
+    }
+
     public int getPins() {
         return falledPins;
     }

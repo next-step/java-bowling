@@ -25,4 +25,13 @@ class FirstBowlTest {
     void isFinish() {
         assertThat(new FirstBowl(new Pins(4)).isFinish()).isFalse();
     }
+
+    @Test
+    @DisplayName("쓰러뜨린 핀의 합계가 10이 넘으면 예외를 던진다.")
+    void bowlWhenOver10Pins() {
+        FirstBowl firstBowl = new FirstBowl(new Pins(4));
+        assertThatThrownBy(() -> firstBowl.bowl(7))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("쓰러트린 핀의 합계는 10을 넘을 수 없습니다");
+    }
 }

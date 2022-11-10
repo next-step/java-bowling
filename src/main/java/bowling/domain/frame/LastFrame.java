@@ -5,12 +5,13 @@ import static java.util.stream.Collectors.*;
 import java.util.LinkedList;
 import java.util.List;
 
-import bowling.domain.BowlingGame;
 import bowling.domain.BowlingGameFrameRecord;
 import bowling.domain.frame.state.Ready;
 import bowling.domain.frame.state.State;
 
 public class LastFrame extends Frame {
+    private static final int DEFAULT_BOWL_COUNT = 2;
+    private static final int BONUS_BOWL_COUNT = 1;
     private static final String ALREADY_ENDED_FRAME_EXCEPTION_MESSAGE = "이미 종료된 프레임입니다.";
 
     private final LinkedList<State> states = new LinkedList<>();
@@ -23,7 +24,7 @@ public class LastFrame extends Frame {
 
     @Override
     public void bowl(int falledPins) {
-        if (isFinish()) {
+        if (isFrameFinish()) {
             throw new IllegalStateException(ALREADY_ENDED_FRAME_EXCEPTION_MESSAGE);
         }
 
@@ -59,8 +60,8 @@ public class LastFrame extends Frame {
     }
 
     @Override
-    public boolean isFinish() {
-        return hasNoBonusBowl() || bowlCount == 3;
+    public boolean isFrameFinish() {
+        return hasNoBonusBowl() || bowlCount == (DEFAULT_BOWL_COUNT + BONUS_BOWL_COUNT);
     }
 
     private State getCurrentState() {

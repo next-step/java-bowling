@@ -50,6 +50,6 @@ public class BowlingGame {
     }
 
     private boolean isCurrentFrameEnded() {
-        return getCurrentFrame().isFinish();
+        return getCurrentFrame().isFrameFinish();
     }
 }
