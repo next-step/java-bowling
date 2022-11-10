@@ -34,6 +34,10 @@ public class Question extends AbstractEntity {
 
     private boolean deleted = false;
 
+    public Question() {
+
+    }
+
     public static Question newQuestion(String title, String contents) {
         return new Question(title, contents);
     }
@@ -42,9 +46,6 @@ public class Question extends AbstractEntity {
         return new Question(title, contents, status);
     }
 
-    private Question() {
-
-    }
 
     private Question(String title, String contents, boolean deleted) {
         this(title, contents);
