@@ -23,4 +23,12 @@ public class Score {
     public int hashCode() {
         return Objects.hash(score, nextScoreCnt);
     }
+
+    public boolean canCalculate() {
+        return this.nextScoreCnt == 0;
+    }
+
+    public Score addScore(Score nextScore) {
+        return new Score(this.score + nextScore.score, this.nextScoreCnt - 1);
+    }
 }

@@ -1,6 +1,7 @@
 package bowling.domain.status;
 
 import bowling.domain.Pin;
+import bowling.domain.Score;
 
 public abstract class Status {
 
@@ -9,6 +10,7 @@ public abstract class Status {
 
     public abstract Status bowl(Pin pin);
     public abstract boolean isFinished();
+    public abstract Score getScore();
     public int getCountOfFirst() {
         return first.getCountOfPin();
     }

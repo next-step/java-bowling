@@ -1,12 +1,15 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pin;
+import bowling.domain.Score;
 import bowling.domain.status.Status;
 
 import java.util.Objects;
 
 public class NormalFrame extends Frame {
     public static final int LAST_FRAME_NO = 9;
+
+    private Frame nextFrame;
 
     public NormalFrame(int newFrameNo) {
         this.frameNo = newFrameNo;
@@ -15,6 +18,9 @@ public class NormalFrame extends Frame {
     @Override
     public Frame bowl(Pin pin) {
         status = status.bowl(pin);
+        if (isFinished()) {
+            nextFrame = nextFrame();
+        }
         return this;
     }
 
@@ -41,6 +47,24 @@ public class NormalFrame extends Frame {
             return new NormalFrame(frameNo + 1);
         }
         return this;
+    }
+
+    @Override
+    public Score getScore() {
+        Score score = status.getScore();
+        if (score.canCalculate()) {
+            return score;
+        }
+        return nextFrame.addScore(score);
+    }
+
+    @Override
+    public Score addScore(Score preScore) {
+        Score score = preScore.addScore(status.getScore());
+        if (score.canCalculate()) {
+            return score;
+        }
+        return nextFrame.addScore(score);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pin;
+import bowling.domain.Score;
 import bowling.domain.status.*;
 
 import java.util.ArrayList;
@@ -45,6 +46,16 @@ public class FinalFrame extends Frame {
     @Override
     public Frame nextFrame() {
         throw new RuntimeException("마지막 프레임입니다.");
+    }
+
+    @Override
+    public Score getScore() {
+        return null;
+    }
+
+    @Override
+    public Score addScore(Score preScore) {
+        return null;
     }
 
     @Override

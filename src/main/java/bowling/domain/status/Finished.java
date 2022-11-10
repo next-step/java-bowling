@@ -1,6 +1,7 @@
 package bowling.domain.status;
 
 import bowling.domain.Pin;
+import bowling.domain.Score;
 
 public class Finished extends Status {
     @Override
@@ -11,5 +12,10 @@ public class Finished extends Status {
     @Override
     public boolean isFinished() {
         return true;
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(0,0);
     }
 }
