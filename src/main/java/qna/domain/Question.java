@@ -9,12 +9,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
-public class Question extends AbstractEntity {
+public class Question extends AbstractContentsDeletableEntity {
     @Column(length = 100, nullable = false)
     private String title;
-
-    @Lob
-    private String contents;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
@@ -25,20 +22,17 @@ public class Question extends AbstractEntity {
     @OrderBy("id ASC")
     private List<Answer> answers = new ArrayList<>();
 
-    private boolean deleted = false;
-
     public Question() {
     }
 
     public Question(String title, String contents) {
+        super(contents);
         this.title = title;
-        this.contents = contents;
     }
 
     public Question(long id, String title, String contents) {
-        super(id);
+        super(id, contents);
         this.title = title;
-        this.contents = contents;
     }
 
     public String getTitle() {
@@ -47,15 +41,6 @@ public class Question extends AbstractEntity {
 
     public Question setTitle(String title) {
         this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
         return this;
     }
 
@@ -86,8 +71,9 @@ public class Question extends AbstractEntity {
         return true;
     }
 
+    @Override
     public DeleteHistory delete() {
-        this.deleted = true;
+        super.delete();
         return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
     }
 
@@ -97,16 +83,12 @@ public class Question extends AbstractEntity {
                 .collect(Collectors.toList());
     }
 
-    public boolean isDeleted() {
-        return deleted;
-    }
-
     public List<Answer> getAnswers() {
         return answers;
     }
 
     @Override
     public String toString() {
-        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+        return "Question [id=" + getId() + ", title=" + title + ", contents=" + getContents() + ", writer=" + writer + "]";
     }
 }

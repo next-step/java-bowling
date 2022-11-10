@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class Answer extends AbstractEntity {
+public class Answer extends AbstractContentsDeletableEntity {
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
@@ -15,11 +15,6 @@ public class Answer extends AbstractEntity {
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
     private Question question;
-
-    @Lob
-    private String contents;
-
-    private boolean deleted = false;
 
     public Answer() {
     }
@@ -29,7 +24,7 @@ public class Answer extends AbstractEntity {
     }
 
     public Answer(Long id, User writer, Question question, String contents) {
-        super(id);
+        super(id, contents);
 
         if(writer == null) {
             throw new UnAuthorizedException();
@@ -41,16 +36,12 @@ public class Answer extends AbstractEntity {
 
         this.writer = writer;
         this.question = question;
-        this.contents = contents;
     }
 
+    @Override
     public DeleteHistory delete() {
-        deleted = true;
+        super.delete();
         return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
-    }
-
-    public boolean isDeleted() {
-        return deleted;
     }
 
     public boolean isOwner(User writer) {
@@ -61,16 +52,12 @@ public class Answer extends AbstractEntity {
         return writer;
     }
 
-    public String getContents() {
-        return contents;
-    }
-
     public void toQuestion(Question question) {
         this.question = question;
     }
 
     @Override
     public String toString() {
-        return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
+        return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + getContents() + "]";
     }
 }
