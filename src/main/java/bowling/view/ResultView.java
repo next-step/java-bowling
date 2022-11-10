@@ -43,7 +43,7 @@ public class ResultView {
         joiner.add("");
         joiner.add(String.format(" %4s ", nameContent));
         for (int i = 0; i < END_FRAME; ++i) {
-            joiner.add(String.format("  %-3s ", frameContents.get(i)));
+            joiner.add(String.format("    %-5s ", frameContents.get(i)));
         }
         joiner.add("");
         System.out.println(joiner);
