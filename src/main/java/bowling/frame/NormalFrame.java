@@ -38,7 +38,12 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isFinish() {
-        return firstFallenPins != null && secondFallenPins != null;
+        if (firstFallenPins == null) {
+            return false;
+        }
+
+        return firstFallenPins.getCountOfPin() == FallenPins.MAX_COUNT_OF_PIN
+                || secondFallenPins != null;
     }
 
     private void validateSecondFallenPins(FallenPins fallenPins) {

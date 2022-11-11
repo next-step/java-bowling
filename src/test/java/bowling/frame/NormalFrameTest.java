@@ -70,6 +70,14 @@ class NormalFrameTest {
     }
 
     @Test
+    void 프레임_종료됨_스트라이크() {
+        Frame frame = new NormalFrame();
+        frame = frame.update(FallenPins.of(10));
+
+        assertThat(frame.isFinish()).isTrue();
+    }
+
+    @Test
     void 프레임_진행중() {
         Frame frame = new NormalFrame();
         frame = frame.update(FallenPins.of(7));
