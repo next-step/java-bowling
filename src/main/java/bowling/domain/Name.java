@@ -3,8 +3,8 @@ package bowling.domain;
 import java.util.Objects;
 
 public class Name {
-    public static final String ERR_MSG_NAME_LENGTH = "이름은 3글자여야 합니다.";
-    public static final int NAME_LENGTH = 3;
+    private static final String ERR_MSG_NAME_LENGTH = "이름은 3글자여야 합니다.";
+    private static final int NAME_LENGTH = 3;
     private final String name;
 
     public Name(String name) {
