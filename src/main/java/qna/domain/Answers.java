@@ -27,9 +27,14 @@ public class Answers {
 
     public List<DeleteHistory> deleteAll(User loginUser) throws CannotDeleteException {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        for(Answer answer : getAnswers()) {
-            deleteHistories.add(answer.delete(loginUser));
+        for (Answer answer : getAnswers()) {
+            deleteHistories.add(deleteAnswer(loginUser, answer));
         }
         return deleteHistories;
     }
+
+    private DeleteHistory deleteAnswer(User loginUser, Answer answer) throws CannotDeleteException {
+        return answer.delete(loginUser);
+    }
+
 }
