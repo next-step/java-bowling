@@ -18,6 +18,10 @@ public class NormalFrame implements Frame {
         return new NormalFrame(frameNumber, new NormalThrown(pins));
     }
 
+    public static NormalFrame init(int countOfPins) {
+        return new NormalFrame(MIN_FRAMES, new NormalThrown(Pins.from(countOfPins)));
+    }
+
     @Override
     public boolean isFinished() {
         if (getScore() == 10) {

@@ -9,7 +9,8 @@ public class BowlingApplication {
 
         String userName = InputView.inputUserName();
 
-        List<Frame> frames = new ArrayList<>();
+        Frames frames = new Frames();
+        ResultView.printResult(userName, frames);
 
         for (int i = NormalFrame.MIN_FRAMES; i <= FinalFrame.FINAL_FRAME_NUM ; i++) {
 

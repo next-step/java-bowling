@@ -10,6 +10,12 @@ public class ResultView {
         printFrames(frames);
     }
 
+    public static void printResult(String name, Frames frames) {
+        printRoundTemplate();
+        printUserName(name);
+        printFrames(frames);
+    }
+
     private static void printRoundTemplate() {
         System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
     }
@@ -21,6 +27,17 @@ public class ResultView {
 
     private static void printFrames(List<Frame> frames) {
         for (Frame frame : frames) {
+            System.out.printf("|  %-3s ", printFrame(frame));
+        }
+        int emptyFrameSize = 11 - frames.size();
+        for (int i = 0; i < emptyFrameSize; i++) {
+            System.out.print("|      ");
+        }
+        System.out.println();
+    }
+
+    private static void printFrames(Frames frames) {
+        for (Frame frame : frames.getFrames()) {
             System.out.printf("|  %-3s ", printFrame(frame));
         }
         int emptyFrameSize = 11 - frames.size();
