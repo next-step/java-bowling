@@ -4,7 +4,7 @@ public interface Thrown {
 
     boolean isStrike();
 
-    boolean hasTurn();
+    boolean isFinished();
 
     void bowl(int secondPins);
 

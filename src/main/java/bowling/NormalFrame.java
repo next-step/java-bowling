@@ -5,12 +5,12 @@ public class NormalFrame implements Frame {
     public static int MAX_FRAMES = 9;
 
     private int frameNumber;
-    private NormalThrown norMalThrown;
+    private NormalThrown normalThrown;
 
-    private NormalFrame(int frameNumber, NormalThrown norMalThrown) {
+    private NormalFrame(int frameNumber, NormalThrown normalThrown) {
         valid(frameNumber);
         this.frameNumber = frameNumber;
-        this.norMalThrown = norMalThrown;
+        this.normalThrown = normalThrown;
     }
 
     public static NormalFrame of(int frameNumber, int countOfPins) {
@@ -18,21 +18,9 @@ public class NormalFrame implements Frame {
         return new NormalFrame(frameNumber, new NormalThrown(pins));
     }
 
-    public static NormalFrame init(int countOfPins) {
-        return new NormalFrame(MIN_FRAMES, new NormalThrown(Pins.from(countOfPins)));
-    }
-
-    @Override
-    public boolean isFinished() {
-        if (getScore() == 10) {
-            return true;
-        }
-        return false;
-    }
-
     @Override
     public int getScore() {
-        return norMalThrown.getScore();
+        return normalThrown.getScore();
     }
 
     private void valid(int frameNumber) {
@@ -43,7 +31,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame bowl(int countOfPins) {
-        norMalThrown.bowl(countOfPins);
+        normalThrown.bowl(countOfPins);
         return this;
     }
 
@@ -54,16 +42,16 @@ public class NormalFrame implements Frame {
 
     @Override
     public int firstPins() {
-        return norMalThrown.firstPins();
+        return normalThrown.firstPins();
     }
 
     @Override
     public int secondPins() {
-        return norMalThrown.secondPins();
+        return normalThrown.secondPins();
     }
 
     @Override
-    public boolean hasTurn() {
-        return norMalThrown.hasTurn();
+    public boolean isFinished() {
+        return normalThrown.isFinished();
     }
 }

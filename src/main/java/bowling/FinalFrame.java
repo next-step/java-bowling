@@ -20,19 +20,6 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public boolean isFinished() {
-        if (bonusPins != null) {
-            return true;
-        }
-
-        if (secondPins() != 0 && getScore() != 10) {
-            return true;
-        }
-
-        return false;
-    }
-
-    @Override
     public Frame bowl(int countOfPins) {
         finalThrown.bowl(countOfPins);
         return this;
@@ -62,7 +49,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public boolean hasTurn() {
-        return finalThrown.hasTurn();
+    public boolean isFinished() {
+        return finalThrown.isFinished();
     }
 }

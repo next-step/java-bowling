@@ -15,7 +15,7 @@ public class NormalThrown implements Thrown {
     }
 
     @Override
-    public boolean hasTurn() {
+    public boolean isFinished() {
         return firstPins.isMax() || secondPins != null;
     }
 

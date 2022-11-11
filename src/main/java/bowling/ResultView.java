@@ -53,19 +53,19 @@ public class ResultView {
             return "X";
         }
 
-        if (frame.getScore() == 10) {
+        if (frame.secondPins() == 10) {
             return frame.firstPins() + "|/";
         }
 
-        if (frame.getScore() == 0) {
+        if ((!frame.isFinished() && frame.firstPins() == 0) || (frame.isFinished() && frame.secondPins() == 0)) {
             return "-";
         }
 
-        if (!frame.hasTurn() && !frame.isFinalFrame()) {
+        if (frame.isFinished() && !frame.isFinalFrame()) {
             return frame.firstPins() + "|" + frame.secondPins();
         }
 
-        if (!frame.hasTurn() && frame.isFinalFrame()) {
+        if (frame.isFinished() && frame.isFinalFrame()) {
             return frame.firstPins() + "|" + frame.secondPins() + "|" + frame.getScore();
         }
 

@@ -13,6 +13,4 @@ public interface Frame {
     int firstPins();
 
     int secondPins();
-
-    boolean hasTurn();
 }

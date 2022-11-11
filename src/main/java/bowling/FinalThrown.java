@@ -20,16 +20,16 @@ public class FinalThrown implements Thrown {
     }
 
     @Override
-    public boolean hasTurn() {
+    public boolean isFinished() {
         if (bonusPins != null) {
-            return false;
+            return true;
         }
 
-        if (secondPins != null && firstPins.getFalledPins() + secondPins.getFalledPins() < 10) {
-            return false;
+        if (secondPins != null && secondPins.getFalledPins() < 10) {
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     @Override
