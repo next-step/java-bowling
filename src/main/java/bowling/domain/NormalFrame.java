@@ -4,7 +4,6 @@ import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
 import java.util.List;
-import java.util.Objects;
 
 public class NormalFrame extends Frame {
     private static final int MIN_FRAME_NUMBER = 1;
@@ -88,7 +87,7 @@ public class NormalFrame extends Frame {
     }
 
     private void validateNextFrame() {
-        if (Objects.isNull(nextFrame)) {
+        if (nextFrame == null) {
             throw new UnsupportedOperationException("점수를 계산할 수 없습니다.");
         }
     }

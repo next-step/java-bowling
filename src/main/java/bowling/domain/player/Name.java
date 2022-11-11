@@ -18,7 +18,7 @@ public class Name {
     }
 
     private static void validateNullOrBlank(String value) {
-        if (Objects.isNull(value) || value.isBlank()) {
+        if (value == null || value.isBlank()) {
             throw new IllegalArgumentException("이름이 null 이거나 빈 문자열입니다.");
         }
     }

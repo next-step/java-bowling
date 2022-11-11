@@ -15,10 +15,6 @@ public abstract class Frame {
 
     }
 
-    public int getFrameNumber() {
-        return number;
-    }
-
     public Frame getNextFrame() {
         return nextFrame;
     }
