@@ -5,7 +5,7 @@ import bowling.domain.Score;
 
 import java.util.List;
 
-public class Spare extends State {
+public class Spare extends Finished {
 
     private final Pin firstPin;
     private final Pin secondPin;
@@ -18,11 +18,6 @@ public class Spare extends State {
     @Override
     public State bowl(Pin pin) {
         throw new UnsupportedOperationException("더 이상 공을 던질 수 없습니다.");
-    }
-
-    @Override
-    public boolean isFinished() {
-        return true;
     }
 
     @Override

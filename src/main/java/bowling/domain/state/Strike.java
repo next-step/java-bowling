@@ -5,16 +5,11 @@ import bowling.domain.Score;
 
 import java.util.List;
 
-public class Strike extends State {
+public class Strike extends Finished {
 
     @Override
     public State bowl(Pin pin) {
         throw new UnsupportedOperationException("더 이상 공을 던질 수 없습니다.");
-    }
-
-    @Override
-    public boolean isFinished() {
-        return true;
     }
 
     @Override
