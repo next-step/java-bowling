@@ -8,9 +8,9 @@ import bowling.domain.score.Scores;
 
 public class Output {
 
-    public static final int SCORE_STRIKE = 10;
-    public static final int ROUND_START = 1;
-    public static final int ROUND_END = 10;
+    private static final int SCORE_STRIKE = 10;
+    private static final int ROUND_START = 1;
+    private static final int ROUND_END = 10;
     private static final String SEPARATOR = "|";
     private static final String DEFAULT_FRAME_FORMAT = SEPARATOR + "  %-3s ";
     private static final String LAST_FRAME_FORMAT = SEPARATOR + " %-5s";
