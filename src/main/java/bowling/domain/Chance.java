@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Chance {
 
-    private final int chance;
+    private int chance;
 
     public Chance(int chance) {
         validatePositive(chance);
@@ -17,21 +17,23 @@ public class Chance {
         }
     }
 
-    public Chance minusOne() {
-        return new Chance(this.chance - 1);
+    public void minusOne() {
+        this.chance--;
+        validatePositive(this.chance);
     }
 
-    public Chance minusTwo() {
-        return new Chance(this.chance - 2);
+    public void minusTwo() {
+        this.chance -= 2;
+        validatePositive(this.chance);
+    }
+
+    public boolean isRemainChance() {
+        return this.chance > 0;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(this.chance);
-    }
-
-    public boolean isRemainChance() {
-        return this.chance > 0;
     }
 
     @Override
