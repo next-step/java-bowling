@@ -15,6 +15,8 @@ public class Output {
     private static final String defaultFrameFormat = SEPARATOR + "  %-3s ";
     private static final String lastFrameFormat = SEPARATOR + " %-5s";
     private static final String nameFormat = SEPARATOR + "  %3s ";
+    private static final String scoreFormat = " %3s  ";
+    private static final String SCORE_BLANK = "      ";
     private static final String STRIKE_OUTPUT = "X";
     private static final String GUTTER_OUTPUT = "-";
     private static final String SPARE_OUTPUT = "/";
@@ -24,8 +26,11 @@ public class Output {
         result.append(firstLine());
         result.append("\n");
         result.append(secondLine(scoreboard));
+        result.append("\n");
+        result.append(thirdLine(scoreboard));
         System.out.println(result);
     }
+
 
     private static String firstLine() {
         StringBuilder result = new StringBuilder();
@@ -110,5 +115,26 @@ public class Output {
             return GUTTER_OUTPUT;
         }
         return String.valueOf(score.value());
+    }
+
+
+    private static String thirdLine(Scoreboard scoreboard) {
+        StringBuilder result = new StringBuilder();
+        result.append(SEPARATOR);
+        result.append("      ");
+        int totalScore = 0;
+        for (int round = ROUND_START; round <= ROUND_END; round++) {
+            result.append(SEPARATOR);
+            Frame frame = scoreboard.frame(new Round(round));
+            if (frame.isNotEndScoreAggregation()) {
+                result.append(SCORE_BLANK);
+            }
+            if (!frame.isNotEndScoreAggregation()) {
+                totalScore += frame.totalScore();
+                result.append(String.format(scoreFormat, totalScore));
+            }
+        }
+        result.append(SEPARATOR);
+        return result.toString();
     }
 }

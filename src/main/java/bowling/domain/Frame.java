@@ -44,6 +44,10 @@ public abstract class Frame {
 
     public abstract boolean isNotEndScoreAggregation();
 
+    public int totalScore() {
+        return this.scores.sum() + this.bonusScores.sum();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
