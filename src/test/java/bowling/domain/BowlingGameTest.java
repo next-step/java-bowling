@@ -14,7 +14,7 @@ class BowlingGameTest {
     void isEndGameTest1() {
         BowlingGame game = new BowlingGame(Arrays.asList("OSC"));
         assertThat(game.isEndGame()).isFalse();
-        game.doGame(0, RuleConfig.NUMBER_OF_PIN);
+        game.doGame(RuleConfig.NUMBER_OF_PIN);
         assertThat(game.isEndGame()).isFalse();
     }
 
@@ -23,8 +23,8 @@ class BowlingGameTest {
     void isEndGameTest2() {
         BowlingGame game = new BowlingGame(Arrays.asList("OSC"));
         for (int index = 0; index < RuleConfig.NUMBER_OF_FRAME; index++) {
-            game.doGame(0, RuleConfig.NUMBER_OF_PIN / 2 - 1);
-            game.doGame(0, RuleConfig.NUMBER_OF_PIN / 2 - 1);
+            game.doGame(RuleConfig.NUMBER_OF_PIN / 2 - 1);
+            game.doGame(RuleConfig.NUMBER_OF_PIN / 2 - 1);
         }
 
         assertThat(game.isEndGame()).isTrue();
@@ -35,7 +35,7 @@ class BowlingGameTest {
     void isEndGameTest3() {
         BowlingGame game = new BowlingGame(Arrays.asList("OSC"));
         for (int index = 0; index < RuleConfig.NUMBER_OF_FRAME; index++) {
-            game.doGame(0, RuleConfig.NUMBER_OF_PIN);
+            game.doGame(RuleConfig.NUMBER_OF_PIN);
         }
 
         assertThat(game.isEndGame()).isFalse();
@@ -46,9 +46,9 @@ class BowlingGameTest {
     void isEndGameTest4() {
         BowlingGame game = new BowlingGame(Arrays.asList("OSC"));
         for (int index = 0; index < RuleConfig.NUMBER_OF_FRAME; index++) {
-            game.doGame(0, RuleConfig.NUMBER_OF_PIN);
+            game.doGame(RuleConfig.NUMBER_OF_PIN);
         }
-        game.doGame(0, RuleConfig.NUMBER_OF_PIN);
+        game.doGame(RuleConfig.NUMBER_OF_PIN);
 
         assertThat(game.isEndGame()).isTrue();
     }

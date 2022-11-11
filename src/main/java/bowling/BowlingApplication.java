@@ -13,15 +13,11 @@ public class BowlingApplication {
 
         ResultView.printScoreBoard(game);
 
-        while (!game.isEndGame()) {
-            doGame(game);
-        }
-    }
-
-    private static void doGame(BowlingGame game) {
         int inputDownPinCount;
-        inputDownPinCount = InputView.inputDownPinCount(game.getPlayerName(0));
-        game.doGame(inputDownPinCount);
-        ResultView.printScoreBoard(game);
+        while (!game.isEndGame()) {
+            inputDownPinCount = InputView.inputDownPinCount(game.getPlayerName());
+            game.doGame(inputDownPinCount);
+            ResultView.printScoreBoard(game);
+        }
     }
 }

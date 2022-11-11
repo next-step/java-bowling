@@ -16,44 +16,16 @@ public class BowlingGame {
         return records.getRecords();
     }
 
-    public boolean isEndFrames(int frameIndex) {
-        return records.isEndFrames(frameIndex);
-    }
-
-    public boolean isEndPlayerFrame(int frameIndex, int playerIndex) {
-        return records.isEndPlayerFrame(frameIndex, playerIndex);
-    }
-
     public boolean isEndGame() {
         return records.isEndRecords();
     }
 
     public void doGame(int downPinCount) {
-        records.record(currentSequence.getCurrentLaneIndex(), downPinCount);
-        setNextTurn();
+        currentSequence.record(records, downPinCount);
     }
 
-    public void doGame(int testNumber, int downPinCount) {
-        records.record(currentSequence.getCurrentLaneIndex(), downPinCount);
-        setNextTurn();
-    }
-
-    private void setNextTurn() {
-        if (isEndGame()) {
-            return;
-        }
-
-        if (isEndFrames(currentSequence.getCurrentFrameIndex())) {
-            currentSequence.setNextFrame();
-        }
-
-        if (isEndPlayerFrame(currentSequence.getCurrentFrameIndex(), currentSequence.getCurrentLaneIndex())) {
-            currentSequence.setNextLane();
-        }
-    }
-
-    public String getPlayerName(int laneIndex) {
-        return records.getPlayerName(laneIndex);
+    public String getPlayerName() {
+        return currentSequence.getPlayerName(records);
     }
 
 }
