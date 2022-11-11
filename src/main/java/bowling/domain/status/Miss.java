@@ -14,4 +14,17 @@ public class Miss extends Finished {
     public Score getScore() {
         return new Score(this.getCountOfFirst() + this.getCountOfSecond(), 0);
     }
+
+    @Override
+    public Score addScore(Score score) {
+        int nextScoreCnt = score.getNextScoreCnt();
+        int addScore = 0;
+        if (nextScoreCnt == 1) {
+            addScore = getCountOfFirst();
+        }
+        if (nextScoreCnt == 2) {
+            addScore = getCountOfFirst() + getCountOfSecond();
+        }
+        return new Score(score.getScore() + addScore, 0);
+    }
 }

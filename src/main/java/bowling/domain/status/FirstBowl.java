@@ -26,4 +26,9 @@ public class FirstBowl extends Status {
     public Score getScore() {
         return new Score(this.getCountOfFirst(), 0);
     }
+
+    @Override
+    public Score addScore(Score score) {
+        return new Score(score.getScore() + this.getCountOfFirst(), score.getNextScoreCnt() - 1);
+    }
 }

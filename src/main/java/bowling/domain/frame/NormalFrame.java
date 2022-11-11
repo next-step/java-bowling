@@ -36,7 +36,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public Boolean isFinalFrame() {
+    public boolean isFinalFrame() {
         return false;
     }
 
@@ -61,7 +61,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public Score addScore(Score preScore) {
-        Score score = preScore.addScore(status.getScore());
+        Score score = status.addScore(preScore);
         if (score.canCalculate()) {
             return score;
         }

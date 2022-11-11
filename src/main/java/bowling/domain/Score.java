@@ -28,11 +28,11 @@ public class Score {
         return this.nextScoreCnt == 0;
     }
 
-    public Score addScore(Score nextScore) {
-        return new Score(this.score + nextScore.score, this.nextScoreCnt - 1);
-    }
-
     public int getScore() {
         return score;
+    }
+
+    public int getNextScoreCnt() {
+        return nextScoreCnt;
     }
 }

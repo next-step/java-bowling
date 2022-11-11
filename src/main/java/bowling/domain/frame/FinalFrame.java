@@ -39,7 +39,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public Boolean isFinalFrame() {
+    public boolean isFinalFrame() {
         return true;
     }
 
@@ -52,7 +52,7 @@ public class FinalFrame extends Frame {
     public Score getScore() {
         Score score = getFirstScore();
         for (int i = 1; i < statuses.size(); i++) {
-            score = statuses.get(i).getScore().addScore(score);
+            score = statuses.get(i).addScore(score);
         }
         return score;
     }
@@ -63,7 +63,13 @@ public class FinalFrame extends Frame {
 
     @Override
     public Score addScore(Score preScore) {
-        return preScore.addScore(getScore());
+        Score score = preScore;
+        int i = 0;
+        while (!score.canCalculate() && i < statuses.size()) {
+            score = statuses.get(i).addScore(score);
+            i++;
+        }
+        return score;
     }
 
     @Override
@@ -78,6 +84,7 @@ public class FinalFrame extends Frame {
         if (statuses.get(0) instanceof Strike && statuses.get(1) instanceof Spare) return true;
         if (statuses.get(0) instanceof Strike && statuses.get(1) instanceof Miss) return true;
         if (statuses.get(0) instanceof Strike && statuses.get(1) instanceof Strike && statuses.get(2) instanceof Strike) return true;
+        if (statuses.get(0) instanceof Strike && statuses.get(1) instanceof Strike && statuses.get(2) instanceof FirstBowl) return true;
         return false;
     }
 

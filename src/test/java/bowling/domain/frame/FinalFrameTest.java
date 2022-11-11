@@ -73,6 +73,15 @@ class FinalFrameTest {
     }
 
     @Test
+    void isFinished_true5() {
+        FinalFrame frame = FinalFrame.init();
+        frame.bowl(new Pin(10));
+        frame.bowl(new Pin(10));
+        frame.bowl(new Pin(5));
+        assertThat(frame.isFinished()).isTrue();
+    }
+
+    @Test
     void getScore_firstBowl() {
         Frame frame = FinalFrame.init();
         frame.bowl(new Pin(7));
@@ -87,5 +96,13 @@ class FinalFrameTest {
         frame.bowl(new Pin(9));
 
         assertThat(frame.getScore().getScore()).isEqualTo(19);
+    }
+
+    @Test
+    void addScore() {
+        FinalFrame frame = FinalFrame.init();
+        frame.bowl(new Pin(10));
+        Score score = frame.addScore(new Score(10, 2));
+        assertThat(score).isEqualTo(new Score(20, 1));
     }
 }

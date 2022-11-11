@@ -3,8 +3,6 @@ package bowling.domain.status;
 import bowling.domain.Pin;
 import bowling.domain.Score;
 
-import static bowling.domain.status.Strike.STRIKE_SCORE;
-
 public class Spare extends Finished {
 
     public Spare(Pin first, Pin second) {
@@ -14,6 +12,19 @@ public class Spare extends Finished {
 
     @Override
     public Score getScore() {
-        return new Score(STRIKE_SCORE, 1);
+        return new Score(getCountOfFirst() + getCountOfSecond(), 1);
+    }
+
+    @Override
+    public Score addScore(Score score) {
+        int nextScoreCnt = score.getNextScoreCnt();
+        int addScore = 0;
+        if (nextScoreCnt == 1) {
+            addScore = getCountOfFirst();
+        }
+        if (nextScoreCnt == 2) {
+            addScore = getCountOfFirst() + getCountOfSecond();
+        }
+        return new Score(score.getScore() + addScore, 0);
     }
 }

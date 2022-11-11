@@ -1,12 +1,10 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pin;
-import bowling.domain.Score;
 import bowling.domain.status.Status;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Frames {
