@@ -5,6 +5,7 @@ import bowling.domain.score.Scores;
 public class LastFrame extends Frame {
 
     private static final int TOTAL_CHANCE = 3;
+    private static final int DEFAULT_CHANCE = 2;
 
     @Override
     protected int TotalChance() {
@@ -12,7 +13,7 @@ public class LastFrame extends Frame {
     }
 
     public void minusChance() {
-        if (this.scores.isSizeEqual(2) && !this.scores.first().isStrike() && !isSpare()) {
+        if (this.scores.isSizeEqual(DEFAULT_CHANCE) && !this.scores.first().isStrike() && !isSpare()) {
             this.chance.minusTwo();
             return;
         }
@@ -24,7 +25,7 @@ public class LastFrame extends Frame {
         if (this.scores.isSizeOver(TOTAL_CHANCE)) {
             throw new IllegalArgumentException();
         }
-        if (this.scores.isSizeEqual(2)) {
+        if (this.scores.isSizeEqual(DEFAULT_CHANCE)) {
             validateLastFrameSecondTimeScore(this.scores);
         }
         if (this.scores.isSizeEqual(TOTAL_CHANCE)) {
@@ -48,7 +49,7 @@ public class LastFrame extends Frame {
 
     @Override
     public boolean isNotEndScoreAggregation() {
-        if (this.scores.isSizeUnder(2)) {
+        if (this.scores.isSizeUnder(DEFAULT_CHANCE)) {
             return true;
         }
         if (this.scores.first().isStrike() || isSpare()) {
