@@ -3,6 +3,8 @@ package bowling.domain;
 public class DefaultFrame extends Frame {
 
     private static final int TOTAL_CHANCE = 2;
+    private static final int SPARE_BONUS_SIZE = 1;
+    private static final int STRIKE_BONUS_SIZE = 2;
 
     @Override
     protected int TotalChance() {
@@ -32,14 +34,12 @@ public class DefaultFrame extends Frame {
         if (this.scores.size() == 1 && !this.scores.first().isStrike()) {
             return true;
         }
-        if (this.scores.first().isStrike()
-                || Scores.sumScores(this.scores.first(), this.scores.second()) == SCORE_STRIKE) {
-            return isNotEndScoreAggregationStrikeOrSpare();
+        if (this.scores.first().isStrike()) {
+            return this.bonusScores.size() != STRIKE_BONUS_SIZE;
+        }
+        if (Scores.sumScores(this.scores.first(), this.scores.second()) == SCORE_STRIKE) {
+            return this.bonusScores.size() != SPARE_BONUS_SIZE;
         }
         return false;
-    }
-
-    private boolean isNotEndScoreAggregationStrikeOrSpare() {
-        return this.scores.size() != TOTAL_CHANCE + 1;
     }
 }

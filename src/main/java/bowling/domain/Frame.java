@@ -6,10 +6,12 @@ public abstract class Frame {
 
     public static final int SCORE_STRIKE = 10;
     protected final Scores scores;
+    protected final Scores bonusScores;
     protected final Chance chance;
 
     public Frame() {
         this.scores = new Scores();
+        this.bonusScores = new Scores();
         this.chance = new Chance(this.TotalChance());
     }
 
@@ -37,7 +39,7 @@ public abstract class Frame {
     }
 
     public void addBonusScore(Score score) {
-        this.scores.add(score);
+        this.bonusScores.add(score);
     }
 
     public abstract boolean isNotEndScoreAggregation();
