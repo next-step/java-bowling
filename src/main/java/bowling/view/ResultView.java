@@ -2,6 +2,7 @@ package bowling.view;
 
 import static java.util.stream.Collectors.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
@@ -9,6 +10,7 @@ import java.util.stream.IntStream;
 
 import bowling.domain.BowlingGameFrameRecord;
 import bowling.domain.BowlRecord;
+import bowling.domain.frame.Score;
 
 public class ResultView {
     private static final int START_FRAME = 1;
@@ -17,12 +19,9 @@ public class ResultView {
     public void printScoreBoard(String name, List<BowlingGameFrameRecord> frameRecords) {
         printScoreBoardTitle();
 
-        List<String> frameContents = frameRecords.stream()
-            .map(BowlingGameFrameRecord::getBowlRecords)
-            .map(this::convertBowlRecordsToDescription)
-            .collect(toList());
+        printBowlRecords(name, frameRecords);
+        printScores(frameRecords);
 
-        printScoreBoardContent(name, frameContents);
         System.out.println();
     }
 
@@ -36,6 +35,23 @@ public class ResultView {
             .collect(toList());
 
         printScoreBoardContent("NAME", frameNumbers);
+    }
+
+    private void printBowlRecords(String name, List<BowlingGameFrameRecord> frameRecords) {
+        List<String> frameContents = frameRecords.stream()
+            .map(BowlingGameFrameRecord::getBowlRecords)
+            .map(this::convertBowlRecordsToDescription)
+            .collect(toList());
+
+        printScoreBoardContent(name, frameContents);
+    }
+
+    private void printScores(List<BowlingGameFrameRecord> frameRecords) {
+        List<Score> scores = frameRecords.stream()
+            .map(BowlingGameFrameRecord::getScore)
+            .collect(toList());
+
+        printScoreBoardContent("", convertScoresToDescription(scores));
     }
 
     private void printScoreBoardContent(String nameContent, List<String> frameContents) {
@@ -78,5 +94,21 @@ public class ResultView {
         }
 
         return pins;
+    }
+
+    private List<String> convertScoresToDescription(List<Score> scores) {
+        List<String> descriptions = new ArrayList<>();
+        int sumOfScore = 0;
+
+        for (Score score : scores) {
+            String description = "";
+            if (score.canCalculateScore()) {
+                description = Integer.toString(sumOfScore + score.getValue());
+                sumOfScore += score.getValue();
+            }
+            descriptions.add(description);
+        }
+
+        return descriptions;
     }
 }

@@ -32,7 +32,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public BowlingGameFrameRecord createFrameRecord() {
-        return new BowlingGameFrameRecord(List.of(state.createBowlRecord()));
+        return new BowlingGameFrameRecord(state.getScore(), List.of(state.createBowlRecord()));
     }
 
     @Override

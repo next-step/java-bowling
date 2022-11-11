@@ -52,7 +52,12 @@ public class LastFrame extends Frame {
             .map(State::createBowlRecord)
             .collect(toList());
 
-        return new BowlingGameFrameRecord(bowlRecords);
+        List<Score> scores = states.stream()
+            .map(State::getScore)
+            .collect(toList());
+
+        // TODO: 추가 점수 계산할 때, 바꿀 것.
+        return new BowlingGameFrameRecord(Score.needToMoreBowl(), bowlRecords);
     }
 
     @Override

@@ -3,6 +3,7 @@ package bowling.domain.frame.state;
 import java.util.List;
 
 import bowling.domain.BowlRecord;
+import bowling.domain.frame.Score;
 
 public class Miss extends Finished {
     private static final String INVALID_PINS_EXCEPTION_MESSAGE = "Miss의 조건을 만족하지 않습니다.";
@@ -19,6 +20,11 @@ public class Miss extends Finished {
     @Override
     public BowlRecord createBowlRecord() {
         return new BowlRecord(List.of(firstPins, secondPins));
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(firstPins.add(secondPins).getPins(), 0);
     }
 
     @Override

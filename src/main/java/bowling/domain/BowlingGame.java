@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
+import bowling.domain.frame.Score;
 
 public class BowlingGame {
     private final List<Frame> frames;
@@ -31,7 +32,7 @@ public class BowlingGame {
 
         IntStream.range(frames.size(), Frame.LAST_FRAME)
             .forEach(i -> {
-                frameRecords.add(new BowlingGameFrameRecord(List.of()));
+                frameRecords.add(new BowlingGameFrameRecord(Score.needToMoreBowl(), List.of()));
             });
 
         return frameRecords;

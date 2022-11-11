@@ -3,6 +3,7 @@ package bowling.domain.frame.state;
 import java.util.List;
 
 import bowling.domain.BowlRecord;
+import bowling.domain.frame.Score;
 
 public class FirstBowl extends Running {
     private static final String ILLEGAL_PIN_COUNT_EXCEPTION_MESSAGE = "쓰러트린 핀의 합계는 10을 넘을 수 없습니다.";
