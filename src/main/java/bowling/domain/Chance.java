@@ -11,12 +11,6 @@ public class Chance {
         this.chance = chance;
     }
 
-    private void validatePositive(int chance) {
-        if (chance < 0) {
-            throw new IllegalArgumentException("Chance는 음수일 수 없습니다.");
-        }
-    }
-
     public void minusOne() {
         this.chance--;
         validatePositive(this.chance);
@@ -25,6 +19,12 @@ public class Chance {
     public void minusTwo() {
         this.chance -= 2;
         validatePositive(this.chance);
+    }
+
+    private void validatePositive(int chance) {
+        if (chance < 0) {
+            throw new IllegalArgumentException("Chance는 음수일 수 없습니다.");
+        }
     }
 
     public boolean isRemainChance() {

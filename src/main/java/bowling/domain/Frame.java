@@ -26,11 +26,11 @@ public abstract class Frame {
         this.minusChance();
     }
 
+    public abstract void minusChance();
+
     public boolean isRemainChance() {
         return this.chance.isRemainChance();
     }
-
-    public abstract void minusChance();
 
     public Scores scores() {
         return this.scores;
