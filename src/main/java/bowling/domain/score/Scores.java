@@ -41,10 +41,6 @@ public class Scores {
         return this.scores.size() > size;
     }
 
-    public boolean isSizeUnder(int size) {
-        return this.scores.size() < size;
-    }
-
     public int sum() {
         return this.scores.stream()
                 .mapToInt(Score::value)
