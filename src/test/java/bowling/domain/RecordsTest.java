@@ -11,9 +11,7 @@ class RecordsTest {
     private static final String TEST_NAME = "ABC";
 
     private static Records getRecords() {
-        Record record1 = new Record(new Player(TEST_NAME));
-        Record record2 = new Record(new Player("DEF"));
-        return new Records(Arrays.asList(record1, record2));
+        return new Records(Arrays.asList(TEST_NAME, "DEF"));
     }
 
     @Test
