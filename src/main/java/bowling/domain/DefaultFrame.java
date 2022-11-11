@@ -12,6 +12,7 @@ public class DefaultFrame extends Frame {
     public void minusChance() {
         if (this.scores.first().isStrike()) {
             this.chance.minusTwo();
+            return;
         }
         this.chance.minusOne();
     }

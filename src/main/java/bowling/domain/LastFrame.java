@@ -12,6 +12,7 @@ public class LastFrame extends Frame {
     public void minusChance() {
         if (this.scores.size() == 2 && Scores.sumScores(this.scores.first(), this.scores.second()) < SCORE_STRIKE) {
             this.chance.minusTwo();
+            return;
         }
         this.chance.minusOne();
     }

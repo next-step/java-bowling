@@ -23,6 +23,7 @@ public abstract class Frame {
         }
         this.scores.add(score);
         validateScore(this);
+        this.minusChance();
     }
 
     public boolean isRemainChance() {

@@ -23,7 +23,6 @@ public class Scoreboard {
     public void addScore(Score score, Round round) {
         Frame frame = this.frames.get(round.index());
         frame.addScore(score);
-        frame.minusChance();
     }
 
     public Frame frame(Round round) {
