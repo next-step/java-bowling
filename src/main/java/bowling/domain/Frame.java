@@ -21,15 +21,15 @@ public abstract class Frame {
         if (!this.chance.isRemainChance()) {
             throw new IllegalArgumentException("남은 기회가 없습니다.");
         }
-        this.addScore(score, this.chance);
+        this.scores.add(score);
         validateScore(this);
     }
-
-    protected abstract void addScore(Score score, Chance chance);
 
     public boolean isRemainChance() {
         return this.chance.isRemainChance();
     }
+
+    public abstract void minusChance();
 
     public Scores scores() {
         return this.scores;

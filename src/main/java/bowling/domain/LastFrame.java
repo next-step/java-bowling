@@ -9,17 +9,11 @@ public class LastFrame extends Frame {
         return TOTAL_CHANCE;
     }
 
-    @Override
-    protected void addScore(Score score, Chance chance) {
-        this.scores.add(score);
-        this.chance = minusChance(chance);
-    }
-
-    private Chance minusChance(Chance chance) {
+    public void minusChance() {
         if (this.scores.size() == 2 && Scores.sumScores(this.scores.first(), this.scores.second()) < SCORE_STRIKE) {
-            return chance.minusTwo();
+            this.chance.minusTwo();
         }
-        return chance.minusOne();
+        this.chance.minusOne();
     }
 
     @Override

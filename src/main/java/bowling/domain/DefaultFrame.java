@@ -9,17 +9,11 @@ public class DefaultFrame extends Frame {
         return TOTAL_CHANCE;
     }
 
-    @Override
-    protected void addScore(Score score, Chance chance) {
-        this.scores.add(score);
-        this.chance = minusChance(score, chance);
-    }
-
-    private Chance minusChance(Score score, Chance chance) {
-        if (score.isStrike()) {
-            return chance.minusTwo();
+    public void minusChance() {
+        if (this.scores.first().isStrike()) {
+            this.chance.minusTwo();
         }
-        return chance.minusOne();
+        this.chance.minusOne();
     }
 
     @Override
