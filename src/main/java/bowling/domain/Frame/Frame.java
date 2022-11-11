@@ -22,6 +22,10 @@ public abstract class Frame {
 
     protected abstract void validateScore(Frame frame);
 
+    public abstract void minusChance();
+
+    public abstract boolean isNotEndScoreAggregation();
+
     public void addScore(Score score) {
         if (!this.chance.isRemainChance()) {
             throw new IllegalArgumentException("남은 기회가 없습니다.");
@@ -30,8 +34,6 @@ public abstract class Frame {
         validateScore(this);
         this.minusChance();
     }
-
-    public abstract void minusChance();
 
     public boolean isRemainChance() {
         return this.chance.isRemainChance();
@@ -44,8 +46,6 @@ public abstract class Frame {
     public void addBonusScore(Score score) {
         this.bonusScores.add(score);
     }
-
-    public abstract boolean isNotEndScoreAggregation();
 
     public int totalScore() {
         return this.scores.sum() + this.bonusScores.sum();
