@@ -68,4 +68,9 @@ public class ScoresTest {
 
         assertThat(scores.sum()).isEqualTo(6);
     }
+
+    @Test
+    void sum_scores() {
+        assertThat(Scores.sumScores(Score.of(1),Score.of(2),Score.of(3))).isEqualTo(6);
+    }
 }
