@@ -27,8 +27,8 @@ public class NormalFrame implements Frame {
         ResultMark firstResultMark = ResultMark.getResultMark(firstFallenPins, null);
         ResultMark secondResultMark = ResultMark.getResultMark(secondFallenPins, firstFallenPins);
 
-        String firstResult = getResultMark(firstResultMark, firstFallenPins);
-        String secondResult = getResultMark(secondResultMark, secondFallenPins);
+        String firstResult = getMark(firstResultMark, firstFallenPins);
+        String secondResult = getMark(secondResultMark, secondFallenPins);
         if (!ResultMark.EMPTY.equals(secondResultMark)) {
             secondResult = RESULT_DELIMITER + secondResult;
         }
@@ -48,7 +48,7 @@ public class NormalFrame implements Frame {
         }
     }
 
-    private String getResultMark(ResultMark resultMark, FallenPins fallenPins) {
+    private String getMark(ResultMark resultMark, FallenPins fallenPins) {
         if (ResultMark.MISS.equals(resultMark)) {
             return String.valueOf(fallenPins.getCountOfPin());
         }
