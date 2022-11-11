@@ -31,14 +31,14 @@ public class Spare extends State {
     }
 
     @Override
-    public Score calculateAdditionalScore(Score scoreV2) {
-        Score score = scoreV2.add(firstPin.getCount());
+    public Score calculateAdditionalScore(Score score) {
+        Score newScore = score.add(firstPin.getCount());
 
-        if (score.canCalculateScore()) {
-            return score;
+        if (newScore.canCalculateScore()) {
+            return newScore;
         }
 
-        return score.add(secondPin.getCount());
+        return newScore.add(secondPin.getCount());
     }
 
     @Override
