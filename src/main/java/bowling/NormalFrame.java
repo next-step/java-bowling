@@ -1,8 +1,8 @@
 package bowling;
 
 public class NormalFrame implements Frame {
-    private static int MIN_FRAMES = 1;
-    private static int MAX_FRAMES = 9;
+    public static int MIN_FRAMES = 1;
+    public static int MAX_FRAMES = 9;
 
     private int frameNumber;
     private NorMalThrown norMalThrown;

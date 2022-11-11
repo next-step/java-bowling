@@ -11,11 +11,11 @@ public class BowlingApplication {
 
         List<Frame> frames = new ArrayList<>();
 
-        for (int i = 1; i < 11; i++) {
+        for (int i = NormalFrame.MIN_FRAMES; i <= FinalFrame.FINAL_FRAME_NUM ; i++) {
 
             int score = InputView.inputUserScore(i);
 
-            if (i != 10) {
+            if (i != FinalFrame.FINAL_FRAME_NUM) {
                 NormalFrame frame = NormalFrame.of(i, score);
                 frames.add(frame);
                 ResultView.printResult(userName, frames);

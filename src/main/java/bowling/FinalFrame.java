@@ -2,6 +2,7 @@ package bowling;
 
 public class FinalFrame implements Frame {
 
+    public static final int FINAL_FRAME_NUM = 10;
     private FinalThrown finalThrown;
     private Pins bonusPins;
 
