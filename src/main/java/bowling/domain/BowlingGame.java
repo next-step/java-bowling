@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.ui.ResultView;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,12 +25,13 @@ public class BowlingGame {
                 .collect(Collectors.toList());
     }
 
-    public List<String> play() {
+    public List<String> play(String userName) {
         List<String> playResult = new ArrayList<>();
         frameList.stream()
                 .forEach(frame -> {
                     frame.play();
                     playResult.add(frame.scoringText());
+                    ResultView.printRoundResult(userName, playResult, frame.score());
                 });
 
         return playResult;

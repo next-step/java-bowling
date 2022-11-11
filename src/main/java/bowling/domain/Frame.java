@@ -70,4 +70,8 @@ public class Frame {
         }
         return result + ScoreRull.getSymbolOrScore(secondBallKnockedDownPinCount, false);
     }
+
+    public int score() {
+        return pins.knockDownCount();
+    }
 }
