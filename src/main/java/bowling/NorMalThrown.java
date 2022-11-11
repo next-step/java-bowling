@@ -33,7 +33,7 @@ public class NorMalThrown implements Thrown {
 
     @Override
     public void bowl(int secondPins) {
-        this.secondPins = firstPins.totalPins(secondPins);
+        this.secondPins = firstPins.addPins(secondPins);
     }
 
     @Override

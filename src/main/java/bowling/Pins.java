@@ -15,10 +15,9 @@ public class Pins {
         }
     }
 
-    private int falledPins;
+    private final int falledPins;
 
     private Pins(int falledPins) {
-        validPins(falledPins);
         this.falledPins = falledPins;
     }
 
@@ -35,18 +34,6 @@ public class Pins {
         return cache.get(falledPins);
     }
 
-    private void validPins(int falledPins) {
-        if (falledPins > MAX_PINS) {
-            throw new IllegalArgumentException(
-                String.format("볼링 핀은 최대 10을 넘을 수 없습니다. 현재 쓰러진 핀 수는 %d", falledPins));
-        }
-
-        if (falledPins < MIN_PINS) {
-            throw new IllegalArgumentException(
-                String.format("볼링 핀은 최초 0 미만이 될 수 없습니다. 현재 쓰러진 핀 수는 %d", falledPins));
-        }
-    }
-
     public boolean isMax() {
         return falledPins == MAX_PINS;
     }
@@ -55,17 +42,9 @@ public class Pins {
         return falledPins == MIN_PINS;
     }
 
-    public Pins totalPins(int secondPins) {
+    public Pins addPins(int secondPins) {
         int totalPins = falledPins + secondPins;
-        validPins(totalPins);
-        return new Pins(totalPins);
-    }
-
-    public String getResult() {
-        if (falledPins == 10) {
-            return "X";
-        }
-        return String.valueOf(falledPins);
+        return from(totalPins);
     }
 
     public int getFalledPins() {

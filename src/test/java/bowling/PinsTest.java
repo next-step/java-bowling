@@ -8,7 +8,7 @@ class PinsTest {
 
     @Test
     void 볼링_생성() {
-        assertThat(Pins.from(5).totalPins(5).getFalledPins()).isEqualTo(10);
+        assertThat(Pins.from(5).addPins(5).getFalledPins()).isEqualTo(10);
     }
 
     @Test
@@ -31,7 +31,7 @@ class PinsTest {
 
     @Test
     void 스페어() {
-        assertThat(Pins.from(1).totalPins(9).isMax()).isTrue();
+        assertThat(Pins.from(1).addPins(9).isMax()).isTrue();
     }
 
     @Test

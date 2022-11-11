@@ -37,7 +37,7 @@ public class FinalThrown implements Thrown {
         if (isStrike()) {
             this.secondPins = Pins.from(secondPins);
         } else {
-            this.secondPins = firstPins.totalPins(secondPins);
+            this.secondPins = firstPins.addPins(secondPins);
         }
     }
 
