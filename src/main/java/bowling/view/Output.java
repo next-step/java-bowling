@@ -12,30 +12,32 @@ public class Output {
     public static final int ROUND_START = 1;
     public static final int ROUND_END = 10;
     private static final String SEPARATOR = "|";
-    private static final String defaultFrameFormat = SEPARATOR + "  %-3s ";
-    private static final String lastFrameFormat = SEPARATOR + " %-5s";
-    private static final String nameFormat = SEPARATOR + "  %3s ";
-    private static final String scoreFormat = " %3s  ";
-    private static final String SCORE_BLANK = "      ";
+    private static final String DEFAULT_FRAME_FORMAT = SEPARATOR + "  %-3s ";
+    private static final String LAST_FRAME_FORMAT = SEPARATOR + " %-5s";
+    private static final String NAME_FORMAT = SEPARATOR + "  %3s ";
+    private static final String SCORE_FORMAT = " %3s  ";
+    private static final String BLANK_BLOCK = "      ";
     private static final String STRIKE_OUTPUT = "X";
     private static final String GUTTER_OUTPUT = "-";
     private static final String SPARE_OUTPUT = "/";
+    private static final String NEW_LINE = "\n";
+    private static final String NAME_GUIDE = " NAME ";
 
     public static void printScoreboard(Scoreboard scoreboard) {
         StringBuilder result = new StringBuilder();
-        result.append(firstLine());
-        result.append("\n");
-        result.append(secondLine(scoreboard));
-        result.append("\n");
-        result.append(thirdLine(scoreboard));
+        result.append(guideLine());
+        result.append(NEW_LINE);
+        result.append(currentScoreLine(scoreboard));
+        result.append(NEW_LINE);
+        result.append(totalScoreLine(scoreboard));
         System.out.println(result);
     }
 
 
-    private static String firstLine() {
+    private static String guideLine() {
         StringBuilder result = new StringBuilder();
         result.append(SEPARATOR);
-        result.append(" NAME ");
+        result.append(NAME_GUIDE);
         for (int round = ROUND_START; round <= ROUND_END; round++) {
             result.append(SEPARATOR);
             result.append("  ");
@@ -53,15 +55,15 @@ public class Output {
         return String.valueOf(round);
     }
 
-    private static String secondLine(Scoreboard scoreboard) {
+    private static String currentScoreLine(Scoreboard scoreboard) {
         StringBuilder result = new StringBuilder();
-        result.append(String.format(nameFormat, scoreboard.name().name()));
+        result.append(String.format(NAME_FORMAT, scoreboard.name().name()));
         for (int round = ROUND_START; round < ROUND_END; round++) {
             Frame frame = scoreboard.frame(new Round(round));
-            result.append(String.format(defaultFrameFormat, frameFormat(frame)));
+            result.append(String.format(DEFAULT_FRAME_FORMAT, frameFormat(frame)));
         }
         Frame frame = scoreboard.frame(new Round(Round.ROUND_END));
-        result.append(String.format(lastFrameFormat, frameFormat(frame)));
+        result.append(String.format(LAST_FRAME_FORMAT, frameFormat(frame)));
         result.append(SEPARATOR);
         return result.toString();
     }
@@ -117,21 +119,20 @@ public class Output {
         return String.valueOf(score.value());
     }
 
-
-    private static String thirdLine(Scoreboard scoreboard) {
+    private static String totalScoreLine(Scoreboard scoreboard) {
         StringBuilder result = new StringBuilder();
         result.append(SEPARATOR);
-        result.append("      ");
+        result.append(BLANK_BLOCK);
         int totalScore = 0;
         for (int round = ROUND_START; round <= ROUND_END; round++) {
             result.append(SEPARATOR);
             Frame frame = scoreboard.frame(new Round(round));
             if (frame.isNotEndScoreAggregation()) {
-                result.append(SCORE_BLANK);
+                result.append(BLANK_BLOCK);
             }
             if (!frame.isNotEndScoreAggregation()) {
                 totalScore += frame.totalScore();
-                result.append(String.format(scoreFormat, totalScore));
+                result.append(String.format(SCORE_FORMAT, totalScore));
             }
         }
         result.append(SEPARATOR);
