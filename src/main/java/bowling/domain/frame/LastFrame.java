@@ -12,6 +12,7 @@ public class LastFrame extends Frame {
         return TOTAL_CHANCE;
     }
 
+    @Override
     public void minusChance() {
         if (this.totalScore.regularScores().isSizeEqual(DEFAULT_CHANCE)
                 && !this.totalScore.regularScores().first().isStrike()

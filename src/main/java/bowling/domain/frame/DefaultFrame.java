@@ -11,6 +11,7 @@ public class DefaultFrame extends Frame {
         return TOTAL_CHANCE;
     }
 
+    @Override
     public void minusChance() {
         if (this.totalScore.regularScores().first().isStrike()) {
             this.chance.minusTwo();
