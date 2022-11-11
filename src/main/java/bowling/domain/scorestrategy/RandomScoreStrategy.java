@@ -10,6 +10,6 @@ public class RandomScoreStrategy implements ScoreStrategy {
 
     @Override
     public Pin getScore(int bound) {
-        return new Pin(random.nextInt(bound+1));
+        return new Pin(random.nextInt(bound + 1));
     }
 }
