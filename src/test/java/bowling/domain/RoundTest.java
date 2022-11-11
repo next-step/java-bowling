@@ -3,6 +3,7 @@ package bowling.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +25,10 @@ public class RoundTest {
     }
 
     @Test
-    void validate_upper_start_round() {
-        assertThatThrownBy(() -> new Round(0)).isInstanceOf(IllegalArgumentException.class);
+    void validate_range() {
+        Assertions.assertAll(
+                () -> assertThatThrownBy(() -> new Round(0)).isInstanceOf(IllegalArgumentException.class),
+                () -> assertThatThrownBy(() -> new Round(11)).isInstanceOf(IllegalArgumentException.class)
+        );
     }
 }
