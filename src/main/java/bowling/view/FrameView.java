@@ -7,10 +7,8 @@ import bowling.domain.status.*;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -19,7 +17,6 @@ public class FrameView {
     private static final int MIN_FRAME_NO = 1;
     public static final String STRIKE_MARK = "X";
     public static final String SPARE_MARK = "/";
-    public static final String TWO_BLANK = "  ";
     public static final String BAR_MARK = "|";
 
     public static List<String> frameResultTitles() {
