@@ -16,11 +16,11 @@ public class Answers {
         this.answers = List.of(answers);
     }
 
-    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         for (Answer answer : answers) {
             deleteHistories.add(answer.delete(loginUser));
         }
-        return deleteHistories;
+        return new DeleteHistories(deleteHistories);
     }
 }

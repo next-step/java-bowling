@@ -21,7 +21,9 @@ public class QuestionTest {
 
     @Test
     void 정상적으로_삭제할_경우_isDeleted_상태_변경() throws CannotDeleteException {
-        List<DeleteHistory> deleteHistories = Q1.deleteWithAnswer(UserTest.JAVAJIGI);
-        assertThat(deleteHistories).contains(new DeleteHistory(ContentType.QUESTION, Q1.getId(), UserTest.JAVAJIGI, LocalDateTime.now()));
+        DeleteHistories deleteHistories = Q1.deleteWithAnswer(UserTest.JAVAJIGI);
+        assertThat(deleteHistories.getHistories()).contains(
+                new DeleteHistory(ContentType.QUESTION, Q1.getId(), UserTest.JAVAJIGI, LocalDateTime.now())
+        );
     }
 }

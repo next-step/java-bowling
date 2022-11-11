@@ -65,7 +65,7 @@ public class Answer extends AbstractEntity {
     public DeleteHistory delete(User loginUser) throws CannotDeleteException {
         validateSameAsWriter(loginUser);
         deleted = true;
-        return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
+        return DeleteHistory.ofAnswer(getId(), writer);
     }
 
     private void validateSameAsWriter(User loginUser) throws CannotDeleteException {

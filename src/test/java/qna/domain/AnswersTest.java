@@ -31,7 +31,7 @@ public class AnswersTest {
         Answer answer1 = new Answer(UserTest.JAVAJIGI, Q1, "Answers Contents1");
         Answer answer2 = new Answer(UserTest.JAVAJIGI, Q1, "Answers Contents2");
         Answers answers = new Answers(answer1, answer2);
-        assertThat(answers.delete(UserTest.JAVAJIGI)).contains(
+        assertThat(answers.delete(UserTest.JAVAJIGI).getHistories()).contains(
                 new DeleteHistory(ContentType.ANSWER, answer1.getId(), UserTest.JAVAJIGI, LocalDateTime.now()),
                 new DeleteHistory(ContentType.ANSWER, answer2.getId(), UserTest.JAVAJIGI, LocalDateTime.now())
         );
