@@ -26,6 +26,15 @@ public class Chance {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(this.chance);
+    }
+
+    public boolean isRemainChance() {
+        return this.chance > 0;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -35,10 +44,5 @@ public class Chance {
         }
         Chance chance1 = (Chance) o;
         return this.chance == chance1.chance;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.chance);
     }
 }

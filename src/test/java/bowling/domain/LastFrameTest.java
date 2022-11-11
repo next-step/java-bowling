@@ -3,6 +3,7 @@ package bowling.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -42,5 +43,15 @@ public class LastFrameTest {
         firstStrikeFrame.addScore(Score.of(9));
 
         assertThatThrownBy(() -> firstStrikeFrame.addScore(Score.of(2))).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("첫 번째 시도와 두번째 시도가 스페어이면 return한다.")
+    @Test
+    void second_spare() {
+        LastFrame firstStrikeFrame = new LastFrame();
+        firstStrikeFrame.addScore(Score.of(8));
+        firstStrikeFrame.addScore(Score.of(2));
+
+        Assertions.assertDoesNotThrow(() -> firstStrikeFrame.addScore(Score.of(10)));
     }
 }

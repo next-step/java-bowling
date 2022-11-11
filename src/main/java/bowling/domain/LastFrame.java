@@ -2,25 +2,24 @@ package bowling.domain;
 
 public class LastFrame extends Frame {
 
+    private static final int TOTAL_CHANCE = 3;
+
     @Override
-    public boolean isRemainChance() {
-        if (this.scores.size() < 2) {
-            return true;
-        }
-        if (this.scores.size() == 2) {
-            return isRemainThirdTimeChance();
-        }
-        return false;
+    protected int TotalChance() {
+        return TOTAL_CHANCE;
     }
 
-    private boolean isRemainThirdTimeChance() {
-        if (this.scores.first().isStrike() || this.scores.second().isStrike()) {
-            return true;
+    @Override
+    protected void addScore(Score score, Chance chance) {
+        this.scores.add(score);
+        this.chance = minusChance(chance);
+    }
+
+    private Chance minusChance(Chance chance) {
+        if (this.scores.size() == 2 && Scores.sumScores(this.scores.first(), this.scores.second()) < SCORE_STRIKE) {
+            return chance.minusTwo();
         }
-        if (Scores.sumScores(this.scores.first(), this.scores.second()) == SCORE_STRIKE) {
-            return true;
-        }
-        return false;
+        return chance.minusOne();
     }
 
     @Override
@@ -37,13 +36,14 @@ public class LastFrame extends Frame {
     }
 
     private void validateLastFrameSecondTimeScore(Scores scores) {
-        if (!scores.first().isStrike() && scores.sum() > SCORE_STRIKE) {
+        if (!scores.first().isStrike() && Scores.sumScores(scores.first(), scores.second()) > SCORE_STRIKE) {
             throw new IllegalArgumentException();
         }
     }
 
     private static void validateLastFrameThirdTimeScore(Scores scores) {
-        if (!scores.second().isStrike() && Scores.sumScores(scores.second(), scores.third()) > SCORE_STRIKE) {
+        if (!scores.second().isStrike() && Scores.sumScores(scores.first(), scores.second()) != SCORE_STRIKE
+                && Scores.sumScores(scores.second(), scores.third()) > SCORE_STRIKE) {
             throw new IllegalArgumentException();
         }
     }
