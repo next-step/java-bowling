@@ -40,7 +40,7 @@ public class BowlingApplication {
                 frame.bowl(score);
                 ResultView.printResult(userName, frames);
 
-                if (frame.isFinished()) {
+                if (!frame.isFinished()) {
                     score = InputView.inputUserScore(i);
                     frame.bonusBowl(score);
                     ResultView.printResult(userName, frames);

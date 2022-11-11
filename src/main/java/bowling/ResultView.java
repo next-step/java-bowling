@@ -4,12 +4,6 @@ import java.util.List;
 
 public class ResultView {
 
-    public static void printResult(String name, List<Frame> frames) {
-        printRoundTemplate();
-        printUserName(name);
-        printFrames(frames);
-    }
-
     public static void printResult(String name, Frames frames) {
         printRoundTemplate();
         printUserName(name);
@@ -23,17 +17,6 @@ public class ResultView {
     private static void printUserName(String name) {
         System.out.print("|");
         System.out.printf("%5s ",name);
-    }
-
-    private static void printFrames(List<Frame> frames) {
-        for (Frame frame : frames) {
-            System.out.printf("|  %-3s ", printFrame(frame));
-        }
-        int emptyFrameSize = 11 - frames.size();
-        for (int i = 0; i < emptyFrameSize; i++) {
-            System.out.print("|      ");
-        }
-        System.out.println();
     }
 
     private static void printFrames(Frames frames) {
