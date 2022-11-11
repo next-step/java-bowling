@@ -6,7 +6,7 @@ public abstract class Frame {
 
     public static final int SCORE_STRIKE = 10;
     protected final Scores scores;
-    protected Chance chance;
+    protected final Chance chance;
 
     public Frame() {
         this.scores = new Scores();
