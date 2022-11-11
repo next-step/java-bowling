@@ -52,10 +52,8 @@ public abstract class Frame {
     }
 
     public boolean isSpare() {
-        if (this.scores().size() >= 2 && Scores.sumScores(scores.first(), scores.second()) == SCORE_STRIKE) {
-            return true;
-        }
-        return false;
+        return this.scores().isSizeOver(1)
+                && Scores.sumScores(this.scores.first(), this.scores.second()) == SCORE_STRIKE;
     }
 
     @Override

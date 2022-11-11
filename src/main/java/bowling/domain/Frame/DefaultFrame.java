@@ -31,14 +31,14 @@ public class DefaultFrame extends Frame {
         if (this.scores.isEmpty()) {
             return true;
         }
-        if (this.scores.size() == 1 && !this.scores.first().isStrike()) {
+        if (this.scores.isSizeEqual(1) && !this.scores.first().isStrike()) {
             return true;
         }
         if (this.scores.first().isStrike()) {
-            return this.bonusScores.size() != STRIKE_BONUS_SIZE;
+            return !this.bonusScores.isSizeEqual(STRIKE_BONUS_SIZE);
         }
         if (isSpare()) {
-            return this.bonusScores.size() != SPARE_BONUS_SIZE;
+            return !this.bonusScores.isSizeEqual(SPARE_BONUS_SIZE);
         }
         return false;
     }

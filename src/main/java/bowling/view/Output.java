@@ -72,13 +72,13 @@ public class Output {
         if (frame.scores().isEmpty()) {
             return "";
         }
-        if (frame.scores().size() == 1) {
+        if (frame.scores().isSizeEqual(1)) {
             return firstThrowOutput(frame);
         }
-        if (frame.scores().size() == 2) {
+        if (frame.scores().isSizeEqual(2)) {
             return twiceThrowOutput(frame);
         }
-        if (frame.scores().size() == 3) {
+        if (frame.scores().isSizeEqual(3)) {
             return thirdThrowOutput(frame);
         }
         return "";

@@ -33,8 +33,16 @@ public class Scores {
         return this.scores.get(2);
     }
 
-    public int size() {
-        return this.scores.size();
+    public boolean isSizeEqual(int size) {
+        return this.scores.size() == size;
+    }
+
+    public boolean isSizeOver(int size) {
+        return this.scores.size() > size;
+    }
+
+    public boolean isSizeUnder(int size) {
+        return this.scores.size() < size;
     }
 
     public int sum() {
