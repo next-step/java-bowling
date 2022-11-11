@@ -17,8 +17,7 @@ public class Pins {
 
     private int falledPins;
 
-    // TODO: 캐싱한 스태틱 메서드로 바꾸고 private 으로 변환하기
-    public Pins(int falledPins) {
+    private Pins(int falledPins) {
         validPins(falledPins);
         this.falledPins = falledPins;
     }

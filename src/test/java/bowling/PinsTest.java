@@ -8,7 +8,7 @@ class PinsTest {
 
     @Test
     void 볼링_생성() {
-        assertThat(new Pins(5).totalPins(5).getFalledPins()).isEqualTo(10);
+        assertThat(Pins.from(5).totalPins(5).getFalledPins()).isEqualTo(10);
     }
 
     @Test
@@ -18,24 +18,24 @@ class PinsTest {
 
     @Test
     void 핀은_0에서_10만_가능() {
-        assertThatThrownBy(() -> new Pins(-1))
+        assertThatThrownBy(() -> Pins.from(-1))
             .isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> new Pins(11))
+        assertThatThrownBy(() -> Pins.from(11))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 스트라이크() {
-        assertThat(new Pins(10).isMax()).isTrue();
+        assertThat(Pins.from(10).isMax()).isTrue();
     }
 
     @Test
     void 스페어() {
-        assertThat(new Pins(1).totalPins(9).isMax()).isTrue();
+        assertThat(Pins.from(1).totalPins(9).isMax()).isTrue();
     }
 
     @Test
     void 미스() {
-        assertThat(new Pins(0).isMiss()).isTrue();
+        assertThat(Pins.from(0).isMiss()).isTrue();
     }
 }
