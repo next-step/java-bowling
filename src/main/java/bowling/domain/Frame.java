@@ -18,8 +18,10 @@ public abstract class Frame {
             throw new IllegalArgumentException("남은 기회가 없습니다.");
         }
         this.scores.add(score);
-        ScoreValidator.validate(this);
+        validateScore(this);
     }
+
+    protected abstract void validateScore(Frame frame);
 
     public Scores scores() {
         return this.scores;

@@ -22,4 +22,29 @@ public class LastFrame extends Frame {
         }
         return false;
     }
+
+    @Override
+    protected void validateScore(Frame frame) {
+        if (this.scores.size() > 4) {
+            throw new IllegalArgumentException();
+        }
+        if (this.scores.size() >= 2) {
+            validateLastFrameSecondTimeScore(this.scores);
+        }
+        if (this.scores.size() >= 3) {
+            validateLastFrameThirdTimeScore(this.scores);
+        }
+    }
+
+    private void validateLastFrameSecondTimeScore(Scores scores) {
+        if (!scores.first().isStrike() && scores.sum() > SCORE_STRIKE) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private static void validateLastFrameThirdTimeScore(Scores scores) {
+        if (!scores.second().isStrike() && Scores.sumScores(scores.second(), scores.third()) > SCORE_STRIKE) {
+            throw new IllegalArgumentException();
+        }
+    }
 }

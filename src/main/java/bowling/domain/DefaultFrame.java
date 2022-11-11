@@ -13,4 +13,11 @@ public class DefaultFrame extends Frame {
     private boolean isRemainSecondChance() {
         return (!this.scores.first().isStrike()) && (this.scores.size() < 2);
     }
+
+    @Override
+    protected void validateScore(Frame frame) {
+        if (this.scores.sum() > SCORE_STRIKE) {
+            throw new IllegalArgumentException();
+        }
+    }
 }
