@@ -5,9 +5,9 @@ public class NormalFrame implements Frame {
     public static int MAX_FRAMES = 9;
 
     private int frameNumber;
-    private NorMalThrown norMalThrown;
+    private NormalThrown norMalThrown;
 
-    private NormalFrame(int frameNumber, NorMalThrown norMalThrown) {
+    private NormalFrame(int frameNumber, NormalThrown norMalThrown) {
         valid(frameNumber);
         this.frameNumber = frameNumber;
         this.norMalThrown = norMalThrown;
@@ -15,7 +15,7 @@ public class NormalFrame implements Frame {
 
     public static NormalFrame of(int frameNumber, int countOfPins) {
         Pins pins = Pins.from(countOfPins);
-        return new NormalFrame(frameNumber, new NorMalThrown(pins));
+        return new NormalFrame(frameNumber, new NormalThrown(pins));
     }
 
     @Override

@@ -1,11 +1,11 @@
 package bowling;
 
-public class NorMalThrown implements Thrown {
+public class NormalThrown implements Thrown {
 
     private final Pins firstPins;
     private Pins secondPins;
 
-    public NorMalThrown(Pins firstPins) {
+    public NormalThrown(Pins firstPins) {
         this.firstPins = firstPins;
     }
 
@@ -16,15 +16,7 @@ public class NorMalThrown implements Thrown {
 
     @Override
     public boolean hasTurn() {
-        if (isStrike()) {
-            return false;
-        }
-
-        if (secondPins != null) {
-            return false;
-        }
-
-        return true;
+        return firstPins.isMax() || secondPins != null;
     }
 
     public boolean isSpare() {
