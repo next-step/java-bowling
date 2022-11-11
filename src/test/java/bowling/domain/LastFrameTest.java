@@ -51,11 +51,11 @@ public class LastFrameTest {
     @DisplayName("첫 번째 시도와 두번째 시도가 스페어이면 return한다.")
     @Test
     void second_spare() {
-        LastFrame firstStrikeFrame = new LastFrame();
-        firstStrikeFrame.addScore(Score.of(8));
-        firstStrikeFrame.addScore(Score.of(2));
+        LastFrame spareFrame = new LastFrame();
+        spareFrame.addScore(Score.of(8));
+        spareFrame.addScore(Score.of(2));
 
-        Assertions.assertDoesNotThrow(() -> firstStrikeFrame.addScore(Score.of(10)));
+        Assertions.assertDoesNotThrow(() -> spareFrame.addScore(Score.of(10)));
     }
 
     @Test
@@ -101,8 +101,6 @@ public class LastFrameTest {
         strikeFrame3.addScore(Score.of(2));
 
         Assertions.assertAll(
-                () -> assertThat(strikeFrame1.isNotEndScoreAggregation()).isTrue(),
-                () -> assertThat(strikeFrame2.isNotEndScoreAggregation()).isTrue(),
                 () -> assertThat(strikeFrame3.isNotEndScoreAggregation()).isFalse()
         );
     }

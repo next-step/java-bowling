@@ -1,7 +1,5 @@
 package bowling.domain.Frame;
 
-import bowling.domain.Score.Scores;
-
 public class DefaultFrame extends Frame {
 
     private static final int TOTAL_CHANCE = 2;
@@ -39,7 +37,7 @@ public class DefaultFrame extends Frame {
         if (this.scores.first().isStrike()) {
             return this.bonusScores.size() != STRIKE_BONUS_SIZE;
         }
-        if (Scores.sumScores(this.scores.first(), this.scores.second()) == SCORE_STRIKE) {
+        if (isSpare()) {
             return this.bonusScores.size() != SPARE_BONUS_SIZE;
         }
         return false;

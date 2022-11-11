@@ -12,7 +12,7 @@ public class LastFrame extends Frame {
     }
 
     public void minusChance() {
-        if (this.scores.size() == 2 && Scores.sumScores(this.scores.first(), this.scores.second()) < SCORE_STRIKE) {
+        if (this.scores.size() == 2 && !this.scores.first().isStrike() && !isSpare()) {
             this.chance.minusTwo();
             return;
         }
@@ -38,8 +38,8 @@ public class LastFrame extends Frame {
         }
     }
 
-    private static void validateLastFrameThirdTimeScore(Scores scores) {
-        if (!scores.second().isStrike() && Scores.sumScores(scores.first(), scores.second()) != SCORE_STRIKE
+    private void validateLastFrameThirdTimeScore(Scores scores) {
+        if (!scores.second().isStrike() && !isSpare()
                 && Scores.sumScores(scores.second(), scores.third()) > SCORE_STRIKE) {
             throw new IllegalArgumentException();
         }
@@ -50,14 +50,9 @@ public class LastFrame extends Frame {
         if (this.scores.size() < 2) {
             return true;
         }
-        if (this.scores.first().isStrike()
-                || Scores.sumScores(this.scores.first(), this.scores.second()) == SCORE_STRIKE) {
-            return isNotEndScoreAggregationStrikeOrSpare();
+        if (this.scores.first().isStrike() || isSpare()) {
+            return this.scores.size() != TOTAL_CHANCE;
         }
         return false;
-    }
-
-    private boolean isNotEndScoreAggregationStrikeOrSpare() {
-        return this.scores.size() != TOTAL_CHANCE;
     }
 }

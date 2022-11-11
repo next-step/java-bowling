@@ -51,6 +51,13 @@ public abstract class Frame {
         return this.scores.sum() + this.bonusScores.sum();
     }
 
+    public boolean isSpare() {
+        if (this.scores().size() >= 2 && Scores.sumScores(scores.first(), scores.second()) == SCORE_STRIKE) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
