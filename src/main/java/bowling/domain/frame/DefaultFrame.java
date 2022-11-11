@@ -28,10 +28,7 @@ public class DefaultFrame extends Frame {
 
     @Override
     public boolean isNotEndScoreAggregation() {
-        if (this.scores.isEmpty()) {
-            return true;
-        }
-        if (this.scores.isSizeEqual(1) && !this.scores.first().isStrike()) {
+        if (this.chance.isRemainChance()) {
             return true;
         }
         if (this.scores.first().isStrike()) {

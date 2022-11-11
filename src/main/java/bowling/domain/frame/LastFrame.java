@@ -49,7 +49,7 @@ public class LastFrame extends Frame {
 
     @Override
     public boolean isNotEndScoreAggregation() {
-        if (this.scores.isSizeUnder(DEFAULT_CHANCE)) {
+        if (this.chance.isRemainChance()) {
             return true;
         }
         if (this.scores.first().isStrike() || isSpare()) {
