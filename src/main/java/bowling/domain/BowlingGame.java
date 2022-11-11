@@ -16,8 +16,12 @@ public class BowlingGame {
 
     public Scoreboard play(Score score) {
         this.scoreboard.addScore(score, this.round);
-        if (!this.round.isFirstRound()) {
+        if (this.round.isSecondRound()) {
             this.scoreboard.addBonusScore(this.round.beforeRound(), score);
+        }
+        if (this.round.isAfterSecondRound()) {
+            this.scoreboard.addBonusScore(this.round.beforeRound(), score);
+            this.scoreboard.addBonusScore(this.round.beforeRound().beforeRound(), score);
         }
         setNextRound();
         return this.scoreboard;
