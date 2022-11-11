@@ -26,7 +26,12 @@ public class BowlingController {
                 .mapToObj(this::getPlayer)
                 .collect(Collectors.toList());
 
-        return new Players(players);
+        try {
+            return new Players(players);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return getPlayers();
+        }
     }
 
     private Player getPlayer(int index) {
