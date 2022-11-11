@@ -28,7 +28,7 @@ public class RoundTest {
     void validate_range() {
         Assertions.assertAll(
                 () -> assertThatThrownBy(() -> new Round(0)).isInstanceOf(IllegalArgumentException.class),
-                () -> assertThatThrownBy(() -> new Round(11)).isInstanceOf(IllegalArgumentException.class)
+                () -> assertThatThrownBy(() -> new Round(12)).isInstanceOf(IllegalArgumentException.class)
         );
     }
 }
