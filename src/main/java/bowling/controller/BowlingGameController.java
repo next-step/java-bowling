@@ -27,7 +27,6 @@ public class BowlingGameController {
         OutputView.printStart(BowlingRecord.ofList(players));
 
         while (players.isGaming()) {
-            players.next();
             Player nowPlayer = players.play(new RandomScoreStrategy());
             OutputView.printBowlNow(nowPlayer.getPlayerName(), nowPlayer.getNow());
             OutputView.print(BowlingRecord.ofList(players));

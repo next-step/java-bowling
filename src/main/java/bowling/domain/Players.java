@@ -22,34 +22,42 @@ public class Players {
         return !players.stream().allMatch(Player::isFinished);
     }
 
-    private boolean isEndOfTurn() {
-        return players.stream().allMatch(Player::isEndOfTurn);
-    }
-
-    public void next() {
-        if (!isEndOfTurn()) {
-            return;
-        }
-
-        players.forEach(Player::next);
-        nowTurnPlayerIndex = 0;
-
-    }
-
     public Player play(ScoreStrategy scoreStrategy) {
 
-        if (players.get(nowTurnPlayerIndex).isEndOfTurn()) {
-            nowTurnPlayerIndex++;
-        }
+        makeNextFrame();
+        checkAndSkipPlayerIndex();
 
         Player now = players.get(nowTurnPlayerIndex);
         now.play(scoreStrategy);
+
+        increasePlayerIndex();
+
+        return now;
+    }
+
+    private void increasePlayerIndex() {
         nowTurnPlayerIndex++;
 
         if (nowTurnPlayerIndex >= players.size()) {
             nowTurnPlayerIndex = 0;
         }
-        return now;
     }
 
+    private void checkAndSkipPlayerIndex() {
+        if (players.get(nowTurnPlayerIndex).isEndOfTurn()) {
+            nowTurnPlayerIndex++;
+        }
+    }
+
+    private void makeNextFrame() {
+        if (!isEndOfTurn()) {
+            return;
+        }
+        players.forEach(Player::next);
+        nowTurnPlayerIndex = 0;
+    }
+
+    private boolean isEndOfTurn() {
+        return players.stream().allMatch(Player::isEndOfTurn);
+    }
 }
