@@ -2,6 +2,7 @@ package bowling.frame;
 
 import bowling.FallenPins;
 import bowling.ResultMark;
+import bowling.exception.EndedFrameException;
 import bowling.exception.ExceedFallenPinsException;
 
 public class NormalFrame implements Frame {
@@ -11,6 +12,10 @@ public class NormalFrame implements Frame {
 
     @Override
     public NormalFrame update(FallenPins fallenPins) {
+        if (isFinish()) {
+            throw new EndedFrameException();
+        }
+
         if (firstFallenPins == null) {
             this.firstFallenPins = fallenPins;
             return this;
@@ -41,9 +46,12 @@ public class NormalFrame implements Frame {
         if (firstFallenPins == null) {
             return false;
         }
-
-        return firstFallenPins.getCountOfPin() == FallenPins.MAX_COUNT_OF_PIN
+        return hasStrike()
                 || secondFallenPins != null;
+    }
+
+    private boolean hasStrike() {
+        return firstFallenPins.getCountOfPin() == FallenPins.MAX_COUNT_OF_PIN;
     }
 
     private void validateSecondFallenPins(FallenPins fallenPins) {

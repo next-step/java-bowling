@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import bowling.FallenPins;
+import bowling.exception.EndedFrameException;
 import bowling.exception.ExceedFallenPinsException;
 import org.junit.jupiter.api.Test;
 
@@ -53,6 +54,15 @@ class NormalFrameTest {
     }
 
     @Test
+    void 첫번째_거터이며_두번째_투구_10개_전부_쓰러뜨리면_스페어() {
+        Frame frame = new NormalFrame();
+        frame = frame.update(FallenPins.of(0));
+        frame = frame.update(FallenPins.of(10));
+
+        assertThat(frame.getResult()).isEqualTo("-|/");
+    }
+
+    @Test
     void 첫번째_투구_시_스트라이크는_아닐때_첫번째_점수_표기() {
         Frame frame = new NormalFrame();
         frame = frame.update(FallenPins.of(4));
@@ -94,4 +104,26 @@ class NormalFrameTest {
                     frame = frame.update(FallenPins.of(7));
                 });
     }
+
+    @Test
+    void 프레임이_스트라이크로_종료되었는데_업데이트_진행_시_예외_발생() {
+        assertThatExceptionOfType(EndedFrameException.class)
+                .isThrownBy(() -> {
+                    NormalFrame frame = new NormalFrame();
+                    frame = frame.update(FallenPins.of(10));
+                    frame = frame.update(FallenPins.of(0));
+                });
+    }
+
+    @Test
+    void 프레임이_모두_투구되어_종료되었는데_업데이트_진행_시_예외_발생() {
+        assertThatExceptionOfType(EndedFrameException.class)
+                .isThrownBy(() -> {
+                    NormalFrame frame = new NormalFrame();
+                    frame = frame.update(FallenPins.of(0));
+                    frame = frame.update(FallenPins.of(10));
+                    frame = frame.update(FallenPins.of(4));
+                });
+    }
+
 }
