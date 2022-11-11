@@ -48,7 +48,7 @@ class FramesTest {
                 () -> assertThat(frames.isFinished()).isFalse(),
                 () -> assertThat(frames.getFrameNumber()).isEqualTo(1),
                 () -> assertThat(frames.getFrames().get(0).getState()).isInstanceOf(Running.class),
-                () -> assertThat(frames.getFrames().get(0).calculatePoint()).isEqualTo(5)
+                () -> assertThat(frames.getFrames().get(0).calculatePoint()).isNull()
         );
 
     }
