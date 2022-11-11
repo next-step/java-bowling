@@ -1,6 +1,7 @@
 package qna.domain;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import qna.CannotDeleteException;
 import qna.NotFoundException;
@@ -26,7 +27,7 @@ public class Answer extends AbstractEntity {
 
     private boolean deleted = false;
 
-    public static Answer newAnswer(User writer,Question question,String contents){
+    public static Answer newAnswer(Long id, User writer, Question question, String contents) {
         if (writer == null) {
             throw new UnAuthorizedException();
         }
@@ -35,19 +36,28 @@ public class Answer extends AbstractEntity {
             throw new NotFoundException();
         }
 
-        return new Answer(writer,question,contents);
+        return new Answer(id, writer, question, contents);
     }
 
-    public static Answer newAnswerWithDeleted(User writer, Question question, String contents,boolean status){
-        return new Answer(writer,question,contents,status);
+    public static Answer newAnswerWithDeleted(Long id, User writer, Question question, String contents, boolean status) {
+        return new Answer(id, writer, question, contents, status);
+    }
+
+    protected Answer() {
+
     }
 
     private Answer(User writer, Question question, String contents) {
         this(null, writer, question, contents);
     }
 
-    private Answer(User writer, Question question, String contents,boolean status) {
-        this(writer,question,contents);
+    private Answer(Long id, User writer, Question question, String contents, boolean status) {
+        this(id, writer, question, contents);
+        this.deleted = status;
+    }
+
+    private Answer(User writer, Question question, String contents, boolean status) {
+        this(writer, question, contents);
         this.deleted = status;
     }
 
@@ -87,4 +97,17 @@ public class Answer extends AbstractEntity {
         return "Answer [id=" + Id() + ", writer=" + writer + ", contents=" + contents + "]";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Answer answer = (Answer) o;
+        return deleted == answer.deleted && Objects.equals(writer, answer.writer) && Objects.equals(question, answer.question) && Objects.equals(contents, answer.contents);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), writer, question, contents, deleted);
+    }
 }

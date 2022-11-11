@@ -27,15 +27,15 @@ public class DeleteHistory {
     }
 
     public static DeleteHistory newDeleteHistory(ContentType contentType, Long contentId, User deletedBy,
-                                                 LocalDateTime createDate){
-        return new DeleteHistory(contentType,contentId,deletedBy, createDate);
+                                                 LocalDateTime createDate) {
+        return new DeleteHistory(contentType, contentId, deletedBy, createDate);
     }
 
-    private DeleteHistory() {
+    protected DeleteHistory() {
     }
 
     private DeleteHistory(ContentType contentType, Long contentId, User deletedBy,
-                         LocalDateTime createDate) {
+                          LocalDateTime createDate) {
         this.contentType = contentType;
         this.contentId = contentId;
         this.deletedBy = deletedBy;

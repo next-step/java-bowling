@@ -38,23 +38,17 @@ public class Question extends AbstractEntity {
 
     }
 
-    public static Question newQuestion(String title, String contents) {
-        return new Question(title, contents);
+    public static Question newQuestion(long id, String title, String contents) {
+        return new Question(id, title, contents);
     }
 
-    public static Question newQuestionWithDeleted(String title, String contents, boolean status) {
-        return new Question(title, contents, status);
+    public static Question newQuestionWithDeleted(Long id, String title, String contents, boolean status) {
+        return new Question(id, title, contents, status);
     }
 
-
-    private Question(String title, String contents, boolean deleted) {
-        this(title, contents);
-        this.deleted = deleted;
-    }
-
-    private Question(String title, String contents) {
-        this.title = title;
-        this.contents = contents;
+    private Question(Long id, String title, String contents, boolean status) {
+        this(id, title, contents);
+        this.deleted = status;
     }
 
     private Question(long id, String title, String contents) {
