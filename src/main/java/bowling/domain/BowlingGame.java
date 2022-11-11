@@ -7,8 +7,7 @@ public class BowlingGame {
     private final Sequence currentSequence;
 
     public BowlingGame(List<String> names) {
-        Players players = new Players(names);
-        this.records = players.getRecords();
+        this.records = new Records(names);
         this.currentSequence = new Sequence();
     }
 

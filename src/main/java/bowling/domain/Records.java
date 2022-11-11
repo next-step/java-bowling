@@ -1,12 +1,15 @@
 package bowling.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Records {
     private final List<Record> records;
 
-    Records(List<Record> records) {
-        this.records = records;
+    public Records(List<String> names) {
+        List<Record> recordList = new ArrayList<>();
+        names.forEach((name) -> recordList.add(new Record(new Player(name))));
+        this.records = recordList;
     }
 
     public List<Record> getRecords() {
