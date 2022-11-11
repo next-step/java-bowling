@@ -12,6 +12,8 @@ public abstract class Frame {
 
     public abstract BowlingGameFrameRecord createFrameRecord();
 
+    public abstract Score calculateBonusScore(Score previousFrameScore);
+
     public abstract int getFrameNumber();
 
     public abstract boolean isFrameFinish();

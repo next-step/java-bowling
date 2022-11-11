@@ -17,6 +17,15 @@ public class Strike extends Finished {
     }
 
     @Override
+    public Score calculateBonusScore(Score previousScore) {
+        if (previousScore.canCalculateScore()) {
+            return previousScore;
+        }
+
+        return previousScore.addBonusScore(Pins.MAX_PINS);
+    }
+
+    @Override
     public boolean canBonusBowl() {
         return true;
     }

@@ -52,12 +52,19 @@ public class LastFrame extends Frame {
             .map(State::createBowlRecord)
             .collect(toList());
 
-        List<Score> scores = states.stream()
-            .map(State::getScore)
-            .collect(toList());
+        return new BowlingGameFrameRecord(getScore(), bowlRecords);
+    }
 
-        // TODO: 추가 점수 계산할 때, 바꿀 것.
-        return new BowlingGameFrameRecord(Score.needToMoreBowl(), bowlRecords);
+    @Override
+    public Score calculateBonusScore(Score previousFrameScore) {
+        Score score = previousFrameScore;
+        for (State state : states) {
+            score = state.calculateBonusScore(score);
+            if (score.canCalculateScore()) {
+                return score;
+            }
+        }
+        return score;
     }
 
     @Override
@@ -76,5 +83,14 @@ public class LastFrame extends Frame {
 
     private boolean hasNoBonusBowl() {
         return bowlCount == 2 && !getCurrentState().canBonusBowl();
+    }
+
+    private Score getScore() {
+        Score score = states.getFirst().getScore();
+
+        for (int i = 1; i < states.size(); ++i) {
+            score = states.get(i).calculateBonusScore(score);
+        }
+        return score;
     }
 }

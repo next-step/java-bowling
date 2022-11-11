@@ -3,6 +3,7 @@ package bowling.domain.frame.state;
 import java.util.List;
 
 import bowling.domain.BowlRecord;
+import bowling.domain.frame.Score;
 
 public class Ready extends Running {
     @Override
@@ -18,6 +19,11 @@ public class Ready extends Running {
     @Override
     public BowlRecord createBowlRecord() {
         return new BowlRecord(List.of());
+    }
+
+    @Override
+    public Score calculateBonusScore(Score previousScore) {
+        return previousScore;
     }
 
     @Override

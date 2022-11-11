@@ -10,6 +10,7 @@ public interface State {
 
     Score getScore();
 
+    Score calculateBonusScore(Score previousScore);
 
     boolean isFinish();
 

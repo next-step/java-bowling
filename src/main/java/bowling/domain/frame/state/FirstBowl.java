@@ -32,12 +32,17 @@ public class FirstBowl extends Running {
     }
 
     @Override
+    public Score calculateBonusScore(Score previousScore) {
+        return previousScore.addBonusScore(firstPins.getPins());
+    }
+
+    @Override
     public boolean canBonusBowl() {
         return true;
     }
 
     private void validate(Pins secondPins) {
-        if(!firstPins.isLegalPins(secondPins)) {
+        if (!firstPins.isLegalPins(secondPins)) {
             throw new IllegalArgumentException(ILLEGAL_PIN_COUNT_EXCEPTION_MESSAGE);
         }
     }

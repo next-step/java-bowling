@@ -1,6 +1,10 @@
 package bowling.domain.frame;
 
+import java.util.Objects;
+
 public class Score {
+    private static final String CANNOT_CALCULATE_SCORE_EXCEPTION_MESSAGE = "아직 스코어를 계산할 수 없는 상태입니다.";
+    private static final String CANNOT_ADD_SCORE_EXCEPTION_MESSAGE = "점수를 더 이상 합산할 수 없습니다.";
     private static final int UN_SCORE_VALUE = -1;
 
     private final int score;
@@ -15,13 +19,46 @@ public class Score {
         this.left = left;
     }
 
+    public Score addBonusScore(int score) {
+        if (canCalculateScore()) {
+            throw new IllegalStateException("점수를 더 이상 합산할 수 없습니다.");
+        }
+
+        return new Score(this.score + score, left - 1);
+    }
+
     public boolean canCalculateScore() {
-        // TODO: 추가 점수 계산할 때 조건 바꿀 것
-        // return left == 0;
-        return left != UN_SCORE_VALUE;
+        return left == 0;
     }
 
     public int getValue() {
+        if (!canCalculateScore()) {
+            throw new IllegalStateException(CANNOT_CALCULATE_SCORE_EXCEPTION_MESSAGE);
+        }
+
         return score;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Score score1 = (Score)o;
+        return score == score1.score && left == score1.left;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score, left);
+    }
+
+    @Override
+    public String toString() {
+        return "Score{" +
+            "score=" + score +
+            ", left=" + left +
+            '}';
     }
 }

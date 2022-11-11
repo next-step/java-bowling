@@ -32,7 +32,17 @@ public class NormalFrame extends Frame {
 
     @Override
     public BowlingGameFrameRecord createFrameRecord() {
-        return new BowlingGameFrameRecord(state.getScore(), List.of(state.createBowlRecord()));
+        return new BowlingGameFrameRecord(getScore(), List.of(state.createBowlRecord()));
+    }
+
+    @Override
+    public Score calculateBonusScore(Score previousFrameScore) {
+        Score score = state.calculateBonusScore(previousFrameScore);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+
+        return next != null ? next.calculateBonusScore(score) : score;
     }
 
     @Override
@@ -57,5 +67,14 @@ public class NormalFrame extends Frame {
         }
 
         return new NormalFrame(frameNumber + 1);
+    }
+
+    private Score getScore() {
+        Score score = state.getScore();
+        if (score.canCalculateScore()) {
+            return score;
+        }
+
+        return next != null ? next.calculateBonusScore(score) : score;
     }
 }

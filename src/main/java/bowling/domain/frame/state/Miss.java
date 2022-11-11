@@ -28,6 +28,16 @@ public class Miss extends Finished {
     }
 
     @Override
+    public Score calculateBonusScore(Score previousScore) {
+        Score score = previousScore.addBonusScore(firstPins.getPins());
+        if (score.canCalculateScore()) {
+            return score;
+        }
+
+        return score.addBonusScore(secondPins.getPins());
+    }
+
+    @Override
     public boolean canBonusBowl() {
         return false;
     }
