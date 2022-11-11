@@ -4,24 +4,23 @@ import bowling.domain.player.Player;
 import bowling.domain.player.Players;
 
 public class ResultView {
+    private static final FramesResult RESULT = new FramesResult();
 
     private ResultView() {
 
     }
 
     public static void printFrameResults(Players players) {
-        FramesResult result = new FramesResult();
+        System.out.println(RESULT.frameNumberLine());
 
-        System.out.println(result.frameNumberLine());
         for (Player player : players.getPlayers()) {
-            printFrameResult(player);
+            printResultOfPlayer(player);
         }
         System.out.println();
     }
 
-    public static void printFrameResult(Player player) {
-        FramesResult result = new FramesResult();
-        System.out.println(result.getPlayerFrameSigns(player));
-        System.out.println(result.getPlayerScores(player));
+    private static void printResultOfPlayer(Player player) {
+        System.out.println(RESULT.getPlayerFrameSigns(player));
+        System.out.println(RESULT.getPlayerScores(player));
     }
 }
