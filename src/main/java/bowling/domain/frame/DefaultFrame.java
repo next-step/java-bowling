@@ -12,7 +12,7 @@ public class DefaultFrame extends Frame {
     }
 
     public void minusChance() {
-        if (this.scores.first().isStrike()) {
+        if (this.totalScore.regularScores().first().isStrike()) {
             this.chance.minusTwo();
             return;
         }
@@ -21,7 +21,7 @@ public class DefaultFrame extends Frame {
 
     @Override
     protected void validateScore(Frame frame) {
-        if (this.scores.sum() > SCORE_STRIKE) {
+        if (this.totalScore.regularScores().sum() > SCORE_STRIKE) {
             throw new IllegalArgumentException();
         }
     }
@@ -31,11 +31,11 @@ public class DefaultFrame extends Frame {
         if (this.chance.isRemainChance()) {
             return true;
         }
-        if (this.scores.first().isStrike()) {
-            return !this.bonusScores.isSizeEqual(STRIKE_BONUS_SIZE);
+        if (this.totalScore.regularScores().first().isStrike()) {
+            return !this.totalScore.bonusScores().isSizeEqual(STRIKE_BONUS_SIZE);
         }
-        if (isSpare()) {
-            return !this.bonusScores.isSizeEqual(SPARE_BONUS_SIZE);
+        if (this.totalScore.isSpare()) {
+            return !this.totalScore.bonusScores().isSizeEqual(SPARE_BONUS_SIZE);
         }
         return false;
     }

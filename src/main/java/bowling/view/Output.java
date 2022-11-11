@@ -69,27 +69,27 @@ public class Output {
     }
 
     private static String frameFormat(Frame frame) {
-        if (frame.scores().isEmpty()) {
+        if (frame.totalScore().regularScores().isEmpty()) {
             return "";
         }
-        if (frame.scores().isSizeEqual(1)) {
+        if (frame.totalScore().regularScores().isSizeEqual(1)) {
             return firstThrowOutput(frame);
         }
-        if (frame.scores().isSizeEqual(2)) {
+        if (frame.totalScore().regularScores().isSizeEqual(2)) {
             return twiceThrowOutput(frame);
         }
-        if (frame.scores().isSizeEqual(3)) {
+        if (frame.totalScore().regularScores().isSizeEqual(3)) {
             return thirdThrowOutput(frame);
         }
         return "";
     }
 
     private static String firstThrowOutput(Frame frame) {
-        return scoreFormat(frame.scores().first());
+        return scoreFormat(frame.totalScore().regularScores().first());
     }
 
     private static String twiceThrowOutput(Frame frame) {
-        Scores scores = frame.scores();
+        Scores scores = frame.totalScore().regularScores();
         if (scores.sum() == SCORE_STRIKE) {
             return scoreFormat(scores.first()) + SEPARATOR + SPARE_OUTPUT;
         }
@@ -97,9 +97,9 @@ public class Output {
     }
 
     private static String thirdThrowOutput(Frame frame) {
-        Score first = frame.scores().first();
-        Score second = frame.scores().second();
-        Score third = frame.scores().third();
+        Score first = frame.totalScore().regularScores().first();
+        Score second = frame.totalScore().regularScores().second();
+        Score third = frame.totalScore().regularScores().third();
         if (!first.isStrike() && Scores.sumScores(first, second) == SCORE_STRIKE) {
             return scoreFormat(first) + SEPARATOR + SPARE_OUTPUT + SEPARATOR + scoreFormat(third);
         }
@@ -131,7 +131,7 @@ public class Output {
                 result.append(BLANK_BLOCK);
             }
             if (!frame.isNotEndScoreAggregation()) {
-                totalScore += frame.totalScore();
+                totalScore += frame.totalScore().sumTotalScore();
                 result.append(String.format(SCORE_FORMAT, totalScore));
             }
         }

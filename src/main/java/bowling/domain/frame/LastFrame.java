@@ -13,7 +13,9 @@ public class LastFrame extends Frame {
     }
 
     public void minusChance() {
-        if (this.scores.isSizeEqual(DEFAULT_CHANCE) && !this.scores.first().isStrike() && !isSpare()) {
+        if (this.totalScore.regularScores().isSizeEqual(DEFAULT_CHANCE)
+                && !this.totalScore.regularScores().first().isStrike()
+                && !this.totalScore.isSpare()) {
             this.chance.minusTwo();
             return;
         }
@@ -22,15 +24,15 @@ public class LastFrame extends Frame {
 
     @Override
     protected void validateScore(Frame frame) {
-        if (this.scores.isSizeOver(TOTAL_CHANCE)) {
+        if (this.totalScore.regularScores().isSizeOver(TOTAL_CHANCE)) {
             throw new IllegalArgumentException();
         }
-        if (this.scores.isSizeEqual(DEFAULT_CHANCE)) {
-            validateLastFrameSecondTimeScore(this.scores);
+        if (this.totalScore.regularScores().isSizeEqual(DEFAULT_CHANCE)) {
+            validateLastFrameSecondTimeScore(this.totalScore.regularScores());
         }
-        if (this.scores.isSizeEqual(TOTAL_CHANCE)) {
-            validateLastFrameSecondTimeScore(this.scores);
-            validateLastFrameThirdTimeScore(this.scores);
+        if (this.totalScore.regularScores().isSizeEqual(TOTAL_CHANCE)) {
+            validateLastFrameSecondTimeScore(this.totalScore.regularScores());
+            validateLastFrameThirdTimeScore(this.totalScore.regularScores());
         }
     }
 
@@ -41,7 +43,7 @@ public class LastFrame extends Frame {
     }
 
     private void validateLastFrameThirdTimeScore(Scores scores) {
-        if (!scores.second().isStrike() && !isSpare()
+        if (!scores.second().isStrike() && !this.totalScore.isSpare()
                 && Scores.sumScores(scores.second(), scores.third()) > SCORE_STRIKE) {
             throw new IllegalArgumentException();
         }
@@ -52,8 +54,8 @@ public class LastFrame extends Frame {
         if (this.chance.isRemainChance()) {
             return true;
         }
-        if (this.scores.first().isStrike() || isSpare()) {
-            return !this.scores.isSizeEqual(TOTAL_CHANCE);
+        if (this.totalScore.regularScores().first().isStrike() || this.totalScore.isSpare()) {
+            return !this.totalScore.regularScores().isSizeEqual(TOTAL_CHANCE);
         }
         return false;
     }

@@ -18,7 +18,7 @@ public class TotalScoreTest {
 
     @Test
     void addScore() {
-        this.totalScore.addScore(Score.of(1));
+        this.totalScore.addRegularScore(Score.of(1));
     }
 
     @Test

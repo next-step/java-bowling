@@ -1,39 +1,38 @@
 package bowling.domain.score;
 
-import java.util.Objects;
-
 public class TotalScore {
 
-    private final Scores scores;
+    public static final int SCORE_STRIKE = 10;
+    private final Scores regularScores;
     private final Scores bonusScores;
 
     public TotalScore() {
-        this.scores = new Scores();
+        this.regularScores = new Scores();
         this.bonusScores = new Scores();
     }
 
-    public void addScore(Score score) {
-        this.scores.add(score);
+    public void addRegularScore(Score score) {
+        this.regularScores.add(score);
     }
 
     public void addBonusScore(Score score) {
         this.bonusScores.add(score);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        TotalScore that = (TotalScore) o;
-        return Objects.equals(this.scores, that.scores) && Objects.equals(this.bonusScores, that.bonusScores);
+    public int sumTotalScore() {
+        return this.regularScores.sum() + this.bonusScores.sum();
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.scores, this.bonusScores);
+    public Scores regularScores() {
+        return this.regularScores;
+    }
+
+    public Scores bonusScores() {
+        return this.bonusScores;
+    }
+
+    public boolean isSpare() {
+        return this.regularScores.isSizeOver(1)
+                && Scores.sumScores(this.regularScores.first(), this.regularScores.second()) == SCORE_STRIKE;
     }
 }
