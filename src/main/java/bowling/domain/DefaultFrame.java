@@ -23,4 +23,23 @@ public class DefaultFrame extends Frame {
             throw new IllegalArgumentException();
         }
     }
+
+    @Override
+    public boolean isNotEndScoreAggregation() {
+        if (this.scores.isEmpty()) {
+            return true;
+        }
+        if (this.scores.size() == 1 && !this.scores.first().isStrike()) {
+            return true;
+        }
+        if (this.scores.first().isStrike()
+                || Scores.sumScores(this.scores.first(), this.scores.second()) == SCORE_STRIKE) {
+            return isNotEndScoreAggregationStrikeOrSpare();
+        }
+        return false;
+    }
+
+    private boolean isNotEndScoreAggregationStrikeOrSpare() {
+        return this.scores.size() != TOTAL_CHANCE + 1;
+    }
 }

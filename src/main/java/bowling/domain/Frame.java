@@ -36,6 +36,12 @@ public abstract class Frame {
         return this.scores;
     }
 
+    public void addBonusScore(Score score) {
+        this.scores.add(score);
+    }
+
+    public abstract boolean isNotEndScoreAggregation();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

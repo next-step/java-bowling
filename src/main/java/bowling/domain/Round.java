@@ -13,7 +13,14 @@ public class Round {
     }
 
     public Round(int number) {
+        validateUpperStartRound(number);
         this.round = number;
+    }
+
+    private void validateUpperStartRound(int number) {
+        if (number < ROUND_START) {
+            throw new IllegalArgumentException("Round는 " + ROUND_START + "보다 작을 수 없습니다.");
+        }
     }
 
     public boolean isGameEnd() {
@@ -30,6 +37,14 @@ public class Round {
 
     public void nextRound() {
         this.round++;
+    }
+
+    public boolean isFirstRound() {
+        return this.round == ROUND_START;
+    }
+
+    public Round beforeRound() {
+        return new Round(this.round - 1);
     }
 
     @Override

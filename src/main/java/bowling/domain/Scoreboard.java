@@ -33,6 +33,13 @@ public class Scoreboard {
         return this.name;
     }
 
+    public void addBonusScore(Round beforeRound, Score score) {
+        Frame beforeRoundFrame = this.frames.get(beforeRound.index());
+        if (beforeRoundFrame.isNotEndScoreAggregation()) {
+            beforeRoundFrame.addBonusScore(score);
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

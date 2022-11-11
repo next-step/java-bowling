@@ -42,4 +42,20 @@ public class LastFrame extends Frame {
             throw new IllegalArgumentException();
         }
     }
+
+    @Override
+    public boolean isNotEndScoreAggregation() {
+        if (this.scores.size() < 2) {
+            return true;
+        }
+        if (this.scores.first().isStrike()
+                || Scores.sumScores(this.scores.first(), this.scores.second()) == SCORE_STRIKE) {
+            return isNotEndScoreAggregationStrikeOrSpare();
+        }
+        return false;
+    }
+
+    private boolean isNotEndScoreAggregationStrikeOrSpare() {
+        return this.scores.size() != TOTAL_CHANCE;
+    }
 }

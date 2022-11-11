@@ -54,4 +54,53 @@ public class LastFrameTest {
 
         Assertions.assertDoesNotThrow(() -> firstStrikeFrame.addScore(Score.of(10)));
     }
+
+    @Test
+    void is_not_end_score_aggregation_default() {
+        Frame frame1 = new LastFrame();
+        frame1.addScore(Score.of(8));
+        Frame frame2 = new LastFrame();
+        frame2.addScore(Score.of(8));
+        frame2.addScore(Score.of(1));
+
+        Assertions.assertAll(
+                () -> assertThat(frame1.isNotEndScoreAggregation()).isTrue(),
+                () -> assertThat(frame2.isNotEndScoreAggregation()).isFalse()
+        );
+    }
+
+    @Test
+    void is_not_end_score_aggregation_spare() {
+        Frame spareFrame1 = new LastFrame();
+        spareFrame1.addScore(Score.of(8));
+        spareFrame1.addScore(Score.of(2));
+        Frame spareFrame2 = new LastFrame();
+        spareFrame2.addScore(Score.of(8));
+        spareFrame2.addScore(Score.of(2));
+        spareFrame2.addScore(Score.of(2));
+
+        Assertions.assertAll(
+                () -> assertThat(spareFrame1.isNotEndScoreAggregation()).isTrue(),
+                () -> assertThat(spareFrame2.isNotEndScoreAggregation()).isFalse()
+        );
+    }
+
+    @Test
+    void is_not_end_score_aggregation_strike() {
+        Frame strikeFrame1 = new LastFrame();
+        strikeFrame1.addScore(Score.of(10));
+        Frame strikeFrame2 = new LastFrame();
+        strikeFrame2.addScore(Score.of(10));
+        strikeFrame2.addScore(Score.of(2));
+        Frame strikeFrame3 = new LastFrame();
+        strikeFrame3.addScore(Score.of(10));
+        strikeFrame3.addScore(Score.of(2));
+        strikeFrame3.addScore(Score.of(2));
+
+        Assertions.assertAll(
+                () -> assertThat(strikeFrame1.isNotEndScoreAggregation()).isTrue(),
+                () -> assertThat(strikeFrame2.isNotEndScoreAggregation()).isTrue(),
+                () -> assertThat(strikeFrame3.isNotEndScoreAggregation()).isFalse()
+        );
+    }
 }
