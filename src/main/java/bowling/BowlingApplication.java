@@ -13,32 +13,15 @@ public class BowlingApplication {
 
         ResultView.printScoreBoard(game);
 
-        int frameIndex = 0;
         while (!game.isEndGame()) {
-            doGame(game, frameIndex);
-            frameIndex++;
+            doGame(game);
         }
     }
 
-    private static void doGame(BowlingGame game, int frameIndex) {
-        int laneIndex = 0;
-        do {
-            doFrames(game, frameIndex, laneIndex);
-            laneIndex++;
-        } while (!game.isEndFrames(frameIndex));
-    }
-
-    private static void doFrames(BowlingGame game, int frameIndex, int laneIndex) {
-        do {
-            doFrame(game, laneIndex);
-        } while (!game.isEndPlayerFrame(frameIndex, laneIndex));
-    }
-
-    private static void doFrame(BowlingGame game, int laneIndex) {
+    private static void doGame(BowlingGame game) {
         int inputDownPinCount;
-        inputDownPinCount = InputView.inputDownPinCount(game.getPlayerName(laneIndex));
-        game.doGame(laneIndex, inputDownPinCount);
+        inputDownPinCount = InputView.inputDownPinCount(game.getPlayerName(0));
+        game.doGame(inputDownPinCount);
         ResultView.printScoreBoard(game);
     }
-
 }
