@@ -1,7 +1,7 @@
 package bowling.domain;
 
-import bowling.domain.Frame.Frame;
-import bowling.domain.Score.Score;
+import bowling.domain.frame.Frame;
+import bowling.domain.score.Score;
 
 public class BowlingGame {
 

@@ -2,8 +2,8 @@ package bowling.controller;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.Name;
-import bowling.domain.Score.Score;
 import bowling.domain.Scoreboard;
+import bowling.domain.score.Score;
 import bowling.view.Input;
 import bowling.view.Output;
 

@@ -1,8 +1,8 @@
-package bowling.domain.Frame;
+package bowling.domain.frame;
 
 import bowling.domain.Chance;
-import bowling.domain.Score.Score;
-import bowling.domain.Score.Scores;
+import bowling.domain.score.Score;
+import bowling.domain.score.Scores;
 import java.util.Objects;
 
 public abstract class Frame {

@@ -1,6 +1,6 @@
-package bowling.domain.Frame;
+package bowling.domain.frame;
 
-import bowling.domain.Score.Scores;
+import bowling.domain.score.Scores;
 
 public class LastFrame extends Frame {
 

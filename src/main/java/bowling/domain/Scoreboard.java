@@ -1,9 +1,9 @@
 package bowling.domain;
 
-import bowling.domain.Frame.DefaultFrame;
-import bowling.domain.Frame.Frame;
-import bowling.domain.Frame.LastFrame;
-import bowling.domain.Score.Score;
+import bowling.domain.frame.DefaultFrame;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.LastFrame;
+import bowling.domain.score.Score;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

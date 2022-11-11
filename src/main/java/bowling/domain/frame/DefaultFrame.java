@@ -1,4 +1,4 @@
-package bowling.domain.Frame;
+package bowling.domain.frame;
 
 public class DefaultFrame extends Frame {
 
