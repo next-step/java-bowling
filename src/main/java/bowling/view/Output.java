@@ -1,10 +1,10 @@
 package bowling.view;
 
-import bowling.domain.Frame;
+import bowling.domain.Frame.Frame;
 import bowling.domain.Round;
-import bowling.domain.Score;
+import bowling.domain.Score.Score;
+import bowling.domain.Score.Scores;
 import bowling.domain.Scoreboard;
-import bowling.domain.Scores;
 
 public class Output {
 
