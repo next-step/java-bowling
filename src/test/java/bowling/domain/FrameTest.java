@@ -61,4 +61,54 @@ public class FrameTest {
 
         assertThat(frame.scoringText()).isEqualTo("-|2");
     }
+
+    @Test
+    void bonus_frame_scoringText_spare_0_10_strike() {
+        Frame frame = new Frame(10, 0, 10, 10);
+
+        assertThat(frame.scoringText()).isEqualTo("-|/|X");
+    }
+
+    @Test
+    void bonus_frame_scoringText_spare_3_7_strike() {
+        Frame frame = new Frame(10, 3, 7, 10);
+
+        assertThat(frame.scoringText()).isEqualTo("3|/|X");
+    }
+
+    @Test
+    void bonus_frame_scoringText_spare_3_7_miss() {
+        Frame frame = new Frame(10, 3, 7, 1);
+
+        assertThat(frame.scoringText()).isEqualTo("3|/|1");
+    }
+
+    @Test
+    void bonus_frame_scoringText_spare_3_7_gutter() {
+        Frame frame = new Frame(10, 3, 7, 0);
+
+        assertThat(frame.scoringText()).isEqualTo("3|/|-");
+    }
+
+
+    @Test
+    void bonus_frame_scoringText_strike_strike() {
+        Frame frame = new Frame(10, 10, 0, 10);
+
+        assertThat(frame.scoringText()).isEqualTo("X|X");
+    }
+
+    @Test
+    void bonus_frame_scoringText_strike_miss() {
+        Frame frame = new Frame(10, 10, 0, 2);
+
+        assertThat(frame.scoringText()).isEqualTo("X|2");
+    }
+
+    @Test
+    void bonus_frame_scoringText_strike_gutter() {
+        Frame frame = new Frame(10, 10, 0, 0);
+
+        assertThat(frame.scoringText()).isEqualTo("X|-");
+    }
 }

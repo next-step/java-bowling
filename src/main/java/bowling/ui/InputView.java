@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class InputView {
     private static final String INPUT_PLAYER_NAME_DESCRIPTION = "플레이어 이름은(3 english letters)?:";
-    private static final Scanner scanner= new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static String inputPlayerName() {
         System.out.printf(INPUT_PLAYER_NAME_DESCRIPTION);

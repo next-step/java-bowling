@@ -11,7 +11,7 @@ public enum ScoreRull {
     private final String symbol;
     private final int fellDownPinCount;
 
-    ScoreRull(String symbol, int fellDownPinCount){
+    ScoreRull(String symbol, int fellDownPinCount) {
         this.symbol = symbol;
         this.fellDownPinCount = fellDownPinCount;
     }

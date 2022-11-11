@@ -20,5 +20,4 @@ public class ResultView {
         printText = "|" + printText;
         System.out.println(printText);
     }
-
 }

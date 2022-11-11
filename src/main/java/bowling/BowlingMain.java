@@ -13,6 +13,5 @@ public class BowlingMain {
         List<String> playResult = bowlingGame.play();
 
         ResultView.printRoundResult(userName, playResult);
-
     }
 }

@@ -14,27 +14,30 @@ public class Pins {
         this.pins = pins;
     }
 
-    public int knockDown(int knockedDownPinCount){
+    public int knockDown(int knockedDownPinCount) {
         List<Pin> pinList = pins.stream()
                 .filter(Pin::isStanding)
                 .limit(knockedDownPinCount)
                 .collect(Collectors.toList());
 
-        pinList.stream()
-                .forEach(pin -> pin.knockDown());
+        pinList.forEach(pin -> pin.knockDown());
 
         return pinList.size();
     }
 
-    public int knockDownCount(){
+    public int knockDownCount() {
         return (int) pins.stream()
                 .filter(Pin::isKnockedDown)
                 .count();
     }
 
-    public int standingPinCount(){
+    public int standingPinCount() {
         return (int) pins.stream()
                 .filter(Pin::isStanding)
                 .count();
+    }
+
+    public void add(List<Pin> addPins) {
+        pins.addAll(addPins);
     }
 }

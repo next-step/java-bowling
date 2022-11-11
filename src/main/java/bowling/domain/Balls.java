@@ -17,13 +17,21 @@ public class Balls {
     }
 
 
-    public void pitch(Pins pins){
-        for (Ball ball : balls){
+    public void pitch(Pins pins) {
+        for (Ball ball : balls) {
             ball.pitch(pins);
         }
     }
 
+    public void add(Ball ball) {
+        balls.add(ball);
+    }
+
+    public int size() {
+        return balls.size();
+    }
+
     public int getKnockedDownPinCount(int index) {
-        return  balls.get(index).getKnockedDownPinCount();
+        return balls.get(index).getKnockedDownPinCount();
     }
 }
