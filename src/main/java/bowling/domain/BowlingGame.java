@@ -25,7 +25,7 @@ public class BowlingGame {
                 .collect(Collectors.toList());
     }
 
-    public List<String> play(String userName) {
+    public List<String> play(UserName userName) {
         List<String> playResult = new ArrayList<>();
         frameList.stream()
                 .forEach(frame -> {

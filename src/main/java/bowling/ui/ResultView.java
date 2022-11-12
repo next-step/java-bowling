@@ -1,5 +1,7 @@
 package bowling.ui;
 
+import bowling.domain.UserName;
+
 import java.util.List;
 
 public class ResultView {
@@ -10,15 +12,15 @@ public class ResultView {
     private static final String ROUND_GUIDE = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
 
 
-    public static void printRoundResult(String userName, List<String> roundResult, int score) {
+    public static void printRoundResult(UserName userName, List<String> roundResult, int score) {
         System.out.println();
         System.out.println(String.format(ROUND_RESULT_TITLE_FORMAT, roundResult.size(), score));
         printScoreBoard(userName, roundResult);
     }
 
-    public static void printScoreBoard(String userName, List<String> roundResult) {
+    public static void printScoreBoard(UserName userName, List<String> roundResult) {
         System.out.println(ROUND_GUIDE);
-        String printText = String.format(ROUND_RESULT_FORMAT, userName);
+        String printText = String.format(ROUND_RESULT_FORMAT, userName.getUserName());
         for (int i = 0; i < 10 ; i ++){
             printText = printText + String.format(ROUND_RESULT_FORMAT, getRoundResult(i, roundResult));
         }
