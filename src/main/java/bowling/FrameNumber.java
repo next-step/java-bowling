@@ -14,8 +14,8 @@ public class FrameNumber {
         return new FrameNumber(number);
     }
 
-    public FrameNumber next() {
-        return new FrameNumber(this.frameNumber + 1);
+    public static FrameNumber plus(FrameNumber frameNumber) {
+        return new FrameNumber(frameNumber.frameNumber + 1);
     }
 
     private FrameNumber(int frameNumber) {
