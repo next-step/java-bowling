@@ -38,8 +38,12 @@ public class Pins {
         return falledPins == MAX_PINS;
     }
 
-    public boolean isMiss() {
+    public boolean isGutter() {
         return falledPins == MIN_PINS;
+    }
+
+    public boolean isMiss() {
+        return falledPins < MAX_PINS;
     }
 
     public Pins addPins(int secondPins) {

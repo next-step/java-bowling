@@ -36,6 +36,6 @@ class PinsTest {
 
     @Test
     void 미스() {
-        assertThat(Pins.from(0).isMiss()).isTrue();
+        assertThat(Pins.from(0).isGutter()).isTrue();
     }
 }
