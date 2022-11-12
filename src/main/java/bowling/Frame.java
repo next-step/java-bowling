@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Frame {
+    private static final int HIT_ONCE = 1;
     private static final int HIT_TWICE = 2;
     private static final int HIT_TRIPLE = 3;
 
@@ -25,7 +26,19 @@ public class Frame {
 
     public void hitBowlingPin(int count) {
         bowlingPin = bowlingPin.hitPins(new BowlingPin(count));
-        hitRecords.add(new HitRecord(count));
+        BowilingTerm bowilingTerm = BowilingTerm.MISS;
+        if ((hitRecords.isEmpty() || hitRecords.size() == HIT_TRIPLE) && bowlingPin.isZero()) {
+            bowilingTerm = BowilingTerm.STRIKE;
+        }
+
+        if (hitRecords.size() == HIT_ONCE && bowlingPin.isZero()) {
+            bowilingTerm = BowilingTerm.SPARE;
+        }
+
+        if (count == 0) {
+            bowilingTerm = BowilingTerm.GUTTER;
+        }
+        hitRecords.add(new HitRecord(count, bowilingTerm));
     }
 
     public boolean finishFrame() {

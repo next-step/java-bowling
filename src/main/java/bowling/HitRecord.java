@@ -2,13 +2,19 @@ package bowling;
 
 public class HitRecord {
     private final int hitCount;
+    private final BowilingTerm bowilingTerm;
 
-    public HitRecord(int count) {
+    public HitRecord(int count, BowilingTerm bowilingTerm) {
         this.hitCount = count;
+        this.bowilingTerm = bowilingTerm;
     }
 
     public int getHitCount() {
         return hitCount;
+    }
+
+    public BowilingTerm getBowilingTerm() {
+        return bowilingTerm;
     }
 
     public boolean hitAll() {
