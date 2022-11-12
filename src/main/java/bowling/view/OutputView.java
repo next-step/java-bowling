@@ -21,7 +21,9 @@ public class OutputView {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("|" + FORMAT_SHAPE, username.getName()));
         for (int i = 0; i < framesList.size(); i++) {
-            String hitShape = frameScore(sb, framesList.get(i));
+            Frame frame = framesList.get(i);
+            String hitShape = frameScore(frame.getHitRecords());
+
             if (i == framesList.size() - 1) {
                 sb.append(String.format(BONUS_SHAPE, hitShape));
                 continue;
@@ -32,10 +34,8 @@ public class OutputView {
         System.out.println();
     }
 
-    private static String frameScore(StringBuilder sb, Frame frame) {
+    private static String frameScore(List<HitRecord> hitRecords) {
         StringBuilder hitBuilder = new StringBuilder();
-        List<HitRecord> hitRecords = frame.getHitRecords();
-
         int hitCount = 0;
         for (int index = 0; index < hitRecords.size(); index++) {
             HitRecord hitRecord = hitRecords.get(index);
