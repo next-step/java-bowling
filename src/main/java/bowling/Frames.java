@@ -17,7 +17,7 @@ public class Frames {
         Frame frame = frames.get(frameNumber.retrieveIndexNumber());
         frame.hitBowlingPin(hitCount);
         if (frame.finishFrame()) {
-            return FrameNumber.plus(frameNumber);
+            return FrameNumber.next(frameNumber);
         }
         return frameNumber;
     }
@@ -30,7 +30,7 @@ public class Frames {
         Frame frame = frames.get(frameNumber.retrieveIndexNumber());
         frame.hitBowlingPin(hitCount);
         if (frame.finishLastFrame()) {
-            return FrameNumber.plus(frameNumber);
+            return FrameNumber.next(frameNumber);
         }
 
         if (frame.clearAllFrame()) {
