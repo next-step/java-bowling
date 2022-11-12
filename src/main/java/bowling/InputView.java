@@ -6,9 +6,10 @@ public class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public static String inputUserName() {
+    public static UserName inputUserName() {
         System.out.print("플레이어 이름은(3 english letters)?:");
-        return SCANNER.next();
+        String input = SCANNER.next();
+        return new UserName(input);
     }
 
     public static int inputUserScore(int round) {

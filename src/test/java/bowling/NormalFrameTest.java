@@ -21,6 +21,6 @@ class NormalFrameTest {
     @Test
     void 현재_프레임에_턴이_끝났는지_확인() {
         assertThat(NormalFrame.of(1, 5).isFinished()).isFalse();
-        assertThat(NormalFrame.of(1,5).bowl(3).hasTurn()).isFalse();
+        assertThat(NormalFrame.of(1,5).bowl(3).isFinished()).isFalse();
     }
 }

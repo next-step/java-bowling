@@ -7,7 +7,7 @@ public class BowlingApplication {
 
     public static void main(String[] args) {
 
-        String userName = InputView.inputUserName();
+        UserName userName = InputView.inputUserName();
 
         Frames frames = new Frames();
         ResultView.printResult(userName, frames);

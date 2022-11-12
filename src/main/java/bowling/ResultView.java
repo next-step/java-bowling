@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ResultView {
 
-    public static void printResult(String name, Frames frames) {
+    public static void printResult(UserName name, Frames frames) {
         printRoundTemplate();
         printUserName(name);
         printFrames(frames);
@@ -14,9 +14,9 @@ public class ResultView {
         System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
     }
 
-    private static void printUserName(String name) {
+    private static void printUserName(UserName name) {
         System.out.print("|");
-        System.out.printf("%5s ",name);
+        System.out.printf("%5s ",name.getName());
     }
 
     private static void printFrames(Frames frames) {
