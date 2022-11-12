@@ -15,7 +15,7 @@ public class Pin {
         this.count = count;
     }
 
-    private static void validateRange(int count) {
+    private static void validateRange(final int count) {
 
         if (count < MIN_COUNT || count > MAX_COUNT) {
             throw new IllegalArgumentException(MIN_COUNT + "~" + MAX_COUNT + " 범위의 수만 가능합니다.");
@@ -25,6 +25,11 @@ public class Pin {
     public int count() {
 
         return count;
+    }
+
+    public boolean isKnockDown() {
+
+        return count == MAX_COUNT;
     }
 
     @Override
