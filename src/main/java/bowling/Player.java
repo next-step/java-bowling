@@ -8,7 +8,7 @@ public class Player {
     private final Frame frame;
 
     public Player(String name) {
-        if (!name.chars().allMatch(Player::isAlphabetic)) {
+        if (!name.matches("^[a-zA-Z]{3}$")) {
             throw new IllegalArgumentException("이름이 영문자가 아닙니다.");
         }
         if (name.length() != 3) {
