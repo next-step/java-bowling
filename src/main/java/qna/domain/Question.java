@@ -1,5 +1,10 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -7,6 +12,8 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+
+import qna.CannotDeleteException;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -93,5 +100,20 @@ public class Question extends AbstractEntity {
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer="
             + writer + "]";
+    }
+
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        Objects.requireNonNull(loginUser);
+        if (!this.isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+        this.setDeleted(true);
+
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter(),
+            LocalDateTime.now()));
+        deleteHistories.addAll(this.getAnswers().delete(loginUser));
+
+        return deleteHistories;
     }
 }
