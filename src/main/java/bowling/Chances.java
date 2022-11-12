@@ -12,17 +12,6 @@ public class Chances {
         this.chances = new ArrayList<>();
     }
 
-    public Chances(int knockDownPin1) {
-        this();
-        add(knockDownPin1);
-    }
-
-    public Chances(int knockDownPin1, int knockDownPin2) {
-        this();
-        add(knockDownPin1);
-        add(knockDownPin2);
-    }
-
     public void add(int knockDownCount) {
         int order = chances.size();
         Pin pin = Pin.of(knockDownCount);
