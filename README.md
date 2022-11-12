@@ -66,4 +66,33 @@ public class QnAService {
 	- 인스턴스 변수의 수를 줄이기 위해 도전한다.
 - 테스트하기 쉬운 부분과 테스트하기 어려운 부분을 분리해 테스트 가능한 부분만 단위테스트한다.
 
+### TODO
+- [ ] QnA서비스 중 테스트하기 어려운 부분 Question 로직으로 분리
+- [ ] Question delete로직 구현
+- [ ] Answer delete로직 구현
+- [ ] 1급 컬렉션 작성
+- [ ] QnA서비스 영향 없는지 확인
+- [ ] Question Test 작성
+- [ ] Answer Test 작성
 
+## QnA
+
+##### Q : Stream findAny vs findFirst
+
+##### Fixed : How to Thorw exception if predicate test passed
+- Option A) 람다에서 CheckedException은 던질수 없으므로,  던지고 싶은경우는 람다밖에서 던진다.
+```java
+final boolean isOtherUserAnswerIncluded = answers.stream()
+	.anyMatch(answer -> !answer.isOwner(loginUser));
+if (isOtherUserAnswerIncluded) {
+	throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+}
+```
+
+- Option B) 런타임으로 전환해서 람다에서 던지기
+```java
+values.stream()
+        .filter(s -> s.equals("two"))
+        .findAny()
+        .ifPresentThrow(() -> new RuntimeException("not found"));
+```
