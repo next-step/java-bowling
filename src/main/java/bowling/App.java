@@ -7,8 +7,6 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
         Username username = InputView.playerName();
 
         BowlingGame bowlingGame = new BowlingGame();
