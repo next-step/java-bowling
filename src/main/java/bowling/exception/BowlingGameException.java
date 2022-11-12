@@ -1,4 +1,4 @@
-package bowling;
+package bowling.exception;
 
 public class BowlingGameException extends RuntimeException {
     public BowlingGameException(ErrorMessage errorMessage) {

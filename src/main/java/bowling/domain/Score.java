@@ -1,4 +1,7 @@
-package bowling;
+package bowling.domain;
+
+import bowling.exception.BowlingGameException;
+import bowling.exception.ErrorMessage;
 
 import java.util.Objects;
 

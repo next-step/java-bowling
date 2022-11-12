@@ -1,5 +1,9 @@
-package bowling;
+package bowling.domain;
 
+import bowling.domain.FrameResult;
+import bowling.domain.Scores;
+import bowling.exception.BowlingGameException;
+import bowling.exception.ErrorMessage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
