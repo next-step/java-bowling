@@ -29,11 +29,13 @@ public class Answers {
         answers.add(answer);
     }
 
-    public void delete(DeleteHistories deleteHistories) {
+    public List<DeleteHistory> delete() {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
         for (Answer answer : answers) {
             answer.delete();
-
-            deleteHistories.addDeleteHistory(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter()));
+            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter()));
         }
+
+        return deleteHistories;
     }
 }

@@ -10,11 +10,10 @@ public class AnswersTest {
 
     @Test
     void deleteAnswers() {
-        DeleteHistories deleteHistories = new DeleteHistories();
         Answers answers = Q1.getAnswers();
 
         Q1.addAnswer(A2);
-        answers.delete(deleteHistories);
+        answers.delete();
         assertThat(A2.isDeleted()).isTrue();
     }
 

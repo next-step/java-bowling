@@ -12,25 +12,22 @@ public class QuestionTest {
 
     @Test
     void delete() throws CannotDeleteException {
-        DeleteHistories deleteHistories = new DeleteHistories();
-        Q1.deleteQuestion(deleteHistories, JAVAJIGI);
+        Q1.deleteQuestionAndAnswer(JAVAJIGI);
         assertThat(Q1.isDeleted()).isTrue();
     }
 
     @Test
     void checkOwner_error(){
-        DeleteHistories deleteHistories = new DeleteHistories();
         assertThatThrownBy(
-                () -> Q1.deleteQuestion(deleteHistories, SANJIGI)
+                () -> Q1.deleteQuestionAndAnswer(SANJIGI)
         ).isInstanceOf(CannotDeleteException.class);
     }
 
     @Test
     void checkAnswersOwner_error() {
-        DeleteHistories deleteHistories = new DeleteHistories();
         Q1.addAnswer(A2);
         assertThatThrownBy(
-                () -> Q1.deleteQuestion(deleteHistories, JAVAJIGI)
+                () -> Q1.deleteQuestionAndAnswer(JAVAJIGI)
         ).isInstanceOf(CannotDeleteException.class);
     }
 

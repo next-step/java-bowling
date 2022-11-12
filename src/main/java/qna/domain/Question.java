@@ -70,12 +70,17 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public void deleteQuestion(DeleteHistories deleteHistories, User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> deleteQuestionAndAnswer(User loginUser) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
         checkOwner(loginUser);
         checkAnswersOwner(loginUser);
 
         this.deleted = true;
-        deleteHistories.addDeleteHistory(new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter()));
+
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter()));
+        deleteHistories.addAll(answers.delete());
+
+        return deleteHistories;
     }
 
 
@@ -108,9 +113,5 @@ public class Question extends AbstractEntity {
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
-    }
-
-    public void deleteAnswers(DeleteHistories deleteHistories) {
-        answers.delete(deleteHistories);
     }
 }
