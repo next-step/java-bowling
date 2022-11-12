@@ -11,14 +11,15 @@ class FrameTest {
     @Test
     void hitAllBowlingPins() {
         Frame frame = new Frame();
-        assertThat(frame.hitBowlingPin(3)).isFalse();
-        assertThat(frame.hitBowlingPin(7)).isTrue();
+        frame.hitBowlingPin(3);
+        assertThat(frame.finishFrame()).isFalse();
     }
 
     @Test
     void hitTwice() {
         Frame frame = new Frame();
-        assertThat(frame.hitBowlingPin(3)).isFalse();
-        assertThat(frame.hitBowlingPin(3)).isTrue();
+        frame.hitBowlingPin(3);
+        frame.hitBowlingPin(5);
+        assertThat(frame.finishFrame()).isTrue();
     }
 }

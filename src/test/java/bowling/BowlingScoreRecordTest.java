@@ -3,37 +3,35 @@ package bowling;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class BowlingScoreRecordTest {
 
     @Test
     void hitMiss() {
-        BowlingScoreRecord bowlingScoreRecord = new BowlingScoreRecord();
-        int frameNumber = bowlingScoreRecord.hit(0, 5);
-        Assertions.assertThat(frameNumber).isEqualTo(0);
+        BowlingGame bowlingScoreRecord = new BowlingGame();
+        FrameNumber frameNumber = bowlingScoreRecord.pitchingBall(5);
+        Assertions.assertThat(frameNumber).isEqualTo(FrameNumber.first());
     }
 
     @Test
     void hitStrike() {
-        BowlingScoreRecord bowlingScoreRecord = new BowlingScoreRecord();
-        int frameNumber = bowlingScoreRecord.hit(0, 10);
-        Assertions.assertThat(frameNumber).isEqualTo(1);
+        BowlingGame bowlingScoreRecord = new BowlingGame();
+        FrameNumber frameNumber = bowlingScoreRecord.pitchingBall( 10);
+        Assertions.assertThat(frameNumber).isEqualTo(FrameNumber.number(2));
     }
 
     @Test
     void hitSpare() {
-        BowlingScoreRecord bowlingScoreRecord = new BowlingScoreRecord();
-        int frameNumber = bowlingScoreRecord.hit(0, 5);
-        frameNumber = bowlingScoreRecord.hit(frameNumber, 5);
-        Assertions.assertThat(frameNumber).isEqualTo(1);
+        BowlingGame bowlingScoreRecord = new BowlingGame();
+        bowlingScoreRecord.pitchingBall(5);
+        FrameNumber frameNumber = bowlingScoreRecord.pitchingBall(5);
+        Assertions.assertThat(frameNumber).isEqualTo(FrameNumber.number(2));
     }
 
     @Test
     void hitGutterTwice() {
-        BowlingScoreRecord bowlingScoreRecord = new BowlingScoreRecord();
-        int frameNumber = bowlingScoreRecord.hit(0, 0);
-        frameNumber = bowlingScoreRecord.hit(frameNumber, 0);
-        Assertions.assertThat(frameNumber).isEqualTo(1);
+        BowlingGame bowlingScoreRecord = new BowlingGame();
+        bowlingScoreRecord.pitchingBall(0);
+        FrameNumber frameNumber = bowlingScoreRecord.pitchingBall(0);
+        Assertions.assertThat(frameNumber).isEqualTo(FrameNumber.number(2));
     }
 }

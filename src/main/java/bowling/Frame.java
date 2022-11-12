@@ -1,12 +1,11 @@
 package bowling;
 
-import bowling.view.ScoreShape;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Frame {
-    private static final int HIT_COUNT = 2;
+    private static final int HIT_TWICE = 2;
+    private static final int HIT_TRIPLE = 3;
 
     private BowlingPin bowlingPin;
     private final List<HitRecord> hitRecords;
@@ -16,22 +15,48 @@ public class Frame {
         hitRecords = new ArrayList<>();
     }
 
-    public boolean hitBowlingPin(int count) {
+    public void hitBowlingPin(int count) {
         bowlingPin = bowlingPin.hitPins(new BowlingPin(count));
         hitRecords.add(new HitRecord(count));
+    }
 
+    public boolean finishFrame() {
         return clearAllFrame() || hitTwice();
+    }
+
+    public boolean hitDouble() {
+        if (hitRecords.size() != HIT_TWICE) {
+            return false;
+        }
+        for (HitRecord hitRecord : hitRecords) {
+            if (!hitRecord.hitAll()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean spare() {
+        return hitRecords.size() == HIT_TWICE && clearAllFrame();
+    }
+
+    public void chargeBowlingPin() {
+        bowlingPin = new BowlingPin(BowlingPin.MAX_PIN_NUMBER);
     }
 
     public List<HitRecord> getHitRecords() {
         return hitRecords;
     }
 
-    private boolean clearAllFrame() {
+    public boolean clearAllFrame() {
         return bowlingPin.isZero();
     }
 
-    private boolean hitTwice() {
-        return hitRecords.size() == HIT_COUNT;
+    public boolean hitTriple() {
+        return hitRecords.size() == HIT_TRIPLE;
+    }
+
+    public boolean hitTwice() {
+        return hitRecords.size() == HIT_TWICE;
     }
 }
