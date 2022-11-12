@@ -104,9 +104,8 @@ public class Question extends AbstractEntity {
 
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         Objects.requireNonNull(loginUser);
-        if (!this.isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
+        validSameWithWriter(loginUser);
+
         this.setDeleted(true);
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
@@ -115,5 +114,11 @@ public class Question extends AbstractEntity {
         deleteHistories.addAll(this.getAnswers().delete(loginUser));
 
         return deleteHistories;
+    }
+
+    private void validSameWithWriter(User loginUser) throws CannotDeleteException {
+        if (!this.isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
     }
 }

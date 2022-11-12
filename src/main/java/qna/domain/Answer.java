@@ -53,10 +53,14 @@ public class Answer extends AbstractEntity {
 
     public void delete(User loginUser) throws CannotDeleteException {
         Objects.requireNonNull(loginUser);
+        validSameWithWriter(loginUser);
+        this.setDeleted(true);
+    }
+
+    private void validSameWithWriter(User loginUser) throws CannotDeleteException {
         if (!this.isOwner(loginUser)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
-        this.setDeleted(true);
     }
 
     public boolean isDeleted() {
