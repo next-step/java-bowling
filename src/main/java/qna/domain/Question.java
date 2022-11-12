@@ -1,13 +1,10 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
+import org.springframework.util.ObjectUtils;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -22,7 +19,7 @@ public class Question extends AbstractEntity {
     private User writer;
 
     @Embedded
-    private Answers answers = new Answers();
+    private Answers answers;
 
     private boolean deleted = false;
 
@@ -50,7 +47,11 @@ public class Question extends AbstractEntity {
     }
 
     public void addAnswer(Answer answer) {
-        answer.toQuestion(this);
+        answer.relateQuestion(this);
+        if(ObjectUtils.isEmpty(answers)) {
+            answers = new Answers(answer);
+            return;
+        }
         answers.add(answer);
     }
 
