@@ -11,14 +11,25 @@ import static java.util.stream.Collectors.toList;
 public class BowlingGame {
     private final List<Lane> lanes;
 
-    public BowlingGame(List<Lane> lanes) {
+    BowlingGame(List<Lane> lanes) {
         this.lanes = lanes;
     }
 
     public static BowlingGame of(List<String> playerNames) {
+        validatePlayerNames(playerNames);
+
         return new BowlingGame(playerNames.stream()
                 .map(name -> new Lane(new PlayerName(name)))
                 .collect(toList()));
+    }
+
+    private static void validatePlayerNames(List<String> playerNames) {
+        long distinctCount = playerNames.stream()
+                .distinct()
+                .count();
+        if (playerNames.size() != distinctCount) {
+            throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
+        }
     }
 
     public boolean isAllFinished() {
