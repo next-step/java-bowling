@@ -1,7 +1,5 @@
 package bowling.step2.domain;
 
-import bowling.step2.utils.GameRuleUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +13,11 @@ public class Frame {
     }
 
     public boolean hasNext(int index) {
-        return index == GameRuleUtils.GAME_LAST_INDEX || !isContainingStrike();
+        return index == BowlingGame.GAME_LAST_INDEX || !isContainingStrike();
     }
 
     public boolean hasBonus(int index) {
-        return index == GameRuleUtils.GAME_LAST_INDEX && (isContainingStrike() || isSpare());
+        return index == BowlingGame.GAME_LAST_INDEX && (isContainingStrike() || isSpare());
     }
 
     private boolean isContainingStrike() {
