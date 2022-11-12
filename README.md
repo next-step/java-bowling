@@ -67,18 +67,20 @@ public class QnAService {
 - 테스트하기 쉬운 부분과 테스트하기 어려운 부분을 분리해 테스트 가능한 부분만 단위테스트한다.
 
 ### TODO
-- [ ] QnA서비스 중 테스트하기 어려운 부분 Question 로직으로 분리
-- [ ] Question delete로직 구현
-- [ ] Answer delete로직 구현
-- [ ] 1급 컬렉션 작성
-- [ ] QnA서비스 영향 없는지 확인
-- [ ] Question Test 작성
-- [ ] Answer Test 작성
+- [x] QnA서비스 중 테스트하기 어려운 부분 Question 로직으로 분리
+- [x] Question delete로직 구현
+- [x] Answer delete로직 구현
+- [x] 1급 컬렉션 작성
+- [x] QnA서비스 영향 없는지 확인
+- [x] Question Test 작성
+- [x] Answer Test 작성
+- [x] Answers Test 작성
 
 ## QnA
 
 ##### Q : Stream findAny vs findFirst
-
+- 병렬시
+- 성능관점
 ##### Fixed : How to Thorw exception if predicate test passed
 - Option A) 람다에서 CheckedException은 던질수 없으므로,  던지고 싶은경우는 람다밖에서 던진다.
 ```java
