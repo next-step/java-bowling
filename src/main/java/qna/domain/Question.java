@@ -104,16 +104,23 @@ public class Question extends AbstractEntity {
 
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         Objects.requireNonNull(loginUser);
+
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+
+        deleteHistories.add(deleteQuestion(loginUser));
+        deleteHistories.addAll(getAnswers().delete(loginUser));
+
+        return deleteHistories;
+    }
+
+    private DeleteHistory deleteQuestion(User loginUser) throws CannotDeleteException {
+        Objects.requireNonNull(loginUser);
         validSameWithWriter(loginUser);
 
         this.setDeleted(true);
 
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter(),
-            LocalDateTime.now()));
-        deleteHistories.addAll(this.getAnswers().delete(loginUser));
-
-        return deleteHistories;
+        return new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter(),
+            LocalDateTime.now());
     }
 
     private void validSameWithWriter(User loginUser) throws CannotDeleteException {
