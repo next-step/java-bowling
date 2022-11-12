@@ -13,16 +13,17 @@ import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
 public class QuestionTest {
-
-    public static final Question Q1 = newQuestion(1L,"title1", "contents1").writeBy(JAVAJIGI);
-    public static final Question Q2 = newQuestion(2L,"title2", "contents2").writeBy(UserTest.SANJIGI);
-
+    private Question Q1;
+    private Question Q2;
     private Question deleteQuestion;
 
     @BeforeEach
     public void setUpAnswer() throws Exception {
+        Q1 = newQuestion(1L, "title1", "contents1").writeBy(JAVAJIGI);
+        Q2 = newQuestion(2L, "title2", "contents2").writeBy(UserTest.SANJIGI);
         deleteQuestion = newQuestionWithDeleted(1L, "title1", "contents1", true).writeBy(JAVAJIGI);
     }
+
     @Test
     @DisplayName("질문자와 로그인한 사람이 일치하지 않으면 예외 반환")
     void isOwnerException() {

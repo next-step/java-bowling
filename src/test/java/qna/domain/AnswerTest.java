@@ -6,15 +6,17 @@ import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
 import static qna.domain.Answer.newAnswerWithDeleted;
-import static qna.domain.QuestionTest.Q1;
+import static qna.domain.Question.newQuestion;
 import static qna.domain.UserTest.JAVAJIGI;
 
 public class AnswerTest {
 
     private Answer A1;
+    private Question Q1;
 
     @BeforeEach
     void setUp() {
+        Q1 = newQuestion(1L, "title1", "contents1").writeBy(JAVAJIGI);
         A1 = Answer.newAnswer(1L, JAVAJIGI, Q1, "test");
     }
 

@@ -23,7 +23,6 @@ import static org.mockito.Mockito.when;
 import static qna.domain.DeleteHistories.deleteHistories;
 import static qna.domain.DeleteHistory.newDeleteHistory;
 import static qna.domain.Question.*;
-import static qna.domain.QuestionTest.Q1;
 import static qna.domain.UserTest.JAVAJIGI;
 
 @ExtendWith(MockitoExtension.class)
@@ -39,13 +38,18 @@ public class QnaServiceTest {
 
     private Question deleteQuestion;
     private Answer answer;
+    private Question Q1;
 
     @BeforeEach
     public void setUpAnswer() throws Exception {
+        Q1 = newQuestion(1L, "title1", "contents1").writeBy(JAVAJIGI);
+
+        answer = Answer.newAnswerWithDeleted(1L, JAVAJIGI, Q1, "test",true);
+        Q1.addAnswer(answer);
+
         deleteQuestion = newQuestionWithDeleted(1L, "title1", "contents1", true).writeBy(JAVAJIGI);
-        answer = Answer.newAnswer(1L, JAVAJIGI, Q1, "test");
-        Q1.addAnswer(Answer.newAnswer(1L, JAVAJIGI, Q1, "test"));
         deleteQuestion.addAnswer(answer);
+
     }
 
     @Test
