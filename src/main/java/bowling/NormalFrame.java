@@ -5,11 +5,12 @@ public class NormalFrame extends Frame {
 
     public NormalFrame(int order) {
         super(order);
-        if(order + 1 == Frame.MAX_FRAME) {
-            this.nextFrame = new FinalFrame(order + 1);
+        int nextOrder = order + 1;
+        if(nextOrder == Frame.MAX_FRAME) {
+            this.nextFrame = new FinalFrame(nextOrder);
             return;
         }
-        this.nextFrame = new NormalFrame(order + 1);
+        this.nextFrame = new NormalFrame(nextOrder);
     }
 
     @Override
