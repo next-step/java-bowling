@@ -16,8 +16,8 @@ public class DeleteHistories {
         return deleteHistories;
     }
 
-    public DeleteHistory get(int i) {
-        return deleteHistories.get(i);
+    public DeleteHistory getDeleteHistory(int number) {
+        return deleteHistories.get(number);
     }
 
     @Override

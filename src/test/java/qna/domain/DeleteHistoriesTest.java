@@ -11,6 +11,7 @@ public class DeleteHistoriesTest {
         Question question = QuestionTest.Q1;
 
         deleteHistories.addDeleteHistory(new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter()));
-        Assertions.assertThat(deleteHistories.get(0)).isEqualTo(new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter()));
+        Assertions.assertThat(deleteHistories.getDeleteHistory(0))
+                .isEqualTo(new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter()));
     }
 }
