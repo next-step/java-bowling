@@ -1,10 +1,10 @@
 package bowling;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.assertThatNoException;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 public class ScoreTest {
     @ParameterizedTest
@@ -19,5 +19,10 @@ public class ScoreTest {
     @ValueSource(ints = {0, 10})
     void 스코어_0이상_10이하(int count) {
         assertThatNoException().isThrownBy(() -> new Score(count));
+    }
+
+    @Test
+    void 스코어_더하기() {
+        assertThat(new Score(1).add(new Score(2))).isEqualTo(new Score(3));
     }
 }
