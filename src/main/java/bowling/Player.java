@@ -18,10 +18,6 @@ public class Player {
         this.frame = Frame.frame();
     }
 
-    private static boolean isAlphabetic(int c) {
-        return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
-    }
-
     public int frameOrderToThrow() {
         return frame.orderToThrow();
     }
