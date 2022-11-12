@@ -3,30 +3,32 @@ package bowling.step2.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Frame {
+public abstract class Frame {
     private final List<Score> scores;
 
-    public Frame(String score) {
-        List<Score> scores = new ArrayList<>();
-        scores.add(new Score(score));
-        this.scores = scores;
+    public Frame() {
+        this.scores = new ArrayList<>();
     }
 
-    public boolean hasNext(int index) {
-        return index == BowlingGame.GAME_LAST_INDEX || !isContainingStrike();
+    public abstract Boolean isFinalFrame();
+
+    public abstract Boolean isEndedOneFrame();
+
+    boolean hasBonusCondition() {
+        return isContainingStrike() || isSpare();
     }
 
-    public boolean hasBonus(int index) {
-        return index == BowlingGame.GAME_LAST_INDEX && (isContainingStrike() || isSpare());
-    }
-
-    private boolean isContainingStrike() {
+    boolean isContainingStrike() {
         return this.scores.stream().anyMatch(Score::isStrike);
     }
 
     public boolean isSpare() {
         if (this.scores.size() > 2) {
-            return (Integer.parseInt(this.scores.get(1).score()) + Integer.parseInt(this.scores.get(2).score())) == 10;
+            int lastScoreIndex = this.scores.size() -1;
+            return (Integer.parseInt(this.scores.get(lastScoreIndex-1).score()) + Integer.parseInt(this.scores.get(lastScoreIndex).score())) == 10;
+        }
+        if(isContainingStrike()){
+            return false;
         }
         return this.scores.stream().mapToInt(it -> Integer.parseInt(it.score())).sum() == 10;
     }

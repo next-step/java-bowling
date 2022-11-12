@@ -1,9 +1,9 @@
 package bowling.step2.view;
 
+import bowling.step2.domain.BowlingGame;
 import bowling.step2.domain.Frame;
 import bowling.step2.domain.Player;
 import bowling.step2.domain.Score;
-import bowling.step2.utils.GameRuleUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -22,7 +22,7 @@ public class ResultView {
     public static void printInitScoreBoard(Player player) {
         printIndex();
         printName(player);
-        printInitBoard(GameRuleUtils.GAME_START_INDEX);
+        printInitBoard(BowlingGame.GAME_START_INDEX);
     }
 
     public static void printGameScoreBoard(Player player) {
@@ -34,7 +34,7 @@ public class ResultView {
     }
 
     private static void printInitBoard(int startIndex) {
-        for (int i = startIndex; i <= GameRuleUtils.GAME_LAST_INDEX; i++) {
+        for (int i = startIndex; i <= BowlingGame.GAME_LAST_INDEX; i++) {
             System.out.print(WALL_SHAPE);
             System.out.print(BLANK.repeat(COLUMN_WIDTH));
         }
@@ -43,7 +43,7 @@ public class ResultView {
 
     private static void printGameResult(Map<Integer, Frame> scoresMap) {
 
-        for (int i = GameRuleUtils.GAME_START_INDEX; i <= scoresMap.keySet().size(); i++) {
+        for (int i = BowlingGame.GAME_START_INDEX; i <= scoresMap.keySet().size(); i++) {
             System.out.print(WALL_SHAPE);
             Frame frame = scoresMap.get(i);
             System.out.print(getScoresString(frame));
@@ -93,7 +93,7 @@ public class ResultView {
     private static void printIndex() {
         System.out.print(WALL_SHAPE);
         System.out.print(BLANK + NAME_TEXT + BLANK);
-        for (int i = GameRuleUtils.GAME_START_INDEX; i <= GameRuleUtils.GAME_LAST_INDEX; i++) {
+        for (int i = BowlingGame.GAME_START_INDEX; i <= BowlingGame.GAME_LAST_INDEX; i++) {
             System.out.print(WALL_SHAPE);
             System.out.print(BLANK.repeat(2) + getIndexNumberString(i) + BLANK.repeat(2));
         }
@@ -101,7 +101,7 @@ public class ResultView {
     }
 
     private static String getIndexNumberString(int num) {
-        if (num < GameRuleUtils.GAME_LAST_INDEX) {
+        if (num < BowlingGame.GAME_LAST_INDEX) {
             return ZERO + num;
         }
         return String.valueOf(num);
