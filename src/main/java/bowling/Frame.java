@@ -15,6 +15,14 @@ public class Frame {
         hitRecords = new ArrayList<>();
     }
 
+    public boolean finishLastFrame() {
+        return hitThreeTimes() || hitDouble() || failedBounsFrame();
+    }
+
+    private boolean failedBounsFrame() {
+        return hitTwice() && !clearAllFrame();
+    }
+
     public void hitBowlingPin(int count) {
         bowlingPin = bowlingPin.hitPins(new BowlingPin(count));
         hitRecords.add(new HitRecord(count));
@@ -36,10 +44,6 @@ public class Frame {
         return true;
     }
 
-    public boolean spare() {
-        return hitRecords.size() == HIT_TWICE && clearAllFrame();
-    }
-
     public void chargeBowlingPin() {
         bowlingPin = new BowlingPin(BowlingPin.MAX_PIN_NUMBER);
     }
@@ -52,7 +56,7 @@ public class Frame {
         return bowlingPin.isZero();
     }
 
-    public boolean hitTriple() {
+    public boolean hitThreeTimes() {
         return hitRecords.size() == HIT_TRIPLE;
     }
 

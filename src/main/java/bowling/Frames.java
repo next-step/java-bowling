@@ -29,15 +29,7 @@ public class Frames {
     public FrameNumber pitchingLast(FrameNumber frameNumber, int hitCount) {
         Frame frame = frames.get(frameNumber.retrieveIndexNumber());
         frame.hitBowlingPin(hitCount);
-        if (frame.hitTriple()) {
-            return FrameNumber.plus(frameNumber);
-        }
-
-        if (frame.hitDouble()) {
-            return FrameNumber.plus(frameNumber);
-        }
-
-        if (frame.hitTwice() && !frame.clearAllFrame()) {
+        if (frame.finishLastFrame()) {
             return FrameNumber.plus(frameNumber);
         }
 
