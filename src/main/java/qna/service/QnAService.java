@@ -33,11 +33,8 @@ public class QnAService {
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
         Question question = findQuestionById(questionId);
 
-        question.checkOwner(loginUser);
-        question.checkAnswersOwner(loginUser);
-
         DeleteHistories deleteHistories = new DeleteHistories();
-        question.deleteQuestion(deleteHistories);
+        question.deleteQuestion(deleteHistories, loginUser);
         question.deleteAnswers(deleteHistories);
 
         deleteHistoryService.saveAll(deleteHistories);

@@ -11,24 +11,26 @@ public class QuestionTest {
     public static final Question Q2 = new Question("title2", "contents2").writeBy(SANJIGI);
 
     @Test
-    void checkOwner() {
-        assertThatThrownBy(
-                () -> Q1.checkOwner(SANJIGI)
-        ).isInstanceOf(CannotDeleteException.class);
-    }
-
-    @Test
-    void delete() {
+    void delete() throws CannotDeleteException {
         DeleteHistories deleteHistories = new DeleteHistories();
-        Q1.deleteQuestion(deleteHistories);
+        Q1.deleteQuestion(deleteHistories, JAVAJIGI);
         assertThat(Q1.isDeleted()).isTrue();
     }
 
     @Test
-    void checkAnswersOwner() {
+    void checkOwner_error(){
+        DeleteHistories deleteHistories = new DeleteHistories();
+        assertThatThrownBy(
+                () -> Q1.deleteQuestion(deleteHistories, SANJIGI)
+        ).isInstanceOf(CannotDeleteException.class);
+    }
+
+    @Test
+    void checkAnswersOwner_error() {
+        DeleteHistories deleteHistories = new DeleteHistories();
         Q1.addAnswer(A2);
         assertThatThrownBy(
-                () -> Q1.checkAnswersOwner(JAVAJIGI)
+                () -> Q1.deleteQuestion(deleteHistories, JAVAJIGI)
         ).isInstanceOf(CannotDeleteException.class);
     }
 
