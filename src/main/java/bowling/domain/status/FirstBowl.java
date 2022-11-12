@@ -1,6 +1,7 @@
 package bowling.domain.status;
 
 import bowling.domain.Pin;
+import bowling.domain.Score;
 
 public class FirstBowl extends Status {
 
@@ -19,5 +20,15 @@ public class FirstBowl extends Status {
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(this.getCountOfFirst(), 0);
+    }
+
+    @Override
+    public Score addScore(Score score) {
+        return new Score(score.getScore() + this.getCountOfFirst(), score.getNextScoreCnt() - 1);
     }
 }
