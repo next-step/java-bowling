@@ -23,6 +23,10 @@ public class BowlingGame {
                 .collect(toList()));
     }
 
+    public boolean isAllFinished() {
+        return lastLane().isFramesFinished();
+    }
+
     private static void validatePlayerNames(List<String> playerNames) {
         long distinctCount = playerNames.stream()
                 .distinct()
@@ -32,16 +36,12 @@ public class BowlingGame {
         }
     }
 
-    public boolean isAllFinished() {
-        return lastLane().isFramesFinished();
+    private Lane lastLane() {
+        return lanes.get(lanes.size() - 1);
     }
 
     public List<Lane> getLanes() {
         return Collections.unmodifiableList(lanes);
-    }
-
-    private Lane lastLane() {
-        return lanes.get(lanes.size() - 1);
     }
 
     @Override
