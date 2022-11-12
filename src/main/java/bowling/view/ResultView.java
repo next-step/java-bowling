@@ -1,11 +1,11 @@
 package bowling.view;
 
+import bowling.domain.BowlingGame;
+import bowling.domain.Lane;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.FrameNumber;
 import bowling.domain.frame.Frames;
 import bowling.domain.pin.FallenPin;
-import bowling.domain.player.Player;
-import bowling.domain.player.Players;
 import bowling.domain.score.Score;
 import bowling.domain.state.FrameState;
 
@@ -24,11 +24,11 @@ public class ResultView {
     public static final String SPARE = "/";
     public static final String GUTTER = "-";
 
-    public static void printFrames(Players players) {
+    public static void printFrames(BowlingGame bowlingGame) {
         System.out.println(scoreTableRow(NAME_COLUMN_TITLE, frameNumberColumnTitles()));
-        for (Player player: players.getPlayers()) {
-            System.out.println(scoreTableRow(player.getPlayerName().getName(), triedFrames(player.getFrames())));
-            System.out.println(scoreTableRow("", accumulatedScores(player.getFrames())));
+        for (Lane lane : bowlingGame.getLanes()) {
+            System.out.println(scoreTableRow(lane.getPlayerName().getName(), triedFrames(lane.getFrames())));
+            System.out.println(scoreTableRow("", accumulatedScores(lane.getFrames())));
         }
     }
 

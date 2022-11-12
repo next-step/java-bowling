@@ -1,45 +1,45 @@
 package bowling;
 
-import bowling.domain.player.Player;
-import bowling.domain.player.Players;
+import bowling.domain.BowlingGame;
+import bowling.domain.Lane;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
 public class Main {
     public static void main(String[] args) {
         int playerCount = InputView.scanPlayerCount();
-        Players players = Players.of(InputView.scanPlayerNames(playerCount));
-        ResultView.printFrames(players);
+        BowlingGame bowlingGame = BowlingGame.of(InputView.scanPlayerNames(playerCount));
+        ResultView.printFrames(bowlingGame);
 
-        while (!players.isAllFinished()) {
-            playBowling(players);
+        while (!bowlingGame.isAllFinished()) {
+            playBowling(bowlingGame);
         }
 
         InputView.closeScan();
     }
 
-    private static void playBowling(Players players) {
-        for (Player player: players.getPlayers()) {
-            bowlInAFrame(players, player);
+    private static void playBowling(BowlingGame bowlingGame) {
+        for (Lane lane : bowlingGame.getLanes()) {
+            bowlInAFrame(bowlingGame, lane);
         }
     }
 
-    private static void bowlInAFrame(Players players, Player player) {
-        bowl(players, player);
-        while (!player.isCurrentFrameFinished()) {
-            bowl(players, player);
+    private static void bowlInAFrame(BowlingGame bowlingGame, Lane lane) {
+        bowl(bowlingGame, lane);
+        while (!lane.isCurrentFrameFinished()) {
+            bowl(bowlingGame, lane);
         }
     }
 
-    private static void bowl(Players players, Player player) {
-        int fallenPins = InputView.scanFallenPinCount(player.getPlayerName());
-        tryBowling(player, fallenPins);
-        ResultView.printFrames(players);
+    private static void bowl(BowlingGame bowlingGame, Lane lane) {
+        int fallenPins = InputView.scanFallenPinCount(lane.getPlayerName());
+        tryBowling(lane, fallenPins);
+        ResultView.printFrames(bowlingGame);
     }
 
-    private static void tryBowling(Player player, int fallenPins) {
+    private static void tryBowling(Lane lane, int fallenPins) {
         try {
-            player.bowl(fallenPins);
+            lane.bowl(fallenPins);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }

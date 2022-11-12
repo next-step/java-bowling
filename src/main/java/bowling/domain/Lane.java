@@ -1,19 +1,20 @@
-package bowling.domain.player;
+package bowling.domain;
 
 import bowling.domain.frame.Frames;
 import bowling.domain.pin.FallenPin;
+import bowling.domain.player.PlayerName;
 
 import java.util.Objects;
 
-public class Player {
+public class Lane {
     private final PlayerName playerName;
     private Frames frames;
 
-    public Player(PlayerName playerName) {
+    public Lane(PlayerName playerName) {
         this(playerName, Frames.init());
     }
 
-    public Player(PlayerName playerName, Frames frames) {
+    public Lane(PlayerName playerName, Frames frames) {
         this.playerName = playerName;
         this.frames = frames;
     }
@@ -41,12 +42,12 @@ public class Player {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Player)) return false;
+        if (!(o instanceof Lane)) return false;
 
-        Player player = (Player) o;
+        Lane lane = (Lane) o;
 
-        if (!Objects.equals(playerName, player.playerName)) return false;
-        return Objects.equals(frames, player.frames);
+        if (!Objects.equals(playerName, lane.playerName)) return false;
+        return Objects.equals(frames, lane.frames);
     }
 
     @Override
