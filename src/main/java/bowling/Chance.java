@@ -1,12 +1,10 @@
 package bowling;
 
 public class Chance {
-    private final int order;
     private final Pin pin;
     private final Status status;
 
-    public Chance(int order, Pin pin, Status status) {
-        this.order = order;
+    public Chance(Pin pin, Status status) {
         this.pin = pin;
         this.status = status;
     }

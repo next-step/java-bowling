@@ -19,7 +19,7 @@ public class Chances {
                 .map(Chance::pin)
                 .reduce(Pin.of(0), Pin::add)
                 .add(pin);
-        chances.add(new Chance(order, pin, Status.findStatus(order, sumOfPin.areAllPinsDown(), pin.areNoPinsDown())));
+        chances.add(new Chance(pin, Status.findStatus(order, sumOfPin.areAllPinsDown(), pin.areNoPinsDown())));
     }
 
     public boolean areAllPinsDown() {
