@@ -6,11 +6,11 @@ import bowling.exception.ErrorMessage;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public class Player {
+public class Name {
     public static final String NAME_FORMAT = "^[a-zA-Z]{3}";
     private final String name;
 
-    public Player(String name) {
+    public Name(String name) {
         validateFormat(name);
         this.name = name;
     }
