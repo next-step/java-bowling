@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain.frame;
 
 public class NormalFrame extends Frame {
     private final Frame nextFrame;

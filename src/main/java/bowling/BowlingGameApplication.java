@@ -1,5 +1,10 @@
 package bowling;
 
+import bowling.domain.frame.Frame;
+import bowling.domain.Player;
+import bowling.view.InputView;
+import bowling.view.OutputView;
+
 public class BowlingGameApplication {
     public static void main(String[] args) {
 

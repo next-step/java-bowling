@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain;
 
 public class Chance {
     private final Pin pin;

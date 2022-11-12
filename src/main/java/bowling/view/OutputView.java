@@ -1,4 +1,7 @@
-package bowling;
+package bowling.view;
+
+import bowling.domain.Chance;
+import bowling.domain.PlayerDto;
 
 import java.util.List;
 

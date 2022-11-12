@@ -1,4 +1,6 @@
-package bowling;
+package bowling.domain.frame;
+
+import bowling.domain.Chances;
 
 public abstract class Frame {
     public static final int MAX_FRAME = 10;

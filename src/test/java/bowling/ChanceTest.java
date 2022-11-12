@@ -1,5 +1,8 @@
 package bowling;
 
+import bowling.domain.Chance;
+import bowling.domain.Pin;
+import bowling.domain.Status;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

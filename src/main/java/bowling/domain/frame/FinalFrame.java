@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain.frame;
 
 public class FinalFrame extends Frame {
     public static final int NO_FRAME_TO_THROW = -1;
