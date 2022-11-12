@@ -13,19 +13,18 @@ class BowlingLineTest {
 
     @ParameterizedTest
     @MethodSource("pitchingFrameSource")
-    public void pitching_available_frame_test(Frame firstFrame, Frame secondFrame, int score1,
-                                              boolean expectAvailable) {
+    public void pitching_available_frame_test(FrameNumber frame, int score1, boolean expectAvailable) {
         Bowling bowling = new Bowling(new User("abc"));
         BowlingLine bowlingLine = new BowlingLine(bowling, (pin) -> score1);
-        bowlingLine.pitching(firstFrame);
+        bowlingLine.pitching(frame);
 
-        assertThat(bowlingLine.availablePitching(secondFrame)).isEqualTo(expectAvailable);
+        assertThat(bowlingLine.availablePitching(frame)).isEqualTo(expectAvailable);
     }
 
     static Stream<Arguments> pitchingFrameSource() {
         return Stream.of(
-                arguments(Frame.FRAME_1_1, Frame.FRAME_1_2, 5, true),
-                arguments(Frame.FRAME_2_1, Frame.FRAME_2_2, 10, false),
-                arguments(Frame.FRAME_10_2, Frame.FRAME_10_3, 10, true));
+                arguments(FrameNumber.FRAME_5, true),
+                arguments(FrameNumber.FRAME_10, false),
+                arguments(FrameNumber.FRAME_10, true));
     }
 }

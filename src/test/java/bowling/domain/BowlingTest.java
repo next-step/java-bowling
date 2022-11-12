@@ -15,48 +15,44 @@ class BowlingTest {
     @Test
     void pitching_score_init_frame_test() {
         Bowling bowling = new Bowling(new User("a"));
-        int score = bowling.pitching(Frame.FRAME_1_1, (pin) -> 5);
+        int score = bowling.pitching(FrameNumber.FRAME_1, (pin) -> 5);
 
         assertThat(score).isEqualTo(5);
     }
 
     @ParameterizedTest
     @MethodSource("pitchingScore")
-    void pitching_score_second_frame_test(Frame firstFrame, Frame secondFrame, int firstScore, int expectSecondScore) {
+    void pitching_score_second_frame_test(int firstScore, int expectSecondScore) {
         Bowling bowling = new Bowling(new User("a"));
-        bowling.pitching(firstFrame, (pin) -> firstScore);
-        int score = bowling.pitching(secondFrame, (pin) -> pin);
+        bowling.pitching(FrameNumber.FRAME_1, (pin) -> firstScore);
+        int score = bowling.pitching(FrameNumber.FRAME_1, (pin) -> pin);
 
         assertThat(score).isEqualTo(expectSecondScore);
     }
 
     @ParameterizedTest
     @MethodSource("pitchingScoreMarkSource")
-    void score_mark_test(Frame firstFrame, Frame secondFrame, int firstScore, int secondScore, String expectMark1,
-                         String expectMark2) {
+    void score_mark_test(FrameNumber frameNumber, int firstScore, int secondScore, String expectMark1) {
         Bowling bowling = new Bowling(new User("a"));
-        bowling.pitching(firstFrame, (pin) -> firstScore);
-        String mark1 = bowling.mark(firstFrame);
+        bowling.pitching(frameNumber, (pin) -> firstScore);
+        bowling.pitching(frameNumber, (pin) -> secondScore);
+        String mark = bowling.score(frameNumber);
 
-        bowling.pitching(secondFrame, (pin) -> secondScore);
-        String mark2 = bowling.mark(secondFrame);
-
-        assertThat(mark1).isEqualTo(expectMark1);
-        assertThat(mark2).isEqualTo(expectMark2);
+        assertThat(mark).isEqualTo(expectMark1);
     }
 
     static Stream<Arguments> pitchingScore() {
-        return Stream.of(arguments(Frame.FRAME_1_1, Frame.FRAME_1_2, 5, 5),
-                         arguments(Frame.FRAME_2_1, Frame.FRAME_2_2, 10, 0),
-                         arguments(Frame.FRAME_2_1, Frame.FRAME_2_2, 0, 10),
-                         arguments(Frame.FRAME_2_1, Frame.FRAME_2_2, 0, 10));
+        return Stream.of(arguments(5, 5),
+                         arguments(10, 0),
+                         arguments(0, 10),
+                         arguments(0, 10));
     }
 
     static Stream<Arguments> pitchingScoreMarkSource() {
-        return Stream.of(arguments(Frame.FRAME_1_1, Frame.FRAME_1_2, 5, 5, "5", "/"),
-                         arguments(Frame.FRAME_2_1, Frame.FRAME_2_2, 10, 0, "X", "/"),
-                         arguments(Frame.FRAME_2_1, Frame.FRAME_2_2, 0, 10, "-", "/"),
-                         arguments(Frame.FRAME_2_1, Frame.FRAME_2_2, 0, 0, "-", "-"),
-                         arguments(Frame.FRAME_2_1, Frame.FRAME_2_2, 5, 0, "5", "-"));
+        return Stream.of(arguments(FrameNumber.FRAME_1, 5, 5, "5|/"),
+                         arguments(FrameNumber.FRAME_1, 10, 0, "X"),
+                         arguments(FrameNumber.FRAME_1, 0, 10, "-|/"),
+                         arguments(FrameNumber.FRAME_1, 0, 0, "-|-"),
+                         arguments(FrameNumber.FRAME_1, 5, 0, "5|-"));
     }
 }

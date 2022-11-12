@@ -9,23 +9,16 @@ public class BowlingLine {
         this.bowlingStrategy = bowlingStrategy;
     }
 
-    public boolean availablePitching(Frame frame) {
-        if (frame.isBonusFrame()) {
-            return !bowling.hasRemainPin(Frame.FRAME_10_2);
-        }
-        return bowling.hasRemainPin(frame);
+    public boolean availablePitching(FrameNumber frame) {
+       return bowling.availablePitch(frame);
     }
 
-    public int pitching(Frame frame) {
+    public int pitching(FrameNumber frame) {
         return bowling.pitching(frame, bowlingStrategy);
     }
 
-    public String score(Frame frame) {
-        return bowling.mark(frame);
-    }
-
-    public boolean isStrike(Frame frame) {
-        return bowling.isStrike(frame.beforeFrame());
+    public String score(FrameNumber frame) {
+        return bowling.score(frame);
     }
 
     public String userName() {

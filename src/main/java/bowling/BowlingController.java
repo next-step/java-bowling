@@ -15,6 +15,6 @@ public class BowlingController {
         Bowling bowling = new Bowling(user);
         BowlingLine bowlingLine = new BowlingLine(bowling, new RandomStrategy());
 
-        outputView.printScore(bowlingLine);
+        outputView.printRecord(bowlingLine);
     }
 }

@@ -1,27 +1,21 @@
 package bowling.domain;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Score {
-    private Map<Frame, Integer> scoreMap;
-
-    public Score() {
-        scoreMap = new HashMap<>();
-        initMap();
+    private int score;
+    private static final int MAX_SCORE = 10;
+    public Score(int score) {
+        this.score = score;
     }
 
-    private void initMap() {
-        for (Frame value : Frame.values()) {
-            scoreMap.put(value, 0);
-        }
+    protected int score() {
+        return score;
     }
 
-    public void recordScore(Frame frame, int score) {
-        scoreMap.put(frame, score);
+    public boolean isStrike() {
+        return score == MAX_SCORE;
     }
 
-    public int frameScore(Frame frame) {
-        return scoreMap.get(frame);
+    public boolean isSpare(Score s) {
+        return this.score + s.score() == MAX_SCORE;
     }
 }
