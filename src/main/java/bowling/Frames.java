@@ -17,20 +17,17 @@ public class Frames {
         Frame frame = frames.get(frameNumber.retrieveIndexNumber());
         frame.hitBowlingPin(hitCount);
         if (frame.finishFrame()) {
-            return FrameNumber.next(frameNumber);
+            return frameNumber.next();
         }
         return frameNumber;
     }
 
-    public List<Frame> getFrames() {
-        return frames;
-    }
 
     public FrameNumber pitchingLast(FrameNumber frameNumber, int hitCount) {
         Frame frame = frames.get(frameNumber.retrieveIndexNumber());
         frame.hitBowlingPin(hitCount);
         if (frame.finishLastFrame()) {
-            return FrameNumber.next(frameNumber);
+            return frameNumber.next();
         }
 
         if (frame.clearAllFrame()) {
@@ -38,5 +35,9 @@ public class Frames {
             return frameNumber;
         }
         return frameNumber;
+    }
+
+    public List<Frame> getFrames() {
+        return frames;
     }
 }
