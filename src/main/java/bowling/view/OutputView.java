@@ -9,6 +9,7 @@ public class OutputView {
     private static final String FORMAT_SHAPE = "  %-4s|";
     private static final String BONUS_SHAPE = "  %-6s|";
     private static final String SEPARATOR = "|";
+    private static final String BLANK = "";
 
     private OutputView() {
     }
@@ -21,13 +22,13 @@ public class OutputView {
         sb.append(makeUserFormat(username));
 
         List<Frame> framesList = frames.getFrames();
-        String hitShape = "";
         for (int i = 0; i < framesList.size() - 1; i++) {
             Frame frame = framesList.get(i);
-            hitShape = makeFrameScoreShape(frame.getHitRecords());
+            String hitShape = makeFrameScoreShape(frame.getHitRecords());
             sb.append(String.format(FORMAT_SHAPE, hitShape));
         }
-        sb.append(String.format(BONUS_SHAPE, hitShape));
+        Frame lastFrame = framesList.get(framesList.size() - 1);
+        sb.append(String.format(BONUS_SHAPE, makeFrameScoreShape(lastFrame.getHitRecords())));
 
         sb.append("\n");
         System.out.println(sb);
@@ -38,6 +39,10 @@ public class OutputView {
     }
 
     private static String makeFrameScoreShape(List<HitRecord> hitRecords) {
+        if (hitRecords.isEmpty()) {
+            return BLANK;
+        }
+
         StringBuilder hitBuilder = new StringBuilder();
         HitRecord hitRecordFirst = hitRecords.get(0);
         hitBuilder.append(retrieveHitShape(hitRecordFirst));

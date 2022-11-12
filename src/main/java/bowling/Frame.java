@@ -27,18 +27,33 @@ public class Frame {
     public void hitBowlingPin(int count) {
         bowlingPin = bowlingPin.hitPins(new BowlingPin(count));
         BowilingTerm bowilingTerm = BowilingTerm.MISS;
-        if ((hitRecords.isEmpty() || hitRecords.size() == HIT_TRIPLE) && bowlingPin.isZero()) {
+        if ((hitRecords.isEmpty() || hitRecords.size() == HIT_TRIPLE || hitStrike()) && bowlingPin.isZero()) {
             bowilingTerm = BowilingTerm.STRIKE;
+            hitRecords.add(new HitRecord(count, bowilingTerm));
+            return ;
         }
 
         if (hitRecords.size() == HIT_ONCE && bowlingPin.isZero()) {
             bowilingTerm = BowilingTerm.SPARE;
+            hitRecords.add(new HitRecord(count, bowilingTerm));
+            return ;
         }
 
         if (count == 0) {
             bowilingTerm = BowilingTerm.GUTTER;
+            hitRecords.add(new HitRecord(count, bowilingTerm));
+            return ;
         }
         hitRecords.add(new HitRecord(count, bowilingTerm));
+    }
+
+    private boolean hitStrike() {
+        for (HitRecord hitRecord : hitRecords) {
+            if (!hitRecord.hitAll()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public boolean finishFrame() {
@@ -49,12 +64,7 @@ public class Frame {
         if (hitRecords.size() != HIT_TWICE) {
             return false;
         }
-        for (HitRecord hitRecord : hitRecords) {
-            if (!hitRecord.hitAll()) {
-                return false;
-            }
-        }
-        return true;
+        return hitStrike();
     }
 
     public void chargeBowlingPin() {
