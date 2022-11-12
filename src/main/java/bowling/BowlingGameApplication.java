@@ -7,7 +7,7 @@ public class BowlingGameApplication {
         OutputView.printPlayerStatus(player.status());
 
         int frameOrderToThrow = player.frameOrderToThrow();
-        while (frameOrderToThrow != -1) {
+        while (frameOrderToThrow != Frame.NO_FRAME_TO_THROW) {
             int knockDownCount = InputView.inputKnockDownCount(frameOrderToThrow);
             player.throwBall(knockDownCount);
             frameOrderToThrow = player.frameOrderToThrow();

@@ -2,6 +2,7 @@ package bowling;
 
 public abstract class Frame {
     public static final int MAX_FRAME = 10;
+    public static final int NO_FRAME_TO_THROW = -1;
 
     private final int order;
     private final Chances chances = new Chances();

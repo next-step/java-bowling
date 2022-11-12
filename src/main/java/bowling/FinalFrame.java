@@ -1,6 +1,8 @@
 package bowling;
 
 public class FinalFrame extends Frame {
+    public static final int NO_FRAME_TO_THROW = -1;
+
     public FinalFrame(int order) {
         super(order);
     }
@@ -8,7 +10,7 @@ public class FinalFrame extends Frame {
     @Override
     public int orderToThrow() {
         if (chances().areAllPinsDown()) {
-            return -1;
+            return NO_FRAME_TO_THROW;
         }
         return order();
     }
