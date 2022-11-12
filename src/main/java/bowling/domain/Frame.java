@@ -2,61 +2,19 @@ package bowling.domain;
 
 import java.util.List;
 
-public class Frame {
-    private int round;
+public abstract class Frame {
+    protected int round;
 
-    private Balls balls;
+    protected Balls balls;
 
-    private Pins pins;
-
-    public Frame(int round) {
-        this(round, 0, 0);
+    public Frame() {
     }
 
-    public Frame(int round, int firstBallKnockedDownPinCount, int secondBallKnockedDownPinCount) {
-        this.round = round;
-        this.balls = new Balls(firstBallKnockedDownPinCount, secondBallKnockedDownPinCount);
-        this.pins = new Pins();
-        pins.knockDown(firstBallKnockedDownPinCount);
-        pins.knockDown(secondBallKnockedDownPinCount);
-    }
+    public abstract void play();
 
-    public Frame(int round, int firstBallKnockedDownPinCount, int secondBallKnockedDownPinCount, int thirdBallKnockedDownPinCount) {
-        this.round = round;
-        this.balls = new Balls(firstBallKnockedDownPinCount, secondBallKnockedDownPinCount);
-        this.pins = new Pins();
-        pins.knockDown(firstBallKnockedDownPinCount);
-        pins.knockDown(secondBallKnockedDownPinCount);
+    public abstract String scoringText();
 
-        // 세번째볼 처리
-        Ball ball = new Ball(thirdBallKnockedDownPinCount);
-        balls.add(ball);
-        List<Pin> addPins = PinGenerator.generate();
-        pins.add(addPins);
-        pins.knockDown(thirdBallKnockedDownPinCount);
-    }
-
-    public void play() {
-        balls.pitch(pins);
-        if (pins.knockDownCount() == 10 && round == 10) {
-            List<Pin> addPins = PinGenerator.generate();
-            pins.add(addPins);
-            Ball ball = new Ball();
-            ball.pitch(pins);
-            balls.add(ball);
-        }
-    }
-
-    public String scoringText() {
-        String result = scoringTextOneToNineRound();
-        if (balls.size() < 3) {
-            return result;
-        }
-        int thirdBallKnockedDownPinCount = balls.getKnockedDownPinCount(2);
-        return result + "|" + ScoreRull.getSymbolOrScore(thirdBallKnockedDownPinCount, true);
-    }
-
-    private String scoringTextOneToNineRound() {
+    public String scoringTextNormalFrame() {
         int firstBallKnockedDownPinCount = balls.getKnockedDownPinCount(0);
         if (firstBallKnockedDownPinCount == 10) {
             return ScoreRull.getSymbolOrScore(firstBallKnockedDownPinCount, true);
@@ -72,6 +30,6 @@ public class Frame {
     }
 
     public int score() {
-        return pins.knockDownCount();
+        return balls.score();
     }
 }

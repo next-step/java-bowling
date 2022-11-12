@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 public class BowlingGame {
 
     private static final int GAME_BEGIN_ROUND_NUMBER = 1;
-    private static final int GAME_END_ROUND_NUMBER = 10;
+    private static final int GAME_END_ROUND_NUMBER = 9;
     private final List<Frame> frameList;
 
 
@@ -19,10 +19,14 @@ public class BowlingGame {
     }
 
     private List<Frame> initFrameList() {
-        return IntStream.rangeClosed(GAME_BEGIN_ROUND_NUMBER, GAME_END_ROUND_NUMBER)
+        List<Frame> frames = IntStream.rangeClosed(GAME_BEGIN_ROUND_NUMBER, GAME_END_ROUND_NUMBER)
                 .boxed()
-                .map(Frame::new)
+                .map(NormalFrame::new)
                 .collect(Collectors.toList());
+        FinalFrame finalFrame = new FinalFrame(10);
+        frames.add(finalFrame);
+
+        return frames;
     }
 
     public void play(UserName userName) {
