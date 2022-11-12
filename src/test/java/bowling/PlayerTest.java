@@ -34,14 +34,14 @@ public class PlayerTest {
     @Test
     @DisplayName("처음 시작하면 1번 프레임부터")
     void test3() {
-        Player player = new Player("a");
+        Player player = new Player("aaa");
         assertThat(player.frameOrderToThrow()).isEqualTo(1);
     }
 
     @Test
     @DisplayName("10개를 쓰러트리면 2번 프레임으로 넘어간다")
     void test4() {
-        Player player = new Player("a");
+        Player player = new Player("aaa");
         player.throwBall(10);
         assertThat(player.frameOrderToThrow()).isEqualTo(2);
     }
