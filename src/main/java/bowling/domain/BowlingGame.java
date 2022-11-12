@@ -25,7 +25,7 @@ public class BowlingGame {
                 .collect(Collectors.toList());
     }
 
-    public List<String> play(UserName userName) {
+    public void play(UserName userName) {
         List<String> playResult = new ArrayList<>();
         frameList.stream()
                 .forEach(frame -> {
@@ -33,8 +33,6 @@ public class BowlingGame {
                     playResult.add(frame.scoringText());
                     ResultView.printRoundResult(userName, playResult, frame.score());
                 });
-
-        return playResult;
     }
 
 }

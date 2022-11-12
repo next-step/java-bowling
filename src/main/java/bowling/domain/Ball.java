@@ -14,9 +14,9 @@ public class Ball {
         this.knockedDownPinCount = knockedDownPinCount;
     }
 
-    public int pitch(Pins pins){
+    public void pitch(Pins pins){
         int knockedDownPinCount = RANDOM.nextInt(pins.standingPinCount() + 1);
-        return this.knockedDownPinCount = pins.knockDown(knockedDownPinCount);
+        this.knockedDownPinCount = pins.knockDown(knockedDownPinCount);
     }
 
     public int getKnockedDownPinCount() {

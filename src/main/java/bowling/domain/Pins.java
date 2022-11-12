@@ -20,7 +20,7 @@ public class Pins {
                 .limit(knockedDownPinCount)
                 .collect(Collectors.toList());
 
-        pinList.forEach(pin -> pin.knockDown());
+        pinList.forEach(Pin::knockDown);
 
         return pinList.size();
     }
