@@ -1,40 +1,63 @@
 package bowling.view;
 
 import bowling.domain.Frame;
-import bowling.domain.ScoreType;
+import bowling.domain.Pin;
+import bowling.domain.state.State;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class FrameResult {
 
-    private final Frame frame;
+    private static final int NO_SCORE = -1;
+    private static final String STRIKE = "X";
+    private static final String GUTTER = "-";
 
-    public FrameResult(Frame frame) {
+    public String frameSign(final Frame frame) {
 
-        this.frame = frame;
+        if (frame.isLastFrame()) {
+            final String states = String.format(frame.getStates()
+                    .stream()
+                    .map(this::sign)
+                    .collect(Collectors.joining("|")), "%5s");
+            return String.format("%5s ", states);
+        }
+
+        final State state = frame.getState();
+        return String.format(" %3s  ", sign(state));
     }
 
-    public String createFrameScore() {
+    private String sign(final State state) {
 
-        if (isFirstFrame(frame)) {
+        return createSign(state)
+                .replaceAll("10", STRIKE)
+                .replaceAll("0", GUTTER);
+    }
+
+    private static String createSign(final State state) {
+
+        final List<Pin> pins = state.pins();
+        if (pins.size() == 0) {
             return "";
         }
 
-        ScoreType score = frame.status();
-        if (score.equals(ScoreType.SPARE)) {
-            return String.format("  %d|/ |", frame.pinNumber(0));
+        if (pins.size() == 1) {
+            return String.valueOf(pins.get(0).count());
         }
 
-        if (frame.pinsSize() == 2) {
-            return String.format("  %d|%d |", frame.pinNumber(0), frame.pinNumber(1));
+        if (pins.get(0).count() + pins.get(1).count() == 10) {
+            return String.format("%d|/", pins.get(0).count());
         }
 
-        if (frame.pinsSize() == 3) {
-            return String.format(" %d|/|%d|", frame.pinNumber(0), frame.pinNumber(2));
-        }
-
-        return String.format("  %d   |", frame.pinNumber(0));
+        return String.format("%d|%d", pins.get(0).count(), pins.get(1).count());
     }
 
-    private boolean isFirstFrame(Frame frame) {
-        return frame.getNumber() == 1 && frame.isEmpty();
+    public int frameScore(final Frame frame) {
+
+        try {
+            return frame.getIntScore();
+        } catch (IllegalArgumentException e) {
+            return NO_SCORE;
+        }
     }
 }
