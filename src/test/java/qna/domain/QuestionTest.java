@@ -49,15 +49,13 @@ public class QuestionTest {
         return question;
     }
 
-    private static List<Answer> answers(User questionWriter, User... answerWriters) {
-        return Arrays.stream(answerWriters).map(writer -> answer(questionWriter, writer)).collect(Collectors.toList());
+    private static Answers answers(User questionWriter, User... answerWriters) {
+        return new Answers(Arrays.stream(answerWriters).map(writer -> answer(questionWriter, writer)).collect(Collectors.toList()));
     }
     
-    private static Question question(long contentId, User questionWriter, User... answerWriters) {
-        Question question = question(contentId, questionWriter);
-        for (Answer answer : answers(questionWriter, answerWriters)) {
-            question.addAnswer(answer);
-        }
+    private static Question question(long contentId, User writer, User... answerWriters) {
+        Question question = new Question("title", "contents", answers(writer, answerWriters)).writeBy(writer);
+        question.setId(contentId);
         return question;
     }
 }
