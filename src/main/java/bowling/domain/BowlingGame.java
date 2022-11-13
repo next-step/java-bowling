@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 public class BowlingGame {
@@ -18,9 +19,9 @@ public class BowlingGame {
     public static BowlingGame of(List<String> playerNames) {
         validatePlayerNames(playerNames);
 
-        return new BowlingGame(playerNames.stream()
+        return playerNames.stream()
                 .map(name -> new Lane(new PlayerName(name)))
-                .collect(toList()));
+                .collect(collectingAndThen(toList(), BowlingGame::new));
     }
 
     private static void validatePlayerNames(List<String> playerNames) {
