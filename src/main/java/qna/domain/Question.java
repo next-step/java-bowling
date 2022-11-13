@@ -15,11 +15,8 @@ public class Question extends ArticleEntity {
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
-
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     public Question() {
     }
@@ -62,7 +59,7 @@ public class Question extends ArticleEntity {
         setDeletedTrue();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer));
 
-        Answers answerList = new Answers(answers);
+        Answers answerList = answers;
         deleteHistories.addAll(answerList.delete(deletedBy));
 
         return deleteHistories;
