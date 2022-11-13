@@ -1,6 +1,8 @@
 package bowling.view;
 
+import bowling.domain.Name;
 import bowling.domain.PinCount;
+
 
 import java.util.Scanner;
 
@@ -11,9 +13,9 @@ public class InputView {
     private InputView() {
     }
 
-    public static String readName() {
+    public static Name readName() {
         System.out.print("플레이어 이름은(3 english letters)?: ");
-        return SCANNER.nextLine();
+        return Name.of(SCANNER.nextLine());
     }
 
     public static PinCount readPinCount(int roundCount) {
