@@ -39,7 +39,7 @@ public class AnswersTest {
     @Test
     void 삭제이력_생성() throws CannotDeleteException {
         DeleteHistories histories = a.deleteAll(AnswerTest.A1.getWriter());
-        assertThat(histories).hasSize(2);
+        assertThat(histories.size()).isEqualTo(2);
         assertThat(histories.get(0)).isEqualTo(DeleteHistoryTest.ANSWER_DELETEHISTORY);
     }
 }
