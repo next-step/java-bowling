@@ -3,25 +3,25 @@ package bowling;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Pins {
+public class Pin {
 
     public static final int MIN_PINS = 0;
     public static final int MAX_PINS = 10;
-    private static final Map<Integer, Pins> cache = new HashMap<>();
+    private static final Map<Integer, Pin> cache = new HashMap<>();
 
     static {
         for (int index = MIN_PINS; index <= MAX_PINS; index++) {
-            cache.put(index, new Pins(index));
+            cache.put(index, new Pin(index));
         }
     }
 
     private final int falledPins;
 
-    private Pins(int falledPins) {
+    private Pin(int falledPins) {
         this.falledPins = falledPins;
     }
 
-    public static Pins from(int falledPins) {
+    public static Pin from(int falledPins) {
         if (falledPins > MAX_PINS) {
             throw new IllegalArgumentException(
                 String.format("볼링 핀은 최대 10을 넘을 수 없습니다. 현재 쓰러진 핀 수는 %d", falledPins));
@@ -46,7 +46,7 @@ public class Pins {
         return falledPins < MAX_PINS;
     }
 
-    public Pins addPins(int secondPins) {
+    public Pin addPins(int secondPins) {
         int totalPins = falledPins + secondPins;
         return from(totalPins);
     }

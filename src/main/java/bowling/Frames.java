@@ -5,25 +5,29 @@ import java.util.List;
 
 public class Frames {
 
-    private List<Frame> frames = new ArrayList<>();
+    private final List<Frame> frames;
 
-    public boolean isFinished() {
-        return frames.size() == FinalFrame.FINAL_FRAME_NUM && getLastFrame().isFinished();
+    private Frames(List<Frame> frames) {
+        this.frames = frames;
+    }
+
+    public static Frames start(Pin falledPins) {
+        List<Frame> frames = new ArrayList<>();
+        NormalFrame firstFrame = new NormalFrame(1, falledPins);
+        frames.add(firstFrame);
+        return new Frames(frames);
+    }
+
+    public void bowl(Pin falledPins) {
+        Frame lastFrame = getLastFrame();
+        if (lastFrame.isFinished()) {
+            frames.add(lastFrame.nextFrame(falledPins));
+            return;
+        }
+        lastFrame.bowl(falledPins);
     }
 
     private Frame getLastFrame() {
         return frames.get(frames.size() - 1);
-    }
-
-    public void add(Frame frame) {
-        frames.add(frame);
-    }
-
-    public List<Frame> getFrames() {
-        return frames;
-    }
-
-    public int size() {
-        return frames.size();
     }
 }

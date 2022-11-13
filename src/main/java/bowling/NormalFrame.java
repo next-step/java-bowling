@@ -1,57 +1,39 @@
 package bowling;
 
-public class NormalFrame implements Frame {
-    public static int MIN_FRAMES = 1;
-    public static int MAX_FRAMES = 9;
+public class NormalFrame implements Frame{
 
-    private int frameNumber;
-    private NormalThrown normalThrown;
+    public static final int MIN_FRAME_NUMBER = 1;
+    public static final int MAX_FRAME_NUMBER = 9;
 
-    private NormalFrame(int frameNumber, NormalThrown normalThrown) {
-        valid(frameNumber);
+    private final int frameNumber;
+    private final Score score = new Score();
+
+    public NormalFrame(int frameNumber, Pin falledPins) {
         this.frameNumber = frameNumber;
-        this.normalThrown = normalThrown;
-    }
-
-    public static NormalFrame of(int frameNumber, int countOfPins) {
-        Pins pins = Pins.from(countOfPins);
-        return new NormalFrame(frameNumber, new NormalThrown(pins));
+        this.score.add(falledPins);
     }
 
     @Override
-    public int getScore() {
-        return normalThrown.getScore();
+    public boolean isFinished() {
+        return score.isFinished();
     }
 
-    private void valid(int frameNumber) {
-        if (frameNumber < MIN_FRAMES || frameNumber > MAX_FRAMES) {
-            throw new IllegalArgumentException("잘못된 프레임 번호입니다.");
+    @Override
+    public Frame nextFrame(Pin falledPins) {
+        if (frameNumber == MAX_FRAME_NUMBER) {
+            return new FinalFrame();
         }
+        return new NormalFrame(frameNumber + 1, falledPins);
     }
 
     @Override
-    public Frame bowl(int countOfPins) {
-        normalThrown.bowl(countOfPins);
-        return this;
+    public Frame bowl(Pin falledPins) {
+        score.add(falledPins);
+        return null;
     }
 
     @Override
     public boolean isFinalFrame() {
         return false;
-    }
-
-    @Override
-    public int firstPins() {
-        return normalThrown.firstPins();
-    }
-
-    @Override
-    public int secondPins() {
-        return normalThrown.secondPins();
-    }
-
-    @Override
-    public boolean isFinished() {
-        return normalThrown.isFinished();
     }
 }

@@ -1,16 +1,11 @@
 package bowling;
 
 public interface Frame {
+    Frame bowl(Pin falledPins);
 
-    Frame bowl(int countOfPins);
-
-    boolean isFinished();
+    Frame nextFrame(Pin falledPins);
 
     boolean isFinalFrame();
 
-    int getScore();
-
-    int firstPins();
-
-    int secondPins();
+    boolean isFinished();
 }
