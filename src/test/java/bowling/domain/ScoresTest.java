@@ -22,4 +22,11 @@ public class ScoresTest {
     void 스코어_개수_구하기() {
         assertThat(new Scores(9, 1, 2).size()).isEqualTo(3);
     }
+
+    @Test
+    void 스코어_추가() {
+        Scores scores = new Scores();
+        scores.add(new Score(1));
+        assertThat(scores.getScores()).contains(new Score(1));
+    }
 }

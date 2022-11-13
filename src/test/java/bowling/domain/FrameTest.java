@@ -29,4 +29,12 @@ public class FrameTest {
     void 프레임_완료_확인(Scores scores, boolean result) {
         assertThat(new Frame(scores).isEnd()).isEqualTo(result);
     }
+
+
+    @Test
+    void 입력값_프레임에_추가() {
+        Frame frame = new Frame();
+        frame.addScore(new Score(10));
+        assertThat(frame.getScores().getScores()).contains(new Score(10));
+    }
 }
