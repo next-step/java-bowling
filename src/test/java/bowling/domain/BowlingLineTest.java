@@ -25,8 +25,7 @@ class BowlingLineTest {
 
     static Stream<Arguments> pitchingFrameSource() {
         return Stream.of(
-                arguments(FrameNumber.FRAME_5, true),
-                arguments(FrameNumber.FRAME_10, false),
-                arguments(FrameNumber.FRAME_10, true));
+                arguments(FrameNumber.FRAME_1, 9, true),
+                arguments(FrameNumber.FRAME_1, 10, false));
     }
 }
