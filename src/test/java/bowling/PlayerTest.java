@@ -62,7 +62,8 @@ public class PlayerTest {
         player.throwBall(10);
         player.throwBall(10);
         player.throwBall(10);
-        player.throwBall(10);
+        player.throwBall(5);
+        player.throwBall(3);
         assertThat(player.frameOrderToThrow()).isEqualTo(-1);
     }
 

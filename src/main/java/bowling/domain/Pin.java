@@ -5,11 +5,13 @@ import java.util.Objects;
 public class Pin {
     public static final int MIN_PIN_COUNT = 0;
     public static final int MAX_PIN_COUNT = 10;
+    public static final Pin All_KNOCK_DOWN_PIN = Pin.of(MAX_PIN_COUNT);
+    public static final Pin NO_KNOCK_DOWN_PIN = Pin.of(MIN_PIN_COUNT);
 
     private final int knockDownCount;
 
     private Pin(int knockDownCount) {
-        if (knockDownCount < MIN_PIN_COUNT || knockDownCount > MAX_PIN_COUNT) {
+        if (knockDownCount < MIN_PIN_COUNT) {
             throw new IllegalArgumentException("쓰러트린 핀의 수가 유효범위에 들지 않았습니다.");
         }
         this.knockDownCount = knockDownCount;
@@ -28,7 +30,11 @@ public class Pin {
     }
 
     public boolean areAllPinsDown() {
-        return knockDownCount == MAX_PIN_COUNT;
+        return knockDownCount >= MAX_PIN_COUNT;
+    }
+
+    public boolean isSmallerThan(Pin pin) {
+        return knockDownCount < pin.knockDownCount;
     }
 
     public int pin() {

@@ -5,7 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Chances {
-    private static final int MAX_CHANCE_COUNT = 2;
+    private static final int NORMAL_FRAME_MAX_CHANCE_COUNT = 2;
+    private static final int FINAL_FRAME_MAX_CHANCE_COUNT = 3;
     private final List<Chance> chances;
 
     public Chances() {
@@ -14,12 +15,12 @@ public class Chances {
 
     public void add(int knockDownCount) {
         int order = chances.size();
-        Pin pin = Pin.of(knockDownCount);
-        Pin sumOfPin = chances.stream()
+        Pin current = Pin.of(knockDownCount);
+        Pin sum = chances.stream()
                 .map(Chance::pin)
                 .reduce(Pin.of(0), Pin::add)
-                .add(pin);
-        chances.add(new Chance(pin, Status.findStatus(order, sumOfPin.areAllPinsDown(), pin.areNoPinsDown())));
+                .add(current);
+        chances.add(new Chance(current, Status.findStatus(order, current, sum)));
     }
 
     public boolean areAllPinsDown() {
@@ -29,8 +30,11 @@ public class Chances {
                 .areAllPinsDown();
     }
 
-    public boolean noLeftChances() {
-        return chances.size() == MAX_CHANCE_COUNT;
+    public boolean noLeftChances(boolean isFinalFrame) {
+        if (!isFinalFrame || !areAllPinsDown()) {
+            return chances.size() == NORMAL_FRAME_MAX_CHANCE_COUNT;
+        }
+        return chances.size() == FINAL_FRAME_MAX_CHANCE_COUNT;
     }
 
     public List<Chance> chances() {

@@ -17,14 +17,6 @@ public class PinTest {
     }
 
     @Test
-    @DisplayName("쓰러트린 핀의 수가 MAX이상")
-    void test2() {
-        assertThatThrownBy(() -> {
-            Pin.of(Pin.MAX_PIN_COUNT + 1);
-        }).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
     @DisplayName("핀 더하기")
     void test3() {
         // given

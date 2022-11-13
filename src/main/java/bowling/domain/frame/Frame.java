@@ -7,10 +7,11 @@ public abstract class Frame {
     public static final int NO_FRAME_TO_THROW = -1;
 
     private final int order;
-    private final Chances chances = new Chances();
+    private final Chances chances;
 
     protected Frame(int order) {
         this.order = order;
+        this.chances = new Chances();
     }
 
     public static Frame frame() {
@@ -28,5 +29,6 @@ public abstract class Frame {
     public Chances chances() {
         return chances;
     }
+
 
 }

@@ -35,8 +35,15 @@ public class OutputView {
             System.out.printf("%-2s|", BLANK);
             return;
         }
-        System.out.printf("%3s|", chances.get(0).chance());
-        System.out.printf("%-2s|", chances.get(1).chance());
+        if (chances.size() == 2) {
+            System.out.printf("%3s|", chances.get(0).chance());
+            System.out.printf("%-2s|", chances.get(1).chance());
+            return;
+        }
+        System.out.printf("%1s|", chances.get(0).chance());
+        System.out.printf("%s|", chances.get(1).chance());
+        System.out.printf("%-2s|", chances.get(2).chance());
+
     }
 
 }

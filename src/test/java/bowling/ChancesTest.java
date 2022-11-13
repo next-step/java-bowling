@@ -5,16 +5,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ChancesTest {
-    @Test
-    @DisplayName("10개 이상의 핀을 넘어뜨림")
-    void test1() {
-        assertThatThrownBy(() -> {
-            new Chances().add(11);
-        }).isInstanceOf(IllegalArgumentException.class);
-    }
 
     @Test
     @DisplayName("모든 핀이 넘어졌음")
@@ -31,7 +23,7 @@ public class ChancesTest {
         Chances chances = new Chances();
         chances.add(10);
         chances.add(0);
-        assertThat(chances.noLeftChances()).isTrue();
+        assertThat(chances.noLeftChances(false)).isTrue();
     }
 
     @Test
@@ -48,7 +40,7 @@ public class ChancesTest {
     void test5() {
         Chances chances = new Chances();
         chances.add(10);
-        assertThat(chances.noLeftChances()).isFalse();
+        assertThat(chances.noLeftChances(false)).isFalse();
     }
 
 }

@@ -35,7 +35,8 @@ public class FrameTest {
         frame.addChances(10);
         frame.addChances(10);
         frame.addChances(10);
-        frame.addChances(10);
+        frame.addChances(5);
+        frame.addChances(3);
         assertThat(frame.orderToThrow()).isEqualTo(-1);
     }
 
