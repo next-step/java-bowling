@@ -11,12 +11,12 @@ public class InputView {
     private InputView() {
     }
 
-    public String readName() {
+    public static String readName() {
         System.out.print("플레이어 이름은(3 english letters)?: ");
         return SCANNER.nextLine();
     }
 
-    public PinCount readPinCount(int roundCount) {
+    public static PinCount readPinCount(int roundCount) {
         System.out.print(String.format("%d 프레인 투구 : ", roundCount));
         int count = SCANNER.nextInt();
         SCANNER.nextLine();
