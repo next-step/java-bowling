@@ -4,13 +4,13 @@ public class TurnStore {
     private int currentFrameIndex;
     private int currentLaneIndex;
 
+    public String getPlayerName(Records records) {
+        return records.getPlayerName(currentLaneIndex);
+    }
+
     public void record(Records records, int downPinCount) {
         records.record(currentLaneIndex, downPinCount);
         setNextTurn(records);
-    }
-
-    public String getPlayerName(Records records) {
-        return records.getPlayerName(currentLaneIndex);
     }
 
     private void setNextTurn(Records records) {
@@ -27,8 +27,12 @@ public class TurnStore {
         }
     }
 
-    private void setNextLane() {
-        currentLaneIndex++;
+    private boolean isEndGame(Records records) {
+        return records.isEndRecords();
+    }
+
+    private boolean isEndFrames(Records records) {
+        return records.isEndFrames(currentFrameIndex);
     }
 
     private void setNextFrame() {
@@ -36,16 +40,12 @@ public class TurnStore {
         currentFrameIndex++;
     }
 
-    private boolean isEndFrames(Records records) {
-        return records.isEndFrames(currentFrameIndex);
-    }
-
     private boolean isEndPlayerFrame(Records records) {
         return records.isEndPlayerFrame(currentFrameIndex, currentLaneIndex);
     }
 
-    private boolean isEndGame(Records records) {
-        return records.isEndRecords();
+    private void setNextLane() {
+        currentLaneIndex++;
     }
 
 }
