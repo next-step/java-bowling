@@ -11,15 +11,19 @@ public class InputView implements AutoCloseable {
         this.bufferedReader = bufferedReader;
     }
 
-    public String getUsername() throws IOException {
-        return bufferedReader.readLine();
+    public String getUsername() {
+        try {
+            return bufferedReader.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public Integer getKnockDownPinNumber() throws IOException {
+    public Integer getNumber() throws IOException {
         try {
             return Integer.parseInt(bufferedReader.readLine());
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("투구 개수는 숫자여야만 합니다.", e);
+            throw new IllegalArgumentException("입력값은 숫자여야만 합니다.", e);
         }
     }
 
@@ -27,4 +31,5 @@ public class InputView implements AutoCloseable {
     public void close() throws Exception {
         bufferedReader.close();
     }
+
 }

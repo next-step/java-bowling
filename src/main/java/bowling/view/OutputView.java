@@ -15,9 +15,10 @@ public class OutputView {
 
     private static final int TEMPLATE_INTERVAL = 5;
 
-    private static final String USERNAME_ASK_QST = "플레이어 이름은(%d english letters)?:";
+    private static final String PEOPLE_NUMBER_ASK_QST = "How many people?";
+    private static final String USERNAME_ASK_QST = "플레이어 %d의 이름은(%d english letters)?:";
 
-    private static final String KNOWN_DOWN_PIN_NUMBER_ASK_QST = "\n %d프레임 투구 : ";
+    private static final String KNOWN_DOWN_PIN_NUMBER_ASK_QST = "\n %s's turn : ";
     private static final String TEMPLATE_SEPARATOR = "|";
     private static final String NAME_DISPLAY_TEMPLATE = "NAME";
 
@@ -29,22 +30,34 @@ public class OutputView {
 
     }
 
-    public static void printUsernameAskQst() {
-        System.out.printf(USERNAME_ASK_QST, Username.USERNAME_LENGTH);
+    public static void printUsernameAskQst(int userIndex) {
+        System.out.printf(USERNAME_ASK_QST, userIndex, Username.USERNAME_LENGTH);
     }
 
-    public static void printPinAskQst(BowlingRound round) {
-        System.out.printf(KNOWN_DOWN_PIN_NUMBER_ASK_QST, round.getRoundNumber());
+    public static void printPinAskQst(Username username) {
+        System.out.printf(KNOWN_DOWN_PIN_NUMBER_ASK_QST, username.getName());
     }
 
 
-    public static void printScore(Bowling bowling, Username username, List<ScoreResult> scoreResults) {
+    public static void printScore(Bowlings bowlings, List<ScoreResult> scoreResults) {
         System.out.println(roundTemplate);
-        System.out.print(TEMPLATE_SEPARATOR + createTemplateUnit(username.getName()));
-        printPin(bowling);
-        System.out.print("\n" + TEMPLATE_SEPARATOR + createTemplateUnit(""));
-        printScore(scoreResults);
+        getUsernames(bowlings)
+                .stream()
+                .forEach((username) -> printScoreOfUser(bowlings, username, scoreResults));
     }
+
+    private static List<Username> getUsernames(Bowlings bowlings) {
+        return bowlings.getUsernames().getUsernames();
+    }
+
+    private static void printScoreOfUser(Bowlings bowlings, Username username, List<ScoreResult> scoreResults) {
+        System.out.print(TEMPLATE_SEPARATOR + createTemplateUnit(username.getName()));
+        printPin(bowlings.findBowlingByUsername(username));
+        System.out.print("\n" + TEMPLATE_SEPARATOR + createTemplateUnit(""));
+        printScore(scoreResults, username);
+        System.out.println();
+    }
+
 
     private static void printPin(Bowling bowling) {
         IntStream.range(1, BowlingRound.LAST_ROUND_NUM + 1)
@@ -52,8 +65,8 @@ public class OutputView {
                 .forEach(System.out::print);
     }
 
-    private static void printScore(List<ScoreResult> scoreResults) {
-        Integer[] result = cumulativeSum(scoreResults);
+    private static void printScore(List<ScoreResult> scoreResults, Username username) {
+        Integer[] result = cumulativeSum(scoreResults, username);
         IntStream.range(0, BowlingRound.LAST_ROUND_NUM)
                 .mapToObj((scoreIndex) -> {
                     if (scoreIndex < result.length) {
@@ -64,8 +77,9 @@ public class OutputView {
                 .forEach(System.out::print);
     }
 
-    private static Integer[] cumulativeSum(List<ScoreResult> scoreResults) {
+    private static Integer[] cumulativeSum(List<ScoreResult> scoreResults, Username username) {
         Integer[] result = scoreResults.stream()
+                .filter((scoreResult -> scoreResult.isSameUsername(username)))
                 .flatMap(scoreResult -> scoreResult.getScores().stream())
                 .toArray(Integer[]::new);
         Arrays.parallelPrefix(result, Integer::sum);
@@ -130,5 +144,9 @@ public class OutputView {
 
     public static void printConsole(String message) {
         System.out.println(message);
+    }
+
+    public static void printPeopleNumberAskQst() {
+        System.out.println(PEOPLE_NUMBER_ASK_QST);
     }
 }
