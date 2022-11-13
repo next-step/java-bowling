@@ -16,7 +16,7 @@ public class BowlingController {
         ResultView.printFrameResults(players);
 
         while (!players.isAllEnd()) {
-            inputBowlNumberAndPrintResult(players);
+            bowl(players);
         }
     }
 
@@ -45,27 +45,27 @@ public class BowlingController {
         }
     }
 
-    private void inputBowlNumberAndPrintResult(Players players) {
+    private void bowl(Players players) {
         for (Player player : players.getPlayers()) {
-            inputBowlNumber(player, players);
+            inputBowlNumberAndPrintResult(player, players);
         }
     }
 
-    private void inputBowlNumber(Player player, Players players) {
+    private void inputBowlNumberAndPrintResult(Player player, Players players) {
         if (player.canBowl()) {
-            bowl(player);
+            inputBowlNumber(player);
             ResultView.printFrameResults(players);
         }
     }
 
-    private void bowl(Player player) {
+    private void inputBowlNumber(Player player) {
         int number = InputView.inputBowlNumber(player.getName().getValue());
 
         try {
             player.bowl(number);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
-            bowl(player);
+            inputBowlNumber(player);
         }
     }
 }
