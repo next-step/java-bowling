@@ -34,13 +34,29 @@ class BowlingsTest {
     }
 
     @Test
-    void 종료() {
+    void 종료_2회투구() {
         Bowlings bowlings = Bowlings.initNormal();
 
         bowlings.bowling(5);
         assertThat(bowlings.isEnd()).isFalse();
 
         bowlings.bowling(5);
+        assertThat(bowlings.isEnd()).isTrue();
+    }
+
+    @Test
+    void 종료_노말_스트라이크() {
+        Bowlings bowlings = Bowlings.initNormal();
+        bowlings.bowling(10);
+        assertThat(bowlings.isEnd()).isTrue();
+    }
+
+    @Test
+    void 종료_마지막_() {
+        Bowlings bowlings = Bowlings.initFianl();
+        bowlings.bowling(10);
+        bowlings.bowling(10);
+        bowlings.bowling(10);
         assertThat(bowlings.isEnd()).isTrue();
     }
 }

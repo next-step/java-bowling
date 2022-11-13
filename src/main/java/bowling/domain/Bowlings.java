@@ -45,11 +45,13 @@ public class Bowlings {
     }
 
     private int getTotalCount(int count) {
-        int beforeTotal = values.stream()
+        return getCurrentTotalCount() + count;
+    }
+
+    private int getCurrentTotalCount() {
+        return values.stream()
                 .mapToInt(Bowling::getCount)
                 .reduce(0, Integer::sum);
-
-        return beforeTotal + count;
     }
 
     public int size() {
@@ -57,7 +59,7 @@ public class Bowlings {
     }
 
     public boolean isEnd() {
-        return values.size() == maxSize;
+        return values.size() == maxSize || getCurrentTotalCount() == maxTotalCount;
     }
 
     //=============================================================
