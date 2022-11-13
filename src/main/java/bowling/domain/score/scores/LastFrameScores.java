@@ -31,4 +31,14 @@ public class LastFrameScores extends Scores {
             throw new IllegalArgumentException();
         }
     }
+
+    @Override
+    public boolean isEndScore() {
+        return isSizeEqual(TOTAL_CHANCE) || isSizeEqual(DEFAULT_CHANCE);
+    }
+
+    @Override
+    public boolean isEndScore(Scores scores) {
+        return false;
+    }
 }

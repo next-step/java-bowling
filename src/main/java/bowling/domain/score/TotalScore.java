@@ -45,4 +45,8 @@ public class TotalScore {
     public void validateScore() {
         this.regularScores.validateScore();
     }
+
+    public boolean isNotEndScoreAggregation() {
+        return !this.regularScores().isEndScore() || !bonusScores().isEndScore(this.regularScores);
+    }
 }

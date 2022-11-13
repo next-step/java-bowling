@@ -25,12 +25,6 @@ public class LastFrame extends Frame {
 
     @Override
     public boolean isNotEndScoreAggregation() {
-        if (this.chance.isRemainChance()) {
-            return true;
-        }
-        if (this.totalScore.regularScores().first().isStrike() || this.totalScore.regularScores().isSpare()) {
-            return !this.totalScore.regularScores().isSizeEqual(TOTAL_CHANCE);
-        }
-        return false;
+        return this.chance.isRemainChance();
     }
 }

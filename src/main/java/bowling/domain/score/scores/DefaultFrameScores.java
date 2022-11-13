@@ -8,4 +8,14 @@ public class DefaultFrameScores extends Scores {
             throw new IllegalArgumentException();
         }
     }
+
+    @Override
+    public boolean isEndScore() {
+        return !isSizeEqual(0) || !(isSizeEqual(1) && !this.isStrike());
+    }
+
+    @Override
+    public boolean isEndScore(Scores scores) {
+        return false;
+    }
 }
