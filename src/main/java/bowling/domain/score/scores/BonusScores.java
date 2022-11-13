@@ -24,6 +24,4 @@ public class BonusScores extends Scores {
     public boolean isChanceMinusTwo() {
         throw new IllegalArgumentException();
     }
-
-
 }

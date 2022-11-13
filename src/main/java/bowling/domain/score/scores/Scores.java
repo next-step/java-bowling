@@ -62,8 +62,7 @@ public abstract class Scores {
     }
 
     public boolean isSpare() {
-        return this.isSizeOver(1)
-                && Scores.sumScores(this.first(), this.second()) == SCORE_STRIKE;
+        return this.isSizeOver(1) && Scores.sumScores(this.first(), this.second()) == SCORE_STRIKE;
     }
 
     protected boolean isStrike() {
