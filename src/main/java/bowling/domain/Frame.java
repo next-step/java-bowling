@@ -20,8 +20,12 @@ public class Frame {
         return scores;
     }
 
-    public boolean isEnd() {
-        return scores.sum().equals(MAX_SCORE) || scores.size() == 2;
+    public boolean end() {
+        if (scores.sum().equals(MAX_SCORE) || scores.size() == 2) {
+            result = FrameResult.match(scores);
+            return true;
+        }
+        return false;
     }
 
     public void addScore(Score score) {
@@ -47,5 +51,9 @@ public class Frame {
                 "scores=" + scores +
                 ", result=" + result +
                 '}';
+    }
+
+    public FrameResult getResult() {
+        return result;
     }
 }

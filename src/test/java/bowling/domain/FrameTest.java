@@ -12,10 +12,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class FrameTest {
     public static Stream<Arguments> provideScoresAndResult() {
         return Stream.of(
-                Arguments.of(new Scores(10), true),
-                Arguments.of(new Scores(9, 1), true),
-                Arguments.of(new Scores(0, 0), true),
-                Arguments.of(new Scores(2), false)
+                Arguments.of(new Scores(10), true, FrameResult.STRIKE),
+                Arguments.of(new Scores(9, 1), true, FrameResult.SPARE),
+                Arguments.of(new Scores(0, 0), true, FrameResult.GUTTER),
+                Arguments.of(new Scores(2), false, null)
         );
     }
 
@@ -26,10 +26,11 @@ public class FrameTest {
 
     @ParameterizedTest
     @MethodSource("provideScoresAndResult")
-    void 프레임_완료_확인(Scores scores, boolean result) {
-        assertThat(new Frame(scores).isEnd()).isEqualTo(result);
+    void 프레임_완료_확인(Scores scores, boolean isEnd, FrameResult result) {
+        Frame frame = new Frame(scores);
+        assertThat(frame.end()).isEqualTo(isEnd);
+        assertThat(frame.getResult()).isEqualTo(result);
     }
-
 
     @Test
     void 입력값_프레임에_추가() {
