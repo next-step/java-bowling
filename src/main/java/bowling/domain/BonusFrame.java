@@ -3,25 +3,25 @@ package bowling.domain;
 import java.util.ArrayList;
 
 public class BonusFrame implements Frame {
-    private final Scores scores;
+    private final Rolls rolls;
     private FrameResult result;
 
     public BonusFrame() {
-        this.scores = new Scores(new ArrayList<>());
+        this.rolls = new Rolls(new ArrayList<>());
     }
 
-    public BonusFrame(Scores scores) {
-        this.scores = scores;
+    public BonusFrame(Rolls rolls) {
+        this.rolls = rolls;
     }
 
     @Override
     public boolean end() {
-        if (scores.size() == 3) {
+        if (rolls.size() == 3) {
             return true;
         }
 
-        if (scores.sum().equals(new Score(10)) || scores.size() == 2) {
-            result = FrameResult.match(scores);
+        if (rolls.sum().equals(new Pin(10)) || rolls.size() == 2) {
+            result = FrameResult.match(rolls);
             return !isNeedBonus();
         }
 
@@ -33,13 +33,13 @@ public class BonusFrame implements Frame {
     }
 
     @Override
-    public void addScore(Score score) {
-        scores.add(score);
+    public void addScore(Pin pin) {
+        rolls.add(pin);
     }
 
     @Override
-    public Scores getScores() {
-        return scores;
+    public Rolls getScores() {
+        return rolls;
     }
 
     @Override

@@ -21,8 +21,8 @@ public class Frames {
         return frames;
     }
 
-    public void addScore(int index, Score score) {
-        frames.get(index).addScore(score);
+    public void addScore(int index, Pin pin) {
+        frames.get(index).addScore(pin);
     }
 
     public boolean end(int index) {

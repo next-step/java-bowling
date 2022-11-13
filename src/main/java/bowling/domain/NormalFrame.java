@@ -4,34 +4,34 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
-    public static final Score MAX_SCORE = new Score(10);
-    private final Scores scores;
+    public static final Pin MAX_PIN = new Pin(10);
+    private final Rolls rolls;
     private FrameResult result;
 
     public NormalFrame() {
-        this.scores = new Scores(new ArrayList<>());
+        this.rolls = new Rolls(new ArrayList<>());
     }
 
-    public NormalFrame(Scores scores) {
-        this.scores = scores;
+    public NormalFrame(Rolls rolls) {
+        this.rolls = rolls;
     }
 
-    public Scores getScores() {
-        return scores;
+    public Rolls getScores() {
+        return rolls;
     }
 
     @Override
     public boolean end() {
-        if (scores.sum().equals(MAX_SCORE) || scores.size() == 2) {
-            result = FrameResult.match(scores);
+        if (rolls.sum().equals(MAX_PIN) || rolls.size() == 2) {
+            result = FrameResult.match(rolls);
             return true;
         }
         return false;
     }
 
     @Override
-    public void addScore(Score score) {
-        scores.add(score);
+    public void addScore(Pin pin) {
+        rolls.add(pin);
     }
 
     @Override
@@ -39,18 +39,18 @@ public class NormalFrame implements Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalFrame frame = (NormalFrame) o;
-        return Objects.equals(scores, frame.scores) && result == frame.result;
+        return Objects.equals(rolls, frame.rolls) && result == frame.result;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(scores, result);
+        return Objects.hash(rolls, result);
     }
 
     @Override
     public String toString() {
         return "Frame{" +
-                "scores=" + scores +
+                "scores=" + rolls +
                 ", result=" + result +
                 '}';
     }

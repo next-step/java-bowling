@@ -1,7 +1,7 @@
 package bowling;
 
+import bowling.domain.Pin;
 import bowling.domain.Player;
-import bowling.domain.Score;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
@@ -15,8 +15,8 @@ public class Main {
 
     private static void startFrame(Player player, int index) {
         while (player.process(index)) {
-            Score score = new Score(InputView.scanScore(index));
-            player.pitch(index, score);
+            Pin pin = new Pin(InputView.scanScore(index));
+            player.pitch(index, pin);
             OutputView.printScores(player);
         }
     }

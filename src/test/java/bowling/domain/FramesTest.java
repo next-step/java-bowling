@@ -13,8 +13,8 @@ public class FramesTest {
     @Test
     void 스코어_추가() {
         Frames frames = new Frames();
-        frames.addScore(0, new Score(1));
-        assertThat(frames.getFrames().get(0).getScores()).isEqualTo(new Scores(1));
+        frames.addScore(0, new Pin(1));
+        assertThat(frames.getFrames().get(0).getScores()).isEqualTo(new Rolls(1));
     }
 
     @Test
@@ -25,7 +25,7 @@ public class FramesTest {
 
     @Test
     void 프레임_완료_후_프레임_추가() {
-        Frames frames = new Frames(new NormalFrame(new Scores(1, 2)));
+        Frames frames = new Frames(new NormalFrame(new Rolls(1, 2)));
         assertThat(frames.end(0)).isTrue();
         assertThat(frames.getFrames()).hasSize(2);
     }

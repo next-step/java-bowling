@@ -12,10 +12,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class NormalFrameTest {
     public static Stream<Arguments> provideScoresAndResult() {
         return Stream.of(
-                Arguments.of(new Scores(10), true, FrameResult.STRIKE),
-                Arguments.of(new Scores(9, 1), true, FrameResult.SPARE),
-                Arguments.of(new Scores(0, 0), true, FrameResult.GUTTER),
-                Arguments.of(new Scores(2), false, null)
+                Arguments.of(new Rolls(10), true, FrameResult.STRIKE),
+                Arguments.of(new Rolls(9, 1), true, FrameResult.SPARE),
+                Arguments.of(new Rolls(0, 0), true, FrameResult.GUTTER),
+                Arguments.of(new Rolls(2), false, null)
         );
     }
 
@@ -26,8 +26,8 @@ public class NormalFrameTest {
 
     @ParameterizedTest
     @MethodSource("provideScoresAndResult")
-    void 프레임_완료_확인(Scores scores, boolean isEnd, FrameResult result) {
-        NormalFrame frame = new NormalFrame(scores);
+    void 프레임_완료_확인(Rolls rolls, boolean isEnd, FrameResult result) {
+        NormalFrame frame = new NormalFrame(rolls);
         assertThat(frame.end()).isEqualTo(isEnd);
         assertThat(frame.getResult()).isEqualTo(result);
     }
@@ -35,7 +35,7 @@ public class NormalFrameTest {
     @Test
     void 입력값_프레임에_추가() {
         NormalFrame frame = new NormalFrame();
-        frame.addScore(new Score(10));
-        assertThat(frame.getScores().getScores()).contains(new Score(10));
+        frame.addScore(new Pin(10));
+        assertThat(frame.getScores().getScores()).contains(new Pin(10));
     }
 }

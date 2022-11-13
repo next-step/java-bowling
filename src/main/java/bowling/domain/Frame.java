@@ -3,9 +3,9 @@ package bowling.domain;
 public interface Frame {
     boolean end();
 
-    void addScore(Score score);
+    void addScore(Pin pin);
 
-    Scores getScores();
+    Rolls getScores();
 
     FrameResult getResult();
 }

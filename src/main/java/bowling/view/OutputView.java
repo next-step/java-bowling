@@ -23,30 +23,30 @@ public class OutputView {
         return "      |";
     }
 
-    private static String makeScore(Scores scores) {
-        if (scores.size() == 3) {
-            return String.format(" %s|%s|", getStrikeOrMiss(scores), getScoreOrGutter(scores, 2));
+    private static String makeScore(Rolls rolls) {
+        if (rolls.size() == 3) {
+            return String.format(" %s|%s|", getStrikeOrMiss(rolls), getScoreOrGutter(rolls, 2));
         }
-        if (scores.size() == 2) {
-            return String.format("  %s |", getStrikeOrMiss(scores));
+        if (rolls.size() == 2) {
+            return String.format("  %s |", getStrikeOrMiss(rolls));
         }
-        if (scores.size() == 1) {
-            if (scores.getScores().get(0).getScore() == 10) {
+        if (rolls.size() == 1) {
+            if (rolls.getScores().get(0).getScore() == 10) {
                 return "  X   |";
             }
         }
-        return String.format("  %s|  |", getScoreOrGutter(scores, 0));
+        return String.format("  %s|  |", getScoreOrGutter(rolls, 0));
     }
 
-    private static String getStrikeOrMiss(Scores scores) {
-        if (scores.sum().equals(new Score(10))) {
-            return String.format("%s|/", getScoreOrGutter(scores, 0));
+    private static String getStrikeOrMiss(Rolls rolls) {
+        if (rolls.sum().equals(new Pin(10))) {
+            return String.format("%s|/", getScoreOrGutter(rolls, 0));
         }
-        return String.format("%s|%s", getScoreOrGutter(scores, 0), getScoreOrGutter(scores, 1));
+        return String.format("%s|%s", getScoreOrGutter(rolls, 0), getScoreOrGutter(rolls, 1));
     }
 
-    private static String getScoreOrGutter(Scores scores, int index) {
-        int score = scores.getScores().get(index).getScore();
+    private static String getScoreOrGutter(Rolls rolls, int index) {
+        int score = rolls.getScores().get(index).getScore();
         if (score == 0) {
             return "-";
         }

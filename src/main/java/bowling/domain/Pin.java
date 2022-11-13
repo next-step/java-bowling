@@ -5,18 +5,18 @@ import bowling.exception.ErrorMessage;
 
 import java.util.Objects;
 
-public class Score {
-    public static final int MINIMUM_COUNT = 0;
-    public static final int MAXIMUM_COUNT = 10;
+public class Pin {
+    public static final int MINIMUM_PIN_COUNT = 0;
+    public static final int MAXIMUM_PIN_COUNT = 10;
     private final int count;
 
-    public Score(int count) {
+    public Pin(int count) {
         validateOutOfRange(count);
         this.count = count;
     }
 
     private void validateOutOfRange(int count) {
-        if (count < MINIMUM_COUNT || count > MAXIMUM_COUNT) {
+        if (count < MINIMUM_PIN_COUNT || count > MAXIMUM_PIN_COUNT) {
             throw new BowlingGameException(ErrorMessage.SCORE_OUT_OF_RANGE);
         }
     }
@@ -25,8 +25,8 @@ public class Score {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Score score = (Score) o;
-        return count == score.count;
+        Pin pin = (Pin) o;
+        return count == pin.count;
     }
 
     @Override
@@ -38,13 +38,13 @@ public class Score {
         return this.count;
     }
 
-    public Score add(Score score) {
-        return new Score(score.count + this.count);
+    public Pin add(Pin pin) {
+        return new Pin(pin.count + this.count);
     }
 
     @Override
     public String toString() {
-        return "Score{" +
+        return "Pin{" +
                 "count=" + count +
                 '}';
     }

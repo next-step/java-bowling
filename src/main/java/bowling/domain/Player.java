@@ -18,8 +18,8 @@ public class Player {
         return !frames.end(index);
     }
 
-    public void pitch(int index, Score score) {
-        frames.addScore(index, score);
+    public void pitch(int index, Pin pin) {
+        frames.addScore(index, pin);
     }
 
     public Name getName() {
