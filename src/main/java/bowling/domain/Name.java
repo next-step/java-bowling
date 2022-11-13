@@ -41,9 +41,4 @@ public class Name {
         Name name1 = (Name) o;
         return Objects.equals(this.name, name1.name);
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.name);
-    }
 }

@@ -36,4 +36,9 @@ public class NameTest {
             );
         }
     }
+
+    @Test
+    void name() {
+        assertThat(new Name("cys").name()).isEqualTo("cys");
+    }
 }
