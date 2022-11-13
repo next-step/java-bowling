@@ -96,7 +96,7 @@ class FrameTest {
     }
 
     @Test
-    void 프레임종료() { // TODO 여기서도 체크해야할까?
+    void 프레임종료() {
         Frame frame = Frame.createNormal();
         frame.bowling(5);
         frame.bowling(5);
