@@ -1,32 +1,33 @@
 package bowling.domain;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 public class BowlingGame {
 
     public static final int SIZE_OF_FRAMES = 10;
 
-    private final List<BowlingGameFrame> frames;
+    private final BowlingGameFrame frame;
     private int indexOfCurrentFrame;
 
     public BowlingGame() {
-        this.frames = createInitFrames();
+        this.frame = createFrame();
         this.indexOfCurrentFrame = 0;
     }
 
-    private List<BowlingGameFrame> createInitFrames() {
-        List<BowlingGameFrame> frames = new ArrayList<>();
-        IntStream.range(0, SIZE_OF_FRAMES - 1)
-                .forEach(i -> frames.add(new NormalBowlingGameFrame()));
-        frames.add(new FinalBowlingGameFrame());
-        return frames;
+    private BowlingGameFrame createFrame() {
+        BowlingGameFrame frame = new FinalBowlingGameFrame();
+        for (int i = 0; i < SIZE_OF_FRAMES - 1; i++) {
+            frame = new NormalBowlingGameFrame(frame);
+        }
+        return frame;
     }
 
     public BowlingGameFrame get(int index) {
-        return frames.get(index);
+        BowlingGameFrame frame = this.frame;
+        for (int i = 0; i < index; i++) {
+            frame = frame.getNextFrame();
+        }
+        return frame;
     }
 
     public void hit(int pins) {
@@ -44,7 +45,7 @@ public class BowlingGame {
 
     public BowlingGameFrame getCurrentFrame() {
         validateState();
-        return frames.get(indexOfCurrentFrame);
+        return get(indexOfCurrentFrame);
     }
 
     private void validateState() {
@@ -66,18 +67,18 @@ public class BowlingGame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BowlingGame game = (BowlingGame) o;
-        return indexOfCurrentFrame == game.indexOfCurrentFrame && Objects.equals(frames, game.frames);
+        return indexOfCurrentFrame == game.indexOfCurrentFrame && Objects.equals(frame, game.frame);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frames, indexOfCurrentFrame);
+        return Objects.hash(frame, indexOfCurrentFrame);
     }
 
     @Override
     public String toString() {
         return "BowlingGame{" +
-                "frames=" + frames +
+                "frame=" + frame +
                 ", indexOfCurrentFrame=" + indexOfCurrentFrame +
                 '}';
     }

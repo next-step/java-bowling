@@ -5,14 +5,18 @@ public class BowlingGameFrameTestFixture {
     private BowlingGameFrameTestFixture() {
     }
 
+    public static BowlingGameFrame createNormalBowlingGameFrame() {
+        return new NormalBowlingGameFrame(new FinalBowlingGameFrame());
+    }
+
     public static BowlingGameFrame createNormalBowlingGameFrame(int hit) {
-        BowlingGameFrame frame = new NormalBowlingGameFrame();
+        BowlingGameFrame frame = new NormalBowlingGameFrame(new FinalBowlingGameFrame());
         frame.add(hit);
         return frame;
     }
 
     public static BowlingGameFrame createNormalBowlingGameFrame(int hit1, int hit2) {
-        BowlingGameFrame frame = new NormalBowlingGameFrame();
+        BowlingGameFrame frame = new NormalBowlingGameFrame(new FinalBowlingGameFrame());
         frame.add(hit1);
         frame.add(hit2);
         return frame;

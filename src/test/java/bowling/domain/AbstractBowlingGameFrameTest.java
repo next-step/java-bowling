@@ -12,7 +12,7 @@ class AbstractBowlingGameFrameTest {
 
     @BeforeEach
     void setUp() {
-        frame = new AbstractBowlingGameFrame() {
+        frame = new AbstractBowlingGameFrame(new FinalBowlingGameFrame()) {
 
             @Override
             public boolean isEnded() {

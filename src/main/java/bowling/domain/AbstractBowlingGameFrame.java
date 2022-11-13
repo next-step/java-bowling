@@ -8,10 +8,12 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
 
     protected final List<Integer> hits;
     protected final List<BowlingGameHitState> states;
+    protected final BowlingGameFrame nextFrame;
 
-    protected AbstractBowlingGameFrame() {
+    protected AbstractBowlingGameFrame(BowlingGameFrame nextFrame) {
         this.hits = new ArrayList<>();
         this.states = new ArrayList<>();
+        this.nextFrame = nextFrame;
     }
 
     @Override
@@ -69,6 +71,16 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
 
     @Override
     abstract public boolean isEnded();
+
+    @Override
+    public BowlingGameFrame getNextFrame() {
+        return nextFrame;
+    }
+
+    @Override
+    public int getScore() {
+        return 0;
+    }
 
     @Override
     public boolean equals(Object o) {
