@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import bowling.domain.score.Score;
+import bowling.domain.score.TotalScore;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -83,5 +84,15 @@ public class DefaultFrameTest {
                 () -> assertThat(frame2.isNotEndScoreAggregation()).isTrue(),
                 () -> assertThat(frame3.isNotEndScoreAggregation()).isFalse()
         );
+    }
+
+    @Test
+    void totalScoreTest() {
+        Frame frame = new DefaultFrame();
+        frame.addScore(Score.of(8));
+        TotalScore expected = TotalScore.defaultFrameTotalScore();
+        expected.addRegularScore(Score.of(8));
+
+        assertThat(frame.totalScore()).isEqualTo(expected);
     }
 }

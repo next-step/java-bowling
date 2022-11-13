@@ -112,4 +112,14 @@ public class LastFrameTest {
                 () -> assertThat(notEndScore.regularScores().isNotEndScore(notEndScore.regularScores())).isTrue()
         );
     }
+
+    @Test
+    void totalScoreTest() {
+        Frame frame = new LastFrame();
+        frame.addScore(Score.of(8));
+        TotalScore expected = TotalScore.lastFrameTotalScore();
+        expected.addRegularScore(Score.of(8));
+
+        assertThat(frame.totalScore()).isEqualTo(expected);
+    }
 }
