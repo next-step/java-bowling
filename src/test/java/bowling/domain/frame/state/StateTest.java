@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import bowling.domain.BowlRecord;
+import bowling.domain.dto.BowlRecord;
 import bowling.domain.frame.Score;
 
 class StateTest {

@@ -5,8 +5,8 @@ import static java.util.stream.Collectors.*;
 import java.util.LinkedList;
 import java.util.List;
 
-import bowling.domain.BowlRecord;
-import bowling.domain.BowlingGameFrameRecord;
+import bowling.domain.dto.BowlRecord;
+import bowling.domain.dto.BowlingGameFrameRecord;
 import bowling.domain.frame.state.Ready;
 import bowling.domain.frame.state.State;
 

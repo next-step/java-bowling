@@ -2,7 +2,7 @@ package bowling.domain.frame.state;
 
 import java.util.List;
 
-import bowling.domain.BowlRecord;
+import bowling.domain.dto.BowlRecord;
 import bowling.domain.frame.Score;
 
 public class FirstBowl extends Running {
@@ -28,7 +28,7 @@ public class FirstBowl extends Running {
 
     @Override
     public BowlRecord createBowlRecord() {
-        return new BowlRecord(List.of(firstPins));
+        return new BowlRecord(List.of(firstPins), false, false);
     }
 
     @Override

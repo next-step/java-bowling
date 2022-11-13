@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.BowlingGameFrameRecord;
+import bowling.domain.dto.BowlingGameFrameRecord;
 
 public abstract class Frame {
     public static final int START_FRAME = 1;

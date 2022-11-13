@@ -1,6 +1,6 @@
 package bowling.domain.frame.state;
 
-import bowling.domain.BowlRecord;
+import bowling.domain.dto.BowlRecord;
 import bowling.domain.frame.Score;
 
 public abstract class State {

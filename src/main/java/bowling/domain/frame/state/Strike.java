@@ -2,7 +2,7 @@ package bowling.domain.frame.state;
 
 import java.util.List;
 
-import bowling.domain.BowlRecord;
+import bowling.domain.dto.BowlRecord;
 import bowling.domain.frame.Score;
 
 public class Strike extends Finished {
@@ -10,7 +10,7 @@ public class Strike extends Finished {
 
     @Override
     public BowlRecord createBowlRecord() {
-        return new BowlRecord(List.of(new Pins(10)));
+        return new BowlRecord(List.of(new Pins(10)), true, false);
     }
 
     @Override

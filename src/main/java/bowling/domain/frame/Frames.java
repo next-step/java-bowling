@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import bowling.domain.BowlingGameFrameRecord;
+import bowling.domain.dto.BowlingGameFrameRecord;
 
 public class Frames {
     private final List<Frame> frames;

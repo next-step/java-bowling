@@ -2,6 +2,7 @@ package bowling.domain;
 
 import java.util.List;
 
+import bowling.domain.dto.BowlingGameFrameRecord;
 import bowling.domain.frame.Frames;
 
 public class BowlingGame {

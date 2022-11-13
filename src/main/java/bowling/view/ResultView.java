@@ -8,8 +8,8 @@ import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import bowling.domain.BowlRecord;
-import bowling.domain.BowlingGameFrameRecord;
+import bowling.domain.dto.BowlRecord;
+import bowling.domain.dto.BowlingGameFrameRecord;
 import bowling.domain.frame.Score;
 
 public class ResultView {

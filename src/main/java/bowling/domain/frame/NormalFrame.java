@@ -2,7 +2,7 @@ package bowling.domain.frame;
 
 import java.util.List;
 
-import bowling.domain.BowlingGameFrameRecord;
+import bowling.domain.dto.BowlingGameFrameRecord;
 import bowling.domain.frame.state.Ready;
 import bowling.domain.frame.state.State;
 
