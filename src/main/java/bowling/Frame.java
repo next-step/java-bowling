@@ -3,7 +3,7 @@ package bowling;
 import java.util.List;
 
 public interface Frame {
-    Frame bowl(Pin falledPins);
+    void bowl(Pin falledPins);
 
     Frame nextFrame(Pin falledPins);
 

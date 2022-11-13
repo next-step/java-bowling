@@ -9,5 +9,12 @@ public class BowlingApplication {
         Frames frames = Frames.start(Pin.from(score));
         ResultView.printResult(userName, frames);
 
+        Bowling bowling = new Bowling(userName, frames);
+
+        while (!bowling.isFinished()) {
+            score = InputView.inputUserScore(bowling.currentFrameNumber());
+            bowling.bowl(Pin.from(score));
+            ResultView.printResult(userName, frames);
+        }
     }
 }

@@ -6,9 +6,21 @@ public class FinalFrame implements Frame {
 
     public static final int FINAL_FRAME_NUMBER = 10;
 
+    private final Score score;
+
+    private FinalFrame(Score score) {
+        this.score = score;
+    }
+
+    public static FinalFrame start(Pin falledPins) {
+        Score score = new Score();
+        score.add(falledPins);
+        return new FinalFrame(score);
+    }
+
     @Override
-    public Frame bowl(Pin falledPins) {
-        return null;
+    public void bowl(Pin falledPins) {
+        score.add(falledPins);
     }
 
     @Override
@@ -23,11 +35,19 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isFinished() {
+        if (score.size() == Score.BONUS_ROUND) {
+            return true;
+        }
+
+        if (score.size() == Score.SECOND_ROUND && !score.isSpare()) {
+            return true;
+        }
+
         return false;
     }
 
     @Override
     public List<Pin> getScores() {
-        return null;
+        return score.getTotalScore();
     }
 }

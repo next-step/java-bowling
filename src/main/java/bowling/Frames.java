@@ -27,6 +27,20 @@ public class Frames {
         lastFrame.bowl(falledPins);
     }
 
+    public int currentFrameNumber() {
+        if (getLastFrame().isFinished()) {
+            return frames.size() + 1;
+        }
+        return frames.size();
+    }
+
+    public boolean isFinished() {
+        if (frames.size() == FinalFrame.FINAL_FRAME_NUMBER && getLastFrame().isFinished()) {
+            return true;
+        }
+        return false;
+    }
+
     public List<Frame> getValues() {
         return frames;
     }
@@ -38,5 +52,4 @@ public class Frames {
     private Frame getLastFrame() {
         return frames.get(frames.size() - 1);
     }
-
 }

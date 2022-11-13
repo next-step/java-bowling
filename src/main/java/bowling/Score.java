@@ -8,10 +8,18 @@ public class Score {
     public static final int FIRST_ROUND = 1;
     public static final int SECOND_ROUND = 2;
 
+    public static final int BONUS_ROUND = 3;
+
     private final List<Pin> pins = new ArrayList<>();
 
     public void add(Pin falledPins) {
-        pins.add(falledPins);
+        if (pins.size() == 0) {
+            pins.add(falledPins);
+            return;
+        }
+        Pin lastPin = pins.get(pins.size() - 1);
+        Pin totalPins = lastPin.addPins(falledPins.getFalledPins());
+        pins.add(totalPins);
     }
 
     public int size() {
@@ -23,7 +31,7 @@ public class Score {
     }
 
     public boolean isSpare() {
-        if (!isFinished()) {
+        if (pins.size() == FIRST_ROUND) {
             return false;
         }
         return pins.get(1).isMax();
@@ -34,14 +42,10 @@ public class Score {
     }
 
     public boolean isMiss() {
-        if (!isFinished()) {
+        if (pins.size() == FIRST_ROUND) {
             return false;
         }
         return pins.get(1).isMiss();
-    }
-
-    public boolean isFinished() {
-        return pins.size() == SECOND_ROUND;
     }
 
     public int getScore(int index) {

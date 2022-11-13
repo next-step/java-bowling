@@ -17,21 +17,20 @@ public class NormalFrame implements Frame{
 
     @Override
     public boolean isFinished() {
-        return score.isFinished();
+        return score.size() == Score.SECOND_ROUND || score.isStrike();
     }
 
     @Override
     public Frame nextFrame(Pin falledPins) {
         if (frameNumber == MAX_NORMAL_FRAME_NUMBER) {
-            return new FinalFrame();
+            return FinalFrame.start(falledPins);
         }
         return new NormalFrame(frameNumber + 1, falledPins);
     }
 
     @Override
-    public Frame bowl(Pin falledPins) {
+    public void bowl(Pin falledPins) {
         score.add(falledPins);
-        return null;
     }
 
     @Override
