@@ -12,4 +12,9 @@ public class ScoreboardTest {
 
         assertThat(actual).isEqualTo(new Scoreboard(new Name("abc")));
     }
+
+    @Test
+    void name() {
+        assertThat(new Scoreboard(new Name("cys")).name()).isEqualTo(new Name("cys"));
+    }
 }
