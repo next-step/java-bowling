@@ -10,12 +10,7 @@ public class DefaultFrameScores extends Scores {
     }
 
     @Override
-    public boolean isEndScore() {
-        return !isSizeEqual(0) || !(isSizeEqual(1) && !this.isStrike());
-    }
-
-    @Override
-    public boolean isEndScore(Scores scores) {
-        return false;
+    public boolean isNotEndScore(Scores scores) {
+        return scores.isSizeEqual(0) || (scores.isSizeEqual(1) && !scores.isStrike());
     }
 }

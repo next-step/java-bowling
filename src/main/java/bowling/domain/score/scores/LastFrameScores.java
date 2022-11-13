@@ -33,12 +33,7 @@ public class LastFrameScores extends Scores {
     }
 
     @Override
-    public boolean isEndScore() {
-        return isSizeEqual(TOTAL_CHANCE) || isSizeEqual(DEFAULT_CHANCE);
-    }
-
-    @Override
-    public boolean isEndScore(Scores scores) {
-        return false;
+    public boolean isNotEndScore(Scores scores) {
+        return !scores.isSizeEqual(TOTAL_CHANCE) || !scores.isSizeEqual(DEFAULT_CHANCE);
     }
 }

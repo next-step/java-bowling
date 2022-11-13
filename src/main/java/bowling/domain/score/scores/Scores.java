@@ -13,9 +13,7 @@ public abstract class Scores {
 
     public abstract void validateScore();
 
-    public abstract boolean isEndScore();
-
-    public abstract boolean isEndScore(Scores scores);
+    public abstract boolean isNotEndScore(Scores scores);
 
     public Scores() {
         this.scores = new ArrayList<>();

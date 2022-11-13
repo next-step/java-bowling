@@ -10,18 +10,13 @@ public class BonusScores extends Scores {
     }
 
     @Override
-    public boolean isEndScore() {
-        return false;
-    }
-
-    @Override
-    public boolean isEndScore(Scores scores) {
+    public boolean isNotEndScore(Scores scores) {
         if (scores.isStrike()) {
-            return this.isSizeEqual(STRIKE_BONUS_SIZE);
+            return !this.isSizeEqual(STRIKE_BONUS_SIZE);
         }
         if (scores.isSpare()) {
-            return this.isSizeEqual(SPARE_BONUS_SIZE);
+            return !this.isSizeEqual(SPARE_BONUS_SIZE);
         }
-        return true;
+        return false;
     }
 }

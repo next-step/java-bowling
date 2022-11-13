@@ -47,6 +47,7 @@ public class TotalScore {
     }
 
     public boolean isNotEndScoreAggregation() {
-        return !this.regularScores().isEndScore() || !bonusScores().isEndScore(this.regularScores);
+        return this.regularScores.isNotEndScore(this.regularScores) || this.bonusScores.isNotEndScore(
+                this.regularScores);
     }
 }
