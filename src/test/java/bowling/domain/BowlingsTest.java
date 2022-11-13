@@ -32,4 +32,15 @@ class BowlingsTest {
 
         assertThat(bowlings.size()).isEqualTo(3);
     }
+
+    @Test
+    void 종료() {
+        Bowlings bowlings = Bowlings.initNormal();
+
+        bowlings.bowling(5);
+        assertThat(bowlings.isEnd()).isFalse();
+
+        bowlings.bowling(5);
+        assertThat(bowlings.isEnd()).isTrue();
+    }
 }

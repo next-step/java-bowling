@@ -6,22 +6,27 @@ import java.util.Objects;
 
 public class Bowlings {
 
-    public static final int FIANL_MAX_TOTAL_COUNT = 30;
     public static final int NORMAL_MAX_TOTAL_COUNT = 10;
+    public static final int NORMAL_MAX_SIZE = 2;
+    public static final int FINAL_MAX_TOTAL_COUNT = 30;
+    public static final int FINAL_MAX_SIZE = 3;
 
     private final int maxTotalCount;
-    private final List<Bowling> values = new ArrayList<>();
+    private final int maxSize;
+    private final List<Bowling> values;
 
-    public Bowlings(int maxTotalCount) {
+    public Bowlings(int maxTotalCount, int size) {
         this.maxTotalCount = maxTotalCount;
+        this.maxSize = size;
+        this.values = new ArrayList<>(size);
     }
 
     public static Bowlings initNormal() {
-        return new Bowlings(NORMAL_MAX_TOTAL_COUNT);
+        return new Bowlings(NORMAL_MAX_TOTAL_COUNT, NORMAL_MAX_SIZE);
     }
 
     public static Bowlings initFianl() {
-        return new Bowlings(FIANL_MAX_TOTAL_COUNT);
+        return new Bowlings(FINAL_MAX_TOTAL_COUNT, FINAL_MAX_SIZE);
     }
 
     public Bowling get(int index) {
@@ -49,6 +54,10 @@ public class Bowlings {
 
     public int size() {
         return values.size();
+    }
+
+    public boolean isEnd() {
+        return values.size() == maxSize;
     }
 
     //=============================================================
