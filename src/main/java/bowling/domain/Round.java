@@ -34,7 +34,8 @@ public class Round {
     }
 
     public void nextRound() {
-        validateUpperRoundRange(++this.round);
+        validateUpperRoundRange(this.round + 1);
+        this.round++;
     }
 
     public boolean isGameEnd() {

@@ -12,13 +12,13 @@ public class Chance {
     }
 
     public void minusOne() {
+        validatePositive(this.chance - 1);
         this.chance--;
-        validatePositive(this.chance);
     }
 
     public void minusTwo() {
+        validatePositive(this.chance - 2);
         this.chance -= 2;
-        validatePositive(this.chance);
     }
 
     private void validatePositive(int chance) {
