@@ -1,8 +1,8 @@
 package bowling.domain;
 
-import java.util.List;
-
 public abstract class Frame {
+    public static final int START_FRAME_NUMBER = 1;
+    public static final int FINAL_FRAME_NUMBER = 10;
     protected int round;
 
     protected Balls balls;
@@ -10,26 +10,21 @@ public abstract class Frame {
     public Frame() {
     }
 
-    public abstract void play();
+    public abstract void play(int knockedDownPinCount);
 
     public abstract String scoringText();
 
-    public String scoringTextNormalFrame() {
-        int firstBallKnockedDownPinCount = balls.getKnockedDownPinCount(0);
-        if (firstBallKnockedDownPinCount == 10) {
-            return ScoreRull.getSymbolOrScore(firstBallKnockedDownPinCount, true);
-        }
-        String result = ScoreRull.getSymbolOrScore(firstBallKnockedDownPinCount, false) + "|";
-        int secondBallKnockedDownPinCount = balls.getKnockedDownPinCount(1);
-        int totalKnockedDownPinCount = firstBallKnockedDownPinCount + secondBallKnockedDownPinCount;
+    public abstract Frame createNextFrame();
 
-        if (totalKnockedDownPinCount == 10) {
-            return result + ScoreRull.getSymbolOrScore(totalKnockedDownPinCount, false);
-        }
-        return result + ScoreRull.getSymbolOrScore(secondBallKnockedDownPinCount, false);
+    public String scoringTextNormalFrame() {
+        return balls.scoringText();
     }
 
-    public int score() {
-        return balls.score();
+    public int getRound() {
+        return round;
+    }
+
+    public boolean isEnd() {
+        return balls.pitchEnd();
     }
 }

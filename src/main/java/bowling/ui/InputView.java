@@ -10,4 +10,9 @@ public class InputView {
         System.out.printf(INPUT_PLAYER_NAME_DESCRIPTION);
         return scanner.nextLine();
     }
+
+    public static int inputKnockedDownPinCount(int frameNumber) {
+        System.out.printf("%d프레임 투구 : ", frameNumber);
+        return scanner.nextInt();
+    }
 }

@@ -7,8 +7,13 @@ public class Balls {
     private List<Ball> balls = new ArrayList<>();
 
     private Pins pins;
+
     public Balls() {
-        this(0, 0);
+        Ball firstBall = new Ball();
+        Ball secondBall = new Ball();
+        this.balls.add(firstBall);
+        this.balls.add(secondBall);
+        this.pins = new Pins();
     }
 
     public Balls(int firstBallKnockedDownPinCount, int secondBallKnockedDownPinCount) {
@@ -22,14 +27,7 @@ public class Balls {
     }
 
     public Balls(int firstBallKnockedDownPinCount, int secondBallKnockedDownPinCount, int thirdBallKnockedDownPinCount) {
-        Ball firstBall = new Ball(firstBallKnockedDownPinCount);
-        Ball secondBall = new Ball(secondBallKnockedDownPinCount);
-        this.balls.add(firstBall);
-        this.balls.add(secondBall);
-        this.pins = new Pins();
-        pins.knockDown(firstBallKnockedDownPinCount);
-        pins.knockDown(secondBallKnockedDownPinCount);
-
+        this(firstBallKnockedDownPinCount, secondBallKnockedDownPinCount);
         // 세번째볼 처리
         Ball ball = new Ball(thirdBallKnockedDownPinCount);
         balls.add(ball);
@@ -39,25 +37,31 @@ public class Balls {
     }
 
 
-    public void pitch() {
-        for (Ball ball : balls) {
-            ball.pitch(pins);
+    public void pitch(int knockedDownPinCount) {
+        if (pitchEnd()) {
+            throw new RuntimeException("더 이상 공을 던질수 없습니다.");
+        }
+        Ball ball = findNotPitchedBall();
+        pins.knockDown(knockedDownPinCount);
+        ball.pitch(knockedDownPinCount);
+
+        if (isFirstBallStrike()) {
+            balls.get(1).pitch(0);
         }
     }
 
-    public void add(Ball ball) {
-        balls.add(ball);
-    }
-
-    public int size() {
-        return balls.size();
+    private Ball findNotPitchedBall() {
+        return balls.stream()
+                .filter(Ball::isNotPitched)
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("모든공을 던졌습니다."));
     }
 
     public int getKnockedDownPinCount(int index) {
         return balls.get(index).getKnockedDownPinCount();
     }
 
-    public int score(){
+    public int score() {
         return balls.stream()
                 .map(Ball::getKnockedDownPinCount)
                 .reduce(0, Integer::sum);
@@ -71,7 +75,54 @@ public class Balls {
         List<Pin> addPins = PinGenerator.generate();
         pinsAdd(addPins);
         Ball ball = new Ball();
-        ball.pitch(pins);
         balls.add(ball);
     }
+
+    public boolean pitchEnd() {
+        return pins.standingPinCount() == 0 || pitchedAllBalls();
+    }
+
+    public boolean pitchedAllBalls() {
+        return balls.stream()
+                .allMatch(Ball::isPitched);
+    }
+
+    public boolean pitchedAnyBalls() {
+        return balls.stream()
+                .anyMatch(Ball::isPitched);
+    }
+
+    public int pitchedBallCount() {
+        return (int) balls.stream()
+                .filter(Ball::isPitched)
+                .count();
+    }
+
+    public String scoringText() {
+        if (isFirstBallStrike() || pitchedBallCount() == 1) {
+            return isFirstBallScoreText();
+        }
+        return isFirstBallScoreText() + "|" + isSecondBallScoreText();
+    }
+
+    private boolean isFirstBallStrike() {
+        int firstBallKnockedDownPinCount = getKnockedDownPinCount(0);
+        return firstBallKnockedDownPinCount == 10;
+    }
+
+    private String isFirstBallScoreText() {
+        int firstBallKnockedDownPinCount = getKnockedDownPinCount(0);
+        return ScoreRull.getSymbolOrScore(firstBallKnockedDownPinCount, true);
+    }
+
+    private String isSecondBallScoreText() {
+        int firstBallKnockedDownPinCount = getKnockedDownPinCount(0);
+        int secondBallKnockedDownPinCount = getKnockedDownPinCount(1);
+        int totalKnockedDownPinCount = firstBallKnockedDownPinCount + secondBallKnockedDownPinCount;
+        if (totalKnockedDownPinCount == 10) {
+            return ScoreRull.getSymbolOrScore(totalKnockedDownPinCount, false);
+        }
+        return ScoreRull.getSymbolOrScore(secondBallKnockedDownPinCount, false);
+    }
+
 }

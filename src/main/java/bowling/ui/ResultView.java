@@ -7,29 +7,26 @@ import java.util.List;
 public class ResultView {
     private static final String ROUND_RESULT_FORMAT = "  %-3s |";
 
-    private static final String ROUND_RESULT_TITLE_FORMAT = "%d프레임 투구 : %d";
-
     private static final String ROUND_GUIDE = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
 
 
-    public static void printRoundResult(UserName userName, List<String> roundResult, int score) {
-        System.out.println();
-        System.out.println(String.format(ROUND_RESULT_TITLE_FORMAT, roundResult.size(), score));
+    public static void printRoundResult(UserName userName, List<String> roundResult) {
         printScoreBoard(userName, roundResult);
     }
 
     public static void printScoreBoard(UserName userName, List<String> roundResult) {
         System.out.println(ROUND_GUIDE);
-        String printText = String.format(ROUND_RESULT_FORMAT, userName.getUserName());
-        for (int i = 0; i < 10 ; i ++){
-            printText = printText + String.format(ROUND_RESULT_FORMAT, getRoundResult(i, roundResult));
+        StringBuilder printText = new StringBuilder(String.format(ROUND_RESULT_FORMAT, userName.getUserName()));
+        for (int i = 0; i < 10; i++) {
+            printText.append(String.format(ROUND_RESULT_FORMAT, getRoundResult(i, roundResult)));
         }
-        printText = "|" + printText;
+        printText.insert(0, "|");
         System.out.println(printText);
+        System.out.println();
     }
 
     private static String getRoundResult(int index, List<String> roundResult) {
-        if(roundResult == null || roundResult.size() <= index){
+        if (roundResult == null || roundResult.size() <= index) {
             return "";
         }
         return roundResult.get(index);

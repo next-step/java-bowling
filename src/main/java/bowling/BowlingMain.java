@@ -13,6 +13,11 @@ public class BowlingMain {
         UserName userName = new UserName(inputUserName);
         ResultView.printScoreBoard(userName, new ArrayList<>());
         BowlingGame bowlingGame = new BowlingGame();
-        bowlingGame.play(userName);
+
+        while (bowlingGame.isGamePlayable()) {
+            int KnockedDownPinCount = InputView.inputKnockedDownPinCount(bowlingGame.getCurrentFrameNumber());
+            bowlingGame.play(KnockedDownPinCount);
+            ResultView.printRoundResult(userName, bowlingGame.playRecords());
+        }
     }
 }

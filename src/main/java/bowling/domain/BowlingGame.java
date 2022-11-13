@@ -1,42 +1,50 @@
 package bowling.domain;
 
-import bowling.ui.ResultView;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.toList;
 
 public class BowlingGame {
-
-    private static final int GAME_BEGIN_ROUND_NUMBER = 1;
-    private static final int GAME_END_ROUND_NUMBER = 9;
     private final List<Frame> frameList;
-
 
     public BowlingGame() {
         this.frameList = initFrameList();
     }
 
     private List<Frame> initFrameList() {
-        List<Frame> frames = IntStream.rangeClosed(GAME_BEGIN_ROUND_NUMBER, GAME_END_ROUND_NUMBER)
-                .boxed()
-                .map(NormalFrame::new)
-                .collect(Collectors.toList());
-        FinalFrame finalFrame = new FinalFrame(10);
-        frames.add(finalFrame);
-
-        return frames;
+        return new ArrayList<>(List.of(new NormalFrame()));
     }
 
-    public void play(UserName userName) {
-        List<String> playResult = new ArrayList<>();
-        frameList.stream()
-                .forEach(frame -> {
-                    frame.play();
-                    playResult.add(frame.scoringText());
-                    ResultView.printRoundResult(userName, playResult, frame.score());
-                });
+    public void play(int knockedDownPinCount) {
+        getCurrentFrame().play(knockedDownPinCount);
+
+        if (isCurrentFrameEnded() && isGamePlayable()) {
+            frameList.add(getCurrentFrame().createNextFrame());
+        }
+    }
+
+    private Frame getCurrentFrame() {
+        return frameList.get(frameList.size() - 1);
+    }
+
+    public int getCurrentFrameNumber() {
+        return getCurrentFrame().getRound();
+    }
+
+    private boolean isCurrentFrameEnded() {
+        return getCurrentFrame().isEnd();
+    }
+
+    public boolean isGamePlayable() {
+        return !(getCurrentFrame().getRound() == Frame.FINAL_FRAME_NUMBER && isCurrentFrameEnded());
+    }
+
+    public List<String> playRecords() {
+        return frameList.stream()
+                .filter(frame -> frame.balls.pitchedAnyBalls())
+                .map(Frame::scoringText)
+                .collect(toList());
     }
 
 }
