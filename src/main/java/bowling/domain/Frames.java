@@ -46,4 +46,8 @@ public class Frames {
     public Frame get(int index) {
         return values.get(index);
     }
+
+    public int getCurrentRound() {
+        return currentRound;
+    }
 }
