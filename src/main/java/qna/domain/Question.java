@@ -70,17 +70,16 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public List<DeleteHistory> deleteQuestionAndAnswer(User loginUser) throws CannotDeleteException {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
+    public void deleteQuestionAndAnswer(User loginUser, DeleteHistories deleteHistories) throws CannotDeleteException {
         checkOwner(loginUser);
         checkAnswersOwner(loginUser);
 
         this.deleted = true;
 
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter()));
-        deleteHistories.addAll(answers.delete());
+        deleteHistories.addDeleteHistory(new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter()));
 
-        return deleteHistories;
+        answers.delete(deleteHistories);
+//        deleteHistories.addAll(answers.delete());
     }
 
 

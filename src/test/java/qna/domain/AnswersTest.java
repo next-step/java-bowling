@@ -13,7 +13,7 @@ public class AnswersTest {
         Answers answers = Q1.getAnswers();
 
         Q1.addAnswer(A2);
-        answers.delete();
+        answers.delete(new DeleteHistories());
         assertThat(A2.isDeleted()).isTrue();
     }
 
