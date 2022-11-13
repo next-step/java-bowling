@@ -13,10 +13,7 @@ public class Player {
 
     public Player(String name) {
         if (!name.matches("^[a-zA-Z]{3}$")) {
-            throw new IllegalArgumentException("이름이 영문자가 아닙니다.");
-        }
-        if (name.length() != 3) {
-            throw new IllegalArgumentException("이름이 3글자가 아닙니다.");
+            throw new IllegalArgumentException("이름은 영문자로 세글자이어야 합니다.");
         }
         this.name = name;
         this.frame = Frame.frame();
