@@ -41,15 +41,23 @@ public class OutputView {
         if (hits.isEmpty()) {
             return EMPTY_FORMAT;
         }
-        int leftEmptyCount = hits.size() < OFFSET_REFERENCE ? OFFSET_OF_SHORT_FORMAT : OFFSET_OF_LONG_FORMAT;
+        int leftEmptyCount = getLeftEmptyCount(hits);
         StringBuilder stringBuilder = new StringBuilder(EMPTY.repeat(leftEmptyCount) + formatHit(hits.get(0)));
         IntStream.range(1, hits.size())
                 .forEach(i -> stringBuilder.append(SPLITTER)
                         .append(formatHit(hits.get(i))));
-        int rightEmptyCount = TOTAL_LENGTH - leftEmptyCount - hits.size() * 2;
+        int rightEmptyCount = getRightEmptyCount(stringBuilder);
         return stringBuilder.append(EMPTY.repeat(rightEmptyCount))
                 .append(SPLITTER)
                 .toString();
+    }
+
+    private static int getLeftEmptyCount(List<BowlingGameHitDto> hits) {
+        return hits.size() < OFFSET_REFERENCE ? OFFSET_OF_SHORT_FORMAT : OFFSET_OF_LONG_FORMAT;
+    }
+
+    private static int getRightEmptyCount(StringBuilder stringBuilder) {
+        return TOTAL_LENGTH - stringBuilder.length() - 1;
     }
 
     private static String formatHit(BowlingGameHitDto hit) {

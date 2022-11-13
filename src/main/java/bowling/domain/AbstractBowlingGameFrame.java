@@ -43,12 +43,12 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
     }
 
     @Override
-    public int size() {
+    public int countHits() {
         return hits.size();
     }
 
     @Override
-    public int get(int index) {
+    public int getHit(int index) {
         return hits.get(index);
     }
 

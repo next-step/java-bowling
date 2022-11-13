@@ -7,9 +7,9 @@ public interface BowlingGameFrame {
 
     void add(int hit);
 
-    int size();
+    int countHits();
 
-    int get(int index);
+    int getHit(int index);
 
     BowlingGameHitResult getResult(int index);
 
