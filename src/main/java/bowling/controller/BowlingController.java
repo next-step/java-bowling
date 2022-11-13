@@ -47,14 +47,14 @@ public class BowlingController {
 
     private void bowl(Players players) {
         for (Player player : players.getPlayers()) {
-            inputBowlNumberAndPrintResult(player, players);
+            inputBowlNumberAndPrintResult(player);
+            ResultView.printFrameResults(players);
         }
     }
 
-    private void inputBowlNumberAndPrintResult(Player player, Players players) {
+    private void inputBowlNumberAndPrintResult(Player player) {
         if (player.canBowl()) {
             inputBowlNumber(player);
-            ResultView.printFrameResults(players);
         }
     }
 
