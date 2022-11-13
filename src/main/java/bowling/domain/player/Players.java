@@ -13,7 +13,7 @@ public class Players {
         this.values = values;
     }
 
-    private static void checkDuplicatedPlayer(List<Player> values) {
+    private void checkDuplicatedPlayer(List<Player> values) {
         HashSet<Player> players = new HashSet<>(values);
         if (players.size() != values.size()) {
             throw new IllegalArgumentException("플레이어 끼리 같은 이름은 사용할 수 없습니다.");
