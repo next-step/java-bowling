@@ -23,6 +23,10 @@ public class Frame {
 		return scores;
 	}
 
+	public Integer getFirstIndex() {
+		return 0;
+	}
+
 	public Integer getLastIndex() {
 		return scores.size() - 1;
 	}
@@ -35,8 +39,8 @@ public class Frame {
 		return scores.size();
 	}
 
-	public Integer sum(int index) {
-		return IntStream.range(0, index)
+	public Integer sumInRange(int start, int end) {
+		return IntStream.range(start, end)
 			.map(scores::get)
 			.sum() % 10;
 	}
@@ -46,11 +50,11 @@ public class Frame {
 	}
 
 	public Boolean isSpare(int index) {
-		return sum(index) + get(index) == 10;
+		return sumInRange(0, index) + get(index) == 10;
 	}
 
 	public Boolean isMiss(int index) {
-		return scores.get(index) > 0 && sum(index) + get(index) < 10;
+		return scores.get(index) > 0 && sumInRange(0, index) + get(index) < 10;
 	}
 
 	public Boolean isGutter(int index) {

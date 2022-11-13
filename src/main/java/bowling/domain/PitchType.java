@@ -4,7 +4,7 @@ public enum PitchType {
 
 	STRIKE("x"),
 	SPARE("/"),
-	MISS(" "),
+	MISS(""),
 	GUTTER("-")
 	;
 

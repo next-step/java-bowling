@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.Constants;
+
 public class NormalFrame extends Frame {
 
 	public NormalFrame save(int score) {
@@ -12,6 +14,6 @@ public class NormalFrame extends Frame {
 	}
 
 	public boolean isMaxSize() {
-		return this.getScores().size() == 2;
+		return this.getScores().size() == Constants.NORMAL_FRAME_SCORE_SIZE;
 	}
 }

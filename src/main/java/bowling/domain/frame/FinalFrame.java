@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.Constants;
+
 public class FinalFrame extends Frame {
 
 	public FinalFrame save(int score) {
@@ -12,10 +14,10 @@ public class FinalFrame extends Frame {
 	}
 
 	public boolean isNext() {
-		return isMiss(this.getLastIndex()) && this.getScores().size() > 1;
+		return !isStrike(this.getFirstIndex()) && isMiss(this.getLastIndex()) && this.getScores().size() > 1;
 	}
 
 	public boolean isMaxSize() {
-		return this.getScores().size() == 3;
+		return this.getScores().size() == Constants.FINAL_FRAME_SCORE_SIZE;
 	}
 }

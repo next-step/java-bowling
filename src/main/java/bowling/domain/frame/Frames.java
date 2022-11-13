@@ -37,7 +37,6 @@ public class Frames {
 		return frames.indexOf(frame) + 1 < Constants.FINAL_FRAME;
 	}
 
-
 	public Boolean isFinalFrame(Frame frame) {
 		return frames.indexOf(frame) + 1 == Constants.FINAL_FRAME;
 	}
