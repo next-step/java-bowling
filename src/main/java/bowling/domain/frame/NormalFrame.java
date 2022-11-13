@@ -3,7 +3,8 @@ package bowling.domain.frame;
 import bowling.domain.Pin;
 import bowling.domain.Point;
 
-import java.util.Optional;
+import java.util.Collections;
+import java.util.List;
 
 public class NormalFrame extends Frame {
 
@@ -13,11 +14,11 @@ public class NormalFrame extends Frame {
         super(before);
     }
 
-    public static NormalFrame start(){
+    public static NormalFrame start() {
         return new NormalFrame(Point.start());
     }
 
-    public static NormalFrame of(Frame frame){
+    public static NormalFrame of(Frame frame) {
         return new NormalFrame(frame.point);
     }
 
@@ -44,7 +45,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public Optional<Pin> getBonus() {
-        return Optional.empty();
+    public List<Pin> getBonus() {
+        return Collections.emptyList();
     }
 }

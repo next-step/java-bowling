@@ -5,7 +5,7 @@ import bowling.domain.Point;
 import bowling.domain.state.Started;
 import bowling.domain.state.State;
 
-import java.util.Optional;
+import java.util.List;
 
 public abstract class Frame {
     State state;
@@ -29,19 +29,23 @@ public abstract class Frame {
         return state;
     }
 
-    public Integer calculatePoint(){
+    public Integer calculatePoint() {
 
-        if( point == null || canAddPoint() ){
+        if (point == null || isNotFinishedCalculate()) {
             return null;
         }
 
-        return point.point();
+        return point.calculate();
+    }
+
+    private boolean isNotFinishedCalculate() {
+        return canAddPoint() || !isFinish();
     }
 
     public abstract boolean canAddPoint();
 
     public abstract void addPoint(Pin pin);
 
-    public abstract Optional<Pin> getBonus();
+    public abstract List<Pin> getBonus();
 
 }

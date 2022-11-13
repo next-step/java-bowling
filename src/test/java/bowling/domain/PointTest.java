@@ -17,7 +17,7 @@ class PointTest {
         strike1.add(new Pin(2));
         strike1.add(new Pin(2));
         //then
-        assertThat(strike1.point()).isEqualTo(14);
+        assertThat(strike1.calculate()).isEqualTo(14);
     }
 
 

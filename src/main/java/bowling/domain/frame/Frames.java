@@ -12,6 +12,7 @@ public class Frames {
 
     private static final int LAST_NORMAL_TURN = 9;
     private static final int TOTAL_TURN = 10;
+    private static final int MAX_REMAIN_PINS = 10;
 
     private LinkedList<Frame> frames;
 
@@ -22,13 +23,12 @@ public class Frames {
 
     public Pin bowl(ScoreStrategy scoreStrategy) {
         Pin now = scoreStrategy.getScore(getRemainPins());
-        addFrame();
-        calculatePoint(now);
+        sumPoint(now);
         frames.getLast().bowl(now);
         return now;
     }
 
-    private void calculatePoint(Pin now) {
+    private void sumPoint(Pin now) {
         frames.stream()
                 .filter(Frame::isFinish)
                 .filter(Frame::canAddPoint)
@@ -40,12 +40,12 @@ public class Frames {
                 .map(LinkedList::getLast)
                 .filter(frame -> !frame.isFinish())
                 .map(Frame::getRemainPins)
-                .orElse(10);
+                .orElse(MAX_REMAIN_PINS);
     }
 
-    private void addFrame() {
+    public void next() {
 
-        if(frames.size() == TOTAL_TURN && frames.getLast().isFinish()){
+        if (frames.size() == TOTAL_TURN && frames.getLast().isFinish()) {
             throw new UnsupportedOperationException("10 프레임 이상 경기를 진행할 수 없습니다.");
         }
 
@@ -60,7 +60,7 @@ public class Frames {
 
 
     public boolean isFinished() {
-        return frames.size() == 10 && frames.getLast().isFinish();
+        return frames.size() == TOTAL_TURN && frames.getLast().isFinish();
     }
 
     private boolean normalFramesIsFinished() {
@@ -73,6 +73,10 @@ public class Frames {
 
     public int getFrameNumber() {
         return frames.size();
+    }
+
+    public boolean isEndOfTurn() {
+        return frames.getLast().isFinish();
     }
 
 }

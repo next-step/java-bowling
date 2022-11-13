@@ -1,13 +1,10 @@
 package bowling.domain;
 
-import bowling.domain.dto.BowlingRecord;
-import bowling.domain.dto.FrameRecord;
 import bowling.domain.frame.Frames;
-import bowling.domain.state.StateType;
+import bowling.domain.state.Running;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,16 +17,21 @@ class FramesTest {
     void perfect_game() {
         //given
         Frames frames = new Frames();
+
         //when
-        IntStream.range(0, 11)
-                .forEach(i -> frames.bowl(range -> new Pin(10)));
-        List<FrameRecord> gameFrameRecord = BowlingRecord.of(frames, new Pin(10), new PlayerName("aaa")).getFrameRecords();
+        IntStream.range(0, 12)
+                .forEach(i -> {
+                    frames.bowl(range -> new Pin(10));
+                    if (!frames.isFinished()) {
+                        frames.next();
+                    }
+                });
+
         //then
         assertAll(
                 () -> assertThat(frames.isFinished()).isTrue(),
                 () -> assertThat(frames.getFrameNumber()).isEqualTo(10),
-                () -> assertThat(gameFrameRecord).hasSize(10),
-                () -> assertThat(gameFrameRecord.get(gameFrameRecord.size()-1).getPoint()).isEqualTo(300)
+                () -> assertThat(frames.getFrames().get(9).calculatePoint()).isEqualTo(300)
         );
 
     }
@@ -41,14 +43,59 @@ class FramesTest {
         Frames frames = new Frames();
         //when
         Pin now = frames.bowl(range -> new Pin(5));
-        List<FrameRecord> gameFrameRecord = BowlingRecord.of(frames, now, new PlayerName("aaa")).getFrameRecords();
         //then
         assertAll(
                 () -> assertThat(frames.isFinished()).isFalse(),
                 () -> assertThat(frames.getFrameNumber()).isEqualTo(1),
-                () -> assertThat(gameFrameRecord.get(0).getState()).isEqualTo(StateType.RUNNING),
-                () -> assertThat(gameFrameRecord.get(0).getScores()).isEqualTo(List.of(5))
+                () -> assertThat(frames.getFrames().get(0).getState()).isInstanceOf(Running.class),
+                () -> assertThat(frames.getFrames().get(0).calculatePoint()).isNull()
         );
 
     }
+
+    @Test
+    @DisplayName("스트라이크면 턴 종료")
+    void end_of_turn_strike() {
+        //given
+        Frames frames = new Frames();
+        //when
+        frames.bowl( a -> new Pin(10));
+        //then
+        assertThat(frames.isEndOfTurn()).isTrue();
+    }
+
+    @Test
+    @DisplayName("스페어면 턴 종료")
+    void end_of_turn_spare() {
+        //given
+        Frames frames = new Frames();
+        //when
+        frames.bowl( a -> new Pin(1));
+        frames.bowl( a -> new Pin(9));
+        //then
+        assertThat(frames.isEndOfTurn()).isTrue();
+    }
+    @Test
+    @DisplayName("miss면 턴 종료")
+    void end_of_turn_miss() {
+        //given
+        Frames frames = new Frames();
+        //when
+        frames.bowl( a -> new Pin(5));
+        frames.bowl( a -> new Pin(3));
+        //then
+        assertThat(frames.isEndOfTurn()).isTrue();
+    }
+
+    @Test
+    @DisplayName("한번 던지면 턴 종료 아님")
+    void not_end_of_turn_one_bowl() {
+        //given
+        Frames frames = new Frames();
+        //when
+        frames.bowl( a -> new Pin(5));
+        //then
+        assertThat(frames.isEndOfTurn()).isFalse();
+    }
+
 }

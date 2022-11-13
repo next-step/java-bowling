@@ -1,20 +1,20 @@
 package bowling.view;
 
-import bowling.domain.dto.BowlingRecord;
-import bowling.domain.dto.FrameRecord;
-import bowling.domain.frame.FrameType;
 import bowling.domain.state.StateType;
+import bowling.dto.BowlingRecord;
+import bowling.dto.FrameRecord;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class OutputView {
 
-    private static final String FORMAT_BOWL = "%d프레임 투구 : %d%n";
     private static final String FORMAT_FRAME_NUMBER = "   %02d   ";
     private static final String FORMAT_FRAME = " %5s  ";
     private static final String FORMAT_RECORD = "| %6s |%s|%n";
+    private static final String FORMAT_BOWL_NOW = "%s's turn : %d";
 
     private static final String BAR = "|";
     private static final String STRIKE = "X";
@@ -26,33 +26,53 @@ public class OutputView {
 
     }
 
-    public static void print(BowlingRecord bowlingRecord) {
-        System.out.printf(FORMAT_BOWL, bowlingRecord.getNth(), bowlingRecord.getNowPin());
+    public static void printStart(List<BowlingRecord> bowlingRecords) {
         printHeader();
-        printFrameRecord(bowlingRecord);
+        bowlingRecords.forEach(record -> {
+            printFrameRecord(record);
+            printPointsStart();
+        } );
     }
 
-    public static void printStart(BowlingRecord bowlingRecord) {
+    public static void print(List<BowlingRecord> bowlingRecords) {
         printHeader();
-        printFrameRecord(bowlingRecord);
+        bowlingRecords.forEach(record -> {
+            printFrameRecord(record);
+            printPoints(record);
+        } );
     }
 
     private static void printFrameRecord(BowlingRecord bowlingRecord) {
         String headerName = String.format(FORMAT_FRAME, bowlingRecord.getPlayerName());
-        String headerPoint = String.format(FORMAT_FRAME, BLANK);
 
         String records = bowlingRecord.getFrameRecords().stream()
                 .map(record -> String.format(FORMAT_FRAME, printFrameRecord(record)))
                 .collect(Collectors.joining(BAR));
 
+        records = addRestEmptyRecord(records, bowlingRecord.getNth());
+
+        System.out.printf(FORMAT_RECORD, headerName, records);
+    }
+
+    private static void printPoints(BowlingRecord bowlingRecord){
         String points = bowlingRecord.getFrameRecords().stream()
                 .map(record -> String.format(FORMAT_FRAME, printPoint(record.getPoint())))
                 .collect(Collectors.joining(BAR));
 
-        records = addRestEmptyRecord(records, bowlingRecord.getNth());
         points = addRestEmptyRecord(points, bowlingRecord.getNth());
 
-        System.out.printf(FORMAT_RECORD, headerName, records);
+        String headerPoint = String.format(FORMAT_FRAME, BLANK);
+
+        System.out.printf(FORMAT_RECORD, headerPoint, points);
+    }
+
+    private static void printPointsStart(){
+        String points = IntStream.range(0,10)
+                .mapToObj(i -> String.format(FORMAT_FRAME, BLANK))
+                .collect(Collectors.joining(BAR));
+
+        String headerPoint = String.format(FORMAT_FRAME, BLANK);
+
         System.out.printf(FORMAT_RECORD, headerPoint, points);
     }
 
@@ -93,10 +113,14 @@ public class OutputView {
     }
 
     private static String printBonus(FrameRecord input) {
-        return Optional.ofNullable(input)
-                .filter(frameRecord -> frameRecord.getKind() == FrameType.FINAL)
-                .map(FrameRecord::getBonus)
-                .map(bonus -> BAR + bonus).orElse("");
+
+        if (input.getBonus() == null && input.getBonus().isEmpty()) {
+            return BLANK;
+        }
+
+        return input.getBonus().stream()
+                .map(bonus -> BAR + bonus)
+                .collect(Collectors.joining(BLANK));
     }
 
     private static String getScore(Integer integer) {
@@ -122,5 +146,10 @@ public class OutputView {
         return Optional.ofNullable(point)
                 .map(String::valueOf)
                 .orElse(BLANK);
+    }
+
+    public static void printBowlNow(String playerName, int now) {
+        String bowlNow = String.format(FORMAT_BOWL_NOW, playerName, now);
+        System.out.println(bowlNow);
     }
 }
