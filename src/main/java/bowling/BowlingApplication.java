@@ -13,9 +13,8 @@ public class BowlingApplication {
 
         ResultView.printScoreBoard(game);
 
-        int inputDownPinCount;
         while (!game.isEndGame()) {
-            inputDownPinCount = InputView.inputDownPinCount(game.getPlayerName());
+            int inputDownPinCount = InputView.inputDownPinCount(game.getPlayerName());
             game.doGame(inputDownPinCount);
             ResultView.printScoreBoard(game);
         }
