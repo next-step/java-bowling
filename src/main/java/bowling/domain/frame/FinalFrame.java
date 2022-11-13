@@ -9,7 +9,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public int orderToThrow() {
-        if (chances().noLeftChances(true)) {
+        if (chances().noLeftChancesInFinalFrame()) {
             return NO_FRAME_TO_THROW;
         }
         return order();
@@ -17,7 +17,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public void addChances(int knockDownCount) {
-        if (chances().noLeftChances(true)) {
+        if (chances().noLeftChancesInFinalFrame()) {
             return;
         }
         chances().add(knockDownCount);

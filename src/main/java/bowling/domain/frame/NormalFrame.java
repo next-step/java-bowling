@@ -15,7 +15,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public int orderToThrow() {
-        if (chances().areAllPinsDown() || chances().noLeftChances(false)) {
+        if (chances().areAllPinsDown() || chances().noLeftChancesInNormalFrame()) {
             return nextFrame.orderToThrow();
         }
         return order();
@@ -23,7 +23,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public void addChances(int knockDownCount) {
-        if (chances().areAllPinsDown() || chances().noLeftChances(false)) {
+        if (chances().areAllPinsDown() || chances().noLeftChancesInNormalFrame()) {
             nextFrame.addChances(knockDownCount);
             return;
         }

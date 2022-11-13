@@ -23,7 +23,7 @@ public class ChancesTest {
         Chances chances = new Chances();
         chances.add(10);
         chances.add(0);
-        assertThat(chances.noLeftChances(false)).isTrue();
+        assertThat(chances.noLeftChancesInNormalFrame()).isTrue();
     }
 
     @Test
@@ -40,7 +40,7 @@ public class ChancesTest {
     void test5() {
         Chances chances = new Chances();
         chances.add(10);
-        assertThat(chances.noLeftChances(false)).isFalse();
+        assertThat(chances.noLeftChancesInNormalFrame()).isFalse();
     }
 
 }

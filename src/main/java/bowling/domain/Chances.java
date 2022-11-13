@@ -37,6 +37,17 @@ public class Chances {
         return chances.size() == FINAL_FRAME_MAX_CHANCE_COUNT;
     }
 
+    public boolean noLeftChancesInNormalFrame() {
+        return chances.size() == NORMAL_FRAME_MAX_CHANCE_COUNT;
+    }
+
+    public boolean noLeftChancesInFinalFrame() {
+        if (!areAllPinsDown()) {
+            return chances.size() == NORMAL_FRAME_MAX_CHANCE_COUNT;
+        }
+        return chances.size() == FINAL_FRAME_MAX_CHANCE_COUNT;
+    }
+
     public List<Chance> chances() {
         return Collections.unmodifiableList(chances);
     }
