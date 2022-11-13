@@ -22,4 +22,12 @@ public class Names {
         }
         names.add(name);
     }
+
+    public Name getPlayerName(int idx) {
+        return names.get(idx);
+    }
+
+    public int getCountOfPlayer() {
+        return names.size();
+    }
 }

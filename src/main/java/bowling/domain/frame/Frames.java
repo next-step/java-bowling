@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pin;
+import bowling.domain.status.Ready;
 import bowling.domain.status.Status;
 
 import java.util.ArrayList;
@@ -55,7 +56,12 @@ public class Frames {
     public List<Integer> getFrameScores() {
         return frames.stream()
                 .filter(frame -> !frame.isFinalFrame())
-                .map(frame -> frame.getScore().getScore())
+                .map(frame -> {
+                    if (frame.getStatus() instanceof Ready) {
+                        return null;
+                    }
+                    return frame.getScore().getScore();
+                })
                 .collect(Collectors.toList());
     }
 }

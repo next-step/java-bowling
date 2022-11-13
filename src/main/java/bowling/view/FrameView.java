@@ -39,7 +39,7 @@ public class FrameView {
         return frames.getFrameStatus()
                 .stream()
                 .filter(status -> !Objects.isNull(status))
-                .map(status -> { String content = "";
+                .map(status -> { String content = "   ";
                     if (status instanceof Strike) {
                         content = String.format("%-3s", STRIKE_MARK);
                     }
@@ -88,10 +88,22 @@ public class FrameView {
     }
 
     public static String getNormalFramesScores(Frames frames) {
-        return frames.getFrameScores()
+        StringBuilder contents = new StringBuilder();
+        String content = frames.getFrameScores()
                 .stream()
-                .map(score -> String.format("%2s",score))
+                .map(score -> {
+                    if (Objects.isNull(score)) {
+                        return String.format("%2s", "");
+                    }
+                    return String.format("%2s", score);
+                })
                 .collect(Collectors.joining("  |  ", "  ", "  |"));
+        contents.append(content);
+
+        for (int i = frames.getCurrentFrameIdx() + 1; i < MAX_FRAME_NO; i++) {
+            contents.append(String.format("%7s", BAR_MARK));
+        }
+        return contents.toString();
     }
 
     public static String getFinalFramesScores(Frames frames) {
