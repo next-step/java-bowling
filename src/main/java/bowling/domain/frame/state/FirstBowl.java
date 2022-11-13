@@ -33,7 +33,7 @@ public class FirstBowl extends Running {
 
     @Override
     public Score calculateBonusScore(Score previousScore) {
-        return previousScore.addBonusScore(firstPins.getPins());
+        return addBonusScore(previousScore, firstPins.getPins());
     }
 
     @Override

@@ -29,12 +29,12 @@ public class Miss extends Finished {
 
     @Override
     public Score calculateBonusScore(Score previousScore) {
-        Score score = previousScore.addBonusScore(firstPins.getPins());
+        Score score = addBonusScore(previousScore, firstPins.getPins());
         if (score.canCalculateScore()) {
             return score;
         }
 
-        return score.addBonusScore(secondPins.getPins());
+        return addBonusScore(score, secondPins.getPins());
     }
 
     @Override

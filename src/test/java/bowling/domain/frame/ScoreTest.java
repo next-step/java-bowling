@@ -24,14 +24,6 @@ class ScoreTest {
     }
 
     @Test
-    public void addScoreWhenNoMoreLeft() {
-        Score score = new Score(7, 0);
-        assertThatThrownBy(() -> score.addBonusScore(4))
-            .isInstanceOf(IllegalStateException.class)
-            .hasMessageContaining("점수를 더 이상 합산할 수 없습니다");
-    }
-
-    @Test
     public void getScoreWhenIllegalState() {
         assertThatThrownBy(() -> new Score(10, 2).getValue())
             .isInstanceOf(IllegalStateException.class)

@@ -24,7 +24,7 @@ public class Strike extends Finished {
             return previousScore;
         }
 
-        return previousScore.addBonusScore(Pins.MAX_PINS);
+        return addBonusScore(previousScore, Pins.MAX_PINS);
     }
 
     @Override
