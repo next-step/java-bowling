@@ -76,4 +76,21 @@ public class ScoresTest {
     void sum_scores() {
         assertThat(Scores.sumScores(Score.of(1), Score.of(2), Score.of(3))).isEqualTo(6);
     }
+
+    @Test
+    void is_not_end_score() {
+        TotalScore endScore = TotalScore.lastFrameTotalScore();
+        endScore.addRegularScore(Score.of(10));
+        endScore.addRegularScore(Score.of(10));
+        endScore.addRegularScore(Score.of(10));
+
+        TotalScore notEndScore = TotalScore.lastFrameTotalScore();
+        notEndScore.addRegularScore(Score.of(2));
+
+        Assertions.assertAll(
+                () -> assertThat(endScore.regularScores().isNotEndScore(endScore.regularScores())).isFalse(),
+                () -> assertThat(notEndScore.regularScores().isNotEndScore(notEndScore.regularScores())).isTrue()
+        );
+    }
+
 }
