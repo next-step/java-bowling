@@ -28,6 +28,17 @@ public class Bowling {
         return count;
     }
 
+    public int sum(Bowling bowling) {
+        return this.count + bowling.count;
+    }
+
+    public boolean isStrike() {
+        return count == 10;
+    }
+
+    public boolean isNone() {
+        return count == 0;
+    }
     //==============================================================================
 
     @Override
