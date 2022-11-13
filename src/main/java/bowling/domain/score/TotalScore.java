@@ -6,9 +6,17 @@ public class TotalScore {
     private final Scores regularScores;
     private final Scores bonusScores;
 
-    public TotalScore() {
-        this.regularScores = new Scores();
-        this.bonusScores = new Scores();
+    public static TotalScore defaultFrameTotalScore() {
+        return new TotalScore(new DefaultFrameScores(), new BonusScores());
+    }
+
+    public static TotalScore lastFrameTotalScore() {
+        return new TotalScore(new LastFrameScores(), new BonusScores());
+    }
+
+    public TotalScore(Scores regularScores, Scores bonusScores) {
+        this.regularScores = regularScores;
+        this.bonusScores = bonusScores;
     }
 
     public void addRegularScore(Score score) {

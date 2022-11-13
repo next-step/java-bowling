@@ -1,15 +1,16 @@
 package bowling.domain.frame;
 
+import bowling.domain.Chance;
 import bowling.domain.score.Scores;
+import bowling.domain.score.TotalScore;
 
 public class LastFrame extends Frame {
 
     private static final int TOTAL_CHANCE = 3;
     private static final int DEFAULT_CHANCE = 2;
 
-    @Override
-    protected int totalChance() {
-        return TOTAL_CHANCE;
+    public LastFrame() {
+        super(new Chance(TOTAL_CHANCE), TotalScore.lastFrameTotalScore());
     }
 
     @Override

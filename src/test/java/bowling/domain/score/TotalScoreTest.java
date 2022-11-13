@@ -9,7 +9,7 @@ public class TotalScoreTest {
 
     @BeforeEach
     void setUp() {
-        this.totalScore = new TotalScore();
+        this.totalScore = TotalScore.defaultFrameTotalScore();
     }
 
     @Test

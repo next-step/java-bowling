@@ -9,14 +9,14 @@ public class ScoresTest {
 
     @Test
     void create() {
-        Scores scores = new Scores();
+        Scores scores = new DefaultFrameScores();
 
-        assertThat(scores).isEqualTo(new Scores());
+        assertThat(scores).isEqualTo(new DefaultFrameScores());
     }
 
     @Test
     void add() {
-        Scores scores = new Scores();
+        Scores scores = new DefaultFrameScores();
         scores.add(Score.of(4));
 
         assertThat(scores.first()).isEqualTo(Score.of(4));
@@ -24,8 +24,8 @@ public class ScoresTest {
 
     @Test
     void isEmpty() {
-        Scores emptyScores = new Scores();
-        Scores notEmptyScores = new Scores();
+        Scores emptyScores = new DefaultFrameScores();
+        Scores notEmptyScores = new DefaultFrameScores();
         notEmptyScores.add(Score.of(4));
 
         Assertions.assertAll(() -> assertThat(emptyScores.isEmpty()).isTrue(),
@@ -34,7 +34,7 @@ public class ScoresTest {
 
     @Test
     void first() {
-        Scores scores = new Scores();
+        Scores scores = new DefaultFrameScores();
         scores.add(Score.of(1));
 
         assertThat(scores.first()).isEqualTo(Score.of(1));
@@ -42,7 +42,7 @@ public class ScoresTest {
 
     @Test
     void second() {
-        Scores scores = new Scores();
+        Scores scores = new DefaultFrameScores();
         scores.add(Score.of(1));
         scores.add(Score.of(2));
 
@@ -51,7 +51,7 @@ public class ScoresTest {
 
     @Test
     void third() {
-        Scores scores = new Scores();
+        Scores scores = new LastFrameScores();
         scores.add(Score.of(1));
         scores.add(Score.of(2));
         scores.add(Score.of(3));
@@ -61,7 +61,7 @@ public class ScoresTest {
 
     @Test
     void sum() {
-        Scores scores = new Scores();
+        Scores scores = new LastFrameScores();
         scores.add(Score.of(1));
         scores.add(Score.of(2));
         scores.add(Score.of(3));
@@ -71,6 +71,6 @@ public class ScoresTest {
 
     @Test
     void sum_scores() {
-        assertThat(Scores.sumScores(Score.of(1),Score.of(2),Score.of(3))).isEqualTo(6);
+        assertThat(Scores.sumScores(Score.of(1), Score.of(2), Score.of(3))).isEqualTo(6);
     }
 }

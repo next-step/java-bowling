@@ -1,14 +1,16 @@
 package bowling.domain.frame;
 
+import bowling.domain.Chance;
+import bowling.domain.score.TotalScore;
+
 public class DefaultFrame extends Frame {
 
     private static final int TOTAL_CHANCE = 2;
     private static final int SPARE_BONUS_SIZE = 1;
     private static final int STRIKE_BONUS_SIZE = 2;
 
-    @Override
-    protected int totalChance() {
-        return TOTAL_CHANCE;
+    public DefaultFrame() {
+        super(new Chance(TOTAL_CHANCE), TotalScore.defaultFrameTotalScore());
     }
 
     @Override

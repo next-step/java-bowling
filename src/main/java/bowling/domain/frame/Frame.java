@@ -7,21 +7,19 @@ import bowling.domain.score.TotalScore;
 public abstract class Frame {
 
     public static final int SCORE_STRIKE = 10;
-    protected final TotalScore totalScore;
     protected final Chance chance;
-
-    public Frame() {
-        this.totalScore = new TotalScore();
-        this.chance = new Chance(this.totalChance());
-    }
-
-    protected abstract int totalChance();
+    protected final TotalScore totalScore;
 
     protected abstract void validateScore(Frame frame);
 
     public abstract void minusChance();
 
     public abstract boolean isNotEndScoreAggregation();
+
+    protected Frame(Chance chance, TotalScore totalScore) {
+        this.chance = chance;
+        this.totalScore = totalScore;
+    }
 
     public boolean isRemainChance() {
         return this.chance.isRemainChance();
