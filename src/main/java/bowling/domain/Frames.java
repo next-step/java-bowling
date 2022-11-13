@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Frames {
+    public final static int FIRST_FRAME_ORDER = 1;
+    public final static int LAST_FRAME_ORDER = 10;
+
     private final List<Frame> frames;
     private boolean isProgress = true;
 
@@ -16,44 +19,46 @@ public class Frames {
         return frames;
     }
 
-    private Frame getLastFrame(){
+    private Frame getLastFrame() {
         return frames.get(frames.size() - 1);
     }
 
-    public int getLastOrder(){
+    public int getLastOrder() {
         return getLastFrame().getOrder();
     }
 
-    public int getLastTry(){
+    public int getLastTry() {
         return getLastFrame().getLatestScore();
     }
 
-    public void next(){
+    public void next() {
         isProgress = !isEnd();
-        if(getLastFrame().isProgress()) {
+        if(!isProgress) return;
+        if (getLastFrame().isProgress()) {
             nextTry();
             return;
         }
         nextRound();
     }
 
-    public void nextTry(){
+    public void nextTry() {
         getLastFrame().nextTry();
     }
 
-    public void nextRound(){
+    public void nextRound() {
         frames.add(getLastFrame().nextRound());
     }
 
     private boolean isEnd() {
-        return frames.size() == 10 && !getLastFrame().isProgress();
+        return frames.size() == LAST_FRAME_ORDER &&
+                !getLastFrame().isProgress();
     }
 
-    public boolean isProgress(){
+    public boolean isProgress() {
         return isProgress;
     }
 
-    public int size(){
+    public int size() {
         return frames.size();
     }
 }

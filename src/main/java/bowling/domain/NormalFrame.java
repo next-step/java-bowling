@@ -4,18 +4,26 @@ import static bowling.BowlingApp.getPinCalculateStrategy;
 
 public class NormalFrame extends DefaultFrame {
 
-    public NormalFrame(Score score) {
-        super(score);
+    public NormalFrame(GeneralScore generalScore) {
+        super(generalScore);
+        if(generalScore.size() > 2) {
+            throw new IllegalArgumentException("score size cannot be bigger than 2");
+        }
     }
 
-    public NormalFrame(Score score, int order) {
-        super(score, order);
+    public NormalFrame(GeneralScore generalScore, int order) {
+        super(generalScore, order);
     }
 
     @Override
-    public NormalFrame nextRound(){
+    public Frame nextRound(){
         int nextOrder = order + 1;
-        return new NormalFrame(new Score(getPinCalculateStrategy()), nextOrder);
+        if(nextOrder == 10) {
+            return new FinalFrame(new GeneralScore(getPinCalculateStrategy()), nextOrder);
+        }
+        return new NormalFrame(new GeneralScore(getPinCalculateStrategy()), nextOrder);
     }
+
+
 
 }

@@ -41,6 +41,9 @@ public class ResultView {
     }
 
     private String getMarker(Frame normalFrame){
+        if(normalFrame.isStrike()) {
+            return "X";
+        }
         if(normalFrame.isProgress()) {
             return String.valueOf(normalFrame.getFirstScore());
         }

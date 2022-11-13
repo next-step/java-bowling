@@ -4,31 +4,31 @@ import bowling.type.BowlingScore;
 import bowling.type.PlayStatus;
 
 public abstract class DefaultFrame implements Frame{
-    protected int order = 1;
-    private final Score score;
-    private PlayStatus playStatus;
 
-    public DefaultFrame(Score score) {
-        this.score = score;
-        if(score.isStrike()) {
-            this.playStatus = PlayStatus.END;
-            return;
-        }
-        this.playStatus = PlayStatus.IN_PROGRESS;
+    protected int order = 1;
+    protected GeneralScore generalScore;
+    protected PlayStatus playStatus;
+
+    public DefaultFrame(GeneralScore generalScore) {
+        this.generalScore = generalScore;
+        this.playStatus = decideEnd(generalScore);
     }
 
-    public DefaultFrame(Score score, int order) {
-        this.score = score;
+    public DefaultFrame(GeneralScore generalScore, int order) {
+        this.generalScore = generalScore;
         this.order = order;
-        if(score.isStrike()) {
-            this.playStatus = PlayStatus.END;
-            return;
+        this.playStatus = decideEnd(generalScore);
+    }
+
+    private PlayStatus decideEnd(GeneralScore generalScore) {
+        if (generalScore.isStrike()) {
+            return PlayStatus.END;
         }
-        this.playStatus = PlayStatus.IN_PROGRESS;
+        return PlayStatus.IN_PROGRESS;
     }
 
     public void nextTry(){
-        score.next();
+        generalScore.next();
         playStatus = PlayStatus.END;
     }
 
@@ -39,15 +39,15 @@ public abstract class DefaultFrame implements Frame{
 
     @Override
     public int getLatestScore() {
-        return score.getLatest();
+        return generalScore.getLatest();
     }
 
     public boolean isStrike(){
-        return score.getBowlingScore() == BowlingScore.STRIKE;
+        return BowlingScore.STRIKE == BowlingScore.from(generalScore);
     }
 
     public BowlingScore getBowlingScore() {
-        return score.getBowlingScore();
+        return BowlingScore.from(generalScore);
     }
 
     public boolean isProgress(){
@@ -55,10 +55,10 @@ public abstract class DefaultFrame implements Frame{
     }
 
     public int getFirstScore(){
-        return score.getFirst();
+        return generalScore.getFirst();
     }
 
     public int getSecondScore(){
-        return score.getSecond();
+        return generalScore.getSecond();
     }
 }
