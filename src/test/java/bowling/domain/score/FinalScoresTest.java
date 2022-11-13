@@ -13,13 +13,10 @@ class FinalScoresTest {
 
     @ParameterizedTest
     @MethodSource("scoreSource")
-    public void remain_pin_calc_test(int score1, int remain1, int score2, int remain2) {
+    public void remain_pin_calc_test(int score1, int remain1) {
         FinalScores finalScores = new FinalScores();
         finalScores.recordingScore(new Score(score1));
         assertThat(finalScores.remainPin()).isEqualTo(remain1);
-
-        finalScores.recordingScore(new Score(score2));
-        assertThat(finalScores.remainPin()).isEqualTo(remain2);
     }
 
     @ParameterizedTest
@@ -41,8 +38,8 @@ class FinalScoresTest {
 
     static Stream<Arguments> scoreSource() {
         return Stream.of(
-                arguments(9, 1, 1, 0),
-                arguments(0, 10, 10, 0),
-                arguments(2, 8, 5, 3));
+                arguments(9, 1),
+                arguments(0, 10),
+                arguments(2, 8));
     }
 }
