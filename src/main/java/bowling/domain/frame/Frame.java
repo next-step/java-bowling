@@ -8,9 +8,15 @@ public abstract class Frame {
     protected final Chance chance;
     protected final TotalScore totalScore;
 
-    public abstract void minusChance();
-
     public abstract boolean isNotEndScoreAggregation();
+
+    public void minusChance() {
+        if (this.totalScore.isChanceMinusTwo()) {
+            this.chance.minusTwo();
+            return;
+        }
+        this.chance.minusOne();
+    }
 
     protected Frame(Chance chance, TotalScore totalScore) {
         this.chance = chance;

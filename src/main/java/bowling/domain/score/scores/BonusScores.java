@@ -19,4 +19,11 @@ public class BonusScores extends Scores {
         }
         return false;
     }
+
+    @Override
+    public boolean isChanceMinusTwo() {
+        throw new IllegalArgumentException();
+    }
+
+
 }

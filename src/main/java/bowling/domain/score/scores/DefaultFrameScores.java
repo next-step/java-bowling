@@ -13,4 +13,9 @@ public class DefaultFrameScores extends Scores {
     public boolean isNotEndScore(Scores scores) {
         return scores.isSizeEqual(0) || (scores.isSizeEqual(1) && !scores.isStrike());
     }
+
+    @Override
+    public boolean isChanceMinusTwo() {
+        return this.first().isStrike();
+    }
 }

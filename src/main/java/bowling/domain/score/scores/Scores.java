@@ -15,6 +15,8 @@ public abstract class Scores {
 
     public abstract boolean isNotEndScore(Scores scores);
 
+    public abstract boolean isChanceMinusTwo();
+
     public Scores() {
         this.scores = new ArrayList<>();
     }

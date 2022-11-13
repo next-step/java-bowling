@@ -36,4 +36,9 @@ public class LastFrameScores extends Scores {
     public boolean isNotEndScore(Scores scores) {
         return !scores.isSizeEqual(TOTAL_CHANCE) || !scores.isSizeEqual(DEFAULT_CHANCE);
     }
+
+    @Override
+    public boolean isChanceMinusTwo() {
+        return this.isSizeEqual(DEFAULT_CHANCE) && !this.first().isStrike() && !this.isSpare();
+    }
 }

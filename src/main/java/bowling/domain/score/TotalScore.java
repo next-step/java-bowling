@@ -38,16 +38,16 @@ public class TotalScore {
         return this.regularScores;
     }
 
-    public Scores bonusScores() {
-        return this.bonusScores;
-    }
-
     public void validateScore() {
         this.regularScores.validateScore();
     }
 
     public boolean isNotEndScoreAggregation() {
-        return this.regularScores.isNotEndScore(this.regularScores) || this.bonusScores.isNotEndScore(
-                this.regularScores);
+        return this.regularScores.isNotEndScore(this.regularScores)
+                || this.bonusScores.isNotEndScore(this.regularScores);
+    }
+
+    public boolean isChanceMinusTwo() {
+        return this.regularScores.isChanceMinusTwo();
     }
 }

@@ -12,15 +12,6 @@ public class DefaultFrame extends Frame {
     }
 
     @Override
-    public void minusChance() {
-        if (this.totalScore.regularScores().first().isStrike()) {
-            this.chance.minusTwo();
-            return;
-        }
-        this.chance.minusOne();
-    }
-
-    @Override
     public boolean isNotEndScoreAggregation() {
         return this.chance.isRemainChance() || this.totalScore.isNotEndScoreAggregation();
     }
