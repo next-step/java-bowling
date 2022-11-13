@@ -17,8 +17,12 @@ public class Pin {
 
     private void validateOutOfRange(int count) {
         if (count < MINIMUM_PIN_COUNT || count > MAXIMUM_PIN_COUNT) {
-            throw new BowlingGameException(ErrorMessage.SCORE_OUT_OF_RANGE);
+            throw new BowlingGameException(ErrorMessage.NUMBER_OF_PINS_OUT_OF_RANGE);
         }
+    }
+
+    public Score toScore() {
+        return new Score(count);
     }
 
     @Override
@@ -36,10 +40,6 @@ public class Pin {
 
     public int getScore() {
         return this.count;
-    }
-
-    public Pin add(Pin pin) {
-        return new Pin(pin.count + this.count);
     }
 
     @Override

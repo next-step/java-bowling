@@ -7,17 +7,17 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 
 public class RollsTest {
     @Test
-    void 스코어_생성() {
+    void 회차_초기화() {
         assertThatNoException().isThrownBy(() -> new Rolls(0, 10));
     }
 
     @Test
-    void 스코어_합_구하기() {
-        assertThat(new Rolls(1, 9).sum()).isEqualTo(new Pin(10));
+    void 회차_합산() {
+        assertThat(new Rolls(1, 9).sum()).isEqualTo(new Score(10));
     }
 
     @Test
-    void 스코어_개수_구하기() {
+    void 진행_회차_구하기() {
         assertThat(new Rolls(9, 1, 2).size()).isEqualTo(3);
     }
 

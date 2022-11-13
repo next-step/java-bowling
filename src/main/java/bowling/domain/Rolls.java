@@ -18,12 +18,17 @@ public class Rolls {
                 .collect(Collectors.toList()));
     }
 
-    public Pin sum() {
+    public Score sum() {
         return pins.stream()
-                .reduce(Pin::add)
+                .map(Pin::toScore)
+                .reduce(Score::add)
                 .stream()
                 .findFirst()
-                .orElseGet(() -> new Pin(0));
+                .orElseGet(() -> new Score(0));
+    }
+
+    public void add(Pin pin) {
+        this.pins.add(pin);
     }
 
     public int size() {
@@ -39,10 +44,6 @@ public class Rolls {
 
     public List<Pin> getScores() {
         return pins;
-    }
-
-    public void add(Pin pin) {
-        this.pins.add(pin);
     }
 
     @Override

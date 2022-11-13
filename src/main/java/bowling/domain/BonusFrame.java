@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class BonusFrame implements Frame {
     private final Rolls rolls;
-    private FrameResult result;
+    private FrameStatus result;
 
     public BonusFrame() {
         this.rolls = new Rolls(new ArrayList<>());
@@ -21,7 +21,7 @@ public class BonusFrame implements Frame {
         }
 
         if (rolls.sum().equals(new Pin(10)) || rolls.size() == 2) {
-            result = FrameResult.match(rolls);
+            result = FrameStatus.match(rolls);
             return !isNeedBonus();
         }
 
@@ -29,7 +29,7 @@ public class BonusFrame implements Frame {
     }
 
     private boolean isNeedBonus() {
-        return result == FrameResult.STRIKE || result == FrameResult.SPARE;
+        return result == FrameStatus.STRIKE || result == FrameStatus.SPARE;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class BonusFrame implements Frame {
     }
 
     @Override
-    public FrameResult getResult() {
+    public FrameStatus getResult() {
         return result;
     }
 }

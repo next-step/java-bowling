@@ -6,7 +6,7 @@ import java.util.Objects;
 public class NormalFrame implements Frame {
     public static final Pin MAX_PIN = new Pin(10);
     private final Rolls rolls;
-    private FrameResult result;
+    private FrameStatus result;
 
     public NormalFrame() {
         this.rolls = new Rolls(new ArrayList<>());
@@ -23,7 +23,7 @@ public class NormalFrame implements Frame {
     @Override
     public boolean end() {
         if (rolls.sum().equals(MAX_PIN) || rolls.size() == 2) {
-            result = FrameResult.match(rolls);
+            result = FrameStatus.match(rolls);
             return true;
         }
         return false;
@@ -55,7 +55,7 @@ public class NormalFrame implements Frame {
                 '}';
     }
 
-    public FrameResult getResult() {
+    public FrameStatus getResult() {
         return result;
     }
 }

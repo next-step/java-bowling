@@ -12,9 +12,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class NormalFrameTest {
     public static Stream<Arguments> provideScoresAndResult() {
         return Stream.of(
-                Arguments.of(new Rolls(10), true, FrameResult.STRIKE),
-                Arguments.of(new Rolls(9, 1), true, FrameResult.SPARE),
-                Arguments.of(new Rolls(0, 0), true, FrameResult.GUTTER),
+                Arguments.of(new Rolls(10), true, FrameStatus.STRIKE),
+                Arguments.of(new Rolls(9, 1), true, FrameStatus.SPARE),
                 Arguments.of(new Rolls(2), false, null)
         );
     }
@@ -26,7 +25,7 @@ public class NormalFrameTest {
 
     @ParameterizedTest
     @MethodSource("provideScoresAndResult")
-    void 프레임_완료_확인(Rolls rolls, boolean isEnd, FrameResult result) {
+    void 프레임_완료_확인(Rolls rolls, boolean isEnd, FrameStatus result) {
         NormalFrame frame = new NormalFrame(rolls);
         assertThat(frame.end()).isEqualTo(isEnd);
         assertThat(frame.getResult()).isEqualTo(result);

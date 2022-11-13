@@ -7,5 +7,5 @@ public interface Frame {
 
     Rolls getScores();
 
-    FrameResult getResult();
+    FrameStatus getResult();
 }

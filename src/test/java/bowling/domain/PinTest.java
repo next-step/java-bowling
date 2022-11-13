@@ -11,20 +11,20 @@ import static org.assertj.core.api.Assertions.*;
 public class PinTest {
     @ParameterizedTest
     @ValueSource(ints = {-1, 11})
-    void 스코어_0미만_또는_10초과(int count) {
+    void 핀_개수는_0미만_또는_10초과(int count) {
         assertThatThrownBy(() -> new Pin(count))
                 .isInstanceOf(BowlingGameException.class)
-                .hasMessage(ErrorMessage.SCORE_OUT_OF_RANGE.getMessage());
+                .hasMessage(ErrorMessage.NUMBER_OF_PINS_OUT_OF_RANGE.getMessage());
     }
 
     @ParameterizedTest
     @ValueSource(ints = {0, 10})
-    void 스코어_0이상_10이하(int count) {
+    void 핀_개수는_0이상_10이하(int count) {
         assertThatNoException().isThrownBy(() -> new Pin(count));
     }
 
     @Test
-    void 스코어_더하기() {
-        assertThat(new Pin(1).add(new Pin(2))).isEqualTo(new Pin(3));
+    void 핀_스코어로_바꾸기() {
+        assertThat(new Pin(1).toScore()).isEqualTo(new Score(1));
     }
 }
