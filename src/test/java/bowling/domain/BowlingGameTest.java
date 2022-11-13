@@ -37,4 +37,17 @@ public class BowlingGameTest {
 
         assertThat(bowlingGame.isEnd()).isTrue();
     }
+
+    @Test
+    void round() {
+        Scoreboard scoreboard = new Scoreboard(new Name("cys"));
+        BowlingGame bowlingGame = new BowlingGame(scoreboard);
+        for (int i = 1; i < 10; i++) {
+            assertThat(bowlingGame.round()).isEqualTo(i);
+            bowlingGame.play(Score.of(1));
+            bowlingGame.play(Score.of(1));
+            bowlingGame.isEnd();
+        }
+        assertThat(bowlingGame.round()).isEqualTo(10);
+    }
 }
