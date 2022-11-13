@@ -20,6 +20,10 @@ public class FinalFrame implements Frame {
 
     @Override
     public void bowl(Pin falledPins) {
+        if (score.isStrike() || score.isSpare()) {
+            score.bonusAdd(falledPins);
+            return;
+        }
         score.add(falledPins);
     }
 
@@ -39,15 +43,19 @@ public class FinalFrame implements Frame {
             return true;
         }
 
-        if (score.size() == Score.SECOND_ROUND && !score.isSpare()) {
+        if (score.size() == Score.SECOND_ROUND && !isContinue()) {
             return true;
         }
 
         return false;
     }
 
+    private boolean isContinue() {
+        return score.isStrike() || score.isSpare();
+    }
+
     @Override
-    public List<Pin> getScores() {
-        return score.getTotalScore();
+    public Score getScores() {
+        return score;
     }
 }

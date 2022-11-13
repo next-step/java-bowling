@@ -39,7 +39,7 @@ public class NormalFrame implements Frame{
     }
 
     @Override
-    public List<Pin> getScores() {
-        return score.getTotalScore();
+    public Score getScores() {
+        return score;
     }
 }

@@ -22,6 +22,10 @@ public class Score {
         pins.add(totalPins);
     }
 
+    public void bonusAdd(Pin falledPins) {
+        pins.add(falledPins);
+    }
+
     public int size() {
         return pins.size();
     }

@@ -11,5 +11,5 @@ public interface Frame {
 
     boolean isFinished();
 
-    public List<Pin> getScores();
+    public Score getScores();
 }
