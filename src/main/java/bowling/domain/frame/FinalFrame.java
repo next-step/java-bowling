@@ -45,7 +45,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public Frame nextFrame() {
-        throw new RuntimeException("마지막 프레임입니다.");
+        throw new IllegalStateException("마지막 프레임입니다.");
     }
 
     @Override
