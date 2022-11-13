@@ -20,4 +20,8 @@ public class Name {
             throw new BowlingGameException(ErrorMessage.WRONG_NAME_FORMAT);
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }
