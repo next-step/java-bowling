@@ -6,8 +6,6 @@ import bowling.domain.score.scores.LastFrameScores;
 import bowling.domain.score.scores.Scores;
 
 public class TotalScore {
-
-    public static final int SCORE_STRIKE = 10;
     private final Scores regularScores;
     private final Scores bonusScores;
 
@@ -44,8 +42,7 @@ public class TotalScore {
         return this.bonusScores;
     }
 
-    public boolean isSpare() {
-        return this.regularScores.isSizeOver(1)
-                && Scores.sumScores(this.regularScores.first(), this.regularScores.second()) == SCORE_STRIKE;
+    public void validateScore() {
+        this.regularScores.validateScore();
     }
 }

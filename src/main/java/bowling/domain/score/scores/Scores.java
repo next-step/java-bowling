@@ -7,8 +7,11 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Scores {
+    public static final int SCORE_STRIKE = 10;
 
-    private final List<Score> scores;
+    protected final List<Score> scores;
+    
+    public abstract void validateScore();
 
     public Scores() {
         this.scores = new ArrayList<>();
@@ -52,6 +55,11 @@ public abstract class Scores {
         return Arrays.stream(scores)
                 .mapToInt(Score::value)
                 .sum();
+    }
+
+    public boolean isSpare() {
+        return this.isSizeOver(1)
+                && Scores.sumScores(this.first(), this.second()) == SCORE_STRIKE;
     }
 
     @Override

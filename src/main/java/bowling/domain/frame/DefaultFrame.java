@@ -23,13 +23,6 @@ public class DefaultFrame extends Frame {
     }
 
     @Override
-    protected void validateScore(Frame frame) {
-        if (this.totalScore.regularScores().sum() > SCORE_STRIKE) {
-            throw new IllegalArgumentException();
-        }
-    }
-
-    @Override
     public boolean isNotEndScoreAggregation() {
         if (this.chance.isRemainChance()) {
             return true;
@@ -37,7 +30,7 @@ public class DefaultFrame extends Frame {
         if (this.totalScore.regularScores().first().isStrike()) {
             return !this.totalScore.bonusScores().isSizeEqual(STRIKE_BONUS_SIZE);
         }
-        if (this.totalScore.isSpare()) {
+        if (this.totalScore.regularScores().isSpare()) {
             return !this.totalScore.bonusScores().isSizeEqual(SPARE_BONUS_SIZE);
         }
         return false;

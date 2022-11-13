@@ -5,12 +5,8 @@ import bowling.domain.score.Score;
 import bowling.domain.score.TotalScore;
 
 public abstract class Frame {
-
-    public static final int SCORE_STRIKE = 10;
     protected final Chance chance;
     protected final TotalScore totalScore;
-
-    protected abstract void validateScore(Frame frame);
 
     public abstract void minusChance();
 
@@ -30,7 +26,7 @@ public abstract class Frame {
             throw new IllegalArgumentException("남은 기회가 없습니다.");
         }
         this.totalScore.addRegularScore(score);
-        validateScore(this);
+        this.totalScore.validateScore();
         this.minusChance();
     }
 
