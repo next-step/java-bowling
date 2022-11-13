@@ -26,7 +26,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public Frame createNextFrame() {
-        next = createNextFrame(this.frameNumber);
+        next = Frames.createNextFrame(this.frameNumber);
         return next;
     }
 
@@ -59,14 +59,6 @@ public class NormalFrame extends Frame {
         if (frameNumber < Frame.START_FRAME || frameNumber > Frame.LAST_FRAME - 1) {
             throw new IllegalArgumentException(INVALID_FRAME_NUMBER_EXCEPTION_MESSAGE);
         }
-    }
-
-    private Frame createNextFrame(int frameNumber) {
-        if (frameNumber + 1 == LAST_FRAME) {
-            return new LastFrame();
-        }
-
-        return new NormalFrame(frameNumber + 1);
     }
 
     private Score getScore() {

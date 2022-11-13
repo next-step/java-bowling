@@ -43,7 +43,7 @@ public class LastFrame extends Frame {
 
     @Override
     public Frame createNextFrame() {
-        throw new UnsupportedOperationException();
+        return Frames.createNextFrame(Frame.LAST_FRAME);
     }
 
     @Override
