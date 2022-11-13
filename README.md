@@ -54,19 +54,12 @@
   * [x] 유저 이름을 출력하는 기능
   * [x] 점수판을 출력하는 기능
 * 도메인
-  * [ ] UserName
-    * [ ] 유저 이름은 3글자
-  * [x] Pins
+  * [x] `UserName` : 유저 이름 클래스
+    * [x] 유저 이름은 3글자
+  * [x] `Pin` : 투구 한 번에 쓰러뜨린 핀 클래스
     * [x] 볼링핀 개수는 0 ~ 10개
-  * [ ] Score
-  * [x] NormalFrame
-    * [x] 1~9 번 프레임
-  * [x] FinalFrame
-    * [ ] 10번 프레임
-    * [ ] 2회 안에 스트라이크 or 스페어이면 1번 더 투구 가능
-  * [x] Frame
-    * [x] Frame 인터페이스
-  * [x] NormalThrown
-  * [x] FinalThrown
-  * [x] Thrown
-    * [x] Thrown 인터페이스
+  * [x] `Score` : Pin 클래스 모음으로 한 프레임 안에서 얻은 점수 클래스
+  * [x] `NormalFrame` : 1 ~ 9 프레임을 나타내는 클래스
+  * [x] `FinalFrame` : 마지막 10 프레임을 나타내는 클래스
+    * [x] 2회 안에 스트라이크 or 스페어이면 1번 더 투구 가능
+  * [x] `Frame` : 10 프레임 중 하나를 나타내는 인터페이스
