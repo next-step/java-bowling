@@ -44,7 +44,11 @@ public class Score {
         return pins.size() == SECOND_ROUND;
     }
 
-    public Pin getScore() {
-        return pins.get(pins.size() - 1);
+    public int getScore(int index) {
+        return pins.get(index).getFalledPins();
+    }
+
+    public List<Pin> getTotalScore() {
+        return pins;
     }
 }

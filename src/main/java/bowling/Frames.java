@@ -27,7 +27,16 @@ public class Frames {
         lastFrame.bowl(falledPins);
     }
 
+    public List<Frame> getValues() {
+        return frames;
+    }
+
+    public int size() {
+        return frames.size();
+    }
+
     private Frame getLastFrame() {
         return frames.get(frames.size() - 1);
     }
+
 }

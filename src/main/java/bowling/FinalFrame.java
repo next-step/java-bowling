@@ -1,6 +1,10 @@
 package bowling;
 
+import java.util.List;
+
 public class FinalFrame implements Frame {
+
+    public static final int FINAL_FRAME_NUMBER = 10;
 
     @Override
     public Frame bowl(Pin falledPins) {
@@ -20,5 +24,10 @@ public class FinalFrame implements Frame {
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    @Override
+    public List<Pin> getScores() {
+        return null;
     }
 }

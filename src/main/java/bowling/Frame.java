@@ -1,5 +1,7 @@
 package bowling;
 
+import java.util.List;
+
 public interface Frame {
     Frame bowl(Pin falledPins);
 
@@ -8,4 +10,6 @@ public interface Frame {
     boolean isFinalFrame();
 
     boolean isFinished();
+
+    public List<Pin> getScores();
 }
