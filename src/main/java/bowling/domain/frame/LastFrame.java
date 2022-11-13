@@ -1,8 +1,8 @@
 package bowling.domain.frame;
 
 import bowling.domain.Chance;
-import bowling.domain.score.Scores;
 import bowling.domain.score.TotalScore;
+import bowling.domain.score.scores.Scores;
 
 public class LastFrame extends Frame {
 

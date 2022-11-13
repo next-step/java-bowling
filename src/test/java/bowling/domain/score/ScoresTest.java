@@ -2,6 +2,9 @@ package bowling.domain.score;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import bowling.domain.score.scores.DefaultFrameScores;
+import bowling.domain.score.scores.LastFrameScores;
+import bowling.domain.score.scores.Scores;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

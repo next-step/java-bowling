@@ -4,7 +4,7 @@ import bowling.domain.Round;
 import bowling.domain.Scoreboard;
 import bowling.domain.frame.Frame;
 import bowling.domain.score.Score;
-import bowling.domain.score.Scores;
+import bowling.domain.score.scores.Scores;
 
 public class Output {
 

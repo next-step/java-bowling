@@ -1,5 +1,10 @@
 package bowling.domain.score;
 
+import bowling.domain.score.scores.BonusScores;
+import bowling.domain.score.scores.DefaultFrameScores;
+import bowling.domain.score.scores.LastFrameScores;
+import bowling.domain.score.scores.Scores;
+
 public class TotalScore {
 
     public static final int SCORE_STRIKE = 10;
