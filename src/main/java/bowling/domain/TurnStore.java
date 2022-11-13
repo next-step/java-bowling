@@ -1,6 +1,6 @@
 package bowling.domain;
 
-public class Sequence {
+public class TurnStore {
     private int currentFrameIndex;
     private int currentLaneIndex;
 

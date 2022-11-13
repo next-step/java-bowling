@@ -4,11 +4,11 @@ import java.util.List;
 
 public class BowlingGame {
     private final Records records;
-    private final Sequence currentSequence;
+    private final TurnStore turnStore;
 
     public BowlingGame(List<String> names) {
         this.records = new Records(names);
-        this.currentSequence = new Sequence();
+        this.turnStore = new TurnStore();
     }
 
     public List<Record> getRecords() {
@@ -20,11 +20,11 @@ public class BowlingGame {
     }
 
     public void doGame(int downPinCount) {
-        currentSequence.record(records, downPinCount);
+        turnStore.record(records, downPinCount);
     }
 
     public String getPlayerName() {
-        return currentSequence.getPlayerName(records);
+        return turnStore.getPlayerName(records);
     }
 
 }
