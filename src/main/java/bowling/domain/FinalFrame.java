@@ -13,7 +13,7 @@ public class FinalFrame extends Frame {
     private final List<State> states = new ArrayList<>();
 
     public FinalFrame() {
-        this(10);
+        this(MAX_FRAME_NUMBER);
     }
 
     public FinalFrame(int number) {
