@@ -19,6 +19,6 @@ public class PlayerTest {
     @Test
     void 프레임_진행_확인() {
         assertThat(new Player("abc").process(0)).isTrue();
-        assertThat(new Player("abc", new Frames(new Frame(new Scores(1, 2)))).process(0)).isFalse();
+        assertThat(new Player("abc", new Frames(new NormalFrame(new Scores(1, 2)))).process(0)).isFalse();
     }
 }

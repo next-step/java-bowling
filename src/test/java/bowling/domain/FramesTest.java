@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class FramesTest {
     @Test
     void 초기화() {
-        assertThat(new Frames().getFrames()).contains(new Frame());
+        assertThat(new Frames().getFrames()).contains(new NormalFrame());
     }
 
     @Test
@@ -24,8 +24,8 @@ public class FramesTest {
     }
 
     @Test
-    void 프레임_완료_후_추가() {
-        Frames frames = new Frames(new Frame(new Scores(1, 2)));
+    void 프레임_완료_후_프레임_추가() {
+        Frames frames = new Frames(new NormalFrame(new Scores(1, 2)));
         assertThat(frames.end(0)).isTrue();
         assertThat(frames.getFrames()).hasSize(2);
     }

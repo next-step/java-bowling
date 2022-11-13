@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class FrameTest {
+public class NormalFrameTest {
     public static Stream<Arguments> provideScoresAndResult() {
         return Stream.of(
                 Arguments.of(new Scores(10), true, FrameResult.STRIKE),
@@ -21,20 +21,20 @@ public class FrameTest {
 
     @Test
     void 생성() {
-        assertThat(new Frame().getScores().size()).isEqualTo(0);
+        assertThat(new NormalFrame().getScores().size()).isEqualTo(0);
     }
 
     @ParameterizedTest
     @MethodSource("provideScoresAndResult")
     void 프레임_완료_확인(Scores scores, boolean isEnd, FrameResult result) {
-        Frame frame = new Frame(scores);
+        NormalFrame frame = new NormalFrame(scores);
         assertThat(frame.end()).isEqualTo(isEnd);
         assertThat(frame.getResult()).isEqualTo(result);
     }
 
     @Test
     void 입력값_프레임에_추가() {
-        Frame frame = new Frame();
+        NormalFrame frame = new NormalFrame();
         frame.addScore(new Score(10));
         assertThat(frame.getScores().getScores()).contains(new Score(10));
     }

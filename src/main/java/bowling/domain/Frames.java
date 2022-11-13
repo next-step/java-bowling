@@ -9,7 +9,7 @@ public class Frames {
 
     public Frames() {
         this.frames = new ArrayList<>();
-        frames.add(new Frame());
+        frames.add(new NormalFrame());
     }
 
     public Frames(Frame... frames) {
@@ -28,7 +28,7 @@ public class Frames {
     public boolean end(int index) {
         boolean isEnd = this.frames.get(index).end();
         if (isEnd) {
-            frames.add(new Frame());
+            frames.add(FrameFactory.create(index + 1));
         }
         return isEnd;
     }
