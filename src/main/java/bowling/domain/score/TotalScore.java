@@ -4,6 +4,7 @@ import bowling.domain.score.scores.BonusScores;
 import bowling.domain.score.scores.DefaultFrameScores;
 import bowling.domain.score.scores.LastFrameScores;
 import bowling.domain.score.scores.Scores;
+import java.util.Objects;
 
 public class TotalScore {
     private final Scores regularScores;
@@ -49,5 +50,18 @@ public class TotalScore {
 
     public boolean isChanceMinusTwo() {
         return this.regularScores.isChanceMinusTwo();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        TotalScore that = (TotalScore) o;
+        return Objects.equals(this.regularScores, that.regularScores) && Objects.equals(this.bonusScores,
+                that.bonusScores);
     }
 }
