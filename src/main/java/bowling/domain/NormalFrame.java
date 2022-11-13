@@ -1,49 +1,21 @@
 package bowling.domain;
 
-import bowling.type.BowlingScore;
-import bowling.type.PlayStatus;
+import static bowling.BowlingApp.getPinCalculateStrategy;
 
-public class NormalFrame {
-    private final BowlingScore bowlingScore;
-    private final PinScore pinScore;
-    private PlayStatus playStatus;
+public class NormalFrame extends DefaultFrame {
 
-    public NormalFrame(PinScore pinScore) {
-        this.pinScore = pinScore;
-        if(pinScore.isStrike()) {
-            this.bowlingScore = BowlingScore.STRIKE;
-            this.playStatus = PlayStatus.END;
-            return;
-        }
-        this.bowlingScore = BowlingScore.NONE;
-        this.playStatus = PlayStatus.IN_PROGRESS;
+    public NormalFrame(Score score) {
+        super(score);
     }
 
-    public void nextTry(){
-        pinScore.next();
-        playStatus = PlayStatus.END;
+    public NormalFrame(Score score, int order) {
+        super(score, order);
     }
 
-    public boolean isStrike(){
-        return bowlingScore == BowlingScore.STRIKE;
+    @Override
+    public NormalFrame nextRound(){
+        int nextOrder = order + 1;
+        return new NormalFrame(new Score(getPinCalculateStrategy()), nextOrder);
     }
 
-    public BowlingScore getBowlingScore() {
-        if(pinScore.isStrike()) {
-            return BowlingScore.STRIKE;
-        }
-        return pinScore.getBowlingScore();
-    }
-
-    public boolean isProgress(){
-        return PlayStatus.IN_PROGRESS == playStatus;
-    }
-
-    public int getFirstScore(){
-        return pinScore.getFirst();
-    }
-
-    public int getSecondScore(){
-        return pinScore.getSecond();
-    }
 }
