@@ -35,6 +35,14 @@ class FinalFrameTest {
     }
 
     @Test
+    void isFinished_false4() {
+        Frame frame = FinalFrame.init();
+        frame.bowl(new Pin(10));
+
+        assertThat(frame.isFinished()).isFalse();
+    }
+
+    @Test
     void isFinished_true1() {
         Frame frame = FinalFrame.init();
         frame.bowl(new Pin(10));

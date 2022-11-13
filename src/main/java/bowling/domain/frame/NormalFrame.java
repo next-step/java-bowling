@@ -31,7 +31,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public Boolean isFinished() {
+    public boolean isFinished() {
         return status.isFinished();
     }
 
