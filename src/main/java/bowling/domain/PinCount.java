@@ -21,6 +21,10 @@ public class PinCount {
         return new PinCount(value);
     }
 
+    public int getValue() {
+        return value;
+    }
+
     //===================================================================
 
 
