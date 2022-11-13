@@ -9,15 +9,18 @@ class FrameTest {
 
     @Test
     void 노말프레임_생성() {
-        Frame frame = Frame.initNormal(5);
-        assertThat(frame).isEqualTo(Frame.initNormal(5));
+        Frame frame = Frame.createNormal();
+        assertThat(frame).isEqualTo(Frame.createNormal());
+
+        frame.bowling(5);
         assertThat(frame.size()).isEqualTo(1);
         assertThat(frame.get(0)).isEqualTo(Bowling.of(5));
     }
 
     @Test
     void 노말프레임_투구() {
-        Frame frame = Frame.initNormal(2);
+        Frame frame = Frame.createNormal();
+        frame.bowling(2);
         frame.bowling(8);
 
         assertThat(frame.get(1)).isEqualTo(Bowling.of(8));
@@ -25,13 +28,15 @@ class FrameTest {
 
     @Test
     void 노말프레임_투구실패() {
-        Frame frame = Frame.initNormal(8);
+        Frame frame = Frame.createNormal();
+        frame.bowling(10);
         assertThatIllegalArgumentException().isThrownBy(() -> frame.bowling(5));
     }
 
     @Test
     void 마지막프레임_투구() {
-        Frame frame = Frame.initFinal(10);
+        Frame frame = Frame.createFinal();
+        frame.bowling(10);
         frame.bowling(10);
         frame.bowling(10);
 
@@ -40,7 +45,8 @@ class FrameTest {
 
     @Test
     void 마지막프레임_투구실패() {
-        Frame frame = Frame.initFinal(10);
+        Frame frame = Frame.createFinal();
+        frame.bowling(10);
         frame.bowling(10);
         frame.bowling(10);
 
@@ -49,22 +55,23 @@ class FrameTest {
 
     @Test
     void 다음프레임() {
-        Frame frame = Frame.initFinal(10).createNext(5);
-        assertThat(frame).isEqualTo(Frame.initNormal(5));
+        Frame frame = Frame.createNormal().createNormal();
+        assertThat(frame).isEqualTo(Frame.createNormal());
     }
 
     @Test
     void 마지막프레임() {
-        Frame frame = Frame.initFinal(10);
+        Frame frame = Frame.createNormal();
         for (int i = 0; i < 9; i++) {
-             frame = frame.createNext(5);
+             frame = frame.createNormal();
         }
-        assertThat(frame).isEqualTo(Frame.initFinal(5));
+        assertThat(frame).isEqualTo(Frame.createFinal());
     }
 
     @Test
     void 프레임종료() { // TODO 여기서도 체크해야할까?
-        Frame frame = Frame.initNormal(5);
+        Frame frame = Frame.createNormal();
+        frame.bowling(5);
         frame.bowling(5);
         assertThat(frame.isEnd()).isTrue();
     }

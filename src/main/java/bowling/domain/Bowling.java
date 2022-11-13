@@ -8,7 +8,7 @@ public class Bowling {
     public static final int MAX = 10;
     private final int count;
 
-    public Bowling(int count) {
+    private Bowling(int count) {
         if (isNotValidCount(count)) {
             throw new IllegalArgumentException("0 ~ 10 사이의 정수만 가능합니다");
         }

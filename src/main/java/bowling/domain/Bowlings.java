@@ -15,7 +15,7 @@ public class Bowlings {
     private final int maxSize;
     private final List<Bowling> values;
 
-    public Bowlings(int maxTotalCount, int size) {
+    private Bowlings(int maxTotalCount, int size) {
         this.maxTotalCount = maxTotalCount;
         this.maxSize = size;
         this.values = new ArrayList<>(size);
