@@ -11,61 +11,58 @@ import java.util.stream.IntStream;
 
 public class BowlingController {
     public void start() {
-        Players players = getPlayers();
+        Players players = createPlayers();
 
         ResultView.printFrameResults(players);
 
         while (!players.isAllEnd()) {
-            bowl(players);
+            bowlAndPrintResult(players);
         }
     }
 
-    private Players getPlayers() {
+    private Players createPlayers() {
         int numberOfPlayers = InputView.inputNumberOfPlayers();
-        List<Player> players = IntStream.rangeClosed(1, numberOfPlayers)
-                .mapToObj(this::getPlayer)
+        List<Player> players = IntStream.range(0, numberOfPlayers)
+                .mapToObj(i -> createPlayer(i + 1))
                 .collect(Collectors.toList());
 
         try {
             return new Players(players);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
-            return getPlayers();
+            return createPlayers();
         }
     }
 
-    private Player getPlayer(int index) {
+    private Player createPlayer(int index) {
         String playerName = InputView.inputPlayerName(index);
 
         try {
             return new Player(playerName);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
-            return getPlayer(index);
+            return createPlayer(index);
         }
     }
 
-    private void bowl(Players players) {
-        for (Player player : players.getPlayers()) {
-            inputBowlNumberAndPrintResult(player);
-            ResultView.printFrameResults(players);
-        }
+    private void bowlAndPrintResult(Players players) {
+        players.getPlayers()
+                .stream()
+                .filter(Player::canBowl)
+                .forEach(player -> {
+                    bowl(player);
+                    ResultView.printFrameResults(players);
+                });
     }
 
-    private void inputBowlNumberAndPrintResult(Player player) {
-        if (player.canBowl()) {
-            inputBowlNumber(player);
-        }
-    }
-
-    private void inputBowlNumber(Player player) {
+    private void bowl(Player player) {
         int number = InputView.inputBowlNumber(player.getName().getValue());
 
         try {
             player.bowl(number);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
-            inputBowlNumber(player);
+            bowl(player);
         }
     }
 }
