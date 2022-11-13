@@ -31,4 +31,18 @@ public class RoundTest {
                 () -> assertThatThrownBy(() -> new Round(12)).isInstanceOf(IllegalArgumentException.class)
         );
     }
+
+    @Test
+    void value() {
+        Round round = new Round(5);
+
+        assertThat(round.value()).isEqualTo(5);
+    }
+
+    @Test
+    void index() {
+        Round round = new Round(4);
+
+        assertThat(round.index()).isEqualTo(3);
+    }
 }
