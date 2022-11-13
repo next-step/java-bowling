@@ -23,10 +23,6 @@ public class BowlingGame {
                 .collect(toList()));
     }
 
-    public boolean isAllFinished() {
-        return lastLane().isFramesFinished();
-    }
-
     private static void validatePlayerNames(List<String> playerNames) {
         long distinctCount = playerNames.stream()
                 .distinct()
@@ -34,6 +30,10 @@ public class BowlingGame {
         if (playerNames.size() != distinctCount) {
             throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
         }
+    }
+
+    public boolean isAllFinished() {
+        return lastLane().isFramesFinished();
     }
 
     private Lane lastLane() {
