@@ -6,6 +6,8 @@ import bowling.domain.BowlRecord;
 import bowling.domain.frame.Score;
 
 public class Strike extends Finished {
+    private static final int STRIKE_BONUS_BOWLS = 2;
+
     @Override
     public BowlRecord createBowlRecord() {
         return new BowlRecord(List.of(new Pins(10)));
@@ -13,7 +15,7 @@ public class Strike extends Finished {
 
     @Override
     public Score getScore() {
-        return new Score(Pins.MAX_PINS, 2);
+        return new Score(Pins.MAX_PINS, STRIKE_BONUS_BOWLS);
     }
 
     @Override
