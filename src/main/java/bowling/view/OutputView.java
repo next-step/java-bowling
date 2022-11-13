@@ -1,7 +1,7 @@
 package bowling.view;
 
 import bowling.domain.Chance;
-import bowling.domain.PlayerDto;
+import bowling.dto.PlayerDto;
 
 import java.util.List;
 
