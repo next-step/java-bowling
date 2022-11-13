@@ -3,37 +3,41 @@ package bowling.domain;
 import java.util.ArrayList;
 
 public class BonusFrame implements Frame {
+    public static final int BONUS_ROLL = 3;
+
     private final Rolls rolls;
-    private FrameStatus result;
+    private FrameStatus status;
+
+    private BonusFrame(Rolls rolls, FrameStatus status) {
+        this.rolls = rolls;
+        this.status = status;
+    }
 
     public BonusFrame() {
-        this.rolls = new Rolls(new ArrayList<>());
+        this(new Rolls(new ArrayList<>()), FrameStatus.PROGRESS);
     }
 
     public BonusFrame(Rolls rolls) {
-        this.rolls = rolls;
+        this(rolls, FrameStatus.PROGRESS);
     }
 
     @Override
-    public boolean end() {
-        if (rolls.size() == 3) {
+    public boolean isEnd() {
+        if (rolls.sum().bigger(10)) {
             return true;
         }
-
-        if (rolls.sum().equals(new Pin(10)) || rolls.size() == 2) {
-            result = FrameStatus.match(rolls);
-            return !isNeedBonus();
-        }
-
-        return false;
-    }
-
-    private boolean isNeedBonus() {
-        return result == FrameStatus.STRIKE || result == FrameStatus.SPARE;
+        return status == FrameStatus.MISS;
     }
 
     @Override
-    public void addScore(Pin pin) {
+    public void updateStatus() {
+        if (rolls.size() < BONUS_ROLL) {
+            status = FrameStatus.match(rolls);
+        }
+    }
+
+    @Override
+    public void addRoll(Pin pin) {
         rolls.add(pin);
     }
 
@@ -43,7 +47,7 @@ public class BonusFrame implements Frame {
     }
 
     @Override
-    public FrameStatus getResult() {
-        return result;
+    public FrameStatus getStatus() {
+        return status;
     }
 }

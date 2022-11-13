@@ -1,11 +1,13 @@
 package bowling.domain;
 
 public interface Frame {
-    boolean end();
+    boolean isEnd();
 
-    void addScore(Pin pin);
+    void addRoll(Pin pin);
 
     Rolls getScores();
 
-    FrameStatus getResult();
+    FrameStatus getStatus();
+
+    void updateStatus();
 }

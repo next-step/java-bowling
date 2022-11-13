@@ -39,7 +39,7 @@ public class OutputView {
     }
 
     private static String getStrikeOrMiss(Rolls rolls) {
-        if (rolls.sum().equals(new Pin(10))) {
+        if (rolls.sum().equals(new Score(10))) {
             return String.format("%s|/", getScoreOrGutter(rolls, 0));
         }
         return String.format("%s|%s", getScoreOrGutter(rolls, 0), getScoreOrGutter(rolls, 1));

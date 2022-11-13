@@ -15,11 +15,11 @@ public class Player {
     }
 
     public boolean process(int index) {
-        return !frames.end(index);
+        return !frames.isEnd(index);
     }
 
-    public void pitch(int index, Pin pin) {
-        frames.addScore(index, pin);
+    public void knockedDownPins(Pin pin) {
+        frames.addRoll(pin);
     }
 
     public Name getName() {

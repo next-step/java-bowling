@@ -23,6 +23,10 @@ public class Score {
         return new Score(count + score.count);
     }
 
+    public boolean bigger(int count) {
+        return this.count > count;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

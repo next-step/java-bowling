@@ -4,34 +4,35 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
-    public static final Pin MAX_PIN = new Pin(10);
     private final Rolls rolls;
-    private FrameStatus result;
+    private FrameStatus status;
+
+    NormalFrame(Rolls rolls, FrameStatus status) {
+        this.rolls = rolls;
+        this.status = status;
+    }
 
     public NormalFrame() {
-        this.rolls = new Rolls(new ArrayList<>());
+        this(new Rolls(new ArrayList<>()), FrameStatus.PROGRESS);
     }
 
     public NormalFrame(Rolls rolls) {
-        this.rolls = rolls;
-    }
-
-    public Rolls getScores() {
-        return rolls;
+        this(rolls, FrameStatus.PROGRESS);
     }
 
     @Override
-    public boolean end() {
-        if (rolls.sum().equals(MAX_PIN) || rolls.size() == 2) {
-            result = FrameStatus.match(rolls);
-            return true;
-        }
-        return false;
+    public boolean isEnd() {
+        return !(status == FrameStatus.PROGRESS);
     }
 
     @Override
-    public void addScore(Pin pin) {
+    public void addRoll(Pin pin) {
         rolls.add(pin);
+    }
+
+    @Override
+    public void updateStatus() {
+        status = FrameStatus.match(rolls);
     }
 
     @Override
@@ -39,23 +40,27 @@ public class NormalFrame implements Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalFrame frame = (NormalFrame) o;
-        return Objects.equals(rolls, frame.rolls) && result == frame.result;
+        return Objects.equals(rolls, frame.rolls) && status == frame.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rolls, result);
+        return Objects.hash(rolls, status);
     }
 
     @Override
     public String toString() {
         return "Frame{" +
                 "scores=" + rolls +
-                ", result=" + result +
+                ", result=" + status +
                 '}';
     }
 
-    public FrameStatus getResult() {
-        return result;
+    public Rolls getScores() {
+        return rolls;
+    }
+
+    public FrameStatus getStatus() {
+        return status;
     }
 }

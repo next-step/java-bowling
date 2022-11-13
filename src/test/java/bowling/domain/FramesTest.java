@@ -13,20 +13,20 @@ public class FramesTest {
     @Test
     void 스코어_추가() {
         Frames frames = new Frames();
-        frames.addScore(0, new Pin(1));
+        frames.addRoll(new Pin(1));
         assertThat(frames.getFrames().get(0).getScores()).isEqualTo(new Rolls(1));
     }
 
     @Test
     void 프레임_완료_전() {
         Frames frames = new Frames();
-        assertThat(frames.end(0)).isFalse();
+        assertThat(frames.isEnd(0)).isFalse();
     }
 
     @Test
     void 프레임_완료_후_프레임_추가() {
-        Frames frames = new Frames(new NormalFrame(new Rolls(1, 2)));
-        assertThat(frames.end(0)).isTrue();
+        Frames frames = new Frames(new NormalFrame(new Rolls(1, 2), FrameStatus.MISS));
+        assertThat(frames.isEnd(0)).isTrue();
         assertThat(frames.getFrames()).hasSize(2);
     }
 }

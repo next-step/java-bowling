@@ -10,11 +10,12 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BonusFrameTest {
-    public static Stream<Arguments> provideScoresAndResult() {
+    public static Stream<Arguments> provideScoresAndStatus() {
         return Stream.of(
-                Arguments.of(new Rolls(10), false, FrameStatus.STRIKE),
-                Arguments.of(new Rolls(9, 1), false, FrameStatus.SPARE),
-                Arguments.of(new Rolls(2), false, null)
+                Arguments.of(new Rolls(10), FrameStatus.STRIKE, false),
+                Arguments.of(new Rolls(9, 1), FrameStatus.SPARE, false),
+                Arguments.of(new Rolls(9, 0), FrameStatus.MISS, true),
+                Arguments.of(new Rolls(2), FrameStatus.PROGRESS, false)
         );
     }
 
@@ -24,17 +25,18 @@ public class BonusFrameTest {
     }
 
     @ParameterizedTest
-    @MethodSource("provideScoresAndResult")
-    void 프레임_완료_확인(Rolls rolls, boolean isEnd, FrameStatus result) {
+    @MethodSource("provideScoresAndStatus")
+    void 프레임_상태_변경_및_완료_확인(Rolls rolls, FrameStatus result, boolean isEnd) {
         BonusFrame frame = new BonusFrame(rolls);
-        assertThat(frame.end()).isEqualTo(isEnd);
-        assertThat(frame.getResult()).isEqualTo(result);
+        frame.updateStatus();
+        assertThat(frame.getStatus()).isEqualTo(result);
+        assertThat(frame.isEnd()).isEqualTo(isEnd);
     }
 
     @Test
     void 입력값_프레임에_추가() {
         BonusFrame frame = new BonusFrame();
-        frame.addScore(new Pin(10));
+        frame.addRoll(new Pin(10));
         assertThat(frame.getScores().getScores()).contains(new Pin(10));
     }
 }

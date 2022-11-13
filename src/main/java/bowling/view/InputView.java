@@ -15,7 +15,7 @@ public class InputView {
     }
 
     public static int scanScore(int index) {
-        System.out.printf("%d프레임 투구 : ", index + 1);
+        System.out.printf("%d프레임 투구 : ", index);
         return SCANNER.nextInt();
     }
 }

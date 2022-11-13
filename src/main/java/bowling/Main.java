@@ -16,7 +16,7 @@ public class Main {
     private static void startFrame(Player player, int index) {
         while (player.process(index)) {
             Pin pin = new Pin(InputView.scanScore(index));
-            player.pitch(index, pin);
+            player.knockedDownPins(pin);
             OutputView.printScores(player);
         }
     }

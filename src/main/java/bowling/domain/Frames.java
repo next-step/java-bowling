@@ -1,32 +1,33 @@
 package bowling.domain;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.LinkedList;
 
 public class Frames {
-    private final List<Frame> frames;
+    private final LinkedList<Frame> frames;
 
     public Frames() {
-        this.frames = new ArrayList<>();
+        this.frames = new LinkedList<>();
         frames.add(new NormalFrame());
     }
 
     public Frames(Frame... frames) {
-        this.frames = new ArrayList<>();
+        this.frames = new LinkedList<>();
         this.frames.addAll(Arrays.asList(frames));
     }
 
-    public List<Frame> getFrames() {
+    public LinkedList<Frame> getFrames() {
         return frames;
     }
 
-    public void addScore(int index, Pin pin) {
-        frames.get(index).addScore(pin);
+    public void addRoll(Pin pin) {
+        Frame last = frames.getLast();
+        last.addRoll(pin);
+        last.updateStatus();
     }
 
-    public boolean end(int index) {
-        boolean isEnd = this.frames.get(index).end();
+    public boolean isEnd(int index) {
+        boolean isEnd = this.frames.get(index).isEnd();
         if (isEnd) {
             frames.add(FrameFactory.create(index + 1));
         }
