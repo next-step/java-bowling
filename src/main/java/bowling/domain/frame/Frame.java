@@ -23,20 +23,20 @@ public class Frame {
 		return scores;
 	}
 
-	public Integer getFirstIndex() {
-		return 0;
-	}
-
-	public Integer getLastIndex() {
-		return scores.size() - 1;
-	}
-
 	public Integer get(int index) {
 		return scores.get(index);
 	}
 
 	public Integer size() {
 		return scores.size();
+	}
+
+	public Integer getFirstIndex() {
+		return 0;
+	}
+
+	public Integer getLastIndex() {
+		return scores.size() - 1;
 	}
 
 	public Integer sumInRange(int start, int end) {

@@ -13,7 +13,7 @@ public class NormalFrame extends Frame {
 		return this;
 	}
 
-	public boolean isMaxSize() {
+	private boolean isMaxSize() {
 		return this.getScores().size() == Constants.NORMAL_FRAME_SCORE_SIZE;
 	}
 }

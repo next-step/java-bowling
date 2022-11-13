@@ -33,15 +33,15 @@ public class Frames {
 		return frames.contains(frame) || frames.size() + 1 < Constants.FINAL_FRAME;
 	}
 
+	public Boolean isUpsertFinalFrame(Frame frame) {
+		return frames.contains(frame) || frames.size() + 1 == Constants.FINAL_FRAME;
+	}
+
 	public Boolean isNormalFrame(Frame frame) {
 		return frames.indexOf(frame) + 1 < Constants.FINAL_FRAME;
 	}
 
 	public Boolean isFinalFrame(Frame frame) {
 		return frames.indexOf(frame) + 1 == Constants.FINAL_FRAME;
-	}
-
-	public Boolean isUpsertFinalFrame(Frame frame) {
-		return frames.contains(frame) || frames.size() + 1 == Constants.FINAL_FRAME;
 	}
 }

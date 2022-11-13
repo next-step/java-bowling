@@ -13,11 +13,11 @@ public class FinalFrame extends Frame {
 		return this;
 	}
 
-	public boolean isNext() {
+	private boolean isNext() {
 		return !isStrike(this.getFirstIndex()) && isMiss(this.getLastIndex()) && this.getScores().size() > 1;
 	}
 
-	public boolean isMaxSize() {
+	private boolean isMaxSize() {
 		return this.getScores().size() == Constants.FINAL_FRAME_SCORE_SIZE;
 	}
 }
