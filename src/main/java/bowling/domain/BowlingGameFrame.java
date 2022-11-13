@@ -11,7 +11,7 @@ public interface BowlingGameFrame {
 
     int getHit(int index);
 
-    BowlingGameHitResult getResult(int index);
+    BowlingGameHitState getState(int index);
 
     default boolean isOnGoing() {
         return !isEnded();

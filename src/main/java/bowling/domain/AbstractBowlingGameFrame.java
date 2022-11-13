@@ -7,11 +7,11 @@ import java.util.Objects;
 public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
 
     protected final List<Integer> hits;
-    protected final List<BowlingGameHitResult> results;
+    protected final List<BowlingGameHitState> states;
 
     protected AbstractBowlingGameFrame() {
         this.hits = new ArrayList<>();
-        this.results = new ArrayList<>();
+        this.states = new ArrayList<>();
     }
 
     @Override
@@ -20,7 +20,7 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
         validateHitIsNegative(hit);
         validateHitIsUnderRemainedPins(hit);
         hits.add(hit);
-        results.add(BowlingGameHitResult.from(hits));
+        states.add(BowlingGameHitState.from(hits));
     }
 
     private void validateState() {
@@ -53,8 +53,8 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
     }
 
     @Override
-    public BowlingGameHitResult getResult(int index) {
-        return results.get(index);
+    public BowlingGameHitState getState(int index) {
+        return states.get(index);
     }
 
     @Override
@@ -75,19 +75,19 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AbstractBowlingGameFrame that = (AbstractBowlingGameFrame) o;
-        return Objects.equals(hits, that.hits) && Objects.equals(results, that.results);
+        return Objects.equals(hits, that.hits) && Objects.equals(states, that.states);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(hits, results);
+        return Objects.hash(hits, states);
     }
 
     @Override
     public String toString() {
         return "AbstractBowlingGameFrame{" +
                 "hits=" + hits +
-                ", results=" + results +
+                ", states=" + states +
                 '}';
     }
 

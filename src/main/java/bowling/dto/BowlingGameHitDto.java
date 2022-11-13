@@ -1,23 +1,23 @@
 package bowling.dto;
 
-import bowling.domain.BowlingGameHitResult;
+import bowling.domain.BowlingGameHitState;
 
 public class BowlingGameHitDto {
 
     private final int value;
-    private final BowlingGameHitResult result;
+    private final BowlingGameHitState state;
 
-    public BowlingGameHitDto(int value, BowlingGameHitResult result) {
+    public BowlingGameHitDto(int value, BowlingGameHitState state) {
         this.value = value;
-        this.result = result;
+        this.state = state;
     }
 
     public int getValue() {
         return value;
     }
 
-    public BowlingGameHitResult getResult() {
-        return result;
+    public BowlingGameHitState getState() {
+        return state;
     }
 
 }

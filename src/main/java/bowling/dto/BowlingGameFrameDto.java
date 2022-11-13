@@ -17,7 +17,7 @@ public class BowlingGameFrameDto {
     public static BowlingGameFrameDto from(BowlingGameFrame frame) {
         List<BowlingGameHitDto> hits = new ArrayList<>();
         IntStream.range(0, frame.countHits())
-                .forEach(i -> hits.add(new BowlingGameHitDto(frame.getHit(i), frame.getResult(i))));
+                .forEach(i -> hits.add(new BowlingGameHitDto(frame.getHit(i), frame.getState(i))));
         return new BowlingGameFrameDto(hits);
     }
 

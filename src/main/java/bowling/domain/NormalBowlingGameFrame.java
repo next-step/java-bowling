@@ -6,7 +6,7 @@ public class NormalBowlingGameFrame extends AbstractBowlingGameFrame {
 
     @Override
     public boolean isEnded() {
-        return results.contains(BowlingGameHitResult.STRIKE) || hits.size() == MAX_SIZE_OF_HITS;
+        return states.contains(BowlingGameHitState.STRIKE) || hits.size() == MAX_SIZE_OF_HITS;
     }
 
 }

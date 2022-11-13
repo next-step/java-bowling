@@ -37,9 +37,9 @@ class AbstractBowlingGameFrameTest {
         frame.add(10);
         frame.add(10);
 
-        assertThat(frame.getResult(0)).isEqualTo(BowlingGameHitResult.GUTTER);
-        assertThat(frame.getResult(1)).isEqualTo(BowlingGameHitResult.SPARE);
-        assertThat(frame.getResult(2)).isEqualTo(BowlingGameHitResult.STRIKE);
+        assertThat(frame.getState(0)).isEqualTo(BowlingGameHitState.GUTTER);
+        assertThat(frame.getState(1)).isEqualTo(BowlingGameHitState.SPARE);
+        assertThat(frame.getState(2)).isEqualTo(BowlingGameHitState.STRIKE);
     }
 
 }
