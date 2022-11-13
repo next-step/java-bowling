@@ -7,7 +7,7 @@ public class DefaultFrame extends Frame {
     private static final int STRIKE_BONUS_SIZE = 2;
 
     @Override
-    protected int TotalChance() {
+    protected int totalChance() {
         return TOTAL_CHANCE;
     }
 

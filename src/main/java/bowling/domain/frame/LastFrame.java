@@ -8,7 +8,7 @@ public class LastFrame extends Frame {
     private static final int DEFAULT_CHANCE = 2;
 
     @Override
-    protected int TotalChance() {
+    protected int totalChance() {
         return TOTAL_CHANCE;
     }
 

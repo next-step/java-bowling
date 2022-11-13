@@ -12,10 +12,10 @@ public abstract class Frame {
 
     public Frame() {
         this.totalScore = new TotalScore();
-        this.chance = new Chance(this.TotalChance());
+        this.chance = new Chance(this.totalChance());
     }
 
-    protected abstract int TotalChance();
+    protected abstract int totalChance();
 
     protected abstract void validateScore(Frame frame);
 
