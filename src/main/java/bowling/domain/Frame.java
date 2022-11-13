@@ -33,6 +33,10 @@ public class Frame {
         return values.get(index);
     }
 
+    public int getCount(int index) {
+        return values.get(index).getCount();
+    }
+
     public void bowling(int count) {
         if (isNotOverMaxTotalCount(count)) {
             throw new IllegalArgumentException("최대 쓰러뜨린수를 초과했습니다.. " + count);
@@ -59,7 +63,27 @@ public class Frame {
     }
 
     public boolean isEnd() {
-        return values.size() == maxSize || getCurrentTotalCount() == maxTotalCount;
+        return isFrameEnd() || isNotRestPin();
+    }
+
+    private boolean isNotRestPin() {
+        return getCurrentTotalCount() == maxTotalCount;
+    }
+
+    private boolean isFrameEnd() {
+        return values.size() == maxSize;
+    }
+
+    public Result result(int index) {
+        return Result.valueOf(this, index);
+    }
+
+    public int sumNowAndBeforePinCount(int index) {
+        if (index <= 0) {
+            throw new IllegalArgumentException("index는 1 이상만 입력가능 합니다.");
+        }
+
+        return get(index).sum(get(index - 1));
     }
 
     //=============================================================
