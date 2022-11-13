@@ -56,7 +56,7 @@ public class BowlingController {
     }
 
     private void bowl(Player player) {
-        int number = InputView.inputBowlNumber(player.getName().getValue());
+        int number = InputView.inputBowlNumber(player.getName().getName());
 
         try {
             player.bowl(number);

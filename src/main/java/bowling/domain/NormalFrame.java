@@ -62,13 +62,13 @@ public class NormalFrame extends Frame {
     @Override
     public int getIntScore() {
         if (score.canCalculateScore()) {
-            return score.getValue();
+            return score.getScore();
         }
 
         try {
             validateNextFrame();
             score = nextFrame.calculateAdditionalScore(score);
-            return score.getValue();
+            return score.getScore();
         } catch (UnsupportedOperationException e) {
             return NO_SCORE;
         }

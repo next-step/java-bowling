@@ -37,7 +37,7 @@ public class FramesResult {
     }
 
     private String playerName(Player player) {
-        return String.format("| %4s |", player.getName().getValue());
+        return String.format("| %4s |", player.getName().getName());
     }
 
     private String createSigns(Player player) {

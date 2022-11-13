@@ -62,7 +62,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public int getIntScore() {
-        return getFirstScore().getValue();
+        return getFirstScore().getScore();
     }
 
     private Score getFirstScore() {
