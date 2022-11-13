@@ -14,7 +14,7 @@ public class Chance {
     }
 
     public String chance() {
-        if (status == Status.NONE) {
+        if (status == Status.NONE || status == Status.MISS) {
             return String.valueOf(pin.pin());
         }
         return status.symbol();
