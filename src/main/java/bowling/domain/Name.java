@@ -7,13 +7,13 @@ public class Name {
 
     private final String value;
 
-    public Name(String value) {
+    private Name(String value) {
         validate(value);
 
         this.value = value;
     }
 
-    private static void validate(String value) {
+    private void validate(String value) {
         if (value == null || value.equals("")) {
             throw new IllegalStateException("이름은 빈값일수 없습니다.");
         }
