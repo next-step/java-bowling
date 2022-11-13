@@ -1,10 +1,14 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.util.CollectionUtils;
+import qna.CannotDeleteException;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -86,6 +90,35 @@ public class Question extends AbstractEntity {
 
     public List<Answer> getAnswers() {
         return answers;
+    }
+
+    public boolean isDeletableBy(User loginUser) {
+        if (CollectionUtils.isEmpty(answers)) {
+            return true;
+        }
+
+        return answers.stream().allMatch(answer -> answer.isOwner(loginUser));
+    }
+
+    public List<DeleteHistory> deleteBy(User loginUser) {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+
+        if (!isDeletableBy(loginUser)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+
+        List<DeleteHistory> deleteHistories = deleteAllAnswer(loginUser);
+        deleted = true;
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+        return deleteHistories;
+    }
+
+    private List<DeleteHistory> deleteAllAnswer(User loginUser) {
+        return answers.stream()
+            .map(answer -> answer.deleteBy(loginUser))
+            .collect(Collectors.toList());
     }
 
     @Override
