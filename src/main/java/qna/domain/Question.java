@@ -96,10 +96,10 @@ public class Question extends AbstractEntity {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
         deleted = true;
-        return deleteHistories(loginUser);
+        return createDeleteHistories(loginUser);
     }
     
-    private List<DeleteHistory> deleteHistories(final User loginUser) throws CannotDeleteException {
+    private List<DeleteHistory> createDeleteHistories(final User loginUser) throws CannotDeleteException {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
         deleteHistories.addAll(new Answers(answers).delete(loginUser));
