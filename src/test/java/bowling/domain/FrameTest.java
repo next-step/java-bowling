@@ -61,4 +61,11 @@ class FrameTest {
         }
         assertThat(frame).isEqualTo(Frame.initFinal(5));
     }
+
+    @Test
+    void 프레임종료() { // TODO 여기서도 체크해야할까?
+        Frame frame = Frame.initNormal(5);
+        frame.bowling(5);
+        assertThat(frame.isEnd()).isTrue();
+    }
 }

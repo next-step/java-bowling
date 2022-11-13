@@ -68,4 +68,8 @@ public class Frame {
     private boolean isNextFinal() {
         return round == 9;
     }
+
+    public boolean isEnd() {
+        return values.isEnd();
+    }
 }
