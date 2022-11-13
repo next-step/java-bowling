@@ -1,13 +1,17 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.util.Strings;
 
+import bowling.domain.score.FinalScores;
+import bowling.domain.score.Scores;
+import bowling.domain.strategy.BowlingStrategy;
+
 public class Frames {
     public static final FrameNumber MAX_FRAME = FrameNumber.FRAME_10;
-    private List<Frame> frames;
+    private final List<Frame> frames;
 
     public Frames() {
         frames = new ArrayList<>();

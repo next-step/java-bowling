@@ -1,7 +1,7 @@
-package bowling;
+package bowling.view;
 
 import bowling.domain.BowlingLine;
-import bowling.domain.FrameNumber;
+import bowling.domain.frame.FrameNumber;
 
 public class OutputView {
 

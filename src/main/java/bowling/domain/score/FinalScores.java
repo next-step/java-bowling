@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ public class FinalScores extends Scores {
 
     private static final int MAX_SCORE_SIZE = 3;
 
-    private List<Score> scores;
+    private final List<Score> scores;
 
     public FinalScores() {
         this(new ArrayList<>());
@@ -26,6 +26,18 @@ public class FinalScores extends Scores {
         }
 
         scores.add(score);
+    }
+
+    @Override
+    public int remainPin() {
+        if(isBonusPitching() || isStrike()) {
+            return MAX_PIN;
+        }
+
+        if(bonusScoreExist()) {
+            return super.remainPin() + MAX_PIN;
+        }
+        return super.remainPin();
     }
 
     @Override

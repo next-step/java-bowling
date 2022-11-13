@@ -2,8 +2,10 @@ package bowling;
 
 import bowling.domain.Bowling;
 import bowling.domain.BowlingLine;
-import bowling.domain.RandomStrategy;
+import bowling.domain.strategy.RandomStrategy;
 import bowling.domain.User;
+import bowling.view.InputView;
+import bowling.view.OutputView;
 
 public class BowlingController {
 

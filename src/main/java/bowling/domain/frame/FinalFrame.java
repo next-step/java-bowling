@@ -1,12 +1,15 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.score.FinalScores;
+import bowling.domain.score.Score;
+import bowling.domain.score.Scores;
+import bowling.domain.strategy.BowlingStrategy;
 
 public class FinalFrame implements Frame {
-    private int remainPin;
     private final FinalScores scores;
 
 
     public FinalFrame(Scores scores) {
-        this.remainPin = MAX_PIN;
         this.scores = (FinalScores) scores;
     }
 
@@ -29,21 +32,16 @@ public class FinalFrame implements Frame {
         if (!availablePitching()) {
             return 0;
         }
-        int score = bowlingStrategy.pitchingBall(remainPin);
+        int score = bowlingStrategy.pitchingBall(scores.remainPin());
         record(score);
         return score;
     }
 
     private void record(int score) {
-        if (scores.isBonusPitching() || scores.isStrike()) {
-            remainPin = MAX_PIN;
-        }
-
-        if (remainPin < score) {
+        if (scores.remainPin() < score) {
             throw new IllegalArgumentException("잘못된 점수 입니다.");
         }
 
         scores.recordingScore(new Score(score));
-        remainPin -= score;
     }
 }

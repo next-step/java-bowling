@@ -1,11 +1,13 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.score.Score;
+import bowling.domain.score.Scores;
+import bowling.domain.strategy.BowlingStrategy;
 
 public class NormalFrame implements Frame {
-    private int remainPin;
-    private Scores scores;
+    private final Scores scores;
 
     public NormalFrame(Scores scores) {
-        this.remainPin = MAX_PIN;
         this.scores = scores;
     }
 
@@ -25,17 +27,15 @@ public class NormalFrame implements Frame {
 
     @Override
     public int pitch(BowlingStrategy bowlingStrategy) {
-        int score = bowlingStrategy.pitchingBall(remainPin);
+        int score = bowlingStrategy.pitchingBall(scores.remainPin());
         record(score);
         return score;
     }
 
     private void record(int score) {
-        if(remainPin < score) {
+        if(scores.remainPin() < score) {
             throw new IllegalArgumentException();
         }
-
-        remainPin -= score;
         scores.recordingScore(new Score(score));
     }
 }

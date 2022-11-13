@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.strategy;
 
 public interface BowlingStrategy {
     int pitchingBall(int remainPin);

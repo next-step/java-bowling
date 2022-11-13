@@ -1,6 +1,4 @@
-package bowling.domain;
-
-import java.util.Arrays;
+package bowling.domain.frame;
 
 public enum FrameNumber {
     FRAME_1(1),

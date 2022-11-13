@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +9,8 @@ public class Scores {
     protected static final String STRIKE = "X";
     protected static final String GUTTER = "-";
     protected static final String SPARE = "/";
-
     private static final int MAX_SCORE_SIZE = 2;
+    protected static final int MAX_PIN = 10;
 
     private List<Score> scores;
 
@@ -63,6 +63,14 @@ public class Scores {
         }
 
         return scores.get(0).isSpare(scores.get(1));
+    }
+
+    public int remainPin() {
+        return MAX_PIN - sumScore();
+    }
+
+    private int sumScore() {
+        return scores.stream().map(score -> score.score()).reduce(Integer::sum).orElse(0);
     }
 
     public String convertToMark(Score score) {

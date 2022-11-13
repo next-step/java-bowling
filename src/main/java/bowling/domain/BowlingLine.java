@@ -1,8 +1,11 @@
 package bowling.domain;
 
+import bowling.domain.frame.FrameNumber;
+import bowling.domain.strategy.BowlingStrategy;
+
 public class BowlingLine {
-    private Bowling bowling;
-    private BowlingStrategy bowlingStrategy;
+    private final Bowling bowling;
+    private final BowlingStrategy bowlingStrategy;
 
     public BowlingLine(Bowling bowling, BowlingStrategy bowlingStrategy) {
         this.bowling = bowling;
@@ -18,7 +21,7 @@ public class BowlingLine {
     }
 
     public String score(FrameNumber frame) {
-        return bowling.score(frame);
+        return bowling.findScore(frame);
     }
 
     public String userName() {

@@ -1,8 +1,8 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.strategy.BowlingStrategy;
 
 public interface Frame {
-    Integer MAX_PIN = 10;
-
     String score();
 
     boolean availablePitching();

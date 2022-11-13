@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.strategy;
 
 import java.util.Random;
 

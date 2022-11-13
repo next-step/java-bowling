@@ -10,6 +10,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import bowling.domain.frame.FrameNumber;
+
 class BowlingTest {
 
     @Test
@@ -36,7 +38,7 @@ class BowlingTest {
         Bowling bowling = new Bowling(new User("a"));
         bowling.pitching(frameNumber, (pin) -> firstScore);
         bowling.pitching(frameNumber, (pin) -> secondScore);
-        String mark = bowling.score(frameNumber);
+        String mark = bowling.findScore(frameNumber);
 
         assertThat(mark).isEqualTo(expectMark1);
     }
