@@ -6,6 +6,33 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 class FrameTest {
+    
+    @Test
+    void 종료_2회투구() {
+        Frame frame = Frame.createNormal();
+
+        frame.bowling(5);
+        assertThat(frame.isEnd()).isFalse();
+
+        frame.bowling(5);
+        assertThat(frame.isEnd()).isTrue();
+    }
+
+    @Test
+    void 종료_노말_스트라이크() {
+        Frame frame = Frame.createNormal();
+        frame.bowling(10);
+        assertThat(frame.isEnd()).isTrue();
+    }
+
+    @Test
+    void 종료_마지막_() {
+        Frame frame = Frame.createFinal();
+        frame.bowling(10);
+        frame.bowling(10);
+        frame.bowling(10);
+        assertThat(frame.isEnd()).isTrue();
+    }
 
     @Test
     void 노말프레임_생성() {

@@ -45,8 +45,6 @@ public class Bowling {
 
     @Override
     public String toString() {
-        return "Bowling{" +
-                "count=" + count +
-                '}';
+        return count + "";
     }
 }

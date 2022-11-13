@@ -50,4 +50,8 @@ public class Frames {
     public int getCurrentRound() {
         return currentRound;
     }
+
+    public int size() {
+        return values.size();
+    }
 }
