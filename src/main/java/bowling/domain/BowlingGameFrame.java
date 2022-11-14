@@ -23,6 +23,8 @@ public interface BowlingGameFrame {
 
     BowlingGameFrame getNextFrame();
 
+    boolean hasScore();
+
     int getScore();
 
 }

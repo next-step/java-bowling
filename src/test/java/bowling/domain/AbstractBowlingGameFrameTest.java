@@ -19,6 +19,16 @@ class AbstractBowlingGameFrameTest {
                 return false;
             }
 
+            @Override
+            public boolean hasScore() {
+                return false;
+            }
+
+            @Override
+            public int getScore() {
+                return 0;
+            }
+
         };
     }
 

@@ -57,4 +57,42 @@ class NormalBowlingGameFrameTest {
                 .withMessage("프레임이 종료되어 더 이상 투구 할 수 없습니다.");
     }
 
+    @DisplayName("스트라이크라면, 2번의 투구를 더 했을때, 점수를 가져야 한다.")
+    @Test
+    void hasScore_givenStrike() {
+        BowlingGameFrame frame3 = new NormalBowlingGameFrame(null);
+        BowlingGameFrame frame2 = new NormalBowlingGameFrame(frame3);
+        BowlingGameFrame frame1 = new NormalBowlingGameFrame(frame2);
+        frame1.add(10);
+        assertThat(frame1.hasScore()).isFalse();
+
+        frame2.add(10);
+        assertThat(frame1.hasScore()).isFalse();
+
+        frame3.add(9);
+        assertThat(frame1.hasScore()).isTrue();
+    }
+
+    @DisplayName("스페어라면, 1번의 투구를 더 했을 때, 점수를 가져야 한다.")
+    @Test
+    void hasScore_givenSpare() {
+        BowlingGameFrame frame2 = new NormalBowlingGameFrame(null);
+        BowlingGameFrame frame1 = new NormalBowlingGameFrame(frame2);
+        frame1.add(9);
+        frame1.add(1);
+        assertThat(frame1.hasScore()).isFalse();
+
+        frame2.add(10);
+        assertThat(frame1.hasScore()).isTrue();
+    }
+
+    @DisplayName("미스라면, 추가적인 투구 없이 점수를 가져야 한다.")
+    @Test
+    void hasScore_givenMiss() {
+        BowlingGameFrame frame = new NormalBowlingGameFrame(null);
+        frame.add(8);
+        frame.add(1);
+        assertThat(frame.hasScore()).isTrue();
+    }
+
 }

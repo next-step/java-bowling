@@ -78,9 +78,7 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
     }
 
     @Override
-    public int getScore() {
-        return 0;
-    }
+    abstract public int getScore();
 
     @Override
     public boolean equals(Object o) {

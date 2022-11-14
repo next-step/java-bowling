@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Spare implements BowlingGameHitState {
 
+    private static final int NUMBER_OF_BONUS = 1;
+
     @Override
     public boolean identify(List<Integer> hits) {
         if (hits.size() < 2) {
@@ -19,6 +21,11 @@ public class Spare implements BowlingGameHitState {
     private int sum(List<Integer> hits) {
         return hits.stream()
                 .reduce(0, Integer::sum);
+    }
+
+    @Override
+    public int getNumberOfBonus() {
+        return NUMBER_OF_BONUS;
     }
 
 }

@@ -13,4 +13,15 @@ public class NormalBowlingGameFrame extends AbstractBowlingGameFrame {
         return states.contains(BowlingGameHitState.STRIKE) || hits.size() == MAX_SIZE_OF_HITS;
     }
 
+    @Override
+    public boolean hasScore() {
+        BowlingGameHitState state = states.get(states.size() - 1);
+        return state.hasScore(this);
+    }
+
+    @Override
+    public int getScore() {
+        return 0;
+    }
+
 }

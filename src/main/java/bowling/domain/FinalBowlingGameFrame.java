@@ -13,4 +13,14 @@ public class FinalBowlingGameFrame extends AbstractBowlingGameFrame {
         return states.contains(BowlingGameHitState.MISS) || hits.size() == MAX_SIZE_OF_HITS;
     }
 
+    @Override
+    public boolean hasScore() {
+        return false;
+    }
+
+    @Override
+    public int getScore() {
+        return 0;
+    }
+
 }

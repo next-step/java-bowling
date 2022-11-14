@@ -20,4 +20,28 @@ public interface BowlingGameHitState {
 
     boolean identify(List<Integer> hits);
 
+    default boolean hasScore(BowlingGameFrame currentFrame) {
+        if (currentFrame.isOnGoing()) {
+            return false;
+        }
+
+        int count = 0;
+        BowlingGameFrame frame = currentFrame.getNextFrame();
+        while (frame != null
+                && frame.countHits() > 0
+                && count < getNumberOfBonus()) {
+            count += frame.countHits();
+            frame = frame.getNextFrame();
+        }
+        return count >= getNumberOfBonus();
+    }
+
+    default int calculateScore(BowlingGameFrame currentFrame) {
+        return 0;
+    }
+
+    default int getNumberOfBonus() {
+        return 0;
+    }
+
 }
