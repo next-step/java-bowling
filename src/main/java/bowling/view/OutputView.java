@@ -34,8 +34,9 @@ public class OutputView {
             if (rolls.getScores().get(0).getScore() == 10) {
                 return "  X   |";
             }
+            return String.format("  %s|  |", getScoreOrGutter(rolls, 0));
         }
-        return String.format("  %s|  |", getScoreOrGutter(rolls, 0));
+        return "      |";
     }
 
     private static String getStrikeOrMiss(Rolls rolls) {
