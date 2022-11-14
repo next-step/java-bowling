@@ -6,6 +6,9 @@ import java.util.List;
 
 public class Miss implements BowlingGameHitState {
 
+    protected Miss() {
+    }
+
     @Override
     public boolean identify(List<Integer> hits) {
         if (hits.size() < 2) {

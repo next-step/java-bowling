@@ -8,6 +8,9 @@ public class Spare implements BowlingGameHitState {
 
     private static final int NUMBER_OF_BONUS = 1;
 
+    protected Spare() {
+    }
+
     @Override
     public boolean identify(List<Integer> hits) {
         if (hits.size() < 2) {
