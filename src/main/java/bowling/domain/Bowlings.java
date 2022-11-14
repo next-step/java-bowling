@@ -40,7 +40,6 @@ public class Bowlings {
         if (isNextUserTurn(before, after)) {
             position = position.next(players.size());
         }
-        scoreResult.addUsername(player.getUsername());
         return scoreResult;
     }
 

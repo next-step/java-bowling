@@ -9,12 +9,17 @@ public class ScoreResult {
 
     private Username username;
 
-    public void addScore(Integer score) {
-        scores.add(score);
+    private ScoreResult() {
     }
 
-    public void addUsername(Username username) {
-        this.username = username;
+    public static ScoreResult ofUsername(Username username) {
+        ScoreResult scoreResult = new ScoreResult();
+        scoreResult.username = username;
+        return scoreResult;
+    }
+
+    public void addScore(Integer score) {
+        scores.add(score);
     }
 
     public List<Integer> getScores() {

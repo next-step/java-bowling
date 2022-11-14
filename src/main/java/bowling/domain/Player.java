@@ -16,7 +16,7 @@ public class Player {
     }
 
     public ScoreResult bowl(int knownDownPins) {
-        return bowling.play(knownDownPins);
+        return bowling.play(knownDownPins, username);
     }
 
     public BowlingRound currentRound() {
