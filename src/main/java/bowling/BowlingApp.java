@@ -29,7 +29,7 @@ public class BowlingApp {
             Bowlings bowlings = new Bowlings(usernames);
             List<ScoreResult> results = new ArrayList<>();
             while (!bowlings.isFinish()) {
-                Username username = bowlings.currentUser();
+                Username username = bowlings.currentPlayerName();
                 OutputView.printPinAskQst(username);
                 ScoreResult scoreResult = getKnockedDownPins(inputView, bowlings);
                 results.add(scoreResult);

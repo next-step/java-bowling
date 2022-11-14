@@ -15,7 +15,7 @@ class BowlingsTest {
     @Test
     @DisplayName("모든 사용자의 게임이 끝나야 true를 반환해야합니다.")
     void shouldReturnWhetherGameFinish() {
-        Bowlings bowlings = new Bowlings(List.of(new Username("abc"), new Username("kcs")));
+        Bowlings bowlings = new Bowlings(List.of(new Username("abc"), new Username("kcs")), players);
 
         playUntilGameFinish(bowlings, 2);
 
@@ -35,7 +35,7 @@ class BowlingsTest {
     @Test
     @DisplayName("현재 차례의 사용자를 반환해야 합니다.")
     void shouldReturnCurrentPlayingUser() {
-        Bowlings bowlings = new Bowlings(List.of(new Username("abc"), new Username("kcs")));
+        Bowlings bowlings = new Bowlings(List.of(new Username("abc"), new Username("kcs")), players);
 
         Username firstUser = bowlings.currentUser();
         bowlings.play(10);
@@ -48,7 +48,7 @@ class BowlingsTest {
     @Test
     @DisplayName("사용자별로 게임을 시도합니다.")
     void shouldPlayGameByUser() {
-        Bowlings bowlings = new Bowlings(List.of(new Username("abc"), new Username("kcs")));
+        Bowlings bowlings = new Bowlings(List.of(new Username("abc"), new Username("kcs")), players);
 
         ScoreResult firstResult = bowlings.play(10);
         ScoreResult secondResult = bowlings.play(10);

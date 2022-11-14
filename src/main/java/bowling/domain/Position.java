@@ -15,6 +15,13 @@ public class Position {
         return new Position(position + 1);
     }
 
+    public Position next(int bound) {
+        if (position >= bound - 1) {
+            return new Position(0);
+        }
+        return next();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

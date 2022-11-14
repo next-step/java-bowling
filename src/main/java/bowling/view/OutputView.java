@@ -47,7 +47,7 @@ public class OutputView {
     }
 
     private static List<Username> getUsernames(Bowlings bowlings) {
-        return bowlings.getUsernames().getUsernames();
+        return bowlings.getPlayers().getUsernames();
     }
 
     private static void printScoreOfUser(Bowlings bowlings, Username username, List<ScoreResult> scoreResults) {

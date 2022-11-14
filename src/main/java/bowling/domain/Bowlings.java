@@ -1,42 +1,46 @@
 package bowling.domain;
 
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-
-import static java.util.stream.Collectors.toMap;
+import java.util.stream.Collectors;
 
 public class Bowlings {
-    private final Map<Username, Bowling> bowlings;
 
-    private final Usernames usernames;
+    private final Players players;
+
+    private Position position;
 
     public Bowlings(List<Username> usernames) {
-        this.bowlings = usernames.stream()
-                .map((username) -> Map.entry(username, new Bowling()))
-                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
-        this.usernames = new Usernames(usernames);
+        if (isDuplicateUsernames(usernames)) {
+            throw new IllegalArgumentException("사용자 이름은 중복이 존재해서는 안됩니다.");
+        }
+        this.players = new Players(usernames.stream()
+                .map((username) -> new Player(username, new Bowling()))
+                .collect(Collectors.toList()));
+        this.position = new Position(0);
+    }
+
+    private boolean isDuplicateUsernames(List<Username> usernames) {
+        return new HashSet<>(usernames).size() != usernames.size();
     }
 
     public boolean isFinish() {
-        return bowlings.values()
-                .stream()
-                .allMatch(Bowling::isFinish);
+        return players.isFinish();
     }
 
-    public Username currentUser() {
-        return usernames.current();
+    private Player findCurrentPlayer() {
+        return players.findPlayerByPosition(position);
     }
 
     public ScoreResult play(Integer knockDownPinNumber) {
-        Username currentUser = currentUser();
-        Bowling bowling = bowlings.get(currentUser);
-        BowlingRound before = bowling.currentRound();
-        ScoreResult scoreResult = bowling.play(knockDownPinNumber);
-        BowlingRound after = bowling.currentRound();
+        Player player = findCurrentPlayer();
+        BowlingRound before = player.currentRound();
+        ScoreResult scoreResult = player.bowl(knockDownPinNumber);
+        BowlingRound after = player.currentRound();
         if (isNextUserTurn(before, after)) {
-            usernames.next();
+            position = position.next(players.size());
         }
-        scoreResult.addUsername(currentUser);
+        scoreResult.addUsername(player.getUsername());
         return scoreResult;
     }
 
@@ -44,12 +48,16 @@ public class Bowlings {
         return !after.isSameRound(before) || after.isLastRoundEnd();
     }
 
+    public Username currentPlayerName() {
+        return findCurrentPlayer().getUsername();
+    }
 
     public Bowling findBowlingByUsername(Username username) {
-        return bowlings.get(username);
+        return players.findBowlingByUsername(username);
     }
 
-    public Usernames getUsernames() {
-        return usernames;
+    public Players getPlayers() {
+        return players;
     }
+
 }
