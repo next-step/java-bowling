@@ -1,5 +1,6 @@
 package qna.domain;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
@@ -12,22 +13,25 @@ public class QuestionTest {
 
 
     @Test
-    public void delete_성공() throws Exception {
+    @DisplayName("삭제 성공 테스트")
+    public void deleteSuccess() throws Exception {
         assertThat(Q1.isDeleted()).isFalse();
-        Q1.questionDeleteHistories(UserTest.JAVAJIGI.getId());
+        Q1.addQuestionDeleteHistory(Q1.getWriter(), UserTest.JAVAJIGI.getId());
         assertThat(Q1.isDeleted()).isTrue();
     }
 
     @Test
-    public void delete_다른_사람이_쓴_글(){
+    @DisplayName("삭제 실패 다른 사람이 쓴 글 삭제 실패 테스트")
+    public void deleteOtherUserWrite(){
         assertThatThrownBy(() -> {
-            Q1.isOnwer(UserTest.SANJIGI);
+            Q1.isOwner(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
 
     @Test
-    public void delete_성공_질문자_같음() throws Exception {
-        Q2.isOnwer(UserTest.SANJIGI);
+    @DisplayName("삭제 성공 질문자가 같음")
+    public void deleteSuccessSameUser() throws Exception {
+        Q2.isOwner(UserTest.SANJIGI);
         assertThat(Q2.isDeleted()).isTrue();
     }
 }
