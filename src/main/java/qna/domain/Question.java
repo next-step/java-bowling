@@ -100,13 +100,18 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public void validateQuestionAuthority(User loginUser) throws CannotDeleteException {
+    public void validate(User loginUser) throws CannotDeleteException {
+        validateQuestionAuthority(loginUser);
+        validateAnswerExists(loginUser);
+    }
+
+    private void validateQuestionAuthority(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
     }
 
-    public void validateAnswerExists(User loginUser) throws CannotDeleteException {
+    private void validateAnswerExists(User loginUser) throws CannotDeleteException {
         for (Answer answer : answers) {
             answer.validateAnswerExists(loginUser);
         }
