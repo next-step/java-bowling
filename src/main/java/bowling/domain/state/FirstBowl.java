@@ -7,7 +7,8 @@ import java.util.List;
 
 public class FirstBowl extends State {
 
-    private static final int MAX_COUNT = 10;
+    private static final int MAX_SCORE = 10;
+    private static final int LEFT_CHANCE = 1;
 
     private final Pin pin;
 
@@ -20,8 +21,8 @@ public class FirstBowl extends State {
     public State bowl(Pin pin) {
 
         int sum = this.pin.count() + pin.count();
-        if (sum > MAX_COUNT) {
-            throw new IllegalArgumentException(MAX_COUNT - this.pin.count() + "이하의 숫자만 입력이 가능합니다.");
+        if (sum > MAX_SCORE) {
+            throw new IllegalArgumentException(MAX_SCORE - this.pin.count() + "이하의 숫자만 입력이 가능합니다.");
         }
 
         if (new Pin(sum).isKnockDown()) {
@@ -40,7 +41,7 @@ public class FirstBowl extends State {
     @Override
     public Score getScore() {
 
-        return new Score(pin.count(), 1);
+        return new Score(pin.count(), LEFT_CHANCE);
     }
 
     @Override
@@ -53,5 +54,11 @@ public class FirstBowl extends State {
     public List<Pin> pins() {
 
         return List.of(pin);
+    }
+
+    @Override
+    public boolean hasPins(final int size) {
+
+        return pins().size() == size;
     }
 }

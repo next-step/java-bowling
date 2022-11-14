@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Miss extends State {
 
+    private static final int NO_CHANCE = 0;
+
     private final Pin firstPin;
     private final Pin secondPin;
 
@@ -31,7 +33,7 @@ public class Miss extends State {
     @Override
     public Score getScore() {
 
-        return new Score(firstPin.count() + secondPin.count(), 0);
+        return new Score(firstPin.count() + secondPin.count(), NO_CHANCE);
     }
 
     @Override
@@ -50,5 +52,11 @@ public class Miss extends State {
     public List<Pin> pins() {
 
         return List.of(firstPin, secondPin);
+    }
+
+    @Override
+    public boolean hasPins(final int size) {
+
+        return pins().size() == size;
     }
 }

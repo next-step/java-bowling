@@ -7,7 +7,8 @@ import java.util.List;
 
 public class Strike extends State {
 
-    private static final int MAX_COUNT = 10;
+    private static final int MAX_SCORE = 10;
+    private static final int LEFT_CHANCE = 2;
 
     @Override
     public State bowl(Pin pin) {
@@ -24,18 +25,24 @@ public class Strike extends State {
     @Override
     public Score getScore() {
 
-        return new Score(MAX_COUNT, 2);
+        return new Score(MAX_SCORE, LEFT_CHANCE);
     }
 
     @Override
     public Score calculateAdditionalScore(Score score) {
 
-        return score.add(MAX_COUNT);
+        return score.add(MAX_SCORE);
     }
 
     @Override
     public List<Pin> pins() {
 
-        return List.of(new Pin(MAX_COUNT));
+        return List.of(new Pin(MAX_SCORE));
+    }
+
+    @Override
+    public boolean hasPins(final int size) {
+
+        return pins().size() == size;
     }
 }

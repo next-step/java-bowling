@@ -38,7 +38,7 @@ public class FramesResult {
 
     private String playerName() {
 
-        return String.format("| %4s |", participant.getParticipant());
+        return String.format("| %4s |", participant.getName());
     }
 
     public String frameSigns() {
@@ -68,11 +68,12 @@ public class FramesResult {
                 .collect(Collectors.toList());
 
         final List<Integer> result = new ArrayList<>();
-        if (scores.size() > 0) {
+        final int size = scores.size();
+        if (size > 0) {
             result.add(scores.get(0));
         }
 
-        for (int i = 1; i < scores.size(); i++) {
+        for (int i = 1; i < size; i++) {
             result.add(result.get(i - 1) + scores.get(i));
         }
 

@@ -12,4 +12,5 @@ public abstract class State {
     public abstract Score getScore();
     public abstract Score calculateAdditionalScore(Score score);
     public abstract List<Pin> pins();
+    public abstract boolean hasPins(final int size);
 }

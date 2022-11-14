@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Spare extends State {
 
+    private static final int LEFT_CHANCE = 1;
+    
     private final Pin firstPin;
     private final Pin secondPin;
 
@@ -31,7 +33,7 @@ public class Spare extends State {
     @Override
     public Score getScore() {
 
-        return new Score(firstPin.count() + secondPin.count(), 1);
+        return new Score(firstPin.count() + secondPin.count(), LEFT_CHANCE);
     }
 
     @Override
@@ -50,5 +52,11 @@ public class Spare extends State {
     public List<Pin> pins() {
 
         return List.of(firstPin, secondPin);
+    }
+
+    @Override
+    public boolean hasPins(final int size) {
+
+        return pins().size() == size;
     }
 }

@@ -7,6 +7,9 @@ import java.util.List;
 
 public class Ready extends State {
 
+    private static final int NO_SCORE = 0;
+    private static final int DEFAULT = 2;
+
     @Override
     public State bowl(Pin pin) {
 
@@ -26,7 +29,7 @@ public class Ready extends State {
     @Override
     public Score getScore() {
 
-        return new Score(0, 2);
+        return new Score(NO_SCORE, DEFAULT);
     }
 
     @Override
@@ -39,5 +42,11 @@ public class Ready extends State {
     public List<Pin> pins() {
 
         return List.of();
+    }
+
+    @Override
+    public boolean hasPins(final int size) {
+
+        return pins().size() == size;
     }
 }
