@@ -2,11 +2,11 @@ package bowling.domain;
 
 public class Participant {
 
-    private String participant;
+    private final String name;
 
-    private Participant(final String participant) {
+    private Participant(final String name) {
 
-        this.participant = participant;
+        this.name = name;
     }
 
     public static Participant from(final String participant) {
@@ -14,8 +14,8 @@ public class Participant {
         return new Participant(participant);
     }
 
-    public String getParticipant() {
+    public String getName() {
         
-        return participant;
+        return name;
     }
 }
