@@ -9,9 +9,10 @@ public class ResultView {
 
     private ResultView() {}
 
-    public static void resultTitlePrint(final FramesResult framesResult) {
+    public static void resultPrint(final FramesResult framesResult) {
 
         System.out.println(framesResult.frameNumberLine());
+        System.out.println(framesResult.frameSigns());
         System.out.println(framesResult.frameScores() + System.lineSeparator());
     }
 }

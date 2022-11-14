@@ -1,71 +1,47 @@
 package bowling.domain;
 
+import bowling.domain.state.Miss;
+import bowling.domain.state.Spare;
+import bowling.domain.state.Strike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@DisplayName("Score 테스트")
 class ScoreTest {
 
-    @DisplayName("SPARE")
+    @DisplayName("Strike 인 경우 2번 점수를 더해야 점수 계산이 가능하다.")
+    @Test
+    void strike() {
+
+        final Score strike = new Strike().getScore();
+        final Score result = strike.add(1).add(2);
+
+        assertThat(result.canCalculateScore()).isTrue();
+    }
+
+    @DisplayName("Spare 인 경우 1번 점수를 더해야 점수 계산이 가능하다.")
     @ParameterizedTest(name = "첫번째 넘어진 개수는 {0}이고, 두번째 넘어진 개수는 {1}이다.")
     @CsvSource(value = {"0,10", "5,5", "2,8"})
     void pin_spare(final int one, final int two) {
 
-        final Score score = new Score();
-        score.add(new Pin(one));
-        score.add(new Pin(two));
+        final Spare spare = new Spare(new Pin(one), new Pin(two));
+        final Score score = spare.getScore();
+        final Score result = score.add(1);
 
-        assertThat(score.status()).isEqualTo(ScoreType.SPARE);
+        assertThat(result.canCalculateScore()).isTrue();
     }
 
-    @DisplayName("STRIKE")
+    @DisplayName("Miss 인 경우 바로 점수 계산한다..")
     @Test
-    void pin_strike() {
+    void miss() {
 
-        final Score score = new Score();
-        score.add(new Pin(10));
+        final Miss miss = new Miss(new Pin(1), new Pin(2));
+        Score score = miss.getScore();
 
-        assertThat(score.status()).isEqualTo(ScoreType.STRIKE);
-    }
-
-    @DisplayName("MISS")
-    @ParameterizedTest(name = "첫번째 넘어진 개수는 {0}이고, 두번째 넘어진 개수는 {1}이다.")
-    @CsvSource(value = {"5,3", "0,0", "1,8"})
-    void pin_miss(final int one, final int two) {
-
-        final Score score = new Score();
-        score.add(new Pin(one));
-        score.add(new Pin(two));
-
-        assertThat(score.status()).isEqualTo(ScoreType.MISS);
-    }
-
-    @DisplayName("볼링 핀의 개수가 10개를 초과한다.")
-    @ParameterizedTest(name = "첫번째 넘어진 개수는 {0}이고, 두번째 넘어진 개수는 {1}이다.")
-    @CsvSource(value = {"5,10", "2,9", "3,9"})
-    void pin_validate(final int one, final int two) {
-
-        final Score score = new Score();
-        score.add(new Pin(one));
-
-        assertThatThrownBy(() -> score.add(new Pin(two)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("쓰러뜨릴 핀 갯수가 올바르지 않습니다.");
-    }
-
-    @DisplayName("SPARE 일 경우")
-    @ParameterizedTest(name = "첫번째 넘어진 개수는 {0}이고, 두번째 넘어진 개수는 {1}이다.")
-    @CsvSource(value = {"0,10", "5,5", "2,8"})
-    void exist_spare(final int one, final int two) {
-
-        final Score score = new Score();
-        score.add(new Pin(one));
-        score.add(new Pin(two));
-
-        assertThat(score.status().strikeOrSpare()).isTrue();
+        assertThat(score.canCalculateScore()).isTrue();
     }
 }

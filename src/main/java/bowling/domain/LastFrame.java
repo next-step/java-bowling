@@ -1,71 +1,129 @@
 package bowling.domain;
 
+import bowling.domain.state.Ready;
+import bowling.domain.state.State;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class LastFrame implements Frame {
 
-    private static final int FRAME_THRESHOLD = 10;
-
     private final int number;
-    private final Score score;
+    private Frame nextFrame;
 
-    public LastFrame(final int number) {
+    private final List<State> states = new ArrayList<>();
 
-        validate(number);
+    private LastFrame(final int number) {
+
         this.number = number;
-        this.score = new Score();
+        this.nextFrame = this;
+        states.add(new Ready());
     }
 
-    private void validate(final int number) {
+    public static LastFrame ready() {
 
-        if (number > FRAME_THRESHOLD) {
-            throw new IllegalArgumentException("마지막 프레임의 번호를 초과하였습니다.");
+        return new LastFrame(10);
+    }
+
+    private void updateLastState(final State state) {
+
+        states.remove(states.size() - 1);
+        states.add(state);
+    }
+
+    private Score getFirstScore() {
+
+        Score firstScore = firstState().getScore();
+
+        for (int i = 1; i < states.size(); i++) {
+            final State state = states.get(i);
+            firstScore = state.calculateAdditionalScore(firstScore);
         }
+
+        return firstScore;
+    }
+
+    private State firstState() {
+
+        return states.get(0);
     }
 
     @Override
-    public boolean canPitch() {
-
-        return score.pitches() < 2 || !status().strikeOrSpare();
-    }
-
-    @Override
-    public boolean isEmpty() {
-
-        return score.pins().isEmpty();
-    }
-
-    @Override
-    public int pinNumber(int index) {
-
-        return score.getPin(index);
-    }
-
-    @Override
-    public int pinsSize() {
-
-        return score.pins().size();
-    }
-
-    @Override
-    public int getNumber() {
+    public int getFrameNumber() {
 
         return number;
     }
 
     @Override
-    public void pitch(int number) {
+    public boolean isLastFrame() {
 
-        score.add(new Pin(number));
+        return true;
     }
 
     @Override
-    public ScoreType status() {
+    public boolean canBowl() {
 
-        return score.status();
+        return !getFirstScore().canCalculateScore();
+    }
+
+    @Override
+    public void bowl(final int number) {
+
+        final State state = lastState();
+        final Pin pin = new Pin(number);
+
+        if (state.isFinished()) {
+            states.add(new Ready().bowl(pin));
+            return;
+        }
+
+        updateLastState(state.bowl(pin));
     }
 
     @Override
     public Frame nextFrame() {
 
         throw new IllegalStateException("마지막 프레임입니다.");
+    }
+
+    @Override
+    public int getIntScore() {
+
+        return getFirstScore().getScore();
+    }
+
+    @Override
+    public Score calculateAdditionalScore(final Score beforeScore) {
+
+        return lastState().calculateAdditionalScore(beforeScore);
+    }
+
+    @Override
+    public State getState() {
+
+        return lastState();
+    }
+
+    private State lastState() {
+
+        return states.get(states.size() - 1);
+    }
+
+    @Override
+    public List<State> getStates() {
+
+        return Collections.unmodifiableList(states);
+    }
+
+    @Override
+    public boolean isFinished() {
+
+        return !canBowl();
+    }
+
+    @Override
+    public Frame getNextFrame() {
+        return nextFrame;
     }
 }

@@ -1,20 +1,30 @@
 package bowling.domain;
 
+import bowling.domain.state.State;
+
+import java.util.List;
+
 public interface Frame {
+
+    int getFrameNumber();
+
+    boolean isLastFrame();
+
+    boolean canBowl();
+
+    void bowl(final int number);
 
     Frame nextFrame();
 
-    boolean canPitch();
+    int getIntScore();
 
-    boolean isEmpty();
+    Score calculateAdditionalScore(final Score beforeScore);
 
-    int pinNumber(final int index);
+    State getState();
 
-    int pinsSize();
+    List<State> getStates();
 
-    int getNumber();
+    boolean isFinished();
 
-    void pitch(final int number);
-
-    ScoreType status();
+    Frame getNextFrame();
 }

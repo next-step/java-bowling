@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@DisplayName("Pin 테스트")
 class PinTest {
 
     @DisplayName("핀은 최소 0개에서 최대 10개까지 넘어진다.")

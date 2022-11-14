@@ -11,22 +11,24 @@ public class BowlingApplication {
 
         final Frames frames = Frames.init();
         final String participationName = InputView.inputParticipationName();
-        final FramesResult framesResult = new FramesResult(new Name(participationName), frames);
-        ResultView.resultTitlePrint(framesResult);
+        final FramesResult framesResult = new FramesResult(Participant.from(participationName), frames);
+        ResultView.resultPrint(framesResult);
 
-        while (frames.end()) {
-            final Frame lastFrame = frames.lastFrame();
-            getPitchNumberAndPrintResult(framesResult, lastFrame);
-            frames.addFrame();
+        while (!frames.isLast()) {
+            inputBowlNumberAndPrintResult(framesResult, frames);
         }
     }
 
-    private static void getPitchNumberAndPrintResult(final FramesResult framesResult, final Frame lastFrame) {
+    private static void inputBowlNumberAndPrintResult(final FramesResult framesResult, final Frames frames) {
 
-        while (lastFrame.canPitch()) {
-            final int number = InputView.inputScore(lastFrame.getNumber());
-            lastFrame.pitch(number);
-            ResultView.resultTitlePrint(framesResult);
+        Frame lastFrame = frames.lastFrame();
+
+        while (lastFrame.canBowl()) {
+            int number = InputView.inputScore(lastFrame.getFrameNumber());
+            lastFrame.bowl(number);
+            ResultView.resultPrint(framesResult);
         }
+
+        frames.addFrame();
     }
 }

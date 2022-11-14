@@ -1,74 +1,32 @@
 package bowling.domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Stream;
-
 public class Score {
 
-    private static final int PITCH_THRESHOLD = 2;
+    private final int score;
+    private final int left;
 
-    private final List<Pin> pins = new ArrayList<>();
+    public Score(final int score, final int left) {
 
-    public void add(final Pin pin) {
-
-        validate(pin);
-        pins.add(pin);
+        this.score = score;
+        this.left = left;
     }
 
-    private void validate(final Pin pin) {
+    public Score add(final int countOfPins) {
 
-        if (!status().strikeOrSpare() && checkExceed(pin)) {
-            throw new IllegalArgumentException("쓰러뜨릴 핀 갯수가 올바르지 않습니다.");
-        }
+        return new Score(score + countOfPins, left - 1);
     }
 
-    private boolean checkExceed(final Pin pin) {
+    public int getScore() {
 
-        return lastPin() + pin.count() > 10;
-    }
-
-    public int lastPin() {
-
-        if (pins().isEmpty()) {
-            return 0;
+        if (!canCalculateScore()) {
+            throw new IllegalArgumentException(left + "만큼 남았습니다.");
         }
 
-        return getPin(pins.size() - 1);
+        return this.score;
     }
 
-    public ScoreType status() {
+    public boolean canCalculateScore() {
 
-        return Stream.of(ScoreType.values())
-                .filter(scoreType -> scoreType.matches(this))
-                .findFirst()
-                .orElse(ScoreType.MISS);
-    }
-
-    public int pitches() {
-
-        return pins.size();
-    }
-
-    public boolean frameEnd() {
-
-        return pitches() == PITCH_THRESHOLD;
-    }
-
-    public int getPin(final int index) {
-
-        return pins.get(index)
-                .count();
-    }
-
-    public List<Pin> pins() {
-
-        return Collections.unmodifiableList(pins);
-    }
-
-    public int calculate() {
-
-        return this.getPin(this.pitches() - 2) + this.lastPin();
+        return left == 0;
     }
 }
