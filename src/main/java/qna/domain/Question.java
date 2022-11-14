@@ -1,7 +1,7 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
-import qna.CannotDeleteException;
+import qna.exception.CannotDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
