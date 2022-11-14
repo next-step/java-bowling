@@ -1,25 +1,24 @@
 package bowling.domain;
 
 import bowling.strategy.FallenPinCalculateStrategy;
-import bowling.type.BowlingScore;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class GeneralScore {
+public class Scores {
     private static final int MAX_PIN_COUNT = 10;
 
     private final List<Integer> scores;
     private FallenPinCalculateStrategy strategy;
 
-    public GeneralScore(FallenPinCalculateStrategy strategy) {
+    public Scores(FallenPinCalculateStrategy strategy) {
         this.strategy = strategy;
         this.scores = new ArrayList<>();
         scores.add(strategy.calculate(MAX_PIN_COUNT));
     }
 
-    public GeneralScore(List<Integer> scores) {
+    public Scores(List<Integer> scores) {
         this.scores = scores;
     }
 
@@ -37,20 +36,16 @@ public class GeneralScore {
         scores.add(strategy.calculate(maxNum));
     }
 
-    public BowlingScore getBowlingScore() {
-        if(isStrike()) return BowlingScore.STRIKE;
-        if(scores.size() == 1) return BowlingScore.NONE;
-        if(scores.get(0) + scores.get(1) == 10) return BowlingScore.SPARE;
-        if(scores.get(1) == 0) return BowlingScore.GUTTER;
-        return BowlingScore.MISS;
-    }
-
     public int getFirst(){
         return scores.get(0);
     }
 
     public int getSecond(){
         return scores.get(1);
+    }
+
+    public int getThird(){
+        return scores.get(2);
     }
 
     public int getLatest(){
@@ -71,7 +66,7 @@ public class GeneralScore {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        GeneralScore that = (GeneralScore) o;
+        Scores that = (Scores) o;
         return Objects.equals(scores, that.scores);
     }
 

@@ -4,9 +4,9 @@ import bowling.type.PlayStatus;
 
 public class FinalFrame extends DefaultFrame{
 
-    public FinalFrame(GeneralScore generalScore, int order) {
-        super(generalScore, order);
-        this.generalScore = generalScore;
+    public FinalFrame(Scores scores, int order) {
+        super(scores, order);
+        this.scores = scores;
         this.order = order;
         this.playStatus = PlayStatus.IN_PROGRESS;
     }
@@ -18,14 +18,22 @@ public class FinalFrame extends DefaultFrame{
 
     @Override
     public void nextTry(){
-        if (generalScore.size() == 2) {
-            generalScore.next(10);
+        if (isThirdTry()) {
+            scores.next(10);
             playStatus = PlayStatus.END;
             return;
         }
-        generalScore.next();
-        if(generalScore.sum() < 10) {
+        scores.next();
+        if(!hasAnotherChance()) {
             playStatus = PlayStatus.END;
         }
+    }
+
+    private boolean isThirdTry() {
+        return scores.size() == 2;
+    }
+
+    private boolean hasAnotherChance(){
+        return scores.sum() >= 10;
     }
 }

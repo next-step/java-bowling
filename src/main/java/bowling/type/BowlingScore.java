@@ -1,6 +1,6 @@
 package bowling.type;
 
-import bowling.domain.GeneralScore;
+import bowling.domain.Scores;
 
 public enum BowlingScore {
     STRIKE,
@@ -9,11 +9,11 @@ public enum BowlingScore {
     GUTTER,
     NONE;
 
-    public static BowlingScore from(GeneralScore generalScore) {
-        if(generalScore.isStrike()) return BowlingScore.STRIKE;
-        if(generalScore.size() == 1) return BowlingScore.NONE;
-        if(generalScore.getFirst() + generalScore.getSecond() == 10) return BowlingScore.SPARE;
-        if(generalScore.getSecond() == 0) return BowlingScore.GUTTER;
+    public static BowlingScore from(Scores scores) {
+        if(scores.isStrike()) return BowlingScore.STRIKE;
+        if(scores.size() == 1) return BowlingScore.NONE;
+        if(scores.getFirst() + scores.getSecond() == 10) return BowlingScore.SPARE;
+        if(scores.getSecond() == 0) return BowlingScore.GUTTER;
         return BowlingScore.MISS;
     }
 }

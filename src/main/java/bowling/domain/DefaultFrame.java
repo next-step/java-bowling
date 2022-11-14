@@ -3,32 +3,32 @@ package bowling.domain;
 import bowling.type.BowlingScore;
 import bowling.type.PlayStatus;
 
-public abstract class DefaultFrame implements Frame{
+public abstract class DefaultFrame implements Frame {
 
     protected int order = 1;
-    protected GeneralScore generalScore;
+    protected Scores scores;
     protected PlayStatus playStatus;
 
-    public DefaultFrame(GeneralScore generalScore) {
-        this.generalScore = generalScore;
-        this.playStatus = decideEnd(generalScore);
+    public DefaultFrame(Scores scores) {
+        this.scores = scores;
+        this.playStatus = decideEnd(scores);
     }
 
-    public DefaultFrame(GeneralScore generalScore, int order) {
-        this.generalScore = generalScore;
+    public DefaultFrame(Scores scores, int order) {
+        this.scores = scores;
         this.order = order;
-        this.playStatus = decideEnd(generalScore);
+        this.playStatus = decideEnd(scores);
     }
 
-    private PlayStatus decideEnd(GeneralScore generalScore) {
-        if (generalScore.isStrike()) {
+    private PlayStatus decideEnd(Scores scores) {
+        if (scores.isStrike()) {
             return PlayStatus.END;
         }
         return PlayStatus.IN_PROGRESS;
     }
 
-    public void nextTry(){
-        generalScore.next();
+    public void nextTry() {
+        scores.next();
         playStatus = PlayStatus.END;
     }
 
@@ -39,26 +39,35 @@ public abstract class DefaultFrame implements Frame{
 
     @Override
     public int getLatestScore() {
-        return generalScore.getLatest();
+        return scores.getLatest();
     }
 
-    public boolean isStrike(){
-        return BowlingScore.STRIKE == BowlingScore.from(generalScore);
+    public boolean isStrike() {
+        return BowlingScore.STRIKE == BowlingScore.from(scores);
     }
 
     public BowlingScore getBowlingScore() {
-        return BowlingScore.from(generalScore);
+        return BowlingScore.from(scores);
     }
 
-    public boolean isProgress(){
+    public boolean isProgress() {
         return PlayStatus.IN_PROGRESS == playStatus;
     }
 
-    public int getFirstScore(){
-        return generalScore.getFirst();
+    public int getFirstScore() {
+        return scores.getFirst();
     }
 
-    public int getSecondScore(){
-        return generalScore.getSecond();
+    public int getSecondScore() {
+        return scores.getSecond();
+    }
+
+    public int getThirdScore() {
+        return scores.getThird();
+    }
+
+    @Override
+    public int getScoreSize() {
+        return scores.size();
     }
 }

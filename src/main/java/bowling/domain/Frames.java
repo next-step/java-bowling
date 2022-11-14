@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Frames {
-    public final static int FIRST_FRAME_ORDER = 1;
     public final static int LAST_FRAME_ORDER = 10;
 
     private final List<Frame> frames;
