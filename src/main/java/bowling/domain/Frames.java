@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class Frames {
 
     public static Frames init() {
 
-        final List<Frame> frames = List.of(NormalFrame.ready());
+        final List<Frame> frames = new ArrayList<>(List.of(NormalFrame.ready()));
         return new Frames(frames);
     }
 
