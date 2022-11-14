@@ -1,36 +1,31 @@
 package bowling.view;
 
-import bowling.domain.FinalFrame;
 import bowling.domain.Frame;
-import bowling.domain.NormalFrame;
-import bowling.domain.Scores;
 import bowling.type.BowlingScore;
-
-import java.util.Arrays;
 
 import static bowling.view.ResultView.*;
 
 public class Mark {
 
-    public static String print(Frame frame){
+    public static String print(Frame frame) {
         StringBuilder result = new StringBuilder();
         result.append(getFirstMark(frame.getFirstScore()));
-        if(isFirstTry(frame)) {
+        if (isFirstTry(frame)) {
             return result.toString();
         }
-        if(isLastFrame(frame)) {
-            return getFinalMarker(frame);
+        if (isLastFrame(frame)) {
+            return getFinalMark(frame);
         }
         result.append(MARK_DIVIDER);
-        result.append(getDefaultMarker(frame));
+        result.append(getDefaultMark(frame));
         return result.toString();
     }
 
-    private static String getDefaultMarker(Frame frame) {
-        if(frame.getBowlingScore() == BowlingScore.SPARE) {
+    private static String getDefaultMark(Frame frame) {
+        if (frame.getBowlingScore() == BowlingScore.SPARE) {
             return SPARE_MARK;
         }
-        if(frame.getBowlingScore() == BowlingScore.GUTTER) {
+        if (frame.getBowlingScore() == BowlingScore.GUTTER) {
             return GUTTER_MARK;
         }
         return String.valueOf(frame.getSecondScore());
@@ -44,17 +39,17 @@ public class Mark {
         return frame.getScoreSize() == 1;
     }
 
-    private static String getFinalMarker(Frame frame){
+    private static String getFinalMark(Frame frame) {
         StringBuilder result = new StringBuilder();
         result.append(getFirstMark(frame.getFirstScore()));
         result.append(MARK_DIVIDER);
 
-        if(frame.getScoreSize() == 2) {
+        if (isSecondTry(frame)) {
             return result.append(frame.getSecondScore()).toString();
         }
 
         result.append(getSecondMark(frame));
-        if(!hasOneMoreChane(frame)) {
+        if (!hasOneMoreChance(frame)) {
             return result.toString();
         }
         result.append(MARK_DIVIDER);
@@ -63,11 +58,15 @@ public class Mark {
         return result.toString();
     }
 
+    private static boolean isSecondTry(Frame frame) {
+        return frame.getScoreSize() == 2;
+    }
+
     private static String getThirdMark(Frame frame) {
-        if(frame.getThirdScore() == STRIKE_NUMBER) {
+        if (frame.getThirdScore() == STRIKE_NUMBER) {
             return STRIKE_MARK;
         }
-        if(frame.getFirstScore() == STRIKE_NUMBER &&
+        if (frame.getFirstScore() == STRIKE_NUMBER &&
                 frame.getSecondScore() + frame.getThirdScore() == SPARE_DECIDE_NUMBER) {
             return SPARE_MARK;
         }
@@ -75,24 +74,24 @@ public class Mark {
     }
 
     private static String getSecondMark(Frame frame) {
-        if(frame.getSecondScore() == STRIKE_NUMBER) {
+        if (frame.getSecondScore() == STRIKE_NUMBER) {
             return STRIKE_MARK;
         }
-        if(frame.getFirstScore() + frame.getSecondScore() < SPARE_DECIDE_NUMBER) {
+        if (frame.getFirstScore() + frame.getSecondScore() < SPARE_DECIDE_NUMBER) {
             return String.valueOf(frame.getSecondScore());
         }
-        if(frame.getFirstScore() + frame.getSecondScore() == SPARE_DECIDE_NUMBER && frame.getFirstScore() != STRIKE_NUMBER) {
+        if (frame.getFirstScore() + frame.getSecondScore() == SPARE_DECIDE_NUMBER && frame.getFirstScore() != STRIKE_NUMBER) {
             return SPARE_MARK;
         }
         return String.valueOf(frame.getSecondScore());
     }
 
-    private static boolean hasOneMoreChane(Frame frame) {
+    private static boolean hasOneMoreChance(Frame frame) {
         return frame.getFirstScore() == STRIKE_NUMBER || frame.getFirstScore() + frame.getSecondScore() == SPARE_DECIDE_NUMBER;
     }
 
     private static String getFirstMark(int firstScore) {
-        if(firstScore == STRIKE_NUMBER) {
+        if (firstScore == STRIKE_NUMBER) {
             return STRIKE_MARK;
         }
         return String.valueOf(firstScore);

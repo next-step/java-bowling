@@ -2,7 +2,7 @@ package bowling.domain;
 
 import bowling.type.PlayStatus;
 
-public class FinalFrame extends DefaultFrame{
+public class FinalFrame extends DefaultFrame {
 
     public FinalFrame(Scores scores, int order) {
         super(scores, order);
@@ -17,14 +17,14 @@ public class FinalFrame extends DefaultFrame{
     }
 
     @Override
-    public void nextTry(){
+    public void nextTry() {
         if (isThirdTry()) {
             scores.next(10);
             playStatus = PlayStatus.END;
             return;
         }
         scores.next();
-        if(!hasAnotherChance()) {
+        if (!hasAnotherChance()) {
             playStatus = PlayStatus.END;
         }
     }
@@ -33,7 +33,7 @@ public class FinalFrame extends DefaultFrame{
         return scores.size() == 2;
     }
 
-    private boolean hasAnotherChance(){
+    private boolean hasAnotherChance() {
         return scores.sum() >= 10;
     }
 }

@@ -7,10 +7,10 @@ public class PlayerName {
     private final String playerName;
 
     public PlayerName(String playerName) {
-        if(!isValidNameLength(playerName)) {
+        if (!isValidNameLength(playerName)) {
             throw new IllegalArgumentException("player name length must be 3");
         }
-        if(!isEnglish(playerName)) {
+        if (!isEnglish(playerName)) {
             throw new IllegalArgumentException("player name must be english");
         }
         this.playerName = playerName;
@@ -19,6 +19,7 @@ public class PlayerName {
     private boolean isValidNameLength(String playerName) {
         return playerName.length() == NAME_LENGTH;
     }
+
     private boolean isEnglish(String playerName) {
         return playerName.matches(ENGLISH_REGEX);
     }

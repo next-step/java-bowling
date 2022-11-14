@@ -22,43 +22,43 @@ public class Scores {
         this.scores = scores;
     }
 
-    public boolean isStrike(){
+    public boolean isStrike() {
         return scores.get(0) == 10;
     }
 
-    public void next(){
+    public void next() {
         int maxNum = MAX_PIN_COUNT - getFirst();
         int newScore = strategy.calculate(maxNum);
         scores.add(newScore);
     }
 
-    public void next(int maxNum){
+    public void next(int maxNum) {
         scores.add(strategy.calculate(maxNum));
     }
 
-    public int getFirst(){
+    public int getFirst() {
         return scores.get(0);
     }
 
-    public int getSecond(){
+    public int getSecond() {
         return scores.get(1);
     }
 
-    public int getThird(){
+    public int getThird() {
         return scores.get(2);
     }
 
-    public int getLatest(){
+    public int getLatest() {
         return scores.get(scores.size() - 1);
     }
 
-    public int sum(){
+    public int sum() {
         return scores.stream()
                 .mapToInt(i -> i)
                 .sum();
     }
 
-    public int size(){
+    public int size() {
         return scores.size();
     }
 

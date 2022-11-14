@@ -21,7 +21,7 @@ public class BowlingApp {
         resultView.printDefaultPanels(playerName);
         NormalFrame normalFrame = new NormalFrame(new Scores(getPinCalculateStrategy()));
         Frames frames = new Frames(normalFrame);
-        while (frames.isProgress()) {
+        while (frames.isInProgress()) {
             resultView.printGameScores(playerName, frames);
             frames.next();
         }

@@ -42,10 +42,6 @@ public abstract class DefaultFrame implements Frame {
         return scores.getLatest();
     }
 
-    public boolean isStrike() {
-        return BowlingScore.STRIKE == BowlingScore.from(scores);
-    }
-
     public BowlingScore getBowlingScore() {
         return BowlingScore.from(scores);
     }

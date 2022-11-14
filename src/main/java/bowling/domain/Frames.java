@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.type.PlayStatus;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,7 +10,7 @@ public class Frames {
     public final static int LAST_FRAME_ORDER = 10;
 
     private final List<Frame> frames;
-    private boolean isProgress = true;
+    private PlayStatus playStatus = PlayStatus.IN_PROGRESS;
 
     public Frames(Frame... frames) {
         this.frames = new ArrayList<>(Arrays.asList(frames));
@@ -31,8 +33,11 @@ public class Frames {
     }
 
     public void next() {
-        isProgress = !isEnd();
-        if(!isProgress) return;
+        if (isEnd()) {
+            playStatus = PlayStatus.END;
+            return;
+        }
+
         if (getLastFrame().isProgress()) {
             nextTry();
             return;
@@ -53,8 +58,8 @@ public class Frames {
                 !getLastFrame().isProgress();
     }
 
-    public boolean isProgress() {
-        return isProgress;
+    public boolean isInProgress() {
+        return PlayStatus.IN_PROGRESS == playStatus;
     }
 
     public int size() {
