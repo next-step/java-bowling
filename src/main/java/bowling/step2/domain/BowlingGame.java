@@ -19,14 +19,14 @@ public class BowlingGame {
         String score = InputView.inputScore(frameNum);
         player.addScore(score);
 
-        Boolean isEndedOneFrame = player.isEndedOneFrame(frameNum);
+        Boolean IsEndOfOneFrame = player.IsEndOfOneFrame(frameNum);
         Boolean isFinalFrame = player.isFinalFrame(frameNum);
 
-        if (isEndedOneFrame) {
+        if (IsEndOfOneFrame) {
             ResultView.printGameScoreBoard(player);
         }
 
-        if (!(isEndedOneFrame && isFinalFrame)) {
+        if (!(IsEndOfOneFrame && isFinalFrame)) {
             playGame(player);
         }
     }

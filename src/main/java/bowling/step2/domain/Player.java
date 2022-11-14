@@ -49,9 +49,9 @@ public class Player {
         frame.add(score);
     }
 
-    public boolean isEndedOneFrame(int frameNum) {
+    public boolean IsEndOfOneFrame(int frameNum) {
         if (frameNum == this.currentFrameNum &&
-                this.frameMap.get(frameNum).isEndedOneFrame()) {
+                this.frameMap.get(frameNum).IsEndOfOneFrame()) {
             this.currentFrameNum++;
             return true;
         }

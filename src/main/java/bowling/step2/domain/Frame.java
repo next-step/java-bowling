@@ -12,7 +12,7 @@ public abstract class Frame {
 
     public abstract Boolean isFinalFrame();
 
-    public abstract Boolean isEndedOneFrame();
+    public abstract Boolean IsEndOfOneFrame();
 
     boolean hasBonusCondition() {
         return isContainingStrike() || isSpare();

@@ -13,7 +13,7 @@ class FrameTest {
         assertSoftly(softly -> {
             assertThat(frame.isContainingStrike()).isTrue();
             assertThat(frame.isSpare()).isFalse();
-            assertThat(frame.isEndedOneFrame()).isTrue();
+            assertThat(frame.IsEndOfOneFrame()).isTrue();
             assertThat(frame.isFinalFrame()).isFalse();
         });
     }
@@ -25,7 +25,7 @@ class FrameTest {
         assertSoftly(softly -> {
             assertThat(frame.isContainingStrike()).isFalse();
             assertThat(frame.isSpare()).isFalse();
-            assertThat(frame.isEndedOneFrame()).isFalse() ;
+            assertThat(frame.IsEndOfOneFrame()).isFalse() ;
             assertThat(frame.isFinalFrame()).isFalse();
         });
     }
@@ -38,7 +38,7 @@ class FrameTest {
             assertThat(frame.isContainingStrike()).isTrue();
             assertThat(frame.hasBonusCondition()).isTrue();
             assertThat(frame.isSpare()).isFalse();
-            assertThat(frame.isEndedOneFrame()).isFalse();
+            assertThat(frame.IsEndOfOneFrame()).isFalse();
             assertThat(frame.isFinalFrame()).isTrue();
         });
     }
@@ -53,7 +53,7 @@ class FrameTest {
             assertThat(frame1.isContainingStrike()).isTrue();
             assertThat(frame1.hasBonusCondition()).isTrue();
             assertThat(frame1.isSpare()).isTrue();
-            assertThat(frame1.isEndedOneFrame()).isTrue();
+            assertThat(frame1.IsEndOfOneFrame()).isTrue();
             assertThat(frame1.isFinalFrame()).isTrue();
         });
 
@@ -64,7 +64,7 @@ class FrameTest {
             assertThat(frame2.isContainingStrike()).isFalse();
             assertThat(frame2.hasBonusCondition()).isTrue();
             assertThat(frame2.isSpare()).isTrue();
-            assertThat(frame2.isEndedOneFrame()).isFalse();
+            assertThat(frame2.IsEndOfOneFrame()).isFalse();
             assertThat(frame2.isFinalFrame()).isTrue();
         });
     }
