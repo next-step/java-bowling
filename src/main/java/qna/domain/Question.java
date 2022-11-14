@@ -34,6 +34,12 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
+    public Question(String title, String contents, List<Answer> answers) {
+        this.title = title;
+        this.contents = contents;
+        this.answers = answers;
+    }
+
     public Question(long id, String title, String contents) {
         super(id);
         this.title = title;
@@ -97,6 +103,12 @@ public class Question extends AbstractEntity {
     public void validateQuestionAuthority(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
+    public void validateAnswerExists(User loginUser) throws CannotDeleteException {
+        for (Answer answer : answers) {
+            answer.validateAnswerExists(loginUser);
         }
     }
 }
