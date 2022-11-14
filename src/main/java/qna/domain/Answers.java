@@ -21,10 +21,10 @@ public class Answers {
     public Answers() {
     }
 
-    public List<DeleteHistory> deleteAll() {
-        return answers.stream()
+    public DeleteHistories deleteAll() {
+        return new DeleteHistories(answers.stream()
                 .map(Answer::delete)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     public void add(Answer answer) {

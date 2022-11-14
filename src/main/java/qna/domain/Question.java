@@ -4,7 +4,6 @@ import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 public class Question extends AbstractContentsDeletableEntity {
@@ -77,7 +76,7 @@ public class Question extends AbstractContentsDeletableEntity {
         return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
     }
 
-    public List<DeleteHistory> deleteAnswers() {
+    public DeleteHistories deleteAnswers() {
         return answers.deleteAll();
     }
 

@@ -3,8 +3,6 @@ package qna.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class QuestionTest {
@@ -60,11 +58,12 @@ public class QuestionTest {
         question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "contents1"));
         question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "contents2"));
 
-        List<DeleteHistory> histories = question.deleteAnswers();
+        DeleteHistories histories = question.deleteAnswers();
 
         assertThat(question).hasFieldOrPropertyWithValue("deleted", false);
-        assertThat(histories.size()).isEqualTo(2);
-        histories.forEach(history -> assertThat(history)
+        assertThat(histories.getDeleteHistories().size()).isEqualTo(2);
+        histories.getDeleteHistories()
+                .forEach(history -> assertThat(history)
                 .hasFieldOrPropertyWithValue("contentType", ContentType.ANSWER)
                 .hasFieldOrPropertyWithValue("deletedBy", UserTest.JAVAJIGI)
         );
