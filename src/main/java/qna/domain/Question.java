@@ -64,12 +64,16 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public List<DeleteHistory> deleteWithAnswer(User loginUser) throws CannotDeleteException {
+    public DeleteHistories deleteWithAnswer(User loginUser) throws CannotDeleteException {
         validateWriterSameAsUser(loginUser);
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
-        deleteHistories.addAll(new Answers(answers).delete(loginUser));
+        DeleteHistories deleteHistories = delete(loginUser);
         deleted = true;
+        return deleteHistories;
+    }
+
+    private DeleteHistories delete(User loginUser) throws CannotDeleteException {
+        DeleteHistories deleteHistories = DeleteHistories.of(DeleteHistory.ofQuestion(getId(), writer));
+        deleteHistories.join(new Answers(answers).delete(loginUser));
         return deleteHistories;
     }
 
