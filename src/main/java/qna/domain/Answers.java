@@ -23,7 +23,7 @@ public class Answers {
         this.answers.add(answer);
     }
 
-    public void addDeleteHistory(List<DeleteHistory> histories) {
+    protected void addDeleteHistories(List<DeleteHistory> histories) {
         this.answers.forEach(answer -> histories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now())));
     }
 

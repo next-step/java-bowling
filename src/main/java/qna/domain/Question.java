@@ -1,5 +1,8 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -84,6 +87,11 @@ public class Question extends AbstractEntity {
 
     public boolean allAnswerIsOwners(User loginUser) {
         return this.answers.isAllOwner(loginUser);
+    }
+
+    public void addDeleteHistories(List<DeleteHistory> histories) {
+        histories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
+        this.answers.addDeleteHistories(histories);
     }
 
     @Override
