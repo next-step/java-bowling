@@ -1,33 +1,24 @@
 package bowling.step2.domain;
 
-
-import bowling.step2.view.InputView;
-import bowling.step2.view.ResultView;
-
 public class BowlingGame {
     public static final int GAME_START_INDEX = 1;
     public static final int GAME_LAST_INDEX = 10;
 
-    public void startGame(String name) {
-        Player player = new Player(name, GAME_START_INDEX, GAME_LAST_INDEX);
-        ResultView.printInitScoreBoard(player);
-        playGame(player);
+    private final Player player;
+
+    public BowlingGame(String name) {
+        this.player = new Player(name, GAME_START_INDEX, GAME_LAST_INDEX);
     }
 
-    private void playGame(Player player) {
-        int frameNum = player.currentFrameNum();
-        String score = InputView.inputScore(frameNum);
+    public void recode(int score) {
         player.addScore(score);
+    }
 
-        Boolean IsEndOfOneFrame = player.IsEndOfOneFrame(frameNum);
-        Boolean isFinalFrame = player.isFinalFrame(frameNum);
+    public Player player() {
+        return player;
+    }
 
-        if (IsEndOfOneFrame) {
-            ResultView.printGameScoreBoard(player);
-        }
-
-        if (!(IsEndOfOneFrame && isFinalFrame)) {
-            playGame(player);
-        }
+    public Boolean IsEndOfOneFrame(int i) {
+        return player.IsEndOfOneFrame(i);
     }
 }

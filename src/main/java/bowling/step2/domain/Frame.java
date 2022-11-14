@@ -33,7 +33,7 @@ public abstract class Frame {
         return this.scores.stream().mapToInt(it -> it.score()).sum() == 10;
     }
 
-    public void add(String score) {
+    public void add(int score) {
         scores.add(new Score(score));
     }
 

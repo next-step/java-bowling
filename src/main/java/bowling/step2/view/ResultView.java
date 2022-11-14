@@ -19,14 +19,15 @@ public class ResultView {
     private static final String SPARE_TEXT = "/";
     private static final String STRIKE_TEXT = "X";
 
-    public static void printInitScoreBoard(Player player) {
+    public static void printInitScoreBoard(BowlingGame bowlingGame) {
         printIndex();
-        printName(player);
+        printName(bowlingGame.player());
         printInitBoard(BowlingGame.GAME_START_INDEX);
     }
 
-    public static void printGameScoreBoard(Player player) {
+    public static void printGameScoreBoard(BowlingGame bowlingGame) {
         printIndex();
+        Player player = bowlingGame.player();
         printName(player);
         Map<Integer, Frame> scoresMap = player.scoreMap();
         printGameResult(scoresMap);

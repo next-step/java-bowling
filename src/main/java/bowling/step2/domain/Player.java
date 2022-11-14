@@ -44,7 +44,7 @@ public class Player {
         }
     }
 
-    public void addScore(String score) {
+    public void addScore(int score) {
         Frame frame = this.frameMap.get(this.currentFrameNum);
         frame.add(score);
     }
@@ -56,10 +56,6 @@ public class Player {
             return true;
         }
         return false;
-    }
-
-    public boolean isFinalFrame(int frameNum) {
-        return this.frameMap.get(frameNum).isFinalFrame();
     }
 
     public Map<Integer, Frame> scoreMap() {

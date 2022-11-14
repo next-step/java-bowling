@@ -13,8 +13,8 @@ public class InputView {
         return sc.next();
     }
 
-    public static String inputScore(int index) {
+    public static int inputScore(int index) {
         System.out.print(System.lineSeparator()+ index + FRAME_SCORE_INPUT_TEXT);
-        return sc.next();
+        return sc.nextInt();
     }
 }
