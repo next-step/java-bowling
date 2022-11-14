@@ -4,13 +4,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Bowlings {
+public class BowlingGame {
 
     private final Players players;
 
     private Position position;
 
-    public Bowlings(List<Username> usernames) {
+    public BowlingGame(List<Username> usernames) {
         if (isDuplicateUsernames(usernames)) {
             throw new IllegalArgumentException("사용자 이름은 중복이 존재해서는 안됩니다.");
         }

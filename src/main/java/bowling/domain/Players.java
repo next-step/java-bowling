@@ -27,12 +27,6 @@ public class Players {
         return players.get(position);
     }
 
-    public List<Username> getUsernames() {
-        return players.values()
-                .stream()
-                .map(Player::getUsername)
-                .collect(Collectors.toList());
-    }
 
     public Bowling findBowlingByUsername(Username username) {
         return players.values()
@@ -45,5 +39,12 @@ public class Players {
 
     public int size() {
         return players.size();
+    }
+
+    public List<Username> getUsernames() {
+        return players.values()
+                .stream()
+                .map(Player::getUsername)
+                .collect(Collectors.toList());
     }
 }

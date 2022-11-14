@@ -1,6 +1,6 @@
 package bowling;
 
-import bowling.domain.Bowlings;
+import bowling.domain.BowlingGame;
 import bowling.domain.ScoreResult;
 import bowling.domain.Username;
 import bowling.view.InputView;
@@ -26,14 +26,14 @@ public class BowlingApp {
                         return new Username(inputView.getUsername());
                     }).collect(Collectors.toList());
 
-            Bowlings bowlings = new Bowlings(usernames);
+            BowlingGame bowlingGame = new BowlingGame(usernames);
             List<ScoreResult> results = new ArrayList<>();
-            while (!bowlings.isFinish()) {
-                Username username = bowlings.currentPlayerName();
+            while (!bowlingGame.isFinish()) {
+                Username username = bowlingGame.currentPlayerName();
                 OutputView.printPinAskQst(username);
-                ScoreResult scoreResult = getKnockedDownPins(inputView, bowlings);
+                ScoreResult scoreResult = getKnockedDownPins(inputView, bowlingGame);
                 results.add(scoreResult);
-                OutputView.printScore(bowlings, results);
+                OutputView.printScore(bowlingGame, results);
             }
         } catch (IllegalArgumentException e) {
             OutputView.printConsole(e.getMessage());
@@ -42,10 +42,10 @@ public class BowlingApp {
         }
     }
 
-    private static ScoreResult getKnockedDownPins(InputView inputView, Bowlings bowlings) {
+    private static ScoreResult getKnockedDownPins(InputView inputView, BowlingGame bowlingGame) {
         try {
             Integer knockDownPinNumber = inputView.getNumber();
-            return bowlings.play(knockDownPinNumber);
+            return bowlingGame.play(knockDownPinNumber);
         } catch (IllegalArgumentException e) {
             OutputView.printConsole(e.getMessage());
         } catch (Exception e) {

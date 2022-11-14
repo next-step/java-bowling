@@ -39,20 +39,20 @@ public class OutputView {
     }
 
 
-    public static void printScore(Bowlings bowlings, List<ScoreResult> scoreResults) {
+    public static void printScore(BowlingGame bowlingGame, List<ScoreResult> scoreResults) {
         System.out.println(roundTemplate);
-        getUsernames(bowlings)
+        getUsernames(bowlingGame)
                 .stream()
-                .forEach((username) -> printScoreOfUser(bowlings, username, scoreResults));
+                .forEach((username) -> printScoreOfUser(bowlingGame, username, scoreResults));
     }
 
-    private static List<Username> getUsernames(Bowlings bowlings) {
-        return bowlings.getPlayers().getUsernames();
+    private static List<Username> getUsernames(BowlingGame bowlingGame) {
+        return bowlingGame.getPlayers().getUsernames();
     }
 
-    private static void printScoreOfUser(Bowlings bowlings, Username username, List<ScoreResult> scoreResults) {
+    private static void printScoreOfUser(BowlingGame bowlingGame, Username username, List<ScoreResult> scoreResults) {
         System.out.print(TEMPLATE_SEPARATOR + createTemplateUnit(username.getName()));
-        printPin(bowlings.findBowlingByUsername(username));
+        printPin(bowlingGame.findBowlingByUsername(username));
         System.out.print("\n" + TEMPLATE_SEPARATOR + createTemplateUnit(""));
         printScore(scoreResults, username);
         System.out.println();
