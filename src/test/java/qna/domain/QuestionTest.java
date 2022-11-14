@@ -14,7 +14,7 @@ public class QuestionTest {
     @DisplayName("다른 사람이 쓴 글의 경우 CannotDeleteException을 throw한다.")
     public void validate_다른_사람이_쓴_글() {
         assertThatThrownBy(() -> {
-            Q1.validateAnswerAuthority(UserTest.SANJIGI);
+            Q1.validateQuestionAuthority(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
 }
