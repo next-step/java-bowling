@@ -23,7 +23,7 @@ public class DeleteHistoryTest {
 	@Test
 	@DisplayName("question 와 포함된 answer 를 delete history 로 변환한다.")
 	public void Given_Question_Then_ReturnDeleteHistory() {
-		List<DeleteHistory> deleteHistories = DeleteHistory.addAllByQuestion(question, UserTest.JAVAJIGI);
+		List<DeleteHistory> deleteHistories = DeleteHistory.addAllByQuestion(question, question.getAnswers(), UserTest.JAVAJIGI);
 		assertThat(deleteHistories).hasSize(2);
 	}
 }

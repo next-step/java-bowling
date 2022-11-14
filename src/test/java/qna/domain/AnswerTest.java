@@ -14,7 +14,7 @@ public class AnswerTest {
     @Test
     @DisplayName("작성자와 로그인한 사용자가 다를 경우 예외를 던진다.")
     public void Given_CheckOwner_Then_Throw() {
-        assertThatThrownBy(() -> A1.softDelete(UserTest.SANJIGI))
+        assertThatThrownBy(() -> A1.delete(UserTest.SANJIGI))
             .isInstanceOf(CannotDeleteException.class);
     }
 
@@ -22,14 +22,14 @@ public class AnswerTest {
     @DisplayName("작성자와 로그인한 사용자가 같을 경우 예외를 던지지 않는다.")
     public void Given_CheckOwner_Then_NotThrow() {
 
-        assertThatNoException().isThrownBy(() -> A1.softDelete(UserTest.JAVAJIGI));
+        assertThatNoException().isThrownBy(() -> A1.delete(UserTest.JAVAJIGI));
     }
 
     @Test
     @DisplayName("isDeleted 필드가 true 로 업데이트된다.")
     public void Given_SoftDelete_Then_Deleted() {
         assertThat(A1.isDeleted()).isFalse();
-        A1.softDelete(UserTest.JAVAJIGI);
+        A1.delete(UserTest.JAVAJIGI);
 
         assertThat(A1.isDeleted()).isTrue();
     }

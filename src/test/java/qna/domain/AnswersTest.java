@@ -17,7 +17,7 @@ public class AnswersTest {
 		answers.add(AnswerTest.A1);
 		answers.add(AnswerTest.A2);
 
-		assertThatThrownBy(() -> answers.softDelete(UserTest.JAVAJIGI))
+		assertThatThrownBy(() -> answers.delete(UserTest.JAVAJIGI))
 			.isInstanceOf(CannotDeleteException.class);
 	}
 
@@ -27,9 +27,9 @@ public class AnswersTest {
 		Answers answers = new Answers();
 		answers.add(AnswerTest.A1);
 
-		answers.softDelete(UserTest.JAVAJIGI);
+		answers.delete(UserTest.JAVAJIGI);
 
-		assertDoesNotThrow(() -> answers.softDelete(UserTest.JAVAJIGI));
+		assertDoesNotThrow(() -> answers.delete(UserTest.JAVAJIGI));
 	}
 
 	@Test
@@ -38,7 +38,7 @@ public class AnswersTest {
 		Answers answers = new Answers();
 		answers.add(AnswerTest.A1);
 
-		answers.softDelete(UserTest.JAVAJIGI);
+		answers.delete(UserTest.JAVAJIGI);
 
 		assertThat(AnswerTest.A1.isDeleted()).isTrue();
 	}
