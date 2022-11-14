@@ -55,15 +55,16 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public boolean isDeleted() throws CannotDeleteException {
+    public boolean isDeleted(){
         return this.deleted;
     }
 
 
-    public void isOnwer(User loginUser) throws CannotDeleteException {
+    public void isOwner(User loginUser) throws CannotDeleteException {
         if (!this.writer.equals(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
+        questionDelete();
     }
 
     public void isAnswer(User loginUser) throws CannotDeleteException {
@@ -72,21 +73,21 @@ public class Question extends AbstractEntity {
         }
     }
 
-    public boolean questionDeleteTure(){
-        return this.deleted = true;
+    private void questionDelete(){
+        this.deleted = true;
     }
 
-    public List<DeleteHistory> questionDeleteHistories(long questionId){
-        questionDeleteTure();
+    public List<DeleteHistory> addQuestionDeleteHistory(User loginUser, long questionId) throws CannotDeleteException {
+        isOwner(loginUser);
+        isAnswer(loginUser);
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, this.writer, LocalDateTime.now()));
-        answerDeleteHistories(deleteHistories);
-        return deleteHistories;
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, loginUser , LocalDateTime.now()));
+        return addAnswersDeleteHistory(deleteHistories);
     }
 
-    public List<DeleteHistory> answerDeleteHistories(List<DeleteHistory> deleteHistories){
+    private List<DeleteHistory> addAnswersDeleteHistory(List<DeleteHistory> deleteHistories){
         for (Answer answer : answers) {
-            answer.answerDeleteTure();
+            answer.answerDelete();
             deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         }
         return deleteHistories;
