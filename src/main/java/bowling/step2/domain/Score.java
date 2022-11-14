@@ -7,12 +7,12 @@ public class Score {
     static final String SCORE_FORMAT_EXCEPTION = "볼링점수가 숫자가 입력되어야 합니다.";
 
 
-    private final String score;
+    private final Integer score;
 
 
     public Score(String score) {
         validate(score);
-        this.score = score;
+        this.score = Integer.parseInt(score);
     }
 
     private void validate(String score) {
@@ -35,7 +35,7 @@ public class Score {
         return this.score.equals(ZERO);
     }
 
-    public String score() {
+    public int score() {
         return score;
     }
 }

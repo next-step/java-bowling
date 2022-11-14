@@ -24,13 +24,13 @@ public abstract class Frame {
 
     public boolean isSpare() {
         if (this.scores.size() > 2) {
-            int lastScoreIndex = this.scores.size() -1;
-            return (Integer.parseInt(this.scores.get(lastScoreIndex-1).score()) + Integer.parseInt(this.scores.get(lastScoreIndex).score())) == 10;
+            int scoreCountInFrame = this.scores.size() -1;
+            return (this.scores.get(scoreCountInFrame-1).score() + this.scores.get(scoreCountInFrame).score()) == 10;
         }
         if(isContainingStrike()){
             return false;
         }
-        return this.scores.stream().mapToInt(it -> Integer.parseInt(it.score())).sum() == 10;
+        return this.scores.stream().mapToInt(it -> it.score()).sum() == 10;
     }
 
     public void add(String score) {
