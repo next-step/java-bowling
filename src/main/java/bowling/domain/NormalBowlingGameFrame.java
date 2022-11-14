@@ -15,13 +15,12 @@ public class NormalBowlingGameFrame extends AbstractBowlingGameFrame {
 
     @Override
     public boolean hasScore() {
-        BowlingGameHitState state = states.get(states.size() - 1);
-        return state.hasScore(this);
+        return getLastState().hasScore(this);
     }
 
     @Override
     public int getScore() {
-        return 0;
+        return getLastState().calculateScore(this);
     }
 
 }

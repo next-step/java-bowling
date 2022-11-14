@@ -50,4 +50,24 @@ class FinalBowlingGameFrameTest {
                 .withMessage("프레임이 종료되어 더 이상 투구 할 수 없습니다.");
     }
 
+    @DisplayName("프레임이 종료될 때, 점수를 가지고 있어야 한다.")
+    @Test
+    void hasScore() {
+        BowlingGameFrame frame = new FinalBowlingGameFrame();
+        frame.add(10);
+        frame.add(1);
+        frame.add(2);
+        assertThat(frame.hasScore()).isTrue();
+    }
+
+    @DisplayName("투구의 합을 점수로 가지고 있어야 한다.")
+    @Test
+    void getScore() {
+        BowlingGameFrame frame = new FinalBowlingGameFrame();
+        frame.add(10);
+        frame.add(1);
+        frame.add(2);
+        assertThat(frame.getScore()).isEqualTo(13);
+    }
+
 }

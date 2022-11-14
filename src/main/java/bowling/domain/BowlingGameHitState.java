@@ -27,17 +27,39 @@ public interface BowlingGameHitState {
 
         int count = 0;
         BowlingGameFrame frame = currentFrame.getNextFrame();
-        while (frame != null
-                && frame.countHits() > 0
-                && count < getNumberOfBonus()) {
+        while (hasMoreHits(count, frame)) {
             count += frame.countHits();
             frame = frame.getNextFrame();
         }
         return count >= getNumberOfBonus();
     }
 
+    private boolean hasMoreHits(int count, BowlingGameFrame frame) {
+        return frame != null && frame.countHits() > 0 && count < getNumberOfBonus();
+    }
+
     default int calculateScore(BowlingGameFrame currentFrame) {
-        return 0;
+        if (!hasScore(currentFrame)) {
+            throw new IllegalStateException("점수를 계산할 수 없는 상태입니다.");
+        }
+
+        return sumHits(currentFrame);
+    }
+
+    private int sumHits(BowlingGameFrame currentFrame) {
+        int count = 0;
+        int index = 0;
+        int sum = 0;
+        BowlingGameFrame frame = currentFrame;
+        while (count < currentFrame.countHits() + getNumberOfBonus()) {
+            sum += frame.getHit(index++);
+            if (index >= frame.countHits()) {
+                frame = frame.getNextFrame();
+                index = 0;
+            }
+            count++;
+        }
+        return sum;
     }
 
     default int getNumberOfBonus() {

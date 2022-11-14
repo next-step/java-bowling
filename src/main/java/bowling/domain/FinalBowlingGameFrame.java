@@ -15,12 +15,15 @@ public class FinalBowlingGameFrame extends AbstractBowlingGameFrame {
 
     @Override
     public boolean hasScore() {
-        return false;
+        return isEnded();
     }
 
     @Override
     public int getScore() {
-        return 0;
+        if (!hasScore()) {
+            throw new IllegalStateException("점수를 가질 수 없는 상태입니다.");
+        }
+        return sumOfHits();
     }
 
 }

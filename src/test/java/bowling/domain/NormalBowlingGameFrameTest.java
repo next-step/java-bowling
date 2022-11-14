@@ -95,4 +95,39 @@ class NormalBowlingGameFrameTest {
         assertThat(frame.hasScore()).isTrue();
     }
 
+    @DisplayName("스트라이크라면, 2번의 투구를 더한 점수를 가져야 한다.")
+    @Test
+    void getScore_givenStrike() {
+        BowlingGameFrame frame3 = new NormalBowlingGameFrame(null);
+        BowlingGameFrame frame2 = new NormalBowlingGameFrame(frame3);
+        BowlingGameFrame frame1 = new NormalBowlingGameFrame(frame2);
+        frame1.add(10);
+        frame2.add(10);
+        frame3.add(9);
+
+        assertThat(frame1.getScore()).isEqualTo(29);
+    }
+
+    @DisplayName("스페어라면, 1번의 투구를 더한 점수를 가져야 한다.")
+    @Test
+    void getScore_givenSpare() {
+        BowlingGameFrame frame2 = new NormalBowlingGameFrame(null);
+        BowlingGameFrame frame1 = new NormalBowlingGameFrame(frame2);
+        frame1.add(9);
+        frame1.add(1);
+        frame2.add(10);
+
+        assertThat(frame1.getScore()).isEqualTo(20);
+    }
+
+    @DisplayName("미스라면, 추가적인 투구 없이 점수를 가져야 한다.")
+    @Test
+    void getScore_givenMiss() {
+        BowlingGameFrame frame = new NormalBowlingGameFrame(null);
+        frame.add(8);
+        frame.add(1);
+
+        assertThat(frame.getScore()).isEqualTo(9);
+    }
+
 }

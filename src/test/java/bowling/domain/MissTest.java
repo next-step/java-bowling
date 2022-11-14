@@ -19,4 +19,13 @@ class MissTest {
         assertThat(BowlingGameHitState.MISS.hasScore(frame)).isTrue();
     }
 
+    @DisplayName("보너스 점수 없이 점수를 가지고 있어야 한다.")
+    @Test
+    void calculateScore() {
+        BowlingGameFrame frame1 = new NormalBowlingGameFrame(null);
+        frame1.add(1);
+        frame1.add(8);
+        assertThat(BowlingGameHitState.MISS.calculateScore(frame1)).isEqualTo(9);
+    }
+
 }

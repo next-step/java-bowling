@@ -64,7 +64,7 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
         return BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS - sumOfHits() % BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS;
     }
 
-    private int sumOfHits() {
+    protected int sumOfHits() {
         return hits.stream()
                 .reduce(0, Integer::sum);
     }
@@ -79,6 +79,10 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
 
     @Override
     abstract public int getScore();
+
+    protected BowlingGameHitState getLastState() {
+        return states.get(states.size() - 1);
+    }
 
     @Override
     public boolean equals(Object o) {
