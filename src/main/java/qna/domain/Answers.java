@@ -32,11 +32,7 @@ public class Answers {
     }
 
     public boolean isOwnerOfAll(User user) {
-        for (Answer answer : answers) {
-            if (!answer.isOwner(user)) {
-                return false;
-            }
-        }
-        return true;
+        return answers.stream()
+                .allMatch(answer -> answer.isOwner(user));
     }
 }
