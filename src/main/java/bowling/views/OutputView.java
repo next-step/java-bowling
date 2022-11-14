@@ -1,6 +1,6 @@
 package bowling.views;
 
-import bowling.domain.BowlingGameHitState;
+import bowling.domain.state.BowlingGameHitState;
 import bowling.dto.BowlingGameDto;
 import bowling.dto.BowlingGameFrameDto;
 import bowling.dto.BowlingGameHitDto;

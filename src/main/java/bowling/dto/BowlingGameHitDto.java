@@ -1,6 +1,6 @@
 package bowling.dto;
 
-import bowling.domain.BowlingGameHitState;
+import bowling.domain.state.BowlingGameHitState;
 
 public class BowlingGameHitDto {
 

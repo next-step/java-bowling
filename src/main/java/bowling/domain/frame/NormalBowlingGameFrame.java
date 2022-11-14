@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.state.BowlingGameHitState;
 
 public class NormalBowlingGameFrame extends AbstractBowlingGameFrame {
 
