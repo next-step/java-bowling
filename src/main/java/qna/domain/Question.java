@@ -1,6 +1,7 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -33,28 +34,16 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
+    public Question(String title, String contents, List<Answer> answers) {
+        this.title = title;
+        this.contents = contents;
+        this.answers = answers;
+    }
+
     public Question(long id, String title, String contents) {
         super(id);
         this.title = title;
         this.contents = contents;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
     }
 
     public User getWriter() {
@@ -71,7 +60,7 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public boolean isOwner(User loginUser) {
+    private boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
 
@@ -91,5 +80,22 @@ public class Question extends AbstractEntity {
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    public void validate(User loginUser) throws CannotDeleteException {
+        validateQuestionAuthority(loginUser);
+        validateAnswerExists(loginUser);
+    }
+
+    private void validateQuestionAuthority(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
+    private void validateAnswerExists(User loginUser) throws CannotDeleteException {
+        for (Answer answer : answers) {
+            answer.validateAnswerExists(loginUser);
+        }
     }
 }
