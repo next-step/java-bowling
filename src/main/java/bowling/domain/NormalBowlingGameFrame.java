@@ -15,11 +15,14 @@ public class NormalBowlingGameFrame extends AbstractBowlingGameFrame {
 
     @Override
     public boolean hasScore() {
-        return getLastState().hasScore(this);
+        return isEnded() && getLastState().hasScore(this);
     }
 
     @Override
     public int getScore() {
+        if (!hasScore()) {
+            throw new IllegalStateException("점수를 가질 수 없는 상태입니다.");
+        }
         return getLastState().calculateScore(this);
     }
 

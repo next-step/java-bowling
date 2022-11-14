@@ -30,6 +30,9 @@ public class OutputView {
         System.out.printf("|  %s |", player.getName());
         game.getFrames()
                 .forEach(OutputView::printBowlingGameFrame);
+        System.out.print("\n");
+
+        printBowlingGameScore(game);
         System.out.print("\n\n");
     }
 
@@ -75,6 +78,32 @@ public class OutputView {
         }
 
         return STRIKE;
+    }
+
+
+    private static void printBowlingGameScore(BowlingGameDto game) {
+        System.out.print("|" + EMPTY_FORMAT);
+        int accumulation = 0;
+        for (BowlingGameFrameDto frame : game.getFrames()) {
+            accumulation = frame.isHasScore() ? accumulation + frame.getScore() : accumulation;
+            printBowlingGameScore(frame.isHasScore(), accumulation);
+        }
+    }
+
+    private static void printBowlingGameScore(boolean hasScore, int score) {
+        System.out.print(getFormatOfScores(hasScore, score));
+    }
+
+    private static String getFormatOfScores(boolean hasScore, int score) {
+        if (!hasScore) {
+            return EMPTY_FORMAT;
+        }
+        int leftEmptyCount = 2;
+        StringBuilder stringBuilder = new StringBuilder(EMPTY.repeat(leftEmptyCount) + score);
+        int rightEmptyCount = getRightEmptyCount(stringBuilder);
+        return stringBuilder.append(EMPTY.repeat(rightEmptyCount))
+                .append(SPLITTER)
+                .toString();
     }
 
     public static void printError(Exception e) {
