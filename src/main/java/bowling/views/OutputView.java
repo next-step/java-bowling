@@ -1,9 +1,9 @@
 package bowling.views;
 
-import bowling.domain.state.BowlingGameHitState;
+import bowling.domain.state.FrameState;
 import bowling.dto.BowlingGameDto;
-import bowling.dto.BowlingGameFrameDto;
-import bowling.dto.BowlingGameHitDto;
+import bowling.dto.FrameDto;
+import bowling.dto.HitDto;
 import bowling.dto.PlayerDto;
 
 import java.util.List;
@@ -36,11 +36,11 @@ public class OutputView {
         System.out.print("\n\n");
     }
 
-    private static void printBowlingGameFrame(BowlingGameFrameDto frame) {
+    private static void printBowlingGameFrame(FrameDto frame) {
         System.out.print(getFormatOfHits(frame.getHits()));
     }
 
-    private static String getFormatOfHits(List<BowlingGameHitDto> hits) {
+    private static String getFormatOfHits(List<HitDto> hits) {
         if (hits.isEmpty()) {
             return EMPTY_FORMAT;
         }
@@ -55,7 +55,7 @@ public class OutputView {
                 .toString();
     }
 
-    private static int getLeftEmptyCount(List<BowlingGameHitDto> hits) {
+    private static int getLeftEmptyCount(List<HitDto> hits) {
         return hits.size() < OFFSET_REFERENCE ? OFFSET_OF_SHORT_FORMAT : OFFSET_OF_LONG_FORMAT;
     }
 
@@ -63,17 +63,17 @@ public class OutputView {
         return TOTAL_LENGTH - stringBuilder.length() - 1;
     }
 
-    private static String formatHit(BowlingGameHitDto hit) {
-        BowlingGameHitState state = hit.getState();
-        if (state == null || state.equals(BowlingGameHitState.MISS)) {
+    private static String formatHit(HitDto hit) {
+        FrameState state = hit.getState();
+        if (state == null || state.equals(FrameState.MISS)) {
             return String.valueOf(hit.getValue());
         }
 
-        if (state.equals(BowlingGameHitState.GUTTER)) {
+        if (state.equals(FrameState.GUTTER)) {
             return GUTTER;
         }
 
-        if (state.equals(BowlingGameHitState.SPARE)) {
+        if (state.equals(FrameState.SPARE)) {
             return SPARE;
         }
 
@@ -84,7 +84,7 @@ public class OutputView {
     private static void printBowlingGameScore(BowlingGameDto game) {
         System.out.print("|" + EMPTY_FORMAT);
         int accumulation = 0;
-        for (BowlingGameFrameDto frame : game.getFrames()) {
+        for (FrameDto frame : game.getFrames()) {
             accumulation = frame.isHasScore() ? accumulation + frame.getScore() : accumulation;
             printBowlingGameScore(frame.isHasScore(), accumulation);
         }

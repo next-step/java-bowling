@@ -3,9 +3,9 @@ package bowling.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static bowling.domain.BowlingGameFrameTestFixture.createNormalBowlingGameFrame;
 import static bowling.domain.BowlingGameTestFixture.createBowlingGame;
 import static bowling.domain.BowlingGameTestFixture.createEndedBowlingGame;
+import static bowling.domain.FrameTestFixture.createNormalBowlingGameFrame;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 

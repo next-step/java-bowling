@@ -1,18 +1,18 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.BowlingGameHitState;
+import bowling.domain.state.FrameState;
 
-public class FinalBowlingGameFrame extends AbstractBowlingGameFrame {
+public class FinalFrame extends AbstractFrame {
 
     private static final int MAX_SIZE_OF_HITS = 3;
 
-    public FinalBowlingGameFrame() {
+    public FinalFrame() {
         super(null);
     }
 
     @Override
     public boolean isEnded() {
-        return states.contains(BowlingGameHitState.MISS) || hits.size() == MAX_SIZE_OF_HITS;
+        return states.contains(FrameState.MISS) || hits.size() == MAX_SIZE_OF_HITS;
     }
 
     @Override

@@ -1,33 +1,33 @@
 package bowling.dto;
 
-import bowling.domain.frame.BowlingGameFrame;
+import bowling.domain.frame.Frame;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class BowlingGameFrameDto {
+public class FrameDto {
 
-    private final List<BowlingGameHitDto> hits;
+    private final List<HitDto> hits;
     private final boolean hasScore;
     private final int score;
 
-    public BowlingGameFrameDto(List<BowlingGameHitDto> hits, boolean hasScore, int score) {
+    public FrameDto(List<HitDto> hits, boolean hasScore, int score) {
         this.hits = hits;
         this.hasScore = hasScore;
         this.score = score;
     }
 
-    public static BowlingGameFrameDto from(BowlingGameFrame frame) {
-        List<BowlingGameHitDto> hits = new ArrayList<>();
+    public static FrameDto from(Frame frame) {
+        List<HitDto> hits = new ArrayList<>();
         IntStream.range(0, frame.countHits())
-                .forEach(i -> hits.add(new BowlingGameHitDto(frame.getHit(i), frame.getState(i))));
+                .forEach(i -> hits.add(new HitDto(frame.getHit(i), frame.getState(i))));
         boolean hasScore = frame.hasScore();
         int score = frame.hasScore() ? frame.getScore() : 0;
-        return new BowlingGameFrameDto(hits, hasScore, score);
+        return new FrameDto(hits, hasScore, score);
     }
 
-    public List<BowlingGameHitDto> getHits() {
+    public List<HitDto> getHits() {
         return hits;
     }
 

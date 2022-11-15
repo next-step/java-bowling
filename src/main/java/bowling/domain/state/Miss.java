@@ -1,10 +1,10 @@
 package bowling.domain.state;
 
-import bowling.domain.frame.BowlingGameFrame;
+import bowling.domain.frame.Frame;
 
 import java.util.List;
 
-public class Miss implements BowlingGameHitState {
+public class Miss implements FrameState {
 
     protected Miss() {
     }
@@ -16,7 +16,7 @@ public class Miss implements BowlingGameHitState {
         }
 
         int indexOfHit = hits.size() - 1;
-        return hits.get(indexOfHit - 1) + hits.get(indexOfHit) < BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS;
+        return hits.get(indexOfHit - 1) + hits.get(indexOfHit) < Frame.MAX_NUMBER_OF_BOWLING_PINS;
     }
 
 }

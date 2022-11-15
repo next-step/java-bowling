@@ -1,8 +1,8 @@
 package bowling.domain;
 
-import bowling.domain.frame.BowlingGameFrame;
-import bowling.domain.frame.FinalBowlingGameFrame;
-import bowling.domain.frame.NormalBowlingGameFrame;
+import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
 
 import java.util.Objects;
 
@@ -10,7 +10,7 @@ public class BowlingGame {
 
     public static final int SIZE_OF_FRAMES = 10;
 
-    private final BowlingGameFrame frame;
+    private final Frame frame;
     private int indexOfCurrentFrame;
 
     public BowlingGame() {
@@ -18,16 +18,16 @@ public class BowlingGame {
         this.indexOfCurrentFrame = 0;
     }
 
-    private BowlingGameFrame createFrame() {
-        BowlingGameFrame frame = new FinalBowlingGameFrame();
+    private Frame createFrame() {
+        Frame frame = new FinalFrame();
         for (int i = 0; i < SIZE_OF_FRAMES - 1; i++) {
-            frame = new NormalBowlingGameFrame(frame);
+            frame = new NormalFrame(frame);
         }
         return frame;
     }
 
-    public BowlingGameFrame get(int index) {
-        BowlingGameFrame frame = this.frame;
+    public Frame get(int index) {
+        Frame frame = this.frame;
         for (int i = 0; i < index; i++) {
             frame = frame.getNextFrame();
         }
@@ -35,7 +35,7 @@ public class BowlingGame {
     }
 
     public void hit(int pins) {
-        BowlingGameFrame currentFrame = getCurrentFrame();
+        Frame currentFrame = getCurrentFrame();
         currentFrame.add(pins);
         if (currentFrame.isEnded()) {
             indexOfCurrentFrame++;
@@ -47,7 +47,7 @@ public class BowlingGame {
         return indexOfCurrentFrame + 1;
     }
 
-    public BowlingGameFrame getCurrentFrame() {
+    public Frame getCurrentFrame() {
         validateState();
         return get(indexOfCurrentFrame);
     }

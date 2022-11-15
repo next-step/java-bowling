@@ -1,10 +1,10 @@
 package bowling.domain.state;
 
-import bowling.domain.frame.BowlingGameFrame;
+import bowling.domain.frame.Frame;
 
 import java.util.List;
 
-public class Spare implements BowlingGameHitState {
+public class Spare implements FrameState {
 
     private static final int NUMBER_OF_BONUS = 1;
 
@@ -18,9 +18,9 @@ public class Spare implements BowlingGameHitState {
         }
 
         int indexOfHit = hits.size() - 1;
-        int remainedPins = BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS - sum(hits) % BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS;
-        return hits.get(indexOfHit - 1) + hits.get(indexOfHit) == BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS
-                && remainedPins == BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS;
+        int remainedPins = Frame.MAX_NUMBER_OF_BOWLING_PINS - sum(hits) % Frame.MAX_NUMBER_OF_BOWLING_PINS;
+        return hits.get(indexOfHit - 1) + hits.get(indexOfHit) == Frame.MAX_NUMBER_OF_BOWLING_PINS
+                && remainedPins == Frame.MAX_NUMBER_OF_BOWLING_PINS;
     }
 
     private int sum(List<Integer> hits) {

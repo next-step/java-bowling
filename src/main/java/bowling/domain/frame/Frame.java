@@ -1,8 +1,8 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.BowlingGameHitState;
+import bowling.domain.state.FrameState;
 
-public interface BowlingGameFrame {
+public interface Frame {
 
     int MIN_NUMBER_OF_BOWLING_PINS = 0;
     int MAX_NUMBER_OF_BOWLING_PINS = 10;
@@ -13,7 +13,7 @@ public interface BowlingGameFrame {
 
     int getHit(int index);
 
-    BowlingGameHitState getState(int index);
+    FrameState getState(int index);
 
     default boolean isOnGoing() {
         return !isEnded();
@@ -23,7 +23,7 @@ public interface BowlingGameFrame {
 
     int getRemainedPins();
 
-    BowlingGameFrame getNextFrame();
+    Frame getNextFrame();
 
     boolean hasScore();
 

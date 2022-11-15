@@ -1,19 +1,19 @@
 package bowling.domain.state;
 
-import bowling.domain.frame.BowlingGameFrame;
+import bowling.domain.frame.Frame;
 
 import java.util.List;
 
-public interface BowlingGameHitState {
+public interface FrameState {
 
-    BowlingGameHitState GUTTER = new Gutter();
-    BowlingGameHitState MISS = new Miss();
-    BowlingGameHitState SPARE = new Spare();
-    BowlingGameHitState STRIKE = new Strike();
+    FrameState GUTTER = new Gutter();
+    FrameState MISS = new Miss();
+    FrameState SPARE = new Spare();
+    FrameState STRIKE = new Strike();
 
-    List<BowlingGameHitState> ALL_STATES = List.of(GUTTER, MISS, SPARE, STRIKE);
+    List<FrameState> ALL_STATES = List.of(GUTTER, MISS, SPARE, STRIKE);
 
-    static BowlingGameHitState from(List<Integer> hits) {
+    static FrameState from(List<Integer> hits) {
         return ALL_STATES.stream()
                 .filter(state -> state.identify(hits))
                 .findFirst()
@@ -22,13 +22,13 @@ public interface BowlingGameHitState {
 
     boolean identify(List<Integer> hits);
 
-    default boolean hasScore(BowlingGameFrame currentFrame) {
+    default boolean hasScore(Frame currentFrame) {
         if (currentFrame.isOnGoing()) {
             return false;
         }
 
         int count = 0;
-        BowlingGameFrame frame = currentFrame.getNextFrame();
+        Frame frame = currentFrame.getNextFrame();
         while (hasMoreHits(count, frame)) {
             count += frame.countHits();
             frame = frame.getNextFrame();
@@ -36,11 +36,11 @@ public interface BowlingGameHitState {
         return count >= getNumberOfBonus();
     }
 
-    private boolean hasMoreHits(int count, BowlingGameFrame frame) {
+    private boolean hasMoreHits(int count, Frame frame) {
         return frame != null && frame.countHits() > 0 && count < getNumberOfBonus();
     }
 
-    default int calculateScore(BowlingGameFrame currentFrame) {
+    default int calculateScore(Frame currentFrame) {
         if (!hasScore(currentFrame)) {
             throw new IllegalStateException("점수를 계산할 수 없는 상태입니다.");
         }
@@ -48,11 +48,11 @@ public interface BowlingGameHitState {
         return sumHits(currentFrame);
     }
 
-    private int sumHits(BowlingGameFrame currentFrame) {
+    private int sumHits(Frame currentFrame) {
         int count = 0;
         int index = 0;
         int sum = 0;
-        BowlingGameFrame frame = currentFrame;
+        Frame frame = currentFrame;
         while (count < currentFrame.countHits() + getNumberOfBonus()) {
             sum += frame.getHit(index++);
             if (index >= frame.countHits()) {

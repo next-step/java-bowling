@@ -8,20 +8,20 @@ import java.util.stream.IntStream;
 
 public class BowlingGameDto {
 
-    private final List<BowlingGameFrameDto> frames;
+    private final List<FrameDto> frames;
 
-    public BowlingGameDto(List<BowlingGameFrameDto> frames) {
+    public BowlingGameDto(List<FrameDto> frames) {
         this.frames = frames;
     }
 
     public static BowlingGameDto from(BowlingGame game) {
-        List<BowlingGameFrameDto> frames = new ArrayList<>();
+        List<FrameDto> frames = new ArrayList<>();
         IntStream.range(0, BowlingGame.SIZE_OF_FRAMES)
-                .forEach(i -> frames.add(BowlingGameFrameDto.from(game.get(i))));
+                .forEach(i -> frames.add(FrameDto.from(game.get(i))));
         return new BowlingGameDto(frames);
     }
 
-    public List<BowlingGameFrameDto> getFrames() {
+    public List<FrameDto> getFrames() {
         return frames;
     }
 
