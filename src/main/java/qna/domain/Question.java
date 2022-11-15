@@ -59,6 +59,10 @@ public class Question extends AbstractEntity {
         return this;
     }
 
+    public User getWriter() {
+        return writer;
+    }
+
     public Question writeBy(User loginUser) {
         this.writer = loginUser;
         return this;

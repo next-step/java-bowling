@@ -67,6 +67,10 @@ public class Answer extends AbstractEntity {
         return deleted;
     }
 
+    public User getWriter() {
+        return writer;
+    }
+
     public String getContents() {
         return contents;
     }

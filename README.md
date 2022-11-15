@@ -10,13 +10,9 @@
 
 ## TO DO LIST(Step1)
 - [x] Question 클래스
-  - [x] getWriter 메소드 제거
   - [x] setDeleted 메소드 변경
   - [x] getAnswers 메소드 제거
-- [ ] User 클래스
-  - [ ] getUserId 메소드 제거
-  - [ ] getPassword 메소드 제거
 - [x] Answer 클래스
   - [x] setDeleted 메소드 변경
-  - [x] getWriter 메소드 제거
-- [ ] 도메인 클래스 테스트 추가
+- [x] QnAService.deleteQuestion 메소드 수정
+- [x] 도메인 클래스 테스트 추가
