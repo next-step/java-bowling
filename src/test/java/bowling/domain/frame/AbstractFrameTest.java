@@ -48,7 +48,7 @@ class AbstractFrameTest {
         frame.add(10);
         frame.add(10);
 
-        assertThat(frame.getState(0)).isEqualTo(FrameState.GUTTER);
+        assertThat(frame.getState(0)).isEqualTo(null);
         assertThat(frame.getState(1)).isEqualTo(FrameState.SPARE);
         assertThat(frame.getState(2)).isEqualTo(FrameState.STRIKE);
     }

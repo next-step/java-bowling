@@ -69,7 +69,7 @@ public class OutputView {
             return String.valueOf(hit.getValue());
         }
 
-        if (state.equals(FrameState.GUTTER)) {
+        if (hit.getValue() == 0) {
             return GUTTER;
         }
 
