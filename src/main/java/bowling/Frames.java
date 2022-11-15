@@ -8,9 +8,10 @@ public class Frames {
 
     public Frames(int size) {
         this.frames = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size - 1; i++) {
             this.frames.add(new Frame());
         }
+        this.frames.add(new FinalFrame());
     }
 
     public FrameNumber pitching(FrameNumber frameNumber, int hitCount) {
@@ -26,9 +27,6 @@ public class Frames {
     public FrameNumber pitchingLast(FrameNumber frameNumber, int hitCount) {
         Frame frame = frames.get(frameNumber.retrieveIndexNumber());
         frame.hitBowlingPin(hitCount);
-        if (frame.finishLastFrame()) {
-            return frameNumber.next();
-        }
 
         if (frame.clearAllFrame()) {
             frame.chargeBowlingPin();
