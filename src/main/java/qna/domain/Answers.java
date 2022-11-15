@@ -1,5 +1,6 @@
 package qna.domain;
 
+import org.aspectj.util.Reflection;
 import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
@@ -7,20 +8,20 @@ import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Embeddable
 public class Answers {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    private List<Answer> answers;
 
-    public Answers() {
+    public Answers() throws UnsupportedOperationException{
+        throw new UnsupportedOperationException("no empty instance available");
     }
 
     public Answers(List<Answer> answers) {
@@ -28,7 +29,7 @@ public class Answers {
     }
 
     public Answers(Answer... answers) {
-        this(Arrays.asList(answers));
+        this(new ArrayList<>(Arrays.asList(answers)));
     }
 
     public void add(Answer answer) {
@@ -36,10 +37,9 @@ public class Answers {
     }
 
     public void validateIfHasOthersAnswer(User loginUser) throws CannotDeleteException {
-        Optional<Answer> othersAnswer = answers.stream()
-                .filter(answer -> !answer.isOwner(loginUser))
-                .findAny();
-        if (othersAnswer.isPresent()) {
+        boolean othersAnswer = answers.stream()
+                .anyMatch(answer -> !answer.isOwner(loginUser));
+        if (othersAnswer) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
     }
@@ -53,9 +53,13 @@ public class Answers {
     public DeleteHistories generateDeleteHistories() {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         for (Answer answer : answers) {
-            Answer deletedAnswer = answer.delete();
-            deleteHistories.add(deletedAnswer.generateDeleteHistory());
+            deleteHistories.add(answer.generateDeleteHistory());
         }
         return new DeleteHistories(deleteHistories);
     }
+
+    private void print(){
+        System.out.println("jackson");
+    }
+
 }

@@ -23,5 +23,4 @@ public class DeleteHistories {
         this.deleteHistories.addAll(deleteHistories.getDeleteHistories());
     }
 
-
 }

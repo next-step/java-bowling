@@ -61,7 +61,7 @@ public class Answer extends AbstractEntity {
         return writer;
     }
 
-    public void toQuestion(Question question) {
+    public void relateQuestion(Question question) {
         this.question = question;
     }
 
