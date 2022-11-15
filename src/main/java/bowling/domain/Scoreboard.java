@@ -31,12 +31,9 @@ public class Scoreboard {
     }
 
     private void setBonusScore(Score score, Round round) {
-        if (round.isSecondRound()) {
+        if (round.isAfterStartRound()) {
             addBonusScore(score, round.beforeRound());
-        }
-        if (round.isAfterSecondRound()) {
-            addBonusScore(score, round.beforeRound());
-            addBonusScore(score, round.beforeRound().beforeRound());
+            setBonusScore(score, round.beforeRound());
         }
     }
 

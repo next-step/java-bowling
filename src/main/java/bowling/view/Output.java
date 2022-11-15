@@ -2,6 +2,7 @@ package bowling.view;
 
 import bowling.domain.Round;
 import bowling.domain.Scoreboard;
+import bowling.domain.Scoreboards;
 import bowling.domain.frame.Frame;
 import bowling.domain.score.Score;
 import bowling.domain.score.scores.Scores;
@@ -23,13 +24,16 @@ public class Output {
     private static final String NEW_LINE = "\n";
     private static final String NAME_GUIDE = " NAME ";
 
-    public static void printScoreboard(Scoreboard scoreboard) {
+    public static void printScoreboard(Scoreboards scoreboards) {
         StringBuilder result = new StringBuilder();
         result.append(guideLine());
         result.append(NEW_LINE);
-        result.append(currentScoreLine(scoreboard));
-        result.append(NEW_LINE);
-        result.append(totalScoreLine(scoreboard));
+        for (Scoreboard scoreboard : scoreboards.scoreboards()) {
+            result.append(currentScoreLine(scoreboard));
+            result.append(NEW_LINE);
+            result.append(totalScoreLine(scoreboard));
+            result.append(NEW_LINE);
+        }
         System.out.println(result);
     }
 
@@ -69,7 +73,7 @@ public class Output {
     }
 
     private static String frameFormat(Frame frame) {
-        if (frame.totalScore().regularScores().isEmpty()) {
+        if (frame.totalScore().regularScores().isSizeEqual(0)) {
             return "";
         }
         if (frame.totalScore().regularScores().isSizeEqual(1)) {

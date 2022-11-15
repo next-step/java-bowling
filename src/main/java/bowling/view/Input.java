@@ -15,4 +15,9 @@ public class Input {
         System.out.print(round + "프레임 투구 : ");
         return Integer.parseInt(scanner.nextLine());
     }
+
+    public static int inputPeopleSize() {
+        System.out.print("How many people? ");
+        return Integer.parseInt(scanner.nextLine());
+    }
 }
