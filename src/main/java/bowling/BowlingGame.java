@@ -11,9 +11,6 @@ public class BowlingGame {
     }
 
     public FrameNumber pitchingBall(int hitCount) {
-        if (frameNumber.isSameNumber(FRAME_SIZE)) {
-            return frames.pitchingLast(frameNumber, hitCount);
-        }
         this.frameNumber = frames.pitching(frameNumber, hitCount);
         return this.frameNumber;
     }
