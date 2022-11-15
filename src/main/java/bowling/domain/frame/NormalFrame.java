@@ -20,14 +20,22 @@ public class NormalFrame extends AbstractFrame {
         if (isOnGoing()) {
             return false;
         }
-        // TODO : 메서드 분리하기
+
+        return hasEnoughHits();
+    }
+
+    private boolean hasEnoughHits() {
         int count = 0;
         Frame nextFrame = getNextFrame();
-        while (nextFrame != null && nextFrame.countHits() > 0 && count < getLastState().getNumberOfBonus()) {
+        while (hasMoreHits(count, nextFrame)) {
             count += nextFrame.countHits();
             nextFrame = nextFrame.getNextFrame();
         }
         return count >= getLastState().getNumberOfBonus();
+    }
+
+    private boolean hasMoreHits(int count, Frame nextFrame) {
+        return nextFrame != null && nextFrame.countHits() > 0 && count < getLastState().getNumberOfBonus();
     }
 
     @Override
@@ -38,21 +46,20 @@ public class NormalFrame extends AbstractFrame {
         return calculateScore();
     }
 
-    // TODO : 인덴트 줄이기
     private int calculateScore() {
-        int count = 0;
-        int index = 0;
         int sum = sumOfHits();
-        Frame nextFrame = getNextFrame();
-        while (count < getLastState().getNumberOfBonus()) {
-            sum += nextFrame.getHit(index++);
-            if (index >= nextFrame.countHits()) {
-                nextFrame = nextFrame.getNextFrame();
-                index = 0;
-            }
-            count++;
+        for (int i = 0; i < getLastState().getNumberOfBonus(); i++) {
+            sum += getNextHit(getNextFrame(), i);
         }
         return sum;
+    }
+
+    private int getNextHit(Frame frame, int index) {
+        if (index >= frame.countHits()) {
+            return getNextHit(frame.getNextFrame(), index - frame.countHits());
+        }
+
+        return frame.getHit(index);
     }
 
 }
