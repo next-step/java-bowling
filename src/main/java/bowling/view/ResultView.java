@@ -1,14 +1,13 @@
 package bowling.view;
 
+import bowling.domain.BowlingGame;
+import bowling.domain.Lane;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.FrameNumber;
 import bowling.domain.frame.Frames;
 import bowling.domain.pin.FallenPin;
-import bowling.domain.player.PlayerName;
 import bowling.domain.score.Score;
 import bowling.domain.state.FrameState;
-import bowling.domain.state.Spare;
-import bowling.domain.state.Strike;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +24,12 @@ public class ResultView {
     public static final String SPARE = "/";
     public static final String GUTTER = "-";
 
-    public static void printFrames(PlayerName playerName, Frames frames) {
+    public static void printFrames(BowlingGame bowlingGame) {
         System.out.println(scoreTableRow(NAME_COLUMN_TITLE, frameNumberColumnTitles()));
-        System.out.println(scoreTableRow(playerName.getName(), triedFrames(frames)));
-        System.out.println(scoreTableRow("", accumulatedScores(frames)));
+        for (Lane lane : bowlingGame.getLanes()) {
+            System.out.println(scoreTableRow(lane.getPlayerName().getName(), triedFrames(lane.getFrames())));
+            System.out.println(scoreTableRow("", accumulatedScores(lane.getFrames())));
+        }
     }
 
     private static List<String> accumulatedScores(Frames frames) {
@@ -36,7 +37,7 @@ public class ResultView {
 
         List<String> result = new ArrayList<>();
         int accumulatedScore = 0;
-        for (int score: scores) {
+        for (int score : scores) {
             accumulatedScore += score;
             result.add(String.valueOf(accumulatedScore));
         }
@@ -94,7 +95,7 @@ public class ResultView {
     }
 
     private static String frameStateString(FrameState frameState) {
-        if (frameState instanceof Strike) {
+        if (frameState.isStrike()) {
             return STRIKE;
         }
 
@@ -104,7 +105,7 @@ public class ResultView {
                 .map(String::valueOf)
                 .collect(toList());
 
-        if (frameState instanceof Spare) {
+        if (frameState.isSpare()) {
             fallenPins.set(frameState.tries() - 1, SPARE);
         }
 

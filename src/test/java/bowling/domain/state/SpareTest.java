@@ -35,6 +35,16 @@ class SpareTest {
         assertThat(frameState.addScore(previousScore)).isEqualTo(new Score(19, 0));
     }
 
+    @Test
+    void isSpare() {
+        assertThat(spare().isSpare()).isTrue();
+    }
+
+    @Test
+    void isStrike() {
+        assertThat(spare().isStrike()).isFalse();
+    }
+
     private Spare spare() {
         return new Spare(FallenPin.of(9), FallenPin.of(1));
     }

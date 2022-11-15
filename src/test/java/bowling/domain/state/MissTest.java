@@ -35,6 +35,16 @@ class MissTest {
         assertThat(frameState.addScore(previousScore)).isEqualTo(new Score(19, 0));
     }
 
+    @Test
+    void isSpare() {
+        assertThat(miss().isSpare()).isFalse();
+    }
+
+    @Test
+    void isStrike() {
+        assertThat(miss().isStrike()).isFalse();
+    }
+
     private Miss miss() {
         return new Miss(FallenPin.of(9), FallenPin.of(0));
     }

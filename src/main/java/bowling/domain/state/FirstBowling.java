@@ -50,6 +50,11 @@ public class FirstBowling extends Running {
     }
 
     @Override
+    public boolean isReady() {
+        return false;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof FirstBowling)) return false;

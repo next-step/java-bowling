@@ -5,4 +5,14 @@ public abstract class Running implements FrameState {
     public boolean isFinished() {
         return false;
     }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
+
+    @Override
+    public boolean isStrike() {
+        return false;
+    }
 }

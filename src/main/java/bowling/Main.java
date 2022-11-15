@@ -1,32 +1,47 @@
 package bowling;
 
-import bowling.domain.frame.Frames;
-import bowling.domain.pin.FallenPin;
-import bowling.domain.player.PlayerName;
+import bowling.domain.BowlingGame;
+import bowling.domain.Lane;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
 public class Main {
     public static void main(String[] args) {
-        PlayerName playerName = new PlayerName(InputView.scanName());
+        int playerCount = InputView.scanPlayerCount();
+        BowlingGame bowlingGame = BowlingGame.of(InputView.scanPlayerNames(playerCount));
+        ResultView.printFrames(bowlingGame);
 
-        Frames frames = Frames.init();
-        ResultView.printFrames(playerName, frames);
-        while (!frames.isOver()) {
-            int fallenPins = InputView.scanFallenPinCount(frames.lastFrameNumber());
-            frames = bowl(frames, fallenPins);
-            ResultView.printFrames(playerName, frames);
+        while (!bowlingGame.isAllFinished()) {
+            playBowling(bowlingGame);
         }
 
         InputView.closeScan();
     }
 
-    private static Frames bowl(Frames frames, int fallenPins) {
+    private static void playBowling(BowlingGame bowlingGame) {
+        for (Lane lane : bowlingGame.getLanes()) {
+            bowlInAFrame(bowlingGame, lane);
+        }
+    }
+
+    private static void bowlInAFrame(BowlingGame bowlingGame, Lane lane) {
+        bowl(bowlingGame, lane);
+        while (!lane.isCurrentFrameFinished()) {
+            bowl(bowlingGame, lane);
+        }
+    }
+
+    private static void bowl(BowlingGame bowlingGame, Lane lane) {
+        int fallenPins = InputView.scanFallenPinCount(lane.getPlayerName());
+        tryBowling(lane, fallenPins);
+        ResultView.printFrames(bowlingGame);
+    }
+
+    private static void tryBowling(Lane lane, int fallenPins) {
         try {
-            return frames.bowl(FallenPin.of(fallenPins));
+            lane.bowl(fallenPins);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return frames;
         }
     }
 }

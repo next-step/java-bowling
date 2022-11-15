@@ -29,6 +29,16 @@ public class Strike extends Finished {
     }
 
     @Override
+    public boolean isSpare() {
+        return false;
+    }
+
+    @Override
+    public boolean isStrike() {
+        return true;
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other instanceof Strike;
     }

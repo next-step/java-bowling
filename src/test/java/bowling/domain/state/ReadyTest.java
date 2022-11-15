@@ -47,4 +47,9 @@ class ReadyTest {
 
         assertThat(frameState.addScore(previousScore)).isEqualTo(previousScore);
     }
+
+    @Test
+    void isReady() {
+        assertThat(new Ready().isReady()).isTrue();
+    }
 }

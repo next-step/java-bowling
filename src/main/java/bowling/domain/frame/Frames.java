@@ -32,8 +32,8 @@ public class Frames {
         return lastFrame().isFinished();
     }
 
-    public int lastFrameNumber() {
-        return lastIndex() + 1;
+    public boolean isCurrentFrameFinished() {
+        return lastFrame().isReady() || isOver();
     }
 
     private Frames add(Frame frame) {

@@ -20,6 +20,11 @@ class FinishedTest {
                 .hasMessage("끝난 상태에서는 더이상 투구할 수 없습니다.");
     }
 
+    @Test
+    void isReady() {
+        assertThat(finished().isReady()).isFalse();
+    }
+
     private Finished finished() {
         return new Miss(FallenPin.of(9), FallenPin.of(0));
     }
