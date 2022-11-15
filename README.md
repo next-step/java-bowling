@@ -17,7 +17,7 @@
 - [ ] User 클래스
   - [ ] getUserId 메소드 제거
   - [ ] getPassword 메소드 제거
-- [ ] Answer 클래스
-  - [ ] setDeleted 메소드 반환 타입 변경
-  - [ ] getWriter 메소드 제거
+- [x] Answer 클래스
+  - [x] setDeleted 메소드 변경
+  - [x] getWriter 메소드 제거
 - [ ] 도메인 클래스 테스트 추가
