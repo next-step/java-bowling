@@ -31,12 +31,12 @@ class BowlingTest {
     }
 
     private void playUntilFinish(Bowling bowling) {
-        ScoreResult scoreResult = new ScoreResult();
+        Username username = new Username("kcs");
         IntStream.range(0, BowlingRound.LAST_ROUND_NUM)
-                .forEach((idx) -> bowling.play(10));
-        bowling.play(10);
+                .forEach((idx) -> bowling.play(10, username));
+        bowling.play(10, username);
         assertThat(bowling.isFinish()).isFalse();
-        bowling.play(10);
+        bowling.play(10, username);
     }
 
     @ParameterizedTest
@@ -50,7 +50,7 @@ class BowlingTest {
     }
 
     private void validateCalculateResult(List<Integer> pins, List<Integer> expectedScoreResult, Bowling bowling, int index) {
-        ScoreResult scoreResult = bowling.play(pins.get(index));
+        ScoreResult scoreResult = bowling.play(pins.get(index), new Username("kcs"));
         Integer expectResult = expectedScoreResult.get(index);
         if (expectResult.equals(0)) {
             assertThat(scoreResult.getScores()).isEmpty();

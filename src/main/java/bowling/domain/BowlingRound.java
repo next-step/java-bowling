@@ -80,4 +80,8 @@ public class BowlingRound {
     public Integer doubleStrikeBonus() {
         return scores.doubleStrikeBonus();
     }
+
+    public boolean isLastRoundEnd() {
+        return scores.isLastRoundEnd();
+    }
 }

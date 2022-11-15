@@ -13,9 +13,9 @@ public class Bowling {
     }
 
 
-    public ScoreResult play(int numberOfPins) {
+    public ScoreResult play(int numberOfPins, Username username) {
         rounds.addKnockDownPins(numberOfPins);
-        return calculateScore(new ScoreResult());
+        return calculateScore(ScoreResult.ofUsername(username));
     }
 
     private ScoreResult calculateScore(ScoreResult scoreResult) {
