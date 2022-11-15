@@ -66,26 +66,26 @@ public class OutputView {
         return getNormalFrameScore(frames.get(index), index);
     }
 
-    private String getNormalFrameScore(Frame frame, int index) {
+    private String getNormalFrameScore(Frame2 frame, int index) {
         StringBuilder sb = new StringBuilder();
 
-        Result first = frame.result(index);
+        Result first = frame.getResult(index);
         sb.append(getScoreMark(first, frame.getCount(index)));
 
-        if (frame.size() == 2 && Result.STRIKE != first) {
+        if (frame.getRound() == 2 && Result.STRIKE != first) {
             appendMark();
             sb.append(getScoreMark(first, frame.getCount(1)));
         }
         return sb.toString();
     }
 
-    private String getFinalFrameScore(Frame frame) {
+    private String getFinalFrameScore(Frame2 frame) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < frame.size(); i++) {
+        for (int i = 0; i < frame.getRound(); i++) {
             if (1 != 0) {
                 sb.append(MARK);
             }
-            sb.append(getScoreMark(frame.result(i), frame.getCount(i)));
+            sb.append(getScoreMark(frame.getResult(i), frame.getCount(i)));
         }
         return sb.toString();
     }
@@ -103,7 +103,7 @@ public class OutputView {
             return "/";
         }
 
-        if (Result.NONE == result) {
+        if (Result.GUTTER == result) {
             return "-";
         }
 

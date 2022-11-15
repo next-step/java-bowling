@@ -13,7 +13,7 @@ public class PinCount {
 
     private void validate(int value) {
         if (value < MIN || value > MAX) {
-            throw new IllegalArgumentException("0 ~ 10 사이 숫자만 가능합니다.");
+            throw new IllegalArgumentException("0 ~ 10 사이 숫자만 가능합니다. " + value);
         }
     }
 
@@ -23,6 +23,10 @@ public class PinCount {
 
     public int getValue() {
         return value;
+    }
+
+    public boolean isZero() {
+        return value == 0;
     }
 
     //===================================================================
@@ -48,5 +52,13 @@ public class PinCount {
         return "PinCount{" +
                 "value=" + value +
                 '}';
+    }
+
+    public int sum(PinCount pinCount) {
+        return value + pinCount.getValue();
+    }
+
+    public boolean isTen() {
+        return value == 10;
     }
 }

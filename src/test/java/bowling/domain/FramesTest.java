@@ -1,9 +1,11 @@
 package bowling.domain;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Disabled
 class FramesTest {
 
     @Test
@@ -11,21 +13,22 @@ class FramesTest {
         Frames frames = Frames.init();
 
         frames.bowling(10);
-        Bowling bowling = frames.get(0).get(0);
+        Frame2 frame = frames.get(0);
 
-        assertThat(bowling).isEqualTo(Bowling.of(10));
         assertThat(frames.getCurrentRound()).isEqualTo(0);
+        assertThat(frame.getResult(0)).isEqualTo(Result.STRIKE);
     }
 
     @Test
     void 다음투구() {
         Frames frames = Frames.init();
 
-        frames.bowling(10);
         frames.bowling(5);
-        Bowling bowling = frames.get(1).get(0);
+        frames.bowling(5);
+        Frame2 frame = frames.get(0);
 
-        assertThat(bowling).isEqualTo(Bowling.of(5));
-        assertThat(frames.getCurrentRound()).isEqualTo(1);
+        assertThat(frames.getCurrentRound()).isEqualTo(0);
+        assertThat(frame.getResult(1)).isEqualTo(Result.SPARE);
     }
+
 }

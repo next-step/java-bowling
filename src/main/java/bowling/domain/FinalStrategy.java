@@ -12,6 +12,10 @@ public class FinalStrategy implements FrameStrategy {
 
     @Override
     public boolean isFrameEnd(int round, Result beforeResult) {
+        if (beforeResult.isNone()) {
+            return false;
+        }
+
         return round == END_ROUND
                 || round == END_BEFORE_ROUND && (beforeResult.isMiss() || beforeResult.isGutter());
     }

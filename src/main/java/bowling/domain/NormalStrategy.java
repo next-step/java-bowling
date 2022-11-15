@@ -12,6 +12,10 @@ public class NormalStrategy implements FrameStrategy {
 
     @Override
     public boolean isFrameEnd(int round, Result beforeResult) {
+        if (beforeResult.isNone()) {
+            return false;
+        }
+
         return round == END_ROUND || beforeResult.isStrike();
     }
 }

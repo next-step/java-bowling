@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Frame {
-
-    public static final int NORMAL_MAX_TOTAL_COUNT = 10;
-    public static final int NORMAL_MAX_SIZE = 2;
     public static final int FINAL_MAX_TOTAL_COUNT = 30;
     public static final int FINAL_MAX_SIZE = 3;
 
@@ -15,14 +12,14 @@ public class Frame {
     private final int maxSize;
     private final List<Bowling> values;
 
-    private Frame(int maxTotalCount, int size) {
+    public Frame(int maxTotalCount, int size) {
         this.maxTotalCount = maxTotalCount;
         this.maxSize = size;
         this.values = new ArrayList<>(size);
     }
 
     public static Frame createNormal() {
-        return new Frame(NORMAL_MAX_TOTAL_COUNT, NORMAL_MAX_SIZE);
+        return null;
     }
 
     public static Frame createFinal() {
@@ -37,11 +34,17 @@ public class Frame {
         return values.get(index).getCount();
     }
 
+    public PinCount getLastCount() {
+        int count = values.get(values.size() - 1).getCount();
+        return PinCount.of(count);
+    }
+
     public void bowling(int count) {
         if (isNotOverMaxTotalCount(count)) {
             throw new IllegalArgumentException("최대 쓰러뜨린수를 초과했습니다.. " + count);
         }
-        values.add(Bowling.of(count));
+
+        values.add(Bowling.from(this, count));
     }
 
     private boolean isNotOverMaxTotalCount(int count) {
@@ -75,7 +78,7 @@ public class Frame {
     }
 
     public Result result(int index) {
-        return Result.valueOf(this, index);
+        return Result.from(this, index);
     }
 
     public int sumNowAndBeforePinCount(int index) {

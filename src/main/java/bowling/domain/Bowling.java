@@ -4,41 +4,47 @@ import java.util.Objects;
 
 public class Bowling {
 
-    public static final int MIN = 0;
-    public static final int MAX = 10;
-    private final int count;
+    private final PinCount pinCount;
+    private final Result result;
 
-    private Bowling(int count) {
-        if (isNotValidCount(count)) {
-            throw new IllegalArgumentException("0 ~ 10 사이의 정수만 가능합니다");
-        }
-
-        this.count = count;
+    private Bowling(PinCount pinCount, Result result) {
+        this.pinCount = pinCount;
+        this.result = result;
     }
 
-    private boolean isNotValidCount(int count) {
-        return count < MIN || count > MAX;
+    public static Bowling from(int count, Result result) {
+        return new Bowling(PinCount.of(count), result);
     }
 
-    public static Bowling of(int count) {
-        return new Bowling(count);
+    public static Bowling from(Frame frame, int count) {
+        return new Bowling(PinCount.of(count), Result.from(frame, count));
+    }
+
+    public static Bowling from(Frame2 frame, PinCount pinCount) {
+        return new Bowling(pinCount, Result.from(frame, pinCount));
     }
 
     public int getCount() {
-        return count;
+        return pinCount.getValue();
     }
 
+    public PinCount getPinCount() {
+        return pinCount;
+    }
+
+    @Deprecated
     public int sum(Bowling bowling) {
-        return this.count + bowling.count;
+        return 0;
     }
 
     public boolean isStrike() {
-        return count == 10;
+        return result == Result.STRIKE;
     }
 
-    public boolean isNone() {
-        return count == 0;
+    public Result getResult() {
+        return result;
     }
+
     //==============================================================================
 
     @Override
@@ -46,16 +52,19 @@ public class Bowling {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Bowling bowling = (Bowling) o;
-        return count == bowling.count;
+        return Objects.equals(pinCount, bowling.pinCount) && result == bowling.result;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(count);
+        return Objects.hash(pinCount, result);
     }
 
     @Override
     public String toString() {
-        return count + "";
+        return "Bowling{" +
+                "pinCount=" + pinCount +
+                ", result=" + result +
+                '}';
     }
 }
