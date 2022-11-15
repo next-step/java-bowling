@@ -1,6 +1,6 @@
 # QnA 서비스 리팩토링 요구사항
-- [ ] `QnAService` 의 `게시글 작성자가 본인인지 검증` 로직을 `Question`으로 이동
-    - [ ] 검증 로직 테스트
+- [x] `QnAService` 의 `게시글 작성자가 본인인지 검증` 로직을 `Question`으로 이동
+    - [x] 검증 로직 테스트
 - [ ] `Question` 의 `List<Answer>`을 일급 콜렉션 `Answers`로 변환
     - [ ] `Answers` 로 `QnAService`의 `다른 사람이 작성한 댓글이 있는지 검증` 로직을 이동
     - [ ] 검증 로직 테스트
