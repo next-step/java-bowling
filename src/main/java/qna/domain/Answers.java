@@ -39,6 +39,14 @@ public class Answers {
         return answers.stream().allMatch(answer -> answer.isOwner(loginUser));
     }
 
+    public boolean hasAnswer(Answer answer) {
+        return this.answers.contains(answer);
+    }
+
+    public boolean isAllDeleted() {
+        return answers.stream().allMatch(Answer::isDeleted);
+    }
+
     public void deleteAll() {
         answers.forEach(answer -> answer.setDeleted(true));
     }
