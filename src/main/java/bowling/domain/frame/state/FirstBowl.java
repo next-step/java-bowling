@@ -2,7 +2,12 @@ package bowling.domain.frame.state;
 
 import java.util.List;
 
-public class FirstBowl implements State {
+import bowling.domain.dto.BowlRecord;
+import bowling.domain.frame.Score;
+
+public class FirstBowl extends Running {
+    private static final String ILLEGAL_PIN_COUNT_EXCEPTION_MESSAGE = "쓰러트린 핀의 합계는 10을 넘을 수 없습니다.";
+
     private final Pins firstPins;
 
     public FirstBowl(Pins firstPins) {
@@ -12,6 +17,8 @@ public class FirstBowl implements State {
     @Override
     public State bowl(int pins) {
         Pins secondPins = new Pins(pins);
+        validate(secondPins);
+
         if (firstPins.isSpare(secondPins)) {
             return new Spare(firstPins, secondPins);
         }
@@ -20,17 +27,23 @@ public class FirstBowl implements State {
     }
 
     @Override
-    public Score createScore() {
-        return new Score(List.of(firstPins.getPins()));
+    public BowlRecord createBowlRecord() {
+        return new BowlRecord(List.of(firstPins), false, false);
     }
 
     @Override
-    public boolean isFinish() {
-        return false;
+    public Score calculateBonusScore(Score previousScore) {
+        return addBonusScore(previousScore, firstPins.getPins());
     }
 
     @Override
     public boolean canBonusBowl() {
         return true;
+    }
+
+    private void validate(Pins secondPins) {
+        if (!firstPins.isLegalPins(secondPins)) {
+            throw new IllegalArgumentException(ILLEGAL_PIN_COUNT_EXCEPTION_MESSAGE);
+        }
     }
 }

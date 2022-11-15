@@ -2,7 +2,11 @@ package bowling.domain.frame.state;
 
 import java.util.List;
 
-public class Spare implements State {
+import bowling.domain.dto.BowlRecord;
+import bowling.domain.frame.Score;
+
+public class Spare extends Finished {
+    private static final int SPARE_BONUS_BOWLS = 1;
     private static final String INVALID_PINS_EXCEPTION_MESSAGE = "스페어의 조건을 만족하지 않습니다.";
 
     private final Pins firstPins;
@@ -15,18 +19,23 @@ public class Spare implements State {
     }
 
     @Override
-    public State bowl(int pins) {
-        throw new UnsupportedOperationException();
+    public BowlRecord createBowlRecord() {
+        return new BowlRecord(List.of(firstPins, secondPins), false, true);
     }
 
     @Override
-    public Score createScore() {
-        return new Score(List.of(firstPins.getPins(), secondPins.getPins()), true);
+    public Score getScore() {
+        return new Score(Pins.MAX_PINS, SPARE_BONUS_BOWLS);
     }
 
     @Override
-    public boolean isFinish() {
-        return true;
+    public Score calculateBonusScore(Score previousScore) {
+        Score score = addBonusScore(previousScore, firstPins.getPins());
+        if (score.canCalculateScore()) {
+            return score;
+        }
+
+        return addBonusScore(score, secondPins.getPins());
     }
 
     @Override

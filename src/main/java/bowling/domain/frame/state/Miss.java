@@ -2,7 +2,10 @@ package bowling.domain.frame.state;
 
 import java.util.List;
 
-public class Miss implements State {
+import bowling.domain.dto.BowlRecord;
+import bowling.domain.frame.Score;
+
+public class Miss extends Finished {
     private static final String INVALID_PINS_EXCEPTION_MESSAGE = "Miss의 조건을 만족하지 않습니다.";
 
     private final Pins firstPins;
@@ -15,18 +18,23 @@ public class Miss implements State {
     }
 
     @Override
-    public State bowl(int pins) {
-        throw new UnsupportedOperationException();
+    public BowlRecord createBowlRecord() {
+        return new BowlRecord(List.of(firstPins, secondPins), false, false);
     }
 
     @Override
-    public Score createScore() {
-        return new Score(List.of(firstPins.getPins(), secondPins.getPins()));
+    public Score getScore() {
+        return new Score(firstPins.add(secondPins).getPins(), 0);
     }
 
     @Override
-    public boolean isFinish() {
-        return true;
+    public Score calculateBonusScore(Score previousScore) {
+        Score score = addBonusScore(previousScore, firstPins.getPins());
+        if (score.canCalculateScore()) {
+            return score;
+        }
+
+        return addBonusScore(score, secondPins.getPins());
     }
 
     @Override

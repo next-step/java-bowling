@@ -2,13 +2,15 @@ package bowling.view;
 
 import static java.util.stream.Collectors.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import bowling.domain.BowlingGameFrameRecord;
-import bowling.domain.frame.state.Score;
+import bowling.domain.dto.BowlRecord;
+import bowling.domain.dto.BowlingGameFrameRecord;
+import bowling.domain.frame.Score;
 
 public class ResultView {
     private static final int START_FRAME = 1;
@@ -17,12 +19,9 @@ public class ResultView {
     public void printScoreBoard(String name, List<BowlingGameFrameRecord> frameRecords) {
         printScoreBoardTitle();
 
-        List<String> frameContents = frameRecords.stream()
-            .map(BowlingGameFrameRecord::getScores)
-            .map(this::convertScoresToDescription)
-            .collect(toList());
+        printBowlRecords(name, frameRecords);
+        printScores(frameRecords);
 
-        printScoreBoardContent(name, frameContents);
         System.out.println();
     }
 
@@ -38,34 +37,51 @@ public class ResultView {
         printScoreBoardContent("NAME", frameNumbers);
     }
 
+    private void printBowlRecords(String name, List<BowlingGameFrameRecord> frameRecords) {
+        List<String> frameContents = frameRecords.stream()
+            .map(BowlingGameFrameRecord::getBowlRecords)
+            .map(this::convertBowlRecordsToDescription)
+            .collect(toList());
+
+        printScoreBoardContent(name, frameContents);
+    }
+
+    private void printScores(List<BowlingGameFrameRecord> frameRecords) {
+        List<Score> scores = frameRecords.stream()
+            .map(BowlingGameFrameRecord::getScore)
+            .collect(toList());
+
+        printScoreBoardContent("", convertScoresToDescription(scores));
+    }
+
     private void printScoreBoardContent(String nameContent, List<String> frameContents) {
         StringJoiner joiner = new StringJoiner("|");
         joiner.add("");
         joiner.add(String.format(" %4s ", nameContent));
         for (int i = 0; i < END_FRAME; ++i) {
-            joiner.add(String.format("  %-3s ", frameContents.get(i)));
+            joiner.add(String.format("    %-5s ", frameContents.get(i)));
         }
         joiner.add("");
         System.out.println(joiner);
     }
 
-    private String convertScoresToDescription(List<Score> scores) {
-        return scores.stream()
-            .map(this::convertSingleScoreToDescription)
+    private String convertBowlRecordsToDescription(List<BowlRecord> bowlRecords) {
+        return bowlRecords.stream()
+            .map(this::convertSingleBowlRecordToDescription)
             .collect(Collectors.joining("|"));
     }
 
-    private String convertSingleScoreToDescription(Score score) {
-        if (score.isStrike()) {
+    private String convertSingleBowlRecordToDescription(BowlRecord bowlRecord) {
+        if (bowlRecord.isStrike()) {
             return "X";
         }
 
-        List<String> pinsList = score.getValues().stream()
+        List<String> pinsList = bowlRecord.getValues().stream()
             .map(value -> Integer.toString(value))
             .map(this::convertGutter)
             .collect(toList());
 
-        if (score.isSpare()) {
+        if (bowlRecord.isSpare()) {
             pinsList.set(pinsList.size() - 1, "/");
         }
 
@@ -78,5 +94,21 @@ public class ResultView {
         }
 
         return pins;
+    }
+
+    private List<String> convertScoresToDescription(List<Score> scores) {
+        List<String> descriptions = new ArrayList<>();
+        int sumOfScore = 0;
+
+        for (Score score : scores) {
+            String description = "";
+            if (score.canCalculateScore()) {
+                description = Integer.toString(sumOfScore + score.getValue());
+                sumOfScore += score.getValue();
+            }
+            descriptions.add(description);
+        }
+
+        return descriptions;
     }
 }

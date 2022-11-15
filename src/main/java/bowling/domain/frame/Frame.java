@@ -1,15 +1,20 @@
 package bowling.domain.frame;
 
-import bowling.domain.BowlingGameFrameRecord;
+import bowling.domain.dto.BowlingGameFrameRecord;
 
-public interface Frame {
-    void bowl(int falledPins);
+public abstract class Frame {
+    public static final int START_FRAME = 1;
+    public static final int LAST_FRAME = 10;
 
-    Frame createNextFrame();
+    public abstract void bowl(int falledPins);
 
-    BowlingGameFrameRecord createFrameRecord();
+    public abstract Frame createNextFrame();
 
-    int getFrameNumber();
+    public abstract BowlingGameFrameRecord createFrameRecord();
 
-    boolean isFinish();
+    public abstract Score calculateBonusScore(Score previousFrameScore);
+
+    public abstract int getFrameNumber();
+
+    public abstract boolean isFrameFinish();
 }

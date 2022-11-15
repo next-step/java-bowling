@@ -26,11 +26,11 @@ class LastFrameTest {
     void testThreeBowls(int firstPins, int secondPins, int thirdPins, String description) {
         Frame frame = new LastFrame();
         frame.bowl(firstPins);
-        assertThat(frame.isFinish()).isFalse();
+        assertThat(frame.isFrameFinish()).isFalse();
         frame.bowl(secondPins);
-        assertThat(frame.isFinish()).isFalse();
+        assertThat(frame.isFrameFinish()).isFalse();
         frame.bowl(thirdPins);
-        assertThat(frame.isFinish()).isTrue();
+        assertThat(frame.isFrameFinish()).isTrue();
     }
 
     @Test
@@ -38,9 +38,9 @@ class LastFrameTest {
     void testMissBowl() {
         Frame frame = new LastFrame();
         frame.bowl(4);
-        assertThat(frame.isFinish()).isFalse();
+        assertThat(frame.isFrameFinish()).isFalse();
         frame.bowl(5);
-        assertThat(frame.isFinish()).isTrue();
+        assertThat(frame.isFrameFinish()).isTrue();
     }
 
     @DisplayName("프레임 종료 후에도 볼링 경기를 시도할 시 예외를 던진다.")

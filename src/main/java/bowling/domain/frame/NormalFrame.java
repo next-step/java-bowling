@@ -2,16 +2,16 @@ package bowling.domain.frame;
 
 import java.util.List;
 
-import bowling.domain.BowlingGame;
-import bowling.domain.BowlingGameFrameRecord;
+import bowling.domain.dto.BowlingGameFrameRecord;
 import bowling.domain.frame.state.Ready;
 import bowling.domain.frame.state.State;
 
-public class NormalFrame implements Frame {
+public class NormalFrame extends Frame {
     private static final String INVALID_FRAME_NUMBER_EXCEPTION_MESSAGE = "일반 프레임의 숫자는 1과 9 사이의 숫자여야 합니다.";
 
     private final int frameNumber;
     private State state;
+    private Frame next;
 
     public NormalFrame(int frameNumber) {
         validate(frameNumber);
@@ -26,16 +26,23 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame createNextFrame() {
-        if (frameNumber + 1 == BowlingGame.LAST_FRAME) {
-            return new LastFrame();
-        }
-
-        return new NormalFrame(frameNumber + 1);
+        next = Frames.createNextFrame(this.frameNumber);
+        return next;
     }
 
     @Override
     public BowlingGameFrameRecord createFrameRecord() {
-        return new BowlingGameFrameRecord(List.of(state.createScore()));
+        return new BowlingGameFrameRecord(getScore(), List.of(state.createBowlRecord()));
+    }
+
+    @Override
+    public Score calculateBonusScore(Score previousFrameScore) {
+        Score score = state.calculateBonusScore(previousFrameScore);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+
+        return next != null ? next.calculateBonusScore(score) : score;
     }
 
     @Override
@@ -44,13 +51,22 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public boolean isFinish() {
+    public boolean isFrameFinish() {
         return state.isFinish();
     }
 
     private void validate(int frameNumber) {
-        if (frameNumber < BowlingGame.START_FRAME || frameNumber > BowlingGame.LAST_FRAME - 1) {
+        if (frameNumber < Frame.START_FRAME || frameNumber > Frame.LAST_FRAME - 1) {
             throw new IllegalArgumentException(INVALID_FRAME_NUMBER_EXCEPTION_MESSAGE);
         }
+    }
+
+    private Score getScore() {
+        Score score = state.getScore();
+        if (score.canCalculateScore()) {
+            return score;
+        }
+
+        return next != null ? next.calculateBonusScore(score) : score;
     }
 }

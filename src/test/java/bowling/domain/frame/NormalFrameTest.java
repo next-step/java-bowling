@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import bowling.domain.BowlingGame;
-
 class NormalFrameTest {
     @DisplayName("1~9 사이의 범위의 숫자를 가진 일반 프레임을 생성한다.")
     @ParameterizedTest(name = "{displayName}; number: {0}")
@@ -31,7 +29,7 @@ class NormalFrameTest {
     void bowlWithStrike() {
         Frame frame = new NormalFrame(1);
         frame.bowl(10);
-        assertThat(frame.isFinish()).isTrue();
+        assertThat(frame.isFrameFinish()).isTrue();
     }
 
     @Test
@@ -39,9 +37,9 @@ class NormalFrameTest {
     void bowlWithSpare() {
         Frame frame = new NormalFrame(1);
         frame.bowl(0);
-        assertThat(frame.isFinish()).isFalse();
+        assertThat(frame.isFrameFinish()).isFalse();
         frame.bowl(10);
-        assertThat(frame.isFinish()).isTrue();
+        assertThat(frame.isFrameFinish()).isTrue();
     }
 
     @Test
@@ -49,9 +47,9 @@ class NormalFrameTest {
     void bowlWithMiss() {
         Frame frame = new NormalFrame(1);
         frame.bowl(3);
-        assertThat(frame.isFinish()).isFalse();
+        assertThat(frame.isFrameFinish()).isFalse();
         frame.bowl(4);
-        assertThat(frame.isFinish()).isTrue();
+        assertThat(frame.isFrameFinish()).isTrue();
     }
 
     @DisplayName("다음 라운드에 대해, 마지막 라운드를 제외한 라운드는 일반 프레임으로 생성된다.")
@@ -66,7 +64,7 @@ class NormalFrameTest {
     @Test
     @DisplayName("마지막 라운드는 LastFrame 인스턴스로 생성된다.")
     void createLastFrame() {
-        Frame nextFrame = new NormalFrame(BowlingGame.LAST_FRAME - 1).createNextFrame();
+        Frame nextFrame = new NormalFrame(Frame.LAST_FRAME - 1).createNextFrame();
         assertThat(nextFrame instanceof LastFrame).isTrue();
     }
 }

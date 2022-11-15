@@ -2,7 +2,7 @@ package bowling.domain.frame.state;
 
 public class Pins {
     private static final int MIN_PINS = 0;
-    private static final int MAX_PINS = 10;
+    public static final int MAX_PINS = 10;
 
     private final int falledPins;
 
@@ -23,8 +23,12 @@ public class Pins {
         return this.falledPins + secondPins.falledPins == MAX_PINS;
     }
 
-    public Pins add(int falledPins) {
-        return new Pins(this.falledPins + falledPins);
+    public Pins add(Pins otherPins) {
+        return new Pins(this.falledPins + otherPins.falledPins);
+    }
+
+    public boolean isLegalPins(Pins secondsPins) {
+        return falledPins + secondsPins.falledPins <= MAX_PINS;
     }
 
     public int getPins() {

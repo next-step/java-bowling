@@ -5,13 +5,14 @@ import static java.util.stream.Collectors.*;
 import java.util.LinkedList;
 import java.util.List;
 
-import bowling.domain.BowlingGame;
-import bowling.domain.BowlingGameFrameRecord;
+import bowling.domain.dto.BowlRecord;
+import bowling.domain.dto.BowlingGameFrameRecord;
 import bowling.domain.frame.state.Ready;
-import bowling.domain.frame.state.Score;
 import bowling.domain.frame.state.State;
 
-public class LastFrame implements Frame {
+public class LastFrame extends Frame {
+    private static final int DEFAULT_BOWL_COUNT = 2;
+    private static final int BONUS_BOWL_COUNT = 1;
     private static final String ALREADY_ENDED_FRAME_EXCEPTION_MESSAGE = "이미 종료된 프레임입니다.";
 
     private final LinkedList<State> states = new LinkedList<>();
@@ -24,7 +25,7 @@ public class LastFrame implements Frame {
 
     @Override
     public void bowl(int falledPins) {
-        if (isFinish()) {
+        if (isFrameFinish()) {
             throw new IllegalStateException(ALREADY_ENDED_FRAME_EXCEPTION_MESSAGE);
         }
 
@@ -42,26 +43,38 @@ public class LastFrame implements Frame {
 
     @Override
     public Frame createNextFrame() {
-        throw new UnsupportedOperationException();
+        return Frames.createNextFrame(Frame.LAST_FRAME);
     }
 
     @Override
     public BowlingGameFrameRecord createFrameRecord() {
-        List<Score> scores = states.stream()
-            .map(State::createScore)
+        List<BowlRecord> bowlRecords = states.stream()
+            .map(State::createBowlRecord)
             .collect(toList());
 
-        return new BowlingGameFrameRecord(scores);
+        return new BowlingGameFrameRecord(getScore(), bowlRecords);
+    }
+
+    @Override
+    public Score calculateBonusScore(Score previousFrameScore) {
+        Score score = previousFrameScore;
+        for (State state : states) {
+            score = state.calculateBonusScore(score);
+            if (score.canCalculateScore()) {
+                return score;
+            }
+        }
+        return score;
     }
 
     @Override
     public int getFrameNumber() {
-        return BowlingGame.LAST_FRAME;
+        return LAST_FRAME;
     }
 
     @Override
-    public boolean isFinish() {
-        return hasNoBonusBowl() || bowlCount == 3;
+    public boolean isFrameFinish() {
+        return hasNoBonusBowl() || bowlCount == (DEFAULT_BOWL_COUNT + BONUS_BOWL_COUNT);
     }
 
     private State getCurrentState() {
@@ -70,5 +83,14 @@ public class LastFrame implements Frame {
 
     private boolean hasNoBonusBowl() {
         return bowlCount == 2 && !getCurrentState().canBonusBowl();
+    }
+
+    private Score getScore() {
+        Score score = states.getFirst().getScore();
+
+        for (int i = 1; i < states.size(); ++i) {
+            score = states.get(i).calculateBonusScore(score);
+        }
+        return score;
     }
 }

@@ -1,58 +1,34 @@
 package bowling.domain;
 
-import static java.util.stream.Collectors.*;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
+import bowling.domain.dto.BowlingGameFrameRecord;
+import bowling.domain.frame.Frames;
 
 public class BowlingGame {
-    public static final int START_FRAME = 1;
-    public static final int LAST_FRAME = 10;
-
-    private final List<Frame> frames;
+    private final Frames frames;
 
     public BowlingGame() {
-        frames = new ArrayList<>(List.of(new NormalFrame(START_FRAME)));
+        frames = new Frames();
     }
 
     public void bowl(int falledPins) {
-        getCurrentFrame().bowl(falledPins);
+        frames.bowl(falledPins);
 
-        if (isCurrentFrameEnded() && isGamePlayable()) {
-            frames.add(getCurrentFrame().createNextFrame());
+        if (frames.isCurrentFrameEnded() && frames.isGamePlayable()) {
+            frames.createNextFrame();
         }
     }
 
     public List<BowlingGameFrameRecord> createFrameRecords() {
-        List<BowlingGameFrameRecord> frameRecords = frames.stream()
-            .map(Frame::createFrameRecord)
-            .collect(toList());
-
-        IntStream.range(frames.size(), LAST_FRAME)
-            .forEach(i -> {
-                frameRecords.add(new BowlingGameFrameRecord(List.of()));
-            });
-
-        return frameRecords;
+        return frames.createFrameRecords();
     }
 
     public boolean isGamePlayable() {
-        return !(frames.size() == LAST_FRAME && isCurrentFrameEnded());
+        return frames.isGamePlayable();
     }
 
     public int getCurrentFrameNumber() {
-        return getCurrentFrame().getFrameNumber();
-    }
-
-    private Frame getCurrentFrame() {
-        return frames.get(frames.size() - 1);
-    }
-
-    private boolean isCurrentFrameEnded() {
-        return getCurrentFrame().isFinish();
+        return frames.getCurrentFrameNumber();
     }
 }

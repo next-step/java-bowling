@@ -2,20 +2,29 @@ package bowling.domain.frame.state;
 
 import java.util.List;
 
-public class Strike implements State {
+import bowling.domain.dto.BowlRecord;
+import bowling.domain.frame.Score;
+
+public class Strike extends Finished {
+    private static final int STRIKE_BONUS_BOWLS = 2;
+
     @Override
-    public State bowl(int pins) {
-        throw new UnsupportedOperationException();
+    public BowlRecord createBowlRecord() {
+        return new BowlRecord(List.of(new Pins(10)), true, false);
     }
 
     @Override
-    public Score createScore() {
-        return new Score(List.of(10));
+    public Score getScore() {
+        return new Score(Pins.MAX_PINS, STRIKE_BONUS_BOWLS);
     }
 
     @Override
-    public boolean isFinish() {
-        return true;
+    public Score calculateBonusScore(Score previousScore) {
+        if (previousScore.canCalculateScore()) {
+            return previousScore;
+        }
+
+        return addBonusScore(previousScore, Pins.MAX_PINS);
     }
 
     @Override
