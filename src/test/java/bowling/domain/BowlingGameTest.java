@@ -43,7 +43,9 @@ class BowlingGameTest {
         BowlingGame game = createBowlingGame(10);
         game.hit(1);
         game.hit(2);
+        game.moveNextFrame();
         game.hit(10);
+        game.moveNextFrame();
         game.hit(3);
 
         assertThat(game).isEqualTo(createBowlingGame(10, 1, 2, 10, 3));
@@ -60,6 +62,7 @@ class BowlingGameTest {
         assertThat(game.getRemainedPins()).isEqualTo(9);
 
         game.hit(2);
+        game.moveNextFrame();
         assertThat(game.getRemainedPins()).isEqualTo(10);
 
         game.hit(3);

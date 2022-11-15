@@ -37,14 +37,10 @@ public class BowlingGame {
     public void hit(int pins) {
         Frame currentFrame = getCurrentFrame();
         currentFrame.add(pins);
-        if (currentFrame.isEnded()) {
-            indexOfCurrentFrame++;
-        }
     }
 
-    public int getNumberOfCurrentFrame() {
-        validateState();
-        return indexOfCurrentFrame + 1;
+    public void moveNextFrame() {
+        indexOfCurrentFrame++;
     }
 
     public Frame getCurrentFrame() {
