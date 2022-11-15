@@ -4,6 +4,10 @@ public class HitRecord {
     private final int hitCount;
     private final BowilingTerm bowilingTerm;
 
+    public static HitRecord of(int count, BowilingTerm bowilingTerm) {
+        return new HitRecord(count, bowilingTerm);
+    }
+
     public HitRecord(int count, BowilingTerm bowilingTerm) {
         this.hitCount = count;
         this.bowilingTerm = bowilingTerm;
