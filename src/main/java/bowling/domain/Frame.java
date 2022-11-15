@@ -3,7 +3,7 @@ package bowling.domain;
 import bowling.type.BowlingScore;
 
 public interface Frame {
-    boolean isProgress();
+    boolean isInProgress();
 
     BowlingScore getBowlingScore();
 
@@ -15,7 +15,7 @@ public interface Frame {
 
     void nextTry();
 
-    Frame nextRound();
+    Frame nextFrame();
 
     int getLatestScore();
 

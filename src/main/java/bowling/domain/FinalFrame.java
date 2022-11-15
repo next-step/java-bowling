@@ -12,18 +12,18 @@ public class FinalFrame extends DefaultFrame {
     }
 
     @Override
-    public Frame nextRound() {
-        throw new UnsupportedOperationException("no next round available");
+    public Frame nextFrame() {
+        throw new UnsupportedOperationException("no next frame available");
     }
 
     @Override
     public void nextTry() {
         if (isThirdTry()) {
-            scores.next(10);
+            scores.nextTry(10);
             playStatus = PlayStatus.END;
             return;
         }
-        scores.next();
+        scores.nextTry();
         if (!hasAnotherChance()) {
             playStatus = PlayStatus.END;
         }

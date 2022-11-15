@@ -38,24 +38,24 @@ public class Frames {
             return;
         }
 
-        if (getLastFrame().isProgress()) {
+        if (getLastFrame().isInProgress()) {
             nextTry();
             return;
         }
-        nextRound();
+        nextFrame();
     }
 
     public void nextTry() {
         getLastFrame().nextTry();
     }
 
-    public void nextRound() {
-        frames.add(getLastFrame().nextRound());
+    public void nextFrame() {
+        frames.add(getLastFrame().nextFrame());
     }
 
     private boolean isEnd() {
         return frames.size() == LAST_FRAME_ORDER &&
-                !getLastFrame().isProgress();
+                !getLastFrame().isInProgress();
     }
 
     public boolean isInProgress() {

@@ -19,7 +19,7 @@ public class NormalFrame extends DefaultFrame {
     }
 
     @Override
-    public Frame nextRound() {
+    public Frame nextFrame() {
         int nextOrder = order + 1;
         if (nextOrder == LAST_FRAME_ORDER) {
             return new FinalFrame(new Scores(getPinCalculateStrategy()), nextOrder);

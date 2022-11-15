@@ -17,7 +17,7 @@ public class ScoresTest {
     @Test
     void testNextScore(){
         Scores scores = new Scores(maxNum -> 5);
-        scores.next();
+        scores.nextTry();
 
         assertThat(scores).isEqualTo(new Scores(Arrays.asList(5,5)));
     }

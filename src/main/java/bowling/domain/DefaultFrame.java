@@ -28,7 +28,7 @@ public abstract class DefaultFrame implements Frame {
     }
 
     public void nextTry() {
-        scores.next();
+        scores.nextTry();
         playStatus = PlayStatus.END;
     }
 
@@ -46,7 +46,7 @@ public abstract class DefaultFrame implements Frame {
         return BowlingScore.from(scores);
     }
 
-    public boolean isProgress() {
+    public boolean isInProgress() {
         return PlayStatus.IN_PROGRESS == playStatus;
     }
 

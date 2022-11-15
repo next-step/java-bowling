@@ -26,13 +26,13 @@ public class Scores {
         return scores.get(0) == 10;
     }
 
-    public void next() {
+    public void nextTry() {
         int maxNum = MAX_PIN_COUNT - getFirst();
         int newScore = strategy.calculate(maxNum);
         scores.add(newScore);
     }
 
-    public void next(int maxNum) {
+    public void nextTry(int maxNum) {
         scores.add(strategy.calculate(maxNum));
     }
 
