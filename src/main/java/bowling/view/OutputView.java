@@ -1,58 +1,87 @@
 package bowling.view;
 
-import bowling.domain.Frame;
-import bowling.domain.Frames;
-import bowling.domain.Player;
-import bowling.domain.Rolls;
+import bowling.domain.*;
 
 import java.util.List;
 
 public class OutputView {
-    public static void printScores(Player player) {
-        System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
-        System.out.printf("|  %s |", player.getName().getName());
 
-        Frames frames = player.getFrames();
+    public static final String HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
+    public static final String EMPTY_FRAME = "      |";
+    public static final String GUTTER = "-";
+    public static final String STRIKE = "X";
+
+    public static void printResult(Player player) {
+        System.out.println(HEADER);
+        printFrames(player.getName(), player.getFrames());
+        printScores(player.getScores());
+        System.out.println();
+    }
+
+    private static void printFrames(Name name, Frames frames) {
+        System.out.printf("|  %s |", name.getName());
         for (int i = 0; i < 10; i++) {
-            System.out.print(makeFrame(frames.getFrames(), i));
+            System.out.print(makeFrameResult(frames.getFrames(), i));
         }
         System.out.println();
     }
 
-    private static String makeFrame(List<Frame> frames, int index) {
-        if (frames.size() > index) {
-            return makeScore(frames.get(index).getScores());
+    private static void printScores(Scores scores) {
+        System.out.print("|      |");
+        for (int i = 0; i < 10; i++) {
+            System.out.print(makeScores(scores.getScores(), i));
         }
-        return "      |";
+        System.out.println();
     }
 
-    private static String makeScore(Rolls rolls) {
+    private static String makeScores(List<Score> scores, int index) {
+        if (scores.size() > index && scores.get(index).isEnd()) {
+            return String.format("  %3d |", scores.get(index).getScore());
+        }
+        return EMPTY_FRAME;
+    }
+
+    private static String makeFrameResult(List<Frame> frames, int index) {
+        if (frames.size() > index) {
+            return makePinCount(frames.get(index).getScores());
+        }
+        return EMPTY_FRAME;
+    }
+
+    private static String makePinCount(Rolls rolls) {
         if (rolls.size() == 3) {
-            return String.format(" %s|%s|", getStrikeOrMiss(rolls), getScoreOrGutter(rolls, 2));
+            return String.format(" %s|%s|", getSpareOrMiss(rolls), getScoreOrGutterOrStrike(rolls, 2));
         }
         if (rolls.size() == 2) {
-            return String.format("  %s |", getStrikeOrMiss(rolls));
+            return String.format("  %s |", getSpareOrMiss(rolls));
         }
         if (rolls.size() == 1) {
-            if (rolls.getScores().get(0).getScore() == 10) {
-                return "  X   |";
-            }
-            return String.format("  %s|  |", getScoreOrGutter(rolls, 0));
+            return getStrikeOrProgress(rolls);
         }
-        return "      |";
+        return EMPTY_FRAME;
     }
 
-    private static String getStrikeOrMiss(Rolls rolls) {
+    private static String getStrikeOrProgress(Rolls rolls) {
+        if (rolls.getScores().get(0).getScore() == 10) {
+            return "  X   |";
+        }
+        return String.format("  %s|  |", getScoreOrGutterOrStrike(rolls, 0));
+    }
+
+    private static String getSpareOrMiss(Rolls rolls) {
         if (rolls.sum() == 10) {
-            return String.format("%s|/", getScoreOrGutter(rolls, 0));
+            return String.format("%s|/", getScoreOrGutterOrStrike(rolls, 0));
         }
-        return String.format("%s|%s", getScoreOrGutter(rolls, 0), getScoreOrGutter(rolls, 1));
+        return String.format("%s|%s", getScoreOrGutterOrStrike(rolls, 0), getScoreOrGutterOrStrike(rolls, 1));
     }
 
-    private static String getScoreOrGutter(Rolls rolls, int index) {
+    private static String getScoreOrGutterOrStrike(Rolls rolls, int index) {
         int score = rolls.getScores().get(index).getScore();
         if (score == 0) {
-            return "-";
+            return GUTTER;
+        }
+        if (score == 10) {
+            return STRIKE;
         }
         return String.valueOf(score);
     }
