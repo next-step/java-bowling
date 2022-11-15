@@ -12,9 +12,6 @@ public class FrameDto {
     }
 
     public static FrameDto from(Frame frame) {
-        if(frame == null){
-            System.out.println("hi~~");
-        }
         ScoreDto scoreDto = ScoreDto.from(frame.score());
         PinCountDto pinCountDto = PinCountDto.from(frame.pitches());
         return new FrameDto(scoreDto, pinCountDto);
