@@ -12,16 +12,25 @@ public class InputView {
 
     }
 
-    public static String inputPlayerName() {
-        return inputWithText("플레이어 이름은?: ");
-    }
-
-    public static int inputBowlNumber(int frameNumber) {
+    public static int inputNumberOfPlayers() {
         try {
-            return Integer.parseInt(inputWithText(frameNumber + "프레임 투구 : "));
+            return Integer.parseInt(inputWithText("참여 인원수를 입력해주세요: "));
         } catch (NumberFormatException e) {
             System.out.println("숫자를 입력해주세요.");
-            return inputBowlNumber(frameNumber);
+            return inputNumberOfPlayers();
+        }
+    }
+
+    public static String inputPlayerName(int index) {
+        return inputWithText("플레이어 " + index + "의 이름은?: ");
+    }
+
+    public static int inputBowlNumber(String playerName) {
+        try {
+            return Integer.parseInt(inputWithText(playerName + "님의 차례: "));
+        } catch (NumberFormatException e) {
+            System.out.println("숫자를 입력해주세요.");
+            return inputBowlNumber(playerName);
         }
     }
 

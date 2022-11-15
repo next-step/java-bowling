@@ -7,7 +7,7 @@ import java.util.List;
 
 import static bowling.domain.Pin.MAX_COUNT;
 
-public class FirstBowl extends State {
+public class FirstBowl extends Running {
 
     private final Pin pin;
 
@@ -27,11 +27,6 @@ public class FirstBowl extends State {
         }
 
         return new Miss(this.pin, pin);
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
     }
 
     @Override

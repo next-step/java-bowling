@@ -5,7 +5,7 @@ import bowling.domain.Score;
 
 import java.util.List;
 
-public class Ready extends State {
+public class Ready extends Running {
 
     @Override
     public State bowl(Pin pin) {
@@ -14,11 +14,6 @@ public class Ready extends State {
         }
 
         return new FirstBowl(pin);
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
     }
 
     @Override

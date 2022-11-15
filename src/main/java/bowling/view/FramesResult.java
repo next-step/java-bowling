@@ -1,7 +1,6 @@
 package bowling.view;
 
 import bowling.domain.Frame;
-import bowling.domain.Frames;
 import bowling.domain.player.Player;
 
 import java.util.ArrayList;
@@ -13,11 +12,11 @@ import static bowling.domain.FinalFrame.MAX_FRAME_NUMBER;
 import static bowling.domain.Frame.NO_SCORE;
 
 public class FramesResult {
-    private final static String FRAME_NUMBER_LINE;
+    private static final String FRAME_NUMBER_LINE;
+    private static final String FRAME_SIGN_BAR = " %3s  |".repeat(MAX_FRAME_NUMBER - 1) + " %-5s|";
+    private static final String FRAME_SCORE_BAR = "|      |" + " %3s  |".repeat(MAX_FRAME_NUMBER);
 
     private final FrameResult frameResult = new FrameResult();
-    private final Player player;
-    private final Frames frames;
 
     static {
         FRAME_NUMBER_LINE = "| NAME |" + IntStream.rangeClosed(1, MAX_FRAME_NUMBER)
@@ -25,41 +24,46 @@ public class FramesResult {
                 .collect(Collectors.joining());
     }
 
-    public FramesResult(Player player, Frames frames) {
-        this.player = player;
-        this.frames = frames;
+    public FramesResult() {
+
     }
 
     public String frameNumberLine() {
         return FRAME_NUMBER_LINE;
     }
 
-    public String frameSigns() {
-        return playerName() + createSigns();
+    public String getPlayerFrameSigns(Player player) {
+        return playerName(player) + createSigns(player);
     }
 
-    private String playerName() {
-        return String.format("| %4s |", player.getName().getValue());
+    private String playerName(Player player) {
+        return String.format("| %4s |", player.getName().getName());
     }
 
-    private String createSigns() {
-        return frames.values()
+    private String createSigns(Player player) {
+        List<String> signs = player.getFrames().values()
                 .stream()
                 .map(this::createFrameSign)
-                .collect(Collectors.joining()) + createEmptyFrame(frames.lastFrame());
-    }
-
-    public String frameScores() {
-        return "|      |" + createScores();
-    }
-
-    private String createScores() {
-        List<Integer> scores = frames.values()
-                .stream()
-                .map(this::getScore)
-                .filter(score -> score != NO_SCORE)
                 .collect(Collectors.toList());
 
+        return String.format(FRAME_SIGN_BAR, padEmptyString(signs));
+    }
+
+    private String createFrameSign(Frame frame) {
+        return frameResult.frameSign(frame);
+    }
+
+    public String getPlayerScores(Player player) {
+        List<Integer> result = accumulateScore(getIntScores(player));
+
+        List<String> stringScores = result.stream()
+                .map(String::valueOf)
+                .collect(Collectors.toList());
+
+        return String.format(FRAME_SCORE_BAR, padEmptyString(stringScores));
+    }
+
+    private List<Integer> accumulateScore(List<Integer> scores) {
         List<Integer> result = new ArrayList<>();
         if (scores.size() > 0) {
             result.add(scores.get(0));
@@ -68,29 +72,28 @@ public class FramesResult {
         for (int i = 1; i < scores.size(); i++) {
             result.add(result.get(i - 1) + scores.get(i));
         }
-
-        return result.stream()
-                .map(this::createScore)
-                .collect(Collectors.joining()) + createEmptyFrame(MAX_FRAME_NUMBER - result.size());
+        return result;
     }
 
-    private String createScore(int score) {
-        return String.format(" %3d ", score) + " |";
+    private List<Integer> getIntScores(Player player) {
+        return player.getFrames().values()
+                .stream()
+                .map(this::getScore)
+                .filter(score -> score != NO_SCORE)
+                .collect(Collectors.toList());
     }
 
     private int getScore(Frame frame) {
         return frameResult.frameScore(frame);
     }
 
-    private String createFrameSign(Frame frame) {
-        return frameResult.frameSign(frame) + "|";
-    }
+    private Object[] padEmptyString(List<String> strings) {
+        int additionalSize = MAX_FRAME_NUMBER - strings.size();
 
-    private String createEmptyFrame(Frame frame) {
-        return createEmptyFrame(MAX_FRAME_NUMBER - frame.getFrameNumber());
-    }
+        for (int i = 0; i < additionalSize; i++) {
+            strings.add("");
+        }
 
-    private String createEmptyFrame(int count) {
-        return "      |".repeat(count);
+        return strings.toArray();
     }
 }

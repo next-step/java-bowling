@@ -11,7 +11,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("일반 프레임 테스트")
 class NormalFrameTest {
@@ -140,8 +139,8 @@ class NormalFrameTest {
         nextFrame.bowl(secondPin);
 
         assertAll(
-                () -> assertEquals(firstExpected, frame.getIntScore()),
-                () -> assertEquals(secondExpected, nextFrame.getIntScore())
+                () -> assertThat(frame.getIntScore()).isEqualTo(firstExpected),
+                () -> assertThat(nextFrame.getIntScore()).isEqualTo(secondExpected)
         );
     }
 
@@ -173,8 +172,8 @@ class NormalFrameTest {
 
 
         assertAll(
-                () -> assertEquals(frame.getIntScore(), 20),
-                () -> assertEquals(second.getIntScore(), 18)
+                () -> assertThat(frame.getIntScore()).isEqualTo(20),
+                () -> assertThat(second.getIntScore()).isEqualTo(18)
         );
     }
 
@@ -193,9 +192,9 @@ class NormalFrameTest {
 
 
         assertAll(
-                () -> assertEquals(frame.getIntScore(), 20),
-                () -> assertEquals(second.getIntScore(), 18),
-                () -> assertEquals(third.getIntScore(), 9)
+                () -> assertThat(frame.getIntScore()).isEqualTo(20),
+                () -> assertThat(second.getIntScore()).isEqualTo(18),
+                () -> assertThat(third.getIntScore()).isEqualTo(9)
         );
     }
 
@@ -226,9 +225,9 @@ class NormalFrameTest {
         third.bowl(4);
 
         assertAll(
-                () -> assertEquals(frame.getIntScore(), 25),
-                () -> assertEquals(second.getIntScore(), 19),
-                () -> assertEquals(third.getIntScore(), 9)
+                () -> assertThat(frame.getIntScore()).isEqualTo(25),
+                () -> assertThat(second.getIntScore()).isEqualTo(19),
+                () -> assertThat(third.getIntScore()).isEqualTo(9)
         );
     }
 }

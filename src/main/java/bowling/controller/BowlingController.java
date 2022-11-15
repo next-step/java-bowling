@@ -1,54 +1,68 @@
 package bowling.controller;
 
-import bowling.domain.Frame;
-import bowling.domain.Frames;
+import bowling.domain.player.Players;
 import bowling.domain.player.Player;
-import bowling.view.FramesResult;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 public class BowlingController {
     public void start() {
-        Player player = getPlayer();
+        Players players = createPlayers();
 
-        Frames frames = Frames.init();
-        FramesResult framesResult = new FramesResult(player, frames);
-        ResultView.printFrameResult(framesResult);
+        ResultView.printFrameResults(players);
 
-        while (!frames.isLast()) {
-            inputBowlNumberAndPrintResult(framesResult, frames);
+        while (!players.isAllEnd()) {
+            bowlAndPrintResult(players);
         }
     }
 
-    private Player getPlayer() {
-        String playerName = InputView.inputPlayerName();
+    private Players createPlayers() {
+        int numberOfPlayers = InputView.inputNumberOfPlayers();
+        List<Player> players = IntStream.range(0, numberOfPlayers)
+                .mapToObj(i -> createPlayer(i + 1))
+                .collect(Collectors.toList());
+
+        try {
+            return new Players(players);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return createPlayers();
+        }
+    }
+
+    private Player createPlayer(int index) {
+        String playerName = InputView.inputPlayerName(index);
 
         try {
             return new Player(playerName);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
-            return getPlayer();
+            return createPlayer(index);
         }
     }
 
-    private void inputBowlNumberAndPrintResult(FramesResult framesResult, Frames frames) {
-        Frame lastFrame = frames.lastFrame();
-
-        while (lastFrame.canBowl()) {
-            bowl(lastFrame);
-            ResultView.printFrameResult(framesResult);
-        }
-
-        frames.addFrame();
+    private void bowlAndPrintResult(Players players) {
+        players.getPlayers()
+                .stream()
+                .filter(Player::canBowl)
+                .forEach(player -> {
+                    bowl(player);
+                    ResultView.printFrameResults(players);
+                });
     }
 
-    private void bowl(Frame frame) {
-        int number = InputView.inputBowlNumber(frame.getFrameNumber());
+    private void bowl(Player player) {
+        int number = InputView.inputBowlNumber(player.getName().getName());
 
         try {
-            frame.bowl(number);
+            player.bowl(number);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
+            bowl(player);
         }
     }
 }

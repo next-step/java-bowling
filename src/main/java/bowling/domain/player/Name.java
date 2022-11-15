@@ -7,18 +7,18 @@ public class Name {
     private static final Pattern PATTERN = Pattern.compile("^[a-zA-Z0-9]+$");
     private static final int MAX_SIZE = 3;
 
-    private final String value;
+    private final String name;
 
-    public Name(String value) {
-        validateNullOrBlank(value);
+    public Name(String name) {
+        validateNullOrBlank(name);
 
-        value = value.strip();
-        validate(value);
-        this.value = value;
+        name = name.strip();
+        validate(name);
+        this.name = name;
     }
 
     private static void validateNullOrBlank(String value) {
-        if (Objects.isNull(value) || value.isBlank()) {
+        if (value == null || value.isBlank()) {
             throw new IllegalArgumentException("이름이 null 이거나 빈 문자열입니다.");
         }
     }
@@ -40,8 +40,8 @@ public class Name {
         }
     }
 
-    public String getValue() {
-        return value;
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -55,11 +55,11 @@ public class Name {
         }
 
         Name name = (Name) o;
-        return Objects.equals(value, name.value);
+        return Objects.equals(this.name, name.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value);
+        return Objects.hash(name);
     }
 }
