@@ -6,6 +6,7 @@ public class Round {
 
     public static final int ROUND_START = 1;
     public static final int ROUND_END = 10;
+    public static final int ROUND_MAX = ROUND_END + 1;
     private int round;
 
     public Round() {
@@ -13,11 +14,15 @@ public class Round {
     }
 
     public Round(int number) {
+        validateUpperRoundRange(number);
         this.round = number;
     }
 
-    public boolean isGameEnd() {
-        return this.round > ROUND_END;
+    private void validateUpperRoundRange(int number) {
+        if (number < ROUND_START || number > ROUND_END + 1) {
+            throw new IllegalArgumentException("Round는 " + ROUND_START + "보다 작거나 "
+                    + ROUND_MAX + "보다 클 수 없습니다.");
+        }
     }
 
     public int value() {
@@ -29,7 +34,24 @@ public class Round {
     }
 
     public void nextRound() {
+        validateUpperRoundRange(this.round + 1);
         this.round++;
+    }
+
+    public boolean isGameEnd() {
+        return this.round > ROUND_END;
+    }
+
+    public boolean isSecondRound() {
+        return this.round == ROUND_START + 1;
+    }
+
+    public boolean isAfterSecondRound() {
+        return this.round > 2;
+    }
+
+    public Round beforeRound() {
+        return new Round(this.round - 1);
     }
 
     @Override

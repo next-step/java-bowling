@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.score;
 
 import java.util.HashMap;
 import java.util.Map;

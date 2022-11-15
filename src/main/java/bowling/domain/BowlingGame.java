@@ -1,5 +1,8 @@
 package bowling.domain;
 
+import bowling.domain.frame.Frame;
+import bowling.domain.score.Score;
+
 public class BowlingGame {
 
     private final Scoreboard scoreboard;

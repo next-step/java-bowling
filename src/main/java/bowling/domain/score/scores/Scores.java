@@ -1,13 +1,21 @@
-package bowling.domain;
+package bowling.domain.score.scores;
 
+import bowling.domain.score.Score;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class Scores {
+public abstract class Scores {
+    protected static final int SCORE_STRIKE = 10;
 
-    private final List<Score> scores;
+    protected final List<Score> scores;
+
+    public abstract void validateScore();
+
+    public abstract boolean isNotEndScore(Scores scores);
+
+    public abstract boolean isChanceMinusTwo();
 
     public Scores() {
         this.scores = new ArrayList<>();
@@ -33,8 +41,12 @@ public class Scores {
         return this.scores.get(2);
     }
 
-    public int size() {
-        return this.scores.size();
+    public boolean isSizeEqual(int size) {
+        return this.scores.size() == size;
+    }
+
+    public boolean isSizeOver(int size) {
+        return this.scores.size() > size;
     }
 
     public int sum() {
@@ -47,6 +59,14 @@ public class Scores {
         return Arrays.stream(scores)
                 .mapToInt(Score::value)
                 .sum();
+    }
+
+    public boolean isSpare() {
+        return this.isSizeOver(1) && Scores.sumScores(this.first(), this.second()) == SCORE_STRIKE;
+    }
+
+    protected boolean isStrike() {
+        return this.first().isStrike();
     }
 
     @Override

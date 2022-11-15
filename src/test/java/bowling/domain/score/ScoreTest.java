@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.score;
 
 
 import static org.assertj.core.api.Assertions.assertThat;

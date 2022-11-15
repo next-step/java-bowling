@@ -1,5 +1,9 @@
 package bowling.domain;
 
+import bowling.domain.frame.DefaultFrame;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.LastFrame;
+import bowling.domain.score.Score;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -23,6 +27,24 @@ public class Scoreboard {
     public void addScore(Score score, Round round) {
         Frame frame = this.frames.get(round.index());
         frame.addScore(score);
+        setBonusScore(score, round);
+    }
+
+    private void setBonusScore(Score score, Round round) {
+        if (round.isSecondRound()) {
+            addBonusScore(score, round.beforeRound());
+        }
+        if (round.isAfterSecondRound()) {
+            addBonusScore(score, round.beforeRound());
+            addBonusScore(score, round.beforeRound().beforeRound());
+        }
+    }
+
+    public void addBonusScore(Score score, Round round) {
+        Frame beforeRoundFrame = this.frames.get(round.index());
+        if (beforeRoundFrame.isNotEndScoreAggregation()) {
+            beforeRoundFrame.addBonusScore(score);
+        }
     }
 
     public Frame frame(Round round) {

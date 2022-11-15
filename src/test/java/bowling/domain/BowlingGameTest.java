@@ -2,6 +2,7 @@ package bowling.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -35,5 +36,18 @@ public class BowlingGameTest {
         bowlingGame.play(Score.of(1));
 
         assertThat(bowlingGame.isEnd()).isTrue();
+    }
+
+    @Test
+    void round() {
+        Scoreboard scoreboard = new Scoreboard(new Name("cys"));
+        BowlingGame bowlingGame = new BowlingGame(scoreboard);
+        for (int i = 1; i < 10; i++) {
+            assertThat(bowlingGame.round()).isEqualTo(i);
+            bowlingGame.play(Score.of(1));
+            bowlingGame.play(Score.of(1));
+            bowlingGame.isEnd();
+        }
+        assertThat(bowlingGame.round()).isEqualTo(10);
     }
 }
