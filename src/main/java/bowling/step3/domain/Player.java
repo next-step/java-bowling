@@ -18,7 +18,7 @@ public class Player {
 
     }
 
-    public boolean IsEndedFrame(int frameNum) {
+    public boolean isEndedFrame(int frameNum) {
         if (frameNum == this.currentFrameNum &&
                 this.frames.isEndedFrame(frameNum)) {
             this.currentFrameNum++;

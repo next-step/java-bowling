@@ -12,7 +12,7 @@ class PlayerTest {
         player.bowl(10);
         assertSoftly(softly -> {
             assertThat(player.name()).isEqualTo("jak");
-            assertThat(player.IsEndedFrame(1)).isTrue();
+            assertThat(player.isEndedFrame(1)).isTrue();
         });
     }
 
@@ -22,7 +22,7 @@ class PlayerTest {
         player.bowl(2);
         assertSoftly(softly -> {
             assertThat(player.name()).isEqualTo("Jin");
-            assertThat(player.IsEndedFrame(1)).isFalse();
+            assertThat(player.isEndedFrame(1)).isFalse();
         });
     }
 }
