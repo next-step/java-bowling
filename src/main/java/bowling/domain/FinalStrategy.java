@@ -12,10 +12,6 @@ public class FinalStrategy implements FrameStrategy {
 
     @Override
     public boolean isFrameEnd(int round, Result beforeResult) {
-        if (round == 3 && (beforeResult.isStrike() || beforeResult.isSpare())) {
-            throw new IllegalArgumentException("유효하지 않은 입력값 입니다");
-        }
-
         return round == END_ROUND
                 || round == END_BEFORE_ROUND && (beforeResult.isMiss() || beforeResult.isGutter());
     }
