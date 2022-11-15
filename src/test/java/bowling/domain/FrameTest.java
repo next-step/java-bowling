@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-class Frame2Test {
+class FrameTest {
 
     @Test
     void 일반프레임_종료판단_2회투구() {
-        Frame2 frame = Frame2.createNormal();
+        Frame frame = Frame.createNormal();
 
         frame.bowling(5);
         assertThat(frame.isEnd()).isFalse();
@@ -20,14 +20,14 @@ class Frame2Test {
 
     @Test
     void 일반프레임_종료판단_스트라이크() {
-        Frame2 frame = Frame2.createNormal();
+        Frame frame = Frame.createNormal();
         frame.bowling(10);
         assertThat(frame.isEnd()).isTrue();
     }
 
     @Test
     void 마지막프레임_종료판단_3회투구() {
-        Frame2 frame = Frame2.createFinal();
+        Frame frame = Frame.createFinal();
         frame.bowling(10);
         frame.bowling(10);
         frame.bowling(10);
@@ -36,7 +36,7 @@ class Frame2Test {
 
     @Test
     void 마지막프레임_예외() {
-        Frame2 frame = Frame2.createFinal();
+        Frame frame = Frame.createFinal();
         frame.bowling(10);
         frame.bowling(10);
         frame.bowling(10);
@@ -46,7 +46,7 @@ class Frame2Test {
 
     @Test
     void 프레임종료() {
-        Frame2 frame = Frame2.createNormal();
+        Frame frame = Frame.createNormal();
         frame.bowling(5);
         frame.bowling(5);
         assertThat(frame.isEnd()).isTrue();

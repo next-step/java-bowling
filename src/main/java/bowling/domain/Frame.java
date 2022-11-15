@@ -2,112 +2,82 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 public class Frame {
-    public static final int FINAL_MAX_TOTAL_COUNT = 30;
-    public static final int FINAL_MAX_SIZE = 3;
 
-    private final int maxTotalCount;
-    private final int maxSize;
-    private final List<Bowling> values;
+    private final List<Bowling> values = new ArrayList<>();
+    private final FrameStrategy strategy;
 
-    public Frame(int maxTotalCount, int size) {
-        this.maxTotalCount = maxTotalCount;
-        this.maxSize = size;
-        this.values = new ArrayList<>(size);
+    public Frame(FrameStrategy strategy) {
+        this.strategy = strategy;
     }
 
     public static Frame createNormal() {
-        return null;
+        return new Frame(new NormalStrategy());
     }
 
     public static Frame createFinal() {
-        return new Frame(FINAL_MAX_TOTAL_COUNT, FINAL_MAX_SIZE);
+        return new Frame(new FinalStrategy());
     }
 
-    public Bowling get(int index) {
-        return values.get(index);
+    public void bowling(int pinCount) {
+        values.add(Bowling.from(this, PinCount.of(pinCount)));
     }
 
-    public int getCount(int index) {
-        return values.get(index).getCount();
-    }
-
-    public PinCount getLastCount() {
-        int count = values.get(values.size() - 1).getCount();
-        return PinCount.of(count);
-    }
-
-    public void bowling(int count) {
-        if (isNotOverMaxTotalCount(count)) {
-            throw new IllegalArgumentException("최대 쓰러뜨린수를 초과했습니다.. " + count);
-        }
-
-        values.add(Bowling.from(this, count));
-    }
-
-    private boolean isNotOverMaxTotalCount(int count) {
-        return getTotalCount(count) > maxTotalCount;
-    }
-
-    private int getTotalCount(int count) {
-        return getCurrentTotalCount() + count;
-    }
-
-    private int getCurrentTotalCount() {
-        return values.stream()
-                .mapToInt(Bowling::getCount)
-                .reduce(0, Integer::sum);
-    }
-
-    public int size() {
-        return values.size();
+    public void bowling(PinCount pinCount) {
+        values.add(Bowling.from(this, pinCount));
     }
 
     public boolean isEnd() {
-        return isFrameEnd() || isNotRestPin();
+        return strategy.isFrameEnd(getRound(), beforeResult());
     }
 
-    private boolean isNotRestPin() {
-        return getCurrentTotalCount() == maxTotalCount;
+    public int getRound() {
+        return values.size();
     }
 
-    private boolean isFrameEnd() {
-        return values.size() == maxSize;
+    public PinCount beforeCount() {
+        return getBeforeBowling().getPinCount();
     }
 
-    public Result result(int index) {
-        return Result.from(this, index);
-    }
-
-    public int sumNowAndBeforePinCount(int index) {
-        if (index <= 0) {
-            throw new IllegalArgumentException("index는 1 이상만 입력가능 합니다.");
+    private Result beforeResult() {
+        if (isFirstRound()) {
+            return Result.NONE;
         }
 
-        return get(index).sum(get(index - 1));
+        return getBeforeBowling().getResult();
+    }
+
+    private Bowling getBeforeBowling() {
+        return values.get(values.size() - 1);
+    }
+
+    private boolean isFirstRound() {
+        return getRound() == Result.FIRST_ROUND;
+    }
+
+    public Result getResult(int round) {
+        return getBowling(round).getResult();
+    }
+
+    public int getCount(int round) {
+        return getBowling(round).getCount();
+    }
+
+
+    private Bowling getBowling(int round) {
+        return Optional.ofNullable(values.get(round))
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 인덱스 입니다. " + round));
     }
 
     //=============================================================
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Frame frame = (Frame) o;
-        return Objects.equals(values, frame.values);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(values);
-    }
-
-    @Override
     public String toString() {
-        return "Bowlings{" +
+        return "Frame{" +
                 "values=" + values +
+                ", strategy=" + strategy +
                 '}';
     }
 }

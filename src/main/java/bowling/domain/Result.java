@@ -12,16 +12,11 @@ public enum Result {
     public static final int FINAL_ROUND = 2;
     public static final int MAX_COUNT = 10;
 
-    public static Result from(Frame2 frame, int count) {
-        return from(frame, PinCount.of(count));
-    }
-
-    @Deprecated
     public static Result from(Frame frame, int count) {
         return from(frame, PinCount.of(count));
     }
 
-    public static Result from(Frame2 frame, PinCount pinCount) {
+    public static Result from(Frame frame, PinCount pinCount) {
         int round = frame.getRound();
 
         if (round == FIRST_ROUND || round == FINAL_ROUND) {
@@ -33,21 +28,6 @@ public enum Result {
         }
 
         throw new IllegalArgumentException("투구는 3회 이하여야 합니다. " + round);
-    }
-
-    @Deprecated
-    public static Result from(Frame frame, PinCount pinCount) {
-        int round = frame.size();
-
-        if (round == FIRST_ROUND || round == FINAL_ROUND) {
-            return Result.of(pinCount);
-        }
-
-        if (round == SECOND_ROUND) {
-            return Result.second(frame.getLastCount(), pinCount);
-        }
-
-        throw new IllegalArgumentException("투구는 3회 이하여야 합니다.");
     }
 
     private static Result of(PinCount pinCount) {

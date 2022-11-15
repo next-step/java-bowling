@@ -20,7 +20,7 @@ public class Bowling {
         return new Bowling(PinCount.of(count), Result.from(frame, count));
     }
 
-    public static Bowling from(Frame2 frame, PinCount pinCount) {
+    public static Bowling from(Frame frame, PinCount pinCount) {
         return new Bowling(pinCount, Result.from(frame, pinCount));
     }
 
@@ -30,11 +30,6 @@ public class Bowling {
 
     public PinCount getPinCount() {
         return pinCount;
-    }
-
-    @Deprecated
-    public int sum(Bowling bowling) {
-        return 0;
     }
 
     public boolean isStrike() {

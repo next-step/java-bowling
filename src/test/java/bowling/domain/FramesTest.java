@@ -13,7 +13,7 @@ class FramesTest {
         Frames frames = Frames.init();
 
         frames.bowling(10);
-        Frame2 frame = frames.get(0);
+        Frame frame = frames.get(0);
 
         assertThat(frames.getCurrentRound()).isEqualTo(0);
         assertThat(frame.getResult(0)).isEqualTo(Result.STRIKE);
@@ -25,7 +25,7 @@ class FramesTest {
 
         frames.bowling(5);
         frames.bowling(5);
-        Frame2 frame = frames.get(0);
+        Frame frame = frames.get(0);
 
         assertThat(frames.getCurrentRound()).isEqualTo(0);
         assertThat(frame.getResult(1)).isEqualTo(Result.SPARE);

@@ -66,7 +66,7 @@ public class OutputView {
         return getNormalFrameScore(frames.get(index), index);
     }
 
-    private String getNormalFrameScore(Frame2 frame, int index) {
+    private String getNormalFrameScore(Frame frame, int index) {
         StringBuilder sb = new StringBuilder();
 
         Result first = frame.getResult(index);
@@ -79,7 +79,7 @@ public class OutputView {
         return sb.toString();
     }
 
-    private String getFinalFrameScore(Frame2 frame) {
+    private String getFinalFrameScore(Frame frame) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < frame.getRound(); i++) {
             if (1 != 0) {
