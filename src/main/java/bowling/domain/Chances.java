@@ -30,13 +30,6 @@ public class Chances {
                 .areAllPinsDown();
     }
 
-    public boolean noLeftChances(boolean isFinalFrame) {
-        if (!isFinalFrame || !areAllPinsDown()) {
-            return chances.size() == NORMAL_FRAME_MAX_CHANCE_COUNT;
-        }
-        return chances.size() == FINAL_FRAME_MAX_CHANCE_COUNT;
-    }
-
     public boolean noLeftChancesInNormalFrame() {
         return chances.size() == NORMAL_FRAME_MAX_CHANCE_COUNT;
     }
