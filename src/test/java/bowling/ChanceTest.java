@@ -23,4 +23,26 @@ public class ChanceTest {
         assertThat(chance.chance()).isEqualTo("X");
     }
 
+    @Test
+    @DisplayName("현재 찬스가 STRIKE인지 확인")
+    void test3() {
+        // given
+        Chance chance = new Chance(Pin.of(10), Status.STRIKE);
+        // when
+        boolean isStrike = chance.isStrike();
+        // then
+        assertThat(isStrike).isTrue();
+    }
+
+    @Test
+    @DisplayName("현재 찬스가 SPARE인지 확인")
+    void test4() {
+        // given
+        Chance chance = new Chance(Pin.of(10), Status.SPARE);
+        // when
+        boolean isSpare = chance.isSPARE();
+        // then
+        assertThat(isSpare).isTrue();
+    }
+
 }

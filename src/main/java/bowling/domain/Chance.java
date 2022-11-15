@@ -20,4 +20,12 @@ public class Chance {
         return status.symbol();
     }
 
+    public boolean isStrike() {
+        return status == Status.STRIKE;
+    }
+
+    public boolean isSPARE() {
+        return status == Status.SPARE;
+    }
+
 }
