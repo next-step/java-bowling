@@ -28,6 +28,7 @@ public class NormalFrame implements Frame {
         return this;
     }
 
+    @Override
     public String getResult() {
         ResultMark firstResultMark = ResultMark.getResultMark(firstFallenPins, null);
         ResultMark secondResultMark = ResultMark.getResultMark(secondFallenPins, firstFallenPins);

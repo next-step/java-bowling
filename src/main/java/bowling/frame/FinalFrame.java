@@ -44,6 +44,7 @@ public class FinalFrame implements Frame {
         return result.replace(RESULT_DELIMITER + ResultMark.EMPTY.getMark(), ResultMark.EMPTY.getMark());
     }
 
+    @Override
     public boolean isFinish() {
         if (hasBonus()) {
             return isNormalRoundFinish() && thirdFallenPins != null;
