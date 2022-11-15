@@ -7,25 +7,27 @@ import java.util.stream.Collectors;
 
 public class ResultView {
     private static String INIT_SCORE_BOARD_STRING = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-    private static String NAME_STRING = "|  %s |";
+    private static String NAME_STRING = "\n|  %s |";
     private static String GUTTER_STRING = "-";
     private static String TOTAL_SCORE_STRING = "\n|      |";
     private static String TOTAL_SCORE_RIGHT_STRING = "  |";
     private static String DOUBLE_BLANK = "  ";
 
     public static void printScoreBoard(BowlingGame game) {
-        System.out.println(INIT_SCORE_BOARD_STRING);
-        System.out.printf(NAME_STRING, game.getPlayer().getName());
-        printPinScore(game.getRecords());
-        printTotalScores(game.getRecords());
+        System.out.print(INIT_SCORE_BOARD_STRING);
+        for (Record record : game.getRecords()) {
+            System.out.printf(NAME_STRING, record.getPlayerName());
+            printPinScore(record);
+            printTotalScores(record);
+        }
         System.out.println();
     }
 
-    private static void printTotalScores(Records records) {
+    private static void printTotalScores(Record record) {
         System.out.print(TOTAL_SCORE_STRING);
         int totalScore;
-        for (int index = 0; records.isReadyFrameScore(index); index++) {
-            totalScore = records.getTotalScore(index);
+        for (int index = 0; record.isReadyFrameScore(index); index++) {
+            totalScore = record.getTotalScore(index);
             System.out.print(DOUBLE_BLANK + getTotalScoreString(totalScore) + TOTAL_SCORE_RIGHT_STRING);
         }
     }
@@ -37,8 +39,8 @@ public class ResultView {
         return "" + totalScore;
     }
 
-    private static void printPinScore(Records records) {
-        for (Frame frame : records.getFrames()) {
+    private static void printPinScore(Record record) {
+        for (Frame frame : record.getFrames()) {
             printScore(frame.getScores());
             printBonusScore(frame);
         }
