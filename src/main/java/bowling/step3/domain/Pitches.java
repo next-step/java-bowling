@@ -44,6 +44,6 @@ public class Pitches {
     }
 
     public List<Pitch> pitches() {
-        return pitches;
+        return new ArrayList<>(pitches);
     }
 }
