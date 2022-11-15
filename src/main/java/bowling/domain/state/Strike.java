@@ -2,9 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.frame.Frame;
 
-import java.util.List;
-
-public class Strike implements FrameState {
+public class Strike implements HitState {
 
     private static final int NUMBER_OF_BONUS = 2;
 
@@ -12,8 +10,8 @@ public class Strike implements FrameState {
     }
 
     @Override
-    public boolean identify(List<Integer> hits) {
-        return hits.get(hits.size() - 1) == Frame.MAX_NUMBER_OF_BOWLING_PINS;
+    public boolean identify(int hit, Integer previousHit) {
+        return (previousHit == null || previousHit != 0) && hit == Frame.MAX_NUMBER_OF_BOWLING_PINS;
     }
 
     @Override

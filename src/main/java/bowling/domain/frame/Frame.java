@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.FrameState;
+import bowling.domain.state.HitState;
 
 public interface Frame {
 
@@ -13,7 +13,7 @@ public interface Frame {
 
     int getHit(int index);
 
-    FrameState getState(int index);
+    HitState getState(int index);
 
     default boolean isOnGoing() {
         return !isEnded();

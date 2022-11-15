@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.FrameState;
+import bowling.domain.state.HitState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -48,9 +48,9 @@ class AbstractFrameTest {
         frame.add(10);
         frame.add(10);
 
-        assertThat(frame.getState(0)).isEqualTo(null);
-        assertThat(frame.getState(1)).isEqualTo(FrameState.SPARE);
-        assertThat(frame.getState(2)).isEqualTo(FrameState.STRIKE);
+        assertThat(frame.getState(0)).isEqualTo(HitState.GUTTER);
+        assertThat(frame.getState(1)).isEqualTo(HitState.SPARE);
+        assertThat(frame.getState(2)).isEqualTo(HitState.STRIKE);
     }
 
 }

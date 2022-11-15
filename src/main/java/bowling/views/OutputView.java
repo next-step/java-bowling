@@ -1,6 +1,6 @@
 package bowling.views;
 
-import bowling.domain.state.FrameState;
+import bowling.domain.state.HitState;
 import bowling.dto.BowlingGameDto;
 import bowling.dto.FrameDto;
 import bowling.dto.HitDto;
@@ -64,16 +64,16 @@ public class OutputView {
     }
 
     private static String formatHit(HitDto hit) {
-        FrameState state = hit.getState();
-        if (state == null || state.equals(FrameState.MISS)) {
+        HitState state = hit.getState();
+        if (state == null || state.equals(HitState.MISS)) {
             return String.valueOf(hit.getValue());
         }
 
-        if (hit.getValue() == 0) {
+        if (state.equals(HitState.GUTTER)) {
             return GUTTER;
         }
 
-        if (state.equals(FrameState.SPARE)) {
+        if (state.equals(HitState.SPARE)) {
             return SPARE;
         }
 

@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.FrameState;
+import bowling.domain.state.HitState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.Objects;
 public abstract class AbstractFrame implements Frame {
 
     protected final List<Integer> hits;
-    protected final List<FrameState> states;
+    protected final List<HitState> states;
     protected final Frame nextFrame;
 
     protected AbstractFrame(Frame nextFrame) {
@@ -23,8 +23,16 @@ public abstract class AbstractFrame implements Frame {
         validateState();
         validateHitIsNegative(hit);
         validateHitIsUnderRemainedPins(hit);
+
+        states.add(HitState.from(hit, getPreviousHit()));
         hits.add(hit);
-        states.add(FrameState.from(hits));
+    }
+
+    private Integer getPreviousHit() {
+        if (hits.isEmpty()) {
+            return null;
+        }
+        return hits.get(hits.size() - 1);
     }
 
     private void validateState() {
@@ -57,7 +65,7 @@ public abstract class AbstractFrame implements Frame {
     }
 
     @Override
-    public FrameState getState(int index) {
+    public HitState getState(int index) {
         return states.get(index);
     }
 
@@ -82,7 +90,7 @@ public abstract class AbstractFrame implements Frame {
     @Override
     abstract public int getScore();
 
-    protected FrameState getLastState() {
+    protected HitState getLastState() {
         return states.get(states.size() - 1);
     }
 

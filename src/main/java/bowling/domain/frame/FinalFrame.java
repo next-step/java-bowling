@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.FrameState;
+import bowling.domain.state.HitState;
 
 public class FinalFrame extends AbstractFrame {
 
@@ -12,7 +12,7 @@ public class FinalFrame extends AbstractFrame {
 
     @Override
     public boolean isEnded() {
-        return states.contains(FrameState.MISS) || hits.size() == MAX_SIZE_OF_HITS;
+        return states.contains(HitState.MISS) || hits.size() == MAX_SIZE_OF_HITS;
     }
 
     @Override
