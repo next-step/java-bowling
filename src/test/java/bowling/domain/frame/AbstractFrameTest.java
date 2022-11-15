@@ -1,22 +1,33 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.state.HitState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class AbstractBowlingGameFrameTest {
+class AbstractFrameTest {
 
-    private BowlingGameFrame frame;
+    private Frame frame;
 
     @BeforeEach
     void setUp() {
-        frame = new AbstractBowlingGameFrame() {
+        frame = new AbstractFrame(new FinalFrame()) {
 
             @Override
             public boolean isEnded() {
                 return false;
+            }
+
+            @Override
+            public boolean hasScore() {
+                return false;
+            }
+
+            @Override
+            public int getScore() {
+                return 0;
             }
 
         };
@@ -37,9 +48,9 @@ class AbstractBowlingGameFrameTest {
         frame.add(10);
         frame.add(10);
 
-        assertThat(frame.getResult(0)).isEqualTo(BowlingGameHitResult.GUTTER);
-        assertThat(frame.getResult(1)).isEqualTo(BowlingGameHitResult.SPARE);
-        assertThat(frame.getResult(2)).isEqualTo(BowlingGameHitResult.STRIKE);
+        assertThat(frame.getState(0)).isEqualTo(HitState.GUTTER);
+        assertThat(frame.getState(1)).isEqualTo(HitState.SPARE);
+        assertThat(frame.getState(2)).isEqualTo(HitState.STRIKE);
     }
 
 }

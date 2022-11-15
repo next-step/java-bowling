@@ -1,17 +1,21 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.state.HitState;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
+public abstract class AbstractFrame implements Frame {
 
     protected final List<Integer> hits;
-    protected final List<BowlingGameHitResult> results;
+    protected final List<HitState> states;
+    protected final Frame nextFrame;
 
-    protected AbstractBowlingGameFrame() {
+    protected AbstractFrame(Frame nextFrame) {
         this.hits = new ArrayList<>();
-        this.results = new ArrayList<>();
+        this.states = new ArrayList<>();
+        this.nextFrame = nextFrame;
     }
 
     @Override
@@ -19,8 +23,16 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
         validateState();
         validateHitIsNegative(hit);
         validateHitIsUnderRemainedPins(hit);
+
+        states.add(HitState.from(hit, getPreviousHit()));
         hits.add(hit);
-        results.add(BowlingGameHitResult.from(hits));
+    }
+
+    private Integer getPreviousHit() {
+        if (hits.isEmpty()) {
+            return null;
+        }
+        return hits.get(hits.size() - 1);
     }
 
     private void validateState() {
@@ -30,8 +42,8 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
     }
 
     private void validateHitIsNegative(int hit) {
-        if (hit < BowlingGameFrame.MIN_NUMBER_OF_BOWLING_PINS) {
-            throw new IllegalArgumentException(String.format("투구는 %d 보다 작을 수 없습니다.", BowlingGameFrame.MIN_NUMBER_OF_BOWLING_PINS));
+        if (hit < Frame.MIN_NUMBER_OF_BOWLING_PINS) {
+            throw new IllegalArgumentException(String.format("투구는 %d 보다 작을 수 없습니다.", Frame.MIN_NUMBER_OF_BOWLING_PINS));
         }
     }
 
@@ -43,26 +55,26 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
     }
 
     @Override
-    public int size() {
+    public int countHits() {
         return hits.size();
     }
 
     @Override
-    public int get(int index) {
+    public int getHit(int index) {
         return hits.get(index);
     }
 
     @Override
-    public BowlingGameHitResult getResult(int index) {
-        return results.get(index);
+    public HitState getState(int index) {
+        return states.get(index);
     }
 
     @Override
     public int getRemainedPins() {
-        return BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS - sumOfHits() % BowlingGameFrame.MAX_NUMBER_OF_BOWLING_PINS;
+        return Frame.MAX_NUMBER_OF_BOWLING_PINS - sumOfHits() % Frame.MAX_NUMBER_OF_BOWLING_PINS;
     }
 
-    private int sumOfHits() {
+    protected int sumOfHits() {
         return hits.stream()
                 .reduce(0, Integer::sum);
     }
@@ -71,23 +83,35 @@ public abstract class AbstractBowlingGameFrame implements BowlingGameFrame {
     abstract public boolean isEnded();
 
     @Override
+    public Frame getNextFrame() {
+        return nextFrame;
+    }
+
+    @Override
+    abstract public int getScore();
+
+    protected HitState getLastState() {
+        return states.get(states.size() - 1);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AbstractBowlingGameFrame that = (AbstractBowlingGameFrame) o;
-        return Objects.equals(hits, that.hits) && Objects.equals(results, that.results);
+        AbstractFrame that = (AbstractFrame) o;
+        return Objects.equals(hits, that.hits) && Objects.equals(states, that.states);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(hits, results);
+        return Objects.hash(hits, states);
     }
 
     @Override
     public String toString() {
         return "AbstractBowlingGameFrame{" +
                 "hits=" + hits +
-                ", results=" + results +
+                ", states=" + states +
                 '}';
     }
 

@@ -1,9 +1,9 @@
 package bowling.views;
 
-import bowling.domain.BowlingGameHitResult;
+import bowling.domain.state.HitState;
 import bowling.dto.BowlingGameDto;
-import bowling.dto.BowlingGameFrameDto;
-import bowling.dto.BowlingGameHitDto;
+import bowling.dto.FrameDto;
+import bowling.dto.HitDto;
 import bowling.dto.PlayerDto;
 
 import java.util.List;
@@ -30,43 +30,80 @@ public class OutputView {
         System.out.printf("|  %s |", player.getName());
         game.getFrames()
                 .forEach(OutputView::printBowlingGameFrame);
+        System.out.print("\n");
+
+        printBowlingGameScore(game);
         System.out.print("\n\n");
     }
 
-    private static void printBowlingGameFrame(BowlingGameFrameDto frame) {
+    private static void printBowlingGameFrame(FrameDto frame) {
         System.out.print(getFormatOfHits(frame.getHits()));
     }
 
-    private static String getFormatOfHits(List<BowlingGameHitDto> hits) {
+    private static String getFormatOfHits(List<HitDto> hits) {
         if (hits.isEmpty()) {
             return EMPTY_FORMAT;
         }
-        int leftEmptyCount = hits.size() < OFFSET_REFERENCE ? OFFSET_OF_SHORT_FORMAT : OFFSET_OF_LONG_FORMAT;
+        int leftEmptyCount = getLeftEmptyCount(hits);
         StringBuilder stringBuilder = new StringBuilder(EMPTY.repeat(leftEmptyCount) + formatHit(hits.get(0)));
         IntStream.range(1, hits.size())
                 .forEach(i -> stringBuilder.append(SPLITTER)
                         .append(formatHit(hits.get(i))));
-        int rightEmptyCount = TOTAL_LENGTH - leftEmptyCount - hits.size() * 2;
+        int rightEmptyCount = getRightEmptyCount(stringBuilder);
         return stringBuilder.append(EMPTY.repeat(rightEmptyCount))
                 .append(SPLITTER)
                 .toString();
     }
 
-    private static String formatHit(BowlingGameHitDto hit) {
-        BowlingGameHitResult result = hit.getResult();
-        if (result == BowlingGameHitResult.GUTTER) {
+    private static int getLeftEmptyCount(List<HitDto> hits) {
+        return hits.size() < OFFSET_REFERENCE ? OFFSET_OF_SHORT_FORMAT : OFFSET_OF_LONG_FORMAT;
+    }
+
+    private static int getRightEmptyCount(StringBuilder stringBuilder) {
+        return TOTAL_LENGTH - stringBuilder.length() - 1;
+    }
+
+    private static String formatHit(HitDto hit) {
+        HitState state = hit.getState();
+        if (state == null || state.equals(HitState.MISS)) {
+            return String.valueOf(hit.getValue());
+        }
+
+        if (state.equals(HitState.GUTTER)) {
             return GUTTER;
         }
 
-        if (result == BowlingGameHitResult.SPARE) {
+        if (state.equals(HitState.SPARE)) {
             return SPARE;
         }
 
-        if (result == BowlingGameHitResult.STRIKE) {
-            return STRIKE;
-        }
+        return STRIKE;
+    }
 
-        return String.valueOf(hit.getValue());
+
+    private static void printBowlingGameScore(BowlingGameDto game) {
+        System.out.print("|" + EMPTY_FORMAT);
+        int accumulation = 0;
+        for (FrameDto frame : game.getFrames()) {
+            accumulation = frame.isHasScore() ? accumulation + frame.getScore() : accumulation;
+            printBowlingGameScore(frame.isHasScore(), accumulation);
+        }
+    }
+
+    private static void printBowlingGameScore(boolean hasScore, int score) {
+        System.out.print(getFormatOfScores(hasScore, score));
+    }
+
+    private static String getFormatOfScores(boolean hasScore, int score) {
+        if (!hasScore) {
+            return EMPTY_FORMAT;
+        }
+        int leftEmptyCount = 2;
+        StringBuilder stringBuilder = new StringBuilder(EMPTY.repeat(leftEmptyCount) + score);
+        int rightEmptyCount = getRightEmptyCount(stringBuilder);
+        return stringBuilder.append(EMPTY.repeat(rightEmptyCount))
+                .append(SPLITTER)
+                .toString();
     }
 
     public static void printError(Exception e) {
