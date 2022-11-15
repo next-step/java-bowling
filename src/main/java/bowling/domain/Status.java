@@ -13,17 +13,17 @@ public enum Status {
         this.symbol = symbol;
     }
 
-    public static Status findStatus(int order, Pin current, Pin sum) {
-        if (current.equals(Pin.All_KNOCK_DOWN_PIN)) {
+    public static Status findStatus(int order, Point current, Point sum) {
+        if (current.equals(Point.All_KNOCK_DOWN_POINT)) {
             return STRIKE;
         }
-        if (order == 1 && current.isSmallerThan(Pin.All_KNOCK_DOWN_PIN) && sum.equals(Pin.All_KNOCK_DOWN_PIN)) {
+        if (order == 1 && current.isSmallerThan(Point.All_KNOCK_DOWN_POINT) && sum.equals(Point.All_KNOCK_DOWN_POINT)) {
             return SPARE;
         }
-        if (order == 1 && sum.isSmallerThan(Pin.All_KNOCK_DOWN_PIN)) {
+        if (order == 1 && sum.isSmallerThan(Point.All_KNOCK_DOWN_POINT)) {
             return MISS;
         }
-        if (order == 0 && current.equals(Pin.NO_KNOCK_DOWN_PIN) && sum.equals(Pin.NO_KNOCK_DOWN_PIN)) {
+        if (order == 0 && current.equals(Point.NO_KNOCK_DOWN_POINT) && sum.equals(Point.NO_KNOCK_DOWN_POINT)) {
             return GUTTER;
         }
         return NONE;

@@ -1,21 +1,21 @@
 package bowling.domain;
 
 public class Chance {
-    private final Pin pin;
+    private final Point point;
     private final Status status;
 
-    public Chance(Pin pin, Status status) {
-        this.pin = pin;
+    public Chance(Point point, Status status) {
+        this.point = point;
         this.status = status;
     }
 
-    public Pin pin() {
-        return pin;
+    public Point point() {
+        return point;
     }
 
     public String chance() {
         if (status == Status.NONE || status == Status.MISS) {
-            return String.valueOf(pin.pin());
+            return String.valueOf(point.point());
         }
         return status.symbol();
     }

@@ -15,18 +15,18 @@ public class Chances {
 
     public void add(int knockDownCount) {
         int order = chances.size();
-        Pin current = Pin.of(knockDownCount);
-        Pin sum = chances.stream()
-                .map(Chance::pin)
-                .reduce(Pin.of(0), Pin::add)
+        Point current = Point.of(knockDownCount);
+        Point sum = chances.stream()
+                .map(Chance::point)
+                .reduce(Point.of(0), Point::add)
                 .add(current);
         chances.add(new Chance(current, Status.findStatus(order, current, sum)));
     }
 
     public boolean areAllPinsDown() {
         return chances.stream()
-                .map(Chance::pin)
-                .reduce(Pin.of(0), Pin::add)
+                .map(Chance::point)
+                .reduce(Point.of(0), Point::add)
                 .areAllPinsDown();
     }
 
