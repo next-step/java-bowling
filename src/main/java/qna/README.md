@@ -1,9 +1,9 @@
 # QnA 서비스 리팩토링 요구사항
 - [x] `QnAService` 의 `게시글 작성자가 본인인지 검증` 로직을 `Question`으로 이동
     - [x] 검증 로직 테스트
-- [ ] `Question` 의 `List<Answer>`을 일급 콜렉션 `Answers`로 변환
-    - [ ] `Answers` 로 `QnAService`의 `다른 사람이 작성한 댓글이 있는지 검증` 로직을 이동
-    - [ ] 검증 로직 테스트
+- [x] `Question` 의 `List<Answer>`을 일급 콜렉션 `Answers`로 변환
+    - [x] `Answers` 로 `QnAService`의 `다른 사람이 작성한 댓글이 있는지 검증` 로직을 이동
+    - [x] 검증 로직 테스트
 - [ ] `Answers` 의 검증 로직을 `Question`의 검증 로직에 병합
 - [ ] `DeleteHistory`의 일급 콜렉션 `DeleteHistories`를 생성, 불변 객체로 설계
 - [ ] `QnAService` 의 `Answer을 삭제` 하는 로직을 `Answer`으로 이동하고, `DeleteHistories`를 반환하도록 설정
