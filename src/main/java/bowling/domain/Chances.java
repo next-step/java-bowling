@@ -55,4 +55,10 @@ public class Chances {
                 .anyMatch(Chance::isSPARE);
     }
 
+    public Point sumOfPoints() {
+        return chances.stream()
+                .map(Chance::point)
+                .reduce(Point.of(0), Point::add);
+    }
+
 }

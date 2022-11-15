@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.domain.Chances;
+import bowling.domain.Point;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -58,6 +59,15 @@ public class ChancesTest {
         chances.add(5);
         chances.add(5);
         assertThat(chances.hasSpare()).isTrue();
+    }
+
+    @Test
+    @DisplayName("가지고 있는 찬스들의 Point 합치기")
+    void test8() {
+        Chances chances = new Chances();
+        chances.add(5);
+        chances.add(5);
+        assertThat(chances.sumOfPoints()).isEqualTo(Point.of(10));
     }
 
 }
