@@ -12,9 +12,14 @@ import java.util.Random;
 
 public class BowlingApp {
 
-    private final InputView inputView = new InputView();
-    private final ResultView resultView = new ResultView();
+    private final InputView inputView;
+    private final ResultView resultView;
     private static final Random random = new Random();
+
+    public BowlingApp(InputView inputView, ResultView resultView) {
+        this.inputView = inputView;
+        this.resultView = resultView;
+    }
 
     public void start(){
         PlayerName playerName = new PlayerName(inputView.getPlayName());
