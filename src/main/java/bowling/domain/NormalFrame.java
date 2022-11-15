@@ -1,11 +1,20 @@
 package bowling.domain;
 
+import bowling.type.PlayStatus;
+
 import static bowling.BowlingApp.getPinCalculateStrategy;
 import static bowling.domain.Frames.LAST_FRAME_ORDER;
 
 public class NormalFrame extends DefaultFrame {
 
     public static final int MAX_SCORE_SIZE = 2;
+
+    public NormalFrame(int order, Scores scores, PlayStatus playStatus) {
+        super(scores, order);
+        this.order = order;
+        this.scores = scores;
+        this.playStatus = playStatus;
+    }
 
     public NormalFrame(Scores scores) {
         super(scores);
@@ -26,5 +35,7 @@ public class NormalFrame extends DefaultFrame {
         }
         return new NormalFrame(new Scores(getPinCalculateStrategy()), nextOrder);
     }
+
+
 
 }

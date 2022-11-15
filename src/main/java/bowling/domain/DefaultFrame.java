@@ -3,6 +3,8 @@ package bowling.domain;
 import bowling.type.BowlingScore;
 import bowling.type.PlayStatus;
 
+import java.util.Objects;
+
 public abstract class DefaultFrame implements Frame {
 
     protected int order = 1;
@@ -65,5 +67,18 @@ public abstract class DefaultFrame implements Frame {
     @Override
     public int getScoreSize() {
         return scores.size();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DefaultFrame that = (DefaultFrame) o;
+        return order == that.order && Objects.equals(scores, that.scores) && playStatus == that.playStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(order, scores, playStatus);
     }
 }
