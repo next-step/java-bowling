@@ -6,7 +6,7 @@ import java.util.List;
 public class HitRecords {
     private static final int HIT_ONCE = 1;
 
-    private List<HitRecord> hitRecords;
+    private final List<HitRecord> hitRecords;
 
     public HitRecords() {
         this.hitRecords = new ArrayList<>();
