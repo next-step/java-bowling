@@ -9,5 +9,7 @@ public interface Frame {
 
     FrameStatus getStatus();
 
+    Score calculateScore();
+
     void updateStatus();
 }

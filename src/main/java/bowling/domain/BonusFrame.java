@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class BonusFrame implements Frame {
     public static final int BONUS_ROLL = 3;
-    public static final int NORMAL_END_SCORE = 10;
 
     private final Rolls rolls;
     private FrameStatus status;
@@ -24,7 +23,7 @@ public class BonusFrame implements Frame {
 
     @Override
     public boolean isEnd() {
-        if (rolls.sum().bigger(NORMAL_END_SCORE)) {
+        if (rolls.size() == BONUS_ROLL) {
             return true;
         }
         return status == FrameStatus.MISS;
@@ -50,5 +49,10 @@ public class BonusFrame implements Frame {
     @Override
     public FrameStatus getStatus() {
         return status;
+    }
+
+    @Override
+    public Score calculateScore() {
+        return new Score(rolls.sum(), 0);
     }
 }
