@@ -20,7 +20,7 @@ public class BowlingGameMain {
     private static void playFrame(Player player, int i) {
         while (!player.isEndedFrame(i)) {
             int fallenPinCount = InputView.inputFallenPinCounts(i);
-            player.bowl(fallenPinCount);
+            player.bowl(i, fallenPinCount);
             ResultView.printScoreBoard(player.name(), FramesDto.from(player.frames()));
         }
     }
