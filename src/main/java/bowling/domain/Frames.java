@@ -24,7 +24,7 @@ public class Frames {
     }
 
     public void bowling(int count) {
-        Frame frame = getFrame2();
+        Frame frame = getFrame();
         frame.bowling(count);
     }
 
@@ -32,7 +32,7 @@ public class Frames {
         return currentRound != 10 && !values.get(currentRound).isEnd();
     }
 
-    private Frame getFrame2() {
+    private Frame getFrame() {
         Frame current = values.get(currentRound);
 
         if (!current.isEnd()) {

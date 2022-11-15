@@ -7,6 +7,7 @@ public enum Result {
     MISS,
     NONE;
 
+
     public static final int FIRST_ROUND = 0;
     public static final int SECOND_ROUND = 1;
     public static final int FINAL_ROUND = 2;
@@ -24,10 +25,54 @@ public enum Result {
         }
 
         if (round == SECOND_ROUND) {
-            return Result.second(frame.beforeCount(), pinCount);
+            return Result.second(frame, pinCount);
         }
 
-        throw new IllegalArgumentException("투구는 3회 이하여야 합니다. " + round);
+        throw new IllegalArgumentException("투구는 3회 이상일수 없습니다.");
+    }
+
+    private static Result second(Frame frame, PinCount pinCount) {
+        if (frame.isFinal()) {
+            return finalSecond(frame.beforeCount(), pinCount);
+        }
+        return normalSecond(frame.beforeCount(), pinCount);
+    }
+
+    private static Result finalSecond(PinCount beforeCount, PinCount currentCount) {
+
+        if (currentCount.isTen()) {
+            return STRIKE;
+        }
+
+        int sum = currentCount.sum(beforeCount);
+        if (sum == MAX_COUNT) {
+            return SPARE;
+        }
+
+        if (currentCount.isZero()) {
+            return GUTTER;
+        }
+
+        return MISS;
+    }
+
+    private static Result normalSecond(PinCount beforeCount, PinCount currentCount) {
+        int sum = currentCount.sum(beforeCount);
+
+        if (sum > MAX_COUNT) {
+            throw new IllegalArgumentException(String.format("이전 투구(%s) + 현재투구(%s)는 %d을 넘을수 없습니다.", beforeCount, currentCount, MAX_COUNT));
+        }
+
+        if (sum == MAX_COUNT) {
+            return SPARE;
+        }
+
+        if (currentCount.isZero()) {
+            return GUTTER;
+        }
+
+
+        return MISS;
     }
 
     private static Result of(PinCount pinCount) {
@@ -46,24 +91,9 @@ public enum Result {
         return of(PinCount.of(count));
     }
 
-    private static Result second(PinCount beforeCount, PinCount currentCount) {
-        if (currentCount.isZero()) {
-            return GUTTER;
-        }
-
-        if (currentCount.sum(beforeCount) == MAX_COUNT) {
-            return SPARE;
-        }
-
-        return MISS;
-    }
 
     public boolean isStrike() {
         return Result.STRIKE == this;
-    }
-
-    public boolean isSpare() {
-        return Result.SPARE == this;
     }
 
     public boolean isMiss() {

@@ -49,9 +49,7 @@ public class PinCount {
 
     @Override
     public String toString() {
-        return "PinCount{" +
-                "value=" + value +
-                '}';
+        return value + "";
     }
 
     public int sum(PinCount pinCount) {

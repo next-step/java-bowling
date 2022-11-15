@@ -3,7 +3,7 @@ package bowling.domain;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 class FrameTest {
 
@@ -35,21 +35,23 @@ class FrameTest {
     }
 
     @Test
-    void 마지막프레임_예외() {
+    void 프레임종료_예외() {
         Frame frame = Frame.createFinal();
         frame.bowling(10);
         frame.bowling(10);
         frame.bowling(10);
 
-        assertThatIllegalArgumentException().isThrownBy(() -> frame.bowling(9));
+        assertThatIllegalStateException().isThrownBy(() -> frame.bowling(9));
     }
 
     @Test
-    void 프레임종료() {
+    void 프레임종료_예외2() {
         Frame frame = Frame.createNormal();
         frame.bowling(5);
         frame.bowling(5);
         assertThat(frame.isEnd()).isTrue();
+
+        assertThatIllegalStateException().isThrownBy(() -> frame.bowling(9));
     }
 
 }

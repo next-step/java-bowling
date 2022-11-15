@@ -1,10 +1,11 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-public class Frame {
+public class Frame implements Iterable<Bowling> {
 
     private final List<Bowling> values = new ArrayList<>();
     private final FrameStrategy strategy;
@@ -22,6 +23,10 @@ public class Frame {
     }
 
     public void bowling(int pinCount) {
+        if (isEnd()) {
+            throw new IllegalStateException("프레임이 종료 되었습니다");
+        }
+
         values.add(Bowling.from(this, PinCount.of(pinCount)));
     }
 
@@ -61,12 +66,11 @@ public class Frame {
         return getBowling(round).getResult();
     }
 
-    public int getCount(int round) {
-        return getBowling(round).getCount();
+    public boolean isFinal() {
+        return strategy.isFinal();
     }
 
-
-    private Bowling getBowling(int round) {
+    public Bowling getBowling(int round) {
         return Optional.ofNullable(values.get(round))
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 인덱스 입니다. " + round));
     }
@@ -79,5 +83,10 @@ public class Frame {
                 "values=" + values +
                 ", strategy=" + strategy +
                 '}';
+    }
+
+    @Override
+    public Iterator<Bowling> iterator() {
+        return values.iterator();
     }
 }

@@ -2,10 +2,14 @@ package bowling.view;
 
 import bowling.domain.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OutputView {
 
     private static final String MARK = "|";
     private static final int FINAL_ROUND = 10;
+    public static final String EMPTY_MARK = "      ";
 
     private final StringBuilder sb;
 
@@ -14,8 +18,7 @@ public class OutputView {
     }
 
     public static OutputView init() {
-        StringBuilder result = createFirstLine();
-        return new OutputView(result);
+        return new OutputView(createFirstLine());
     }
 
     private static StringBuilder createFirstLine() {
@@ -26,12 +29,25 @@ public class OutputView {
 
         for (int i = 1; i <= 10; i++) {
             sb.append(MARK);
-            sb.append(String.format(" %s ", lpadZero(i)));
+            sb.append(String.format(" %s   ", lpadZero(i)));
         }
         sb.append(MARK);
 
         sb.append(System.lineSeparator());
         return sb;
+    }
+
+    public void print(Name name, Frames frames) {
+        appendMark();
+        sb.append(String.format("  %s ", name));
+
+        for (int i = 0; i < 10; i++) {
+            appendMark();
+            sb.append(getFrameScore(frames, i));
+        }
+        appendMark();
+
+        System.out.println(sb);
     }
 
     private static String lpadZero(int round) {
@@ -42,59 +58,50 @@ public class OutputView {
         return "0" + round;
     }
 
-    public void print(Name name, Frames frames) {
-        appendMark();
-        sb.append(String.format("  %s ", name));
-
-        for (int i = 0; i < 10; i++) {
-            appendMark();
-            appendBody(frames, i);
-        }
-
-        System.out.println(sb);
-    }
-
-    private String appendBody(Frames frames, int index) {
+    private String getFrameScore(Frames frames, int index) {
         if (index > frames.size() - 1) {
-            return "";
+            return EMPTY_MARK;
         }
 
-        if (index == 10) {
-            return getFinalFrameScore(frames.get(index));
+        Frame frame = frames.get(index);
+        if (frame.getRound() == 0) {
+            return EMPTY_MARK;
         }
 
-        return getNormalFrameScore(frames.get(index), index);
+        return formatScore(getNormalFrameScore(frame));
     }
 
-    private String getNormalFrameScore(Frame frame, int index) {
-        StringBuilder sb = new StringBuilder();
-
-        Result first = frame.getResult(index);
-        sb.append(getScoreMark(first, frame.getCount(index)));
-
-        if (frame.getRound() == 2 && Result.STRIKE != first) {
-            appendMark();
-            sb.append(getScoreMark(first, frame.getCount(1)));
-        }
-        return sb.toString();
+    private String formatScore(String scoreMark) {
+        return " " + rpad(scoreMark, MARK);
     }
 
-    private String getFinalFrameScore(Frame frame) {
+    private String rpad(String scoreMark, String mark) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < frame.getRound(); i++) {
-            if (1 != 0) {
-                sb.append(MARK);
-            }
-            sb.append(getScoreMark(frame.getResult(i), frame.getCount(i)));
+
+        int cnt = 5 - scoreMark.length();
+        for (int i = 0; i < cnt; i++) {
+            sb.append(" ");
         }
-        return sb.toString();
+        return scoreMark + sb;
+    }
+
+    private String getNormalFrameScore(Frame frame) {
+        List<String> list = new ArrayList<>();
+        for (Bowling bowling : frame) {
+            list.add(getScoreMark(bowling));
+        }
+
+        return String.join(MARK, list);
     }
 
     private void appendMark() {
         sb.append(MARK);
     }
 
-    private String getScoreMark(Result result, int count) {
+    private String getScoreMark(Bowling bowling) {
+        Result result = bowling.getResult();
+        int count = bowling.getCount();
+
         if (Result.STRIKE == result) {
             return "X";
         }
