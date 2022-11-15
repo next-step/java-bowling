@@ -18,13 +18,13 @@ public class Rolls {
                 .collect(Collectors.toList()));
     }
 
-    public Score sum() {
+    public int sum() {
         return pins.stream()
-                .map(Pin::toScore)
-                .reduce(Score::add)
+                .map(Pin::getScore)
+                .reduce(Integer::sum)
                 .stream()
                 .findFirst()
-                .orElseGet(() -> new Score(0));
+                .orElse(0);
     }
 
     public void add(Pin pin) {

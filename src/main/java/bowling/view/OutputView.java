@@ -1,6 +1,9 @@
 package bowling.view;
 
-import bowling.domain.*;
+import bowling.domain.Frame;
+import bowling.domain.Frames;
+import bowling.domain.Player;
+import bowling.domain.Rolls;
 
 import java.util.List;
 
@@ -40,7 +43,7 @@ public class OutputView {
     }
 
     private static String getStrikeOrMiss(Rolls rolls) {
-        if (rolls.sum().equals(new Score(10))) {
+        if (rolls.sum() == 10) {
             return String.format("%s|/", getScoreOrGutter(rolls, 0));
         }
         return String.format("%s|%s", getScoreOrGutter(rolls, 0), getScoreOrGutter(rolls, 1));
