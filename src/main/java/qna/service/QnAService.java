@@ -37,13 +37,10 @@ public class QnAService {
         Question question = findQuestionById(questionId);
         question.validateOwner(loginUser);
 
-        Answers answers = question.getAnswers();
-        answers.validateOwner(loginUser);
-
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         question.setDeleted(true);
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
-        for (Answer answer : answers.answers()) {
+        for (Answer answer : question.getAnswers().answers()) {
             answer.setDeleted(true);
             deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         }
