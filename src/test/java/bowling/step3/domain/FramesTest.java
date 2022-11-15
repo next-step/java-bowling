@@ -43,8 +43,8 @@ class FramesTest {
         frames.bowl(2, 8);
         frames.bowl(2, 1);
         assertSoftly(softly -> {
-            assertThat(frames.frameMap().get(1).score().score()).isEqualTo(19);
-            assertThat(frames.frameMap().get(2).score().score()).isEqualTo(28);
+            assertThat(frames.frameMap().get(1).score().value()).isEqualTo(19);
+            assertThat(frames.frameMap().get(2).score().value()).isEqualTo(28);
         });
     }
 
@@ -56,8 +56,8 @@ class FramesTest {
         frames.bowl(2, 1);
         frames.bowl(2, 8);
         assertSoftly(softly -> {
-            assertThat(frames.frameMap().get(1).score().score()).isEqualTo(11);
-            assertThat(frames.frameMap().get(2).score().score()).isEqualTo(20);
+            assertThat(frames.frameMap().get(1).score().value()).isEqualTo(11);
+            assertThat(frames.frameMap().get(2).score().value()).isEqualTo(20);
         });
     }
 
@@ -69,8 +69,8 @@ class FramesTest {
         frames.bowl(3, 10);
         frames.bowl(4, 8);
         assertSoftly(softly -> {
-            assertThat(frames.frameMap().get(1).score().score()).isEqualTo(30);
-            assertThat(frames.frameMap().get(2).score().score()).isEqualTo(50);
+            assertThat(frames.frameMap().get(1).score().value()).isEqualTo(30);
+            assertThat(frames.frameMap().get(2).score().value()).isEqualTo(50);
         });
     }
 }

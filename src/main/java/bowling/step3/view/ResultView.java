@@ -35,7 +35,7 @@ public class ResultView {
         if (frame.score() == null) {
             return BLANK.repeat(COLUMN_WIDTH);
         }
-        String point = String.valueOf(frame.score().score());
+        String point = String.valueOf(frame.score().value());
         int blankCount = ((COLUMN_WIDTH - point.length()) / 2);
         return BLANK.repeat(blankCount) + point + BLANK.repeat(COLUMN_WIDTH - blankCount - point.length());
     }

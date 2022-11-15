@@ -50,7 +50,7 @@ class FrameTest {
         frame.add(2);
         frame.add(8);
         frame.addPoint(10,0);
-        assertThat(frame.score().score()).isEqualTo(20);
+        assertThat(frame.score().value()).isEqualTo(20);
 
     }
 }

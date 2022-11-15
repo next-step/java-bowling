@@ -7,7 +7,7 @@ public class Score {
         this.score = score;
     }
 
-    public int score() {
+    public int value() {
         return score;
     }
 }

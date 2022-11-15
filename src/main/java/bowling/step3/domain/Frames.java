@@ -51,7 +51,7 @@ public class Frames {
         if (index - 1 < START_FRAME_INDEX) {
             return 0;
         }
-        return this.frameMap.get(index - 1).score().score();
+        return this.frameMap.get(index - 1).score().value();
     }
 
     private void addFrameScore(int frameNum) {
