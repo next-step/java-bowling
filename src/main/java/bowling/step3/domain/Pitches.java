@@ -43,7 +43,7 @@ public class Pitches {
         return pitches.size();
     }
 
-    public List<Pitch> pitches() {
+    public List<Pitch> value() {
         return new ArrayList<>(pitches);
     }
 }
