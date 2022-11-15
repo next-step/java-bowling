@@ -43,4 +43,21 @@ public class ChancesTest {
         assertThat(chances.noLeftChancesInNormalFrame()).isFalse();
     }
 
+    @Test
+    @DisplayName("STRIKE를 가지고 있음")
+    void test6() {
+        Chances chances = new Chances();
+        chances.add(10);
+        assertThat(chances.hasStrike()).isTrue();
+    }
+
+    @Test
+    @DisplayName("SPARE를 가지고 있음")
+    void test7() {
+        Chances chances = new Chances();
+        chances.add(5);
+        chances.add(5);
+        assertThat(chances.hasSpare()).isTrue();
+    }
+
 }

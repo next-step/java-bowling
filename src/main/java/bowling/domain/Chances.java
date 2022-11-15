@@ -45,4 +45,14 @@ public class Chances {
         return Collections.unmodifiableList(chances);
     }
 
+    public boolean hasStrike() {
+        return chances.stream()
+                .anyMatch(Chance::isStrike);
+    }
+
+    public boolean hasSpare() {
+        return chances.stream()
+                .anyMatch(Chance::isSPARE);
+    }
+
 }
