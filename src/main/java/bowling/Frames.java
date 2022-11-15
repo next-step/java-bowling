@@ -24,17 +24,6 @@ public class Frames {
     }
 
 
-    public FrameNumber pitchingLast(FrameNumber frameNumber, int hitCount) {
-        Frame frame = frames.get(frameNumber.retrieveIndexNumber());
-        frame.hitBowlingPin(hitCount);
-
-        if (frame.clearAllFrame()) {
-            frame.chargeBowlingPin();
-            return frameNumber;
-        }
-        return frameNumber;
-    }
-
     public List<Frame> getFrames() {
         return frames;
     }
