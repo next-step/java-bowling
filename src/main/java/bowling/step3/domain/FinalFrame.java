@@ -11,6 +11,11 @@ public class FinalFrame extends Frame {
         return !hasBonusCondition() && this.pitches.getSize() == DEFAULT_PITCH_CHANCE;
     }
 
+    @Override
+    public Boolean isFinalFrame() {
+        return true;
+    }
+
     private Boolean hasBonusCondition() {
         return this.pitches.hasStrike() || this.pitches.hasSpare();
     }

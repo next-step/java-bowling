@@ -21,5 +21,7 @@ public class Pitch {
         return this.pinCounts == STRIKE;
     }
 
-    public int count() { return pinCounts; }
+    public int count() {
+        return pinCounts;
+    }
 }

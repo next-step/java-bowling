@@ -8,6 +8,7 @@ public class Name {
     static final String NAME_ENGLISH_EXCEPTION = "플레이어 이름은 영어만 사용 가능합니다.";
 
     private final String name;
+
     public Name(String name) {
         validate(name);
         this.name = name;

@@ -14,6 +14,8 @@ class PitchesTest {
             assertThat(pitches.hasSpare()).isFalse();
             assertThat(pitches.hasStrike()).isTrue();
             assertThat(pitches.getSize()).isEqualTo(1);
+            assertThat(pitches.sum()).isEqualTo(10);
+            assertThat(pitches.first()).isEqualTo(10);
         });
     }
 
@@ -27,6 +29,8 @@ class PitchesTest {
             assertThat(pitches.hasSpare()).isTrue();
             assertThat(pitches.hasStrike()).isTrue();
             assertThat(pitches.getSize()).isEqualTo(3);
+            assertThat(pitches.sum()).isEqualTo(20);
+            assertThat(pitches.first()).isEqualTo(10);
         });
     }
 }

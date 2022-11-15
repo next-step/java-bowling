@@ -11,23 +11,35 @@ public class Pitches {
         this.pitches = new ArrayList<>();
     }
 
-    public void add(int count){
+    public void add(int count) {
         this.pitches.add(new Pitch(count));
     }
 
-    public Boolean hasStrike(){
+    public int sum() {
+        return this.pitches.stream().mapToInt(Pitch::count).sum();
+    }
+
+    public int first() {
+        return this.pitches.get(0).count();
+    }
+
+    public int second() {
+        return this.pitches.get(1).count();
+    }
+
+    public Boolean hasStrike() {
         return this.pitches.stream().anyMatch(Pitch::isStrike);
     }
 
     public boolean hasSpare() {
-        if(this.pitches.size() < 2){
+        if (this.pitches.size() < 2) {
             return false;
         }
-        int lastPitch = this.pitches.size() -1;
-        return this.pitches.get(lastPitch).count() + pitches.get(lastPitch-1).count() == 10;
+        int lastPitch = this.pitches.size() - 1;
+        return this.pitches.get(lastPitch).count() + pitches.get(lastPitch - 1).count() == 10;
     }
 
-    public int getSize(){
+    public int getSize() {
         return pitches.size();
     }
 

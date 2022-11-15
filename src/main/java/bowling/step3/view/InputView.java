@@ -14,7 +14,7 @@ public class InputView {
     }
 
     public static int inputFallenPinCounts(int index) {
-        System.out.print(System.lineSeparator()+ index + FRAME_SCORE_INPUT_TEXT);
+        System.out.print(System.lineSeparator() + index + FRAME_SCORE_INPUT_TEXT);
         return sc.nextInt();
     }
 }

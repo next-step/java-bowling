@@ -6,4 +6,9 @@ public class NormalFrame extends Frame {
     public Boolean isEndedFrame() {
         return this.pitches.getSize() == DEFAULT_PITCH_CHANCE || this.pitches.hasStrike();
     }
+
+    @Override
+    public Boolean isFinalFrame() {
+        return false;
+    }
 }

@@ -1,8 +1,5 @@
 package bowling.step3.domain;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Player {
 
     private final Name name;
@@ -17,7 +14,7 @@ public class Player {
 
 
     public void bowl(int count) {
-        frames.add(this.currentFrameNum,count);
+        frames.bowl(this.currentFrameNum, count);
 
     }
 
