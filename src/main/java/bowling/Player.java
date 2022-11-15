@@ -11,7 +11,7 @@ public class Player {
     private final String name;
     public Player(String name) {
         validateName(name);
-        this.name = name;
+        this.name = name.toUpperCase();
     }
 
     public String getName() {
