@@ -6,8 +6,8 @@ import bowling.exception.ErrorMessage;
 import java.util.Objects;
 
 public class Score {
-    private final int score;
-    private final int bonusCount;
+    private int score;
+    private int bonusCount;
 
     public Score(int score) {
         validateOverMinimum(score);
@@ -26,12 +26,17 @@ public class Score {
         }
     }
 
-    public Score add(Score score) {
-        return new Score(this.score + score.score);
+    public void add(Score score) {
+        this.score += score.score;
     }
 
-    public boolean bigger(int count) {
-        return this.score > count;
+    public boolean isEnd() {
+        return bonusCount == 0;
+    }
+
+    public void addBonus(Pin pin) {
+        this.score += pin.getScore();
+        this.bonusCount--;
     }
 
     @Override
@@ -45,5 +50,17 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(score, bonusCount);
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    @Override
+    public String toString() {
+        return "Score{" +
+                "score=" + score +
+                ", bonusCount=" + bonusCount +
+                '}';
     }
 }

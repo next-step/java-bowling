@@ -21,6 +21,15 @@ public class ScoreTest {
 
     @Test
     void 스코어_더하기() {
-        assertThat(new Score(1).add(new Score(3))).isEqualTo(new Score(4));
+        Score score = new Score(1);
+        score.add(new Score(3));
+        assertThat(score).isEqualTo(new Score(4));
+    }
+
+    @Test
+    void 보너스_더하기() {
+        Score score = new Score(10, 1);
+        score.addBonus(new Pin(1));
+        assertThat(score).isEqualTo(new Score(11, 0));
     }
 }

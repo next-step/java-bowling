@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 public class Frames {
+    public static final int MAX_INDEX = 10;
+
     private final LinkedList<Frame> frames;
 
     public Frames() {
@@ -26,11 +28,18 @@ public class Frames {
         last.updateStatus();
     }
 
-    public boolean isEnd(int index) {
-        boolean isEnd = this.frames.get(index).isEnd();
-        if (isEnd) {
-            frames.add(FrameFactory.create(index + 1));
+    public boolean isEnd() {
+        return this.frames.getLast().isEnd();
+    }
+
+    public void add() {
+        int lastIndex = frames.size();
+        if (lastIndex < MAX_INDEX) {
+            frames.add(FrameFactory.create(lastIndex));
         }
-        return isEnd;
+    }
+
+    public Score calculateScore() {
+        return this.frames.getLast().calculateScore();
     }
 }

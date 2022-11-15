@@ -18,7 +18,6 @@ public class PlayerTest {
 
     @Test
     void 프레임_진행_확인() {
-        assertThat(new Player("abc").process(0)).isTrue();
-        assertThat(new Player("abc", new Frames(new NormalFrame(new Rolls(1, 2), FrameStatus.MISS))).process(0)).isFalse();
+        assertThat(new Player("abc").process()).isTrue();
     }
 }
