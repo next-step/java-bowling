@@ -1,9 +1,6 @@
 package bowling.step3.view;
 
-import bowling.step3.domain.Frame;
-import bowling.step3.domain.Frames;
-import bowling.step3.domain.Player;
-import bowling.step3.domain.Pitch;
+import bowling.step3.domain.*;
 
 import java.util.List;
 import java.util.Map;
@@ -13,6 +10,7 @@ public class ResultView {
     private static final String WALL_SHAPE = "|";
     private static final String BLANK = " ";
     private static final int COLUMN_WIDTH = 6;
+    private static final int COLUMN_LAST_INDEX = 10;
     private static final String ZERO_TEXT = "-";
     private static final String STRIKE_TEXT = "X";
 
@@ -20,6 +18,26 @@ public class ResultView {
         System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
         printName(player);
         printPinCount(player.frames());
+        printScore(player.frames());
+    }
+
+    private static void printScore(Frames frames) {
+        System.out.print("|      ");
+        Map<Integer, Frame> frameMap = frames.frameMap();
+        for (int i = 1; i <= frameMap.size(); i++) {
+            System.out.print(WALL_SHAPE);
+            System.out.print(getPointString(frameMap.get(i)));
+        }
+        System.out.println(WALL_SHAPE);
+    }
+
+    private static String getPointString(Frame frame) {
+        if (frame.score() == null) {
+            return BLANK.repeat(COLUMN_WIDTH);
+        }
+        String point = String.valueOf(frame.score().score());
+        int blankCount = ((COLUMN_WIDTH - point.length()) / 2);
+        return BLANK.repeat(blankCount) + point + BLANK.repeat(COLUMN_WIDTH - blankCount - point.length());
     }
 
     private static void printName(Player player) {
@@ -30,12 +48,12 @@ public class ResultView {
 
     private static void printPinCount(Frames frames) {
         Map<Integer, Frame> frameMap = frames.frameMap();
-        for (int i = 1; i <= frameMap.size(); i++) {
+        for (int i = 1; i <= COLUMN_LAST_INDEX; i++) {
             System.out.print(WALL_SHAPE);
             Frame frame = frameMap.get(i);
             System.out.print(getPinCountString(frame));
         }
-        System.out.println();
+        System.out.println(WALL_SHAPE);
     }
 
     private static String getPinCountString(Frame frame) {
@@ -62,7 +80,8 @@ public class ResultView {
     }
 
     private static String getTextInCaseOfThree(List<Pitch> pitches) {
-        if (pitches.get(0).count() + pitches.get(1).count() == 10) {
+
+        if (pitches.get(0).count() != 10 && pitches.get(0).count() + pitches.get(1).count() == 10) {
             return String.format("%s|/|%s", getText(pitches.get(0).count()), getText(pitches.get(2).count()));
         }
 
@@ -74,7 +93,7 @@ public class ResultView {
     }
 
     private static String getTextInCaseOfTwo(List<Pitch> pitches) {
-        if (pitches.get(0).count() + pitches.get(1).count() == 10) {
+        if (pitches.get(0).count() != 10 && pitches.get(0).count() + pitches.get(1).count() == 10) {
             return String.format("%s|/", getText(pitches.get(0).count()));
         }
         return String.format("%s|%s", getText(pitches.get(0).count()), getText(pitches.get(1).count()));
