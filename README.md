@@ -7,3 +7,17 @@
 
 ## 온라인 코드 리뷰 과정
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
+
+## TO DO LIST(Step1)
+- [ ] Question 클래스
+  - [ ] getWriter 메소드 제거
+  - [ ] setDeleted 메소드 반환 타입 변경
+  - [ ] getAnswers 메소드 제거
+    - 대체할 새로운 메소드 추가
+- [ ] User 클래스
+  - [ ] getUserId 메소드 제거
+  - [ ] getPassword 메소드 제거
+- [ ] Answer 클래스
+  - [ ] setDeleted 메소드 반환 타입 변경
+  - [ ] getWriter 메소드 제거
+- [ ] 도메인 클래스 테스트 추가
