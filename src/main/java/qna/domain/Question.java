@@ -1,6 +1,7 @@
 package qna.domain;
 
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -74,6 +75,18 @@ public class Question extends AbstractEntity {
     }
 
     public List<DeleteHistory> delete(final User user) {
+        validateWriter(user);
+
+        this.deleted = true;
+
+        List<DeleteHistory> result = new ArrayList<>();
+        result.add(new DeleteHistory(ContentType.QUESTION, this.getId(), user, LocalDateTime.now()));
+        result.addAll(deleteAnswers(user));
+
+        return result;
+    }
+
+    private void validateWriter(final User user) {
         if (user == null) {
             throw new IllegalArgumentException("입력 값이 누락되었습니다.");
         }
@@ -81,24 +94,16 @@ public class Question extends AbstractEntity {
         if (!isOwner(user)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-
-        this.deleted = true;
-
-        List<DeleteHistory> result = new ArrayList<>();
-        result.add(new DeleteHistory(ContentType.QUESTION, this.getId(), user, LocalDateTime.now()));
-
-        if (answers.size() == 0) {
-            return result;
-        }
-
-        this.answers.forEach(answer -> {
-            result.add(answer.delete(user));
-        });
-
-        return result;
     }
+
     private boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
+    }
+
+    private List<DeleteHistory> deleteAnswers(final User user) {
+        return this.answers.stream()
+            .map(answer -> answer.delete(user))
+            .collect(Collectors.toList());
     }
 
     public boolean isDeleted() {

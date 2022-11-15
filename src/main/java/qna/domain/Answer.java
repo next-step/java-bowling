@@ -46,6 +46,13 @@ public class Answer extends AbstractEntity {
     }
 
     public DeleteHistory delete(final User user) {
+        validateWriter(user);
+        this.deleted = true;
+
+        return new DeleteHistory(ContentType.ANSWER, this.getId(), user, LocalDateTime.now());
+    }
+
+    private void validateWriter(final User user) {
         if (user == null) {
             throw new IllegalArgumentException("입력 값이 누락되었습니다.");
         }
@@ -53,10 +60,6 @@ public class Answer extends AbstractEntity {
         if (!isOwner(user)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
-
-        this.deleted = true;
-
-        return new DeleteHistory(ContentType.ANSWER, this.getId(), user, LocalDateTime.now());
     }
 
     private boolean isOwner(User writer) {
