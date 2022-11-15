@@ -1,4 +1,4 @@
-package qna.domain;
+package step1.qna.domain;
 
 import org.springframework.data.repository.CrudRepository;
 
