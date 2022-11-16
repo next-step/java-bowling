@@ -1,11 +1,11 @@
 package bowling.domain;
 
+import bowling.view.OutputView;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
-@Disabled
 class FramesTest {
 
     @Test
@@ -31,4 +31,58 @@ class FramesTest {
         assertThat(frame.getResult(1)).isEqualTo(Result.SPARE);
     }
 
+    @Test
+    void 종료조건_마지막미스() {
+        Frames frames = Frames.init();
+
+        for (int i = 0; i < 19; i++) {
+            frames.bowling(2);
+        }
+        frames.bowling(2);
+
+        OutputView init = OutputView.init();
+        init.print(Name.of("abc"), frames);
+
+        assertThat(frames.getCurrentFrameIndex()).isEqualTo(9);
+        assertThat(frames.canBowling()).isFalse();
+    }
+
+    @Test
+    void 종료조건_마지막_스페어_스트라이크() {
+        Frames frames = Frames.init();
+
+        for (int i = 0; i < 19; i++) {
+            frames.bowling(2);
+        }
+
+        /*OutputView init = OutputView.init();
+        init.print(Name.of("abc"), frames);*/
+
+        frames.bowling(8);
+        frames.bowling(10);
+
+        //init.print(Name.of("abc"), frames);
+
+        assertThat(frames.getCurrentFrameIndex()).isEqualTo(9);
+        assertThat(frames.canBowling()).isFalse();
+    }
+
+    @Test
+    void 종료조건_마지막_3스트라이크() {
+        Frames frames = Frames.init();
+
+        for (int i = 0; i < 18; i++) {
+            frames.bowling(2);
+        }
+
+        frames.bowling(10);
+        frames.bowling(10);
+        frames.bowling(10);
+
+        /*OutputView init = OutputView.init();
+        init.print(Name.of("abc"), frames);*/
+
+        assertThat(frames.getCurrentFrameIndex()).isEqualTo(9);
+        assertThat(frames.canBowling()).isFalse();
+    }
 }

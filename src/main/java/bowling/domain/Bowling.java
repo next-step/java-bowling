@@ -32,10 +32,6 @@ public class Bowling {
         return pinCount;
     }
 
-    public boolean isStrike() {
-        return result == Result.STRIKE;
-    }
-
     public Result getResult() {
         return result;
     }

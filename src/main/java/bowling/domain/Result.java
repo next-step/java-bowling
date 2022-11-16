@@ -25,12 +25,14 @@ public enum Result {
         }
 
         if (round == SECOND_ROUND) {
-            return Result.second(frame, pinCount);
+            return normalSecond(frame.beforeCount(), pinCount);
+            //return Result.second(frame, pinCount);
         }
 
         throw new IllegalArgumentException("투구는 3회 이상일수 없습니다.");
     }
 
+    @Deprecated
     private static Result second(Frame frame, PinCount pinCount) {
         if (frame.isFinal()) {
             return finalSecond(frame.beforeCount(), pinCount);
@@ -38,6 +40,7 @@ public enum Result {
         return normalSecond(frame.beforeCount(), pinCount);
     }
 
+    @Deprecated
     private static Result finalSecond(PinCount beforeCount, PinCount currentCount) {
 
         if (currentCount.isTen()) {
@@ -57,8 +60,11 @@ public enum Result {
     }
 
     private static Result normalSecond(PinCount beforeCount, PinCount currentCount) {
-        int sum = currentCount.sum(beforeCount);
+        if (beforeCount.isTen() && currentCount.isTen()) {
+            return STRIKE;
+        }
 
+        int sum = currentCount.sum(beforeCount);
         if (sum > MAX_COUNT) {
             throw new IllegalArgumentException(String.format("이전 투구(%s) + 현재투구(%s)는 %d을 넘을수 없습니다.", beforeCount, currentCount, MAX_COUNT));
         }

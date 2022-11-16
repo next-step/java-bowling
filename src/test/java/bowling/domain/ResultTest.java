@@ -101,4 +101,11 @@ class ResultTest {
 
         assertThatIllegalStateException().isThrownBy(() -> frame.bowling(10));
     }
+
+    @Test
+    void 마지막프레임_예외() {
+        Frame frame = Frame.createFinal();
+        frame.bowling(5);
+        assertThatIllegalArgumentException().isThrownBy(() -> frame.bowling(10));
+    }
 }

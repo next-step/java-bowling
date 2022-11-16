@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Frames {
 
-    public static final int END_FRAME = 10;
+    public static final int END_FRAME_INDEX = 9;
     private int currentFrameIndex = 0;
     private final List<Frame> values;
 
@@ -34,8 +34,8 @@ public class Frames {
     }
 
     private boolean endGame() {
-        return currentFrameIndex == END_FRAME
-                && values.get(END_FRAME).isEnd();
+        return currentFrameIndex == END_FRAME_INDEX
+                && values.get(END_FRAME_INDEX).isEnd();
     }
 
     private Frame getFrame() {
