@@ -5,11 +5,11 @@ import java.util.stream.IntStream;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.Player;
-import bowling.view.dto.BowlingGameFrameRecord;
-import bowling.view.dto.BowlingGameFrameRecordConverter;
 import bowling.domain.frame.Frame;
 import bowling.view.InputView;
 import bowling.view.ResultView;
+import bowling.view.dto.BowlingGameFrameRecord;
+import bowling.view.dto.BowlingGameFrameRecordConverter;
 
 public class BowlingGameController {
     private final InputView inputView;

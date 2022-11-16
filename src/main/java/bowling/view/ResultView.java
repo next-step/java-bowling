@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 
 import bowling.view.dto.BowlRecord;
 import bowling.view.dto.BowlingGameFrameRecord;
-import bowling.domain.frame.Score;
+import bowling.view.dto.ScoreDto;
 
 public class ResultView {
     private static final int START_FRAME = 1;
@@ -47,7 +47,7 @@ public class ResultView {
     }
 
     private void printScores(List<BowlingGameFrameRecord> frameRecords) {
-        List<Score> scores = frameRecords.stream()
+        List<ScoreDto> scores = frameRecords.stream()
             .map(BowlingGameFrameRecord::getScore)
             .collect(toList());
 
@@ -96,16 +96,14 @@ public class ResultView {
         return pins;
     }
 
-    private List<String> convertScoresToDescription(List<Score> scores) {
+    private List<String> convertScoresToDescription(List<ScoreDto> scores) {
         List<String> descriptions = new ArrayList<>();
         int sumOfScore = 0;
 
-        for (Score score : scores) {
-            String description = "";
-            if (score.canCalculateScore()) {
-                description = Integer.toString(sumOfScore + score.getValue());
-                sumOfScore += score.getValue();
-            }
+        for (ScoreDto score : scores) {
+            String description = score.getScoreDescription(sumOfScore);
+            sumOfScore += score.getValue();
+
             descriptions.add(description);
         }
 

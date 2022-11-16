@@ -28,10 +28,6 @@ public class Score {
     }
 
     public int getValue() {
-        if (!canCalculateScore()) {
-            throw new IllegalStateException(CANNOT_CALCULATE_SCORE_EXCEPTION_MESSAGE);
-        }
-
         return score;
     }
 

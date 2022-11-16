@@ -23,6 +23,7 @@ public class BowlingGameFrameRecordConverter {
     }
 
     private static BowlingGameFrameRecord convert(Score score, List<BowlRecord> bowlRecords) {
-        return new BowlingGameFrameRecord(score, bowlRecords);
+        ScoreDto scoreDto = ScoreDtoConverter.convert(score);
+        return new BowlingGameFrameRecord(scoreDto, bowlRecords);
     }
 }
