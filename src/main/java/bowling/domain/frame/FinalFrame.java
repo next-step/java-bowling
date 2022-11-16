@@ -84,12 +84,12 @@ public class FinalFrame extends Frame {
     @Override
     public boolean isFinished() {
         if (getFirstStatus() instanceof Spare || getFirstStatus() instanceof Strike) {
-            return getNextTryCountOfFisrtStatus() == 0;
+            return getRemainCountOfBowl() == 0;
         }
         return getFirstStatus().isFinished();
     }
 
-    private int getNextTryCountOfFisrtStatus() {
+    private int getRemainCountOfBowl() {
         Score score = getFirstScore();
         for (int i = 1; i < statuses.size(); i++) {
             score = statuses.get(i).addScore(score);
