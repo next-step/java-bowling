@@ -7,6 +7,7 @@ import bowling.domain.score.Score;
 import bowling.domain.score.TotalScore;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class ScoreboardsTest {
@@ -55,14 +56,24 @@ public class ScoreboardsTest {
         assertThat(scoreboards.scoreboards().get(name).frame(this.round).totalScore()).isEqualTo(totalScore);
     }
 
+    @DisplayName("남은 기회가 없으면 점수를 추가 할 수 없다.")
     @Test
-    void addScoreFail() {
+    void addScoreFailNotRemainChance() {
         Scoreboards scoreboards = new Scoreboards(new Names(List.of(name)));
         scoreboards.addScore(Score.of(8), name, this.round);
         scoreboards.addScore(Score.of(2), name, this.round);
 
         assertThatThrownBy(() -> scoreboards.addScore(Score.of(2), name, this.round)).isInstanceOf(
                 IllegalArgumentException.class);
+    }
+
+    @DisplayName("참가하지 않은 참가면 점수를 추가할 수 없다.")
+    @Test
+    void addScoreFail() {
+        Scoreboards scoreboards = new Scoreboards(new Names(List.of(name)));
+
+        assertThatThrownBy(() -> scoreboards.addScore(Score.of(2), new Name("aka"), this.round))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
