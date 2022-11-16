@@ -33,14 +33,6 @@ class AbstractFrameTest {
         };
     }
 
-    @DisplayName("남아 있는 핀의 개수를 반환해야 한다.")
-    @Test
-    void getRemainedPins() {
-        frame.add(2);
-        frame.add(3);
-        assertThat(frame.getRemainedPins()).isEqualTo(5);
-    }
-
     @DisplayName("투구 결과를 반환해야 한다.")
     @Test
     void getResult() {

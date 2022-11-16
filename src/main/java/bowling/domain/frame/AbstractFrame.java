@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.Hit;
 import bowling.domain.state.HitState;
 
 import java.util.ArrayList;
@@ -8,30 +9,25 @@ import java.util.Objects;
 
 public abstract class AbstractFrame implements Frame {
 
-    protected final List<Integer> hits;
-    protected final List<HitState> states;
+    protected final List<Hit> hits;
     protected final Frame nextFrame;
 
     protected AbstractFrame(Frame nextFrame) {
         this.hits = new ArrayList<>();
-        this.states = new ArrayList<>();
         this.nextFrame = nextFrame;
     }
 
     @Override
-    public void add(int hit) {
+    public void add(int hitValue) {
         validateState();
-        validateHitIsNegative(hit);
-        validateHitIsUnderRemainedPins(hit);
-
-        states.add(HitState.from(hit, getPreviousHit()));
-        hits.add(hit);
+        hits.add(new Hit(hitValue, getPreviousHit()));
     }
 
-    private Integer getPreviousHit() {
+    private Hit getPreviousHit() {
         if (hits.isEmpty()) {
             return null;
         }
+
         return hits.get(hits.size() - 1);
     }
 
@@ -41,41 +37,26 @@ public abstract class AbstractFrame implements Frame {
         }
     }
 
-    private void validateHitIsNegative(int hit) {
-        if (hit < Frame.MIN_NUMBER_OF_BOWLING_PINS) {
-            throw new IllegalArgumentException(String.format("투구는 %d 보다 작을 수 없습니다.", Frame.MIN_NUMBER_OF_BOWLING_PINS));
-        }
-    }
-
-    private void validateHitIsUnderRemainedPins(int hit) {
-        int remainedPins = getRemainedPins();
-        if (hit > remainedPins) {
-            throw new IllegalArgumentException(String.format("투구는 남은 핀의 개수(%d) 보다 클 수 없습니다.", remainedPins));
-        }
-    }
-
     @Override
     public int countHits() {
         return hits.size();
     }
 
     @Override
-    public int getHit(int index) {
-        return hits.get(index);
+    public int getHitValue(int index) {
+        return hits.get(index)
+                .getValue();
     }
 
     @Override
     public HitState getState(int index) {
-        return states.get(index);
-    }
-
-    @Override
-    public int getRemainedPins() {
-        return Frame.MAX_NUMBER_OF_BOWLING_PINS - sumOfHits() % Frame.MAX_NUMBER_OF_BOWLING_PINS;
+        Hit hit = hits.get(index);
+        return hit.getState();
     }
 
     protected int sumOfHits() {
         return hits.stream()
+                .map(Hit::getValue)
                 .reduce(0, Integer::sum);
     }
 
@@ -91,7 +72,7 @@ public abstract class AbstractFrame implements Frame {
     abstract public int getScore();
 
     protected HitState getLastState() {
-        return states.get(states.size() - 1);
+        return getState(hits.size() - 1);
     }
 
     @Override
@@ -99,20 +80,12 @@ public abstract class AbstractFrame implements Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AbstractFrame that = (AbstractFrame) o;
-        return Objects.equals(hits, that.hits) && Objects.equals(states, that.states);
+        return Objects.equals(hits, that.hits) && Objects.equals(nextFrame, that.nextFrame);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(hits, states);
-    }
-
-    @Override
-    public String toString() {
-        return "AbstractBowlingGameFrame{" +
-                "hits=" + hits +
-                ", states=" + states +
-                '}';
+        return Objects.hash(hits, nextFrame);
     }
 
 }

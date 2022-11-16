@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import static bowling.domain.BowlingGameTestFixture.createBowlingGame;
 import static bowling.domain.BowlingGameTestFixture.createEndedBowlingGame;
-import static bowling.domain.FrameTestFixture.createNormalBowlingGameFrame;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
@@ -24,7 +23,7 @@ class BowlingGameTest {
     void getCurrentFrame() {
         BowlingGame game = createBowlingGame(1, 2, 1);
 
-        assertThat(game.getCurrentFrame()).isEqualTo(createNormalBowlingGameFrame(1));
+        assertThat(game.getCurrentFrame()).isEqualTo(game.get(1));
     }
 
     @DisplayName("종료된 상태라면, 예외가 발생해야 한다.")

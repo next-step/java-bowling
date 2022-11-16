@@ -21,7 +21,7 @@ public class FrameDto {
     public static FrameDto from(Frame frame) {
         List<HitDto> hits = new ArrayList<>();
         IntStream.range(0, frame.countHits())
-                .forEach(i -> hits.add(new HitDto(frame.getHit(i), frame.getState(i))));
+                .forEach(i -> hits.add(new HitDto(frame.getHitValue(i), frame.getState(i))));
         boolean hasScore = frame.hasScore();
         int score = frame.hasScore() ? frame.getScore() : 0;
         return new FrameDto(hits, hasScore, score);
