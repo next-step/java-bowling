@@ -1,8 +1,9 @@
 package bowling.views;
 
 import bowling.domain.Player;
-import bowling.domain.Players;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
@@ -13,9 +14,9 @@ public class InputView {
     private InputView() {
     }
 
-    public static Players inputPlayers() {
+    public static List<Player> inputPlayers() {
         int numberOfPlayers = InputView.inputNumberOfPlayers();
-        Players players = new Players();
+        List<Player> players = new ArrayList<>();
         IntStream.range(0, numberOfPlayers)
                 .forEach(i -> players.add(new Player(InputView.inputPlayerName())));
         return players;

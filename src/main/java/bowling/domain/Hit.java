@@ -44,11 +44,7 @@ public class Hit {
             return Frame.MAX_NUMBER_OF_BOWLING_PINS;
         }
 
-        int hit = previousHit.value;
-        if (hit == Frame.MAX_NUMBER_OF_BOWLING_PINS) {
-            return Frame.MAX_NUMBER_OF_BOWLING_PINS;
-        }
-        return Frame.MAX_NUMBER_OF_BOWLING_PINS - hit;
+        return Frame.MAX_NUMBER_OF_BOWLING_PINS - previousHit.value;
     }
 
     public int getValue() {

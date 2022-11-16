@@ -6,6 +6,7 @@ public class FinalFrame extends AbstractFrame {
 
     private static final int MAX_SIZE_OF_HITS = 3;
     private static final int MIN_SIZE_OF_HITS = 2;
+    private static final int SECOND_INDEX = 1;
 
     public FinalFrame() {
         super(null);
@@ -16,8 +17,12 @@ public class FinalFrame extends AbstractFrame {
         if (hits.size() < MIN_SIZE_OF_HITS) {
             return false;
         }
-        return HitState.MISS.equals(getState(MIN_SIZE_OF_HITS - 1))
+        return HitState.MISS.equals(getSecondHitState())
                 || hits.size() == MAX_SIZE_OF_HITS;
+    }
+
+    private HitState getSecondHitState() {
+        return getState(SECOND_INDEX);
     }
 
     @Override

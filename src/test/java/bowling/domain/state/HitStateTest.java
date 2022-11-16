@@ -16,7 +16,7 @@ class HitStateTest {
         assertThat(HitState.from(10, null)).isEqualTo(HitState.STRIKE);
     }
 
-    @DisplayName("첫번째 시도에서 1개 이상, 10개 미만의 핀을 쓰러트리지 못하면, null을 반환해야 한다.")
+    @DisplayName("첫번째 시도에서 1개 이상, 10개 미만의 핀을 쓰러트리면, null을 반환해야 한다.")
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
     void from_givenNotStrike(int hit) {
