@@ -32,9 +32,12 @@ public class AnswerTest {
 
     @Test
     void 댓글_삭제() {
-        DeleteHistories deleteHistories = A1.delete(new DeleteHistories(), LocalDateTime.now());
+        LocalDateTime localDateTime = LocalDateTime.now();
+        DeleteHistories deleteHistories = A1.delete(new DeleteHistories(), localDateTime);
 
         assertThat(A1.isDeleted()).isTrue();
-        assertThat(deleteHistories.histories()).hasSize(1);
+        assertThat(deleteHistories.histories()).containsExactly(
+                new DeleteHistory(ContentType.ANSWER, A1.getId(), A1.getWriter(), localDateTime)
+        );
     }
 }

@@ -7,6 +7,8 @@ import qna.CannotDeleteException;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.*;
+import static qna.domain.AnswerTest.A1;
+import static qna.domain.AnswerTest.A2;
 
 public class QuestionTest {
     public static Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
@@ -38,15 +40,19 @@ public class QuestionTest {
 
     @Test
     void 게시물_및_댓글_삭졔_정상() throws CannotDeleteException {
-        Q1.addAnswer(AnswerTest.A1);
+        Q1.addAnswer(A1);
+        LocalDateTime localDateTime = LocalDateTime.now();
+        DeleteHistories deleteHistories = Q1.delete(UserTest.JAVAJIGI, localDateTime);
 
-        DeleteHistories deleteHistories = Q1.delete(UserTest.JAVAJIGI, LocalDateTime.now());
-        assertThat(deleteHistories.histories()).hasSize(2);
+        assertThat(deleteHistories.histories()).containsExactly(
+                new DeleteHistory(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), localDateTime),
+                new DeleteHistory(ContentType.ANSWER, A1.getId(), A1.getWriter(), localDateTime)
+        );
     }
 
     @Test
-    void 게시물_및_댓글_삭졔_오류(){
-        Q1.addAnswer(AnswerTest.A2);
+    void 게시물_및_댓글_삭졔_오류() {
+        Q1.addAnswer(A2);
 
         assertThatThrownBy(() -> Q1.delete(UserTest.JAVAJIGI, LocalDateTime.now()))
                 .isInstanceOf(CannotDeleteException.class);
