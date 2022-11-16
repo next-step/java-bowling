@@ -56,13 +56,8 @@ public class Frames {
 
     public List<Score> getFrameScores() {
         return frames.stream()
-                .filter(frame -> !frame.isFinalFrame())
-                .map(frame -> {
-                    if (frame.getStatus() instanceof Ready) {
-                        return null;
-                    }
-                    return frame.getScore();
-                })
+                .filter(frame -> !frame.isFinalFrame() && !(frame.getStatus() instanceof Ready))
+                .map(frame -> frame.getScore())
                 .collect(Collectors.toList());
     }
 }

@@ -28,9 +28,7 @@ public class FrameView {
     public static String frameResultContents(Frames frames) {
         StringBuilder contents = new StringBuilder(getNormalFramesContents(frames));
         contents.append(getFinalFrameContents(frames));
-        for (int i = frames.getCurrentFrameIdx() + 1; i < MAX_FRAME_NO; i++) {
-            contents.append(String.format("%7s", BAR_MARK));
-        }
+        getRemainFramesScores(frames.getCurrentFrameIdx() + 1, contents);
 
         return contents.toString();
     }
@@ -91,19 +89,23 @@ public class FrameView {
         StringBuilder contents = new StringBuilder();
         String content = frames.getFrameScores()
                 .stream()
-                .map(score -> {
-                    if (Objects.isNull(score)) {
-                        return String.format("%2s", "");
-                    }
-                    return String.format("%2s", score.getValue());
-                })
+                .map(score -> String.format("%2s", score.getValue()))
                 .collect(Collectors.joining("  |  ", "  ", "  |"));
-        contents.append(content);
 
-        for (int i = frames.getCurrentFrameIdx() + 1; i < MAX_FRAME_NO; i++) {
+        int startIdx = 0;
+        if (content.length() >= 7) {
+            contents.append(content);
+            startIdx = frames.getCurrentFrameIdx() + 1;
+        }
+
+        getRemainFramesScores(startIdx, contents);
+        return contents.toString();
+    }
+
+    private static void getRemainFramesScores(int startIdx, StringBuilder contents) {
+        for (int i = startIdx; i < MAX_FRAME_NO; i++) {
             contents.append(String.format("%7s", BAR_MARK));
         }
-        return contents.toString();
     }
 
     public static String getFinalFramesScores(Frames frames) {
