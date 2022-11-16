@@ -31,10 +31,6 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
-    public boolean isEmpty() {
-        return Objects.isNull(contentId);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

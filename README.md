@@ -7,3 +7,8 @@
 
 ## 온라인 코드 리뷰 과정
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
+
+## 기능 목록
+- 사용자 이름 입력
+- 볼링 게임 진행 기능
+- 볼링 게임 출력 기능
