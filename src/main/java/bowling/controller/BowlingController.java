@@ -4,7 +4,6 @@ import bowling.domain.BowlingGame;
 import bowling.domain.Name;
 import bowling.domain.Names;
 import bowling.domain.PeopleSize;
-import bowling.domain.Scoreboard;
 import bowling.domain.Scoreboards;
 import bowling.domain.score.Score;
 import bowling.view.Input;
@@ -16,9 +15,7 @@ public class BowlingController {
 
     public void start() {
         Names names = createNames(new PeopleSize(Input.inputPeopleSize()));
-
-        Scoreboards scoreboards = new Scoreboards();
-        createScoreboards(names, scoreboards);
+        Scoreboards scoreboards = new Scoreboards(names);
         BowlingGame bowlingGame = new BowlingGame(scoreboards);
         play(bowlingGame, names);
     }
@@ -29,33 +26,27 @@ public class BowlingController {
                 .collect(Collectors.toList()));
     }
 
-    private static void createScoreboards(Names names, Scoreboards scoreboards) {
-        for (Name name : names.names()) {
-            scoreboards.add(new Scoreboard(name));
-        }
-    }
-
     private void play(BowlingGame bowlingGame, Names names) {
         if (!bowlingGame.isEnd()) {
-            playRound(bowlingGame, names.names().size());
+            playRound(bowlingGame, names);
             play(bowlingGame, names);
         }
     }
 
-    private void playRound(BowlingGame bowlingGame, int peopleSize) {
-        for (int turn = 0; turn < peopleSize; turn++) {
-            playTurn(bowlingGame, turn);
+    private void playRound(BowlingGame bowlingGame, Names names) {
+        for (Name name : names.names()) {
+            playTurn(bowlingGame, name);
         }
         bowlingGame.setNextRound();
     }
 
-    private void playTurn(BowlingGame bowlingGame, int turn) {
-        if (!bowlingGame.isEndTurn(turn)) {
+    private void playTurn(BowlingGame bowlingGame, Name name) {
+        if (!bowlingGame.isEndTurn(name)) {
             int round = bowlingGame.round();
             Score score = Score.of(Input.inputScore(round));
-            Scoreboards scoreboards = bowlingGame.play(score, turn);
+            Scoreboards scoreboards = bowlingGame.play(score, name);
             Output.printScoreboard(scoreboards);
-            playTurn(bowlingGame, turn);
+            playTurn(bowlingGame, name);
         }
     }
 }

@@ -28,7 +28,7 @@ public class Output {
         StringBuilder result = new StringBuilder();
         result.append(guideLine());
         result.append(NEW_LINE);
-        for (Scoreboard scoreboard : scoreboards.scoreboards()) {
+        for (Scoreboard scoreboard : scoreboards.scoreboards().values()) {
             result.append(currentScoreLine(scoreboard));
             result.append(NEW_LINE);
             result.append(totalScoreLine(scoreboard));

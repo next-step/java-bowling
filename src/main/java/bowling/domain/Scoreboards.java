@@ -1,30 +1,25 @@
 package bowling.domain;
 
 import bowling.domain.score.Score;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 public class Scoreboards {
-    private final List<Scoreboard> scoreboards;
+    private final Map<Name, Scoreboard> scoreboards;
 
-    public Scoreboards() {
-        this.scoreboards = new ArrayList<>();
+    public Scoreboards(Names names) {
+        this.scoreboards = names.createScoreboards();
     }
 
-    public void add(Scoreboard scoreboard) {
-        this.scoreboards.add(scoreboard);
-    }
-
-    public boolean isEndTurn(Round round, int turn) {
-        Scoreboard scoreboard = this.scoreboards.get(turn);
+    public boolean isEndTurn(Round round, Name name) {
+        Scoreboard scoreboard = this.scoreboards.get(name);
         return !scoreboard.frame(round).isRemainChance();
     }
 
-    public void addScore(Score score, int turn, Round round) {
-        this.scoreboards.get(turn).addScore(score, round);
+    public void addScore(Score score, Name name, Round round) {
+        this.scoreboards.get(name).addScore(score, round);
     }
 
-    public List<Scoreboard> scoreboards() {
+    public Map<Name, Scoreboard> scoreboards() {
         return this.scoreboards;
     }
 }

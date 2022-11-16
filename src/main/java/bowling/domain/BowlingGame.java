@@ -15,8 +15,8 @@ public class BowlingGame {
         return this.round.value();
     }
 
-    public Scoreboards play(Score score, int turn) {
-        this.scoreboards.addScore(score, turn, this.round);
+    public Scoreboards play(Score score, Name name) {
+        this.scoreboards.addScore(score, name, this.round);
         return this.scoreboards;
     }
 
@@ -28,7 +28,7 @@ public class BowlingGame {
         return this.round.isGameEnd();
     }
 
-    public boolean isEndTurn(int turn) {
-        return this.scoreboards.isEndTurn(this.round, turn);
+    public boolean isEndTurn(Name name) {
+        return this.scoreboards.isEndTurn(this.round, name);
     }
 }

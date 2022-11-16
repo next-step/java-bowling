@@ -1,6 +1,8 @@
 package bowling.domain;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Names {
     private static final int NAMES_SIZE_MIN = 1;
@@ -20,5 +22,13 @@ public class Names {
 
     public List<Name> names() {
         return this.names;
+    }
+
+    public Map<Name, Scoreboard> createScoreboards() {
+        Map<Name, Scoreboard> scoreboards = new HashMap<>();
+        for (Name name : this.names) {
+            scoreboards.put(name, new Scoreboard(name));
+        }
+        return scoreboards;
     }
 }
