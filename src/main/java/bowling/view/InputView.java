@@ -15,15 +15,17 @@ public class InputView {
 
     public static Name readName() {
         System.out.print("플레이어 이름은(3 english letters)?: ");
+        Name name = Name.of(SCANNER.nextLine());
         System.out.println();
-        return Name.of(SCANNER.nextLine());
+        return name;
+
     }
 
     public static PinCount readPinCount(int roundIndex) {
         System.out.print(String.format("%d 프레인 투구 : ", roundIndex + 1));
-        System.out.println();
-        int count = SCANNER.nextInt();
+        PinCount count = PinCount.of(SCANNER.nextInt());
         SCANNER.nextLine();
-        return PinCount.of(count);
+        System.out.println();
+        return count;
     }
 }

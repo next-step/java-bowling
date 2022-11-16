@@ -11,17 +11,13 @@ public class OutputView {
     private static final int FINAL_ROUND = 10;
     public static final String EMPTY_MARK = "      ";
 
-    private final StringBuilder sb;
-
-    public OutputView(StringBuilder result) {
-        this.sb = result;
-    }
+    private final String header = getHeader();
 
     public static OutputView init() {
-        return new OutputView(createFirstLine());
+        return new OutputView();
     }
 
-    private static StringBuilder createFirstLine() {
+    private String getHeader() {
         StringBuilder sb = new StringBuilder();
 
         sb.append(MARK);
@@ -32,22 +28,25 @@ public class OutputView {
             sb.append(String.format(" %s   ", lpadZero(i)));
         }
         sb.append(MARK);
-
-        sb.append(System.lineSeparator());
-        return sb;
+        return sb.toString();
     }
 
     public void print(Name name, Frames frames) {
-        appendMark();
+        System.out.println(header);
+        System.out.println(getBody(name, frames));
+    }
+
+    private String getBody(Name name, Frames frames) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(MARK);
         sb.append(String.format("  %s ", name));
 
         for (int i = 0; i < 10; i++) {
-            appendMark();
+            sb.append(MARK);
             sb.append(getFrameScore(frames, i));
         }
-        appendMark();
-
-        System.out.println(sb);
+        sb.append(MARK);
+        return sb.toString();
     }
 
     private static String lpadZero(int round) {
@@ -92,10 +91,6 @@ public class OutputView {
         }
 
         return String.join(MARK, list);
-    }
-
-    private void appendMark() {
-        sb.append(MARK);
     }
 
     private String getScoreMark(Bowling bowling) {

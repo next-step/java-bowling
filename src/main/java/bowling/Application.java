@@ -15,11 +15,11 @@ public class Application {
         OutputView outputView = OutputView.init();
 
         while (frames.canBowling()) {
-            PinCount pinCount = InputView.readPinCount(frames.getCurrentRound());
+            PinCount pinCount = InputView.readPinCount(frames.getCurrentFrameIndex());
 
             frames.bowling(pinCount.getValue());
-
             outputView.print(name, frames);
         }
+
     }
 }
