@@ -20,6 +20,14 @@ public class Score {
         this.bonusCount = bonusCount;
     }
 
+    public static Score end(int sum) {
+        return new Score(sum);
+    }
+
+    public static Score zero() {
+        return new Score(0, 0);
+    }
+
     private void validateOverMinimum(int score) {
         if (score < 0) {
             throw new BowlingGameException(ErrorMessage.SCORE_OUT_OF_RANGE);

@@ -32,4 +32,14 @@ public class ScoreTest {
         score.addBonus(new Pin(1));
         assertThat(score).isEqualTo(new Score(11, 0));
     }
+
+    @Test
+    void 완료된_스코어_구하기() {
+        assertThat(Score.end(10)).isEqualTo(new Score(10, 0));
+    }
+
+    @Test
+    void 빈_스코어_생성() {
+        assertThat(Score.zero()).isEqualTo(new Score(0, 0));
+    }
 }
