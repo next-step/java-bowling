@@ -18,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import qna.CannotDeleteException;
 import qna.domain.Answer;
+import qna.domain.Answers;
 import qna.domain.ContentType;
 import qna.domain.DeleteHistory;
 import qna.domain.Question;
@@ -41,9 +42,8 @@ public class QnaServiceTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-        question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
         answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.question(123L, UserTest.JAVAJIGI), "Answers Contents1");
-        question.addAnswer(answer);
+        question = new Question(1L, "title1", "contents1", new Answers(List.of(answer))).writeBy(UserTest.JAVAJIGI);
     }
 
     @DisplayName("로그인 한 사용자와 질문한 사람이 같고 질문한 사람 외에 다른 사람의 답변이 없다면 질문의 삭제상태를 true 로 변경하고 삭제이력을 저장한다.")

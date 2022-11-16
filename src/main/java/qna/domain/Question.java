@@ -4,17 +4,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-
-import org.hibernate.annotations.Where;
 
 import qna.CannotDeleteException;
 
@@ -30,10 +26,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers;
 
     private boolean deleted = false;
 
@@ -45,12 +39,18 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Question(long id, String title, String contents) {
+    public Question(String title, String contents, final Answers answers) {
+        this(title, contents);
+        this.answers = answers;
+    }
+    
+    public Question(long id, String title, String contents, final Answers answers) {
         super(id);
         this.title = title;
         this.contents = contents;
+        this.answers = answers;
     }
-
+    
     public String getTitle() {
         return title;
     }
@@ -78,11 +78,6 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    public void addAnswer(Answer answer) {
-        answer.toQuestion(this);
-        answers.add(answer);
-    }
-
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
@@ -96,13 +91,13 @@ public class Question extends AbstractEntity {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
         deleted = true;
-        return deleteHistories(loginUser);
+        return createDeleteHistories(loginUser);
     }
     
-    private List<DeleteHistory> deleteHistories(final User loginUser) throws CannotDeleteException {
+    private List<DeleteHistory> createDeleteHistories(final User loginUser) throws CannotDeleteException {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
-        deleteHistories.addAll(new Answers(answers).delete(loginUser));
+        deleteHistories.addAll(answers.delete(loginUser));
         return deleteHistories;
     }
 
