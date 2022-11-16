@@ -11,7 +11,7 @@ public abstract class State {
             throw new IllegalStateException(CANNOT_ADD_SCORE_EXCEPTION_MESSAGE);
         }
 
-        return score.addBonusScore(bonusScore);
+        return score.add(bonusScore);
     }
 
     public abstract State bowl(int pins);

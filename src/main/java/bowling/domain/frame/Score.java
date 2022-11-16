@@ -19,7 +19,7 @@ public class Score {
         this.left = left;
     }
 
-    public Score addBonusScore(int score) {
+    public Score add(int score) {
         return new Score(this.score + score, left - 1);
     }
 

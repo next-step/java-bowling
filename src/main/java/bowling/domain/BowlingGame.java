@@ -9,7 +9,7 @@ public class BowlingGame {
     private final Frames frames;
 
     public BowlingGame() {
-        frames = new Frames();
+        frames = Frames.init();
     }
 
     public void bowl(int falledPins) {

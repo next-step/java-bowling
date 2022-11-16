@@ -8,13 +8,13 @@ class ScoreTest {
     @Test
     public void getScoreWhenStrike() {
         Score score = new Score(10, 2);
-        assertThat(score.addBonusScore(10).addBonusScore(9).getValue()).isEqualTo(29);
+        assertThat(score.add(10).add(9).getValue()).isEqualTo(29);
     }
 
     @Test
     public void getScoreWhenSpare() {
         Score score = new Score(10, 1);
-        assertThat(score.addBonusScore(9).getValue()).isEqualTo(19);
+        assertThat(score.add(9).getValue()).isEqualTo(19);
     }
 
     @Test
