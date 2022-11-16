@@ -7,3 +7,12 @@
 
 ## 온라인 코드 리뷰 과정
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
+
+## TO DO LIST(Step1)
+- [x] Question 클래스
+  - [x] setDeleted 메소드 변경
+  - [x] getAnswers 메소드 제거
+- [x] Answer 클래스
+  - [x] setDeleted 메소드 변경
+- [x] QnAService.deleteQuestion 메소드 수정
+- [x] 도메인 클래스 테스트 추가
