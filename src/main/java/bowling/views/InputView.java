@@ -23,7 +23,11 @@ public class InputView {
 
     private static int inputNumberOfPlayers() {
         System.out.print("How many people? ");
-        return Integer.parseInt(SCANNER.nextLine());
+        int numberOfPlayers = Integer.parseInt(SCANNER.nextLine());
+        if (numberOfPlayers <= 0) {
+            throw new IllegalArgumentException("0 보다 큰 숫자를 입력해야 합니다.");
+        }
+        return numberOfPlayers;
     }
 
     private static String inputPlayerName() {
