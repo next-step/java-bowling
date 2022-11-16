@@ -5,9 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import bowling.domain.score.Score;
 import bowling.domain.score.TotalScore;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,10 +18,6 @@ public class ScoreboardsTest {
     void setUp() {
         this.name = new Name("cys");
         this.round = new Round(1);
-    }
-
-    private Names createNames(String... names) {
-        return new Names(Arrays.stream(names).map(Name::new).collect(Collectors.toList()));
     }
 
     @Test
