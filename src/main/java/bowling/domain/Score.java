@@ -6,6 +6,11 @@ public class Score {
     private final int score;
     private final int nextScoreCnt;
 
+    public Score(int score) {
+        this.score = score;
+        this.nextScoreCnt = 0;
+    }
+
     public Score(int score, int nextScoreCnt) {
         this.score = score;
         this.nextScoreCnt = nextScoreCnt;
@@ -28,7 +33,7 @@ public class Score {
         return this.nextScoreCnt == 0;
     }
 
-    public int getScore() {
+    public int getValue() {
         return score;
     }
 

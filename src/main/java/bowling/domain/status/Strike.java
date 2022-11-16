@@ -1,6 +1,5 @@
 package bowling.domain.status;
 
-import bowling.domain.Pin;
 import bowling.domain.Score;
 
 public class Strike extends Finished {
@@ -14,6 +13,6 @@ public class Strike extends Finished {
 
     @Override
     public Score addScore(Score score) {
-        return new Score(score.getScore() + STRIKE_SCORE, score.getNextScoreCnt() - 1);
+        return new Score(score.getValue() + STRIKE_SCORE, score.getNextScoreCnt() - 1);
     }
 }

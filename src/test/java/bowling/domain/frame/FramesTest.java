@@ -1,8 +1,12 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pin;
+import bowling.domain.Score;
 import bowling.domain.status.Strike;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -34,7 +38,11 @@ class FramesTest {
         frames.bowl(new Pin(1));
         frames.bowl(new Pin(1));
 
-        assertThat(frames.getFrameScores()).containsExactly(20, 11, 2);
+        List<Integer> scores = frames.getFrameScores().stream()
+                .map(Score::getValue)
+                .collect(Collectors.toList());
+
+        assertThat(scores).containsExactly(20, 11, 2);
     }
 
     @Test
@@ -69,6 +77,10 @@ class FramesTest {
         frames.bowl(new Pin(1));
         frames.bowl(new Pin(1));
 
-        assertThat(frames.getFrameScores()).containsExactly(20, 11, 2, 2, 2, 2, 2, 2, 11);
+        List<Integer> scores = frames.getFrameScores().stream()
+                .map(Score::getValue)
+                .collect(Collectors.toList());
+
+        assertThat(scores).containsExactly(20, 11, 2, 2, 2, 2, 2, 2, 11);
     }
 }

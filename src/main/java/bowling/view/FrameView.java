@@ -95,7 +95,7 @@ public class FrameView {
                     if (Objects.isNull(score)) {
                         return String.format("%2s", "");
                     }
-                    return String.format("%2s", score);
+                    return String.format("%2s", score.getValue());
                 })
                 .collect(Collectors.joining("  |  ", "  ", "  |"));
         contents.append(content);
@@ -109,7 +109,7 @@ public class FrameView {
     public static String getFinalFramesScores(Frames frames) {
         if (frames.getCurrentFrame().isFinalFrame()) {
             Score score = frames.getCurrentFrame().getScore();
-            String finalScore = String.valueOf(score.getScore());
+            String finalScore = String.valueOf(score.getValue());
             return String.format("  " + "%-4s", finalScore) + BAR_MARK;
         }
         return "";

@@ -103,7 +103,7 @@ class FinalFrameTest {
         frame.bowl(new Pin(10));
         frame.bowl(new Pin(9));
 
-        assertThat(frame.getScore().getScore()).isEqualTo(19);
+        assertThat(frame.getScore().getValue()).isEqualTo(19);
     }
 
     @Test

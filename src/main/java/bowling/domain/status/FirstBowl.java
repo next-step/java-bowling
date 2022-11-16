@@ -24,6 +24,6 @@ public class FirstBowl extends Ongoing {
 
     @Override
     public Score addScore(Score score) {
-        return new Score(score.getScore() + this.getCountOfFirst(), score.getNextScoreCnt() - 1);
+        return new Score(score.getValue() + this.getCountOfFirst(), score.getNextScoreCnt() - 1);
     }
 }

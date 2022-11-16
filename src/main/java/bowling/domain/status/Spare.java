@@ -25,6 +25,6 @@ public class Spare extends Finished {
         if (nextScoreCnt == 2) {
             addScore = getCountOfFirst() + getCountOfSecond();
         }
-        return new Score(score.getScore() + addScore, 0);
+        return new Score(score.getValue() + addScore, 0);
     }
 }
