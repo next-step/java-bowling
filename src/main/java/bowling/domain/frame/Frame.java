@@ -11,7 +11,7 @@ public interface Frame {
 
     int countHits();
 
-    int getHit(int index);
+    int getHitValue(int index);
 
     HitState getState(int index);
 
@@ -20,8 +20,6 @@ public interface Frame {
     }
 
     boolean isEnded();
-
-    int getRemainedPins();
 
     Frame getNextFrame();
 

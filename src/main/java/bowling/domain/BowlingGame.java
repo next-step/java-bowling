@@ -37,14 +37,10 @@ public class BowlingGame {
     public void hit(int pins) {
         Frame currentFrame = getCurrentFrame();
         currentFrame.add(pins);
-        if (currentFrame.isEnded()) {
-            indexOfCurrentFrame++;
-        }
     }
 
-    public int getNumberOfCurrentFrame() {
-        validateState();
-        return indexOfCurrentFrame + 1;
+    public void moveNextFrame() {
+        indexOfCurrentFrame++;
     }
 
     public Frame getCurrentFrame() {
@@ -56,10 +52,6 @@ public class BowlingGame {
         if (isEnded()) {
             throw new IllegalStateException("이미 종료된 게임입니다.");
         }
-    }
-
-    public int getRemainedPins() {
-        return getCurrentFrame().getRemainedPins();
     }
 
     public boolean isEnded() {

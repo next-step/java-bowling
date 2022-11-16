@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import static bowling.domain.BowlingGameTestFixture.createBowlingGame;
 import static bowling.domain.BowlingGameTestFixture.createEndedBowlingGame;
-import static bowling.domain.FrameTestFixture.createNormalBowlingGameFrame;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
@@ -24,7 +23,7 @@ class BowlingGameTest {
     void getCurrentFrame() {
         BowlingGame game = createBowlingGame(1, 2, 1);
 
-        assertThat(game.getCurrentFrame()).isEqualTo(createNormalBowlingGameFrame(1));
+        assertThat(game.getCurrentFrame()).isEqualTo(game.get(1));
     }
 
     @DisplayName("종료된 상태라면, 예외가 발생해야 한다.")
@@ -43,27 +42,12 @@ class BowlingGameTest {
         BowlingGame game = createBowlingGame(10);
         game.hit(1);
         game.hit(2);
+        game.moveNextFrame();
         game.hit(10);
+        game.moveNextFrame();
         game.hit(3);
 
         assertThat(game).isEqualTo(createBowlingGame(10, 1, 2, 10, 3));
-    }
-
-    @DisplayName("남아 있는 볼링 핀의 개수를 반환해야 한다.")
-    @Test
-    void getRemainedPins() {
-        BowlingGame game = new BowlingGame();
-
-        assertThat(game.getRemainedPins()).isEqualTo(10);
-
-        game.hit(1);
-        assertThat(game.getRemainedPins()).isEqualTo(9);
-
-        game.hit(2);
-        assertThat(game.getRemainedPins()).isEqualTo(10);
-
-        game.hit(3);
-        assertThat(game.getRemainedPins()).isEqualTo(7);
     }
 
 }

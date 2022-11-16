@@ -2,10 +2,12 @@ package bowling;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.Player;
-import bowling.dto.BowlingGameDto;
 import bowling.dto.PlayerDto;
 import bowling.views.InputView;
 import bowling.views.OutputView;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BowlingGameApplication {
 
@@ -18,15 +20,34 @@ public class BowlingGameApplication {
     }
 
     private static void runApplication() {
-        Player player = new Player(InputView.inputPlayerName());
-        BowlingGame game = new BowlingGame();
-        OutputView.printBowlingGame(PlayerDto.from(player), BowlingGameDto.from(game));
+        List<Player> players = InputView.inputPlayers();
+        OutputView.printBowlingGames(getPlayerDtos(players));
 
-        while (!game.isEnded()) {
-            int hit = InputView.inputNumberOfPinsHit(game.getNumberOfCurrentFrame());
-            game.hit(hit);
-            OutputView.printBowlingGame(PlayerDto.from(player), BowlingGameDto.from(game));
+        for (int i = 0; i < BowlingGame.SIZE_OF_FRAMES; i++) {
+            playFrameTurn(players);
         }
+    }
+
+    private static void playFrameTurn(List<Player> players) {
+        for (int i = 0; i < players.size(); i++) {
+            playFrameTurn(players, i);
+        }
+    }
+
+    private static void playFrameTurn(List<Player> players, int index) {
+        Player player = players.get(index);
+        while (!player.isCurrentFrameEnded()) {
+            int hit = InputView.inputNumberOfPinsHit(player.getName());
+            player.hit(hit);
+            OutputView.printBowlingGames(getPlayerDtos(players));
+        }
+        player.moveNextFrame();
+    }
+
+    private static List<PlayerDto> getPlayerDtos(List<Player> players) {
+        return players.stream()
+                .map(PlayerDto::from)
+                .collect(Collectors.toList());
     }
 
 }

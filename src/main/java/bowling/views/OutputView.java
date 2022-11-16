@@ -25,7 +25,12 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printBowlingGame(PlayerDto player, BowlingGameDto game) {
+    public static void printBowlingGames(List<PlayerDto> players) {
+        players.forEach(OutputView::printBowlingGame);
+    }
+
+    private static void printBowlingGame(PlayerDto player) {
+        BowlingGameDto game = player.getGame();
         System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
         System.out.printf("|  %s |", player.getName());
         game.getFrames()

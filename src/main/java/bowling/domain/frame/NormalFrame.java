@@ -12,7 +12,11 @@ public class NormalFrame extends AbstractFrame {
 
     @Override
     public boolean isEnded() {
-        return states.contains(HitState.STRIKE) || hits.size() == MAX_SIZE_OF_HITS;
+        if (hits.isEmpty()) {
+            return false;
+        }
+        return HitState.STRIKE.equals(getLastState())
+                || hits.size() == MAX_SIZE_OF_HITS;
     }
 
     @Override
@@ -59,7 +63,15 @@ public class NormalFrame extends AbstractFrame {
             return getNextHit(frame.getNextFrame(), index - frame.countHits());
         }
 
-        return frame.getHit(index);
+        return frame.getHitValue(index);
+    }
+
+    @Override
+    public String toString() {
+        return "NormalFrame{" +
+                "hits=" + hits +
+                ", nextFrame=" + nextFrame +
+                '}';
     }
 
 }
