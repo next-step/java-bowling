@@ -8,6 +8,8 @@ import static org.assertj.core.api.Assertions.*;
 
 class FramesTest {
 
+    public static final int END_FRAME_INDEX = 10;
+
     @Test
     void 최초투구() {
         Frames frames = Frames.init();
@@ -15,7 +17,7 @@ class FramesTest {
         frames.bowling(10);
         Frame frame = frames.get(0);
 
-        assertThat(frames.getCurrentFrameIndex()).isEqualTo(0);
+        assertThat(frames.getCurrentFrameIndex()).isEqualTo(1);
         assertThat(frame.getResult(0)).isEqualTo(Result.STRIKE);
     }
 
@@ -27,7 +29,7 @@ class FramesTest {
         frames.bowling(5);
         Frame frame = frames.get(0);
 
-        assertThat(frames.getCurrentFrameIndex()).isEqualTo(0);
+        assertThat(frames.getCurrentFrameIndex()).isEqualTo(1);
         assertThat(frame.getResult(1)).isEqualTo(Result.SPARE);
     }
 
@@ -43,7 +45,7 @@ class FramesTest {
         /*OutputView init = OutputView.init();
         init.print(Name.of("abc"), frames);*/
 
-        assertThat(frames.getCurrentFrameIndex()).isEqualTo(9);
+        assertThat(frames.getCurrentFrameIndex()).isEqualTo(END_FRAME_INDEX);
         assertThat(frames.canBowling()).isFalse();
     }
 
@@ -63,7 +65,7 @@ class FramesTest {
 
         //init.print(Name.of("abc"), frames);
 
-        assertThat(frames.getCurrentFrameIndex()).isEqualTo(9);
+        assertThat(frames.getCurrentFrameIndex()).isEqualTo(END_FRAME_INDEX);
         assertThat(frames.canBowling()).isFalse();
     }
 
@@ -82,7 +84,7 @@ class FramesTest {
         /*OutputView init = OutputView.init();
         init.print(Name.of("abc"), frames);*/
 
-        assertThat(frames.getCurrentFrameIndex()).isEqualTo(9);
+        assertThat(frames.getCurrentFrameIndex()).isEqualTo(END_FRAME_INDEX);
         assertThat(frames.canBowling()).isFalse();
     }
 }

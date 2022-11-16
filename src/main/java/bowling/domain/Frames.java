@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Frames {
 
-    private static final int END_FRAME_INDEX = 9;
+    private static final int END_FRAME_INDEX = 10;
     private int currentFrameIndex = 0;
     private final List<Frame> values;
 
@@ -25,8 +25,12 @@ public class Frames {
     }
 
     public void bowling(int count) {
-        Frame frame = getFrame();
+        Frame frame = getCurrentFrame();
         frame.bowling(count);
+
+        if (frame.isEnd()) {
+            currentFrameIndex++;
+        }
     }
 
     public boolean canBowling() {
@@ -34,18 +38,10 @@ public class Frames {
     }
 
     private boolean endGame() {
-        return currentFrameIndex == END_FRAME_INDEX
-                && values.get(END_FRAME_INDEX).isEnd();
+        return currentFrameIndex == END_FRAME_INDEX;
     }
 
-    private Frame getFrame() {
-        Frame current = values.get(currentFrameIndex);
-
-        if (!current.isEnd()) {
-            return current;
-        }
-
-        currentFrameIndex++;
+    private Frame getCurrentFrame() {
         return values.get(currentFrameIndex);
     }
 
