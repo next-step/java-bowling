@@ -7,18 +7,17 @@ import bowling.domain.frame.MultiFrames;
 import bowling.domain.name.Name;
 import bowling.domain.name.Names;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static bowling.view.InputView.*;
 import static bowling.view.ResultView.printMultiFrameResult;
 
 public class BowlingApplication {
     public static void main(String[] args) {
         int countOfPlayer = inputCountOfPlayer();
-        Names names = Names.init();
         MultiFrames multiFrames = MultiFrames.init(countOfPlayer);
-
-        for (int i = 1; i <= countOfPlayer; i++) {
-             names.addName(inputPlayerName(i));
-        }
+        Names names = new Names(inputPlayersName(countOfPlayer));
         printMultiFrameResult(names, multiFrames);
 
         while(!multiFrames.isOver()) {
