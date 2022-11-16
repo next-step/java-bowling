@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,6 +14,19 @@ class HitStateTest {
     @Test
     void from_givenStrike() {
         assertThat(HitState.from(10, null)).isEqualTo(HitState.STRIKE);
+    }
+
+    @DisplayName("첫번째 시도에서 1개 이상, 10개 미만의 핀을 쓰러트리지 못하면, null을 반환해야 한다.")
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
+    void from_givenNotStrike(int hit) {
+        assertThat(HitState.from(hit, null)).isEqualTo(null);
+    }
+
+    @DisplayName("첫번째 시도에서 1개의 핀도 쓰러트리지 못하면, 거터를 반환해야 한다.")
+    @Test
+    void from_givenGutterOfFirstTry() {
+        assertThat(HitState.from(0, null)).isEqualTo(HitState.GUTTER);
     }
 
     @DisplayName("두번째 시도까지 10개의 핀을 쓰러트리면 스페어를 반환해야 한다.")
