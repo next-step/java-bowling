@@ -26,8 +26,8 @@ public class FallenPins {
         }
     }
 
-    public static boolean isStrike(FallenPins fallenPins) {
-        return fallenPins.getCountOfPin() == FallenPins.MAX_COUNT_OF_PIN;
+    public boolean isAllPinFallen() {
+        return countOfPin == FallenPins.MAX_COUNT_OF_PIN;
     }
 
 }
