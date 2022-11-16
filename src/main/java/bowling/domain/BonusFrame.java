@@ -23,7 +23,7 @@ public class BonusFrame implements Frame {
 
     @Override
     public boolean isEnd() {
-        if (rolls.sum().bigger(10)) {
+        if (rolls.size() == BONUS_ROLL) {
             return true;
         }
         return status == FrameStatus.MISS;
@@ -49,5 +49,10 @@ public class BonusFrame implements Frame {
     @Override
     public FrameStatus getStatus() {
         return status;
+    }
+
+    @Override
+    public Score calculateScore() {
+        return new Score(rolls.sum(), 0);
     }
 }

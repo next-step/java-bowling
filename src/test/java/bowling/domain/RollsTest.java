@@ -13,7 +13,7 @@ public class RollsTest {
 
     @Test
     void 회차_합산() {
-        assertThat(new Rolls(1, 9).sum()).isEqualTo(new Score(10));
+        assertThat(new Rolls(1, 9).sum()).isEqualTo(10);
     }
 
     @Test

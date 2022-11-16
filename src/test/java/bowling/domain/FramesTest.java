@@ -20,13 +20,13 @@ public class FramesTest {
     @Test
     void 프레임_완료_전() {
         Frames frames = new Frames();
-        assertThat(frames.isEnd(0)).isFalse();
+        assertThat(frames.isEnd()).isFalse();
     }
 
     @Test
-    void 프레임_완료_후_프레임_추가() {
+    void 프레임_추가() {
         Frames frames = new Frames(new NormalFrame(new Rolls(1, 2), FrameStatus.MISS));
-        assertThat(frames.isEnd(0)).isTrue();
+        frames.add();
         assertThat(frames.getFrames()).hasSize(2);
     }
 }

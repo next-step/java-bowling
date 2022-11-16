@@ -19,6 +19,14 @@ public class BonusFrameTest {
         );
     }
 
+    public static Stream<Arguments> provideFrameAndScore() {
+        return Stream.of(
+                Arguments.of(new NormalFrame(new Rolls(10, 10, 10)), new Score(30, 0)),
+                Arguments.of(new NormalFrame(new Rolls(9, 1, 5)), new Score(15, 0)),
+                Arguments.of(new NormalFrame(new Rolls(9, 0)), new Score(9, 0))
+        );
+    }
+
     @Test
     void 생성() {
         assertThat(new NormalFrame().getScores().size()).isEqualTo(0);
@@ -38,5 +46,11 @@ public class BonusFrameTest {
         BonusFrame frame = new BonusFrame();
         frame.addRoll(new Pin(10));
         assertThat(frame.getScores().getScores()).contains(new Pin(10));
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideFrameAndScore")
+    void 프레임_완료시_스코어_계산(Frame frame, Score score) {
+        assertThat(frame.calculateScore()).isEqualTo(score);
     }
 }

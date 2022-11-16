@@ -4,17 +4,19 @@ import java.util.Arrays;
 import java.util.function.Function;
 
 public enum FrameStatus {
-    STRIKE(1, (score) -> score.equals(Constants.TEN)),
-    SPARE(2, (score) -> score.equals(Constants.TEN)),
-    MISS(2, (score) -> !score.equals(Constants.TEN)),
-    PROGRESS(1, (score) -> !score.equals(Constants.TEN));
+    STRIKE(1, (sum) -> sum == Constants.MAX_PIN_COUNT, 2),
+    SPARE(2, (sum) -> sum == Constants.MAX_PIN_COUNT, 1),
+    MISS(2, (sum) -> sum < Constants.MAX_PIN_COUNT, 0),
+    PROGRESS(1, (sum) -> sum < Constants.MAX_PIN_COUNT, 0);
 
-    private final int count;
-    private final Function<Score, Boolean> sum;
+    private final int rollCount;
+    private final Function<Integer, Boolean> sum;
+    private final int bonusCount;
 
-    FrameStatus(int count, Function<Score, Boolean> sum) {
-        this.count = count;
+    FrameStatus(int rollCount, Function<Integer, Boolean> sum, int bonusCount) {
+        this.rollCount = rollCount;
         this.sum = sum;
+        this.bonusCount = bonusCount;
     }
 
     public static FrameStatus match(Rolls rolls) {
@@ -25,10 +27,14 @@ public enum FrameStatus {
     }
 
     private static boolean isMatch(Rolls rolls, FrameStatus result) {
-        return result.count == rolls.size() && result.sum.apply(rolls.sum());
+        return result.rollCount == rolls.size() && result.sum.apply(rolls.sum());
+    }
+
+    public Score calculateScore(Rolls rolls) {
+        return new Score(rolls.sum(), bonusCount);
     }
 
     private static class Constants {
-        public static final Score TEN = new Score(10);
+        public static final int MAX_PIN_COUNT = 10;
     }
 }

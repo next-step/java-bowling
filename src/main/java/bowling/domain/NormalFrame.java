@@ -17,7 +17,8 @@ public class NormalFrame implements Frame {
     }
 
     public NormalFrame(Rolls rolls) {
-        this(rolls, FrameStatus.PROGRESS);
+        this.rolls = rolls;
+        this.status = FrameStatus.match(rolls);
     }
 
     @Override
@@ -62,5 +63,10 @@ public class NormalFrame implements Frame {
 
     public FrameStatus getStatus() {
         return status;
+    }
+
+    @Override
+    public Score calculateScore() {
+        return status.calculateScore(rolls);
     }
 }
