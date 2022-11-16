@@ -51,22 +51,4 @@ class BowlingGameTest {
         assertThat(game).isEqualTo(createBowlingGame(10, 1, 2, 10, 3));
     }
 
-    @DisplayName("남아 있는 볼링 핀의 개수를 반환해야 한다.")
-    @Test
-    void getRemainedPins() {
-        BowlingGame game = new BowlingGame();
-
-        assertThat(game.getRemainedPins()).isEqualTo(10);
-
-        game.hit(1);
-        assertThat(game.getRemainedPins()).isEqualTo(9);
-
-        game.hit(2);
-        game.moveNextFrame();
-        assertThat(game.getRemainedPins()).isEqualTo(10);
-
-        game.hit(3);
-        assertThat(game.getRemainedPins()).isEqualTo(7);
-    }
-
 }

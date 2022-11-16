@@ -54,10 +54,6 @@ public class BowlingGame {
         }
     }
 
-    public int getRemainedPins() {
-        return getCurrentFrame().getRemainedPins();
-    }
-
     public boolean isEnded() {
         return indexOfCurrentFrame == SIZE_OF_FRAMES;
     }
