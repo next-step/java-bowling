@@ -2,8 +2,7 @@ package bowling.domain;
 
 public class NormalStrategy implements FrameStrategy {
 
-    public static final int END_ROUND = 2;
-
+    private static final int END_ROUND = 2;
 
     @Override
     public boolean isFinal() {

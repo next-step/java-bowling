@@ -40,8 +40,8 @@ class FramesTest {
         }
         frames.bowling(2);
 
-        OutputView init = OutputView.init();
-        init.print(Name.of("abc"), frames);
+        /*OutputView init = OutputView.init();
+        init.print(Name.of("abc"), frames);*/
 
         assertThat(frames.getCurrentFrameIndex()).isEqualTo(9);
         assertThat(frames.canBowling()).isFalse();

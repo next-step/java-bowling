@@ -9,7 +9,7 @@ public class OutputView {
 
     private static final String MARK = "|";
     private static final int FINAL_ROUND = 10;
-    public static final String EMPTY_MARK = "      ";
+    private static final String EMPTY_MARK = "      ";
 
     private final String header = getHeader();
 
@@ -86,16 +86,16 @@ public class OutputView {
 
     private String getNormalFrameScore(Frame frame) {
         List<String> list = new ArrayList<>();
-        for (Bowling bowling : frame) {
-            list.add(getScoreMark(bowling));
+        for (RollingResult rollingResult : frame) {
+            list.add(getScoreMark(rollingResult));
         }
 
         return String.join(MARK, list);
     }
 
-    private String getScoreMark(Bowling bowling) {
-        Result result = bowling.getResult();
-        int count = bowling.getCount();
+    private String getScoreMark(RollingResult rollingResult) {
+        Result result = rollingResult.getResult();
+        int count = rollingResult.getCount();
 
         if (Result.STRIKE == result) {
             return "X";

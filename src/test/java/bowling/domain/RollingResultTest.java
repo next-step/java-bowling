@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class BowlingTest {
+class RollingResultTest {
 
     @Test
     void 생성_성공() {
         Frame frame = Frame.createNormal();
-        Bowling bowling = Bowling.from(frame, PinCount.of(5));
-        assertThat(bowling.getResult()).isEqualTo(Result.MISS);
+        RollingResult rollingResult = RollingResult.from(frame, PinCount.of(5));
+        assertThat(rollingResult.getResult()).isEqualTo(Result.MISS);
     }
 }

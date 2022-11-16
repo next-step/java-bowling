@@ -5,9 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-public class Frame implements Iterable<Bowling> {
+public class Frame implements Iterable<RollingResult> {
 
-    private final List<Bowling> values = new ArrayList<>();
+    private final List<RollingResult> values = new ArrayList<>();
     private final FrameStrategy strategy;
 
     public Frame(FrameStrategy strategy) {
@@ -27,11 +27,11 @@ public class Frame implements Iterable<Bowling> {
             throw new IllegalStateException("프레임이 종료 되었습니다");
         }
 
-        values.add(Bowling.from(this, PinCount.of(pinCount)));
+        values.add(RollingResult.from(this, PinCount.of(pinCount)));
     }
 
     public void bowling(PinCount pinCount) {
-        values.add(Bowling.from(this, pinCount));
+        values.add(RollingResult.from(this, pinCount));
     }
 
     public boolean isEnd() {
@@ -54,7 +54,7 @@ public class Frame implements Iterable<Bowling> {
         return getBeforeBowling().getResult();
     }
 
-    private Bowling getBeforeBowling() {
+    private RollingResult getBeforeBowling() {
         return values.get(values.size() - 1);
     }
 
@@ -70,7 +70,7 @@ public class Frame implements Iterable<Bowling> {
         return strategy.isFinal();
     }
 
-    public Bowling getBowling(int round) {
+    public RollingResult getBowling(int round) {
         return Optional.ofNullable(values.get(round))
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 인덱스 입니다. " + round));
     }
@@ -86,7 +86,7 @@ public class Frame implements Iterable<Bowling> {
     }
 
     @Override
-    public Iterator<Bowling> iterator() {
+    public Iterator<RollingResult> iterator() {
         return values.iterator();
     }
 }

@@ -9,9 +9,9 @@ public enum Result {
 
 
     public static final int FIRST_ROUND = 0;
-    public static final int SECOND_ROUND = 1;
-    public static final int FINAL_ROUND = 2;
-    public static final int MAX_COUNT = 10;
+    private static final int SECOND_ROUND = 1;
+    private static final int FINAL_ROUND = 2;
+    private static final int MAX_COUNT = 10;
 
     public static Result from(Frame frame, int count) {
         return from(frame, PinCount.of(count));

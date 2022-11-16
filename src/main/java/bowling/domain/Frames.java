@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Frames {
 
-    public static final int END_FRAME_INDEX = 9;
+    private static final int END_FRAME_INDEX = 9;
     private int currentFrameIndex = 0;
     private final List<Frame> values;
 

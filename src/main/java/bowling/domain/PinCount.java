@@ -2,8 +2,8 @@ package bowling.domain;
 
 public class PinCount {
 
-    public static final int MAX = 10;
-    public static final int MIN = 0;
+    private static final int MAX = 10;
+    private static final int MIN = 0;
     private final int value;
 
     private PinCount(int value) {
