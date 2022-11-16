@@ -2,10 +2,11 @@ package bowling.domain.frame.state;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import bowling.domain.dto.BowlRecord;
 import bowling.domain.frame.Score;
 
 class StateTest {
@@ -37,11 +38,6 @@ class StateTest {
         }
 
         @Override
-        public BowlRecord createBowlRecord() {
-            return null;
-        }
-
-        @Override
         public Score getScore() {
             return null;
         }
@@ -58,6 +54,21 @@ class StateTest {
 
         @Override
         public boolean canBonusBowl() {
+            return false;
+        }
+
+        @Override
+        public List<Pins> getFalledPins() {
+            return null;
+        }
+
+        @Override
+        public boolean isStrike() {
+            return false;
+        }
+
+        @Override
+        public boolean isSpare() {
             return false;
         }
     }

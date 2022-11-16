@@ -1,6 +1,8 @@
 package bowling.domain.frame;
 
-import bowling.domain.dto.BowlingGameFrameRecord;
+import java.util.List;
+
+import bowling.domain.frame.state.State;
 
 public abstract class Frame {
     public static final int START_FRAME = 1;
@@ -10,11 +12,13 @@ public abstract class Frame {
 
     public abstract Frame createNextFrame();
 
-    public abstract BowlingGameFrameRecord createFrameRecord();
+    public abstract Score getScore();
 
     public abstract Score calculateBonusScore(Score previousFrameScore);
 
     public abstract int getFrameNumber();
 
     public abstract boolean isFrameFinish();
+
+    public abstract List<State> getStates();
 }

@@ -12,4 +12,14 @@ abstract class Running extends State {
     public final Score getScore() {
         return Score.needToMoreBowl();
     }
+
+    @Override
+    public final boolean isStrike() {
+        return false;
+    }
+
+    @Override
+    public final boolean isSpare() {
+        return false;
+    }
 }

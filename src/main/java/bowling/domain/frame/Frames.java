@@ -1,13 +1,9 @@
 package bowling.domain.frame;
 
 import static bowling.domain.frame.Frame.*;
-import static java.util.stream.Collectors.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
-
-import bowling.domain.dto.BowlingGameFrameRecord;
 
 public class Frames {
     private static final String INVALID_FRAME_NUMBER_EXCEPTION_MESSAGE = "허용되지 않는 프레임 숫자 입니다.";
@@ -42,17 +38,6 @@ public class Frames {
         frames.add(getCurrentFrame().createNextFrame());
     }
 
-    public List<BowlingGameFrameRecord> createFrameRecords() {
-        List<BowlingGameFrameRecord> frameRecords = frames.stream()
-            .map(Frame::createFrameRecord)
-            .collect(toList());
-
-        IntStream.range(frames.size(), LAST_FRAME)
-            .forEach(i -> frameRecords.add(new BowlingGameFrameRecord(Score.needToMoreBowl(), List.of())));
-
-        return frameRecords;
-    }
-
     public boolean isCurrentFrameEnded() {
         return getCurrentFrame().isFrameFinish();
     }
@@ -63,6 +48,10 @@ public class Frames {
 
     public boolean isGamePlayable() {
         return !(frames.size() == LAST_FRAME && isCurrentFrameEnded());
+    }
+
+    public List<Frame> getValue() {
+        return frames;
     }
 
     private Frame getCurrentFrame() {
