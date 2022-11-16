@@ -20,4 +20,13 @@ public class QuestionTest {
         assertThatThrownBy(() -> Q1.validateOwner(UserTest.SANJIGI))
                 .isInstanceOf(CannotDeleteException.class);
     }
+
+    @Test
+    void 게시물_삭제() {
+        DeleteHistories deleteHistories = new DeleteHistories();
+        Q1.delete(deleteHistories);
+
+        assertThat(Q1.isDeleted()).isTrue();
+        assertThat(deleteHistories.histories()).hasSize(1);
+    }
 }

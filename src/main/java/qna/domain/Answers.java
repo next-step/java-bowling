@@ -29,7 +29,7 @@ public class Answers {
 
     public void deleteAll(DeleteHistories deleteHistories) {
         for (Answer answer : answers) {
-            answer.setDeleted(true);
+            answer.delete();
             deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         }
     }

@@ -22,7 +22,7 @@ class AnswersTest {
     }
 
     @Test
-    void answers_전쳬_삭제() {
+    void 답글_전쳬_삭제() {
         DeleteHistories deleteHistories = new DeleteHistories();
         answers.deleteAll(deleteHistories);
 

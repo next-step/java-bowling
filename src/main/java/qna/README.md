@@ -9,6 +9,6 @@
   - [x] 테스트 작성
 - [x] `QnAService` 의 `Answer을 삭제` 하는 로직을 `Answers`로 이동
   - [x] 테스트 작성
-- [ ] `QnAService` 의 `Question을 삭제` 하는 로직을 `Question`으로 이동
-  - [ ] 테스트 작성
+- [x] `QnAService` 의 `Question을 삭제` 하는 로직을 `Question`으로 이동
+  - [x] 테스트 작성
 - [ ] `Question` 의 `delete()` 로직에서 위 로직을 모두 수행하고, 질문과 답글이 모두 포함된 `DeleteHistories` 를 반환하도록 변경
