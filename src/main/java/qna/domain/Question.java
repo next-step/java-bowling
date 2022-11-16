@@ -52,42 +52,38 @@ public class Question extends AbstractEntity {
     }
 
     public List<DeleteHistory> delete(User user) throws CannotDeleteException {
-        userValidationDelete(user);
+        checkDeleteByUser(user);
         if (!answers.isEmpty()) {
-            answersValidationDelete(user);
+            checkDeleteByAnswer(user);
         }
         this.deleted = true;
         return saveDeleteHistory(user);
     }
 
-    private void userValidationDelete(User user) throws CannotDeleteException {
-        if (!writer.equals(user)) {
+    private void checkDeleteByUser(User user) throws CannotDeleteException {
+        if (!isOwner(user)) {
             throw new CannotDeleteException(DELETE_QUESTION_EXCEPTION_MESSAGE);
         }
     }
 
-    private void answersValidationDelete(User user) throws CannotDeleteException {
+    private void checkDeleteByAnswer(User user) throws CannotDeleteException {
+        Answers.from(answers);
         for (Answer answer : answers) {
-            if (!answer.isSameUser(user)) {
+            if (!answer.isOwner(user)) {
                 throw new CannotDeleteException(DELETE_ANSWER_EXCEPTION_MESSAGE);
             }
         }
-        deleteAnswer(user);
     }
 
-    private List<DeleteHistory> saveDeleteHistory(User user) {
+    private List<DeleteHistory> saveDeleteHistory(User user) throws CannotDeleteException {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
-        for (Answer answer : answers) {
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+        if (!answers.isEmpty()) {
+            for (Answer answer : answers) {
+                deleteHistories.add(answer.delete(user));
+            }
         }
         return deleteHistories;
-    }
-
-    private void deleteAnswer(User user) throws CannotDeleteException {
-        for (Answer answer : answers) {
-            answer.delete(user);
-        }
     }
 
     public String getTitle() {

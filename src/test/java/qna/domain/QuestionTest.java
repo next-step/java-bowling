@@ -24,10 +24,4 @@ public class QuestionTest {
         Q1.delete(UserTest.JAVAJIGI);
         assertThat(Q1.isDeleted()).isTrue();
     }
-
-    @Test
-    void 다른사람이답변달았을때_삭제불가() throws CannotDeleteException {
-        assertThatThrownBy(() -> Q3.delete(UserTest.SANJIGI))
-                .isInstanceOf(CannotDeleteException.class);
-    }
 }
