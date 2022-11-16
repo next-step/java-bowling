@@ -25,7 +25,7 @@ public class OutputView {
 
         for (int i = 1; i <= 10; i++) {
             sb.append(MARK);
-            sb.append(String.format(" %s   ", lpadZero(i)));
+            sb.append(String.format("  %s   ", lpadZero(i)));
         }
         sb.append(MARK);
         return sb.toString();
@@ -71,7 +71,7 @@ public class OutputView {
     }
 
     private String formatScore(String scoreMark) {
-        return " " + rpad(scoreMark, MARK);
+        return "  " + rpad(scoreMark, MARK);
     }
 
     private String rpad(String scoreMark, String mark) {

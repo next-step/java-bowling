@@ -37,7 +37,7 @@ public enum Result {
         }
 
         int sum = currentCount.sum(beforeCount);
-        if (sum > MAX_COUNT) {
+        if (!beforeCount.isTen() && sum > MAX_COUNT) {
             throw new IllegalArgumentException(String.format("이전 투구(%s) + 현재투구(%s)는 %d을 넘을수 없습니다.", beforeCount, currentCount, MAX_COUNT));
         }
 
@@ -83,6 +83,10 @@ public enum Result {
 
     public boolean isNone() {
         return Result.NONE == this;
+    }
+
+    public boolean isSpare() {
+        return Result.SPARE == this;
     }
 
 }
