@@ -78,7 +78,7 @@ public class Answer extends AbstractEntity {
         validateDelete(user);
         deleted = true;
 
-        return getDeleteHistory();
+        return createDeleteHistory();
     }
 
     private void validateDelete(User user) throws CannotDeleteException {
@@ -87,7 +87,7 @@ public class Answer extends AbstractEntity {
         }
     }
 
-    private DeleteHistory getDeleteHistory() {
+    private DeleteHistory createDeleteHistory() {
         return new DeleteHistory(ContentType.ANSWER, super.getId(), writer, LocalDateTime.now());
     }
 }

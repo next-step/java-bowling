@@ -75,15 +75,15 @@ public class Question extends AbstractEntity {
     private DeleteHistory delete(User user) throws CannotDeleteException {
         validateDelete(user);
         deleted = true;
-        return getDeleteHistory();
+        return createDeleteHistory();
     }
 
-    private DeleteHistory getDeleteHistory() {
+    private DeleteHistory createDeleteHistory() {
         return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
     }
 
     public boolean isDeleted() {
-        return deleted && answers.isDeletedAll();
+        return deleted;
     }
 
     public Answers getAnswers() {
