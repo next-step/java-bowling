@@ -29,4 +29,20 @@ public class QuestionTest {
         assertThat(Q1.isDeleted()).isTrue();
         assertThat(deleteHistories.histories()).hasSize(1);
     }
+
+    @Test
+    void 게시물_및_댓글_삭졔_정상() throws CannotDeleteException {
+        Q1.addAnswer(AnswerTest.A1);
+
+        DeleteHistories deleteHistories = Q1.delete(UserTest.JAVAJIGI);
+        assertThat(deleteHistories.histories()).hasSize(2);
+    }
+
+    @Test
+    void 게시물_및_댓글_삭졔_오류(){
+        Q1.addAnswer(AnswerTest.A2);
+
+        assertThatThrownBy(() -> Q1.delete(UserTest.JAVAJIGI))
+                .isInstanceOf(CannotDeleteException.class);
+    }
 }
