@@ -1,11 +1,9 @@
 package bowling;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class FramesTest {
 
@@ -42,18 +40,8 @@ class FramesTest {
     void lastPitching() {
         int lastNumber = 10;
         Frames frames = new Frames(lastNumber);
-        FrameNumber frameNumber = frames.pitchingLast(FrameNumber.number(lastNumber), BowlingPin.MAX_PIN_NUMBER);
+        FrameNumber frameNumber = frames.pitching(FrameNumber.number(lastNumber), BowlingPin.MAX_PIN_NUMBER);
         assertThat(frameNumber).isEqualTo(FrameNumber.number(lastNumber));
-    }
-
-    @Test
-    @DisplayName("마지막 프레임의 스트라이크의 두번째 스트라이크는 프레임이 변함")
-    void lastPitchingDouble() {
-        int lastNumber = 10;
-        Frames frames = new Frames(lastNumber);
-        frames.pitchingLast(FrameNumber.number(lastNumber), BowlingPin.MAX_PIN_NUMBER);
-        FrameNumber frameNumber = frames.pitchingLast(FrameNumber.number(lastNumber), BowlingPin.MAX_PIN_NUMBER);
-        assertThat(frameNumber).isEqualTo(FrameNumber.number(lastNumber).next());
     }
 
     @Test
@@ -61,8 +49,8 @@ class FramesTest {
     void lastPitchingSpare() {
         int lastNumber = 10;
         Frames frames = new Frames(lastNumber);
-        frames.pitchingLast(FrameNumber.number(lastNumber), 5);
-        FrameNumber frameNumber = frames.pitchingLast(FrameNumber.number(lastNumber), 5);
+        frames.pitching(FrameNumber.number(lastNumber), 5);
+        FrameNumber frameNumber = frames.pitching(FrameNumber.number(lastNumber), 5);
         assertThat(frameNumber).isEqualTo(FrameNumber.number(lastNumber));
     }
 
@@ -71,8 +59,8 @@ class FramesTest {
     void lastFrameMiss() {
         int lastNumber = 10;
         Frames frames = new Frames(lastNumber);
-        frames.pitchingLast(FrameNumber.number(lastNumber), 5);
-        FrameNumber frameNumber = frames.pitchingLast(FrameNumber.number(lastNumber), 4);
+        frames.pitching(FrameNumber.number(lastNumber), 5);
+        FrameNumber frameNumber = frames.pitching(FrameNumber.number(lastNumber), 4);
         assertThat(frameNumber).isEqualTo(FrameNumber.number(lastNumber).next());
     }
 
@@ -81,9 +69,9 @@ class FramesTest {
     void lastFramePitchingThreeTimes() {
         int lastNumber = 10;
         Frames frames = new Frames(lastNumber);
-        frames.pitchingLast(FrameNumber.number(lastNumber), 5);
-        frames.pitchingLast(FrameNumber.number(lastNumber), 5);
-        FrameNumber frameNumber = frames.pitchingLast(FrameNumber.number(lastNumber), 10);
+        frames.pitching(FrameNumber.number(lastNumber), 5);
+        frames.pitching(FrameNumber.number(lastNumber), 5);
+        FrameNumber frameNumber = frames.pitching(FrameNumber.number(lastNumber), 10);
         assertThat(frameNumber).isEqualTo(FrameNumber.number(lastNumber).next());
     }
 }

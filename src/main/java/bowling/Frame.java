@@ -1,70 +1,45 @@
 package bowling;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Frame {
-    private static final int HIT_ONCE = 1;
-    private static final int HIT_TWICE = 2;
-    private static final int HIT_TRIPLE = 3;
+    protected static final int HIT_TWICE = 2;
+    protected static final int HIT_TRIPLE = 3;
 
-    private BowlingPin bowlingPin;
-    private final List<HitRecord> hitRecords;
+    protected BowlingPin bowlingPin;
+    protected final HitRecords hitRecords;
 
     public Frame() {
         this.bowlingPin = new BowlingPin(BowlingPin.MAX_PIN_NUMBER);
-        hitRecords = new ArrayList<>();
+        this.hitRecords = new HitRecords();
     }
 
-    public boolean finishLastFrame() {
-        return hitThreeTimes() || hitDouble() || failedBounsFrame();
-    }
-
-    private boolean failedBounsFrame() {
-        return hitTwice() && !clearAllFrame();
-    }
-
-    public void hitBowlingPin(int count) {
+    public BowilingTerm hitBowlingPin(int count) {
         bowlingPin = bowlingPin.hitPins(new BowlingPin(count));
-        BowilingTerm bowilingTerm = BowilingTerm.MISS;
-        if ((hitRecords.isEmpty() || hitRecords.size() == HIT_TRIPLE || hitStrike()) && bowlingPin.isZero()) {
-            bowilingTerm = BowilingTerm.STRIKE;
-            hitRecords.add(new HitRecord(count, bowilingTerm));
-            return ;
+        if (hitRecords.hitOnce() && bowlingPin.isZero()) {
+            hitRecords.addSpare();
+            return BowilingTerm.SPARE;
         }
 
-        if (hitRecords.size() == HIT_ONCE && bowlingPin.isZero()) {
-            bowilingTerm = BowilingTerm.SPARE;
-            hitRecords.add(new HitRecord(count, bowilingTerm));
-            return ;
+        if (strikeCondition()) {
+            hitRecords.addStrike();
+            return BowilingTerm.STRIKE;
         }
 
-        if (count == 0) {
-            bowilingTerm = BowilingTerm.GUTTER;
-            hitRecords.add(new HitRecord(count, bowilingTerm));
-            return ;
+        if (count == BowlingPin.ZERO) {
+            hitRecords.addGutter();
+            return BowilingTerm.GUTTER;
         }
-        hitRecords.add(new HitRecord(count, bowilingTerm));
+        hitRecords.addMiss(count);
+        return BowilingTerm.MISS;
     }
 
-    private boolean hitStrike() {
-        for (HitRecord hitRecord : hitRecords) {
-            if (!hitRecord.hitAll()) {
-                return false;
-            }
-        }
-        return true;
+    protected boolean strikeCondition() {
+        return bowlingPin.isZero();
     }
 
-    public boolean finishFrame() {
-        return clearAllFrame() || hitTwice();
-    }
-
-    public boolean hitDouble() {
-        if (hitRecords.size() != HIT_TWICE) {
-            return false;
-        }
-        return hitStrike();
+    protected boolean finishFrame() {
+        return clearAllFrame() || hitRecords.hitTimes(HIT_TWICE);
     }
 
     public void chargeBowlingPin() {
@@ -72,18 +47,18 @@ public class Frame {
     }
 
     public List<HitRecord> getHitRecords() {
-        return hitRecords;
+        return hitRecords.getHitRecords();
     }
 
     public boolean clearAllFrame() {
         return bowlingPin.isZero();
     }
 
-    public boolean hitThreeTimes() {
-        return hitRecords.size() == HIT_TRIPLE;
+    public void calculateBonus(int hitCount) {
+        hitRecords.calculateBonus(hitCount);
     }
 
-    public boolean hitTwice() {
-        return hitRecords.size() == HIT_TWICE;
+    public HitRecords hitRecords() {
+        return hitRecords;
     }
 }

@@ -17,7 +17,7 @@ public class App {
             frameNumber = bowlingGame.pitchingBall(count);
 
             Frames frames = bowlingGame.getFrames();
-            OutputView.printScoreScreen(username, frames);
+            OutputView.printScoreScreen(username, frames, bowlingGame);
         }
     }
 }
