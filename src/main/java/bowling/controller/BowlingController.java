@@ -17,7 +17,7 @@ public class BowlingController {
         Names names = createNames(new PeopleSize(Input.inputPeopleSize()));
         Scoreboards scoreboards = new Scoreboards(names);
         BowlingGame bowlingGame = new BowlingGame(scoreboards);
-        play(bowlingGame, names);
+        game(bowlingGame, names);
     }
 
     private Names createNames(PeopleSize peopleSize) {
@@ -26,27 +26,27 @@ public class BowlingController {
                 .collect(Collectors.toList()));
     }
 
-    private void play(BowlingGame bowlingGame, Names names) {
+    private void game(BowlingGame bowlingGame, Names names) {
         if (!bowlingGame.isEnd()) {
-            playRound(bowlingGame, names);
-            play(bowlingGame, names);
+            round(bowlingGame, names);
+            game(bowlingGame, names);
         }
     }
 
-    private void playRound(BowlingGame bowlingGame, Names names) {
+    private void round(BowlingGame bowlingGame, Names names) {
         for (Name name : names.names()) {
-            playTurn(bowlingGame, name);
+            turn(bowlingGame, name);
         }
         bowlingGame.setNextRound();
     }
 
-    private void playTurn(BowlingGame bowlingGame, Name name) {
+    private void turn(BowlingGame bowlingGame, Name name) {
         if (!bowlingGame.isEndTurn(name)) {
             int round = bowlingGame.round();
             Score score = Score.of(Input.inputScore(round));
             Scoreboards scoreboards = bowlingGame.play(score, name);
             Output.printScoreboard(scoreboards);
-            playTurn(bowlingGame, name);
+            turn(bowlingGame, name);
         }
     }
 }
