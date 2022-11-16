@@ -2,10 +2,14 @@ package bowling.domain.frame;
 
 import bowling.domain.Pin;
 import bowling.domain.Score;
-import bowling.domain.status.*;
+import bowling.domain.status.Ready;
+import bowling.domain.status.Spare;
+import bowling.domain.status.Status;
+import bowling.domain.status.Strike;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FinalFrame extends Frame {
 
@@ -45,7 +49,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public Frame nextFrame() {
-        throw new RuntimeException("마지막 프레임입니다.");
+        throw new IllegalStateException("마지막 프레임입니다.");
     }
 
     @Override
@@ -58,7 +62,7 @@ public class FinalFrame extends Frame {
     }
 
     private Score getFirstScore() {
-        return statuses.get(0).getScore();
+        return getFirstStatus().getScore();
     }
 
     @Override
@@ -78,14 +82,23 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public Boolean isFinished() {
-        if (statuses.size() == 1 && statuses.get(0) instanceof Miss) return true;
-        if (statuses.get(0) instanceof Spare && statuses.get(1) instanceof FirstBowl) return true;
-        if (statuses.get(0) instanceof Strike && statuses.get(1) instanceof Spare) return true;
-        if (statuses.get(0) instanceof Strike && statuses.get(1) instanceof Miss) return true;
-        if (statuses.get(0) instanceof Strike && statuses.get(1) instanceof Strike && statuses.get(2) instanceof Strike) return true;
-        if (statuses.get(0) instanceof Strike && statuses.get(1) instanceof Strike && statuses.get(2) instanceof FirstBowl) return true;
-        return false;
+    public boolean isFinished() {
+        if (getFirstStatus() instanceof Spare || getFirstStatus() instanceof Strike) {
+            return getRemainCountOfBowl() == 0;
+        }
+        return getFirstStatus().isFinished();
+    }
+
+    private int getRemainCountOfBowl() {
+        Score score = getFirstScore();
+        for (int i = 1; i < statuses.size(); i++) {
+            score = statuses.get(i).addScore(score);
+        }
+        return score.getNextScoreCnt();
+    }
+
+    private Status getFirstStatus() {
+        return statuses.get(0);
     }
 
     public List<Status> getStatuses() {

@@ -14,7 +14,7 @@ public abstract class Frame {
 
     public abstract Status getStatus();
 
-    public abstract Boolean isFinished();
+    public abstract boolean isFinished();
 
     public abstract boolean isFinalFrame();
 

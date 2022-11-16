@@ -28,9 +28,7 @@ public class FrameView {
     public static String frameResultContents(Frames frames) {
         StringBuilder contents = new StringBuilder(getNormalFramesContents(frames));
         contents.append(getFinalFrameContents(frames));
-        for (int i = frames.getCurrentFrameIdx() + 1; i < MAX_FRAME_NO; i++) {
-            contents.append(String.format("%7s", BAR_MARK));
-        }
+        getRemainFramesScores(frames.getCurrentFrameIdx() + 1, contents);
 
         return contents.toString();
     }
@@ -39,7 +37,7 @@ public class FrameView {
         return frames.getFrameStatus()
                 .stream()
                 .filter(status -> !Objects.isNull(status))
-                .map(status -> { String content = "";
+                .map(status -> { String content = "   ";
                     if (status instanceof Strike) {
                         content = String.format("%-3s", STRIKE_MARK);
                     }
@@ -88,16 +86,32 @@ public class FrameView {
     }
 
     public static String getNormalFramesScores(Frames frames) {
-        return frames.getFrameScores()
+        StringBuilder contents = new StringBuilder();
+        String content = frames.getFrameScores()
                 .stream()
-                .map(score -> String.format("%2s",score))
+                .map(score -> String.format("%2s", score.getValue()))
                 .collect(Collectors.joining("  |  ", "  ", "  |"));
+
+        int startIdx = 0;
+        if (content.length() >= 7) {
+            contents.append(content);
+            startIdx = frames.getCurrentFrameIdx() + 1;
+        }
+
+        getRemainFramesScores(startIdx, contents);
+        return contents.toString();
+    }
+
+    private static void getRemainFramesScores(int startIdx, StringBuilder contents) {
+        for (int i = startIdx; i < MAX_FRAME_NO; i++) {
+            contents.append(String.format("%7s", BAR_MARK));
+        }
     }
 
     public static String getFinalFramesScores(Frames frames) {
         if (frames.getCurrentFrame().isFinalFrame()) {
             Score score = frames.getCurrentFrame().getScore();
-            String finalScore = String.valueOf(score.getScore());
+            String finalScore = String.valueOf(score.getValue());
             return String.format("  " + "%-4s", finalScore) + BAR_MARK;
         }
         return "";

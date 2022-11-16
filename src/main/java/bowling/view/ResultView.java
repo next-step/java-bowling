@@ -1,7 +1,9 @@
 package bowling.view;
 
-import bowling.domain.Name;
+import bowling.domain.frame.MultiFrames;
+import bowling.domain.name.Name;
 import bowling.domain.frame.Frames;
+import bowling.domain.name.Names;
 
 import static bowling.view.FrameView.getFinalFramesScores;
 import static bowling.view.FrameView.getNormalFramesScores;
@@ -16,10 +18,8 @@ public class ResultView {
     public static final String ZERO = "0";
 
     public static void printFrameResult(Name name, Frames frames) {
-        printFrameTitle();
         printFrameContents(name, frames);
         printFrameScores(frames);
-        System.out.println();
     }
 
     private static void printFrameTitle() {
@@ -40,5 +40,13 @@ public class ResultView {
     private static void printFrameScores(Frames frames) {
         String scores = SCORE_HEAD + getNormalFramesScores(frames) + getFinalFramesScores(frames);
         System.out.println(scores);
+    }
+
+    public static void printMultiFrameResult(Names names, MultiFrames multiFrames) {
+        printFrameTitle();
+        for (int i = 0; i < names.getCountOfPlayer(); i++) {
+            printFrameResult(names.getPlayerName(i), multiFrames.getPlayerFrame(i));
+        }
+        System.out.println();
     }
 }

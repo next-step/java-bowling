@@ -3,7 +3,7 @@ package bowling.domain.status;
 import bowling.domain.Pin;
 import bowling.domain.Score;
 
-public class Ready extends Status {
+public class Ready extends Ongoing {
 
     @Override
     public Status bowl(Pin pin) {
@@ -11,11 +11,6 @@ public class Ready extends Status {
             return new Strike();
         }
         return new FirstBowl(pin);
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
     }
 
     @Override
