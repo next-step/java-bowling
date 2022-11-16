@@ -1,10 +1,15 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Optional;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.util.CollectionUtils;
+import qna.CannotDeleteException;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -18,10 +23,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -84,12 +87,33 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
     }
 
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    public List<DeleteHistory> delete(final User deleteUser) throws CannotDeleteException {
+
+        if (!isOwner(deleteUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+
+        if(!answers.isOwner(deleteUser)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+
+        this.deleted = true;
+        final DeleteHistory questionDeleteHistory = new DeleteHistory(ContentType.QUESTION, getId(),
+          getWriter(), LocalDateTime.now());
+        final List<DeleteHistory> answerDeleteHistories = this.answers.delete(deleteUser);
+
+        final List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(questionDeleteHistory);
+        deleteHistories.addAll(answerDeleteHistories);
+        return deleteHistories;
     }
 }
