@@ -101,12 +101,6 @@ public class FinalFrame extends Frame {
         return statuses.get(0);
     }
 
-    private List<Status> getNotReadyStatuses() {
-        return statuses.stream()
-                .filter(status -> !(status instanceof Ready))
-                .collect(Collectors.toList());
-    }
-
     public List<Status> getStatuses() {
         return statuses;
     }
