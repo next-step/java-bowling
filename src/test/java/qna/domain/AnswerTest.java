@@ -30,8 +30,7 @@ public class AnswerTest {
 
     @Test
     void 댓글_삭제() {
-        DeleteHistories deleteHistories = new DeleteHistories();
-        A1.delete(deleteHistories);
+        DeleteHistories deleteHistories = A1.delete(new DeleteHistories());
 
         assertThat(A1.isDeleted()).isTrue();
         assertThat(deleteHistories.histories()).hasSize(1);

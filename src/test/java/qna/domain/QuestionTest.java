@@ -28,8 +28,7 @@ public class QuestionTest {
 
     @Test
     void 게시물_삭제() {
-        DeleteHistories deleteHistories = new DeleteHistories();
-        Q1.delete(deleteHistories);
+        DeleteHistories deleteHistories = Q1.delete(new DeleteHistories());
 
         assertThat(Q1.isDeleted()).isTrue();
         assertThat(deleteHistories.histories()).hasSize(1);

@@ -61,16 +61,14 @@ public class Question extends AbstractEntity {
     public DeleteHistories delete(User loginUser) throws CannotDeleteException {
         validateOwner(loginUser);
 
-        DeleteHistories deleteHistories = new DeleteHistories();
-        delete(deleteHistories);
-        answers.deleteAll(deleteHistories);
-
+        DeleteHistories deleteHistories = delete(new DeleteHistories());
+        deleteHistories = answers.deleteAll(deleteHistories);
         return deleteHistories;
     }
 
-    void delete(DeleteHistories deleteHistories) {
+    DeleteHistories delete(DeleteHistories deleteHistories) {
         deleted = true;
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+        return deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
     }
 
     void validateOwner(User loginUser) throws CannotDeleteException {

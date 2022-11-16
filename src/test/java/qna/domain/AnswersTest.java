@@ -23,8 +23,7 @@ class AnswersTest {
 
     @Test
     void 답글_전쳬_삭제() {
-        DeleteHistories deleteHistories = new DeleteHistories();
-        answers.deleteAll(deleteHistories);
+        DeleteHistories deleteHistories = answers.deleteAll(new DeleteHistories());
 
         assertThat(AnswerTest.A1.isDeleted()).isTrue();
         assertThat(AnswerTest.A2.isDeleted()).isTrue();

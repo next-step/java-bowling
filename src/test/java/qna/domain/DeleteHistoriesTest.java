@@ -16,10 +16,12 @@ class DeleteHistoriesTest {
     );
 
     @Test
-    void add() {
-        DeleteHistories deleteHistories = new DeleteHistories();
-        deleteHistories.add(DH1);
+    void 원소추가시_새로운_객체_반환() {
+        DeleteHistories deleteHistories1 = new DeleteHistories();
+        DeleteHistories deleteHistories2 = deleteHistories1.add(DH1);
 
-        assertThat(deleteHistories.histories()).containsExactly(DH1);
+        assertThat(deleteHistories1.histories()).hasSize(0);
+        assertThat(deleteHistories2.histories()).hasSize(1);
+        assertThat(deleteHistories1).isNotSameAs(deleteHistories2);
     }
 }

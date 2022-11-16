@@ -26,10 +26,11 @@ public class Answers {
         answers.add(answer);
     }
 
-    public void deleteAll(DeleteHistories deleteHistories) {
+    public DeleteHistories deleteAll(DeleteHistories deleteHistories) {
         for (Answer answer : answers) {
-            answer.delete(deleteHistories);
+            deleteHistories = answer.delete(deleteHistories);
         }
+        return deleteHistories;
     }
 
     public void validateOwner(User loginUser) throws CannotDeleteException {
