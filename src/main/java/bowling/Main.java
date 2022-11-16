@@ -28,11 +28,11 @@ public class Main {
 
     private static void startFrame(List<Player> players) {
         for (Player player : players) {
-            changeTurn(players, player);
+            startPlayerTurn(players, player);
         }
     }
 
-    private static void changeTurn(List<Player> players, Player player) {
+    private static void startPlayerTurn(List<Player> players, Player player) {
         while (player.process()) {
             Pin pin = new Pin(InputView.scanScore(player));
             player.knockedDownPins(pin);
