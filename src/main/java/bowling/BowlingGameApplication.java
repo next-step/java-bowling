@@ -22,20 +22,12 @@ public class BowlingGameApplication {
     }
 
     private static void runApplication() {
-        Players players = inputPlayers();
+        Players players = InputView.inputPlayers();
         OutputView.printBowlingGames(getPlayerDtos(players));
 
         for (int i = 0; i < BowlingGame.SIZE_OF_FRAMES; i++) {
             playFrame(players);
         }
-    }
-
-    private static Players inputPlayers() {
-        int numberOfPlayers = InputView.inputNumberOfPlayers();
-        Players players = new Players();
-        IntStream.range(0, numberOfPlayers)
-                .forEach(i -> players.add(new Player(InputView.inputPlayerName())));
-        return players;
     }
 
     private static void playFrame(Players players) {
