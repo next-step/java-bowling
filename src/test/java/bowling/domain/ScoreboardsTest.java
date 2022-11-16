@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import bowling.domain.score.Score;
 import bowling.domain.score.TotalScore;
@@ -22,9 +23,7 @@ public class ScoreboardsTest {
     }
 
     private Names createNames(String... names) {
-        return new Names(Arrays.stream(names)
-                .map(Name::new)
-                .collect(Collectors.toList()));
+        return new Names(Arrays.stream(names).map(Name::new).collect(Collectors.toList()));
     }
 
     @Test
@@ -60,5 +59,23 @@ public class ScoreboardsTest {
         totalScore.addRegularScore(Score.of(8));
 
         assertThat(scoreboards.scoreboards().get(name).frame(this.round).totalScore()).isEqualTo(totalScore);
+    }
+
+    @Test
+    void addScoreFail() {
+        Scoreboards scoreboards = new Scoreboards(new Names(List.of(name)));
+        scoreboards.addScore(Score.of(8), name, this.round);
+        scoreboards.addScore(Score.of(2), name, this.round);
+
+        assertThatThrownBy(() -> scoreboards.addScore(Score.of(2), name, this.round)).isInstanceOf(
+                IllegalArgumentException.class);
+    }
+
+    @Test
+    void validateName() {
+        Scoreboards scoreboards = new Scoreboards(new Names(List.of(new Name("aka"))));
+
+        assertThatThrownBy(() -> scoreboards.isEndTurn(new Round(1), new Name("cys")))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
