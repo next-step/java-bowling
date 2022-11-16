@@ -59,9 +59,9 @@ public class Question extends AbstractEntity {
     }
 
     public DeleteHistories delete(User loginUser) throws CannotDeleteException {
-        DeleteHistories deleteHistories = new DeleteHistories();
         validateOwner(loginUser);
 
+        DeleteHistories deleteHistories = new DeleteHistories();
         delete(deleteHistories);
         answers.deleteAll(deleteHistories);
 

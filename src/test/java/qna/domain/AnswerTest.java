@@ -1,13 +1,20 @@
 package qna.domain;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
 import static org.assertj.core.api.Assertions.*;
 
 public class AnswerTest {
-    public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
-    public static final Answer A2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
+    public static Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+    public static Answer A2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
+
+    @AfterEach
+    void tearDown() {
+        A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+        A2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
+    }
 
     @Test
     void validation_작성자_본인_여부_정상() {
@@ -23,7 +30,10 @@ public class AnswerTest {
 
     @Test
     void 댓글_삭제() {
-        A1.delete();
+        DeleteHistories deleteHistories = new DeleteHistories();
+        A1.delete(deleteHistories);
+
         assertThat(A1.isDeleted()).isTrue();
+        assertThat(deleteHistories.histories()).hasSize(1);
     }
 }
