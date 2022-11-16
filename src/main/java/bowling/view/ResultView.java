@@ -1,7 +1,7 @@
 package bowling.view;
 
-import bowling.Player;
-import bowling.frame.BowlingFrames;
+import bowling.domain.Player;
+import bowling.domain.frame.BowlingFrames;
 
 public class ResultView {
 

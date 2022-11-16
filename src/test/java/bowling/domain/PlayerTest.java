@@ -1,13 +1,13 @@
-package bowling;
+package bowling.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import bowling.exception.InvalidNameException;
-import bowling.frame.Frame;
-import bowling.frame.NormalFrame;
+import bowling.domain.exception.InvalidNameException;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {

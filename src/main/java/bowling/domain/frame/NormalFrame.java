@@ -1,9 +1,9 @@
-package bowling.frame;
+package bowling.domain.frame;
 
-import bowling.FallenPins;
-import bowling.ResultMark;
-import bowling.exception.EndedFrameException;
-import bowling.exception.ExceedFallenPinsException;
+import bowling.domain.FallenPins;
+import bowling.domain.ResultMark;
+import bowling.domain.exception.EndedFrameException;
+import bowling.domain.exception.ExceedFallenPinsException;
 
 public class NormalFrame implements Frame {
 
@@ -11,7 +11,7 @@ public class NormalFrame implements Frame {
     private FallenPins secondFallenPins;
 
     @Override
-    public NormalFrame update(FallenPins fallenPins) {
+    public NormalFrame updateFrameState(FallenPins fallenPins) {
         if (isFinish()) {
             throw new EndedFrameException();
         }
@@ -52,7 +52,7 @@ public class NormalFrame implements Frame {
     }
 
     private boolean hasStrike() {
-        return firstFallenPins.getCountOfPin() == FallenPins.MAX_COUNT_OF_PIN;
+        return FallenPins.isStrike(firstFallenPins);
     }
 
     private void validateSecondFallenPins(FallenPins fallenPins) {

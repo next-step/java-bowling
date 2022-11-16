@@ -1,4 +1,4 @@
-package bowling.frame;
+package bowling.domain.frame;
 
 import java.util.List;
 import java.util.stream.Collectors;

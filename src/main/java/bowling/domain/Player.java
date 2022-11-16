@@ -1,7 +1,7 @@
-package bowling;
+package bowling.domain;
 
-import bowling.exception.InvalidNameException;
-import bowling.frame.Frame;
+import bowling.domain.exception.InvalidNameException;
+import bowling.domain.frame.Frame;
 import java.util.regex.Pattern;
 
 public class Player {
@@ -19,7 +19,7 @@ public class Player {
     }
 
     public Frame bowlBall(Frame frame, FallenPins fallenPins) {
-        return frame.update(fallenPins);
+        return frame.updateFrameState(fallenPins);
     }
 
     private void validateName(String name) {

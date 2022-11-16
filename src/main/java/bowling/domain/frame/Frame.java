@@ -1,12 +1,12 @@
-package bowling.frame;
+package bowling.domain.frame;
 
-import bowling.FallenPins;
+import bowling.domain.FallenPins;
 
 public interface Frame {
 
     String RESULT_DELIMITER = "|";
 
-    Frame update(FallenPins fallenPins);
+    Frame updateFrameState(FallenPins fallenPins);
 
     String getResult();
 

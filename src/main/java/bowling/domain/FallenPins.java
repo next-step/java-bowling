@@ -1,6 +1,6 @@
-package bowling;
+package bowling.domain;
 
-import bowling.exception.InvalidCountOfPinException;
+import bowling.domain.exception.InvalidCountOfPinException;
 
 public class FallenPins {
 
@@ -26,5 +26,8 @@ public class FallenPins {
         }
     }
 
+    public static boolean isStrike(FallenPins fallenPins) {
+        return fallenPins.getCountOfPin() == FallenPins.MAX_COUNT_OF_PIN;
+    }
 
 }

@@ -1,9 +1,9 @@
-package bowling;
+package bowling.domain;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import bowling.exception.InvalidCountOfPinException;
+import bowling.domain.exception.InvalidCountOfPinException;
 import org.junit.jupiter.api.Test;
 
 class FallenPinsTest {

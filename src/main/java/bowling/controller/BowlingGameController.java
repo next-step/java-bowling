@@ -1,11 +1,17 @@
-package bowling;
+package bowling.controller;
 
-import bowling.frame.BowlingFrames;
-import bowling.frame.Frame;
+import bowling.domain.FallenPins;
+import bowling.domain.Player;
+import bowling.domain.frame.BowlingFrames;
+import bowling.domain.frame.Frame;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
 public class BowlingGameController {
+
+    public static void main(String[] args) {
+        play();
+    }
 
     public static void play() {
         Player player = InputView.getPlayer();

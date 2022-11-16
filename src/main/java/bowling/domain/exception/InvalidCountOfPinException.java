@@ -1,4 +1,4 @@
-package bowling.exception;
+package bowling.domain.exception;
 
 public class InvalidCountOfPinException extends RuntimeException {
 

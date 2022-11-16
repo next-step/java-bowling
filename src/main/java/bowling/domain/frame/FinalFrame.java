@@ -1,8 +1,8 @@
-package bowling.frame;
+package bowling.domain.frame;
 
-import bowling.FallenPins;
-import bowling.ResultMark;
-import bowling.exception.EndedFrameException;
+import bowling.domain.FallenPins;
+import bowling.domain.ResultMark;
+import bowling.domain.exception.EndedFrameException;
 
 public class FinalFrame implements Frame {
 
@@ -11,7 +11,7 @@ public class FinalFrame implements Frame {
     private FallenPins thirdFallenPins;
 
     @Override
-    public Frame update(FallenPins fallenPins) {
+    public Frame updateFrameState(FallenPins fallenPins) {
         if (isFinish()) {
             throw new EndedFrameException();
         }
