@@ -14,23 +14,24 @@ public class Frame {
         this.hitRecords = new HitRecords();
     }
 
-    public void hitBowlingPin(int count) {
+    public BowilingTerm hitBowlingPin(int count) {
         bowlingPin = bowlingPin.hitPins(new BowlingPin(count));
-        if (strikeCondition()) {
-            hitRecords.addStrike();
-            return ;
-        }
-
         if (hitRecords.hitOnce() && bowlingPin.isZero()) {
             hitRecords.addSpare();
-            return ;
+            return BowilingTerm.SPARE;
+        }
+
+        if (strikeCondition()) {
+            hitRecords.addStrike();
+            return BowilingTerm.STRIKE;
         }
 
         if (count == BowlingPin.ZERO) {
             hitRecords.addGutter();
-            return ;
+            return BowilingTerm.GUTTER;
         }
         hitRecords.addMiss(count);
+        return BowilingTerm.MISS;
     }
 
     protected boolean strikeCondition() {
@@ -51,5 +52,13 @@ public class Frame {
 
     public boolean clearAllFrame() {
         return bowlingPin.isZero();
+    }
+
+    public void calculateBonus(int hitCount) {
+        hitRecords.calculateBonus(hitCount);
+    }
+
+    public HitRecords hitRecords() {
+        return hitRecords;
     }
 }
