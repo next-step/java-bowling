@@ -18,4 +18,8 @@ public class BowlingGame {
     public Frames getFrames() {
         return frames;
     }
+
+    public FrameNumber getFrameNumber() {
+        return frameNumber;
+    }
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 public class OutputView {
     private static final String BASE_SCORE_SCREEN = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |   10   |";
+    private static final String START_SHAPE = "|      |";
     private static final String FORMAT_SHAPE = "  %-4s|";
     private static final String BONUS_SHAPE = "  %-6s|";
     private static final String SEPARATOR = "|";
@@ -15,7 +16,7 @@ public class OutputView {
     }
 
 
-    public static void printScoreScreen(Username username, Frames frames) {
+    public static void printScoreScreen(Username username, Frames frames, BowlingGame bowlingGame) {
         System.out.println(BASE_SCORE_SCREEN);
 
         StringBuilder sb = new StringBuilder();
@@ -29,9 +30,38 @@ public class OutputView {
         }
         Frame lastFrame = framesList.get(framesList.size() - 1);
         sb.append(String.format(BONUS_SHAPE, makeFrameScoreShape(lastFrame.getHitRecords())));
+        sb.append("\n");
 
+        int totalScore = 0;
+        sb.append(START_SHAPE);
+        for (int i = 0; i < framesList.size() - 1; i++) {
+            Frame frame = framesList.get(i);
+            FrameNumber frameNumber = bowlingGame.getFrameNumber();
+            String score = makeFrameScore(i, frame.hitRecords(), frameNumber, totalScore);
+            if (!score.equals("")) {
+                totalScore += Integer.parseInt(score);
+                score = String.valueOf(totalScore);
+            }
+            sb.append(String.format(FORMAT_SHAPE, score));
+        }
+        FrameNumber frameNumber = bowlingGame.getFrameNumber();
+        lastFrame = framesList.get(framesList.size() - 1);
+        String score = makeFrameScore(framesList.size() - 1, lastFrame.hitRecords(), frameNumber, totalScore);
+        if (!score.equals("")) {
+            totalScore += Integer.parseInt(score);
+            score = String.valueOf(totalScore);
+        }
+        sb.append(String.format(BONUS_SHAPE, score));
         sb.append("\n");
         System.out.println(sb);
+    }
+
+    private static String makeFrameScore(int index, HitRecords hitRecords, FrameNumber frameNumber, int totalScore) {
+        Score score = hitRecords.getScore();
+        if (score.remainBonus() || index + 1 >= frameNumber.getFrameNumber()) {
+            return "";
+        }
+        return String.valueOf(score.getHitCount());
     }
 
     private static String makeUserFormat(Username username) {
