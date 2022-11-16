@@ -25,41 +25,13 @@ public enum Result {
         }
 
         if (round == SECOND_ROUND) {
-            return normalSecond(frame.beforeCount(), pinCount);
-            //return Result.second(frame, pinCount);
+            return getSecondResult(frame.beforeCount(), pinCount);
         }
 
         throw new IllegalArgumentException("투구는 3회 이상일수 없습니다.");
     }
 
-    @Deprecated
-    private static Result second(Frame frame, PinCount pinCount) {
-        if (frame.isFinal()) {
-            return finalSecond(frame.beforeCount(), pinCount);
-        }
-        return normalSecond(frame.beforeCount(), pinCount);
-    }
-
-    @Deprecated
-    private static Result finalSecond(PinCount beforeCount, PinCount currentCount) {
-
-        if (currentCount.isTen()) {
-            return STRIKE;
-        }
-
-        int sum = currentCount.sum(beforeCount);
-        if (sum == MAX_COUNT) {
-            return SPARE;
-        }
-
-        if (currentCount.isZero()) {
-            return GUTTER;
-        }
-
-        return MISS;
-    }
-
-    private static Result normalSecond(PinCount beforeCount, PinCount currentCount) {
+    private static Result getSecondResult(PinCount beforeCount, PinCount currentCount) {
         if (beforeCount.isTen() && currentCount.isTen()) {
             return STRIKE;
         }
@@ -81,6 +53,10 @@ public enum Result {
         return MISS;
     }
 
+    public static Result of(int count) {
+        return of(PinCount.of(count));
+    }
+
     private static Result of(PinCount pinCount) {
         if (pinCount.isTen()) {
             return STRIKE;
@@ -92,11 +68,6 @@ public enum Result {
 
         return MISS;
     }
-
-    public static Result of(int count) {
-        return of(PinCount.of(count));
-    }
-
 
     public boolean isStrike() {
         return Result.STRIKE == this;
