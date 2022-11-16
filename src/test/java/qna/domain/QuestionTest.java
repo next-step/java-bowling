@@ -4,6 +4,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.Assertions.*;
 
 public class QuestionTest {
@@ -28,7 +30,7 @@ public class QuestionTest {
 
     @Test
     void 게시물_삭제() {
-        DeleteHistories deleteHistories = Q1.delete(new DeleteHistories());
+        DeleteHistories deleteHistories = Q1.delete(new DeleteHistories(), LocalDateTime.now());
 
         assertThat(Q1.isDeleted()).isTrue();
         assertThat(deleteHistories.histories()).hasSize(1);
@@ -38,7 +40,7 @@ public class QuestionTest {
     void 게시물_및_댓글_삭졔_정상() throws CannotDeleteException {
         Q1.addAnswer(AnswerTest.A1);
 
-        DeleteHistories deleteHistories = Q1.delete(UserTest.JAVAJIGI);
+        DeleteHistories deleteHistories = Q1.delete(UserTest.JAVAJIGI, LocalDateTime.now());
         assertThat(deleteHistories.histories()).hasSize(2);
     }
 
@@ -46,7 +48,7 @@ public class QuestionTest {
     void 게시물_및_댓글_삭졔_오류(){
         Q1.addAnswer(AnswerTest.A2);
 
-        assertThatThrownBy(() -> Q1.delete(UserTest.JAVAJIGI))
+        assertThatThrownBy(() -> Q1.delete(UserTest.JAVAJIGI, LocalDateTime.now()))
                 .isInstanceOf(CannotDeleteException.class);
     }
 }

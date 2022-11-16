@@ -4,6 +4,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.Assertions.*;
 
 public class AnswerTest {
@@ -30,7 +32,7 @@ public class AnswerTest {
 
     @Test
     void 댓글_삭제() {
-        DeleteHistories deleteHistories = A1.delete(new DeleteHistories());
+        DeleteHistories deleteHistories = A1.delete(new DeleteHistories(), LocalDateTime.now());
 
         assertThat(A1.isDeleted()).isTrue();
         assertThat(deleteHistories.histories()).hasSize(1);

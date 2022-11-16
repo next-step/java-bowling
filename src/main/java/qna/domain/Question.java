@@ -58,17 +58,17 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
-    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
+    public DeleteHistories delete(User loginUser, LocalDateTime dateTime) throws CannotDeleteException {
         validateOwner(loginUser);
 
-        DeleteHistories deleteHistories = delete(new DeleteHistories());
-        deleteHistories = answers.deleteAll(deleteHistories);
+        DeleteHistories deleteHistories = delete(new DeleteHistories(), dateTime);
+        deleteHistories = answers.deleteAll(deleteHistories, dateTime);
         return deleteHistories;
     }
 
-    DeleteHistories delete(DeleteHistories deleteHistories) {
+    DeleteHistories delete(DeleteHistories deleteHistories, LocalDateTime dateTime) {
         deleted = true;
-        return deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+        return deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, dateTime));
     }
 
     void validateOwner(User loginUser) throws CannotDeleteException {

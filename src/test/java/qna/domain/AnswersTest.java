@@ -3,6 +3,8 @@ package qna.domain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class AnswersTest {
@@ -23,7 +25,7 @@ class AnswersTest {
 
     @Test
     void 답글_전쳬_삭제() {
-        DeleteHistories deleteHistories = answers.deleteAll(new DeleteHistories());
+        DeleteHistories deleteHistories = answers.deleteAll(new DeleteHistories(), LocalDateTime.now());
 
         assertThat(AnswerTest.A1.isDeleted()).isTrue();
         assertThat(AnswerTest.A2.isDeleted()).isTrue();

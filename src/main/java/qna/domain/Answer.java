@@ -61,9 +61,9 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
-    public DeleteHistories delete(DeleteHistories deleteHistories) {
+    public DeleteHistories delete(DeleteHistories deleteHistories, LocalDateTime dateTime) {
         deleted = true;
-        return deleteHistories.add(new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now()));
+        return deleteHistories.add(new DeleteHistory(ContentType.ANSWER, getId(), writer, dateTime));
     }
 
     void validateOwner(User loginUser) throws CannotDeleteException {
