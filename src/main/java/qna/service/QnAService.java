@@ -10,8 +10,6 @@ import qna.domain.*;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service("qnaService")
 public class QnAService {
@@ -40,10 +38,9 @@ public class QnAService {
         DeleteHistories deleteHistories = new DeleteHistories();
         question.setDeleted(true);
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
-        for (Answer answer : question.getAnswers().answers()) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }
+
+        question.getAnswers().deleteAll(deleteHistories);
+
         deleteHistoryService.saveAll(deleteHistories.histories());
     }
 }
