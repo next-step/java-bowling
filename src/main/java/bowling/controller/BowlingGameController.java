@@ -1,15 +1,13 @@
 package bowling.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.Player;
-import bowling.domain.frame.Frame;
 import bowling.view.InputView;
 import bowling.view.ResultView;
-import bowling.view.dto.BowlingGameFrameRecord;
-import bowling.view.dto.BowlingGameFrameRecordConverter;
 
 public class BowlingGameController {
     private final InputView inputView;
@@ -29,24 +27,37 @@ public class BowlingGameController {
     }
 
     private void doRun() {
-        Player player = new Player(inputView.getPlayerName());
-        BowlingGame bowlingGame = new BowlingGame();
-        resultView.printScoreBoard(player.getName(), createFrameRecords(bowlingGame));
+        List<BowlingGame> bowlingGames = initGames(inputView.getPlayerCount());
 
-        while (bowlingGame.isGamePlayable()) {
-            int falledPins = inputView.getFalledPins(bowlingGame.getCurrentFrameNumber());
-            bowlingGame.bowl(falledPins);
-            resultView.printScoreBoard(player.getName(), createFrameRecords(bowlingGame));
+        resultView.printScoreBoard(bowlingGames);
+
+        while (isGamePlayable(bowlingGames)) {
+            bowlingGames.forEach(bowlingGame -> play(bowlingGames, bowlingGame));
         }
     }
 
-    private List<BowlingGameFrameRecord> createFrameRecords(BowlingGame bowlingGame) {
-        List<Frame> frames = bowlingGame.getFrames();
-        List<BowlingGameFrameRecord> frameRecords = BowlingGameFrameRecordConverter.convert(frames);
+    private List<BowlingGame> initGames(int playerCount) {
+        return IntStream.range(1, playerCount + 1)
+            .mapToObj(inputView::getPlayerName)
+            .map(Player::new)
+            .map(BowlingGame::new)
+            .collect(Collectors.toList());
+    }
 
-        IntStream.range(frames.size(), Frame.LAST_FRAME)
-            .forEach(i -> frameRecords.add(BowlingGameFrameRecordConverter.convertEmptyRecord()));
+    private boolean isGamePlayable(List<BowlingGame> bowlingGames) {
+        return bowlingGames.stream()
+            .anyMatch(BowlingGame::isGamePlayable);
+    }
 
-        return frameRecords;
+    private void play(List<BowlingGame> bowlingGames, BowlingGame bowlingGame) {
+        while(true) {
+            int falledPins = inputView.getFalledPins(bowlingGame.getPlayerName());
+            boolean isFrameEnded = bowlingGame.bowl(falledPins);
+            resultView.printScoreBoard(bowlingGames);
+
+            if (isFrameEnded) {
+                break;
+            }
+        }
     }
 }

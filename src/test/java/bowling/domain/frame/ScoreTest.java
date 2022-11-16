@@ -22,11 +22,4 @@ class ScoreTest {
         Score score = new Score(7, 0);
         assertThat(score.getValue()).isEqualTo(7);
     }
-
-    @Test
-    public void getScoreWhenIllegalState() {
-        assertThatThrownBy(() -> new Score(10, 2).getValue())
-            .isInstanceOf(IllegalStateException.class)
-            .hasMessageContaining("아직 스코어를 계산할 수 없는 상태입니다");
-    }
 }

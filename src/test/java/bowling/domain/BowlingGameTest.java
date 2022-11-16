@@ -12,7 +12,7 @@ class BowlingGameTest {
     @Test
     @DisplayName("퍼펙트 게임 테스트")
     void testPerfectGame() {
-        BowlingGame bowlingGame = new BowlingGame();
+        BowlingGame bowlingGame = new BowlingGame(null);
         IntStream.range(0, 12)
             .forEach(i -> bowlingGame.bowl(10));
 
@@ -24,7 +24,7 @@ class BowlingGameTest {
     @ParameterizedTest(name = "진행중인 라운드: {0}")
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
     void testNotFinishedGame(int round) {
-        BowlingGame bowlingGame = new BowlingGame();
+        BowlingGame bowlingGame = new BowlingGame(null);
         IntStream.range(0, round)
             .forEach(i -> bowlingGame.bowl(10));
 

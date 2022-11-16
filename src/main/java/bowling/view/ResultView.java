@@ -8,20 +8,21 @@ import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import bowling.domain.BowlingGame;
+import bowling.domain.frame.Frame;
 import bowling.view.dto.BowlRecord;
 import bowling.view.dto.BowlingGameFrameRecord;
+import bowling.view.dto.BowlingGameFrameRecordConverter;
 import bowling.view.dto.ScoreDto;
 
 public class ResultView {
     private static final int START_FRAME = 1;
     private static final int END_FRAME = 10;
 
-    public void printScoreBoard(String name, List<BowlingGameFrameRecord> frameRecords) {
+    public void printScoreBoard(List<BowlingGame> bowlingGames) {
         printScoreBoardTitle();
 
-        printBowlRecords(name, frameRecords);
-        printScores(frameRecords);
-
+        bowlingGames.forEach(bowlingGame -> printScoreBoard(bowlingGame.getPlayerName(), createFrameRecords(bowlingGame)));
         System.out.println();
     }
 
@@ -35,6 +36,11 @@ public class ResultView {
             .collect(toList());
 
         printScoreBoardContent("NAME", frameNumbers);
+    }
+
+    private void printScoreBoard(String name, List<BowlingGameFrameRecord> frameRecords) {
+        printBowlRecords(name, frameRecords);
+        printScores(frameRecords);
     }
 
     private void printBowlRecords(String name, List<BowlingGameFrameRecord> frameRecords) {
@@ -108,5 +114,15 @@ public class ResultView {
         }
 
         return descriptions;
+    }
+
+    private List<BowlingGameFrameRecord> createFrameRecords(BowlingGame bowlingGame) {
+        List<Frame> frames = bowlingGame.getFrames();
+        List<BowlingGameFrameRecord> frameRecords = BowlingGameFrameRecordConverter.convert(frames);
+
+        IntStream.range(frames.size(), Frame.LAST_FRAME)
+            .forEach(i -> frameRecords.add(BowlingGameFrameRecordConverter.convertEmptyRecord()));
+
+        return frameRecords;
     }
 }

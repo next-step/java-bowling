@@ -6,18 +6,23 @@ import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 
 public class BowlingGame {
+    private final Player player;
     private final Frames frames;
 
-    public BowlingGame() {
-        frames = Frames.init();
+    public BowlingGame(Player player) {
+        this.player = player;
+        this.frames = Frames.init();
     }
 
-    public void bowl(int falledPins) {
+    public boolean bowl(int falledPins) {
         frames.bowl(falledPins);
+        boolean isCurrentFrameEnded = frames.isCurrentFrameEnded();
 
-        if (frames.isCurrentFrameEnded() && frames.isGamePlayable()) {
+        if (isCurrentFrameEnded && isGamePlayable()) {
             frames.createNextFrame();
         }
+
+        return isCurrentFrameEnded;
     }
 
     public boolean isGamePlayable() {
@@ -30,5 +35,9 @@ public class BowlingGame {
 
     public List<Frame> getFrames() {
         return frames.getValue();
+    }
+
+    public String getPlayerName() {
+        return player.getName();
     }
 }
