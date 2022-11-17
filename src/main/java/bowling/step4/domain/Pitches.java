@@ -14,10 +14,14 @@ public class Pitches {
     }
 
     public void add(int count) {
-        if(sum()+count > 10){
+        validate(count);
+        this.pitches.add(new Pitch(count));
+    }
+
+    private void validate(int count) {
+        if (sum() + count > 10) {
             throw new IllegalArgumentException(PIN_COUNT_EXCEPTION);
         }
-        this.pitches.add(new Pitch(count));
     }
 
     public int sum() {
