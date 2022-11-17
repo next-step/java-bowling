@@ -15,18 +15,18 @@ public class ResultView {
 
     public static void printScoreBoard(List<ResultDto> resultDto) {
         System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
-        for (int i = 0; i < resultDto.size(); i++) {
-            printName(resultDto.get(i).name);
-            printPinCount(resultDto.get(i).pitchesDto);
-            printScore(resultDto.get(i).scoresDto);
+        for (ResultDto dto : resultDto) {
+            printName(dto.name);
+            printPinCount(dto.pitchesDto);
+            printScore(dto.scoresDto);
         }
     }
 
     private static void printScore(List<ScoreDto> scoresDto) {
         System.out.print("|      ");
-        for (int i = 0; i < scoresDto.size(); i++) {
+        for (ScoreDto scoreDto : scoresDto) {
             System.out.print(WALL_SHAPE);
-            System.out.print(getScoreString(scoresDto.get(i)));
+            System.out.print(getScoreString(scoreDto));
         }
         System.out.println(WALL_SHAPE);
     }

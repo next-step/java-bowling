@@ -21,8 +21,8 @@ public class ResultDto {
     public static ResultDto from(Player player) {
         return new ResultDto(
                 player.name(),
-                player.frames().frameMap().entrySet().stream().map(it -> PitchDto.from(it.getValue().pitches())).collect(Collectors.toList()),
-                player.frames().frameMap().entrySet().stream().map(it -> ScoreDto.from(it.getValue().score())).collect(Collectors.toList())
+                player.frames().frameMap().values().stream().map(frame -> PitchDto.from(frame.pitches())).collect(Collectors.toList()),
+                player.frames().frameMap().values().stream().map(frame -> ScoreDto.from(frame.score())).collect(Collectors.toList())
         );
     }
 }
