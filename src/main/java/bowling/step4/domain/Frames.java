@@ -42,8 +42,8 @@ public class Frames {
             this.frameMap.get(frameNum - 1).addPoint(this.frameMap.get(frameNum).firstPitch(), getPreviousScore(frameNum - 1));
         }
 
-        if(frameNum > START_FRAME_INDEX + 1 && this.frameMap.get(frameNum - 2).pitches.hasStrike()){
-            this.frameMap.get(frameNum - 2).addPoint(this.frameMap.get(frameNum-1).pitches.sum(), getPreviousScore(frameNum - 2));
+        if (frameNum > START_FRAME_INDEX + 1 && this.frameMap.get(frameNum - 2).pitches.hasStrike()) {
+            this.frameMap.get(frameNum - 2).addPoint(this.frameMap.get(frameNum - 1).pitches.sum(), getPreviousScore(frameNum - 2));
         }
     }
 
@@ -55,8 +55,11 @@ public class Frames {
     }
 
     private void addFrameScore(int frameNum) {
-        if (frameNum > START_FRAME_INDEX+1 && this.frameMap.get(frameNum - 1).pitches.hasStrike()) {
+        if (frameNum > START_FRAME_INDEX + 1 && this.frameMap.get(frameNum - 1).pitches.hasStrike()) {
             checkDoubleStrike(frameNum);
+        }
+        if (frameNum > START_FRAME_INDEX && this.frameMap.get(frameNum - 1).pitches.hasSpare() && this.frameMap.get(frameNum).pitches.hasStrike()) {
+            this.frameMap.get(frameNum - 1).addPoint(10, getPreviousScore(frameNum - 1));
         }
 
         if (frameNum == START_FRAME_INDEX + 1 && !this.frameMap.get(frameNum).pitches.hasStrike() && this.frameMap.get(frameNum - 1).pitches.hasStrike()) {
@@ -68,18 +71,18 @@ public class Frames {
     }
 
     private void checkDoubleStrike(int frameNum) {
-        if(this.frameMap.get(frameNum).pitches.hasStrike() && this.frameMap.get(frameNum - 2).pitches.hasStrike()){
+        if (this.frameMap.get(frameNum).pitches.hasStrike() && this.frameMap.get(frameNum - 2).pitches.hasStrike()) {
             this.frameMap.get(frameNum - 2).addPoint(20, getPreviousScore(frameNum - 2));
         }
 
-        if(!this.frameMap.get(frameNum).pitches.hasStrike() || this.frameMap.get(frameNum).isFinalFrame()) {
+        if (!this.frameMap.get(frameNum).pitches.hasStrike() || this.frameMap.get(frameNum).isFinalFrame()) {
             this.frameMap.get(frameNum - 1).addPoint(getStrikeBonusPoint(frameNum), getPreviousScore(frameNum - 1));
         }
     }
 
     private int getStrikeBonusPoint(int frameNum) {
-        if(this.frameMap.get(frameNum).isFinalFrame()){
-            return this.frameMap.get(frameNum).firstPitch()+this.frameMap.get(frameNum).secondPitch();
+        if (this.frameMap.get(frameNum).isFinalFrame()) {
+            return this.frameMap.get(frameNum).firstPitch() + this.frameMap.get(frameNum).secondPitch();
         }
         return this.frameMap.get(frameNum).pitches.sum();
     }
