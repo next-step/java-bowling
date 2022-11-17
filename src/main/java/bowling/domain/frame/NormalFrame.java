@@ -52,7 +52,7 @@ public class NormalFrame implements Frame {
     }
 
     private boolean hasStrike() {
-        return FallenPins.isStrike(firstFallenPins);
+        return firstFallenPins.isAllPinFallen();
     }
 
     private void validateSecondFallenPins(FallenPins fallenPins) {
