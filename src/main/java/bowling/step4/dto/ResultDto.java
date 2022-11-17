@@ -19,10 +19,11 @@ public class ResultDto {
 
 
     public static ResultDto from(Player player) {
+        ScoreCalculator calculator = new ScoreCalculator();
         return new ResultDto(
                 player.name(),
                 player.frames().frameMap().values().stream().map(frame -> PitchDto.from(frame.pitches())).collect(Collectors.toList()),
-                player.frames().frameMap().values().stream().map(frame -> ScoreDto.from(frame.score())).collect(Collectors.toList())
+                calculator.calculate(player.frames())
         );
     }
 }

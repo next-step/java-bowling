@@ -1,5 +1,8 @@
 package bowling.step4.domain;
 
+import bowling.step4.domain.Frame.FinalFrame;
+import bowling.step4.domain.Frame.Frames;
+import bowling.step4.domain.Frame.NormalFrame;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

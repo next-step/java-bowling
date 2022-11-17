@@ -24,18 +24,18 @@ public class ResultView {
 
     private static void printScore(List<ScoreDto> scoresDto) {
         System.out.print("|      ");
-        for (ScoreDto scoreDto : scoresDto) {
+        for (int i = 0; i < 10; i++) {
             System.out.print(WALL_SHAPE);
-            System.out.print(getScoreString(scoreDto));
+            System.out.print(getScoreString(scoresDto, i));
         }
         System.out.println(WALL_SHAPE);
     }
 
-    private static String getScoreString(ScoreDto scoreDto) {
-        if (scoreDto.score.isBlank()) {
+    private static String getScoreString(List<ScoreDto> scoresDto, int i) {
+        if (scoresDto.size() <= i) {
             return BLANK.repeat(COLUMN_WIDTH);
         }
-        String score = scoreDto.score;
+        String score = String.valueOf(scoresDto.get(i).score);
         int blankCount = ((COLUMN_WIDTH - score.length()) / 2);
         return BLANK.repeat(blankCount) + score + BLANK.repeat(COLUMN_WIDTH - blankCount - score.length());
     }

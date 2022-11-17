@@ -29,7 +29,7 @@ public class BowlingGameMain {
 
     private static void playPitch(BowlingGame bowlingGame, int i, Player player) {
         while (!player.isEndedFrame(i)) {
-            int fallenPinCount = InputView.inputFallenPinCounts(player.name(), i);
+            int fallenPinCount = InputView.inputFallenPinCounts(player.name());
             player.bowl(i, fallenPinCount);
             ResultView.printScoreBoard(bowlingGame.createResult());
         }

@@ -1,5 +1,7 @@
 package bowling.step4.domain;
 
+import bowling.step4.domain.Frame.Frames;
+
 public class Player {
 
     private final Name name;

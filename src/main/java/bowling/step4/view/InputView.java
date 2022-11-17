@@ -8,7 +8,7 @@ public class InputView {
 
     private static final String PLAYER_TEXT = "플레이어 ";
     private static final String NAME_INPUT_TEXT = "의 이름은?(3 english letters): ";
-    private static final String FRAME_SCORE_INPUT_TEXT = "프레임 투구 : ";
+    private static final String FRAME_SCORE_INPUT_TEXT = "'s turn";
     private static final String HOW_MANY_PEOPLE = "How many people? ";
     private static final Scanner sc = new Scanner(System.in);
 
@@ -26,8 +26,8 @@ public class InputView {
         return names;
     }
 
-    public static int inputFallenPinCounts(String name, int index) {
-        System.out.print(System.lineSeparator() + name+"'s turn, "+ index + FRAME_SCORE_INPUT_TEXT);
+    public static int inputFallenPinCounts(String name) {
+        System.out.print(System.lineSeparator() + name + FRAME_SCORE_INPUT_TEXT);
         return sc.nextInt();
     }
 }
