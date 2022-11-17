@@ -4,11 +4,11 @@ import bowling.domain.pin.FallenPins;
 
 public interface Frame {
 
-    String RESULT_DELIMITER = "|";
-
     Frame updateFrameState(FallenPins fallenPins);
 
-    String getResult();
+    FallenPins getFirstTurnResult();
+
+    FallenPins getSecondTurnResult();
 
     boolean isFinish();
 

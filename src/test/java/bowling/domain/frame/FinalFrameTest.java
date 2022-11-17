@@ -12,7 +12,11 @@ class FinalFrameTest {
         Frame frame = new FinalFrame();
         frame = frame.updateFrameState(FallenPins.of(10));
 
-        assertThat(frame.getResult()).isEqualTo("X  ");
+        assertThat(frame.getFirstTurnResult().getCountOfPin()).isEqualTo(10);
+        assertThat(frame.getSecondTurnResult()).isNull();
+
+        FinalFrame finalFrame = (FinalFrame) frame;
+        assertThat(finalFrame.getBonusTurnResult()).isNull();
     }
 
     @Test
@@ -21,7 +25,11 @@ class FinalFrameTest {
         frame = frame.updateFrameState(FallenPins.of(8));
         frame = frame.updateFrameState(FallenPins.of(2));
 
-        assertThat(frame.getResult()).isEqualTo("8|/ ");
+        assertThat(frame.getFirstTurnResult().getCountOfPin()).isEqualTo(8);
+        assertThat(frame.getSecondTurnResult().getCountOfPin()).isEqualTo(2);
+
+        FinalFrame finalFrame = (FinalFrame) frame;
+        assertThat(finalFrame.getBonusTurnResult()).isNull();
     }
 
     @Test
@@ -31,7 +39,11 @@ class FinalFrameTest {
         frame = frame.updateFrameState(FallenPins.of(2));
         frame = frame.updateFrameState(FallenPins.of(10));
 
-        assertThat(frame.getResult()).isEqualTo("8|/|X");
+        assertThat(frame.getFirstTurnResult().getCountOfPin()).isEqualTo(8);
+        assertThat(frame.getSecondTurnResult().getCountOfPin()).isEqualTo(2);
+
+        FinalFrame finalFrame = (FinalFrame) frame;
+        assertThat(finalFrame.getBonusTurnResult().getCountOfPin()).isEqualTo(10);
     }
 
     @Test
@@ -40,7 +52,11 @@ class FinalFrameTest {
         frame = frame.updateFrameState(FallenPins.of(10));
         frame = frame.updateFrameState(FallenPins.of(0));
 
-        assertThat(frame.getResult()).isEqualTo("X|- ");
+        assertThat(frame.getFirstTurnResult().getCountOfPin()).isEqualTo(10);
+        assertThat(frame.getSecondTurnResult().getCountOfPin()).isEqualTo(0);
+
+        FinalFrame finalFrame = (FinalFrame) frame;
+        assertThat(finalFrame.getBonusTurnResult()).isNull();
     }
 
 
@@ -50,7 +66,11 @@ class FinalFrameTest {
         frame = frame.updateFrameState(FallenPins.of(8));
         frame = frame.updateFrameState(FallenPins.of(1));
 
-        assertThat(frame.getResult()).isEqualTo("8|1 ");
+        assertThat(frame.getFirstTurnResult().getCountOfPin()).isEqualTo(8);
+        assertThat(frame.getSecondTurnResult().getCountOfPin()).isEqualTo(1);
+
+        FinalFrame finalFrame = (FinalFrame) frame;
+        assertThat(finalFrame.getBonusTurnResult()).isNull();
     }
 
     @Test
@@ -58,7 +78,11 @@ class FinalFrameTest {
         Frame frame = new FinalFrame();
         frame = frame.updateFrameState(FallenPins.of(0));
 
-        assertThat(frame.getResult()).isEqualTo("-  ");
+        assertThat(frame.getFirstTurnResult().getCountOfPin()).isEqualTo(0);
+        assertThat(frame.getSecondTurnResult()).isNull();
+
+        FinalFrame finalFrame = (FinalFrame) frame;
+        assertThat(finalFrame.getBonusTurnResult()).isNull();
     }
 
     @Test
@@ -67,15 +91,11 @@ class FinalFrameTest {
         frame = frame.updateFrameState(FallenPins.of(7));
         frame = frame.updateFrameState(FallenPins.of(0));
 
-        assertThat(frame.getResult()).isEqualTo("7|- ");
-    }
+        assertThat(frame.getFirstTurnResult().getCountOfPin()).isEqualTo(7);
+        assertThat(frame.getSecondTurnResult().getCountOfPin()).isEqualTo(0);
 
-    @Test
-    void 첫번째_투구_시_스트라이크는_아닐때_첫번째_점수_표기() {
-        Frame frame = new FinalFrame();
-        frame = frame.updateFrameState(FallenPins.of(4));
-
-        assertThat(frame.getResult()).isEqualTo("4  ");
+        FinalFrame finalFrame = (FinalFrame) frame;
+        assertThat(finalFrame.getBonusTurnResult()).isNull();
     }
 
     @Test

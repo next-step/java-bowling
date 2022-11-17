@@ -1,6 +1,9 @@
 package bowling.domain.pin;
 
 import bowling.domain.exception.OutOfBoundFallenPinsBucket;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.Optional;
 
 public class FallenPinsBucket {
 
@@ -29,6 +32,17 @@ public class FallenPinsBucket {
     public void saveFallenPins(FallenPins fallenPins, int index) {
         validateIndex(index);
         bucket[index] = fallenPins;
+    }
+
+    public boolean isTurnFinished(int index) {
+        validateIndex(index);
+        return Optional.ofNullable(bucket[index])
+                .isPresent();
+    }
+
+    public boolean isFull() {
+        return Arrays.stream(bucket)
+                .allMatch(Objects::nonNull);
     }
 
     public int getSize() {

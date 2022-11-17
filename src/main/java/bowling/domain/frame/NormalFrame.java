@@ -1,14 +1,13 @@
 package bowling.domain.frame;
 
-import bowling.domain.ResultMark;
 import bowling.domain.exception.EndedFrameException;
 import bowling.domain.exception.ExceedFallenPinsException;
 import bowling.domain.pin.FallenPins;
+import bowling.domain.pin.FallenPinsBucket;
 
 public class NormalFrame implements Frame {
 
-    private FallenPins firstFallenPins;
-    private FallenPins secondFallenPins;
+    private final FallenPinsBucket fallenPinsBucket = FallenPinsBucket.ofNormalSize();
 
     @Override
     public NormalFrame updateFrameState(FallenPins fallenPins) {
@@ -16,57 +15,59 @@ public class NormalFrame implements Frame {
             throw new EndedFrameException();
         }
 
-        if (firstFallenPins == null) {
-            this.firstFallenPins = fallenPins;
+        if (isFirstTurn()) {
+            saveFirstTurn(fallenPins);
             return this;
         }
 
         validateSecondFallenPins(fallenPins);
-
-        this.secondFallenPins = fallenPins;
+        saveSecondTurn(fallenPins);
 
         return this;
     }
 
     @Override
-    public String getResult() {
-        ResultMark firstResultMark = ResultMark.getResultMark(firstFallenPins, null);
-        ResultMark secondResultMark = ResultMark.getResultMark(secondFallenPins, firstFallenPins);
-
-        String firstResult = getMark(firstResultMark, firstFallenPins);
-        String secondResult = getMark(secondResultMark, secondFallenPins);
-        if (!ResultMark.EMPTY.equals(secondResultMark)) {
-            secondResult = RESULT_DELIMITER + secondResult;
+    public boolean isFinish() {
+        if (isFirstTurn()) {
+            return false;
         }
-
-        return firstResult + secondResult;
+        return hasStrike() || fallenPinsBucket.isFull();
     }
 
     @Override
-    public boolean isFinish() {
-        if (firstFallenPins == null) {
-            return false;
-        }
-        return hasStrike()
-                || secondFallenPins != null;
+    public FallenPins getFirstTurnResult() {
+        return fallenPinsBucket.getFallenPins(0);
+    }
+
+    @Override
+    public FallenPins getSecondTurnResult() {
+        return fallenPinsBucket.getFallenPins(1);
     }
 
     private boolean hasStrike() {
-        return firstFallenPins.isAllPinFallen();
+        return getFirstTurnResult().isAllPinFallen();
     }
 
     private void validateSecondFallenPins(FallenPins fallenPins) {
-        if (firstFallenPins.getCountOfPin() + fallenPins.getCountOfPin()
-                > FallenPins.MAX_COUNT_OF_PIN) {
+        FallenPins firstFallenPins = fallenPinsBucket.getFallenPins(0);
+
+        try {
+            firstFallenPins.merge(fallenPins);
+        } catch (Exception e) {
             throw new ExceedFallenPinsException();
         }
     }
 
-    private String getMark(ResultMark resultMark, FallenPins fallenPins) {
-        if (ResultMark.MISS.equals(resultMark)) {
-            return String.valueOf(fallenPins.getCountOfPin());
-        }
-        return resultMark.getMark();
+    private boolean isFirstTurn() {
+        return !fallenPinsBucket.isTurnFinished(0);
+    }
+
+    private void saveFirstTurn(FallenPins fallenPins) {
+        fallenPinsBucket.saveFallenPins(fallenPins, 0);
+    }
+
+    private void saveSecondTurn(FallenPins fallenPins) {
+        fallenPinsBucket.saveFallenPins(fallenPins, 1);
     }
 
 }

@@ -42,4 +42,24 @@ class FallenPinsBucketTest {
                 .isThrownBy(() -> fallenPinsBucket.getFallenPins(2));
     }
 
+    @Test
+    void 해당턴에_투구가_진행되어_핀이_있는지_확인() {
+        FallenPinsBucket fallenPinsBucket = FallenPinsBucket.ofNormalSize();
+        fallenPinsBucket.saveFallenPins(FallenPins.of(3), 0);
+
+        assertThat(fallenPinsBucket.isTurnFinished(0)).isTrue();
+    }
+
+    @Test
+    void 버킷이_다_찾는지_확인() {
+        FallenPinsBucket fallenPinsBucket = FallenPinsBucket.ofNormalSize();
+        fallenPinsBucket.saveFallenPins(FallenPins.of(3), 0);
+
+        assertThat(fallenPinsBucket.isFull()).isFalse();
+
+        fallenPinsBucket.saveFallenPins(FallenPins.of(3), 1);
+
+        assertThat(fallenPinsBucket.isFull()).isTrue();
+    }
+
 }

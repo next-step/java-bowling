@@ -1,15 +1,15 @@
 package bowling.view;
 
-import bowling.domain.Player;
-import bowling.domain.frame.BowlingFrames;
-
 public class ResultView {
 
     private static final int WIDTH = 6;
 
+    String RESULT_DELIMITER = "|";
+
     private ResultView() {
 
     }
+/*
 
     public static void printFrame(BowlingFrames bowlingFrames, Player player) {
         printHeader(bowlingFrames.getSize());
@@ -38,5 +38,6 @@ public class ResultView {
         String rightBlank = " ".repeat(blankSize/2);
         return leftBlank + data + rightBlank;
     }
+*/
 
 }

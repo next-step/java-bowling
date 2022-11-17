@@ -35,8 +35,7 @@ class PlayerTest {
 
         frame = player.bowlBall(frame, FallenPins.of(10));
 
-        assertThat(frame.getResult())
-                .isEqualTo(ResultMark.STRIKE.getMark() + ResultMark.EMPTY.getMark());
+        assertThat(frame.getFirstTurnResult().isAllPinFallen()).isTrue();
     }
 
 
@@ -48,8 +47,8 @@ class PlayerTest {
         frame = player.bowlBall(frame, FallenPins.of(7));
         frame = player.bowlBall(frame, FallenPins.of(0));
 
-        assertThat(frame.getResult())
-                .isEqualTo("7" + Frame.RESULT_DELIMITER + ResultMark.GUTTER.getMark());
+        assertThat(frame.getFirstTurnResult().getCountOfPin()).isEqualTo(7);
+        assertThat(frame.getSecondTurnResult().getCountOfPin()).isEqualTo(0);
     }
 
 }
