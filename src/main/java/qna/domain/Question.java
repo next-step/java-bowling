@@ -1,9 +1,12 @@
 package qna.domain;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
+
+import qna.CannotDeleteException;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -72,7 +75,8 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public void delete() {
+    public void delete(User loginUser) throws CannotDeleteException {
+        validateUser(loginUser);
         this.deleted = true;
         this.answers.deleteAll();
     }
@@ -85,17 +89,30 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
-    public boolean allAnswerIsOwners(User loginUser) {
-        return this.answers.isAllOwner(loginUser);
-    }
-
-    public void addDeleteHistories(List<DeleteHistory> histories) {
+    public List<DeleteHistory> getDeleteHistories() {
+        List<DeleteHistory> histories = new ArrayList<>();
         histories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
         this.answers.addDeleteHistories(histories);
+        return histories;
     }
 
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
+
+    private void validateUser(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+
+        if (!allAnswerIsOwners(loginUser)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+    }
+
+    public boolean allAnswerIsOwners(User loginUser) {
+        return this.answers.isAllOwner(loginUser);
+    }
+
 }

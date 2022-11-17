@@ -1,8 +1,5 @@
 package qna.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -32,24 +29,11 @@ public class QnAService {
     @Transactional
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
         Question question = findQuestionById(questionId);
-        validateUser(question, loginUser);
-        question.delete();
+        question.delete(loginUser);
         saveDeleteHistories(question);
     }
 
-    private void validateUser(Question question, User loginUser) throws CannotDeleteException {
-        if (!question.isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
-
-        if (!question.allAnswerIsOwners(loginUser)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-        }
-    }
-
     private void saveDeleteHistories(Question question) {
-        List<DeleteHistory> histories = new ArrayList<>();
-        question.addDeleteHistories(histories);
-        deleteHistoryService.saveAll(histories);
+        deleteHistoryService.saveAll(question.getDeleteHistories());
     }
 }
