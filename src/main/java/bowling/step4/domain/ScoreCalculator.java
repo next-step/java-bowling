@@ -47,9 +47,9 @@ public class ScoreCalculator {
 
     }
 
-    public void addPoint(int index, int BonusPoint) {
-        int score = BonusPoint + getFrame(index).pitches().sum() + getPreviousScore(index);
-        this.scoreDtoList.put(index, new ScoreDto(score));
+    public void addPoint(int frameNum, int BonusPoint) {
+        int score = BonusPoint + getFrame(frameNum).pitches().sum() + getPreviousScore(frameNum);
+        this.scoreDtoList.put(frameNum, new ScoreDto(score));
     }
 
     private int getSpareBonus(int spareNum) {
@@ -72,14 +72,14 @@ public class ScoreCalculator {
         return getFrame(spareNum + 1).pitches().getSize() > 0;
     }
 
-    private Frame getFrame(int index) {
-        return this.frames.frameMap().get(index);
+    private Frame getFrame(int frameNum) {
+        return this.frames.frameMap().get(frameNum);
     }
 
-    private int getPreviousScore(int index) {
-        if (index < 2) {
+    private int getPreviousScore(int frameNum) {
+        if (frameNum < 2) {
             return 0;
         }
-        return this.scoreDtoList.get(index - 1).score;
+        return this.scoreDtoList.get(frameNum - 1).score;
     }
 }
