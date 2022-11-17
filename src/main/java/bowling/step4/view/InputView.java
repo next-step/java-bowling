@@ -26,8 +26,8 @@ public class InputView {
         return names;
     }
 
-    public static int inputFallenPinCounts(int index) {
-        System.out.print(System.lineSeparator() + index + FRAME_SCORE_INPUT_TEXT);
+    public static int inputFallenPinCounts(String name, int index) {
+        System.out.print(System.lineSeparator() + name+"'s turn, "+ index + FRAME_SCORE_INPUT_TEXT);
         return sc.nextInt();
     }
 }
