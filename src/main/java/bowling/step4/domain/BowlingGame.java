@@ -18,7 +18,7 @@ public class BowlingGame {
     }
 
     public List<Player> players() {
-        return players;
+        return new ArrayList<>(players);
     }
 
     public List<ResultDto> createResult() {
