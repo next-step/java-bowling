@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.exception.EndedFrameException;
+import bowling.domain.exception.ExceedFallenPinsException;
 import bowling.domain.pin.FallenPins;
 import bowling.domain.pin.FallenPinsBucket;
 import java.util.Optional;
@@ -93,11 +94,24 @@ public class FinalFrame implements Frame {
     }
 
     private void saveSecondTurn(FallenPins fallenPins) {
+        if (!hasStrike()) {
+            validateSecondFallenPins(fallenPins);
+        }
         fallenPinsBucket.saveFallenPins(fallenPins, 1);
     }
 
     private void saveBonusTurn(FallenPins fallenPins) {
         fallenPinsBucket.saveFallenPins(fallenPins, 2);
+    }
+
+    private void validateSecondFallenPins(FallenPins fallenPins) {
+        FallenPins firstFallenPins = fallenPinsBucket.getFallenPins(0);
+
+        try {
+            firstFallenPins.merge(fallenPins);
+        } catch (Exception e) {
+            throw new ExceedFallenPinsException();
+        }
     }
 
 }

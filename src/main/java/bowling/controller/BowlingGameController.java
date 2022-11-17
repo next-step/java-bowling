@@ -2,7 +2,6 @@ package bowling.controller;
 
 import bowling.domain.Player;
 import bowling.domain.frame.BowlingFrames;
-import bowling.domain.frame.Frame;
 import bowling.domain.pin.FallenPins;
 import bowling.view.InputView;
 import bowling.view.ResultView;
@@ -13,23 +12,28 @@ public class BowlingGameController {
         play();
     }
 
-    public static void play() {
-        Player player = InputView.getPlayer();
-
-        BowlingFrames bowlingFrames = new BowlingFrames();
+    private static void play() {
+        Player player = new Player(InputView.getPlayerName());
 
         for (int i = 0; i < BowlingFrames.LAST_FRAME; i++) {
-            Frame frame = bowlingFrames.getFrame(i);
-            bowl(player, bowlingFrames, i, frame);
+            playFrame(player, i);
         }
 
     }
 
-    private static void bowl(Player player, BowlingFrames bowlingFrames, int i, Frame frame) {
-        while (!frame.isFinish()) {
-            FallenPins fallenPins = InputView.getFallenPins(i + 1);
-            player.bowlBall(frame, fallenPins);
-            ResultView.printFrame(bowlingFrames, player);
+    private static void playFrame(Player player, int indexOfFrame) {
+        while (!player.isFinishedBowling(indexOfFrame)) {
+            playTurn(player, indexOfFrame);
+            ResultView.printFrame(player);
+        }
+    }
+
+    private static void playTurn(Player player, int indexOfFrame) {
+        try {
+            FallenPins fallenPins = InputView.getFallenPins(indexOfFrame + 1);
+            player.bowlBall(indexOfFrame, fallenPins);
+        } catch(Exception e) {
+            ResultView.printError(e);
         }
     }
 

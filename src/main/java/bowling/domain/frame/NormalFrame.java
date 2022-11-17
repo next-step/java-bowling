@@ -20,7 +20,6 @@ public class NormalFrame implements Frame {
             return this;
         }
 
-        validateSecondFallenPins(fallenPins);
         saveSecondTurn(fallenPins);
 
         return this;
@@ -67,6 +66,7 @@ public class NormalFrame implements Frame {
     }
 
     private void saveSecondTurn(FallenPins fallenPins) {
+        validateSecondFallenPins(fallenPins);
         fallenPinsBucket.saveFallenPins(fallenPins, 1);
     }
 

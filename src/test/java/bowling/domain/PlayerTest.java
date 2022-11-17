@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import bowling.domain.exception.InvalidNameException;
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
 import bowling.domain.pin.FallenPins;
 import org.junit.jupiter.api.Test;
 
@@ -31,10 +30,9 @@ class PlayerTest {
     @Test
     void 투구_첫번째_시도() {
         Player player = new Player("KJY");
-        Frame frame = new NormalFrame();
+        player.bowlBall(0, FallenPins.of(10));
 
-        frame = player.bowlBall(frame, FallenPins.of(10));
-
+        Frame frame = player.getFrames().getFrame(0);
         assertThat(frame.getFirstTurnResult().isAllPinFallen()).isTrue();
     }
 
@@ -42,11 +40,11 @@ class PlayerTest {
     @Test
     void 투구_두번째_시도() {
         Player player = new Player("KJY");
-        Frame frame = new NormalFrame();
 
-        frame = player.bowlBall(frame, FallenPins.of(7));
-        frame = player.bowlBall(frame, FallenPins.of(0));
+        player.bowlBall(0, FallenPins.of(7));
+        player.bowlBall(0, FallenPins.of(0));
 
+        Frame frame = player.getFrames().getFrame(0);
         assertThat(frame.getFirstTurnResult().getCountOfPin()).isEqualTo(7);
         assertThat(frame.getSecondTurnResult().getCountOfPin()).isEqualTo(0);
     }

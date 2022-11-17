@@ -1,6 +1,5 @@
 package bowling.view;
 
-import bowling.domain.Player;
 import bowling.domain.pin.FallenPins;
 import java.util.Scanner;
 
@@ -12,9 +11,9 @@ public class InputView {
 
     }
 
-    public static Player getPlayer() {
+    public static String getPlayerName() {
         System.out.print("플레이어 이름은(3 english letters)?: ");
-        return new Player(scanner.nextLine());
+        return scanner.nextLine();
     }
 
     public static FallenPins getFallenPins(int numberOfFrame) {
@@ -27,14 +26,8 @@ public class InputView {
     }
 
     private static FallenPins getFallenPins() {
-        try {
-            String numberOfFallenPin = scanner.nextLine();
-            return FallenPins.of(Integer.parseInt(numberOfFallenPin));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("입력값을 확인하고 다시 입력해주세요.");
-            return null;
-        }
+        String numberOfFallenPin = scanner.nextLine();
+        return FallenPins.of(Integer.parseInt(numberOfFallenPin));
     }
 
 }

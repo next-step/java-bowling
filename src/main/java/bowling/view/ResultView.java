@@ -16,9 +16,14 @@ public class ResultView {
 
     }
 
-    public static void printFrame(BowlingFrames bowlingFrames, Player player) {
-        printHeader(bowlingFrames.getSize());
-        printRow(bowlingFrames, player);
+    public static void printFrame(Player player) {
+        printHeader(player.getFrames().getSize());
+        printRow(player.getFrames(), player);
+    }
+
+    public static void printError(Exception e) {
+        System.out.println(e.getMessage());
+        System.out.println("입력값을 확인하고 다시 입력해주세요.");
     }
 
     private static void printRow(BowlingFrames bowlingFrames, Player player) {
@@ -48,7 +53,7 @@ public class ResultView {
                 ResultMark.EMPTY.getMark());
     }
 
-    public static String getResultMark(FallenPins fallenPins, FallenPins previousFallenPins) {
+    private static String getResultMark(FallenPins fallenPins, FallenPins previousFallenPins) {
         if (isEmpty(fallenPins)) {
             return ResultMark.EMPTY.getMark();
         }
