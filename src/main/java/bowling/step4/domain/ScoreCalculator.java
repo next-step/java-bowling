@@ -20,7 +20,7 @@ public class ScoreCalculator {
     }
 
     public List<ScoreDto> calculate() {
-        frames.frameMap().keySet().stream().filter(it->getFrame(it).pitches().getSize()>0).forEach(this::addFrameScore);
+        frames.frameMap().keySet().stream().filter(it -> getFrame(it).pitches().getSize() > 0).forEach(this::addFrameScore);
         return new ArrayList<>(scoreDtoList.values());
     }
 
@@ -56,11 +56,11 @@ public class ScoreCalculator {
     }
 
     private int getStrikeBonus(int strikeNum) {
-        int min = IntStream.rangeClosed(strikeNum + 1, strikeNum + 2).filter(it -> !getFrame(it).pitches().hasStrike()).min().orElse(strikeNum + 1);
-        return IntStream.rangeClosed(strikeNum + 1, min).map(it -> {
-            int sum = getFrame(it).pitches().sum();
-            return sum;
-        }).sum();
+        int bonusCount = 2;
+        if (IntStream.rangeClosed(strikeNum, strikeNum + bonusCount).anyMatch(it -> !getFrame(it).pitches().hasStrike())) {
+            bonusCount = 1;
+        }
+        return IntStream.rangeClosed(strikeNum + 1, strikeNum + bonusCount).map(it -> getFrame(it).pitches().sum()).sum();
     }
 
     private Boolean isStrikeBonusEnd(int strikeNum) {
