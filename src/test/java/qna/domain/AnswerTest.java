@@ -31,18 +31,6 @@ public class AnswerTest {
     }
 
     @Test
-    public void getWriter() {
-        assertThat(A1.getWriter()).isEqualTo(UserTest.JAVAJIGI);
-        assertThat(A2.getWriter()).isEqualTo(UserTest.SANJIGI);
-    }
-
-    @Test
-    public void getContents() {
-        assertThat(A1.getContents()).isEqualTo("Answers Contents1");
-        assertThat(A2.getContents()).isEqualTo("Answers Contents2");
-    }
-
-    @Test
     public void toQuestion() {
         A1.toQuestion(QuestionTest.Q2);
         A2.toQuestion(QuestionTest.Q2);
