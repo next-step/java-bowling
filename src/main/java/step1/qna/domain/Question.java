@@ -9,74 +9,69 @@ import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
-	private static final String EXCEPTION_MSG = "질문을 삭제할 권한이 없습니다.";
+    private static final String EXCEPTION_MSG = "질문을 삭제할 권한이 없습니다.";
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    @Where(clause = "deleted = false")
+    @OrderBy("id ASC")
+    private final List<Answer> answers = new ArrayList<>();
+    @Column(length = 100, nullable = false)
+    private String title;
+    @Lob
+    private String contents;
+    @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
+    private User writer;
+    private boolean deleted = false;
 
-	@Column(length = 100, nullable = false)
-	private String title;
+    public Question() {
+    }
 
-	@Lob
-	private String contents;
+    public Question(String title, String contents) {
+        this.title = title;
+        this.contents = contents;
+    }
 
-	@ManyToOne
-	@JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
-	private User writer;
+    public Question(long id, String title, String contents) {
+        super(id);
+        this.title = title;
+        this.contents = contents;
+    }
 
-	@OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-	@Where(clause = "deleted = false")
-	@OrderBy("id ASC")
-	private final List<Answer> answers = new ArrayList<>();
+    public User getWriter() {
+        return writer;
+    }
 
-	private boolean deleted = false;
+    public Question writeBy(User loginUser) {
+        this.writer = loginUser;
+        return this;
+    }
 
-	public Question() {
-	}
+    public void addAnswer(Answer answer) {
+        answer.toQuestion(this);
+        answers.add(answer);
+    }
 
-	public Question(String title, String contents) {
-		this.title = title;
-		this.contents = contents;
-	}
+    public void checkDeleteCondition(User loginUser) throws CannotDeleteException {
+        if (!this.writer.equals(loginUser)) {
+            throw new CannotDeleteException(EXCEPTION_MSG);
+        }
+    }
 
-	public Question(long id, String title, String contents) {
-		super(id);
-		this.title = title;
-		this.contents = contents;
-	}
+    public void deleteAndRecord(List<DeleteHistory> deleteHistories) {
+        this.deleted = true;
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this));
+    }
 
-	public User getWriter() {
-		return writer;
-	}
+    public boolean isDeleted() {
+        return deleted;
+    }
 
-	public Question writeBy(User loginUser) {
-		this.writer = loginUser;
-		return this;
-	}
+    public List<Answer> getAnswers() {
+        return answers;
+    }
 
-	public void addAnswer(Answer answer) {
-		answer.toQuestion(this);
-		answers.add(answer);
-	}
-
-	public void checkDeleteCondition(User loginUser) throws CannotDeleteException {
-		if(!this.writer.equals(loginUser)) {
-			throw new CannotDeleteException(EXCEPTION_MSG);
-		}
-	}
-
-	public void deleteAndRecord(List<DeleteHistory> deleteHistories){
-		this.deleted = true;
-		deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this));
-	}
-
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public List<Answer> getAnswers() {
-		return answers;
-	}
-
-	@Override
-	public String toString() {
-		return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
-	}
+    @Override
+    public String toString() {
+        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
 }

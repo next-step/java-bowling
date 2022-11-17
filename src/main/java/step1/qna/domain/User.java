@@ -8,138 +8,138 @@ import java.util.Objects;
 
 @Entity
 public class User extends AbstractEntity {
-	public static final GuestUser GUEST_USER = new GuestUser();
+    public static final GuestUser GUEST_USER = new GuestUser();
 
-	@Column(unique = true, nullable = false)
-	private String userId;
+    @Column(unique = true, nullable = false)
+    private String userId;
 
-	@Column(nullable = false)
-	private String password;
+    @Column(nullable = false)
+    private String password;
 
-	@Column(nullable = false)
-	private String name;
+    @Column(nullable = false)
+    private String name;
 
-	private String email;
+    private String email;
 
-	public User() {
-	}
+    public User() {
+    }
 
-	public User(String userId, String password, String name, String email) {
-		this(null, userId, password, name, email);
-	}
+    public User(String userId, String password, String name, String email) {
+        this(null, userId, password, name, email);
+    }
 
-	public User(Long id, String userId, String password, String name, String email) {
-		super(id);
-		this.userId = userId;
-		this.password = password;
-		this.name = name;
-		this.email = email;
-	}
+    public User(Long id, String userId, String password, String name, String email) {
+        super(id);
+        this.userId = userId;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+    }
 
-	public String getUserId() {
-		return userId;
-	}
+    public String getUserId() {
+        return userId;
+    }
 
-	public User setUserId(String userId) {
-		this.userId = userId;
-		return this;
-	}
+    public User setUserId(String userId) {
+        this.userId = userId;
+        return this;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public User setPassword(String password) {
-		this.password = password;
-		return this;
-	}
+    public User setPassword(String password) {
+        this.password = password;
+        return this;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public User setName(String name) {
-		this.name = name;
-		return this;
-	}
+    public User setName(String name) {
+        this.name = name;
+        return this;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public User setEmail(String email) {
-		this.email = email;
-		return this;
-	}
+    public User setEmail(String email) {
+        this.email = email;
+        return this;
+    }
 
-	public void update(User loginUser, User target) {
-		if (!matchUserId(loginUser.getUserId())) {
-			throw new UnAuthorizedException();
-		}
+    public void update(User loginUser, User target) {
+        if (!matchUserId(loginUser.getUserId())) {
+            throw new UnAuthorizedException();
+        }
 
-		if (!matchPassword(target.getPassword())) {
-			throw new UnAuthorizedException();
-		}
+        if (!matchPassword(target.getPassword())) {
+            throw new UnAuthorizedException();
+        }
 
-		this.name = target.name;
-		this.email = target.email;
-	}
+        this.name = target.name;
+        this.email = target.email;
+    }
 
-	private boolean matchUserId(String userId) {
-		return this.userId.equals(userId);
-	}
+    private boolean matchUserId(String userId) {
+        return this.userId.equals(userId);
+    }
 
-	public boolean matchPassword(String targetPassword) {
-		return password.equals(targetPassword);
-	}
+    public boolean matchPassword(String targetPassword) {
+        return password.equals(targetPassword);
+    }
 
-	public boolean equalsNameAndEmail(User target) {
-		if (Objects.isNull(target)) {
-			return false;
-		}
+    public boolean equalsNameAndEmail(User target) {
+        if (Objects.isNull(target)) {
+            return false;
+        }
 
-		return name.equals(target.name) &&
-				email.equals(target.email);
-	}
+        return name.equals(target.name) &&
+                email.equals(target.email);
+    }
 
-	public boolean isGuestUser() {
-		return false;
-	}
+    public boolean isGuestUser() {
+        return false;
+    }
 
-	private static class GuestUser extends User {
-		@Override
-		public boolean isGuestUser() {
-			return true;
-		}
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        if (!super.equals(o)) return false;
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof User)) return false;
-		if (!super.equals(o)) return false;
+        User user = (User) o;
 
-		User user = (User) o;
+        if (getUserId() != null ? !getUserId().equals(user.getUserId()) : user.getUserId() != null) return false;
+        if (getPassword() != null ? !getPassword().equals(user.getPassword()) : user.getPassword() != null)
+            return false;
+        if (getName() != null ? !getName().equals(user.getName()) : user.getName() != null) return false;
+        return getEmail() != null ? getEmail().equals(user.getEmail()) : user.getEmail() == null;
+    }
 
-		if (getUserId() != null ? !getUserId().equals(user.getUserId()) : user.getUserId() != null) return false;
-		if (getPassword() != null ? !getPassword().equals(user.getPassword()) : user.getPassword() != null)
-			return false;
-		if (getName() != null ? !getName().equals(user.getName()) : user.getName() != null) return false;
-		return getEmail() != null ? getEmail().equals(user.getEmail()) : user.getEmail() == null;
-	}
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (getUserId() != null ? getUserId().hashCode() : 0);
+        result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
+        return result;
+    }
 
-	@Override
-	public int hashCode() {
-		int result = super.hashCode();
-		result = 31 * result + (getUserId() != null ? getUserId().hashCode() : 0);
-		result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
-		result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-		result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
-		return result;
-	}
+    @Override
+    public String toString() {
+        return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email=" + email + "]";
+    }
 
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email=" + email + "]";
-	}
+    private static class GuestUser extends User {
+        @Override
+        public boolean isGuestUser() {
+            return true;
+        }
+    }
 }

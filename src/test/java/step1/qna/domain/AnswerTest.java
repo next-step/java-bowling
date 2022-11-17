@@ -3,9 +3,9 @@ package step1.qna.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import step1.qna.CannotDeleteException;
-import java.util.List;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,9 +33,9 @@ public class AnswerTest {
 		assertTrue(A1.isDeleted());
 		assertEquals(deleteHistories.get(0).getDeletedBy(), UserTest.JAVAJIGI);
 
-		assertFalse(A2.isDeleted());
-		A2.deleteAndRecord(deleteHistories);
-		assertTrue(A2.isDeleted());
+        assertFalse(A2.isDeleted());
+        A2.deleteAndRecord(deleteHistories);
+        assertTrue(A2.isDeleted());
 		assertEquals(deleteHistories.get(1).getDeletedBy(), UserTest.SANJIGI);
 	}
 }
