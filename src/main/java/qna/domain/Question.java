@@ -39,27 +39,6 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
-    private User getWriter() {
-        return writer;
-    }
-
     public Question writeBy(User loginUser) {
         this.writer = loginUser;
         return this;
@@ -68,10 +47,6 @@ public class Question extends AbstractEntity {
     public void addAnswer(Answer answer) {
         answer.toQuestion(this);
         answers.add(answer);
-    }
-
-    public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
     }
 
     public void delete(User loginUser) throws CannotDeleteException {
@@ -100,6 +75,10 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
+    private boolean isOwner(User loginUser) {
+        return writer.equals(loginUser);
+    }
+
     private void validateUser(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
@@ -108,6 +87,10 @@ public class Question extends AbstractEntity {
         if (!allAnswerIsOwners(loginUser)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
+    }
+
+    private User getWriter() {
+        return writer;
     }
 
     public boolean allAnswerIsOwners(User loginUser) {
