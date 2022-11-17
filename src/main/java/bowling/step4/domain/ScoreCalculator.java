@@ -26,22 +26,25 @@ public class ScoreCalculator {
     }
 
     private void addFrameScore(int frameNum) {
-        if (getFrame(frameNum).isEndedFrame() && getFrame(frameNum).isFinalFrame()) {
+        Frame frame = getFrame(frameNum);
+        Pitches pitches = frame.pitches();
+
+        if (frame.isEndedFrame() && frame.isFinalFrame()) {
             addPoint(frameNum, 0);
             return;
         }
 
-        if (!getFrame(frameNum).isFinalFrame() && getFrame(frameNum).pitches().hasSpare() && isSpareBonusEnd(frameNum)) {
+        if (!frame.isFinalFrame() && pitches.hasSpare() && isSpareBonusEnd(frameNum)) {
             addPoint(frameNum, getSpareBonus(frameNum));
             return;
         }
 
-        if (!getFrame(frameNum).isFinalFrame() && getFrame(frameNum).pitches().hasStrike() && isStrikeBonusEnd(frameNum)) {
+        if (!frame.isFinalFrame() && pitches.hasStrike() && isStrikeBonusEnd(frameNum)) {
             addPoint(frameNum, getStrikeBonus(frameNum));
             return;
         }
 
-        if (!getFrame(frameNum).isFinalFrame() && getFrame(frameNum).isEndedFrame() && !getFrame(frameNum).pitches().hasStrike() && !getFrame(frameNum).pitches().hasSpare()) {
+        if (!frame.isFinalFrame() && frame.isEndedFrame() && !pitches.hasStrike() && !pitches.hasSpare()) {
             addPoint(frameNum, 0);
         }
     }
