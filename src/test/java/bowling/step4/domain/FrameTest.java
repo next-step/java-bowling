@@ -40,7 +40,7 @@ class FrameTest {
         frame.add(8);
         assertSoftly(softly -> {
             assertThat(frame.isEndedFrame()).isFalse();
-            assertThat(frame.first()).isEqualTo(2);
+            assertThat(frame.firstPitch()).isEqualTo(2);
         });
     }
 

@@ -39,7 +39,7 @@ public class Frames {
             return;
         }
         if (frameNum > START_FRAME_INDEX && this.frameMap.get(frameNum - 1).pitches.hasSpare()) {
-            this.frameMap.get(frameNum - 1).addPoint(this.frameMap.get(frameNum).first(), getPreviousScore(frameNum - 1));
+            this.frameMap.get(frameNum - 1).addPoint(this.frameMap.get(frameNum).firstPitch(), getPreviousScore(frameNum - 1));
         }
 
         if(frameNum > START_FRAME_INDEX + 1 && this.frameMap.get(frameNum - 2).pitches.hasStrike()){
@@ -79,7 +79,7 @@ public class Frames {
 
     private int getStrikeBonusPoint(int frameNum) {
         if(this.frameMap.get(frameNum).isFinalFrame()){
-            return this.frameMap.get(frameNum).first()+this.frameMap.get(frameNum).second();
+            return this.frameMap.get(frameNum).firstPitch()+this.frameMap.get(frameNum).secondPitch();
         }
         return this.frameMap.get(frameNum).pitches.sum();
     }

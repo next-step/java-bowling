@@ -18,12 +18,12 @@ public abstract class Frame {
         pitches.add(count);
     }
 
-    public int first() {
-        return this.pitches.first();
+    public int firstPitch() {
+        return this.pitches.firstPitch();
     }
 
-    public int second() {
-        return this.pitches.second();
+    public int secondPitch() {
+        return this.pitches.secondPitch();
     }
 
     public void addPoint(int BonusPoint, int totalPoint) {

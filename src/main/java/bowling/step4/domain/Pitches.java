@@ -24,11 +24,11 @@ public class Pitches {
         return this.pitches.stream().mapToInt(Pitch::count).sum();
     }
 
-    public int first() {
+    public int firstPitch() {
         return this.pitches.get(0).count();
     }
 
-    public int second() {
+    public int secondPitch() {
         return this.pitches.get(1).count();
     }
 
