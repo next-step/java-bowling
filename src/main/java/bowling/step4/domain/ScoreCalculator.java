@@ -31,20 +31,19 @@ public class ScoreCalculator {
             return;
         }
 
-        if (getFrame(frameNum).pitches().hasSpare() && isSpareBonusEnd(frameNum)) {
+        if (!getFrame(frameNum).isFinalFrame() && getFrame(frameNum).pitches().hasSpare() && isSpareBonusEnd(frameNum)) {
             addPoint(frameNum, getSpareBonus(frameNum));
             return;
         }
 
-        if (getFrame(frameNum).pitches().hasStrike() && isStrikeBonusEnd(frameNum)) {
+        if (!getFrame(frameNum).isFinalFrame() && getFrame(frameNum).pitches().hasStrike() && isStrikeBonusEnd(frameNum)) {
             addPoint(frameNum, getStrikeBonus(frameNum));
             return;
         }
 
-        if (getFrame(frameNum).isEndedFrame() && !getFrame(frameNum).pitches().hasStrike() && !getFrame(frameNum).pitches().hasSpare()) {
+        if (!getFrame(frameNum).isFinalFrame() && getFrame(frameNum).isEndedFrame() && !getFrame(frameNum).pitches().hasStrike() && !getFrame(frameNum).pitches().hasSpare()) {
             addPoint(frameNum, 0);
         }
-
     }
 
     public void addPoint(int frameNum, int BonusPoint) {
@@ -58,13 +57,25 @@ public class ScoreCalculator {
 
     private int getStrikeBonus(int strikeNum) {
         int bonusCount = 2;
-        if (IntStream.rangeClosed(strikeNum, strikeNum + bonusCount).anyMatch(it -> !getFrame(it).pitches().hasStrike())) {
+        if (IntStream.rangeClosed(strikeNum, strikeNum + bonusCount).filter(it -> frames.frameMap().keySet().contains(it)).anyMatch(it -> !getFrame(it).pitches().hasStrike())) {
             bonusCount = 1;
         }
-        return IntStream.rangeClosed(strikeNum + 1, strikeNum + bonusCount).map(it -> getFrame(it).pitches().sum()).sum();
+        return IntStream.rangeClosed(strikeNum + 1, strikeNum + bonusCount).filter(it -> frames.frameMap().keySet().contains(it))
+                .map(it -> {
+                    if (strikeNum == 8 && it == 10) {
+                        return getFrame(it).pitches().firstPitch();
+                    }
+                    if (strikeNum == 9 && it == 10) {
+                        return getFrame(it).pitches().firstPitch() + getFrame(it).pitches().secondPitch();
+                    }
+                    return getFrame(it).pitches().sum();
+                }).sum();
     }
 
     private Boolean isStrikeBonusEnd(int strikeNum) {
+        if (strikeNum == 9) {
+            return getFrame(strikeNum + 1).pitches().getSize() > 1;
+        }
         return (!getFrame(strikeNum + 1).pitches().hasStrike() && getFrame(strikeNum + 1).isEndedFrame()) || getFrame(strikeNum + 2).pitches().getSize() > 0;
     }
 
