@@ -10,7 +10,6 @@ public class Player {
         this.frames = new Frames();
     }
 
-
     public void bowl(int frameNum, int count) {
         frames.bowl(frameNum, count);
 

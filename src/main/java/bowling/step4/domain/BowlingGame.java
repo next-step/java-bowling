@@ -4,6 +4,7 @@ import bowling.step4.dto.ResultDto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BowlingGame {
     private final List<Player> players;
@@ -19,7 +20,8 @@ public class BowlingGame {
     public List<Player> players() {
         return players;
     }
-    public ResultDto createResult() {
-        return ResultDto.from(this.players);
+
+    public List<ResultDto> createResult() {
+        return this.players.stream().map(it -> ResultDto.from(it)).collect(Collectors.toList());
     }
 }

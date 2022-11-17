@@ -3,7 +3,6 @@ package bowling.step4.view;
 import bowling.step4.dto.*;
 
 import java.util.List;
-import java.util.Map;
 
 public class ResultView {
 
@@ -14,21 +13,20 @@ public class ResultView {
     private static final int COLUMN_WIDTH = 6;
     private static final int COLUMN_LAST_INDEX = 10;
 
-    public static void printScoreBoard(ResultDto resultDto) {
+    public static void printScoreBoard(List<ResultDto> resultDto) {
         System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
-        for (int i = 0; i < resultDto.playerDtoList.size(); i++) {
-            printName(resultDto.playerDtoList.get(i).name);
-            printPinCount(resultDto.playerDtoList.get(i).framesDto);
-            printScore(resultDto.playerDtoList.get(i).framesDto);
+        for (int i = 0; i < resultDto.size(); i++) {
+            printName(resultDto.get(i).name);
+            printPinCount(resultDto.get(i).pitchesDto);
+            printScore(resultDto.get(i).scoresDto);
         }
     }
 
-    private static void printScore(FramesDto framesDto) {
+    private static void printScore(List<ScoreDto> scoresDto) {
         System.out.print("|      ");
-        Map<Integer, FrameDto> frameMap = framesDto.frameDtoMap;
-        for (int i = 1; i <= frameMap.size(); i++) {
+        for (int i = 0; i < scoresDto.size(); i++) {
             System.out.print(WALL_SHAPE);
-            System.out.print(getScoreString(frameMap.get(i).score));
+            System.out.print(getScoreString(scoresDto.get(i)));
         }
         System.out.println(WALL_SHAPE);
     }
@@ -48,33 +46,32 @@ public class ResultView {
         System.out.print(BLANK.repeat(blankCount) + name + BLANK.repeat(COLUMN_WIDTH - blankCount - name.length()));
     }
 
-    private static void printPinCount(FramesDto framesDto) {
-        Map<Integer, FrameDto> frameMap = framesDto.frameDtoMap;
-        for (int i = 1; i <= COLUMN_LAST_INDEX; i++) {
+    private static void printPinCount(List<PitchDto> pitchesDto) {
+        for (int i = 0; i < COLUMN_LAST_INDEX; i++) {
             System.out.print(WALL_SHAPE);
-            System.out.print(getPinCountString(frameMap.get(i).pinCounts));
+            System.out.print(getPinCountString(pitchesDto.get(i).pinCounts));
         }
         System.out.println(WALL_SHAPE);
     }
 
-    private static String getPinCountString(List<PinCountDto> pinCountDtos) {
-        if (pinCountDtos.size() == 0) {
+    private static String getPinCountString(List<Integer> pinCounts) {
+        if (pinCounts.size() == 0) {
             return BLANK.repeat(COLUMN_WIDTH);
         }
 
-        int pitchCounts = pinCountDtos.size();
+        int pitchCounts = pinCounts.size();
         String result = "";
 
         if (pitchCounts == 1) {
-            result += getText(pinCountDtos.get(0).count);
+            result += getText(pinCounts.get(0));
         }
 
         if (pitchCounts == 2) {
-            result += getTextInCaseOfTwo(pinCountDtos);
+            result += getTextInCaseOfTwo(pinCounts);
         }
 
         if (pitchCounts == 3) {
-            result += getTextInCaseOfThree(pinCountDtos);
+            result += getTextInCaseOfThree(pinCounts);
         }
 
         int blankCount = ((COLUMN_WIDTH - result.length()) / 2);
@@ -82,24 +79,24 @@ public class ResultView {
     }
 
 
-    private static String getTextInCaseOfThree(List<PinCountDto> pitches) {
+    private static String getTextInCaseOfThree(List<Integer> pinCounts) {
 
-        if (pitches.get(0).count != 10 && pitches.get(0).count + pitches.get(1).count == 10) {
-            return String.format("%s|/|%s", getText(pitches.get(0).count), getText(pitches.get(2).count));
+        if (pinCounts.get(0) != 10 && pinCounts.get(0) + pinCounts.get(1) == 10) {
+            return String.format("%s|/|%s", getText(pinCounts.get(0)), getText(pinCounts.get(2)));
         }
 
-        if (pitches.get(1).count + pitches.get(2).count == 10) {
-            return String.format("%s|%s|/", getText(pitches.get(0).count), getText(pitches.get(1).count));
+        if (pinCounts.get(1) + pinCounts.get(2) == 10) {
+            return String.format("%s|%s|/", getText(pinCounts.get(0)), getText(pinCounts.get(1)));
         }
 
-        return String.format("%s|%s|%s", getText(pitches.get(0).count), getText(pitches.get(1).count), getText(pitches.get(2).count));
+        return String.format("%s|%s|%s", getText(pinCounts.get(0)), getText(pinCounts.get(1)), getText(pinCounts.get(2)));
     }
 
-    private static String getTextInCaseOfTwo(List<PinCountDto> pitches) {
-        if (pitches.get(0).count != 10 && pitches.get(0).count + pitches.get(1).count == 10) {
-            return String.format("%s|/", getText(pitches.get(0).count));
+    private static String getTextInCaseOfTwo(List<Integer> pinCounts) {
+        if (pinCounts.get(0) != 10 && pinCounts.get(0) + pinCounts.get(1) == 10) {
+            return String.format("%s|/", getText(pinCounts.get(0)));
         }
-        return String.format("%s|%s", getText(pitches.get(0).count), getText(pitches.get(1).count));
+        return String.format("%s|%s", getText(pinCounts.get(0)), getText(pinCounts.get(1)));
     }
 
     private static String getText(int count) {
