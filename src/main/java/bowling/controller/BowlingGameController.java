@@ -5,6 +5,7 @@ import bowling.domain.frame.BowlingFrames;
 import bowling.domain.frame.Frame;
 import bowling.domain.pin.FallenPins;
 import bowling.view.InputView;
+import bowling.view.ResultView;
 
 public class BowlingGameController {
 
@@ -28,7 +29,7 @@ public class BowlingGameController {
         while (!frame.isFinish()) {
             FallenPins fallenPins = InputView.getFallenPins(i + 1);
             player.bowlBall(frame, fallenPins);
-            //ResultView.printFrame(bowlingFrames, player);
+            ResultView.printFrame(bowlingFrames, player);
         }
     }
 
