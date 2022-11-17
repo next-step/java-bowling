@@ -17,7 +17,7 @@ public class AnswerTest {
 
     @ParameterizedTest
     @ValueSource(booleans = {true, false})
-    public void setDeleted(boolean deleted) {
+    public void when_setDeleted(boolean deleted) {
         A1.setDeleted(deleted);
         A2.setDeleted(deleted);
         assertThat(A1.isDeleted()).isEqualTo(deleted);
@@ -26,12 +26,12 @@ public class AnswerTest {
 
     @ParameterizedTest
     @MethodSource("isOwnerParams")
-    public void isOwner(Answer answer, User user, boolean isOwner) {
+    public void when_isOwner_given_user(Answer answer, User user, boolean isOwner) {
         assertThat(answer.isOwner(user)).isEqualTo(isOwner);
     }
 
     @Test
-    public void toQuestion() {
+    public void when_toQuestion_Q2() {
         A1.toQuestion(QuestionTest.Q2);
         A2.toQuestion(QuestionTest.Q2);
     }

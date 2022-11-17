@@ -5,34 +5,41 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class AnswersTest {
-    public static Answers ANSWERS1 = new Answers();
+    public static Answers ANSWERS1;
 
-    @Test
-    public void addAnswer() {
-        ANSWERS1.add(AnswerTest.A1);
-        ANSWERS1.add(AnswerTest.A2);
+    @BeforeAll
+    static void setUp() {
+        Answer a1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+        Answer a2 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents12");
+
+        ANSWERS1 = new Answers(Lists.newArrayList(a1, a2));
     }
 
     @Test
-    public void addDeleteHistories() {
+    public void when_addAnswer() {
+        ANSWERS1.add(new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents3"));
+    }
+
+    @Test
+    public void when_addDeleteHistories() {
         List<DeleteHistory> histories = new ArrayList<>();
         ANSWERS1.addDeleteHistories(histories);
         assertThat(histories.size()).isEqualTo(2);
     }
 
     @Test
-    public void deleteAll() {
+    public void when_deleteAll_then_isAllDeleted() {
         ANSWERS1.deleteAll();
+        assertThat(ANSWERS1.isAllDeleted()).isEqualTo(true);
     }
 
     @Test
-    public void isAllOwners() {
-        assertThat(ANSWERS1.isAllOwner(UserTest.JAVAJIGI)).isEqualTo(false);
-        assertThat(ANSWERS1.isAllOwner(UserTest.SANJIGI)).isEqualTo(false);
-
+    public void when_isAllOwners_given_user() {
         Answer a1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
         Answer a2 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents12");
 
