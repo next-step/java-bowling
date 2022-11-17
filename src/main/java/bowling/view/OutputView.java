@@ -11,10 +11,12 @@ public class OutputView {
     public static final String GUTTER = "-";
     public static final String STRIKE = "X";
 
-    public static void printResult(Player player) {
+    public static void printResult(List<Player> players) {
         System.out.println(HEADER);
-        printFrames(player.getName(), player.getFrames());
-        printScores(player.getScores());
+        for (Player player : players) {
+            printFrames(player.getName(), player.getFrames());
+            printScores(player.getScores());
+        }
         System.out.println();
     }
 

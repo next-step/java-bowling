@@ -11,12 +11,6 @@ public class Player {
         this.scores = new Scores();
     }
 
-    public Player(String name, Frames frames) {
-        this.name = new Name(name);
-        this.frames = frames;
-        this.scores = new Scores();
-    }
-
     public boolean process() {
         if (frames.isEnd()) {
             frames.add();

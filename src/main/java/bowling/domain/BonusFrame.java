@@ -53,6 +53,6 @@ public class BonusFrame implements Frame {
 
     @Override
     public Score calculateScore() {
-        return new Score(rolls.sum(), 0);
+        return Score.end(rolls.sum());
     }
 }

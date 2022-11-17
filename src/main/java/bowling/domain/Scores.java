@@ -19,7 +19,7 @@ public class Scores {
     }
 
     public void addBonusScore(Pin pin) {
-        Score previous = null;
+        Score previous = Score.zero();
         for (Score score : scores) {
             addBonusAndPrevious(pin, previous, score);
             previous = score;
@@ -43,7 +43,7 @@ public class Scores {
         if (scores.size() != 0) {
             return scores.get(scores.size() - 1);
         }
-        return null;
+        return Score.zero();
     }
 
     private void addPreviousIfEndAddBonus(Score previous, Score now) {
