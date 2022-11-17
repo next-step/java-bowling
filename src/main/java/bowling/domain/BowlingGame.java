@@ -1,15 +1,13 @@
 package bowling.domain;
 
-import bowling.domain.frame.Frame;
 import bowling.domain.score.Score;
 
 public class BowlingGame {
-
-    private final Scoreboard scoreboard;
+    private final Scoreboards scoreboards;
     private final Round round;
 
-    public BowlingGame(Scoreboard scoreboard) {
-        this.scoreboard = scoreboard;
+    public BowlingGame(Scoreboards scoreboards) {
+        this.scoreboards = scoreboards;
         this.round = new Round();
     }
 
@@ -17,20 +15,20 @@ public class BowlingGame {
         return this.round.value();
     }
 
-    public Scoreboard play(Score score) {
-        this.scoreboard.addScore(score, this.round);
-        setNextRound();
-        return this.scoreboard;
+    public Scoreboards play(Score score, Name name) {
+        this.scoreboards.addScore(score, name, this.round);
+        return this.scoreboards;
     }
 
-    private void setNextRound() {
-        Frame frame = this.scoreboard.frame(this.round);
-        if (!frame.isRemainChance()) {
-            this.round.nextRound();
-        }
+    public void setNextRound() {
+        this.round.nextRound();
     }
 
     public boolean isEnd() {
         return this.round.isGameEnd();
+    }
+
+    public boolean isEndTurn(Name name) {
+        return this.scoreboards.isEndTurn(this.round, name);
     }
 }

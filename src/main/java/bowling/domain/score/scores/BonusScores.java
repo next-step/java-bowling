@@ -6,7 +6,7 @@ public class BonusScores extends Scores {
 
     @Override
     public void validateScore() {
-        // 검증 필요 없음
+        throw new RuntimeException("보너스 게임은 검증이 필요 없습니다.");
     }
 
     @Override

@@ -42,12 +42,8 @@ public class Round {
         return this.round > ROUND_END;
     }
 
-    public boolean isSecondRound() {
-        return this.round == ROUND_START + 1;
-    }
-
-    public boolean isAfterSecondRound() {
-        return this.round > 2;
+    public boolean isAfterStartRound() {
+        return this.round > ROUND_START;
     }
 
     public Round beforeRound() {

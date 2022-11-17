@@ -24,17 +24,7 @@ public class ScoresTest {
 
         assertThat(scores.first()).isEqualTo(Score.of(4));
     }
-
-    @Test
-    void isEmpty() {
-        Scores emptyScores = new DefaultFrameScores();
-        Scores notEmptyScores = new DefaultFrameScores();
-        notEmptyScores.add(Score.of(4));
-
-        Assertions.assertAll(() -> assertThat(emptyScores.isEmpty()).isTrue(),
-                () -> assertThat(notEmptyScores.isEmpty()).isFalse());
-    }
-
+    
     @Test
     void first() {
         Scores scores = new DefaultFrameScores();

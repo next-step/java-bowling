@@ -25,10 +25,6 @@ public abstract class Scores {
         this.scores.add(score);
     }
 
-    public boolean isEmpty() {
-        return this.scores.isEmpty();
-    }
-
     public Score first() {
         return this.scores.get(0);
     }
