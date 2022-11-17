@@ -21,7 +21,7 @@ public class Question extends AbstractEntity {
     private User writer;
 
     @Embedded
-    private Answers answers = new Answers();
+    private final Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -56,8 +56,7 @@ public class Question extends AbstractEntity {
         this.contents = contents;
         return this;
     }
-
-    public User getWriter() {
+    private User getWriter() {
         return writer;
     }
 
