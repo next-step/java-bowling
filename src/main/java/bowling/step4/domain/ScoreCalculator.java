@@ -12,10 +12,11 @@ import java.util.stream.IntStream;
 
 public class ScoreCalculator {
 
-    private final Map<Integer, ScoreDto> scoreDtoList = new HashMap<>();
+    private final Map<Integer, ScoreDto> scoreDtoList;
     private final Frames frames;
 
     public ScoreCalculator(Frames frames) {
+        this.scoreDtoList = new HashMap<>();
         this.frames = frames;
     }
 
