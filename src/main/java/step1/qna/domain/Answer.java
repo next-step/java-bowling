@@ -5,7 +5,6 @@ import step1.qna.NotFoundException;
 import step1.qna.UnAuthorizedException;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -50,15 +49,13 @@ public class Answer extends AbstractEntity {
         return deleted;
     }
 
-    public void checkDeleteCondition(User loginUser) throws CannotDeleteException {
+    public DeleteHistory delete(User loginUser) throws CannotDeleteException {
         if (!this.writer.equals(loginUser)) {
             throw new CannotDeleteException(EXCEPTION_MSG);
         }
-    }
 
-    public void deleteAndRecord(List<DeleteHistory> deleteHistories) {
         this.deleted = true;
-        deleteHistories.add(new DeleteHistory(ContentType.ANSWER, this));
+        return new DeleteHistory(ContentType.ANSWER, this);
     }
 
     public User getWriter() {

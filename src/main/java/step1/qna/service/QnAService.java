@@ -9,7 +9,6 @@ import step1.qna.NotFoundException;
 import step1.qna.domain.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service("qnaService")
@@ -34,14 +33,7 @@ public class QnAService {
     @Transactional
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
         Question question = findQuestionById(questionId);
-        question.checkDeleteCondition(loginUser);
-
-        AnswerList answerList = new AnswerList(question);
-        answerList.checkDeleteCondition(loginUser);
-
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        question.deleteAndRecord(deleteHistories);
-        answerList.deleteAndRecord(deleteHistories);
+        List<DeleteHistory> deleteHistories = question.delete(loginUser);
         deleteHistoryService.saveAll(deleteHistories);
     }
 }

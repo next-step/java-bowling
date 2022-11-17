@@ -2,6 +2,7 @@ package step1.qna.domain;
 
 import step1.qna.CannotDeleteException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AnswerList {
@@ -11,15 +12,12 @@ public class AnswerList {
         this.answerList = question.getAnswers();
     }
 
-    public void checkDeleteCondition(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
         for (Answer answer : answerList) {
-            answer.checkDeleteCondition(loginUser);
+            deleteHistories.add(answer.delete(loginUser));
         }
-    }
 
-    public void deleteAndRecord(List<DeleteHistory> deleteHistories) {
-        for (Answer answer : answerList) {
-            answer.deleteAndRecord(deleteHistories);
-        }
+        return deleteHistories;
     }
 }
