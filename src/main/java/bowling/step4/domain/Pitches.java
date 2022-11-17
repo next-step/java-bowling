@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pitches {
-
-    private static final String PIN_COUNT_EXCEPTION = "핀의 개수는 합10을 넘을 수 없습니다.";
-
     private final List<Pitch> pitches;
 
     public Pitches() {
@@ -14,14 +11,7 @@ public class Pitches {
     }
 
     public void add(int count) {
-        validate(count);
         this.pitches.add(new Pitch(count));
-    }
-
-    private void validate(int count) {
-        if (sum() + count > 10) {
-            throw new IllegalArgumentException(PIN_COUNT_EXCEPTION);
-        }
     }
 
     public int sum() {

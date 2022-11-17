@@ -1,5 +1,6 @@
 package bowling.step4.domain;
 
+import bowling.step4.dto.PitchDto;
 import bowling.step4.dto.ResultDto;
 
 import java.util.ArrayList;
@@ -22,6 +23,13 @@ public class BowlingGame {
     }
 
     public List<ResultDto> createResult() {
-        return this.players.stream().map(ResultDto::from).collect(Collectors.toList());
+        return this.players.stream().map(player -> {
+            ScoreCalculator calculator = new ScoreCalculator(player.frames());
+            return new ResultDto(
+                    player.name(),
+                    player.frames().frameMap().values().stream().map(frame -> PitchDto.from(frame.pitches())).collect(Collectors.toList()),
+                    calculator.calculate()
+            );
+        }).collect(Collectors.toList());
     }
 }

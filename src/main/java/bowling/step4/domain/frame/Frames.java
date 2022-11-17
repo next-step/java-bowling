@@ -1,4 +1,4 @@
-package bowling.step4.domain.Frame;
+package bowling.step4.domain.frame;
 
 import java.util.HashMap;
 import java.util.Map;

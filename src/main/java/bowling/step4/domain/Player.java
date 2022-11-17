@@ -1,6 +1,6 @@
 package bowling.step4.domain;
 
-import bowling.step4.domain.Frame.Frames;
+import bowling.step4.domain.frame.Frames;
 
 public class Player {
 
@@ -18,10 +18,7 @@ public class Player {
     }
 
     public boolean isEndedFrame(int frameNum) {
-        if (this.frames.isEndedFrame(frameNum)) {
-            return true;
-        }
-        return false;
+        return this.frames.isEndedFrame(frameNum);
     }
 
     public Frames frames() {
