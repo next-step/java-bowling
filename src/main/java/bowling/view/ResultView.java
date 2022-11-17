@@ -13,11 +13,13 @@ public class ResultView {
     }
 
     private static void printFrame(Frame frame) {
-        String frameString = "  ";
+        String frameString = " ";
         FrameStatus firstStatus = frame.getFirstStatus();
         frameString += getFrameCharacter(firstStatus, frame.getFirstHit());
         FrameStatus secondStatus = frame.getSecondStatus();
         frameString += getSecondFrameCharacter(secondStatus, frame.getSecondHit());
+        FrameStatus thirdStatus = frame.getThirdStatus();
+        frameString += getThirdFrameCharacter(thirdStatus, frame.getThirdHit());
         System.out.print(frameString);
     }
 
@@ -37,14 +39,34 @@ public class ResultView {
     private static String getSecondFrameCharacter(FrameStatus frameStatus, Hit hit) {
         if (frameStatus == FrameStatus.BEFORE
                 || frameStatus == FrameStatus.SKIP) {
-            return "   |";
+            return "  ";
         }
         if (frameStatus == FrameStatus.GUTTER) {
-            return "|- |";
+            return "|-";
         }
         if (frameStatus == FrameStatus.SPARE) {
-            return "|/ |";
+            return "|/";
         }
-        return String.format("|%d |", hit.getScore());
+        if (frameStatus == FrameStatus.STRIKE) {
+            return "|X";
+        }
+        return String.format("|%d", hit.getScore());
+    }
+
+    private static String getThirdFrameCharacter(FrameStatus frameStatus, Hit hit) {
+        if (frameStatus == FrameStatus.BEFORE
+                || frameStatus == FrameStatus.SKIP) {
+            return "  |";
+        }
+        if (frameStatus == FrameStatus.GUTTER) {
+            return "|-|";
+        }
+        if (frameStatus == FrameStatus.SPARE) {
+            return "|/|";
+        }
+        if (frameStatus == FrameStatus.STRIKE) {
+            return "|X|";
+        }
+        return String.format("|%d|", hit.getScore());
     }
 }

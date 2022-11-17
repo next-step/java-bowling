@@ -11,9 +11,10 @@ public class Round {
     private final List<Frame> frames;
 
     public Round() {
-        frames = IntStream.range(0, ROUND_COUNT)
-                .mapToObj(i -> new Frame())
+        frames = IntStream.range(0, ROUND_COUNT - 1)
+                .mapToObj(i -> new NormalFrame())
                 .collect(Collectors.toList());
+        frames.add(new LastFrame());
     }
 
     public void hit(Hit hit) {
@@ -23,7 +24,11 @@ public class Round {
             last.firstThrow(hit);
             return;
         }
-        last.secondThrow(hit);
+        if (last.getSecondStatus() == FrameStatus.BEFORE) {
+            last.secondThrow(hit);
+            return;
+        }
+        last.thirdThrow(hit);
     }
 
     public boolean isEnd() {
