@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.pin;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;

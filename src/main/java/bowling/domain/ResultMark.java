@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.pin.FallenPins;
+
 public enum ResultMark {
 
     STRIKE("X"),

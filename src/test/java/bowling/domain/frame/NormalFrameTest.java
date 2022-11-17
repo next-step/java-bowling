@@ -3,9 +3,9 @@ package bowling.domain.frame;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-import bowling.domain.FallenPins;
 import bowling.domain.exception.EndedFrameException;
 import bowling.domain.exception.ExceedFallenPinsException;
+import bowling.domain.pin.FallenPins;
 import org.junit.jupiter.api.Test;
 
 class NormalFrameTest {

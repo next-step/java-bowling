@@ -1,9 +1,9 @@
 package bowling.controller;
 
-import bowling.domain.FallenPins;
 import bowling.domain.Player;
 import bowling.domain.frame.BowlingFrames;
 import bowling.domain.frame.Frame;
+import bowling.domain.pin.FallenPins;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 

@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.pin;
 
 import bowling.domain.exception.InvalidCountOfPinException;
 

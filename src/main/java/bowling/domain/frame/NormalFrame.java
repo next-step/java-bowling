@@ -1,9 +1,9 @@
 package bowling.domain.frame;
 
-import bowling.domain.FallenPins;
 import bowling.domain.ResultMark;
 import bowling.domain.exception.EndedFrameException;
 import bowling.domain.exception.ExceedFallenPinsException;
+import bowling.domain.pin.FallenPins;
 
 public class NormalFrame implements Frame {
 

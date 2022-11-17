@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.domain.exception.InvalidNameException;
 import bowling.domain.frame.Frame;
+import bowling.domain.pin.FallenPins;
 import java.util.regex.Pattern;
 
 public class Player {

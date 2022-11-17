@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import bowling.domain.exception.InvalidNameException;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
+import bowling.domain.pin.FallenPins;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {

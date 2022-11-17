@@ -3,6 +3,7 @@ package bowling.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import bowling.domain.pin.FallenPins;
 import org.junit.jupiter.api.Test;
 
 class ResultMarkTest {

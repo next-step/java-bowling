@@ -1,7 +1,7 @@
 package bowling.view;
 
-import bowling.domain.FallenPins;
 import bowling.domain.Player;
+import bowling.domain.pin.FallenPins;
 import java.util.Scanner;
 
 public class InputView {

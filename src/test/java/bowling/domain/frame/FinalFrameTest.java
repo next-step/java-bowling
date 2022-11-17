@@ -2,7 +2,7 @@ package bowling.domain.frame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bowling.domain.FallenPins;
+import bowling.domain.pin.FallenPins;
 import org.junit.jupiter.api.Test;
 
 class FinalFrameTest {
