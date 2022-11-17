@@ -20,14 +20,18 @@ public class FallenPins {
         return this.countOfPin;
     }
 
+    public boolean isAllPinFallen() {
+        return countOfPin == FallenPins.MAX_COUNT_OF_PIN;
+    }
+
+    public FallenPins merge(FallenPins fallenPins) {
+        return FallenPins.of(countOfPin + fallenPins.getCountOfPin());
+    }
+
     private void validateCountOfPin(int countOfPin) {
         if (countOfPin < 0 || countOfPin > MAX_COUNT_OF_PIN) {
             throw new InvalidCountOfPinException();
         }
-    }
-
-    public boolean isAllPinFallen() {
-        return countOfPin == FallenPins.MAX_COUNT_OF_PIN;
     }
 
 }
