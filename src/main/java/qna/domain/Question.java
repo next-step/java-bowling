@@ -21,7 +21,7 @@ public class Question extends AbstractEntity {
     private User writer;
 
     @Embedded
-    private final Answers answers = new Answers();
+    private Answers answers;
 
     private boolean deleted = false;
 
@@ -46,6 +46,10 @@ public class Question extends AbstractEntity {
 
     public void addAnswer(Answer answer) {
         answer.toQuestion(this);
+
+        if(answers == null) {
+            answers = new Answers();
+        }
         answers.add(answer);
     }
 
