@@ -21,7 +21,7 @@ public class BowlingGameMain {
     }
 
     private static void playFrame(BowlingGame bowlingGame, int i) {
-        for (Player player : bowlingGame.getPlayers()) {
+        for (Player player : bowlingGame.players()) {
             playPitch(bowlingGame, i, player);
         }
 

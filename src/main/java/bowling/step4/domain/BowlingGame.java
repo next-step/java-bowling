@@ -6,10 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BowlingGame {
-    public List<Player> getPlayers() {
-        return players;
-    }
-
     private final List<Player> players;
 
     public BowlingGame(List<String> names) {
@@ -20,6 +16,9 @@ public class BowlingGame {
         this.players = players;
     }
 
+    public List<Player> players() {
+        return players;
+    }
     public ResultDto createResult() {
         return ResultDto.from(this.players);
     }
