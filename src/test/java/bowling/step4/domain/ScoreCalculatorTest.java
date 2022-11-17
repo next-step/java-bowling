@@ -28,10 +28,10 @@ class ScoreCalculatorTest {
         frames.bowl(2, 8);
         frames.bowl(3, 2);
         ScoreCalculator scoreCalculator = new ScoreCalculator(frames);
-        List<ScoreDto> scoreDtos = scoreCalculator.calculate();
+        List<ScoreDto> scoresDto = scoreCalculator.calculate();
         assertSoftly(softly -> {
-            assertThat(scoreDtos.get(0).score).isEqualTo(20);
-            assertThat(scoreDtos.get(1).score).isEqualTo(32);
+            assertThat(scoresDto.get(0).score).isEqualTo(20);
+            assertThat(scoresDto.get(1).score).isEqualTo(32);
         });
     }
 
@@ -45,11 +45,11 @@ class ScoreCalculatorTest {
         frames.bowl(3, 2);
         frames.bowl(3, 4);
         ScoreCalculator scoreCalculator = new ScoreCalculator(frames);
-        List<ScoreDto> scoreDtos = scoreCalculator.calculate();
+        List<ScoreDto> scoresDto = scoreCalculator.calculate();
         assertSoftly(softly -> {
-            assertThat(scoreDtos.get(0).score).isEqualTo(9);
-            assertThat(scoreDtos.get(1).score).isEqualTo(21);
-            assertThat(scoreDtos.get(2).score).isEqualTo(27);
+            assertThat(scoresDto.get(0).score).isEqualTo(9);
+            assertThat(scoresDto.get(1).score).isEqualTo(21);
+            assertThat(scoresDto.get(2).score).isEqualTo(27);
         });
     }
 
@@ -61,11 +61,11 @@ class ScoreCalculatorTest {
         frames.bowl(3, 2);
         frames.bowl(3, 6);
         ScoreCalculator scoreCalculator = new ScoreCalculator(frames);
-        List<ScoreDto> scoreDtos = scoreCalculator.calculate();
+        List<ScoreDto> scoresDto = scoreCalculator.calculate();
         assertSoftly(softly -> {
-            assertThat(scoreDtos.get(0).score).isEqualTo(20);
-            assertThat(scoreDtos.get(1).score).isEqualTo(38);
-            assertThat(scoreDtos.get(2).score).isEqualTo(46);
+            assertThat(scoresDto.get(0).score).isEqualTo(20);
+            assertThat(scoresDto.get(1).score).isEqualTo(38);
+            assertThat(scoresDto.get(2).score).isEqualTo(46);
         });
     }
 }
