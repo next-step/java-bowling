@@ -25,4 +25,14 @@ public class QuestionTest {
             .isExactlyInstanceOf(CannotDeleteException.class)
             .hasMessage("질문을 삭제할 권한이 없습니다.");
     }
+
+    @DisplayName("질문 작성자와 답변 작성자가 다른 사람일 경우 예외 발생")
+    @Test
+    void cannotDeleteDifferentWriter() {
+        Q2.addAnswer(AnswerTest.A1);
+        Q2.addAnswer(AnswerTest.A2);
+
+        assertThatThrownBy(() -> Q2.delete(UserTest.JAVAJIGI))
+            .isExactlyInstanceOf(CannotDeleteException.class);
+    }
 }
