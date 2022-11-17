@@ -1,6 +1,5 @@
 package qna.domain;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +31,7 @@ public class Answers {
     }
 
     public void addDeleteHistories(List<DeleteHistory> histories) {
-        this.answers.forEach(answer -> histories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now())));
+        this.answers.forEach(answer -> histories.add(answer.getDeleteHistory()));
     }
 
     public boolean isAllOwner(User loginUser) {
