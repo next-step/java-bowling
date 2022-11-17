@@ -20,15 +20,7 @@ public class Round {
     public void hit(Hit hit) {
         Frame last = getLastPlayingFrame()
                 .orElseThrow(() -> new IllegalStateException("모든 프레임이 종료되었습니다."));
-        if (last.getFirstStatus() == FrameStatus.BEFORE) {
-            last.firstThrow(hit);
-            return;
-        }
-        if (last.getSecondStatus() == FrameStatus.BEFORE) {
-            last.secondThrow(hit);
-            return;
-        }
-        last.thirdThrow(hit);
+        last.play(hit);
     }
 
     public boolean isEnd() {

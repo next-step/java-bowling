@@ -2,9 +2,7 @@ package bowling.domain;
 
 public interface Frame {
 
-    void firstThrow(Hit hit);
-    void secondThrow(Hit hit);
-    void thirdThrow(Hit hit);
+    void play(Hit hit);
 
     FrameStatus getFirstStatus();
     FrameStatus getSecondStatus();

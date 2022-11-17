@@ -6,17 +6,27 @@ public class LastFrame implements Frame {
     private Hit third;
 
     @Override
-    public void firstThrow(Hit hit) {
+    public void play(Hit hit) {
+        if (getFirstStatus() == FrameStatus.BEFORE) {
+            firstThrow(hit);
+            return;
+        }
+        if (getSecondStatus() == FrameStatus.BEFORE) {
+            secondThrow(hit);
+            return;
+        }
+        thirdThrow(hit);
+    }
+
+    private void firstThrow(Hit hit) {
         this.first = hit;
     }
 
-    @Override
-    public void secondThrow(Hit hit) {
+    private void secondThrow(Hit hit) {
         this.second = hit;
     }
 
-    @Override
-    public void thirdThrow(Hit hit) {
+    private void thirdThrow(Hit hit) {
         this.third = hit;
     }
 

@@ -5,21 +5,23 @@ public class NormalFrame implements Frame {
     private Hit second;
 
     @Override
-    public void firstThrow(Hit hit) {
+    public void play(Hit hit) {
+        if (getFirstStatus() == FrameStatus.BEFORE) {
+            firstThrow(hit);
+            return;
+        }
+        secondThrow(hit);
+    }
+
+    private void firstThrow(Hit hit) {
         this.first = hit;
         if (hit.isMax()) {
             second = new Hit(0);
         }
     }
 
-    @Override
-    public void secondThrow(Hit hit) {
+    private void secondThrow(Hit hit) {
         this.second = hit;
-    }
-
-    @Override
-    public void thirdThrow(Hit hit) {
-        throw new IllegalStateException("실행할 수 없는 메소드를 실행했습니다.");
     }
 
     @Override
