@@ -57,10 +57,10 @@ public class ScoreCalculator {
 
     private int getStrikeBonus(int strikeNum) {
         int bonusCount = 2;
-        if (IntStream.rangeClosed(strikeNum, strikeNum + bonusCount).filter(it -> frames.frameMap().keySet().contains(it)).anyMatch(it -> !getFrame(it).pitches().hasStrike())) {
+        if (IntStream.rangeClosed(strikeNum, strikeNum + bonusCount).filter(it -> frames.frameMap().containsKey(it)).anyMatch(it -> !getFrame(it).pitches().hasStrike())) {
             bonusCount = 1;
         }
-        return IntStream.rangeClosed(strikeNum + 1, strikeNum + bonusCount).filter(it -> frames.frameMap().keySet().contains(it))
+        return IntStream.rangeClosed(strikeNum + 1, strikeNum + bonusCount).filter(it -> frames.frameMap().containsKey(it))
                 .map(it -> {
                     if (strikeNum == 8 && it == 10) {
                         return getFrame(it).pitches().firstPitch();
