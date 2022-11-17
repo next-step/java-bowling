@@ -68,4 +68,16 @@ class ScoreCalculatorTest {
             assertThat(scoresDto.get(2).score).isEqualTo(46);
         });
     }
+
+    @Test
+    void 스트라이크_후_스페어_스트라이크() {
+        Frames frames = new Frames();
+        frames.bowl(1, 10);
+        frames.bowl(2, 8);
+        frames.bowl(2, 2);
+        frames.bowl(3, 10);
+        ScoreCalculator scoreCalculator = new ScoreCalculator(frames);
+        assertThat(scoreCalculator.calculate().get(0).score).isEqualTo(20);
+        assertThat(scoreCalculator.calculate().get(1).score).isEqualTo(40);
+    }
 }

@@ -10,7 +10,7 @@ public abstract class Frame {
         this.pitches = new Pitches();
     }
 
-    abstract Boolean isEndedFrame();
+    public abstract Boolean isEndedFrame();
 
     public abstract Boolean isFinalFrame();
 
