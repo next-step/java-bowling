@@ -22,6 +22,6 @@ public class BowlingGame {
     }
 
     public List<ResultDto> createResult() {
-        return this.players.stream().map(it -> ResultDto.from(it)).collect(Collectors.toList());
+        return this.players.stream().map(ResultDto::from).collect(Collectors.toList());
     }
 }
