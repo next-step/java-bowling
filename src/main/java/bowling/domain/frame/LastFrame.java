@@ -1,12 +1,8 @@
 package bowling.domain.frame;
 
-import static java.util.stream.Collectors.*;
-
 import java.util.LinkedList;
 import java.util.List;
 
-import bowling.domain.dto.BowlRecord;
-import bowling.domain.dto.BowlingGameFrameRecord;
 import bowling.domain.frame.state.Ready;
 import bowling.domain.frame.state.State;
 
@@ -47,12 +43,18 @@ public class LastFrame extends Frame {
     }
 
     @Override
-    public BowlingGameFrameRecord createFrameRecord() {
-        List<BowlRecord> bowlRecords = states.stream()
-            .map(State::createBowlRecord)
-            .collect(toList());
+    public Score getScore() {
+        Score score = states.getFirst().getScore();
 
-        return new BowlingGameFrameRecord(getScore(), bowlRecords);
+        for (int i = 1; i < states.size(); ++i) {
+            score = states.get(i).calculateBonusScore(score);
+        }
+        return score;
+    }
+
+    @Override
+    public List<State> getStates() {
+        return states;
     }
 
     @Override
@@ -85,12 +87,4 @@ public class LastFrame extends Frame {
         return bowlCount == 2 && !getCurrentState().canBonusBowl();
     }
 
-    private Score getScore() {
-        Score score = states.getFirst().getScore();
-
-        for (int i = 1; i < states.size(); ++i) {
-            score = states.get(i).calculateBonusScore(score);
-        }
-        return score;
-    }
 }

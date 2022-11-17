@@ -1,6 +1,7 @@
 package bowling.domain.frame.state;
 
-import bowling.domain.dto.BowlRecord;
+import java.util.List;
+
 import bowling.domain.frame.Score;
 
 public abstract class State {
@@ -11,12 +12,10 @@ public abstract class State {
             throw new IllegalStateException(CANNOT_ADD_SCORE_EXCEPTION_MESSAGE);
         }
 
-        return score.addBonusScore(bonusScore);
+        return score.add(bonusScore);
     }
 
     public abstract State bowl(int pins);
-
-    public abstract BowlRecord createBowlRecord();
 
     public abstract Score getScore();
 
@@ -25,4 +24,10 @@ public abstract class State {
     public abstract boolean isFinish();
 
     public abstract boolean canBonusBowl();
+
+    public abstract List<Pins> getFalledPins();
+
+    public abstract boolean isStrike();
+
+    public abstract boolean isSpare();
 }

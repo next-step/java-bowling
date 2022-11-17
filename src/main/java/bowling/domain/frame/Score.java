@@ -3,8 +3,6 @@ package bowling.domain.frame;
 import java.util.Objects;
 
 public class Score {
-    private static final String CANNOT_CALCULATE_SCORE_EXCEPTION_MESSAGE = "아직 스코어를 계산할 수 없는 상태입니다.";
-
     private static final int UN_SCORE_VALUE = -1;
 
     private final int score;
@@ -19,7 +17,7 @@ public class Score {
         this.left = left;
     }
 
-    public Score addBonusScore(int score) {
+    public Score add(int score) {
         return new Score(this.score + score, left - 1);
     }
 
@@ -28,10 +26,6 @@ public class Score {
     }
 
     public int getValue() {
-        if (!canCalculateScore()) {
-            throw new IllegalStateException(CANNOT_CALCULATE_SCORE_EXCEPTION_MESSAGE);
-        }
-
         return score;
     }
 

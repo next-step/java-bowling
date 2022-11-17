@@ -2,7 +2,6 @@ package bowling.domain.frame.state;
 
 import java.util.List;
 
-import bowling.domain.dto.BowlRecord;
 import bowling.domain.frame.Score;
 
 public class Spare extends Finished {
@@ -19,8 +18,18 @@ public class Spare extends Finished {
     }
 
     @Override
-    public BowlRecord createBowlRecord() {
-        return new BowlRecord(List.of(firstPins, secondPins), false, true);
+    public List<Pins> getFalledPins() {
+        return List.of(firstPins, secondPins);
+    }
+
+    @Override
+    public boolean isStrike() {
+        return false;
+    }
+
+    @Override
+    public boolean isSpare() {
+        return true;
     }
 
     @Override

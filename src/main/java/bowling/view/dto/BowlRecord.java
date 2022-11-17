@@ -1,4 +1,4 @@
-package bowling.domain.dto;
+package bowling.view.dto;
 
 import static java.util.stream.Collectors.*;
 

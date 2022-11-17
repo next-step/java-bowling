@@ -8,20 +8,21 @@ import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import bowling.domain.dto.BowlRecord;
-import bowling.domain.dto.BowlingGameFrameRecord;
-import bowling.domain.frame.Score;
+import bowling.domain.BowlingGame;
+import bowling.domain.frame.Frame;
+import bowling.view.dto.BowlRecord;
+import bowling.view.dto.BowlingGameFrameRecord;
+import bowling.view.dto.BowlingGameFrameRecordConverter;
+import bowling.view.dto.ScoreDto;
 
 public class ResultView {
     private static final int START_FRAME = 1;
     private static final int END_FRAME = 10;
 
-    public void printScoreBoard(String name, List<BowlingGameFrameRecord> frameRecords) {
+    public void printScoreBoard(List<BowlingGame> bowlingGames) {
         printScoreBoardTitle();
 
-        printBowlRecords(name, frameRecords);
-        printScores(frameRecords);
-
+        bowlingGames.forEach(bowlingGame -> printScoreBoard(bowlingGame.getPlayerName(), createFrameRecords(bowlingGame)));
         System.out.println();
     }
 
@@ -37,6 +38,11 @@ public class ResultView {
         printScoreBoardContent("NAME", frameNumbers);
     }
 
+    private void printScoreBoard(String name, List<BowlingGameFrameRecord> frameRecords) {
+        printBowlRecords(name, frameRecords);
+        printScores(frameRecords);
+    }
+
     private void printBowlRecords(String name, List<BowlingGameFrameRecord> frameRecords) {
         List<String> frameContents = frameRecords.stream()
             .map(BowlingGameFrameRecord::getBowlRecords)
@@ -47,7 +53,7 @@ public class ResultView {
     }
 
     private void printScores(List<BowlingGameFrameRecord> frameRecords) {
-        List<Score> scores = frameRecords.stream()
+        List<ScoreDto> scores = frameRecords.stream()
             .map(BowlingGameFrameRecord::getScore)
             .collect(toList());
 
@@ -96,19 +102,27 @@ public class ResultView {
         return pins;
     }
 
-    private List<String> convertScoresToDescription(List<Score> scores) {
+    private List<String> convertScoresToDescription(List<ScoreDto> scores) {
         List<String> descriptions = new ArrayList<>();
         int sumOfScore = 0;
 
-        for (Score score : scores) {
-            String description = "";
-            if (score.canCalculateScore()) {
-                description = Integer.toString(sumOfScore + score.getValue());
-                sumOfScore += score.getValue();
-            }
+        for (ScoreDto score : scores) {
+            String description = score.getScoreDescription(sumOfScore);
+            sumOfScore += score.getValue();
+
             descriptions.add(description);
         }
 
         return descriptions;
+    }
+
+    private List<BowlingGameFrameRecord> createFrameRecords(BowlingGame bowlingGame) {
+        List<Frame> frames = bowlingGame.getFrames();
+        List<BowlingGameFrameRecord> frameRecords = BowlingGameFrameRecordConverter.convert(frames);
+
+        IntStream.range(frames.size(), Frame.LAST_FRAME)
+            .forEach(i -> frameRecords.add(BowlingGameFrameRecordConverter.convertEmptyRecord()));
+
+        return frameRecords;
     }
 }
