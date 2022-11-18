@@ -13,19 +13,17 @@ public class FrameResult {
     private static final String STRIKE = "X";
     private static final String GUTTER = "-";
     private static final String EMPTY = "";
+    private static final int MAX_COUNT = 10;
 
     public String frameSign(final Frame frame) {
 
         if (frame.isLastFrame()) {
-            final String states = String.format(frame.getStates()
+            return String.format(frame.getStates()
                     .stream()
                     .map(this::sign)
-                    .collect(Collectors.joining("|")), "%5s");
-            return String.format("%5s ", states);
+                    .collect(Collectors.joining("|")));
         }
-
-        final State state = frame.getState();
-        return String.format(" %3s  ", sign(state));
+        return sign(frame.getState());
     }
 
     private String sign(final State state) {
@@ -48,7 +46,7 @@ public class FrameResult {
         }
 
         final Pin secondPin = pins.get(1);
-        if (firstPin.count() + secondPin.count() == 10) {
+        if (firstPin.count() + secondPin.count() == MAX_COUNT) {
             return String.format("%d|/", firstPin.count());
         }
 
