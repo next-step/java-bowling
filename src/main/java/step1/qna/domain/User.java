@@ -1,6 +1,6 @@
-package qna.domain;
+package step1.qna.domain;
 
-import qna.UnAuthorizedException;
+import step1.qna.UnAuthorizedException;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -106,15 +106,40 @@ public class User extends AbstractEntity {
         return false;
     }
 
-    private static class GuestUser extends User {
-        @Override
-        public boolean isGuestUser() {
-            return true;
-        }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        if (!super.equals(o)) return false;
+
+        User user = (User) o;
+
+        if (getUserId() != null ? !getUserId().equals(user.getUserId()) : user.getUserId() != null) return false;
+        if (getPassword() != null ? !getPassword().equals(user.getPassword()) : user.getPassword() != null)
+            return false;
+        if (getName() != null ? !getName().equals(user.getName()) : user.getName() != null) return false;
+        return getEmail() != null ? getEmail().equals(user.getEmail()) : user.getEmail() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (getUserId() != null ? getUserId().hashCode() : 0);
+        result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
+        return result;
     }
 
     @Override
     public String toString() {
         return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email=" + email + "]";
+    }
+
+    private static class GuestUser extends User {
+        @Override
+        public boolean isGuestUser() {
+            return true;
+        }
     }
 }

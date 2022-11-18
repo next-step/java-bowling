@@ -1,4 +1,4 @@
-package qna.domain;
+package step1.qna.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -31,6 +31,15 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
+    public DeleteHistory(ContentType contentType, Question question) {
+        this(contentType, question.getId(), question.getWriter(), LocalDateTime.now());
+    }
+
+    public DeleteHistory(ContentType contentType, Answer answer) {
+        this(contentType, answer.getId(), answer.getWriter(), LocalDateTime.now());
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -51,5 +60,9 @@ public class DeleteHistory {
     public String toString() {
         return "DeleteHistory [id=" + id + ", contentType=" + contentType + ", contentId=" + contentId + ", deletedBy="
                 + deletedBy + ", createDate=" + createDate + "]";
+    }
+
+    public User getDeletedBy() {
+        return deletedBy;
     }
 }

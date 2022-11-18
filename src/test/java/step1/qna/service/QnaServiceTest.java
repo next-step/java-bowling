@@ -1,4 +1,4 @@
-package qna.service;
+package step1.qna.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -6,8 +6,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import qna.CannotDeleteException;
-import qna.domain.*;
+import step1.qna.CannotDeleteException;
+import step1.qna.domain.*;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -82,8 +82,9 @@ public class QnaServiceTest {
 
     private void verifyDeleteHistories() {
         List<DeleteHistory> deleteHistories = Arrays.asList(
-                new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()),
-                new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+                new DeleteHistory(ContentType.QUESTION, question),
+                new DeleteHistory(ContentType.ANSWER, answer)
+		);
         verify(deleteHistoryService).saveAll(deleteHistories);
     }
 }

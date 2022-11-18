@@ -1,12 +1,14 @@
-package qna.domain;
+package step1.qna.domain;
 
-import qna.NotFoundException;
-import qna.UnAuthorizedException;
+import step1.qna.CannotDeleteException;
+import step1.qna.NotFoundException;
+import step1.qna.UnAuthorizedException;
 
 import javax.persistence.*;
 
 @Entity
 public class Answer extends AbstractEntity {
+    private static final String EXCEPTION_MSG = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
@@ -30,11 +32,11 @@ public class Answer extends AbstractEntity {
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
 
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
 
@@ -43,25 +45,21 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
     }
 
-    public boolean isOwner(User writer) {
-        return this.writer.equals(writer);
+    public DeleteHistory delete(User loginUser) throws CannotDeleteException {
+        if (!this.writer.equals(loginUser)) {
+            throw new CannotDeleteException(EXCEPTION_MSG);
+        }
+
+        this.deleted = true;
+        return new DeleteHistory(ContentType.ANSWER, this);
     }
 
     public User getWriter() {
         return writer;
-    }
-
-    public String getContents() {
-        return contents;
     }
 
     public void toQuestion(Question question) {

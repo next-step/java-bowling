@@ -1,6 +1,7 @@
-package qna.domain;
+package step1.qna.domain;
 
 import org.hibernate.annotations.Where;
+import step1.qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,21 +9,18 @@ import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
-    @Column(length = 100, nullable = false)
-    private String title;
-
-    @Lob
-    private String contents;
-
-    @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
-    private User writer;
-
+    private static final String EXCEPTION_MSG = "질문을 삭제할 권한이 없습니다.";
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
-
+    private final List<Answer> answers = new ArrayList<>();
+    @Column(length = 100, nullable = false)
+    private String title;
+    @Lob
+    private String contents;
+    @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
+    private User writer;
     private boolean deleted = false;
 
     public Question() {
@@ -39,24 +37,6 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
-
     public User getWriter() {
         return writer;
     }
@@ -71,13 +51,17 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
-    }
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        if (!this.writer.equals(loginUser)) {
+            throw new CannotDeleteException(EXCEPTION_MSG);
+        }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+        this.deleted = true;
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this));
+        AnswerList answerList = new AnswerList(this);
+        deleteHistories.addAll(answerList.delete(loginUser));
+        return deleteHistories;
     }
 
     public boolean isDeleted() {
