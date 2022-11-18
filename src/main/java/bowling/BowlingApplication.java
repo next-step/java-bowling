@@ -1,34 +1,57 @@
 package bowling;
 
 import bowling.domain.*;
-import bowling.view.FramesResult;
 import bowling.view.InputView;
 import bowling.view.ResultView;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class BowlingApplication {
 
     public static void main(String[] args) {
 
-        final Frames frames = Frames.init();
-        final String participationName = InputView.inputParticipationName();
-        final FramesResult framesResult = new FramesResult(Participant.from(participationName), frames);
-        ResultView.resultPrint(framesResult);
+        final Players players = generatePlayers();
 
-        while (!frames.isLast()) {
-            inputBowlNumberAndPrintResult(framesResult, frames);
+        ResultView.printFrameResults(players);
+
+        while (!players.canEnd()) {
+            bowl(players);
         }
     }
 
-    private static void inputBowlNumberAndPrintResult(final FramesResult framesResult, final Frames frames) {
+    private static void bowl(final Players players) {
 
-        Frame lastFrame = frames.lastFrame();
-
-        while (lastFrame.canBowl()) {
-            int number = InputView.inputScore(lastFrame.getFrameNumber());
-            lastFrame.bowl(number);
-            ResultView.resultPrint(framesResult);
+        for (Player player : players.getPlayers()) {
+                inputBowlNumberAndPrintResult(player);
+                ResultView.printFrameResults(players);
         }
+    }
 
-        frames.addFrame();
+    private static Players generatePlayers() {
+
+        final int numberOfPlayers = InputView.inputPlayers();
+        final List<Player> players = IntStream.range(0, numberOfPlayers)
+                .mapToObj(i -> generatePlayer(i + 1))
+                .collect(Collectors.toList());
+        return new Players(players);
+    }
+
+    private static Player generatePlayer(final int index) {
+
+        return new Player(InputView.inputPlayerName(index));
+    }
+
+    private static void inputBowlNumberAndPrintResult(final Player player) {
+
+        if (player.canBowl()) {
+            inputBowlNumber(player);
+        }
+    }
+
+    private static void inputBowlNumber(final Player player) {
+
+        player.bowl(InputView.inputBowlNumber(player.getName()));
     }
 }
