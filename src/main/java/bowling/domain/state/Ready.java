@@ -5,25 +5,19 @@ import bowling.domain.Score;
 
 import java.util.List;
 
-public class Ready extends State {
+public class Ready extends Running {
 
     private static final int NO_SCORE = 0;
     private static final int DEFAULT = 2;
 
     @Override
-    public State bowl(Pin pin) {
+    public State bowl(final Pin pin) {
 
         if (pin.isKnockDown()) {
             return new Strike();
         }
 
         return new FirstBowl(pin);
-    }
-
-    @Override
-    public boolean isFinished() {
-
-        return false;
     }
 
     @Override

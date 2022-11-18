@@ -5,29 +5,23 @@ import bowling.domain.Score;
 
 import java.util.List;
 
-public class Spare extends State {
+public class Spare extends Finished {
 
     private static final int LEFT_CHANCE = 1;
     
     private final Pin firstPin;
     private final Pin secondPin;
 
-    public Spare(Pin firstPin, Pin secondPin) {
+    public Spare(final Pin firstPin, final Pin secondPin) {
 
         this.firstPin = firstPin;
         this.secondPin = secondPin;
     }
 
     @Override
-    public State bowl(Pin pin) {
+    public State bowl(final Pin pin) {
 
         throw new IllegalArgumentException("더 이상 공을 던질 수 없습니다.");
-    }
-
-    @Override
-    public boolean isFinished() {
-
-        return true;
     }
 
     @Override
@@ -37,15 +31,15 @@ public class Spare extends State {
     }
 
     @Override
-    public Score calculateAdditionalScore(Score scoreV2) {
+    public Score calculateAdditionalScore(final Score score) {
 
-        Score score = scoreV2.add(firstPin.count());
+        Score newScore = score.add(firstPin.count());
 
-        if (score.canCalculateScore()) {
-            return score;
+        if (newScore.canCalculateScore()) {
+            return newScore;
         }
 
-        return score.add(secondPin.count());
+        return newScore.add(secondPin.count());
     }
 
     @Override

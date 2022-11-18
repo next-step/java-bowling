@@ -5,21 +5,15 @@ import bowling.domain.Score;
 
 import java.util.List;
 
-public class Strike extends State {
+public class Strike extends Finished {
 
     private static final int MAX_SCORE = 10;
     private static final int LEFT_CHANCE = 2;
 
     @Override
-    public State bowl(Pin pin) {
+    public State bowl(final Pin pin) {
 
         throw new IllegalArgumentException("더 이상 공을 던질 수 없습니다.");
-    }
-
-    @Override
-    public boolean isFinished() {
-
-        return true;
     }
 
     @Override
@@ -29,7 +23,7 @@ public class Strike extends State {
     }
 
     @Override
-    public Score calculateAdditionalScore(Score score) {
+    public Score calculateAdditionalScore(final Score score) {
 
         return score.add(MAX_SCORE);
     }
