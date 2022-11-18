@@ -1,5 +1,8 @@
 package bowling.view;
 
+import bowling.domain.Player;
+import bowling.domain.Players;
+
 public class ResultView {
 
     /**
@@ -7,12 +10,22 @@ public class ResultView {
      * |  PJS |  X   |  8   |      |      |      |      |      |      |      |      |
      */
 
+    private static final FramesResult RESULT = FramesResult.init();
+
     private ResultView() {}
 
-    public static void resultPrint(final FramesResult framesResult) {
+    public static void printFrameResults(final Players players) {
 
-        System.out.println(framesResult.frameNumberLine());
-        System.out.println(framesResult.frameSigns());
-        System.out.println(framesResult.frameScores() + System.lineSeparator());
+        System.out.println(RESULT.frameNumberLine());
+        for (Player player : players.getPlayers()) {
+            resultPlayer(player);
+        }
+        System.out.println();
+    }
+
+    private static void resultPlayer(final Player player) {
+
+        System.out.println(RESULT.playerFrameSigns(player));
+        System.out.println(RESULT.playerScores(player));
     }
 }
