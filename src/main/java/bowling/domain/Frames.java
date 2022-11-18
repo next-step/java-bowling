@@ -15,8 +15,7 @@ public class Frames {
 
     public static Frames init() {
 
-        final List<Frame> frames = new ArrayList<>(List.of(NormalFrame.ready()));
-        return new Frames(frames);
+        return new Frames(new ArrayList<>(List.of(NormalFrame.ready())));
     }
 
     public void addFrame() {
