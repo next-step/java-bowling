@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface Frame {
 
-    int getFrameNumber();
-
     boolean isLastFrame();
 
     boolean canBowl();

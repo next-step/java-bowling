@@ -50,12 +50,6 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public int getFrameNumber() {
-
-        return number;
-    }
-
-    @Override
     public boolean isLastFrame() {
 
         return true;
