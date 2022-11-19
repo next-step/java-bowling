@@ -1,11 +1,10 @@
 package bowling;
 
-import java.util.List;
-
 public interface Frame {
-    void bowl(Pin falledPins);
 
-    Frame nextFrame(Pin falledPins);
+    Frame bowl(Pin falledPins);
+
+    Frame nextFrame();
 
     boolean isFinalFrame();
 

@@ -11,20 +11,19 @@ public class Frames {
         this.frames = frames;
     }
 
-    public static Frames start(Pin falledPins) {
+    public static Frames start() {
         List<Frame> frames = new ArrayList<>();
-        NormalFrame firstFrame = new NormalFrame(1, falledPins);
+        Frame firstFrame = NormalFrame.first();
         frames.add(firstFrame);
         return new Frames(frames);
     }
 
     public void bowl(Pin falledPins) {
         Frame lastFrame = getLastFrame();
-        if (lastFrame.isFinished()) {
-            frames.add(lastFrame.nextFrame(falledPins));
-            return;
+        Frame frame = lastFrame.bowl(falledPins);
+        if (frame != lastFrame) {
+            frames.add(frame);
         }
-        lastFrame.bowl(falledPins);
     }
 
     public int currentFrameNumber() {
