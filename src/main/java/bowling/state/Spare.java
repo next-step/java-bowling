@@ -19,7 +19,7 @@ public class Spare extends Finished{
     }
 
     @Override
-    public Score calculatorAdditionalScore(Score beforeScore) {
+    public Score calculateAdditionalScore(Score beforeScore) {
         Score afterScore = beforeScore.addScore(firstPins.getFalledPins());
         if (afterScore.canCalculate()) {
             return afterScore;

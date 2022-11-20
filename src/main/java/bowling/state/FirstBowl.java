@@ -20,12 +20,15 @@ public class FirstBowl extends Running {
     }
 
     @Override
-    public Score calculatorAdditionalScore(Score beforeScore) {
+    public Score calculateAdditionalScore(Score beforeScore) {
         return beforeScore.addScore(firstPins.getFalledPins());
     }
 
     @Override
     public String getDesc() {
+        if (firstPins.getFalledPins() == 0) {
+            return "-";
+        }
         return String.valueOf(firstPins.getFalledPins());
     }
 }

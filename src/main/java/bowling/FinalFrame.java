@@ -6,6 +6,7 @@ import bowling.state.State;
 import bowling.state.Strike;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
 
@@ -78,8 +79,23 @@ public class FinalFrame implements Frame {
         Score score = states.get(0).score();
         for (int i = 1; i < states.size(); i++) {
             State state = states.get(i);
-            score = state.calculatorAdditionalScore(score);
+            score = state.calculateAdditionalScore(score);
         }
         return score;
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score beforeScore) {
+        Score score = beforeScore;
+        for (State state : states) {
+            score = state.calculateAdditionalScore(score);
+        }
+        return score;
+    }
+
+    @Override
+    public String getDesc() {
+        return states.stream().map(i -> i.getDesc())
+            .collect(Collectors.joining("|"));
     }
 }

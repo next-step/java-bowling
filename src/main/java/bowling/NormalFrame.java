@@ -10,6 +10,7 @@ public class NormalFrame implements Frame {
 
     private final int frameNumber;
     private State state;
+    private Frame next;
 
     private NormalFrame(int frameNumber, State state) {
         this.frameNumber = frameNumber;
@@ -28,9 +29,11 @@ public class NormalFrame implements Frame {
     @Override
     public Frame nextFrame() {
         if (frameNumber == MAX_NORMAL_FRAME_NUMBER) {
-            return FinalFrame.start();
+            next = FinalFrame.start();
+            return next;
         }
-        return new NormalFrame(frameNumber + 1, new Ready());
+        next = new NormalFrame(frameNumber + 1, new Ready());
+        return next;
     }
 
     @Override
@@ -49,6 +52,24 @@ public class NormalFrame implements Frame {
 
     @Override
     public Score getScores() {
-        return state.score();
+        Score score = state.score();
+        if (score.canCalculate()) {
+            return score;
+        }
+        return next.calculateAdditionalScore(score);
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score beforeScore) {
+        Score afterScore = state.calculateAdditionalScore(beforeScore);
+        if (afterScore.canCalculate() || next == null) {
+            return afterScore;
+        }
+        return next.calculateAdditionalScore(afterScore);
+    }
+
+    @Override
+    public String getDesc() {
+        return state.getDesc();
     }
 }

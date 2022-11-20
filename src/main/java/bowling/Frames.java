@@ -2,6 +2,7 @@ package bowling;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Frames {
 
@@ -40,8 +41,10 @@ public class Frames {
         return false;
     }
 
-    public List<Frame> getValues() {
-        return frames;
+    public List<String> getValues() {
+        return frames.stream()
+            .map(Frame::getDesc)
+            .collect(Collectors.toList());
     }
 
     public int size() {
@@ -50,5 +53,14 @@ public class Frames {
 
     private Frame getLastFrame() {
         return frames.get(frames.size() - 1);
+    }
+
+    public List<Integer> getScore() {
+        return frames.stream()
+            .filter(Frame::isFinished)
+            .map(Frame::getScores)
+            .filter(Score::canCalculate)
+            .map(Score::getScore)
+            .collect(Collectors.toList());
     }
 }

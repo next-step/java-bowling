@@ -10,5 +10,9 @@ public interface Frame {
 
     boolean isFinished();
 
-    public Score getScores();
+    Score getScores();
+
+    String getDesc();
+
+    Score calculateAdditionalScore(Score beforeScore);
 }

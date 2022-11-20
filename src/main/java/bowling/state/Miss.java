@@ -19,7 +19,7 @@ public class Miss extends Finished {
     }
 
     @Override
-    public Score calculatorAdditionalScore(Score beforeScore) {
+    public Score calculateAdditionalScore(Score beforeScore) {
         Score afterScore = beforeScore.addScore(firstPins.getFalledPins());
         if (afterScore.canCalculate()) {
             return afterScore;
@@ -29,6 +29,16 @@ public class Miss extends Finished {
 
     @Override
     public String getDesc() {
-        return firstPins.getFalledPins() + "|" + secondPins.getFalledPins();
+        String first = String.valueOf(firstPins.getFalledPins());
+        String second = String.valueOf(secondPins.getFalledPins());
+        if (first.equals("0")) {
+            first = "-";
+        }
+
+        if (second.equals("0")) {
+            second = "-";
+        }
+
+        return first + "|" + second;
     }
 }

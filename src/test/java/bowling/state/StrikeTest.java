@@ -19,7 +19,7 @@ class StrikeTest {
     void 이전_스페어와_점수합산() {
         Score beforeScore = Score.ofSpare();
         Strike strike = new Strike();
-        Score score = strike.calculatorAdditionalScore(beforeScore);
+        Score score = strike.calculateAdditionalScore(beforeScore);
         assertThat(score.getScore()).isEqualTo(20);
     }
 }

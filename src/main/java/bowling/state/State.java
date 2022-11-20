@@ -11,7 +11,7 @@ public interface State {
 
     Score score();
 
-    Score calculatorAdditionalScore(Score beforeScore);
+    Score calculateAdditionalScore(Score beforeScore);
 
     String getDesc();
 }

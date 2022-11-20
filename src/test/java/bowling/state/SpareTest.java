@@ -20,7 +20,7 @@ class SpareTest {
     void 이전_스트라이크와_점수합산() {
         Score beforeScore = Score.ofStrike();
         Spare spare = new Spare(Pin.from(9), Pin.from(1));
-        Score score = spare.calculatorAdditionalScore(beforeScore);
+        Score score = spare.calculateAdditionalScore(beforeScore);
         assertThat(score.getScore()).isEqualTo(20);
     }
 }

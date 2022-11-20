@@ -11,7 +11,7 @@ public class Strike extends Finished {
     }
 
     @Override
-    public Score calculatorAdditionalScore(Score beforeScore) {
+    public Score calculateAdditionalScore(Score beforeScore) {
         return beforeScore.addScore(Pin.MAX_PINS);
     }
 

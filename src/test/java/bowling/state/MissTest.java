@@ -19,7 +19,7 @@ class MissTest {
     void 이전_스트라이크와_점수합산() {
         Score beforeScore = Score.ofStrike();
         Miss miss = new Miss(Pin.from(1), Pin.from(2));
-        Score score = miss.calculatorAdditionalScore(beforeScore);
+        Score score = miss.calculateAdditionalScore(beforeScore);
         assertThat(score.getScore()).isEqualTo(13);
     }
 }

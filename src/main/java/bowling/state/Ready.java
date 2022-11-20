@@ -14,7 +14,7 @@ public class Ready extends Running {
     }
 
     @Override
-    public Score calculatorAdditionalScore(Score beforeScore) {
+    public Score calculateAdditionalScore(Score beforeScore) {
         return beforeScore;
     }
 
