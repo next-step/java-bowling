@@ -5,7 +5,7 @@ import bowling.domain.Name;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-//@Disabled("로컬 확인용")
+@Disabled("로컬 확인용")
 class OutputViewTest {
 
     @Test
@@ -13,106 +13,37 @@ class OutputViewTest {
         Frames frames = Frames.init();
         OutputView outputView = OutputView.init();
         //1
-        frames.bowling(5);
-        outputView.print(Name.of("abc"), frames);
-        frames.bowling(5);
-        outputView.print(Name.of("abc"), frames);
+        bowlingAndPrint(frames, outputView, 5);
+        bowlingAndPrint(frames, outputView, 5);
         //2
-        frames.bowling(2);
-        outputView.print(Name.of("abc"), frames);
-        frames.bowling(3);
-        outputView.print(Name.of("abc"), frames);
+        bowlingAndPrint(frames, outputView, 2);
+        bowlingAndPrint(frames, outputView, 3);
         //3
-        frames.bowling(5);
-        outputView.print(Name.of("abc"), frames);
-        frames.bowling(5);
-        outputView.print(Name.of("abc"), frames);
+        bowlingAndPrint(frames, outputView, 5);
+        bowlingAndPrint(frames, outputView, 5);
         //4
-        frames.bowling(10);
-        outputView.print(Name.of("abc"), frames);
+        bowlingAndPrint(frames, outputView, 10);
         //5
-        frames.bowling(5);
-        outputView.print(Name.of("abc"), frames);
-        frames.bowling(3);
-        outputView.print(Name.of("abc"), frames);
+        bowlingAndPrint(frames, outputView, 5);
+        bowlingAndPrint(frames, outputView, 3);
         //6
-        frames.bowling(0);
-        outputView.print(Name.of("abc"), frames);
-        frames.bowling(10);
-        outputView.print(Name.of("abc"), frames);
+        bowlingAndPrint(frames, outputView, 0);
+        bowlingAndPrint(frames, outputView, 10);
         //7
-        frames.bowling(0);
-        outputView.print(Name.of("abc"), frames);
-        frames.bowling(10);
-        outputView.print(Name.of("abc"), frames);
+        bowlingAndPrint(frames, outputView, 0);
+        bowlingAndPrint(frames, outputView, 10);
         //8
-        frames.bowling(10);
-        outputView.print(Name.of("abc"), frames);
+        bowlingAndPrint(frames, outputView, 10);
         //9
-        frames.bowling(10);
-        outputView.print(Name.of("abc"), frames);
+        bowlingAndPrint(frames, outputView, 10);
         //10
-        frames.bowling(5);
-        outputView.print(Name.of("abc"), frames);
-        frames.bowling(5);
-        outputView.print(Name.of("abc"), frames);
-        frames.bowling(10);
-        outputView.print(Name.of("abc"), frames);
+        bowlingAndPrint(frames, outputView, 5);
+        bowlingAndPrint(frames, outputView, 5);
+        bowlingAndPrint(frames, outputView, 10);
     }
 
-    @Disabled
-    @Test
-    void 생성2() {
-        Frames frames = Frames.init();
-        OutputView outputView = OutputView.init();
-
-        frames.bowling(10);
-        frames.bowling(10);
-        frames.bowling(10);
-        frames.bowling(10);
-        frames.bowling(10);
-        frames.bowling(10);
-        frames.bowling(10);
-        frames.bowling(10);
-        frames.bowling(10);
-        //10
-        frames.bowling(10);
-        frames.bowling(10);
-        frames.bowling(10);
-
-        outputView.print(Name.of("abc"), frames);
-    }
-
-    @Disabled
-    @Test
-    void 생성3() {
-        Frames frames = Frames.init();
-        OutputView outputView = OutputView.init();
-        frames.bowling(10);
-//        outputView.print(Name.of("abc"), frames);
-        frames.bowling(10);
-//        outputView.print(Name.of("abc"), frames);
-        frames.bowling(10);
-        outputView.print(Name.of("abc"), frames);
-        frames.bowling(10);
-        outputView.print(Name.of("abc"), frames);
-        frames.bowling(10);
-        outputView.print(Name.of("abc"), frames);
-        frames.bowling(10);
-        outputView.print(Name.of("abc"), frames);
-        frames.bowling(10);
-        outputView.print(Name.of("abc"), frames);
-        frames.bowling(10);
-        outputView.print(Name.of("abc"), frames);
-        frames.bowling(10);
-        outputView.print(Name.of("abc"), frames);
-        //10
-        frames.bowling(10);
-        outputView.print(Name.of("abc"), frames);
-        frames.bowling(10);
-        outputView.print(Name.of("abc"), frames);
-        frames.bowling(10);
-
+    private void bowlingAndPrint(Frames frames, OutputView outputView, int count) {
+        frames.bowling(count);
         outputView.print(Name.of("abc"), frames);
     }
 }
