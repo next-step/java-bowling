@@ -1,13 +1,13 @@
 package bowling.domain;
 
 import java.util.*;
+import java.util.concurrent.RecursiveTask;
 
 public class Frame implements Iterable<RollingResult> {
 
     private final List<RollingResult> values = new ArrayList<>();
     private final FrameStrategy strategy;
     private Frame before;
-    private Frame after;
     private Score score;
 
     public Frame(FrameStrategy strategy, Frame before) {
@@ -20,13 +20,11 @@ public class Frame implements Iterable<RollingResult> {
     }
 
     public Frame createNext() {
-        this.after = new Frame(new NormalStrategy(), this);
-        return this.after;
+        return new Frame(new NormalStrategy(), this);
     }
 
     public Frame createFinal() {
-        this.after = new Frame(new FinalStrategy(), this);
-        return this.after;
+        return new Frame(new FinalStrategy(), this);
     }
 
     public void bowling(int pinCount) {
