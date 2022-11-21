@@ -63,7 +63,7 @@ public class OutputView {
         }
 
         Frame frame = frames.get(index);
-        if (frame.getRound() == 0) {
+        if (frame.size() == 0) {
             return EMPTY_MARK;
         }
 

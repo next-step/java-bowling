@@ -18,7 +18,7 @@ public enum Result {
     }
 
     public static Result from(Frame frame, PinCount pinCount) {
-        int round = frame.getRound();
+        int round = frame.size();
 
         if (round == FIRST_ROUND || round == FINAL_ROUND) {
             return Result.of(pinCount);

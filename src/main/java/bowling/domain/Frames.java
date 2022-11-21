@@ -16,11 +16,15 @@ public class Frames {
     public static Frames init() {
         List<Frame> values = new ArrayList<>();
 
+        Frame frame = Frame.createFirst();
+        values.add(frame);
+
         for (int i = 0; i < 9; i++) {
-            values.add(Frame.createNormal());
+            frame = frame.createNext();
+            values.add(frame);
         }
 
-        values.add(Frame.createFinal());
+        values.add(frame.createFinal());
         return new Frames(values);
     }
 

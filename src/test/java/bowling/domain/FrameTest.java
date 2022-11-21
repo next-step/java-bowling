@@ -9,7 +9,7 @@ class FrameTest {
 
     @Test
     void 일반프레임_종료판단_2회투구() {
-        Frame frame = Frame.createNormal();
+        Frame frame = Frame.createFirst();
 
         frame.bowling(5);
         assertThat(frame.isEnd()).isFalse();
@@ -20,14 +20,17 @@ class FrameTest {
 
     @Test
     void 일반프레임_종료판단_스트라이크() {
-        Frame frame = Frame.createNormal();
+        Frame frame = Frame.createFirst();
         frame.bowling(10);
         assertThat(frame.isEnd()).isTrue();
     }
 
     @Test
     void 마지막프레임_종료판단_3회투구() {
-        Frame frame = Frame.createFinal();
+        Frame first = Frame.createFirst();
+        first.bowling(10);
+
+        Frame frame = first.createFinal();
         frame.bowling(10);
         frame.bowling(10);
         frame.bowling(10);
@@ -36,7 +39,10 @@ class FrameTest {
 
     @Test
     void 프레임종료_예외() {
-        Frame frame = Frame.createFinal();
+        Frame first = Frame.createFirst();
+        first.bowling(10);
+
+        Frame frame = first.createFinal();
         frame.bowling(10);
         frame.bowling(10);
         frame.bowling(10);
@@ -46,7 +52,7 @@ class FrameTest {
 
     @Test
     void 프레임종료_예외2() {
-        Frame frame = Frame.createNormal();
+        Frame frame = Frame.createFirst();
         frame.bowling(5);
         frame.bowling(5);
         assertThat(frame.isEnd()).isTrue();
@@ -56,7 +62,7 @@ class FrameTest {
 
     @Test
     void 다음프레임생성() {
-        Frame first = Frame.createNormal();
+        Frame first = Frame.createFirst();
         first.bowling(2);
         first.bowling(2);
         Frame next = first.createNext();
@@ -68,7 +74,7 @@ class FrameTest {
 
     @Test
     void 노말점수_계산_미스() {
-        Frame frame = Frame.createNormal();
+        Frame frame = Frame.createFirst();
         frame.bowling(2);
         frame.bowling(2);
 
@@ -77,7 +83,7 @@ class FrameTest {
 
     @Test
     void 노말점수_계산_스트라이크() {
-        Frame first = Frame.createNormal();
+        Frame first = Frame.createFirst();
         first.bowling(2);
         first.bowling(2);
 
@@ -95,7 +101,7 @@ class FrameTest {
 
     @Test
     void 노말점수_계산_스페어() {
-        Frame first = Frame.createNormal();
+        Frame first = Frame.createFirst();
         first.bowling(2);
         first.bowling(2);
 
@@ -112,11 +118,11 @@ class FrameTest {
 
     @Test
     void 마지막점수_계산_미스() {
-        Frame first = Frame.createNormal();
+        Frame first = Frame.createFirst();
         first.bowling(2);
         first.bowling(2);
 
-        Frame finalFrame = first.createFinal2();
+        Frame finalFrame = first.createFinal();
         finalFrame.bowling(2);
         finalFrame.bowling(2);
         
@@ -125,11 +131,11 @@ class FrameTest {
 
     @Test
     void 마지막점수_계산_3스트라이크() {
-        Frame first = Frame.createNormal();
+        Frame first = Frame.createFirst();
         first.bowling(2);
         first.bowling(2);
 
-        Frame finalFrame = first.createFinal2();
+        Frame finalFrame = first.createFinal();
         finalFrame.bowling(10); // 4 + 10 + 10 + 10 = 34
         finalFrame.bowling(10); // 34 + 10 + 10 = 54
         finalFrame.bowling(10); // 54 + 10 = 64
@@ -139,11 +145,11 @@ class FrameTest {
 
     @Test
     void 마지막점수_계산_스페어() {
-        Frame first = Frame.createNormal();
+        Frame first = Frame.createFirst();
         first.bowling(2);
         first.bowling(2);
 
-        Frame finalFrame = first.createFinal2();
+        Frame finalFrame = first.createFinal();
         finalFrame.bowling(5); // 5
         finalFrame.bowling(5); // 15
         finalFrame.bowling(10); // 10
