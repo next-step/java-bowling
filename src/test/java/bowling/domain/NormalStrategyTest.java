@@ -22,7 +22,7 @@ class NormalStrategyTest {
         NormalStrategy strategy = new NormalStrategy();
         Frame frame = Frame.createFirst();
         RollingResult current = RollingResult.createFirst(frame, PinCount.of(5));
-        assertThat(strategy.getScore(current)).isEqualTo(Score.of(5));
+        assertThat(strategy.getScore(current).get()).isEqualTo(Score.of(5));
     }
 
     @Test
@@ -33,7 +33,7 @@ class NormalStrategyTest {
         RollingResult next2 = next1.createNext(frame, 5);
         next2.createNext(frame, 5);
 
-        assertThat(strategy.getScore(next1)).isEqualTo(Score.of(20));
+        assertThat(strategy.getScore(next1).get()).isEqualTo(Score.of(20));
     }
 
     @Test
@@ -44,7 +44,7 @@ class NormalStrategyTest {
         RollingResult next1 = RollingResult.createFirst(frame, 9);
         next1.createNext(frame, 5);
 
-        assertThat(strategy.getScore(next1)).isEqualTo(Score.of(14));
+        assertThat(strategy.getScore(next1).get()).isEqualTo(Score.of(14));
     }
 }
 

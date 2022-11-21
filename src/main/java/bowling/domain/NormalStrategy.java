@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Optional;
+
 public class NormalStrategy implements FrameStrategy {
 
     private static final int END_ROUND = 2;
@@ -19,20 +21,45 @@ public class NormalStrategy implements FrameStrategy {
     }
 
     @Override
-    public Score getScore(RollingResult rollingResult) {
+    public Optional<Score> getScore(RollingResult rollingResult) {
         Result result = rollingResult.getResult();
         Score current = Score.of(rollingResult.getPinCount());
 
         if (result.isStrike()) {
-            return current
-                    .add(rollingResult.getAfterPinCount())
-                    .add(rollingResult.getAfterAfterPinCount());
+            return getStrikeScore(rollingResult, current);
         }
 
         if (result.isSpare()) {
-            return current.add(rollingResult.getAfterPinCount());
+            return getSpareScore(rollingResult, current);
         }
 
-        return current;
+        return Optional.of(current);
+    }
+
+    private static Optional<Score> getSpareScore(RollingResult rollingResult, Score current) {
+        Optional<PinCount> afterPinCount = rollingResult.getAfterPinCount();
+
+        if (afterPinCount.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(current.add(afterPinCount.get()));
+    }
+
+    private Optional<Score> getStrikeScore(RollingResult rollingResult, Score current) {
+        Optional<PinCount> afterPinCount = rollingResult.getAfterPinCount();
+        Optional<PinCount> afterAfterPinCount = rollingResult.getAfterAfterPinCount();
+
+        if (afterPinCount.isEmpty()) {
+            return Optional.empty();
+        }
+
+        if (afterAfterPinCount.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(current
+                .add(afterPinCount.get())
+                .add(afterAfterPinCount.get()));
     }
 }

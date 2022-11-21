@@ -7,7 +7,7 @@ public class Frame implements Iterable<RollingResult> {
     private final List<RollingResult> values = new ArrayList<>();
     private final FrameStrategy strategy;
     private Frame before;
-    private Score score;
+    private Optional<Score> score = Optional.empty();
 
     public Frame(FrameStrategy strategy, Frame before) {
         this.strategy = strategy;
@@ -106,24 +106,40 @@ public class Frame implements Iterable<RollingResult> {
         return values.get(round);
     }
 
-    public Score getScore() {
-        if (score != null) {
+    public Optional<Score> getScore() {
+        if (score.isPresent()) {
             return score;
         }
 
-        score = getBeforeScore().add(getCurrentScore());
+        getCurrentScore()
+                .ifPresent(current -> this.score = Optional.of(getBeforeScore().add(current)));
+
         return score;
     }
 
-    private Score getCurrentScore() {
-        return values.stream()
-                .map(v -> strategy.getScore(v))
+    private Optional<Score> getCurrentScore() {
+        if (canNotCalculateScore()) {
+            return Optional.empty();
+        };
+
+        Score sum = values.stream()
+                .map(r -> strategy.getScore(r).orElseThrow(() -> new IllegalArgumentException("점수를 조회할 수 없습니다")))
                 .reduce(Score.of(0), Score::add);
+
+        return Optional.of(sum);
+    }
+
+    private boolean canNotCalculateScore() {
+        return values.stream()
+                .anyMatch(r -> strategy.getScore(r).isEmpty());
     }
 
     public Score getBeforeScore() {
-        return Optional.ofNullable(before)
-                .map(Frame::getScore)
+        if (before == null) {
+            return Score.of(0);
+        }
+
+        return before.getScore()
                 .orElseGet(() -> Score.of(0));
     }
 

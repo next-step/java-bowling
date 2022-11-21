@@ -51,4 +51,8 @@ public class Score {
     public String toString() {
         return value + "";
     }
+
+    public Score add(Optional<Score> score) {
+        return add(score.orElseThrow(() -> new IllegalArgumentException("값이 없습니다")));
+    }
 }

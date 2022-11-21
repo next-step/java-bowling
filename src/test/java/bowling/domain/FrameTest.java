@@ -67,7 +67,7 @@ class FrameTest {
         first.bowling(2);
         Frame next = first.createNext();
 
-        assertThat(first.getScore()).isEqualTo(next.getBeforeScore());
+        assertThat(first.getScore().get()).isEqualTo(next.getBeforeScore());
     }
     
     // ==============================================================================
@@ -78,7 +78,7 @@ class FrameTest {
         frame.bowling(2);
         frame.bowling(2);
 
-        assertThat(frame.getScore()).isEqualTo(Score.of(4));
+        assertThat(frame.getScore().get()).isEqualTo(Score.of(4));
     }
 
     @Test
@@ -96,7 +96,7 @@ class FrameTest {
         Frame next2 = next1.createNext();
         next2.bowling(2);
 
-        assertThat(next.getScore()).isEqualTo(Score.of(26));
+        assertThat(next.getScore().get()).isEqualTo(Score.of(26));
     }
 
     @Test
@@ -113,7 +113,7 @@ class FrameTest {
         nextNext.bowling(2);
         nextNext.bowling(2);
 
-        assertThat(next.getScore()).isEqualTo(Score.of(16));
+        assertThat(next.getScore().get()).isEqualTo(Score.of(16));
     }
 
     @Test
@@ -126,7 +126,7 @@ class FrameTest {
         finalFrame.bowling(2);
         finalFrame.bowling(2);
         
-        assertThat(finalFrame.getScore()).isEqualTo(Score.of(8));
+        assertThat(finalFrame.getScore().get()).isEqualTo(Score.of(8));
     }
 
     @Test
@@ -140,7 +140,7 @@ class FrameTest {
         finalFrame.bowling(10);
         finalFrame.bowling(10);
 
-        assertThat(finalFrame.getScore()).isEqualTo(Score.of(34));
+        assertThat(finalFrame.getScore().get()).isEqualTo(Score.of(34));
     }
 
     @Test
@@ -154,6 +154,6 @@ class FrameTest {
         finalFrame.bowling(5); // 5
         finalFrame.bowling(10); // 10
 
-        assertThat(finalFrame.getScore()).isEqualTo(Score.of(24));
+        assertThat(finalFrame.getScore().get()).isEqualTo(Score.of(24));
     }
 }

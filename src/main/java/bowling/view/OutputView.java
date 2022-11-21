@@ -47,11 +47,13 @@ public class OutputView {
     }
 
     private String getFrameScore(Frames frames, Integer index) {
-        if (isMaxOver(frames, index) || frames.isEmpty(index)) {
+        if (isMaxOver(frames, index) || frames.isEmpty(index) || frames.getScore(index).isEmpty()) {
             return EMPTY_MARK;
         }
 
-        return frames.getScore(index).toString();
+        return frames.getScore(index)
+                .orElseThrow(() -> new IllegalArgumentException("점수를 조회할 수 없습니다"))
+                .toString();
     }
 
     private String getMarkdedString(String name, Function<Integer, String> function) {

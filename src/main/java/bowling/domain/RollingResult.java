@@ -49,16 +49,15 @@ public class RollingResult {
         return after;
     }
 
-    public PinCount getAfterPinCount() {
+    public Optional<PinCount> getAfterPinCount() {
         return Optional.ofNullable(after)
-                .map(RollingResult::getPinCount)
-                .orElseGet(() -> PinCount.of(0));
+                .map(RollingResult::getPinCount);
     }
 
-    public PinCount getAfterAfterPinCount() {
+    public Optional<PinCount> getAfterAfterPinCount() {
         return Optional.ofNullable(after)
                 .map(RollingResult::getAfterPinCount)
-                .orElseGet(() -> PinCount.of(0));
+                .orElseGet(() -> Optional.empty());
     }
 
     //==============================================================================

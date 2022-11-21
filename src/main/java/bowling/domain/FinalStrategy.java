@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Optional;
+
 public class FinalStrategy implements FrameStrategy {
 
     private static final int END_ROUND = 3;
@@ -21,7 +23,7 @@ public class FinalStrategy implements FrameStrategy {
     }
 
     @Override
-    public Score getScore(RollingResult rollingResult) {
-        return Score.of(rollingResult.getPinCount());
+    public Optional<Score> getScore(RollingResult rollingResult) {
+        return Optional.of(Score.of(rollingResult.getPinCount()));
     }
 }

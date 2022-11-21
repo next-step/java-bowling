@@ -64,9 +64,10 @@ public class Frames {
                 .orElse(true);
     }
 
-    public Score getScore(Integer index) {
+    public Optional<Score> getScore(Integer index) {
         return Optional.ofNullable(values.get(index))
+                .filter(Frame::isEnd)
                 .map(Frame::getScore)
-                .orElse(Score.of(0));
+                .orElseGet(() -> Optional.empty());
     }
 }
