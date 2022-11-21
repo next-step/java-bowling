@@ -5,37 +5,38 @@ import bowling.domain.Score;
 
 import java.util.List;
 
-public class Strike extends State {
+public class Strike extends Finished {
 
-    private static final int MAX_COUNT = 10;
+    private static final int MAX_SCORE = 10;
+    private static final int LEFT_CHANCE = 2;
 
     @Override
-    public State bowl(Pin pin) {
+    public State bowl(final Pin pin) {
 
         throw new IllegalArgumentException("더 이상 공을 던질 수 없습니다.");
     }
 
     @Override
-    public boolean isFinished() {
-
-        return true;
-    }
-
-    @Override
     public Score getScore() {
 
-        return new Score(MAX_COUNT, 2);
+        return new Score(MAX_SCORE, LEFT_CHANCE);
     }
 
     @Override
-    public Score calculateAdditionalScore(Score score) {
+    public Score calculateAdditionalScore(final Score score) {
 
-        return score.add(MAX_COUNT);
+        return score.add(MAX_SCORE);
     }
 
     @Override
     public List<Pin> pins() {
 
-        return List.of(new Pin(MAX_COUNT));
+        return List.of(new Pin(MAX_SCORE));
+    }
+
+    @Override
+    public boolean hasPins(final int size) {
+
+        return pins().size() == size;
     }
 }

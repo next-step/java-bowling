@@ -8,10 +8,24 @@ public class InputView {
 
     private InputView() {}
 
-    public static String inputParticipationName() {
+    public static int inputPlayers() {
 
-        System.out.println("플레이어 이름은(3 english letters)?:");
-        final String name = SCANNER.next();
+        try {
+            return Integer.parseInt(inputWith("How many people? "));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("숫자를 입력해주세요.");
+        }
+    }
+
+    private static String inputWith(final String text) {
+
+        System.out.print(text);
+        return SCANNER.next();
+    }
+
+    public static String inputPlayerName(final int index) {
+
+        final String name = inputWith("플레이어 " + index + "의 이름은?(3 english letters): ");
         validate(name);
         return name;
     }
@@ -26,14 +40,12 @@ public class InputView {
         }
     }
 
-    public static int inputScore(final int frame) {
+    public static int inputBowlNumber(final String playerName) {
 
-        System.out.printf("%d프레임 투구 :", frame);
         try {
-            final String score = SCANNER.next();
-            return Integer.parseInt(score);
-        } catch (NumberFormatException nfe) {
-            throw new IllegalArgumentException("숫자만 입력해야 합니다.");
+            return Integer.parseInt(inputWith(playerName + "'s turn : "));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("숫자를 입력해주세요.");
         }
     }
 }

@@ -11,7 +11,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("일반 프레임 테스트")
 class NormalFrameTest {
@@ -137,8 +136,8 @@ class NormalFrameTest {
         nextFrame.bowl(second);
 
         assertAll(
-                () -> assertEquals(firstExpected, frame.getIntScore()),
-                () -> assertEquals(secondExpected, nextFrame.getIntScore())
+                () -> assertThat(frame.getIntScore()).isEqualTo(firstExpected),
+                () -> assertThat(nextFrame.getIntScore()).isEqualTo(secondExpected)
         );
     }
 }

@@ -47,12 +47,6 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public int getFrameNumber() {
-
-        return number;
-    }
-
-    @Override
     public boolean isLastFrame() {
 
         return false;

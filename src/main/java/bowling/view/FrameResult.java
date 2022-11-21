@@ -12,19 +12,18 @@ public class FrameResult {
     private static final int NO_SCORE = -1;
     private static final String STRIKE = "X";
     private static final String GUTTER = "-";
+    private static final String EMPTY = "";
+    private static final int MAX_COUNT = 10;
 
     public String frameSign(final Frame frame) {
 
         if (frame.isLastFrame()) {
-            final String states = String.format(frame.getStates()
+            return String.format(frame.getStates()
                     .stream()
                     .map(this::sign)
-                    .collect(Collectors.joining("|")), "%5s");
-            return String.format("%5s ", states);
+                    .collect(Collectors.joining("|")));
         }
-
-        final State state = frame.getState();
-        return String.format(" %3s  ", sign(state));
+        return sign(frame.getState());
     }
 
     private String sign(final State state) {
@@ -37,19 +36,21 @@ public class FrameResult {
     private static String createSign(final State state) {
 
         final List<Pin> pins = state.pins();
-        if (pins.size() == 0) {
-            return "";
+        if (state.hasPins(0)) {
+            return EMPTY;
         }
 
-        if (pins.size() == 1) {
-            return String.valueOf(pins.get(0).count());
+        final Pin firstPin = pins.get(0);
+        if (state.hasPins(1)) {
+            return String.valueOf(firstPin.count());
         }
 
-        if (pins.get(0).count() + pins.get(1).count() == 10) {
-            return String.format("%d|/", pins.get(0).count());
+        final Pin secondPin = pins.get(1);
+        if (firstPin.count() + secondPin.count() == MAX_COUNT) {
+            return String.format("%d|/", firstPin.count());
         }
 
-        return String.format("%d|%d", pins.get(0).count(), pins.get(1).count());
+        return String.format("%d|%d", firstPin.count(), secondPin.count());
     }
 
     public int frameScore(final Frame frame) {

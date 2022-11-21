@@ -5,10 +5,13 @@ import bowling.domain.Score;
 
 import java.util.List;
 
-public class Ready extends State {
+public class Ready extends Running {
+
+    private static final int NO_SCORE = 0;
+    private static final int DEFAULT = 2;
 
     @Override
-    public State bowl(Pin pin) {
+    public State bowl(final Pin pin) {
 
         if (pin.isKnockDown()) {
             return new Strike();
@@ -18,15 +21,9 @@ public class Ready extends State {
     }
 
     @Override
-    public boolean isFinished() {
-
-        return false;
-    }
-
-    @Override
     public Score getScore() {
 
-        return new Score(0, 2);
+        return new Score(NO_SCORE, DEFAULT);
     }
 
     @Override
@@ -39,5 +36,11 @@ public class Ready extends State {
     public List<Pin> pins() {
 
         return List.of();
+    }
+
+    @Override
+    public boolean hasPins(final int size) {
+
+        return pins().size() == size;
     }
 }
