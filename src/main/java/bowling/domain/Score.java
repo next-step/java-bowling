@@ -24,23 +24,6 @@ public class Score {
         return Score.of(pinCount.getValue());
     }
 
-    public static Score of(RollingResult rollingResult) {
-        Result result = rollingResult.getResult();
-        Score current = Score.of(rollingResult.getPinCount());
-
-        if (result.isStrike()) {
-            return current
-                    .add(rollingResult.getAfterPinCount())
-                    .add(rollingResult.getAfterAfterPinCount());
-        }
-
-        if (result.isSpare()) {
-            return current.add(rollingResult.getAfterPinCount());
-        }
-
-        return current;
-    }
-
     public Score add(Score score) {
         return Score.of(value + score.value);
     }

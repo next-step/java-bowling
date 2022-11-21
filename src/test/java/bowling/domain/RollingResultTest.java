@@ -21,32 +21,5 @@ class RollingResultTest {
 
         assertThat(before.getAfter()).isEqualTo(after);
     }
-
-    @Test
-    void 점수_미스() {
-        Frame frame = Frame.createFirst();
-        RollingResult current = RollingResult.createFirst(frame, PinCount.of(5));
-        assertThat(current.getScore()).isEqualTo(Score.of(5));
-    }
-
-    @Test
-    void 점수_스트라이크() {
-        Frame frame = Frame.createFirst();
-        RollingResult next1 = RollingResult.createFirst(frame, 10);
-        RollingResult next2 = next1.createNext(frame, 5);
-        next2.createNext(frame, 5);
-
-        assertThat(next1.getScore()).isEqualTo(Score.of(20));
-    }
-
-    @Test
-    void 점수_스페어() {
-        Frame frame = Frame.createFirst();
-        frame.bowling(1);
-        RollingResult next1 = RollingResult.createFirst(frame, 9);
-        next1.createNext(frame, 5);
-
-        assertThat(next1.getScore()).isEqualTo(Score.of(14));
-    }
 }
 

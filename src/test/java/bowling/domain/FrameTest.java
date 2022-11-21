@@ -136,11 +136,11 @@ class FrameTest {
         first.bowling(2);
 
         Frame finalFrame = first.createFinal();
-        finalFrame.bowling(10); // 4 + 10 + 10 + 10 = 34
-        finalFrame.bowling(10); // 34 + 10 + 10 = 54
-        finalFrame.bowling(10); // 54 + 10 = 64
+        finalFrame.bowling(10);
+        finalFrame.bowling(10);
+        finalFrame.bowling(10);
 
-        assertThat(finalFrame.getScore()).isEqualTo(Score.of(64));
+        assertThat(finalFrame.getScore()).isEqualTo(Score.of(34));
     }
 
     @Test
@@ -151,9 +151,9 @@ class FrameTest {
 
         Frame finalFrame = first.createFinal();
         finalFrame.bowling(5); // 5
-        finalFrame.bowling(5); // 15
+        finalFrame.bowling(5); // 5
         finalFrame.bowling(10); // 10
 
-        assertThat(finalFrame.getScore()).isEqualTo(Score.of(34));
+        assertThat(finalFrame.getScore()).isEqualTo(Score.of(24));
     }
 }

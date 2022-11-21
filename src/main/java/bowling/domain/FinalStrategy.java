@@ -19,4 +19,9 @@ public class FinalStrategy implements FrameStrategy {
         return round == END_ROUND
                 || round == END_BEFORE_ROUND && (beforeResult.isMiss() || beforeResult.isGutter());
     }
+
+    @Override
+    public Score getScore(RollingResult rollingResult) {
+        return Score.of(rollingResult.getPinCount());
+    }
 }

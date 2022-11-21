@@ -49,10 +49,6 @@ public class RollingResult {
         return after;
     }
 
-    public Score getScore() {
-        return Score.of(this);
-    }
-
     public PinCount getAfterPinCount() {
         return Optional.ofNullable(after)
                 .map(RollingResult::getPinCount)

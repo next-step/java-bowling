@@ -2,6 +2,7 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Frames {
 
@@ -19,7 +20,7 @@ public class Frames {
         Frame frame = Frame.createFirst();
         values.add(frame);
 
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 8; i++) {
             frame = frame.createNext();
             values.add(frame);
         }
@@ -55,5 +56,17 @@ public class Frames {
 
     public int size() {
         return values.size();
+    }
+
+    public boolean isEmpty(int index) {
+        return Optional.ofNullable(values.get(index))
+                .map(Frame::isEmpty)
+                .orElse(true);
+    }
+
+    public Score getScore(Integer index) {
+        return Optional.ofNullable(values.get(index))
+                .map(Frame::getScore)
+                .orElse(Score.of(0));
     }
 }

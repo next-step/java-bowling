@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import java.util.*;
-import java.util.concurrent.RecursiveTask;
 
 public class Frame implements Iterable<RollingResult> {
 
@@ -118,7 +117,7 @@ public class Frame implements Iterable<RollingResult> {
 
     private Score getCurrentScore() {
         return values.stream()
-                .map(v -> v.getScore())
+                .map(v -> strategy.getScore(v))
                 .reduce(Score.of(0), Score::add);
     }
 
@@ -126,6 +125,10 @@ public class Frame implements Iterable<RollingResult> {
         return Optional.ofNullable(before)
                 .map(Frame::getScore)
                 .orElseGet(() -> Score.of(0));
+    }
+
+    public boolean isEmpty() {
+        return values.size() == 0;
     }
 
     //=============================================================
@@ -142,5 +145,4 @@ public class Frame implements Iterable<RollingResult> {
     public Iterator<RollingResult> iterator() {
         return values.iterator();
     }
-
 }
