@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.view.OutputView;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -46,7 +44,7 @@ class FramesTest {
         init.print(Name.of("abc"), frames);*/
 
         assertThat(frames.getCurrentFrameIndex()).isEqualTo(END_FRAME_INDEX);
-        assertThat(frames.canBowling()).isFalse();
+        assertThat(frames.isNotEnd()).isFalse();
     }
 
     @Test
@@ -66,7 +64,7 @@ class FramesTest {
         //init.print(Name.of("abc"), frames);
 
         assertThat(frames.getCurrentFrameIndex()).isEqualTo(END_FRAME_INDEX);
-        assertThat(frames.canBowling()).isFalse();
+        assertThat(frames.isNotEnd()).isFalse();
     }
 
     @Test
@@ -85,6 +83,6 @@ class FramesTest {
         init.print(Name.of("abc"), frames);*/
 
         assertThat(frames.getCurrentFrameIndex()).isEqualTo(END_FRAME_INDEX);
-        assertThat(frames.canBowling()).isFalse();
+        assertThat(frames.isNotEnd()).isFalse();
     }
 }

@@ -29,6 +29,14 @@ public class PinCount {
         return value == 0;
     }
 
+    public int sum(PinCount pinCount) {
+        return value + pinCount.getValue();
+    }
+
+    public boolean isTen() {
+        return value == 10;
+    }
+
     //===================================================================
 
 
@@ -50,13 +58,5 @@ public class PinCount {
     @Override
     public String toString() {
         return value + "";
-    }
-
-    public int sum(PinCount pinCount) {
-        return value + pinCount.getValue();
-    }
-
-    public boolean isTen() {
-        return value == 10;
     }
 }

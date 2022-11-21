@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import org.springframework.util.CollectionUtils;
-
 import java.util.*;
 
 public class Frame implements Iterable<RollingResult> {
@@ -40,19 +38,23 @@ public class Frame implements Iterable<RollingResult> {
             throw new IllegalStateException("프레임이 종료 되었습니다");
         }
 
-        values.add(getCurrentRollingResult(pinCount));
+        values.add(createRollingResult(pinCount));
     }
 
-    private RollingResult getCurrentRollingResult(PinCount pinCount) {
-        if (before == null) {
+    private RollingResult createRollingResult(PinCount pinCount) {
+        if (isFirstFrame()) {
             return RollingResult.createFirst(this, pinCount);
         }
 
-        if (values.isEmpty()) {
+        if (isFirstRolling()) {
             return before.getLastRollingResult().createNext(this, pinCount);
         }
 
         return getBeforeRollingResultInFrame().createNext(this, pinCount);
+    }
+
+    private boolean isFirstFrame() {
+        return before == null;
     }
 
     public boolean isEnd() {
@@ -64,7 +66,7 @@ public class Frame implements Iterable<RollingResult> {
     }
 
     public PinCount beforeCount() {
-        if (isFirstRound()) {
+        if (isFirstRolling()) {
             return PinCount.of(0);
         }
 
@@ -72,7 +74,7 @@ public class Frame implements Iterable<RollingResult> {
     }
 
     private Result beforeResult() {
-        if (isFirstRound()) {
+        if (isFirstRolling()) {
             return Result.NONE;
         }
 
@@ -87,28 +89,24 @@ public class Frame implements Iterable<RollingResult> {
         return values.get(values.size() - 1);
     }
 
-    private boolean isFirstRound() {
+    private boolean isFirstRolling() {
         return size() == Result.FIRST_ROUND;
     }
 
     public Result getResult(int round) {
-        return getBowling(round).getResult();
+        return getRollingResult(round).getResult();
     }
 
-    public boolean isFinal() {
-        return strategy.isFinal();
+    private RollingResult getLastRollingResult() {
+        return getRollingResult(values.size() - 1);
     }
 
-    public RollingResult getBowling(int round) {
+    public RollingResult getRollingResult(int round) {
         if (round < 0 || round > values.size() - 1) {
             throw new IllegalArgumentException("유효하지 않은 인덱스 입니다. " + round);
         }
 
         return values.get(round);
-    }
-
-    private RollingResult getLastRollingResult() {
-        return getBowling(values.size() - 1);
     }
 
     public Score getScore() {

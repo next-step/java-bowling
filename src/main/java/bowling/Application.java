@@ -14,7 +14,7 @@ public class Application {
         Frames frames = Frames.init();
         OutputView outputView = OutputView.init();
 
-        while (frames.canBowling()) {
+        while (frames.isNotEnd()) {
             PinCount pinCount = InputView.readPinCount(frames.getCurrentFrameIndex());
 
             frames.bowling(pinCount.getValue());

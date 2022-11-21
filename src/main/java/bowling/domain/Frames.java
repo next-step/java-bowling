@@ -37,12 +37,8 @@ public class Frames {
         }
     }
 
-    public boolean canBowling() {
-        return !endGame();
-    }
-
-    private boolean endGame() {
-        return currentFrameIndex == END_FRAME_INDEX;
+    public boolean isNotEnd() {
+        return currentFrameIndex != END_FRAME_INDEX;
     }
 
     private Frame getCurrentFrame() {

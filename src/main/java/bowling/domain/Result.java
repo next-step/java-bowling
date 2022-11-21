@@ -7,7 +7,6 @@ public enum Result {
     MISS,
     NONE;
 
-
     public static final int FIRST_ROUND = 0;
     private static final int SECOND_ROUND = 1;
     private static final int FINAL_ROUND = 2;
@@ -48,7 +47,6 @@ public enum Result {
         if (currentCount.isZero()) {
             return GUTTER;
         }
-
 
         return MISS;
     }
