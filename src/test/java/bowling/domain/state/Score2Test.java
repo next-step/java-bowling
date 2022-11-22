@@ -4,7 +4,8 @@ import bowling.domain.PinCount;
 import bowling.domain.Score2;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 class Score2Test {
 

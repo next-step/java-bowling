@@ -1,12 +1,10 @@
 package bowling.domain.state;
 
 import bowling.domain.PinCount;
-import bowling.domain.Score;
 import bowling.domain.Score2;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class StrikeTest {
 

@@ -3,7 +3,6 @@ package bowling.view;
 import bowling.domain.Name;
 import bowling.domain.PinCount;
 
-
 import java.util.Scanner;
 
 public class InputView {

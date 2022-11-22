@@ -69,7 +69,7 @@ class FrameTest {
 
         assertThat(first.getScore().get()).isEqualTo(next.getBeforeScore());
     }
-    
+
     // ==============================================================================
 
     @Test
@@ -125,7 +125,7 @@ class FrameTest {
         Frame finalFrame = first.createFinal();
         finalFrame.bowling(2);
         finalFrame.bowling(2);
-        
+
         assertThat(finalFrame.getScore().get()).isEqualTo(Score.of(8));
     }
 

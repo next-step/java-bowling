@@ -14,7 +14,7 @@ public class Score2 {
 
     public int getValue() {
         if (!canCalculate()) {
-            throw new IllegalStateException("계산할수 없는 상태입니다 left "+ left);
+            throw new IllegalStateException("계산할수 없는 상태입니다 left " + left);
         }
 
         return value;

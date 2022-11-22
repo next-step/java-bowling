@@ -1,6 +1,9 @@
 package bowling.domain;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 
 public class Frame implements Iterable<RollingResult> {
 
@@ -120,7 +123,8 @@ public class Frame implements Iterable<RollingResult> {
     private Optional<Score> getCurrentScore() {
         if (canNotCalculateScore()) {
             return Optional.empty();
-        };
+        }
+        ;
 
         Score sum = values.stream()
                 .map(r -> strategy.getScore(r).orElseThrow(() -> new IllegalArgumentException("점수를 조회할 수 없습니다")))
