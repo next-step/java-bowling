@@ -6,14 +6,15 @@ public class BowlingApplication {
 
         UserName userName = InputView.inputUserName();
         Frames frames = Frames.start();
-        ResultView.printResult(userName, frames);
 
         Bowling bowling = new Bowling(userName, frames);
+
+        ResultView.printResult(bowling);
 
         while (!bowling.isFinished()) {
             int score = InputView.inputUserScore(bowling.currentFrameNumber());
             bowling.bowl(Pin.from(score));
-            ResultView.printResult(userName, frames);
+            ResultView.printResult(bowling);
         }
     }
 }

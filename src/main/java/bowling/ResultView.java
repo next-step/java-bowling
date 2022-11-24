@@ -11,9 +11,12 @@ public class ResultView {
     private static final String SCORE_RESULT = "| %-5s";
     private static final String SCORE_EMPTY = "|      ";
 
-    public static void printResult(UserName name, Frames frames) {
+    public static void printResult(Bowling bowling) {
+        Frames frames = bowling.getFrames();
+        UserName userName = bowling.getUserName();
+
         printRoundTemplate();
-        printUserName(name);
+        printUserName(userName);
         printFrames(frames);
         printUserScore(frames);
     }

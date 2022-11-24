@@ -23,4 +23,12 @@ public class Bowling {
     public boolean isFinished() {
         return frames.isFinished();
     }
+
+    public Frames getFrames() {
+        return frames;
+    }
+
+    public UserName getUserName() {
+        return userName;
+    }
 }
