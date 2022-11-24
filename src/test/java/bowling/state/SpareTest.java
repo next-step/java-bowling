@@ -2,6 +2,7 @@ package bowling.state;
 
 import static org.assertj.core.api.Assertions.*;
 
+import bowling.CannotCalculateException;
 import bowling.Pin;
 import bowling.Score;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,7 @@ class SpareTest {
         Spare spare = new Spare(Pin.from(9), Pin.from(1));
         Score score = spare.score();
         assertThatThrownBy(() -> score.getScore())
-            .isInstanceOf(IllegalStateException.class);
+            .isInstanceOf(CannotCalculateException.class);
     }
 
     @Test

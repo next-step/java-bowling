@@ -16,7 +16,7 @@ class ScoreTest {
     void 시도_횟수가_남아있다면_에러() {
         Score score = Score.ofStrike();
         assertThatThrownBy(() -> score.getScore())
-            .isInstanceOf(IllegalStateException.class);
+            .isInstanceOf(CannotCalculateException.class);
     }
 
     @Test

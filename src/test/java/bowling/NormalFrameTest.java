@@ -25,14 +25,13 @@ class NormalFrameTest {
         Frame first = NormalFrame.first();
         first.bowl(Pin.from(2));
         first.bowl(Pin.from(5));
-        assertThat(first.getScores().getScore()).isEqualTo(7);
+        assertThat(first.getScores()).isEqualTo(7);
     }
 
     @Test
     void 스트라이크_점수계산_불가() {
         Frame first = NormalFrame.first();
         first.bowl(Pin.from(10));
-        assertThatThrownBy(() -> first.getScores().getScore())
-            .isInstanceOf(IllegalStateException.class);
+        assertThat(first.getScores()).isEqualTo(Score.INCALCULABLE_SCORE);
     }
 }

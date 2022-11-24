@@ -15,6 +15,5 @@ public class BowlingApplication {
             bowling.bowl(Pin.from(score));
             ResultView.printResult(userName, frames);
         }
-        System.out.println("frames = " + frames.getScore());
     }
 }

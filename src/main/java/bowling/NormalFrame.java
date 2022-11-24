@@ -51,19 +51,35 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Score getScores() {
+    public int getScores() {
+        if (!isFinished()) {
+            return Score.INCALCULABLE_SCORE;
+        }
+
         Score score = state.score();
         if (score.canCalculate()) {
-            return score;
+            return score.getScore();
         }
         return next.calculateAdditionalScore(score);
     }
 
     @Override
-    public Score calculateAdditionalScore(Score beforeScore) {
+    public int calculateAdditionalScore(Score beforeScore) {
+        try {
+            return catchCalculateAdditionalScore(beforeScore);
+        } catch (CannotCalculateException exception) {
+            return Score.INCALCULABLE_SCORE;
+        }
+    }
+
+    private int catchCalculateAdditionalScore(Score beforeScore) {
         Score afterScore = state.calculateAdditionalScore(beforeScore);
-        if (afterScore.canCalculate() || next == null) {
-            return afterScore;
+        if (afterScore.canCalculate()) {
+            return afterScore.getScore();
+        }
+
+        if (next == null) {
+            throw new CannotCalculateException();
         }
         return next.calculateAdditionalScore(afterScore);
     }

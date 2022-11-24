@@ -2,12 +2,18 @@ package bowling;
 
 public class Score {
 
+    public static int INCALCULABLE_SCORE = -1;
+
     private final int score;
     private final int left;
 
     private Score(int score, int left) {
         this.score = score;
         this.left = left;
+    }
+
+    public static Score create(Score score) {
+        return new Score(score.getScore(), 0);
     }
 
     public static Score ofStrike() {
@@ -28,7 +34,7 @@ public class Score {
 
     public int getScore() {
         if (!canCalculate()) {
-            throw new IllegalStateException("시도 횟수가 남아있어 점수 계산이 불가능합니다.");
+            throw new CannotCalculateException();
         }
         return score;
     }

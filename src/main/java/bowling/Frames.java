@@ -55,12 +55,7 @@ public class Frames {
         return frames.get(frames.size() - 1);
     }
 
-    public List<Integer> getScore() {
-        return frames.stream()
-            .filter(Frame::isFinished)
-            .map(Frame::getScores)
-            .filter(Score::canCalculate)
-            .map(Score::getScore)
-            .collect(Collectors.toList());
+    public List<Frame> getValues2() {
+        return frames;
     }
 }

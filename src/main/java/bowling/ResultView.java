@@ -1,6 +1,7 @@
 package bowling;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ResultView {
 
@@ -42,17 +43,32 @@ public class ResultView {
 
     private static void printUserScore(Frames frames) {
         System.out.print(SCORE_EMPTY);
-        List<Integer> scores = frames.getScore();
-        int totalScore = 0;
 
-        for (Integer score : scores) {
-            System.out.printf(SCORE_RESULT, totalScore += score);
-        }
-
-        int emptyFrame = FinalFrame.FINAL_FRAME_NUMBER + 1 - scores.size();
+        System.out.print(createUserScore(frames));
+        int emptyFrame = FinalFrame.FINAL_FRAME_NUMBER + 1 - frames.size();
         for (int i = 0; i < emptyFrame; i++) {
             System.out.print(SCORE_EMPTY);
         }
         System.out.println();
+    }
+
+    private static String createUserScore(Frames frames) {
+        List<Frame> values2 = frames.getValues2();
+
+        String userScore = values2.stream().map(frame -> {
+            if (frame.getScores() != Score.INCALCULABLE_SCORE) {
+                return sumTotalScore(values2, values2.indexOf(frame) + 1);
+            }
+            return SCORE_EMPTY;
+        }).collect(Collectors.joining());
+        return userScore;
+    }
+
+    private static String sumTotalScore(List<Frame> frames, int limit) {
+        int sum = frames.stream()
+            .limit(limit)
+            .mapToInt(Frame::getScores)
+            .sum();
+        return String.format(SCORE_RESULT, sum);
     }
 }

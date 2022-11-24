@@ -61,9 +61,6 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isFinished() {
-        if (getLastState().isFinished() && getScores().canCalculate()) {
-            return true;
-        }
         if (states.size() == 3) {
             return true;
         }
@@ -75,22 +72,35 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Score getScores() {
+    public int getScores() {
+        if (!isFinished()) {
+            return Score.INCALCULABLE_SCORE;
+        }
+
         Score score = states.get(0).score();
         for (int i = 1; i < states.size(); i++) {
             State state = states.get(i);
             score = state.calculateAdditionalScore(score);
         }
-        return score;
+        return score.getScore();
     }
 
     @Override
-    public Score calculateAdditionalScore(Score beforeScore) {
-        Score score = beforeScore;
-        for (State state : states) {
-            score = state.calculateAdditionalScore(score);
+    public int calculateAdditionalScore(Score beforeScore) {
+        try {
+            return catchCalculateAdditionalScore(beforeScore, 0);
+        } catch (CannotCalculateException | IndexOutOfBoundsException exception) {
+            return Score.INCALCULABLE_SCORE;
         }
-        return score;
+    }
+
+    private int catchCalculateAdditionalScore(Score beforeScore, int index) {
+        State state = states.get(index);
+        Score score = state.calculateAdditionalScore(beforeScore);
+        if (score.canCalculate()) {
+            return score.getScore();
+        }
+        return catchCalculateAdditionalScore(score, index + 1);
     }
 
     @Override

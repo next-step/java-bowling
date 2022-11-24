@@ -16,7 +16,7 @@ class FinalFrameTest {
         start.bowl(Pin.from(10));
 
         assertThat(start.isFinished()).isTrue();
-        assertThat(start.getScores().getScore()).isEqualTo(30);
+        assertThat(start.getScores()).isEqualTo(30);
     }
 
     @Test
@@ -34,7 +34,7 @@ class FinalFrameTest {
         start.bowl(Pin.from(10));
 
         assertThat(start.isFinished()).isTrue();
-        assertThat(start.getScores().getScore()).isEqualTo(30);
+        assertThat(start.getScores()).isEqualTo(30);
     }
 
     @Test
@@ -45,7 +45,7 @@ class FinalFrameTest {
         start.bowl(Pin.from(1));
 
         assertThat(start.isFinished()).isTrue();
-        assertThat(start.getScores().getScore()).isEqualTo(21);
+        assertThat(start.getScores()).isEqualTo(21);
     }
 
     @Test
@@ -56,7 +56,7 @@ class FinalFrameTest {
         start.bowl(Pin.from(9));
 
         assertThat(start.isFinished()).isTrue();
-        assertThat(start.getScores().getScore()).isEqualTo(20);
+        assertThat(start.getScores()).isEqualTo(20);
     }
 
     @Test
@@ -67,7 +67,7 @@ class FinalFrameTest {
         start.bowl(Pin.from(1));
 
         assertThat(start.isFinished()).isTrue();
-        assertThat(start.getScores().getScore()).isEqualTo(11);
+        assertThat(start.getScores()).isEqualTo(11);
     }
 
     @Test
@@ -77,6 +77,6 @@ class FinalFrameTest {
         start.bowl(Pin.from(1));
 
         assertThat(start.isFinished()).isTrue();
-        assertThat(start.getScores().getScore()).isEqualTo(5);
+        assertThat(start.getScores()).isEqualTo(5);
     }
 }

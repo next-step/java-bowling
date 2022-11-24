@@ -2,6 +2,7 @@ package bowling.state;
 
 import static org.assertj.core.api.Assertions.*;
 
+import bowling.CannotCalculateException;
 import bowling.Score;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ class StrikeTest {
         Strike strike = new Strike();
         Score score = strike.score();
         assertThatThrownBy(() -> score.getScore())
-            .isInstanceOf(IllegalStateException.class);
+            .isInstanceOf(CannotCalculateException.class);
     }
 
     @Test
