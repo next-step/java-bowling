@@ -75,10 +75,10 @@
   * / -> 다음 1회까지 합산하여 출력
 
 * 예시
-  - X|X|X
-  - X|X|1
-  - X|1|/
-  - X|1|3
-  - 1|/|X
-  - 1|/|2
-  - 1|3
+  - X|X|X Strike Strike Strike
+  - X|X|1 Strike Strike Miss
+  - X|1|/ Strike Spare
+  - X|1|3 Strike Miss
+  - 1|/|X Spare Strike
+  - 1|/|2 Spare FirstBowl
+  - 1|3   Miss

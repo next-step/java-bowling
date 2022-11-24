@@ -1,5 +1,7 @@
 package bowling;
 
+import bowling.state.FirstBowl;
+import bowling.state.Miss;
 import bowling.state.Ready;
 import bowling.state.Spare;
 import bowling.state.State;
@@ -64,8 +66,17 @@ public class FinalFrame implements Frame {
         if (states.size() == 3) {
             return true;
         }
-        if (states.size() == 2) {
-            return states.stream().anyMatch(state -> state instanceof Spare);
+
+        if (getLastState() instanceof Miss) {
+            return true;
+        }
+
+        if (states.stream().anyMatch(state -> state instanceof Spare) && states.stream().anyMatch(state -> state instanceof Strike)) {
+            return true;
+        }
+
+        if (states.stream().anyMatch(state -> state instanceof Spare) && states.stream().anyMatch(state -> state instanceof FirstBowl)) {
+            return true;
         }
 
         return false;
@@ -105,7 +116,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public String getDesc() {
-        return states.stream().map(i -> i.getDesc())
+        return states.stream().map(State::getDesc)
             .collect(Collectors.joining("|"));
     }
 }
