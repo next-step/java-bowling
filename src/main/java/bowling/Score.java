@@ -12,10 +12,6 @@ public class Score {
         this.left = left;
     }
 
-    public static Score create(Score score) {
-        return new Score(score.getScore(), 0);
-    }
-
     public static Score ofStrike() {
         return new Score(10, 2);
     }
