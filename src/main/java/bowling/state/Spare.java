@@ -3,7 +3,7 @@ package bowling.state;
 import bowling.Pin;
 import bowling.Score;
 
-public class Spare extends Finished{
+public class Spare extends Finished {
 
     private final Pin firstPins;
     private final Pin secondPins;
