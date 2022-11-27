@@ -39,7 +39,7 @@ public class QnAService {
         question.checkAnswersDelete(loginUser);
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        question.saveDelete(deleteHistories);
+        question.delete(deleteHistories);
         deleteHistoryService.saveAll(deleteHistories);
     }
 }

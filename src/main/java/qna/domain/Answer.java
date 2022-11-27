@@ -52,7 +52,7 @@ public class Answer extends AbstractEntity {
         }
     }
 
-    public void saveDelete(List<DeleteHistory> deleteHistories) {
+    public void delete(List<DeleteHistory> deleteHistories) {
         setDeleted(true);
         deleteHistories.add(new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now()));
     }
