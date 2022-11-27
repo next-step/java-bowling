@@ -89,14 +89,12 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public void saveDelete(List<DeleteHistory> deleteHistories) {
+    public void delete(List<DeleteHistory> deleteHistories) {
         setDeleted(true);
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
 
-// 일급 객체 ...
-        for (Answer answer : answers) {
-            answer.saveDelete(deleteHistories);
-        }
+        Answers answers1 = new Answers(answers);
+        answers1.deleteAll(deleteHistories);
     }
 
     public Question setDeleted(boolean deleted) {
