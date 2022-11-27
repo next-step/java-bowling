@@ -19,4 +19,9 @@ public class Strike extends Finished {
     public String getDesc() {
         return "X";
     }
+
+    @Override
+    public boolean canAddBonusPins() {
+        return true;
+    }
 }

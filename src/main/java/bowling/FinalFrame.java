@@ -41,7 +41,7 @@ public class FinalFrame implements Frame {
     }
 
     private State bonusPins(State beforeState, Pin falledPins) {
-        if (beforeState instanceof Strike || beforeState instanceof Spare) {
+        if (beforeState.canAddBonusPins()) {
             return new Ready().bowl(falledPins);
         }
         throw new IllegalStateException("게임이 끝나서 더이상 진행할 수 없습니다.");

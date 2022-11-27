@@ -14,4 +14,6 @@ public interface State {
     Score calculateAdditionalScore(Score beforeScore);
 
     String getDesc();
+
+    boolean canAddBonusPins();
 }

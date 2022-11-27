@@ -41,4 +41,9 @@ public class Miss extends Finished {
 
         return first + "|" + second;
     }
+
+    @Override
+    public boolean canAddBonusPins() {
+        return false;
+    }
 }

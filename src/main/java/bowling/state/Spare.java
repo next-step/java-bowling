@@ -31,4 +31,9 @@ public class Spare extends Finished {
     public String getDesc() {
         return firstPins.getFalledPins() + "|/";
     }
+
+    @Override
+    public boolean canAddBonusPins() {
+        return true;
+    }
 }
