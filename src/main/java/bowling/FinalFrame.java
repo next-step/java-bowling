@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 public class FinalFrame implements Frame {
 
     public static final int FINAL_FRAME_NUMBER = 10;
+    public static final int MAX_COUNT_BOWL = 3;
 
     private final List<State> states = new ArrayList<>();
 
@@ -63,7 +64,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isFinished() {
-        if (states.size() == 3) {
+        if (states.size() == MAX_COUNT_BOWL) {
             return true;
         }
 
@@ -93,6 +94,7 @@ public class FinalFrame implements Frame {
             State state = states.get(i);
             score = state.calculateAdditionalScore(score);
         }
+
         return score.getScore();
     }
 
