@@ -26,21 +26,11 @@ class PinTest {
 
     @Test
     void 스트라이크() {
-        assertThat(Pin.from(10).isMax()).isTrue();
+        assertThat(Pin.from(10).isStrike()).isTrue();
     }
 
     @Test
     void 스페어() {
-        assertThat(Pin.from(1).addPins(9).isMax()).isTrue();
-    }
-
-    @Test
-    void 거터() {
-        assertThat(Pin.from(0).isGutter()).isTrue();
-    }
-
-    @Test
-    void 미스() {
-        assertThat(Pin.from(2).isMiss()).isTrue();
+        assertThat(Pin.from(1).isSpare(9)).isTrue();
     }
 }

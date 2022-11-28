@@ -1,36 +1,48 @@
 package bowling;
 
-import java.util.List;
+import bowling.state.Ready;
+import bowling.state.State;
 
-public class NormalFrame implements Frame{
+public class NormalFrame implements Frame {
 
     public static final int MIN_NORMAL_FRAME_NUMBER = 1;
     public static final int MAX_NORMAL_FRAME_NUMBER = 9;
 
     private final int frameNumber;
-    private final Score score = new Score();
+    private State state;
+    private Frame next;
 
-    public NormalFrame(int frameNumber, Pin falledPins) {
+    private NormalFrame(int frameNumber, State state) {
         this.frameNumber = frameNumber;
-        this.score.add(falledPins);
+        this.state = state;
+    }
+
+    public static Frame first() {
+        return new NormalFrame(MIN_NORMAL_FRAME_NUMBER, new Ready());
     }
 
     @Override
     public boolean isFinished() {
-        return score.size() == Score.SECOND_ROUND || score.isStrike();
+        return state.isFinished();
     }
 
     @Override
-    public Frame nextFrame(Pin falledPins) {
+    public Frame nextFrame() {
         if (frameNumber == MAX_NORMAL_FRAME_NUMBER) {
-            return FinalFrame.start(falledPins);
+            next = FinalFrame.start();
+            return next;
         }
-        return new NormalFrame(frameNumber + 1, falledPins);
+        next = new NormalFrame(frameNumber + 1, new Ready());
+        return next;
     }
 
     @Override
-    public void bowl(Pin falledPins) {
-        score.add(falledPins);
+    public Frame bowl(Pin falledPins) {
+        state = state.bowl(falledPins);
+        if (state.isFinished()) {
+            return nextFrame();
+        }
+        return this;
     }
 
     @Override
@@ -39,7 +51,41 @@ public class NormalFrame implements Frame{
     }
 
     @Override
-    public Score getScores() {
-        return score;
+    public int getScores() {
+        if (!isFinished()) {
+            return Score.INCALCULABLE_SCORE;
+        }
+
+        Score score = state.score();
+        if (score.canCalculate()) {
+            return score.getScore();
+        }
+        return next.calculateAdditionalScore(score);
+    }
+
+    @Override
+    public int calculateAdditionalScore(Score beforeScore) {
+        try {
+            return catchCalculateAdditionalScore(beforeScore);
+        } catch (CannotCalculateException exception) {
+            return Score.INCALCULABLE_SCORE;
+        }
+    }
+
+    private int catchCalculateAdditionalScore(Score beforeScore) {
+        Score afterScore = state.calculateAdditionalScore(beforeScore);
+        if (afterScore.canCalculate()) {
+            return afterScore.getScore();
+        }
+
+        if (next == null) {
+            throw new CannotCalculateException();
+        }
+        return next.calculateAdditionalScore(afterScore);
+    }
+
+    @Override
+    public String getDesc() {
+        return state.getDesc();
     }
 }

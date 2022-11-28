@@ -34,16 +34,12 @@ public class Pin {
         return cache.get(falledPins);
     }
 
-    public boolean isMax() {
+    public boolean isStrike() {
         return falledPins == MAX_PINS;
     }
 
-    public boolean isGutter() {
-        return falledPins == MIN_PINS;
-    }
-
-    public boolean isMiss() {
-        return falledPins < MAX_PINS;
+    public boolean isSpare(int secondPins) {
+        return addPins(secondPins).getFalledPins() == MAX_PINS;
     }
 
     public Pin addPins(int secondPins) {
