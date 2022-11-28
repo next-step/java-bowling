@@ -20,6 +20,6 @@ public class Ready extends Running {
 
     @Override
     public String getDesc() {
-        return "";
+        return StateSymbol.BLANK.symbol();
     }
 }

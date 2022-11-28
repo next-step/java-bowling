@@ -29,7 +29,7 @@ public class Spare extends Finished {
 
     @Override
     public String getDesc() {
-        return firstPins.getFalledPins() + "|/";
+        return firstPins.getFalledPins() + "|" + StateSymbol.SPARE.symbol();
     }
 
     @Override

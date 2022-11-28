@@ -31,12 +31,12 @@ public class Miss extends Finished {
     public String getDesc() {
         String first = String.valueOf(firstPins.getFalledPins());
         String second = String.valueOf(secondPins.getFalledPins());
-        if (first.equals("0")) {
-            first = "-";
+        if ("0".equals(first)) {
+            first = StateSymbol.GUTTER.symbol();
         }
 
-        if (second.equals("0")) {
-            second = "-";
+        if ("0".equals(second)) {
+            second = StateSymbol.GUTTER.symbol();
         }
 
         return first + "|" + second;

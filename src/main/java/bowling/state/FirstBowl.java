@@ -26,8 +26,8 @@ public class FirstBowl extends Running {
 
     @Override
     public String getDesc() {
-        if (firstPins.getFalledPins() == 0) {
-            return "-";
+        if (firstPins.getFalledPins() == Pin.MIN_PINS) {
+            return StateSymbol.GUTTER.symbol();
         }
         return String.valueOf(firstPins.getFalledPins());
     }

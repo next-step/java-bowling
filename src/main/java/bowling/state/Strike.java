@@ -17,7 +17,7 @@ public class Strike extends Finished {
 
     @Override
     public String getDesc() {
-        return "X";
+        return StateSymbol.STRIKE.symbol();
     }
 
     @Override
