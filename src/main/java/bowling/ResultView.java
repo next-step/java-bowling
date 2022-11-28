@@ -31,7 +31,9 @@ public class ResultView {
 
 
     private static void printFrames(Frames frames) {
-        List<String> values = frames.getValues();
+        List<String> values = frames.getValues().stream()
+            .map(Frame::getDesc)
+            .collect(Collectors.toList());
 
         for (String value : values) {
             System.out.printf(FRAME_RESULT, value);
@@ -56,15 +58,14 @@ public class ResultView {
     }
 
     private static String createUserScore(Frames frames) {
-        List<Frame> values2 = frames.getValues2();
+        List<Frame> values = frames.getValues();
 
-        String userScore = values2.stream().map(frame -> {
+        return values.stream().map(frame -> {
             if (frame.getScores() != Score.INCALCULABLE_SCORE) {
-                return sumTotalScore(values2, values2.indexOf(frame) + 1);
+                return sumTotalScore(values, values.indexOf(frame) + 1);
             }
             return SCORE_EMPTY;
         }).collect(Collectors.joining());
-        return userScore;
     }
 
     private static String sumTotalScore(List<Frame> frames, int limit) {
