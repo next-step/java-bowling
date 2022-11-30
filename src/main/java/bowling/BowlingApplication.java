@@ -1,20 +1,21 @@
 package bowling;
 
+import java.util.List;
+
 public class BowlingApplication {
 
     public static void main(String[] args) {
 
-        UserName userName = InputView.inputUserName();
-        Frames frames = Frames.start();
+        int playerNumber = InputView.inputPlayerNumber();
+        List<UserName> userNames = InputView.inputUserNames(playerNumber);
+        BowlingGames bowlingGames = BowlingGames.start(userNames);
 
-        BowlingGame bowlingGame = new BowlingGame(userName, frames);
+        ResultView.printResult(bowlingGames);
 
-        ResultView.printResult(bowlingGame);
-
-        while (!bowlingGame.isFinished()) {
-            int score = InputView.inputUserScore(bowlingGame.currentFrameNumber());
-            bowlingGame.bowl(Pin.from(score));
-            ResultView.printResult(bowlingGame);
+        while (!bowlingGames.isFinished()) {
+            int score = InputView.inputUserScore(bowlingGames.currentTurnOfUser().getUserName());
+            bowlingGames.bowl(Pin.from(score));
+            ResultView.printResult(bowlingGames);
         }
     }
 }
