@@ -1,58 +1,56 @@
 package bowling.domain;
 
 import java.util.Objects;
-import java.util.Optional;
 
 public class Score {
 
-    public static final int MAX = 300;
-    public static final int MIN = 0;
     private final int value;
+    private final int left;
 
-    public Score(int value) {
-        if (value < MIN || value > MAX) {
-            throw new IllegalArgumentException("점수는 0 ~ 300 사이 입니다. " + value);
-        }
+    public Score(int value, int left) {
         this.value = value;
+        this.left = left;
     }
 
-    public static Score of(int value) {
-        return new Score(value);
+    public int getValue() {
+        if (!canCalculate()) {
+            throw new IllegalStateException("계산할수 없는 상태입니다 left " + left);
+        }
+
+        return value;
     }
 
-    public static Score of(PinCount pinCount) {
-        return Score.of(pinCount.getValue());
-    }
-
-    public Score add(Score score) {
-        return Score.of(value + score.value);
+    public boolean canCalculate() {
+        return left == 0;
     }
 
     public Score add(PinCount pinCount) {
-        return Score.of(value + pinCount.getValue());
+        return new Score(value + pinCount.getValue(), left - 1);
     }
 
-    // =======================================================================================================
+    //=================================================================
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Score score = (Score) o;
-        return value == score.value;
+        return value == score.value && left == score.left;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value);
+        return Objects.hash(value, left);
     }
 
     @Override
     public String toString() {
-        return value + "";
+        return "Score{" +
+                "value=" + value +
+                ", left=" + left +
+                '}';
     }
 
-    public Score add(Optional<Score> score) {
-        return add(score.orElseThrow(() -> new IllegalArgumentException("값이 없습니다")));
-    }
+    //=================================================================
 }
+

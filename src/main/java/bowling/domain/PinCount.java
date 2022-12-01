@@ -29,14 +29,13 @@ public class PinCount {
         return value == 0;
     }
 
-    public int sum(PinCount pinCount) {
-        return value + pinCount.getValue();
+    public PinCount sum(PinCount pinCount) {
+        return PinCount.of(value + pinCount.getValue());
     }
 
     public boolean isTen() {
         return value == 10;
     }
-
     //===================================================================
 
 

@@ -1,39 +1,25 @@
-package bowling.domain;
+package bowling.domain.frame;
 
-import java.util.ArrayList;
+import bowling.domain.Score;
+
 import java.util.List;
 import java.util.Optional;
 
-public class Frames {
+public class Bowling {
 
     private static final int END_FRAME_INDEX = 10;
     private int currentFrameIndex = 0;
     private final List<Frame> values;
 
-    private Frames(List<Frame> values) {
+    private Bowling(List<Frame> values) {
         this.values = values;
-    }
-
-    public static Frames init() {
-        List<Frame> values = new ArrayList<>();
-
-        Frame frame = Frame.createFirst();
-        values.add(frame);
-
-        for (int i = 0; i < 8; i++) {
-            frame = frame.createNext();
-            values.add(frame);
-        }
-
-        values.add(frame.createFinal());
-        return new Frames(values);
     }
 
     public void bowling(int count) {
         Frame frame = getCurrentFrame();
-        frame.bowling(count);
+        frame.bowl(count);
 
-        if (frame.isEnd()) {
+        if (frame.isFinish()) {
             currentFrameIndex++;
         }
     }
@@ -59,15 +45,15 @@ public class Frames {
     }
 
     public boolean isEmpty(int index) {
-        return Optional.ofNullable(values.get(index))
-                .map(Frame::isEmpty)
-                .orElse(true);
+        return false;
     }
 
     public Optional<Score> getScore(Integer index) {
-        return Optional.ofNullable(values.get(index))
-                .filter(Frame::isEnd)
-                .map(Frame::getScore)
-                .orElseGet(() -> Optional.empty());
+//        return Optional.ofNullable(values.get(index))
+//                .filter(Frame::isEnd)
+//                .map(Frame::getScore)
+//                .orElseGet(() -> Optional.empty());
+
+        return null;
     }
 }

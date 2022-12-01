@@ -1,7 +1,10 @@
-package bowling.domain.state;
+package bowling.domain.state.normal;
 
 import bowling.domain.PinCount;
-import bowling.domain.Score2;
+import bowling.domain.Score;
+import bowling.domain.state.State;
+import bowling.domain.state.normal.FirstBowl;
+import bowling.domain.state.normal.Spare;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,7 +27,13 @@ class SpareTest {
 
     @Test
     void 점수() {
-        Spare spare = new Spare(PinCount.of(5), PinCount.of(5));
-        assertThat(spare.getScore()).isEqualTo(new Score2(10, 1));
+        Spare spare = new Spare(5, 5);
+        assertThat(spare.getScore()).isEqualTo(new Score(10, 1));
+    }
+
+    @Test
+    void 보너스점수계산() {
+        State spare = new Spare(6, 4);
+        assertThat(spare.calculateBonusScore(new Score(3, 2))).isEqualTo(new Score(13, 0));
     }
 }

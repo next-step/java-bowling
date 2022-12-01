@@ -1,13 +1,15 @@
 package bowling.domain.state;
 
 import bowling.domain.PinCount;
-import bowling.domain.Score2;
+import bowling.domain.Score;
 
 public interface State {
 
     boolean isFinish();
 
-    Score2 getScore();
+    Score getScore();
 
     State next(PinCount pinCount);
+
+    Score calculateBonusScore(Score beforeScore);
 }

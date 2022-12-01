@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
-import bowling.domain.Score2;
+import bowling.domain.PinCount;
+import bowling.domain.Score;
 
 public abstract class Running implements State {
 
@@ -10,7 +11,7 @@ public abstract class Running implements State {
     }
 
     @Override
-    public Score2 getScore() {
+    public Score getScore() {
         throw new IllegalStateException("점수계산은 종료 상태만 가능합니다.");
     }
 }
