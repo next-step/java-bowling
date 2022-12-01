@@ -1,11 +1,11 @@
 package bowling;
 
-public class Bowling {
+public class BowlingGame {
 
     private final UserName userName;
     private final Frames frames;
 
-    public Bowling(UserName userName, Frames frames) {
+    public BowlingGame(UserName userName, Frames frames) {
         this.userName = userName;
         this.frames = frames;
     }

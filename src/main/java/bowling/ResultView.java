@@ -11,11 +11,16 @@ public class ResultView {
     private static final String SCORE_RESULT = "| %-5s";
     private static final String SCORE_EMPTY = "|      ";
 
-    public static void printResult(Bowling bowling) {
-        Frames frames = bowling.getFrames();
-        UserName userName = bowling.getUserName();
-
+    public static void printResult(BowlingGames bowlingGames) {
+        List<BowlingGame> games = bowlingGames.getValues();
         printRoundTemplate();
+        games.forEach(ResultView::printResultUser);
+    }
+
+    public static void printResultUser(BowlingGame bowlingGame) {
+        Frames frames = bowlingGame.getFrames();
+        UserName userName = bowlingGame.getUserName();
+
         printUserName(userName);
         printFrames(frames);
         printUserScore(frames);
