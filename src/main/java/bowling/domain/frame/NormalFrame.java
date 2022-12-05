@@ -3,13 +3,9 @@ package bowling.domain.frame;
 import bowling.domain.Point;
 import bowling.domain.Score;
 import bowling.domain.state.Ready;
-import bowling.domain.state.State;
 import bowling.exception.DoNotHaveEnoughPointsException;
 
-import java.util.List;
-
 public class NormalFrame extends AbstractFrame {
-    private State state;
     private Frame next;
 
     public NormalFrame(int order) {
@@ -36,11 +32,6 @@ public class NormalFrame extends AbstractFrame {
 
     private boolean isNextFrameIsLastFrame() {
         return order + 1 == Frame.MAX_NUMBER;
-    }
-
-    @Override
-    public List<Point> getPoints() {
-        return state.getPoints();
     }
 
     @Override
