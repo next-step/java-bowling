@@ -1,37 +1,71 @@
 package bowling.domain.frame;
 
-public class NormalFrame extends Frame {
-    private final Frame nextFrame;
+import bowling.domain.Point;
+import bowling.domain.Score;
+import bowling.domain.state.Ready;
+import bowling.domain.state.State;
+import bowling.exception.DoNotHaveEnoughPointsException;
+
+import java.util.List;
+
+public class NormalFrame extends AbstractFrame {
+    private State state;
+    private Frame next;
 
     public NormalFrame(int order) {
         super(order);
-        int nextOrder = order + 1;
-        if(nextOrder == Frame.MAX_FRAME) {
-            this.nextFrame = new FinalFrame(nextOrder);
-            return;
-        }
-        this.nextFrame = new NormalFrame(nextOrder);
+        this.state = new Ready();
     }
 
     @Override
-    public int orderToThrow() {
-        if (chances().areAllPinsDown() || chances().noLeftChances(false)) {
-            return nextFrame.orderToThrow();
+    public Frame bowl(Point point) {
+        state = state.bowl(point);
+        if (state.isFinished()) {
+            next = nextFrame();
+            return next;
         }
-        return order();
+        return this;
+    }
+
+    private Frame nextFrame() {
+        if (isNextFrameIsLastFrame()) {
+            return new LastFrame(order + 1);
+        }
+        return new NormalFrame(order + 1);
+    }
+
+    private boolean isNextFrameIsLastFrame() {
+        return order + 1 == Frame.MAX_NUMBER;
     }
 
     @Override
-    public void addChances(int knockDownCount) {
-        if (chances().areAllPinsDown() || chances().noLeftChances(false)) {
-            nextFrame.addChances(knockDownCount);
-            return;
-        }
-        chances().add(knockDownCount);
+    public List<Point> getPoints() {
+        return state.getPoints();
     }
 
-    public Frame nextFrame() {
-        return nextFrame;
+    @Override
+    public Point calculateTotalPoint() {
+        Score score = state.score();
+        if (score.canReceiveExtraPoint()) {
+            score = next.calculateExtraPoint(score);
+        }
+        return score.getPoint();
+    }
+
+    @Override
+    public Score calculateExtraPoint(Score score) {
+        score = state.addExtraPoint(score);
+        if (score.canReceiveExtraPoint()) {
+            return getExtraPointFromNext(score);
+        }
+        return score;
+    }
+
+    private Score getExtraPointFromNext(Score score) {
+        if (next == null) {
+            throw new DoNotHaveEnoughPointsException();
+        }
+        return next.calculateExtraPoint(score);
     }
 
 }

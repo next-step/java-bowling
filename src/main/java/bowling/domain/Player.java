@@ -1,43 +1,49 @@
 package bowling.domain;
 
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
+
+import static java.util.stream.Collectors.toUnmodifiableList;
 
 public class Player {
+    private static final Pattern pattern = Pattern.compile("^[a-zA-Z]{3}$");
     private final String name;
-    private final Frame frame;
+    private final Frames frames;
 
     public Player(String name) {
-        if (!name.matches("^[a-zA-Z]{3}$")) {
-            throw new IllegalArgumentException("이름이 영문자가 아닙니다.");
-        }
-        if (name.length() != 3) {
-            throw new IllegalArgumentException("이름이 3글자가 아닙니다.");
+        if (!pattern.matcher(name).matches()) {
+            throw new IllegalArgumentException("이름은 3글자, 영문이어야 합니다.");
         }
         this.name = name;
-        this.frame = Frame.frame();
+        this.frames = new Frames();
     }
 
-    public int frameOrderToThrow() {
-        return frame.orderToThrow();
+    public int getFrameNumber() {
+        return frames.getFrameNumber();
     }
 
-    public void throwBall(int knockDownCount) {
-        frame.addChances(knockDownCount);
+    public String getName() {
+        return name;
     }
 
-    public PlayerDto status() {
-        List<Frame> frames = new ArrayList<>();
-        Frame frame = this.frame;
-        while (frame.getClass() == NormalFrame.class) {
-            frames.add(frame);
-            frame = ((NormalFrame) frame).nextFrame();
-        }
-        frames.add(frame);
-        return new PlayerDto(name, frames);
+    public boolean bowl(Pin pin) {
+        return frames.bowl(pin.pinToPoint());
+    }
+
+    public List<List<Integer>> getPointsOfFrames() {
+        return frames.getPointsOfFrames()
+                .stream()
+                .map(points -> points.stream()
+                        .map(Point::getPoint)
+                        .collect(toUnmodifiableList()))
+                .collect(toUnmodifiableList());
+    }
+
+    public List<Integer> getTotalPointsOfFrames() {
+        return frames.getTotalPointsOfFrames()
+                .stream()
+                .map(Point::getPoint)
+                .collect(toUnmodifiableList());
     }
 
 }

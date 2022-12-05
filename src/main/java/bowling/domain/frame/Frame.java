@@ -1,34 +1,20 @@
 package bowling.domain.frame;
 
-import bowling.domain.Chances;
+import bowling.domain.Point;
+import bowling.domain.Score;
 
-public abstract class Frame {
-    public static final int MAX_FRAME = 10;
-    public static final int NO_FRAME_TO_THROW = -1;
+import java.util.List;
 
-    private final int order;
-    private final Chances chances;
+public interface Frame {
+    int MAX_NUMBER = 10;
 
-    protected Frame(int order) {
-        this.order = order;
-        this.chances = new Chances();
-    }
+    Frame bowl(Point point);
 
-    public static Frame frame() {
-        return new NormalFrame(1);
-    }
+    List<Point> getPoints();
 
-    public abstract int orderToThrow();
+    Point calculateTotalPoint();
 
-    public abstract void addChances(int knockDownCount);
+    Score calculateExtraPoint(Score score);
 
-    public int order() {
-        return order;
-    }
-
-    public Chances chances() {
-        return chances;
-    }
-
-
+    int getOrder();
 }

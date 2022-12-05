@@ -1,49 +1,60 @@
 package bowling.view;
 
-import bowling.domain.Chance;
-import bowling.domain.PlayerDto;
+import bowling.domain.Player;
 
 import java.util.List;
+import java.util.StringJoiner;
 
 public class OutputView {
-    private static final String NAME = "NAME";
-    private static final String BLANK = " ";
-
-    public static void printPlayerStatus(PlayerDto playerDto) {
-        System.out.printf("|%6s |", NAME);
-        for (int i = 0; i < playerDto.frame().size(); i++) {
-            System.out.printf("%2s%02d%2s|", BLANK, i + 1, BLANK);
-        }
+    public static void printBoard(Player player) {
+        System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
+        printPoints(player);
+        printTotalPoints(player);
         System.out.println();
-
-        System.out.printf("|%6s |", playerDto.name());
-        for (int i = 0; i < playerDto.frame().size(); i++) {
-            List<Chance> chances = playerDto.frame().get(i).chances().chances();
-            printChances(chances);
-        }
-        System.out.println();
-
     }
 
-    private static void printChances(List<Chance> chances) {
-        if (chances.isEmpty()) {
-            System.out.printf("%6s|", BLANK);
-            return;
+    private static void printPoints(Player player) {
+        System.out.printf("| %4s |", player.getName());
+        List<List<Integer>> pointsOfFrames = player.getPointsOfFrames();
+        for (int i = 0; i < 10; i++) {
+            if (i < pointsOfFrames.size()) {
+                System.out.printf(" %-5s|", printPoints(pointsOfFrames.get(i)));
+            } else {
+                System.out.print("      |");
+            }
         }
-        if (chances.size() == 1) {
-            System.out.printf("%3s ", chances.get(0).chance());
-            System.out.printf("%-2s|", BLANK);
-            return;
-        }
-        if (chances.size() == 2) {
-            System.out.printf("%3s|", chances.get(0).chance());
-            System.out.printf("%-2s|", chances.get(1).chance());
-            return;
-        }
-        System.out.printf("%1s|", chances.get(0).chance());
-        System.out.printf("%s|", chances.get(1).chance());
-        System.out.printf("%-2s|", chances.get(2).chance());
+        System.out.println();
+    }
 
+    private static String printPoints(List<Integer> points) {
+        StringJoiner result = new StringJoiner("|");
+        int sum = 0;
+        for (int point : points) {
+            sum += point;
+            if (point == 0) {
+                result.add("-");
+            } else if (point == 10) {
+                result.add("X");
+            } else if (sum == 10) {
+                result.add("/");
+            } else {
+                result.add(String.valueOf(point));
+            }
+        }
+        return result.toString();
+    }
+
+    private static void printTotalPoints(Player player) {
+        System.out.print("|      |");
+        List<Integer> totalPointsOfFrames = player.getTotalPointsOfFrames();
+        for (int i = 0; i < 10; i++) {
+            if (i < totalPointsOfFrames.size()) {
+                System.out.printf("  %-4d|", totalPointsOfFrames.get(i));
+            } else {
+                System.out.print("      |");
+            }
+        }
+        System.out.println();
     }
 
 }
