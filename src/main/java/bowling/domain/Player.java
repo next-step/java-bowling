@@ -18,10 +18,6 @@ public class Player {
         this.frames = new Frames();
     }
 
-    public int getFrameNumber() {
-        return frames.getFrameNumber();
-    }
-
     public String getName() {
         return name;
     }
@@ -44,6 +40,10 @@ public class Player {
                 .stream()
                 .map(Point::getPoint)
                 .collect(toUnmodifiableList());
+    }
+
+    public boolean isFinished() {
+        return frames.isFinished();
     }
 
 }

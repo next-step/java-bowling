@@ -59,4 +59,8 @@ public class NormalFrame extends AbstractFrame {
         return next.calculateExtraPoint(score);
     }
 
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

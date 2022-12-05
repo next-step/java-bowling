@@ -14,7 +14,7 @@ public class LastFrame extends AbstractFrame {
     @Override
     public Frame bowl(Point point) {
         state = state.bowl(point);
-        if (state.isFinished()) {
+        if (isFinished()) {
             return null;
         }
         return this;
@@ -32,6 +32,11 @@ public class LastFrame extends AbstractFrame {
             throw new DoNotHaveEnoughPointsException();
         }
         return score;
+    }
+
+    @Override
+    public boolean isFinished() {
+        return state.isFinished();
     }
 
 }

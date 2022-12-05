@@ -18,10 +18,6 @@ public class Frames {
         frames.add(new NormalFrame(this.current));
     }
 
-    public int getFrameNumber() {
-        return current;
-    }
-
     public boolean bowl(Point point) {
         Frame frame = frames.get(current - 1);
         Frame nextFrame = frame.bowl(point);
@@ -60,6 +56,11 @@ public class Frames {
             totalPointsOfFrames.set(i, totalPointsOfFrames.get(i).add(totalPointsOfFrames.get(i - 1)));
         }
         return Collections.unmodifiableList(totalPointsOfFrames);
+    }
+
+    public boolean isFinished() {
+        return frames.get(frames.size() - 1)
+                .isFinished();
     }
 
 }
