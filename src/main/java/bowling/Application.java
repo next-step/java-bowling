@@ -1,18 +1,24 @@
 package bowling;
 
+import bowling.domain.Bowling;
+import bowling.domain.Name;
+import bowling.domain.PinCount;
+import bowling.view.InputView;
+import bowling.view.OutputView;
+
 public class Application {
 
     public static void main(String[] args) {
 //        Name name = InputView.readName();
 //
-//        Bowling frames = Bowling.init();
+//        Bowling bowling = new Bowling();
 //        OutputView outputView = OutputView.init();
 //
-//        while (frames.isNotEnd()) {
-//            PinCount pinCount = InputView.readPinCount(frames.getCurrentFrameIndex());
+//        while (!bowling.isGameEnd()) {
+//            PinCount pinCount = InputView.readPinCount(bowling.getCurrentFrameNo());
 //
-//            frames.bowling(pinCount.getValue());
-//            outputView.print(name, frames);
+//            bowling.bowl(pinCount.getValue());
+//            outputView.print(name, bowling.createResults());
 //        }
 
     }

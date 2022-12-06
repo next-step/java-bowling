@@ -4,10 +4,13 @@ import bowling.domain.PinCount;
 import bowling.domain.Result;
 import bowling.domain.Score;
 import bowling.domain.state.State;
+import bowling.exception.CannotCalculateException;
+import org.hibernate.cache.CacheException;
 
 import java.util.Optional;
 
 public abstract class Frame {
+    public static final int IN_VALID_SCORE = -1;
     protected final int no;
     protected State state;
     protected Frame next;
@@ -39,7 +42,11 @@ public abstract class Frame {
     }
 
     public Result createResult() {
-        return new Result(getScore().getValue(), state.getDesc());
+        try {
+            return new Result(getScore().getValue(), state.getDesc());
+        } catch (CannotCalculateException e) {
+            return new Result(IN_VALID_SCORE, state.getDesc());
+        }
     }
 
     public abstract Score getScore();

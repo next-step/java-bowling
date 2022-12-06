@@ -38,10 +38,6 @@ public class Bowling {
     }
 
     public List<Result> createResults() {
-        if (!isGameEnd()) {
-            throw new IllegalStateException("게임이 종료되지 않았습니다.");
-        }
-
         List<Result> results = new ArrayList<>();
         try {
             for (Frame frame : frames) {
@@ -53,7 +49,7 @@ public class Bowling {
         return results;
     }
 
-    private boolean isGameEnd() {
+    public boolean isGameEnd() {
         Frame frame = getLastFrame();
         return frame.getNo() == 10 && frame.isFinish();
     }
@@ -63,5 +59,9 @@ public class Bowling {
         return "Bowling{" +
                 "frames=" + frames +
                 '}';
+    }
+
+    public int getCurrentFrameNo() {
+        return getLastFrame().getNo();
     }
 }
