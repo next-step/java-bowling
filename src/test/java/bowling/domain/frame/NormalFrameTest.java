@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.Score;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.exception.CannotCalculateException;
@@ -59,6 +60,18 @@ class NormalFrameTest {
 
         assertThat(last.getNo()).isEqualTo(10);
         assertThat(last.isFinish()).isTrue();
+        assertThat(frame.getScore()).isEqualTo(new Score(18, 0));
+    }
+
+    @Test
+    void 점수_스트라이크_8라운드() {
+        NormalFrame frame = new NormalFrame(8);
+        Frame last = frame.bowl(10)
+                .bowl(5)
+                .bowl(3);
+
+        assertThat(frame.getNo()).isEqualTo(8);
+        assertThat(frame.isFinish()).isTrue();
         assertThat(frame.getScore()).isEqualTo(new Score(18, 0));
     }
 }

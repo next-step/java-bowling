@@ -4,6 +4,7 @@ import bowling.domain.PinCount;
 import bowling.domain.Score;
 import bowling.domain.state.Running;
 import bowling.domain.state.State;
+import bowling.utils.StringUtils;
 
 public class FirstBowl extends Running {
 
@@ -25,5 +26,10 @@ public class FirstBowl extends Running {
     @Override
     public Score calculateBonusScore(Score beforeScore) {
         return beforeScore.add(first);
+    }
+
+    @Override
+    public String getDesc() {
+        return StringUtils.getDesc(first) + "|";
     }
 }

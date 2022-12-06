@@ -1,9 +1,9 @@
 package bowling.domain;
 
+import bowling.exception.CannotCalculateException;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+import static org.assertj.core.api.Assertions.*;
 
 class ScoreTest {
 
@@ -22,7 +22,7 @@ class ScoreTest {
     @Test
     void 예외() {
         Score score = new Score(10, 2);
-        assertThatIllegalStateException().isThrownBy(() -> score.getValue());
+        assertThatThrownBy(() -> score.getValue()).isInstanceOf(CannotCalculateException.class);
     }
 
     @Test

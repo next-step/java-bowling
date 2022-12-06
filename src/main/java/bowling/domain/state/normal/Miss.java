@@ -3,6 +3,7 @@ package bowling.domain.state.normal;
 import bowling.domain.PinCount;
 import bowling.domain.Score;
 import bowling.domain.state.Finished;
+import bowling.utils.StringUtils;
 
 public class Miss extends Finished {
 
@@ -35,5 +36,10 @@ public class Miss extends Finished {
         }
 
         return beforeScore.add(second);
+    }
+
+    @Override
+    public String getDesc() {
+        return StringUtils.getDesc(first) + "|" + StringUtils.getDesc(second);
     }
 }

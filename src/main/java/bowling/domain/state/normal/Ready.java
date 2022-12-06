@@ -21,4 +21,9 @@ public class Ready extends Running {
     public Score calculateBonusScore(Score beforeScore) {
         throw new CannotCalculateException();
     }
+
+    @Override
+    public String getDesc() {
+        return "  ";
+    }
 }

@@ -1,11 +1,5 @@
 package bowling.view;
 
-import bowling.domain.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
-
 public class OutputView {
 
 //    private static final String MARK = "|";

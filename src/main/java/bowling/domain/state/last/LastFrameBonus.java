@@ -3,37 +3,35 @@ package bowling.domain.state.last;
 import bowling.domain.PinCount;
 import bowling.domain.Score;
 import bowling.domain.state.Finished;
-import bowling.domain.state.Running;
-import bowling.domain.state.State;
-import bowling.domain.state.normal.Miss;
-import bowling.domain.state.normal.Spare;
+import bowling.utils.StringUtils;
 
-import java.text.FieldPosition;
+import java.util.Optional;
 
-public class LastFrameLastBowl extends Finished {
+public class LastFrameBonus extends Finished {
 
     private final PinCount first;
     private final PinCount second;
     private final PinCount last;
 
-    public LastFrameLastBowl(PinCount first, PinCount second, PinCount last) {
+    public LastFrameBonus(PinCount first, PinCount second, PinCount last) {
         this.first = first;
         this.second = second;
         this.last = last;
     }
 
-    public LastFrameLastBowl(PinCount first, PinCount second) {
-        this(first,second, PinCount.of(0));
-    }
-
-    public LastFrameLastBowl(int first, int second, int last) {
+    public LastFrameBonus(int first, int second, int last) {
         this(PinCount.of(first), PinCount.of(second), PinCount.of(last));
     }
 
     @Override
     public Score calculateBonusScore(Score beforeScore) {
-        Score score = beforeScore.add(first).add(second);
-        if (last.isZero()) {
+        Score score = beforeScore.add(first);
+        if (score.canCalculate()) {
+            return score;
+        }
+
+        score = score.add(second);
+        if (score.canCalculate()) {
             return score;
         }
 
@@ -43,5 +41,10 @@ public class LastFrameLastBowl extends Finished {
     @Override
     public Score getScore() {
         return new Score(first.getValue() + second.getValue() + last.getValue(), 0);
+    }
+
+    @Override
+    public String getDesc() {
+        return StringUtils.getDesc(first) + "|" + StringUtils.getSecondDesc(first, second) + "|" + StringUtils.getDesc(last);
     }
 }

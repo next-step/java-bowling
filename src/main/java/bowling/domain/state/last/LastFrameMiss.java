@@ -2,27 +2,23 @@ package bowling.domain.state.last;
 
 import bowling.domain.PinCount;
 import bowling.domain.Score;
+import bowling.domain.state.Finished;
 import bowling.domain.state.Running;
 import bowling.domain.state.State;
 import bowling.utils.StringUtils;
 
-public class LastFrameSecondBowl extends Running {
+public class LastFrameMiss extends Finished {
 
     private final PinCount first;
     private final PinCount second;
 
-    public LastFrameSecondBowl(PinCount first, PinCount second) {
+    public LastFrameMiss(PinCount first, PinCount second) {
         this.first = first;
         this.second = second;
     }
 
-    public LastFrameSecondBowl(int first, int second) {
+    public LastFrameMiss(int first, int second) {
         this(PinCount.of(first), PinCount.of(second));
-    }
-
-    @Override
-    public State next(PinCount last) {
-        return new LastFrameBonus(first, second, last);
     }
 
     @Override
@@ -37,5 +33,10 @@ public class LastFrameSecondBowl extends Running {
     @Override
     public String getDesc() {
         return StringUtils.getDesc(first) + "|" + StringUtils.getSecondDesc(first, second);
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(first.getValue() + second.getValue(), 0);
     }
 }

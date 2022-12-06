@@ -21,7 +21,7 @@ public class InputView {
 
     public static PinCount readPinCount(int roundIndex) {
         System.out.println();
-        System.out.print(String.format("%d 프레인 투구 : ", roundIndex + 1));
+        System.out.printf("%d 프레인 투구 : ", roundIndex + 1);
         PinCount count = PinCount.of(SCANNER.nextInt());
         SCANNER.nextLine();
         return count;

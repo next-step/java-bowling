@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import bowling.domain.frame.LastFrame;
 import bowling.domain.frame.Frame;
@@ -51,6 +51,6 @@ class LastFrameTest {
         frame.bowl(4);
 
         assertThat(frame.isFinish()).isFalse();
-        assertThatThrownBy(() -> frame.getScore()).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> frame.getScore()).isInstanceOf(CannotCalculateException.class);
     }
 }

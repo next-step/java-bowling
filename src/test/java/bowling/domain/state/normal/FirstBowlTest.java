@@ -4,17 +4,17 @@ import bowling.domain.PinCount;
 import bowling.domain.state.State;
 import bowling.domain.state.normal.FirstBowl;
 import bowling.domain.state.normal.Ready;
+import bowling.exception.CannotCalculateException;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+import static org.assertj.core.api.Assertions.*;
 
 class FirstBowlTest {
 
     @Test
     void 생성() {
         State firstBowl = new Ready().next(PinCount.of(5));
-        assertThatIllegalStateException().isThrownBy(() -> firstBowl.getScore());
+        assertThatThrownBy(() -> firstBowl.getScore()).isInstanceOf(CannotCalculateException.class);
     }
 
     @Test

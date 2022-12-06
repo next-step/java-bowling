@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.CannotCalculateException;
+
 import java.util.Objects;
 
 public class Score {
@@ -14,7 +16,7 @@ public class Score {
 
     public int getValue() {
         if (!canCalculate()) {
-            throw new IllegalStateException("계산할수 없는 상태입니다 left " + left);
+            throw new CannotCalculateException("계산할수 없는 상태입니다 " + this);
         }
 
         return value;

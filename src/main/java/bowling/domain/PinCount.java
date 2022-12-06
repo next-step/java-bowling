@@ -34,7 +34,7 @@ public class PinCount {
     }
 
     public boolean isTen() {
-        return value == 10;
+        return value == PinCount.MAX;
     }
     //===================================================================
 

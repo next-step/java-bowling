@@ -13,8 +13,20 @@ public class NormalFrame extends Frame {
         super(no, new Ready());
     }
 
+    public static Frame createFirst() {
+        return new NormalFrame(1);
+    }
+
     @Override
     public Score getScore() {
+        return score.orElseGet(() -> {
+            Score newScore = calculateScore();
+            score = Optional.ofNullable(newScore);
+            return newScore;
+        });
+    }
+
+    private Score calculateScore() {
         Score score = getState().getScore();
         if (score.canCalculate()) {
             return score;

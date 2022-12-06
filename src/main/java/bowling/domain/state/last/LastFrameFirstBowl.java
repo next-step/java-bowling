@@ -4,8 +4,7 @@ import bowling.domain.PinCount;
 import bowling.domain.Score;
 import bowling.domain.state.Running;
 import bowling.domain.state.State;
-import bowling.domain.state.normal.Miss;
-import bowling.domain.state.normal.Spare;
+import bowling.utils.StringUtils;
 
 public class LastFrameFirstBowl extends Running {
 
@@ -22,15 +21,20 @@ public class LastFrameFirstBowl extends Running {
 
     @Override
     public State next(PinCount second) {
-        if (first.isTen() || first.sum(second).isTen()) {
+        if (second.isTen() || first.sum(second).isTen()) {
             return new LastFrameSecondBowl(first, second);
         }
 
-        return new LastFrameLastBowl(first, second);
+        return new LastFrameMiss(first, second);
     }
 
     @Override
     public Score calculateBonusScore(Score beforeScore) {
         return beforeScore.add(first);
+    }
+
+    @Override
+    public String getDesc() {
+        return StringUtils.getDesc(first);
     }
 }

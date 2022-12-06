@@ -20,4 +20,12 @@ public class Result {
     public String getDesc() {
         return desc;
     }
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "score=" + score +
+                ", desc='" + desc + '\'' +
+                '}';
+    }
 }

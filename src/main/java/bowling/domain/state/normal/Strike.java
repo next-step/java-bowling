@@ -18,4 +18,9 @@ public class Strike extends Finished {
         }
         return beforeScore.add(PinCount.of(PinCount.MAX));
     }
+
+    @Override
+    public String getDesc() {
+        return "X";
+    }
 }
