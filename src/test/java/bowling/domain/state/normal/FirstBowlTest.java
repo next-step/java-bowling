@@ -2,12 +2,11 @@ package bowling.domain.state.normal;
 
 import bowling.domain.PinCount;
 import bowling.domain.state.State;
-import bowling.domain.state.normal.FirstBowl;
-import bowling.domain.state.normal.Ready;
 import bowling.exception.CannotCalculateException;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FirstBowlTest {
 

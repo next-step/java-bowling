@@ -1,8 +1,6 @@
 package bowling.domain.frame;
 
 import bowling.domain.Score;
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
 import bowling.exception.CannotCalculateException;
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +13,8 @@ class NormalFrameTest {
     void 점수_미스() {
         NormalFrame frame = new NormalFrame(1);
         frame
-        .bowl(2)
-        .bowl(5);
+                .bowl(2)
+                .bowl(5);
         assertThat(frame.getNo()).isEqualTo(1);
         assertThat(frame.getScore()).isEqualTo(new Score(7, 0));
     }

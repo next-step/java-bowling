@@ -3,8 +3,6 @@ package bowling.domain.state;
 import bowling.domain.PinCount;
 import bowling.domain.Score;
 
-import javax.management.Descriptor;
-
 public interface State {
 
     boolean isFinish();

@@ -4,10 +4,8 @@ import bowling.domain.PinCount;
 import bowling.domain.Score;
 import bowling.domain.state.State;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.annotation.Primary;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by seungwoo.song on 2022-12-05

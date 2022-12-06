@@ -5,7 +5,6 @@ import bowling.domain.Result;
 import bowling.domain.Score;
 import bowling.domain.state.State;
 
-import java.util.Objects;
 import java.util.Optional;
 
 public abstract class Frame {

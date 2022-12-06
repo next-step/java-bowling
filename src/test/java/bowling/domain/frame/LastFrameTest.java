@@ -1,7 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.frame.LastFrame;
-import bowling.domain.frame.Frame;
 import bowling.exception.CannotCalculateException;
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +38,7 @@ class LastFrameTest {
         Frame frame = new LastFrame();
         frame.bowl(4);
         frame.bowl(5);
-        
+
         assertThat(frame.getScore().getValue()).isEqualTo(9);
         assertThat(frame.isFinish()).isTrue();
     }

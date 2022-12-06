@@ -2,15 +2,10 @@ package bowling.domain;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
-import bowling.domain.state.last.LastFrameSecondBowl;
 import bowling.exception.CannotCalculateException;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Bowling {
 
@@ -60,7 +55,7 @@ public class Bowling {
 
     private boolean isGameEnd() {
         Frame frame = getLastFrame();
-        return frame.getNo() == 10 && frame.isFinish() ;
+        return frame.getNo() == 10 && frame.isFinish();
     }
 
     @Override

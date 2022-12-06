@@ -5,8 +5,6 @@ import bowling.domain.Score;
 import bowling.domain.state.Finished;
 import bowling.utils.StringUtils;
 
-import java.util.Optional;
-
 public class LastFrameBonus extends Finished {
 
     private final PinCount first;

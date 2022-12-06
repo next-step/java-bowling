@@ -1,6 +1,5 @@
 package bowling.domain.state.normal;
 
-import bowling.domain.state.normal.Ready;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

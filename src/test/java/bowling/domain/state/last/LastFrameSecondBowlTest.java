@@ -20,13 +20,13 @@ class LastFrameSecondBowlTest {
 
     @Test
     void 스페어() {
-        State state = new LastFrameSecondBowl(5,5);
+        State state = new LastFrameSecondBowl(5, 5);
         assertThat(state.getDesc()).isEqualTo("5|/");
     }
 
     @Test
     void 미스() {
-        State state = new LastFrameSecondBowl(2,5);
+        State state = new LastFrameSecondBowl(2, 5);
         assertThat(state.getDesc()).isEqualTo("2|5");
     }
 }

@@ -3,8 +3,6 @@ package bowling.domain.state.normal;
 import bowling.domain.PinCount;
 import bowling.domain.Score;
 import bowling.domain.state.State;
-import bowling.domain.state.normal.FirstBowl;
-import bowling.domain.state.normal.Spare;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

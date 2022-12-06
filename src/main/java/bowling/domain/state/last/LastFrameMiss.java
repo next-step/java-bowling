@@ -3,8 +3,6 @@ package bowling.domain.state.last;
 import bowling.domain.PinCount;
 import bowling.domain.Score;
 import bowling.domain.state.Finished;
-import bowling.domain.state.Running;
-import bowling.domain.state.State;
 import bowling.utils.StringUtils;
 
 public class LastFrameMiss extends Finished {

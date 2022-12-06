@@ -1,6 +1,5 @@
 package bowling.domain.state.last;
 
-import bowling.domain.PinCount;
 import bowling.domain.frame.LastFrame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.state.State;
