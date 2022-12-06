@@ -3,13 +3,9 @@ package bowling.domain.frame;
 import bowling.domain.Point;
 import bowling.domain.Score;
 import bowling.domain.state.Ready;
-import bowling.domain.state.State;
 import bowling.exception.DoNotHaveEnoughPointsException;
 
-import java.util.List;
-
 public class NormalFrame extends AbstractFrame {
-    private State state;
     private Frame next;
 
     public NormalFrame(int order) {
@@ -39,11 +35,6 @@ public class NormalFrame extends AbstractFrame {
     }
 
     @Override
-    public List<Point> getPoints() {
-        return state.getPoints();
-    }
-
-    @Override
     public Point calculateTotalPoint() {
         Score score = state.score();
         if (score.canReceiveExtraPoint()) {
@@ -68,4 +59,8 @@ public class NormalFrame extends AbstractFrame {
         return next.calculateExtraPoint(score);
     }
 
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.StringJoiner;
 
 public class OutputView {
-    public static void printBoard(Player player) {
+    public static void printBoard(List<Player> players) {
         System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
-        printPoints(player);
-        printTotalPoints(player);
+        for (Player player : players) {
+            printPoints(player);
+            printTotalPoints(player);
+        }
         System.out.println();
     }
 

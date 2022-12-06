@@ -17,4 +17,6 @@ public interface Frame {
     Score calculateExtraPoint(Score score);
 
     int getOrder();
+
+    boolean isFinished();
 }

@@ -3,14 +3,9 @@ package bowling.domain.frame;
 import bowling.domain.Point;
 import bowling.domain.Score;
 import bowling.domain.state.LastState;
-import bowling.domain.state.State;
 import bowling.exception.DoNotHaveEnoughPointsException;
 
-import java.util.List;
-
 public class LastFrame extends AbstractFrame {
-    private State state;
-
     public LastFrame(int order) {
         super(order);
         this.state = new LastState();
@@ -19,15 +14,10 @@ public class LastFrame extends AbstractFrame {
     @Override
     public Frame bowl(Point point) {
         state = state.bowl(point);
-        if (state.isFinished()) {
+        if (isFinished()) {
             return null;
         }
         return this;
-    }
-
-    @Override
-    public List<Point> getPoints() {
-        return state.getPoints();
     }
 
     @Override
@@ -42,6 +32,11 @@ public class LastFrame extends AbstractFrame {
             throw new DoNotHaveEnoughPointsException();
         }
         return score;
+    }
+
+    @Override
+    public boolean isFinished() {
+        return state.isFinished();
     }
 
 }
