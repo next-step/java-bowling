@@ -4,6 +4,7 @@ import bowling.domain.PinCount;
 import bowling.domain.Score;
 import bowling.domain.state.Running;
 import bowling.domain.state.State;
+import bowling.exception.CannotCalculateException;
 import bowling.utils.StringUtils;
 
 public class LastFrameFirstBowl extends Running {
@@ -30,7 +31,12 @@ public class LastFrameFirstBowl extends Running {
 
     @Override
     public Score calculateBonusScore(Score beforeScore) {
-        return beforeScore.add(first);
+        Score score = beforeScore.add(first);
+        if (score.canCalculate()) {
+            return score;
+        }
+
+        throw new CannotCalculateException();
     }
 
     @Override

@@ -3,6 +3,7 @@ package bowling.domain.state.last;
 import bowling.domain.PinCount;
 import bowling.domain.Score;
 import bowling.domain.state.Finished;
+import bowling.exception.CannotCalculateException;
 import bowling.utils.StringUtils;
 
 public class LastFrameMiss extends Finished {
@@ -25,7 +26,13 @@ public class LastFrameMiss extends Finished {
         if (score.canCalculate()) {
             return score;
         }
-        return score.add(second);
+
+        score = score.add(second);
+        if (score.canCalculate()) {
+            return score;
+        }
+
+        throw new CannotCalculateException();
     }
 
     @Override

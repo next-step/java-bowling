@@ -18,7 +18,7 @@ class BowlingTest {
         bowling.bowl(PinCount.of(1));
         bowling.bowl(PinCount.of(1));
 
-        assertThat(bowling.createResults()).hasSize(2);
+        assertThat(bowling.createResults()).hasSize(3);
     }
 
     @Test
@@ -38,7 +38,7 @@ class BowlingTest {
         bowling.bowl(10);
 
         List<Result> results = bowling.createResults();
-        //results.forEach(System.out::println);
+        results.forEach(System.out::println);
         assertThat(results).hasSize(10);
     }
 
