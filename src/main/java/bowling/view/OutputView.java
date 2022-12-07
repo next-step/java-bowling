@@ -2,7 +2,6 @@ package bowling.view;
 
 import bowling.domain.Name;
 import bowling.domain.Result;
-import bowling.domain.frame.Frame;
 
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class OutputView {
         StringBuilder sb = new StringBuilder();
 
         sb.append(MARK);
-        sb.append(String.format(" NAME "));
+        sb.append(" NAME ");
 
         for (int i = 1; i <= 10; i++) {
             sb.append(MARK);
@@ -50,7 +49,7 @@ public class OutputView {
             }
             total += score;
 
-            sb.append(rpad(total+""));
+            sb.append(rpad(total + ""));
         }
 
         addEmptyMark(results, sb);
@@ -81,19 +80,6 @@ public class OutputView {
         sb.append(MARK);
     }
 
-    private int getScore(int index, List<Result> results) {
-        if (isMaxOver(results.size(), index)) {
-            return Frame.IN_VALID_SCORE;
-        }
-
-        int score = results.get(index).getScore();
-        if (score == Frame.IN_VALID_SCORE) {
-            return Frame.IN_VALID_SCORE;
-        }
-
-        return score;
-    }
-
     private static String lpadZero(int round) {
         if (round == FINAL_ROUND) {
             return round + "";
@@ -113,6 +99,6 @@ public class OutputView {
         for (int i = 0; i < cnt; i++) {
             sb.append(" ");
         }
-        return "  "+ scoreMark + sb;
+        return "  " + scoreMark + sb;
     }
 }

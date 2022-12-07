@@ -5,7 +5,6 @@ import bowling.domain.Result;
 import bowling.domain.Score;
 import bowling.domain.state.State;
 import bowling.exception.CannotCalculateException;
-import org.hibernate.cache.CacheException;
 
 import java.util.Optional;
 
@@ -16,7 +15,7 @@ public abstract class Frame {
     protected Frame next;
     protected Optional<Score> score = Optional.empty();
 
-    public Frame(int no, State state) {
+    protected Frame(int no, State state) {
         this.no = no;
         this.state = state;
     }
@@ -51,9 +50,9 @@ public abstract class Frame {
 
     public abstract Score getScore();
 
-    abstract protected Score calculateBonusScore(Score score);
+    protected abstract Score calculateBonusScore(Score score);
 
-    abstract public Frame bowl(PinCount pinCount);
+    public abstract Frame bowl(PinCount pinCount);
 
     @Override
     public String toString() {

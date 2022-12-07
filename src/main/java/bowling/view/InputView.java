@@ -14,8 +14,7 @@ public class InputView {
 
     public static Name readName() {
         System.out.print("플레이어 이름은(3 english letters)?: ");
-        Name name = Name.of(SCANNER.nextLine());
-        return name;
+        return Name.of(SCANNER.nextLine());
 
     }
 

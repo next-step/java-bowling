@@ -2,9 +2,6 @@ package bowling.utils;
 
 import bowling.domain.PinCount;
 
-/**
- * Created by seungwoo.song on 2022-12-01
- */
 public class StringUtils {
 
     private StringUtils() {

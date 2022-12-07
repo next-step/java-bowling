@@ -40,7 +40,7 @@ public class NormalFrame extends Frame {
 
         return Optional.ofNullable(getNext())
                 .map(f -> f.calculateBonusScore(score))
-                .orElseThrow(() -> new CannotCalculateException());
+                .orElseThrow(CannotCalculateException::new);
     }
 
     @Override

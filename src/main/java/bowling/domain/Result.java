@@ -1,8 +1,5 @@
 package bowling.domain;
 
-/**
- * Created by seungwoo.song on 2022-12-01
- */
 public class Result {
 
     private final int score;
