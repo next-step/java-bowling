@@ -10,11 +10,17 @@ import java.util.List;
 public class Bowling {
 
     private final List<Frame> frames;
+    private final Name name;
 
-    public Bowling() {
+    public Bowling(Name name) {
         List<Frame> frames = new ArrayList<>();
         frames.add(new NormalFrame(1));
         this.frames = frames;
+        this.name = name;
+    }
+
+    public Bowling(String name) {
+        this(Name.of(name));
     }
 
     public void bowl(int pinCount) {
@@ -61,7 +67,7 @@ public class Bowling {
                 '}';
     }
 
-    public int getCurrentFrameNo() {
-        return getLastFrame().getNo();
+    public Name getName() {
+        return name;
     }
 }

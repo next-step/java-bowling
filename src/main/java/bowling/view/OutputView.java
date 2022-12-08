@@ -1,5 +1,7 @@
 package bowling.view;
 
+import bowling.domain.Bowling;
+import bowling.domain.Bowlings;
 import bowling.domain.Name;
 import bowling.domain.Result;
 
@@ -27,10 +29,16 @@ public class OutputView {
         return sb.toString();
     }
 
-    public void print(Name name, List<Result> results) {
+    public void print(Bowlings bowlings) {
+        bowlings.forEach(this::print);
+    }
+
+    public void print(Bowling bowling) {
+        List<Result> results = bowling.createResults();
         System.out.println(header);
-        System.out.println(getDesc(name, results));
+        System.out.println(getDesc(bowling.getName(), results));
         System.out.println(getScore(results));
+
     }
 
     private String getScore(List<Result> results) {
