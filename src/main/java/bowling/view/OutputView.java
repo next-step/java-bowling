@@ -1,52 +1,83 @@
 package bowling.view;
 
-import bowling.domain.*;
+import bowling.domain.Name;
+import bowling.domain.Result;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class OutputView {
 
     private static final String MARK = "|";
+
     private static final int FINAL_ROUND = 10;
-    private static final String EMPTY_MARK = "      ";
-
+    private static final String EMPTY_MARK = "       ";
     private final String header = getHeader();
-
-    public static OutputView init() {
-        return new OutputView();
-    }
 
     private String getHeader() {
         StringBuilder sb = new StringBuilder();
 
         sb.append(MARK);
-        sb.append(String.format(" NAME "));
+        sb.append(" NAME ");
 
         for (int i = 1; i <= 10; i++) {
             sb.append(MARK);
-            sb.append(String.format(" %s   ", lpadZero(i)));
+            sb.append(String.format("  %s   ", lpadZero(i)));
         }
         sb.append(MARK);
         return sb.toString();
     }
 
-    public void print(Name name, Frames frames) {
+    public void print(Name name, List<Result> results) {
         System.out.println(header);
-        System.out.println(getBody(name, frames));
+        System.out.println(getDesc(name, results));
+        System.out.println(getScore(results));
     }
 
-    private String getBody(Name name, Frames frames) {
+    private String getScore(List<Result> results) {
+        int total = 0;
+        StringBuilder sb = new StringBuilder();
+        sb.append(MARK);
+        sb.append("      ");
+
+        for (Result result : results) {
+            sb.append(MARK);
+
+            int score = result.getScore();
+            if (score == -1) {
+                sb.append(EMPTY_MARK);
+                continue;
+            }
+            total += score;
+
+            sb.append(rpad(total + ""));
+        }
+
+        addEmptyMark(results, sb);
+        return sb.toString();
+    }
+
+    private String getDesc(Name name, List<Result> results) {
         StringBuilder sb = new StringBuilder();
         sb.append(MARK);
         sb.append(String.format("  %s ", name));
 
-        for (int i = 0; i < 10; i++) {
+        for (Result result : results) {
             sb.append(MARK);
-            sb.append(getFrameScore(frames, i));
+            sb.append(rpad(result.getDesc()));
+        }
+
+        addEmptyMark(results, sb);
+        return sb.toString();
+    }
+
+    private void addEmptyMark(List<Result> results, StringBuilder sb) {
+        int cntEmpty = 10 - results.size();
+
+        for (int i = 0; i < cntEmpty; i++) {
+            sb.append(MARK);
+            sb.append(EMPTY_MARK);
         }
         sb.append(MARK);
-        return sb.toString();
     }
 
     private static String lpadZero(int round) {
@@ -57,58 +88,17 @@ public class OutputView {
         return "0" + round;
     }
 
-    private String getFrameScore(Frames frames, int index) {
-        if (index > frames.size() - 1) {
-            return EMPTY_MARK;
-        }
-
-        Frame frame = frames.get(index);
-        if (frame.getRound() == 0) {
-            return EMPTY_MARK;
-        }
-
-        return formatScore(getNormalFrameScore(frame));
+    private boolean isMaxOver(int size, int index) {
+        return index > (size - 1);
     }
 
-    private String formatScore(String scoreMark) {
-        return " " + rpad(scoreMark, MARK);
-    }
-
-    private String rpad(String scoreMark, String mark) {
+    private String rpad(String scoreMark) {
         StringBuilder sb = new StringBuilder();
 
         int cnt = 5 - scoreMark.length();
         for (int i = 0; i < cnt; i++) {
             sb.append(" ");
         }
-        return scoreMark + sb;
-    }
-
-    private String getNormalFrameScore(Frame frame) {
-        List<String> list = new ArrayList<>();
-        for (RollingResult rollingResult : frame) {
-            list.add(getScoreMark(rollingResult));
-        }
-
-        return String.join(MARK, list);
-    }
-
-    private String getScoreMark(RollingResult rollingResult) {
-        Result result = rollingResult.getResult();
-        int count = rollingResult.getCount();
-
-        if (Result.STRIKE == result) {
-            return "X";
-        }
-
-        if (Result.SPARE == result) {
-            return "/";
-        }
-
-        if (Result.GUTTER == result) {
-            return "-";
-        }
-
-        return count + "";
+        return "  " + scoreMark + sb;
     }
 }

@@ -1,111 +1,88 @@
 package bowling.domain;
 
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.LastFrame;
+import bowling.domain.frame.NormalFrame;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Created by seungwoo.song on 2022-12-01
+ */
 class ResultTest {
+
     @Test
-    void 처음_스트라이크() {
-        Result result = Result.from(Frame.createNormal(), 10);
-        assertThat(result).isEqualTo(Result.STRIKE);
+    void 스트라이크_노말() {
+        Frame frame = new NormalFrame(1);
+        frame.bowl(10)
+                .bowl(1)
+                .bowl(1);
+
+        Result result = frame.createResult();
+
+        assertThat(result.getScore()).isEqualTo(12);
+        assertThat(result.getDesc()).isEqualTo("X");
     }
 
     @Test
-    void 처음_거터() {
-        Result result = Result.from(Frame.createNormal(), 0);
-        assertThat(result).isEqualTo(Result.GUTTER);
+    void 스페어_노말() {
+        Frame frame = new NormalFrame(1);
+        frame.bowl(4)
+                .bowl(6)
+                .bowl(1);
+        Result result = frame.createResult();
+
+        assertThat(result.getScore()).isEqualTo(11);
+        assertThat(result.getDesc()).isEqualTo("4|/");
     }
 
     @Test
-    void 처음_미스() {
-        Result result = Result.from(Frame.createNormal(), 8);
-        assertThat(result).isEqualTo(Result.MISS);
+    void 미스_노말() {
+        Frame frame = new NormalFrame(1);
+        frame.bowl(4).bowl(3);
+        Result result = frame.createResult();
+
+        assertThat(result.getScore()).isEqualTo(7);
+        assertThat(result.getDesc()).isEqualTo("4|3");
     }
 
     @Test
-    void 다음_스페어() {
-        Frame frame = Frame.createNormal();
-        frame.bowling(5);
+    void 마지막_미스() {
+        Frame frame = new LastFrame();
+        frame.bowl(3)
+                .bowl(2);
+        Result result = frame.createResult();
 
-        Result result = Result.from(frame, 5);
-
-        assertThat(result).isEqualTo(Result.SPARE);
+        assertThat(frame.isFinish()).isTrue();
+        assertThat(result.getScore()).isEqualTo(5);
+        assertThat(result.getDesc()).isEqualTo("3|2");
     }
 
     @Test
-    void 다음_에러_스트라이크() {
-        Frame frame = Frame.createNormal();
-        frame.bowling(5);
-        assertThatIllegalArgumentException().isThrownBy(() -> Result.from(frame, 10));
+    void 마지막_3스트라이크() {
+        Frame frame = new LastFrame();
+        frame.bowl(10)
+                .bowl(10)
+                .bowl(10);
+        Result result = frame.createResult();
+
+        assertThat(frame.isFinish()).isTrue();
+        assertThat(result.getScore()).isEqualTo(30);
+        assertThat(result.getDesc()).isEqualTo("X|X|X");
     }
 
     @Test
-    void 다음_거터() {
-        Frame frame = Frame.createNormal();
-        frame.bowling(5);
+    void 마지막_스페어() {
+        Frame frame = new LastFrame();
+        frame.bowl(4)
+                .bowl(6)
+                .bowl(10);
+        Result result = frame.createResult();
 
-        Result result = Result.from(frame, 0);
-
-        assertThat(result).isEqualTo(Result.GUTTER);
-    }
-
-    @Test
-    void 다음_미스() {
-        Frame frame = Frame.createNormal();
-        frame.bowling(5);
-
-        Result result = Result.from(frame, 2);
-
-        assertThat(result).isEqualTo(Result.MISS);
-    }
-
-    @Test
-    void 마지막프레임_3스트라이크() {
-        Frame frame = Frame.createFinal();
-        frame.bowling(10);
-        assertThat(frame.isEnd()).isFalse();
-        frame.bowling(10);
-        assertThat(frame.isEnd()).isFalse();
-        frame.bowling(10);
-        assertThat(frame.isEnd()).isTrue();
-
-        assertThat(frame.getResult(0)).isEqualTo(Result.STRIKE);
-        assertThat(frame.getResult(1)).isEqualTo(Result.STRIKE);
-        assertThat(frame.getResult(2)).isEqualTo(Result.STRIKE);
-    }
-
-    @Test
-    void 마지막프레임_스페어_스트라이크() {
-        Frame frame = Frame.createFinal();
-        frame.bowling(5);
-        frame.bowling(5);
-        assertThat(frame.isEnd()).isFalse();
-
-        frame.bowling(10);
-        assertThat(frame.isEnd()).isTrue();
-
-        assertThat(frame.getResult(0)).isEqualTo(Result.MISS);
-        assertThat(frame.getResult(1)).isEqualTo(Result.SPARE);
-        assertThat(frame.getResult(2)).isEqualTo(Result.STRIKE);
-    }
-
-    @Test
-    void 마지막프레임_스페어_스트라이크2() {
-        Frame frame = Frame.createFinal();
-        frame.bowling(5);
-        frame.bowling(3);
-        assertThat(frame.isEnd()).isTrue();
-        assertThat(frame.getResult(0)).isEqualTo(Result.MISS);
-        assertThat(frame.getResult(1)).isEqualTo(Result.MISS);
-
-        assertThatIllegalStateException().isThrownBy(() -> frame.bowling(10));
-    }
-
-    @Test
-    void 마지막프레임_예외() {
-        Frame frame = Frame.createFinal();
-        frame.bowling(5);
-        assertThatIllegalArgumentException().isThrownBy(() -> frame.bowling(10));
+        assertThat(frame.isFinish()).isTrue();
+        assertThat(result.getScore()).isEqualTo(20);
+        assertThat(result.getDesc()).isEqualTo("4|/|X");
     }
 }
+

@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.Frames;
+import bowling.domain.Bowling;
 import bowling.domain.Name;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -10,27 +10,40 @@ class OutputViewTest {
 
     @Test
     void 생성() {
-        Frames frames = Frames.init();
-        OutputView outputView = OutputView.init();
-        frames.bowling(5);
-        frames.bowling(5);
-        frames.bowling(2);
-        frames.bowling(3);
-        frames.bowling(5);
-        frames.bowling(5);
-        frames.bowling(10);
-        frames.bowling(5);
-        frames.bowling(3);
-        frames.bowling(0);
-        frames.bowling(10);
-        frames.bowling(0);
-        frames.bowling(10);
-        frames.bowling(10);
-        frames.bowling(10);
-        frames.bowling(10);
-        frames.bowling(10);
-        frames.bowling(10);
+        Bowling bowling = new Bowling();
+        OutputView outputView = new OutputView();
+        //1
+        bowlingAndPrint(bowling, outputView, 5);
+        bowlingAndPrint(bowling, outputView, 5);
+        //2
+        bowlingAndPrint(bowling, outputView, 2);
+        bowlingAndPrint(bowling, outputView, 3);
+        //3
+        bowlingAndPrint(bowling, outputView, 5);
+        bowlingAndPrint(bowling, outputView, 5);
+        //4
+        bowlingAndPrint(bowling, outputView, 10);
+        //5
+        bowlingAndPrint(bowling, outputView, 5);
+        bowlingAndPrint(bowling, outputView, 3);
+        //6
+        bowlingAndPrint(bowling, outputView, 0);
+        bowlingAndPrint(bowling, outputView, 10);
+        //7
+        bowlingAndPrint(bowling, outputView, 0);
+        bowlingAndPrint(bowling, outputView, 10);
+        //8
+        bowlingAndPrint(bowling, outputView, 10);
+        //9
+        bowlingAndPrint(bowling, outputView, 10);
+        //10
+        bowlingAndPrint(bowling, outputView, 5);
+        bowlingAndPrint(bowling, outputView, 5);
+        bowlingAndPrint(bowling, outputView, 10);
+    }
 
-        outputView.print(Name.of("abc"), frames);
+    private void bowlingAndPrint(Bowling bowling, OutputView outputView, int count) {
+        bowling.bowl(count);
+        outputView.print(Name.of("abc"), bowling.createResults());
     }
 }

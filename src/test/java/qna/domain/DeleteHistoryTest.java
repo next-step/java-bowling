@@ -1,10 +1,6 @@
 package qna.domain;
 
-import org.junit.jupiter.api.Test;
-
 import java.time.LocalDateTime;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Created by seungwoo.song on 2022-11-08

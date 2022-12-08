@@ -2,7 +2,7 @@ package bowling.domain;
 
 public class PinCount {
 
-    private static final int MAX = 10;
+    public static final int MAX = 10;
     private static final int MIN = 0;
     private final int value;
 
@@ -29,6 +29,13 @@ public class PinCount {
         return value == 0;
     }
 
+    public PinCount sum(PinCount pinCount) {
+        return PinCount.of(value + pinCount.getValue());
+    }
+
+    public boolean isTen() {
+        return value == PinCount.MAX;
+    }
     //===================================================================
 
 
@@ -50,13 +57,5 @@ public class PinCount {
     @Override
     public String toString() {
         return value + "";
-    }
-
-    public int sum(PinCount pinCount) {
-        return value + pinCount.getValue();
-    }
-
-    public boolean isTen() {
-        return value == 10;
     }
 }

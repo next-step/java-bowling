@@ -21,7 +21,7 @@ class PinCountTest {
 
     @Test
     void 합() {
-        int result = PinCount.of(5).sum(PinCount.of(5));
+        int result = PinCount.of(5).sum(PinCount.of(5)).getValue();
         assertThat(result).isEqualTo(10);
     }
 }
