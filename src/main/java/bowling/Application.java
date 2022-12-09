@@ -1,7 +1,6 @@
 package bowling;
 
-import bowling.domain.Bowling;
-import bowling.domain.Name;
+import bowling.domain.Bowlings;
 import bowling.domain.PinCount;
 import bowling.view.InputView;
 import bowling.view.OutputView;
@@ -9,16 +8,16 @@ import bowling.view.OutputView;
 public class Application {
 
     public static void main(String[] args) {
-        Name name = InputView.readName();
 
-        Bowling bowling = new Bowling();
         OutputView outputView = new OutputView();
+        Bowlings bowlings = new Bowlings(InputView.readName(InputView.readPlayerCount()));
 
-        while (!bowling.isGameEnd()) {
-            PinCount pinCount = InputView.readPinCount(bowling.getCurrentFrameNo());
-
-            bowling.bowl(pinCount.getValue());
-            outputView.print(name, bowling.createResults());
+        while (bowlings.isGameNotEnd()) {
+            bowlings.forEach(bowling -> {
+                PinCount pinCount = InputView.readPinCount(bowling.getName());
+                bowling.bowl(pinCount.getValue());
+                outputView.print(bowlings);
+            });
         }
 
     }

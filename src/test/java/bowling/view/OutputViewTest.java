@@ -10,7 +10,7 @@ class OutputViewTest {
 
     @Test
     void 생성() {
-        Bowling bowling = new Bowling();
+        Bowling bowling = new Bowling("kim");
         OutputView outputView = new OutputView();
         //1
         bowlingAndPrint(bowling, outputView, 5);
@@ -44,6 +44,6 @@ class OutputViewTest {
 
     private void bowlingAndPrint(Bowling bowling, OutputView outputView, int count) {
         bowling.bowl(count);
-        outputView.print(Name.of("abc"), bowling.createResults());
+        outputView.print(bowling);
     }
 }

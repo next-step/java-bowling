@@ -13,7 +13,7 @@ class BowlingTest {
 
     @Test
     void 게임실행1() {
-        Bowling bowling = new Bowling();
+        Bowling bowling = new Bowling("kim");
         bowling.bowl(PinCount.of(10));
         bowling.bowl(PinCount.of(1));
         bowling.bowl(PinCount.of(1));
@@ -23,7 +23,7 @@ class BowlingTest {
 
     @Test
     void 게임실행2() {
-        Bowling bowling = new Bowling();
+        Bowling bowling = new Bowling("kim");
         bowling.bowl(10);
         bowling.bowl(10);
         bowling.bowl(10);
@@ -44,7 +44,7 @@ class BowlingTest {
 
     @Test
     void 게임실행3() {
-        Bowling bowling = new Bowling();
+        Bowling bowling = new Bowling("kim");
         bowling.bowl(1);
         bowling.bowl(2);
 
@@ -74,5 +74,13 @@ class BowlingTest {
         List<Result> results = bowling.createResults();
         results.forEach(System.out::println);
         assertThat(results).hasSize(10);
+    }
+
+
+    @Test
+    void 생성() {
+        Bowling bowling = new Bowling(Name.of("abc"));
+        Name name = bowling.getName();
+        assertThat(name).isEqualTo(Name.of("abc"));
     }
 }
