@@ -2,7 +2,7 @@ package bowling.model.state;
 
 import bowling.model.Pin;
 
-public class First implements State {
+public class First extends Running {
 
     private final Pin pin;
 
@@ -10,6 +10,7 @@ public class First implements State {
         this.pin = pin;
     }
 
+    @Override
     public State bowl(Pin pin) {
         if (this.pin.isClearAll(pin)) {
             return new Spare(this.pin, pin);

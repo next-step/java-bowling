@@ -2,7 +2,7 @@ package bowling.model.state;
 
 import bowling.model.Pin;
 
-public class Spare implements State {
+public class Spare extends Finished {
 
     private final Pin firstPin;
     private final Pin secondPin;

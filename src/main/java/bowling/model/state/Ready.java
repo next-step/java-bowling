@@ -2,8 +2,9 @@ package bowling.model.state;
 
 import bowling.model.Pin;
 
-public class Ready implements State {
+public class Ready extends Running {
 
+    @Override
     public State bowl(Pin pin) {
         if (pin.isClearAll()) {
             return new Strike();

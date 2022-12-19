@@ -1,6 +1,6 @@
 package bowling.model.state;
 
-public class Strike implements State {
+public class Strike extends Finished {
 
 
 }
