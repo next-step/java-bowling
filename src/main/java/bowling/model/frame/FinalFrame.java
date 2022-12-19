@@ -18,7 +18,7 @@ public class FinalFrame implements Frame {
     @Override
     public void bowl(Pin pin) {
         roundNumber++;
-        State currentState = states.get(states.size() - 1);
+        State currentState = getCurrentState();
         State state = currentState.bowl(pin);
         states.remove(states.size() - 1);
         states.add(state);
@@ -26,6 +26,10 @@ public class FinalFrame implements Frame {
         if (state.isFinished()) {
             states.add(new Ready());
         }
+    }
+
+    private State getCurrentState() {
+        return states.get(states.size() - 1);
     }
 
     @Override
@@ -37,5 +41,25 @@ public class FinalFrame implements Frame {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Frame nextFrame() {
+        throw new IllegalStateException("마지막 프레임입니다.");
+    }
+
+    @Override
+    public boolean isFinalFrame() {
+        return true;
+    }
+
+    @Override
+    public int getNumber() {
+        return 10;
+    }
+
+    @Override
+    public State getState() {
+        return getCurrentState();
     }
 }

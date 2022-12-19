@@ -32,6 +32,7 @@ public class NormalFrame implements Frame {
         return state.isFinished();
     }
 
+    @Override
     public Frame nextFrame() {
         if (isLastFrame()){
             return new FinalFrame();
@@ -39,14 +40,21 @@ public class NormalFrame implements Frame {
         return new NormalFrame(number + 1);
     }
 
+    @Override
+    public boolean isFinalFrame() {
+        return false;
+    }
+
     private boolean isLastFrame() {
         return number == LAST_FRAME_NUMBER;
     }
 
+    @Override
     public int getNumber() {
         return number;
     }
 
+    @Override
     public State getState() {
         return state;
     }
