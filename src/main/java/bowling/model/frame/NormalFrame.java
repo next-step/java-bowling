@@ -22,10 +22,12 @@ public class NormalFrame implements Frame {
         return new NormalFrame(FIRST_FRAME_NUMBER);
     }
 
+    @Override
     public void bowl(Pin pin) {
         state = state.bowl(pin);
     }
 
+    @Override
     public boolean isFinished() {
         return state.isFinished();
     }

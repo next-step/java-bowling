@@ -15,6 +15,7 @@ public class FinalFrame implements Frame {
         states.add(new Ready());
     }
 
+    @Override
     public void bowl(Pin pin) {
         roundNumber++;
         State currentState = states.get(states.size() - 1);
@@ -27,6 +28,7 @@ public class FinalFrame implements Frame {
         }
     }
 
+    @Override
     public boolean isFinished() {
         if (roundNumber == 3) {
             return true;
