@@ -1,15 +1,26 @@
 package bowling.model;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Pin {
 
     public static final String INVALID_PIN_MESSAGE = "유효한 핀의 개수는 0~10개 입니다.";
     public static final int MIN_PIN = 0;
     public static final int MAX_PIN = 10;
+    private static final Map<Integer, Pin> pins = new HashMap<>();
+
+    static {
+        for (int i = MIN_PIN; i <= MAX_PIN; i++) {
+            pins.put(i, new Pin(i));
+        }
+    }
+
     private final int pin;
 
-    public Pin(int pin) {
+    private Pin(int pin) {
         validate(pin);
         this.pin = pin;
     }
@@ -18,6 +29,11 @@ public class Pin {
         if (!isValidPin(pin)) {
             throw new IllegalArgumentException(INVALID_PIN_MESSAGE);
         }
+    }
+
+    public static Pin of(int pin) {
+        return Optional.ofNullable(pins.get(pin))
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_PIN_MESSAGE));
     }
 
     private boolean isValidPin(int pin) {

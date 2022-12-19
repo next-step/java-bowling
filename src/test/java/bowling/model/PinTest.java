@@ -13,8 +13,8 @@ class PinTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 10})
     void createPin(int input) {
-        Pin pin = new Pin(input);
-        assertThat(pin).isEqualTo(new Pin(input));
+        Pin pin = Pin.of(input);
+        assertThat(pin).isEqualTo(Pin.of(input));
     }
 
     @DisplayName("핀의 개수가 0~10 사이가 아닐 경우 예외가 발생한다.")
@@ -23,7 +23,7 @@ class PinTest {
     void validatePin(int input) {
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> {
-                    new Pin(input);
+                    Pin.of(input);
                 });
     }
 
