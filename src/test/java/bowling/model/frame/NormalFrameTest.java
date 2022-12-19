@@ -66,4 +66,18 @@ class NormalFrameTest {
 
         assertThat(normalFrame.isFinished()).isTrue();
     }
+
+    @Test
+    @DisplayName("다음 프레임이 생성될 때 프레임 번호가 증가한다.")
+    void nextFrame() {
+        NormalFrame frame = (NormalFrame) normalFrame.nextFrame();
+        assertThat(frame.getNumber()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("프레임 번호가 9이면 마지막 프레임이 생성된다.")
+    void lastFrame() {
+        NormalFrame normalFrame = new NormalFrame(9);
+        assertThat(normalFrame.nextFrame()).isInstanceOf(FinalFrame.class);
+    }
 }
