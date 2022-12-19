@@ -40,6 +40,10 @@ public class Pin {
         return MIN_PIN <= pin && pin <= MAX_PIN;
     }
 
+    public boolean isClearAll() {
+        return pin == MAX_PIN;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
