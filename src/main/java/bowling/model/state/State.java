@@ -5,4 +5,6 @@ import bowling.model.Pin;
 public interface State {
 
     State bowl(Pin pin);
+
+    boolean isFinished();
 }

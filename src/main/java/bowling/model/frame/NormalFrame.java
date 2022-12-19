@@ -25,6 +25,10 @@ public class NormalFrame implements Frame {
         state = state.bowl(pin);
     }
 
+    public boolean isFinished(){
+        return state.isFinished();
+    }
+
     public int getNumber() {
         return number;
     }
