@@ -36,12 +36,19 @@ public class Pin {
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_PIN_MESSAGE));
     }
 
-    private boolean isValidPin(int pin) {
-        return MIN_PIN <= pin && pin <= MAX_PIN;
-    }
 
     public boolean isClearAll() {
         return pin == MAX_PIN;
+    }
+
+    public boolean isClearAll(Pin secondPin) {
+        int totalPins = this.pin + secondPin.pin;
+        validate(totalPins);
+        return totalPins == MAX_PIN;
+    }
+
+    private boolean isValidPin(int pin) {
+        return MIN_PIN <= pin && pin <= MAX_PIN;
     }
 
     @Override
