@@ -15,19 +15,19 @@ public class Frames {
     }
 
     public void bowl(Pin pin) {
-       Frame frame = getCurrentFrame();
+        Frame frame = getCurrentFrame();
         frame.bowl(pin);
     }
 
     public Frame nextFrame() {
         Frame frame = getCurrentFrame();
-        if(isFinished(frame)){
+        if (isFinished(frame)) {
             frames.add(frame.nextFrame());
         }
         return getCurrentFrame();
     }
 
-    private static boolean isFinished(Frame frame) {
+    private boolean isFinished(Frame frame) {
         return frame.isFinished() && !frame.isFinalFrame();
     }
 
@@ -37,6 +37,10 @@ public class Frames {
 
     public Frame getCurrentFrame() {
         return frames.get(frames.size() - 1);
+    }
+
+    public int getCurrentFrameNumber() {
+        return getCurrentFrame().getNumber();
     }
 
     public List<Frame> getFrames() {

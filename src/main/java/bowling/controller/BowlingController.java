@@ -13,5 +13,7 @@ public class BowlingController {
         Frames frames = new Frames();
         OutputView.printBowlResult(player, frames);
 
+       InputView.inputPinNumber(frames.getCurrentFrameNumber());
+
     }
 }
