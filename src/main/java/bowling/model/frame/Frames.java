@@ -41,7 +41,11 @@ public class Frames {
     }
 
     public Frame getCurrentFrame() {
-        return frames.get(frames.size() - 1);
+        return frames.get(getCurrentIndex());
+    }
+
+    private int getCurrentIndex() {
+        return frames.size() - 1;
     }
 
     public int getCurrentFrameNumber() {

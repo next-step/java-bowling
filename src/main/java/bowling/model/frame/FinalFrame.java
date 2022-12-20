@@ -22,7 +22,7 @@ public class FinalFrame implements Frame {
         roundNumber++;
         State currentState = getCurrentState();
         State state = currentState.bowl(pin);
-        states.remove(states.size() - 1);
+        states.remove(getCurrentIndex());
         states.add(state);
 
         if (state.isFinished()) {
@@ -31,7 +31,11 @@ public class FinalFrame implements Frame {
     }
 
     private State getCurrentState() {
-        return states.get(states.size() - 1);
+        return states.get(getCurrentIndex());
+    }
+
+    private int getCurrentIndex() {
+        return states.size() - 1;
     }
 
     @Override
