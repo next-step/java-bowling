@@ -19,7 +19,7 @@ class FramesTest {
         List<Frame> frameList = frames.getFrames();
 
         assertThat(frameList.get(0).getState()).isInstanceOf(Strike.class);
-        assertThat(frames.getCurrentFrame()).isInstanceOf(NormalFrame.class);
+        assertThat(frames.nextFrame()).isInstanceOf(NormalFrame.class);
     }
 
     @Test
@@ -28,7 +28,9 @@ class FramesTest {
         Frames frames = new Frames();
         for (int i = 0; i < 9; i++) {
             frames.bowl(Pin.of(10));
+            frames.nextFrame();
         }
+
         assertThat(frames.getCurrentFrame()).isInstanceOf(FinalFrame.class);
     }
 }
