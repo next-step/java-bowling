@@ -12,14 +12,16 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public static final String STATE_DELIMITER = "|";
+    public static final String NAME = "NAME";
+    public static final int MIN_FRAME_NUMBER = 1;
+    public static final int MAX_FRAME_NUMBER = 10;
     public static final String ZERO = "0";
     public static final String GUTTER = "-";
+    public static final String STATE_DELIMITER = "|";
     public static final String FRAME_DELIMITER = " | ";
     public static final String PREFIX = "| ";
     public static final String SUFFIX = " |";
     public static final String BLANK = " ";
-    public static final String NAME = "NAME";
 
     private OutputView() {
     }
@@ -40,7 +42,7 @@ public class OutputView {
     }
 
     private static void addTitleNumber(List<String> titles) {
-        for (int i = 1; i <= 10; i++) {
+        for (int i = MIN_FRAME_NUMBER; i <= MAX_FRAME_NUMBER; i++) {
             titles.add(String.format(" %02d ", i));
         }
     }
@@ -56,7 +58,7 @@ public class OutputView {
     }
 
     private static void addStates(List<Frame> frames, List<String> result) {
-        for (int i = 0; i < frames.size(); i++) {
+        for (int i = MIN_FRAME_NUMBER - 1; i < frames.size(); i++) {
             addState(frames.get(i), result);
         }
     }
@@ -74,7 +76,7 @@ public class OutputView {
     }
 
     private static void addEmptyStates(List<Frame> frames, List<String> result) {
-        for (int i = frames.size(); i < 10; i++) {
+        for (int i = frames.size(); i < MAX_FRAME_NUMBER; i++) {
             result.add(String.format("%4s", BLANK));
         }
     }

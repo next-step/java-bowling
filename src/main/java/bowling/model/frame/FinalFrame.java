@@ -10,6 +10,9 @@ import java.util.List;
 
 public class FinalFrame implements Frame {
 
+    public static final int THIRD = 3;
+    public static final int SECOND = 2;
+
     private final List<State> states = new ArrayList<>();
     private int roundNumber = 0;
 
@@ -40,10 +43,10 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isFinished() {
-        if (roundNumber == 3) {
+        if (roundNumber == THIRD) {
             return true;
         }
-        if (roundNumber == 2 && states.get(0) instanceof Miss) {
+        if (roundNumber == SECOND && states.get(0) instanceof Miss) {
             return true;
         }
         return false;
