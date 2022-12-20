@@ -1,7 +1,10 @@
 package bowling.view;
 
 import bowling.model.Player;
+import bowling.model.frame.FinalFrame;
+import bowling.model.frame.Frame;
 import bowling.model.frame.Frames;
+import bowling.model.state.Ready;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,42 +12,75 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
+    public static final String STATE_DELIMITER = "|";
+    public static final String ZERO = "0";
+    public static final String GUTTER = "-";
+    public static final String FRAME_DELIMITER = " | ";
+    public static final String PREFIX = "| ";
+    public static final String SUFFIX = " |";
+    public static final String BLANK = " ";
+    public static final String NAME = "NAME";
+
     private OutputView() {
     }
 
     public static void printBowlResult(Player player, Frames frames) {
         printTitle();
-        printResult(player.getName(), frames);
-
+        printResult(player.getName(), frames.getFrames());
+        System.out.println();
     }
 
     private static void printTitle() {
         List<String> titles = new ArrayList<>();
-        titles.add("NAME");
 
+        titles.add(NAME);
+        addTitleNumber(titles);
+
+        System.out.println(frameFormat(titles));
+    }
+
+    private static void addTitleNumber(List<String> titles) {
         for (int i = 1; i <= 10; i++) {
             titles.add(String.format(" %02d ", i));
         }
-
-        printFormat(titles);
     }
 
-    private static void printResult(String name, Frames frames) {
+    private static void printResult(String name, List<Frame> frames) {
         List<String> result = new ArrayList<>();
-        result.add(String.format("%4s", name));
-        int size = frames.size();
-        for (int i = 0; i < size; i++) {
-            result.add(frames.getCurrentFrame().getState().toString());
-        }
-        for (int i = size; i < 10; i++) {
-            result.add(String.format("%4s", " "));
-        }
 
-        printFormat(result);
+        result.add(String.format("%4s", name));
+        addStates(frames, result);
+        addEmptyStates(frames, result);
+
+        System.out.println(frameFormat(result).replaceAll(ZERO, GUTTER));
     }
 
-    private static void printFormat(List<String> values) {
-        System.out.println(values.stream()
-                .collect(Collectors.joining(" | ", "| ", " |")));
+    private static void addStates(List<Frame> frames, List<String> result) {
+        for (int i = 0; i < frames.size(); i++) {
+            addState(frames.get(i), result);
+        }
+    }
+
+    private static void addState(Frame frame, List<String> result) {
+        if (frame instanceof FinalFrame) {
+            List<String> states = ((FinalFrame) frame).getStates()
+                    .stream()
+                    .filter(state -> !(state instanceof Ready))
+                    .map(Object::toString).collect(Collectors.toList());
+            result.add(String.format("%-4s", String.join(STATE_DELIMITER, states)));
+            return;
+        }
+        result.add(String.format(" %-3s", frame.getState().toString()));
+    }
+
+    private static void addEmptyStates(List<Frame> frames, List<String> result) {
+        for (int i = frames.size(); i < 10; i++) {
+            result.add(String.format("%4s", BLANK));
+        }
+    }
+
+    private static String frameFormat(List<String> values) {
+        return values.stream()
+                .collect(Collectors.joining(FRAME_DELIMITER, PREFIX, SUFFIX));
     }
 }

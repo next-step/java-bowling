@@ -1,7 +1,9 @@
 package bowling.model.frame;
 
 import bowling.model.Pin;
-import bowling.model.state.*;
+import bowling.model.state.Miss;
+import bowling.model.state.Ready;
+import bowling.model.state.State;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,5 +63,9 @@ public class FinalFrame implements Frame {
     @Override
     public State getState() {
         return getCurrentState();
+    }
+
+    public List<State> getStates() {
+        return states;
     }
 }

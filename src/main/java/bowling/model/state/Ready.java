@@ -14,6 +14,6 @@ public class Ready extends Running {
 
     @Override
     public String toString() {
-        return String.format("%-4s", " ");
+        return " ";
     }
 }

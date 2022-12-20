@@ -31,6 +31,11 @@ public class Frames {
         return frame.isFinished() && !frame.isFinalFrame();
     }
 
+    public boolean isGameOver() {
+        Frame frame = getCurrentFrame();
+        return frame.isFinalFrame() && frame.isFinished();
+    }
+
     public int size() {
         return frames.size();
     }

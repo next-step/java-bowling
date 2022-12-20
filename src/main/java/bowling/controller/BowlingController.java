@@ -13,7 +13,11 @@ public class BowlingController {
         Frames frames = new Frames();
         OutputView.printBowlResult(player, frames);
 
-       InputView.inputPinNumber(frames.getCurrentFrameNumber());
-
+        while(!frames.isGameOver()){
+            Pin pin = Pin.of(InputView.inputPinNumber(frames.getCurrentFrameNumber()));
+            frames.bowl(pin);
+            frames.nextFrame();
+            OutputView.printBowlResult(player, frames);
+        }
     }
 }

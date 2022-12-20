@@ -51,6 +51,10 @@ public class Pin {
         return MIN_PIN <= pin && pin <= MAX_PIN;
     }
 
+    public int getValue() {
+        return pin;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -17,4 +17,9 @@ public class First extends Running {
         }
         return new Miss(this.pin, pin);
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(pin.getValue());
+    }
 }
