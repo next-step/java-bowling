@@ -31,6 +31,10 @@ public class Frames {
         return frame.isFinished() && !frame.isFinalFrame();
     }
 
+    public int size() {
+        return frames.size();
+    }
+
     public Frame getCurrentFrame() {
         return frames.get(frames.size() - 1);
     }

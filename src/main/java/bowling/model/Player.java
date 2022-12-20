@@ -32,6 +32,10 @@ public class Player {
         return name.length() == NAME_LENGTH;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -11,4 +11,9 @@ public class Ready extends Running {
         }
         return new First(pin);
     }
+
+    @Override
+    public String toString() {
+        return String.format("%-4s", " ");
+    }
 }
