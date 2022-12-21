@@ -23,6 +23,5 @@ class ReadyTest {
     @ValueSource(ints = {0, 9})
     void first(int input) {
         assertThat(ready.bowl(Pin.of(input))).isInstanceOf(First.class);
-
     }
 }

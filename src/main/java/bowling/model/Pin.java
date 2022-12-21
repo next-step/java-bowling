@@ -36,7 +36,6 @@ public class Pin {
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_PIN_MESSAGE));
     }
 
-
     public boolean isClearAll() {
         return pin == MAX_PIN;
     }

@@ -55,7 +55,6 @@ class NormalFrameTest {
     void isFinishedTrue1(int first, int second) {
         normalFrame.bowl(Pin.of(first));
         normalFrame.bowl(Pin.of(second));
-
         assertThat(normalFrame.isFinished()).isTrue();
     }
 
@@ -63,7 +62,6 @@ class NormalFrameTest {
     @DisplayName("스트라이크일때 게임이 끝난다.")
     void isFinishedTrue2() {
         normalFrame.bowl(Pin.of(10));
-
         assertThat(normalFrame.isFinished()).isTrue();
     }
 

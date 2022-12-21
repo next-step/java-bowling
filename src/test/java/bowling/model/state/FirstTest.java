@@ -21,7 +21,6 @@ class FirstTest {
     @DisplayName("첫번째 볼에서 총 10개 이하 맞추면 미스다.")
     void miss() {
         assertThat(first.bowl(Pin.of(3))).isInstanceOf(Miss.class);
-
     }
 
     @Test

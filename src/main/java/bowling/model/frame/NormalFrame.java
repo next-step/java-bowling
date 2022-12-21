@@ -10,10 +10,10 @@ public class NormalFrame implements Frame {
     public static final int LAST_FRAME_NUMBER = 9;
     public static final int FIRST_FRAME_NUMBER = 1;
 
-    private int number;
+    private final int number;
     private State state;
 
-   NormalFrame(int number) {
+    NormalFrame(int number) {
         this.number = number;
         this.state = new Ready();
     }
@@ -34,7 +34,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame nextFrame() {
-        if (isLastFrame()){
+        if (isLastFrame()) {
             return new FinalFrame();
         }
         return new NormalFrame(number + 1);

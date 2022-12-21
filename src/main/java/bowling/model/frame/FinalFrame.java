@@ -46,10 +46,7 @@ public class FinalFrame implements Frame {
         if (roundNumber == THIRD) {
             return true;
         }
-        if (roundNumber == SECOND && states.get(0) instanceof Miss) {
-            return true;
-        }
-        return false;
+        return roundNumber == SECOND && states.get(0) instanceof Miss;
     }
 
     @Override

@@ -8,12 +8,12 @@ import bowling.view.OutputView;
 
 public class BowlingController {
 
-    public void run(){
+    public void run() {
         Player player = new Player(InputView.inputPlayerName());
         Frames frames = new Frames();
         OutputView.printBowlResult(player, frames);
 
-        while(!frames.isGameOver()){
+        while (!frames.isGameOver()) {
             Pin pin = Pin.of(InputView.inputPinNumber(frames.getCurrentFrameNumber()));
             frames.bowl(pin);
             frames.nextFrame();

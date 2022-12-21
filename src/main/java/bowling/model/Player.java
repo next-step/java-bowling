@@ -19,7 +19,7 @@ public class Player {
         if (!isEnglish(name)) {
             throw new IllegalArgumentException(REQUIRE_ENGLISH_NAME);
         }
-        if(!isValidNameLength(name)) {
+        if (!isValidNameLength(name)) {
             throw new IllegalArgumentException(REQUIRE_NAME_LENGTH);
         }
     }

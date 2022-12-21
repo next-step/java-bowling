@@ -6,6 +6,7 @@ import bowling.model.state.State;
 public interface Frame {
 
     void bowl(Pin pin);
+
     boolean isFinished();
 
     Frame nextFrame();
