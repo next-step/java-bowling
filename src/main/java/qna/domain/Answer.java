@@ -9,6 +9,9 @@ import java.time.LocalDateTime;
 
 @Entity
 public class Answer extends AbstractEntity {
+
+    public static final String CANNOT_DELETE_ANSWER_MESSAGE = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
+
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
@@ -47,9 +50,11 @@ public class Answer extends AbstractEntity {
 
     public DeleteHistory delete(User loginUser) {
         if (!isOwner(loginUser)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+            throw new CannotDeleteException(CANNOT_DELETE_ANSWER_MESSAGE);
         }
+
         deleted = true;
+
         return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
     }
 
