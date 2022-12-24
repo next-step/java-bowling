@@ -30,7 +30,7 @@ public abstract class AbstractFrame implements Frame {
         return states.get(getCurrentIndex());
     }
 
-    protected int getCurrentIndex() {
+    private int getCurrentIndex() {
         return states.size() - 1;
     }
 
