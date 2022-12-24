@@ -29,6 +29,7 @@ public class OutputView {
     public static void printBowlResult(Player player, Frames frames) {
         printTitle();
         printResult(player.getName(), frames.getFrames());
+        printScore(frames.getSumScores());
         System.out.println();
     }
 
@@ -52,7 +53,7 @@ public class OutputView {
 
         result.add(String.format("%4s", name));
         addStates(frames, result);
-        addEmptyStates(frames, result);
+        addRemainFrames(result);
 
         System.out.println(frameFormat(result).replaceAll(ZERO, GUTTER));
     }
@@ -75,8 +76,26 @@ public class OutputView {
         result.add(String.format(" %-3s", frame.getCurrentState().toString()));
     }
 
-    private static void addEmptyStates(List<Frame> frames, List<String> result) {
-        for (int i = frames.size(); i < MAX_FRAME_NUMBER; i++) {
+    private static void printScore(List<Integer> scores) {
+        List<String> result = new ArrayList<>();
+
+        result.add(String.format("%4s", BLANK));
+        addScores(result, scores);
+        addRemainFrames(result);
+
+        System.out.println(frameFormat(result));
+    }
+
+    private static List<String> addScores(List<String> result, List<Integer> scores) {
+        for (Integer score : scores) {
+            result.add(String.format(" %-3s", score));
+        }
+        return result;
+    }
+
+    private static void addRemainFrames(List<String> result) {
+        int resultSize = result.size();
+        for (int i = resultSize; i <= MAX_FRAME_NUMBER; i++) {
             result.add(String.format("%4s", BLANK));
         }
     }

@@ -20,6 +20,10 @@ public class Score {
         return leftCount == 0;
     }
 
+    public int getScore() {
+        return score;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
