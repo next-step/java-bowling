@@ -74,6 +74,9 @@ public class FinalFrame extends AbstractFrame {
         Score score = beforeScore;
         for (int i = 1; i < states.size(); i++) {
             score = states.get(i).addBonusScore(score);
+            if (score.canCalculate()) {
+                return score;
+            }
         }
         return score;
     }
