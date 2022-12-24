@@ -59,7 +59,7 @@ public class Frames {
         return Collections.unmodifiableList(frames);
     }
 
-    public List<Integer> getSumScores(){
+    public List<Integer> getSumScores() {
         List<Integer> scores = getScores();
         List<Integer> result = new ArrayList<>();
 
