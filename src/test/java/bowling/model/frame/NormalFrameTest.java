@@ -25,14 +25,14 @@ class NormalFrameTest {
     @DisplayName("첫번째 프레임이 생성될 때 프레임 번호는 1, 상태는 레디이다.")
     void firstFrame() {
         assertThat(normalFrame.getNumber()).isEqualTo(1);
-        assertThat(normalFrame.getState()).isInstanceOf(Ready.class);
+        assertThat(normalFrame.getCurrentState()).isInstanceOf(Ready.class);
     }
 
     @Test
     @DisplayName("게임이 진행되면 상태가 바뀐다.")
     void bowl() {
         normalFrame.bowl(Pin.of(5));
-        assertThat(normalFrame.getState()).isInstanceOf(First.class);
+        assertThat(normalFrame.getCurrentState()).isInstanceOf(First.class);
     }
 
     @DisplayName("레디일때 게임이 끝나지 않는다.")

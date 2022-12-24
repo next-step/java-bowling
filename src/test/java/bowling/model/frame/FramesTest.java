@@ -16,9 +16,8 @@ class FramesTest {
     void nextFrame() {
         Frames frames = new Frames();
         frames.bowl(Pin.of(10));
-        List<Frame> frameList = frames.getFrames();
 
-        assertThat(frameList.get(0).getState()).isInstanceOf(Strike.class);
+        assertThat(frames.getCurrentFrame().getCurrentState()).isInstanceOf(Strike.class);
         assertThat(frames.nextFrame()).isInstanceOf(NormalFrame.class);
     }
 

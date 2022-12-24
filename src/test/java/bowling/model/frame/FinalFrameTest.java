@@ -14,7 +14,7 @@ class FinalFrameTest {
 
     @BeforeEach
     void init() {
-        finalFrame = new FinalFrame();
+        finalFrame = new FinalFrame(10);
     }
 
     @DisplayName("게임 진행 중")

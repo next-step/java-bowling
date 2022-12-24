@@ -72,7 +72,7 @@ public class OutputView {
             result.add(String.format("%-4s", String.join(STATE_DELIMITER, states)));
             return;
         }
-        result.add(String.format(" %-3s", frame.getState().toString()));
+        result.add(String.format(" %-3s", frame.getCurrentState().toString()));
     }
 
     private static void addEmptyStates(List<Frame> frames, List<String> result) {

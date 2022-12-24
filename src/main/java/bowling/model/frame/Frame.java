@@ -15,5 +15,6 @@ public interface Frame {
 
     int getNumber();
 
-    State getState();
+    State getCurrentState();
+
 }
