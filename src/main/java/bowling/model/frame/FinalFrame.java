@@ -1,17 +1,14 @@
 package bowling.model.frame;
 
 import bowling.model.Pin;
-import bowling.model.state.Miss;
-import bowling.model.state.Ready;
-import bowling.model.state.State;
+import bowling.model.state.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FinalFrame implements Frame {
 
-    public static final int THIRD = 3;
-    public static final int SECOND = 2;
+    public static final int MAX_TRY_NUMBER = 3;
 
     private final List<State> states = new ArrayList<>();
     private int roundNumber = 0;
@@ -43,10 +40,15 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isFinished() {
-        if (roundNumber == THIRD) {
-            return true;
+        if (getFirstState() instanceof Strike || getFirstState() instanceof Spare) {
+            return roundNumber == MAX_TRY_NUMBER;
         }
-        return roundNumber == SECOND && states.get(0) instanceof Miss;
+
+        return getFirstState().isFinished();
+    }
+
+    private State getFirstState() {
+        return states.get(0);
     }
 
     @Override
