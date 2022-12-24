@@ -16,6 +16,10 @@ public class Score {
         return new Score(this.score + score, leftCount - 1);
     }
 
+    public boolean canCalculate() {
+        return leftCount == 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -25,15 +25,15 @@ public class Pin {
         this.pin = pin;
     }
 
+    public static Pin of(int pin) {
+        return Optional.ofNullable(pins.get(pin))
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_PIN_MESSAGE));
+    }
+
     private void validate(int pin) {
         if (!isValidPin(pin)) {
             throw new IllegalArgumentException(INVALID_PIN_MESSAGE);
         }
-    }
-
-    public static Pin of(int pin) {
-        return Optional.ofNullable(pins.get(pin))
-                .orElseThrow(() -> new IllegalArgumentException(INVALID_PIN_MESSAGE));
     }
 
     public boolean isClearAll() {
@@ -41,9 +41,13 @@ public class Pin {
     }
 
     public boolean isClearAll(Pin secondPin) {
-        int totalPins = this.pin + secondPin.pin;
+        int totalPins = sum(secondPin);
         validate(totalPins);
         return totalPins == MAX_PIN;
+    }
+
+    public int sum(Pin secondPin) {
+        return this.pin + secondPin.pin;
     }
 
     private boolean isValidPin(int pin) {

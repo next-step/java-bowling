@@ -2,7 +2,7 @@ package bowling.model.state;
 
 import bowling.model.Pin;
 
-public class Finished implements State {
+public abstract class Finished implements State {
 
     @Override
     public State bowl(Pin pin) {

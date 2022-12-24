@@ -1,25 +1,31 @@
 package bowling.model.state;
 
 import bowling.model.Pin;
+import bowling.model.Score;
 
 public class First extends Running {
 
-    private final Pin pin;
+    private final Pin firstPin;
 
-    public First(Pin pin) {
-        this.pin = pin;
+    public First(Pin firstPin) {
+        this.firstPin = firstPin;
     }
 
     @Override
-    public State bowl(Pin pin) {
-        if (this.pin.isClearAll(pin)) {
-            return new Spare(this.pin, pin);
+    public State bowl(Pin secondPin) {
+        if (this.firstPin.isClearAll(secondPin)) {
+            return new Spare(this.firstPin, secondPin);
         }
-        return new Miss(this.pin, pin);
+        return new Miss(this.firstPin, secondPin);
+    }
+
+    @Override
+    public Score addBonusScore(Score beforeScore) {
+        return beforeScore.bowl(firstPin.getValue());
     }
 
     @Override
     public String toString() {
-        return String.valueOf(pin.getValue());
+        return String.valueOf(firstPin.getValue());
     }
 }
