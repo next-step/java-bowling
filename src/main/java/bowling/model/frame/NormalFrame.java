@@ -1,10 +1,15 @@
 package bowling.model.frame;
 
 
+import bowling.model.Score;
+
+import java.util.Optional;
+
 public class NormalFrame extends AbstractFrame {
 
     public static final int LAST_FRAME_NUMBER = 9;
     public static final int FIRST_FRAME_NUMBER = 1;
+    private Frame nextFrame;
 
     public NormalFrame(int number) {
         super(number);
@@ -22,9 +27,9 @@ public class NormalFrame extends AbstractFrame {
     @Override
     public Frame nextFrame() {
         if (isLastFrame()) {
-            return new FinalFrame(number + 1);
+            return nextFrame = new FinalFrame(number + 1);
         }
-        return new NormalFrame(number + 1);
+        return nextFrame = new NormalFrame(number + 1);
     }
 
     @Override
@@ -34,5 +39,27 @@ public class NormalFrame extends AbstractFrame {
 
     private boolean isLastFrame() {
         return number == LAST_FRAME_NUMBER;
+    }
+
+    @Override
+    public Score getScore() {
+        Score score = getCurrentState().getScore();
+        if (score.canCalculate()) {
+            return score;
+        }
+
+        return nextFrame.addBonusScore(score);
+    }
+
+    @Override
+    public Score addBonusScore(Score beforeScore) {
+        Score score = getCurrentState().addBonusScore(beforeScore);
+        if (score.canCalculate()) {
+            return score;
+        }
+
+        return Optional.ofNullable(nextFrame)
+                .map(nextFrame -> nextFrame.addBonusScore(score))
+                .orElse(score);
     }
 }

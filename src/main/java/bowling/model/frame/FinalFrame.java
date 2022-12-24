@@ -1,6 +1,7 @@
 package bowling.model.frame;
 
 import bowling.model.Pin;
+import bowling.model.Score;
 import bowling.model.state.Ready;
 import bowling.model.state.Spare;
 import bowling.model.state.State;
@@ -47,6 +48,34 @@ public class FinalFrame extends AbstractFrame {
     @Override
     public boolean isFinalFrame() {
         return true;
+    }
+
+    @Override
+    public Score getScore() {
+        Score score = getFirstState().getScore();
+        if (score.canCalculate()) {
+            return score;
+        }
+
+        return addNextBonusScore(score);
+    }
+
+    @Override
+    public Score addBonusScore(Score beforeScore) {
+        Score score = getFirstState().addBonusScore(beforeScore);
+        if (score.canCalculate()) {
+            return score;
+        }
+
+        return addNextBonusScore(score);
+    }
+
+    private Score addNextBonusScore(Score beforeScore) {
+        Score score = beforeScore;
+        for (int i = 1; i < states.size(); i++) {
+            score = states.get(i).addBonusScore(score);
+        }
+        return score;
     }
 
     public List<State> getStates() {
