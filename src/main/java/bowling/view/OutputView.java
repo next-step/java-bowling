@@ -38,7 +38,7 @@ public class OutputView {
         }
     }
 
-    public static void printBowlResult(String playerName, Frames frames) {
+    private static void printBowlResult(String playerName, Frames frames) {
         printResult(playerName, frames.getFrames());
         printScore(frames.getSumScores());
     }
