@@ -20,8 +20,8 @@ public class First extends Running {
     }
 
     @Override
-    public Score addBonusScore(Score beforeScore) {
-        return beforeScore.bowl(firstPin.getValue());
+    public Score addBonusScore(Score score) {
+        return firstPin.sumScore(score);
     }
 
     @Override

@@ -50,12 +50,24 @@ public class Pin {
         return this.pin + secondPin.pin;
     }
 
+    public Score sumScore(Score score) {
+        return score.bowl(pin);
+    }
+
     private boolean isValidPin(int pin) {
         return MIN_PIN <= pin && pin <= MAX_PIN;
     }
 
     public int getValue() {
         return pin;
+    }
+
+    public String getDesc(Pin secondPin) {
+        if (isClearAll(secondPin)) {
+            return pin + "|/";
+        }
+
+        return pin + "|" + secondPin.pin;
     }
 
     @Override

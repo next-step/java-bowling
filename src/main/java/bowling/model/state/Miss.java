@@ -19,16 +19,16 @@ public class Miss extends Finished {
     }
 
     @Override
-    public Score addBonusScore(Score beforeScore) {
-        Score score = beforeScore.bowl(firstPin.getValue());
+    public Score addBonusScore(Score score) {
+        score = firstPin.sumScore(score);
         if (score.canCalculate()) {
             return score;
         }
-        return score.bowl(secondPin.getValue());
+        return secondPin.sumScore(score);
     }
 
     @Override
     public String toString() {
-        return firstPin.getValue() + "|" + secondPin.getValue();
+        return firstPin.getDesc(secondPin);
     }
 }

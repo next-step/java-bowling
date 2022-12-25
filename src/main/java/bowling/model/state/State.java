@@ -11,5 +11,5 @@ public interface State {
 
     Score getScore();
 
-    Score addBonusScore(Score beforeScore);
+    Score addBonusScore(Score score);
 }
