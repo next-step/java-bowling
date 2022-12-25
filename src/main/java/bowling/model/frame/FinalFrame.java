@@ -18,11 +18,12 @@ public class FinalFrame extends AbstractFrame {
 
     @Override
     public void bowl(Pin pin) {
-        super.bowl(pin);
         roundNumber++;
         if (getCurrentState().isFinished()) {
-            getStates().add(new Ready());
+            getStates().add(new Ready().bowl(pin));
+            return;
         }
+        super.bowl(pin);
     }
 
     @Override
