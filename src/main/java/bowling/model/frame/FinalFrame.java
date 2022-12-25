@@ -51,30 +51,17 @@ public class FinalFrame extends AbstractFrame {
     @Override
     public Score getScore() {
         Score score = getFirstState().getScore();
-        if (score.canCalculate()) {
-            return score;
+        for (int i = 1; i < getStates().size(); i++) {
+            score = getStates().get(i).addBonusScore(score);
         }
-
-        return addNextBonusScore(score);
+        return score;
     }
 
     @Override
     public Score addBonusScore(Score beforeScore) {
-        Score score = getFirstState().addBonusScore(beforeScore);
-        if (score.canCalculate()) {
-            return score;
-        }
-
-        return addNextBonusScore(score);
-    }
-
-    private Score addNextBonusScore(Score beforeScore) {
         Score score = beforeScore;
-        for (int i = 1; i < getStates().size(); i++) {
-            score = getStates().get(i).addBonusScore(score);
-            if (score.canCalculate()) {
-                return score;
-            }
+        for (State state : getStates()) {
+            score = state.addBonusScore(score);
         }
         return score;
     }

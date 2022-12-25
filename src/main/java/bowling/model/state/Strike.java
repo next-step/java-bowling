@@ -12,6 +12,9 @@ public class Strike extends Finished {
 
     @Override
     public Score addBonusScore(Score score) {
+        if (score.canCalculate()) {
+            return score;
+        }
         return score.bowl(Pin.MAX_PIN);
     }
 
