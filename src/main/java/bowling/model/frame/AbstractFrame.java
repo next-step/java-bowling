@@ -9,8 +9,8 @@ import java.util.List;
 
 public abstract class AbstractFrame implements Frame {
 
-    protected final List<State> states = new ArrayList<>();
-    protected final int number;
+    private final List<State> states = new ArrayList<>();
+    private final int number;
 
     public AbstractFrame(int number) {
         this.number = number;
@@ -37,5 +37,10 @@ public abstract class AbstractFrame implements Frame {
     @Override
     public int getNumber() {
         return number;
+    }
+
+    @Override
+    public List<State> getStates() {
+        return states;
     }
 }

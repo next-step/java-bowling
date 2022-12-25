@@ -7,8 +7,6 @@ import bowling.model.state.Spare;
 import bowling.model.state.State;
 import bowling.model.state.Strike;
 
-import java.util.List;
-
 public class FinalFrame extends AbstractFrame {
 
     public static final int MAX_TRY_NUMBER = 3;
@@ -23,7 +21,7 @@ public class FinalFrame extends AbstractFrame {
         super.bowl(pin);
         roundNumber++;
         if (getCurrentState().isFinished()) {
-            states.add(new Ready());
+            getStates().add(new Ready());
         }
     }
 
@@ -37,7 +35,7 @@ public class FinalFrame extends AbstractFrame {
     }
 
     private State getFirstState() {
-        return states.get(0);
+        return getStates().get(0);
     }
 
     @Override
@@ -72,16 +70,12 @@ public class FinalFrame extends AbstractFrame {
 
     private Score addNextBonusScore(Score beforeScore) {
         Score score = beforeScore;
-        for (int i = 1; i < states.size(); i++) {
-            score = states.get(i).addBonusScore(score);
+        for (int i = 1; i < getStates().size(); i++) {
+            score = getStates().get(i).addBonusScore(score);
             if (score.canCalculate()) {
                 return score;
             }
         }
         return score;
-    }
-
-    public List<State> getStates() {
-        return states;
     }
 }

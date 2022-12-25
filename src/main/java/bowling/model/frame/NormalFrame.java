@@ -27,9 +27,9 @@ public class NormalFrame extends AbstractFrame {
     @Override
     public Frame nextFrame() {
         if (isLastFrame()) {
-            return nextFrame = new FinalFrame(number + 1);
+            return nextFrame = new FinalFrame(getNumber() + 1);
         }
-        return nextFrame = new NormalFrame(number + 1);
+        return nextFrame = new NormalFrame(getNumber() + 1);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class NormalFrame extends AbstractFrame {
     }
 
     private boolean isLastFrame() {
-        return number == LAST_FRAME_NUMBER;
+        return getNumber() == LAST_FRAME_NUMBER;
     }
 
     @Override
