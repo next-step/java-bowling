@@ -1,6 +1,7 @@
 package bowling.model.frame;
 
 import bowling.model.Pin;
+import bowling.model.Score;
 import bowling.model.state.First;
 import bowling.model.state.Ready;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,14 +26,14 @@ class NormalFrameTest {
     @DisplayName("첫번째 프레임이 생성될 때 프레임 번호는 1, 상태는 레디이다.")
     void firstFrame() {
         assertThat(normalFrame.getNumber()).isEqualTo(1);
-        assertThat(normalFrame.getState()).isInstanceOf(Ready.class);
+        assertThat(normalFrame.getCurrentState()).isInstanceOf(Ready.class);
     }
 
     @Test
     @DisplayName("게임이 진행되면 상태가 바뀐다.")
     void bowl() {
         normalFrame.bowl(Pin.of(5));
-        assertThat(normalFrame.getState()).isInstanceOf(First.class);
+        assertThat(normalFrame.getCurrentState()).isInstanceOf(First.class);
     }
 
     @DisplayName("레디일때 게임이 끝나지 않는다.")
@@ -55,7 +56,6 @@ class NormalFrameTest {
     void isFinishedTrue1(int first, int second) {
         normalFrame.bowl(Pin.of(first));
         normalFrame.bowl(Pin.of(second));
-
         assertThat(normalFrame.isFinished()).isTrue();
     }
 
@@ -63,7 +63,6 @@ class NormalFrameTest {
     @DisplayName("스트라이크일때 게임이 끝난다.")
     void isFinishedTrue2() {
         normalFrame.bowl(Pin.of(10));
-
         assertThat(normalFrame.isFinished()).isTrue();
     }
 
@@ -79,5 +78,46 @@ class NormalFrameTest {
     void lastFrame() {
         NormalFrame normalFrame = new NormalFrame(9);
         assertThat(normalFrame.nextFrame()).isInstanceOf(FinalFrame.class);
+    }
+
+    @DisplayName("점수 계산 가능한 경우")
+    @Test
+    void getScorePossible() {
+        normalFrame.bowl(Pin.of(8));
+        normalFrame.bowl(Pin.of(1));
+
+        Score score = normalFrame.getScore();
+        assertThat(score.canCalculate()).isTrue();
+        assertThat(score).isEqualTo(new Score(9, 0));
+    }
+
+    @DisplayName("점수 계산 불가능한 경우")
+    @Test
+    void getScoreImPossible() {
+        normalFrame.bowl(Pin.of(8));
+        normalFrame.bowl(Pin.of(2));
+        normalFrame.nextFrame();
+
+        Score score = normalFrame.getScore();
+        assertThat(score.canCalculate()).isFalse();
+    }
+
+    @DisplayName("보너스 점수 계산 가능한 경우")
+    @Test
+    void addBonusScorePossible() {
+        normalFrame.bowl(Pin.of(5));
+        Score score = normalFrame.addBonusScore(new Score(10, 1));
+
+        assertThat(score).isEqualTo(new Score(15, 0));
+    }
+
+    @DisplayName("보너스 점수 계산 불가능한 경우")
+    @Test
+    void addBonusScoreImPossible() {
+        normalFrame.bowl(Pin.of(8));
+        normalFrame.nextFrame();
+
+        Score score = normalFrame.addBonusScore(new Score(10, 2));
+        assertThat(score.canCalculate()).isFalse();
     }
 }

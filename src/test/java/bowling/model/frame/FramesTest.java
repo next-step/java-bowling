@@ -5,8 +5,6 @@ import bowling.model.state.Strike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FramesTest {
@@ -16,9 +14,8 @@ class FramesTest {
     void nextFrame() {
         Frames frames = new Frames();
         frames.bowl(Pin.of(10));
-        List<Frame> frameList = frames.getFrames();
 
-        assertThat(frameList.get(0).getState()).isInstanceOf(Strike.class);
+        assertThat(frames.getCurrentFrame().getCurrentState()).isInstanceOf(Strike.class);
         assertThat(frames.nextFrame()).isInstanceOf(NormalFrame.class);
     }
 

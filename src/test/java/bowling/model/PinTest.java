@@ -26,5 +26,4 @@ class PinTest {
                     Pin.of(input);
                 });
     }
-
 }

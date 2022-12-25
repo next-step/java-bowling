@@ -1,6 +1,7 @@
 package bowling.model.state;
 
 import bowling.model.Pin;
+import bowling.model.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +22,6 @@ class FirstTest {
     @DisplayName("첫번째 볼에서 총 10개 이하 맞추면 미스다.")
     void miss() {
         assertThat(first.bowl(Pin.of(3))).isInstanceOf(Miss.class);
-
     }
 
     @Test
@@ -31,5 +31,21 @@ class FirstTest {
                 .isThrownBy(() -> {
                     first.bowl(Pin.of(8));
                 });
+    }
+
+    @Test
+    @DisplayName("첫번째 볼은 점수를 생성할 수 없다.")
+    void getScore() {
+        assertThatExceptionOfType(IllegalStateException.class)
+                .isThrownBy(() -> {
+                    first.getScore();
+                });
+    }
+
+    @Test
+    @DisplayName("첫번째 볼을 보너스 점수로 더한다.")
+    void addBonusScore() {
+        assertThat(first.addBonusScore(new Score(10, 1)))
+                .isEqualTo(new Score(13, 0));
     }
 }

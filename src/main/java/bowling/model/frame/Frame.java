@@ -1,11 +1,13 @@
 package bowling.model.frame;
 
 import bowling.model.Pin;
+import bowling.model.Score;
 import bowling.model.state.State;
 
 public interface Frame {
 
     void bowl(Pin pin);
+
     boolean isFinished();
 
     Frame nextFrame();
@@ -14,5 +16,9 @@ public interface Frame {
 
     int getNumber();
 
-    State getState();
+    State getCurrentState();
+
+    Score getScore();
+
+    Score addBonusScore(Score beforeScore);
 }

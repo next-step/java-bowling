@@ -1,10 +1,13 @@
 package bowling.model.frame;
 
 import bowling.model.Pin;
+import bowling.model.Score;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 public class Frames {
 
@@ -54,5 +57,27 @@ public class Frames {
 
     public List<Frame> getFrames() {
         return Collections.unmodifiableList(frames);
+    }
+
+    public List<Integer> getSumScores() {
+        List<Integer> scores = getScores();
+        List<Integer> result = new ArrayList<>();
+
+        int sumScore = 0;
+        for (int score : scores) {
+            sumScore += score;
+            result.add(sumScore);
+        }
+
+        return result;
+    }
+
+    private List<Integer> getScores() {
+        return frames.stream()
+                .filter(Frame::isFinished)
+                .map(Frame::getScore)
+                .filter(Score::canCalculate)
+                .map(Score::getScore)
+                .collect(toList());
     }
 }

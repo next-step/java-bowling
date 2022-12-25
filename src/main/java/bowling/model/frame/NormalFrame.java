@@ -1,21 +1,18 @@
 package bowling.model.frame;
 
 
-import bowling.model.Pin;
-import bowling.model.state.Ready;
-import bowling.model.state.State;
+import bowling.model.Score;
 
-public class NormalFrame implements Frame {
+import java.util.Optional;
+
+public class NormalFrame extends AbstractFrame {
 
     public static final int LAST_FRAME_NUMBER = 9;
     public static final int FIRST_FRAME_NUMBER = 1;
+    private Frame nextFrame;
 
-    private int number;
-    private State state;
-
-   NormalFrame(int number) {
-        this.number = number;
-        this.state = new Ready();
+    public NormalFrame(int number) {
+        super(number);
     }
 
     public static NormalFrame first() {
@@ -23,21 +20,16 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public void bowl(Pin pin) {
-        state = state.bowl(pin);
-    }
-
-    @Override
     public boolean isFinished() {
-        return state.isFinished();
+        return getCurrentState().isFinished();
     }
 
     @Override
     public Frame nextFrame() {
-        if (isLastFrame()){
-            return new FinalFrame();
+        if (isLastFrame()) {
+            return nextFrame = new FinalFrame(number + 1);
         }
-        return new NormalFrame(number + 1);
+        return nextFrame = new NormalFrame(number + 1);
     }
 
     @Override
@@ -50,12 +42,24 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public int getNumber() {
-        return number;
+    public Score getScore() {
+        Score score = getCurrentState().getScore();
+        if (score.canCalculate()) {
+            return score;
+        }
+
+        return nextFrame.addBonusScore(score);
     }
 
     @Override
-    public State getState() {
-        return state;
+    public Score addBonusScore(Score beforeScore) {
+        Score score = getCurrentState().addBonusScore(beforeScore);
+        if (score.canCalculate()) {
+            return score;
+        }
+
+        return Optional.ofNullable(nextFrame)
+                .map(nextFrame -> nextFrame.addBonusScore(score))
+                .orElse(score);
     }
 }

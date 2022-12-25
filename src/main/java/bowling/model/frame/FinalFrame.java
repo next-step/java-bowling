@@ -1,55 +1,43 @@
 package bowling.model.frame;
 
 import bowling.model.Pin;
-import bowling.model.state.Miss;
+import bowling.model.Score;
 import bowling.model.state.Ready;
+import bowling.model.state.Spare;
 import bowling.model.state.State;
+import bowling.model.state.Strike;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class FinalFrame implements Frame {
+public class FinalFrame extends AbstractFrame {
 
-    public static final int THIRD = 3;
-    public static final int SECOND = 2;
-
-    private final List<State> states = new ArrayList<>();
+    public static final int MAX_TRY_NUMBER = 3;
     private int roundNumber = 0;
 
-    public FinalFrame() {
-        states.add(new Ready());
+    public FinalFrame(int number) {
+        super(number);
     }
 
     @Override
     public void bowl(Pin pin) {
+        super.bowl(pin);
         roundNumber++;
-        State currentState = getCurrentState();
-        State state = currentState.bowl(pin);
-        states.remove(getCurrentIndex());
-        states.add(state);
-
-        if (state.isFinished()) {
+        if (getCurrentState().isFinished()) {
             states.add(new Ready());
         }
     }
 
-    private State getCurrentState() {
-        return states.get(getCurrentIndex());
-    }
-
-    private int getCurrentIndex() {
-        return states.size() - 1;
-    }
-
     @Override
     public boolean isFinished() {
-        if (roundNumber == THIRD) {
-            return true;
+        if (getFirstState() instanceof Strike || getFirstState() instanceof Spare) {
+            return roundNumber == MAX_TRY_NUMBER;
         }
-        if (roundNumber == SECOND && states.get(0) instanceof Miss) {
-            return true;
-        }
-        return false;
+
+        return getFirstState().isFinished();
+    }
+
+    private State getFirstState() {
+        return states.get(0);
     }
 
     @Override
@@ -63,13 +51,34 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public int getNumber() {
-        return 10;
+    public Score getScore() {
+        Score score = getFirstState().getScore();
+        if (score.canCalculate()) {
+            return score;
+        }
+
+        return addNextBonusScore(score);
     }
 
     @Override
-    public State getState() {
-        return getCurrentState();
+    public Score addBonusScore(Score beforeScore) {
+        Score score = getFirstState().addBonusScore(beforeScore);
+        if (score.canCalculate()) {
+            return score;
+        }
+
+        return addNextBonusScore(score);
+    }
+
+    private Score addNextBonusScore(Score beforeScore) {
+        Score score = beforeScore;
+        for (int i = 1; i < states.size(); i++) {
+            score = states.get(i).addBonusScore(score);
+            if (score.canCalculate()) {
+                return score;
+            }
+        }
+        return score;
     }
 
     public List<State> getStates() {

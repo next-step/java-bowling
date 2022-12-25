@@ -1,6 +1,7 @@
 package bowling.model.state;
 
 import bowling.model.Pin;
+import bowling.model.Score;
 
 public class Ready extends Running {
 
@@ -10,6 +11,11 @@ public class Ready extends Running {
             return new Strike();
         }
         return new First(pin);
+    }
+
+    @Override
+    public Score addBonusScore(Score beforeScore) {
+        return beforeScore;
     }
 
     @Override
