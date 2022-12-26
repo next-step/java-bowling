@@ -42,10 +42,6 @@ public class Player {
         frames.nextFrame();
     }
 
-    public void nextFrame() {
-        frames.nextFrame();
-    }
-
     public boolean isGameOver() {
         return frames.isGameOver();
     }

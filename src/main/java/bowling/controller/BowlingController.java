@@ -36,7 +36,6 @@ public class BowlingController {
         while (!isFinished) {
             Pin pin = Pin.of(InputView.inputPinNumber(player.getName()));
             player.bowl(pin);
-            player.nextFrame();
             isFinished = player.isCurrentFrameFinished();
             OutputView.printBowlResults(bowlingGame.getPlayers());
         }
