@@ -1,23 +1,43 @@
 package bowling.controller;
 
+import bowling.model.BowlingGame;
 import bowling.model.Pin;
 import bowling.model.Player;
-import bowling.model.frame.Frames;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
 public class BowlingController {
 
-    public void run() {
-        Player player = new Player(InputView.inputPlayerName());
-        Frames frames = new Frames();
-        OutputView.printBowlResult(player, frames);
+    private final BowlingGame bowlingGame = new BowlingGame();
 
-        while (!frames.isGameOver()) {
-            Pin pin = Pin.of(InputView.inputPinNumber(frames.getCurrentFrameNumber()));
-            frames.bowl(pin);
-            frames.nextFrame();
-            OutputView.printBowlResult(player, frames);
+    public void run() {
+        initBowlingGame();
+        playBowlingGame();
+    }
+
+    private void initBowlingGame() {
+        int playerCount = InputView.inputPlayerCount();
+        for (int playerNumber = 1; playerNumber <= playerCount; playerNumber++) {
+            bowlingGame.addPlayer(new Player(InputView.inputPlayerName(playerNumber)));
+        }
+        OutputView.printBowlResults(bowlingGame.getPlayers());
+    }
+
+    private void playBowlingGame() {
+        while (!bowlingGame.isGameOver()) {
+            for (Player player : bowlingGame.getPlayers()) {
+                bowl(player);
+            }
+        }
+    }
+
+    private void bowl(Player player) {
+        boolean isFinished = false;
+        while (!isFinished) {
+            Pin pin = Pin.of(InputView.inputPinNumber(player.getName()));
+            player.bowl(pin);
+            isFinished = player.isCurrentFrameFinished();
+            OutputView.printBowlResults(bowlingGame.getPlayers());
         }
     }
 }

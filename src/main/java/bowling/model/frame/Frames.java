@@ -2,6 +2,7 @@ package bowling.model.frame;
 
 import bowling.model.Pin;
 import bowling.model.Score;
+import bowling.model.state.Ready;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,19 +25,27 @@ public class Frames {
 
     public Frame nextFrame() {
         Frame frame = getCurrentFrame();
-        if (isFinished(frame)) {
+        if (isFinished() && !frame.isFinalFrame()) {
             frames.add(frame.nextFrame());
         }
         return getCurrentFrame();
     }
 
-    private boolean isFinished(Frame frame) {
-        return frame.isFinished() && !frame.isFinalFrame();
+    public boolean isCurrentFrameFinished() {
+        return isFinished() || isReady();
+    }
+
+    private boolean isFinished() {
+        return getCurrentFrame().isFinished();
+    }
+
+    public boolean isReady() {
+        return getCurrentFrame().getCurrentState() instanceof Ready;
     }
 
     public boolean isGameOver() {
         Frame frame = getCurrentFrame();
-        return frame.isFinalFrame() && frame.isFinished();
+        return frame.isFinished();
     }
 
     public int size() {
@@ -49,10 +58,6 @@ public class Frames {
 
     private int getCurrentIndex() {
         return frames.size() - 1;
-    }
-
-    public int getCurrentFrameNumber() {
-        return getCurrentFrame().getNumber();
     }
 
     public List<Frame> getFrames() {

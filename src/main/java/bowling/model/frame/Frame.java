@@ -4,6 +4,8 @@ import bowling.model.Pin;
 import bowling.model.Score;
 import bowling.model.state.State;
 
+import java.util.List;
+
 public interface Frame {
 
     void bowl(Pin pin);
@@ -17,6 +19,8 @@ public interface Frame {
     int getNumber();
 
     State getCurrentState();
+
+    List<State> getStates();
 
     Score getScore();
 

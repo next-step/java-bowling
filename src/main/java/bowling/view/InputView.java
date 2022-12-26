@@ -9,13 +9,18 @@ public class InputView {
     private InputView() {
     }
 
-    public static String inputPlayerName() {
-        System.out.print("플레이어 이름은(3 english letters)?: ");
-        return scanner.nextLine();
+    public static int inputPlayerCount() {
+        System.out.print("How many people? ");
+        return scanner.nextInt();
     }
 
-    public static int inputPinNumber(int frameNumber) {
-        System.out.printf("%d프레임 투구 : ", frameNumber);
+    public static String inputPlayerName(int playerNumber) {
+        System.out.printf("플레이어 %d의 이름은?(3 english letters): ", playerNumber);
+        return scanner.next();
+    }
+
+    public static int inputPinNumber(String playerName) {
+        System.out.printf("%s's turn : ", playerName);
         return scanner.nextInt();
     }
 }

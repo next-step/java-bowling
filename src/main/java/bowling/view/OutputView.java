@@ -26,11 +26,21 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printBowlResult(Player player, Frames frames) {
+    public static void printBowlResults(List<Player> players) {
         printTitle();
-        printResult(player.getName(), frames.getFrames());
-        printScore(frames.getSumScores());
+        printPlayersResult(players);
         System.out.println();
+    }
+
+    private static void printPlayersResult(List<Player> players) {
+        for (Player player : players) {
+            printBowlResult(player.getName(), player.getFrames());
+        }
+    }
+
+    private static void printBowlResult(String playerName, Frames frames) {
+        printResult(playerName, frames.getFrames());
+        printScore(frames.getSumScores());
     }
 
     private static void printTitle() {
@@ -66,7 +76,7 @@ public class OutputView {
 
     private static void addState(Frame frame, List<String> result) {
         if (frame instanceof FinalFrame) {
-            List<String> states = ((FinalFrame) frame).getStates()
+            List<String> states = frame.getStates()
                     .stream()
                     .filter(state -> !(state instanceof Ready))
                     .map(Object::toString).collect(Collectors.toList());

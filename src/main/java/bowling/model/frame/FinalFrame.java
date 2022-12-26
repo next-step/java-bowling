@@ -7,8 +7,6 @@ import bowling.model.state.Spare;
 import bowling.model.state.State;
 import bowling.model.state.Strike;
 
-import java.util.List;
-
 public class FinalFrame extends AbstractFrame {
 
     public static final int MAX_TRY_NUMBER = 3;
@@ -20,11 +18,12 @@ public class FinalFrame extends AbstractFrame {
 
     @Override
     public void bowl(Pin pin) {
-        super.bowl(pin);
         roundNumber++;
         if (getCurrentState().isFinished()) {
-            states.add(new Ready());
+            getStates().add(new Ready().bowl(pin));
+            return;
         }
+        super.bowl(pin);
     }
 
     @Override
@@ -37,7 +36,7 @@ public class FinalFrame extends AbstractFrame {
     }
 
     private State getFirstState() {
-        return states.get(0);
+        return getStates().get(0);
     }
 
     @Override
@@ -53,35 +52,18 @@ public class FinalFrame extends AbstractFrame {
     @Override
     public Score getScore() {
         Score score = getFirstState().getScore();
-        if (score.canCalculate()) {
-            return score;
-        }
-
-        return addNextBonusScore(score);
-    }
-
-    @Override
-    public Score addBonusScore(Score beforeScore) {
-        Score score = getFirstState().addBonusScore(beforeScore);
-        if (score.canCalculate()) {
-            return score;
-        }
-
-        return addNextBonusScore(score);
-    }
-
-    private Score addNextBonusScore(Score beforeScore) {
-        Score score = beforeScore;
-        for (int i = 1; i < states.size(); i++) {
-            score = states.get(i).addBonusScore(score);
-            if (score.canCalculate()) {
-                return score;
-            }
+        for (int i = 1; i < getStates().size(); i++) {
+            score = getStates().get(i).addBonusScore(score);
         }
         return score;
     }
 
-    public List<State> getStates() {
-        return states;
+    @Override
+    public Score addBonusScore(Score beforeScore) {
+        Score score = beforeScore;
+        for (State state : getStates()) {
+            score = state.addBonusScore(score);
+        }
+        return score;
     }
 }

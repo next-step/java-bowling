@@ -1,5 +1,7 @@
 package bowling.model;
 
+import bowling.model.frame.Frames;
+
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -8,11 +10,14 @@ public class Player {
     public static final int NAME_LENGTH = 3;
     public static final String REQUIRE_ENGLISH_NAME = "영어로 입력해주세요.";
     public static final String REQUIRE_NAME_LENGTH = "이름의 길이는 3글자입니다.";
+
     private final String name;
+    private final Frames frames;
 
     public Player(String name) {
         validate(name);
         this.name = name;
+        this.frames = new Frames();
     }
 
     private void validate(String name) {
@@ -32,8 +37,25 @@ public class Player {
         return name.length() == NAME_LENGTH;
     }
 
+    public void bowl(Pin pin) {
+        frames.bowl(pin);
+        frames.nextFrame();
+    }
+
+    public boolean isGameOver() {
+        return frames.isGameOver();
+    }
+
+    public boolean isCurrentFrameFinished() {
+        return frames.isCurrentFrameFinished();
+    }
+
     public String getName() {
         return name;
+    }
+
+    public Frames getFrames() {
+        return frames;
     }
 
     @Override

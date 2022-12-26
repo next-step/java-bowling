@@ -14,8 +14,8 @@ public class Ready extends Running {
     }
 
     @Override
-    public Score addBonusScore(Score beforeScore) {
-        return beforeScore;
+    public Score addBonusScore(Score score) {
+        return score;
     }
 
     @Override
