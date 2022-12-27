@@ -1,13 +1,13 @@
 package bowling.domain;
 
-public class Pins {
+public class Pin {
 
     public static final int MIN_AMOUNT = 0;
     public static final int MAX_AMOUNT = 10;
 
     private final int amount;
 
-    public Pins(int amount) {
+    public Pin(int amount) {
         validate(amount);
         this.amount = amount;
     }
@@ -25,7 +25,7 @@ public class Pins {
         return amount == MAX_AMOUNT;
     }
 
-    public boolean isClear(Pins pins) {
-        return amount + pins.amount == MAX_AMOUNT;
+    public boolean isClear(Pin pin) {
+        return amount + pin.amount == MAX_AMOUNT;
     }
 }
