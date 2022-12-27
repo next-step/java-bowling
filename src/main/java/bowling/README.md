@@ -4,6 +4,8 @@
 * 현재 amount가 전체 핀의 개수와 일치하는지 확인하는 isMax()
 * 자신이 가진 amount와 인자로 주어진 핀의 amount를 비교해 핀 전체를 쓰려뜨렸는지 확인하는 isClear()
 
+### Player
+
 ### Frame
 * NormalFrame와 FinalFrame에서 구현되는 인터페이스
 * bowl(Pins pins), isFinished(), nextFrame()을 갖는다
