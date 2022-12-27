@@ -1,11 +1,12 @@
-                            ## 볼링 1단계 기능 요구사항
+## 볼링 1단계 기능 요구사항
 ### Pins
 * 볼링공을 굴렸을 때 쓰러뜨린 핀의 개수(amount)를 가짐
 * 현재 amount가 전체 핀의 개수와 일치하는지 확인하는 isMax()
 * 자신이 가진 amount와 인자로 주어진 핀의 amount를 비교해 핀 전체를 쓰려뜨렸는지 확인하는 isClear()
 
 ### Frame
-* TODO::NormalFrame과 FinalFrame의 공통 부분 추출하여 interface로 만들기
+* NormalFrame와 FinalFrame에서 구현되는 인터페이스
+* bowl(Pins pins), isFinished(), nextFrame()을 갖는다
 
 ### NormalFrame
 * 상태 값(Status)을 가짐
@@ -15,24 +16,18 @@
     * 게임이 종료되었을 경우 새로운 프레임, 게임이 진행중이면 기존 프레임 반환
 
 ### FinalFrame
-* 상태 값(Status)의 리스트를 가짐
-* FinalFrame에 맞게 bowl() 메소드 수정
+* 상태 값(Status)의 리스트(statuses)를 가짐
+* 10번째 프레임에서는 Strike/Spare 시 총 3번의 bowl() 기회가 주어짐
+  * bowlCount 변수를 가져 예외 로직 처리
+* ifFinished()에서 bowlCount가 3이면, 무조건 true
+  * bowlCount가 2면, Miss가 있을 경우에만 true
+  * 나머지(bawlCount <= 1 || Miss가 없는 BowlCount == 2) 는 false
+* nextFrame()은 Exception 발생 (마지막 프레임)
 
 ### Frames
 * Frame의 일급컬렉션 (볼링 게임이 진행되는 동안 최대 10개의 Frame을 관리)
 * bowl() 메소드로 게임을 진행 -> Frame에게 위임
 * 전체 볼링 게임 종료 여부 gameFinished()
-
-### NormalFrame
-* 1번에 10을 던지면 Finished
-* 1번에 9이하를 던지면 Running(FirstPin), 2번 기회를 주고 Finished
-
-### FinalFrame
-* 1번에 10을 던지면 Running
-    * 1번에 9이하를 던져도 Running
-    * 2번째 기회에서 2번째까지 합산이 10이 되면 Running(SecondPin)
-* 3번째 기회를 주고, Finished
-
 
 ### 상태 클래스
 * 필요에 따라 pins를 가져 게임 진행 상태에 대한 정보를 기록
@@ -43,8 +38,7 @@
 * Status(interface)
     * Running(abstract)
         * Ready -> Frame의 최초 상태
-        * FirstPin
-        * SecondPin -> FinalFrame에서만 사용
+        * FirstPin -> 한 번 bowl()을 했으나 아직 한 Frame이 종료되지 않은 상태
     * Finished(abstract)
         * Miss
         * Strike
