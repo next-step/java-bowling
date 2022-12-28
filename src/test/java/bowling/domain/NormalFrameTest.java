@@ -87,4 +87,21 @@ class NormalFrameTest {
         assertThat(frame.nextFrame().frameNumber()).isEqualTo(2);
     }
 
+    @Test
+    void 다음_프레임_얻기_NormalFrame() {
+        Frame frame = new NormalFrame(8);
+        frame.bowl(new Pin(10));
+
+        assertThat(frame.nextFrame()).isInstanceOf(NormalFrame.class);
+        assertThat(frame.nextFrame().frameNumber()).isEqualTo(9);
+    }
+
+    @Test
+    void 다음_프레임_얻기_FinalFrame() {
+        Frame frame = new NormalFrame(9);
+        frame.bowl(new Pin(10));
+
+        assertThat(frame.nextFrame()).isInstanceOf(FinalFrame.class);
+        assertThat(frame.nextFrame().frameNumber()).isEqualTo(10);
+    }
 }

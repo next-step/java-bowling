@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Objects;
+
 public class Pin {
 
     public static final int MIN_AMOUNT = 0;
@@ -36,5 +38,18 @@ public class Pin {
             return GUTTER_MESSAGE;
         }
         return String.valueOf(amount);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pin pin = (Pin) o;
+        return amount == pin.amount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(amount);
     }
 }

@@ -42,10 +42,13 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame nextFrame() {
-        if (isFinished()) {
+        if (!isFinished()) {
+            return this;
+        }
+        if (frameNumber < MAX_FRAMENUMBER) {
             return new NormalFrame(frameNumber + 1);
         }
-        return this;
+        return new FinalFrame();
     }
 
     @Override

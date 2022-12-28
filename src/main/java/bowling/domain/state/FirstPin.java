@@ -2,6 +2,8 @@ package bowling.domain.state;
 
 import bowling.domain.Pin;
 
+import java.util.Objects;
+
 public class FirstPin extends Running {
 
     private final Pin firstPin;
@@ -21,5 +23,18 @@ public class FirstPin extends Running {
     @Override
     public String toString() {
         return firstPin.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FirstPin firstPin1 = (FirstPin) o;
+        return Objects.equals(firstPin, firstPin1.firstPin);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstPin);
     }
 }
