@@ -8,4 +8,6 @@ public interface Frame {
 
     Frame nextFrame();
 
+    int frameNumber();
+
 }

@@ -22,8 +22,9 @@ public class MissTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"0, 0, -|-", "5, 4, 5|4", "5, 0, 5|-"})
-    void 메시지_출력(int firstPinAmount, int secondPinAmount, String expected) {
-        assertThat(new Miss(new Pin(firstPinAmount), new Pin(secondPinAmount)).toString()).isEqualTo(expected);
+    @CsvSource(value = {"0, 0, -, -", "5, 4, 5, 4", "5, 0, 5, -"})
+    void 메시지_출력(int firstPinAmount, int secondPinAmount, String expectedFirst, String expectedSecond) {
+        assertThat(new Miss(new Pin(firstPinAmount), new Pin(secondPinAmount)).toString())
+                .isEqualTo(expectedFirst + Miss.MISS_MESSAGE + expectedSecond);
     }
 }

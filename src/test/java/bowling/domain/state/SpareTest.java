@@ -21,7 +21,7 @@ public class SpareTest {
 
     @Test
     void 메시지_출력() {
-        assertThat(new Spare(new Pin(5)).toString()).isEqualTo("5|/");
+        assertThat(new Spare(new Pin(5)).toString()).isEqualTo("5" + Spare.SPARE_MESSAGE);
     }
 
 }

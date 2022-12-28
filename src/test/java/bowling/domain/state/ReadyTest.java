@@ -29,6 +29,6 @@ class ReadyTest {
 
     @Test
     void 메시지_출력() {
-        assertThat(new Ready().toString()).isEqualTo("");
+        assertThat(new Ready().toString()).isEqualTo(Ready.READY_MESSAGE);
     }
 }

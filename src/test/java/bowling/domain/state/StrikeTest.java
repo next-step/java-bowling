@@ -21,6 +21,6 @@ public class StrikeTest {
 
     @Test
     void 메시지_출력() {
-        assertThat(new Strike().toString()).isEqualTo("X");
+        assertThat(new Strike().toString()).isEqualTo(Strike.STRIKE_MESSAGE);
     }
 }
