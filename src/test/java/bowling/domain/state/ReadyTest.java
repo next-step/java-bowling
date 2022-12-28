@@ -26,4 +26,9 @@ class ReadyTest {
         assertThat(new Ready().bowl(new Pin(amount)))
                 .isInstanceOf(FirstPin.class);
     }
+
+    @Test
+    void 메시지_출력() {
+        assertThat(new Ready().toString()).isEqualTo("");
+    }
 }

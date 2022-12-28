@@ -4,6 +4,7 @@ public class Pin {
 
     public static final int MIN_AMOUNT = 0;
     public static final int MAX_AMOUNT = 10;
+    public static final String GUTTER_MESSAGE = "-";
 
     private final int amount;
 
@@ -27,5 +28,13 @@ public class Pin {
 
     public boolean isClear(Pin pin) {
         return amount + pin.amount == MAX_AMOUNT;
+    }
+
+    @Override
+    public String toString() {
+        if (amount == MIN_AMOUNT) {
+            return GUTTER_MESSAGE;
+        }
+        return String.valueOf(amount);
     }
 }

@@ -18,4 +18,9 @@ public class StrikeTest {
         assertThatThrownBy(() -> new Strike().bowl(new Pin(0)))
                 .isInstanceOf(IllegalStateException.class);
     }
+
+    @Test
+    void 메시지_출력() {
+        assertThat(new Strike().toString()).isEqualTo("X");
+    }
 }

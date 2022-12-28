@@ -32,4 +32,10 @@ class PinTest {
     void 볼링_핀의_합계가_최대값이_되는지_확인(int firstPinAmount, int secondPinAmount, boolean expected) {
         assertThat(new Pin(firstPinAmount).isClear(new Pin(secondPinAmount))).isEqualTo(expected);
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"0, -", "1, 1", "10, 10"})
+    void 볼링_핀_개수_출력(int amount, String expected) {
+        assertThat(new Pin(amount).toString()).isEqualTo(expected);
+    }
 }

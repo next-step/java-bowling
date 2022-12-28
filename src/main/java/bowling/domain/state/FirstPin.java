@@ -17,4 +17,9 @@ public class FirstPin extends Running {
         }
         return new Miss(firstPin, secondPin);
     }
+
+    @Override
+    public String toString() {
+        return firstPin.toString();
+    }
 }

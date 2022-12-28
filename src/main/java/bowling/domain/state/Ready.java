@@ -3,6 +3,9 @@ package bowling.domain.state;
 import bowling.domain.Pin;
 
 public class Ready extends Running {
+
+    public static final String READY_MESSAGE = "";
+
     @Override
     public Status bowl(Pin pin) {
         if (pin.isMax()) {
@@ -10,4 +13,10 @@ public class Ready extends Running {
         }
         return new FirstPin(pin);
     }
+
+    @Override
+    public String toString() {
+        return READY_MESSAGE;
+    }
+
 }

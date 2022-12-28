@@ -27,4 +27,9 @@ class FirstPinTest {
         assertThat(new FirstPin(new Pin(firstPinAmount)).bowl(new Pin(secondPinAmount)))
                 .isInstanceOf(Miss.class);
     }
+
+    @Test
+    void 메시지_출력() {
+        assertThat(new FirstPin(new Pin(5)).toString()).isEqualTo("5");
+    }
 }
