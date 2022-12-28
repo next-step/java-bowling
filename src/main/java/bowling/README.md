@@ -8,7 +8,7 @@
 
 ### Frame
 * NormalFrame와 FinalFrame에서 구현되는 인터페이스
-* bowl(Pins pins), isFinished(), nextFrame()을 갖는다
+* bowl(Pin pin), isFinished(), nextFrame()을 갖는다
 
 ### NormalFrame
 * 상태 값(Status)을 가짐
