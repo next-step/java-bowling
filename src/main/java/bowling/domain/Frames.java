@@ -1,10 +1,8 @@
 package bowling.domain;
 
-import bowling.domain.dto.FrameResultsDto;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Frames {
 
@@ -47,10 +45,8 @@ public class Frames {
         return frames.get(frames.size() - 1);
     }
 
-    public FrameResultsDto results() {
-        return new FrameResultsDto(frames.stream()
-                .map(Object::toString)
-                .collect(Collectors.toList()));
+    public List<Frame> results() {
+        return Collections.unmodifiableList(frames);
     }
 
 }

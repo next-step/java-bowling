@@ -1,25 +1,32 @@
 package bowling.domain.dto;
 
+import bowling.domain.Frame;
 import bowling.domain.Frames;
+import bowling.domain.Player;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FrameResultsDto {
 
-    private final List<String> results;
+    private final LinkedList<String> results;
 
-    public FrameResultsDto(List<String> results) {
-        this.results = makeResultsMaxSize(new ArrayList<>(results));
+    public FrameResultsDto(Player player, List<Frame> frameResults) {
+        results = frameResults.stream()
+                .map(Object::toString)
+                .collect(Collectors.toCollection(LinkedList::new));
+
+        makeResultsMaxSize(frameResults);
+        results.addFirst(player.name());
     }
 
-    private List<String> makeResultsMaxSize(List<String> results) {
-        int resultsSize = results.size();
-        for (int i = 0; i < (Frames.MAX_FRAME_NUMBER - resultsSize); i++) {
-            results.add("");
+    private void makeResultsMaxSize(List<Frame> frameResults) {
+        int frameResultsSize = frameResults.size();
+        for (int i = 0; i < (Frames.MAX_FRAME_NUMBER - frameResultsSize); i++) {
+            results.addLast("");
         }
-        return results;
     }
 
     public List<String> results() {
