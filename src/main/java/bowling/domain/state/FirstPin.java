@@ -28,13 +28,12 @@ public class FirstPin extends Running {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FirstPin firstPin1 = (FirstPin) o;
-        return Objects.equals(firstPin, firstPin1.firstPin);
+        if (o == null) return false;
+        return getClass() == o.getClass();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstPin);
+        return Objects.hash();
     }
 }

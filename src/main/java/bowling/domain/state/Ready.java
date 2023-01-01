@@ -2,6 +2,8 @@ package bowling.domain.state;
 
 import bowling.domain.Pin;
 
+import java.util.Objects;
+
 public class Ready extends Running {
 
     public static final String READY_MESSAGE = "";
@@ -19,4 +21,15 @@ public class Ready extends Running {
         return READY_MESSAGE;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        return getClass() == o.getClass();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash();
+    }
 }

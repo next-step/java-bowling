@@ -20,7 +20,7 @@ public class Frames {
 
     private static List<Frame> initFrames() {
         List<Frame> frames = new ArrayList<>();
-        frames.add(new NormalFrame(1));
+        frames.add(NormalFrame.init(1));
         return frames;
     }
 

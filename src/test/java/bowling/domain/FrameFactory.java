@@ -6,7 +6,7 @@ public class FrameFactory {
         if (frameNumber == 10) {
             return new FinalFrame();
         }
-        return new NormalFrame(frameNumber);
+        return NormalFrame.init(frameNumber);
     }
 
 }
