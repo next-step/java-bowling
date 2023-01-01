@@ -54,7 +54,7 @@ public class NormalFrame implements Frame {
         if (frameNumber < MAX_FRAMENUMBER) {
             return NormalFrame.init(frameNumber + 1);
         }
-        return new FinalFrame();
+        return FinalFrame.init();
     }
 
     @Override

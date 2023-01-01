@@ -6,30 +6,27 @@ import bowling.domain.state.Status;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
 
     public static final int MAX_BOWLCOUNT = 3;
     public static final String FINALFRAME_MESSAGE_DELIMITER = "|";
+    private static final int FINAL_FRAME_FRAMENUMBER = 10;
 
     private final List<Status> statuses;
-    private final int frameNumber = 10;
-
     private int bowlCount = 0;
 
-    public FinalFrame() {
-        this(initStatuses());
-    }
-
-    public FinalFrame(List<Status> statuses) {
+    FinalFrame(List<Status> statuses) {
         this.statuses = statuses;
     }
 
-    private static List<Status> initStatuses() {
+    public static Frame init() {
         List<Status> statuses = new ArrayList<>(MAX_BOWLCOUNT);
         statuses.add(new Ready());
-        return statuses;
+
+        return new FinalFrame(statuses);
     }
 
     @Override
@@ -79,7 +76,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public int frameNumber() {
-        return frameNumber;
+        return FINAL_FRAME_FRAMENUMBER;
     }
 
     @Override
@@ -87,5 +84,18 @@ public class FinalFrame implements Frame {
         return statuses.stream()
                 .map(Object::toString)
                 .collect(Collectors.joining(FINALFRAME_MESSAGE_DELIMITER));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FinalFrame that = (FinalFrame) o;
+        return bowlCount == that.bowlCount && Objects.equals(statuses, that.statuses);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(statuses, bowlCount);
     }
 }

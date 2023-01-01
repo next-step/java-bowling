@@ -13,8 +13,7 @@ class NormalFrameTest {
 
     @Test
     void init() {
-        assertThat(NormalFrame.init(1))
-                .isEqualTo(new NormalFrame(1, new Ready()));
+        assertThat(NormalFrame.init(1)).isEqualTo(new NormalFrame(1, new Ready()));
     }
 
     @Test
