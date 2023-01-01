@@ -1,6 +1,5 @@
-package bowling.domain.dto;
+package bowling.domain;
 
-import bowling.domain.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -10,25 +9,31 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class FrameResultsDtoTest {
+class ResultLinesTest {
 
     public static final String PLAYER_NAME_HSH = "HSH";
+
+    @Test
+    void firstline_생성() {
+        assertThat(ResultLines.FIRST_LINE.get(0)).isEqualTo(ResultLines.NAME_MESSAGE);
+        assertThat(ResultLines.FIRST_LINE).hasSize(11);
+    }
 
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 9, 10})
     void frame_최대개수만큼_생성(int frameResultsLength) {
-        assertThat(frameResultsDtoProvider(PLAYER_NAME_HSH, frameResultsLength).results())
+        assertThat(resultsLinesProvider(PLAYER_NAME_HSH, frameResultsLength).secondLine())
                 .hasSize(11);
     }
 
     @Test
     void player_이름이_결과리스트의_첫번째원소에_들어가야_한다() {
-        assertThat(frameResultsDtoProvider(PLAYER_NAME_HSH, 1).results().get(0))
+        assertThat(resultsLinesProvider(PLAYER_NAME_HSH, 1).secondLine().get(0))
                 .isEqualTo(PLAYER_NAME_HSH);
     }
 
-    private FrameResultsDto frameResultsDtoProvider(String playerName, int frameResultsLength) {
-        if (frameResultsLength > Frames.MAX_FRAME_NUMBER) {
+    private ResultLines resultsLinesProvider(String playerName, int frameResultsLength) {
+        if (frameResultsLength > Frames.MAX_FRAMENUMBER) {
             throw new IllegalArgumentException("프레임은 최대 10개까지만 생성 가능합니다.");
         }
 
@@ -37,7 +42,7 @@ class FrameResultsDtoTest {
             frameResults.add(FrameFactory.frameImplProvider(frameNumber));
         }
 
-        return new FrameResultsDto(new Player(playerName), frameResults);
+        return new ResultLines(new Player(playerName), frameResults);
     }
 
 }

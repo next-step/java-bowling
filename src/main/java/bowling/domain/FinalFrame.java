@@ -13,7 +13,6 @@ public class FinalFrame implements Frame {
 
     public static final int MAX_BOWLCOUNT = 3;
     public static final String FINALFRAME_MESSAGE_DELIMITER = "|";
-    private static final int FINAL_FRAME_FRAMENUMBER = 10;
 
     private final List<Status> statuses;
     private int bowlCount = 0;
@@ -76,7 +75,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public int frameNumber() {
-        return FINAL_FRAME_FRAMENUMBER;
+        return Frames.MAX_FRAMENUMBER;
     }
 
     @Override

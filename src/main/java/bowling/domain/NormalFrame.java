@@ -7,8 +7,7 @@ import java.util.Objects;
 
 public class NormalFrame implements Frame {
 
-    public static final int MIN_FRAMENUMBER = 1;
-    public static final int MAX_FRAMENUMBER = 9;
+    public static final int NORMALFRAME_MAX_FRAMENUMBER = 9;
 
     private final int frameNumber;
     private Status status;
@@ -24,10 +23,10 @@ public class NormalFrame implements Frame {
     }
 
     private static void validate(int frameNumber) {
-        if (frameNumber < MIN_FRAMENUMBER) {
+        if (frameNumber < Frames.MIN_FRAMENUMBER) {
             throw new IllegalArgumentException("Frame은 1번부터 시작합니다.");
         }
-        if (frameNumber > MAX_FRAMENUMBER) {
+        if (frameNumber > NORMALFRAME_MAX_FRAMENUMBER) {
             throw new IllegalArgumentException("NormalFrame은 9번까지만 존재합니다.");
         }
     }
@@ -51,7 +50,7 @@ public class NormalFrame implements Frame {
         if (!isFinished()) {
             return this;
         }
-        if (frameNumber < MAX_FRAMENUMBER) {
+        if (frameNumber < NORMALFRAME_MAX_FRAMENUMBER) {
             return NormalFrame.init(frameNumber + 1);
         }
         return FinalFrame.init();

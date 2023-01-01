@@ -6,7 +6,8 @@ import java.util.List;
 
 public class Frames {
 
-    public static final int MAX_FRAME_NUMBER = 10;
+    public static final int MIN_FRAMENUMBER = 1;
+    public static final int MAX_FRAMENUMBER = 10;
 
     private final List<Frame> frames;
 
@@ -34,7 +35,7 @@ public class Frames {
     }
 
     private void nextFrame() {
-        if (frames.size() == MAX_FRAME_NUMBER) {
+        if (frames.size() == MAX_FRAMENUMBER) {
             return;
         }
         if (currentFrame().isFinished()) {
@@ -43,7 +44,7 @@ public class Frames {
     }
 
     public boolean gameFinished() {
-        if (frames.size() < MAX_FRAME_NUMBER) {
+        if (frames.size() < MAX_FRAMENUMBER) {
             return false;
         }
         return currentFrame().isFinished();

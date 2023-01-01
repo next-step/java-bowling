@@ -1,31 +1,17 @@
 package bowling.view;
 
-import bowling.domain.dto.FrameResultsDto;
+import bowling.domain.ResultLines;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class OutputView {
 
     public static final String FRAME_DELIMETER = "|";
-    public static final List<String> frameNumberList = new ArrayList<>();
 
-    static {
-        frameNumberList.add(" NAME ");
-        frameNumberList.addAll(IntStream.rangeClosed(1, 10)
-                .mapToObj(s -> String.format("%02d", s))
-                .map(String::valueOf)
-                .collect(Collectors.toList()));
-    }
-
-    public static void printFrameResult(FrameResultsDto results) {
-        printResult(frameNumberList);
-        
+    public static void printFrameResult(ResultLines results) {
+        printResult(results.firstLine());
         System.out.println();
-        
-        printResult(results.results());
+        printResult(results.secondLine());
 
         System.out.println();
         System.out.println();
