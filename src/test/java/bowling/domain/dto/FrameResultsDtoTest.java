@@ -34,16 +34,10 @@ class FrameResultsDtoTest {
 
         List<Frame> frameResults = new ArrayList<>();
         for (int frameNumber = 1; frameNumber <= frameResultsLength; frameNumber++) {
-            frameResults.add(frameImplProvider(frameNumber));
+            frameResults.add(FrameFactory.frameImplProvider(frameNumber));
         }
 
         return new FrameResultsDto(new Player(playerName), frameResults);
     }
 
-    private Frame frameImplProvider(int frameNumber) {
-        if (frameNumber == 10) {
-            return new FinalFrame();
-        }
-        return new NormalFrame(frameNumber);
-    }
 }

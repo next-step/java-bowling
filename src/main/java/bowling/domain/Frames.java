@@ -11,8 +11,17 @@ public class Frames {
     private final List<Frame> frames;
 
     public Frames() {
-        frames = new ArrayList<>();
+        this(initFrames());
+    }
+
+    public Frames(List<Frame> frames) {
+        this.frames = frames;
+    }
+
+    private static List<Frame> initFrames() {
+        List<Frame> frames = new ArrayList<>();
         frames.add(new NormalFrame(1));
+        return frames;
     }
 
     public int currentFrameNumber() {
@@ -33,7 +42,6 @@ public class Frames {
         }
     }
 
-    // todo 아래 메소드 어떻게 테스트할지 고민
     public boolean gameFinished() {
         if (frames.size() < MAX_FRAME_NUMBER) {
             return false;
