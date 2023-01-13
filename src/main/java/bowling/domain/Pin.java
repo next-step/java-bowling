@@ -28,17 +28,16 @@ public class Pin {
         return amount;
     }
 
-    // todo - Pin 10개 이상 넘어가는지 FirstPin에서 validation 추가
-//    public boolean isOverMax(Pin pin) {
-//        return
-//    }
-
     public boolean isMax() {
         return amount == MAX_AMOUNT;
     }
 
     public boolean isClear(Pin pin) {
-        return amount + pin.amount == MAX_AMOUNT;
+        int newAmount = amount + pin.amount;
+        if (newAmount > MAX_AMOUNT) {
+            throw new IllegalArgumentException("볼링 핀의 전체 개수는 10개 입니다.");
+        }
+        return newAmount == MAX_AMOUNT;
     }
 
     @Override

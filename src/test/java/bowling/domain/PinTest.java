@@ -33,9 +33,15 @@ class PinTest {
         assertThat(new Pin(firstPinAmount).isClear(new Pin(secondPinAmount))).isEqualTo(expected);
     }
 
+    @Test
+    void 볼링_핀의_합계가_최대값을_초과하는_경우() {
+        assertThatThrownBy(() -> new Pin(5).isClear(new Pin(6)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
     @ParameterizedTest
     @CsvSource(value = {"0, -", "1, 1", "10, 10"})
-    void 볼링_핀_개수_출력(int amount, String expected) {
+    void 볼링_핀_개수_toString(int amount, String expected) {
         assertThat(new Pin(amount).toString()).isEqualTo(expected);
     }
 
