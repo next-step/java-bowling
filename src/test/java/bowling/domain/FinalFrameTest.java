@@ -1,11 +1,8 @@
 package bowling.domain;
 
 import bowling.domain.state.Miss;
-import bowling.domain.state.Ready;
 import bowling.domain.state.Spare;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -13,8 +10,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 class FinalFrameTest {
 
     @Test
-    void init() {
-        assertThat(FinalFrame.init()).isEqualTo(new FinalFrame(List.of(new Ready())));
+    void FinalFrame은_bowlCount_3_frameNumber_10으로_init_된다() {
+        assertThat(FinalFrame.init()).isEqualTo(new FinalFrame(3, 10));
     }
 
     @Test
@@ -54,7 +51,7 @@ class FinalFrameTest {
         frame.bowl(new Pin(1));
 
         assertThat(frame.isFinished()).isFalse();
-        assertThat(frame.toString()).isEqualTo("X" + FinalFrame.FINALFRAME_MESSAGE_DELIMITER + "1");
+        assertThat(frame.toString()).isEqualTo("X" + FinalFrame.MESSAGE_DELIMITER + "1");
     }
 
     @Test
@@ -77,7 +74,7 @@ class FinalFrameTest {
         assertThat(frame.isFinished()).isTrue();
         assertThat(frame.toString()).isEqualTo("9"
                 + Spare.SPARE_MESSAGE
-                + FinalFrame.FINALFRAME_MESSAGE_DELIMITER
+                + FinalFrame.MESSAGE_DELIMITER
                 + Pin.GUTTER_MESSAGE);
     }
 }

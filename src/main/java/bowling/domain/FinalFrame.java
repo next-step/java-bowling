@@ -2,58 +2,36 @@ package bowling.domain;
 
 import bowling.domain.state.Miss;
 import bowling.domain.state.Ready;
-import bowling.domain.state.Status;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class FinalFrame implements Frame {
+public class FinalFrame extends AbstractFrame {
 
     public static final int MAX_BOWLCOUNT = 3;
-    public static final String FINALFRAME_MESSAGE_DELIMITER = "|";
+    public static final int FRAMENUMBER = 10;
+    public static final String MESSAGE_DELIMITER = "|";
 
-    private final List<Status> statuses;
     private int bowlCount = 0;
 
-    FinalFrame(List<Status> statuses) {
-        this.statuses = statuses;
+    FinalFrame(int maxBowlCount, int frameNumber) {
+        super(maxBowlCount, frameNumber);
     }
 
     public static Frame init() {
-        List<Status> statuses = new ArrayList<>(MAX_BOWLCOUNT);
-        statuses.add(new Ready());
-
-        return new FinalFrame(statuses);
+        return new FinalFrame(MAX_BOWLCOUNT, FRAMENUMBER);
     }
 
     @Override
     public void bowl(Pin pin) {
         assertFinished();
+
         if (currentStatus().isFinished()) {
             statuses.add(new Ready());
         }
 
-        Status currentStatus = currentStatus();
-        statuses.remove(currentStatusIndex());
-
-        statuses.add(currentStatus.bowl(pin));
+        super.bowl(pin);
         bowlCount++;
-    }
-
-    private Status currentStatus() {
-        return statuses.get(currentStatusIndex());
-    }
-
-    private int currentStatusIndex() {
-        return statuses.size() - 1;
-    }
-
-    private void assertFinished() {
-        if (isFinished()) {
-            throw new IllegalStateException("현재 프레임에서는 더 이상 게임을 진행할 수 없습니다.");
-        }
     }
 
     @Override
@@ -74,27 +52,23 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public int frameNumber() {
-        return Frames.MAX_FRAMENUMBER;
-    }
-
-    @Override
     public String toString() {
         return statuses.stream()
                 .map(Object::toString)
-                .collect(Collectors.joining(FINALFRAME_MESSAGE_DELIMITER));
+                .collect(Collectors.joining(MESSAGE_DELIMITER));
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         FinalFrame that = (FinalFrame) o;
-        return bowlCount == that.bowlCount && Objects.equals(statuses, that.statuses);
+        return bowlCount == that.bowlCount;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(statuses, bowlCount);
+        return Objects.hash(super.hashCode(), bowlCount);
     }
 }

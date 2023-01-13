@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import bowling.domain.state.Miss;
-import bowling.domain.state.Ready;
 import bowling.domain.state.Spare;
 import bowling.domain.state.Strike;
 import org.junit.jupiter.api.Test;
@@ -12,8 +11,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 class NormalFrameTest {
 
     @Test
-    void init() {
-        assertThat(NormalFrame.init(1)).isEqualTo(new NormalFrame(1, new Ready()));
+    void NormalFrame은_maxBowlCount_1로_init_된다() {
+        assertThat(NormalFrame.init(1)).isEqualTo(new NormalFrame(1, 1));
     }
 
     @Test
