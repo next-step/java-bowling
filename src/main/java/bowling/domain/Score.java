@@ -9,8 +9,8 @@ public class Score {
     public static final int SPARE_LEFT_BOWL_COUNT = 1;
     public static final int MISS_LEFT_BOWL_COUNT = 0;
 
-    private int currentScore;
-    private int leftBowlCount;
+    private final int currentScore;
+    private final int leftBowlCount;
 
     Score(int initialScore, int leftBowlCount) {
         validateInitialScore(initialScore);
@@ -19,9 +19,6 @@ public class Score {
     }
 
     private static void validateInitialScore(int initialScore) {
-        if (initialScore > MAX_INITIAL_SCORE) {
-            throw new IllegalArgumentException("생성 시 가능한 최대 점수는 10입니다.");
-        }
         if (initialScore < 0) {
             throw new IllegalArgumentException("점수는 0점보다 작을 수 없습니다.");
         }
@@ -39,9 +36,8 @@ public class Score {
         return new Score(currentScore, MISS_LEFT_BOWL_COUNT);
     }
 
-    public void bowl(int fallenPinCount) {
-        currentScore += fallenPinCount;
-        leftBowlCount--;
+    public Score bowl(int fallenPinCount) {
+        return new Score(currentScore + fallenPinCount, leftBowlCount - 1);
     }
 
     public boolean canCalculateScore() {
