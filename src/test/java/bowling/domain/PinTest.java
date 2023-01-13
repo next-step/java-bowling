@@ -38,4 +38,5 @@ class PinTest {
     void 볼링_핀_개수_출력(int amount, String expected) {
         assertThat(new Pin(amount).toString()).isEqualTo(expected);
     }
+
 }

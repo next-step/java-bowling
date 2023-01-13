@@ -12,7 +12,7 @@ public class Score {
     private final int currentScore;
     private final int leftBowlCount;
 
-    Score(int initialScore, int leftBowlCount) {
+    public Score(int initialScore, int leftBowlCount) {
         validateInitialScore(initialScore);
         this.currentScore = initialScore;
         this.leftBowlCount = leftBowlCount;

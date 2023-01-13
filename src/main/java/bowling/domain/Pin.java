@@ -24,6 +24,15 @@ public class Pin {
         }
     }
 
+    public int amount() {
+        return amount;
+    }
+
+    // todo - Pin 10개 이상 넘어가는지 FirstPin에서 validation 추가
+//    public boolean isOverMax(Pin pin) {
+//        return
+//    }
+
     public boolean isMax() {
         return amount == MAX_AMOUNT;
     }
