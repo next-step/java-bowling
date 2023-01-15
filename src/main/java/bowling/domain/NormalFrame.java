@@ -1,9 +1,13 @@
 package bowling.domain;
 
+import java.util.Optional;
+
 public class NormalFrame extends AbstractFrame {
 
     public static final int MAX_BOWLCOUNT = 1;
     public static final int MAX_FRAMENUMBER = 9;
+
+    private Frame next;
 
     NormalFrame(int maxBowlCount, int frameNumber) {
         super(maxBowlCount, frameNumber);
@@ -31,6 +35,39 @@ public class NormalFrame extends AbstractFrame {
     }
 
     @Override
+    public Optional<Integer> calculateScore() {
+        if (!isFinished()) {
+            return Optional.empty();
+        }
+
+        Score score = currentStatus().score();
+        if (score.canCalculateScore()) {
+            return Optional.of(score.score());
+        }
+
+        if (next == null) {
+            return Optional.empty();
+        }
+        return next.calculateLastFrameScore(score);
+    }
+
+    public Optional<Integer> calculateLastFrameScore(Score lastScore) {
+        Score newScore = currentStatus().calculateScore(lastScore);
+        if (newScore.canCalculateScore()) {
+            return Optional.of(newScore.score());
+        }
+
+        if (!isFinished()) {
+            return Optional.empty();
+        }
+
+        if (next == null) {
+            return Optional.empty();
+        }
+        return next.calculateLastFrameScore(newScore);
+    }
+
+    @Override
     public boolean isFinished() {
         return currentStatus().isFinished();
     }
@@ -41,9 +78,13 @@ public class NormalFrame extends AbstractFrame {
             return this;
         }
         if (frameNumber < MAX_FRAMENUMBER) {
-            return NormalFrame.init(frameNumber + 1);
+            Frame next = NormalFrame.init(frameNumber + 1);
+            this.next = next;
+            return next;
         }
-        return FinalFrame.init();
+        Frame next = FinalFrame.init();
+        this.next = next;
+        return next;
     }
 
     @Override

@@ -42,7 +42,7 @@ public abstract class AbstractFrame implements Frame {
         return statuses.get(currentStatusIndex());
     }
 
-    private int currentStatusIndex() {
+    protected int currentStatusIndex() {
         return statuses.size() - 1;
     }
 

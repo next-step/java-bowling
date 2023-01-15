@@ -37,6 +37,9 @@ public class Score {
     }
 
     public Score bowl(int fallenPinCount) {
+        if (leftBowlCount == 0) {
+            return this;
+        }
         return new Score(currentScore + fallenPinCount, leftBowlCount - 1);
     }
 

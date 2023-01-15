@@ -29,8 +29,8 @@ class ScoreTest {
 
     @Test
     void 생성_valid() {
-        assertThatCode(() -> new Score(0, 0))
-                .doesNotThrowAnyException();
+        assertThatCode(() -> new Score(0, 0)).doesNotThrowAnyException();
+        assertThat(new Score(10, 0).score()).isEqualTo(10);
     }
 
     @Test
@@ -50,5 +50,12 @@ class ScoreTest {
         assertThat(score).isEqualTo(new Score(20, 0));
         assertThat(score.canCalculateScore()).isTrue();
         assertThat(score.score()).isEqualTo(20);
+    }
+
+    @Test
+    void 게임진행_leftBowlCount_가_0인_경우() {
+        Score score = new Score(10, 0).bowl(10);
+
+        assertThat(score).isEqualTo(new Score(10, 0));
     }
 }

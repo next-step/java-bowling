@@ -2,8 +2,10 @@ package bowling.domain;
 
 import bowling.domain.state.Miss;
 import bowling.domain.state.Ready;
+import bowling.domain.state.Status;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FinalFrame extends AbstractFrame {
@@ -49,6 +51,33 @@ public class FinalFrame extends AbstractFrame {
     @Override
     public Frame nextFrame() {
         throw new IllegalStateException("마지막 프레임입니다. 다음 프레임을 생성할 수 없습니다.");
+    }
+
+    @Override
+    public Optional<Integer> calculateScore() {
+        if (!isFinished()) {
+            return Optional.empty();
+        }
+
+        Score score = statuses.get(0).score();
+        for (Status state : statuses.subList(1, statuses.size())) {
+            score = state.calculateScore(score);
+        }
+        return Optional.of(score.score());
+    }
+
+    @Override
+    public Optional<Integer> calculateLastFrameScore(Score lastScore) {
+        Score newScore = lastScore;
+        for (Status state : statuses) {
+            newScore = state.calculateScore(newScore);
+        }
+
+        if (newScore.canCalculateScore()) {
+            return Optional.of(newScore.score());
+        }
+
+        return Optional.empty();
     }
 
     @Override

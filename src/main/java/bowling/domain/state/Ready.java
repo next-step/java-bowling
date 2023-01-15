@@ -19,7 +19,7 @@ public class Ready extends Running {
 
     @Override
     public Score calculateScore(Score lastScore) {
-        throw new IllegalStateException(CANNOT_CALCULATE_SCORE_ERROR_MESSAGE);
+        return lastScore;
     }
 
     @Override
