@@ -9,9 +9,11 @@ public class OutputView {
     public static final String FRAME_DELIMETER = "|";
 
     public static void printFrameResult(ResultLines results) {
-        printResult(results.firstLine());
+        printResult(results.frameNumbers());
         System.out.println();
-        printResult(results.secondLine());
+        printResult(results.frameResults());
+        System.out.println();
+        printResult(results.frameScores());
 
         System.out.println();
         System.out.println();

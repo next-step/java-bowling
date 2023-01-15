@@ -22,7 +22,6 @@ public class Spare extends Finished {
 
     @Override
     public Score calculateScore(Score lastScore) {
-        // todo 리팩토링
         return lastScore
                 .bowl(firstPin.amount())
                 .bowl(Pin.MAX_AMOUNT - firstPin.amount());
