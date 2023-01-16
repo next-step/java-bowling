@@ -1,48 +1,75 @@
 package bowling.domain;
 
-import bowling.domain.state.Ready;
-import bowling.domain.state.Status;
+import java.util.Optional;
 
-import java.util.Objects;
+public class NormalFrame extends AbstractFrame {
 
-public class NormalFrame implements Frame {
+    public static final int MAX_BOWLCOUNT = 1;
+    public static final int MAX_FRAMENUMBER = 9;
 
-    public static final int NORMALFRAME_MAX_FRAMENUMBER = 9;
+    private Frame next;
 
-    private final int frameNumber;
-    private Status status;
-
-    NormalFrame(int frameNumber, Status status) {
-        validate(frameNumber);
-        this.frameNumber = frameNumber;
-        this.status = status;
+    NormalFrame(int maxBowlCount, int frameNumber) {
+        super(maxBowlCount, frameNumber);
     }
 
     public static Frame init(int frameNumber) {
-        return new NormalFrame(frameNumber, new Ready());
+        validate(frameNumber);
+        return new NormalFrame(MAX_BOWLCOUNT, frameNumber);
     }
 
     private static void validate(int frameNumber) {
         if (frameNumber < Frames.MIN_FRAMENUMBER) {
             throw new IllegalArgumentException("Frame은 1번부터 시작합니다.");
         }
-        if (frameNumber > NORMALFRAME_MAX_FRAMENUMBER) {
+        if (frameNumber > MAX_FRAMENUMBER) {
             throw new IllegalArgumentException("NormalFrame은 9번까지만 존재합니다.");
         }
     }
 
-    public int frameNumber() {
-        return frameNumber;
+    @Override
+    public void bowl(Pin pin) {
+        assertFinished();
+
+        super.bowl(pin);
     }
 
     @Override
-    public void bowl(Pin pin) {
-        status = status.bowl(pin);
+    public Optional<Integer> calculateScore() {
+        if (!isFinished()) {
+            return Optional.empty();
+        }
+
+        Score score = currentStatus().score();
+        if (score.canCalculateScore()) {
+            return Optional.of(score.score());
+        }
+
+        if (next == null) {
+            return Optional.empty();
+        }
+        return next.calculateLastFrameScore(score);
+    }
+
+    public Optional<Integer> calculateLastFrameScore(Score lastScore) {
+        Score newScore = currentStatus().calculateScore(lastScore);
+        if (newScore.canCalculateScore()) {
+            return Optional.of(newScore.score());
+        }
+
+        if (!isFinished()) {
+            return Optional.empty();
+        }
+
+        if (next == null) {
+            return Optional.empty();
+        }
+        return next.calculateLastFrameScore(newScore);
     }
 
     @Override
     public boolean isFinished() {
-        return status.isFinished();
+        return currentStatus().isFinished();
     }
 
     @Override
@@ -50,27 +77,21 @@ public class NormalFrame implements Frame {
         if (!isFinished()) {
             return this;
         }
-        if (frameNumber < NORMALFRAME_MAX_FRAMENUMBER) {
-            return NormalFrame.init(frameNumber + 1);
+        if (frameNumber < MAX_FRAMENUMBER) {
+            Frame next = NormalFrame.init(frameNumber + 1);
+            this.next = next;
+            return next;
         }
-        return FinalFrame.init();
+        Frame next = FinalFrame.init();
+        this.next = next;
+        return next;
     }
 
     @Override
     public String toString() {
-        return status.toString();
+        return currentStatus().toString();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        NormalFrame that = (NormalFrame) o;
-        return frameNumber == that.frameNumber && Objects.equals(status, that.status);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(frameNumber, status);
-    }
+
 }

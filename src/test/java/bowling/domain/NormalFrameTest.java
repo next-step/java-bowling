@@ -1,10 +1,11 @@
 package bowling.domain;
 
 import bowling.domain.state.Miss;
-import bowling.domain.state.Ready;
 import bowling.domain.state.Spare;
 import bowling.domain.state.Strike;
 import org.junit.jupiter.api.Test;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -12,8 +13,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 class NormalFrameTest {
 
     @Test
-    void init() {
-        assertThat(NormalFrame.init(1)).isEqualTo(new NormalFrame(1, new Ready()));
+    void NormalFrame은_maxBowlCount_1로_init_된다() {
+        assertThat(NormalFrame.init(1)).isEqualTo(new NormalFrame(1, 1));
     }
 
     @Test
@@ -109,5 +110,58 @@ class NormalFrameTest {
 
         assertThat(frame.nextFrame()).isInstanceOf(FinalFrame.class);
         assertThat(frame.nextFrame().frameNumber()).isEqualTo(10);
+    }
+
+    @Test
+    void 점수계산_계산불가_Running() {
+        Frame frame = NormalFrame.init(1);
+        assertThat(frame.calculateScore()).isEqualTo(Optional.empty());
+
+        frame.bowl(new Pin(5));
+        assertThat(frame.calculateScore()).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    void 점수계산_계산불가_Strike() {
+        Frame frame = NormalFrame.init(1);
+        frame.bowl(new Pin(10));
+
+        assertThat(frame.calculateScore()).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    void 점수계산_계산불가_Spare() {
+        Frame frame = NormalFrame.init(1);
+        frame.bowl(new Pin(5));
+        frame.bowl(new Pin(5));
+
+        assertThat(frame.calculateScore()).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    void 점수계산_계산가능_Miss() {
+        Frame frame = NormalFrame.init(1);
+        frame.bowl(new Pin(5));
+        frame.bowl(new Pin(4));
+
+        assertThat(frame.calculateScore()).isEqualTo(Optional.of(9));
+    }
+
+    @Test
+    void 점수계산_계산가능_Spare() {
+        Frame frame = NormalFrame.init(1);
+        frame.bowl(new Pin(5));
+
+        assertThat(frame.calculateLastFrameScore(Score.ofSpare())).isEqualTo(Optional.of(15));
+    }
+
+    @Test
+    void 점수계산_계산가능_Strike() {
+        Frame frame = NormalFrame.init(1);
+        frame.bowl(new Pin(5));
+        assertThat(frame.calculateLastFrameScore(Score.ofStrike())).isEqualTo(Optional.empty());
+
+        frame.bowl(new Pin(3));
+        assertThat(frame.calculateLastFrameScore(Score.ofStrike())).isEqualTo(Optional.of(18));
     }
 }

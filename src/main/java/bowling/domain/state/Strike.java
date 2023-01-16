@@ -1,5 +1,8 @@
 package bowling.domain.state;
 
+import bowling.domain.Pin;
+import bowling.domain.Score;
+
 import java.util.Objects;
 
 public class Strike extends Finished {
@@ -7,6 +10,16 @@ public class Strike extends Finished {
     public static final String STRIKE_MESSAGE = "X";
 
     public Strike() {
+    }
+
+    @Override
+    public Score score() {
+        return Score.ofStrike();
+    }
+
+    @Override
+    public Score calculateScore(Score lastScore) {
+        return lastScore.bowl(Pin.MAX_AMOUNT);
     }
 
     @Override

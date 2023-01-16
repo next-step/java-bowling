@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pin;
+import bowling.domain.Score;
 
 import java.util.Objects;
 
@@ -14,6 +15,11 @@ public class Ready extends Running {
             return new Strike();
         }
         return new FirstPin(pin);
+    }
+
+    @Override
+    public Score calculateScore(Score lastScore) {
+        return lastScore;
     }
 
     @Override

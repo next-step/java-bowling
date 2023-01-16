@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pin;
+import bowling.domain.Score;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -27,4 +28,17 @@ public class MissTest {
         assertThat(new Miss(new Pin(firstPinAmount), new Pin(secondPinAmount)).toString())
                 .isEqualTo(expectedFirst + Miss.MISS_MESSAGE + expectedSecond);
     }
+
+    @Test
+    void Score_생성() {
+        assertThat(new Miss(new Pin(1), new Pin(2)).score())
+                .isEqualTo(new Score(3, 0));
+    }
+
+    @Test
+    void Score_계산() {
+        assertThat(new Miss(new Pin(1), new Pin(2)).calculateScore(new Score(10, 2)))
+                .isEqualTo(new Score(13, 0));
+    }
+
 }

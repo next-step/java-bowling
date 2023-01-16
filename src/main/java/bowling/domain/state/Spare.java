@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pin;
+import bowling.domain.Score;
 
 import java.util.Objects;
 
@@ -12,6 +13,18 @@ public class Spare extends Finished {
 
     public Spare(Pin firstPin) {
         this.firstPin = firstPin;
+    }
+
+    @Override
+    public Score score() {
+        return Score.ofSpare();
+    }
+
+    @Override
+    public Score calculateScore(Score lastScore) {
+        return lastScore
+                .bowl(firstPin.amount())
+                .bowl(Pin.MAX_AMOUNT - firstPin.amount());
     }
 
     @Override

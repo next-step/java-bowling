@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pin;
+import bowling.domain.Score;
 
 import java.util.Objects;
 
@@ -14,6 +15,18 @@ public class Miss extends Finished {
     public Miss(Pin firstPin, Pin secondPin) {
         this.firstPin = firstPin;
         this.secondPin = secondPin;
+    }
+
+    @Override
+    public Score score() {
+        return Score.ofMiss(firstPin.amount() + secondPin.amount());
+    }
+
+    @Override
+    public Score calculateScore(Score lastScore) {
+        return lastScore
+                .bowl(firstPin.amount())
+                .bowl(secondPin.amount());
     }
 
     @Override

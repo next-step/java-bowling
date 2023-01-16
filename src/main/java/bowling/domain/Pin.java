@@ -24,12 +24,20 @@ public class Pin {
         }
     }
 
+    public int amount() {
+        return amount;
+    }
+
     public boolean isMax() {
         return amount == MAX_AMOUNT;
     }
 
     public boolean isClear(Pin pin) {
-        return amount + pin.amount == MAX_AMOUNT;
+        int newAmount = amount + pin.amount;
+        if (newAmount > MAX_AMOUNT) {
+            throw new IllegalArgumentException("볼링 핀의 전체 개수는 10개 입니다.");
+        }
+        return newAmount == MAX_AMOUNT;
     }
 
     @Override
